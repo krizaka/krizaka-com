@@ -1,0 +1,38 @@
+# Krizaka — Orazaka
+
+> Krizaka is a Québec startup building Orazaka, an open-source, sovereign
+> **AI orchestration engine**. It runs multimodal inference (chat, image, video,
+> voice) on a hexagonal architecture (Java 21, Spring Boot 4, Spring AI 2)
+> enforced by ArchUnit, with a cognitive interceptor pipeline and Model Context
+> Protocol (MCP) support. Everything runs on your own infrastructure — Law 25,
+> GDPR and PIPEDA compliant by design: data never leaves your network.
+
+## What it is
+
+Orazaka is an AI orchestration engine: it takes a single request and routes it
+through a deterministic or agentic pipeline of interceptors (security, RBAC,
+context, RAG, tooling/MCP, validation, governance) to the optimal local model,
+then returns the result. Self-hosted, open source, free.
+
+## Editions
+
+- Orazaka Community — the complete open-source engine, self-hosted, free forever.
+- Packages — composable interceptor bundles that turn the engine into tailored
+  business solutions (agencies, sales, legal, support, real estate, healthcare).
+
+## Key pages
+
+- Product & docs: https://krizaka.com/en/products/orazaka
+- Getting started (3 commands): https://krizaka.com/en/get-started
+- Cognitive engineering & interceptor pipeline: https://krizaka.com/en/products/orazaka/ingenierie-cognitive
+- Architecture (interactive): https://krizaka.com/en/products/orazaka/architecture
+- Packages & solutions: https://krizaka.com/en/products/orazaka/packages
+- Use cases: https://krizaka.com/en/products/orazaka/usecases
+- Demos (real outputs): https://krizaka.com/en/products/orazaka/demos
+- Editions: https://krizaka.com/en/editions
+
+## Source
+
+- GitHub: https://github.com/krizaka/orazaka
+
+Languages: English and French (Québec). Detailed version: https://krizaka.com/llms-full.txt

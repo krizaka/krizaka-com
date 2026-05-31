@@ -1,0 +1,325 @@
+{
+  "product": "orazaka",
+  "source": "generated from code by scripts/generate-docs.mjs — do not hand-edit",
+  "modules": [
+    {
+      "id": "orazaka-persistence-app",
+      "path": "orazaka-framework/orazaka-persistence/app",
+      "layer": "framework",
+      "ports": {
+        "inbound": [
+          "CatalogModelManager",
+          "ChatMemoryPersistenceProvider",
+          "ChatSessionPersistenceProvider",
+          "JobPersistenceProvider",
+          "PlatformMcpServerPersistenceProvider",
+          "PlatformToolConfigPersistenceProvider",
+          "RuntimeConfigProvider"
+        ],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-persistence-identity",
+      "path": "orazaka-framework/orazaka-persistence/identity",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-core",
+      "path": "orazaka-framework/orazaka-core",
+      "layer": "framework",
+      "ports": {
+        "inbound": [
+          "AiClient",
+          "CatalogModelService",
+          "ChatSessionService",
+          "JobService",
+          "McpService"
+        ],
+        "outbound": [
+          "AudioGeneratorClient",
+          "CapabilityProvider",
+          "ChatGeneratorClient",
+          "ChatMemoryStore",
+          "ImageGeneratorClient",
+          "McpOrchestrator",
+          "ModelCatalogProvider",
+          "ModelEndpointResolver",
+          "PipelineConfigProvider",
+          "PlatformMcpServerProvider",
+          "PlatformToolConfigProvider",
+          "SemanticClassifierPort",
+          "TestShaperPort",
+          "ToolRegistry",
+          "UserCredentialsProvider",
+          "UserMcpServerProvider",
+          "ValidationPipelineRepository",
+          "VideoGeneratorClient"
+        ]
+      }
+    },
+    {
+      "id": "orazaka-interceptors",
+      "path": "orazaka-framework/orazaka-interceptors",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-business",
+      "path": "orazaka-framework/orazaka-business",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-identity",
+      "path": "orazaka-framework/orazaka-identity",
+      "layer": "framework",
+      "ports": {
+        "inbound": [
+          "IdentityReconciliationService",
+          "IdentityService",
+          "PasswordRecoveryService",
+          "RateLimitProvider",
+          "UserProfileProvider"
+        ],
+        "outbound": [
+          "AuthorityRepositoryPort",
+          "CryptographyPort",
+          "OAuth2ProviderVerifier",
+          "PasswordEventPublisher",
+          "PasswordResetTokenRepositoryPort",
+          "UserCredentialRepositoryPort",
+          "UserEventPublisher",
+          "UserInterceptionRepositoryPort",
+          "UserProfileRepositoryPort",
+          "UserRepositoryPort",
+          "VerificationTokenRepositoryPort"
+        ]
+      }
+    },
+    {
+      "id": "orazaka-tools",
+      "path": "orazaka-framework/orazaka-tools",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-router",
+      "path": "orazaka-apps/orazaka-router",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-worker-integrations",
+      "path": "orazaka-apps/orazaka-workers/orazaka-worker-integrations",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-worker-media",
+      "path": "orazaka-apps/orazaka-workers/orazaka-worker-media",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-web-client",
+      "path": "orazaka-apps/orazaka-ui/orazaka-web-client",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-web-admin",
+      "path": "orazaka-apps/orazaka-ui/orazaka-web-admin",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-mobile-client",
+      "path": "orazaka-apps/orazaka-ui/orazaka-mobile-client",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orazaka-cli",
+      "path": "orazaka-apps/orazaka-ui/orazaka-cli",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    }
+  ],
+  "dependencies": [
+    {
+      "from": "orazaka-persistence-app",
+      "to": "orazaka-identity"
+    },
+    {
+      "from": "orazaka-core",
+      "to": "orazaka-persistence-app"
+    },
+    {
+      "from": "orazaka-interceptors",
+      "to": "orazaka-core"
+    },
+    {
+      "from": "orazaka-business",
+      "to": "orazaka-core"
+    },
+    {
+      "from": "orazaka-identity",
+      "to": "orazaka-persistence-identity"
+    },
+    {
+      "from": "orazaka-tools",
+      "to": "orazaka-core"
+    },
+    {
+      "from": "orazaka-tools",
+      "to": "orazaka-persistence-app"
+    },
+    {
+      "from": "orazaka-router",
+      "to": "orazaka-core"
+    },
+    {
+      "from": "orazaka-router",
+      "to": "orazaka-identity"
+    },
+    {
+      "from": "orazaka-router",
+      "to": "orazaka-tools"
+    },
+    {
+      "from": "orazaka-router",
+      "to": "orazaka-business"
+    },
+    {
+      "from": "orazaka-router",
+      "to": "orazaka-persistence-app"
+    },
+    {
+      "from": "orazaka-router",
+      "to": "orazaka-interceptors"
+    },
+    {
+      "from": "orazaka-worker-integrations",
+      "to": "orazaka-identity"
+    },
+    {
+      "from": "orazaka-web-client",
+      "to": "orazaka-router"
+    },
+    {
+      "from": "orazaka-web-admin",
+      "to": "orazaka-router"
+    },
+    {
+      "from": "orazaka-mobile-client",
+      "to": "orazaka-router"
+    },
+    {
+      "from": "orazaka-cli",
+      "to": "orazaka-router"
+    },
+    {
+      "from": "orazaka-router",
+      "to": "orazaka-worker-media"
+    },
+    {
+      "from": "orazaka-worker-media",
+      "to": "orazaka-persistence-app"
+    }
+  ],
+  "pipeline": [
+    {
+      "interceptor": "UserContextResolver",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "interceptor": "SystemContextInjector",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "interceptor": "RagInterceptor",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "interceptor": "McpInterceptor",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "interceptor": "MemoryInterceptor",
+      "order": 5,
+      "enabled": true
+    },
+    {
+      "interceptor": "RefinerInterceptor",
+      "order": 6,
+      "enabled": true
+    },
+    {
+      "interceptor": "RouterInterceptor",
+      "order": 7,
+      "enabled": true
+    },
+    {
+      "interceptor": "ToolInterceptor",
+      "order": 8,
+      "enabled": true
+    },
+    {
+      "interceptor": "MediaInterceptor",
+      "order": 9,
+      "enabled": true
+    },
+    {
+      "interceptor": "UserContextInterceptor",
+      "order": 10,
+      "enabled": true
+    }
+  ],
+  "messaging": {
+    "keys": [
+      "orazaka.jobs.exchange",
+      "orazaka.jobs.routingKey",
+      "orazaka.routing.media.generate",
+      "orazaka.routing.text.process"
+    ]
+  }
+}
