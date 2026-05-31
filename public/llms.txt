@@ -1,0 +1,30 @@
+# Krizaka — Orasaka
+
+> Krizaka is a Québec-based startup building Orasaka, an open-source sovereign AI
+> orchestration engine. Java 21, Spring Boot 3.5, Spring AI, hexagonal architecture
+> enforced by ArchUnit, a 15-interceptor cognitive pipeline, and multimodal inference
+> (chat, image, video, voice) running entirely on-premise. Designed to facilitate
+> compliance with Québec's Law 25, GDPR and PIPEDA: data never leaves your network.
+
+## Editions
+
+- Orasaka Community: complete open-source, self-hosted, free forever.
+- Orasaka Cloud (2026, waitlist): white-label deployments and one-click Packages
+  (pre-configured interceptor bundles forming tailored business solutions).
+
+## Key pages
+
+- Product & docs: https://krizaka.com/products/orasaka
+- Getting started (3 commands): https://krizaka.com/get-started
+- Cognitive engineering & 15-interceptor pipeline: https://krizaka.com/ingenierie-cognitive
+- Editions: https://krizaka.com/editions
+- Solutions / Packages: https://krizaka.com/solutions
+- Roadmap (generated from the repo, real statuses): https://krizaka.com/roadmap
+- Use cases (agencies, sales, legal, support, real estate, healthcare): https://krizaka.com/use-cases
+- Demos (real outputs): https://krizaka.com/demos
+
+## Source
+
+- GitHub: https://github.com/krizaka/orasaka
+
+Languages: French (default, Québec) and English.

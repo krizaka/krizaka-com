@@ -1,0 +1,291 @@
+{
+  "product": "orasaka",
+  "source": "generated from code by scripts/generate-docs.mjs — do not hand-edit",
+  "modules": [
+    {
+      "id": "orasaka-test-support",
+      "path": "orasaka-framework/orasaka-test-support",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orasaka-persistence",
+      "path": "orasaka-framework/orasaka-persistence",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orasaka-core",
+      "path": "orasaka-framework/orasaka-core",
+      "layer": "framework",
+      "ports": {
+        "inbound": [
+          "AiClient",
+          "CatalogModelService",
+          "ChatSessionService",
+          "JobService",
+          "McpService"
+        ],
+        "outbound": [
+          "AudioGeneratorClient",
+          "CapabilityProvider",
+          "ChatGeneratorClient",
+          "ImageGeneratorClient",
+          "McpOrchestrator",
+          "ModelCatalogProvider",
+          "PipelineConfigProvider",
+          "PlatformMcpServerProvider",
+          "PlatformToolConfigProvider",
+          "SemanticClassifierPort",
+          "TestShaperPort",
+          "ToolRegistry",
+          "UserCredentialsProvider",
+          "UserMcpServerProvider",
+          "ValidationPipelineRepository",
+          "VideoGeneratorClient"
+        ]
+      }
+    },
+    {
+      "id": "orasaka-interceptors",
+      "path": "orasaka-framework/orasaka-interceptors",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orasaka-business",
+      "path": "orasaka-framework/orasaka-business",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orasaka-identity",
+      "path": "orasaka-framework/orasaka-identity",
+      "layer": "framework",
+      "ports": {
+        "inbound": [
+          "IdentityReconciliationService",
+          "IdentityService",
+          "PasswordRecoveryService",
+          "RateLimitProvider",
+          "UserProfileProvider"
+        ],
+        "outbound": [
+          "AuthorityRepositoryPort",
+          "CryptographyPort",
+          "OAuth2ProviderVerifier",
+          "PasswordEventPublisher",
+          "PasswordResetTokenRepositoryPort",
+          "UserCredentialRepositoryPort",
+          "UserEventPublisher",
+          "UserInterceptionRepositoryPort",
+          "UserProfileRepositoryPort",
+          "UserRepositoryPort",
+          "VerificationTokenRepositoryPort"
+        ]
+      }
+    },
+    {
+      "id": "orasaka-tools",
+      "path": "orasaka-framework/orasaka-tools",
+      "layer": "framework",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orasaka-router",
+      "path": "orasaka-apps/orasaka-router",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orasaka-workers",
+      "path": "orasaka-apps/orasaka-workers",
+      "layer": "app",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "orasaka-end2end",
+      "path": "orasaka-end2end",
+      "layer": "aggregate",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    }
+  ],
+  "dependencies": [
+    {
+      "from": "orasaka-core",
+      "to": "orasaka-persistence-app"
+    },
+    {
+      "from": "orasaka-core",
+      "to": "orasaka-test-support"
+    },
+    {
+      "from": "orasaka-interceptors",
+      "to": "orasaka-core"
+    },
+    {
+      "from": "orasaka-interceptors",
+      "to": "orasaka-test-support"
+    },
+    {
+      "from": "orasaka-business",
+      "to": "orasaka-core"
+    },
+    {
+      "from": "orasaka-identity",
+      "to": "orasaka-persistence-identity"
+    },
+    {
+      "from": "orasaka-identity",
+      "to": "orasaka-test-support"
+    },
+    {
+      "from": "orasaka-tools",
+      "to": "orasaka-core"
+    },
+    {
+      "from": "orasaka-tools",
+      "to": "orasaka-persistence-app"
+    },
+    {
+      "from": "orasaka-tools",
+      "to": "orasaka-test-support"
+    },
+    {
+      "from": "orasaka-router",
+      "to": "orasaka-core"
+    },
+    {
+      "from": "orasaka-router",
+      "to": "orasaka-identity"
+    },
+    {
+      "from": "orasaka-router",
+      "to": "orasaka-tools"
+    },
+    {
+      "from": "orasaka-router",
+      "to": "orasaka-business"
+    },
+    {
+      "from": "orasaka-router",
+      "to": "orasaka-persistence-app"
+    },
+    {
+      "from": "orasaka-router",
+      "to": "orasaka-test-support"
+    },
+    {
+      "from": "orasaka-router",
+      "to": "orasaka-interceptors"
+    },
+    {
+      "from": "orasaka-end2end",
+      "to": "orasaka-router"
+    },
+    {
+      "from": "orasaka-end2end",
+      "to": "orasaka-core"
+    },
+    {
+      "from": "orasaka-end2end",
+      "to": "orasaka-identity"
+    },
+    {
+      "from": "orasaka-end2end",
+      "to": "orasaka-business"
+    },
+    {
+      "from": "orasaka-end2end",
+      "to": "orasaka-persistence-app"
+    },
+    {
+      "from": "orasaka-end2end",
+      "to": "orasaka-persistence-identity"
+    }
+  ],
+  "pipeline": [
+    {
+      "interceptor": "UserContextResolver",
+      "order": 1,
+      "enabled": true
+    },
+    {
+      "interceptor": "SystemContextInjector",
+      "order": 2,
+      "enabled": true
+    },
+    {
+      "interceptor": "RagInterceptor",
+      "order": 3,
+      "enabled": true
+    },
+    {
+      "interceptor": "McpInterceptor",
+      "order": 4,
+      "enabled": true
+    },
+    {
+      "interceptor": "MemoryInterceptor",
+      "order": 5,
+      "enabled": true
+    },
+    {
+      "interceptor": "RefinerInterceptor",
+      "order": 6,
+      "enabled": true
+    },
+    {
+      "interceptor": "RouterInterceptor",
+      "order": 7,
+      "enabled": true
+    },
+    {
+      "interceptor": "ToolInterceptor",
+      "order": 8,
+      "enabled": true
+    },
+    {
+      "interceptor": "MediaInterceptor",
+      "order": 9,
+      "enabled": true
+    },
+    {
+      "interceptor": "UserContextInterceptor",
+      "order": 10,
+      "enabled": true
+    }
+  ],
+  "messaging": {
+    "keys": [
+      "orasaka.jobs.exchange",
+      "orasaka.jobs.routingKey",
+      "orasaka.routing.media.generate",
+      "orasaka.routing.text.process"
+    ]
+  }
+}
