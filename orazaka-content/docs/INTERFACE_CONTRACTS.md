@@ -25,9 +25,13 @@ generated: true
 - `AudioGeneratorClient`
 - `CapabilityProvider`
 - `ChatGeneratorClient`
+- `ChatMemoryStore`
 - `ImageGeneratorClient`
+- `InfrastructureStatusProvider`
+- `KnowledgeService`
 - `McpOrchestrator`
 - `ModelCatalogProvider`
+- `ModelEndpointResolver`
 - `PipelineConfigProvider`
 - `PlatformMcpServerProvider`
 - `PlatformToolConfigProvider`
@@ -37,20 +41,22 @@ generated: true
 - `UserCredentialsProvider`
 - `UserMcpServerProvider`
 - `ValidationPipelineRepository`
-- `VideoGeneratorClient`
 
 ## `orazaka-identity`
 
 **Inbound ports**
 
+- `ApiKeyService`
 - `IdentityReconciliationService`
 - `IdentityService`
 - `PasswordRecoveryService`
 - `RateLimitProvider`
+- `TokenService`
 - `UserProfileProvider`
 
 **Outbound ports**
 
+- `ApiKeyRepositoryPort`
 - `AuthorityRepositoryPort`
 - `CryptographyPort`
 - `OAuth2ProviderVerifier`

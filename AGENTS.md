@@ -3,7 +3,8 @@
 > Governance contract for **`krizaka-com`**, the public Next.js site for Krizaka
 > and its flagship product Orazaka. This file is the single source of truth for
 > how the site is built, themed, and kept in sync with the Orazaka engine.
-> The product engine has its **own** contract at `products/orazaka/AGENTS.md` —
+> The product engine has its **own** contract at `products/orazaka/AGENTS.md` (the Orazaka
+> workspace, [`krizaka/orazaka`](https://github.com/krizaka/orazaka), one repository per component) —
 > do not mix the two.
 
 ---
@@ -27,6 +28,8 @@
   into the repo by hand.
 - The 3D architecture scene renders `app/data/architecture.json`; treat it as
   read-only generated data.
+- The Orazaka repository map (`RepositoryMap`, architecture page `#repositories`) renders
+  `repositories` from the same generated file — never hard-code a repository list in a component.
 
 ## 3. Theming — dark **and** light are first-class
 

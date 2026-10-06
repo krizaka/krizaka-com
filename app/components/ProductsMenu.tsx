@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { ChevronDown, BookOpen, Cpu, Layers, Play } from "lucide-react";
+import { ChevronDown, BookOpen, Cpu, Layers, Play, Flame } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import OrazakaLogo from "./OrazakaLogo";
 
@@ -15,6 +15,7 @@ export function ProductsMenu() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const isOrochiaActive = pathname.startsWith("/products/orochia");
   const isDocsActive = pathname.startsWith("/products/orazaka") &&
     !pathname.startsWith("/products/orazaka/packages") &&
     !pathname.startsWith("/products/orazaka/usecases") &&
@@ -24,7 +25,7 @@ export function ProductsMenu() {
   const isDemosActive = pathname === "/products/orazaka/demos";
   const isArchitectureActive = pathname === "/products/orazaka/architecture";
   const isEditionsActive = pathname === "/editions";
-  const isProductsActive = isDocsActive || isDemosActive || isArchitectureActive || isEditionsActive || pathname.startsWith("/products/orazaka/packages") || pathname.startsWith("/products/orazaka/usecases") || pathname === "/products/orazaka/ingenierie-cognitive";
+  const isProductsActive = isOrochiaActive || isDocsActive || isDemosActive || isArchitectureActive || isEditionsActive || pathname.startsWith("/products/orazaka/packages") || pathname.startsWith("/products/orazaka/usecases") || pathname === "/products/orazaka/ingenierie-cognitive";
 
   useEffect(() => {
     return () => {
@@ -269,6 +270,75 @@ export function ProductsMenu() {
                       );
                     })}
                   </div>
+                </div>
+
+                {/* Group 3: Orochia — Streaming 4K & Créateurs */}
+                <div style={{ marginTop: "16px", paddingTop: "14px", borderTop: "1px solid var(--kz-border-subtle)" }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      marginBottom: "6px",
+                      paddingLeft: "8px",
+                      paddingRight: "8px",
+                    }}
+                  >
+                    <div
+                      style={{
+                        fontFamily: "var(--font-mono, monospace)",
+                        fontSize: "9px",
+                        fontWeight: 700,
+                        color: "var(--kz-accent)",
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "6px",
+                      }}
+                    >
+                      <Flame size={12} />
+                      <span>{locale === "fr" ? "Orochia • Nouveau" : "Orochia • New"}</span>
+                    </div>
+                    <span
+                      style={{
+                        fontFamily: "var(--font-mono, monospace)",
+                        fontSize: "9px",
+                        color: "var(--kz-status-success)",
+                        fontWeight: 600,
+                      }}
+                    >
+                      v1.0 Live
+                    </span>
+                  </div>
+
+                  <Link
+                    href="/products/orochia"
+                    role="menuitem"
+                    className="nav-sub-link"
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                      padding: "8px 10px",
+                      borderRadius: "8px",
+                      textDecoration: "none",
+                      background: isOrochiaActive ? "var(--kz-surface-2)" : "transparent",
+                      transition: "all 200ms cubic-bezier(0.16, 1, 0.3, 1)",
+                    }}
+                  >
+                    <div style={{ color: isOrochiaActive ? "var(--kz-accent)" : "var(--kz-text-secondary)", display: "flex", alignItems: "center", flexShrink: 0 }}>
+                      <Flame size={13} strokeWidth={1.8} />
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: "12px", fontWeight: 600, color: isOrochiaActive ? "var(--kz-text-primary)" : "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
+                        {locale === "fr" ? "Plateforme Streaming 4K" : "4K Streaming & Creator Platform"}
+                      </div>
+                      <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {locale === "fr" ? "Bunny Anycast, 2257 Vault & Monétisation" : "Bunny Anycast, 2257 Vault & Monetization"}
+                      </div>
+                    </div>
+                  </Link>
                 </div>
               </div>
             </div>

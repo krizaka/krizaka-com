@@ -5,6 +5,7 @@ import ArchitectureMesh from "../../../../components/illustrations/ArchitectureM
 import HowOrazakaWorks from "../../../../components/HowOrazakaWorks";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
+import RepositoryMap, { type RepositoryEntry } from "../../../../components/RepositoryMap";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -171,6 +172,12 @@ export default async function ArchitecturePage({ params }: Props) {
       <section style={{ maxWidth: "80rem", margin: "0 auto", padding: "32px 20px 100px" }}>
         <ArchitectureMesh modules={architecture.modules} dependencies={architecture.dependencies} />
       </section>
+
+      {/* ─── Where each component lives: one GitHub repository per component (generated) ─── */}
+      <RepositoryMap
+        repositories={(architecture as { repositories?: RepositoryEntry[] }).repositories ?? []}
+        locale={locale}
+      />
 
       <SiteFooter />
     </main>

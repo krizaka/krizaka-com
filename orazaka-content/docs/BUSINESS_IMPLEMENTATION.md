@@ -126,7 +126,7 @@ public class MovieEmbeddingService {
 }
 ```
 
-### Step 4: Controller Mapping (`orazaka-gateway`)
+### Step 4: Controller Mapping (`orazaka-conversation-service`)
 ```java
 @RestController
 @RequestMapping("/api/v1/cinepulse")
@@ -151,16 +151,16 @@ public class CinePulseController {
 ### Build Sequence
 ```bash
 # 1. Build identity logic
-mvn clean install -pl orazaka-framework/orazaka-identity
+mvn clean install -pl orazaka-apps/services/orazaka-users/orazaka-identity
 
 # 2. Compile gateway API with dependencies
-mvn clean compile -pl orazaka-apps/orazaka-gateway -am
+mvn clean compile -pl orazaka-apps/services/orazaka-conversation-service -am
 
 # 3. Build CLI executable
-npm run build --prefix orazaka-apps/orazaka-ui/orazaka-cli
+npm run build --prefix orazaka-apps/ui/orazaka-cli
 
 # 4. Install UI workspace dependencies
-npm install --prefix orazaka-apps/orazaka-ui
+npm install --prefix orazaka-apps/ui
 ```
 
 ### Start Services

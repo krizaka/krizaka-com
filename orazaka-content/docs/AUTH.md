@@ -29,7 +29,7 @@ order: 7
 sequenceDiagram
     participant Browser as NextAuth (Browser)
     participant BFF as Next.js BFF
-    participant GW as orazaka-gateway
+    participant GW as orazaka-conversation-service
     participant IS as IdentityService
     participant IP as orazaka-persistence-identity
     participant DB as PostgreSQL
@@ -59,7 +59,7 @@ sequenceDiagram
     participant Browser as NextAuth (Browser)
     participant Provider as Google/GitHub
     participant BFF as Next.js BFF
-    participant GW as orazaka-gateway
+    participant GW as orazaka-conversation-service
     participant RS as IdentityReconciliationService
     participant PV as OAuth2ProviderVerifier
     participant IP as orazaka-persistence-identity
@@ -96,7 +96,7 @@ sequenceDiagram
 sequenceDiagram
     participant Client as Browser / CLI
     participant BFF as Next.js BFF
-    participant GW as orazaka-gateway
+    participant GW as orazaka-conversation-service
     participant PRS as PasswordRecoveryService
     participant IP as orazaka-persistence-identity
     participant DB as PostgreSQL

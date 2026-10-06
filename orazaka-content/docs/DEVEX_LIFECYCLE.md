@@ -85,14 +85,14 @@ flowchart TB
 
 - **Docker** (*stateful* infra only): PostgreSQL+pgvector, Redis, RabbitMQ. Started by `orazaka start`.
 - **Native macOS** (Metal): Ollama (chat+embeddings), stable-diffusion.cpp (image), worker-media MLX (video). Never in Docker (otherwise CPU fallback = destroyed DevX).
-- **Apps**: router, workers, web-client, web-admin, mobile (Expo) — launched as native processes by `orazaka dev` with color logs.
+- **Apps**: the eight JVM services (edge, conversation, identity, knowledge, automation, job, billing, studio), the workers, web-client, web-admin, mobile (Expo) — launched as native processes by `orazaka dev` with color logs.
 - 64 GB lets everything run in parallel (Docker infra + 2–3 loaded Ollama models + apps + IDE).
 
 ### 3.2 IDE split
 
 | IDE | Scope | Why |
 | :--- | :--- | :--- |
-| **IntelliJ IDEA** | Java/Maven backend: `orazaka-router`, `orazaka-framework/*`, Java workers | multi-module Maven support, Spring, JVM debugging, ArchUnit |
+| **IntelliJ IDEA** | Java/Maven backend: `orazaka-router`, `orazaka-libs/*`, Java workers | multi-module Maven support, Spring, JVM debugging, ArchUnit |
 | **VSCode** | TS frontends (`orazaka-ui/*`), `worker-media` (Python), infra scripts | Next/Expo, ESLint, Pyright, integrated terminal for the CLI |
 
 Both share the repo; **the `orazaka` CLI is the neutral orchestrator** both call. To commit so both IDEs are *turnkey*:
@@ -106,8 +106,11 @@ Both share the repo; **the `orazaka` CLI is the neutral orchestrator** both call
 orazaka install      # detect HW/prereqs (Java 21, Node 24+, Docker, Ollama), generate .env
 orazaka start        # start the Docker infra + check native Ollama
 orazaka models pull  # pull the required Ollama models
-orazaka dev          # spawn router + workers + web + admin + mobile (color logs)
-#   variants: orazaka dev --only web,core   |   --only mobile
+orazaka dev          # spawn the 8 services + web + admin + mobile (color logs)
+#   the 8: edge :8088 · router :8080 · identity :8083 · knowledge :8084
+#          automation :8082 · job :8090 · billing :8095 · studio :8096
+#   variants: orazaka dev --only web,router   |   --only studio,billing
+#             orazaka dev --skip-studio       (one --skip-<key> per service)
 orazaka onboard      # validate a clone-and-run (prereqs → build → M2M → runtime)
 ```
 

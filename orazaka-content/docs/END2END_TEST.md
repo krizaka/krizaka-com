@@ -41,7 +41,7 @@ order: 12
 | **Governance** | ArchUnit | Compile-time architecture decoupling rules | `GovernanceTest.java`, `*BoundaryTest.java` |
 | **Integration** | Testcontainers | Ephemeral PostgreSQL, Redis, RabbitMQ | `AbstractContainerIntegrationTest` |
 | **E2E (Java)** | Playwright Java | Headless Chromium with full gateway stack | `orazaka-end2end/src/test/java/` |
-| **E2E (CLI)** | Vitest / Execa | Sandboxed CLI subprocess testing | `orazaka-apps/orazaka-ui/orazaka-cli/e2e/` |
+| **E2E (CLI)** | Vitest / Execa | Sandboxed CLI subprocess testing | `orazaka-apps/ui/orazaka-cli/e2e/` |
 
 ---
 
@@ -91,7 +91,7 @@ Additional boundary tests per module (`*BoundaryTest.java`) ensure cross-module 
   });
   ```
 - Run (via Maven): `./mvnw clean verify -P e2e-tests`.
-- Run (standalone): `npm run test:e2e --prefix orazaka-apps/orazaka-ui/orazaka-web-client`.
+- Run (standalone): `npm run test:e2e --prefix orazaka-apps/ui/orazaka-web-client`.
 
 ---
 
@@ -105,7 +105,7 @@ const result = await execa('npx', ['orazaka', 'init'], { cwd: sandbox });
 expect(result.exitCode).toBe(0);
 ```
 - Run (via Maven): `./mvnw clean verify -P e2e-tests`.
-- Run (standalone): `npm run test:e2e --prefix orazaka-apps/orazaka-ui/orazaka-cli`.
+- Run (standalone): `npm run test:e2e --prefix orazaka-apps/ui/orazaka-cli`.
 
 ---
 
@@ -135,7 +135,7 @@ Dedicated Maven submodule at `orazaka-end2end/` housing the complete hermetic E2
 ```
 pre-integration-test:
   1. Fabric8 → compose start db-local (PostgreSQL, TCP:5432 wait)
-  2. process-exec:start → java -jar orazaka-gateway-*.jar (background)
+  2. process-exec:start → java -jar orazaka-conversation-service-*.jar (background)
   3. Antrun → poll /actuator/health until 200 UP (120s timeout)
   4. frontend-maven-plugin → install Node v24.11.1
 

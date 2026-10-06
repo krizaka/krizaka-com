@@ -1,12 +1,12 @@
 ---
-title: Orazaka — Master Feature Matrix
-description: Documentation for Orazaka — Master Feature Matrix
+title: Orasaka — Master Feature Matrix
+description: Documentation for Orasaka — Master Feature Matrix
 category: Core Features
 order: 10
 ---
-# Orazaka — Master Feature Matrix
+# Orasaka — Master Feature Matrix
 
-> Single source of truth for feature delivery status across the Orazaka platform. Organized by technology pillar, updated continuously as features ship.
+> Single source of truth for feature delivery status across the Orasaka platform. Organized by technology pillar, updated continuously as features ship.
 
 ---
 
@@ -52,7 +52,7 @@ order: 10
 | **CLI-02** | Doctor Diagnostics | Global system health check — ports, models, memory, workspace structure. | 🟢 **COMPLETED & LOCKED** |
 | **CLI-03** | Config Manager | Interactive terminal editor for local environment variables (`.env`). | 🟢 **COMPLETED & LOCKED** |
 | **CLI-04** | Local SQLite Cache | Persistent offline queue to synchronize local agent tasks with 15-second heartbeat. | 🟢 **COMPLETED & LOCKED** |
-| **CLI-05** | Full-Stack Dev Orchestrator | `npx orazaka dev` — parallel-spawns Gateway, Web Client, Admin Console, and Mobile App with `--skip-*` flags. | 🟢 **COMPLETED & LOCKED** |
+| **CLI-05** | Full-Stack Dev Orchestrator | `npx orasaka dev` — parallel-spawns Gateway, Web Client, Admin Console, and Mobile App with `--skip-*` flags. | 🟢 **COMPLETED & LOCKED** |
 
 ---
 
@@ -88,4 +88,4 @@ order: 10
 | **UX-02** | Pro Admin UI Workspace | Visual interceptor pipeline rendering and Routing Rules editor in the Admin Console. | 📅 **ROADMAP (High Priority)** |
 | **UX-03** | Internal Minimalist CLI | Maintenance of the CLI as an internal automation utility for consulting and DevOps. | 🟢 **COMPLETED & LOCKED** |
 | **UX-04** | Core Backend Hardening | Stabilized Docker image stack (Postgres, Redis, RabbitMQ, Java 21) for isolated local production. | 🟢 **COMPLETED & LOCKED** |
-| **UX-05** | Cross-Platform SaaS Mobile Boilerplate | Production-ready Expo SDK 53 mobile app with complete user lifecycle — secure Login, Registration, Password Recovery, SSE multi-modal streaming terminal, and multi-tier Subscription management. 6-screen typed navigation stack with shared Zod validation via `orazaka-shared`. | 🟢 **COMPLETED & LOCKED** |
+| **UX-05** | Cross-Platform SaaS Mobile Client | Expo SDK 53 app talking to the edge (`:8088`) with a bearer JWT kept in the device keychain. Real sign-in/registration/recovery, token-by-token chat over SSE, the Studio marketplace (browse → install → run → artefacts), jobs, connectors and profile. Two navigation stacks chosen by session — signed-out users can no longer reach an app screen. **Still seeded**: `DashboardScreen` (wave visualiser) and `AdminGovernanceScreen` (no endpoint lists interceptor policies — web-admin has none either; the screen says so on its face). | 🟢 **WIRED** (26 tests; bundles on both platforms) |

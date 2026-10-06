@@ -1,6 +1,6 @@
 ---
 title: AI Model Catalog
-description: Models seeded in infra/init.sql.
+description: Models seeded in infra/initdb.
 category: Models
 order: 8
 generated: true

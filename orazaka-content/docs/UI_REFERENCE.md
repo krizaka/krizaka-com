@@ -6,7 +6,7 @@ order: 13
 ---
 # Orazaka UI Reference
 
-The Orazaka platform includes a comprehensive client tier housed under `orazaka-apps/orazaka-ui/` as npm workspaces. The primary web client is a Next.js 16 application designed with cinematic dark-mode and glassmorphism. This document maps out the available interfaces, workflows, and their connections to the backend.
+The Orazaka platform includes a comprehensive client tier housed under `orazaka-apps/ui/` as npm workspaces. The primary web client is a Next.js 16 application designed with cinematic dark-mode and glassmorphism. This document maps out the available interfaces, workflows, and their connections to the backend.
 
 ## 1. Authentication & Identity
 
@@ -78,17 +78,17 @@ The UI interacts with the backend strictly through the Next.js API Routes (`src/
 
 ## Workspace Architecture
 
-All client packages are orchestrated by the workspace root at `orazaka-apps/orazaka-ui/package.json`:
+All client packs are orchestrated by the workspace root at `orazaka-apps/ui/package.json`:
 
 | Package | Location | Purpose | Port |
 |:---|:---|:---|:---:|
-| `orazaka-web-client` | `orazaka-apps/orazaka-ui/orazaka-web-client/` | Client-facing Next.js 16 App Router application | 3000 |
-| `orazaka-web-admin` | `orazaka-apps/orazaka-ui/orazaka-web-admin/` | Isolated SecOps Administration Console | 3001 |
-| `orazaka-mobile-client` | `orazaka-apps/orazaka-ui/orazaka-mobile-client/` | Expo SDK 53 cross-platform mobile app (6-screen SaaS boilerplate) | 8081 |
-| `orazaka-cli` | `orazaka-apps/orazaka-ui/orazaka-cli/` | Developer automation CLI with offline SQLite job queue | — |
-| `orazaka-shared` | `orazaka-apps/orazaka-ui/orazaka-shared/` | Shared TypeScript types + Zod validation schemas | — |
+| `orazaka-web-client` | `orazaka-apps/ui/orazaka-web-client/` | Client-facing Next.js 16 App Router application | 3000 |
+| `orazaka-web-admin` | `orazaka-apps/ui/orazaka-web-admin/` | Isolated SecOps Administration Console | 3001 |
+| `orazaka-mobile-client` | `orazaka-apps/ui/orazaka-mobile-client/` | Expo SDK 53 cross-platform mobile app — 15 screens, wired to the **edge** (`:8088`) with a bearer JWT; auth, chat SSE, Studio, jobs, connectors, profile | 8081 |
+| `orazaka-cli` | `orazaka-apps/ui/orazaka-cli/` | Developer automation CLI with offline SQLite job queue | — |
+| `orazaka-shared` | `orazaka-apps/ui/orazaka-ui-kit/orazaka-shared/` | Shared TypeScript types + Zod validation schemas | — |
 
-> All client packages import types from `orazaka-shared` exclusively. Type duplication across packages is banned.
+> All client packs import types from `orazaka-shared` exclusively. Type duplication across packs is banned.
 
 ---
 

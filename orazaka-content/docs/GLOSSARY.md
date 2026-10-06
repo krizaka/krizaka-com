@@ -30,7 +30,7 @@ order: 16
 
 ## 2. Environment Variables
 
-All variables are defined in the root `.env` file (loaded by `properties-maven-plugin` at the `initialize` phase). Frontend-specific variables are in `orazaka-apps/orazaka-ui/orazaka-web-client/.env.local`.
+All variables are defined in the root `.env` file (loaded by `properties-maven-plugin` at the `initialize` phase). Frontend-specific variables are in `orazaka-apps/ui/orazaka-web-client/.env.local`.
 
 ### Infrastructure & Database
 
@@ -97,7 +97,7 @@ All variables are defined in the root `.env` file (loaded by `properties-maven-p
 | `LOG_DIR` | `var/logs` | Application log output directory |
 | `GATEWAY_LOG` | `var/logs/gateway.log` | Gateway-specific log file path |
 
-### Frontend BFF (Next.js) — `orazaka-apps/orazaka-ui/orazaka-web-client/.env.local`
+### Frontend BFF (Next.js) — `orazaka-apps/ui/orazaka-web-client/.env.local`
 
 | Key | Default | Purpose |
 | :--- | :--- | :--- |
@@ -152,7 +152,7 @@ UI theme accents are resolved from the database (`theme` category in `orazaka_mo
 | ERR-107 | Mapper Isolation | Mapping logic in package-private static `*Mapper` files |
 | ERR-108 | Date Formatting | `date-fns` only. Banned: moment.js, dayjs, native Date methods |
 | ERR-109 | Persistence | Parameterized repos, no raw SQL, catch `DataIntegrityViolationException` |
-| ERR-112 | Segregated Ingress | GraphQL, REST, AMQP in separate sub-packages |
+| ERR-112 | Segregated Ingress | GraphQL, REST, AMQP in separate sub-packs |
 | ERR-116 | Owner Validates | Record owning field validates it |
 | ERR-120 | Clients | Spring `RestClient` or `@HttpExchange` only. Banned: `java.net.http.HttpClient` |
 | ERR-122 | Core Interceptor Purification | Only `PromptContextInterceptor` interface in core interceptor package |

@@ -222,7 +222,7 @@ The **only** difference between the two is the **inbound adapter**. So "the work
 | **orazaka-router** | *Headless Ingress.* Translates transport → `Intention`, enforces security & streaming. No business logic. | HTTP, SSE, GraphQL, JWT | use-cases, AI models |
 | **orazaka-business** | *App Factory.* Resolves an `Intention` to a `UseCase` and orchestrates capability composition. Extensible without touching the rest. | use-cases, personas | transport, providers |
 | **orazaka-core** | *Cognitive Core.* Primitive capabilities (chat/image/audio/video), interceptor pipeline, Provider Mesh, model routing, vector routines. Stateless, web/DB-agnostic. | Spring AI, capabilities | use-cases, web, database |
-| **orazaka-interceptors** | *Cross-cutting filters* of the pipeline (one module, packages by concern). | the `PromptContext` | business orchestration |
+| **orazaka-interceptors** | *Cross-cutting filters* of the pipeline (one module, packs by concern). | the `PromptContext` | business orchestration |
 | **orazaka-tools** | *The hands.* Outbound adapters: MCP, RAG, web search, sandboxed execution. | external systems | business logic |
 | **orazaka-identity** | *Security bounded context.* Users, credentials, RBAC, OAuth2, crypto. | identity | AI, transport |
 | **orazaka-persistence** | *State.* Write models (aggregates) and read models (projections) + cache. | JPA, SQL, Redis | business logic |
@@ -318,7 +318,7 @@ Consequences:
 
 Adding a new product must require **minimal effort**: implement a contract, declare metadata, drop personas. The registry discovers the rest.
 
-### Internal split (packages)
+### Internal split (packs)
 
 ```
 com.orazaka.business
@@ -334,7 +334,7 @@ com.orazaka.business
 - `UseCase` is an **SPI** (inbound interface); each use case implements it.
 - `UseCaseRegistry` **auto-discovers** them (component scan / `ServiceLoader`) and indexes them by `UseCaseDescriptor` (metadata: target capability, personas, policies, routing mode).
 - **Metadata-driven** bootstrap (extends ADR-027): descriptors can come from config or a table.
-- **Adding a product** = (1) a package under `usecases/` implementing `UseCase`, (2) a `UseCaseDescriptor`, (3) markdown personas. Zero change to `core`/`router`.
+- **Adding a product** = (1) a pack under `usecases/` implementing `UseCase`, (2) a `UseCaseDescriptor`, (3) markdown personas. Zero change to `core`/`router`.
 
 Resolution flow (textual): `Intention → UseCaseRegistry → (match descriptor) → target UseCase → composes the core capabilities (chat/image/…)`.
 
@@ -447,7 +447,7 @@ On Java 21, the historical pro-WebFlux argument (non-blocking scalability) falls
 | Propagation | publishes **domain events** → RabbitMQ | reads projections built by the workers |
 | Consistency | strong | eventual (async projections) |
 
-`orazaka-persistence` split: within each bounded context (`app`, `identity`), packages `command/` (write repositories on aggregates), `query/` (read repositories/projections), `cache/`. An AI `Intention` can **fan out**: **read** enrichment (RAG/memory from the read models) + **write** persistence (store the turn, emit the event).
+`orazaka-persistence` split: within each bounded context (`app`, `identity`), packs `command/` (write repositories on aggregates), `query/` (read repositories/projections), `cache/`. An AI `Intention` can **fan out**: **read** enrichment (RAG/memory from the read models) + **write** persistence (store the turn, emit the event).
 
 ---
 
@@ -470,25 +470,35 @@ orazaka/
 ├── docs/                         # auto-generated + curated, consumed by the Krizaka site
 ├── infra/                        # docker-compose (PG/pgvector, Redis, RabbitMQ) + terraform
 │   └── docker-compose.yml        #   (AI runtimes are NOT here → native macOS)
-├── orazaka-apps/
-│   ├── orazaka-router/           # Headless Ingress / Intention Gateway (Spring MVC + virtual threads)
-│   ├── orazaka-ui/
-│   │   ├── orazaka-web-client/
-│   │   ├── orazaka-web-admin/
-│   │   ├── orazaka-mobile-client/
-│   │   ├── orazaka-cli/
-│   │   └── orazaka-shared/
-│   └── orazaka-workers/
-│       ├── orazaka-worker-integrations/
-│       └── orazaka-worker-media/ # native macOS (Python/MLX)
-└── orazaka-framework/
-    ├── orazaka-business/         # App Factory — api / core / usecases / personas / infrastructure
-    ├── orazaka-core/             # Cognitive Core / Provider Mesh
-    ├── orazaka-interceptors/     # SINGLE MODULE — packages: security/token/context/translation/
-    │                             #   enrichment/reformulation/tooling/validation/governance
-    ├── orazaka-identity/         # security bounded context (KEPT)
-    ├── orazaka-persistence/      # command/ + query/ + cache  (CQRS)
-    └── orazaka-tools/            # MCP / RAG / sandbox
+├── orazaka-apps/                 # RUN, never imported — grouped by role/runtime
+│   ├── services/                 # JVM Spring Boot deployables (the Maven reactor)
+│   │   ├── orazaka-edge/         #   transport facade (:8088)
+│   │   ├── orazaka-conversation-service/  # headless ingress, ex-router (:8080)
+│   │   ├── orazaka-job-service/  #   async executor (:8090)
+│   │   ├── orazaka-identity-service/      # auth + profile (owns orazaka-identity + DB)
+│   │   ├── orazaka-automation-service/    # automation context (autonomous)
+│   │   └── orazaka-knowledge-service/     # RAG / knowledge context (autonomous)
+│   ├── workers/                  # native / polyglot async executors
+│   │   └── orazaka-worker-media/ #   native macOS (Python/MLX)
+│   └── ui/
+│       ├── orazaka-web-client/
+│       ├── orazaka-web-admin/
+│       ├── orazaka-mobile-client/
+│       ├── orazaka-cli/
+│       ├── orazaka-shared/
+│       └── orazaka-design-system/
+└── orazaka-libs/                 # IMPORTED, never run — grouped by sharing tier (§2)
+    ├── contracts/                # Tier 1 — pure *-api contracts (semver, zero impl deps)
+    │   ├── orazaka-identity-api/ #   identity contract (domain.model / domain.exception)
+    │   └── orazaka-persistence-app-api/  # persistence contract (inbound ports + DTOs, no JPA)
+    ├── orazaka-core/             # Tier 2 (SDK) — Cognitive Core / Provider Mesh
+    ├── orazaka-interceptors/     # Tier 2 (SDK) — SINGLE MODULE, packs: security/token/context/
+    │                             #   translation/enrichment/reformulation/tooling/validation/governance
+    ├── orazaka-tools/            # Tier 2 (SDK) — MCP / RAG / sandbox
+    ├── orazaka-test-support/     # Tier 2 (SDK) — shared test infra
+    ├── orazaka-business/         # Tier 3 (owned) — App Factory: api / usecases / personas
+    ├── orazaka-identity/         # Tier 3 (owned) — security bounded context
+    └── orazaka-persistence/      # Tier 3 (owned) — command/ + query/ + cache (CQRS)
 ```
 
 ---

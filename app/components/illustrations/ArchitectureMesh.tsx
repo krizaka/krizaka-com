@@ -177,7 +177,7 @@ const NODES: Node[] = [
       fr: "Application client Next.js principale : chat, génération d'images/vidéos et interaction avec l'IA.",
       en: "Main Next.js client application: chat, image/video generation and AI interaction.",
     },
-    path: "orazaka-apps/orazaka-ui/orazaka-web-client",
+    path: "orazaka-apps/ui/orazaka-web-client",
   },
   {
     id: "orazaka-web-admin", stage: 1, icon: SlidersHorizontal,
@@ -187,7 +187,7 @@ const NODES: Node[] = [
       fr: "Console SecOps isolée (port 3001) pour gérer les modèles, le pipeline et la conformité.",
       en: "Isolated SecOps console (port 3001) for model, pipeline and compliance management.",
     },
-    path: "orazaka-apps/orazaka-ui/orazaka-web-admin",
+    path: "orazaka-apps/ui/orazaka-web-admin",
   },
   {
     id: "orazaka-mobile-client", stage: 1, icon: Smartphone,
@@ -197,7 +197,7 @@ const NODES: Node[] = [
       fr: "Application mobile cross-platform (Expo SDK 53) pour l'accès à l'IA en déplacement.",
       en: "Cross-platform mobile app (Expo SDK 53) for on-the-go access to the AI engine.",
     },
-    path: "orazaka-apps/orazaka-ui/orazaka-mobile-client",
+    path: "orazaka-apps/ui/orazaka-mobile-client",
   },
   {
     id: "orazaka-cli", stage: 1, icon: Terminal,
@@ -207,7 +207,7 @@ const NODES: Node[] = [
       fr: "Interface en ligne de commande pour l'automatisation, avec file d'attente locale SQLite.",
       en: "Command-line interface for automation, with a local SQLite job queue.",
     },
-    path: "orazaka-apps/orazaka-ui/orazaka-cli",
+    path: "orazaka-apps/ui/orazaka-cli",
   },
 
   // ── Stage 2 · Entry Gate ──
@@ -219,7 +219,7 @@ const NODES: Node[] = [
       fr: "Réceptionne les requêtes (API REST & SSE) et les achemine vers le moteur d'orchestration.",
       en: "Receives requests (REST & SSE API) and routes them into the orchestration engine.",
     },
-    path: "orazaka-apps/orazaka-router",
+    path: "orazaka-apps/services/orazaka-conversation-service",
   },
 
   // ── Stage 3 · Security & Logic ──
@@ -231,7 +231,7 @@ const NODES: Node[] = [
       fr: "Authentifie les requêtes, valide les permissions (RBAC) et applique les quotas par locataire.",
       en: "Authenticates requests, validates permissions (RBAC) and enforces per-tenant quotas.",
     },
-    path: "orazaka-framework/orazaka-identity",
+    path: "orazaka-apps/services/orazaka-users/orazaka-identity",
   },
   {
     id: "orazaka-business", stage: 3, icon: Workflow,
@@ -241,7 +241,7 @@ const NODES: Node[] = [
       fr: "Règles d'affaires, gabarits de prompts et structuration des cas d'usage cognitifs.",
       en: "Business rules, prompt templates and structuring of cognitive use-cases.",
     },
-    path: "orazaka-framework/orazaka-business",
+    path: "orazaka-libs/orazaka-ai-engine/orazaka-business",
   },
 
   // ── Stage 4 · Cognitive Engine (hub) ──
@@ -253,7 +253,7 @@ const NODES: Node[] = [
       fr: "Le cœur d'Orazaka. Coordonne l'exécution sans état des requêtes IA et orchestre le flux de données.",
       en: "The heart of Orazaka. Coordinates stateless AI request execution and orchestrates the data flow.",
     },
-    path: "orazaka-framework/orazaka-core",
+    path: "orazaka-libs/orazaka-ai-engine/orazaka-core",
   },
 
   // ── Stage 5 · Workers & Pipeline ──
@@ -265,7 +265,7 @@ const NODES: Node[] = [
       fr: "Assemble les 15 intercepteurs (contexte système, mémoire, RAG, sécurité) pour enrichir la requête.",
       en: "Assembles the 15 interceptors (system context, memory, RAG, safety) to enrich requests.",
     },
-    path: "orazaka-framework/orazaka-interceptors",
+    path: "orazaka-libs/orazaka-ai-engine/orazaka-interceptors",
   },
   {
     id: "orazaka-worker-integrations", stage: 5, icon: Boxes,
@@ -275,7 +275,7 @@ const NODES: Node[] = [
       fr: "Service d'arrière-plan asynchrone : files d'intégration et tâches système.",
       en: "Asynchronous background service running integration queues and system tasks.",
     },
-    path: "orazaka-apps/orazaka-workers/orazaka-worker-integrations",
+    path: "orazaka-apps/services/orazaka-automation-service",
   },
   {
     id: "orazaka-worker-media", stage: 5, icon: Film,
@@ -285,7 +285,7 @@ const NODES: Node[] = [
       fr: "Traitement lourd d'images, vidéos et voix, hors du thread d'API principal.",
       en: "Heavy image, video and audio generation, off the main API thread.",
     },
-    path: "orazaka-apps/orazaka-workers/orazaka-worker-media",
+    path: "orazaka-apps/workers/orazaka-worker-media",
   },
   {
     id: "orazaka-tools", stage: 5, icon: Plug,
@@ -295,7 +295,7 @@ const NODES: Node[] = [
       fr: "Connexion sécurisée aux outils externes (bases, APIs) via le Model Context Protocol.",
       en: "Secure connections to external tools (databases, APIs) via the Model Context Protocol.",
     },
-    path: "orazaka-framework/orazaka-tools",
+    path: "orazaka-libs/orazaka-ai-engine/orazaka-tools",
   },
 
   // ── Stage 6 · Persistence ──
@@ -307,7 +307,7 @@ const NODES: Node[] = [
       fr: "Stockage sécurisé et isolé des identités, clés d'accès et politiques RBAC.",
       en: "Secure, isolated store for identities, credentials and RBAC policies.",
     },
-    path: "orazaka-framework/orazaka-persistence/identity",
+    path: "orazaka-apps/services/orazaka-users/orazaka-persistence-identity",
   },
   {
     id: "orazaka-persistence-app", stage: 6, icon: Database,
@@ -317,7 +317,7 @@ const NODES: Node[] = [
       fr: "Base relationnelle et vectorielle (pgvector) : sessions, contextes et données RAG.",
       en: "Relational and vector database (pgvector): sessions, contexts and RAG data.",
     },
-    path: "orazaka-framework/orazaka-persistence/app",
+    path: "orazaka-libs/orazaka-ai-engine/orazaka-persistence-app",
   },
 ];
 

@@ -19,11 +19,11 @@ graph TD
     worker -->|Trigger Outbound Cloud Actions| external[" Cloud APIs (Jira, Slack, WhatsApp)"]
     worker -->|Quartz + Flyway State| db[" PostgreSQL"]
     
-    gateway["orazaka-gateway"] -.->|Reverse Tunnel / SSE| cli["orazaka-cli Agent"]
+    gateway["orazaka-conversation-service"] -.->|Reverse Tunnel / SSE| cli["orazaka-cli Agent"]
     rabbitmq -.->|Proxy Tunnel Payload| gateway
 ```
 
-- **Hexagonal Isolation**: The worker is fully isolated. It has zero dependency on `orazaka-gateway`.
+- **Hexagonal Isolation**: The worker is fully isolated. It has zero dependency on `orazaka-conversation-service`.
 - **Communication Invariant**: Inter-module sync is handled via the RabbitMQ broker.
 - **Zero Inbound Ports**: The worker runs in a secure cluster mesh; the local CLI agent connects **outbound** to the gateway to fetch requests.
 
@@ -38,7 +38,7 @@ Automation scheduling states are persisted in the PostgreSQL database:
 
 ## 3. Connectors & Log Stubs
 The worker does not integrate with actual cloud APIs or Apache Camel routing. Instead:
-- **Connector Dispatcher**: Outbound actions (Jira, Slack, Messenger, WhatsApp) are implemented as log-stubs in `ConnectorDispatcher.java` (`orazaka-apps/orazaka-workers/external-services/`).
+- **Connector Dispatcher**: Outbound actions (Jira, Slack, Messenger, WhatsApp) are implemented as log-stubs in `ConnectorDispatcher.java` (`orazaka-apps/workers/external-services/`).
 - **Execution Logs**: Dispatching acts as a stub simulation logging payload metadata.
 - **CLI Agent Routing**: If the type is `CLI_AGENT`, it correctly serializes and dispatches to RabbitMQ under the `cli.{userId}.dispatch` routing key for remote CLI execution.
 
@@ -49,7 +49,7 @@ The worker does not integrate with actual cloud APIs or Apache Camel routing. In
 ```mermaid
 sequenceDiagram
     participant CLI as orazaka-cli (User)
-    participant GW as orazaka-gateway
+    participant GW as orazaka-conversation-service
     participant ID as Identity Core
     participant MQ as RabbitMQ Exchange
     participant WK as Automation Worker

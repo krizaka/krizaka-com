@@ -16,7 +16,7 @@ order: 3
 
 ```mermaid
 flowchart LR
-    GW[orazaka-gateway] -->|Inbound Port| Facade["AiClient Facade"]
+    GW[orazaka-conversation-service] -->|Inbound Port| Facade["AiClient Facade"]
     Facade --> Pipeline["DynamicPipelineOrchestrator"]
     Pipeline --> Interceptors["orazaka-interceptors (SPI)"]
     Pipeline --> Engines["Model Engines"]
@@ -119,7 +119,7 @@ classDiagram
 
 ## 5. Outbound Ports & Lifecycle Policies
 
-- **Interface-Driven Boundaries**: Outbound ports (e.g. `ChatGeneratorClient`, `VideoGeneratorClient`) live as public interfaces in `domain.ports.outbound`. Implementations reside in infrastructure packages as package-private beans.
+- **Interface-Driven Boundaries**: Outbound ports (e.g. `ChatGeneratorClient`, `VideoGeneratorClient`) live as public interfaces in `domain.ports.outbound`. Implementations reside in infrastructure packs as package-private beans.
 - **Resource Recovery**: Streams and SSE channels must register completion/timeout hooks (`onCompletion`, `.doFinally()`) to dispose subscriptions (`Disposable.dispose()`) and prevent memory leaks.
 - **Hikari Database Connection Eviction**:
   ```yaml

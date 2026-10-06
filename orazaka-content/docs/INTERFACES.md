@@ -162,7 +162,7 @@ On the router side, the purely technical **inbound** (for reference, not a busin
 
 ```java
 // orazaka-router · infrastructure.adapter.rest   [ADAPTER]
-// IntentionController:  HttpRequest → Intention → UseCaseDispatcher
+// IntentController:  HttpRequest → Intention → UseCaseDispatcher
 // JobEventController:   GET /v1/jobs/{id}/events → SseEmitter ← JobEventRelay (§7)
 ```
 
@@ -277,7 +277,7 @@ public interface InterceptorPolicy {                          // [SPI] condition
 }
 ```
 
-Internal packages (one module, boundaries by concern):
+Internal packs (one module, boundaries by concern):
 `security/` `token/` `context/` `translation/` `enrichment/` `reformulation/` `tooling/` `validation/` `governance/`.
 
 ---

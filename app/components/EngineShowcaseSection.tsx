@@ -3,6 +3,7 @@
 import "./engine-showcase.css";
 import { useI18n } from "./I18nProvider";
 import { CognitiveEngineeringCard } from "./CognitiveEngineeringCard";
+import { OrochiaShowcaseCard } from "./OrochiaShowcaseCard";
 import { motion } from "framer-motion";
 
 export default function EngineShowcaseSection() {
@@ -76,6 +77,8 @@ export default function EngineShowcaseSection() {
       {/* ─── Cognitive Engineering card ─── */}
       <CognitiveEngineeringCard />
 
+      {/* ─── Orochia Streaming Platform card ─── */}
+      <OrochiaShowcaseCard />
     </section>
   );
 }
