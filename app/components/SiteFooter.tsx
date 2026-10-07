@@ -25,7 +25,15 @@ export default function SiteFooter() {
     { label: locale === "fr" ? "Démos" : "Demos", href: "/products/orazaka/demos" },
   ];
 
+  const orochiaLinks = [
+    { label: locale === "fr" ? "Présentation" : "Overview", href: "/products/orochia" },
+    { label: locale === "fr" ? "Documentation" : "Docs", href: "/products/orochia/docs" },
+    { label: "API", href: "/products/orochia/docs/api_contracts" },
+  ];
+
   const krizakaLinks = [
+    { label: locale === "fr" ? "Produits" : "Products", href: "/products" },
+    { label: "Open source", href: "/open-source" },
     { label: "Contact", href: "/contact" },
     { label: locale === "fr" ? "Confidentialité" : "Privacy", href: "/privacy" },
     { label: locale === "fr" ? "Conditions" : "Terms", href: "/terms" },
@@ -106,8 +114,8 @@ export default function SiteFooter() {
               }}
             >
               {locale === "fr"
-                ? "Éditeur de solutions d'IA souveraines. Concepteurs d'Orazaka."
-                : "Sovereign AI solutions. Creators of Orazaka."}
+                ? "Studio logiciel open source. Créateurs d'Orazaka et d'Orochia."
+                : "Open-source software studio. Creators of Orazaka and Orochia."}
             </p>
             <a
               href="https://github.com/krizaka"
@@ -135,7 +143,8 @@ export default function SiteFooter() {
             className="footer-nav-cols"
             style={{
               display: "flex",
-              gap: "56px",
+              gap: "44px",
+              flexWrap: "wrap",
             }}
           >
             {/* Orazaka Column */}
@@ -154,6 +163,38 @@ export default function SiteFooter() {
               </span>
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {orazakaLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="footer-link"
+                    style={{
+                      fontSize: "12px",
+                      color: "var(--kz-text-muted)",
+                      textDecoration: "none",
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Orochia Column */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+              <span
+                style={{
+                  fontFamily: "var(--font-mono, monospace)",
+                  fontSize: "9px",
+                  fontWeight: 700,
+                  color: "var(--kz-text-muted)",
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                }}
+              >
+                {locale === "fr" ? "Orochia (Vidéo créateurs)" : "Orochia (Creator video)"}
+              </span>
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                {orochiaLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}

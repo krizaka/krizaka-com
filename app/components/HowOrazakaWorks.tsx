@@ -165,15 +165,16 @@ export default function HowOrazakaWorks() {
   const loc: Loc = locale === "fr" ? "fr" : "en";
   const reduce = useReducedMotion();
 
-  const reveal = (delay = 0) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 18 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-12%" },
-          transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const, delay },
-        };
+  // Same markup on the server and the client (useReducedMotion is unknown during SSR, and
+  // branching on it caused a hydration mismatch); reduced motion only zeroes the transition.
+  const reveal = (delay = 0) => ({
+    initial: { opacity: 0, y: 18 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-12%" },
+    transition: reduce
+      ? { duration: 0 }
+      : { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const, delay },
+  });
 
   return (
     <section
@@ -223,7 +224,7 @@ export default function HowOrazakaWorks() {
           return (
             <motion.div
               key={p.title.en}
-              {...reveal(reduce ? 0 : 0.06 * i)}
+              {...reveal(0.06 * i)}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -322,7 +323,7 @@ export default function HowOrazakaWorks() {
         {STEPS.map((s, i) => {
           const last = i === STEPS.length - 1;
           return (
-            <motion.li key={s.num} {...reveal(reduce ? 0 : 0.04 * Math.min(i, 5))} style={{ display: "flex", gap: "16px" }}>
+            <motion.li key={s.num} {...reveal(0.04 * Math.min(i, 5))} style={{ display: "flex", gap: "16px" }}>
               {/* spine + badge */}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
                 <span
@@ -482,7 +483,7 @@ export default function HowOrazakaWorks() {
           size={18}
           strokeWidth={2.2}
           aria-hidden="true"
-          className={reduce ? undefined : "how-bounce"}
+          className="how-bounce"
           style={{ color: "var(--kz-text-muted)", margin: "16px 0 0" }}
         />
       </motion.div>

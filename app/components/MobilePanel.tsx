@@ -91,7 +91,11 @@ export function MobilePanel({
           borderLeft: "1px solid var(--kz-border-subtle)",
           boxShadow: "-8px 0 32px hsla(0, 0%, 0%, 0.3)",
           transform: isOpen ? "translateX(0)" : "translateX(100%)",
-          transition: "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)",
+          // Closed: hidden after the slide-out, so neither its shadow nor its links leak on screen / to Tab.
+          visibility: isOpen ? "visible" : "hidden",
+          transition: isOpen
+            ? "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)"
+            : "transform 300ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 300ms",
           display: "flex",
           flexDirection: "column",
           overflowY: "auto",
@@ -209,6 +213,9 @@ export function MobilePanel({
             { href: "/products/orazaka/demos", label: t.nav.demos, active: pathname === "/products/orazaka/demos", icon: <Play size={16} strokeWidth={1.5} /> },
             { href: "/products/orazaka", label: t.nav.docs, icon: <BookOpen size={16} strokeWidth={1.5} />, active: isDocsActive },
             { href: "/products/orazaka/packages", label: t.nav.packages, active: pathname === "/products/orazaka/packages", icon: <Layers size={16} strokeWidth={1.5} /> },
+            { href: "/products/orochia", label: "Orochia", active: pathname === "/products/orochia", icon: <Play size={16} strokeWidth={1.5} /> },
+            { href: "/products/orochia/docs", label: locale === "fr" ? "Docs Orochia" : "Orochia docs", active: pathname.startsWith("/products/orochia/docs"), icon: <BookOpen size={16} strokeWidth={1.5} /> },
+            { href: "/open-source", label: "Open source", active: pathname === "/open-source", icon: <Layers size={16} strokeWidth={1.5} /> },
           ].map((link) => (
             <Link
               key={link.href}

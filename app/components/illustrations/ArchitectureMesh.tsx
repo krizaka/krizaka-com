@@ -13,7 +13,9 @@
    six stage colors are semantic mid-tone accents that read on dark & light.
    ───────────────────────────────────────────────────────────────────────── */
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
+
+const noopSubscribe = () => () => {};
 import { motion, useReducedMotion } from "framer-motion";
 import {
   Search,
@@ -365,10 +367,10 @@ function NodeCard({
       onMouseLeave={() => onHover(null)}
       aria-label={node.label[locale]}
       aria-expanded={expandable ? expanded : undefined}
-      initial={reduce ? false : { opacity: 0, y: 10 }}
-      whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-6%" }}
-      transition={{ duration: 0.4, delay: reduce ? 0 : Math.min(index, 6) * 0.04, ease: [0.16, 1, 0.3, 1] }}
+      transition={reduce ? { duration: 0 } : { duration: 0.4, delay: Math.min(index, 6) * 0.04, ease: [0.16, 1, 0.3, 1] }}
       style={{
         position: "relative",
         display: "block",
@@ -647,7 +649,11 @@ export default function ArchitectureMesh({
 }) {
   const { locale } = useI18n();
   const loc = (locale === "fr" ? "fr" : "en") as Loc;
-  const reduce = useReducedMotion();
+  // The motion preference is unknown during SSR: honour it only after mount, so the first client
+  // render matches the server's HTML (React hydration error #418 otherwise).
+  const prefersReduced = useReducedMotion();
+  const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
+  const reduce = mounted && prefersReduced;
 
   void modules;
   void dependencies;

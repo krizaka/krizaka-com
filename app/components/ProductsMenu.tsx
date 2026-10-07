@@ -308,7 +308,7 @@ export function ProductsMenu() {
                         fontWeight: 600,
                       }}
                     >
-                      v1.0 Live
+                      Open source
                     </span>
                   </div>
 
@@ -332,10 +332,36 @@ export function ProductsMenu() {
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: "12px", fontWeight: 600, color: isOrochiaActive ? "var(--kz-text-primary)" : "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
-                        {locale === "fr" ? "Plateforme Streaming 4K" : "4K Streaming & Creator Platform"}
+                        {locale === "fr" ? "Plateforme vidéo créateurs" : "Creator video platform"}
                       </div>
                       <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {locale === "fr" ? "Bunny Anycast, 2257 Vault & Monétisation" : "Bunny Anycast, 2257 Vault & Monetization"}
+                        {locale === "fr" ? "Streaming, paywalls, conformité 18+" : "Streaming, paywalls, 18+ compliance"}
+                      </div>
+                    </div>
+                  </Link>
+                  <Link href="/products/orochia/docs" role="menuitem" className="nav-sub-link" style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 10px", borderRadius: "8px", textDecoration: "none" }}>
+                    <div style={{ color: "var(--kz-text-secondary)", display: "flex", alignItems: "center", flexShrink: 0 }}>
+                      <BookOpen size={13} strokeWidth={1.8} />
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
+                        {locale === "fr" ? "Documentation Orochia" : "Orochia docs"}
+                      </div>
+                      <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)" }}>
+                        {locale === "fr" ? "Architecture, API, déploiement" : "Architecture, API, deployment"}
+                      </div>
+                    </div>
+                  </Link>
+                  <Link href="/open-source" role="menuitem" className="nav-sub-link" style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 10px", borderRadius: "8px", textDecoration: "none" }}>
+                    <div style={{ color: "var(--kz-text-secondary)", display: "flex", alignItems: "center", flexShrink: 0 }}>
+                      <Layers size={13} strokeWidth={1.8} />
+                    </div>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
+                        {locale === "fr" ? "Open source" : "Open source"}
+                      </div>
+                      <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)" }}>
+                        {locale === "fr" ? "Tous les dépôts Krizaka" : "Every Krizaka repository"}
                       </div>
                     </div>
                   </Link>
