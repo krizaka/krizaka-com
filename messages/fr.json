@@ -807,7 +807,10 @@
       "flockTitle": "Ceux qui veillent.",
       "flockLead": "Nos mascottes ne sont pas un décor. Chacune porte une chose sur laquelle nous ne transigeons pas.",
       "ctaProducts": "Découvrir les produits",
-      "ctaContact": "Nous écrire"
+      "ctaContact": "Nous écrire",
+      "arcade": {
+        "continue": "Continuer ?"
+      }
     },
     "orochia": {
       "arch": {

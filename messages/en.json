@@ -807,7 +807,10 @@
       "flockTitle": "The ones keeping watch.",
       "flockLead": "Our mascots aren't decoration. Each one carries something we don't compromise on.",
       "ctaProducts": "Explore the products",
-      "ctaContact": "Write to us"
+      "ctaContact": "Write to us",
+      "arcade": {
+        "continue": "Continue?"
+      }
     },
     "orochia": {
       "arch": {

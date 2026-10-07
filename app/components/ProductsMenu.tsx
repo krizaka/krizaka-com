@@ -156,6 +156,9 @@ export function ProductsMenu() {
       <Link href="/open-source" className={`kz-dd-trigger${pathname === "/open-source" ? " is-active" : ""}`}>
         {m.openSource}
       </Link>
+      <Link href="/story" className={`kz-dd-trigger${pathname === "/story" ? " is-active" : ""}`}>
+        {t.site.nav.company.story.label}
+      </Link>
 
       <style>{`
         .kz-dd { position: relative; }
