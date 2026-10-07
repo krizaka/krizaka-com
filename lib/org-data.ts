@@ -61,6 +61,8 @@ export interface Product {
   summary: L;
   points: L[];
   stack: string;
+  /** Screen recording of the product: `${src}.webm|.mp4|.jpg` under /public. */
+  media: { src: string; aspect: string; frame: string };
 }
 
 export const PRODUCTS: Product[] = [
@@ -82,6 +84,7 @@ export const PRODUCTS: Product[] = [
       { fr: "Composants réutilisables : utilisateurs, notifications, facturation", en: "Reusable components: users, notifications, billing" },
     ],
     stack: "Java 21 · Spring Boot 4 · Spring AI 2 · Next.js · Ollama",
+    media: { src: "/assets/orazaka/tour/chat", aspect: "1000 / 497", frame: "orazaka · web client" },
   },
   {
     id: "orochia",
@@ -101,6 +104,7 @@ export const PRODUCTS: Product[] = [
       { fr: "Conformité 18+ et registres 2257 intégrés", en: "Built-in 18+ compliance and 2257 records" },
     ],
     stack: "Next.js 14 · PostgreSQL · Drizzle · Bunny Stream",
+    media: { src: "/assets/orochia/tour/feed", aspect: "16 / 10", frame: "orochia · web" },
   },
 ];
 

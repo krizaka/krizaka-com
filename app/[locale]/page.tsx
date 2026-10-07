@@ -6,7 +6,7 @@ import OrgHero from "../components/home/OrgHero";
 import ProductsShowcase from "../components/home/ProductsShowcase";
 import ExpertiseSection from "../components/home/ExpertiseSection";
 import OpenSourceSection from "../components/home/OpenSourceSection";
-import EngineShowcaseSection from "../components/EngineShowcaseSection";
+import ContactCta from "../components/home/ContactCta";
 import SiteFooter from "../components/SiteFooter";
 
 interface Props {
@@ -42,7 +42,7 @@ export default function Home() {
       <ProductsShowcase />
       <ExpertiseSection />
       <OpenSourceSection orazakaRepos={orazaka} orochiaRepos={orochia} />
-      <EngineShowcaseSection />
+      <ContactCta />
       <SiteFooter />
     </main>
   );

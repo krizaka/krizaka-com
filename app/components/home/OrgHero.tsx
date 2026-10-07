@@ -7,6 +7,7 @@ import { ArrowRight, GitBranch } from "lucide-react";
 import { useI18n } from "../I18nProvider";
 import KrizakaLandscape from "../illustrations/KrizakaLandscape";
 import { PRODUCTS } from "@/lib/org-data";
+import ProductLogo from "../ProductLogo";
 import { GITHUB_ORG_URL } from "@/lib/site";
 
 export default function OrgHero({ repositoryCount }: { repositoryCount: number }) {
@@ -43,7 +44,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
         <div className="org-hero-products">
           {PRODUCTS.map((p) => (
             <Link key={p.id} href={p.href} className="org-hero-product">
-              <span className="org-hero-dot" style={{ background: p.accent }} aria-hidden />
+              <ProductLogo id={p.id} size={34} />
               <span>
                 <strong>{p.name}</strong>
                 <span className="org-hero-product-tag">{p.tagline[loc]}</span>
@@ -64,12 +65,14 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
       </div>
 
       <style>{`
-        .org-hero { position: relative; overflow: hidden; padding: clamp(120px, 15vw, 176px) 20px clamp(200px, 24vw, 260px); }
+        .org-hero { position: relative; overflow: hidden; padding: clamp(120px, 15vw, 168px) 20px clamp(280px, 30vw, 400px); }
         .org-hero-glow { position:absolute; top:-12%; left:50%; transform:translateX(-50%); width:min(820px,95vw); height:420px;
-          background: radial-gradient(60% 60% at 50% 30%, color-mix(in srgb, var(--kz-accent) 16%, transparent) 0%, transparent 70%); pointer-events:none; }
-        .org-hero-landscape { position:absolute; inset:auto 0 0 0; height:clamp(160px, 20vw, 220px); opacity:.55; pointer-events:none;
-          -webkit-mask-image: linear-gradient(to bottom, transparent, black 40%); mask-image: linear-gradient(to bottom, transparent, black 40%); }
-        .org-hero-inner { position:relative; z-index:1; max-width:860px; margin:0 auto; text-align:center; }
+          background: radial-gradient(ellipse at center, var(--kz-accent-soft) 0%, transparent 66%); pointer-events:none; }
+        /* The signature landscape at its original scale (mascots whole), fading only at its top edge. */
+        .org-hero-landscape { position:absolute; inset:auto 0 0 0; height:300px; opacity:.6; pointer-events:none;
+          -webkit-mask-image: linear-gradient(to top, black 60%, transparent); mask-image: linear-gradient(to top, black 60%, transparent); }
+        @media (min-width: 768px) { .org-hero-landscape { height:420px; } }
+        .org-hero-inner { position:relative; z-index:1; max-width:880px; margin:0 auto; text-align:center; }
         .org-hero-badge { display:inline-block; padding:6px 12px; border-radius:999px; font-family:var(--font-mono); font-size:11px; font-weight:600;
           letter-spacing:.08em; text-transform:uppercase; color:var(--kz-accent); background:var(--kz-accent-soft);
           border:1px solid color-mix(in srgb, var(--kz-accent) 25%, transparent); }
