@@ -45,6 +45,7 @@ function parseNodeDef(str: string): { id: string; label: string } {
 
   // Strip outer brackets layer by layer
   const bracketPairs = [
+    [/^\[\(/, /\)\]$/], // cylinder: A[(Database)]
     [/^\[+"?/, /"?\]+$/],
     [/^\(+/, /\)+$/],
     [/^\{+/, /\}+$/],
