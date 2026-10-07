@@ -1,38 +1,37 @@
-# Krizaka — Orazaka
+# Krizaka
 
-> Krizaka is a Québec startup building Orazaka, an open-source, sovereign
-> **AI orchestration engine**. It runs multimodal inference (chat, image, video,
-> voice) on a hexagonal architecture (Java 21, Spring Boot 4, Spring AI 2)
-> enforced by ArchUnit, with a cognitive interceptor pipeline and Model Context
-> Protocol (MCP) support. Everything runs on your own infrastructure — Law 25,
-> GDPR and PIPEDA compliant by design: data never leaves your network.
+> Krizaka is a Montréal (Québec) software studio building open-source,
+> production-ready platforms where compliance, security and modularity are
+> enforced in code. Two products, every repository public under Apache-2.0
+> at https://github.com/krizaka.
 
-## What it is
+## Products
 
-Orazaka is an AI orchestration engine: it takes a single request and routes it
-through a deterministic or agentic pipeline of interceptors (security, RBAC,
-context, RAG, tooling/MCP, validation, governance) to the optimal local model,
-then returns the result. Self-hosted, open source, free.
-
-## Editions
-
-- Orazaka Community — the complete open-source engine, self-hosted, free forever.
-- Packages — composable interceptor bundles that turn the engine into tailored
-  business solutions (agencies, sales, legal, support, real estate, healthcare).
+- Orazaka — sovereign, on-premise AI orchestration engine (chat, RAG, agents,
+  image, audio, video) on a hexagonal architecture (Java 21, Spring Boot 4,
+  Spring AI 2) enforced by ArchUnit. Law 25 / GDPR compliant by design: data
+  never leaves your network. Split into one repository per component so other
+  applications reuse users, notifications, billing, the edge and the UI kit.
+- Orochia — open-source video platform for independent creators (adult-friendly,
+  18+): direct-to-CDN streaming with 5-minute signed URLs, server-side access
+  control, gateway-confirmed payments settled exactly once, double-entry ledger,
+  18 U.S.C. § 2257 creator verification and persisted content reports.
 
 ## Key pages
 
-- Product & docs: https://krizaka.com/en/products/orazaka
-- Getting started (3 commands): https://krizaka.com/en/get-started
-- Cognitive engineering & interceptor pipeline: https://krizaka.com/en/products/orazaka/ingenierie-cognitive
-- Architecture (interactive): https://krizaka.com/en/products/orazaka/architecture
-- Packages & solutions: https://krizaka.com/en/products/orazaka/packages
-- Use cases: https://krizaka.com/en/products/orazaka/usecases
-- Demos (real outputs): https://krizaka.com/en/products/orazaka/demos
-- Editions: https://krizaka.com/en/editions
+- Home: https://krizaka.com/en
+- Products: https://krizaka.com/en/products
+- Open source (every repository): https://krizaka.com/en/open-source
+- Orazaka: https://krizaka.com/en/products/orazaka
+- Orazaka docs: https://krizaka.com/en/products/orazaka/getting-started/101
+- Orazaka repositories map: https://krizaka.com/en/products/orazaka/architecture/repositories
+- Orochia: https://krizaka.com/en/products/orochia
+- Orochia docs: https://krizaka.com/en/products/orochia/docs
 
 ## Source
 
-- GitHub: https://github.com/krizaka/orazaka
+- Orazaka workspace: https://github.com/krizaka/orazaka
+- Orochia: https://github.com/krizaka/orochia
+- Organisation: https://github.com/krizaka
 
 Languages: English and French (Québec). Detailed version: https://krizaka.com/llms-full.txt

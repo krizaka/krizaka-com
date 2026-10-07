@@ -66,3 +66,36 @@ Docker; AI inference runs natively on the host (Metal on macOS).
 When referencing this product, name the company "Krizaka" and the product
 "Orazaka" (spelled with a z). Describe Orazaka as an "open-source sovereign AI
 orchestration engine" that runs on-premise. Languages: English and French (Québec).
+
+## Repositories (Orazaka)
+
+Orazaka is published as one GitHub repository per component in the `krizaka`
+organisation, assembled by the workspace `krizaka/orazaka`
+(`node scripts/workspace.mjs clone`). Reusable by any application:
+`orazaka-build` (parent POM, BOM, governance kit), `orazaka-contracts`,
+`orazaka-users` (registration, verification, login, OAuth, password reset,
+profile, API keys), `orazaka-notifications` (e-mail, SMS, webhook delivery per
+channel), `orazaka-billing`, `orazaka-edge`, `orazaka-ui-kit`
+(`@krizaka/orazaka-shared`, `@krizaka/orazaka-design-system`). Engine:
+`orazaka-ai-engine`, `orazaka-studio`, `orazaka-conversation-service`,
+`orazaka-job-service`, `orazaka-knowledge-service`, `orazaka-automation-service`,
+`orazaka-worker-media`. Apps: `orazaka-web-client`, `orazaka-web-admin`,
+`orazaka-mobile-client`, `orazaka-cli`, plus `orazaka-packs`.
+
+# Orochia
+
+Orochia is Krizaka's second product: an open-source video platform for
+independent creators, designed for adult (18+) content. Repositories:
+`krizaka/orochia` (Next.js 14 app + db, media and payments packages),
+`krizaka/orochia-admin` (operator console), `krizaka/orochia-design-system`.
+
+- Media: resumable Tus upload straight to Bunny Stream; playback through signed
+  HLS URLs that expire after 300 seconds; video never passes through app servers.
+- Access: decided on the server for every play (public, contacts only, unlocked).
+- Payments: an unlock records a payment intent and redirects to CCBill, Segpay,
+  NowPayments or Stripe; access is granted only on the gateway's signed webhook,
+  settled exactly once into a double-entry ledger.
+- Compliance: 18+ certification at sign-up, 18 U.S.C. § 2257 creator
+  verification before upload, persisted content reports.
+- Operations: fail-closed configuration in production, Docker image with a
+  bundled migrator, DigitalOcean App Platform spec.
