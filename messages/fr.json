@@ -634,14 +634,8 @@
         "cta": "Lire l'histoire"
       },
       "contact": {
-        "eyebrow": "Contact",
         "title": "Parlez-nous de ce que vous construisez.",
-        "body": "Une contrainte de conformité, une plateforme à faire tenir, une idée qui a besoin d'un socle. Écrivez-nous simplement : c'est un ingénieur qui vous répond.",
-        "points": [
-          "Réponse sous deux jours ouvrables",
-          "Montréal · Loi 25 · RGPD",
-          "Code ouvert, sans enfermement"
-        ]
+        "cta": "Nous contacter"
       }
     },
     "footer": {
@@ -655,21 +649,50 @@
       "madeIn": "Fait à Montréal · Apache-2.0"
     },
     "contactForm": {
+      "stepTopic": "Qu'est-ce qui vous amène ?",
+      "stepDetails": "Comment vous joindre ?",
+      "stepMessage": "Dites-nous en plus",
       "name": "Nom",
       "email": "Courriel",
-      "company": "Organisation (facultatif)",
-      "topic": "Sujet",
-      "message": "Votre message",
-      "placeholder": "Votre contexte, votre besoin, vos délais…",
+      "company": "Organisation",
+      "optional": "facultatif",
       "topics": {
-        "orazaka": "Orazaka — IA souveraine",
-        "orochia": "Orochia — plateforme vidéo",
-        "partnership": "Partenariat / intégration",
-        "other": "Autre"
+        "orazaka": "Orazaka",
+        "orochia": "Orochia",
+        "partnership": "Partenariat",
+        "other": "Autre chose"
       },
+      "topicHints": {
+        "orazaka": "Déployer ou auditer la passerelle d'IA souveraine",
+        "orochia": "Lancer ou intégrer la plateforme vidéo pour créateurs",
+        "partnership": "Intégration, revente ou partenariat de recherche",
+        "other": "Presse, carrières, une question pour l'équipe"
+      },
+      "timeline": "Pour quand ?",
+      "timelines": {
+        "now": "Dès que possible",
+        "quarter": "Ce trimestre",
+        "exploring": "Simple exploration"
+      },
+      "message": "Votre message",
+      "placeholders": {
+        "orazaka": "Votre infrastructure (infonuagique, sur site, isolée), les modèles utilisés, vos contraintes de conformité…",
+        "orochia": "Vos créateurs et votre public, les moyens de paiement voulus, votre date de lancement…",
+        "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
+        "other": "Comment pouvons-nous vous aider ?"
+      },
+      "counter": "{count} / {max}",
+      "shortcut": "⌘ / Ctrl + Entrée pour envoyer",
       "send": "Envoyer le message",
       "sending": "Envoi…",
-      "sent": "Message envoyé. Nous vous répondons sous deux jours ouvrables.",
+      "sentTitle": "Message envoyé",
+      "sentBody": "Merci, {name}. Nous répondons à {email} sous deux jours ouvrables.",
+      "another": "Envoyer un autre message",
+      "fieldErrors": {
+        "name": "Indiquez votre nom (2 caractères au moins).",
+        "email": "Indiquez un courriel valide, nous y répondrons.",
+        "message": "Quelques mots de plus, s'il vous plaît — 10 caractères au moins."
+      },
       "errors": {
         "invalid": "Vérifiez le champ indiqué.",
         "rate_limited": "Trop de messages envoyés. Réessayez dans quelques minutes.",
@@ -1249,7 +1272,27 @@
       "lead": "Déploiement d'Orazaka ou d'Orochia, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
       "publicTitle": "Ou échangeons en public",
       "publicLead": "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub.",
-      "whichProduct": "pour quel produit ?"
+      "whichProduct": "pour quel produit ?",
+      "nextTitle": "La suite",
+      "nextSteps": [
+        {
+          "title": "Nous lisons chaque message",
+          "text": "Un membre de l'équipe d'ingénierie — pas un robot — le lit et répond sous deux jours ouvrables."
+        },
+        {
+          "title": "Un appel de 30 minutes",
+          "text": "Nous faisons le tour de votre contexte et de vos contraintes, en français ou en anglais."
+        },
+        {
+          "title": "Une proposition claire",
+          "text": "Périmètre, architecture et échéancier par écrit. Le code reste open source dans tous les cas."
+        }
+      ],
+      "facts": [
+        "Réponse sous 2 jours ouvrables",
+        "Français · English",
+        "Montréal, Québec"
+      ]
     },
     "search": {
       "placeholder": "Rechercher une page, la documentation...",

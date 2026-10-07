@@ -634,14 +634,8 @@
         "cta": "Read the story"
       },
       "contact": {
-        "eyebrow": "Contact",
         "title": "Tell us what you're building.",
-        "body": "A compliance constraint, a platform that has to hold, an idea that needs solid ground. Just write to us — an engineer reads it and replies.",
-        "points": [
-          "Reply within two business days",
-          "Montréal · Law 25 · GDPR",
-          "Open code, no lock-in"
-        ]
+        "cta": "Contact us"
       }
     },
     "footer": {
@@ -655,21 +649,50 @@
       "madeIn": "Made in Montréal · Apache-2.0"
     },
     "contactForm": {
+      "stepTopic": "What brings you here?",
+      "stepDetails": "How can we reach you?",
+      "stepMessage": "Tell us more",
       "name": "Name",
       "email": "Email",
-      "company": "Organisation (optional)",
-      "topic": "Topic",
-      "message": "Your message",
-      "placeholder": "Your context, what you need, your timeline…",
+      "company": "Organisation",
+      "optional": "optional",
       "topics": {
-        "orazaka": "Orazaka — sovereign AI",
-        "orochia": "Orochia — video platform",
-        "partnership": "Partnership / integration",
-        "other": "Other"
+        "orazaka": "Orazaka",
+        "orochia": "Orochia",
+        "partnership": "Partnership",
+        "other": "Something else"
       },
+      "topicHints": {
+        "orazaka": "Deploy or audit the sovereign-AI gateway",
+        "orochia": "Launch or integrate the creator video platform",
+        "partnership": "Integration, reseller or research partnership",
+        "other": "Press, careers, a question for the team"
+      },
+      "timeline": "When do you need it?",
+      "timelines": {
+        "now": "As soon as possible",
+        "quarter": "This quarter",
+        "exploring": "Just exploring"
+      },
+      "message": "Your message",
+      "placeholders": {
+        "orazaka": "Your infrastructure (cloud, on-prem, air-gapped), the models you run, your compliance constraints…",
+        "orochia": "Your creators and audience, the payment methods you need, your launch date…",
+        "partnership": "Who you are, what you would build together, the markets you serve…",
+        "other": "How can we help?"
+      },
+      "counter": "{count} / {max}",
+      "shortcut": "⌘ / Ctrl + Enter to send",
       "send": "Send message",
       "sending": "Sending…",
-      "sent": "Message sent. We reply within two business days.",
+      "sentTitle": "Message sent",
+      "sentBody": "Thank you, {name}. We reply to {email} within two business days.",
+      "another": "Send another message",
+      "fieldErrors": {
+        "name": "Enter your name (2 characters at least).",
+        "email": "Enter a valid email address, we reply there.",
+        "message": "A few more words please — 10 characters at least."
+      },
       "errors": {
         "invalid": "Please check the highlighted field.",
         "rate_limited": "Too many messages sent. Please try again in a few minutes.",
@@ -1249,7 +1272,27 @@
       "lead": "Deploying Orazaka or Orochia, a custom integration, a sovereign-AI audit or a partnership: write to the team, we reply within two business days.",
       "publicTitle": "Or talk in public",
       "publicLead": "Questions, bugs and ideas about our open-source repositories are discussed on GitHub.",
-      "whichProduct": "for which product?"
+      "whichProduct": "for which product?",
+      "nextTitle": "What happens next",
+      "nextSteps": [
+        {
+          "title": "We read every message",
+          "text": "A member of the engineering team — not a bot — reads it and replies within two business days."
+        },
+        {
+          "title": "A 30-minute call",
+          "text": "We go through your context and constraints, in English or French."
+        },
+        {
+          "title": "A clear proposal",
+          "text": "Scope, architecture and timeline in writing. The code stays open source either way."
+        }
+      ],
+      "facts": [
+        "Reply within 2 business days",
+        "English · Français",
+        "Montréal, Québec"
+      ]
     },
     "search": {
       "placeholder": "Search pages and documentation...",

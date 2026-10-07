@@ -10,11 +10,16 @@ const CONTACT_LOCALES = ["en", "fr"] as const;
 export const CONTACT_TOPICS = ["orazaka", "orochia", "partnership", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
+/** When the sender needs it (optional): qualifies the request for the team. */
+export const CONTACT_TIMELINES = ["now", "quarter", "exploring"] as const;
+export type ContactTimeline = (typeof CONTACT_TIMELINES)[number];
+
 export interface ContactMessage {
   name: string;
   email: string;
   company: string;
   topic: ContactTopic;
+  timeline: ContactTimeline | null;
   message: string;
   locale: "fr" | "en";
 }
@@ -37,8 +42,10 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
   if (!EMAIL.test(email) || email.length > 200) return { ok: false, field: "email" };
   if (company.length > 160) return { ok: false, field: "company" };
   if (!topic) return { ok: false, field: "topic" };
+  const timeline = CONTACT_TIMELINES.includes(b.timeline as ContactTimeline) ? (b.timeline as ContactTimeline) : null;
+  if (b.timeline !== undefined && b.timeline !== null && b.timeline !== "" && !timeline) return { ok: false, field: "timeline" };
   if (message.length < 10 || message.length > 5000) return { ok: false, field: "message" };
-  return { ok: true, value: { name, email, company, topic, message, locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en" } };
+  return { ok: true, value: { name, email, company, topic, timeline, message, locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en" } };
 }
 
 const TOPIC_LABEL: Record<ContactTopic, string> = {
@@ -46,6 +53,12 @@ const TOPIC_LABEL: Record<ContactTopic, string> = {
   orochia: "Orochia",
   partnership: "Partnership",
   other: "Other",
+};
+
+const TIMELINE_LABEL: Record<ContactTimeline, string> = {
+  now: "As soon as possible",
+  quarter: "This quarter",
+  exploring: "Exploring",
 };
 
 const escapeHtml = (s: string) =>
@@ -61,7 +74,7 @@ export function contactChannels(env: NodeJS.ProcessEnv = process.env) {
 /** Delivers to every configured channel. Returns how many accepted it. */
 export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv = process.env): Promise<number> {
   const subject = `[krizaka.com] ${TOPIC_LABEL[m.topic]} — ${m.name}${m.company ? ` (${m.company})` : ""}`;
-  const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${TOPIC_LABEL[m.topic]} · ${m.locale}`;
+  const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${TOPIC_LABEL[m.topic]}${m.timeline ? ` · ${TIMELINE_LABEL[m.timeline]}` : ""} · ${m.locale}`;
   const jobs: Promise<boolean>[] = [];
 
   if (env.MAILGUN_API_KEY && env.MAILGUN_DOMAIN && env.CONTACT_TO_EMAIL) {
@@ -77,6 +90,7 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
       ["E-mail", m.email],
       ["Company", m.company || "—"],
       ["Topic", TOPIC_LABEL[m.topic]],
+      ["Timeline", m.timeline ? TIMELINE_LABEL[m.timeline] : "—"],
       ["Language", m.locale],
       ["Message", m.message],
     ];

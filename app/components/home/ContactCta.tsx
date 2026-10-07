@@ -1,35 +1,32 @@
 "use client";
 
-/* Closing call to action — the same on the home page and every product page: write to the team. */
+/* Closing call to action — the same on the home page and every product page: one line and a link to
+   the contact page, where the form lives (pre-set on the page's product). */
 
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { useI18n } from "../I18nProvider";
-import ContactForm from "../ContactForm";
 import type { ContactTopic } from "@/lib/contact";
 
-export default function ContactCta({ topic = "other" }: { topic?: ContactTopic }) {
+export default function ContactCta({ topic }: { topic?: ContactTopic }) {
   const { t } = useI18n();
   const c = t.site.home.contact;
   return (
     <section id="contact" className="kz-section kz-cta">
-      <div className="kz-cta-copy">
-        <p className="kz-eyebrow">{c.eyebrow}</p>
-        <h2 className="kz-h2">{c.title}</h2>
-        <p>
-          {c.body}
-        </p>
-        <ul>
-          {c.points.map((point) => (
-            <li key={point}>{point}</li>
-          ))}
-        </ul>
-      </div>
-      <ContactForm defaultTopic={topic} />
+      <h2 className="kz-h2">{c.title}</h2>
+      <Link href={topic ? `/contact?topic=${topic}` : "/contact"} className="kz-cta-link btn-sheen">
+        {c.cta} <ArrowRight size={16} aria-hidden />
+      </Link>
       <style>{`
-        .kz-cta { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(24px, 4vw, 48px); align-items: start; }
-        .kz-cta-copy p:not(.kz-eyebrow) { font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); margin: 0; }
-        .kz-cta-copy ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-        .kz-cta-copy li { position: relative; padding-left: 18px; font-size: 14px; color: var(--kz-text-secondary); }
-        .kz-cta-copy li::before { content: ""; position: absolute; left: 0; top: .55em; width: 7px; height: 7px; border-radius: 50%; background: var(--kz-accent); }
+        .kz-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 32px;
+          border-top: 1px solid var(--kz-border-subtle); }
+        .kz-cta .kz-h2 { margin: 0; }
+        .kz-cta-link { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 12px; font-size: 15px; font-weight: 700;
+          text-decoration: none; background: var(--kz-accent); color: var(--kz-on-accent); transition: transform 150ms ease; }
+        .kz-cta-link:hover { transform: translateY(-1px); }
+        .kz-cta-link svg { transition: transform 150ms ease; }
+        .kz-cta-link:hover svg { transform: translateX(3px); }
+        @media (prefers-reduced-motion: reduce) { .kz-cta-link, .kz-cta-link svg { transition: none; } }
       `}</style>
     </section>
   );

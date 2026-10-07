@@ -148,7 +148,7 @@ export default function ContactClient() {
 
       <div
         style={{
-          maxWidth: "720px",
+          maxWidth: "1120px",
           margin: "0 auto",
           padding: "140px 24px 80px",
         }}
@@ -192,16 +192,40 @@ export default function ContactClient() {
               fontSize: "15px",
               color: "var(--kz-text-secondary)",
               lineHeight: 1.7,
-              maxWidth: "560px",
+              maxWidth: "620px",
             }}
           >
             {t.site.contactPage.lead}
           </p>
         </motion.div>
 
-        {/* ─── Private message to the team ─── */}
-        <div style={{ marginBottom: "56px" }}>
+        {/* ─── Private message to the team, and what happens after ─── */}
+        <div className="contact-main">
           <ContactForm />
+          <aside className="contact-next" aria-labelledby="contact-next-title">
+            <h2 id="contact-next-title">{t.site.contactPage.nextTitle}</h2>
+            <ol>
+              {t.site.contactPage.nextSteps.map((step, i) => (
+                <motion.li
+                  key={step.title}
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 + i * 0.1 }}
+                >
+                  <span className="contact-next-num">{i + 1}</span>
+                  <div>
+                    <strong>{step.title}</strong>
+                    <p>{step.text}</p>
+                  </div>
+                </motion.li>
+              ))}
+            </ol>
+            <ul className="contact-facts">
+              {t.site.contactPage.facts.map((fact) => (
+                <li key={fact}>{fact}</li>
+              ))}
+            </ul>
+          </aside>
         </div>
 
         <h2
@@ -350,6 +374,24 @@ export default function ContactClient() {
           text-decoration: none; color: var(--kz-text-primary); background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle);
           transition: border-color 150ms ease, transform 150ms ease; }
         .contact-product:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+        .contact-main { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: clamp(24px, 4vw, 48px);
+          align-items: start; margin-bottom: 72px; }
+        .contact-next { position: sticky; top: 110px; padding: 8px 0; }
+        .contact-next h2 { margin: 0 0 20px; font-family: var(--font-display), system-ui, sans-serif; font-size: 16px; font-weight: 700; color: var(--kz-text-primary); }
+        .contact-next ol { position: relative; margin: 0; padding: 0; list-style: none; display: grid; gap: 22px; }
+        .contact-next ol::before { content: ""; position: absolute; left: 13px; top: 8px; bottom: 8px; width: 1px; background: var(--kz-border-default); }
+        .contact-next li { position: relative; display: flex; gap: 14px; }
+        .contact-next-num { position: relative; z-index: 1; display: grid; place-items: center; width: 27px; height: 27px; flex-shrink: 0; border-radius: 50%;
+          font-size: 12px; font-weight: 700; color: var(--kz-accent); background: var(--kz-surface-0); border: 1px solid color-mix(in srgb, var(--kz-accent) 45%, transparent); }
+        .contact-next strong { display: block; font-size: 14px; color: var(--kz-text-primary); margin: 3px 0 4px; }
+        .contact-next p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
+        .contact-facts { margin: 28px 0 0; padding: 18px 0 0; list-style: none; display: grid; gap: 8px; border-top: 1px solid var(--kz-border-subtle); }
+        .contact-facts li { font-size: 13px; color: var(--kz-text-muted); }
+        @media (max-width: 900px) {
+          .contact-main { grid-template-columns: 1fr; }
+          .contact-next { position: static; }
+        }
 
         @media (max-width: 640px) {
           .contact-grid {
