@@ -31,6 +31,18 @@
 - The Orazaka repository map (`RepositoryMap`, architecture page `#repositories`) renders
   `repositories` from the same generated file — never hard-code a repository list in a component.
 
+## 2.1 Products are presented the same way
+
+- `lib/nav.ts` is the single source of the product navigation: the desktop mega-menu, the mobile
+  panel, the footer and the home spotlights all render it. Every product exposes the same five
+  entries in the same order (overview · how it works · demo · documentation · signature).
+- Product marks are the animated logos (`ProductLogo` → `OrazakaLogo` / `OrochiaLogo`, same motion
+  grammar as `KrizakaLogo`); never a placeholder icon.
+- Product recordings live in `public/assets/<product>/tour/<clip>.{webm,mp4,jpg}`, recorded on the
+  real application; endpoints named by the Orochia journeys are verified against the generated
+  architecture data at build time (`lib/orochia-journeys.ts`).
+- English is the default language; French is served when chosen (cookie `NEXT_LOCALE`) or opened.
+
 ## 3. Theming — dark **and** light are first-class
 
 - One token system in `app/globals.css`: dark on `:root`, light on `html.light`,
@@ -62,6 +74,10 @@
 - Prefer static generation; keep client bundles lean (the 3D libs are the only
   heavy deps and are code-split behind `ssr: false`).
 - i18n via `app/components/I18nProvider` where text is user-facing.
+
+- The contact form posts to `app/api/contact` (validation in `lib/contact.ts`). Delivery is
+  configured by environment and fails closed (503) when nothing is set:
+  `RESEND_API_KEY` + `CONTACT_TO_EMAIL` (+ `CONTACT_FROM_EMAIL`) and/or `CONTACT_WEBHOOK_URL`.
 
 ## 6. Definition of done
 
