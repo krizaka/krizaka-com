@@ -101,6 +101,23 @@ export function buildSiteGraph(locale: Locale) {
           "Ollama and open-source model support",
         ],
       },
+      {
+        "@type": "SoftwareApplication",
+        "@id": `${SITE_URL}/#orochia`,
+        name: "Orochia",
+        applicationCategory: "MultimediaApplication",
+        operatingSystem: "Linux (Docker), DigitalOcean App Platform",
+        description:
+          locale === "fr"
+            ? "Plateforme vidéo open source pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle, conformité 18+."
+            : "Open-source video platform for independent creators: direct-to-CDN streaming, server-side access control, gateway-confirmed payments, 18+ compliance.",
+        url: `${SITE_URL}/${locale}/products/orochia`,
+        isAccessibleForFree: true,
+        codeRepository: "https://github.com/krizaka/orochia",
+        author: { "@id": ORG_ID },
+        publisher: { "@id": ORG_ID },
+        offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
+      },
     ],
   };
 }

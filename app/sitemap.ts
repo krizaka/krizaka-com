@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getAllUseCaseSlugs } from "@/lib/use-cases-data";
 import { DOCS_MANIFEST } from "@/lib/docs-manifest";
+import { OROCHIA_DOCS_MANIFEST } from "@/lib/orochia-docs-manifest";
 import { SITE_URL } from "@/lib/site";
 
 // A single sitemap is correct here: the protocol limit is 50k URLs / 50 MB, and
@@ -13,7 +14,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Base list of static paths
   const staticPaths = [
     "",
+    "/products",
+    "/open-source",
     "/products/orazaka",
+    "/products/orochia",
+    "/products/orochia/docs",
     "/products/orazaka/packages",
     "/products/orazaka/usecases",
     "/products/orazaka/ingenierie-cognitive",
@@ -51,7 +56,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     let freq: "weekly" | "monthly" | "yearly" = "weekly";
     if (path === "") {
       priority = 1.0;
-    } else if (path === "/products/orazaka" || path === "/products/orazaka/packages") {
+    } else if (path === "/products/orazaka" || path === "/products/orochia" || path === "/products" || path === "/products/orazaka/packages") {
       priority = 0.9;
     } else if (path === "/contact" || path === "/privacy" || path === "/terms") {
       priority = 0.5;
@@ -73,5 +78,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     buildEntries(`/products/orazaka/${doc.category}/${slug}`, 0.8, "weekly")
   );
 
-  return [...staticPages, ...useCasePages, ...docPages];
+  const orochiaDocPages = Object.keys(OROCHIA_DOCS_MANIFEST).flatMap((slug) =>
+    buildEntries(`/products/orochia/docs/${slug}`, 0.7, "weekly")
+  );
+
+  return [...staticPages, ...useCasePages, ...docPages, ...orochiaDocPages];
 }

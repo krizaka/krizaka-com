@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
+import { orgRepositories } from "@/lib/org-data";
 import TopNavBar from "../components/TopNavBar";
-import HeroSection from "../components/HeroSection";
-import FeaturePillars from "../components/FeaturePillars";
+import OrgHero from "../components/home/OrgHero";
+import ProductsShowcase from "../components/home/ProductsShowcase";
+import ExpertiseSection from "../components/home/ExpertiseSection";
+import OpenSourceSection from "../components/home/OpenSourceSection";
 import EngineShowcaseSection from "../components/EngineShowcaseSection";
 import SiteFooter from "../components/SiteFooter";
 
@@ -15,29 +18,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/",
     en: {
-      title: "Krizaka — Sovereign On-Premise AI | Law 25 & GDPR Compliance",
+      title: "Krizaka — Sovereign, open-source software ready for production",
       description:
-        "Krizaka designs Orazaka, an open-source multi-modal AI orchestration engine. Deploy local LLMs in Montreal, Quebec with Ollama, conforming to Law 25 and GDPR.",
+        "Krizaka is a Montréal software studio building open-source platforms: Orazaka, sovereign on-premise AI (Law 25, GDPR), and Orochia, the video platform for independent creators.",
     },
     fr: {
-      title: "Krizaka — IA souveraine on-premise | Loi 25 & RGPD Montréal",
+      title: "Krizaka — Logiciels souverains et open source, prêts pour la production",
       description:
-        "Krizaka développe Orazaka, un moteur d'orchestration IA souverain et open source à Montréal. Déployez une IA locale conforme à la Loi 25 du Québec et au RGPD.",
+        "Krizaka est un studio logiciel montréalais qui conçoit des plateformes open source : Orazaka, l'IA souveraine sur site (Loi 25, RGPD), et Orochia, la plateforme vidéo des créateurs indépendants.",
     },
   });
 }
 
-/* ─────────────────────────────────────────────────────────────────────
-   HOME PAGE — Simplified, developer-first landing page.
-   Hero (with interactive pipeline illustration) → Showcase → Footer.
-   ───────────────────────────────────────────────────────────────────── */
-
+/* HOME — the organisation first: who we are, our two products, our know-how, our open source. */
 export default function Home() {
+  const repositories = orgRepositories();
+  const orazaka = repositories.filter((r) => r.product === "orazaka").length;
+  const orochia = repositories.filter((r) => r.product === "orochia").length;
   return (
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
       <TopNavBar />
-      <HeroSection />
-      <FeaturePillars />
+      <OrgHero repositoryCount={repositories.length} />
+      <ProductsShowcase />
+      <ExpertiseSection />
+      <OpenSourceSection orazakaRepos={orazaka} orochiaRepos={orochia} />
       <EngineShowcaseSection />
       <SiteFooter />
     </main>

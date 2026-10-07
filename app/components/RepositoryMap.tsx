@@ -203,8 +203,6 @@ export default function RepositoryMap({
       aria-labelledby="repositories-title"
       style={{ maxWidth: "80rem", margin: "0 auto", padding: "8px 20px 96px" }}
     >
-      <style>{`.kz-repo-card:hover{border-color:var(--kz-accent);transform:translateY(-2px)}
-@media (prefers-reduced-motion: reduce){.kz-repo-card,.kz-repo-card:hover{transition:none;transform:none}}`}</style>
       <div style={{ maxWidth: "700px", margin: "0 auto 40px", textAlign: "center" }}>
         <p
           style={{
