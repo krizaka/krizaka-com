@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import orochia from "@/app/data/orochia-architecture.json";
+import OrochiaDocsOverview from "./OrochiaDocsOverview";
 import { getDocsList } from "@/lib/docs";
 import { localizedMetadata } from "@/lib/seo";
 
@@ -16,32 +17,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function OrochiaDocsIndex({ params }: Props) {
-  const { locale } = await params;
-  const isFr = locale === "fr";
+const READING_ORDER = ["getting-started", "architecture", "api", "operations"];
+
+export default async function OrochiaDocsIndex() {
   const docs = await getDocsList("orochia");
+  const web = orochia.repositories.find((r) => r.name === "orochia");
   return (
-    <div>
-      <h1 style={{ fontFamily: "var(--font-display), system-ui, sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.4rem)", fontWeight: 800, letterSpacing: "-0.02em", margin: 0, color: "var(--kz-text-primary)" }}>
-        {isFr ? "Documentation Orochia" : "Orochia documentation"}
-      </h1>
-      <p style={{ color: "var(--kz-text-secondary)", fontSize: 15, lineHeight: 1.7, margin: "12px 0 32px", maxWidth: 640 }}>
-        {isFr
-          ? "Synchronisée depuis le dépôt krizaka/orochia : ces pages décrivent le code tel qu'il est publié."
-          : "Synced from the krizaka/orochia repository: these pages describe the code as published."}
-      </p>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 260px), 1fr))", gap: 14 }}>
-        {docs.map((d) => (
-          <Link
-            key={d.slug}
-            href={`/products/orochia/docs/${d.slug}`}
-            style={{ display: "block", padding: 18, borderRadius: 16, border: "1px solid var(--kz-border-subtle)", background: "var(--kz-surface-1)", textDecoration: "none" }}
-          >
-            <span style={{ fontWeight: 700, color: "var(--kz-text-primary)" }}>{d.title}</span>
-            <p style={{ margin: "8px 0 0", fontSize: 13, lineHeight: 1.6, color: "var(--kz-text-secondary)" }}>{d.intro}</p>
-          </Link>
-        ))}
-      </div>
-    </div>
+    <OrochiaDocsOverview
+      docs={docs
+        .map((d) => ({ slug: d.slug, title: d.title, category: d.category, order: d.order }))
+        .sort((a, b) => READING_ORDER.indexOf(a.category) - READING_ORDER.indexOf(b.category) || a.order - b.order)}
+      modules={orochia.modules}
+      stack={web?.stack ?? []}
+      endpoints={orochia.apiEndpoints.length}
+    />
   );
 }

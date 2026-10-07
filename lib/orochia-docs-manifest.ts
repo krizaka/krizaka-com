@@ -10,6 +10,14 @@
 import type { DocManifestEntry } from "./docs-manifest";
 
 export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
+  getting_started: {
+    title: "Getting Started",
+    category: "getting-started",
+    order: 1,
+    audience: "developer",
+    intro:
+      "Run Orochia locally in five commands, sign in with the seeded accounts, start the admin console, and run the quality gates.",
+  },
   architecture: {
     title: "Architecture",
     category: "architecture",

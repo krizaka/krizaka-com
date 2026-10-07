@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import rehypeHighlight from "rehype-highlight";
-import remarkGfm from "remark-gfm";
 import { getDocsList, getDocBySlugAndCategory } from "@/lib/docs";
 import { buildAlternates } from "@/lib/seo";
-import { mdxComponents } from "@/app/components/MdxComponents";
+import DocArticle from "@/app/components/DocArticle";
+import OrochiaArchitecture from "@/app/components/OrochiaArchitecture";
+import { verifiedJourneys } from "@/lib/orochia-journeys";
 
 interface Props {
   params: Promise<{ locale: string; slug: string }>;
@@ -33,35 +32,21 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/* The animated journeys open the docs they illustrate. */
+const HERO_JOURNEYS: Record<string, string[]> = {
+  architecture: ["playback", "unlock", "upload"],
+  media_pipeline: ["upload", "playback"],
+};
+
 export default async function OrochiaDocPage({ params }: Props) {
   const { slug } = await params;
   const doc = await load(slug);
   if (!doc) notFound();
-  return (
-    <article className="docs-article">
-      {doc.intro && (
-        <p
-          style={{
-            margin: "0 0 32px",
-            padding: "16px 18px",
-            borderRadius: "var(--kz-radius-lg)",
-            border: "1px solid var(--kz-border-subtle)",
-            background: "var(--kz-surface-1)",
-            fontSize: 14.5,
-            lineHeight: 1.6,
-            color: "var(--kz-text-secondary)",
-          }}
-        >
-          {doc.intro}
-        </p>
-      )}
-      <div className="mdx-content-container">
-        <MDXRemote
-          source={doc.content}
-          components={mdxComponents}
-          options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeHighlight] } }}
-        />
-      </div>
-    </article>
-  );
+  const ids = HERO_JOURNEYS[slug];
+  const hero = ids ? (
+    <div style={{ margin: "0 0 40px" }}>
+      <OrochiaArchitecture journeys={verifiedJourneys().filter((j) => ids.includes(j.id)).sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))} />
+    </div>
+  ) : undefined;
+  return <DocArticle doc={doc} product={{ name: "Orochia", href: "/products/orochia" }} hero={hero} />;
 }
