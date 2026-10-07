@@ -25,7 +25,7 @@ export default function ProductsShowcase() {
   return (
     <section id="products" className="kz-section">
       <p className="kz-eyebrow">{loc === "fr" ? "Nos produits" : "Our products"}</p>
-      <h2 className="kz-h2">{loc === "fr" ? "Deux plateformes, une même rigueur." : "Two platforms, one standard."}</h2>
+      <h2 className="kz-h2">{loc === "fr" ? "Deux produits. Zéro raccourci." : "Two products. Zero shortcuts."}</h2>
 
       <div className="kz-spots">
         {PRODUCTS.map((p, i) => {

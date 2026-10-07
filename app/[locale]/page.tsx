@@ -18,12 +18,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/",
     en: {
-      title: "Krizaka — Sovereign, open-source software ready for production",
+      title: "Krizaka — Open source. Closed to compromise.",
       description:
         "Krizaka is a Montréal software studio building open-source platforms: Orazaka, sovereign on-premise AI (Law 25, GDPR), and Orochia, the video platform for independent creators.",
     },
     fr: {
-      title: "Krizaka — Logiciels souverains et open source, prêts pour la production",
+      title: "Krizaka — Open source. Fermé aux compromis.",
       description:
         "Krizaka est un studio logiciel montréalais qui conçoit des plateformes open source : Orazaka, l'IA souveraine sur site (Loi 25, RGPD), et Orochia, la plateforme vidéo des créateurs indépendants.",
     },

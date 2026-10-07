@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight, GitBranch } from "lucide-react";
 import { useI18n } from "../I18nProvider";
 import KrizakaLandscape from "../illustrations/KrizakaLandscape";
+import RotatingWord from "./RotatingWord";
 import { PRODUCTS } from "@/lib/org-data";
 import ProductLogo from "../ProductLogo";
 import { GITHUB_ORG_URL } from "@/lib/site";
@@ -22,23 +23,23 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
       </div>
       <div className="org-hero-inner">
         <span className="org-hero-badge">
-          {loc === "fr" ? "Studio logiciel · Montréal · open source" : "Software studio · Montréal · open source"}
+          {loc === "fr" ? "Fabriqué à Montréal · Ouvert par défaut · Souverain par conception" : "Made in Montréal · Open by default · Sovereign by design"}
         </span>
-        <h1 className="org-hero-title">
-          {loc === "fr" ? (
-            <>
-              Des logiciels <span className="org-hero-accent">souverains</span>, prêts pour la production.
-            </>
-          ) : (
-            <>
-              <span className="org-hero-accent">Sovereign</span> software, ready for production.
-            </>
-          )}
+        <h1 className="org-hero-title" aria-label={loc === "fr" ? "Open source. Fermé aux compromis." : "Open source. Closed to compromise."}>
+          <span className="org-hero-line">Open source.</span>
+          <span className="org-hero-line">
+            {loc === "fr" ? "Fermé " : "Closed to "}
+            <RotatingWord
+              key={loc}
+              className="org-hero-accent"
+              words={loc === "fr" ? ["aux compromis.", "aux fuites.", "à l'enfermement.", "aux raccourcis."] : ["compromise.", "leaks.", "lock-in.", "shortcuts."]}
+            />
+          </span>
         </h1>
         <p className="org-hero-sub">
           {loc === "fr"
-            ? `Krizaka conçoit des plateformes open source où la conformité, la sécurité et la modularité sont écrites dans le code. Deux produits, ${repositoryCount} dépôts publics, une même exigence.`
-            : `Krizaka builds open-source platforms where compliance, security and modularity are written into the code. Two products, ${repositoryCount} public repositories, one standard.`}
+            ? `Nous construisons ce que d'autres mettent des années à réussir : une IA qui ne quitte jamais vos murs, une plateforme vidéo qui paie chaque cent une seule fois. La conformité et la sécurité ne sont pas des options — elles sont compilées dedans. ${repositoryCount} dépôts publics pour le prouver.`
+            : `We build what others take years to get right: AI that never leaves your walls, a video platform that pays every cent exactly once. Compliance and security aren't add-ons — they're compiled in. ${repositoryCount} public repositories to prove it.`}
         </p>
 
         <div className="org-hero-products">
@@ -56,7 +57,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
 
         <div className="org-hero-cta">
           <Link href="/products" className="org-btn org-btn-primary btn-sheen">
-            {loc === "fr" ? "Nos produits" : "Our products"} <ArrowRight size={15} strokeWidth={2.5} />
+            {loc === "fr" ? "Voir nos produits en action" : "See them in action"} <ArrowRight size={15} strokeWidth={2.5} />
           </Link>
           <a href={GITHUB_ORG_URL} target="_blank" rel="noopener noreferrer" className="org-btn org-btn-ghost">
             <GitBranch size={15} /> github.com/krizaka
@@ -78,6 +79,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
           border:1px solid color-mix(in srgb, var(--kz-accent) 25%, transparent); }
         .org-hero-title { font-family:var(--font-display), system-ui, sans-serif; font-size:clamp(2.3rem,6.4vw,3.9rem); font-weight:800;
           letter-spacing:-.035em; line-height:1.05; margin:20px 0 0; color:var(--kz-text-primary); }
+        .org-hero-line { display:block; }
         .org-hero-accent { background:var(--kz-sheen); -webkit-background-clip:text; background-clip:text; color:transparent; }
         .org-hero-sub { font-size:clamp(15px,1.8vw,17px); line-height:1.7; color:var(--kz-text-secondary); max-width:660px; margin:20px auto 0; }
         .org-hero-products { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:12px; margin:32px auto 0; max-width:720px; text-align:left; }

@@ -73,7 +73,7 @@ export const PRODUCTS: Product[] = [
     docsHref: "/products/orazaka/getting-started/101",
     repoUrl: "https://github.com/krizaka/orazaka",
     accent: "#6366f1",
-    tagline: { fr: "IA souveraine, hébergée chez vous.", en: "Sovereign AI, hosted on your infrastructure." },
+    tagline: { fr: "L'IA qui ne quitte jamais la maison.", en: "The AI that never leaves home." },
     summary: {
       fr: "Moteur d'orchestration IA multimodal : chaque requête traverse un pipeline d'intercepteurs déterministe vers le meilleur modèle local. Rien ne quitte votre réseau.",
       en: "A multimodal AI orchestration engine: every request flows through a deterministic interceptor pipeline to the best local model. Nothing leaves your network.",
@@ -93,7 +93,7 @@ export const PRODUCTS: Product[] = [
     docsHref: "/products/orochia/docs",
     repoUrl: "https://github.com/krizaka/orochia",
     accent: "#a855f7",
-    tagline: { fr: "La plateforme vidéo des créateurs indépendants.", en: "The video platform for independent creators." },
+    tagline: { fr: "Les créateurs sont payés. Chaque cent, une seule fois.", en: "Creators get paid. Every cent, exactly once." },
     summary: {
       fr: "Streaming 4K, paywalls et versements créateurs, avec la rigueur d'une infrastructure financière. Conçue pour les contenus adultes (18+).",
       en: "4K streaming, paywalls and creator payouts with the rigour of financial infrastructure. Designed for adult (18+) content.",

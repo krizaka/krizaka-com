@@ -13,7 +13,7 @@ export default function ContactCta({ topic = "other" }: { topic?: ContactTopic }
     <section id="contact" className="kz-section kz-cta">
       <div className="kz-cta-copy">
         <p className="kz-eyebrow">{fr ? "Travaillons ensemble" : "Work with us"}</p>
-        <h2 className="kz-h2">{fr ? "Un projet, une question, un déploiement ?" : "A project, a question, a deployment?"}</h2>
+        <h2 className="kz-h2">{fr ? "Un projet audacieux en tête ?" : "Got something bold to build?"}</h2>
         <p>
           {fr
             ? "Nous déployons et adaptons nos plateformes chez vous, et concevons les briques qui leur manquent. Décrivez votre besoin : un ingénieur vous répond, pas un robot."
