@@ -97,6 +97,18 @@ layout). That's why inner pages use **inline `style`** for container width/paddi
 inline styles (or non-spacing classes) for page layout until the reset is moved into a
 `@layer`.
 
+## Contact form
+
+`/contact`, the home page and every product page end with a contact form that posts to
+`app/api/contact`. Configure at least one delivery channel in the hosting environment (Vercel →
+Settings → Environment Variables); without one the endpoint answers `503` instead of pretending:
+
+| Variable | Purpose |
+| :--- | :--- |
+| `RESEND_API_KEY`, `CONTACT_TO_EMAIL` | e-mail through the [Resend](https://resend.com) API (comma-separated recipients) |
+| `CONTACT_FROM_EMAIL` | sender, on a domain verified in Resend (default `Krizaka <contact@krizaka.com>`) |
+| `CONTACT_WEBHOOK_URL` | JSON POST to Slack, Discord or any relay (`text`, `content` and structured `contact` fields) |
+
 ## Develop
 
 ```bash

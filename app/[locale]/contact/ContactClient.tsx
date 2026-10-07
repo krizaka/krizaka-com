@@ -5,6 +5,7 @@ import { ArrowRight, MessagesSquare, CircleDot } from "lucide-react";
 import TopNavBar from "../../components/TopNavBar";
 import SiteFooter from "../../components/SiteFooter";
 import { useI18n } from "../../components/I18nProvider";
+import ContactForm from "../../components/ContactForm";
 import {
   GITHUB_DISCUSSIONS_URL,
   GITHUB_ISSUES_URL,
@@ -176,7 +177,7 @@ export default function ContactClient() {
               marginBottom: "14px",
             }}
           >
-            {locale === "fr" ? "COMMUNAUTÉ" : "COMMUNITY"}
+            {locale === "fr" ? "CONTACT" : "CONTACT"}
           </span>
           <h1
             style={{
@@ -189,7 +190,7 @@ export default function ContactClient() {
               marginBottom: "16px",
             }}
           >
-            {locale === "fr" ? "Échangeons en public" : "Let's talk in public"}
+            {locale === "fr" ? "Parlons de votre projet" : "Let's talk about your project"}
           </h1>
           <p
             style={{
@@ -200,10 +201,32 @@ export default function ContactClient() {
             }}
           >
             {locale === "fr"
-              ? "Orazaka est un projet open source. La transparence est un principe fondamental — chaque question, bogue ou idée se discute publiquement sur GitHub."
-              : "Orazaka is an open-source project. Transparency is a core principle — every question, bug, or idea is discussed publicly on GitHub."}
+              ? "Déploiement d'Orazaka ou d'Orochia, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables."
+              : "Deploying Orazaka or Orochia, a custom integration, a sovereign-AI audit or a partnership: write to the team, we reply within two business days."}
           </p>
         </motion.div>
+
+        {/* ─── Private message to the team ─── */}
+        <div style={{ marginBottom: "56px" }}>
+          <ContactForm />
+        </div>
+
+        <h2
+          style={{
+            fontFamily: "var(--font-display), system-ui, sans-serif",
+            fontSize: "18px",
+            fontWeight: 700,
+            color: "var(--kz-text-primary)",
+            margin: "0 0 6px",
+          }}
+        >
+          {locale === "fr" ? "Ou échangeons en public" : "Or talk in public"}
+        </h2>
+        <p style={{ fontSize: "14px", color: "var(--kz-text-secondary)", margin: "0 0 20px" }}>
+          {locale === "fr"
+            ? "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub."
+            : "Questions, bugs and ideas about our open-source repositories are discussed on GitHub."}
+        </p>
 
         {/* ─── Two Channel Cards ─── */}
         <div
