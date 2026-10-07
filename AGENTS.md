@@ -90,6 +90,9 @@
   heavy deps and are code-split behind `ssr: false`).
 - i18n via `app/components/I18nProvider` where text is user-facing.
 
+- Links to the running Orochia go through `OROCHIA_APP_URL` (`lib/site.ts`), set by
+  `NEXT_PUBLIC_OROCHIA_APP_URL` (dev today, production later; read at build time). `llms.txt` and
+  `llms-full.txt` are rendered from `content/` with that URL — never hard-code the app's address.
 - The contact form posts to `app/api/contact` (validation in `lib/contact.ts`). Delivery is
   configured by environment and fails closed (503) when nothing is set:
   `MAILGUN_API_KEY` + `MAILGUN_DOMAIN` + `CONTACT_TO_EMAIL` (+ `MAILGUN_API_URL`, `CONTACT_FROM_EMAIL`)

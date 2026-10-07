@@ -6,7 +6,7 @@
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { useReducedMotion } from "framer-motion";
-import { ArrowRight, Check, GitBranch } from "lucide-react";
+import { ArrowRight, Check, GitBranch, ExternalLink } from "lucide-react";
 import { useI18n } from "../I18nProvider";
 import ProductLogo from "../ProductLogo";
 import { NAV_ICONS } from "../ProductsMenu";
@@ -62,6 +62,11 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
                         </Link>
                       );
                     })}
+                  {p.appUrl && (
+                    <a href={p.appUrl} target="_blank" rel="noopener" className="kz-spot-chip">
+                      <ExternalLink size={14} aria-hidden /> {h.openApp}
+                    </a>
+                  )}
                   <a href={p.repoUrl} target="_blank" rel="noopener noreferrer" className="kz-spot-chip">
                     <GitBranch size={14} aria-hidden /> GitHub
                   </a>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BookOpen, CreditCard, Film, GitBranch, Heart, Lock, PlayCircle, ShieldCheck, UsersRound } from "lucide-react";
+import { ArrowRight, BookOpen, CreditCard, ExternalLink, Film, GitBranch, Heart, Lock, PlayCircle, ShieldCheck, UsersRound } from "lucide-react";
+import { OROCHIA_APP_URL } from "@/lib/site";
 import type { LucideIcon } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
 import orochia from "@/app/data/orochia-architecture.json";
@@ -111,6 +112,9 @@ export default async function OrochiaPage({ params }: Props) {
           <Link href="#tour" className="btn-sheen" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 20px", borderRadius: 12, background: "var(--kz-accent)", color: "var(--kz-on-accent)", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
             <PlayCircle size={16} /> {t.watchDemo}
           </Link>
+          <a href={OROCHIA_APP_URL} target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 20px", borderRadius: 12, border: "1px solid var(--kz-border-default)", color: "var(--kz-text-primary)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
+            <ExternalLink size={16} /> {t.openApp}
+          </a>
           <Link href="/products/orochia/docs" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 20px", borderRadius: 12, border: "1px solid var(--kz-border-default)", color: "var(--kz-text-primary)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
             <BookOpen size={16} /> {t.docs}
           </Link>

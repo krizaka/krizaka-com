@@ -86,7 +86,7 @@ channel), `orazaka-billing`, `orazaka-edge`, `orazaka-ui-kit`
 
 Orochia is Krizaka's second product: an open-source (Apache-2.0) video platform
 for independent creators, designed for adult (18+) content. Live at
-https://orochia.com. Repositories: `krizaka/orochia` (Next.js 16 / React 19 app
+{{OROCHIA_APP_URL}}. Repositories: `krizaka/orochia` (Next.js 16 / React 19 app
 and API, PostgreSQL, db/media/payments packages), `krizaka/orochia-admin`
 (operator console), `krizaka/orochia-design-system`.
 

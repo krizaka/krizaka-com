@@ -13,6 +13,7 @@ import {
   GITHUB_ORG_URL,
   GITHUB_REPO_URL,
   ORAZAKA_VERSION,
+  OROCHIA_APP_URL,
 } from "@/lib/site";
 
 export type Locale = "fr" | "en";
@@ -113,7 +114,7 @@ export function buildSiteGraph(locale: Locale) {
         url: `${SITE_URL}/${locale}/products/orochia`,
         isAccessibleForFree: true,
         codeRepository: "https://github.com/krizaka/orochia",
-        sameAs: ["https://orochia.com", "https://github.com/krizaka/orochia"],
+        sameAs: [OROCHIA_APP_URL, "https://github.com/krizaka/orochia"],
         license: "https://www.apache.org/licenses/LICENSE-2.0",
         contentRating: "adult",
         featureList: [

@@ -619,7 +619,8 @@
       "products": {
         "title": "Products",
         "discover": "Discover",
-        "demo": "demo"
+        "demo": "demo",
+        "openApp": "Open the app"
       },
       "openSource": {
         "title": "Read every line.",
@@ -993,7 +994,8 @@
       "archLead": "Three journeys, step by step. Every API endpoint named here is checked against Orochia's code on every build of this site.",
       "sourceEyebrow": "Source code",
       "sourceTitle": "Three repositories, one platform.",
-      "sourceLead": "The app exposes {endpoints} API endpoints and {tables} tables, extracted from the code by the documentation generator."
+      "sourceLead": "The app exposes {endpoints} API endpoints and {tables} tables, extracted from the code by the documentation generator.",
+      "openApp": "Open the app"
     },
     "openSource": {
       "steps": {

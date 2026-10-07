@@ -1,3 +1,4 @@
+import { OROCHIA_APP_URL } from "./site";
 /* ═══════════════════════════════════════════════════════════════════
    KRIZAKA — organisation-level data for the home page and /open-source.
    Repository lists are NOT written here: they come from the generated
@@ -56,6 +57,8 @@ export interface Product {
   href: string;
   docsHref: string;
   repoUrl: string;
+  /** The running application, when there is one to open (OROCHIA_APP_URL). */
+  appUrl?: string;
   accent: string;
   /* Tagline, summary and points: messages → site.products.<id>. */
   stack: string;
@@ -80,8 +83,9 @@ export const PRODUCTS: Product[] = [
     href: "/products/orochia",
     docsHref: "/products/orochia/docs",
     repoUrl: "https://github.com/krizaka/orochia",
+    appUrl: OROCHIA_APP_URL,
     accent: "#a855f7",
-    stack: "Next.js 14 · PostgreSQL · Drizzle · Bunny Stream",
+    stack: "Next.js 16 · PostgreSQL · Drizzle · Bunny Stream",
     media: { src: "/assets/orochia/tour/feed", aspect: "16 / 10", frame: "orochia · web" },
   },
 ];

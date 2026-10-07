@@ -619,7 +619,8 @@
       "products": {
         "title": "Produits",
         "discover": "Découvrir",
-        "demo": "démonstration"
+        "demo": "démonstration",
+        "openApp": "Ouvrir l'application"
       },
       "openSource": {
         "title": "Lisez chaque ligne.",
@@ -993,7 +994,8 @@
       "archLead": "Trois parcours, étape par étape. Chaque point d'API cité est vérifié contre le code d'Orochia à chaque build du site.",
       "sourceEyebrow": "Code source",
       "sourceTitle": "Trois dépôts, une plateforme.",
-      "sourceLead": "L'application expose {endpoints} points d'API et {tables} tables, extraits du code par le générateur de documentation."
+      "sourceLead": "L'application expose {endpoints} points d'API et {tables} tables, extraits du code par le générateur de documentation.",
+      "openApp": "Ouvrir l'application"
     },
     "openSource": {
       "steps": {
