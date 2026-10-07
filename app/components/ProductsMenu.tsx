@@ -7,7 +7,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpen, ChevronDown, Compass, Cpu, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, ChevronDown, Compass, Cpu, Feather, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import ProductLogo from "./ProductLogo";
@@ -22,6 +22,7 @@ export const NAV_ICONS: Record<NavIcon, LucideIcon> = {
   repos: GitBranch,
   contact: Mail,
   products: LayoutGrid,
+  story: Feather,
 };
 
 function Dropdown({ id, label, active, width, children }: { id: string; label: string; active: boolean; width: number; children: ReactNode }) {

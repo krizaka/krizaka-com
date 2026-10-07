@@ -4,7 +4,7 @@
 
 import type { L } from "@/lib/org-data";
 
-export type NavIcon = "overview" | "architecture" | "demo" | "docs" | "signature" | "repos" | "contact" | "products";
+export type NavIcon = "overview" | "architecture" | "demo" | "docs" | "signature" | "repos" | "contact" | "products" | "story";
 
 export interface NavLink {
   href: string;
@@ -57,6 +57,7 @@ export const NAV_PRODUCTS: NavProduct[] = [
 
 export const NAV_COMPANY: NavLink[] = [
   { href: "/products", icon: "products", label: { fr: "Tous les produits", en: "All products" }, desc: { fr: "Comparer Orazaka et Orochia", en: "Compare Orazaka and Orochia" } },
+  { href: "/story", icon: "story", label: { fr: "Notre histoire", en: "Our story" }, desc: { fr: "D'où viennent nos noms", en: "Where our names come from" } },
   { href: "/open-source", icon: "repos", label: { fr: "Open source", en: "Open source" }, desc: { fr: "Tous les dépôts Krizaka", en: "Every Krizaka repository" } },
   { href: "/contact", icon: "contact", label: { fr: "Contact", en: "Contact" }, desc: { fr: "Écrire à l'équipe", en: "Write to the team" } },
 ];
