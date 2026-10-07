@@ -84,18 +84,33 @@ channel), `orazaka-billing`, `orazaka-edge`, `orazaka-ui-kit`
 
 # Orochia
 
-Orochia is Krizaka's second product: an open-source video platform for
-independent creators, designed for adult (18+) content. Repositories:
-`krizaka/orochia` (Next.js 14 app + db, media and payments packages),
-`krizaka/orochia-admin` (operator console), `krizaka/orochia-design-system`.
+Orochia is Krizaka's second product: an open-source (Apache-2.0) video platform
+for independent creators, designed for adult (18+) content. Live at
+https://orochia.com. Repositories: `krizaka/orochia` (Next.js 16 / React 19 app
+and API, PostgreSQL, db/media/payments packages), `krizaka/orochia-admin`
+(operator console), `krizaka/orochia-design-system`.
 
-- Media: resumable Tus upload straight to Bunny Stream; playback through signed
-  HLS URLs that expire after 300 seconds; video never passes through app servers.
-- Access: decided on the server for every play (public, contacts only, unlocked).
-- Payments: an unlock records a payment intent and redirects to CCBill, Segpay,
-  NowPayments or Stripe; access is granted only on the gateway's signed webhook,
-  settled exactly once into a double-entry ledger.
+- Media: resumable Tus upload straight to Bunny Stream; playback through HLS URLs
+  signed for 300 seconds (the token covers the playlist and every segment); video
+  never passes through the app servers.
+- Who watches: decided on the server for every play. Per video: public, approved
+  followers, accepted contacts, paid unlock (never below the creator's minimum),
+  or invited only — people invited one by one or reusable, private audience
+  lists ("Close friends") whose membership is live. Invited-only videos are never
+  listed anywhere.
+- Collections: each one opened to everyone, approved followers, contacts,
+  invited people and lists, or kept private; a collection never opens a video its
+  own rule keeps closed.
+- Engagement: views counted once per viewer and day (never the author's), likes,
+  threaded comments the creator can moderate or close, shares by channel; every
+  counter moves in the same transaction as its record.
+- Payments: an unlock or tip records a payment intent and redirects to CCBill,
+  Segpay, NOWPayments or Stripe; access is granted only on the gateway's signed
+  webhook, settled exactly once into an immutable double-entry ledger.
 - Compliance: 18+ certification at sign-up, 18 U.S.C. § 2257 creator
-  verification before upload, persisted content reports.
-- Operations: fail-closed configuration in production, Docker image with a
-  bundled migrator, DigitalOcean App Platform spec.
+  verification before upload, persisted content reports with urgent alerts,
+  takedowns and suspensions that carry their reason.
+- Operations: fail-closed configuration, one Docker image with a bundled
+  migrator, DigitalOcean App Platform specs (dev and production), owner account
+  configured by environment, Mailgun transactional e-mail.
+- Docs: https://krizaka.com/en/products/orochia/docs

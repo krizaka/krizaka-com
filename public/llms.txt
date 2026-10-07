@@ -13,9 +13,11 @@
   never leaves your network. Split into one repository per component so other
   applications reuse users, notifications, billing, the edge and the UI kit.
 - Orochia — open-source video platform for independent creators (adult-friendly,
-  18+): direct-to-CDN streaming with 5-minute signed URLs, server-side access
-  control, gateway-confirmed payments settled exactly once, double-entry ledger,
-  18 U.S.C. § 2257 creator verification and persisted content reports.
+  18+), live at https://orochia.com: direct-to-CDN streaming with 5-minute signed
+  URLs; per-video audiences (followers, contacts, paid unlock with a minimum,
+  invited people and reusable private lists); collections with permissions;
+  views, likes, comments and shares; gateway-confirmed payments settled exactly
+  once into a double-entry ledger; 18 U.S.C. § 2257 creator verification.
 
 ## Key pages
 
@@ -27,6 +29,9 @@
 - Orazaka repositories map: https://krizaka.com/en/products/orazaka/architecture/repositories
 - Orochia: https://krizaka.com/en/products/orochia
 - Orochia docs: https://krizaka.com/en/products/orochia/docs
+- Orochia (the platform): https://orochia.com
+- Our story (where the names come from): https://krizaka.com/en/story
+- Contact the team: https://krizaka.com/en/contact
 
 ## Source
 
