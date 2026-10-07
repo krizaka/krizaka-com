@@ -6,113 +6,70 @@ import { useI18n } from "./I18nProvider";
 import { Layout, Image as ImageIcon, Video, Play, Maximize2, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+/** Title and description: messages → pages.demosGallery.demos[i]. */
 interface DemoItem {
   type: "webapp" | "image" | "video";
-  titleFr: string;
-  titleEn: string;
-  descFr: string;
-  descEn: string;
   src: string;
 }
+
+type DemoView = DemoItem & { title: string; desc: string };
 
 const DEMOS: DemoItem[] = [
   {
     type: "webapp",
-    titleFr: "Console d'Administration",
-    titleEn: "Administration Console",
-    descFr: "Tableau de bord local de configuration et suivi du moteur Orazaka.",
-    descEn: "Local setup and monitoring dashboard for the Orazaka engine.",
     src: "/assets/orazaka/orazaka/screenshots/start.gif",
   },
   {
     type: "webapp",
-    titleFr: "Portail de Connexion",
-    titleEn: "Client Sign-in",
-    descFr: "Connexion sécurisée du client et chargement du workspace local.",
-    descEn: "Secure client authentication and local workspace loading.",
     src: "/assets/orazaka/orazaka/screenshots/login.gif",
   },
   {
     type: "webapp",
-    titleFr: "Interface de Dialogue",
-    titleEn: "Conversational Interface",
-    descFr: "Console de chat multi-agents et flux de réflexion souverain.",
-    descEn: "Multi-agent conversational interface and sovereign reasoning flow.",
     src: "/assets/orazaka/orazaka/screenshots/awnser.gif",
   },
   {
     type: "image",
-    titleFr: "Pipeline Souverain",
-    titleEn: "Sovereign Pipeline",
-    descFr: "Architecture locale du traitement d'inférence.",
-    descEn: "Local execution architecture of inference processing.",
     src: "/assets/orazaka/orazaka/output/image/sd-1.5/stable-diffusion-cpp/image_output_20260601_202752.png",
   },
   {
     type: "image",
-    titleFr: "Protection des Données",
-    titleEn: "Data Protection",
-    descFr: "Blindage et isolation des métriques locales.",
-    descEn: "Local shielding and isolation of metrics.",
     src: "/assets/orazaka/orazaka/output/image/sd-1.5/stable-diffusion-cpp/image_output_20260601_203432.png",
   },
   {
     type: "image",
-    titleFr: "Maillage de Contexte",
-    titleEn: "Context Mesh",
-    descFr: "Matrice gérant l'intégration des outils et de la mémoire.",
-    descEn: "Matrix orchestrating tools and memory integration.",
     src: "/assets/orazaka/orazaka/output/image/sd-1.5/stable-diffusion-cpp/image_output_20260601_204836.png",
   },
   {
     type: "video",
-    titleFr: "Régulation Cognitive",
-    titleEn: "Cognitive Regulation",
-    descFr: "Ajustement sémantique continu en boucle fermée.",
-    descEn: "Continuous closed-loop semantic adjustment.",
     src: "/assets/orazaka/orazaka/output/video/animatediff-lightning/diffusers-pytorch/video_output_20260601_203751.mp4",
   },
   {
     type: "video",
-    titleFr: "Flux Vectoriel RAG",
-    titleEn: "RAG Vector Stream",
-    descFr: "Indexation et injection de contexte dynamique.",
-    descEn: "Real-time indexation and dynamic context injection.",
     src: "/assets/orazaka/orazaka/output/video/animatediff-lightning/diffusers-pytorch/video_output_20260601_204246.mp4",
   },
   {
     type: "video",
-    titleFr: "Maillage d'Intercepteurs",
-    titleEn: "Interceptor Mesh",
-    descFr: "Passage de la requête à travers le pipeline d'ingénierie.",
-    descEn: "Traversing the cognitive engineering pipeline.",
     src: "/assets/orazaka/orazaka/output/video/animatediff-lightning/diffusers-pytorch/video_output_20260601_204836.mp4",
   },
   {
     type: "video",
-    titleFr: "Sécurisation des Flux",
-    titleEn: "Secure Stream Routing",
-    descFr: "Contrôle d'accès et filtrage cryptographique des flux de données sortants.",
-    descEn: "Access control and cryptographic filtering of outbound data streams.",
     src: "/assets/orazaka/orazaka/output/video/animatediff-lightning/diffusers-pytorch/video_output_20260619_204836.mp4",
   },
   {
     type: "video",
-    titleFr: "Raisonnement Localisé",
-    titleEn: "Localized Reasoning Loop",
-    descFr: "Inférence neuronale optimisée s'exécutant sur le matériel de l'hôte.",
-    descEn: "Optimized neural inference running directly on host hardware.",
     src: "/assets/orazaka/orazaka/output/video/animatediff-lightning/diffusers-pytorch/video_output_20260619_244836.mp4",
   },
 ];
 
 export default function DemosGallery() {
-  const { locale } = useI18n();
+  const { t } = useI18n();
+  const text = t.pages.demosGallery;
+  const demos: DemoView[] = DEMOS.map((d, i) => ({ ...d, ...text.demos[i] }));
   const [filter, setFilter] = useState<"all" | "webapp" | "image" | "video">("video");
   const [loaded, setLoaded] = useState<Record<string, boolean>>({});
-  const [activeMedia, setActiveMedia] = useState<DemoItem | null>(null);
+  const [activeMedia, setActiveMedia] = useState<DemoView | null>(null);
 
-  const filteredDemos = DEMOS.filter((d) => filter === "all" || d.type === filter);
+  const filteredDemos = demos.filter((d) => filter === "all" || d.type === filter);
 
   const handleMediaLoad = (src: string) => {
     setLoaded((prev) => ({ ...prev, [src]: true }));
@@ -136,7 +93,7 @@ export default function DemosGallery() {
       {/* Category filter tabs */}
       <div
         role="tablist"
-        aria-label={locale === "fr" ? "Filtrer les démos" : "Filter demos"}
+        aria-label={t.pages.demosGallery.filterDemos}
         style={{
           display: "flex",
           flexWrap: "wrap",
@@ -146,10 +103,10 @@ export default function DemosGallery() {
         }}
       >
         {[
-          { id: "all", labelFr: "Tous les Démos", labelEn: "All Demos", icon: <Play size={13} strokeWidth={2} /> },
-          { id: "webapp", labelFr: "Web App & Dashboard", labelEn: "Web App & Dashboard", icon: <Layout size={13} strokeWidth={2} /> },
-          { id: "image", labelFr: "Générations SD", labelEn: "SD Generations", icon: <ImageIcon size={13} strokeWidth={2} /> },
-          { id: "video", labelFr: "Boucles Vidéo", labelEn: "Video Loops", icon: <Video size={13} strokeWidth={2} /> },
+          { id: "all", label: text.tabs.all, icon: <Play size={13} strokeWidth={2} /> },
+          { id: "webapp", label: text.tabs.webapp, icon: <Layout size={13} strokeWidth={2} /> },
+          { id: "image", label: text.tabs.image, icon: <ImageIcon size={13} strokeWidth={2} /> },
+          { id: "video", label: text.tabs.video, icon: <Video size={13} strokeWidth={2} /> },
         ].map((tab) => {
           const isActive = filter === tab.id;
           return (
@@ -180,7 +137,7 @@ export default function DemosGallery() {
               <span style={{ display: "inline-flex", color: isActive ? "var(--kz-accent)" : "var(--kz-text-muted)", transition: "color 150ms ease" }}>
                 {tab.icon}
               </span>
-              {locale === "fr" ? tab.labelFr : tab.labelEn}
+              {tab.label}
             </button>
           );
         })}
@@ -243,7 +200,7 @@ export default function DemosGallery() {
                   ) : (
                     <Image
                       src={demo.src}
-                      alt={locale === "fr" ? demo.titleFr : demo.titleEn}
+                      alt={demo.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
                       onLoad={() => handleMediaLoad(demo.src)}
@@ -283,10 +240,10 @@ export default function DemosGallery() {
                       {getBadgeLabel(demo.type)}
                     </span>
                     <h3 className="demo-card-title">
-                      {locale === "fr" ? demo.titleFr : demo.titleEn}
+                      {demo.title}
                     </h3>
                     <p className="demo-card-desc">
-                      {locale === "fr" ? demo.descFr : demo.descEn}
+                      {demo.desc}
                     </p>
                   </div>
                 </div>
@@ -366,7 +323,7 @@ export default function DemosGallery() {
               ) : (
                 <Image
                   src={activeMedia.src}
-                  alt={locale === "fr" ? activeMedia.titleFr : activeMedia.titleEn}
+                  alt={activeMedia.title}
                   fill
                   sizes="(max-width: 900px) 100vw, 900px"
                   style={{ objectFit: "contain" }}
@@ -380,10 +337,10 @@ export default function DemosGallery() {
                 {getBadgeLabel(activeMedia.type)}
               </span>
               <h3 className="font-display font-extrabold text-lg text-kz-text-primary mb-2" style={{ color: "var(--kz-text-primary)", margin: "0 0 8px 0" }}>
-                {locale === "fr" ? activeMedia.titleFr : activeMedia.titleEn}
+                {activeMedia.title}
               </h3>
               <p style={{ fontSize: "13.5px", color: "var(--kz-text-secondary)", lineHeight: 1.55, margin: 0 }}>
-                {locale === "fr" ? activeMedia.descFr : activeMedia.descEn}
+                {activeMedia.desc}
               </p>
             </div>
           </div>

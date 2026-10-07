@@ -6,6 +6,19 @@ import { Search } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 
 /* ─── Command-palette search (⌘K) ─── */
+
+const SEARCH_TARGETS = [
+  { id: "orazaka", url: "/products/orazaka" },
+  { id: "orazakaDocs", url: "/products/orazaka/getting-started/101" },
+  { id: "orazakaDemo", url: "/products/orazaka/demos" },
+  { id: "orazakaArch", url: "/products/orazaka/architecture" },
+  { id: "orochia", url: "/products/orochia" },
+  { id: "orochiaDocs", url: "/products/orochia/docs" },
+  { id: "story", url: "/story" },
+  { id: "openSource", url: "/open-source" },
+  { id: "contact", url: "/contact" },
+] as const;
+
 export function SearchCommand({
   open,
   setOpen,
@@ -13,7 +26,7 @@ export function SearchCommand({
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const { locale } = useI18n();
+  const { t } = useI18n();
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -29,21 +42,8 @@ export function SearchCommand({
     }
   }
 
-  const searchItems = locale === "fr" ? [
-    { title: "Vue d'ensemble Orazaka", category: "Produit", url: "/products/orazaka", desc: "IA souveraine, orchestration locale et RAG sécurisé." },
-    { title: "Documentation Orazaka", category: "Ressources", url: "/products/orazaka/getting-started/101", desc: "Guides de démarrage rapide, référence de configuration." },
-    { title: "Démo interactive", category: "Outils", url: "/products/orazaka/demos", desc: "Simulations interactives du fonctionnement d'Orazaka." },
-    { title: "Schéma de fonctionnement", category: "Outils", url: "/products/orazaka/architecture", desc: "Flux de traitement et schéma de fonctionnement du moteur Orazaka." },
-    { title: "Packs de solutions", category: "Produit", url: "/products/orazaka/packages", desc: "Configuration de souveraineté et conformité de sécurité." },
-    { title: "Contact", category: "Général", url: "/contact", desc: "Prendre contact avec l'équipe Krizaka." },
-  ] : [
-    { title: "Orazaka Overview", category: "Product", url: "/products/orazaka", desc: "Sovereign AI, local orchestration and secure RAG." },
-    { title: "Orazaka Documentation", category: "Resources", url: "/products/orazaka/getting-started/101", desc: "Quickstart guides, configuration reference." },
-    { title: "Interactive Demo", category: "Tools", url: "/products/orazaka/demos", desc: "Interactive simulations of Orazaka operations." },
-    { title: "Operational Flow Diagram", category: "Tools", url: "/products/orazaka/architecture", desc: "Operational flow and interactive schema of the Orazaka engine." },
-    { title: "Solution Packages", category: "Product", url: "/products/orazaka/packages", desc: "Sovereignty configuration and security compliance." },
-    { title: "Contact Us", category: "General", url: "/contact", desc: "Get in touch with the Krizaka team." },
-  ];
+  // Texts: messages → site.search.items.<id>.
+  const searchItems = SEARCH_TARGETS.map(({ id, url }) => ({ url, ...t.site.search.items[id] }));
 
   const filteredItems = searchItems.filter(item => {
     const q = searchQuery.toLowerCase();
@@ -150,7 +150,7 @@ export function SearchCommand({
               <input
                 autoFocus
                 type="text"
-                placeholder={locale === "fr" ? "Rechercher une page, documentation..." : "Search page, documentation..."}
+                placeholder={t.site.search.placeholder}
                 value={searchQuery}
                 onChange={(e) => {
                   setSearchQuery(e.target.value);
@@ -270,7 +270,7 @@ export function SearchCommand({
                     fontSize: "13.5px",
                   }}
                 >
-                  {locale === "fr" ? "Aucun résultat trouvé pour votre recherche." : "No results found for your search."}
+                  {t.site.search.empty}
                 </div>
               )}
             </div>
@@ -289,11 +289,11 @@ export function SearchCommand({
               }}
             >
               <span>
-                {locale === "fr" ? "Entrée pour sélectionner" : "Enter to select"}
+                {t.site.search.select}
               </span>
               <span style={{ display: "flex", gap: "12px" }}>
-                <span>↑↓ {locale === "fr" ? "Naviguer" : "Navigate"}</span>
-                <span>ESC {locale === "fr" ? "Fermer" : "Close"}</span>
+                <span>↑↓ {t.site.search.navigate}</span>
+                <span>ESC {t.site.search.close}</span>
               </span>
             </div>
           </div>

@@ -12,8 +12,8 @@
 import { ArrowUpRight, Boxes, Cpu, LayoutGrid, Layers, Package } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { GITHUB_ORG_URL } from "@/lib/site";
+import { getDictionary, format } from "@/lib/i18n";
 
-type Loc = "fr" | "en";
 
 export interface RepositoryEntry {
   name: string;
@@ -25,11 +25,10 @@ export interface RepositoryEntry {
   dependsOn: string[];
 }
 
+/** Title and intro: messages → pages.repositoryMap.layers.<layer>. */
 interface LayerMeta {
   icon: LucideIcon;
   color: string;
-  title: Record<Loc, string>;
-  intro: Record<Loc, string>;
 }
 
 /* Order = how a reader meets the platform: reusable bricks first. */
@@ -39,11 +38,6 @@ const LAYERS: [string, LayerMeta][] = [
     {
       icon: Layers,
       color: "#0ea5e9",
-      title: { fr: "Fondations", en: "Foundation" },
-      intro: {
-        fr: "Socle réutilisable par toute application Krizaka : build, contrats, edge, UI kit.",
-        en: "Reusable by any Krizaka application: build, contracts, edge, UI kit.",
-      },
     },
   ],
   [
@@ -51,11 +45,6 @@ const LAYERS: [string, LayerMeta][] = [
     {
       icon: Boxes,
       color: "#10b981",
-      title: { fr: "Services de domaine", en: "Domain services" },
-      intro: {
-        fr: "Utilisateurs, notifications, facturation — à brancher tels quels dans une nouvelle application.",
-        en: "Users, notifications, billing — plug them into a new application as they are.",
-      },
     },
   ],
   [
@@ -63,11 +52,6 @@ const LAYERS: [string, LayerMeta][] = [
     {
       icon: Cpu,
       color: "#6366f1",
-      title: { fr: "Moteur IA Orazaka", en: "Orazaka AI engine" },
-      intro: {
-        fr: "Le moteur cognitif et les services qui l'hébergent.",
-        en: "The cognitive engine and the services that host it.",
-      },
     },
   ],
   [
@@ -75,11 +59,6 @@ const LAYERS: [string, LayerMeta][] = [
     {
       icon: Cpu,
       color: "#f59e0b",
-      title: { fr: "Workers natifs", en: "Native workers" },
-      intro: {
-        fr: "Inférence média native, hors Docker.",
-        en: "Native media inference, outside Docker.",
-      },
     },
   ],
   [
@@ -87,11 +66,6 @@ const LAYERS: [string, LayerMeta][] = [
     {
       icon: LayoutGrid,
       color: "#8b5cf6",
-      title: { fr: "Applications", en: "Applications" },
-      intro: {
-        fr: "Web, administration, mobile et CLI.",
-        en: "Web, administration, mobile and CLI.",
-      },
     },
   ],
   [
@@ -99,11 +73,6 @@ const LAYERS: [string, LayerMeta][] = [
     {
       icon: Package,
       color: "#f43f5e",
-      title: { fr: "Contenu", en: "Content" },
-      intro: {
-        fr: "Les packs de référence du Studio.",
-        en: "The Studio's reference packs.",
-      },
     },
   ],
 ];
@@ -194,7 +163,7 @@ export default function RepositoryMap({
   repositories: RepositoryEntry[];
   locale: string;
 }) {
-  const loc: Loc = locale === "en" ? "en" : "fr";
+  const text = getDictionary(locale).pages.repositoryMap;
   if (repositories.length === 0) return null;
 
   return (
@@ -215,7 +184,7 @@ export default function RepositoryMap({
             margin: 0,
           }}
         >
-          {loc === "fr" ? "Code source" : "Source code"}
+          {text.sourceCode}
         </p>
         <h2
           id="repositories-title"
@@ -227,12 +196,10 @@ export default function RepositoryMap({
             margin: "12px 0 0",
           }}
         >
-          {loc === "fr" ? "Un dépôt par composant." : "One repository per component."}
+          {text.oneRepositoryPerComponent}
         </h2>
         <p style={{ fontSize: "15px", lineHeight: 1.7, color: "var(--kz-text-secondary)", margin: "14px 0 0" }}>
-          {loc === "fr"
-            ? `${repositories.length} dépôts open source (Apache-2.0) dans l'organisation krizaka. Prenez seulement ce dont votre application a besoin, ou clonez tout l'espace de travail avec `
-            : `${repositories.length} open-source repositories (Apache-2.0) in the krizaka organisation. Take only what your application needs, or clone the whole workspace with `}
+          {format(text.openSourceRepositoriesApache2, { p0: repositories.length })}
           <a href={`${GITHUB_ORG_URL}/orazaka`} style={{ color: "var(--kz-accent)" }}>
             krizaka/orazaka
           </a>
@@ -257,9 +224,9 @@ export default function RepositoryMap({
                     fontWeight: 700,
                   }}
                 >
-                  {meta.title[loc]}
+                  {text.layers[layer as keyof typeof text.layers].title}
                 </h3>
-                <span style={{ fontSize: "13px", color: "var(--kz-text-muted)" }}>{meta.intro[loc]}</span>
+                <span style={{ fontSize: "13px", color: "var(--kz-text-muted)" }}>{text.layers[layer as keyof typeof text.layers].intro}</span>
               </div>
               <div
                 style={{

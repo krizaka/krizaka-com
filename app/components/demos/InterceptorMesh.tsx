@@ -33,9 +33,8 @@ const INTERCEPTOR_DATA: Record<
   {
     name: string;
     phase: "ingress" | "core" | "egress";
-    desc: { fr: string; en: string };
+    /* desc and details.title: messages → pages.interceptorMesh.interceptorData.<node>. */
     details: {
-      title: { fr: string; en: string };
       params: Record<string, unknown>;
     };
   }
@@ -43,12 +42,7 @@ const INTERCEPTOR_DATA: Record<
   "node-1": {
     name: "UserContextResolver",
     phase: "ingress",
-    desc: {
-      fr: "Résout le profil utilisateur, ses rôles RBAC et son tier de rate-limiting.",
-      en: "Resolves user profiles, RBAC roles, and rate-limiting tier.",
-    },
     details: {
-      title: { fr: "Résolution Contexte Utilisateur", en: "User Context Resolution" },
       params: {
         userId: "usr_9x2f8b",
         tier: "GOVERNANCE",
@@ -62,12 +56,7 @@ const INTERCEPTOR_DATA: Record<
   "node-2": {
     name: "SystemContextInjector",
     phase: "ingress",
-    desc: {
-      fr: "Injecte les signaux système, les contraintes matérielles et les variables d'environnement.",
-      en: "Injects environmental variables, hardware constraints, and system metadata.",
-    },
     details: {
-      title: { fr: "Injection Contexte Système", en: "System Context Injection" },
       params: {
         environment: "production-us-east-1",
         podId: "orazaka-pod-88a",
@@ -80,12 +69,7 @@ const INTERCEPTOR_DATA: Record<
   "node-3": {
     name: "LanguageAlignmentInterceptor",
     phase: "ingress",
-    desc: {
-      fr: "Assure la traduction du raisonnement et maintient l'alignement sémantique du dictionnaire.",
-      en: "Ensures reasoning translation and dictionary mapping consistency.",
-    },
     details: {
-      title: { fr: "Alignement Linguistique", en: "Language Alignment" },
       params: {
         sourceLang: "fr-CA",
         reasoningTarget: "en-US",
@@ -97,12 +81,7 @@ const INTERCEPTOR_DATA: Record<
   "node-4": {
     name: "MemoryInterceptor",
     phase: "ingress",
-    desc: {
-      fr: "Récupère et formate la fenêtre de conversation historique FIFO (glissante).",
-      en: "Retrieves and formats the FIFO sliding history window.",
-    },
     details: {
-      title: { fr: "Fenêtre Mémoire Conversationnelle", en: "Conversation Memory Window" },
       params: {
         windowType: "Sliding FIFO",
         maxHistoryMessages: 50,
@@ -115,12 +94,7 @@ const INTERCEPTOR_DATA: Record<
   "node-5": {
     name: "RagInterceptor",
     phase: "ingress",
-    desc: {
-      fr: "Enrichit le prompt avec des contextes pertinents récupérés de pgvector.",
-      en: "Enriches the prompt with context fetched from pgvector database.",
-    },
     details: {
-      title: { fr: "Enrichissement Vectoriel RAG", en: "RAG Vector Context Retrieval" },
       params: {
         vectorDb: "pgvector (hybrid-search)",
         similarityThreshold: 0.82,
@@ -133,12 +107,7 @@ const INTERCEPTOR_DATA: Record<
   "node-6": {
     name: "McpInterceptor",
     phase: "core",
-    desc: {
-      fr: "Résout les outils externes et les serveurs Model Context Protocol connectés.",
-      en: "Resolves Model Context Protocol servers and connected external tools.",
-    },
     details: {
-      title: { fr: "Résolution de Protocole MCP", en: "Model Context Protocol Resolver" },
       params: {
         activeMcpServers: ["codegraph", "pinecone-mcp"],
         availableTools: 12,
@@ -150,12 +119,7 @@ const INTERCEPTOR_DATA: Record<
   "node-7": {
     name: "RefinerInterceptor",
     phase: "core",
-    desc: {
-      fr: "Re-formule les instructions floues en commandes précises et structurées.",
-      en: "Reformulates fuzzy user inputs into structured system commands.",
-    },
     details: {
-      title: { fr: "Raffinement Sémantique", en: "Semantic Query Refinement" },
       params: {
         originalQuery: "vérifier build",
         refinedPrompt: "Locate compilation outputs in workspace and execute npm run build --check",
@@ -166,12 +130,7 @@ const INTERCEPTOR_DATA: Record<
   "node-8": {
     name: "RouterInterceptor",
     phase: "core",
-    desc: {
-      fr: "Analyse l'intention de la requête et la route vers le modèle LLM optimal.",
-      en: "Analyzes user intent and routes the query to the optimal LLM.",
-    },
     details: {
-      title: { fr: "Routage Intentionnel", en: "Intent-Based LLM Router" },
       params: {
         intentClass: "SYSTEM_CODEGEN",
         routedModel: "claude-3-5-sonnet-v2",
@@ -183,12 +142,7 @@ const INTERCEPTOR_DATA: Record<
   "node-9": {
     name: "ToolInterceptor",
     phase: "core",
-    desc: {
-      fr: "Exécute les callbacks d'outils dynamiques et valide les schémas d'entrée.",
-      en: "Executes dynamic tool callbacks and checks schema safety constraints.",
-    },
     details: {
-      title: { fr: "Exécution des Outils / Callbacks", en: "Tool Execution & Dispatcher" },
       params: {
         registeredToolsCount: 8,
         activeInvocation: "run_command",
@@ -200,12 +154,7 @@ const INTERCEPTOR_DATA: Record<
   "node-10": {
     name: "CostShieldInterceptor",
     phase: "core",
-    desc: {
-      fr: "Surveille le budget de jetons et bloque les requêtes hors limite financière.",
-      en: "Monitors token budgets and blocks requests exceeding cost allocation limits.",
-    },
     details: {
-      title: { fr: "Bouclier Anti-Surcoût", en: "Cost & Token Resource Shield" },
       params: {
         maxTokenLimit: 16384,
         estimatedTokens: 4850,
@@ -217,12 +166,7 @@ const INTERCEPTOR_DATA: Record<
   "node-11": {
     name: "QuantumValidationAdvisor",
     phase: "core",
-    desc: {
-      fr: "Exécute des validations multi-agents rigoureuses sur la réponse produite.",
-      en: "Runs multi-agent validations on LLM outputs prior to output streaming.",
-    },
     details: {
-      title: { fr: "Validation Multi-Agents de Sortie", en: "Output Validation Matrix" },
       params: {
         validationTiers: ["json-schema", "ast-syntax", "types-compilation"],
         validationStatus: "SUCCESS",
@@ -233,12 +177,7 @@ const INTERCEPTOR_DATA: Record<
   "node-12": {
     name: "MediaInterceptor",
     phase: "ingress",
-    desc: {
-      fr: "Décode et vérifie l'intégrité des entrées multi-modales (Base64).",
-      en: "Decodes and verifies Base64 multi-modal input payloads.",
-    },
     details: {
-      title: { fr: "Extraction Média Multi-Modale", en: "Multi-Modal Payload Extractor" },
       params: {
         detectedMime: "image/png",
         payloadBytes: 1258291,
@@ -250,12 +189,7 @@ const INTERCEPTOR_DATA: Record<
   "node-13": {
     name: "AuditLogInterceptor",
     phase: "ingress",
-    desc: {
-      fr: "Enregistre des journaux chiffrés pour la conformité Loi 25 (anonymisés).",
-      en: "Records encrypted, anonymized audit logs for compliance tracking.",
-    },
     details: {
-      title: { fr: "Journalisation SecOps & Loi 25", en: "Compliance & Audit Logger" },
       params: {
         complianceTarget: "Loi 25 (Quebec)",
         encryptionType: "AES-GCM-256",
@@ -267,12 +201,7 @@ const INTERCEPTOR_DATA: Record<
   "node-14": {
     name: "SafetyGuardrailsInterceptor",
     phase: "ingress",
-    desc: {
-      fr: "Filtre les contenus toxiques ou inappropriés via des filtres système locaux.",
-      en: "Applies content filters and toxic language blocklists locally.",
-    },
     details: {
-      title: { fr: "Garde-Fous de Sécurité", en: "Safety Guardrails Filter" },
       params: {
         moderationEngine: "Llama-Guard-3-local",
         inputSafety: "SAFE",
@@ -284,12 +213,7 @@ const INTERCEPTOR_DATA: Record<
   "node-15": {
     name: "ResponseAssemblyInterceptor",
     phase: "egress",
-    desc: {
-      fr: "Assemble, compresse et formate la réponse finale pour le client BFF.",
-      en: "Assembles, compresses, and packages the output for client BFF streaming.",
-    },
     details: {
-      title: { fr: "Assemblage & Streaming BFF", en: "BFF Response Assembly Stream" },
       params: {
         streamProtocol: "Server-Sent Events (SSE)",
         compression: "gzip",
@@ -414,7 +338,7 @@ const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = "LR") => 
 };
 
 export default function InterceptorMesh({ compact = false }: { compact?: boolean }) {
-  const { locale } = useI18n();
+  const { t } = useI18n();
   const [mounted, setMounted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
@@ -485,6 +409,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
 
   const selectedNodeId = hoveredNodeId || currentActiveNodeId || "node-1";
   const selectedData = INTERCEPTOR_DATA[selectedNodeId];
+  const selectedText = t.pages.interceptorMesh.interceptorData[selectedNodeId as keyof typeof t.pages.interceptorMesh.interceptorData];
 
   const handleReset = () => {
     setActiveStep(0);
@@ -550,7 +475,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
                 margin: 0,
               }}
             >
-              {locale === "fr" ? "Console Cognitive Interactive" : "Interactive Cognitive Console"}
+              {t.pages.interceptorMesh.interactiveCognitiveConsole}
             </h3>
             <p style={{ fontSize: "10.5px", fontFamily: "var(--font-mono)", color: "var(--kz-text-muted)", margin: "2px 0 0" }}>
               STATUS: <span style={{ color: isPlaying ? "var(--kz-status-success)" : "var(--kz-status-warning)" }}>{isPlaying ? "WAVE_PROPAGATION_ACTIVE" : "ENGINE_PAUSED"}</span> | STEP: 0{activeStep + 1}
@@ -589,12 +514,12 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
             {isPlaying ? (
               <>
                 <Pause size={12} />
-                {locale === "fr" ? "PAUSE" : "PAUSE"}
+                {t.pages.interceptorMesh.pause}
               </>
             ) : (
               <>
                 <Play size={12} style={{ color: "var(--kz-accent)" }} fill="var(--kz-accent-soft)" />
-                {locale === "fr" ? "LANCER" : "RESUME"}
+                {t.pages.interceptorMesh.resume}
               </>
             )}
           </button>
@@ -628,7 +553,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
             title="Reset wave sequence"
           >
             <RotateCcw size={12} />
-            {locale === "fr" ? "RÉINITIALISER" : "RESET"}
+            {t.pages.interceptorMesh.reset}
           </button>
 
           {/* Speed settings */}
@@ -763,7 +688,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
             >
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px", borderBottom: "1px solid var(--kz-border-subtle)", paddingBottom: "8px" }}>
                 <span style={{ flex: 1, fontFamily: "var(--font-mono)", fontSize: "9px", fontWeight: 700, color: "var(--kz-accent)", letterSpacing: "0.05em" }}>
-                  {locale === "fr" ? "HUD: LOGS DE RAISONNEMENT" : "HUD: REASONING LOGS"}
+                  {t.pages.interceptorMesh.hudReasoningLogs}
                 </span>
                 <span
                   style={{
@@ -784,7 +709,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
                 {selectedData?.name}
               </h4>
               <p style={{ fontSize: "11.5px", lineHeight: "1.5", color: "var(--kz-text-secondary)", marginBottom: "12px" }}>
-                {locale === "fr" ? selectedData?.desc.fr : selectedData?.desc.en}
+                {selectedText?.desc}
               </p>
               
               <div
@@ -804,7 +729,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
               >
                 <div style={{ color: "var(--kz-accent)", fontWeight: 700, marginBottom: "4px" }}>
                   {"// "}
-                  {locale === "fr" ? selectedData?.details.title.fr : selectedData?.details.title.en}
+                  {selectedText?.details.title}
                 </div>
                 <pre style={{ color: "color-mix(in srgb, var(--kz-accent) 70%, var(--kz-text-primary))", margin: 0 }}>
                   {JSON.stringify(selectedData?.details.params, null, 2)}
@@ -831,7 +756,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
             {/* Header */}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px", borderBottom: "1px solid var(--kz-border-subtle)" }}>
               <span style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", fontWeight: 700, color: "var(--kz-accent)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
-                {locale === "fr" ? "LOGS D'ENRICHISSEMENT CONTEXTUEL" : "CONTEXT ENRICHMENT LOGS"}
+                {t.pages.interceptorMesh.contextEnrichmentLogs}
               </span>
               {hoveredNodeId ? (
                 <span
@@ -866,13 +791,13 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
                   STAGE: {selectedNodeId.replace("node-", "")} | {selectedData?.phase}
                 </span>
                 <p style={{ fontSize: "13px", lineHeight: "1.6", color: "var(--kz-text-secondary)", marginBottom: "20px", margin: 0 }}>
-                  {locale === "fr" ? selectedData?.desc.fr : selectedData?.desc.en}
+                  {selectedText?.desc}
                 </p>
 
                 {/* JSON Mock Inspector Parameters */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
                   <span style={{ fontFamily: "var(--font-mono)", fontSize: "9.5px", color: "var(--kz-text-muted)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
-                    {locale === "fr" ? "Paramètres d'enrichissement :" : "Enrichment parameters:"}
+                    {t.pages.interceptorMesh.enrichmentParameters}
                   </span>
                   <div
                     style={{
@@ -889,7 +814,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
                   >
                     <div style={{ color: "var(--kz-accent)", fontWeight: 700, marginBottom: "6px" }}>
                       {"// "}
-                      {locale === "fr" ? selectedData?.details.title.fr : selectedData?.details.title.en}
+                      {selectedText?.details.title}
                     </div>
                     <pre style={{ color: "color-mix(in srgb, var(--kz-accent) 70%, var(--kz-text-primary))", margin: 0 }}>
                       {JSON.stringify(selectedData?.details.params, null, 2)}
@@ -916,9 +841,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
               >
                 <ShieldAlert size={14} style={{ color: "var(--kz-accent)", flexShrink: 0, marginTop: "2px" }} />
                 <span>
-                  {locale === "fr"
-                    ? "Conformément à la Loi 25, les données personnelles de l'utilisateur sont anonymisées au niveau de l'intercepteur AuditLog avant d'entrer dans le pipeline central d'inférence."
-                    : "In compliance with Loi 25, personal user context fields are anonymized at the AuditLog interceptor phase prior to entering the core inference pipeline."}
+                  {t.pages.interceptorMesh.inComplianceWithLoi25}
                 </span>
               </div>
             </div>

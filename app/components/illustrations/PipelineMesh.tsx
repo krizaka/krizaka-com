@@ -79,7 +79,7 @@ const getNodeTheme = (id: string) => {
 };
 
 export default function PipelineMesh() {
-  const { locale } = useI18n();
+  const { t, locale } = useI18n();
   const [active, setActive] = useState<string | null>(null);
 
   // Map and center coordinates to take up the full canvas width & height with nice breathing room
@@ -326,7 +326,7 @@ export default function PipelineMesh() {
                     boxShadow: `0 4px 12px ${theme.glow}`,
                   }}
                 >
-                  {locale === "fr" ? "DÉPART / INTENTION UTILISATEUR" : "START / USER INTENTION"}
+                  {t.pages.pipelineMesh.startUserIntention}
                 </span>
               )}
 

@@ -3,6 +3,7 @@ import { localizedMetadata } from "@/lib/seo";
 import TopNavBar from "../../../../components/TopNavBar";
 import DemosGallery from "../../../../components/DemosGallery";
 import SiteFooter from "../../../../components/SiteFooter";
+import { getDictionary } from "@/lib/i18n";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -50,7 +51,8 @@ export default async function DemosPage({ params }: Props) {
           position: "relative",
           maxWidth: "1120px",
           margin: "0 auto",
-          overflow: "visible",
+          // The 1200px backdrop is decorative: clip it, or narrow screens scroll sideways.
+          overflow: "hidden",
         }}
       >
         {/* Unified Cyber Landscape Backdrop */}
@@ -314,7 +316,7 @@ export default async function DemosPage({ params }: Props) {
             zIndex: 1,
           }}
         >
-          {locale === "fr" ? "Démos & Visualisation" : "Demos & Visualization"}
+          {getDictionary(locale).pages.demosMeta.demosVisualization}
         </h1>
         <p
           style={{
@@ -327,9 +329,7 @@ export default async function DemosPage({ params }: Props) {
             zIndex: 1,
           }}
         >
-          {locale === "fr" 
-            ? "Démonstrations et preuves visuelles de l'exécution locale du moteur et de son pipeline cognitif."
-            : "Visual proof of the local orchestration engine and cognitive pipeline execution."}
+          {getDictionary(locale).pages.demosMeta.visualProofOfTheLocal}
         </p>
       </section>
 

@@ -5,28 +5,27 @@
 import { Bot, Boxes, CreditCard, Film, Scale, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "../I18nProvider";
-import { EXPERTISE } from "@/lib/org-data";
 
 const ICONS: LucideIcon[] = [Bot, Boxes, Scale, Film, CreditCard, ShieldCheck];
 
 export default function ExpertiseSection() {
-  const { locale } = useI18n();
-  const loc = locale === "en" ? "en" : "fr";
+  const { t } = useI18n();
+  const e = t.site.expertise;
 
   return (
     <section id="expertise" className="kz-section">
-      <p className="kz-eyebrow">{loc === "fr" ? "Savoir-faire" : "Know-how"}</p>
+      <p className="kz-eyebrow">{e.eyebrow}</p>
       <h2 className="kz-h2">
-        {loc === "fr" ? "Ce dont on s'occupe, pour que vous n'ayez pas à y penser." : "What we take care of, so you don't have to think about it."}
+        {e.title}
       </h2>
       <div className="kz-expertise">
-        {EXPERTISE.map((item, i) => {
+        {e.items.map((item, i) => {
           const Icon = ICONS[i % ICONS.length];
           return (
-            <div key={item.title.en} className="kz-expertise-item">
+            <div key={item.title} className="kz-expertise-item">
               <Icon size={18} aria-hidden />
-              <h3>{item.title[loc]}</h3>
-              <p>{item.body[loc]}</p>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
             </div>
           );
         })}

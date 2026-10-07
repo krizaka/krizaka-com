@@ -198,18 +198,18 @@ const COPY = {
 } as const;
 
 export default function OrazakaOverview() {
-  const { locale } = useI18n();
+  const { t, locale } = useI18n();
   const c = COPY[locale];
 
   const DOCS = [
-    { title: "Developer Onboarding (101)", href: "/products/orazaka/getting-started/101", category: locale === "fr" ? "Démarrer" : "Start" },
-    { title: "Architecture Reference", href: "/products/orazaka/architecture/architecture", category: locale === "fr" ? "Cœur" : "Core" },
-    { title: "API Reference", href: "/products/orazaka/api/api_reference", category: locale === "fr" ? "Cœur" : "Core" },
-    { title: "Auth & Security", href: "/products/orazaka/core-features/auth", category: locale === "fr" ? "Cœur" : "Core" },
-    { title: "Model Catalog", href: "/products/orazaka/architecture/models", category: locale === "fr" ? "Cœur" : "Core" },
-    { title: "CLI Reference", href: "/products/orazaka/api/cli", category: locale === "fr" ? "Ops" : "Ops" },
-    { title: "Deployment (IaC)", href: "/products/orazaka/operations/deploy", category: locale === "fr" ? "Ops" : "Ops" },
-    { title: "Feature Matrix", href: "/products/orazaka/core-features/master_features", category: locale === "fr" ? "Ops" : "Ops" },
+    { title: "Developer Onboarding (101)", href: "/products/orazaka/getting-started/101", category: t.pages.orazakaOverview.start },
+    { title: "Architecture Reference", href: "/products/orazaka/architecture/architecture", category: t.pages.orazakaOverview.core },
+    { title: "API Reference", href: "/products/orazaka/api/api_reference", category: t.pages.orazakaOverview.core },
+    { title: "Auth & Security", href: "/products/orazaka/core-features/auth", category: t.pages.orazakaOverview.core },
+    { title: "Model Catalog", href: "/products/orazaka/architecture/models", category: t.pages.orazakaOverview.core },
+    { title: "CLI Reference", href: "/products/orazaka/api/cli", category: t.pages.orazakaOverview.ops },
+    { title: "Deployment (IaC)", href: "/products/orazaka/operations/deploy", category: t.pages.orazakaOverview.ops },
+    { title: "Feature Matrix", href: "/products/orazaka/core-features/master_features", category: t.pages.orazakaOverview.ops },
   ];
 
   return (

@@ -11,7 +11,7 @@ import { ArrowRight, BookOpen, ChevronDown, Compass, Cpu, Feather, GitBranch, La
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import ProductLogo from "./ProductLogo";
-import { NAV_COMPANY, NAV_PRODUCTS, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
+import { NAV_COMPANY, NAV_PRODUCTS, companyLinkText, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
 
 export const NAV_ICONS: Record<NavIcon, LucideIcon> = {
   overview: Compass,
@@ -80,15 +80,15 @@ function Dropdown({ id, label, active, width, children }: { id: string; label: s
   );
 }
 
-function MenuLink({ link, loc, pathname }: { link: NavLink; loc: "fr" | "en"; pathname: string }) {
+function MenuLink({ link, text, pathname }: { link: NavLink; text: { label: string; desc: string }; pathname: string }) {
   const Icon = NAV_ICONS[link.icon];
   const active = isNavActive(link, pathname);
   return (
     <Link href={link.href} className={`kz-menu-link${active ? " is-active" : ""}`}>
       <Icon size={15} strokeWidth={1.8} className="kz-menu-icon" aria-hidden />
       <span>
-        <span className="kz-menu-label">{link.label[loc]}</span>
-        <span className="kz-menu-desc">{link.desc[loc]}</span>
+        <span className="kz-menu-label">{text.label}</span>
+        <span className="kz-menu-desc">{text.desc}</span>
       </span>
     </Link>
   );
@@ -96,13 +96,13 @@ function MenuLink({ link, loc, pathname }: { link: NavLink; loc: "fr" | "en"; pa
 
 export function ProductsMenu() {
   const pathname = localeless(usePathname());
-  const { locale } = useI18n();
-  const loc = locale === "fr" ? "fr" : "en";
+  const { t } = useI18n();
+  const m = t.site.menu;
   const productsActive = pathname.startsWith("/products");
 
   return (
     <>
-      <Dropdown id="nav-products-trigger" label={loc === "fr" ? "Produits" : "Products"} active={productsActive} width={640}>
+      <Dropdown id="nav-products-trigger" label={m.products} active={productsActive} width={640}>
         <div className="kz-mega">
           {NAV_PRODUCTS.map((p) => (
             <div key={p.id} className="kz-mega-col">
@@ -112,14 +112,14 @@ export function ProductsMenu() {
                 </span>
                 <span style={{ minWidth: 0 }}>
                   <span className="kz-mega-name">
-                    {p.name} <span className="kz-mega-badge">{p.badge[loc]}</span>
+                    {p.name} <span className="kz-mega-badge">{t.site.nav[p.id].badge}</span>
                   </span>
-                  <span className="kz-mega-tagline">{p.tagline[loc]}</span>
+                  <span className="kz-mega-tagline">{t.site.nav[p.id].tagline}</span>
                 </span>
               </Link>
               <div className="kz-mega-links">
                 {p.links.map((l) => (
-                  <MenuLink key={l.href} link={l} loc={loc} pathname={pathname} />
+                  <MenuLink key={l.href} link={l} text={t.site.nav[p.id].links[l.icon]} pathname={pathname} />
                 ))}
               </div>
             </div>
@@ -130,14 +130,14 @@ export function ProductsMenu() {
             const Icon = NAV_ICONS[l.icon];
             return (
               <Link key={l.href} href={l.href} className="kz-mega-foot-link">
-                <Icon size={14} aria-hidden /> {l.label[loc]}
+                <Icon size={14} aria-hidden /> {companyLinkText(t, l).label}
               </Link>
             );
           })}
         </div>
       </Dropdown>
 
-      <Dropdown id="nav-docs-trigger" label="Docs" active={pathname.includes("/docs") || pathname.startsWith("/products/orazaka/getting-started")} width={300}>
+      <Dropdown id="nav-docs-trigger" label={m.docs} active={pathname.includes("/docs") || pathname.startsWith("/products/orazaka/getting-started")} width={300}>
         {NAV_PRODUCTS.map((p) => {
           const docs = p.links.find((l) => l.icon === "docs")!;
           return (
@@ -145,7 +145,7 @@ export function ProductsMenu() {
               <ProductLogo id={p.id} size={22} animated={false} />
               <span>
                 <span className="kz-menu-label">{p.name}</span>
-                <span className="kz-menu-desc">{docs.desc[loc]}</span>
+                <span className="kz-menu-desc">{t.site.nav[p.id].links.docs.desc}</span>
               </span>
               <ArrowRight size={13} className="kz-menu-arrow" aria-hidden />
             </Link>
@@ -154,7 +154,7 @@ export function ProductsMenu() {
       </Dropdown>
 
       <Link href="/open-source" className={`kz-dd-trigger${pathname === "/open-source" ? " is-active" : ""}`}>
-        Open source
+        {m.openSource}
       </Link>
 
       <style>{`

@@ -174,7 +174,7 @@ export default function SovereigntyPerimeter({
   width?: number;
   height?: number;
 }) {
-  const { locale } = useI18n();
+  const { t, locale } = useI18n();
   const reduce = useReducedMotion();
   const [active, setActive] = useState<NodeId | null>(null);
 
@@ -215,7 +215,7 @@ export default function SovereigntyPerimeter({
     <div
       className={`${className}`}
       role="group"
-      aria-label={locale === "fr" ? "Schéma : le produit Orazaka tourne entièrement dans ton périmètre souverain." : "Diagram: the Orazaka product runs entirely inside your sovereign perimeter."}
+      aria-label={t.pages.sovereigntyPerimeter.diagramTheOrazakaProductRuns}
       style={{
         width: "100%",
         maxWidth: `${width}px`,

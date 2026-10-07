@@ -39,7 +39,7 @@ const HERO_JOURNEYS: Record<string, string[]> = {
 };
 
 export default async function OrochiaDocPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug, locale } = await params;
   const doc = await load(slug);
   if (!doc) notFound();
   const ids = HERO_JOURNEYS[slug];
@@ -48,5 +48,5 @@ export default async function OrochiaDocPage({ params }: Props) {
       <OrochiaArchitecture journeys={verifiedJourneys().filter((j) => ids.includes(j.id)).sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))} />
     </div>
   ) : undefined;
-  return <DocArticle doc={doc} product={{ name: "Orochia", href: "/products/orochia" }} hero={hero} />;
+  return <DocArticle doc={doc} product={{ name: "Orochia", href: "/products/orochia" }} hero={hero} locale={locale} />;
 }

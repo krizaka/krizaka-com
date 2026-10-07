@@ -1,3 +1,4 @@
+import { getDictionary } from "@/lib/i18n";
 /* ═══════════════════════════════════════════════════════════════════
    Structured data (schema.org / JSON-LD) builders.
 
@@ -20,7 +21,8 @@ const ORG_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
 const SOFTWARE_ID = `${SITE_URL}/#orazaka`;
 
-const hreflangOf = (locale: Locale) => (locale === "fr" ? "fr-CA" : "en");
+const HREFLANG: Record<Locale, string> = { fr: "fr-CA", en: "en" };
+const hreflangOf = (locale: Locale) => HREFLANG[locale];
 
 const ORG_DESCRIPTION: Record<Locale, string> = {
   fr: "Krizaka conçoit Orazaka, un moteur d'orchestration d'IA souverain et open source. Déployez une IA multimodale (chat, image, vidéo, voix) entièrement sur votre propre infrastructure — conforme à la Loi 25, au RGPD et à PIPEDA.",
@@ -107,10 +109,7 @@ export function buildSiteGraph(locale: Locale) {
         name: "Orochia",
         applicationCategory: "MultimediaApplication",
         operatingSystem: "Linux (Docker), DigitalOcean App Platform",
-        description:
-          locale === "fr"
-            ? "Plateforme vidéo open source pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle, conformité 18+."
-            : "Open-source video platform for independent creators: direct-to-CDN streaming, server-side access control, gateway-confirmed payments, 18+ compliance.",
+        description: getDictionary(locale).site.structuredData.orochia,
         url: `${SITE_URL}/${locale}/products/orochia`,
         isAccessibleForFree: true,
         codeRepository: "https://github.com/krizaka/orochia",

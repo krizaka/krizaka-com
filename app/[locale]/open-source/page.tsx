@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookOpen, FileCode2, GitBranch, Package, Plug, Scale, ShieldCheck, Workflow } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
-import { orgRepositories, type Loc, type OrgRepository } from "@/lib/org-data";
+import { orgRepositories, type OrgRepository } from "@/lib/org-data";
+import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
@@ -32,76 +32,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-const STEPS: { icon: LucideIcon; title: Record<Loc, string>; body: Record<Loc, string> }[] = [
-  {
-    icon: Package,
-    title: { en: "Pick a piece", fr: "Choisissez une brique" },
-    body: {
-      en: "Each component is its own repository, with its own CI, docs and contract. Take one, or several.",
-      fr: "Chaque composant est un dépôt à part, avec sa CI, sa doc et son contrat. Prenez-en un, ou plusieurs.",
-    },
-  },
-  {
-    icon: GitBranch,
-    title: { en: "Run it", fr: "Faites-le tourner" },
-    body: {
-      en: "Clone it on its own, or the whole platform at once with the krizaka/orazaka workspace.",
-      fr: "Clonez-le seul, ou toute la plateforme d'un coup avec l'espace de travail krizaka/orazaka.",
-    },
-  },
-  {
-    icon: Plug,
-    title: { en: "Plug it in", fr: "Branchez-le" },
-    body: {
-      en: "Talk to it through its versioned contract — the *-api modules and typed clients, published as com.orazaka:* on GitHub Packages.",
-      fr: "Parlez-lui via son contrat versionné — les modules *-api et clients typés, publiés en com.orazaka:* sur GitHub Packages.",
-    },
-  },
-];
+const STEPS = [
+  { id: "pick", icon: Package },
+  { id: "run", icon: GitBranch },
+  { id: "plug", icon: Plug },
+] as const;
 
 /** The pieces most applications need first — reusable outside Orazaka as they are. */
-const FEATURED: { name: string; title: Record<Loc, string>; gives: Record<Loc, string[]> }[] = [
-  {
-    name: "orazaka-users",
-    title: { en: "Users & sign-in", fr: "Utilisateurs & connexion" },
-    gives: {
-      en: ["Registration and e-mail verification", "Password, Google and GitHub sign-in", "Forgot / reset password, profiles", "API keys, roles, JWT"],
-      fr: ["Inscription et vérification d'e-mail", "Connexion mot de passe, Google, GitHub", "Mot de passe oublié, profils", "Clés d'API, rôles, JWT"],
-    },
-  },
-  {
-    name: "orazaka-notifications",
-    title: { en: "Notifications", fr: "Notifications" },
-    gives: {
-      en: ["E-mail (SMTP), SMS (Twilio), webhooks", "One delivery port for every channel", "Triggered by events or explicit requests", "Over AMQP, decoupled from your app"],
-      fr: ["E-mail (SMTP), SMS (Twilio), webhooks", "Un seul port de livraison pour tous les canaux", "Déclenché par événement ou à la demande", "Via AMQP, découplé de votre app"],
-    },
-  },
-  {
-    name: "orazaka-billing",
-    title: { en: "Billing & credits", fr: "Facturation & crédits" },
-    gives: {
-      en: ["Credits, wallets and plans", "Subscriptions and a price book", "Metering: hold → settle → release", "A typed client for your services"],
-      fr: ["Crédits, portefeuilles et forfaits", "Abonnements et grille tarifaire", "Mesure : réserver → régler → libérer", "Un client typé pour vos services"],
-    },
-  },
-];
+/** The pieces most applications need first — reusable outside Orazaka as they are. */
+const FEATURED = ["orazaka-users", "orazaka-notifications", "orazaka-billing"] as const;
 
-const GROUPS: { id: string; product: "orazaka" | "orochia"; title: Record<Loc, string>; intro: Record<Loc, string> }[] = [
-  { id: "workspace", product: "orazaka", title: { fr: "Espace de travail", en: "Workspace" }, intro: { fr: "Le point d'entrée : clone et construit tous les dépôts d'Orazaka.", en: "The entry point: clones and builds every Orazaka repository." } },
-  { id: "foundation", product: "orazaka", title: { fr: "Fondations", en: "Foundation" }, intro: { fr: "Build, contrats, edge et kit UI — pour toute application.", en: "Build, contracts, edge and UI kit — for any application." } },
-  { id: "domain", product: "orazaka", title: { fr: "Services réutilisables", en: "Reusable services" }, intro: { fr: "Utilisateurs, notifications, facturation.", en: "Users, notifications, billing." } },
-  { id: "ai", product: "orazaka", title: { fr: "Moteur IA", en: "AI engine" }, intro: { fr: "Le moteur cognitif, ses services et son worker natif.", en: "The cognitive engine, its services and its native worker." } },
-  { id: "apps", product: "orazaka", title: { fr: "Applications & packs", en: "Applications & packs" }, intro: { fr: "Web, administration, mobile, CLI, packs du Studio.", en: "Web, admin, mobile, CLI, Studio packs." } },
-  { id: "orochia", product: "orochia", title: { fr: "Plateforme vidéo", en: "Video platform" }, intro: { fr: "L'application, sa console d'administration et son design system.", en: "The app, its admin console and its design system." } },
-];
+const GROUPS = [
+  { id: "workspace", product: "orazaka" },
+  { id: "foundation", product: "orazaka" },
+  { id: "domain", product: "orazaka" },
+  { id: "ai", product: "orazaka" },
+  { id: "apps", product: "orazaka" },
+  { id: "orochia", product: "orochia" },
+] as const;
 
-const PROMISES: { icon: LucideIcon; title: Record<Loc, string>; body: Record<Loc, string> }[] = [
-  { icon: Scale, title: { en: "Apache-2.0, everywhere", fr: "Apache-2.0, partout" }, body: { en: "Use it, change it, ship it — commercially too.", fr: "Utilisez, modifiez, livrez — commercialement aussi." } },
-  { icon: Workflow, title: { en: "Green on every commit", fr: "Vert à chaque commit" }, body: { en: "Build, tests and architecture rules run in CI.", fr: "Build, tests et règles d'architecture tournent en CI." } },
-  { icon: FileCode2, title: { en: "Docs from the code", fr: "Docs issues du code" }, body: { en: "API and data references are generated, never stale.", fr: "Références API et données générées, jamais périmées." } },
-  { icon: ShieldCheck, title: { en: "Private security reports", fr: "Failles signalées en privé" }, body: { en: "Every repository accepts private vulnerability reports.", fr: "Chaque dépôt accepte les signalements privés." } },
-];
+const PROMISES = [
+  { id: "license", icon: Scale },
+  { id: "ci", icon: Workflow },
+  { id: "docs", icon: FileCode2 },
+  { id: "security", icon: ShieldCheck },
+] as const;
 
 /** First sentence of a repository description — the card stays one idea long. */
 const short = (d: string) => (d.split(/(?<=[.:])\s/)[0] ?? d).replace(/[:.]$/, "");
@@ -119,7 +74,7 @@ function RepoCard({ repo }: { repo: OrgRepository }) {
 
 export default async function OpenSourcePage({ params }: Props) {
   const { locale } = await params;
-  const loc: Loc = locale === "en" ? "en" : "fr";
+  const t = getDictionary(locale).site.openSource;
   const repositories = orgRepositories();
   const byName = new Map(repositories.map((r) => [r.name, r]));
 
@@ -129,49 +84,47 @@ export default async function OpenSourcePage({ params }: Props) {
 
       <header className="os-hero">
         <p className="os-eyebrow">Open source · Apache-2.0</p>
-        <h1>{loc === "fr" ? "Construisez avec nos briques." : "Build with our pieces."}</h1>
+        <h1>{t.title}</h1>
         <p className="os-lead">
-          {loc === "fr"
-            ? "Tout ce que nous construisons est public. Cette page est pour les développeurs : prenez la gestion des utilisateurs, les notifications ou la facturation pour votre propre application — ou déployez un produit entier."
-            : "Everything we build is public. This page is for developers: take user management, notifications or billing for your own application — or run a whole product."}
+          {t.lead}
         </p>
         <p className="os-count">
-          {loc === "fr" ? `${repositories.length} dépôts publics · ` : `${repositories.length} public repositories · `}
+          {format(t.count, { count: repositories.length })}
           <a href={GITHUB_ORG_URL}>github.com/krizaka</a>
         </p>
       </header>
 
       <section className="os-section">
         <ol className="os-steps">
-          {STEPS.map(({ icon: Icon, title, body }, i) => (
-            <li key={title.en}>
+          {STEPS.map(({ id, icon: Icon }, i) => (
+            <li key={id}>
               <span className="os-step-n">{String(i + 1).padStart(2, "0")}</span>
               <Icon size={20} aria-hidden />
-              <h2>{title[loc]}</h2>
-              <p>{body[loc]}</p>
+              <h2>{t.steps[id].title}</h2>
+              <p>{t.steps[id].body}</p>
             </li>
           ))}
         </ol>
       </section>
 
       <section className="os-section">
-        <p className="os-eyebrow">{loc === "fr" ? "Les plus réutilisées" : "Most reused"}</p>
-        <h2 className="os-h2">{loc === "fr" ? "Ce dont chaque application a besoin d'abord." : "What every application needs first."}</h2>
+        <p className="os-eyebrow">{t.mostReused}</p>
+        <h2 className="os-h2">{t.mostReusedTitle}</h2>
         <div className="os-featured">
-          {FEATURED.map((f) => {
-            const repo = byName.get(f.name);
+          {FEATURED.map((name) => {
+            const repo = byName.get(name);
             if (!repo) return null;
             return (
-              <article key={f.name} className="os-feature">
-                <p className="os-feature-repo">{f.name}</p>
-                <h3>{f.title[loc]}</h3>
+              <article key={name} className="os-feature">
+                <p className="os-feature-repo">{name}</p>
+                <h3>{t.featured[name].title}</h3>
                 <ul>
-                  {f.gives[loc].map((g) => (
+                  {t.featured[name].gives.map((g) => (
                     <li key={g}>{g}</li>
                   ))}
                 </ul>
                 <a href={repo.url} target="_blank" rel="noopener noreferrer" className="os-feature-link">
-                  {loc === "fr" ? "Voir le dépôt" : "View the repository"} <ArrowUpRight size={14} />
+                  {t.viewRepo} <ArrowUpRight size={14} />
                 </a>
               </article>
             );
@@ -186,7 +139,7 @@ export default async function OpenSourcePage({ params }: Props) {
             <div>
               <h2 className="os-h2" style={{ margin: 0 }}>{product === "orazaka" ? "Orazaka" : "Orochia"}</h2>
               <Link href={`/products/${product}`} className="os-product-link">
-                {loc === "fr" ? "Découvrir le produit" : "Discover the product"} <ArrowRight size={13} />
+                {t.discoverProduct} <ArrowRight size={13} />
               </Link>
             </div>
           </div>
@@ -196,8 +149,8 @@ export default async function OpenSourcePage({ params }: Props) {
             return (
               <div key={group.id} className="os-group">
                 <div className="os-group-head">
-                  <h3>{group.title[loc]}</h3>
-                  <p>{group.intro[loc]}</p>
+                  <h3>{t.groups[group.id].title}</h3>
+                  <p>{t.groups[group.id].intro}</p>
                 </div>
                 <div className="os-repos">
                   {repos.map((r) => (
@@ -212,29 +165,27 @@ export default async function OpenSourcePage({ params }: Props) {
 
       <section className="os-section">
         <div className="os-promises">
-          {PROMISES.map(({ icon: Icon, title, body }) => (
-            <div key={title.en}>
+          {PROMISES.map(({ id, icon: Icon }) => (
+            <div key={id}>
               <Icon size={18} aria-hidden />
-              <h3>{title[loc]}</h3>
-              <p>{body[loc]}</p>
+              <h3>{t.promises[id].title}</h3>
+              <p>{t.promises[id].body}</p>
             </div>
           ))}
         </div>
         <div className="os-contribute">
           <div>
-            <h2>{loc === "fr" ? "Envie de contribuer ?" : "Want to contribute?"}</h2>
+            <h2>{t.contributeTitle}</h2>
             <p>
-              {loc === "fr"
-                ? "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue."
-                : "Every repository has its contract (AGENTS.md) and the same contribution rules. A question, a bug, an idea: open a discussion or an issue."}
+              {t.contributeBody}
             </p>
           </div>
           <div className="os-contribute-links">
             <a href="https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="os-btn is-primary">
-              <BookOpen size={15} /> {loc === "fr" ? "Guide de contribution" : "Contribution guide"}
+              <BookOpen size={15} /> {t.contributeGuide}
             </a>
             <Link href="/contact" className="os-btn">
-              {loc === "fr" ? "Poser une question" : "Ask a question"}
+              {t.ask}
             </Link>
           </div>
         </div>

@@ -6,6 +6,7 @@ import HowOrazakaWorks from "../../../../components/HowOrazakaWorks";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import RepositoryMap, { type RepositoryEntry } from "../../../../components/RepositoryMap";
+import { getDictionary } from "@/lib/i18n";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -13,10 +14,9 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  const title = locale === "fr" ? "Fonctionnement d'Orazaka — Krizaka" : "How Orazaka Works — Krizaka";
-  const description = locale === "fr"
-    ? "Schéma interactif du fonctionnement interne de la plateforme d'orchestration d'IA souveraine Orazaka."
-    : "Interactive schema of the operational inner workings of the Orazaka sovereign AI orchestration platform.";
+  const text = getDictionary(locale).pages.orazakaArchitecture;
+  const title = text.howOrazakaWorksKrizaka;
+  const description = text.interactiveSchemaOfTheOperational;
   return {
     title,
     description,
@@ -26,18 +26,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 /* The six-stage journey — mirrors the stage colors in ArchitectureMesh so the
    header hints at the flow the reader is about to explore. */
-const STAGE_HINTS: { color: string; fr: string; en: string }[] = [
-  { color: "#0ea5e9", fr: "Présentation", en: "Presentation" },
-  { color: "#8b5cf6", fr: "Portail", en: "Gateway" },
-  { color: "#f59e0b", fr: "Sécurité", en: "Security" },
-  { color: "#6366f1", fr: "Moteur", en: "Engine" },
-  { color: "#10b981", fr: "Workers", en: "Workers" },
-  { color: "#f43f5e", fr: "Stockage", en: "Persistence" },
-];
+const STAGE_COLORS = ["#0ea5e9", "#8b5cf6", "#f59e0b", "#6366f1", "#10b981", "#f43f5e"];
+// Names: messages → pages.orazakaArchitecture.stageHints[i].
 
 export default async function ArchitecturePage({ params }: Props) {
   const { locale } = await params;
-  const isFr = locale === "fr";
+  const text = getDictionary(locale).pages.orazakaArchitecture;
 
   return (
     <main style={{ background: "var(--kz-surface-0)", color: "var(--kz-text-primary)", minHeight: "100vh" }}>
@@ -97,7 +91,7 @@ export default async function ArchitecturePage({ params }: Props) {
               margin: 0,
             }}
           >
-            {isFr ? "Fonctionnement" : "How it works"}
+            {text.howItWorks}
           </p>
           <h1
             style={{
@@ -110,12 +104,10 @@ export default async function ArchitecturePage({ params }: Props) {
               margin: "14px 0 0",
             }}
           >
-            {isFr ? "Le parcours d'une requête." : "The journey of a request."}
+            {text.theJourneyOfARequest}
           </h1>
           <p style={{ fontSize: "15px", lineHeight: 1.7, color: "var(--kz-text-secondary)", margin: "16px 0 0" }}>
-            {isFr
-              ? "Orazaka orchestre un flux cognitif modulaire, sécurisé et entièrement souverain. Suivez une requête à travers six étapes — de l'interface jusqu'au stockage."
-              : "Orazaka orchestrates a modular, secure, and fully sovereign cognitive flow. Follow a request through six stages — from the interface all the way to storage."}
+            {text.orazakaOrchestratesAModularSecure}
           </p>
 
           {/* six-stage hint chips */}
@@ -129,9 +121,9 @@ export default async function ArchitecturePage({ params }: Props) {
               maxWidth: "620px",
             }}
           >
-            {STAGE_HINTS.map((s, i) => (
+            {STAGE_COLORS.map((color, i) => (
               <span
-                key={s.en}
+                key={color}
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -157,8 +149,8 @@ export default async function ArchitecturePage({ params }: Props) {
                 >
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span aria-hidden="true" style={{ width: "7px", height: "7px", borderRadius: "50%", background: s.color }} />
-                {isFr ? s.fr : s.en}
+                <span aria-hidden="true" style={{ width: "7px", height: "7px", borderRadius: "50%", background: color }} />
+                {text.stageHints[i]}
               </span>
             ))}
           </div>

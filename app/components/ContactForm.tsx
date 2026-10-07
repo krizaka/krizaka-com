@@ -9,48 +9,9 @@ import { CONTACT_TOPICS, type ContactTopic } from "@/lib/contact";
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-const COPY = {
-  fr: {
-    name: "Nom",
-    email: "Courriel",
-    company: "Organisation (facultatif)",
-    topic: "Sujet",
-    message: "Votre message",
-    placeholder: "Votre contexte, votre besoin, vos délais…",
-    topics: { orazaka: "Orazaka — IA souveraine", orochia: "Orochia — plateforme vidéo", partnership: "Partenariat / intégration", other: "Autre" },
-    send: "Envoyer le message",
-    sending: "Envoi…",
-    sent: "Message envoyé. Nous vous répondons sous deux jours ouvrables.",
-    errors: {
-      invalid: "Vérifiez le champ indiqué.",
-      rate_limited: "Trop de messages envoyés. Réessayez dans quelques minutes.",
-      other: "L'envoi a échoué. Écrivez-nous sur GitHub Discussions en attendant.",
-    },
-    privacy: "Vos coordonnées servent uniquement à vous répondre (Loi 25).",
-  },
-  en: {
-    name: "Name",
-    email: "Email",
-    company: "Organisation (optional)",
-    topic: "Topic",
-    message: "Your message",
-    placeholder: "Your context, what you need, your timeline…",
-    topics: { orazaka: "Orazaka — sovereign AI", orochia: "Orochia — video platform", partnership: "Partnership / integration", other: "Other" },
-    send: "Send message",
-    sending: "Sending…",
-    sent: "Message sent. We reply within two business days.",
-    errors: {
-      invalid: "Please check the highlighted field.",
-      rate_limited: "Too many messages sent. Please try again in a few minutes.",
-      other: "Sending failed. Reach us on GitHub Discussions in the meantime.",
-    },
-    privacy: "Your details are used only to reply to you (Law 25 / GDPR).",
-  },
-} as const;
-
 export default function ContactForm({ defaultTopic = "other" }: { defaultTopic?: ContactTopic }) {
-  const { locale } = useI18n();
-  const c = COPY[locale === "fr" ? "fr" : "en"];
+  const { t, locale } = useI18n();
+  const c = t.site.contactForm;
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<{ text: string; field?: string } | null>(null);
 

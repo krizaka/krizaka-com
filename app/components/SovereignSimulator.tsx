@@ -8,50 +8,32 @@ const SCENARIOS = [
   {
     id: "martin",
     icon: "⚡",
-    labelFr: "Prospection Électricien (B2C)",
-    labelEn: "Electrician Outreach (B2C)",
-    prompt: "Détecter les opportunités de chantiers à Montréal et préparer le publipostage.",
-    promptEn: "Scan Montreal for electrical contracts and prepare CASL-exempt direct mail.",
     steps: [
-      { name: "SystemContextInjector", descFr: "Injecte le profil d'électricien et la zone d'activité (Montréal).", descEn: "Enforces electrician specialty and geographic postal constraints." },
-      { name: "McpInterceptor", descFr: "Scanne le Registre foncier du Québec et les permis de bornes de recharge VE.", descEn: "Scans building permit logs and public transfers for EV chargers." },
-      { name: "RefinerInterceptor", descFr: "Identifie les chantiers nécessitant une augmentation de panneau électrique.", descEn: "Filters deals, flagging panels requiring amp upgrades." },
-      { name: "LanguageAlignmentInterceptor", descFr: "Exclut le courriel froid B2C (LCEE), génère un courrier papier conforme.", descEn: "Blocks cold B2C email outreach (CASL) and drafts direct mailers." }
+      { name: "SystemContextInjector" },
+      { name: "McpInterceptor" },
+      { name: "RefinerInterceptor" },
+      { name: "LanguageAlignmentInterceptor" }
     ],
-    outputFr: "📄 1 publipostage postal généré en local (Conforme LCEE)\n📦 0 octet partagé sur des serveurs cloud tiers\n🔒 Statut : Périmètre 100% Souverain",
-    outputEn: "📄 1 Local physical mailer drafted (CASL-compliant)\n📦 0 bytes uploaded to external cloud servers\n🔒 Status: 100% Sovereign"
   },
   {
     id: "claims",
     icon: "🛡️",
-    labelFr: "Support Client Anonymisé",
-    labelEn: "Anonymous Support Claim",
-    prompt: "Analyser une réclamation d'accident de voiture contenant des informations personnelles.",
-    promptEn: "Analyze a private car insurance claim containing citizen PII.",
     steps: [
-      { name: "SystemContextInjector", descFr: "Détecte la présence de renseignements personnels de citoyens.", descEn: "Detects presence of personal identifiable information (PII)." },
-      { name: "RefinerInterceptor", descFr: "Masque le VIN, le téléphone et l'adresse de la réclamation en Sandbox.", descEn: "Anonymizes VIN, address, and phone numbers inside local Sandbox." },
-      { name: "McpInterceptor", descFr: "Cherche les articles de police correspondants dans la base vectorielle locale.", descEn: "Queries policy terms from the secure local pgvector store." },
-      { name: "LanguageAlignmentInterceptor", descFr: "Fait appel au LLM local (Mistral) hors-ligne pour rédiger la réponse.", descEn: "Invokes offline local LLM (Mistral) to draft the reply safely." }
+      { name: "SystemContextInjector" },
+      { name: "RefinerInterceptor" },
+      { name: "McpInterceptor" },
+      { name: "LanguageAlignmentInterceptor" }
     ],
-    outputFr: "✉️ Brouillon rédigé en Sandbox (PII chiffrées/anonymisées)\n📦 Conforme Loi 25 (Aucune fuite cloud sans évaluation ÉFVP)\n🔒 Statut : Sécurisé & Étanche",
-    outputEn: "✉️ Support draft written in Sandbox (PII redacted/encrypted)\n📦 Law 25 compliant (Zero cloud transfer without PIA)\n🔒 Status: Sealed & Sovereign"
   },
   {
     id: "supplier",
     icon: "🏭",
-    labelFr: "Audit Fournisseur (B2B)",
-    labelEn: "Supplier Audit (B2B)",
-    prompt: "Auditer un nouveau fournisseur de pièces aéronautiques et valider le NDA.",
-    promptEn: "Audit a new aerospace supplier registry and validate NDAs.",
     steps: [
-      { name: "SystemContextInjector", descFr: "Applique la charte d'approvisionnement et les règles de conformité.", descEn: "Enforces procurement criteria and audit guidelines." },
-      { name: "McpInterceptor", descFr: "Interroge la base ERP locale pour vérifier les certificats actifs.", descEn: "Queries local ERP database for active supplier certificates." },
-      { name: "RefinerInterceptor", descFr: "Détecte l'absence d'entente de confidentialité (NDA).", descEn: "Flags lack of active Non-Disclosure Agreement (NDA)." },
-      { name: "LanguageAlignmentInterceptor", descFr: "Rédige une alerte interne d'interdiction en français (Loi 101).", descEn: "Drafts French internal warning alert (Bill 101 compliant)." }
+      { name: "SystemContextInjector" },
+      { name: "McpInterceptor" },
+      { name: "RefinerInterceptor" },
+      { name: "LanguageAlignmentInterceptor" }
     ],
-    outputFr: "⚠️ Alerte interne : NDA manquant pour le Fournisseur (Conforme Loi 101)\n📦 Exécuté intégralement sur le serveur physique local\n🔒 Statut : Local uniquement",
-    outputEn: "⚠️ Internal alert: Supplier missing NDA (Bill 101 compliant)\n📦 Processed 100% on the local host machine\n🔒 Status: Local only"
   }
 ];
 
@@ -89,15 +71,22 @@ function renderConsoleLog(log: string) {
 }
 
 /* ─── Sovereign Pipeline Simulator ─── */
-export function SovereignSimulator({ locale }: { locale: "fr" | "en" }) {
+export function SovereignSimulator() {
   const t = useI18n().t;
+  const text = t.pages.sovereignSimulator;
   const [activeScenario, setActiveScenario] = useState("martin");
   const [isSimulating, setIsSimulating] = useState(false);
   const [currentStep, setCurrentStep] = useState(-1);
   const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
   const [showOutput, setShowOutput] = useState(false);
 
-  const scenario = SCENARIOS.find((s) => s.id === activeScenario) || SCENARIOS[0];
+  // Structure here, words in messages → pages.sovereignSimulator.scenarios[i].
+  const scenarios = SCENARIOS.map((sc, i) => ({
+    ...sc,
+    ...text.scenarios[i],
+    steps: sc.steps.map((st, j) => ({ ...st, ...text.scenarios[i].steps[j] })),
+  }));
+  const scenario = scenarios.find((s) => s.id === activeScenario) || scenarios[0];
 
   const handleSelectScenario = (id: string) => {
     if (isSimulating) return;
@@ -113,7 +102,7 @@ export function SovereignSimulator({ locale }: { locale: "fr" | "en" }) {
     setCurrentStep(0);
     setShowOutput(false);
     
-    const promptText = locale === "fr" ? scenario.prompt : scenario.promptEn;
+    const promptText = scenario.prompt;
     const initialLogs = [
       `[INGRESS] 📥 Request received: "${promptText}"`,
       `[INGRESS] 🛡️ Sovereignty gate check: local network validation [OK]`,
@@ -130,7 +119,7 @@ export function SovereignSimulator({ locale }: { locale: "fr" | "en" }) {
       if (step <= 4) {
         setCurrentStep(step - 1);
         const currentInterceptor = scenario.steps[step - 1];
-        const stepLog = `[CORE] ⚙️ Interceptor ${step}/4 (${currentInterceptor.name}) active: ${locale === "fr" ? currentInterceptor.descFr : currentInterceptor.descEn}`;
+        const stepLog = `[CORE] ⚙️ Interceptor ${step}/4 (${currentInterceptor.name}) active: ${currentInterceptor.desc}`;
         
         setConsoleLogs((prev) => [...prev, stepLog]);
       } else if (step === 5) {
@@ -164,7 +153,7 @@ export function SovereignSimulator({ locale }: { locale: "fr" | "en" }) {
         <div className="simulator-pipeline">
           {/* Scenario Selectors */}
           <div className="scenario-selector-row">
-            {SCENARIOS.map((s) => {
+            {scenarios.map((s) => {
               const isActive = activeScenario === s.id;
               return (
                 <button
@@ -175,7 +164,7 @@ export function SovereignSimulator({ locale }: { locale: "fr" | "en" }) {
                 >
                   <span className="scenario-icon">{s.icon}</span>
                   <span className="scenario-label">
-                    {locale === "fr" ? s.labelFr : s.labelEn}
+                    {s.label}
                   </span>
                 </button>
               );
@@ -203,7 +192,7 @@ export function SovereignSimulator({ locale }: { locale: "fr" | "en" }) {
                       {isCurrent && <span className="pulse-dot" />}
                     </div>
                     <span className="step-desc-text">
-                      {locale === "fr" ? step.descFr : step.descEn}
+                      {step.desc}
                     </span>
                   </div>
                 </div>
@@ -228,9 +217,7 @@ export function SovereignSimulator({ locale }: { locale: "fr" | "en" }) {
               <div className="console-prompt-line">
                 <span className="console-caret">&gt;</span>
                 <span className="console-placeholder-text">
-                  {locale === "fr" 
-                    ? "Sélectionnez un scénario et cliquez sur Simuler..." 
-                    : "Select a scenario and click Run Simulation..."}
+                  {text.selectAScenarioAndClick}
                 </span>
               </div>
             ) : (
@@ -256,7 +243,7 @@ export function SovereignSimulator({ locale }: { locale: "fr" | "en" }) {
                       <span className="output-card-title">{t.engineShowcase.simOutput}</span>
                     </div>
                     <pre className="output-card-body">
-                      {locale === "fr" ? scenario.outputFr : scenario.outputEn}
+                      {scenario.output}
                     </pre>
                   </div>
                 )}

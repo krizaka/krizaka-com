@@ -5,6 +5,7 @@ import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
 import { mdxComponents } from "./MdxComponents";
 import type { DocContent } from "@/lib/docs";
+import { getDictionary } from "@/lib/i18n";
 
 /* A documentation article, identical for every product: breadcrumb, curated intro with its
    audience, an optional interactive hero, then the synced markdown (MDX). */
@@ -22,7 +23,8 @@ export const CATEGORY_LABELS: Record<string, string> = {
 export const categoryLabel = (category: string) =>
   CATEGORY_LABELS[category] || category.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-export default function DocArticle({ doc, product, hero }: { doc: DocContent; product: { name: string; href: string }; hero?: ReactNode }) {
+export default function DocArticle({ doc, product, hero, locale }: { doc: DocContent; product: { name: string; href: string }; hero?: ReactNode; locale: string }) {
+  const text = getDictionary(locale).site.docs;
   const categoryLabelText = categoryLabel(doc.category);
   const jsonLd = {
     "@context": "https://schema.org",
@@ -79,7 +81,7 @@ export default function DocArticle({ doc, product, hero }: { doc: DocContent; pr
           style={{ color: "var(--kz-text-muted)", textDecoration: "none", transition: "color 0.2s" }}
           className="breadcrumb-link"
         >
-          Products
+          {text.products}
         </Link>
         <span style={{ color: "var(--kz-text-muted)", opacity: 0.3, fontSize: 14 }}>/</span>
         <Link
@@ -128,7 +130,7 @@ export default function DocArticle({ doc, product, hero }: { doc: DocContent; pr
                 border: "1px solid color-mix(in srgb, var(--kz-accent) 25%, transparent)",
               }}
             >
-              {doc.audience === "developer" ? "For developers" : "For decision-makers"}
+              {doc.audience === "developer" ? text.forDevelopers : text.forDecisionMakers}
             </span>
           )}
           <p style={{ margin: 0, fontSize: 14.5, lineHeight: 1.6, color: "var(--kz-text-secondary)" }}>

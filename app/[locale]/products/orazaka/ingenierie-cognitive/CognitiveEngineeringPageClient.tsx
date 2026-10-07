@@ -97,7 +97,7 @@ const NEUROMORPHIC_ICONS = [Cpu, Database, Shield];
 const CARD_COLORS = ["#f43f5e", "#3b82f6", "#10b981"];
 
 export default function CognitiveEngineeringPageClient() {
-  const { locale, t } = useI18n();
+  const { t } = useI18n();
   const p = t.cognitiveEngineeringPage;
 
   return (
@@ -307,7 +307,7 @@ export default function CognitiveEngineeringPageClient() {
                 marginBottom: "12px",
               }}
             >
-              {locale === "fr" ? "COGNITION COMPLÈTE" : "FULL COGNITION"}
+              {t.pages.cognitive.fullCognition}
             </span>
             <h2
               style={{
@@ -488,7 +488,7 @@ export default function CognitiveEngineeringPageClient() {
                 marginBottom: "12px",
               }}
             >
-              {locale === "fr" ? "ARCHITECTURE DU CONTRÔLE" : "CONTROL ARCHITECTURE"}
+              {t.pages.cognitive.controlArchitecture}
             </span>
             <h2
               style={{
@@ -518,20 +518,20 @@ export default function CognitiveEngineeringPageClient() {
             {[
               {
                 step: "01",
-                title: locale === "fr" ? "Perception & Ingestion" : "Perception & Ingestion",
-                desc: locale === "fr" ? "La requête est nettoyée, les variables d'environnement sont injectées et l'identité de l'utilisateur (RBAC) est vérifiée localement." : "The query is cleaned, system context variables are injected, and user identity (RBAC) is verified locally.",
+                title: t.pages.cognitive.perceptionIngestion,
+                desc: t.pages.cognitive.theQueryIsCleanedSystem,
                 color: "#f43f5e"
               },
               {
                 step: "02",
-                title: locale === "fr" ? "Raisonnement & Contextualisation" : "Reasoning & Context",
-                desc: locale === "fr" ? "Orazaka consulte les connaissances à long terme (RAG), la mémoire récente et route l'instruction vers le modèle idéal (local ou cloud)." : "Orazaka queries long-term context (RAG) and short-term sliding memory, then routes the prompt to the optimal local or cloud model.",
+                title: t.pages.cognitive.reasoningContext,
+                desc: t.pages.cognitive.orazakaQueriesLongTermContext,
                 color: "#a78bfa"
               },
               {
                 step: "03",
-                title: locale === "fr" ? "Validation & Métacognition" : "Validation & Metacognition",
-                desc: locale === "fr" ? "La réponse est auditée en boucle fermée (validation JSON, règles de sécurité, sandbox d'exécution) avant livraison." : "The final output is audited in a closed loop (JSON schema validation, safety rules, execution sandbox) before delivery.",
+                title: t.pages.cognitive.validationMetacognition,
+                desc: t.pages.cognitive.theFinalOutputIsAudited,
                 color: "#10b981"
               }
             ].map((stage, idx) => (
@@ -655,7 +655,7 @@ export default function CognitiveEngineeringPageClient() {
                 marginBottom: "12px",
               }}
             >
-              {locale === "fr" ? "PROCESSEUR D'INFÉRENCE" : "INFERENCE PROCESSOR"}
+              {t.pages.cognitive.inferenceProcessor}
             </span>
             <h2
               style={{
@@ -763,9 +763,9 @@ export default function CognitiveEngineeringPageClient() {
                 {/* Inputs Grid */}
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
                   {[
-                    { label: locale === "fr" ? "Mémoire" : "Memory", sub: "FIFO Chat", icon: MessageSquare },
-                    { label: locale === "fr" ? "Connaissances" : "Knowledge", sub: "RAG / Vector", icon: Database },
-                    { label: locale === "fr" ? "Règles" : "Rules", sub: "RBAC / Env", icon: Shield }
+                    { label: t.pages.cognitive.memory, sub: "FIFO Chat", icon: MessageSquare },
+                    { label: t.pages.cognitive.knowledge, sub: "RAG / Vector", icon: Database },
+                    { label: t.pages.cognitive.rules, sub: "RBAC / Env", icon: Shield }
                   ].map((input, i) => {
                     const Icon = input.icon;
                     return (
@@ -797,10 +797,11 @@ export default function CognitiveEngineeringPageClient() {
 
                 {/* Converging connector lines */}
                 <div style={{ display: "flex", justifyContent: "center", height: "16px", position: "relative" }}>
-                  <svg width="100%" height="16" style={{ overflow: "visible" }}>
-                    <path d="M 16.6% 0 L 16.6% 8 L 50% 12" stroke="var(--kz-border-strong)" strokeWidth="1.2" fill="none" />
-                    <path d="M 50% 0 L 50% 12" stroke="var(--kz-border-strong)" strokeWidth="1.2" fill="none" />
-                    <path d="M 83.3% 0 L 83.3% 8 L 50% 12" stroke="var(--kz-border-strong)" strokeWidth="1.2" fill="none" />
+                  {/* Path data cannot use percentages: draw in a 0–100 box stretched to the width. */}
+                  <svg width="100%" height="16" viewBox="0 0 100 16" preserveAspectRatio="none" style={{ overflow: "visible" }}>
+                    <path d="M 16.6 0 L 16.6 8 L 50 12" stroke="var(--kz-border-strong)" strokeWidth="1.2" fill="none" vectorEffect="non-scaling-stroke" />
+                    <path d="M 50 0 L 50 12" stroke="var(--kz-border-strong)" strokeWidth="1.2" fill="none" vectorEffect="non-scaling-stroke" />
+                    <path d="M 83.3 0 L 83.3 8 L 50 12" stroke="var(--kz-border-strong)" strokeWidth="1.2" fill="none" vectorEffect="non-scaling-stroke" />
                   </svg>
                 </div>
 
@@ -821,7 +822,7 @@ export default function CognitiveEngineeringPageClient() {
                 >
                   <Cpu size={14} style={{ color: "var(--kz-accent)" }} />
                   <span style={{ fontSize: "11px", fontWeight: 700, color: "var(--kz-text-primary)", fontFamily: "var(--font-mono, monospace)", textTransform: "uppercase", letterSpacing: "0.05em" }}>
-                    {locale === "fr" ? "Contexte Enrichi" : "Enriched Context"}
+                    {t.pages.cognitive.enrichedContext}
                   </span>
                 </div>
               </div>
@@ -850,7 +851,7 @@ export default function CognitiveEngineeringPageClient() {
                   letterSpacing: "0.1em",
                 }}
               >
-                {locale === "fr" ? "TRANSFERT" : "TRANSFER"}
+                {t.pages.cognitive.transfer}
               </div>
             </div>
 
@@ -946,9 +947,9 @@ export default function CognitiveEngineeringPageClient() {
                 {/* Sequential Flow steps */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "16px", position: "relative", zIndex: 1 }}>
                   {[
-                    { label: locale === "fr" ? "Bac à sable sécurisé" : "Secure Sandbox", desc: locale === "fr" ? "Raisonnement isolé" : "Isolated reasoning", icon: Lock },
-                    { label: locale === "fr" ? "Contrôles de conformité" : "Compliance Checks", desc: locale === "fr" ? "Validation de schéma JSON" : "JSON schema validation", icon: Shield },
-                    { label: locale === "fr" ? "Réponse finale validée" : "Secure Delivery", desc: locale === "fr" ? "Hermétique et certifiée" : "Hermetic and certified", icon: CheckCircle2 }
+                    { label: t.pages.cognitive.secureSandbox, desc: t.pages.cognitive.isolatedReasoning, icon: Lock },
+                    { label: t.pages.cognitive.complianceChecks, desc: t.pages.cognitive.jsonSchemaValidation, icon: Shield },
+                    { label: t.pages.cognitive.secureDelivery, desc: t.pages.cognitive.hermeticAndCertified, icon: CheckCircle2 }
                   ].map((step, i) => {
                     const StepIcon = step.icon;
                     return (
@@ -998,7 +999,7 @@ export default function CognitiveEngineeringPageClient() {
                 marginBottom: "12px",
               }}
             >
-              {locale === "fr" ? "MODES DE FONCTIONNEMENT" : "OPERATING MODES"}
+              {t.pages.cognitive.operatingModes}
             </span>
             <h2
               style={{
@@ -1076,7 +1077,7 @@ export default function CognitiveEngineeringPageClient() {
                       marginBottom: "14px"
                     }}
                   >
-                    {locale === "fr" ? "MODE PAR DÉFAUT" : "DEFAULT MODE"}
+                    {t.pages.cognitive.defaultMode}
                   </span>
 
                   <h3
@@ -1167,7 +1168,7 @@ export default function CognitiveEngineeringPageClient() {
                     marginBottom: "8px",
                   }}
                 >
-                  {locale === "fr" ? "PARAMÈTRE ADAPTATIF" : "ADAPTIVE PARAMETER"}
+                  {t.pages.cognitive.adaptiveParameter}
                 </span>
                 <h3
                   style={{
@@ -1206,28 +1207,28 @@ export default function CognitiveEngineeringPageClient() {
             >
               {[
                 {
-                  level: locale === "fr" ? "Bas" : "Low",
-                  sub: locale === "fr" ? "Réponse directe" : "Direct response",
-                  interceptors: locale === "fr" ? "3–5 intercepteurs" : "3–5 interceptors",
-                  tokens: locale === "fr" ? "Tokens minimaux" : "Minimal tokens",
+                  level: t.pages.cognitive.low,
+                  sub: t.pages.cognitive.directResponse,
+                  interceptors: t.pages.cognitive.t35Interceptors,
+                  tokens: t.pages.cognitive.minimalTokens,
                   color: "#22c55e",
                   bar: "25%",
                   icon: "⚡",
                 },
                 {
-                  level: locale === "fr" ? "Moyen" : "Medium",
-                  sub: locale === "fr" ? "Analyse standard" : "Standard analysis",
-                  interceptors: locale === "fr" ? "7–10 intercepteurs" : "7–10 interceptors",
-                  tokens: locale === "fr" ? "Budget équilibré" : "Balanced budget",
+                  level: t.pages.cognitive.medium,
+                  sub: t.pages.cognitive.standardAnalysis,
+                  interceptors: t.pages.cognitive.t710Interceptors,
+                  tokens: t.pages.cognitive.balancedBudget,
                   color: "#f59e0b",
                   bar: "55%",
                   icon: "⚙️",
                 },
                 {
-                  level: locale === "fr" ? "Haut" : "High",
-                  sub: locale === "fr" ? "Délibération profonde" : "Deep deliberation",
-                  interceptors: locale === "fr" ? "12–15 intercepteurs" : "12–15 interceptors",
-                  tokens: locale === "fr" ? "Budget maximal" : "Maximum budget",
+                  level: t.pages.cognitive.high,
+                  sub: t.pages.cognitive.deepDeliberation,
+                  interceptors: t.pages.cognitive.t1215Interceptors,
+                  tokens: t.pages.cognitive.maximumBudget,
                   color: "#ef4444",
                   bar: "90%",
                   icon: "🧠",
@@ -1364,7 +1365,7 @@ export default function CognitiveEngineeringPageClient() {
                     marginBottom: "8px",
                   }}
                 >
-                  {locale === "fr" ? "EXTENSIBILITÉ ACTIVE" : "ACTIVE EXTENSIBILITY"}
+                  {t.pages.cognitive.activeExtensibility}
                 </span>
                 <h3
                   style={{
@@ -1433,19 +1434,19 @@ export default function CognitiveEngineeringPageClient() {
                       letterSpacing: "0.04em",
                     }}
                   >
-                    {locale === "fr" ? "Choisissez vos intercepteurs" : "Choose your interceptors"}
+                    {t.pages.cognitive.chooseYourInterceptors}
                   </span>
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
                   {[
                     { name: "RAG", active: true },
-                    { name: locale === "fr" ? "Audit" : "Audit", active: true },
+                    { name: t.pages.cognitive.audit, active: true },
                     { name: "JSON Schema", active: true },
-                    { name: locale === "fr" ? "Mémoire" : "Memory", active: false },
-                    { name: locale === "fr" ? "Sécurité" : "Security", active: false },
-                    { name: locale === "fr" ? "Métriques" : "Metrics", active: false },
-                    { name: locale === "fr" ? "Routage" : "Routing", active: false },
-                    { name: locale === "fr" ? "Cache" : "Cache", active: false },
+                    { name: t.pages.cognitive.memory, active: false },
+                    { name: t.pages.cognitive.security, active: false },
+                    { name: t.pages.cognitive.metrics, active: false },
+                    { name: t.pages.cognitive.routing, active: false },
+                    { name: t.pages.cognitive.cache, active: false },
                   ].map((chip, ci) => (
                     <motion.div
                       key={ci}
@@ -1527,7 +1528,7 @@ export default function CognitiveEngineeringPageClient() {
                       letterSpacing: "0.04em",
                     }}
                   >
-                    {locale === "fr" ? "Votre mode personnalisé" : "Your custom mode"}
+                    {t.pages.cognitive.yourCustomMode}
                   </span>
                 </div>
 
@@ -1618,7 +1619,7 @@ export default function CognitiveEngineeringPageClient() {
                         textTransform: "uppercase",
                       }}
                     >
-                      {locale === "fr" ? "Actif" : "Active"}
+                      {t.pages.cognitive.active}
                     </span>
                   </div>
                 </motion.div>
@@ -1845,9 +1846,9 @@ export default function CognitiveEngineeringPageClient() {
                 <div style={{ position: "absolute", left: "15%", right: "15%", height: "2px", background: "linear-gradient(90deg, var(--kz-accent), var(--kz-status-success))", zIndex: 0 }} />
 
                 {[
-                  { label: locale === "fr" ? "Contexte" : "Context", sub: locale === "fr" ? "Mémoire & RAG" : "Memory & RAG", icon: Database, color: "var(--kz-accent)", shadow: "var(--kz-accent-soft)" },
-                  { label: locale === "fr" ? "Réflexion" : "Reasoning", sub: locale === "fr" ? "Local LLM" : "Local LLM", icon: Brain, color: "#a78bfa", shadow: "rgba(167, 139, 250, 0.2)" },
-                  { label: locale === "fr" ? "Validation" : "Compliance", sub: locale === "fr" ? "Audit JSON" : "JSON Audit", icon: Shield, color: "var(--kz-status-success)", shadow: "rgba(16, 185, 129, 0.2)" }
+                  { label: t.pages.cognitive.context, sub: t.pages.cognitive.memoryRag, icon: Database, color: "var(--kz-accent)", shadow: "var(--kz-accent-soft)" },
+                  { label: t.pages.cognitive.reasoning, sub: t.pages.cognitive.localLlm, icon: Brain, color: "#a78bfa", shadow: "rgba(167, 139, 250, 0.2)" },
+                  { label: t.pages.cognitive.compliance, sub: t.pages.cognitive.jsonAudit, icon: Shield, color: "var(--kz-status-success)", shadow: "rgba(16, 185, 129, 0.2)" }
                 ].map((step, i) => {
                   const Icon = step.icon;
                   return (

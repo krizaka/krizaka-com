@@ -27,7 +27,6 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 
-type Loc = "fr" | "en";
 
 /* Same six accents as ArchitectureMesh, so the narrative maps 1:1 onto the board. */
 const STAGE_COLORS = ["#0ea5e9", "#8b5cf6", "#f59e0b", "#6366f1", "#10b981", "#f43f5e"];
@@ -37,132 +36,61 @@ const mix = (color: string, pct: number) => `color-mix(in srgb, ${color} ${pct}%
 interface Principle {
   icon: LucideIcon;
   color: string;
-  title: Record<Loc, string>;
-  desc: Record<Loc, string>;
 }
 
 const PRINCIPLES: Principle[] = [
   {
     icon: ShieldCheck,
     color: "#10b981",
-    title: { fr: "Souverain", en: "Sovereign" },
-    desc: {
-      fr: "Tout s'exécute sur ton infrastructure. Aucune donnée n'est envoyée à un cloud tiers — conforme Loi 25 & RGPD.",
-      en: "Everything runs on your infrastructure. No data is sent to a third-party cloud — Law 25 & GDPR compliant.",
-    },
   },
   {
     icon: Workflow,
     color: "#6366f1",
-    title: { fr: "Déterministe", en: "Deterministic" },
-    desc: {
-      fr: "Pas de boîte noire : chaque requête suit un ordre d'intercepteurs explicite, reproductible et auditable.",
-      en: "No black box: each request follows an explicit, reproducible, auditable order of interceptors.",
-    },
   },
   {
     icon: Boxes,
     color: "#8b5cf6",
-    title: { fr: "Modulaire", en: "Modular" },
-    desc: {
-      fr: "Une architecture hexagonale : chaque responsabilité — sécurité, mémoire, médias — est un module remplaçable.",
-      en: "A hexagonal architecture: every responsibility — security, memory, media — is a swappable module.",
-    },
   },
 ];
 
 interface Step {
   num: string;
   color: string;
-  title: Record<Loc, string>;
-  what: Record<Loc, string>;
-  why: Record<Loc, string>;
 }
 
 const STEPS: Step[] = [
   {
     num: "01",
     color: STAGE_COLORS[0],
-    title: { fr: "Présentation", en: "Presentation" },
-    what: {
-      fr: "Tu poses ta question depuis le client web, l'app mobile, le CLI ou la console d'administration.",
-      en: "You ask from the web client, the mobile app, the CLI or the admin console.",
-    },
-    why: {
-      fr: "Quatre portes d'entrée, un seul moteur derrière.",
-      en: "Four front doors, a single engine behind them.",
-    },
   },
   {
     num: "02",
     color: STAGE_COLORS[1],
-    title: { fr: "Portail d'entrée", en: "Entry Gate" },
-    what: {
-      fr: "Le portail réceptionne la requête et l'achemine vers le moteur — en streaming (SSE) quand la réponse arrive au fil de l'eau.",
-      en: "The gate receives the request and routes it into the engine — streaming (SSE) when the answer arrives token by token.",
-    },
-    why: {
-      fr: "Un point d'entrée unique et contrôlé : rien n'accède directement aux modèles.",
-      en: "One controlled entry point: nothing touches the models directly.",
-    },
   },
   {
     num: "03",
     color: STAGE_COLORS[2],
-    title: { fr: "Sécurité & Métier", en: "Security & Logic" },
-    what: {
-      fr: "Avant tout calcul, Orazaka t'authentifie, vérifie tes permissions (RBAC), applique les quotas et les règles métier.",
-      en: "Before any compute, Orazaka authenticates you, checks permissions (RBAC), and enforces quotas and business rules.",
-    },
-    why: {
-      fr: "La sécurité et la gouvernance passent avant l'inférence — pas après.",
-      en: "Security and governance happen before inference — not after.",
-    },
   },
   {
     num: "04",
     color: STAGE_COLORS[3],
-    title: { fr: "Moteur Cognitif", en: "Cognitive Engine" },
-    what: {
-      fr: "Le cœur hexagonal, sans état, orchestre l'exécution de la requête et coordonne le flux de données.",
-      en: "The stateless hexagonal core orchestrates the request and coordinates the data flow.",
-    },
-    why: {
-      fr: "Le chef d'orchestre : reproductible à chaque appel.",
-      en: "The conductor: reproducible on every single call.",
-    },
   },
   {
     num: "05",
     color: STAGE_COLORS[4],
-    title: { fr: "Workers & Pipeline", en: "Workers & Pipeline" },
-    what: {
-      fr: "La requête traverse les 15 intercepteurs (contexte système, mémoire, RAG, garde-fous), pendant que les workers asynchrones gèrent médias et intégrations MCP.",
-      en: "The request flows through 15 interceptors (system context, memory, RAG, safety), while async workers handle media and MCP integrations.",
-    },
-    why: {
-      fr: "C'est ici que la « cognition » s'assemble, étape ordonnée après étape ordonnée.",
-      en: "This is where “cognition” is assembled, one ordered step after another.",
-    },
   },
   {
     num: "06",
     color: STAGE_COLORS[5],
-    title: { fr: "Stockage", en: "Persistence" },
-    what: {
-      fr: "Sessions, mémoire vectorielle (pgvector) et identités sont stockées dans tes propres bases de données.",
-      en: "Sessions, vector memory (pgvector) and identities are stored in your own databases.",
-    },
-    why: {
-      fr: "Ta donnée reste chez toi, du premier au dernier octet.",
-      en: "Your data stays home, from the first byte to the last.",
-    },
   },
 ];
 
 export default function HowOrazakaWorks() {
-  const { locale } = useI18n();
-  const loc: Loc = locale === "fr" ? "fr" : "en";
+  const { t } = useI18n();
+  const text = t.pages.howOrazakaWorks;
+  // Structure here, words in messages → pages.howOrazakaWorks.
+  const principles = PRINCIPLES.map((p, i) => ({ ...p, ...text.principles[i] }));
+  const steps = STEPS.map((s, i) => ({ ...s, ...text.steps[i] }));
   const reduce = useReducedMotion();
 
   // Same markup on the server and the client (useReducedMotion is unknown during SSR, and
@@ -194,7 +122,7 @@ export default function HowOrazakaWorks() {
             margin: 0,
           }}
         >
-          {loc === "fr" ? "Guide de lecture" : "Reading guide"}
+          {t.pages.howOrazakaWorks.readingGuide}
         </p>
         <h2
           id="how-it-works-heading"
@@ -208,22 +136,20 @@ export default function HowOrazakaWorks() {
             margin: "12px 0 0",
           }}
         >
-          {loc === "fr" ? "Orazaka, expliqué simplement." : "Orazaka, explained simply."}
+          {t.pages.howOrazakaWorks.orazakaExplainedSimply}
         </h2>
         <p style={{ fontSize: "15.5px", lineHeight: 1.7, color: "var(--kz-text-secondary)", margin: "14px 0 0" }}>
-          {loc === "fr"
-            ? "Avant de plonger dans la carte, voici le modèle mental. Orazaka est un moteur d'orchestration d'IA que tu héberges toi-même : chaque requête traverse un pipeline déterministe, étape par étape, sans jamais quitter ton réseau."
-            : "Before you dive into the map, here's the mental model. Orazaka is an AI orchestration engine you host yourself: every request flows through a deterministic pipeline, step by step, and never leaves your network."}
+          {t.pages.howOrazakaWorks.beforeYouDiveIntoThe}
         </p>
       </motion.div>
 
       {/* ── Three principles ── */}
       <div className="how-principles" style={{ display: "grid", gap: "12px", margin: "32px 0 8px" }}>
-        {PRINCIPLES.map((p, i) => {
+        {principles.map((p, i) => {
           const Icon = p.icon;
           return (
             <motion.div
-              key={p.title.en}
+              key={p.title}
               {...reveal(0.06 * i)}
               style={{
                 display: "flex",
@@ -258,10 +184,10 @@ export default function HowOrazakaWorks() {
                   color: "var(--kz-text-primary)",
                 }}
               >
-                {p.title[loc]}
+                {p.title}
               </span>
               <span style={{ fontSize: "13.5px", lineHeight: 1.6, color: "var(--kz-text-secondary)" }}>
-                {p.desc[loc]}
+                {p.desc}
               </span>
             </motion.div>
           );
@@ -280,7 +206,7 @@ export default function HowOrazakaWorks() {
             margin: 0,
           }}
         >
-          {loc === "fr" ? "Suivons une vraie requête." : "Let's follow one real request."}
+          {t.pages.howOrazakaWorks.letSFollowOneReal}
         </h3>
 
         {/* the sample question */}
@@ -306,22 +232,18 @@ export default function HowOrazakaWorks() {
               color: "var(--kz-text-primary)",
             }}
           >
-            {loc === "fr"
-              ? "« Résume ce contrat et signale les clauses non conformes à la Loi 25. »"
-              : "“Summarize this contract and flag the clauses that don't comply with Law 25.”"}
+            {t.pages.howOrazakaWorks.summarizeThisContractAndFlag}
           </p>
         </div>
         <p style={{ fontSize: "14.5px", lineHeight: 1.65, color: "var(--kz-text-secondary)", margin: "12px 2px 0" }}>
-          {loc === "fr"
-            ? "Voici ce qui lui arrive, de ta question jusqu'à la réponse :"
-            : "Here's what happens to it, from your question to the answer:"}
+          {t.pages.howOrazakaWorks.hereSWhatHappensTo}
         </p>
       </motion.div>
 
       {/* ── The narrated timeline ── */}
       <ol style={{ listStyle: "none", padding: 0, margin: "24px 0 0" }}>
-        {STEPS.map((s, i) => {
-          const last = i === STEPS.length - 1;
+        {steps.map((s, i) => {
+          const last = i === steps.length - 1;
           return (
             <motion.li key={s.num} {...reveal(0.04 * Math.min(i, 5))} style={{ display: "flex", gap: "16px" }}>
               {/* spine + badge */}
@@ -370,10 +292,10 @@ export default function HowOrazakaWorks() {
                     letterSpacing: "-0.01em",
                   }}
                 >
-                  {s.title[loc]}
+                  {s.title}
                 </div>
                 <p style={{ margin: "6px 0 0", fontSize: "14.5px", lineHeight: 1.65, color: "var(--kz-text-secondary)" }}>
-                  {s.what[loc]}
+                  {s.what}
                 </p>
                 <p
                   style={{
@@ -397,9 +319,9 @@ export default function HowOrazakaWorks() {
                       flexShrink: 0,
                     }}
                   >
-                    {loc === "fr" ? "Pourquoi" : "Why"}
+                    {t.pages.howOrazakaWorks.why}
                   </span>
-                  <span>{s.why[loc]}</span>
+                  <span>{s.why}</span>
                 </p>
               </div>
             </motion.li>
@@ -419,9 +341,7 @@ export default function HowOrazakaWorks() {
           fontWeight: 500,
         }}
       >
-        {loc === "fr"
-          ? "→ La réponse, validée localement, te revient. Zéro donnée n'a quitté ton réseau."
-          : "→ The locally-validated answer comes back to you. Zero data left your network."}
+        {t.pages.howOrazakaWorks.theLocallyValidatedAnswerComes}
       </motion.p>
 
       {/* ── Hand-off to the live map ── */}
@@ -444,7 +364,7 @@ export default function HowOrazakaWorks() {
             color: "var(--kz-text-primary)",
           }}
         >
-          {loc === "fr" ? "À toi d'explorer la carte vivante." : "Now explore the live map."}
+          {t.pages.howOrazakaWorks.nowExploreTheLiveMap}
         </div>
         <div
           className="how-handoff-hints"
@@ -457,9 +377,9 @@ export default function HowOrazakaWorks() {
           }}
         >
           {[
-            { icon: MousePointerClick, fr: "Survole une carte pour l'éclairer", en: "Hover a card to light it up" },
-            { icon: MousePointerClick, fr: "Clique pour épingler le détail", en: "Click to pin its detail" },
-            { icon: Search, fr: "Recherche un composant par nom", en: "Search a component by name" },
+            { icon: MousePointerClick, text: text.hints[0] },
+            { icon: MousePointerClick, text: text.hints[1] },
+            { icon: Search, text: text.hints[2] },
           ].map((h, i) => {
             const Icon = h.icon;
             return (
@@ -474,7 +394,7 @@ export default function HowOrazakaWorks() {
                 }}
               >
                 <Icon size={14} strokeWidth={2} style={{ color: "var(--kz-accent)", flexShrink: 0 }} />
-                {loc === "fr" ? h.fr : h.en}
+                {h.text}
               </span>
             );
           })}

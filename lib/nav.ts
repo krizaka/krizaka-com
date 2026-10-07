@@ -2,15 +2,16 @@
    Every product exposes the same five entries, in the same order, so the two read alike:
    overview · how it works · demo · documentation · its signature capability. */
 
-import type { L } from "@/lib/org-data";
+import type { TranslationDictionary } from "@/lib/i18n";
 
-export type NavIcon = "overview" | "architecture" | "demo" | "docs" | "signature" | "repos" | "contact" | "products" | "story";
+export type ProductLinkId = "overview" | "architecture" | "demo" | "docs" | "signature";
+export type CompanyLinkId = "products" | "story" | "repos" | "contact";
+export type NavIcon = ProductLinkId | CompanyLinkId;
 
-export interface NavLink {
+/** Texts: messages → site.nav.<product>.links.<icon> (products) or site.nav.company.<icon>. */
+export interface NavLink<I extends NavIcon = NavIcon> {
   href: string;
-  label: L;
-  desc: L;
-  icon: NavIcon;
+  icon: I;
   /** Extra path prefixes that mark this entry active. */
   match?: string[];
 }
@@ -19,9 +20,8 @@ export interface NavProduct {
   id: "orazaka" | "orochia";
   name: string;
   href: string;
-  tagline: L;
-  badge: L;
-  links: NavLink[];
+  /** Tagline and badge: messages → site.nav.<id>. */
+  links: NavLink<ProductLinkId>[];
 }
 
 export const NAV_PRODUCTS: NavProduct[] = [
@@ -29,37 +29,33 @@ export const NAV_PRODUCTS: NavProduct[] = [
     id: "orazaka",
     name: "Orazaka",
     href: "/products/orazaka",
-    tagline: { fr: "IA souveraine, hébergée chez vous", en: "Sovereign AI on your infrastructure" },
-    badge: { fr: "IA", en: "AI" },
     links: [
-      { href: "/products/orazaka", icon: "overview", label: { fr: "Vue d'ensemble", en: "Overview" }, desc: { fr: "Le moteur et ses composants", en: "The engine and its components" } },
-      { href: "/products/orazaka/architecture", icon: "architecture", label: { fr: "Fonctionnement", en: "How it works" }, desc: { fr: "Le parcours d'une requête, animé", en: "A request's journey, animated" } },
-      { href: "/products/orazaka/demos", icon: "demo", label: { fr: "Démos", en: "Demos" }, desc: { fr: "Chat, médias et agents en action", en: "Chat, media and agents in action" } },
-      { href: "/products/orazaka/getting-started/101", icon: "docs", label: { fr: "Documentation", en: "Documentation" }, desc: { fr: "Démarrage, API, exploitation", en: "Getting started, API, operations" }, match: ["/products/orazaka/getting-started", "/products/orazaka/api", "/products/orazaka/core-features", "/products/orazaka/guidelines", "/products/orazaka/usecases"] },
-      { href: "/products/orazaka/ingenierie-cognitive", icon: "signature", label: { fr: "Ingénierie cognitive", en: "Cognitive engineering" }, desc: { fr: "Pourquoi un pipeline plutôt qu'un prompt", en: "Why a pipeline, not a prompt" }, match: ["/products/orazaka/packages"] },
+      { href: "/products/orazaka", icon: "overview" },
+      { href: "/products/orazaka/architecture", icon: "architecture" },
+      { href: "/products/orazaka/demos", icon: "demo" },
+      { href: "/products/orazaka/getting-started/101", icon: "docs", match: ["/products/orazaka/getting-started", "/products/orazaka/api", "/products/orazaka/core-features", "/products/orazaka/guidelines", "/products/orazaka/usecases"] },
+      { href: "/products/orazaka/ingenierie-cognitive", icon: "signature", match: ["/products/orazaka/packages"] },
     ],
   },
   {
     id: "orochia",
     name: "Orochia",
     href: "/products/orochia",
-    tagline: { fr: "La plateforme vidéo des créateurs", en: "The video platform for creators" },
-    badge: { fr: "Vidéo", en: "Video" },
     links: [
-      { href: "/products/orochia", icon: "overview", label: { fr: "Vue d'ensemble", en: "Overview" }, desc: { fr: "Streaming, paywalls, versements", en: "Streaming, paywalls, payouts" } },
-      { href: "/products/orochia#architecture", icon: "architecture", label: { fr: "Fonctionnement", en: "How it works" }, desc: { fr: "Lecture, déblocage et téléversement, animés", en: "Playback, unlock and upload, animated" } },
-      { href: "/products/orochia#tour", icon: "demo", label: { fr: "Démo", en: "Demo" }, desc: { fr: "Visite vidéo de l'application", en: "A video tour of the app" } },
-      { href: "/products/orochia/docs", icon: "docs", label: { fr: "Documentation", en: "Documentation" }, desc: { fr: "Architecture, API, déploiement", en: "Architecture, API, deployment" }, match: ["/products/orochia/docs"] },
-      { href: "/products/orochia#guarantees", icon: "signature", label: { fr: "Paiements & conformité", en: "Payments & compliance" }, desc: { fr: "Webhooks signés, registres 2257", en: "Signed webhooks, 2257 records" } },
+      { href: "/products/orochia", icon: "overview" },
+      { href: "/products/orochia#architecture", icon: "architecture" },
+      { href: "/products/orochia#tour", icon: "demo" },
+      { href: "/products/orochia/docs", icon: "docs", match: ["/products/orochia/docs"] },
+      { href: "/products/orochia#guarantees", icon: "signature" },
     ],
   },
 ];
 
-export const NAV_COMPANY: NavLink[] = [
-  { href: "/products", icon: "products", label: { fr: "Tous les produits", en: "All products" }, desc: { fr: "Comparer Orazaka et Orochia", en: "Compare Orazaka and Orochia" } },
-  { href: "/story", icon: "story", label: { fr: "Notre histoire", en: "Our story" }, desc: { fr: "D'où viennent nos noms", en: "Where our names come from" } },
-  { href: "/open-source", icon: "repos", label: { fr: "Open source", en: "Open source" }, desc: { fr: "Tous les dépôts Krizaka", en: "Every Krizaka repository" } },
-  { href: "/contact", icon: "contact", label: { fr: "Contact", en: "Contact" }, desc: { fr: "Écrire à l'équipe", en: "Write to the team" } },
+export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
+  { href: "/products", icon: "products" },
+  { href: "/story", icon: "story" },
+  { href: "/open-source", icon: "repos" },
+  { href: "/contact", icon: "contact" },
 ];
 
 /** True when `pathname` (locale-less) is this link's page — anchors (#…) never mark a link active. */
@@ -73,3 +69,9 @@ export function isNavActive(link: NavLink, pathname: string): boolean {
 export function localeless(pathname: string): string {
   return pathname.replace(/^\/(fr|en)(?=\/|$)/, "") || "/";
 }
+
+/** The label and description of a product's entry. */
+export const productLinkText = (t: TranslationDictionary, product: NavProduct["id"], link: NavLink<ProductLinkId>) => t.site.nav[product].links[link.icon];
+
+/** The label and description of a company entry. */
+export const companyLinkText = (t: TranslationDictionary, link: NavLink<CompanyLinkId>) => t.site.nav.company[link.icon];

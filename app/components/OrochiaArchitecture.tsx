@@ -13,6 +13,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { ARCH_NODES, type ArchNode, type Journey, type NodeId } from "@/lib/orochia-journeys";
+import type { TranslationDictionary } from "@/lib/i18n";
+
+type ArchText = TranslationDictionary["site"]["orochia"]["arch"];
 
 const STEP_MS = 3200;
 const noop = () => () => {};
@@ -51,7 +54,8 @@ function curve(l: Layout, a: NodeId, b: NodeId) {
   return { d: `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`, at: (t: number) => [(1 - t) ** 2 * x1 + 2 * (1 - t) * t * cx + t * t * x2, (1 - t) ** 2 * y1 + 2 * (1 - t) * t * cy + t * t * y2] };
 }
 
-function Diagram({ layout, journey, step, reduce, loc, className }: { layout: Layout; journey: Journey; step: number; reduce: boolean; loc: "fr" | "en"; className: string }) {
+function Diagram({ layout, journey, step, reduce, text, className }: { layout: Layout; journey: Journey; step: number; reduce: boolean; text: ArchText; className: string }) {
+  const jt = text.journeys[journey.id];
   const s = journey.steps[step];
   const pairs = useMemo(() => [...new Set(journey.steps.map((x) => pair(x.from, x.to)))], [journey]);
   const done = new Set(journey.steps.slice(0, step).map((x) => pair(x.from, x.to)));
@@ -60,7 +64,7 @@ function Diagram({ layout, journey, step, reduce, loc, className }: { layout: La
   const nodeH = 64;
 
   return (
-    <svg viewBox={`0 0 ${layout.w} ${layout.h}`} className={className} role="img" aria-label={`${journey.name[loc]} — ${s.title[loc]}`}>
+    <svg viewBox={`0 0 ${layout.w} ${layout.h}`} className={className} role="img" aria-label={`${jt.name} — ${jt.steps[step].title}`}>
       {/* Every hop of the journey, quiet; the ones already travelled keep a trace. */}
       {pairs.map((p) => {
         const [a, b] = p.split("|") as [NodeId, NodeId];
@@ -94,10 +98,10 @@ function Diagram({ layout, journey, step, reduce, loc, className }: { layout: La
               stroke={on ? journey.color : "var(--kz-border-default)"} strokeWidth={on ? 2.5 : 1}
               style={{ filter: on ? `drop-shadow(0 0 14px color-mix(in srgb, ${journey.color} 45%, transparent))` : undefined, transition: "stroke 250ms ease" }} />
             <text x={layout.nodeW / 2} y={27} textAnchor="middle" fontSize={17} fontWeight={700} fill="var(--kz-text-primary)" fontFamily="var(--font-display), system-ui, sans-serif">
-              {n.label[loc]}
+              {text.nodes[n.id].label}
             </text>
             <text x={layout.nodeW / 2} y={47} textAnchor="middle" fontSize={11.5} fill="var(--kz-text-muted)" fontFamily="var(--font-mono), monospace">
-              {n.sub[loc]}
+              {text.nodes[n.id].sub}
             </text>
           </g>
         );
@@ -107,8 +111,8 @@ function Diagram({ layout, journey, step, reduce, loc, className }: { layout: La
 }
 
 export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] }) {
-  const { locale } = useI18n();
-  const loc = locale === "fr" ? "fr" : "en";
+  const { t } = useI18n();
+  const text = t.site.orochia.arch;
   // Unknown during SSR: honour the preference only once mounted (no hydration mismatch).
   const mounted = useSyncExternalStore(noop, () => true, () => false);
   const prefersReduced = useReducedMotion();
@@ -155,37 +159,37 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <div className="oa-tabs" role="tablist" aria-label={loc === "fr" ? "Parcours" : "Journeys"}>
+      <div className="oa-tabs" role="tablist" aria-label={t.site.menu.journeysAria}>
         {journeys.map((x, i) => (
           <button key={x.id} role="tab" aria-selected={i === j} className="oa-tab" style={{ ["--c" as string]: x.color }}
             onClick={() => { setJ(i); setStep(0); }}>
-            <span className="oa-dot" aria-hidden /> {x.name[loc]}
+            <span className="oa-dot" aria-hidden /> {text.journeys[x.id].name}
           </button>
         ))}
       </div>
-      <p className="oa-summary">{journey.summary[loc]}</p>
+      <p className="oa-summary">{text.journeys[journey.id].summary}</p>
 
       <div className="oa-stage">
-        <Diagram layout={WIDE} journey={journey} step={step} reduce={reduce} loc={loc} className="oa-svg oa-wide" />
-        <Diagram layout={NARROW} journey={journey} step={step} reduce={reduce} loc={loc} className="oa-svg oa-narrow" />
+        <Diagram layout={WIDE} journey={journey} step={step} reduce={reduce} text={text} className="oa-svg oa-wide" />
+        <Diagram layout={NARROW} journey={journey} step={step} reduce={reduce} text={text} className="oa-svg oa-narrow" />
       </div>
 
       <div className="oa-card" aria-live="polite">
         <div className="oa-card-head">
           <span className="oa-num">{String(step + 1).padStart(2, "0")}<span>/{String(journey.steps.length).padStart(2, "0")}</span></span>
-          <strong>{s.title[loc]}</strong>
+          <strong>{text.journeys[journey.id].steps[step].title}</strong>
           {s.endpoint && <code className="oa-endpoint">{s.endpoint}</code>}
         </div>
-        <p>{s.detail[loc]}</p>
+        <p>{text.journeys[journey.id].steps[step].detail}</p>
         <div className="oa-controls">
-          <button onClick={() => go(-1)} disabled={step === 0} aria-label={loc === "fr" ? "Étape précédente" : "Previous step"}><ChevronLeft size={16} /></button>
+          <button onClick={() => go(-1)} disabled={step === 0} aria-label={text.stepPrev}><ChevronLeft size={16} /></button>
           <div className="oa-steps">
             {journey.steps.map((_, i) => (
               <button key={i} className={`oa-step${i === step ? " is-on" : ""}${i < step ? " is-done" : ""}`} onClick={() => setStep(i)}
-                aria-label={`${loc === "fr" ? "Étape" : "Step"} ${i + 1}`} aria-current={i === step ? "step" : undefined} />
+                aria-label={`${text.step} ${i + 1}`} aria-current={i === step ? "step" : undefined} />
             ))}
           </div>
-          <button onClick={() => go(1)} disabled={step === journey.steps.length - 1} aria-label={loc === "fr" ? "Étape suivante" : "Next step"}><ChevronRight size={16} /></button>
+          <button onClick={() => go(1)} disabled={step === journey.steps.length - 1} aria-label={text.stepNext}><ChevronRight size={16} /></button>
           {!reduce && (
             <button className="oa-play" onClick={() => setPaused((p) => !p)} aria-label={paused ? "Play" : "Pause"}>
               {paused ? <Play size={14} /> : <Pause size={14} />}

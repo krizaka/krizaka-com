@@ -4,6 +4,8 @@
      CONTACT_WEBHOOK_URL                                        JSON POST (Slack / Discord / Teams / any relay)
    Both may be set; the message is accepted when at least one channel delivers it. */
 
+const CONTACT_LOCALES = ["en", "fr"] as const;
+
 export const CONTACT_TOPICS = ["orazaka", "orochia", "partnership", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
@@ -35,7 +37,7 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
   if (company.length > 160) return { ok: false, field: "company" };
   if (!topic) return { ok: false, field: "topic" };
   if (message.length < 10 || message.length > 5000) return { ok: false, field: "message" };
-  return { ok: true, value: { name, email, company, topic, message, locale: b.locale === "fr" ? "fr" : "en" } };
+  return { ok: true, value: { name, email, company, topic, message, locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en" } };
 }
 
 const TOPIC_LABEL: Record<ContactTopic, string> = {

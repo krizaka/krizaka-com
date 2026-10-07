@@ -7,22 +7,20 @@ import ContactForm from "../ContactForm";
 import type { ContactTopic } from "@/lib/contact";
 
 export default function ContactCta({ topic = "other" }: { topic?: ContactTopic }) {
-  const { locale } = useI18n();
-  const fr = locale === "fr";
+  const { t } = useI18n();
+  const c = t.site.home.contact;
   return (
     <section id="contact" className="kz-section kz-cta">
       <div className="kz-cta-copy">
-        <p className="kz-eyebrow">{fr ? "Contact" : "Contact"}</p>
-        <h2 className="kz-h2">{fr ? "Parlez-nous de ce que vous construisez." : "Tell us what you're building."}</h2>
+        <p className="kz-eyebrow">{c.eyebrow}</p>
+        <h2 className="kz-h2">{c.title}</h2>
         <p>
-          {fr
-            ? "Une contrainte de conformité, une plateforme à faire tenir, une idée qui a besoin d'un socle. Écrivez-nous simplement : c'est un ingénieur qui vous répond."
-            : "A compliance constraint, a platform that has to hold, an idea that needs solid ground. Just write to us — an engineer reads it and replies."}
+          {c.body}
         </p>
         <ul>
-          <li>{fr ? "Réponse sous deux jours ouvrables" : "Reply within two business days"}</li>
-          <li>{fr ? "Montréal · Loi 25 · RGPD" : "Montréal · Law 25 · GDPR"}</li>
-          <li>{fr ? "Code ouvert, sans enfermement" : "Open code, no lock-in"}</li>
+          {c.points.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
         </ul>
       </div>
       <ContactForm defaultTopic={topic} />

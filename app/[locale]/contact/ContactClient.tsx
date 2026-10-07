@@ -137,7 +137,7 @@ const CHANNELS = [
 ];
 
 export default function ContactClient() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   // Only keep the first 2 channels (Questions & Bugs), skip "Partenariats & presse"
   const channels = t.contact.channels.slice(0, 2);
@@ -172,7 +172,7 @@ export default function ContactClient() {
               marginBottom: "14px",
             }}
           >
-            {locale === "fr" ? "CONTACT" : "CONTACT"}
+            {t.site.contactPage.eyebrow}
           </span>
           <h1
             style={{
@@ -185,7 +185,7 @@ export default function ContactClient() {
               marginBottom: "16px",
             }}
           >
-            {locale === "fr" ? "Parlons de votre projet" : "Let's talk about your project"}
+            {t.site.contactPage.title}
           </h1>
           <p
             style={{
@@ -195,9 +195,7 @@ export default function ContactClient() {
               maxWidth: "560px",
             }}
           >
-            {locale === "fr"
-              ? "Déploiement d'Orazaka ou d'Orochia, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables."
-              : "Deploying Orazaka or Orochia, a custom integration, a sovereign-AI audit or a partnership: write to the team, we reply within two business days."}
+            {t.site.contactPage.lead}
           </p>
         </motion.div>
 
@@ -215,12 +213,10 @@ export default function ContactClient() {
             margin: "0 0 6px",
           }}
         >
-          {locale === "fr" ? "Ou échangeons en public" : "Or talk in public"}
+          {t.site.contactPage.publicTitle}
         </h2>
         <p style={{ fontSize: "14px", color: "var(--kz-text-secondary)", margin: "0 0 20px" }}>
-          {locale === "fr"
-            ? "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub."
-            : "Questions, bugs and ideas about our open-source repositories are discussed on GitHub."}
+          {t.site.contactPage.publicLead}
         </p>
 
         {/* ─── Two Channel Cards ─── */}
@@ -323,7 +319,7 @@ export default function ContactClient() {
 
                 {/* CTA — one link per product: each has its own repository */}
                 <span style={{ fontSize: "11px", color: "var(--kz-text-muted)", marginBottom: "10px" }}>
-                  {ch.cta} — {locale === "fr" ? "pour quel produit ?" : "for which product?"}
+                  {ch.cta} — {t.site.contactPage.whichProduct}
                 </span>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center" }}>
                   {(["orazaka", "orochia"] as const).map((product) => (

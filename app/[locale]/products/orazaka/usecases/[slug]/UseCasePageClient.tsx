@@ -20,7 +20,8 @@ import { useI18n } from "../../../../../components/I18nProvider";
 import TopNavBar from "../../../../../components/TopNavBar";
 import SiteFooter from "../../../../../components/SiteFooter";
 import { USE_CASES, getUseCaseBySlug, getLocalizedField, UseCaseActionPlanStep, UseCaseData } from "@/lib/use-cases-data";
-import { TranslationDictionary } from "@/lib/i18n";
+import { TranslationDictionary, getDictionary } from "@/lib/i18n";
+import Rich from "@/app/components/Rich";
 import MartinFalconSentry from "../../../../../components/illustrations/MartinFalconSentry";
 
 /* ─── Sibling Navigation (Centered) ─── */
@@ -64,7 +65,7 @@ function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr"
           <ChevronLeft size={16} style={{ color: "var(--kz-text-muted)", flexShrink: 0 }} />
           <div style={{ minWidth: 0, textAlign: "left" }}>
             <div style={{ fontSize: "10px", fontWeight: 600, color: "var(--kz-text-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "4px" }}>
-              {locale === "fr" ? "Précédent" : "Previous"}
+              {getDictionary(locale).pages.useCase.previous}
             </div>
             <div style={{ fontSize: "13px", fontWeight: 600, color: "var(--kz-text-primary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {getLocalizedField(prev.title, locale)}
@@ -91,7 +92,7 @@ function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr"
         >
           <div style={{ minWidth: 0, textAlign: "right" }}>
             <div style={{ fontSize: "10px", fontWeight: 600, color: "var(--kz-text-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "4px" }}>
-              {locale === "fr" ? "Suivant" : "Next"}
+              {getDictionary(locale).pages.useCase.next}
             </div>
             <div style={{ fontSize: "13px", fontWeight: 600, color: "var(--kz-text-primary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {getLocalizedField(next.title, locale)}
@@ -133,7 +134,7 @@ function UseCaseMiniNav({ currentSlug, locale }: { currentSlug: string; locale: 
           transition: "color 150ms ease, background 150ms ease",
         }}
       >
-        {locale === "fr" ? "Tous les cas" : "All cases"}
+        {getDictionary(locale).pages.useCase.allCases}
       </Link>
       {USE_CASES.map((uc) => {
         const isActive = uc.slug === currentSlug;
@@ -177,7 +178,7 @@ function MartinHero({ title, description, locale }: { title: string; description
       <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "8px", marginBottom: "20px" }}>
         <span className="kw-badge accent-badge">Orazaka Sentinelle</span>
         <span className="kw-badge outline-badge">Loi 25 · LCEE</span>
-        <span className="kw-badge outline-badge">{locale === "fr" ? "IA Souveraine" : "Sovereign AI"}</span>
+        <span className="kw-badge outline-badge">{getDictionary(locale).pages.useCase.sovereignAi}</span>
       </div>
       
       <h1 className="martin-hero-title">{title}</h1>
@@ -186,18 +187,10 @@ function MartinHero({ title, description, locale }: { title: string; description
       <div className="martin-story-box">
         <h3 className="martin-story-heading">
           <span style={{ fontSize: "16px" }}>💡</span> 
-          {locale === "fr" ? "Qui est Martin ?" : "Who is Martin?"}
+          {getDictionary(locale).pages.useCase.whoIsMartin}
         </h3>
         <p className="martin-story-text">
-          {locale === "fr" ? (
-            <>
-              <strong>Martin</strong> est électricien à Montréal. Comme beaucoup {"d'artisans"}, il veut développer sa clientèle sans passer ses soirées à éplucher les registres publics, et surtout, <strong>sans enfreindre la loi</strong>. Le Québec impose des règles strictes : la <strong>LCEE</strong> interdit les courriels commerciaux froids B2C, et la <strong>Loi 25</strong> interdit {"d'envoyer"} les données personnelles de ses prospects dans des serveurs cloud tiers. Orazaka Sentinelle résout ce casse-tête en exécutant tout le processus localement sur son ordinateur.
-            </>
-          ) : (
-            <>
-              <strong>Martin</strong> is an electrician in Montreal. Like many local pros, he wants to grow his business without spending his evenings scanning public registries, and above all, <strong>without breaking the law</strong>. Quebec has strict rules: <strong>CASL</strong> bans cold B2C emails, and <strong>Law 25</strong> bans sending prospect PII to cloud servers. Orazaka Sentinel solves this headache by running everything locally on his computer.
-            </>
-          )}
+          <Rich text={getDictionary(locale).pages.useCase.martinStory} />
         </p>
       </div>
     </div>
@@ -209,30 +202,26 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
   return (
     <div className="comparison-container">
       <h2 className="section-title">
-        {locale === "fr" ? "L'expérience utilisateur réinventée" : "The User Experience Reimagined"}
+        {getDictionary(locale).pages.useCase.theUserExperienceReimagined}
       </h2>
       <p className="section-desc">
-        {locale === "fr" 
-          ? "Découvrez comment Orazaka Sentinelle simplifie le quotidien de Martin."
-          : "Discover how Orazaka Sentinel simplifies Martin's day-to-day operations."}
+        {getDictionary(locale).pages.useCase.discoverHowOrazakaSentinelSimplifies}
       </p>
 
       {/* Empathy Hook Schema */}
       <div className="empathy-schema">
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 2 }}>
           <div className="empathy-question">
-            {locale === "fr" ? "Vous vous reconnaissez ?" : "Do you recognize yourself?"}
+            {getDictionary(locale).pages.useCase.doYouRecognizeYourself}
           </div>
           <p className="empathy-text">
-            {locale === "fr" 
-              ? "Si vous passez des heures à chercher des clients ou si vous craignez les lourdes amendes de la Loi 25, vous partagez le même quotidien difficile que Martin. Orazaka vous permet de passer de la surcharge à la sérénité :"
-              : "If you spend hours chasing leads or worry about heavy Law 25 compliance fines, you share Martin's struggles. Orazaka allows you to transition from overload to peace of mind:"}
+            {getDictionary(locale).pages.useCase.ifYouSpendHoursChasing}
           </p>
           
           {/* Visual flow indicator arrow (Before -> After) */}
           <div className="visual-transition-bridge" aria-hidden="true">
             <div className="bridge-indicator indicator-manual">
-              {locale === "fr" ? "Surcharge & Risque" : "Overload & Risk"}
+              {getDictionary(locale).pages.useCase.overloadRisk}
             </div>
             <div className="bridge-arrow-container">
               <div className="bridge-line-dashed" />
@@ -241,7 +230,7 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <div className="bridge-arrow-head" />
             </div>
             <div className="bridge-indicator indicator-auto">
-              {locale === "fr" ? "Souveraineté & Sérénité" : "Sovereignty & Serenity"}
+              {getDictionary(locale).pages.useCase.sovereigntySerenity}
             </div>
           </div>
         </div>
@@ -253,7 +242,7 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
         <div className="comparison-card before-card">
           <div className="panel-badge before-badge">
             <AlertCircle size={13} style={{ marginRight: "4px" }} />
-            {locale === "fr" ? "Avant Orazaka : 10h / semaine" : "Before Orazaka: 10h / week"}
+            {getDictionary(locale).pages.useCase.beforeOrazaka10hWeek}
           </div>
           
           <div className="flow-steps">
@@ -261,12 +250,10 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num">1</span>
               <div>
                 <h4 className="step-item-title">
-                  {locale === "fr" ? "Recherche manuelle harassante" : "Tiresome manual search"}
+                  {getDictionary(locale).pages.useCase.tiresomeManualSearch}
                 </h4>
                 <p className="step-item-desc">
-                  {locale === "fr" 
-                    ? "Martin épluche chaque soir les réseaux sociaux et babillards de chantiers (5h/semaine)."
-                    : "Martin spends every evening scanning social networks and local bulletin boards (5h/week)."}
+                  {getDictionary(locale).pages.useCase.martinSpendsEveryEveningScanning}
                 </p>
               </div>
             </div>
@@ -275,12 +262,10 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num">2</span>
               <div>
                 <h4 className="step-item-title">
-                  {locale === "fr" ? "Consultation fastidieuse du Registre" : "Tedious Land Registry checks"}
+                  {getDictionary(locale).pages.useCase.tediousLandRegistryChecks}
                 </h4>
                 <p className="step-item-desc">
-                  {locale === "fr" 
-                    ? "Consultation manuelle du Registre foncier du Québec pour cibler les nouveaux propriétaires (2h/semaine)."
-                    : "Manually checking the Quebec Land Registry to target new property owners (2h/week)."}
+                  {getDictionary(locale).pages.useCase.manuallyCheckingTheQuebecLand}
                 </p>
               </div>
             </div>
@@ -289,21 +274,17 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num">3</span>
               <div>
                 <h4 className="step-item-title">
-                  {locale === "fr" ? "Risque de non-conformité & Fuites" : "Spam risk & Cloud privacy leaks"}
+                  {getDictionary(locale).pages.useCase.spamRiskCloudPrivacyLeaks}
                 </h4>
                 <p className="step-item-desc">
-                  {locale === "fr" 
-                    ? "Peur d'enfreindre la LCEE (loi anti-spam) en écrivant en B2C, ou de violer la Loi 25 en mettant des données privées dans le cloud."
-                    : "Fear of violating CASL (anti-spam law) writing B2C, or violating Law 25 by putting private prospect data in the cloud."}
+                  {getDictionary(locale).pages.useCase.fearOfViolatingCaslAnti}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="panel-footer-note before-note">
-            {locale === "fr" 
-              ? "Résultat : Martin est débordé, perd son temps libre et s'expose à de lourdes amendes."
-              : "Result: Martin is overloaded, loses free time, and risks heavy regulatory fines."}
+            {getDictionary(locale).pages.useCase.resultMartinIsOverloadedLoses}
           </div>
         </div>
 
@@ -311,7 +292,7 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
         <div className="comparison-card after-card">
           <div className="panel-badge after-badge">
             <Sparkles size={13} style={{ marginRight: "4px" }} />
-            {locale === "fr" ? "Avec Orazaka : 10 min / semaine" : "With Orazaka: 10 min / week"}
+            {getDictionary(locale).pages.useCase.withOrazaka10MinWeek}
           </div>
           
           <div className="flow-steps">
@@ -319,12 +300,10 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num success-num">1</span>
               <div>
                 <h4 className="step-item-title">
-                  {locale === "fr" ? "Veille automatisée locale" : "Automated local territorial watch"}
+                  {getDictionary(locale).pages.useCase.automatedLocalTerritorialWatch}
                 </h4>
                 <p className="step-item-desc">
-                  {locale === "fr" 
-                    ? "Orazaka Sentinelle scanne en arrière-plan les chantiers et permis publics depuis son ordinateur."
-                    : "Orazaka Sentinel silently scans municipal permits and public sales feeds locally in the background."}
+                  {getDictionary(locale).pages.useCase.orazakaSentinelSilentlyScansMunicipal}
                 </p>
               </div>
             </div>
@@ -333,12 +312,10 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num success-num">2</span>
               <div>
                 <h4 className="step-item-title">
-                  {locale === "fr" ? "Tri intelligent et souverain" : "Intelligent, sovereign filtering"}
+                  {getDictionary(locale).pages.useCase.intelligentSovereignFiltering}
                 </h4>
                 <p className="step-item-desc">
-                  {locale === "fr" 
-                    ? "Un LLM local qualifie l'intention (ex. permis de borne VE) sans jamais envoyer de données dans le cloud."
-                    : "A local LLM qualifies target intent (e.g. EV charger permit detection) without sending any data to the cloud."}
+                  {getDictionary(locale).pages.useCase.aLocalLlmQualifiesTarget}
                 </p>
               </div>
             </div>
@@ -347,21 +324,17 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num success-num">3</span>
               <div>
                 <h4 className="step-item-title">
-                  {locale === "fr" ? "Actions conformes prêtes à poster" : "Compliant actions ready to mail/send"}
+                  {getDictionary(locale).pages.useCase.compliantActionsReadyToMail}
                 </h4>
                 <p className="step-item-desc">
-                  {locale === "fr" 
-                    ? "Impression de publipostages postaux pour le B2C (légal hors LCEE) et e-mails ciblés pour le B2B."
-                    : "Instant print-ready postcard drafts for B2C (fully CASL-compliant) and business emails for B2B."}
+                  {getDictionary(locale).pages.useCase.instantPrintReadyPostcardDrafts}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="panel-footer-note after-note">
-            {locale === "fr" 
-              ? "Résultat : Martin consacre son temps à son métier de manière 100% légale et l'esprit tranquille."
-              : "Result: Martin devotes his time to his trade with complete peace of mind and full compliance."}
+            {getDictionary(locale).pages.useCase.resultMartinDevotesHisTime}
           </div>
         </div>
       </div>
@@ -374,38 +347,30 @@ function FeaturesBento({ locale }: { locale: "fr" | "en" }) {
   const cards = [
     {
       icon: <Search size={20} style={{ color: "var(--kz-accent)" }} />,
-      title: locale === "fr" ? "Veille automatique" : "Automated monitoring",
-      desc: locale === "fr" 
-        ? "Scanne automatiquement les permis fonciers locaux sans recherche manuelle." 
-        : "Silently scans public regional registries without manual outreach.",
+      title: getDictionary(locale).pages.useCase.automatedMonitoring,
+      desc: getDictionary(locale).pages.useCase.silentlyScansPublicRegionalRegistries,
     },
     {
       icon: <Mail size={20} style={{ color: "var(--kz-accent)" }} />,
-      title: locale === "fr" ? "Courriers B2C éthiques" : "Ethical B2C Mailers",
-      desc: locale === "fr" 
-        ? "Génère du publipostage physique légal qui contourne la loi anti-spam électronique." 
-        : "Drafts physical direct mail campaigns exempt from electronic anti-spam laws.",
+      title: getDictionary(locale).pages.useCase.ethicalB2cMailers,
+      desc: getDictionary(locale).pages.useCase.draftsPhysicalDirectMailCampaigns,
     },
     {
       icon: <Briefcase size={20} style={{ color: "var(--kz-accent)" }} />,
-      title: locale === "fr" ? "E-mails B2B ciblés" : "Targeted B2B emails",
-      desc: locale === "fr" 
-        ? "Rédige des courriels professionnels conformes aux exemptions d'affaires." 
-        : "Writes contextual corporate messages adhering to business exemptions.",
+      title: getDictionary(locale).pages.useCase.targetedB2bEmails,
+      desc: getDictionary(locale).pages.useCase.writesContextualCorporateMessagesAdhering,
     },
     {
       icon: <Lock size={20} style={{ color: "var(--kz-accent)" }} />,
-      title: locale === "fr" ? "100% Hors-ligne & Souverain" : "100% Sovereign & Offline",
-      desc: locale === "fr" 
-        ? "Aucune donnée de vos prospects ne quitte votre ordinateur. Conforme Loi 25." 
-        : "Prospect details never leave your hardware. Fully Law 25 compliant.",
+      title: getDictionary(locale).pages.useCase.t100SovereignOffline,
+      desc: getDictionary(locale).pages.useCase.prospectDetailsNeverLeaveYour,
     }
   ];
 
   return (
     <div style={{ marginBottom: "56px", width: "100%" }}>
       <h2 className="section-title">
-        {locale === "fr" ? "Ce que fait le package Orazaka Sentinelle" : "What Orazaka Sentinel Does"}
+        {getDictionary(locale).pages.useCase.whatOrazakaSentinelDoes}
       </h2>
       
       <div className="features-grid">
@@ -454,7 +419,7 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
         <div style={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center", width: "100%" }}>
           <Clock size={18} style={{ color: "var(--kz-accent)" }} />
           <h3 className="roi-calc-title">
-            {locale === "fr" ? "Calculateur de temps & ROI" : "Time & ROI Calculator"}
+            {getDictionary(locale).pages.useCase.timeRoiCalculator}
           </h3>
         </div>
         
@@ -482,10 +447,10 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
       <div className="roi-calc-content">
         <div className="roi-calc-stat">
           <div style={{ fontSize: "13px", color: "var(--kz-text-muted)", marginBottom: "8px" }}>
-            {locale === "fr" ? "Temps passé manuellement" : "Time spent manually"}
+            {getDictionary(locale).pages.useCase.timeSpentManually}
           </div>
           <div style={{ fontSize: "24px", fontWeight: 700, color: "var(--kz-text-primary)" }}>
-            {current.totalManual}h <span style={{ fontSize: "14px", color: "var(--kz-text-muted)" }}>/ {locale === "fr" ? "semaine" : "week"}</span>
+            {current.totalManual}h <span style={{ fontSize: "14px", color: "var(--kz-text-muted)" }}>/ {getDictionary(locale).pages.useCase.week}</span>
           </div>
         </div>
 
@@ -493,10 +458,10 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
 
         <div className="roi-calc-stat">
           <div style={{ fontSize: "13px", color: "var(--kz-text-muted)", marginBottom: "8px" }}>
-            {locale === "fr" ? "Temps avec Orazaka" : "Time with Orazaka"}
+            {getDictionary(locale).pages.useCase.timeWithOrazaka}
           </div>
           <div style={{ fontSize: "24px", fontWeight: 700, color: "var(--kz-accent)" }}>
-            10 min <span style={{ fontSize: "14px", color: "var(--kz-text-muted)" }}>/ {locale === "fr" ? "semaine" : "week"}</span>
+            10 min <span style={{ fontSize: "14px", color: "var(--kz-text-muted)" }}>/ {getDictionary(locale).pages.useCase.week}</span>
           </div>
         </div>
 
@@ -504,10 +469,10 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
 
         <div className="roi-calc-stat highlight-stat">
           <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--kz-status-success)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
-            {locale === "fr" ? "Temps libéré" : "Time saved"}
+            {getDictionary(locale).pages.useCase.timeSaved}
           </div>
           <div style={{ fontSize: "28px", fontWeight: 800, color: "var(--kz-status-success)" }}>
-            +{current.saved.toFixed(1)}h <span style={{ fontSize: "14px", fontWeight: 500 }}>/ {locale === "fr" ? "semaine" : "week"}</span>
+            +{current.saved.toFixed(1)}h <span style={{ fontSize: "14px", fontWeight: 500 }}>/ {getDictionary(locale).pages.useCase.week}</span>
           </div>
         </div>
       </div>

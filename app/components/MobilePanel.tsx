@@ -9,7 +9,7 @@ import { useTheme } from "./ThemeProvider";
 import KrizakaLogo from "./KrizakaLogo";
 import ProductLogo from "./ProductLogo";
 import { NAV_ICONS } from "./ProductsMenu";
-import { NAV_COMPANY, NAV_PRODUCTS, isNavActive, localeless } from "@/lib/nav";
+import { NAV_COMPANY, NAV_PRODUCTS, companyLinkText, isNavActive, localeless } from "@/lib/nav";
 
 /* ─── Mobile Menu Panel ─── */
 
@@ -20,11 +20,10 @@ export function MobilePanel({
   isOpen: boolean;
   onClose: () => void;
 }) {
-  const { t, locale, toggleLocale } = useI18n();
+  const { t, toggleLocale } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
   const path = localeless(pathname);
-  const loc = locale === "fr" ? "fr" : "en";
 
   /* Close on route change */
   useEffect(() => {
@@ -145,7 +144,7 @@ export function MobilePanel({
                 </span>
                 <span style={{ flex: 1, minWidth: 0 }}>
                   <span className="kz-mp-name">{p.name}</span>
-                  <span className="kz-mp-tagline">{p.tagline[loc]}</span>
+                  <span className="kz-mp-tagline">{t.site.nav[p.id].tagline}</span>
                 </span>
                 <ChevronDown size={16} className="kz-mp-chevron" aria-hidden />
               </summary>
@@ -154,7 +153,7 @@ export function MobilePanel({
                   const Icon = NAV_ICONS[l.icon];
                   return (
                     <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
-                      <Icon size={16} strokeWidth={1.6} aria-hidden /> {l.label[loc]}
+                      <Icon size={16} strokeWidth={1.6} aria-hidden /> {t.site.nav[p.id].links[l.icon].label}
                     </Link>
                   );
                 })}
@@ -167,7 +166,7 @@ export function MobilePanel({
               const Icon = NAV_ICONS[l.icon];
               return (
                 <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
-                  <Icon size={16} strokeWidth={1.6} aria-hidden /> {l.label[loc]}
+                  <Icon size={16} strokeWidth={1.6} aria-hidden /> {companyLinkText(t, l).label}
                 </Link>
               );
             })}
@@ -252,7 +251,7 @@ export function MobilePanel({
             }}
           >
             <Globe size={16} />
-            {locale === "fr" ? "English" : "Français"}
+            {t.site.menu.otherLanguage}
           </button>
         </div>
       </nav>

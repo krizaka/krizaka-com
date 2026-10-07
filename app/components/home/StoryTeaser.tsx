@@ -6,28 +6,27 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useI18n } from "../I18nProvider";
 import { BirdPortrait, FlockStyles } from "../story/Flock";
-import { FLOCK, STORY_INTRO } from "@/lib/story";
+import { FLOCK } from "@/lib/story";
 
 export default function StoryTeaser() {
-  const { locale } = useI18n();
-  const loc = locale === "fr" ? "fr" : "en";
+  const { t } = useI18n();
+  const st = t.site.story;
+  const teaser = t.site.home.storyTeaser;
   return (
     <section className="kz-section kz-teaser" aria-labelledby="teaser-title">
       <FlockStyles />
       <div className="kz-teaser-flock" aria-hidden>
-        {FLOCK.map((b) => (
-          <BirdPortrait key={b.id} id={b.id} size={64} />
+        {FLOCK.map((id) => (
+          <BirdPortrait key={id} id={id} size={64} />
         ))}
       </div>
-      <p className="kz-eyebrow">{STORY_INTRO.eyebrow[loc]}</p>
-      <h2 id="teaser-title" className="kz-teaser-title">{STORY_INTRO.title[loc]}</h2>
+      <p className="kz-eyebrow">{st.intro.eyebrow}</p>
+      <h2 id="teaser-title" className="kz-teaser-title">{st.intro.title}</h2>
       <p className="kz-teaser-sub">
-        {loc === "fr"
-          ? "Une forge à mi-pente, un oracle qui ne quitte pas la maison, un serpent à huit têtes — et la volée qui veille."
-          : "A forge halfway up a slope, an oracle that stays home, an eight-headed serpent — and the flock that keeps watch."}
+        {teaser.sub}
       </p>
       <Link href="/story" className="kz-link-strong">
-        {loc === "fr" ? "Lire l'histoire" : "Read the story"} <ArrowRight size={14} />
+        {teaser.cta} <ArrowRight size={14} />
       </Link>
       <style>{`
         .kz-teaser { text-align: center; }

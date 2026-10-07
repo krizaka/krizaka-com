@@ -42,7 +42,7 @@ export async function generateMetadata({
 export default async function OrazakaDocSlugPage({
   params,
 }: {
-  params: Promise<{ category: string; slug: string }>;
+  params: Promise<{ locale: string; category: string; slug: string }>;
 }) {
   const resolvedParams = await params;
   const doc = await getDocBySlugAndCategory(
@@ -56,5 +56,5 @@ export default async function OrazakaDocSlugPage({
 
   const hero =
     resolvedParams.category === "architecture" && resolvedParams.slug === "architecture" ? <ArchitectureDocHero /> : undefined;
-  return <DocArticle doc={doc} product={{ name: "Orazaka", href: "/products/orazaka" }} hero={hero} />;
+  return <DocArticle doc={doc} product={{ name: "Orazaka", href: "/products/orazaka" }} hero={hero} locale={resolvedParams.locale} />;
 }

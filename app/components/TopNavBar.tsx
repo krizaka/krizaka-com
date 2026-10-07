@@ -12,7 +12,7 @@ import { SearchCommand } from "./SearchCommand";
 import { ProductsMenu } from "./ProductsMenu";
 
 export default function TopNavBar() {
-  const { t, locale, toggleLocale } = useI18n();
+  const { t, toggleLocale } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -117,7 +117,7 @@ export default function TopNavBar() {
               >
                 <Search size={12} style={{ color: "var(--kz-text-muted)" }} />
                 <span className="search-placeholder-text">
-                  {locale === "fr" ? "Rechercher..." : "Search..."}
+                  {t.site.menu.search}
                 </span>
                 <kbd
                   style={{
@@ -210,7 +210,7 @@ export default function TopNavBar() {
               id="nav-lang-toggle"
               type="button"
               onClick={toggleLocale}
-              aria-label={locale === "fr" ? "Switch to English" : "Changer en Français"}
+              aria-label={t.site.menu.switchLanguage}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -230,12 +230,12 @@ export default function TopNavBar() {
                 transition: "border-color 150ms ease, color 150ms ease",
               }}
             >
-              {locale === "fr" ? "EN" : "FR"}
+              {t.site.menu.languageShort}
             </button>
 
             {/* Primary call to action */}
             <Link href="/contact" id="nav-contact-cta" className="btn-sheen">
-              {locale === "fr" ? "Nous contacter" : "Contact us"}
+              {t.site.menu.contactCta}
             </Link>
 
             {/* Mobile Hamburger */}

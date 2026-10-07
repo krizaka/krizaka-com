@@ -8,10 +8,9 @@ import Link from "next/link";
 import { ArrowRight, Check, CreditCard, Database, Film, PlayCircle, ShieldAlert, ShieldCheck, Workflow } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "@/app/components/I18nProvider";
+import { format } from "@/lib/i18n";
 import OrochiaLogo from "@/app/components/OrochiaLogo";
 import { ComplianceSentryScene, SignedDeliveryScene, WatchPartyScene } from "@/app/components/illustrations/OrochiaScenes";
-
-type Loc = "fr" | "en";
 
 interface Props {
   docs: { slug: string; title: string; category: string }[];
@@ -23,107 +22,9 @@ interface Props {
 const MODULE_ICON: Record<string, LucideIcon> = { media: Film, payments: CreditCard, data: Database, compliance: ShieldCheck };
 const CATEGORY_TAG: Record<string, string> = { "getting-started": "START", architecture: "CORE", api: "API", operations: "OPS" };
 
-const COPY = {
-  en: {
-    kicker: "Creator video platform",
-    tagline: "Stream in 4K, sell access, pay creators — with the rigour of financial infrastructure. Open source, Apache-2.0.",
-    pay: {
-      eyebrow: "Payments & trust",
-      title: "The client never says it paid.",
-      body: "Every unlock starts as a payment intent and ends only when the gateway's signed webhook arrives — verified in constant time, settled exactly once, written to a double-entry ledger.",
-      risk: "The usual shortcut",
-      risks: ["The browser reports “payment OK” and gets the video", "A replayed webhook credits twice", "Balances drift from what was really paid"],
-      shield: "Orochia's guarantee",
-      shields: ["Access granted only by the signed gateway webhook", "Idempotent settlement: one intent, one credit", "Balances computed from the ledger, never a counter"],
-    },
-    comp: {
-      eyebrow: "Compliance",
-      title: "Obligations become invariants.",
-      body: "18+ certification at sign-up, creator verification (18 U.S.C. § 2257) before any upload, content reports persisted and triaged — enforced on the server, reviewed in the admin console.",
-      cards: [
-        ["Verified before upload", "Upload sessions open only for creators whose records an operator approved."],
-        ["Reports are data", "Suspected minors, non-consensual content and DMCA claims are stored before being acknowledged."],
-      ],
-    },
-    run: {
-      eyebrow: "See it run",
-      title: "Watch the real product, then follow a request.",
-      body: "Screen recordings of the latest build, and an animated walk through playback, paid unlock and upload.",
-      tour: ["Video tour", "Feed, tipping, creator studio and admin console, recorded on the real app."],
-      arch: ["Animated architecture", "Step through each journey; every endpoint is checked against the code."],
-      tourCta: "Watch the tour",
-      archCta: "Follow a request",
-    },
-    quick: "Quick start",
-    steps: [
-      ["Install", "npm install", "Node 20 or later, Docker running."],
-      ["Set everything up", "npm run setup", "Writes .env, starts PostgreSQL 16 + Redis 7, migrates and seeds — idempotent."],
-      ["Run it", "npm run dev", "http://localhost:3000 · db:status, db:reset, db:studio for the database."],
-    ],
-    modules: "Architecture modules",
-    tables: (n: number) => `${n} tables`,
-    docs: "Documentation",
-    principles: "Design principles",
-    princ: [
-      ["Zero-trust playback", "No raw media URL reaches a client: every play is authorised, then signed for 300 seconds."],
-      ["Direct-to-CDN media", "Uploads and segments go straight to Bunny Stream; the web servers never carry video."],
-      ["Fail-closed configuration", "Missing secrets refuse to run in production; demo mode does not exist there."],
-    ],
-    facts: (e: number) => `${e} API endpoints, extracted from the code`,
-  },
-  fr: {
-    kicker: "Plateforme vidéo pour créateurs",
-    tagline: "Diffuser en 4K, vendre l'accès, payer les créateurs — avec la rigueur d'une infrastructure financière. Open source, Apache-2.0.",
-    pay: {
-      eyebrow: "Paiements & confiance",
-      title: "Le client ne dit jamais qu'il a payé.",
-      body: "Chaque déblocage commence par une intention de paiement et ne se termine qu'à l'arrivée du webhook signé de la passerelle — vérifié en temps constant, réglé une seule fois, inscrit dans un grand livre en partie double.",
-      risk: "Le raccourci habituel",
-      risks: ["Le navigateur annonce « paiement OK » et obtient la vidéo", "Un webhook rejoué crédite deux fois", "Les soldes dérivent de ce qui a vraiment été payé"],
-      shield: "La garantie Orochia",
-      shields: ["Accès accordé uniquement par le webhook signé de la passerelle", "Règlement idempotent : une intention, un crédit", "Soldes calculés depuis le grand livre, jamais un compteur"],
-    },
-    comp: {
-      eyebrow: "Conformité",
-      title: "Les obligations deviennent des invariants.",
-      body: "Certification 18+ à l'inscription, vérification des créateurs (18 U.S.C. § 2257) avant tout téléversement, signalements persistés et traités — appliqués sur le serveur, revus dans la console d'administration.",
-      cards: [
-        ["Vérifié avant l'envoi", "Les sessions de téléversement ne s'ouvrent qu'aux créateurs dont un opérateur a approuvé les registres."],
-        ["Les signalements sont des données", "Mineur présumé, contenu non consenti, DMCA : enregistrés avant d'être acquittés."],
-      ],
-    },
-    run: {
-      eyebrow: "En action",
-      title: "Voyez le vrai produit, puis suivez une requête.",
-      body: "Des enregistrements de la dernière version, et un parcours animé de la lecture, du déblocage payant et du téléversement.",
-      tour: ["Visite vidéo", "Fil, pourboires, studio créateur et console d'administration, enregistrés sur l'application réelle."],
-      arch: ["Architecture animée", "Parcourez chaque trajet ; chaque point d'API est vérifié contre le code."],
-      tourCta: "Voir la visite",
-      archCta: "Suivre une requête",
-    },
-    quick: "Démarrage rapide",
-    steps: [
-      ["Installer", "npm install", "Node 20 ou plus, Docker démarré."],
-      ["Tout configurer", "npm run setup", "Écrit .env, démarre PostgreSQL 16 + Redis 7, migre et peuple — idempotent."],
-      ["Lancer", "npm run dev", "http://localhost:3000 · db:status, db:reset, db:studio pour la base."],
-    ],
-    modules: "Modules d'architecture",
-    tables: (n: number) => `${n} tables`,
-    docs: "Documentation",
-    principles: "Principes de conception",
-    princ: [
-      ["Lecture zéro confiance", "Aucune URL média brute n'atteint un client : chaque lecture est autorisée, puis signée pour 300 secondes."],
-      ["Médias directs sur CDN", "Envois et segments passent directement par Bunny Stream ; les serveurs web ne portent jamais de vidéo."],
-      ["Configuration fail-closed", "Un secret manquant empêche le démarrage en production ; le mode démo n'y existe pas."],
-    ],
-    facts: (e: number) => `${e} points d'API, extraits du code`,
-  },
-} as const;
-
 export default function OrochiaDocsOverview({ docs, modules, stack, endpoints }: Props) {
-  const { locale } = useI18n();
-  const loc: Loc = locale === "fr" ? "fr" : "en";
-  const c = COPY[loc];
+  const { t } = useI18n();
+  const c = t.site.orochiaDocs;
 
   return (
     <div className="odo">
@@ -138,7 +39,7 @@ export default function OrochiaDocsOverview({ docs, modules, stack, endpoints }:
             <span key={s}><i aria-hidden /> {s}</span>
           ))}
         </div>
-        <p className="odo-facts">{c.facts(endpoints)}</p>
+        <p className="odo-facts">{format(c.facts, { count: endpoints })}</p>
       </header>
 
       {/* Payments & trust */}
@@ -236,7 +137,7 @@ export default function OrochiaDocsOverview({ docs, modules, stack, endpoints }:
                 <div>
                   <strong>{m.name}</strong>
                   <code>{m.path}</code>
-                  <p>{m.features ? m.features.slice(0, 3).join(" · ") : c.tables(m.tables?.length ?? 0)}</p>
+                  <p>{m.features ? m.features.slice(0, 3).join(" · ") : format(c.tables, { count: m.tables?.length ?? 0 })}</p>
                 </div>
               </div>
             );

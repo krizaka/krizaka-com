@@ -5,6 +5,7 @@
 import Link from "next/link";
 import { ArrowRight, GitBranch } from "lucide-react";
 import { useI18n } from "../I18nProvider";
+import { format } from "@/lib/i18n";
 import KrizakaLandscape from "../illustrations/KrizakaLandscape";
 import RotatingWord from "./RotatingWord";
 import { PRODUCTS } from "@/lib/org-data";
@@ -12,8 +13,8 @@ import ProductLogo from "../ProductLogo";
 import { GITHUB_ORG_URL } from "@/lib/site";
 
 export default function OrgHero({ repositoryCount }: { repositoryCount: number }) {
-  const { locale } = useI18n();
-  const loc = locale === "en" ? "en" : "fr";
+  const { t, locale } = useI18n();
+  const h = t.site.home.hero;
 
   return (
     <section id="hero" className="org-hero">
@@ -23,23 +24,21 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
       </div>
       <div className="org-hero-inner">
         <span className="org-hero-badge">
-          {loc === "fr" ? "Montréal · open source" : "Montréal · open source"}
+          {h.badge}
         </span>
-        <h1 className="org-hero-title" aria-label={loc === "fr" ? "Open source. Fermé aux compromis." : "Open source. Closed to compromise."}>
+        <h1 className="org-hero-title" aria-label={h.titleAria}>
           <span className="org-hero-line">Open source.</span>
           <span className="org-hero-line">
-            {loc === "fr" ? "Fermé " : "Closed to "}
+            {h.closedTo}
             <RotatingWord
-              key={loc}
+              key={locale}
               className="org-hero-accent"
-              words={loc === "fr" ? ["aux compromis.", "aux fuites.", "à l'enfermement.", "aux raccourcis."] : ["compromise.", "leaks.", "lock-in.", "shortcuts."]}
+              words={h.words}
             />
           </span>
         </h1>
         <p className="org-hero-sub">
-          {loc === "fr"
-            ? `Vos données restent chez vous. Vos créateurs sont payés. Votre code reste le vôtre. Nous construisons, en open source, les logiciels qui n'ont pas le droit de casser — ${repositoryCount} dépôts publics, à lire ligne par ligne.`
-            : `Your data stays home. Your creators get paid. Your code stays yours. We build, in the open, the software that isn't allowed to break — ${repositoryCount} public repositories, readable line by line.`}
+          {format(h.sub, { count: repositoryCount })}
         </p>
 
         <div className="org-hero-products">
@@ -48,7 +47,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
               <ProductLogo id={p.id} size={34} />
               <span>
                 <strong>{p.name}</strong>
-                <span className="org-hero-product-tag">{p.tagline[loc]}</span>
+                <span className="org-hero-product-tag">{t.site.products[p.id].tagline}</span>
               </span>
               <ArrowRight size={15} aria-hidden />
             </Link>
@@ -57,7 +56,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
 
         <div className="org-hero-cta">
           <Link href="/products" className="org-btn org-btn-primary btn-sheen">
-            {loc === "fr" ? "Découvrir les produits" : "Explore the products"} <ArrowRight size={15} strokeWidth={2.5} />
+            {h.cta} <ArrowRight size={15} strokeWidth={2.5} />
           </Link>
           <a href={GITHUB_ORG_URL} target="_blank" rel="noopener noreferrer" className="org-btn org-btn-ghost">
             <GitBranch size={15} /> github.com/krizaka

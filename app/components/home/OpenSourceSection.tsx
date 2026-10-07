@@ -5,14 +5,15 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useI18n } from "../I18nProvider";
+import { format } from "@/lib/i18n";
 
 export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { orazakaRepos: number; orochiaRepos: number }) {
-  const { locale } = useI18n();
-  const loc = locale === "en" ? "en" : "fr";
+  const { t } = useI18n();
+  const o = t.site.home.openSource;
   const stats = [
-    { value: orazakaRepos + orochiaRepos, label: loc === "fr" ? "dépôts publics" : "public repositories" },
-    { value: "Apache-2.0", label: loc === "fr" ? "licence de tous les dépôts" : "license of every repository" },
-    { value: "CI", label: loc === "fr" ? "build, tests et règles d'architecture à chaque commit" : "build, tests and architecture rules on every commit" },
+    { value: orazakaRepos + orochiaRepos, label: o.repos },
+    { value: "Apache-2.0", label: o.license },
+    { value: "CI", label: o.ci },
   ];
   return (
     <section id="open-source" className="kz-section">
@@ -20,15 +21,13 @@ export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { oraz
         <div>
           <p className="kz-eyebrow">Open source</p>
           <h2 className="kz-h2" style={{ marginBottom: 12 }}>
-            {loc === "fr" ? "Lisez chaque ligne." : "Read every line."}
+            {o.title}
           </h2>
           <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7, color: "var(--kz-text-secondary)", maxWidth: 520 }}>
-            {loc === "fr"
-              ? `Orazaka est découpé en ${orazakaRepos} dépôts — prenez seulement les briques dont votre application a besoin. Orochia en compte ${orochiaRepos}.`
-              : `Orazaka is split into ${orazakaRepos} repositories — take only the building blocks your application needs. Orochia has ${orochiaRepos}.`}
+            {format(o.body, { orazaka: orazakaRepos, orochia: orochiaRepos })}
           </p>
           <Link href="/open-source" className="kz-link-strong" style={{ marginTop: 18 }}>
-            {loc === "fr" ? "Parcourir les dépôts" : "Browse the repositories"} <ArrowRight size={14} />
+            {o.browse} <ArrowRight size={14} />
           </Link>
         </div>
         <dl className="kz-oss-stats">

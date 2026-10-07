@@ -16,15 +16,15 @@ import { NAV_PRODUCTS } from "@/lib/nav";
 const noop = () => () => {};
 
 export default function ProductsShowcase() {
-  const { locale } = useI18n();
-  const loc = locale === "fr" ? "fr" : "en";
+  const { t } = useI18n();
+  const h = t.site.home.products;
   const mounted = useSyncExternalStore(noop, () => true, () => false);
   const prefersReduced = useReducedMotion();
   const still = !mounted || !!prefersReduced;
 
   return (
     <section id="products" className="kz-section">
-      <h2 className="kz-h2">{loc === "fr" ? "Produits" : "Products"}</h2>
+      <h2 className="kz-h2">{h.title}</h2>
 
       <div className="kz-spots">
         {PRODUCTS.map((p, i) => {
@@ -36,15 +36,15 @@ export default function ProductsShowcase() {
                   <ProductLogo id={p.id} size={56} />
                   <div>
                     <h3>{p.name}</h3>
-                    <span className="kz-spot-badge">{nav.badge[loc]} · open source</span>
+                    <span className="kz-spot-badge">{t.site.nav[p.id].badge} · open source</span>
                   </div>
                 </div>
-                <p className="kz-spot-tagline">{p.tagline[loc]}</p>
-                <p className="kz-spot-summary">{p.summary[loc]}</p>
+                <p className="kz-spot-tagline">{t.site.products[p.id].tagline}</p>
+                <p className="kz-spot-summary">{t.site.products[p.id].summary}</p>
                 <ul className="kz-spot-points">
-                  {p.points.map((point) => (
-                    <li key={point.en}>
-                      <Check size={14} aria-hidden /> {point[loc]}
+                  {t.site.products[p.id].points.map((point) => (
+                    <li key={point}>
+                      <Check size={14} aria-hidden /> {point}
                     </li>
                   ))}
                 </ul>
@@ -56,7 +56,7 @@ export default function ProductsShowcase() {
                       const Icon = NAV_ICONS[l.icon];
                       return (
                         <Link key={l.href} href={l.href} className={l.icon === "overview" ? "kz-spot-primary" : "kz-spot-chip"}>
-                          {l.icon !== "overview" && <Icon size={14} aria-hidden />} {l.icon === "overview" ? (loc === "fr" ? "Découvrir" : "Discover") : l.label[loc]}
+                          {l.icon !== "overview" && <Icon size={14} aria-hidden />} {l.icon === "overview" ? h.discover : t.site.nav[p.id].links[l.icon].label}
                           {l.icon === "overview" && <ArrowRight size={14} aria-hidden />}
                         </Link>
                       );
@@ -80,7 +80,7 @@ export default function ProductsShowcase() {
                   preload={still ? "none" : "metadata"}
                   poster={`${p.media.src}.jpg`}
                   style={{ aspectRatio: p.media.aspect }}
-                  aria-label={`${p.name} — ${loc === "fr" ? "démonstration" : "demo"}`}
+                  aria-label={`${p.name} — ${h.demo}`}
                 >
                   <source src={`${p.media.src}.webm`} type="video/webm" />
                   <source src={`${p.media.src}.mp4`} type="video/mp4" />

@@ -11,7 +11,7 @@ import OrazakaLogo from "@/app/components/OrazakaLogo";
 import OrochiaLogo from "@/app/components/OrochiaLogo";
 import KrizakaLandscape from "@/app/components/illustrations/KrizakaLandscape";
 import { BirdPortrait, FlockStyles } from "@/app/components/story/Flock";
-import { CHAPTERS, FLOCK, HEADS, STORY_CLOSING, STORY_INTRO } from "@/lib/story";
+import { CHAPTERS, FLOCK } from "@/lib/story";
 
 const MARK = {
   krizaka: <KrizakaLogo size={150} />,
@@ -20,17 +20,17 @@ const MARK = {
 };
 
 export default function StoryClient() {
-  const { locale } = useI18n();
-  const loc = locale === "fr" ? "fr" : "en";
+  const { t } = useI18n();
+  const st = t.site.story;
 
   return (
     <div className="st">
       <FlockStyles />
 
       <header className="st-hero">
-        <p className="st-eyebrow">{STORY_INTRO.eyebrow[loc]}</p>
-        <h1>{STORY_INTRO.title[loc]}</h1>
-        <p className="st-lead">{STORY_INTRO.lead[loc]}</p>
+        <p className="st-eyebrow">{st.intro.eyebrow}</p>
+        <h1>{st.intro.title}</h1>
+        <p className="st-lead">{st.intro.lead}</p>
         <div className="st-marks" aria-hidden>
           <KrizakaLogo size={44} />
           <span />
@@ -44,45 +44,43 @@ export default function StoryClient() {
         <section key={ch.id} className={`st-chapter${i % 2 ? " is-flipped" : ""}`} aria-labelledby={`st-${ch.id}`}>
           <div className="st-mark">
             <div className="st-mark-disc">{MARK[ch.id]}</div>
-            <p className="st-roots">{ch.roots[loc]}</p>
+            <p className="st-roots">{st.chapters[ch.id].roots}</p>
           </div>
           <div className="st-text">
             <p className="st-num">{String(i + 1).padStart(2, "0")} · {ch.name}</p>
-            <h2 id={`st-${ch.id}`}>{ch.title[loc]}</h2>
-            {ch.body.map((p) => (
-              <p key={p.en}>{p[loc]}</p>
+            <h2 id={`st-${ch.id}`}>{st.chapters[ch.id].title}</h2>
+            {st.chapters[ch.id].body.map((p) => (
+              <p key={p}>{p}</p>
             ))}
           </div>
         </section>
       ))}
 
-      <section className="st-heads" aria-label={loc === "fr" ? "Les huit têtes" : "The eight heads"}>
+      <section className="st-heads" aria-label={st.headsAria}>
         <ol>
-          {HEADS.map((h, i) => (
-            <li key={h.head.en}>
+          {st.heads.map((h, i) => (
+            <li key={h.head}>
               <span className="st-vat">{i + 1}</span>
-              <span className="st-head">{h.head[loc]}</span>
-              <span className="st-answer">{h.answer[loc]}</span>
+              <span className="st-head">{h.head}</span>
+              <span className="st-answer">{h.answer}</span>
             </li>
           ))}
         </ol>
       </section>
 
       <section className="st-flock" aria-labelledby="st-flock">
-        <p className="st-num">04 · {loc === "fr" ? "La volée" : "The flock"}</p>
-        <h2 id="st-flock">{loc === "fr" ? "Ceux qui veillent." : "The ones keeping watch."}</h2>
+        <p className="st-num">04 · {st.flockLabel}</p>
+        <h2 id="st-flock">{st.flockTitle}</h2>
         <p className="st-flock-lead">
-          {loc === "fr"
-            ? "Nos mascottes ne sont pas un décor. Chacune porte une chose sur laquelle nous ne transigeons pas."
-            : "Our mascots aren't decoration. Each one carries something we don't compromise on."}
+          {st.flockLead}
         </p>
         <div className="st-birds">
-          {FLOCK.map((b) => (
-            <article key={b.id} className="st-bird">
-              <BirdPortrait id={b.id} />
-              <h3>{b.name[loc]}</h3>
-              <p className="st-role">{b.role[loc]}</p>
-              <p>{b.line[loc]}</p>
+          {FLOCK.map((id) => (
+            <article key={id} className="st-bird">
+              <BirdPortrait id={id} />
+              <h3>{st.flock[id].name}</h3>
+              <p className="st-role">{st.flock[id].role}</p>
+              <p>{st.flock[id].line}</p>
             </article>
           ))}
         </div>
@@ -90,14 +88,14 @@ export default function StoryClient() {
 
       <section className="st-closing">
         <div className="st-closing-text">
-          <h2>{STORY_CLOSING.title[loc]}</h2>
-          <p>{STORY_CLOSING.body[loc]}</p>
+          <h2>{st.closing.title}</h2>
+          <p>{st.closing.body}</p>
           <div className="st-ctas">
             <Link href="/products" className="st-btn is-primary">
-              {loc === "fr" ? "Découvrir les produits" : "Explore the products"} <ArrowRight size={15} />
+              {st.ctaProducts} <ArrowRight size={15} />
             </Link>
             <Link href="/contact" className="st-btn">
-              {loc === "fr" ? "Nous écrire" : "Write to us"}
+              {st.ctaContact}
             </Link>
           </div>
         </div>

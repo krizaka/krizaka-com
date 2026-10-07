@@ -1,7 +1,8 @@
+import { asLocale } from "@/lib/i18n";
 import type { Metadata } from "next";
 import { buildAlternates } from "@/lib/seo";
 import { notFound } from "next/navigation";
-import { getUseCaseBySlug, getAllUseCaseSlugs } from "@/lib/use-cases-data";
+import { getLocalizedField, getUseCaseBySlug, getAllUseCaseSlugs } from "@/lib/use-cases-data";
 import UseCasePageClient from "./UseCasePageClient";
 
 /* ─── Static params for SSG ─── */
@@ -24,9 +25,9 @@ export async function generateMetadata({
   const uc = getUseCaseBySlug(slug);
   if (!uc) return {};
 
-  const isEn = locale === "en";
-  const title = isEn ? (uc.title.en || uc.title.fr) : uc.title.fr;
-  const desc = isEn ? (uc.metaDescription.en || uc.metaDescription.fr) : uc.metaDescription.fr;
+  const lang = asLocale(locale);
+  const title = getLocalizedField(uc.title, lang);
+  const desc = getLocalizedField(uc.metaDescription, lang);
 
   return {
     title: `${title} — Orazaka`,

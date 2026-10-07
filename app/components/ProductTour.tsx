@@ -6,13 +6,11 @@
 
 import { useRef, useState, useSyncExternalStore } from "react";
 import { useReducedMotion } from "framer-motion";
-import type { L } from "@/lib/org-data";
-import { useI18n } from "./I18nProvider";
 
 export interface TourClip {
   id: string;
-  label: L;
-  caption: L;
+  label: string;
+  caption: string;
   /** Path without extension: `${src}.webm`, `${src}.mp4`, `${src}.jpg` must exist under /public. */
   src: string;
 }
@@ -20,8 +18,6 @@ export interface TourClip {
 const noop = () => () => {};
 
 export default function ProductTour({ clips, accent = "var(--kz-accent)", frameLabel }: { clips: TourClip[]; accent?: string; frameLabel: string }) {
-  const { locale } = useI18n();
-  const loc = locale === "fr" ? "fr" : "en";
   const mounted = useSyncExternalStore(noop, () => true, () => false);
   const prefersReduced = useReducedMotion();
   const reduce = !mounted || !!prefersReduced;
@@ -39,7 +35,7 @@ export default function ProductTour({ clips, accent = "var(--kz-accent)", frameL
       <div className="pt-tabs" role="tablist">
         {clips.map((c, k) => (
           <button key={c.id} role="tab" aria-selected={k === i} className="pt-tab" onClick={() => setI(k)}>
-            <span className="pt-tab-num">{String(k + 1).padStart(2, "0")}</span> {c.label[loc]}
+            <span className="pt-tab-num">{String(k + 1).padStart(2, "0")}</span> {c.label}
           </button>
         ))}
       </div>
@@ -64,13 +60,13 @@ export default function ProductTour({ clips, accent = "var(--kz-accent)", frameL
             const v = e.currentTarget;
             if (v.duration) setProgress(v.currentTime / v.duration);
           }}
-          aria-label={clip.caption[loc]}
+          aria-label={clip.caption}
         >
           <source src={`${clip.src}.webm`} type="video/webm" />
           <source src={`${clip.src}.mp4`} type="video/mp4" />
         </video>
         {!reduce && <div className="pt-progress" style={{ transform: `scaleX(${progress})` }} />}
-        <figcaption className="pt-caption">{clip.caption[loc]}</figcaption>
+        <figcaption className="pt-caption">{clip.caption}</figcaption>
       </figure>
 
       <style>{`

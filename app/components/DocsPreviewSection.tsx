@@ -15,44 +15,32 @@ import { useI18n } from "./I18nProvider";
 const DOC_CARDS = [
   {
     icon: BookOpen,
-    titleFr: "Guide de démarrage",
-    titleEn: "Getting Started",
     href: "/products/orazaka/getting-started/101",
   },
   {
     icon: Cpu,
-    titleFr: "Architecture Hexagonale",
-    titleEn: "Hexagonal Architecture",
     href: "/products/orazaka/architecture/architecture",
   },
   {
     icon: Layers,
-    titleFr: "Référence API",
-    titleEn: "API Reference",
     href: "/products/orazaka/api/api_reference",
   },
   {
     icon: Shield,
-    titleFr: "Auth & Sécurité",
-    titleEn: "Auth & Security",
     href: "/products/orazaka/core-features/auth",
   },
   {
     icon: Terminal,
-    titleFr: "CLI Orazaka",
-    titleEn: "Orazaka CLI",
     href: "/products/orazaka/api/cli",
   },
   {
     icon: Server,
-    titleFr: "Déploiement (IaC)",
-    titleEn: "Deployment (IaC)",
     href: "/products/orazaka/operations/deploy",
   },
 ];
 
 export default function DocsPreviewSection() {
-  const { t, locale } = useI18n();
+  const { t } = useI18n();
 
   return (
     <section
@@ -120,9 +108,9 @@ export default function DocsPreviewSection() {
           marginBottom: "32px",
         }}
       >
-        {DOC_CARDS.map((doc) => {
+        {DOC_CARDS.map((doc, i) => {
           const Icon = doc.icon;
-          const title = locale === "fr" ? doc.titleFr : doc.titleEn;
+          const title = t.pages.docsPreview.docCards[i].title;
           return (
             <Link
               key={doc.href}

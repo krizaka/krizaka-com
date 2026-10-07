@@ -39,7 +39,6 @@ import {
 } from "lucide-react";
 import { useI18n } from "../I18nProvider";
 
-type Loc = "fr" | "en";
 type IconType = React.ComponentType<{
   size?: number | string;
   strokeWidth?: number;
@@ -127,32 +126,19 @@ const MASCOTS: Record<string, (p: { size?: number }) => React.ReactElement> = {
 interface Stage {
   id: number;
   num: string;
-  title: Record<Loc, string>;
-  subtitle: Record<Loc, string>;
+
   color: string;
   mascot?: keyof typeof MASCOTS;
   hub?: boolean;
 }
 
 const STAGES: Stage[] = [
-  { id: 1, num: "01", color: "#0ea5e9", mascot: "duck",
-    title: { fr: "Présentation", en: "Presentation" },
-    subtitle: { fr: "Points d'entrée", en: "Entry points" } },
-  { id: 2, num: "02", color: "#8b5cf6",
-    title: { fr: "Portail d'entrée", en: "Entry Gate" },
-    subtitle: { fr: "Routage REST · SSE", en: "REST · SSE routing" } },
-  { id: 3, num: "03", color: "#f59e0b", mascot: "falcon",
-    title: { fr: "Sécurité & Métier", en: "Security & Logic" },
-    subtitle: { fr: "RBAC · règles", en: "RBAC · rules" } },
-  { id: 4, num: "04", color: "#6366f1", mascot: "owl", hub: true,
-    title: { fr: "Moteur Cognitif", en: "Cognitive Engine" },
-    subtitle: { fr: "Le cœur hexagonal", en: "The hexagonal core" } },
-  { id: 5, num: "05", color: "#10b981", mascot: "flamingo",
-    title: { fr: "Workers & Pipeline", en: "Workers & Pipeline" },
-    subtitle: { fr: "Async · intercepteurs", en: "Async · interceptors" } },
-  { id: 6, num: "06", color: "#f43f5e",
-    title: { fr: "Stockage", en: "Persistence" },
-    subtitle: { fr: "Données souveraines", en: "Sovereign data" } },
+  { id: 1, num: "01", color: "#0ea5e9", mascot: "duck", },
+  { id: 2, num: "02", color: "#8b5cf6", },
+  { id: 3, num: "03", color: "#f59e0b", mascot: "falcon", },
+  { id: 4, num: "04", color: "#6366f1", mascot: "owl", hub: true, },
+  { id: 5, num: "05", color: "#10b981", mascot: "flamingo", },
+  { id: 6, num: "06", color: "#f43f5e", },
 ];
 
 /* ─── NODES (15 components, grouped by stage) ─────────────────────────── */
@@ -161,10 +147,7 @@ interface Node {
   id: string;
   stage: number;
   icon: IconType;
-  tag: Record<Loc, string>;
-  layer: Record<Loc, string>;
-  label: Record<Loc, string>;
-  desc: Record<Loc, string>;
+
   path: string;
   hub?: boolean;
 }
@@ -173,161 +156,80 @@ const NODES: Node[] = [
   // ── Stage 1 · Presentation ──
   {
     id: "orazaka-web-client", stage: 1, icon: Monitor,
-    tag: { fr: "Web", en: "Web" }, layer: { fr: "Application", en: "Application" },
-    label: { fr: "Console Client Web", en: "Web Client Console" },
-    desc: {
-      fr: "Application client Next.js principale : chat, génération d'images/vidéos et interaction avec l'IA.",
-      en: "Main Next.js client application: chat, image/video generation and AI interaction.",
-    },
     path: "orazaka-apps/ui/orazaka-web-client",
   },
   {
     id: "orazaka-web-admin", stage: 1, icon: SlidersHorizontal,
-    tag: { fr: "Admin", en: "Admin" }, layer: { fr: "Application", en: "Application" },
-    label: { fr: "Console d'Administration", en: "Administration Console" },
-    desc: {
-      fr: "Console SecOps isolée (port 3001) pour gérer les modèles, le pipeline et la conformité.",
-      en: "Isolated SecOps console (port 3001) for model, pipeline and compliance management.",
-    },
     path: "orazaka-apps/ui/orazaka-web-admin",
   },
   {
     id: "orazaka-mobile-client", stage: 1, icon: Smartphone,
-    tag: { fr: "Mobile", en: "Mobile" }, layer: { fr: "Application", en: "Application" },
-    label: { fr: "Application Mobile", en: "Mobile Application" },
-    desc: {
-      fr: "Application mobile cross-platform (Expo SDK 53) pour l'accès à l'IA en déplacement.",
-      en: "Cross-platform mobile app (Expo SDK 53) for on-the-go access to the AI engine.",
-    },
     path: "orazaka-apps/ui/orazaka-mobile-client",
   },
   {
     id: "orazaka-cli", stage: 1, icon: Terminal,
-    tag: { fr: "CLI", en: "CLI" }, layer: { fr: "Application", en: "Application" },
-    label: { fr: "CLI Orazaka", en: "Orazaka CLI" },
-    desc: {
-      fr: "Interface en ligne de commande pour l'automatisation, avec file d'attente locale SQLite.",
-      en: "Command-line interface for automation, with a local SQLite job queue.",
-    },
     path: "orazaka-apps/ui/orazaka-cli",
   },
 
   // ── Stage 2 · Entry Gate ──
   {
     id: "orazaka-router", stage: 2, icon: Network,
-    tag: { fr: "API", en: "API" }, layer: { fr: "Application", en: "Application" },
-    label: { fr: "Portail d'entrée", en: "Entry Gate" },
-    desc: {
-      fr: "Réceptionne les requêtes (API REST & SSE) et les achemine vers le moteur d'orchestration.",
-      en: "Receives requests (REST & SSE API) and routes them into the orchestration engine.",
-    },
     path: "orazaka-apps/services/orazaka-conversation-service",
   },
 
   // ── Stage 3 · Security & Logic ──
   {
     id: "orazaka-identity", stage: 3, icon: ShieldCheck,
-    tag: { fr: "RBAC", en: "RBAC" }, layer: { fr: "Framework", en: "Framework" },
-    label: { fr: "Sécurité & RBAC", en: "Security & RBAC" },
-    desc: {
-      fr: "Authentifie les requêtes, valide les permissions (RBAC) et applique les quotas par locataire.",
-      en: "Authenticates requests, validates permissions (RBAC) and enforces per-tenant quotas.",
-    },
     path: "orazaka-apps/services/orazaka-users/orazaka-identity",
   },
   {
     id: "orazaka-business", stage: 3, icon: Workflow,
-    tag: { fr: "Métier", en: "Logic" }, layer: { fr: "Framework", en: "Framework" },
-    label: { fr: "Gouvernance Métier", en: "Business Logic" },
-    desc: {
-      fr: "Règles d'affaires, gabarits de prompts et structuration des cas d'usage cognitifs.",
-      en: "Business rules, prompt templates and structuring of cognitive use-cases.",
-    },
     path: "orazaka-libs/orazaka-ai-engine/orazaka-business",
   },
 
   // ── Stage 4 · Cognitive Engine (hub) ──
   {
     id: "orazaka-core", stage: 4, icon: Cpu, hub: true,
-    tag: { fr: "Core", en: "Core" }, layer: { fr: "Framework", en: "Framework" },
-    label: { fr: "Moteur Cognitif", en: "Cognitive Engine" },
-    desc: {
-      fr: "Le cœur d'Orazaka. Coordonne l'exécution sans état des requêtes IA et orchestre le flux de données.",
-      en: "The heart of Orazaka. Coordinates stateless AI request execution and orchestrates the data flow.",
-    },
     path: "orazaka-libs/orazaka-ai-engine/orazaka-core",
   },
 
   // ── Stage 5 · Workers & Pipeline ──
   {
     id: "orazaka-interceptors", stage: 5, icon: Layers,
-    tag: { fr: "Pipeline", en: "Pipeline" }, layer: { fr: "Framework", en: "Framework" },
-    label: { fr: "Pipeline de Cognition", en: "Cognitive Pipeline" },
-    desc: {
-      fr: "Assemble les 15 intercepteurs (contexte système, mémoire, RAG, sécurité) pour enrichir la requête.",
-      en: "Assembles the 15 interceptors (system context, memory, RAG, safety) to enrich requests.",
-    },
     path: "orazaka-libs/orazaka-ai-engine/orazaka-interceptors",
   },
   {
     id: "orazaka-worker-integrations", stage: 5, icon: Boxes,
-    tag: { fr: "Intégrations", en: "Integrations" }, layer: { fr: "Application", en: "Application" },
-    label: { fr: "Worker Intégrations", en: "Integrations Worker" },
-    desc: {
-      fr: "Service d'arrière-plan asynchrone : files d'intégration et tâches système.",
-      en: "Asynchronous background service running integration queues and system tasks.",
-    },
     path: "orazaka-apps/services/orazaka-automation-service",
   },
   {
     id: "orazaka-worker-media", stage: 5, icon: Film,
-    tag: { fr: "Médias", en: "Media" }, layer: { fr: "Application", en: "Application" },
-    label: { fr: "Worker Médias", en: "Media Worker" },
-    desc: {
-      fr: "Traitement lourd d'images, vidéos et voix, hors du thread d'API principal.",
-      en: "Heavy image, video and audio generation, off the main API thread.",
-    },
     path: "orazaka-apps/workers/orazaka-worker-media",
   },
   {
     id: "orazaka-tools", stage: 5, icon: Plug,
-    tag: { fr: "MCP", en: "MCP" }, layer: { fr: "Framework", en: "Framework" },
-    label: { fr: "Intégrations MCP", en: "MCP Integrations" },
-    desc: {
-      fr: "Connexion sécurisée aux outils externes (bases, APIs) via le Model Context Protocol.",
-      en: "Secure connections to external tools (databases, APIs) via the Model Context Protocol.",
-    },
     path: "orazaka-libs/orazaka-ai-engine/orazaka-tools",
   },
 
   // ── Stage 6 · Persistence ──
   {
     id: "orazaka-persistence-identity", stage: 6, icon: Database,
-    tag: { fr: "Identité", en: "Identity" }, layer: { fr: "Framework", en: "Framework" },
-    label: { fr: "Base de Données Identité", en: "Identity Database" },
-    desc: {
-      fr: "Stockage sécurisé et isolé des identités, clés d'accès et politiques RBAC.",
-      en: "Secure, isolated store for identities, credentials and RBAC policies.",
-    },
     path: "orazaka-apps/services/orazaka-users/orazaka-persistence-identity",
   },
   {
     id: "orazaka-persistence-app", stage: 6, icon: Database,
-    tag: { fr: "App · RAG", en: "App · RAG" }, layer: { fr: "Framework", en: "Framework" },
-    label: { fr: "Base de Données Applicative", en: "Application Database" },
-    desc: {
-      fr: "Base relationnelle et vectorielle (pgvector) : sessions, contextes et données RAG.",
-      en: "Relational and vector database (pgvector): sessions, contexts and RAG data.",
-    },
     path: "orazaka-libs/orazaka-ai-engine/orazaka-persistence-app",
   },
 ];
 
 /* ─── helpers ──────────────────────────────────────────────────────────── */
 
+/** A stage / node with its words (messages → pages.architectureMesh.stages[i] / nodes[i]). */
+type StageView = Stage & { title: string; subtitle: string };
+type NodeView = Node & { tag: string; layer: string; label: string; desc: string };
+
 const mix = (color: string, pct: number) => `color-mix(in srgb, ${color} ${pct}%, transparent)`;
 const stageOf = (n: Node) => STAGES.find((s) => s.id === n.stage)!;
-const nodesInStage = (id: number) => NODES.filter((n) => n.stage === id);
 const leaf = (path: string) => path.split("/").pop() || path;
 
 /* ─── Component card ───────────────────────────────────────────────────── */
@@ -337,18 +239,16 @@ function NodeCard({
   active,
   dimmed,
   reduce,
-  locale,
   index,
   expandable = false,
   expanded = false,
   onSelect,
   onHover,
 }: {
-  node: Node;
+  node: NodeView;
   active: boolean;
   dimmed: boolean;
   reduce: boolean | null;
-  locale: Loc;
   index: number;
   expandable?: boolean;
   expanded?: boolean;
@@ -365,7 +265,7 @@ function NodeCard({
       onClick={onSelect}
       onMouseEnter={() => onHover(node.id)}
       onMouseLeave={() => onHover(null)}
-      aria-label={node.label[locale]}
+      aria-label={node.label}
       aria-expanded={expandable ? expanded : undefined}
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -427,7 +327,7 @@ function NodeCard({
               whiteSpace: "nowrap",
             }}
           >
-            {node.label[locale]}
+            {node.label}
           </span>
           <span style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 3 }}>
             <span
@@ -440,7 +340,7 @@ function NodeCard({
                 color: c,
               }}
             >
-              {node.tag[locale]}
+              {node.tag}
             </span>
             <span style={{ width: 2.5, height: 2.5, borderRadius: "50%", background: "var(--kz-border-strong)" }} />
             <span
@@ -495,7 +395,7 @@ function NodeCard({
         >
           <span style={{ display: "block", height: 1, background: "var(--kz-border-subtle)", margin: "12px 0 10px" }} />
           <span style={{ display: "block", fontSize: 12.5, lineHeight: 1.6, color: "var(--kz-text-secondary)" }}>
-            {node.desc[locale]}
+            {node.desc}
           </span>
           <span
             style={{
@@ -531,7 +431,7 @@ function NodeCard({
 
 /* ─── Stage header (shared) ────────────────────────────────────────────── */
 
-function StageHeader({ stage, locale, count }: { stage: Stage; locale: Loc; count: number }) {
+function StageHeader({ stage, count }: { stage: StageView; count: number }) {
   const c = stage.color;
   const Mascot = stage.mascot ? MASCOTS[stage.mascot] : null;
   return (
@@ -567,7 +467,7 @@ function StageHeader({ stage, locale, count }: { stage: Stage; locale: Loc; coun
             gap: 6,
           }}
         >
-          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{stage.title[locale]}</span>
+          <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{stage.title}</span>
           <span
             style={{
               flexShrink: 0,
@@ -596,7 +496,7 @@ function StageHeader({ stage, locale, count }: { stage: Stage; locale: Loc; coun
             whiteSpace: "nowrap",
           }}
         >
-          {stage.subtitle[locale]}
+          {stage.subtitle}
         </div>
       </div>
       {Mascot && (
@@ -647,8 +547,10 @@ export default function ArchitectureMesh({
   modules?: unknown[];
   dependencies?: unknown[];
 }) {
-  const { locale } = useI18n();
-  const loc = (locale === "fr" ? "fr" : "en") as Loc;
+  const { t } = useI18n();
+  const text = t.pages.architectureMesh;
+  const stages: StageView[] = useMemo(() => STAGES.map((st, i) => ({ ...st, ...text.stages[i] })), [text]);
+  const nodes: NodeView[] = useMemo(() => NODES.map((n, i) => ({ ...n, ...text.nodes[i] })), [text]);
   // The motion preference is unknown during SSR: honour it only after mount, so the first client
   // render matches the server's HTML (React hydration error #418 otherwise).
   const prefersReduced = useReducedMotion();
@@ -666,11 +568,11 @@ export default function ArchitectureMesh({
   const matches = useMemo(() => {
     if (!q) return null;
     const set = new Set<string>();
-    for (const n of NODES) {
+    for (const n of nodes) {
       if (
-        n.label[loc].toLowerCase().includes(q) ||
-        n.desc[loc].toLowerCase().includes(q) ||
-        n.tag[loc].toLowerCase().includes(q) ||
+        n.label.toLowerCase().includes(q) ||
+        n.desc.toLowerCase().includes(q) ||
+        n.tag.toLowerCase().includes(q) ||
         n.path.toLowerCase().includes(q) ||
         n.id.toLowerCase().includes(q)
       ) {
@@ -678,11 +580,11 @@ export default function ArchitectureMesh({
       }
     }
     return set;
-  }, [q, loc]);
+  }, [q, nodes]);
 
   const activeId = hovered || selected;
-  const active = NODES.find((n) => n.id === activeId) || NODES.find((n) => n.id === "orazaka-core")!;
-  const activeStage = stageOf(active);
+  const active = nodes.find((n) => n.id === activeId) || nodes.find((n) => n.id === "orazaka-core")!;
+  const activeStage = stages.find((st) => st.id === active.stage)!;
   const isDimmed = (id: string) => (matches ? !matches.has(id) : false);
 
   return (
@@ -708,7 +610,7 @@ export default function ArchitectureMesh({
               color: "var(--kz-accent)",
             }}
           >
-            {loc === "fr" ? "Parcours d'une requête" : "Request journey"}
+            {t.pages.architectureMesh.requestJourney}
           </span>
           <span
             style={{
@@ -718,7 +620,7 @@ export default function ArchitectureMesh({
             }}
             className="arch-flow-hint"
           >
-            {loc === "fr" ? "de gauche à droite →" : "left to right →"}
+            {t.pages.architectureMesh.leftToRight}
           </span>
         </div>
 
@@ -729,8 +631,8 @@ export default function ArchitectureMesh({
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={loc === "fr" ? "Rechercher un composant…" : "Search a component…"}
-            aria-label={loc === "fr" ? "Rechercher un composant" : "Search a component"}
+            placeholder={t.pages.architectureMesh.searchAComponent}
+            aria-label={t.pages.architectureMesh.searchAComponent2}
             style={{
               width: "100%",
               padding: "9px 32px 9px 34px",
@@ -747,7 +649,7 @@ export default function ArchitectureMesh({
             <button
               type="button"
               onClick={() => setQuery("")}
-              aria-label={loc === "fr" ? "Effacer" : "Clear"}
+              aria-label={t.pages.architectureMesh.clear}
               style={{ position: "absolute", right: 8, display: "grid", placeItems: "center", width: 20, height: 20, border: "none", background: "transparent", cursor: "pointer" }}
             >
               <X size={14} color="var(--kz-text-muted)" />
@@ -801,12 +703,12 @@ export default function ArchitectureMesh({
         />
 
         <div style={{ position: "relative", display: "flex", alignItems: "flex-start", minWidth: 940 }}>
-          {STAGES.map((stage, si) => {
-            const items = nodesInStage(stage.id);
+          {stages.map((stage, si) => {
+            const items = nodes.filter((n) => n.stage === stage.id);
             return (
               <div key={stage.id} style={{ display: "contents" }}>
                 <div style={{ flex: "1 1 0", minWidth: 148, display: "flex", flexDirection: "column", gap: 14 }}>
-                  <StageHeader stage={stage} locale={loc} count={items.length} />
+                  <StageHeader stage={stage} count={items.length} />
                   <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
                     {items.map((n, i) => (
                       <NodeCard
@@ -816,7 +718,6 @@ export default function ArchitectureMesh({
                         active={activeId === n.id}
                         dimmed={isDimmed(n.id)}
                         reduce={reduce}
-                        locale={loc}
                         onSelect={() => setSelected(n.id)}
                         onHover={setHovered}
                       />
@@ -834,8 +735,8 @@ export default function ArchitectureMesh({
 
       {/* ═══ MOBILE JOURNEY (< 1024px) ═══ */}
       <div className="arch-journey-mobile" style={{ display: "none", flexDirection: "column" }}>
-        {STAGES.map((stage, si) => {
-          const items = nodesInStage(stage.id);
+        {stages.map((stage, si) => {
+          const items = nodes.filter((n) => n.stage === stage.id);
           const c = stage.color;
           return (
             <div key={stage.id}>
@@ -851,7 +752,7 @@ export default function ArchitectureMesh({
               >
                 {/* top accent line */}
                 <span style={{ position: "absolute", left: 0, right: 0, top: 0, height: 3, background: `linear-gradient(90deg, ${c}, ${mix(c, 20)})` }} />
-                <StageHeader stage={stage} locale={loc} count={items.length} />
+                <StageHeader stage={stage} count={items.length} />
                 <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 14 }}>
                   {items.map((n, i) => (
                     <NodeCard
@@ -861,7 +762,6 @@ export default function ArchitectureMesh({
                       active={activeId === n.id}
                       dimmed={isDimmed(n.id)}
                       reduce={reduce}
-                      locale={loc}
                       expandable
                       expanded={selected === n.id}
                       onSelect={() => setSelected((cur) => (cur === n.id ? "" : n.id))}
@@ -923,21 +823,21 @@ export default function ArchitectureMesh({
           </span>
           <div style={{ minWidth: 0 }}>
             <div style={{ fontFamily: "var(--font-display), system-ui, sans-serif", fontSize: 15, fontWeight: 700, color: "var(--kz-text-primary)", lineHeight: 1.2 }}>
-              {active.label[loc]}
+              {active.label}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 4 }}>
               <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.04em", color: activeStage.color }}>
-                {activeStage.num} · {activeStage.title[loc]}
+                {activeStage.num} · {activeStage.title}
               </span>
               <span style={{ width: 2.5, height: 2.5, borderRadius: "50%", background: "var(--kz-border-strong)" }} />
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--kz-text-muted)" }}>{active.layer[loc]}</span>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--kz-text-muted)" }}>{active.layer}</span>
             </div>
           </div>
         </div>
 
         {/* center: description */}
         <div style={{ flex: 1, minWidth: 0, display: "flex", alignItems: "center", borderLeft: "1px solid var(--kz-border-subtle)", paddingLeft: 18 }}>
-          <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: "var(--kz-text-secondary)" }}>{active.desc[loc]}</p>
+          <p style={{ margin: 0, fontSize: 13.5, lineHeight: 1.6, color: "var(--kz-text-secondary)" }}>{active.desc}</p>
         </div>
 
         {/* right: source */}

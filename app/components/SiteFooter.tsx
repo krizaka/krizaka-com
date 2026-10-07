@@ -17,22 +17,22 @@ function GitHubIcon({ size = 14 }: { size?: number }) {
 }
 
 export default function SiteFooter() {
-  const { locale } = useI18n();
+  const { t } = useI18n();
+  const f = t.site.footer;
 
   // Same five entries per product as the menus (lib/nav.ts).
-  const loc = locale === "fr" ? "fr" : "en";
   const linksOf = (id: "orazaka" | "orochia") =>
-    NAV_PRODUCTS.find((p) => p.id === id)!.links.map((l) => ({ label: l.label[loc], href: l.href }));
+    NAV_PRODUCTS.find((p) => p.id === id)!.links.map((l) => ({ label: t.site.nav[id].links[l.icon].label, href: l.href }));
   const orazakaLinks = linksOf("orazaka");
   const orochiaLinks = linksOf("orochia");
 
   const krizakaLinks = [
-    { label: locale === "fr" ? "Produits" : "Products", href: "/products" },
-    { label: locale === "fr" ? "Notre histoire" : "Our story", href: "/story" },
-    { label: "Open source", href: "/open-source" },
-    { label: "Contact", href: "/contact" },
-    { label: locale === "fr" ? "Confidentialité" : "Privacy", href: "/privacy" },
-    { label: locale === "fr" ? "Conditions" : "Terms", href: "/terms" },
+    { label: f.products, href: "/products" },
+    { label: f.story, href: "/story" },
+    { label: f.openSource, href: "/open-source" },
+    { label: f.contact, href: "/contact" },
+    { label: f.privacy, href: "/privacy" },
+    { label: f.terms, href: "/terms" },
   ];
 
   const columns = [
@@ -49,16 +49,14 @@ export default function SiteFooter() {
             <KrizakaLogo size={28} /> Krizaka
           </Link>
           <p>
-            {locale === "fr"
-              ? "Studio logiciel open source à Montréal. Créateurs d'Orazaka et d'Orochia."
-              : "Open-source software studio in Montréal. Makers of Orazaka and Orochia."}
+            {f.tagline}
           </p>
           <a href="https://github.com/krizaka" target="_blank" rel="noopener noreferrer" className="kz-footer-gh">
             <GitHubIcon size={14} /> github.com/krizaka <ArrowUpRight size={12} />
           </a>
         </div>
 
-        <nav className="kz-footer-cols" aria-label={locale === "fr" ? "Pied de page" : "Footer"}>
+        <nav className="kz-footer-cols" aria-label={t.site.menu.footerAria}>
           {columns.map((col) => (
             <div key={col.key} className="kz-footer-col">
               <p className="kz-footer-title">{col.title}</p>
@@ -76,7 +74,7 @@ export default function SiteFooter() {
 
       <div className="kz-footer-bottom">
         <span>© {new Date().getFullYear()} Krizaka</span>
-        <span>{locale === "fr" ? "Fait à Montréal · Apache-2.0" : "Made in Montréal · Apache-2.0"}</span>
+        <span>{f.madeIn}</span>
       </div>
 
       <style>{`
