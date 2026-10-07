@@ -109,7 +109,7 @@
       "method": "PATCH",
       "path": "/api/admin/creators/[id]",
       "access": "session · ADMIN",
-      "summary": "Records the outcome of a creator's 18 U.S.C."
+      "summary": "Records the outcome of a creator's 18 U.S.C. § 2257 review."
     },
     {
       "method": "GET",
