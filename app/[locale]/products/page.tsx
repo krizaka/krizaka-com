@@ -22,7 +22,7 @@ export default function ProductsPage() {
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh" }}>
       <TopNavBar />
       <div style={{ paddingTop: 80 }}>
-        <ProductsShowcase />
+        <ProductsShowcase heading="h1" />
       </div>
       <SiteFooter />
     </main>

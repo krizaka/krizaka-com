@@ -939,7 +939,15 @@
         },
         "access": {
           "title": "Server-side access control",
-          "body": "Every play is authorised on the server against the video's visibility — public, contacts only or paid unlock. No raw media URL is ever exposed."
+          "body": "Every play is authorised on the server against the video's own rule — public, approved followers, contacts, paid unlock (never below the creator's minimum) or invited only. No raw media URL is ever exposed."
+        },
+        "audiences": {
+          "title": "Audiences the creator chooses",
+          "body": "Invite people one by one or open a video to reusable, private lists — add someone and they're in, remove them and they're out. Invited-only videos are never listed. Collections get the same permissions."
+        },
+        "engagement": {
+          "title": "Engagement that means something",
+          "body": "Views counted once per viewer and day, never the creator's own; likes, threaded comments the creator can moderate or close, and shares — each counter moves with the record that justifies it."
         },
         "payments": {
           "title": "Gateway-confirmed payments",
@@ -979,7 +987,7 @@
       "docs": "Documentation",
       "audience": "Software for platform operators; adult content is restricted to adults.",
       "pillarsEyebrow": "What makes it production-ready",
-      "pillarsTitle": "Four guarantees, enforced in code.",
+      "pillarsTitle": "Six guarantees, enforced in code.",
       "archEyebrow": "How it works",
       "archTitle": "Follow a request through the platform.",
       "archLead": "Three journeys, step by step. Every API endpoint named here is checked against Orochia's code on every build of this site.",

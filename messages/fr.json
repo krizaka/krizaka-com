@@ -939,7 +939,15 @@
         },
         "access": {
           "title": "Contrôle d'accès côté serveur",
-          "body": "Chaque lecture est autorisée sur le serveur selon la visibilité : publique, contacts seulement ou déblocage payant. Aucune URL brute n'est jamais exposée."
+          "body": "Chaque lecture est autorisée sur le serveur selon la règle de la vidéo — publique, abonnés approuvés, contacts, déblocage payant (jamais sous le minimum du créateur) ou invités seulement. Aucune URL média brute n'est exposée."
+        },
+        "audiences": {
+          "title": "Des publics choisis par le créateur",
+          "body": "Invitez des personnes une à une ou ouvrez une vidéo à des listes privées réutilisables — ajoutez quelqu'un, il entre ; retirez-le, il sort. Les vidéos sur invitation ne sont jamais listées. Les collections ont les mêmes permissions."
+        },
+        "engagement": {
+          "title": "Un engagement qui veut dire quelque chose",
+          "body": "Des vues comptées une fois par spectateur et par jour, jamais celles du créateur ; des mentions j'aime, des commentaires en fil que le créateur modère ou ferme, des partages — chaque compteur suit l'enregistrement qui le justifie."
         },
         "payments": {
           "title": "Paiements confirmés par la passerelle",
@@ -979,7 +987,7 @@
       "docs": "Documentation",
       "audience": "Logiciel destiné aux exploitants de plateformes ; les contenus adultes sont réservés aux personnes majeures.",
       "pillarsEyebrow": "Ce qui la rend prête pour la production",
-      "pillarsTitle": "Quatre garanties, appliquées dans le code.",
+      "pillarsTitle": "Six garanties, appliquées dans le code.",
       "archEyebrow": "Fonctionnement",
       "archTitle": "Suivez une requête à travers la plateforme.",
       "archLead": "Trois parcours, étape par étape. Chaque point d'API cité est vérifié contre le code d'Orochia à chaque build du site.",

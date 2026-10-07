@@ -15,7 +15,8 @@ import { NAV_PRODUCTS } from "@/lib/nav";
 
 const noop = () => () => {};
 
-export default function ProductsShowcase() {
+/** `heading="h1"` where the showcase is the page itself (/products); a section of the home page otherwise. */
+export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?: "h1" | "h2" }) {
   const { t } = useI18n();
   const h = t.site.home.products;
   const mounted = useSyncExternalStore(noop, () => true, () => false);
@@ -24,7 +25,7 @@ export default function ProductsShowcase() {
 
   return (
     <section id="products" className="kz-section">
-      <h2 className="kz-h2">{h.title}</h2>
+      <Heading className="kz-h2">{h.title}</Heading>
 
       <div className="kz-spots">
         {PRODUCTS.map((p, i) => {

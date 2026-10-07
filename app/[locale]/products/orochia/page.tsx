@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BookOpen, CreditCard, Film, GitBranch, Lock, PlayCircle, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, CreditCard, Film, GitBranch, Heart, Lock, PlayCircle, ShieldCheck, UsersRound } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
 import orochia from "@/app/data/orochia-architecture.json";
@@ -24,20 +24,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Orochia — Open-Source Creator Video Platform | Krizaka",
       description:
-        "Orochia is Krizaka's open-source video platform for independent creators: direct-to-CDN streaming, server-side access control, gateway-confirmed payments and 18+ compliance records.",
+        "Orochia is Krizaka's open-source video platform for independent creators: signed 4K streaming, audiences the creator chooses (followers, contacts, paid unlock, invited lists), collections, gateway-confirmed payments and 18+ compliance.",
     },
     fr: {
       title: "Orochia — Plateforme vidéo open source pour créateurs | Krizaka",
       description:
-        "Orochia est la plateforme vidéo open source de Krizaka pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle et conformité 18+.",
+        "Orochia est la plateforme vidéo open source de Krizaka pour créateurs indépendants : diffusion 4K signée, publics choisis par le créateur (abonnés, contacts, déblocage payant, listes d'invités), collections, paiements confirmés par la passerelle et conformité 18+.",
     },
   });
 }
 
 
-const PILLARS: { id: "cdn" | "access" | "payments" | "compliance"; icon: LucideIcon; color: string }[] = [
+const PILLARS: { id: "cdn" | "access" | "audiences" | "engagement" | "payments" | "compliance"; icon: LucideIcon; color: string }[] = [
   { id: "cdn", icon: Film, color: "#a855f7" },
   { id: "access", icon: Lock, color: "#0ea5e9" },
+  { id: "audiences", icon: UsersRound, color: "#d946ef" },
+  { id: "engagement", icon: Heart, color: "#f43f5e" },
   { id: "payments", icon: CreditCard, color: "#10b981" },
   { id: "compliance", icon: ShieldCheck, color: "#f59e0b" },
 ];
@@ -134,7 +136,7 @@ export default async function OrochiaPage({ params }: Props) {
       <section id="guarantees" style={{ ...section, marginBottom: 88, scrollMarginTop: 96 }}>
         <p style={label}>{t.pillarsEyebrow}</p>
         <h2 style={h2}>{t.pillarsTitle}</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 250px), 1fr))", gap: 14, marginTop: 24 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))", gap: 14, marginTop: 24 }}>
           {PILLARS.map(({ id, icon: Icon, color }) => (
             <div key={id} style={card}>
               <Icon size={20} style={{ color }} aria-hidden="true" />
