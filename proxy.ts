@@ -2,34 +2,13 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 const locales = ["fr", "en"];
-// Unknown-language visitors get English: the international default, matching the
-// hreflang x-default and the sitemap. French speakers still get the Québec site.
+// English is the site's default language. French is served when the visitor chose it
+// (the language switch writes NEXT_LOCALE) or opened a /fr URL — matching hreflang x-default.
 const defaultLocale = "en";
 
 function getLocale(request: NextRequest): string {
-  // A sticky NEXT_LOCALE cookie (set on the first redirect) wins over headers.
   const cookie = request.cookies.get("NEXT_LOCALE")?.value;
-  if (cookie === "fr" || cookie === "en") return cookie;
-
-  const acceptLanguage = request.headers.get("accept-language");
-  if (!acceptLanguage) return defaultLocale;
-
-  const prefs = acceptLanguage.split(",").map((part) => {
-    const [lang, qVal] = part.split(";q=");
-    return {
-      lang: lang.trim().toLowerCase().split("-")[0],
-      q: qVal ? parseFloat(qVal) : 1.0,
-    };
-  });
-
-  prefs.sort((a, b) => b.q - a.q);
-
-  for (const pref of prefs) {
-    if (pref.lang === "en") return "en";
-    if (pref.lang === "fr") return "fr";
-  }
-
-  return defaultLocale;
+  return cookie === "fr" || cookie === "en" ? cookie : defaultLocale;
 }
 
 export function proxy(request: NextRequest) {
@@ -51,6 +30,15 @@ export function proxy(request: NextRequest) {
   const pathnameIsMissingLocale = locales.every(
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
   );
+
+  // A /fr or /en page remembers its language, so the site's unprefixed links keep it.
+  if (!pathnameIsMissingLocale) {
+    const current = pathname.split("/")[1];
+    if (request.cookies.get("NEXT_LOCALE")?.value === current) return;
+    const response = NextResponse.next();
+    response.cookies.set("NEXT_LOCALE", current, { path: "/", maxAge: 60 * 60 * 24 * 365, sameSite: "lax" });
+    return response;
+  }
 
   // Redirect if there is no locale prefix
   if (pathnameIsMissingLocale) {

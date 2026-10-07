@@ -12,6 +12,7 @@ import {
   type Locale,
   type TranslationDictionary,
   DEFAULT_LOCALE,
+  LOCALE_COOKIE,
   getDictionary,
 } from "@/lib/i18n";
 
@@ -48,6 +49,8 @@ export function I18nProvider({ children, locale }: { children: ReactNode; locale
       segments.splice(1, 0, l);
     }
     
+    // Remember the choice, so unprefixed URLs (/, shared links) open in this language next time.
+    document.cookie = `${LOCALE_COOKIE}=${l}; path=/; max-age=31536000; samesite=lax`;
     const newPath = segments.join("/") || "/";
     router.push(newPath);
   }, [pathname, router]);

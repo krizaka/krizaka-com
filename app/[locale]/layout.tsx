@@ -121,7 +121,7 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const validatedLocale = locale === "en" || locale === "fr" ? locale : "fr";
+  const validatedLocale = locale === "en" || locale === "fr" ? locale : "en";
 
   return (
     <html

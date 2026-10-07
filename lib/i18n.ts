@@ -8,7 +8,7 @@
 
 export type Locale = "fr" | "en";
 
-export const DEFAULT_LOCALE: Locale = "fr";
+export const DEFAULT_LOCALE: Locale = "en";
 
 export interface TranslationDictionary {
   /* ─── Global ─── */
@@ -1050,17 +1050,5 @@ export function getDictionary(locale: Locale): TranslationDictionary {
   return dictionaries[locale];
 }
 
-export function getLocaleFromStorage(): Locale {
-  if (typeof window === "undefined") return DEFAULT_LOCALE;
-  const stored = localStorage.getItem("kz-locale");
-  if (stored === "fr" || stored === "en") return stored;
-  /* Detect browser language */
-  const browserLang = navigator.language.toLowerCase();
-  if (browserLang.startsWith("fr")) return "fr";
-  return "en";
-}
-
-export function setLocaleToStorage(locale: Locale): void {
-  if (typeof window === "undefined") return;
-  localStorage.setItem("kz-locale", locale);
-}
+/** Cookie the locale switch writes and `proxy.ts` honours: English unless the visitor chose French. */
+export const LOCALE_COOKIE = "NEXT_LOCALE";
