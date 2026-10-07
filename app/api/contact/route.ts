@@ -36,7 +36,7 @@ export async function POST(request: Request) {
 
   const channels = contactChannels();
   if (!channels.email && !channels.webhook) {
-    console.error("contact: no delivery channel configured (RESEND_API_KEY + CONTACT_TO_EMAIL, or CONTACT_WEBHOOK_URL)");
+    console.error("contact: no delivery channel configured (MAILGUN_API_KEY + MAILGUN_DOMAIN + CONTACT_TO_EMAIL, or CONTACT_WEBHOOK_URL)");
     return NextResponse.json({ error: "unavailable" }, { status: 503 });
   }
 

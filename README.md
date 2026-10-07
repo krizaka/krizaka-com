@@ -100,14 +100,22 @@ inline styles (or non-spacing classes) for page layout until the reset is moved 
 ## Contact form
 
 `/contact`, the home page and every product page end with a contact form that posts to
-`app/api/contact`. Configure at least one delivery channel in the hosting environment (Vercel →
-Settings → Environment Variables); without one the endpoint answers `503` instead of pretending:
+`app/api/contact`. Configure at least one delivery channel through environment variables — `.env.local` in
+development (copy `.env.example`), the hosting environment in production (Vercel → Settings →
+Environment Variables). Without one the endpoint answers `503` instead of pretending:
 
 | Variable | Purpose |
 | :--- | :--- |
-| `RESEND_API_KEY`, `CONTACT_TO_EMAIL` | e-mail through the [Resend](https://resend.com) API (comma-separated recipients) |
-| `CONTACT_FROM_EMAIL` | sender, on a domain verified in Resend (default `Krizaka <contact@krizaka.com>`) |
-| `CONTACT_WEBHOOK_URL` | JSON POST to Slack, Discord or any relay (`text`, `content` and structured `contact` fields) |
+| `MAILGUN_API_KEY` | private API key ([Mailgun](https://documentation.mailgun.com) → API Security); sent as Basic auth `api:<key>` |
+| `MAILGUN_DOMAIN` | sending domain verified in Mailgun (`mg.krizaka.com`) |
+| `MAILGUN_API_URL` | optional, `https://api.mailgun.net` by default; `https://api.eu.mailgun.net` for an EU-region domain |
+| `CONTACT_TO_EMAIL` | where the messages land (comma-separated recipients) |
+| `CONTACT_FROM_EMAIL` | optional sender, on `MAILGUN_DOMAIN` (default `Krizaka <contact@<MAILGUN_DOMAIN>>`) |
+| `CONTACT_WEBHOOK_URL` | optional JSON POST to Slack, Discord or any relay (`text`, `content` and structured `contact` fields) |
+
+The e-mail goes out via `POST {MAILGUN_API_URL}/v3/{MAILGUN_DOMAIN}/messages` (`lib/contact.ts`)
+with `Reply-To` set to the visitor, so answering the e-mail answers them. A Mailgun refusal is
+logged (`contact: mailgun refused (…)`) and the visitor gets a `502`.
 
 ## Develop
 

@@ -1079,7 +1079,7 @@
             "title": "Ce que ce site collecte",
             "paragraphs": [
               "Quand vous nous écrivez avec le formulaire de contact, nous recevons votre nom, votre courriel, votre organisation si vous l'indiquez, le sujet et votre message. Nous les utilisons uniquement pour vous répondre.",
-              "Le message est transmis à l'équipe par courriel (via notre fournisseur, Resend) ou dans notre messagerie d'équipe. Nous le conservons le temps de l'échange, puis nous le supprimons. Nous ne le vendons pas, ne le partageons pas à des fins marketing et ne l'utilisons pas pour vous profiler.",
+              "Le message est transmis à l'équipe par courriel (via notre fournisseur, Mailgun) ou dans notre messagerie d'équipe. Nous le conservons le temps de l'échange, puis nous le supprimons. Nous ne le vendons pas, ne le partageons pas à des fins marketing et ne l'utilisons pas pour vous profiler.",
               "Notre hébergeur (Vercel) conserve des journaux techniques — adresse IP, heure, page — pour la sécurité et la prévention des abus, selon sa propre politique."
             ]
           },

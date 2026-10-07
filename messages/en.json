@@ -1079,7 +1079,7 @@
             "title": "What this website collects",
             "paragraphs": [
               "When you write to us through the contact form, we receive your name, your e-mail address, your organisation if you give it, the topic and your message. We use them only to reply to you.",
-              "The message is delivered to the team by e-mail (through our e-mail provider, Resend) or to our team messaging. We keep it as long as the conversation needs it, then delete it. We never sell it, share it for marketing or use it to profile you.",
+              "The message is delivered to the team by e-mail (through our e-mail provider, Mailgun) or to our team messaging. We keep it as long as the conversation needs it, then delete it. We never sell it, share it for marketing or use it to profile you.",
               "Our host (Vercel) keeps technical logs — IP address, time, page — for security and abuse prevention, under its own policy."
             ]
           },

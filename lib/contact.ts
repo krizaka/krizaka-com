@@ -1,6 +1,7 @@
 /* Contact messages — validation and delivery, shared by app/api/contact/route.ts.
    Delivery is configured by environment (fail-closed: nothing configured → 503, never a fake success):
-     RESEND_API_KEY + CONTACT_TO_EMAIL (+ CONTACT_FROM_EMAIL)   e-mail through the Resend HTTP API
+     MAILGUN_API_KEY + MAILGUN_DOMAIN + CONTACT_TO_EMAIL         e-mail through the Mailgun HTTP API
+       (+ MAILGUN_API_URL for the EU region, + CONTACT_FROM_EMAIL)
      CONTACT_WEBHOOK_URL                                        JSON POST (Slack / Discord / Teams / any relay)
    Both may be set; the message is accepted when at least one channel delivers it. */
 
@@ -52,7 +53,7 @@ const escapeHtml = (s: string) =>
 
 export function contactChannels(env: NodeJS.ProcessEnv = process.env) {
   return {
-    email: Boolean(env.RESEND_API_KEY && env.CONTACT_TO_EMAIL),
+    email: Boolean(env.MAILGUN_API_KEY && env.MAILGUN_DOMAIN && env.CONTACT_TO_EMAIL),
     webhook: Boolean(env.CONTACT_WEBHOOK_URL),
   };
 }
@@ -63,23 +64,49 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
   const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${TOPIC_LABEL[m.topic]} · ${m.locale}`;
   const jobs: Promise<boolean>[] = [];
 
-  if (env.RESEND_API_KEY && env.CONTACT_TO_EMAIL) {
+  if (env.MAILGUN_API_KEY && env.MAILGUN_DOMAIN && env.CONTACT_TO_EMAIL) {
+    // https://documentation.mailgun.com — POST /v3/{domain}/messages, Basic auth `api:<key>`, form fields.
+    const form = new FormData();
+    form.append("from", env.CONTACT_FROM_EMAIL || `Krizaka <contact@${env.MAILGUN_DOMAIN}>`);
+    for (const to of env.CONTACT_TO_EMAIL.split(",").map((s) => s.trim()).filter(Boolean)) form.append("to", to);
+    form.append("h:Reply-To", m.email);
+    form.append("subject", subject);
+    // Every field of the form, as filled in.
+    const fields: [string, string][] = [
+      ["Name", m.name],
+      ["E-mail", m.email],
+      ["Company", m.company || "—"],
+      ["Topic", TOPIC_LABEL[m.topic]],
+      ["Language", m.locale],
+      ["Message", m.message],
+    ];
+    form.append("text", fields.map(([k, v]) => `${k}: ${v}`).join("\n"));
+    form.append(
+      "html",
+      `<table cellpadding="6" style="border-collapse:collapse;font-family:sans-serif;font-size:14px">${fields
+        .map(
+          ([k, v]) =>
+            `<tr><th align="left" valign="top" style="border-bottom:1px solid #ddd">${k}</th><td style="border-bottom:1px solid #ddd;white-space:pre-wrap">${escapeHtml(v)}</td></tr>`,
+        )
+        .join("")}</table>`,
+    );
+    const base = (env.MAILGUN_API_URL || "https://api.mailgun.net").replace(/\/+$/, "");
     jobs.push(
-      fetch("https://api.resend.com/emails", {
+      fetch(`${base}/v3/${encodeURIComponent(env.MAILGUN_DOMAIN)}/messages`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-        body: JSON.stringify({
-          from: env.CONTACT_FROM_EMAIL || "Krizaka <contact@krizaka.com>",
-          to: env.CONTACT_TO_EMAIL.split(",").map((s) => s.trim()),
-          reply_to: m.email,
-          subject,
-          text,
-          html: `<p style="white-space:pre-wrap">${escapeHtml(m.message)}</p><hr><p>${escapeHtml(m.name)} &lt;${escapeHtml(m.email)}&gt;${
-            m.company ? ` · ${escapeHtml(m.company)}` : ""
-          }<br>${TOPIC_LABEL[m.topic]} · ${m.locale}</p>`,
-        }),
+        headers: { Authorization: `Basic ${Buffer.from(`api:${env.MAILGUN_API_KEY}`).toString("base64")}` },
+        body: form,
         signal: AbortSignal.timeout(8000),
-      }).then((r) => r.ok, () => false),
+      }).then(
+        async (r) => {
+          if (!r.ok) console.error(`contact: mailgun refused (${r.status}) ${(await r.text()).slice(0, 300)}`);
+          return r.ok;
+        },
+        (e) => {
+          console.error("contact: mailgun unreachable", e);
+          return false;
+        },
+      ),
     );
   }
 

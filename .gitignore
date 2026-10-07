@@ -50,3 +50,4 @@ next-env.d.ts
 
 # local development
 PLAN_DEPLOIEMENT.md
+!.env.example

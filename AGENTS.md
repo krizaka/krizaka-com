@@ -92,7 +92,8 @@
 
 - The contact form posts to `app/api/contact` (validation in `lib/contact.ts`). Delivery is
   configured by environment and fails closed (503) when nothing is set:
-  `RESEND_API_KEY` + `CONTACT_TO_EMAIL` (+ `CONTACT_FROM_EMAIL`) and/or `CONTACT_WEBHOOK_URL`.
+  `MAILGUN_API_KEY` + `MAILGUN_DOMAIN` + `CONTACT_TO_EMAIL` (+ `MAILGUN_API_URL`, `CONTACT_FROM_EMAIL`)
+  and/or `CONTACT_WEBHOOK_URL`. Template: `.env.example`.
 
 ## 6. Definition of done
 
