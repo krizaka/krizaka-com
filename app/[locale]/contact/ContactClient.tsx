@@ -6,10 +6,7 @@ import TopNavBar from "../../components/TopNavBar";
 import SiteFooter from "../../components/SiteFooter";
 import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
-import {
-  GITHUB_DISCUSSIONS_URL,
-  GITHUB_ISSUES_URL,
-} from "@/lib/site";
+import ProductLogo from "../../components/ProductLogo";
 
 /* ─── Mascot: Owl (Questions & help) ─── */
 function OwlMascot() {
@@ -127,8 +124,7 @@ const CHANNELS = [
     Mascot: OwlMascot,
     accent: "#a78bfa",
     glow: "rgba(167, 139, 250, 0.08)",
-    href: GITHUB_DISCUSSIONS_URL,
-    external: true,
+    path: "discussions/new/choose",
   },
   {
     id: "issues",
@@ -136,8 +132,7 @@ const CHANNELS = [
     Mascot: FalconMascot,
     accent: "#ff9f00",
     glow: "rgba(255, 159, 0, 0.08)",
-    href: GITHUB_ISSUES_URL,
-    external: true,
+    path: "issues/new/choose",
   },
 ];
 
@@ -241,14 +236,11 @@ export default function ContactClient() {
           {channels.map((ch, index) => {
             const channelDef = CHANNELS[index];
             if (!channelDef) return null;
-            const { Mascot, Icon, accent, glow, href, external } = channelDef;
+            const { Mascot, Icon, accent, glow, path } = channelDef;
 
             return (
-              <motion.a
+              <motion.div
                 key={ch.kind}
-                href={href}
-                target={external ? "_blank" : undefined}
-                rel={external ? "noopener noreferrer" : undefined}
                 className="contact-card"
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -268,8 +260,6 @@ export default function ContactClient() {
                   border: "1px solid var(--kz-border-subtle)",
                   background: "color-mix(in srgb, var(--kz-surface-1) 70%, transparent)",
                   backdropFilter: "blur(16px)",
-                  textDecoration: "none",
-                  cursor: "pointer",
                   transition: "border-color 250ms ease, box-shadow 250ms ease",
                 }}
               >
@@ -331,23 +321,27 @@ export default function ContactClient() {
                   {ch.desc}
                 </p>
 
-                {/* CTA */}
-                <span
-                  className="contact-cta"
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    fontSize: "13px",
-                    fontWeight: 600,
-                    color: accent,
-                    transition: "gap 200ms ease",
-                  }}
-                >
-                  {ch.cta}
-                  <ArrowRight size={14} strokeWidth={2} />
+                {/* CTA — one link per product: each has its own repository */}
+                <span style={{ fontSize: "11px", color: "var(--kz-text-muted)", marginBottom: "10px" }}>
+                  {ch.cta} — {locale === "fr" ? "pour quel produit ?" : "for which product?"}
                 </span>
-              </motion.a>
+                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center" }}>
+                  {(["orazaka", "orochia"] as const).map((product) => (
+                    <a
+                      key={product}
+                      href={`https://github.com/krizaka/${product}/${path}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="contact-product"
+                      style={{ ["--accent" as string]: accent }}
+                    >
+                      <ProductLogo id={product} size={18} animated={false} />
+                      {product === "orazaka" ? "Orazaka" : "Orochia"}
+                      <ArrowRight size={13} strokeWidth={2} />
+                    </a>
+                  ))}
+                </div>
+              </motion.div>
             );
           })}
         </div>
@@ -356,9 +350,10 @@ export default function ContactClient() {
       <SiteFooter />
 
       <style>{`
-        .contact-card:hover .contact-cta {
-          gap: 10px !important;
-        }
+        .contact-product { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px; font-size: 13px; font-weight: 600;
+          text-decoration: none; color: var(--kz-text-primary); background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle);
+          transition: border-color 150ms ease, transform 150ms ease; }
+        .contact-product:hover { border-color: var(--accent); transform: translateY(-1px); }
 
         @media (max-width: 640px) {
           .contact-grid {

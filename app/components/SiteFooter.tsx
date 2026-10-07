@@ -28,270 +28,80 @@ export default function SiteFooter() {
 
   const krizakaLinks = [
     { label: locale === "fr" ? "Produits" : "Products", href: "/products" },
+    { label: locale === "fr" ? "Notre histoire" : "Our story", href: "/story" },
     { label: "Open source", href: "/open-source" },
     { label: "Contact", href: "/contact" },
     { label: locale === "fr" ? "Confidentialité" : "Privacy", href: "/privacy" },
     { label: locale === "fr" ? "Conditions" : "Terms", href: "/terms" },
   ];
 
+  const columns = [
+    { key: "orazaka", title: <><ProductLogo id="orazaka" size={18} animated={false} /> Orazaka</>, links: orazakaLinks },
+    { key: "orochia", title: <><ProductLogo id="orochia" size={18} animated={false} /> Orochia</>, links: orochiaLinks },
+    { key: "krizaka", title: <>Krizaka</>, links: krizakaLinks },
+  ];
+
   return (
-    <footer
-      id="site-footer"
-      style={{
-        padding: "56px 24px 32px",
-        background: "var(--kz-surface-0)",
-        position: "relative",
-      }}
-    >
-      <div
-        className="footer-inner"
-        style={{
-          maxWidth: "880px",
-          margin: "0 auto",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "stretch",
-          width: "100%",
-        }}
-      >
-        {/* ─── Subtle separator line ─── */}
-        <div
-          style={{
-            height: "1px",
-            background: "linear-gradient(90deg, transparent, var(--kz-border-subtle) 30%, var(--kz-border-subtle) 70%, transparent)",
-            marginBottom: "40px",
-            width: "100%",
-          }}
-        />
-
-        {/* ─── Main footer row: brand left, links columns right ─── */}
-        <div
-          className="footer-main-row"
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            gap: "40px",
-            marginBottom: "40px",
-            width: "100%",
-          }}
-        >
-          {/* Brand */}
-          <div style={{ flexShrink: 0 }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                marginBottom: "10px",
-              }}
-            >
-              <KrizakaLogo size={22} />
-              <span
-                style={{
-                  fontFamily: "var(--font-display), system-ui, sans-serif",
-                  fontSize: "14px",
-                  fontWeight: 700,
-                  color: "var(--kz-text-primary)",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                Krizaka
-              </span>
-            </div>
-            <p
-              style={{
-                fontSize: "12px",
-                color: "var(--kz-text-muted)",
-                lineHeight: 1.5,
-                maxWidth: "260px",
-                marginBottom: "14px",
-              }}
-            >
-              {locale === "fr"
-                ? "Studio logiciel open source. Créateurs d'Orazaka et d'Orochia."
-                : "Open-source software studio. Creators of Orazaka and Orochia."}
-            </p>
-            <a
-              href="https://github.com/krizaka"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="footer-gh-link"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "5px",
-                fontSize: "11px",
-                fontWeight: 500,
-                color: "var(--kz-text-muted)",
-                textDecoration: "none",
-              }}
-            >
-              <GitHubIcon size={13} />
-              GitHub
-              <ArrowUpRight size={9} strokeWidth={2} />
-            </a>
-          </div>
-
-          {/* Dual-column Links */}
-          <div
-            className="footer-nav-cols"
-            style={{
-              display: "flex",
-              gap: "44px",
-              flexWrap: "wrap",
-            }}
-          >
-            {/* Orazaka Column */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-              <span
-                style={{
-                  fontFamily: "var(--font-mono, monospace)",
-                  fontSize: "9px",
-                  fontWeight: 700,
-                  color: "var(--kz-text-muted)",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-              >
-                <ProductLogo id="orazaka" size={18} animated={false} /> Orazaka
-              </span>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {orazakaLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="footer-link"
-                    style={{
-                      fontSize: "12px",
-                      color: "var(--kz-text-muted)",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Orochia Column */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-              <span
-                style={{
-                  fontFamily: "var(--font-mono, monospace)",
-                  fontSize: "9px",
-                  fontWeight: 700,
-                  color: "var(--kz-text-muted)",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "6px",
-                }}
-              >
-                <ProductLogo id="orochia" size={18} animated={false} /> Orochia
-              </span>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {orochiaLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="footer-link"
-                    style={{
-                      fontSize: "12px",
-                      color: "var(--kz-text-muted)",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Krizaka / Legal Column */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-              <span
-                style={{
-                  fontFamily: "var(--font-mono, monospace)",
-                  fontSize: "9px",
-                  fontWeight: 700,
-                  color: "var(--kz-text-muted)",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                }}
-              >
-                {locale === "fr" ? "Krizaka (Organisation)" : "Krizaka (Organization)"}
-              </span>
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                {krizakaLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="footer-link"
-                    style={{
-                      fontSize: "12px",
-                      color: "var(--kz-text-muted)",
-                      textDecoration: "none",
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
+    <footer className="kz-footer">
+      <div className="kz-footer-inner">
+        <div className="kz-footer-brand">
+          <Link href="/" className="kz-footer-logo">
+            <KrizakaLogo size={28} /> Krizaka
+          </Link>
+          <p>
+            {locale === "fr"
+              ? "Studio logiciel open source à Montréal. Créateurs d'Orazaka et d'Orochia."
+              : "Open-source software studio in Montréal. Makers of Orazaka and Orochia."}
+          </p>
+          <a href="https://github.com/krizaka" target="_blank" rel="noopener noreferrer" className="kz-footer-gh">
+            <GitHubIcon size={14} /> github.com/krizaka <ArrowUpRight size={12} />
+          </a>
         </div>
 
-        {/* ─── Bottom copyright ─── */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            paddingTop: "16px",
-            borderTop: "1px solid color-mix(in srgb, var(--kz-border-subtle) 50%, transparent)",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "11px",
-              color: "var(--kz-text-muted)",
-              fontFamily: "var(--font-mono, monospace)",
-              opacity: 0.7,
-            }}
-          >
-            © 2026 Krizaka.
-          </span>
-        </div>
+        <nav className="kz-footer-cols" aria-label={locale === "fr" ? "Pied de page" : "Footer"}>
+          {columns.map((col) => (
+            <div key={col.key} className="kz-footer-col">
+              <p className="kz-footer-title">{col.title}</p>
+              <ul>
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href}>{link.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </nav>
+      </div>
+
+      <div className="kz-footer-bottom">
+        <span>© {new Date().getFullYear()} Krizaka</span>
+        <span>{locale === "fr" ? "Fait à Montréal · Apache-2.0" : "Made in Montréal · Apache-2.0"}</span>
       </div>
 
       <style>{`
-        .footer-link {
-          transition: color 150ms ease;
+        .kz-footer { padding: 64px 20px 28px; background: var(--kz-surface-0); border-top: 1px solid var(--kz-border-subtle); text-align: left; }
+        .kz-footer-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr); gap: 48px; }
+        .kz-footer-logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display), system-ui, sans-serif; font-size: 16px;
+          font-weight: 700; color: var(--kz-text-primary); text-decoration: none; }
+        .kz-footer-brand p { margin: 14px 0 16px; max-width: 300px; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
+        .kz-footer-gh { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--kz-text-muted); text-decoration: none; }
+        .kz-footer-gh:hover { color: var(--kz-text-primary); }
+        .kz-footer-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+        .kz-footer-title { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
+          letter-spacing: .12em; text-transform: uppercase; color: var(--kz-text-primary); }
+        .kz-footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+        .kz-footer-col a { font-size: 13.5px; color: var(--kz-text-secondary); text-decoration: none; transition: color 150ms ease; }
+        .kz-footer-col a:hover { color: var(--kz-text-primary); }
+        .kz-footer-bottom { max-width: 72rem; margin: 48px auto 0; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+          border-top: 1px solid var(--kz-border-subtle); font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-muted); }
+        @media (max-width: 860px) {
+          .kz-footer-inner { grid-template-columns: 1fr; gap: 36px; }
         }
-        .footer-link:hover {
-          color: var(--kz-text-secondary) !important;
-        }
-        .footer-gh-link {
-          transition: color 150ms ease;
-        }
-        .footer-gh-link:hover {
-          color: var(--kz-text-secondary) !important;
-        }
-
-        @media (max-width: 640px) {
-          .footer-main-row {
-            flex-direction: column !important;
-            gap: 32px !important;
-            align-items: flex-start !important;
-          }
-          .footer-nav-cols {
-            gap: 40px !important;
-          }
+        @media (max-width: 560px) {
+          .kz-footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
+          .kz-footer-col:last-child { grid-column: 1 / -1; }
+          .kz-footer-col:last-child ul { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
         }
       `}</style>
     </footer>
