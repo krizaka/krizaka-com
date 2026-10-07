@@ -20,7 +20,7 @@ export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { oraz
         <div>
           <p className="kz-eyebrow">Open source</p>
           <h2 className="kz-h2" style={{ marginBottom: 12 }}>
-            {loc === "fr" ? "Rien à cacher. Littéralement." : "Nothing to hide. Literally."}
+            {loc === "fr" ? "Lisez chaque ligne." : "Read every line."}
           </h2>
           <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7, color: "var(--kz-text-secondary)", maxWidth: 520 }}>
             {loc === "fr"

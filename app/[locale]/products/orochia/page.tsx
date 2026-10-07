@@ -88,16 +88,22 @@ const TOUR: TourClip[] = [
     caption: { fr: "Lecture protégée et pourboire : montant, passerelle configurée, confirmation par la passerelle.", en: "Protected playback and tipping: amount, configured gateway, gateway confirmation." },
   },
   {
+    id: "community",
+    src: "/assets/orochia/tour/community",
+    label: { fr: "Explorer & playlists", en: "Explore & playlists" },
+    caption: { fr: "Recherche et tags, une vidéo réservée aux abonnés approuvés, l'enregistrement dans une playlist.", en: "Search and tags, a video for approved followers, saving it to a playlist." },
+  },
+  {
     id: "studio",
     src: "/assets/orochia/tour/studio",
     label: { fr: "Studio créateur", en: "Creator studio" },
-    caption: { fr: "Tableau de bord, téléversement direct vers Bunny avec attestations 2257, demande de versement.", en: "Dashboard, direct-to-Bunny upload with 2257 attestations, payout request." },
+    caption: { fr: "Tableau de bord, approbation des abonnés, édition d'une vidéo, téléversement direct vers Bunny.", en: "Dashboard, approving followers, editing a video, direct-to-Bunny upload." },
   },
   {
     id: "admin",
     src: "/assets/orochia/tour/admin",
     label: { fr: "Console d'administration", en: "Admin console" },
-    caption: { fr: "orochia-admin : vérification 2257, signalements, trésorerie et registre des créateurs.", en: "orochia-admin: 2257 verification, content reports, treasury and creator registry." },
+    caption: { fr: "orochia-admin : vérification 2257, signalements, catalogue et retraits, comptes, trésorerie.", en: "orochia-admin: 2257 verification, reports, catalogue and takedowns, accounts, treasury." },
   },
 ];
 

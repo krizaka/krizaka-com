@@ -7,6 +7,7 @@ import ProductsShowcase from "../components/home/ProductsShowcase";
 import ExpertiseSection from "../components/home/ExpertiseSection";
 import OpenSourceSection from "../components/home/OpenSourceSection";
 import ContactCta from "../components/home/ContactCta";
+import StoryTeaser from "../components/home/StoryTeaser";
 import SiteFooter from "../components/SiteFooter";
 
 interface Props {
@@ -40,6 +41,7 @@ export default function Home() {
       <TopNavBar />
       <OrgHero repositoryCount={repositories.length} />
       <ProductsShowcase />
+      <StoryTeaser />
       <ExpertiseSection />
       <OpenSourceSection orazakaRepos={orazaka} orochiaRepos={orochia} />
       <ContactCta />

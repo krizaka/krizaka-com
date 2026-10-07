@@ -17,7 +17,7 @@ export default function ExpertiseSection() {
     <section id="expertise" className="kz-section">
       <p className="kz-eyebrow">{loc === "fr" ? "Savoir-faire" : "Know-how"}</p>
       <h2 className="kz-h2">
-        {loc === "fr" ? "On ne promet pas. On compile." : "We don't promise. We compile."}
+        {loc === "fr" ? "Ce dont on s'occupe, pour que vous n'ayez pas à y penser." : "What we take care of, so you don't have to think about it."}
       </h2>
       <div className="kz-expertise">
         {EXPERTISE.map((item, i) => {

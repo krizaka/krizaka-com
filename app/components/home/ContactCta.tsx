@@ -12,12 +12,12 @@ export default function ContactCta({ topic = "other" }: { topic?: ContactTopic }
   return (
     <section id="contact" className="kz-section kz-cta">
       <div className="kz-cta-copy">
-        <p className="kz-eyebrow">{fr ? "Travaillons ensemble" : "Work with us"}</p>
-        <h2 className="kz-h2">{fr ? "Un projet audacieux en tête ?" : "Got something bold to build?"}</h2>
+        <p className="kz-eyebrow">{fr ? "Contact" : "Contact"}</p>
+        <h2 className="kz-h2">{fr ? "Parlez-nous de ce que vous construisez." : "Tell us what you're building."}</h2>
         <p>
           {fr
-            ? "Nous déployons et adaptons nos plateformes chez vous, et concevons les briques qui leur manquent. Décrivez votre besoin : un ingénieur vous répond, pas un robot."
-            : "We deploy and adapt our platforms on your infrastructure, and build the pieces they are missing. Tell us what you need: an engineer replies, not a bot."}
+            ? "Une contrainte de conformité, une plateforme à faire tenir, une idée qui a besoin d'un socle. Écrivez-nous simplement : c'est un ingénieur qui vous répond."
+            : "A compliance constraint, a platform that has to hold, an idea that needs solid ground. Just write to us — an engineer reads it and replies."}
         </p>
         <ul>
           <li>{fr ? "Réponse sous deux jours ouvrables" : "Reply within two business days"}</li>

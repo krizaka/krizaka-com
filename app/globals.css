@@ -1382,3 +1382,10 @@ body {
 .react-flow__controls-button { background: var(--kz-surface-2); border-bottom: 1px solid var(--kz-border-subtle); color: var(--kz-text-secondary); fill: var(--kz-text-secondary); }
 .react-flow__controls-button:hover { background: var(--kz-surface-3); }
 .react-flow__controls-button svg { fill: currentColor; }
+
+/* Story page — the phoenix floats, its core breathes. */
+@keyframes phx-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.phx-float { animation: phx-float 5s ease-in-out infinite; }
+@keyframes phx-core { 0%, 100% { opacity: .8; } 50% { opacity: 1; } }
+.phx-core { animation: phx-core 2.8s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .phx-float, .phx-core { animation: none !important; } }

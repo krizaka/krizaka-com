@@ -18,6 +18,22 @@ export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     intro:
       "Run Orochia locally in five commands, sign in with the seeded accounts, start the admin console, and run the quality gates.",
   },
+  development: {
+    title: "Development Guide",
+    category: "getting-started",
+    order: 2,
+    audience: "developer",
+    intro:
+      "Everyday commands, the database lifecycle (schema changes, seed, reset, backups), the seeded accounts, tests and troubleshooting.",
+  },
+  database: {
+    title: "Database Reference",
+    category: "architecture",
+    order: 3,
+    audience: "developer",
+    intro:
+      "Every table, column, index, foreign key and enum of the PostgreSQL schema, with the relationship diagram — generated from the Drizzle schema.",
+  },
   architecture: {
     title: "Architecture",
     category: "architecture",

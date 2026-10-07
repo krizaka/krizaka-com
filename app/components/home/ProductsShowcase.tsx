@@ -6,7 +6,7 @@
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { useReducedMotion } from "framer-motion";
-import { Check, GitBranch } from "lucide-react";
+import { ArrowRight, Check, GitBranch } from "lucide-react";
 import { useI18n } from "../I18nProvider";
 import ProductLogo from "../ProductLogo";
 import { NAV_ICONS } from "../ProductsMenu";
@@ -24,8 +24,7 @@ export default function ProductsShowcase() {
 
   return (
     <section id="products" className="kz-section">
-      <p className="kz-eyebrow">{loc === "fr" ? "Nos produits" : "Our products"}</p>
-      <h2 className="kz-h2">{loc === "fr" ? "Deux produits. Zéro raccourci." : "Two products. Zero shortcuts."}</h2>
+      <h2 className="kz-h2">{loc === "fr" ? "Produits" : "Products"}</h2>
 
       <div className="kz-spots">
         {PRODUCTS.map((p, i) => {
@@ -51,14 +50,17 @@ export default function ProductsShowcase() {
                 </ul>
                 <p className="kz-spot-stack">{p.stack}</p>
                 <nav className="kz-spot-links" aria-label={p.name}>
-                  {nav.links.map((l) => {
-                    const Icon = NAV_ICONS[l.icon];
-                    return (
-                      <Link key={l.href} href={l.href} className={l.icon === "overview" ? "kz-spot-primary" : "kz-spot-chip"}>
-                        <Icon size={14} aria-hidden /> {l.label[loc]}
-                      </Link>
-                    );
-                  })}
+                  {nav.links
+                    .filter((l) => l.icon === "overview" || l.icon === "architecture" || l.icon === "docs")
+                    .map((l) => {
+                      const Icon = NAV_ICONS[l.icon];
+                      return (
+                        <Link key={l.href} href={l.href} className={l.icon === "overview" ? "kz-spot-primary" : "kz-spot-chip"}>
+                          {l.icon !== "overview" && <Icon size={14} aria-hidden />} {l.icon === "overview" ? (loc === "fr" ? "Découvrir" : "Discover") : l.label[loc]}
+                          {l.icon === "overview" && <ArrowRight size={14} aria-hidden />}
+                        </Link>
+                      );
+                    })}
                   <a href={p.repoUrl} target="_blank" rel="noopener noreferrer" className="kz-spot-chip">
                     <GitBranch size={14} aria-hidden /> GitHub
                   </a>
@@ -90,7 +92,7 @@ export default function ProductsShowcase() {
       </div>
 
       <style>{`
-        .kz-spots { display: grid; gap: clamp(40px, 6vw, 72px); }
+        .kz-spots { display: grid; gap: clamp(56px, 8vw, 104px); }
         .kz-spot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
         .kz-spot.is-flipped .kz-spot-copy { order: 2; }
         @media (max-width: 900px) { .kz-spot { grid-template-columns: 1fr; } .kz-spot.is-flipped .kz-spot-copy { order: 0; } }
@@ -107,10 +109,10 @@ export default function ProductsShowcase() {
         .kz-spot-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
         .kz-spot-primary, .kz-spot-chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; text-decoration: none; }
         .kz-spot-primary { background: var(--kz-text-primary); color: var(--kz-surface-0); }
-        .kz-spot-chip { color: var(--kz-text-secondary); background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: border-color 150ms ease, color 150ms ease; }
-        .kz-spot-chip:hover { color: var(--kz-text-primary); border-color: var(--product-accent); }
+        .kz-spot-chip { color: var(--kz-text-secondary); transition: color 150ms ease; padding-left: 4px; padding-right: 4px; }
+        .kz-spot-chip:hover { color: var(--kz-text-primary); }
         .kz-spot-media { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--kz-border-default); background: #09090b;
-          box-shadow: var(--kz-shadow-lg), 0 0 70px color-mix(in srgb, var(--product-accent) 18%, transparent); }
+          box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--product-accent) 45%, transparent); }
         .kz-spot-chrome { display: flex; align-items: center; gap: 6px; padding: 9px 12px; background: var(--kz-surface-2); border-bottom: 1px solid var(--kz-border-subtle); }
         .kz-spot-chrome span { width: 9px; height: 9px; border-radius: 50%; background: var(--kz-border-strong); }
         .kz-spot-chrome em { margin-left: 8px; font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-muted); }

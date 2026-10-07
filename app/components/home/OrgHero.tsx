@@ -23,7 +23,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
       </div>
       <div className="org-hero-inner">
         <span className="org-hero-badge">
-          {loc === "fr" ? "Fabriqué à Montréal · Ouvert par défaut · Souverain par conception" : "Made in Montréal · Open by default · Sovereign by design"}
+          {loc === "fr" ? "Montréal · open source" : "Montréal · open source"}
         </span>
         <h1 className="org-hero-title" aria-label={loc === "fr" ? "Open source. Fermé aux compromis." : "Open source. Closed to compromise."}>
           <span className="org-hero-line">Open source.</span>
@@ -38,8 +38,8 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
         </h1>
         <p className="org-hero-sub">
           {loc === "fr"
-            ? `Nous construisons ce que d'autres mettent des années à réussir : une IA qui ne quitte jamais vos murs, une plateforme vidéo qui paie chaque cent une seule fois. La conformité et la sécurité ne sont pas des options — elles sont compilées dedans. ${repositoryCount} dépôts publics pour le prouver.`
-            : `We build what others take years to get right: AI that never leaves your walls, a video platform that pays every cent exactly once. Compliance and security aren't add-ons — they're compiled in. ${repositoryCount} public repositories to prove it.`}
+            ? `Vos données restent chez vous. Vos créateurs sont payés. Votre code reste le vôtre. Nous construisons, en open source, les logiciels qui n'ont pas le droit de casser — ${repositoryCount} dépôts publics, à lire ligne par ligne.`
+            : `Your data stays home. Your creators get paid. Your code stays yours. We build, in the open, the software that isn't allowed to break — ${repositoryCount} public repositories, readable line by line.`}
         </p>
 
         <div className="org-hero-products">
@@ -57,7 +57,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
 
         <div className="org-hero-cta">
           <Link href="/products" className="org-btn org-btn-primary btn-sheen">
-            {loc === "fr" ? "Voir nos produits en action" : "See them in action"} <ArrowRight size={15} strokeWidth={2.5} />
+            {loc === "fr" ? "Découvrir les produits" : "Explore the products"} <ArrowRight size={15} strokeWidth={2.5} />
           </Link>
           <a href={GITHUB_ORG_URL} target="_blank" rel="noopener noreferrer" className="org-btn org-btn-ghost">
             <GitBranch size={15} /> github.com/krizaka
