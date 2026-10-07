@@ -5,6 +5,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import ProductLogo from "./ProductLogo";
+import { localeless } from "@/lib/nav";
 import {
   BookOpen,
   Cpu,
@@ -49,10 +51,16 @@ interface DocMeta {
 interface DocsSidebarProps {
   groupedDocs: Record<string, DocMeta[]>;
   sortedCategories: string[];
+  /** Which product's docs: drives the brand, the overview link and each doc's URL. */
+  product?: { id: "orazaka" | "orochia"; name: string; kicker: string; overviewHref: string; docUrls: "category" | "flat" };
 }
 
-export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSidebarProps) {
-  const pathname = usePathname();
+const ORAZAKA_DOCS = { id: "orazaka", name: "Orazaka", kicker: "Documentation", overviewHref: "/products/orazaka", docUrls: "category" } as const;
+
+export default function DocsSidebar({ groupedDocs, sortedCategories, product = ORAZAKA_DOCS }: DocsSidebarProps) {
+  const pathname = localeless(usePathname());
+  const docHref = (doc: DocMeta) =>
+    product.docUrls === "category" ? `${product.overviewHref}/${doc.category}/${doc.slug}` : `${product.overviewHref}/${doc.slug}`;
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Close on navigation
@@ -75,7 +83,7 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
       {/* ── Header ── */}
       <div style={{ padding: "24px 20px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
         <Link
-          href="/products/orazaka"
+          href={product.overviewHref}
           style={{
             display: "flex",
             alignItems: "center",
@@ -96,14 +104,8 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
               flexShrink: 0,
               boxShadow: "0 4px 12px rgba(0,0,0,0.2), inset 0 1px 1px rgba(255,255,255,0.05)",
             }}
-            className="logo-pulse"
           >
-            <svg width="22" height="22" viewBox="-56 -56 112 112" fill="none">
-              <path d="M -24 -41.5 L 0 -55.4 L 24 -41.5 L 24 -24 L 14 -18.2 L 14 -35.7 L 0 -43.8 L -14 -35.7 L -14 -18.2" stroke="var(--kz-accent)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" opacity="0.5" />
-              <path d="M -48 0 L -38 17.3 L -14 31.2 L 0 23.1 L -10 17.3 L -24 9.2 L -24 -9.2" stroke="var(--kz-accent)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" opacity="0.3" />
-              <path d="M 48 0 L 38 17.3 L 14 31.2 L 0 23.1 L 10 17.3 L 24 9.2 L 24 -9.2" stroke="var(--kz-accent)" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-              <circle cx="0" cy="0" r="9" fill="var(--kz-accent)" opacity="0.9" />
-            </svg>
+            <ProductLogo id={product.id} size={30} />
           </div>
           <div>
             <div
@@ -116,7 +118,7 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
                 lineHeight: 1.1,
               }}
             >
-              Orazaka
+              {product.name}
             </div>
             <div
               style={{
@@ -129,7 +131,7 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
                 marginTop: 2,
               }}
             >
-              Intelligence
+              {product.kicker}
             </div>
           </div>
         </Link>
@@ -165,8 +167,8 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
       >
         {/* Overview */}
         <Link
-          href="/products/orazaka"
-          className={`docs-nav-link ${pathname === "/products/orazaka" ? "active" : ""}`}
+          href={product.overviewHref}
+          className={`docs-nav-link ${pathname === product.overviewHref ? "active" : ""}`}
           style={{
             display: "flex",
             alignItems: "center",
@@ -174,10 +176,10 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
             padding: "9px 12px",
             borderRadius: "var(--kz-radius-md)",
             fontSize: 13.5,
-            color: pathname === "/products/orazaka" ? "var(--kz-accent)" : "var(--kz-text-secondary)",
+            color: pathname === product.overviewHref ? "var(--kz-accent)" : "var(--kz-text-secondary)",
             textDecoration: "none",
-            fontWeight: pathname === "/products/orazaka" ? 600 : 500,
-            background: pathname === "/products/orazaka" ? "rgba(var(--kz-accent-rgb), 0.1)" : "transparent",
+            fontWeight: pathname === product.overviewHref ? 600 : 500,
+            background: pathname === product.overviewHref ? "rgba(var(--kz-accent-rgb), 0.1)" : "transparent",
             transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         >
@@ -216,7 +218,7 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
               {/* Section items */}
               <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
                 {docs.map((doc) => {
-                  const href = `/products/orazaka/${doc.category}/${doc.slug}`;
+                  const href = docHref(doc);
                   const isActive = pathname === href;
                   return (
                     <Link
@@ -321,6 +323,7 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
           .docs-sidebar-mobile-toggle {
             display: flex !important;
           }
+          .docs-sidebar-close { display: block !important; }
         }
       `}</style>
 
@@ -370,15 +373,6 @@ export default function DocsSidebar({ groupedDocs, sortedCategories }: DocsSideb
           transform: mobileOpen ? "translateX(0)" : "translateX(-100%)",
         }}
       >
-        <div style={{ padding: "20px 20px 12px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <Link href="/products/orazaka" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-            <div style={{ width: 36, height: 36, borderRadius: "var(--kz-radius-sm)", background: "var(--kz-surface-2)", border: "1px solid var(--kz-border-subtle)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-               {/* Mini logo */}
-            </div>
-            <div style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--kz-text-primary)" }}>Orazaka</div>
-          </Link>
-          <button onClick={() => setMobileOpen(false)} style={{ background: "none", border: "none", color: "var(--kz-text-muted)" }}><X size={20} /></button>
-        </div>
         {navContent}
       </div>
     </>

@@ -1376,3 +1376,9 @@ body {
 }
 .oz-core { transform-box: fill-box; transform-origin: center; animation: oz-core 2.5s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .oz-orbit, .oz-core { animation: none !important; } }
+
+/* React Flow controls follow the theme (the default buttons are white on both themes). */
+.react-flow__controls { box-shadow: var(--kz-shadow-lg); border-radius: 10px; overflow: hidden; border: 1px solid var(--kz-border-subtle); }
+.react-flow__controls-button { background: var(--kz-surface-2); border-bottom: 1px solid var(--kz-border-subtle); color: var(--kz-text-secondary); fill: var(--kz-text-secondary); }
+.react-flow__controls-button:hover { background: var(--kz-surface-3); }
+.react-flow__controls-button svg { fill: currentColor; }
