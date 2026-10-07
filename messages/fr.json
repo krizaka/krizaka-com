@@ -1,0 +1,1898 @@
+{
+  "meta": {
+    "siteTitle": "Krizaka — Orazaka, moteur d'orchestration IA souverain open source",
+    "siteDescription": "Orazaka est un moteur d'orchestration IA souverain et open source — Java 21, Spring AI, pipeline à 15 intercepteurs, multimodal. Auto-héberge une IA locale conçue pour faciliter la conformité Loi 25 et RGPD. Conçu au Québec.",
+    "ogTitle": "Orazaka — moteur d'orchestration IA souverain, open source",
+    "ogDescription": "Le moteur d'orchestration IA que tu héberges toi-même. Java 21 · Spring AI · 15 intercepteurs · multimodal. Open source, souverain, conçu au Québec."
+  },
+  "nav": {
+    "products": "Produits",
+    "solutions": "Solutions",
+    "docs": "Docs",
+    "compliance": "Conformité",
+    "useCases": "Cas d'usage",
+    "getStarted": "Découvrir Orazaka",
+    "menu": "Menu",
+    "close": "Fermer",
+    "darkMode": "Mode sombre",
+    "lightMode": "Mode clair",
+    "language": "Langue",
+    "orazakaDesc": "Moteur d'orchestration IA souverain",
+    "architecture": "Fonctionnement",
+    "editions": "Éditions",
+    "viewDocs": "Documentation",
+    "byEdition": "Par édition",
+    "recommended": "Recommandé",
+    "demos": "Démos",
+    "community": "Communauté",
+    "packages": "Packages",
+    "start": "Démarrer",
+    "githubAria": "Voir le dépôt sur GitHub",
+    "starsAria": "étoiles GitHub"
+  },
+  "hero": {
+    "headline": "Le moteur d'orchestration IA souverain.",
+    "headlineAccent": "Open source.",
+    "sub": "Java 21 · Spring AI · 15 intercepteurs · multimodal. Une infrastructure cognitive que tu héberges toi-même — conçue au Québec.\nTes données ne quittent jamais ton réseau.",
+    "ctaPrimary": "Démarrer en 3 commandes",
+    "ctaSecondary": "Star sur GitHub",
+    "badge": "Open Source"
+  },
+  "homeHero": {
+    "badge": "IA cognitive souveraine · Loi 25 · RGPD",
+    "titleLead": "L'IA de ton organisation,",
+    "titleAccent": "souveraine",
+    "titleTail": "et hébergée chez toi.",
+    "sub": "Krizaka conçoit Orazaka — le moteur d'orchestration IA multimodal qui raisonne sur ton infra. Chaque requête traverse un pipeline d'intercepteurs déterministe. Rien ne quitte ton réseau.",
+    "ctaPrimary": "Découvrir Orazaka",
+    "ctaSecondary": "Voir l'architecture",
+    "trust": [
+      "On-premise",
+      "Ollama",
+      "Open source",
+      "Architecture hexagonale"
+    ],
+    "chat": {
+      "status": "En ligne · local",
+      "model": "llama3 · Ollama",
+      "routed": "Routé localement",
+      "question": "Résume le contrat en pièce jointe et signale les clauses non conformes à la Loi 25.",
+      "answer": "3 clauses à revoir : transfert de données hors Québec (art. 17), durée de conservation indéfinie, absence de consentement explicite. Analyse effectuée sur ton serveur — aucune donnée transmise.",
+      "pipeline": [
+        "Intention",
+        "Contexte",
+        "Routage",
+        "Validation"
+      ],
+      "privacy": "0 donnée ne quitte ton réseau",
+      "placeholder": "Pose une question à ton IA souveraine…"
+    }
+  },
+  "quickstart": {
+    "sectionLabel": "Quickstart",
+    "sectionTitle": "Démarre en 3 commandes",
+    "sectionDesc": "Une seule dépendance : Node. Orazaka installe le moteur, le lance et ouvre le mode dev.",
+    "note": "Besoin du détail ? Le guide d'installation couvre Docker, Ollama et la configuration.",
+    "docsCta": "Lire les docs",
+    "communityCta": "Rejoindre la communauté"
+  },
+  "pillars": {
+    "sectionLabel": "Ce que fait Orazaka",
+    "sectionTitle": "Toute l'IA moderne, dans un seul moteur.",
+    "items": [
+      {
+        "keyword": "Souverain",
+        "title": "Tes données ne sortent jamais",
+        "desc": "Chaque inférence tourne sur ton infra, rien ne quitte ton réseau — conforme Loi 25 et aligné RGPD par construction."
+      },
+      {
+        "keyword": "Multi-Modal",
+        "title": "Chat · Image · Vidéo · Voix",
+        "desc": "Un seul moteur pour chaque modalité IA — unifié sous une couche d'orchestration à 15 intercepteurs."
+      },
+      {
+        "keyword": "Hybride",
+        "title": "Tes clés, ton choix",
+        "desc": "Besoin de GPT-4, Claude ou Gemini ? Apporte tes clés API — Orazaka route intelligemment tout en gardant ton orchestration souveraine."
+      },
+      {
+        "keyword": "Open Source",
+        "title": "Code ouvert, auditable",
+        "desc": "Architecture hexagonale vérifiée par ArchUnit. Chaque décision architecturale est documentée et le code est disponible sur GitHub."
+      },
+      {
+        "keyword": "Validé",
+        "title": "Vérification en boucle fermée",
+        "desc": "Chaque réponse passe par une matrice de validation multi-étapes avant d'atteindre tes utilisateurs."
+      }
+    ]
+  },
+  "techStack": {
+    "sectionLabel": "Stack technologique",
+    "sectionTitle": "Construit avec des technologies éprouvées",
+    "sectionDesc": "Java 21 Virtual Threads, Spring AI, architecture hexagonale — pas de frameworks expérimentaux."
+  },
+  "useCases": {
+    "sectionLabel": "L'Infrastructure en Action",
+    "sectionTitle": "Solutions Souveraines par Secteur",
+    "sectionDesc": "De la veille territoriale à l'engagement éthique : découvrez comment Orazaka automatise la prospection locale tout en garantissant la conformité Loi 25 et LCEE.",
+    "viewAll": "Explorer le cas d'usage",
+    "learnMore": "Fiche technique",
+    "items": [
+      {
+        "industry": "Services de proximité",
+        "title": "Prospection locale et détection d'opportunités",
+        "desc": "Automatisez la prospection locale B2C et B2B pour votre métier en scannant les chantiers et les ventes foncières publiques sans fuite cloud.",
+        "slug": "local-prospecting"
+      }
+    ]
+  },
+  "packages": {
+    "sectionLabel": "Gouvernance",
+    "sectionTitle": "Les Packages d'Intercepteurs Orazaka",
+    "sectionDesc": "Des topologies de sécurité pré-configurées pour encapsuler vos applications intelligentes selon les normes industrielles.",
+    "concept": "Chaque flux de données traverse séquentiellement le maillage d'Orazaka. Un Package assemble et configure un groupe d'intercepteurs (ex. RAG + Audit + Router) pour certifier la conformité de vos processus.",
+    "composedOf": "Intercepteurs chaînés",
+    "manualNote": "Composables manuellement dans Orazaka Community — open source, sans verrou propriétaire.",
+    "viewUseCase": "Configurer le package",
+    "viewAll": "Découvrir le Package",
+    "pageTitle": "Packages de Gouvernance IA — Orazaka",
+    "pageDesc": "Encapsulez vos requêtes IA avec notre Package de gouvernance local Orazaka Sentinelle : conformité Loi 25 et LCEE pour la prospection locale."
+  },
+  "community": {
+    "sectionLabel": "Communauté",
+    "sectionTitle": "Construisons-le ensemble",
+    "sectionDesc": "Orazaka est un projet naissant et il l'assume. Transparence radicale : tout est public, tout se discute, et chaque contribution compte.",
+    "items": [
+      {
+        "title": "Issues",
+        "desc": "Signale un bogue, propose une fonctionnalité, suis ce sur quoi on travaille.",
+        "cta": "Ouvrir une issue"
+      },
+      {
+        "title": "Discussions",
+        "desc": "Pose tes questions, partage ton déploiement, échange avec les autres adoptants.",
+        "cta": "Rejoindre les discussions"
+      },
+      {
+        "title": "Contribuer",
+        "desc": "Le guide de contribution explique l'architecture, les conventions et le workflow.",
+        "cta": "Lire le guide"
+      },
+      {
+        "title": "Good first issues",
+        "desc": "De petites tâches balisées pour une première contribution sans friction.",
+        "cta": "Trouver une issue"
+      }
+    ]
+  },
+  "engineShowcase": {
+    "sectionLabel": "Technologie",
+    "sectionTitle": "L'ingénierie cognitive derrière l'orchestration",
+    "sectionDesc": "Orazaka ne relaie pas vos prompts à un modèle. Chaque requête traverse un pipeline déterministe d'intercepteurs qui enrichit, raffine, route et valide — avant que le modèle ne soit sollicité.",
+    "cogTitle": "La Science Cognitive dans l'IA",
+    "cogDesc": "Plutôt que d'utiliser l'IA comme une simple boîte noire génératrice de texte, l'ingénierie cognitive structure le raisonnement artificiel. En découpant le flux en étapes ordonnées — analyse d'intention, contextualisation factuelle et auto-surveillance —, elle garantit le déterminisme, la sécurité logique et l'alignement métier indispensables aux architectures de production d'entreprise.",
+    "cogCta": "Explorer l'ingénierie cognitive",
+    "highlights": [
+      {
+        "label": "Intercepteurs",
+        "value": "15"
+      },
+      {
+        "label": "Pipeline par défaut",
+        "value": "9 étapes"
+      },
+      {
+        "label": "Familles",
+        "value": "5"
+      },
+      {
+        "label": "Modes",
+        "value": "3"
+      }
+    ],
+    "simulatorTitle": "Simulateur de Traitement Souverain d'Orazaka",
+    "simulatorSubtitle": "Visualisez comment Orazaka, l'engin d'automatisation cognitive souverain conçu par Krizaka, traite vos flux d'affaires locaux de manière hermétique et sécurisée.",
+    "runSim": "Simuler l'exécution",
+    "simulating": "Exécution locale...",
+    "simReset": "Réinitialiser",
+    "simStatus": "Statut de Souveraineté",
+    "simOutput": "Sortie produit localement",
+    "galleryTitle": "Visualisations & Preuves de Raisonnement",
+    "gallerySubtitle": "Des rendus locaux et captures d'activités extraits directement depuis le cœur souverain d'Orazaka."
+  },
+  "contact": {
+    "pageTitle": "Contact & partenariats",
+    "pageDesc": "Contributions, partenariats, presse ou questions sur Orazaka — voici comment nous joindre. Projet open source, échanges publics par défaut.",
+    "heading": "Contact & partenariats",
+    "intro": "Orazaka est un projet open source : la plupart des échanges se font en public. Choisis le canal qui correspond à ton besoin.",
+    "channels": [
+      {
+        "title": "Questions & entraide",
+        "desc": "Une question technique ou d'usage ? Les Discussions GitHub sont l'endroit.",
+        "cta": "Ouvrir une discussion",
+        "kind": "discussions"
+      },
+      {
+        "title": "Bogues & fonctionnalités",
+        "desc": "Quelque chose ne va pas, ou une idée à proposer ? Ouvre une issue.",
+        "cta": "Ouvrir une issue",
+        "kind": "issues"
+      },
+      {
+        "title": "Partenariats & presse",
+        "desc": "Collaboration, intégration ou demande média — écris-nous directement.",
+        "cta": "Nous écrire",
+        "kind": "email"
+      }
+    ],
+    "backHome": "Retour à l'accueil"
+  },
+  "docsNav": {
+    "onThisPage": "Sur cette page",
+    "readingTime": "Temps de lecture",
+    "minRead": "min",
+    "prev": "Précédent",
+    "next": "Suivant"
+  },
+  "docsPreview": {
+    "sectionLabel": "Documentation",
+    "sectionTitle": "Explore la documentation technique",
+    "sectionDesc": "Architecture, API, déploiement — tout est documenté et open source.",
+    "viewAllDocs": "Voir toute la documentation"
+  },
+  "footer": {
+    "product": "Produit",
+    "solutions": "Solutions",
+    "legal": "Légal",
+    "social": "Social",
+    "documentation": "Documentation",
+    "architecture": "Fonctionnement",
+    "privacy": "Confidentialité",
+    "terms": "Conditions",
+    "loi25": "Loi 25",
+    "allRights": "Tous droits réservés",
+    "openSource": "Open Source",
+    "explore": "Explorer",
+    "community": "Communauté",
+    "useCases": "Cas d'usage",
+    "compliance": "Conformité",
+    "contact": "Contact",
+    "demos": "Démos",
+    "packages": "Packages",
+    "editions": "Éditions",
+    "github": "GitHub",
+    "tagline": "Le moteur d'orchestration IA souverain, open source. Conçu au Québec."
+  },
+  "cognitiveEngineering": {
+    "sectionLabel": "Ingénierie cognitive",
+    "sectionTitle": "Au-delà du prompt",
+    "sectionSub": "L'intelligence est dans le pipeline.",
+    "sectionDesc": "Orazaka ne se contente pas de relayer tes prompts à un modèle. Par défaut, chaque requête traverse un cycle de traitement à 9 étapes séquentielles. Cependant, la force d'Orazaka réside dans sa bibliothèque complète de 15 intercepteurs modulaires (débat multi-agents, bac à sable MCP, audit, validation humaine) que vous pouvez assembler pour composer vos propres Packages de gouvernance.",
+    "ctaLabel": "Explorer l'ingénierie cognitive",
+    "ctaHref": "/products/orazaka/ingenierie-cognitive",
+    "agnosticTitle": "Mode Agnostique (Souveraineté)",
+    "agnosticDesc": "Libre choix du modèle : Ollama en local, ou API cloud (OpenAI, Anthropic, Gemini). Orazaka s'adapte sans verrouillage propriétaire.",
+    "deterministicTitle": "Mode Déterministe (Précision)",
+    "deterministicDesc": "Contrôle total du flux : température à 0.0, schémas de sortie stricts (JSON), validation en boucle fermée. Zéro hallucination.",
+    "effortTitle": "Mode Effort (Profondeur adaptative)",
+    "effortDesc": "Orazaka jauge la complexité de l'intention et alloue l'effort de raisonnement en conséquence — réponse directe pour le trivial, délibération approfondie pour le critique.",
+    "stages": [
+      {
+        "order": "01",
+        "name": "Résolution du contexte utilisateur",
+        "desc": "Profil, rôle RBAC, tier de rate-limiting"
+      },
+      {
+        "order": "02",
+        "name": "Injection du contexte système",
+        "desc": "Variables d'environnement, outils, signaux système"
+      },
+      {
+        "order": "03",
+        "name": "Enrichissement RAG",
+        "desc": "Récupération vectorielle → injection de connaissances"
+      },
+      {
+        "order": "04",
+        "name": "Résolution MCP",
+        "desc": "Sources de connaissance externes via Model Context Protocol"
+      },
+      {
+        "order": "05",
+        "name": "Mémoire conversationnelle",
+        "desc": "Historique FIFO avec fenêtre de 50 messages"
+      },
+      {
+        "order": "06",
+        "name": "Raffinement sémantique",
+        "desc": "Requête floue → instruction précise"
+      },
+      {
+        "order": "07",
+        "name": "Routage intentionnel",
+        "desc": "Intention → provider optimal (temp: 0.0)"
+      },
+      {
+        "order": "08",
+        "name": "Attachement d'outils",
+        "desc": "Callbacks d'outils à la demande"
+      },
+      {
+        "order": "09",
+        "name": "Assemblage multi-modal",
+        "desc": "Extraction media base64 et assemblage"
+      }
+    ],
+    "principles": [
+      {
+        "title": "Enrichissement contextuel",
+        "desc": "Chaque prompt est enrichi avec le profil utilisateur, l'historique de conversation et les connaissances RAG avant d'atteindre le modèle."
+      },
+      {
+        "title": "Routage intentionnel",
+        "desc": "L'intention de l'utilisateur est analysée pour router vers le modèle optimal — local Ollama ou provider cloud — avec une température de 0.0 pour maximiser le déterminisme."
+      },
+      {
+        "title": "Mémoire architecturale",
+        "desc": "La mémoire conversationnelle n'est pas un simple buffer. C'est un système FIFO à fenêtre glissante qui préserve le contexte pertinent sans surcharger le context window."
+      },
+      {
+        "title": "Validation en boucle fermée",
+        "desc": "Les réponses sont validées par une matrice multi-étapes — schéma JSON, sandbox MCP, débat multi-agents — avant d'atteindre l'utilisateur."
+      }
+    ]
+  },
+  "cognitiveEngineeringPage": {
+    "pageTitle": "Ingénierie cognitive IA — Pipeline cognitif Orazaka | Krizaka",
+    "pageDesc": "Découvrez comment l'ingénierie cognitive structure l'intelligence artificielle pour la rendre fiable, sécurisée et souveraine.",
+    "introTitle": "L'ingénierie cognitive, c'est quoi ?",
+    "introText": "L'ingénierie cognitive appliquée à l'IA consiste à structurer et organiser le flux de pensée de l'intelligence artificielle.\n\nAu lieu d'utiliser un modèle de langage comme une boîte noire à qui l'on envoie des questions en espérant une bonne réponse, Orazaka décompose chaque interaction en étapes claires et spécialisées. C'est ce qui garantit la sécurité des données, l'exactitude des faits et la prévisibilité de l'IA.",
+    "visionTitle": "Dépasser le simple chatbot",
+    "visionText": "Les chatbots d'entreprise traditionnels envoient directement vos questions à des serveurs cloud sans contrôle intermédiaire. Cela pose des risques majeurs de fuites de données et d'hallucinations.\n\nKrizaka a conçu Orazaka pour changer cela. Orazaka agit comme un copilote d'ingénierie cognitive : il nettoie la requête, va chercher la mémoire et les connaissances locales, applique des filtres de sécurité, et valide délibérément la réponse en local (on-premise) sur votre machine avant de vous la livrer. Une souveraineté totale, conforme à la Loi 25 et au RGPD.",
+    "neuromorphicTitle": "Les 3 Piliers de la Cognition Orazaka",
+    "neuromorphicDesc": "Inspiré du fonctionnement du cerveau humain, le moteur d'Orazaka orchestre 3 grandes fonctions cognitives complémentaires.",
+    "neuromorphicCards": [
+      {
+        "title": "Perception & Attention",
+        "brainRegion": "Le Cortex Préfrontal",
+        "moduleName": "Routage sémantique",
+        "desc": "Orazaka analyse l'intention profonde derrière votre demande pour éliminer les informations inutiles et l'aiguiller vers le meilleur modèle (local ou cloud)."
+      },
+      {
+        "title": "Mémoire & Connaissances",
+        "brainRegion": "L'Hippocampe",
+        "moduleName": "RAG & MCP",
+        "desc": "Orazaka connecte l'IA à vos documents locaux et à vos outils de travail en temps réel, sans jamais envoyer vos données personnelles à des tiers."
+      },
+      {
+        "title": "Métacognition & Réflexion",
+        "brainRegion": "Cortex Cingulaire",
+        "moduleName": "Validation en boucle fermée",
+        "desc": "L'IA examine sa propre réponse, corrige les erreurs potentielles et vérifie les règles de sécurité avant de vous afficher le résultat."
+      }
+    ],
+    "familiesTitle": "Familles d'intercepteurs",
+    "familiesDesc": "Les intercepteurs d'Orazaka.",
+    "pipelineTitle": "Le Pipeline Cognitif : 3 Étapes Clés",
+    "pipelineDesc": "Chaque interaction utilisateur traverse un circuit sécurisé en trois temps pour garantir une réponse irréprochable.",
+    "executorTitle": "Analyse et Action Séparées",
+    "executorDesc": "Orazaka sépare hermétiquement la phase de préparation de la phase de décision, comme le fait le cerveau humain.",
+    "executorPhases": [
+      {
+        "title": "Phase 1 : Accumulation & Contexte",
+        "desc": "Le moteur rassemble l'historique conversationnel, vos fichiers (RAG) et les règles système pour enrichir la demande."
+      },
+      {
+        "title": "Phase 2 : Raisonnement & Sécurité",
+        "desc": "L'IA formule la réponse dans un environnement sécurisé et valide sa conformité logique avant toute livraison."
+      }
+    ],
+    "modesTitle": "Modes de fonctionnement par défaut",
+    "modesDesc": "Orazaka propose deux modes d'exécution standards intégrés, tout en permettant une extensibilité complète du pipeline.",
+    "modes": [
+      {
+        "title": "Mode Souverain",
+        "desc": "Exécution locale hermétique (via Ollama) garantissant une confidentialité absolue de vos données et une conformité directe (Loi 25 / RGPD).",
+        "accent": "#10b981"
+      },
+      {
+        "title": "Mode Déterministe",
+        "desc": "Température stricte à 0.0, schémas de sortie contraints (JSON) et validation en boucle fermée pour éradiquer les hallucinations.",
+        "accent": "#a78bfa"
+      }
+    ],
+    "effortTitle": "Ajustement dynamique de l'effort",
+    "effortDesc": "L'effort n'est pas un mode, mais un paramètre d'ajustement. Le moteur analyse la complexité de l'intention utilisateur pour calibrer les tokens de réflexion et le nombre d'intercepteurs actifs.",
+    "extensibilityTitle": "Extensibilité & Modes Personnalisés",
+    "extensibilityDesc": "Assemblez les 15 intercepteurs d'Orazaka pour concevoir des modes sur mesure. Configurez vos propres règles métiers, audits et topologies de sécurité.",
+    "diffTitle": "Cloud Stateless API vs. Moteur de Raisonnement Orazaka",
+    "diffLeftTitle": "API & Chatbot Cloud Classique",
+    "diffLeftSub": "Générateur de texte simple (Stateless)",
+    "diffLeftFeatures": [
+      {
+        "title": "Pipeline linéaire direct",
+        "desc": "La requête est relayée sans analyse préalable d'intention ni contextualisation locale."
+      },
+      {
+        "title": "Pas de mémoire ou état sécurisé",
+        "desc": "Historique et contexte volatils, sans isolation ou contrôle d'accès (RBAC)."
+      },
+      {
+        "title": "Dépendance et fuite de données",
+        "desc": "Envoi obligatoire des prompts vers des serveurs tiers cloud (risques Loi 25 / RGPD)."
+      },
+      {
+        "title": "Génération brute incontrôlée",
+        "desc": "Pas d'auto-évaluation ou de validation finale du format (hallucinations fréquentes)."
+      }
+    ],
+    "diffRightTitle": "Moteur de Raisonnement Orazaka",
+    "diffRightSub": "Infrastructure cognitive souveraine",
+    "diffRightFeatures": [
+      {
+        "title": "Pipeline d'intercepteurs cognitifs",
+        "desc": "La requête traverse 9 à 15 intercepteurs pour valider l'intention et optimiser le prompt."
+      },
+      {
+        "title": "Mémoire & RAG locaux",
+        "desc": "Accès immédiat à la base vectorielle locale et à une mémoire glissante préservant la souveraineté."
+      },
+      {
+        "title": "Hébergement hermétique local",
+        "desc": "Données chiffrées sur votre infrastructure privée (conformité Loi 25 et RGPD native)."
+      },
+      {
+        "title": "Validation en boucle fermée",
+        "desc": "Métacognition locale vérifiant la conformité du format (JSON strict) avant livraison."
+      }
+    ],
+    "ctaTitle": "Prêt à démarrer avec l'ingénierie cognitive ?",
+    "ctaDesc": "Déployez Orazaka et configurez vos propres règles de conformité en quelques minutes.",
+    "ctaButton": "Découvrir les Packages Orazaka",
+    "backHome": "Retour à l'accueil"
+  },
+  "useCasePage": {
+    "backToUseCases": "Retour aux cas d'usage",
+    "problem": "Le défi",
+    "solution": "La solution Orazaka",
+    "keyFeatures": "Fonctionnalités clés",
+    "ctaTitle": "Essaie-le sur ta machine",
+    "ctaDesc": "Orazaka est open source. Installe-le en 3 commandes et compose le Package qui correspond.",
+    "ctaButton": "Démarrer en 3 commandes",
+    "relatedDocs": "Documentation associée",
+    "relatedPackage": "Package associé",
+    "composePackage": "Composer ce package",
+    "quebecContextTitle": "Cadre réglementaire & Souveraineté au Québec",
+    "actionPlanTitle": "Plan de déploiement et intégration projetée",
+    "topologyTitle": "Topologie du Package d'Intercepteurs Orazaka"
+  },
+  "site": {
+    "menu": {
+      "products": "Produits",
+      "docs": "Docs",
+      "openSource": "Open source",
+      "contactCta": "Nous contacter",
+      "search": "Rechercher...",
+      "switchLanguage": "Switch to English",
+      "languageShort": "EN",
+      "otherLanguage": "English",
+      "footerAria": "Pied de page",
+      "journeysAria": "Parcours"
+    },
+    "nav": {
+      "orazaka": {
+        "tagline": "IA souveraine, hébergée chez vous",
+        "badge": "IA",
+        "links": {
+          "overview": {
+            "label": "Vue d'ensemble",
+            "desc": "Le moteur et ses composants"
+          },
+          "architecture": {
+            "label": "Fonctionnement",
+            "desc": "Le parcours d'une requête, animé"
+          },
+          "demo": {
+            "label": "Démos",
+            "desc": "Chat, médias et agents en action"
+          },
+          "docs": {
+            "label": "Documentation",
+            "desc": "Démarrage, API, exploitation"
+          },
+          "signature": {
+            "label": "Ingénierie cognitive",
+            "desc": "Pourquoi un pipeline plutôt qu'un prompt"
+          }
+        }
+      },
+      "orochia": {
+        "tagline": "La plateforme vidéo des créateurs",
+        "badge": "Vidéo",
+        "links": {
+          "overview": {
+            "label": "Vue d'ensemble",
+            "desc": "Streaming, paywalls, versements"
+          },
+          "architecture": {
+            "label": "Fonctionnement",
+            "desc": "Lecture, déblocage et téléversement, animés"
+          },
+          "demo": {
+            "label": "Démo",
+            "desc": "Visite vidéo de l'application"
+          },
+          "docs": {
+            "label": "Documentation",
+            "desc": "Architecture, API, déploiement"
+          },
+          "signature": {
+            "label": "Paiements & conformité",
+            "desc": "Webhooks signés, registres 2257"
+          }
+        }
+      },
+      "company": {
+        "products": {
+          "label": "Tous les produits",
+          "desc": "Comparer Orazaka et Orochia"
+        },
+        "story": {
+          "label": "Notre histoire",
+          "desc": "D'où viennent nos noms"
+        },
+        "repos": {
+          "label": "Open source",
+          "desc": "Tous les dépôts Krizaka"
+        },
+        "contact": {
+          "label": "Contact",
+          "desc": "Écrire à l'équipe"
+        }
+      }
+    },
+    "products": {
+      "orazaka": {
+        "tagline": "L'IA qui ne quitte jamais la maison.",
+        "summary": "Moteur d'orchestration IA multimodal : chaque requête traverse un pipeline d'intercepteurs déterministe vers le meilleur modèle local. Rien ne quitte votre réseau.",
+        "points": [
+          "Chat, RAG, agents, image, audio, vidéo",
+          "Architecture hexagonale vérifiée au build (ArchUnit)",
+          "Composants réutilisables : utilisateurs, notifications, facturation"
+        ]
+      },
+      "orochia": {
+        "tagline": "Les créateurs sont payés. Chaque cent, une seule fois.",
+        "summary": "Streaming 4K, paywalls et versements créateurs, avec la rigueur d'une infrastructure financière. Conçue pour les contenus adultes (18+).",
+        "points": [
+          "Vidéo directe sur CDN, URL signées de 5 minutes",
+          "Paiements confirmés par webhook signé, réglés une seule fois",
+          "Conformité 18+ et registres 2257 intégrés"
+        ]
+      }
+    },
+    "expertise": {
+      "eyebrow": "Savoir-faire",
+      "title": "Ce dont on s'occupe, pour que vous n'ayez pas à y penser.",
+      "items": [
+        {
+          "title": "IA souveraine",
+          "body": "Orchestration de modèles locaux, RAG, agents et MCP sur votre infrastructure — conforme à la Loi 25 et au RGPD par conception."
+        },
+        {
+          "title": "Architecture modulaire",
+          "body": "Hexagonal, contrats versionnés, un dépôt par composant : des briques que chaque nouvelle application reprend telles quelles."
+        },
+        {
+          "title": "Conformité intégrée",
+          "body": "Loi 25, RGPD, 18 U.S.C. § 2257 : les obligations deviennent des invariants du code, vérifiés à chaque build."
+        },
+        {
+          "title": "Médias & diffusion",
+          "body": "Ingestion reprenable, encodage adaptatif, URL signées et génération image/vidéo native sur GPU Apple."
+        },
+        {
+          "title": "Paiements & grands livres",
+          "body": "Crédits, abonnements, intentions de paiement, webhooks signés et règlement idempotent en partie double."
+        },
+        {
+          "title": "Gouvernance par le code",
+          "body": "Règles d'architecture testées, documentation générée depuis le code, CI qui refuse ce que le contrat interdit."
+        }
+      ]
+    },
+    "home": {
+      "hero": {
+        "badge": "Montréal · open source",
+        "titleAria": "Open source. Fermé aux compromis.",
+        "closedTo": "Fermé ",
+        "words": [
+          "aux compromis.",
+          "aux fuites.",
+          "à l'enfermement.",
+          "aux raccourcis."
+        ],
+        "sub": "Vos données restent chez vous. Vos créateurs sont payés. Votre code reste le vôtre. Nous construisons, en open source, les logiciels qui n'ont pas le droit de casser — {count} dépôts publics, à lire ligne par ligne.",
+        "cta": "Découvrir les produits"
+      },
+      "products": {
+        "title": "Produits",
+        "discover": "Découvrir",
+        "demo": "démonstration"
+      },
+      "openSource": {
+        "title": "Lisez chaque ligne.",
+        "body": "Orazaka est découpé en {orazaka} dépôts — prenez seulement les briques dont votre application a besoin. Orochia en compte {orochia}.",
+        "browse": "Parcourir les dépôts",
+        "repos": "dépôts publics",
+        "license": "licence de tous les dépôts",
+        "ci": "build, tests et règles d'architecture à chaque commit"
+      },
+      "storyTeaser": {
+        "sub": "Une forge à mi-pente, un oracle qui ne quitte pas la maison, un serpent à huit têtes — et la volée qui veille.",
+        "cta": "Lire l'histoire"
+      },
+      "contact": {
+        "eyebrow": "Contact",
+        "title": "Parlez-nous de ce que vous construisez.",
+        "body": "Une contrainte de conformité, une plateforme à faire tenir, une idée qui a besoin d'un socle. Écrivez-nous simplement : c'est un ingénieur qui vous répond.",
+        "points": [
+          "Réponse sous deux jours ouvrables",
+          "Montréal · Loi 25 · RGPD",
+          "Code ouvert, sans enfermement"
+        ]
+      }
+    },
+    "footer": {
+      "tagline": "Studio logiciel open source à Montréal. Créateurs d'Orazaka et d'Orochia.",
+      "products": "Produits",
+      "story": "Notre histoire",
+      "openSource": "Open source",
+      "contact": "Contact",
+      "privacy": "Confidentialité",
+      "terms": "Conditions",
+      "madeIn": "Fait à Montréal · Apache-2.0"
+    },
+    "contactForm": {
+      "name": "Nom",
+      "email": "Courriel",
+      "company": "Organisation (facultatif)",
+      "topic": "Sujet",
+      "message": "Votre message",
+      "placeholder": "Votre contexte, votre besoin, vos délais…",
+      "topics": {
+        "orazaka": "Orazaka — IA souveraine",
+        "orochia": "Orochia — plateforme vidéo",
+        "partnership": "Partenariat / intégration",
+        "other": "Autre"
+      },
+      "send": "Envoyer le message",
+      "sending": "Envoi…",
+      "sent": "Message envoyé. Nous vous répondons sous deux jours ouvrables.",
+      "errors": {
+        "invalid": "Vérifiez le champ indiqué.",
+        "rate_limited": "Trop de messages envoyés. Réessayez dans quelques minutes.",
+        "other": "L'envoi a échoué. Écrivez-nous sur GitHub Discussions en attendant."
+      },
+      "privacy": "Vos coordonnées servent uniquement à vous répondre (Loi 25)."
+    },
+    "story": {
+      "intro": {
+        "eyebrow": "Notre histoire",
+        "title": "Chaque nom ici est une légende que nous avons choisi de garder.",
+        "lead": "Nous avons grandi entre les bornes d'arcade et les vieux mythes. Quand nous avons commencé à construire des logiciels à qui l'on confierait ses mots, son travail et ses revenus, nous les avons nommés d'après les histoires qui nous ont appris ce que coûte la confiance."
+      },
+      "chapters": {
+        "krizaka": {
+          "roots": "kris + zaka (坂)",
+          "title": "La forge à mi-pente",
+          "body": [
+            "Le kris est une lame forgée par couches — le fer replié sur le fer, encore et encore, jusqu'à ce qu'un motif apparaisse dans l'acier. Zaka, c'est la pente que l'on gravit, un pas après l'autre.",
+            "Krizaka, c'est la forge à mi-pente. Rien n'en sort sans avoir été replié, éprouvé et documenté — et tout ce qui en sort est ouvert, pour que chacun puisse vérifier le motif."
+          ]
+        },
+        "orazaka": {
+          "roots": "ōrāre (parler) + zaka",
+          "title": "L'oracle qui ne quitte pas la maison",
+          "body": [
+            "Ōrāre : parler, demander — la racine latine d'oracle. Dans les vieilles histoires, on montait jusqu'à l'oracle avec sa question, et on lui confiait quelque chose d'intime.",
+            "Orazaka est un oracle sur votre propre colline. Il répond, il raisonne, il crée — et il ne descend jamais vos mots dans la vallée d'un autre. Une IA que l'on consulte sans rien céder."
+          ]
+        },
+        "orochia": {
+          "roots": "Yamata no Orochi",
+          "title": "Huit têtes, huit réponses",
+          "body": [
+            "Yamata no Orochi est le serpent à huit têtes des plus anciennes chroniques du Japon. Les joueurs d'une certaine génération l'ont croisé ailleurs : le boss final de The King of Fighters '97, scellé par trois clans et leurs trésors sacrés.",
+            "Dans le mythe, Susanoo ne gagne pas par la force. Il dispose huit cuves, une pour chaque tête, et il attend. L'économie des créateurs a ses huit têtes — Orochia pose une réponse devant chacune, pour que les créateurs soient payés, chaque cent, une seule fois."
+          ]
+        }
+      },
+      "heads": [
+        {
+          "head": "Les liens qui fuient",
+          "answer": "Une lecture signée pour cinq minutes"
+        },
+        {
+          "head": "Les paiements forgés",
+          "answer": "Seule la passerelle confirme"
+        },
+        {
+          "head": "Les crédits en double",
+          "answer": "Réglé une seule fois"
+        },
+        {
+          "head": "Les créateurs impayés",
+          "answer": "Des soldes lus dans le grand livre"
+        },
+        {
+          "head": "Le contenu non vérifié",
+          "answer": "Registres 2257 avant tout envoi"
+        },
+        {
+          "head": "Les abus sans réponse",
+          "answer": "Signalements conservés, retraits motivés"
+        },
+        {
+          "head": "Le déréférencement",
+          "answer": "Vos serveurs, plusieurs passerelles"
+        },
+        {
+          "head": "L'enfermement",
+          "answer": "Apache-2.0, chaque ligne"
+        }
+      ],
+      "flock": {
+        "falcon": {
+          "name": "Martin, le faucon",
+          "role": "La sentinelle",
+          "line": "Veille sur les frontières : Loi 25, RGPD, 2257. Rien ne passe qui ne devrait pas."
+        },
+        "owl": {
+          "name": "Le hibou",
+          "role": "Celui qui écoute",
+          "line": "Entend chaque question et la garde à la maison."
+        },
+        "pigeon": {
+          "name": "Le pigeon voyageur",
+          "role": "Le messager",
+          "line": "Porte des messages signés, et livre chacun une seule fois."
+        },
+        "flamingo": {
+          "name": "Le flamant rose",
+          "role": "La créatrice",
+          "line": "Tient en équilibre sur une patte, et rend ça facile. Nous veillons à ce qu'elle soit payée."
+        },
+        "duck": {
+          "name": "Le canard",
+          "role": "Le bâtisseur",
+          "line": "Calme en surface, qui pagaie dur dessous : le code, les tests, la doc."
+        },
+        "phoenix": {
+          "name": "Le phénix",
+          "role": "Les deux flammes",
+          "line": "Violette et dorée — deux flammes rivales de la légende d'arcade, qui volent ensemble. Du code qui renaît à chaque commit."
+        }
+      },
+      "closing": {
+        "title": "De vieilles histoires, des promesses tenues.",
+        "body": "C'est toute l'idée. Les légendes nous ont donné les noms ; le travail, c'est de faire en sorte que les logiciels les méritent."
+      },
+      "headsAria": "Les huit têtes",
+      "flockLabel": "La volée",
+      "flockTitle": "Ceux qui veillent.",
+      "flockLead": "Nos mascottes ne sont pas un décor. Chacune porte une chose sur laquelle nous ne transigeons pas.",
+      "ctaProducts": "Découvrir les produits",
+      "ctaContact": "Nous écrire"
+    },
+    "orochia": {
+      "arch": {
+        "nodes": {
+          "viewer": {
+            "label": "Spectateur",
+            "sub": "Navigateur · lecteur HLS"
+          },
+          "creator": {
+            "label": "Créateur",
+            "sub": "Studio · envoi Tus"
+          },
+          "app": {
+            "label": "Orochia",
+            "sub": "Next.js · API · accès"
+          },
+          "gateway": {
+            "label": "Passerelle",
+            "sub": "Cartes · crypto"
+          },
+          "db": {
+            "label": "PostgreSQL",
+            "sub": "Grand livre · accès"
+          },
+          "bunny": {
+            "label": "Bunny Stream",
+            "sub": "Ingestion · encodage · CDN"
+          }
+        },
+        "journeys": {
+          "playback": {
+            "name": "Lecture",
+            "summary": "Aucune URL vidéo brute n'atteint jamais le client.",
+            "steps": [
+              {
+                "title": "Demande de lecture",
+                "detail": "Le lecteur ne détient aucune URL média : il en demande une à Orochia."
+              },
+              {
+                "title": "Contrôle d'accès",
+                "detail": "Publique, contacts, abonnés ou déblocage payant : la visibilité est vérifiée contre les contacts, abonnements et droits d'accès."
+              },
+              {
+                "title": "Décision",
+                "detail": "Pas de droit, pas d'URL : la réponse est un refus ou le paywall."
+              },
+              {
+                "title": "URL signée · 300 s",
+                "detail": "Un jeton HMAC-SHA256 lié à la vidéo et à son expiration : un lien partagé meurt en cinq minutes."
+              },
+              {
+                "title": "Diffusion 4K HLS",
+                "detail": "Les segments viennent directement du CDN de Bunny, jamais des serveurs applicatifs."
+              }
+            ]
+          },
+          "unlock": {
+            "name": "Déblocage payant",
+            "summary": "Le client ne dit jamais qu'il a payé : la passerelle le prouve.",
+            "steps": [
+              {
+                "title": "Demande de déblocage",
+                "detail": "L'acheteur choisit un montant et une passerelle configurée."
+              },
+              {
+                "title": "Intention de paiement",
+                "detail": "Acheteur, créateur, vidéo et montant sont enregistrés avant tout mouvement d'argent."
+              },
+              {
+                "title": "Page de paiement",
+                "detail": "L'acheteur part sur la page hébergée du prestataire : Orochia ne voit jamais de carte."
+              },
+              {
+                "title": "Paiement",
+                "detail": "Seules les passerelles dont tous les identifiants sont configurés sont proposées."
+              },
+              {
+                "title": "Webhook signé",
+                "detail": "Signature vérifiée en temps constant sur le corps brut — aucun mode permissif."
+              },
+              {
+                "title": "Règlement, une seule fois",
+                "detail": "Crédit au grand livre et droit d'accès dans une même transaction ; un webhook rejoué ne change rien."
+              }
+            ]
+          },
+          "upload": {
+            "name": "Téléversement",
+            "summary": "Les fichiers lourds ne traversent jamais les serveurs web.",
+            "steps": [
+              {
+                "title": "Ouverture d'envoi",
+                "detail": "Seuls les créateurs vérifiés (registres 18 U.S.C. § 2257) peuvent ouvrir une session."
+              },
+              {
+                "title": "Création de la vidéo",
+                "detail": "Orochia enregistre la vidéo chez Bunny Stream et signe une session Tus."
+              },
+              {
+                "title": "Session Tus signée",
+                "detail": "Le studio reçoit l'adresse d'envoi et sa signature, valables pour cette seule vidéo."
+              },
+              {
+                "title": "Envoi reprenable",
+                "detail": "Le fichier part directement vers Bunny et reprend après une coupure."
+              },
+              {
+                "title": "Encodage terminé",
+                "detail": "Bunny signale la fin du transcodage par un webhook signé."
+              },
+              {
+                "title": "Prête à diffuser",
+                "detail": "La vidéo devient lisible, sous la visibilité choisie par son créateur."
+              }
+            ]
+          }
+        },
+        "stepPrev": "Étape précédente",
+        "stepNext": "Étape suivante",
+        "step": "Étape"
+      },
+      "pillars": {
+        "cdn": {
+          "title": "Vidéo directe sur le CDN",
+          "body": "Les créateurs téléversent directement sur Bunny Stream (protocole Tus, reprise sur coupure). La lecture passe par des URL HLS signées qui expirent après 5 minutes : aucune vidéo ne transite par les serveurs applicatifs."
+        },
+        "access": {
+          "title": "Contrôle d'accès côté serveur",
+          "body": "Chaque lecture est autorisée sur le serveur selon la visibilité : publique, contacts seulement ou déblocage payant. Aucune URL brute n'est jamais exposée."
+        },
+        "payments": {
+          "title": "Paiements confirmés par la passerelle",
+          "body": "Un déblocage crée une intention de paiement puis redirige vers CCBill, Segpay, NowPayments ou Stripe. L'accès n'est accordé qu'au webhook signé du prestataire — une seule fois, même si le webhook est rejoué."
+        },
+        "compliance": {
+          "title": "Conformité 18+ intégrée",
+          "body": "Certification 18+ à l'inscription, vérification des registres 18 U.S.C. § 2257 avant tout téléversement, signalements (mineur présumé, contenu non consenti, DMCA) persistés et traités en priorité."
+        }
+      },
+      "tour": {
+        "feed": {
+          "label": "Fil public",
+          "caption": "Porte d'âge 18+, fil des créateurs, profil créatrice — enregistré sur la dernière version d'Orochia."
+        },
+        "unlock": {
+          "label": "Lecture & pourboire",
+          "caption": "Lecture protégée et pourboire : montant, passerelle configurée, confirmation par la passerelle."
+        },
+        "community": {
+          "label": "Explorer & playlists",
+          "caption": "Recherche et tags, une vidéo réservée aux abonnés approuvés, l'enregistrement dans une playlist."
+        },
+        "studio": {
+          "label": "Studio créateur",
+          "caption": "Tableau de bord, approbation des abonnés, édition d'une vidéo, téléversement direct vers Bunny."
+        },
+        "admin": {
+          "label": "Console d'administration",
+          "caption": "orochia-admin : vérification 2257, signalements, catalogue et retraits, comptes, trésorerie."
+        }
+      },
+      "kicker": "Produit Krizaka · open source",
+      "subtitle": "La plateforme vidéo des créateurs indépendants.",
+      "lead": "Diffusion 4K, paywalls, pourboires et versements créateurs — avec la rigueur d'une infrastructure financière : accès décidé sur le serveur, paiements confirmés par la passerelle, grand livre en partie double. Conçue pour les contenus adultes (18+), sous licence Apache-2.0.",
+      "watchDemo": "Voir la démo",
+      "docs": "Documentation",
+      "audience": "Logiciel destiné aux exploitants de plateformes ; les contenus adultes sont réservés aux personnes majeures.",
+      "pillarsEyebrow": "Ce qui la rend prête pour la production",
+      "pillarsTitle": "Quatre garanties, appliquées dans le code.",
+      "archEyebrow": "Fonctionnement",
+      "archTitle": "Suivez une requête à travers la plateforme.",
+      "archLead": "Trois parcours, étape par étape. Chaque point d'API cité est vérifié contre le code d'Orochia à chaque build du site.",
+      "sourceEyebrow": "Code source",
+      "sourceTitle": "Trois dépôts, une plateforme.",
+      "sourceLead": "L'application expose {endpoints} points d'API et {tables} tables, extraits du code par le générateur de documentation."
+    },
+    "openSource": {
+      "steps": {
+        "pick": {
+          "title": "Choisissez une brique",
+          "body": "Chaque composant est un dépôt à part, avec sa CI, sa doc et son contrat. Prenez-en un, ou plusieurs."
+        },
+        "run": {
+          "title": "Faites-le tourner",
+          "body": "Clonez-le seul, ou toute la plateforme d'un coup avec l'espace de travail krizaka/orazaka."
+        },
+        "plug": {
+          "title": "Branchez-le",
+          "body": "Parlez-lui via son contrat versionné — les modules *-api et clients typés, publiés en com.orazaka:* sur GitHub Packages."
+        }
+      },
+      "featured": {
+        "orazaka-users": {
+          "title": "Utilisateurs & connexion",
+          "gives": [
+            "Inscription et vérification d'e-mail",
+            "Connexion mot de passe, Google, GitHub",
+            "Mot de passe oublié, profils",
+            "Clés d'API, rôles, JWT"
+          ]
+        },
+        "orazaka-notifications": {
+          "title": "Notifications",
+          "gives": [
+            "E-mail (SMTP), SMS (Twilio), webhooks",
+            "Un seul port de livraison pour tous les canaux",
+            "Déclenché par événement ou à la demande",
+            "Via AMQP, découplé de votre app"
+          ]
+        },
+        "orazaka-billing": {
+          "title": "Facturation & crédits",
+          "gives": [
+            "Crédits, portefeuilles et forfaits",
+            "Abonnements et grille tarifaire",
+            "Mesure : réserver → régler → libérer",
+            "Un client typé pour vos services"
+          ]
+        }
+      },
+      "groups": {
+        "workspace": {
+          "title": "Espace de travail",
+          "intro": "Le point d'entrée : clone et construit tous les dépôts d'Orazaka."
+        },
+        "foundation": {
+          "title": "Fondations",
+          "intro": "Build, contrats, edge et kit UI — pour toute application."
+        },
+        "domain": {
+          "title": "Services réutilisables",
+          "intro": "Utilisateurs, notifications, facturation."
+        },
+        "ai": {
+          "title": "Moteur IA",
+          "intro": "Le moteur cognitif, ses services et son worker natif."
+        },
+        "apps": {
+          "title": "Applications & packs",
+          "intro": "Web, administration, mobile, CLI, packs du Studio."
+        },
+        "orochia": {
+          "title": "Plateforme vidéo",
+          "intro": "L'application, sa console d'administration et son design system."
+        }
+      },
+      "promises": {
+        "license": {
+          "title": "Apache-2.0, partout",
+          "body": "Utilisez, modifiez, livrez — commercialement aussi."
+        },
+        "ci": {
+          "title": "Vert à chaque commit",
+          "body": "Build, tests et règles d'architecture tournent en CI."
+        },
+        "docs": {
+          "title": "Docs issues du code",
+          "body": "Références API et données générées, jamais périmées."
+        },
+        "security": {
+          "title": "Failles signalées en privé",
+          "body": "Chaque dépôt accepte les signalements privés."
+        }
+      },
+      "title": "Construisez avec nos briques.",
+      "lead": "Tout ce que nous construisons est public. Cette page est pour les développeurs : prenez la gestion des utilisateurs, les notifications ou la facturation pour votre propre application — ou déployez un produit entier.",
+      "count": "{count} dépôts publics · ",
+      "mostReused": "Les plus réutilisées",
+      "mostReusedTitle": "Ce dont chaque application a besoin d'abord.",
+      "viewRepo": "Voir le dépôt",
+      "discoverProduct": "Découvrir le produit",
+      "contributeTitle": "Envie de contribuer ?",
+      "contributeBody": "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue.",
+      "contributeGuide": "Guide de contribution",
+      "ask": "Poser une question"
+    },
+    "legal": {
+      "back": "← Retour à l'accueil",
+      "updated": "Dernière mise à jour : octobre 2026",
+      "privacy": {
+        "metaTitle": "Politique de confidentialité — Krizaka",
+        "metaDescription": "Ce que krizaka.com collecte (très peu), pourquoi, et vos droits selon la Loi 25 du Québec et le RGPD.",
+        "title": "Politique de confidentialité",
+        "sections": [
+          {
+            "title": "Notre engagement",
+            "paragraphs": [
+              "Krizaka construit des logiciels qui gardent les données là où elles doivent être. Cette page dit exactement ce que ce site collecte, sans rien cacher derrière."
+            ]
+          },
+          {
+            "title": "Ce que ce site collecte",
+            "paragraphs": [
+              "Quand vous nous écrivez avec le formulaire de contact, nous recevons votre nom, votre courriel, votre organisation si vous l'indiquez, le sujet et votre message. Nous les utilisons uniquement pour vous répondre.",
+              "Le message est transmis à l'équipe par courriel (via notre fournisseur, Resend) ou dans notre messagerie d'équipe. Nous le conservons le temps de l'échange, puis nous le supprimons. Nous ne le vendons pas, ne le partageons pas à des fins marketing et ne l'utilisons pas pour vous profiler.",
+              "Notre hébergeur (Vercel) conserve des journaux techniques — adresse IP, heure, page — pour la sécurité et la prévention des abus, selon sa propre politique."
+            ]
+          },
+          {
+            "title": "Cookies et stockage local",
+            "paragraphs": [
+              "Un seul cookie fonctionnel, NEXT_LOCALE, mémorise la langue que vous avez choisie (un an). Votre préférence de thème est gardée dans le stockage local de votre navigateur.",
+              "Aucune mesure d'audience, aucune publicité, aucun script de traçage, aucun cookie tiers."
+            ]
+          },
+          {
+            "title": "Nos logiciels",
+            "paragraphs": [
+              "Orazaka et Orochia sont auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie.",
+              "Si vous y connectez des services externes (fournisseurs d'IA, passerelles de paiement, CDN vidéo), les données envoyées vont directement à ces fournisseurs, selon leurs propres politiques."
+            ]
+          },
+          {
+            "title": "Vos droits",
+            "paragraphs": [
+              "Selon la Loi 25 du Québec et le RGPD, vous pouvez demander l'accès, la rectification ou la suppression des renseignements que vous nous avez envoyés, ou retirer votre consentement. Écrivez-nous avec le formulaire de contact : nous répondons dans les 30 jours."
+            ]
+          },
+          {
+            "title": "Contact",
+            "paragraphs": [
+              "Pour toute question de confidentialité, utilisez le formulaire de contact (sujet « Autre »). Krizaka, Montréal, Québec."
+            ]
+          }
+        ]
+      },
+      "terms": {
+        "metaTitle": "Conditions d'utilisation — Krizaka",
+        "metaDescription": "Conditions d'utilisation de krizaka.com et de l'auto-hébergement d'Orazaka et d'Orochia, les logiciels open source conçus par Krizaka.",
+        "title": "Conditions d'utilisation",
+        "sections": [
+          {
+            "title": "Licence du logiciel",
+            "paragraphs": [
+              "Orazaka et Orochia sont des logiciels open source distribués sous licence Apache 2.0. Vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence — voir chaque dépôt sur github.com/krizaka."
+            ]
+          },
+          {
+            "title": "Responsabilité de l'auto-hébergement",
+            "paragraphs": [
+              "Les deux produits tournent sur une infrastructure que vous exploitez. Vous êtes responsable de cette infrastructure, de la sécurité des données qu'elle contient et du respect des lois qui s'appliquent à vous."
+            ]
+          },
+          {
+            "title": "Exploiter Orochia",
+            "paragraphs": [
+              "Orochia est conçue pour des plateformes pouvant héberger des contenus adultes. L'exploitant est responsable de sa propre vérification d'âge, de la tenue des registres (dont 18 U.S.C. § 2257 lorsqu'il s'applique), de la modération, du traitement des retraits et du respect des règles des prestataires de paiement. Le logiciel fournit les outils pour ces obligations ; il ne les remplit pas à votre place."
+            ]
+          },
+          {
+            "title": "Services tiers",
+            "paragraphs": [
+              "Si vous connectez des services externes — fournisseurs d'IA, passerelles de paiement, Bunny Stream, fournisseurs de courriel ou de SMS — leur utilisation est régie par leurs propres conditions."
+            ]
+          },
+          {
+            "title": "Absence de garantie",
+            "paragraphs": [
+              "Le logiciel est fourni « tel quel », sans garantie d'aucune sorte. Krizaka ne garantit ni disponibilité, ni exactitude, ni adéquation à un usage particulier, et n'est pas responsable des dommages liés à son utilisation, comme le prévoit la licence Apache 2.0."
+            ]
+          },
+          {
+            "title": "Ce site",
+            "paragraphs": [
+              "krizaka.com présente nos produits et leur documentation. Son contenu peut changer sans préavis. Ces conditions sont régies par les lois du Québec, Canada."
+            ]
+          }
+        ]
+      }
+    },
+    "orochiaDocs": {
+      "kicker": "Plateforme vidéo pour créateurs",
+      "tagline": "Diffuser en 4K, vendre l'accès, payer les créateurs — avec la rigueur d'une infrastructure financière. Open source, Apache-2.0.",
+      "pay": {
+        "eyebrow": "Paiements & confiance",
+        "title": "Le client ne dit jamais qu'il a payé.",
+        "body": "Chaque déblocage commence par une intention de paiement et ne se termine qu'à l'arrivée du webhook signé de la passerelle — vérifié en temps constant, réglé une seule fois, inscrit dans un grand livre en partie double.",
+        "risk": "Le raccourci habituel",
+        "risks": [
+          "Le navigateur annonce « paiement OK » et obtient la vidéo",
+          "Un webhook rejoué crédite deux fois",
+          "Les soldes dérivent de ce qui a vraiment été payé"
+        ],
+        "shield": "La garantie Orochia",
+        "shields": [
+          "Accès accordé uniquement par le webhook signé de la passerelle",
+          "Règlement idempotent : une intention, un crédit",
+          "Soldes calculés depuis le grand livre, jamais un compteur"
+        ]
+      },
+      "comp": {
+        "eyebrow": "Conformité",
+        "title": "Les obligations deviennent des invariants.",
+        "body": "Certification 18+ à l'inscription, vérification des créateurs (18 U.S.C. § 2257) avant tout téléversement, signalements persistés et traités — appliqués sur le serveur, revus dans la console d'administration.",
+        "cards": [
+          [
+            "Vérifié avant l'envoi",
+            "Les sessions de téléversement ne s'ouvrent qu'aux créateurs dont un opérateur a approuvé les registres."
+          ],
+          [
+            "Les signalements sont des données",
+            "Mineur présumé, contenu non consenti, DMCA : enregistrés avant d'être acquittés."
+          ]
+        ]
+      },
+      "run": {
+        "eyebrow": "En action",
+        "title": "Voyez le vrai produit, puis suivez une requête.",
+        "body": "Des enregistrements de la dernière version, et un parcours animé de la lecture, du déblocage payant et du téléversement.",
+        "tour": [
+          "Visite vidéo",
+          "Fil, pourboires, studio créateur et console d'administration, enregistrés sur l'application réelle."
+        ],
+        "arch": [
+          "Architecture animée",
+          "Parcourez chaque trajet ; chaque point d'API est vérifié contre le code."
+        ],
+        "tourCta": "Voir la visite",
+        "archCta": "Suivre une requête"
+      },
+      "quick": "Démarrage rapide",
+      "steps": [
+        [
+          "Installer",
+          "npm install",
+          "Node 20 ou plus, Docker démarré."
+        ],
+        [
+          "Tout configurer",
+          "npm run setup",
+          "Écrit .env, démarre PostgreSQL 16 + Redis 7, migre et peuple — idempotent."
+        ],
+        [
+          "Lancer",
+          "npm run dev",
+          "http://localhost:3000 · db:status, db:reset, db:studio pour la base."
+        ]
+      ],
+      "modules": "Modules d'architecture",
+      "tables": "{count} tables",
+      "docs": "Documentation",
+      "principles": "Principes de conception",
+      "princ": [
+        [
+          "Lecture zéro confiance",
+          "Aucune URL média brute n'atteint un client : chaque lecture est autorisée, puis signée pour 300 secondes."
+        ],
+        [
+          "Médias directs sur CDN",
+          "Envois et segments passent directement par Bunny Stream ; les serveurs web ne portent jamais de vidéo."
+        ],
+        [
+          "Configuration fail-closed",
+          "Un secret manquant empêche le démarrage en production ; le mode démo n'y existe pas."
+        ]
+      ],
+      "facts": "{count} points d'API, extraits du code"
+    },
+    "contactPage": {
+      "eyebrow": "Contact",
+      "title": "Parlons de votre projet",
+      "lead": "Déploiement d'Orazaka ou d'Orochia, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
+      "publicTitle": "Ou échangeons en public",
+      "publicLead": "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub.",
+      "whichProduct": "pour quel produit ?"
+    },
+    "search": {
+      "placeholder": "Rechercher une page, la documentation...",
+      "empty": "Aucun résultat trouvé pour votre recherche.",
+      "select": "Entrée pour sélectionner",
+      "navigate": "Naviguer",
+      "close": "Fermer",
+      "items": {
+        "orazaka": {
+          "title": "Orazaka",
+          "category": "Produit",
+          "desc": "L'IA qui ne quitte jamais la maison : orchestration locale, RAG, agents."
+        },
+        "orazakaDocs": {
+          "title": "Documentation Orazaka",
+          "category": "Documentation",
+          "desc": "Démarrage, API, exploitation."
+        },
+        "orazakaDemo": {
+          "title": "Démos Orazaka",
+          "category": "Produit",
+          "desc": "Chat, médias et agents en action."
+        },
+        "orazakaArch": {
+          "title": "Fonctionnement d'Orazaka",
+          "category": "Produit",
+          "desc": "Le parcours d'une requête dans le moteur, animé."
+        },
+        "orochia": {
+          "title": "Orochia",
+          "category": "Produit",
+          "desc": "La plateforme vidéo des créateurs : streaming, paywalls, versements."
+        },
+        "orochiaDocs": {
+          "title": "Documentation Orochia",
+          "category": "Documentation",
+          "desc": "Démarrage, architecture, API, base de données, déploiement."
+        },
+        "story": {
+          "title": "Notre histoire",
+          "category": "Krizaka",
+          "desc": "D'où viennent nos noms."
+        },
+        "openSource": {
+          "title": "Open source",
+          "category": "Krizaka",
+          "desc": "Construisez avec nos briques — tous les dépôts."
+        },
+        "contact": {
+          "title": "Contact",
+          "category": "Krizaka",
+          "desc": "Écrire à l'équipe."
+        }
+      }
+    },
+    "docs": {
+      "forDevelopers": "Pour les développeurs",
+      "forDecisionMakers": "Pour les décideurs",
+      "products": "Produits"
+    },
+    "structuredData": {
+      "orochia": "Plateforme vidéo open source pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle, conformité 18+."
+    }
+  },
+  "pages": {
+    "cognitive": {
+      "fullCognition": "COGNITION COMPLÈTE",
+      "controlArchitecture": "ARCHITECTURE DU CONTRÔLE",
+      "perceptionIngestion": "Perception & Ingestion",
+      "theQueryIsCleanedSystem": "La requête est nettoyée, les variables d'environnement sont injectées et l'identité de l'utilisateur (RBAC) est vérifiée localement.",
+      "reasoningContext": "Raisonnement & Contextualisation",
+      "orazakaQueriesLongTermContext": "Orazaka consulte les connaissances à long terme (RAG), la mémoire récente et route l'instruction vers le modèle idéal (local ou cloud).",
+      "validationMetacognition": "Validation & Métacognition",
+      "theFinalOutputIsAudited": "La réponse est auditée en boucle fermée (validation JSON, règles de sécurité, sandbox d'exécution) avant livraison.",
+      "inferenceProcessor": "PROCESSEUR D'INFÉRENCE",
+      "memory": "Mémoire",
+      "knowledge": "Connaissances",
+      "rules": "Règles",
+      "enrichedContext": "Contexte Enrichi",
+      "transfer": "TRANSFERT",
+      "secureSandbox": "Bac à sable sécurisé",
+      "isolatedReasoning": "Raisonnement isolé",
+      "complianceChecks": "Contrôles de conformité",
+      "jsonSchemaValidation": "Validation de schéma JSON",
+      "secureDelivery": "Réponse finale validée",
+      "hermeticAndCertified": "Hermétique et certifiée",
+      "operatingModes": "MODES DE FONCTIONNEMENT",
+      "defaultMode": "MODE PAR DÉFAUT",
+      "adaptiveParameter": "PARAMÈTRE ADAPTATIF",
+      "low": "Bas",
+      "directResponse": "Réponse directe",
+      "t35Interceptors": "3–5 intercepteurs",
+      "minimalTokens": "Tokens minimaux",
+      "medium": "Moyen",
+      "standardAnalysis": "Analyse standard",
+      "t710Interceptors": "7–10 intercepteurs",
+      "balancedBudget": "Budget équilibré",
+      "high": "Haut",
+      "deepDeliberation": "Délibération profonde",
+      "t1215Interceptors": "12–15 intercepteurs",
+      "maximumBudget": "Budget maximal",
+      "activeExtensibility": "EXTENSIBILITÉ ACTIVE",
+      "chooseYourInterceptors": "Choisissez vos intercepteurs",
+      "audit": "Audit",
+      "security": "Sécurité",
+      "metrics": "Métriques",
+      "routing": "Routage",
+      "cache": "Cache",
+      "yourCustomMode": "Votre mode personnalisé",
+      "active": "Actif",
+      "context": "Contexte",
+      "memoryRag": "Mémoire & RAG",
+      "reasoning": "Réflexion",
+      "localLlm": "Local LLM",
+      "compliance": "Validation",
+      "jsonAudit": "Audit JSON"
+    },
+    "useCase": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "allCases": "Tous les cas",
+      "sovereignAi": "IA Souveraine",
+      "whoIsMartin": "Qui est Martin ?",
+      "theUserExperienceReimagined": "L'expérience utilisateur réinventée",
+      "discoverHowOrazakaSentinelSimplifies": "Découvrez comment Orazaka Sentinelle simplifie le quotidien de Martin.",
+      "doYouRecognizeYourself": "Vous vous reconnaissez ?",
+      "ifYouSpendHoursChasing": "Si vous passez des heures à chercher des clients ou si vous craignez les lourdes amendes de la Loi 25, vous partagez le même quotidien difficile que Martin. Orazaka vous permet de passer de la surcharge à la sérénité :",
+      "overloadRisk": "Surcharge & Risque",
+      "sovereigntySerenity": "Souveraineté & Sérénité",
+      "beforeOrazaka10hWeek": "Avant Orazaka : 10h / semaine",
+      "tiresomeManualSearch": "Recherche manuelle harassante",
+      "martinSpendsEveryEveningScanning": "Martin épluche chaque soir les réseaux sociaux et babillards de chantiers (5h/semaine).",
+      "tediousLandRegistryChecks": "Consultation fastidieuse du Registre",
+      "manuallyCheckingTheQuebecLand": "Consultation manuelle du Registre foncier du Québec pour cibler les nouveaux propriétaires (2h/semaine).",
+      "spamRiskCloudPrivacyLeaks": "Risque de non-conformité & Fuites",
+      "fearOfViolatingCaslAnti": "Peur d'enfreindre la LCEE (loi anti-spam) en écrivant en B2C, ou de violer la Loi 25 en mettant des données privées dans le cloud.",
+      "resultMartinIsOverloadedLoses": "Résultat : Martin est débordé, perd son temps libre et s'expose à de lourdes amendes.",
+      "withOrazaka10MinWeek": "Avec Orazaka : 10 min / semaine",
+      "automatedLocalTerritorialWatch": "Veille automatisée locale",
+      "orazakaSentinelSilentlyScansMunicipal": "Orazaka Sentinelle scanne en arrière-plan les chantiers et permis publics depuis son ordinateur.",
+      "intelligentSovereignFiltering": "Tri intelligent et souverain",
+      "aLocalLlmQualifiesTarget": "Un LLM local qualifie l'intention (ex. permis de borne VE) sans jamais envoyer de données dans le cloud.",
+      "compliantActionsReadyToMail": "Actions conformes prêtes à poster",
+      "instantPrintReadyPostcardDrafts": "Impression de publipostages postaux pour le B2C (légal hors LCEE) et e-mails ciblés pour le B2B.",
+      "resultMartinDevotesHisTime": "Résultat : Martin consacre son temps à son métier de manière 100% légale et l'esprit tranquille.",
+      "automatedMonitoring": "Veille automatique",
+      "silentlyScansPublicRegionalRegistries": "Scanne automatiquement les permis fonciers locaux sans recherche manuelle.",
+      "ethicalB2cMailers": "Courriers B2C éthiques",
+      "draftsPhysicalDirectMailCampaigns": "Génère du publipostage physique légal qui contourne la loi anti-spam électronique.",
+      "targetedB2bEmails": "E-mails B2B ciblés",
+      "writesContextualCorporateMessagesAdhering": "Rédige des courriels professionnels conformes aux exemptions d'affaires.",
+      "t100SovereignOffline": "100% Hors-ligne & Souverain",
+      "prospectDetailsNeverLeaveYour": "Aucune donnée de vos prospects ne quitte votre ordinateur. Conforme Loi 25.",
+      "whatOrazakaSentinelDoes": "Ce que fait le package Orazaka Sentinelle",
+      "timeRoiCalculator": "Calculateur de temps & ROI",
+      "timeSpentManually": "Temps passé manuellement",
+      "week": "semaine",
+      "timeWithOrazaka": "Temps avec Orazaka",
+      "timeSaved": "Temps libéré",
+      "martinStory": "<b>Martin</b> est électricien à Montréal. Comme beaucoup d'artisans, il veut développer sa clientèle sans passer ses soirées à éplucher les registres publics, et surtout, <b>sans enfreindre la loi</b>. Le Québec impose des règles strictes : la <b>LCEE</b> interdit les courriels commerciaux froids B2C, et la <b>Loi 25</b> interdit d'envoyer les données personnelles de ses prospects dans des serveurs cloud tiers. Orazaka Sentinelle résout ce casse-tête en exécutant tout le processus localement sur son ordinateur."
+    },
+    "interceptorMesh": {
+      "interactiveCognitiveConsole": "Console Cognitive Interactive",
+      "pause": "PAUSE",
+      "resume": "LANCER",
+      "reset": "RÉINITIALISER",
+      "hudReasoningLogs": "HUD: LOGS DE RAISONNEMENT",
+      "contextEnrichmentLogs": "LOGS D'ENRICHISSEMENT CONTEXTUEL",
+      "enrichmentParameters": "Paramètres d'enrichissement :",
+      "inComplianceWithLoi25": "Conformément à la Loi 25, les données personnelles de l'utilisateur sont anonymisées au niveau de l'intercepteur AuditLog avant d'entrer dans le pipeline central d'inférence.",
+      "interceptorData": {
+        "node-1": {
+          "desc": "Résout le profil utilisateur, ses rôles RBAC et son tier de rate-limiting.",
+          "details": {
+            "title": "Résolution Contexte Utilisateur"
+          }
+        },
+        "node-2": {
+          "desc": "Injecte les signaux système, les contraintes matérielles et les variables d'environnement.",
+          "details": {
+            "title": "Injection Contexte Système"
+          }
+        },
+        "node-3": {
+          "desc": "Assure la traduction du raisonnement et maintient l'alignement sémantique du dictionnaire.",
+          "details": {
+            "title": "Alignement Linguistique"
+          }
+        },
+        "node-4": {
+          "desc": "Récupère et formate la fenêtre de conversation historique FIFO (glissante).",
+          "details": {
+            "title": "Fenêtre Mémoire Conversationnelle"
+          }
+        },
+        "node-5": {
+          "desc": "Enrichit le prompt avec des contextes pertinents récupérés de pgvector.",
+          "details": {
+            "title": "Enrichissement Vectoriel RAG"
+          }
+        },
+        "node-6": {
+          "desc": "Résout les outils externes et les serveurs Model Context Protocol connectés.",
+          "details": {
+            "title": "Résolution de Protocole MCP"
+          }
+        },
+        "node-7": {
+          "desc": "Re-formule les instructions floues en commandes précises et structurées.",
+          "details": {
+            "title": "Raffinement Sémantique"
+          }
+        },
+        "node-8": {
+          "desc": "Analyse l'intention de la requête et la route vers le modèle LLM optimal.",
+          "details": {
+            "title": "Routage Intentionnel"
+          }
+        },
+        "node-9": {
+          "desc": "Exécute les callbacks d'outils dynamiques et valide les schémas d'entrée.",
+          "details": {
+            "title": "Exécution des Outils / Callbacks"
+          }
+        },
+        "node-10": {
+          "desc": "Surveille le budget de jetons et bloque les requêtes hors limite financière.",
+          "details": {
+            "title": "Bouclier Anti-Surcoût"
+          }
+        },
+        "node-11": {
+          "desc": "Exécute des validations multi-agents rigoureuses sur la réponse produite.",
+          "details": {
+            "title": "Validation Multi-Agents de Sortie"
+          }
+        },
+        "node-12": {
+          "desc": "Décode et vérifie l'intégrité des entrées multi-modales (Base64).",
+          "details": {
+            "title": "Extraction Média Multi-Modale"
+          }
+        },
+        "node-13": {
+          "desc": "Enregistre des journaux chiffrés pour la conformité Loi 25 (anonymisés).",
+          "details": {
+            "title": "Journalisation SecOps & Loi 25"
+          }
+        },
+        "node-14": {
+          "desc": "Filtre les contenus toxiques ou inappropriés via des filtres système locaux.",
+          "details": {
+            "title": "Garde-Fous de Sécurité"
+          }
+        },
+        "node-15": {
+          "desc": "Assemble, compresse et formate la réponse finale pour le client BFF.",
+          "details": {
+            "title": "Assemblage & Streaming BFF"
+          }
+        }
+      }
+    },
+    "howOrazakaWorks": {
+      "readingGuide": "Guide de lecture",
+      "orazakaExplainedSimply": "Orazaka, expliqué simplement.",
+      "beforeYouDiveIntoThe": "Avant de plonger dans la carte, voici le modèle mental. Orazaka est un moteur d'orchestration d'IA que tu héberges toi-même : chaque requête traverse un pipeline déterministe, étape par étape, sans jamais quitter ton réseau.",
+      "letSFollowOneReal": "Suivons une vraie requête.",
+      "summarizeThisContractAndFlag": "« Résume ce contrat et signale les clauses non conformes à la Loi 25. »",
+      "hereSWhatHappensTo": "Voici ce qui lui arrive, de ta question jusqu'à la réponse :",
+      "why": "Pourquoi",
+      "theLocallyValidatedAnswerComes": "→ La réponse, validée localement, te revient. Zéro donnée n'a quitté ton réseau.",
+      "nowExploreTheLiveMap": "À toi d'explorer la carte vivante.",
+      "principles": [
+        {
+          "title": "Souverain",
+          "desc": "Tout s'exécute sur ton infrastructure. Aucune donnée n'est envoyée à un cloud tiers — conforme Loi 25 & RGPD."
+        },
+        {
+          "title": "Déterministe",
+          "desc": "Pas de boîte noire : chaque requête suit un ordre d'intercepteurs explicite, reproductible et auditable."
+        },
+        {
+          "title": "Modulaire",
+          "desc": "Une architecture hexagonale : chaque responsabilité — sécurité, mémoire, médias — est un module remplaçable."
+        }
+      ],
+      "steps": [
+        {
+          "title": "Présentation",
+          "what": "Tu poses ta question depuis le client web, l'app mobile, le CLI ou la console d'administration.",
+          "why": "Quatre portes d'entrée, un seul moteur derrière."
+        },
+        {
+          "title": "Portail d'entrée",
+          "what": "Le portail réceptionne la requête et l'achemine vers le moteur — en streaming (SSE) quand la réponse arrive au fil de l'eau.",
+          "why": "Un point d'entrée unique et contrôlé : rien n'accède directement aux modèles."
+        },
+        {
+          "title": "Sécurité & Métier",
+          "what": "Avant tout calcul, Orazaka t'authentifie, vérifie tes permissions (RBAC), applique les quotas et les règles métier.",
+          "why": "La sécurité et la gouvernance passent avant l'inférence — pas après."
+        },
+        {
+          "title": "Moteur Cognitif",
+          "what": "Le cœur hexagonal, sans état, orchestre l'exécution de la requête et coordonne le flux de données.",
+          "why": "Le chef d'orchestre : reproductible à chaque appel."
+        },
+        {
+          "title": "Workers & Pipeline",
+          "what": "La requête traverse les 15 intercepteurs (contexte système, mémoire, RAG, garde-fous), pendant que les workers asynchrones gèrent médias et intégrations MCP.",
+          "why": "C'est ici que la « cognition » s'assemble, étape ordonnée après étape ordonnée."
+        },
+        {
+          "title": "Stockage",
+          "what": "Sessions, mémoire vectorielle (pgvector) et identités sont stockées dans tes propres bases de données.",
+          "why": "Ta donnée reste chez toi, du premier au dernier octet."
+        }
+      ],
+      "hints": [
+        "Survole une carte pour l'éclairer",
+        "Clique pour épingler le détail",
+        "Recherche un composant par nom"
+      ]
+    },
+    "demosGallery": {
+      "filterDemos": "Filtrer les démos",
+      "demos": [
+        {
+          "title": "Console d'Administration",
+          "desc": "Tableau de bord local de configuration et suivi du moteur Orazaka."
+        },
+        {
+          "title": "Portail de Connexion",
+          "desc": "Connexion sécurisée du client et chargement du workspace local."
+        },
+        {
+          "title": "Interface de Dialogue",
+          "desc": "Console de chat multi-agents et flux de réflexion souverain."
+        },
+        {
+          "title": "Pipeline Souverain",
+          "desc": "Architecture locale du traitement d'inférence."
+        },
+        {
+          "title": "Protection des Données",
+          "desc": "Blindage et isolation des métriques locales."
+        },
+        {
+          "title": "Maillage de Contexte",
+          "desc": "Matrice gérant l'intégration des outils et de la mémoire."
+        },
+        {
+          "title": "Régulation Cognitive",
+          "desc": "Ajustement sémantique continu en boucle fermée."
+        },
+        {
+          "title": "Flux Vectoriel RAG",
+          "desc": "Indexation et injection de contexte dynamique."
+        },
+        {
+          "title": "Maillage d'Intercepteurs",
+          "desc": "Passage de la requête à travers le pipeline d'ingénierie."
+        },
+        {
+          "title": "Sécurisation des Flux",
+          "desc": "Contrôle d'accès et filtrage cryptographique des flux de données sortants."
+        },
+        {
+          "title": "Raisonnement Localisé",
+          "desc": "Inférence neuronale optimisée s'exécutant sur le matériel de l'hôte."
+        }
+      ],
+      "tabs": {
+        "all": "Toutes les démos",
+        "webapp": "Web app & tableau de bord",
+        "image": "Générations SD",
+        "video": "Boucles vidéo"
+      }
+    },
+    "orazakaOverview": {
+      "start": "Démarrer",
+      "core": "Cœur",
+      "ops": "Ops"
+    },
+    "architectureMesh": {
+      "requestJourney": "Parcours d'une requête",
+      "leftToRight": "de gauche à droite →",
+      "searchAComponent": "Rechercher un composant…",
+      "searchAComponent2": "Rechercher un composant",
+      "clear": "Effacer",
+      "stages": [
+        {
+          "title": "Présentation",
+          "subtitle": "Points d'entrée"
+        },
+        {
+          "title": "Portail d'entrée",
+          "subtitle": "Routage REST · SSE"
+        },
+        {
+          "title": "Sécurité & Métier",
+          "subtitle": "RBAC · règles"
+        },
+        {
+          "title": "Moteur Cognitif",
+          "subtitle": "Le cœur hexagonal"
+        },
+        {
+          "title": "Workers & Pipeline",
+          "subtitle": "Async · intercepteurs"
+        },
+        {
+          "title": "Stockage",
+          "subtitle": "Données souveraines"
+        }
+      ],
+      "nodes": [
+        {
+          "tag": "Web",
+          "layer": "Application",
+          "label": "Console Client Web",
+          "desc": "Application client Next.js principale : chat, génération d'images/vidéos et interaction avec l'IA."
+        },
+        {
+          "tag": "Admin",
+          "layer": "Application",
+          "label": "Console d'Administration",
+          "desc": "Console SecOps isolée (port 3001) pour gérer les modèles, le pipeline et la conformité."
+        },
+        {
+          "tag": "Mobile",
+          "layer": "Application",
+          "label": "Application Mobile",
+          "desc": "Application mobile cross-platform (Expo SDK 53) pour l'accès à l'IA en déplacement."
+        },
+        {
+          "tag": "CLI",
+          "layer": "Application",
+          "label": "CLI Orazaka",
+          "desc": "Interface en ligne de commande pour l'automatisation, avec file d'attente locale SQLite."
+        },
+        {
+          "tag": "API",
+          "layer": "Application",
+          "label": "Portail d'entrée",
+          "desc": "Réceptionne les requêtes (API REST & SSE) et les achemine vers le moteur d'orchestration."
+        },
+        {
+          "tag": "RBAC",
+          "layer": "Framework",
+          "label": "Sécurité & RBAC",
+          "desc": "Authentifie les requêtes, valide les permissions (RBAC) et applique les quotas par locataire."
+        },
+        {
+          "tag": "Métier",
+          "layer": "Framework",
+          "label": "Gouvernance Métier",
+          "desc": "Règles d'affaires, gabarits de prompts et structuration des cas d'usage cognitifs."
+        },
+        {
+          "tag": "Core",
+          "layer": "Framework",
+          "label": "Moteur Cognitif",
+          "desc": "Le cœur d'Orazaka. Coordonne l'exécution sans état des requêtes IA et orchestre le flux de données."
+        },
+        {
+          "tag": "Pipeline",
+          "layer": "Framework",
+          "label": "Pipeline de Cognition",
+          "desc": "Assemble les 15 intercepteurs (contexte système, mémoire, RAG, sécurité) pour enrichir la requête."
+        },
+        {
+          "tag": "Intégrations",
+          "layer": "Application",
+          "label": "Worker Intégrations",
+          "desc": "Service d'arrière-plan asynchrone : files d'intégration et tâches système."
+        },
+        {
+          "tag": "Médias",
+          "layer": "Application",
+          "label": "Worker Médias",
+          "desc": "Traitement lourd d'images, vidéos et voix, hors du thread d'API principal."
+        },
+        {
+          "tag": "MCP",
+          "layer": "Framework",
+          "label": "Intégrations MCP",
+          "desc": "Connexion sécurisée aux outils externes (bases, APIs) via le Model Context Protocol."
+        },
+        {
+          "tag": "Identité",
+          "layer": "Framework",
+          "label": "Base de Données Identité",
+          "desc": "Stockage sécurisé et isolé des identités, clés d'accès et politiques RBAC."
+        },
+        {
+          "tag": "App · RAG",
+          "layer": "Framework",
+          "label": "Base de Données Applicative",
+          "desc": "Base relationnelle et vectorielle (pgvector) : sessions, contextes et données RAG."
+        }
+      ]
+    },
+    "sovereignSimulator": {
+      "selectAScenarioAndClick": "Sélectionnez un scénario et cliquez sur Simuler...",
+      "scenarios": [
+        {
+          "label": "Prospection Électricien (B2C)",
+          "prompt": "Détecter les opportunités de chantiers à Montréal et préparer le publipostage.",
+          "output": "📄 1 publipostage postal généré en local (Conforme LCEE)\n📦 0 octet partagé sur des serveurs cloud tiers\n🔒 Statut : Périmètre 100% Souverain",
+          "steps": [
+            {
+              "desc": "Injecte le profil d'électricien et la zone d'activité (Montréal)."
+            },
+            {
+              "desc": "Scanne le Registre foncier du Québec et les permis de bornes de recharge VE."
+            },
+            {
+              "desc": "Identifie les chantiers nécessitant une augmentation de panneau électrique."
+            },
+            {
+              "desc": "Exclut le courriel froid B2C (LCEE), génère un courrier papier conforme."
+            }
+          ]
+        },
+        {
+          "label": "Support Client Anonymisé",
+          "prompt": "Analyser une réclamation d'accident de voiture contenant des informations personnelles.",
+          "output": "✉️ Brouillon rédigé en Sandbox (PII chiffrées/anonymisées)\n📦 Conforme Loi 25 (Aucune fuite cloud sans évaluation ÉFVP)\n🔒 Statut : Sécurisé & Étanche",
+          "steps": [
+            {
+              "desc": "Détecte la présence de renseignements personnels de citoyens."
+            },
+            {
+              "desc": "Masque le VIN, le téléphone et l'adresse de la réclamation en Sandbox."
+            },
+            {
+              "desc": "Cherche les articles de police correspondants dans la base vectorielle locale."
+            },
+            {
+              "desc": "Fait appel au LLM local (Mistral) hors-ligne pour rédiger la réponse."
+            }
+          ]
+        },
+        {
+          "label": "Audit Fournisseur (B2B)",
+          "prompt": "Auditer un nouveau fournisseur de pièces aéronautiques et valider le NDA.",
+          "output": "⚠️ Alerte interne : NDA manquant pour le Fournisseur (Conforme Loi 101)\n📦 Exécuté intégralement sur le serveur physique local\n🔒 Statut : Local uniquement",
+          "steps": [
+            {
+              "desc": "Applique la charte d'approvisionnement et les règles de conformité."
+            },
+            {
+              "desc": "Interroge la base ERP locale pour vérifier les certificats actifs."
+            },
+            {
+              "desc": "Détecte l'absence d'entente de confidentialité (NDA)."
+            },
+            {
+              "desc": "Rédige une alerte interne d'interdiction en français (Loi 101)."
+            }
+          ]
+        }
+      ]
+    },
+    "orazakaArchitecture": {
+      "howOrazakaWorksKrizaka": "Fonctionnement d'Orazaka — Krizaka",
+      "interactiveSchemaOfTheOperational": "Schéma interactif du fonctionnement interne de la plateforme d'orchestration d'IA souveraine Orazaka.",
+      "howItWorks": "Fonctionnement",
+      "theJourneyOfARequest": "Le parcours d'une requête.",
+      "orazakaOrchestratesAModularSecure": "Orazaka orchestre un flux cognitif modulaire, sécurisé et entièrement souverain. Suivez une requête à travers six étapes — de l'interface jusqu'au stockage.",
+      "stageHints": [
+        "Présentation",
+        "Portail",
+        "Sécurité",
+        "Moteur",
+        "Workers",
+        "Stockage"
+      ]
+    },
+    "repositoryMap": {
+      "sourceCode": "Code source",
+      "oneRepositoryPerComponent": "Un dépôt par composant.",
+      "openSourceRepositoriesApache2": "{p0} dépôts open source (Apache-2.0) dans l'organisation krizaka. Prenez seulement ce dont votre application a besoin, ou clonez tout l'espace de travail avec ",
+      "layers": {
+        "foundation": {
+          "title": "Fondations",
+          "intro": "Socle réutilisable par toute application Krizaka : build, contrats, edge, UI kit."
+        },
+        "domain": {
+          "title": "Services de domaine",
+          "intro": "Utilisateurs, notifications, facturation — à brancher tels quels dans une nouvelle application."
+        },
+        "ai": {
+          "title": "Moteur IA Orazaka",
+          "intro": "Le moteur cognitif et les services qui l'hébergent."
+        },
+        "worker": {
+          "title": "Workers natifs",
+          "intro": "Inférence média native, hors Docker."
+        },
+        "app": {
+          "title": "Applications",
+          "intro": "Web, administration, mobile et CLI."
+        },
+        "content": {
+          "title": "Contenu",
+          "intro": "Les packs de référence du Studio."
+        }
+      }
+    },
+    "demosMeta": {
+      "demosVisualization": "Démos & Visualisation",
+      "visualProofOfTheLocal": "Démonstrations et preuves visuelles de l'exécution locale du moteur et de son pipeline cognitif."
+    },
+    "sovereigntyPerimeter": {
+      "diagramTheOrazakaProductRuns": "Schéma : le produit Orazaka tourne entièrement dans ton périmètre souverain."
+    },
+    "pipelineMesh": {
+      "startUserIntention": "DÉPART / INTENTION UTILISATEUR"
+    },
+    "docsPreview": {
+      "docCards": [
+        {
+          "title": "Guide de démarrage"
+        },
+        {
+          "title": "Architecture Hexagonale"
+        },
+        {
+          "title": "Référence API"
+        },
+        {
+          "title": "Auth & Sécurité"
+        },
+        {
+          "title": "CLI Orazaka"
+        },
+        {
+          "title": "Déploiement (IaC)"
+        }
+      ]
+    }
+  }
+}

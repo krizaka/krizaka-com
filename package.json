@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint && node scripts/check-messages.mjs",
+    "i18n:check": "node scripts/check-messages.mjs"
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.0.0",

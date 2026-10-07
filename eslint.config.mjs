@@ -29,4 +29,26 @@ const eslintConfig = defineConfig([
   },
 ]);
 
+// Every user-facing string comes from messages/<locale>.json (lib/i18n.ts): a component never
+// chooses its text with `locale === "fr" ? … : …`. Only routing code compares locales.
+eslintConfig.push(
+  {
+    files: ["app/**/*.{ts,tsx}", "lib/**/*.{ts,tsx}"],
+    ignores: ["lib/i18n.ts", "lib/seo.ts", "app/[[]locale[]]/layout.tsx", "app/components/I18nProvider.tsx"],
+    rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector: "ConditionalExpression[test.type='BinaryExpression'][test.right.value=/^(fr|en)$/]",
+          message: "Put the text in messages/en.json + messages/fr.json and read it from the dictionary (t.…).",
+        },
+        {
+          selector: "ConditionalExpression > Identifier.test[name=/^(isFr|isEn|fr)$/]",
+          message: "Put the text in messages/en.json + messages/fr.json and read it from the dictionary (t.…).",
+        },
+      ],
+    },
+  },
+);
+
 export default eslintConfig;

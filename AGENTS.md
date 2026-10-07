@@ -43,6 +43,21 @@
   architecture data at build time (`lib/orochia-journeys.ts`).
 - English is the default language; French is served when chosen (cookie `NEXT_LOCALE`) or opened.
 
+## 2.2 Text & languages — nothing hard-coded
+
+- **Every user-facing string lives in `messages/en.json` and `messages/fr.json`** (`lib/i18n.ts`).
+  `en.json` is the reference: its shape is the `TranslationDictionary` type, so a missing French key
+  fails type-checking, and `npm run lint` runs `scripts/check-messages.mjs` (same keys, no empty
+  strings, same `{placeholders}`).
+- Components read `t` from `useI18n()` (client) or `getDictionary(locale)` (server); variables go
+  through `format(message, { name })`; emphasis through `<Rich>` (`<b>…</b>` only).
+- **Never** choose a text with `locale === "fr" ? … : …` (or `isFr ? …`): ESLint refuses it. Only
+  routing code (`proxy.ts`, `lib/i18n.ts`, `lib/seo.ts`, the locale layout) compares locales.
+- Data modules keep **structure** (ids, links, colors, endpoints); their words are messages keyed by
+  the same ids (e.g. `site.nav.<product>.links.<id>`, `site.orochia.arch.journeys.<id>`). Long,
+  structured content collections (`lib/use-cases-data.ts`, `lib/packages-data.ts`) may hold
+  `{ fr, en }` fields read with the locale key — never with a ternary.
+
 ## 3. Theming — dark **and** light are first-class
 
 - One token system in `app/globals.css`: dark on `:root`, light on `html.light`,
