@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowRight, BookOpen, CreditCard, Film, GitBranch, Lock, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, CreditCard, Film, GitBranch, Lock, PlayCircle, ShieldCheck } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
 import orochia from "@/app/data/orochia-architecture.json";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
+import OrochiaLogo from "@/app/components/OrochiaLogo";
+import OrochiaArchitecture from "@/app/components/OrochiaArchitecture";
+import ProductTour, { type TourClip } from "@/app/components/ProductTour";
+import ContactCta from "@/app/components/home/ContactCta";
+import { verifiedJourneys } from "@/lib/orochia-journeys";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -70,26 +74,39 @@ const PILLARS: { icon: LucideIcon; color: string; title: Record<Loc, string>; bo
   },
 ];
 
-const FLOW: Record<Loc, string[]> = {
-  fr: [
-    "L'acheteur choisit un montant et une passerelle configurée.",
-    "Orochia enregistre l'intention (acheteur, créateur, vidéo, montant) et renvoie la page de paiement du prestataire.",
-    "Le prestataire notifie Orochia par un webhook signé — signature vérifiée en temps constant.",
-    "Le règlement écrit le crédit au grand livre et l'accès, dans une seule transaction, une seule fois.",
-  ],
-  en: [
-    "The buyer picks an amount and a configured gateway.",
-    "Orochia records the intent (buyer, creator, video, amount) and returns the provider's checkout page.",
-    "The provider notifies Orochia through a signed webhook — verified in constant time.",
-    "Settlement writes the ledger credit and the access grant in one transaction, exactly once.",
-  ],
-};
+const TOUR: TourClip[] = [
+  {
+    id: "feed",
+    src: "/assets/orochia/tour/feed",
+    label: { fr: "Fil public", en: "Public feed" },
+    caption: { fr: "Porte d'âge 18+, fil des créateurs, profil créatrice — enregistré sur la dernière version d'Orochia.", en: "18+ age gate, creator feed, creator profile — recorded on the latest Orochia build." },
+  },
+  {
+    id: "unlock",
+    src: "/assets/orochia/tour/unlock",
+    label: { fr: "Lecture & pourboire", en: "Watch & tip" },
+    caption: { fr: "Lecture protégée et pourboire : montant, passerelle configurée, confirmation par la passerelle.", en: "Protected playback and tipping: amount, configured gateway, gateway confirmation." },
+  },
+  {
+    id: "studio",
+    src: "/assets/orochia/tour/studio",
+    label: { fr: "Studio créateur", en: "Creator studio" },
+    caption: { fr: "Tableau de bord, téléversement direct vers Bunny avec attestations 2257, demande de versement.", en: "Dashboard, direct-to-Bunny upload with 2257 attestations, payout request." },
+  },
+  {
+    id: "admin",
+    src: "/assets/orochia/tour/admin",
+    label: { fr: "Console d'administration", en: "Admin console" },
+    caption: { fr: "orochia-admin : vérification 2257, signalements, trésorerie et registre des créateurs.", en: "orochia-admin: 2257 verification, content reports, treasury and creator registry." },
+  },
+];
 
 export default async function OrochiaPage({ params }: Props) {
   const { locale } = await params;
   const loc: Loc = locale === "en" ? "en" : "fr";
   const isFr = loc === "fr";
   const tables = orochia.modules.find((m) => m.id === "data")?.tables ?? [];
+  const journeys = verifiedJourneys();
 
   const section: React.CSSProperties = { maxWidth: "72rem", margin: "0 auto", padding: "0 20px" };
   const h2: React.CSSProperties = {
@@ -122,6 +139,9 @@ export default async function OrochiaPage({ params }: Props) {
 
       {/* ─── Hero ─── */}
       <section style={{ ...section, padding: "clamp(112px, 13vw, 156px) 20px 56px", textAlign: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 8 }}>
+          <OrochiaLogo size={112} />
+        </div>
         <p style={label}>{isFr ? "Produit Krizaka · open source" : "Krizaka product · open source"}</p>
         <h1
           style={{
@@ -145,8 +165,11 @@ export default async function OrochiaPage({ params }: Props) {
             : "4K streaming, paywalls, tips and creator payouts — with the rigour of financial infrastructure: access decided on the server, payments confirmed by the gateway, a double-entry ledger. Designed for adult (18+) content, Apache-2.0 licensed."}
         </p>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center", marginTop: 28 }}>
-          <Link href="/products/orochia/docs" className="btn-sheen" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 20px", borderRadius: 12, background: "var(--kz-accent)", color: "var(--kz-on-accent)", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
-            <BookOpen size={16} /> {isFr ? "Lire la documentation" : "Read the docs"}
+          <Link href="#tour" className="btn-sheen" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 20px", borderRadius: 12, background: "var(--kz-accent)", color: "var(--kz-on-accent)", fontWeight: 700, fontSize: 14, textDecoration: "none" }}>
+            <PlayCircle size={16} /> {isFr ? "Voir la démo" : "Watch the demo"}
+          </Link>
+          <Link href="/products/orochia/docs" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 20px", borderRadius: 12, border: "1px solid var(--kz-border-default)", color: "var(--kz-text-primary)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
+            <BookOpen size={16} /> {isFr ? "Documentation" : "Documentation"}
           </Link>
           <a href="https://github.com/krizaka/orochia" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 20px", borderRadius: 12, border: "1px solid var(--kz-border-default)", color: "var(--kz-text-primary)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>
             <GitBranch size={16} /> krizaka/orochia
@@ -159,25 +182,13 @@ export default async function OrochiaPage({ params }: Props) {
         </p>
       </section>
 
-      {/* ─── Screenshot ─── */}
-      <section style={{ ...section, marginBottom: 72 }}>
-        <figure style={{ margin: 0 }}>
-          <Image
-            src="/assets/orochia/streams.png"
-            width={3024}
-            height={1478}
-            sizes="(max-width: 1152px) 100vw, 1152px"
-            alt={isFr ? "Fil de vidéos d'Orochia" : "Orochia video feed"}
-            style={{ width: "100%", height: "auto", borderRadius: 18, border: "1px solid var(--kz-border-subtle)", boxShadow: "var(--kz-shadow-lg)" }}
-          />
-          <figcaption style={{ fontSize: 12, color: "var(--kz-text-muted)", textAlign: "center", marginTop: 10 }}>
-            {isFr ? "Fil public — données de démonstration du seed de développement." : "Public feed — development seed data."}
-          </figcaption>
-        </figure>
+      {/* ─── Product tour (screen recordings of the real app) ─── */}
+      <section id="tour" style={{ ...section, marginBottom: 88, scrollMarginTop: 96 }}>
+        <ProductTour clips={TOUR} accent="#a855f7" frameLabel="orochia · localhost" />
       </section>
 
       {/* ─── Pillars ─── */}
-      <section style={{ ...section, marginBottom: 80 }}>
+      <section id="guarantees" style={{ ...section, marginBottom: 88, scrollMarginTop: 96 }}>
         <p style={label}>{isFr ? "Ce qui la rend prête pour la production" : "What makes it production-ready"}</p>
         <h2 style={h2}>{isFr ? "Quatre garanties, appliquées dans le code." : "Four guarantees, enforced in code."}</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 250px), 1fr))", gap: 14, marginTop: 24 }}>
@@ -191,18 +202,16 @@ export default async function OrochiaPage({ params }: Props) {
         </div>
       </section>
 
-      {/* ─── Payment flow ─── */}
-      <section style={{ ...section, marginBottom: 80 }}>
-        <p style={label}>{isFr ? "Parcours d'un déblocage" : "How an unlock works"}</p>
-        <h2 style={h2}>{isFr ? "Le client ne dit jamais qu'il a payé." : "The client never says it paid."}</h2>
-        <ol style={{ listStyle: "none", padding: 0, margin: "24px 0 0", display: "grid", gap: 10 }}>
-          {FLOW[loc].map((step, i) => (
-            <li key={step} style={{ ...card, display: "flex", gap: 14, alignItems: "baseline", padding: "14px 18px" }}>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, fontWeight: 700, color: "var(--kz-accent)" }}>{String(i + 1).padStart(2, "0")}</span>
-              <span style={{ fontSize: 14, lineHeight: 1.6, color: "var(--kz-text-secondary)" }}>{step}</span>
-            </li>
-          ))}
-        </ol>
+      {/* ─── How it works: animated journeys ─── */}
+      <section id="architecture" style={{ ...section, marginBottom: 88, scrollMarginTop: 96 }}>
+        <p style={label}>{isFr ? "Fonctionnement" : "How it works"}</p>
+        <h2 style={h2}>{isFr ? "Suivez une requête à travers la plateforme." : "Follow a request through the platform."}</h2>
+        <p style={{ fontSize: 14.5, color: "var(--kz-text-secondary)", lineHeight: 1.7, maxWidth: 680, margin: "0 0 24px" }}>
+          {isFr
+            ? "Trois parcours, étape par étape. Chaque point d'API cité est vérifié contre le code d'Orochia à chaque build du site."
+            : "Three journeys, step by step. Every API endpoint named here is checked against Orochia's code on every build of this site."}
+        </p>
+        <OrochiaArchitecture journeys={journeys} />
       </section>
 
       {/* ─── Repositories & facts ─── */}
@@ -229,6 +238,7 @@ export default async function OrochiaPage({ params }: Props) {
         <style>{`.kz-repo-card:hover{border-color:var(--kz-accent)!important}`}</style>
       </section>
 
+      <ContactCta topic="orochia" />
       <SiteFooter />
     </main>
   );
