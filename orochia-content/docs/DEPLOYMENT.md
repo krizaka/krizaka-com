@@ -15,6 +15,7 @@
 | `DATABASE_CA_CERT` | managed DB | CA of a managed PostgreSQL (`${<db>.CA_CERT}` on App Platform): TLS verified against it. |
 | `MAILGUN_API_KEY`, `MAILGUN_DOMAIN` (+ `MAILGUN_API_URL`, `MAIL_FROM`) | — | Transactional e-mail (sending subdomain `mg.orochia.com`). Without them nothing is sent. |
 | `COMPLIANCE_ALERT_EMAIL` | — | Receives every content report (`[URGENT]` for underage / non-consensual). |
+| `SEARCH_INDEXING=off` | dev / preview | Every page noindex, robots.txt disallows all: only production is indexed (build time). |
 | `OROCHIA_OWNER_EMAIL`, `_USERNAME`, `_NAME`, `_PASSWORD` | recommended | The default user (owner, ADMIN), applied by the release job — see *Owner account*. |
 | Gateway credentials | at least one | See `.env.example`. A gateway is offered only when **all** its variables are set. |
 
@@ -29,7 +30,7 @@ platform never runs on a placeholder secret.
 | Segpay | `/api/webhooks/payments/segpay` | `X-Segpay-Signature` (HMAC-SHA256, `SEGPAY_SECRET_KEY`) |
 | NowPayments | `/api/webhooks/payments/crypto` | `x-nowpayments-sig` (HMAC-SHA512 of the key-sorted body, `NOWPAYMENTS_IPN_SECRET`) |
 | Stripe | `/api/webhooks/payments/stripe` | `Stripe-Signature` (v1, 300 s tolerance, `STRIPE_WEBHOOK_SECRET`) — events `checkout.session.*` |
-| Bunny Stream | `/api/webhooks/bunny` | `BunnyCDN-Signature` (HMAC-SHA256, `BUNNY_WEBHOOK_SECRET`) |
+| Bunny Stream | `/api/webhooks/bunny` | `X-BunnyStream-Signature` v1 (HMAC-SHA256 of the raw body, keyed with the library's Read-Only API key = `BUNNY_WEBHOOK_SECRET`) |
 
 ## DigitalOcean App Platform
 
@@ -90,7 +91,17 @@ On every release `migrate.cjs` applies the migrations, then creates or reactivat
 | CDN token authentication | **on** — `BUNNY_STREAM_TOKEN_AUTH_KEY` is its key; every playback URL is signed for 300 s |
 | Block direct url file access | on, with **Allowed domains** `orochia.com`, `*.orochia.com` (and `localhost` while developing) |
 | Embed view token authentication | off — the app plays HLS itself, not Bunny's embedded player |
-| Webhook | `https://<domain>/api/webhooks/bunny`, secret = `BUNNY_WEBHOOK_SECRET` |
+| Webhook | `https://<domain>/api/webhooks/bunny`. Bunny signs it (v1, HMAC-SHA256) with the library's **Read-Only API key**: that key is `BUNNY_WEBHOOK_SECRET` |
+
+Thumbnails and preview animations are on the same CDN, so they are signed too — one file per token
+(`?token=…&expires=…`, 6-hour windows), which never opens the video's renditions.
+
+### Storage zone (avatars, thumbnails, 2257 documents)
+
+`BUNNY_STORAGE_ZONE`, `BUNNY_STORAGE_API_KEY` (the zone's password), `BUNNY_STORAGE_ENDPOINT` (region host, default
+`storage.bunnycdn.com` = Frankfurt) and `BUNNY_PULL_ZONE_HOSTNAME` (the pull zone connected to the storage zone). File
+names are random UUIDs. 2257 documents are stored under `private/` with no public URL and are read by operators only,
+through `GET /api/admin/documents?ref=…`: add an edge rule on the storage pull zone that blocks `/private/*`.
 
 The token is carried in the path (`/bcdn_token=…&token_path=/<guid>/…`) so renditions and segments, requested by
 relative URL, are authorised too. New uploads are filed in the collection `BUNNY_STREAM_COLLECTION_ID`; who may
