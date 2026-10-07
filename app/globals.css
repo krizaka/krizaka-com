@@ -1354,3 +1354,25 @@ body {
 /* RepositoryMap */
 .kz-repo-card:hover{border-color:var(--kz-accent);transform:translateY(-2px)}
 @media (prefers-reduced-motion: reduce){.kz-repo-card,.kz-repo-card:hover{transition:none;transform:none}}
+
+/* Orochia mark (OrochiaLogo): scales sliding along the serpent, flame/eye breathing. */
+@keyframes oro-slither { to { stroke-dashoffset: -64; } }
+.oro-slither { animation: oro-slither 2.4s linear infinite; }
+@keyframes oro-pulse {
+  0%, 100% { filter: drop-shadow(0 0 6px hsla(292, 84%, 61%, 0.25)); opacity: 0.92; }
+  50% { filter: drop-shadow(0 0 14px hsla(292, 84%, 61%, 0.55)); opacity: 1; }
+}
+.oro-pulse { animation: oro-pulse 3.2s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .oro-slither, .oro-pulse, .logo-spin { animation: none !important; }
+}
+
+/* Orazaka mark (OrazakaLogo): the official isotype's orbit + core pulse. */
+@keyframes oz-orbit { to { transform: rotate(360deg); } }
+.oz-orbit { transform-box: view-box; transform-origin: 0 0; animation: oz-orbit 35s linear infinite; }
+@keyframes oz-core {
+  0%, 100% { transform: scale(1); opacity: .9; filter: drop-shadow(0 0 3px #f59e0b); }
+  50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 10px #f59e0b); }
+}
+.oz-core { transform-box: fill-box; transform-origin: center; animation: oz-core 2.5s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .oz-orbit, .oz-core { animation: none !important; } }
