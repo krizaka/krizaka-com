@@ -1,9 +1,21 @@
 import fs from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
-import { getManifestEntry, isPublished, type Audience } from './docs-manifest';
+import { DOCS_MANIFEST, type Audience, type DocManifestEntry } from './docs-manifest';
+import { OROCHIA_DOCS_MANIFEST } from './orochia-docs-manifest';
 
-const DOCS_DIR = path.join(process.cwd(), 'orazaka-content/docs');
+/** Each product publishes the docs synced from its own repository, gated by its own manifest. */
+export type Product = 'orazaka' | 'orochia';
+
+const ORAZAKA_DOCS_DIR = path.join(process.cwd(), 'orazaka-content/docs');
+const OROCHIA_DOCS_DIR = path.join(process.cwd(), 'orochia-content/docs');
+
+// Explicit per product (not a lookup table) so the bundler traces exactly these two folders.
+function productDocs(product: Product): { dir: string; manifest: Record<string, DocManifestEntry> } {
+  return product === 'orochia'
+    ? { dir: OROCHIA_DOCS_DIR, manifest: OROCHIA_DOCS_MANIFEST }
+    : { dir: ORAZAKA_DOCS_DIR, manifest: DOCS_MANIFEST };
+}
 const README_PATH = path.join(process.cwd(), 'orazaka-content/README.md');
 
 export interface DocContent {
@@ -35,7 +47,8 @@ function extractDescriptionFromMarkdown(markdown: string): string {
   return '';
 }
 
-export async function getDocsList(): Promise<Omit<DocContent, 'content'>[]> {
+export async function getDocsList(product: Product = 'orazaka'): Promise<Omit<DocContent, 'content'>[]> {
+  const { dir: DOCS_DIR, manifest } = productDocs(product);
   try {
     const files = await fs.readdir(DOCS_DIR);
     const mdFiles = files.filter(f => f.endsWith('.md'));
@@ -47,8 +60,8 @@ export async function getDocsList(): Promise<Omit<DocContent, 'content'>[]> {
       // PUBLICATION GATE — only manifest-approved docs reach the public site.
       // Internal/contributor docs (agent rules, ADR ledgers, CI, UI guidelines)
       // are excluded by omission from the manifest.
-      if (!isPublished(slug)) continue;
-      const entry = getManifestEntry(slug)!;
+      const entry = manifest[slug];
+      if (!entry) continue;
 
       const content = await fs.readFile(path.join(DOCS_DIR, file), 'utf8');
       const { data, content: rawContent } = matter(content);
@@ -77,8 +90,13 @@ export async function getDocsList(): Promise<Omit<DocContent, 'content'>[]> {
   }
 }
 
-export async function getDocBySlugAndCategory(category: string, slug: string): Promise<DocContent | null> {
-  const list = await getDocsList();
+export async function getDocBySlugAndCategory(
+  category: string,
+  slug: string,
+  product: Product = 'orazaka',
+): Promise<DocContent | null> {
+  const DOCS_DIR = productDocs(product).dir;
+  const list = await getDocsList(product);
   const docMeta = list.find(d => d.slug === slug && d.category === category);
   
   if (!docMeta) return null;

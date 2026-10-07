@@ -141,6 +141,37 @@ export const DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     intro:
       "The Architecture Decision Records cited across the codebase — generated from the source. For developers who want the rationale behind the engine's structure.",
   },
+  repositories: {
+    title: "Repositories",
+    category: "architecture",
+    order: 2,
+    audience: "developer",
+    intro:
+      "Orazaka is one GitHub repository per component — users, notifications, billing, the AI engine, the UI kit… This map, generated from the workspace manifest, shows what each repository holds and what it depends on, so you can reuse only what your application needs.",
+  },
+  governance: {
+    title: "Governance Rules",
+    category: "guidelines",
+    order: 7,
+    audience: "developer",
+    intro:
+      "Every architecture rule enforced at build time and the test suites that enforce it — generated from the governance kit. For contributors who want to know what the build will refuse.",
+  },
+  worker_protocol: {
+    title: "Worker Protocol",
+    category: "api",
+    order: 4,
+    audience: "developer",
+    intro:
+      "The AMQP contract a worker speaks to join the platform — bindings, envelopes, progress and failure semantics. For developers writing a native or polyglot worker.",
+  },
+  licensing: {
+    title: "Licensing",
+    category: "guidelines",
+    order: 10,
+    audience: "decision-maker",
+    intro: "What the Apache-2.0 license covers across the Orazaka repositories, and what that means for your deployment.",
+  },
   glossary: {
     title: "Glossary",
     category: "guidelines",

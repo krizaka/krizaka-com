@@ -248,8 +248,11 @@ const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'TB') => 
   dagreGraph.setDefaultEdgeLabel(() => ({}));
 
   nodes.forEach((node) => {
-    if (node.type === 'group') {
+    if (node.type === 'group' && nodes.some((n) => n.parentId === node.id)) {
       dagreGraph.setNode(node.id, { label: node.data.label, paddingLeft: 30, paddingRight: 30, paddingTop: 60, paddingBottom: 30 });
+    } else if (node.type === 'group') {
+      // A childless group has no size for dagre to derive: without one its position is NaN.
+      dagreGraph.setNode(node.id, { label: node.data.label, width: 300, height: 200 });
     } else {
       dagreGraph.setNode(node.id, { width: 180, height: 60 });
     }
