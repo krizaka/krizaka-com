@@ -6,7 +6,7 @@ import { Menu, Sun, Moon, Search } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
 import KrizakaLogo from "./KrizakaLogo";
-import { GITHUB_REPO_URL } from "@/lib/site";
+import { GITHUB_ORG_URL } from "@/lib/site";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
 import { ProductsMenu } from "./ProductsMenu";
@@ -54,7 +54,7 @@ export default function TopNavBar() {
             gap: "0px",
             height: "52px",
             width: "100%",
-            maxWidth: "960px",
+            maxWidth: "1080px",
             paddingLeft: "24px",
             paddingRight: "16px",
             borderRadius: "9999px",
@@ -89,7 +89,7 @@ export default function TopNavBar() {
           </Link>
 
           {/* ─── Desktop Dropdown — Produits (flush after logo) ─── */}
-          <div className="nav-links" style={{ display: "flex", alignItems: "center", position: "relative", marginLeft: "20px" }}>
+          <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "2px", position: "relative", marginLeft: "20px" }}>
             <ProductsMenu />
           </div>
 
@@ -162,10 +162,10 @@ export default function TopNavBar() {
             {/* Desktop GitHub Link */}
             <a
               id="nav-github-link"
-              href={GITHUB_REPO_URL}
+              href={GITHUB_ORG_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="GitHub Repository"
+              aria-label="GitHub — krizaka"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -233,6 +233,11 @@ export default function TopNavBar() {
               {locale === "fr" ? "EN" : "FR"}
             </button>
 
+            {/* Primary call to action */}
+            <Link href="/contact" id="nav-contact-cta" className="btn-sheen">
+              {locale === "fr" ? "Nous contacter" : "Contact us"}
+            </Link>
+
             {/* Mobile Hamburger */}
             <button
               id="mobile-menu-trigger"
@@ -281,6 +286,9 @@ export default function TopNavBar() {
           #nav-lang-toggle {
             display: none !important;
           }
+          #nav-contact-cta {
+            display: none !important;
+          }
           .nav-hamburger {
             display: flex !important;
           }
@@ -298,6 +306,11 @@ export default function TopNavBar() {
           .nav-hamburger {
             display: none !important;
           }
+        }
+        #nav-contact-cta { display:inline-flex; align-items:center; height:32px; padding:0 14px; border-radius:9999px; font-size:12.5px;
+          font-weight:700; text-decoration:none; white-space:nowrap; background:var(--kz-accent); color:var(--kz-on-accent); }
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .search-placeholder-text { display: none; }
         }
         .nav-top-link:hover {
           color: var(--kz-text-primary) !important;

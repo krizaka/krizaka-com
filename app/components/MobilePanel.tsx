@@ -3,21 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import {
-  ArrowRight,
-  BookOpen,
-  Cpu,
-  Globe,
-  Layers,
-  Moon,
-  Play,
-  Sun,
-  X,
-} from "lucide-react";
+import { ChevronDown, Globe, Moon, Sun, X } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
 import KrizakaLogo from "./KrizakaLogo";
-import OrazakaLogo from "./OrazakaLogo";
+import ProductLogo from "./ProductLogo";
+import { NAV_ICONS } from "./ProductsMenu";
+import { NAV_COMPANY, NAV_PRODUCTS, isNavActive, localeless } from "@/lib/nav";
 
 /* ─── Mobile Menu Panel ─── */
 
@@ -31,12 +23,8 @@ export function MobilePanel({
   const { t, locale, toggleLocale } = useI18n();
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
-  const isDocsActive = pathname.startsWith("/products/orazaka") &&
-    !pathname.startsWith("/products/orazaka/packages") &&
-    !pathname.startsWith("/products/orazaka/usecases") &&
-    !pathname.startsWith("/products/orazaka/architecture") &&
-    !pathname.startsWith("/products/orazaka/demos") &&
-    !pathname.startsWith("/products/orazaka/ingenierie-cognitive");
+  const path = localeless(pathname);
+  const loc = locale === "fr" ? "fr" : "en";
 
   /* Close on route change */
   useEffect(() => {
@@ -147,99 +135,63 @@ export function MobilePanel({
           </button>
         </div>
 
-        {/* Product card */}
-        <div style={{ padding: "16px 20px" }}>
-          <Link
-            id="mobile-nav-orazaka"
-            href="/products/orazaka"
-            onClick={onClose}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              padding: "14px 16px",
-              borderRadius: "12px",
-              textDecoration: "none",
-              background: "var(--kz-surface-2)",
-              border: "1px solid var(--kz-border-subtle)",
-            }}
-          >
-            <div
-              style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "10px",
-                background: "var(--kz-surface-0)",
-                border: "1px solid hsla(217, 92%, 60%, 0.15)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexShrink: 0,
-              }}
-            >
-              <OrazakaLogo size={26} />
-            </div>
-            <div style={{ flex: 1 }}>
-              <div
-                style={{
-                  fontSize: "14px",
-                  fontWeight: 700,
-                  color: "var(--kz-text-primary)",
-                  fontFamily: "var(--font-display), system-ui, sans-serif",
-                }}
-              >
-                Orazaka
+        {/* Products — same five entries per product as the desktop mega-menu (lib/nav.ts) */}
+        <div style={{ flex: 1, padding: "14px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+          {NAV_PRODUCTS.map((p) => (
+            <details key={p.id} className="kz-mp-product" open={path.startsWith(p.href) || (!path.startsWith("/products/") && p.id === "orazaka")}>
+              <summary>
+                <span className="kz-mp-logo">
+                  <ProductLogo id={p.id} size={26} />
+                </span>
+                <span style={{ flex: 1, minWidth: 0 }}>
+                  <span className="kz-mp-name">{p.name}</span>
+                  <span className="kz-mp-tagline">{p.tagline[loc]}</span>
+                </span>
+                <ChevronDown size={16} className="kz-mp-chevron" aria-hidden />
+              </summary>
+              <div className="kz-mp-links">
+                {p.links.map((l) => {
+                  const Icon = NAV_ICONS[l.icon];
+                  return (
+                    <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
+                      <Icon size={16} strokeWidth={1.6} aria-hidden /> {l.label[loc]}
+                    </Link>
+                  );
+                })}
               </div>
-              <div style={{ fontSize: "12px", color: "var(--kz-text-muted)" }}>
-                {t.nav.orazakaDesc}
-              </div>
-            </div>
-            <ArrowRight size={14} style={{ color: "var(--kz-text-muted)", flexShrink: 0 }} />
-          </Link>
+            </details>
+          ))}
+
+          <div className="kz-mp-links" style={{ marginTop: "4px", paddingTop: "10px", borderTop: "1px solid var(--kz-border-subtle)" }}>
+            {NAV_COMPANY.map((l) => {
+              const Icon = NAV_ICONS[l.icon];
+              return (
+                <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
+                  <Icon size={16} strokeWidth={1.6} aria-hidden /> {l.label[loc]}
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Navigation links */}
-        <div
-          style={{
-            flex: 1,
-            padding: "0 20px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "2px",
-          }}
-        >
-          {[
-            { href: "/products/orazaka/architecture", label: t.nav.architecture, icon: <Cpu size={16} strokeWidth={1.5} />, active: pathname === "/products/orazaka/architecture" },
-            { href: "/products/orazaka/demos", label: t.nav.demos, active: pathname === "/products/orazaka/demos", icon: <Play size={16} strokeWidth={1.5} /> },
-            { href: "/products/orazaka", label: t.nav.docs, icon: <BookOpen size={16} strokeWidth={1.5} />, active: isDocsActive },
-            { href: "/products/orazaka/packages", label: t.nav.packages, active: pathname === "/products/orazaka/packages", icon: <Layers size={16} strokeWidth={1.5} /> },
-            { href: "/products/orochia", label: "Orochia", active: pathname === "/products/orochia", icon: <Play size={16} strokeWidth={1.5} /> },
-            { href: "/products/orochia/docs", label: locale === "fr" ? "Docs Orochia" : "Orochia docs", active: pathname.startsWith("/products/orochia/docs"), icon: <BookOpen size={16} strokeWidth={1.5} /> },
-            { href: "/open-source", label: "Open source", active: pathname === "/open-source", icon: <Layers size={16} strokeWidth={1.5} /> },
-          ].map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={onClose}
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-                padding: "12px 12px",
-                borderRadius: "8px",
-                fontSize: "14px",
-                fontWeight: link.active ? 600 : 500,
-                color: link.active ? "var(--kz-accent)" : "var(--kz-text-secondary)",
-                background: link.active ? "var(--kz-surface-2)" : "transparent",
-                textDecoration: "none",
-                fontFamily: "var(--font-display), system-ui, sans-serif",
-              }}
-            >
-              {link.icon}
-              {link.label}
-            </Link>
-          ))}
-        </div>
+        <style>{`
+          .kz-mp-product { border-radius: 14px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-2); overflow: hidden; }
+          .kz-mp-product summary { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; list-style: none; }
+          .kz-mp-product summary::-webkit-details-marker { display: none; }
+          .kz-mp-logo { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px;
+            background: var(--kz-surface-0); border: 1px solid var(--kz-border-subtle); flex-shrink: 0; }
+          .kz-mp-name { display: block; font-family: var(--font-display), system-ui, sans-serif; font-size: 14px; font-weight: 700; color: var(--kz-text-primary); }
+          .kz-mp-tagline { display: block; font-size: 12px; color: var(--kz-text-muted); }
+          .kz-mp-chevron { color: var(--kz-text-muted); transition: transform 200ms ease; flex-shrink: 0; }
+          .kz-mp-product[open] .kz-mp-chevron { transform: rotate(180deg); }
+          .kz-mp-product .kz-mp-links { padding: 0 8px 8px; }
+          .kz-mp-links { display: flex; flex-direction: column; gap: 2px; }
+          .kz-mp-link { display: flex; align-items: center; gap: 10px; padding: 10px 10px; border-radius: 8px; font-size: 14px; font-weight: 500;
+            color: var(--kz-text-secondary); text-decoration: none; font-family: var(--font-display), system-ui, sans-serif; }
+          .kz-mp-link svg { color: var(--kz-text-muted); }
+          .kz-mp-link.is-active { color: var(--kz-accent); font-weight: 600; background: var(--kz-surface-1); }
+          .kz-mp-link.is-active svg { color: var(--kz-accent); }
+        `}</style>
 
         {/* Controls */}
         <div

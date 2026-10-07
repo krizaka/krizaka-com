@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import KrizakaLogo from "./KrizakaLogo";
+import { NAV_PRODUCTS } from "@/lib/nav";
+import ProductLogo from "./ProductLogo";
 
 /* GitHub Icon SVG */
 function GitHubIcon({ size = 14 }: { size?: number }) {
@@ -17,19 +19,12 @@ function GitHubIcon({ size = 14 }: { size?: number }) {
 export default function SiteFooter() {
   const { locale } = useI18n();
 
-  const orazakaLinks = [
-    { label: locale === "fr" ? "Présentation" : "Overview", href: "/products/orazaka" },
-    { label: locale === "fr" ? "Documentation" : "Docs", href: "/products/orazaka/getting-started/101" },
-    { label: locale === "fr" ? "Fonctionnement" : "How it works", href: "/products/orazaka/architecture" },
-    { label: "Packages", href: "/products/orazaka/packages" },
-    { label: locale === "fr" ? "Démos" : "Demos", href: "/products/orazaka/demos" },
-  ];
-
-  const orochiaLinks = [
-    { label: locale === "fr" ? "Présentation" : "Overview", href: "/products/orochia" },
-    { label: locale === "fr" ? "Documentation" : "Docs", href: "/products/orochia/docs" },
-    { label: "API", href: "/products/orochia/docs/api_contracts" },
-  ];
+  // Same five entries per product as the menus (lib/nav.ts).
+  const loc = locale === "fr" ? "fr" : "en";
+  const linksOf = (id: "orazaka" | "orochia") =>
+    NAV_PRODUCTS.find((p) => p.id === id)!.links.map((l) => ({ label: l.label[loc], href: l.href }));
+  const orazakaLinks = linksOf("orazaka");
+  const orochiaLinks = linksOf("orochia");
 
   const krizakaLinks = [
     { label: locale === "fr" ? "Produits" : "Products", href: "/products" },
@@ -157,9 +152,12 @@ export default function SiteFooter() {
                   color: "var(--kz-text-muted)",
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
                 }}
               >
-                {locale === "fr" ? "Orazaka (Moteur IA)" : "Orazaka (AI Engine)"}
+                <ProductLogo id="orazaka" size={18} animated={false} /> Orazaka
               </span>
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {orazakaLinks.map((link) => (
@@ -189,9 +187,12 @@ export default function SiteFooter() {
                   color: "var(--kz-text-muted)",
                   letterSpacing: "0.08em",
                   textTransform: "uppercase",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
                 }}
               >
-                {locale === "fr" ? "Orochia (Vidéo créateurs)" : "Orochia (Creator video)"}
+                <ProductLogo id="orochia" size={18} animated={false} /> Orochia
               </span>
               <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {orochiaLinks.map((link) => (

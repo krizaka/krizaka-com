@@ -1,372 +1,207 @@
 "use client";
 
+/* Desktop navigation menus — a Products mega-menu (one identical column per product) and a Docs
+   menu. Data: lib/nav.ts, shared with the mobile panel. Opens on hover or click, closes on
+   Escape / outside click / route change. */
+
 import { usePathname } from "next/navigation";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { ChevronDown, BookOpen, Cpu, Layers, Play, Flame } from "lucide-react";
+import { ArrowRight, BookOpen, ChevronDown, Compass, Cpu, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useI18n } from "./I18nProvider";
-import OrazakaLogo from "./OrazakaLogo";
+import ProductLogo from "./ProductLogo";
+import { NAV_COMPANY, NAV_PRODUCTS, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
 
-/* ─── Desktop Products mega-menu (hover-open dropdown) ─── */
-export function ProductsMenu() {
-  const pathname = usePathname();
-  const { t, locale } = useI18n();
-  const [productsOpen, setProductsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+export const NAV_ICONS: Record<NavIcon, LucideIcon> = {
+  overview: Compass,
+  architecture: Cpu,
+  demo: PlayCircle,
+  docs: BookOpen,
+  signature: Sparkles,
+  repos: GitBranch,
+  contact: Mail,
+  products: LayoutGrid,
+};
 
-  const isOrochiaActive = pathname.startsWith("/products/orochia");
-  const isDocsActive = pathname.startsWith("/products/orazaka") &&
-    !pathname.startsWith("/products/orazaka/packages") &&
-    !pathname.startsWith("/products/orazaka/usecases") &&
-    !pathname.startsWith("/products/orazaka/architecture") &&
-    !pathname.startsWith("/products/orazaka/demos") &&
-    !pathname.startsWith("/products/orazaka/ingenierie-cognitive");
-  const isDemosActive = pathname === "/products/orazaka/demos";
-  const isArchitectureActive = pathname === "/products/orazaka/architecture";
-  const isEditionsActive = pathname === "/editions";
-  const isProductsActive = isOrochiaActive || isDocsActive || isDemosActive || isArchitectureActive || isEditionsActive || pathname.startsWith("/products/orazaka/packages") || pathname.startsWith("/products/orazaka/usecases") || pathname === "/products/orazaka/ingenierie-cognitive";
+function Dropdown({ id, label, active, width, children }: { id: string; label: string; active: boolean; width: number; children: ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onClick = (e: MouseEvent) => ref.current && !ref.current.contains(e.target as Node) && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onClick);
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onClick);
     };
-  }, []);
-
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    setProductsOpen(true);
-  };
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => setProductsOpen(false), 250);
-  };
+  }, [open]);
+  useEffect(() => () => void (timer.current && clearTimeout(timer.current)), []);
 
   return (
-            <div
-              ref={dropdownRef}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              style={{ position: "relative" }}
-            >
-              <button
-                id="nav-products-trigger"
-                type="button"
-                aria-expanded={productsOpen}
-                aria-haspopup="true"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "4px",
-                  fontSize: "13px",
-                  lineHeight: 1,
-                  color: isProductsActive ? "var(--kz-accent)" : "var(--kz-text-muted)",
-                  fontWeight: isProductsActive ? 600 : 500,
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  fontFamily: "inherit",
-                  padding: "6px 12px",
-                  borderRadius: "9999px",
-                  transition: "all 200ms ease",
-                }}
-              >
-                {locale === "fr" ? "Produits" : "Products"}
-                <ChevronDown
-                  size={12}
-                  strokeWidth={2}
-                  style={{
-                    transition: "transform 200ms ease",
-                    transform: productsOpen ? "rotate(180deg)" : "rotate(0deg)",
-                  }}
-                />
-              </button>
+    <div
+      ref={ref}
+      className="kz-dd"
+      onMouseEnter={() => {
+        if (timer.current) clearTimeout(timer.current);
+        setOpen(true);
+      }}
+      onMouseLeave={() => {
+        timer.current = setTimeout(() => setOpen(false), 200);
+      }}
+    >
+      <button
+        id={id}
+        type="button"
+        className={`kz-dd-trigger${active ? " is-active" : ""}`}
+        aria-expanded={open}
+        aria-controls={`${id}-panel`}
+        onClick={() => setOpen((o) => !o)}
+      >
+        {label}
+        <ChevronDown size={12} strokeWidth={2} className="kz-dd-chevron" />
+      </button>
+      <div
+        id={`${id}-panel`}
+        className={`kz-dd-panel${open ? " is-open" : ""}`}
+        style={{ width }}
+        // Following a link closes the menu.
+        onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}
+      >
+        <div className="kz-dd-bridge" />
+        {children}
+      </div>
+    </div>
+  );
+}
 
-              {isProductsActive && (
-                <span
-                  style={{
-                    position: "absolute",
-                    bottom: "-12px",
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: "4px",
-                    height: "4px",
-                    borderRadius: "50%",
-                    background: "var(--kz-accent)",
-                    boxShadow: "0 0 8px var(--kz-accent)",
-                    pointerEvents: "none",
-                  }}
-                />
-              )}
+function MenuLink({ link, loc, pathname }: { link: NavLink; loc: "fr" | "en"; pathname: string }) {
+  const Icon = NAV_ICONS[link.icon];
+  const active = isNavActive(link, pathname);
+  return (
+    <Link href={link.href} className={`kz-menu-link${active ? " is-active" : ""}`}>
+      <Icon size={15} strokeWidth={1.8} className="kz-menu-icon" aria-hidden />
+      <span>
+        <span className="kz-menu-label">{link.label[loc]}</span>
+        <span className="kz-menu-desc">{link.desc[loc]}</span>
+      </span>
+    </Link>
+  );
+}
 
-              {/* Dropdown panel */}
-              <div
-                role="menu"
-                style={{
-                  position: "absolute",
-                  top: "calc(100% + 14px)",
-                  left: "50%",
-                  width: "350px",
-                  padding: "16px",
-                  borderRadius: "16px",
-                  background: "color-mix(in srgb, var(--kz-surface-1) 97%, transparent)",
-                  backdropFilter: "blur(32px) saturate(200%)",
-                  WebkitBackdropFilter: "blur(32px) saturate(200%)",
-                  border: "1px solid var(--kz-border-subtle)",
-                  boxShadow: "0 24px 48px rgba(0, 0, 0, 0.25), 0 0 32px var(--kz-accent-soft)",
-                  opacity: productsOpen ? 1 : 0,
-                  pointerEvents: productsOpen ? "auto" : "none",
-                  transform: productsOpen ? "translateX(-50%) translateY(0)" : "translateX(-50%) translateY(-8px)",
-                  transition: "opacity 250ms cubic-bezier(0.16,1,0.3,1), transform 250ms cubic-bezier(0.16,1,0.3,1)",
-                }}
-              >
-                {/* Hover bridge */}
-                <div style={{ position: "absolute", top: "-16px", left: 0, right: 0, height: "16px" }} />
+export function ProductsMenu() {
+  const pathname = localeless(usePathname());
+  const { locale } = useI18n();
+  const loc = locale === "fr" ? "fr" : "en";
+  const productsActive = pathname.startsWith("/products");
 
-                {/* Dropdown Header — Orazaka as a Product */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    paddingBottom: "14px",
-                    borderBottom: "1px solid var(--kz-border-subtle)",
-                    marginBottom: "14px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "8px",
-                      background: "linear-gradient(135deg, var(--kz-surface-2), var(--kz-surface-1))",
-                      border: "1px solid hsla(217, 92%, 60%, 0.15)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                      boxShadow: "0 2px 8px var(--kz-accent-soft)",
-                    }}
-                  >
-                    <OrazakaLogo size={22} />
-                  </div>
-                  <div>
-                    <span style={{ fontSize: "14px", fontWeight: 700, color: "var(--kz-text-primary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
-                      Orazaka
-                    </span>
-                    <div style={{ fontSize: "11px", color: "var(--kz-text-secondary)", marginTop: "1px" }}>
-                      {locale === "fr" ? "Moteur d'orchestration IA souverain" : "Sovereign AI orchestration engine"}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Group 1: Plateforme & Flow */}
-                <div style={{ marginBottom: "16px" }}>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-mono, monospace)",
-                      fontSize: "9px",
-                      fontWeight: 700,
-                      color: "var(--kz-text-muted)",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      marginBottom: "6px",
-                      paddingLeft: "8px",
-                    }}
-                  >
-                    {locale === "fr" ? "Moteur & Flow" : "Engine & Flow"}
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                    {[
-                      { href: "/products/orazaka/architecture", label: t.nav.architecture, desc: locale === "fr" ? "Schéma de fonctionnement interactif" : "Interactive operational schema", icon: <Cpu size={13} strokeWidth={1.8} /> },
-                    ].map((sub, idx) => {
-                      const isSubActive = pathname === sub.href;
-                      return (
-                        <Link
-                          key={idx}
-                          href={sub.href}
-                          role="menuitem"
-                          className="nav-sub-link"
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                            padding: "8px 10px",
-                            borderRadius: "8px",
-                            textDecoration: "none",
-                            background: isSubActive ? "var(--kz-surface-2)" : "transparent",
-                            transition: "all 200ms cubic-bezier(0.16, 1, 0.3, 1)",
-                          }}
-                        >
-                          <div style={{ color: isSubActive ? "var(--kz-accent)" : "var(--kz-text-secondary)", display: "flex", alignItems: "center", flexShrink: 0 }}>
-                            {sub.icon}
-                          </div>
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ fontSize: "12px", fontWeight: 600, color: isSubActive ? "var(--kz-text-primary)" : "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
-                              {sub.label}
-                            </div>
-                            <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                              {sub.desc}
-                            </div>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Group 2: Ressources & Dev */}
-                <div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-mono, monospace)",
-                      fontSize: "9px",
-                      fontWeight: 700,
-                      color: "var(--kz-text-muted)",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      marginBottom: "6px",
-                      paddingLeft: "8px",
-                    }}
-                  >
-                    {locale === "fr" ? "Ressources & Dev" : "Resources & Dev"}
-                  </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-                    {[
-                      { href: "/products/orazaka/demos", label: t.nav.demos, desc: locale === "fr" ? "Bac à sable & simulations" : "Sandbox & simulations", icon: <Play size={13} strokeWidth={1.8} /> },
-                      { href: "/products/orazaka", label: t.nav.docs, desc: locale === "fr" ? "Référence d'API & Guides de configuration" : "API Reference & Config guides", icon: <BookOpen size={13} strokeWidth={1.8} /> },
-                      { href: "/products/orazaka/packages", label: t.nav.packages, desc: locale === "fr" ? "Configurations de souveraineté & conformité" : "Sovereignty & compliance configs", icon: <Layers size={13} strokeWidth={1.8} /> },
-                    ].map((sub, idx) => {
-                      const isSubActive = pathname === sub.href || (sub.href === "/products/orazaka" && isDocsActive);
-                      return (
-                        <Link
-                          key={idx}
-                          href={sub.href}
-                          role="menuitem"
-                          className="nav-sub-link"
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                            padding: "8px 10px",
-                            borderRadius: "8px",
-                            textDecoration: "none",
-                            background: isSubActive ? "var(--kz-surface-2)" : "transparent",
-                            transition: "all 200ms cubic-bezier(0.16, 1, 0.3, 1)",
-                          }}
-                        >
-                          <div style={{ color: isSubActive ? "var(--kz-accent)" : "var(--kz-text-secondary)", display: "flex", alignItems: "center", flexShrink: 0 }}>
-                            {sub.icon}
-                          </div>
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ fontSize: "12px", fontWeight: 600, color: isSubActive ? "var(--kz-text-primary)" : "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
-                              {sub.label}
-                            </div>
-                            <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                              {sub.desc}
-                            </div>
-                          </div>
-                        </Link>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Group 3: Orochia — Streaming 4K & Créateurs */}
-                <div style={{ marginTop: "16px", paddingTop: "14px", borderTop: "1px solid var(--kz-border-subtle)" }}>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      marginBottom: "6px",
-                      paddingLeft: "8px",
-                      paddingRight: "8px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontFamily: "var(--font-mono, monospace)",
-                        fontSize: "9px",
-                        fontWeight: 700,
-                        color: "var(--kz-accent)",
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                      }}
-                    >
-                      <Flame size={12} />
-                      <span>{locale === "fr" ? "Orochia • Nouveau" : "Orochia • New"}</span>
-                    </div>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-mono, monospace)",
-                        fontSize: "9px",
-                        color: "var(--kz-status-success)",
-                        fontWeight: 600,
-                      }}
-                    >
-                      Open source
-                    </span>
-                  </div>
-
-                  <Link
-                    href="/products/orochia"
-                    role="menuitem"
-                    className="nav-sub-link"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      padding: "8px 10px",
-                      borderRadius: "8px",
-                      textDecoration: "none",
-                      background: isOrochiaActive ? "var(--kz-surface-2)" : "transparent",
-                      transition: "all 200ms cubic-bezier(0.16, 1, 0.3, 1)",
-                    }}
-                  >
-                    <div style={{ color: isOrochiaActive ? "var(--kz-accent)" : "var(--kz-text-secondary)", display: "flex", alignItems: "center", flexShrink: 0 }}>
-                      <Flame size={13} strokeWidth={1.8} />
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: "12px", fontWeight: 600, color: isOrochiaActive ? "var(--kz-text-primary)" : "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
-                        {locale === "fr" ? "Plateforme vidéo créateurs" : "Creator video platform"}
-                      </div>
-                      <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                        {locale === "fr" ? "Streaming, paywalls, conformité 18+" : "Streaming, paywalls, 18+ compliance"}
-                      </div>
-                    </div>
-                  </Link>
-                  <Link href="/products/orochia/docs" role="menuitem" className="nav-sub-link" style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 10px", borderRadius: "8px", textDecoration: "none" }}>
-                    <div style={{ color: "var(--kz-text-secondary)", display: "flex", alignItems: "center", flexShrink: 0 }}>
-                      <BookOpen size={13} strokeWidth={1.8} />
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
-                        {locale === "fr" ? "Documentation Orochia" : "Orochia docs"}
-                      </div>
-                      <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)" }}>
-                        {locale === "fr" ? "Architecture, API, déploiement" : "Architecture, API, deployment"}
-                      </div>
-                    </div>
-                  </Link>
-                  <Link href="/open-source" role="menuitem" className="nav-sub-link" style={{ display: "flex", alignItems: "center", gap: "10px", padding: "8px 10px", borderRadius: "8px", textDecoration: "none" }}>
-                    <div style={{ color: "var(--kz-text-secondary)", display: "flex", alignItems: "center", flexShrink: 0 }}>
-                      <Layers size={13} strokeWidth={1.8} />
-                    </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--kz-text-secondary)", fontFamily: "var(--font-display), system-ui, sans-serif" }}>
-                        {locale === "fr" ? "Open source" : "Open source"}
-                      </div>
-                      <div style={{ fontSize: "10.5px", color: "var(--kz-text-muted)" }}>
-                        {locale === "fr" ? "Tous les dépôts Krizaka" : "Every Krizaka repository"}
-                      </div>
-                    </div>
-                  </Link>
-                </div>
+  return (
+    <>
+      <Dropdown id="nav-products-trigger" label={loc === "fr" ? "Produits" : "Products"} active={productsActive} width={640}>
+        <div className="kz-mega">
+          {NAV_PRODUCTS.map((p) => (
+            <div key={p.id} className="kz-mega-col">
+              <Link href={p.href} className="kz-mega-head">
+                <span className="kz-mega-logo">
+                  <ProductLogo id={p.id} size={30} />
+                </span>
+                <span style={{ minWidth: 0 }}>
+                  <span className="kz-mega-name">
+                    {p.name} <span className="kz-mega-badge">{p.badge[loc]}</span>
+                  </span>
+                  <span className="kz-mega-tagline">{p.tagline[loc]}</span>
+                </span>
+              </Link>
+              <div className="kz-mega-links">
+                {p.links.map((l) => (
+                  <MenuLink key={l.href} link={l} loc={loc} pathname={pathname} />
+                ))}
               </div>
             </div>
+          ))}
+        </div>
+        <div className="kz-mega-foot">
+          {NAV_COMPANY.map((l) => {
+            const Icon = NAV_ICONS[l.icon];
+            return (
+              <Link key={l.href} href={l.href} className="kz-mega-foot-link">
+                <Icon size={14} aria-hidden /> {l.label[loc]}
+              </Link>
+            );
+          })}
+        </div>
+      </Dropdown>
+
+      <Dropdown id="nav-docs-trigger" label="Docs" active={pathname.includes("/docs") || pathname.startsWith("/products/orazaka/getting-started")} width={300}>
+        {NAV_PRODUCTS.map((p) => {
+          const docs = p.links.find((l) => l.icon === "docs")!;
+          return (
+            <Link key={p.id} href={docs.href} className={`kz-menu-link${isNavActive(docs, pathname) ? " is-active" : ""}`}>
+              <ProductLogo id={p.id} size={22} animated={false} />
+              <span>
+                <span className="kz-menu-label">{p.name}</span>
+                <span className="kz-menu-desc">{docs.desc[loc]}</span>
+              </span>
+              <ArrowRight size={13} className="kz-menu-arrow" aria-hidden />
+            </Link>
+          );
+        })}
+      </Dropdown>
+
+      <Link href="/open-source" className={`kz-dd-trigger${pathname === "/open-source" ? " is-active" : ""}`}>
+        Open source
+      </Link>
+
+      <style>{`
+        .kz-dd { position: relative; }
+        .kz-dd-trigger { display:inline-flex; align-items:center; gap:4px; padding:6px 12px; border-radius:9999px; border:0; background:none;
+          font:inherit; font-size:13px; font-weight:500; line-height:1; color:var(--kz-text-muted); cursor:pointer; text-decoration:none;
+          transition:color 150ms ease, background-color 150ms ease; white-space:nowrap; }
+        .kz-dd-trigger:hover, .kz-dd-trigger[aria-expanded="true"] { color:var(--kz-text-primary); background:var(--kz-surface-2); }
+        .kz-dd-trigger.is-active { color:var(--kz-accent); font-weight:600; }
+        .kz-dd-chevron { transition: transform 200ms ease; }
+        .kz-dd-trigger[aria-expanded="true"] .kz-dd-chevron { transform: rotate(180deg); }
+        .kz-dd-panel { position:absolute; top:calc(100% + 14px); left:50%; padding:14px; border-radius:18px; z-index:60;
+          background:color-mix(in srgb, var(--kz-surface-1) 97%, transparent); backdrop-filter:blur(32px) saturate(200%);
+          -webkit-backdrop-filter:blur(32px) saturate(200%); border:1px solid var(--kz-border-subtle);
+          box-shadow:0 24px 48px rgba(0,0,0,.22), 0 0 32px var(--kz-accent-soft);
+          opacity:0; visibility:hidden; pointer-events:none; transform:translateX(-50%) translateY(-6px);
+          transition:opacity 200ms cubic-bezier(.16,1,.3,1), transform 200ms cubic-bezier(.16,1,.3,1), visibility 0s linear 200ms; }
+        .kz-dd-panel.is-open { opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0);
+          transition:opacity 200ms cubic-bezier(.16,1,.3,1), transform 200ms cubic-bezier(.16,1,.3,1); }
+        .kz-dd-bridge { position:absolute; top:-16px; left:0; right:0; height:16px; }
+        .kz-mega { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+        .kz-mega-col { display:flex; flex-direction:column; gap:6px; min-width:0; }
+        .kz-mega-head { display:flex; align-items:center; gap:12px; padding:10px; border-radius:12px; text-decoration:none;
+          background:var(--kz-surface-2); border:1px solid var(--kz-border-subtle); transition:border-color 150ms ease; }
+        .kz-mega-head:hover { border-color:var(--kz-border-strong); }
+        .kz-mega-logo { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:10px;
+          background:var(--kz-surface-0); border:1px solid var(--kz-border-subtle); flex-shrink:0; }
+        .kz-mega-name { display:flex; align-items:center; gap:6px; font-family:var(--font-display), system-ui, sans-serif; font-size:14px;
+          font-weight:700; color:var(--kz-text-primary); }
+        .kz-mega-badge { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+          padding:2px 6px; border-radius:999px; color:var(--kz-text-muted); border:1px solid var(--kz-border-default); }
+        .kz-mega-tagline { display:block; font-size:11.5px; color:var(--kz-text-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .kz-mega-links { display:flex; flex-direction:column; gap:1px; }
+        .kz-menu-link { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:9px; text-decoration:none;
+          transition:background-color 150ms ease; }
+        .kz-menu-link:hover, .kz-menu-link.is-active { background:var(--kz-surface-2); }
+        .kz-menu-icon { color:var(--kz-text-muted); flex-shrink:0; transition:color 150ms ease, transform 200ms ease; }
+        .kz-menu-link:hover .kz-menu-icon, .kz-menu-link.is-active .kz-menu-icon { color:var(--kz-accent); transform:scale(1.1); }
+        .kz-menu-label { display:block; font-family:var(--font-display), system-ui, sans-serif; font-size:12.5px; font-weight:600; color:var(--kz-text-primary); }
+        .kz-menu-desc { display:block; font-size:11px; color:var(--kz-text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .kz-menu-link > span { flex:1; min-width:0; }
+        .kz-menu-arrow { color:var(--kz-text-muted); flex-shrink:0; }
+        .kz-mega-foot { display:flex; gap:6px; margin-top:12px; padding-top:12px; border-top:1px solid var(--kz-border-subtle); }
+        .kz-mega-foot-link { flex:1; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:9px 10px; border-radius:10px;
+          font-size:12.5px; font-weight:600; color:var(--kz-text-secondary); text-decoration:none; transition:background-color 150ms ease, color 150ms ease; }
+        .kz-mega-foot-link:hover { background:var(--kz-surface-2); color:var(--kz-text-primary); }
+        @media (prefers-reduced-motion: reduce) { .kz-dd-panel, .kz-dd-panel.is-open { transition:none; } }
+      `}</style>
+    </>
   );
 }
