@@ -335,27 +335,7 @@ body {
   100% { transform: translateX(400%); }
 }
 
-/* Logo ambient pulse */
-@keyframes core-pulse {
-  0%, 100% {
-    filter: drop-shadow(0 0 8px hsla(217, 92%, 60%, 0.2)) drop-shadow(0 0 24px hsla(217, 92%, 60%, 0.06));
-  }
-  50% {
-    filter: drop-shadow(0 0 12px hsla(217, 92%, 60%, 0.35)) drop-shadow(0 0 36px hsla(217, 92%, 60%, 0.12));
-  }
-}
-.logo-pulse {
-  animation: core-pulse 4s ease-in-out infinite;
-}
-
-/* Logo slow rotation */
-@keyframes logo-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-.logo-spin {
-  animation: logo-spin 30s linear infinite;
-}
+/* The brand marks (Krizaka, Orazaka, Orochia) carry their own motion: @krizaka/ui. */
 
 /* ═══════════════════════════════════════════════════════════════════
    ORAZAKA ORBIT SYSTEM — CSS offset-path Particle
@@ -1355,27 +1335,6 @@ body {
 .kz-repo-card:hover{border-color:var(--kz-accent);transform:translateY(-2px)}
 @media (prefers-reduced-motion: reduce){.kz-repo-card,.kz-repo-card:hover{transition:none;transform:none}}
 
-/* Orochia mark (OrochiaLogo): scales sliding along the serpent, flame/eye breathing. */
-@keyframes oro-slither { to { stroke-dashoffset: -64; } }
-.oro-slither { animation: oro-slither 2.4s linear infinite; }
-@keyframes oro-pulse {
-  0%, 100% { filter: drop-shadow(0 0 6px hsla(292, 84%, 61%, 0.25)); opacity: 0.92; }
-  50% { filter: drop-shadow(0 0 14px hsla(292, 84%, 61%, 0.55)); opacity: 1; }
-}
-.oro-pulse { animation: oro-pulse 3.2s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) {
-  .oro-slither, .oro-pulse, .logo-spin { animation: none !important; }
-}
-
-/* Orazaka mark (OrazakaLogo): the official isotype's orbit + core pulse. */
-@keyframes oz-orbit { to { transform: rotate(360deg); } }
-.oz-orbit { transform-box: view-box; transform-origin: 0 0; animation: oz-orbit 35s linear infinite; }
-@keyframes oz-core {
-  0%, 100% { transform: scale(1); opacity: .9; filter: drop-shadow(0 0 3px #f59e0b); }
-  50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 10px #f59e0b); }
-}
-.oz-core { transform-box: fill-box; transform-origin: center; animation: oz-core 2.5s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) { .oz-orbit, .oz-core { animation: none !important; } }
 
 /* React Flow controls follow the theme (the default buttons are white on both themes). */
 .react-flow__controls { box-shadow: var(--kz-shadow-lg); border-radius: 10px; overflow: hidden; border: 1px solid var(--kz-border-subtle); }

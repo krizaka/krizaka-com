@@ -36,8 +36,9 @@
 - `lib/nav.ts` is the single source of the product navigation: the desktop mega-menu, the mobile
   panel, the footer and the home spotlights all render it. Every product exposes the same five
   entries in the same order (overview · how it works · demo · documentation · signature).
-- Product marks are the animated logos (`ProductLogo` → `OrazakaLogo` / `OrochiaLogo`, same motion
-  grammar as `KrizakaLogo`); never a placeholder icon.
+- Brand marks come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui) on npm (`KrizakaLogo`,
+  `OrazakaLogo`, `OrochiaLogo`, `ProductLogo`) — the same package the products use, never a copy in this repo.
+  Never a placeholder icon. A change to a mark is made in `krizaka-ui`, released, then adopted here.
 - Product recordings live in `public/assets/<product>/tour/<clip>.{webm,mp4,jpg}`, recorded on the
   real application; endpoints named by the Orochia journeys are verified against the generated
   architecture data at build time (`lib/orochia-journeys.ts`).

@@ -8,10 +8,10 @@ import { useSyncExternalStore } from "react";
 import { useReducedMotion } from "framer-motion";
 import { ArrowRight, Check, GitBranch, ExternalLink } from "lucide-react";
 import { useI18n } from "../I18nProvider";
-import ProductLogo from "../ProductLogo";
 import { NAV_ICONS } from "../ProductsMenu";
 import { PRODUCTS } from "@/lib/org-data";
 import { NAV_PRODUCTS } from "@/lib/nav";
+import { ProductLogo } from "@krizaka/ui";
 
 const noop = () => () => {};
 

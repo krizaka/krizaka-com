@@ -5,11 +5,11 @@ import { useState, useCallback, useEffect } from "react";
 import { Menu, Sun, Moon, Search } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
-import KrizakaLogo from "./KrizakaLogo";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
 import { ProductsMenu } from "./ProductsMenu";
+import { KrizakaLogo } from "@krizaka/ui";
 
 export default function TopNavBar() {
   const { t, toggleLocale } = useI18n();

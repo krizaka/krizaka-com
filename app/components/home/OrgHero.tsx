@@ -9,8 +9,8 @@ import { format } from "@/lib/i18n";
 import KrizakaLandscape from "../illustrations/KrizakaLandscape";
 import RotatingWord from "./RotatingWord";
 import { PRODUCTS } from "@/lib/org-data";
-import ProductLogo from "../ProductLogo";
 import { GITHUB_ORG_URL } from "@/lib/site";
+import { ProductLogo } from "@krizaka/ui";
 
 export default function OrgHero({ repositoryCount }: { repositoryCount: number }) {
   const { t, locale } = useI18n();

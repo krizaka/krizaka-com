@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n } from "./I18nProvider";
-import KrizakaLogo from "./KrizakaLogo";
 import { NAV_PRODUCTS } from "@/lib/nav";
-import ProductLogo from "./ProductLogo";
+import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 /* GitHub Icon SVG */
 function GitHubIcon({ size = 14 }: { size?: number }) {

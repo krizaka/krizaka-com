@@ -9,8 +9,8 @@ import { ArrowRight, Check, CreditCard, Database, Film, PlayCircle, ShieldAlert,
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "@/app/components/I18nProvider";
 import { format } from "@/lib/i18n";
-import OrochiaLogo from "@/app/components/OrochiaLogo";
 import { ComplianceSentryScene, SignedDeliveryScene, WatchPartyScene } from "@/app/components/illustrations/OrochiaScenes";
+import { OrochiaLogo } from "@krizaka/ui";
 
 interface Props {
   docs: { slug: string; title: string; category: string }[];

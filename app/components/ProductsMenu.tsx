@@ -10,8 +10,8 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, ChevronDown, Compass, Cpu, Feather, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "./I18nProvider";
-import ProductLogo from "./ProductLogo";
 import { NAV_COMPANY, NAV_PRODUCTS, companyLinkText, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
+import { ProductLogo } from "@krizaka/ui";
 
 export const NAV_ICONS: Record<NavIcon, LucideIcon> = {
   overview: Compass,

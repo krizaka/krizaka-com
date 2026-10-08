@@ -15,7 +15,7 @@ export interface OrgRepository {
   name: string;
   url: string;
   description: string;
-  product: "orazaka" | "orochia";
+  product: "krizaka" | "orazaka" | "orochia";
   group: string;
 }
 
@@ -48,7 +48,17 @@ export function orgRepositories(): OrgRepository[] {
     product: "orochia" as const,
     group: "orochia",
   }));
-  return [workspace, ...oz, ...oc];
+  // Organisation-level repositories that belong to no product (they have no generated architecture file).
+  const shared: OrgRepository[] = [
+    {
+      name: "krizaka-ui",
+      url: "https://github.com/krizaka/krizaka-ui",
+      description: "@krizaka/ui — the Krizaka brand layer shared by every product: animated marks and the motion signature.",
+      product: "krizaka",
+      group: "brand",
+    },
+  ];
+  return [workspace, ...oz, ...oc, ...shared];
 }
 
 export interface Product {

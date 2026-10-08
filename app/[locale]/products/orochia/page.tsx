@@ -7,12 +7,12 @@ import { localizedMetadata } from "@/lib/seo";
 import orochia from "@/app/data/orochia-architecture.json";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
-import OrochiaLogo from "@/app/components/OrochiaLogo";
 import OrochiaArchitecture from "@/app/components/OrochiaArchitecture";
 import ProductTour from "@/app/components/ProductTour";
 import { format, getDictionary } from "@/lib/i18n";
 import ContactCta from "@/app/components/home/ContactCta";
 import { verifiedJourneys } from "@/lib/orochia-journeys";
+import { OrochiaLogo } from "@krizaka/ui";
 
 interface Props {
   params: Promise<{ locale: string }>;

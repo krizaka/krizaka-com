@@ -5,7 +5,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import ProductLogo from "./ProductLogo";
 import { localeless } from "@/lib/nav";
 import {
   BookOpen,
@@ -22,6 +21,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { ProductLogo } from "@krizaka/ui";
 
 const CATEGORY_META: Record<string, { icon: typeof BookOpen; label: string }> = {
   "getting-started": { icon: Rocket, label: "Getting Started" },

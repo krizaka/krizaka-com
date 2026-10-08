@@ -7,7 +7,9 @@ import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
-import ProductLogo from "@/app/components/ProductLogo";
+import { ProductLogo } from "@krizaka/ui";
+import { NPM_PACKAGES, npmUrl, repoUrl } from "@/lib/npm-packages";
+import PackageGlyph from "@/app/components/packages/PackageGlyph";
 
 /* /open-source — for developers who want to build with Krizaka's pieces: what can be reused, how
    to take it, and every public repository. The repository list comes from the generated product
@@ -75,6 +77,7 @@ function RepoCard({ repo }: { repo: OrgRepository }) {
 export default async function OpenSourcePage({ params }: Props) {
   const { locale } = await params;
   const t = getDictionary(locale).site.openSource;
+  const pk = getDictionary(locale).site.packages;
   const repositories = orgRepositories();
   const byName = new Map(repositories.map((r) => [r.name, r]));
 
@@ -163,6 +166,33 @@ export default async function OpenSourcePage({ params }: Props) {
         </section>
       ))}
 
+      <section className="os-section" id="packages">
+        <p className="os-eyebrow">{pk.eyebrow}</p>
+        <h2 className="os-h2">{pk.title}</h2>
+        <p className="os-pk-lead">{pk.lead}</p>
+        <div className="os-packages">
+          {NPM_PACKAGES.map((p) => (
+            <article key={p.id} className="os-package">
+              <PackageGlyph id={p.id} size={48} />
+              <div className="os-package-body">
+                <p className="os-package-role">{pk.items[p.id].role}</p>
+                <h3>{p.name}</h3>
+                <p>{pk.items[p.id].line}</p>
+                <code>npm install {p.name}</code>
+                <div className="os-package-links">
+                  <a href={npmUrl(p)} target="_blank" rel="noopener noreferrer">
+                    {pk.npm} <ArrowUpRight size={13} aria-hidden />
+                  </a>
+                  <a href={repoUrl(p)} target="_blank" rel="noopener noreferrer">
+                    {pk.source} <ArrowUpRight size={13} aria-hidden />
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="os-section">
         <div className="os-promises">
           {PROMISES.map(({ id, icon: Icon }) => (
@@ -194,6 +224,19 @@ export default async function OpenSourcePage({ params }: Props) {
       <SiteFooter />
 
       <style>{`
+        .os-pk-lead { max-width: 640px; margin: -4px 0 24px; font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); }
+        .os-packages { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 14px; }
+        .os-package { display: flex; gap: 16px; padding: 20px; border-radius: 20px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: border-color .25s, transform .25s; }
+        .os-package:hover { border-color: var(--kz-border-strong); transform: translateY(-2px); }
+        @media (prefers-reduced-motion: reduce) { .os-package, .os-package:hover { transition: none; transform: none; } }
+        .os-package-body { min-width: 0; }
+        .os-package-role { margin: 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--kz-accent); }
+        .os-package h3 { margin: 6px 0 0; font-family: var(--font-mono); font-size: 14.5px; font-weight: 700; overflow-wrap: anywhere; }
+        .os-package p:not(.os-package-role) { margin: 6px 0 0; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary); }
+        .os-package code { display: block; margin-top: 12px; padding: 8px 10px; border-radius: 10px; font-family: var(--font-mono); font-size: 12px; background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle); color: var(--kz-text-primary); overflow-x: auto; white-space: nowrap; }
+        .os-package-links { display: flex; gap: 14px; margin-top: 12px; }
+        .os-package-links a { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
+        .os-package-links a:hover { color: var(--kz-accent); }
         .os-hero { max-width: 760px; margin: 0 auto; padding: clamp(128px, 16vw, 176px) 20px 40px; text-align: center; }
         .os-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-accent); margin: 0 0 12px; }
         .os-hero h1 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.08; margin: 0; }

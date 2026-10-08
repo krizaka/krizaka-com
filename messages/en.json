@@ -811,6 +811,18 @@
       "ctaContact": "Write to us",
       "arcade": {
         "continue": "Continue?"
+      },
+      "layers": {
+        "label": "The pattern in the steel",
+        "title": "Folded once, used everywhere.",
+        "lead": "A kris draws its strength from layers of steel folded onto each other. Our interfaces are forged the same way: one brand layer, folded into each product's kit, and every layer published in the open — anyone can use it, anyone can check the pattern.",
+        "items": {
+          "ui": "The first fold: the marks and the way everything moves.",
+          "orochiaDs": "Folded for Orochia: the serpent's colours, every control a creator touches.",
+          "orazakaDs": "Folded for Orazaka: the oracle's interface, on every screen it speaks from.",
+          "orazakaShared": "The core of the blade: the shapes every Orazaka client agrees on."
+        },
+        "install": "Take a layer"
       }
     },
     "orochia": {
@@ -1368,6 +1380,31 @@
     },
     "structuredData": {
       "orochia": "Open-source video platform for independent creators: direct-to-CDN streaming, server-side access control, gateway-confirmed payments, 18+ compliance."
+    },
+    "packages": {
+      "eyebrow": "On npm",
+      "title": "The pieces, published.",
+      "lead": "What every product's interface is made of, on the public npm registry: installable without an account or a token, each release built in CI with provenance.",
+      "npm": "npm",
+      "source": "Source",
+      "items": {
+        "ui": {
+          "role": "The brand layer",
+          "line": "The animated marks of Krizaka, Orazaka and Orochia, and the Krizaka motion signature — one easing, one way to enter, reveal and open."
+        },
+        "orochiaDs": {
+          "role": "Orochia's kit",
+          "line": "Buttons, sheets, switches, sliders, two-tap confirmations — the components of the Orochia apps, on Tailwind CSS v4, in both themes."
+        },
+        "orazakaDs": {
+          "role": "Orazaka's kit",
+          "line": "The React components, theme and icon registry of the Orazaka web clients."
+        },
+        "orazakaShared": {
+          "role": "Orazaka's contracts",
+          "line": "TypeScript types, Zod schemas and design tokens shared by Orazaka's web, mobile and command-line clients."
+        }
+      }
     }
   },
   "pages": {

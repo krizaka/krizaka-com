@@ -6,7 +6,7 @@ import TopNavBar from "../../components/TopNavBar";
 import SiteFooter from "../../components/SiteFooter";
 import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
-import ProductLogo from "../../components/ProductLogo";
+import { ProductLogo } from "@krizaka/ui";
 
 /* ─── Mascot: Owl (Questions & help) ─── */
 function OwlMascot() {

@@ -6,15 +6,15 @@
 
 import Link from "next/link";
 import { MotionConfig, motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { useI18n } from "@/app/components/I18nProvider";
-import KrizakaLogo from "@/app/components/KrizakaLogo";
-import OrazakaLogo from "@/app/components/OrazakaLogo";
-import OrochiaLogo from "@/app/components/OrochiaLogo";
 import KrizakaLandscape from "@/app/components/illustrations/KrizakaLandscape";
 import { BirdPortrait, FlockStyles } from "@/app/components/story/Flock";
 import { CHAPTERS, FLOCK } from "@/lib/story";
+import { NPM_PACKAGES, npmUrl } from "@/lib/npm-packages";
+import PackageGlyph from "@/app/components/packages/PackageGlyph";
 import { ArcadeStyles, ContinuePrompt, Embers, Treasures, YearsMarquee } from "@/app/components/story/ArcadeNods";
+import { KrizakaLogo, OrazakaLogo, OrochiaLogo } from "@krizaka/ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const reveal = {
@@ -116,6 +116,37 @@ export default function StoryClient() {
         </div>
       </section>
 
+      {/* The pattern in the steel: the shared interface layers, published on npm. */}
+      <section className="st-layers" aria-labelledby="st-layers">
+        <p className="st-num">05 · {st.layers.label}</p>
+        <h2 id="st-layers">{st.layers.title}</h2>
+        <p className="st-flock-lead">{st.layers.lead}</p>
+        <ol className="st-folds">
+          {NPM_PACKAGES.map((pkg, i) => (
+            <motion.li
+              key={pkg.id}
+              className="st-fold"
+              initial={{ opacity: 0, x: -18 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, ease: EASE, delay: i * 0.1 }}
+              style={{ marginLeft: `calc(${i} * var(--st-fold-step))` }}
+            >
+              <PackageGlyph id={pkg.id} size={52} />
+              <div>
+                <a href={npmUrl(pkg)} target="_blank" rel="noopener noreferrer" className="st-fold-name">
+                  {pkg.name} <ArrowUpRight size={13} aria-hidden />
+                </a>
+                <p>{st.layers.items[pkg.id]}</p>
+              </div>
+            </motion.li>
+          ))}
+        </ol>
+        <p className="st-install">
+          <span>{st.layers.install}</span> <code>npm install @krizaka/ui</code>
+        </p>
+      </section>
+
       <section className="st-closing">
         <div className="st-closing-text">
           <h2>{st.closing.title}</h2>
@@ -159,7 +190,7 @@ export default function StoryClient() {
         .st-mark-disc { display: flex; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%;
           background: radial-gradient(circle at 50% 40%, var(--kz-surface-2), var(--kz-surface-0) 70%); border: 1px solid var(--kz-border-subtle); }
         .st-roots { font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); margin: 0; }
-        .st-text h2, .st-flock h2, .st-closing h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.6rem, 3.6vw, 2.3rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.15; margin: 12px 0 18px; }
+        .st-text h2, .st-flock h2, .st-layers h2, .st-closing h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.6rem, 3.6vw, 2.3rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.15; margin: 12px 0 18px; }
         .st-text p:not(.st-num) { font-size: 16px; line-height: 1.8; color: var(--kz-text-secondary); margin: 0 0 14px; }
 
         .st-heads { position: relative; max-width: 64rem; margin: -24px auto 0; padding: 24px 20px 96px; }
@@ -178,6 +209,16 @@ export default function StoryClient() {
         .st-bird h3 { margin: 10px 0 0; font-size: 16px; font-weight: 700; }
         .st-role { margin: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--kz-accent); }
         .st-bird p:last-child { margin: 6px 0 0; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
+
+        .st-layers { max-width: 64rem; margin: 0 auto; padding: 72px 20px; border-top: 1px solid var(--kz-border-subtle); text-align: center; --st-fold-step: clamp(0px, 4vw, 44px); }
+        .st-folds { list-style: none; margin: 0 auto; padding: 0; max-width: 720px; display: grid; gap: 12px; text-align: left; }
+        .st-fold { display: flex; gap: 16px; align-items: center; padding: 16px 18px; border-radius: 18px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); }
+        @media (max-width: 640px) { .st-fold { margin-left: 0 !important; } }
+        .st-fold-name { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
+        .st-fold-name:hover { color: var(--kz-accent); }
+        .st-fold p { margin: 4px 0 0; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary); }
+        .st-install { margin: 28px 0 0; font-size: 13px; color: var(--kz-text-muted); }
+        .st-install code { font-family: var(--font-mono); padding: 6px 10px; margin-left: 6px; border-radius: 8px; background: var(--kz-surface-2); color: var(--kz-text-primary); border: 1px solid var(--kz-border-subtle); }
 
         .st-closing { position: relative; overflow: hidden; padding: 96px 20px clamp(300px, 34vw, 440px); text-align: center; border-top: 1px solid var(--kz-border-subtle); }
         .st-closing-text { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }

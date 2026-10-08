@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.0.0",
+    "@krizaka/ui": "^1.0.0",
     "@react-three/drei": "^10.0.0",
     "@react-three/fiber": "^9.1.0",
     "@tailwindcss/typography": "^0.5.19",

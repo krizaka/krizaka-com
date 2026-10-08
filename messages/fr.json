@@ -811,6 +811,18 @@
       "ctaContact": "Nous écrire",
       "arcade": {
         "continue": "Continuer ?"
+      },
+      "layers": {
+        "label": "Le motif dans l'acier",
+        "title": "Plié une fois, utilisé partout.",
+        "lead": "Un kriss tire sa force de couches d'acier repliées les unes sur les autres. Nos interfaces sont forgées de la même façon : une couche de marque, repliée dans le kit de chaque produit, et chaque couche publiée au grand jour — chacun peut s'en servir, chacun peut vérifier le motif.",
+        "items": {
+          "ui": "Le premier pli : les logos et la façon dont tout bouge.",
+          "orochiaDs": "Replié pour Orochia : les couleurs du serpent, chaque contrôle que touche un créateur.",
+          "orazakaDs": "Replié pour Orazaka : l'interface de l'oracle, sur chaque écran où il parle.",
+          "orazakaShared": "Le cœur de la lame : les formes sur lesquelles tous les clients d'Orazaka s'accordent."
+        },
+        "install": "Prendre une couche"
       }
     },
     "orochia": {
@@ -1368,6 +1380,31 @@
     },
     "structuredData": {
       "orochia": "Plateforme vidéo open source pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle, conformité 18+."
+    },
+    "packages": {
+      "eyebrow": "Sur npm",
+      "title": "Les pièces, publiées.",
+      "lead": "Ce dont est faite l'interface de chaque produit, sur le registre public npm : installable sans compte ni jeton, chaque version construite en CI avec sa provenance.",
+      "npm": "npm",
+      "source": "Source",
+      "items": {
+        "ui": {
+          "role": "La couche de marque",
+          "line": "Les logos animés de Krizaka, Orazaka et Orochia, et la signature de mouvement Krizaka — une courbe, une même façon d'entrer, d'apparaître et de s'ouvrir."
+        },
+        "orochiaDs": {
+          "role": "Le kit d'Orochia",
+          "line": "Boutons, panneaux, interrupteurs, curseurs, confirmations en deux temps — les composants des applications Orochia, sur Tailwind CSS v4, dans les deux thèmes."
+        },
+        "orazakaDs": {
+          "role": "Le kit d'Orazaka",
+          "line": "Les composants React, le thème et le registre d'icônes des clients web d'Orazaka."
+        },
+        "orazakaShared": {
+          "role": "Les contrats d'Orazaka",
+          "line": "Types TypeScript, schémas Zod et jetons de design partagés par les clients web, mobile et en ligne de commande d'Orazaka."
+        }
+      }
     }
   },
   "pages": {

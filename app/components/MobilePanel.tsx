@@ -6,10 +6,9 @@ import { useEffect } from "react";
 import { ChevronDown, Globe, Moon, Sun, X } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
-import KrizakaLogo from "./KrizakaLogo";
-import ProductLogo from "./ProductLogo";
 import { NAV_ICONS } from "./ProductsMenu";
 import { NAV_COMPANY, NAV_PRODUCTS, companyLinkText, isNavActive, localeless } from "@/lib/nav";
+import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 /* ─── Mobile Menu Panel ─── */
 
