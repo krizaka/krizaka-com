@@ -29,7 +29,7 @@ export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
   database: {
     title: "Database Reference",
     category: "architecture",
-    order: 3,
+    order: 4,
     audience: "developer",
     intro:
       "Every table, column, index, foreign key and enum of the PostgreSQL schema, with the relationship diagram — generated from the Drizzle schema.",
@@ -41,6 +41,14 @@ export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     audience: "developer",
     intro:
       "How Orochia is built: Next.js app and packages, server-side access control, gateway-confirmed payments, the double-entry ledger and the compliance records. For developers and reviewers evaluating the platform.",
+  },
+  auctions: {
+    title: "Auctions & Realtime",
+    category: "architecture",
+    order: 3,
+    audience: "developer",
+    intro:
+      "Video auctions with bids escrowed in credits, anti-sniping, the creator's decision or an automatic sale — and the broker-free realtime behind them: PostgreSQL LISTEN/NOTIFY, Server-Sent Events, a SKIP LOCKED closer.",
   },
   media_pipeline: {
     title: "Media Pipeline",
