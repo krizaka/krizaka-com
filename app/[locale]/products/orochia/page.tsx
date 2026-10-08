@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BookOpen, CreditCard, ExternalLink, Film, GitBranch, Heart, Lock, PlayCircle, ShieldCheck, UsersRound } from "lucide-react";
+import { ArrowRight, BookOpen, CreditCard, ExternalLink, Film, Gavel, GitBranch, Heart, Lock, PlayCircle, ShieldCheck, UsersRound, Wallet } from "lucide-react";
 import { OROCHIA_APP_URL } from "@/lib/site";
 import type { LucideIcon } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
@@ -25,23 +25,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Orochia — Open-Source Creator Video Platform | Krizaka",
       description:
-        "Orochia is Krizaka's open-source video platform for independent creators: signed 4K streaming, audiences the creator chooses (followers, contacts, paid unlock, invited lists), collections, gateway-confirmed payments and 18+ compliance.",
+        "Orochia is Krizaka's open-source video platform for independent creators: signed 4K streaming, audiences the creator chooses (followers, contacts, paid unlock, invited lists), live video auctions, collections, gateway-confirmed payments and 18+ compliance.",
     },
     fr: {
       title: "Orochia — Plateforme vidéo open source pour créateurs | Krizaka",
       description:
-        "Orochia est la plateforme vidéo open source de Krizaka pour créateurs indépendants : diffusion 4K signée, publics choisis par le créateur (abonnés, contacts, déblocage payant, listes d'invités), collections, paiements confirmés par la passerelle et conformité 18+.",
+        "Orochia est la plateforme vidéo open source de Krizaka pour créateurs indépendants : diffusion 4K signée, publics choisis par le créateur (abonnés, contacts, déblocage payant, listes d'invités), enchères vidéo en direct, collections, paiements confirmés par la passerelle et conformité 18+.",
     },
   });
 }
 
 
-const PILLARS: { id: "cdn" | "access" | "audiences" | "engagement" | "payments" | "compliance"; icon: LucideIcon; color: string }[] = [
+const PILLARS: { id: "cdn" | "access" | "audiences" | "engagement" | "payments" | "wallet" | "auctions" | "compliance"; icon: LucideIcon; color: string }[] = [
   { id: "cdn", icon: Film, color: "#a855f7" },
   { id: "access", icon: Lock, color: "#0ea5e9" },
   { id: "audiences", icon: UsersRound, color: "#d946ef" },
   { id: "engagement", icon: Heart, color: "#f43f5e" },
   { id: "payments", icon: CreditCard, color: "#10b981" },
+  { id: "wallet", icon: Wallet, color: "#8b5cf6" },
+  { id: "auctions", icon: Gavel, color: "#ec4899" },
   { id: "compliance", icon: ShieldCheck, color: "#f59e0b" },
 ];
 
