@@ -4,9 +4,10 @@
    chapter, the animated marks and the flock as ornaments, sections revealed as they scroll in, and
    a few quiet arcade nods in the background (ArcadeNods). Tokens only; reduced-motion safe. */
 
+import React, { useState } from "react";
 import Link from "next/link";
 import { MotionConfig, motion } from "framer-motion";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Copy } from "lucide-react";
 import { useI18n } from "@/app/components/I18nProvider";
 import KrizakaLandscape from "@/app/components/illustrations/KrizakaLandscape";
 import { BirdPortrait, FlockStyles } from "@/app/components/story/Flock";
@@ -17,6 +18,7 @@ import {
   ArcadeStyles,
   ArcadeStageCut,
   ArcadeTeamBadge,
+  ClanHeroMarks,
   ContinuePrompt,
   Embers,
   Treasures,
@@ -38,15 +40,18 @@ const MARK = {
   orochia: <OrochiaLogo size={150} />,
 };
 
-const MARK_AURA = {
-  krizaka: "is-krizaka",
-  orazaka: "is-orazaka",
-  orochia: "is-orochia",
-} as const;
-
 export default function StoryClient() {
   const { t } = useI18n();
   const st = t.site.story;
+  const [copiedPkg, setCopiedPkg] = useState<string | null>(null);
+
+  const handleCopy = (pkgName: string) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(`npm install ${pkgName}`);
+      setCopiedPkg(pkgName);
+      setTimeout(() => setCopiedPkg(null), 2000);
+    }
+  };
 
   return (
     <MotionConfig reducedMotion="user">
@@ -57,31 +62,19 @@ export default function StoryClient() {
 
       <header className="st-hero">
         <p className="st-eyebrow">{st.intro.eyebrow}</p>
-        <h1>{st.intro.title}</h1>
+        <h1 className="st-hero-title">{st.intro.title}</h1>
         <p className="st-lead">{st.intro.lead}</p>
 
         {/* 1990s Arcade Team Battle Homage: Three Sacred Clans */}
         <ArcadeTeamBadge tag={st.arcade.teamTag} synergy={st.arcade.teamSynergy} />
 
-        {/* Three names, one team: they enter in turn, then a light sweeps across them. */}
-        <div className="st-marks" aria-hidden>
-          {[
-            { mark: <KrizakaLogo key="k" size={44} />, id: "krizaka" },
-            { mark: <OrazakaLogo key="oz" size={40} />, id: "orazaka" },
-            { mark: <OrochiaLogo key="oc" size={44} />, id: "orochia" },
-          ].map(({ mark, id }, i) => [
-            i > 0 && <i key={`sep-${i}`} className="st-sep" />,
-            <motion.span
-              key={`mark-${i}`}
-              className={`st-mark-slot ${MARK_AURA[id as keyof typeof MARK_AURA]}`}
-              initial={{ opacity: 0, x: (i - 1) * -24, scale: 0.85 }}
-              animate={{ opacity: 1, x: 0, scale: 1 }}
-              transition={{ duration: 0.6, ease: EASE, delay: 0.25 + i * 0.18 }}
-            >
-              {mark}
-            </motion.span>,
-          ])}
-        </div>
+        {/* The Three Sacred Clans: Kusanagi (Solar Fire), Yata (Mirror), Yasakani (Violet Moon Serpent) */}
+        <ClanHeroMarks
+          krizakaLogo={<KrizakaLogo size={42} />}
+          orazakaLogo={<OrazakaLogo size={38} />}
+          orochiaLogo={<OrochiaLogo size={42} />}
+          clans={st.arcade.clans}
+        />
       </header>
 
       {CHAPTERS.map((ch, i) => (
@@ -151,8 +144,11 @@ export default function StoryClient() {
         </div>
       </section>
 
-      {/* The pattern in the steel: the shared interface layers, published on npm. */}
+      {/* The pattern in the steel: the shared interface layers, published on npm (Not standalone products) */}
       <section className="st-layers" aria-labelledby="st-layers">
+        <div className="st-layers-badge-wrap">
+          <span className="st-layers-badge">{st.layers.badge}</span>
+        </div>
         <p className="st-num">05 · {st.layers.label}</p>
         <h2 id="st-layers">{st.layers.title}</h2>
         <p className="st-flock-lead">{st.layers.lead}</p>
@@ -167,19 +163,67 @@ export default function StoryClient() {
               transition={{ duration: 0.6, ease: EASE, delay: i * 0.1 }}
               style={{ marginLeft: `calc(${i} * var(--st-fold-step))` }}
             >
-              <PackageGlyph id={pkg.id} size={52} />
-              <div>
-                <a href={npmUrl(pkg)} target="_blank" rel="noopener noreferrer" className="st-fold-name">
-                  {pkg.name} <ArrowUpRight size={13} aria-hidden />
-                </a>
+              <PackageGlyph id={pkg.id} size={54} />
+              <div className="st-fold-body">
+                <div className="st-fold-head">
+                  <span className="st-fold-layer-pill">LAYER 0{i + 1}</span>
+                  <a href={npmUrl(pkg)} target="_blank" rel="noopener noreferrer" className="st-fold-name">
+                    {pkg.name} <ArrowUpRight size={13} aria-hidden />
+                  </a>
+                </div>
                 <p>{st.layers.items[pkg.id]}</p>
+                <div className="st-fold-actions">
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(pkg.name)}
+                    className="st-fold-copy-btn"
+                    title={st.layers.copyInstall}
+                  >
+                    {copiedPkg === pkg.name ? (
+                      <>
+                        <Check size={12} style={{ color: "var(--kz-status-success)" }} />
+                        <span style={{ color: "var(--kz-status-success)" }}>{st.layers.copied}</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={12} />
+                        <code>npm i {pkg.name}</code>
+                      </>
+                    )}
+                  </button>
+                  <a
+                    href={npmUrl(pkg)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="st-fold-npm-link"
+                  >
+                    {st.layers.viewNpm} <ArrowUpRight size={11} aria-hidden />
+                  </a>
+                </div>
               </div>
             </motion.li>
           ))}
         </ol>
-        <p className="st-install">
-          <span>{st.layers.install}</span> <code>npm install @krizaka/ui</code>
-        </p>
+        <div className="st-install">
+          <span>{st.layers.install}</span>
+          <button
+            type="button"
+            onClick={() => handleCopy("@krizaka/ui")}
+            className="st-install-pill"
+          >
+            {copiedPkg === "@krizaka/ui" ? (
+              <>
+                <Check size={13} style={{ color: "var(--kz-status-success)" }} />
+                <span style={{ color: "var(--kz-status-success)" }}>{st.layers.copied}</span>
+              </>
+            ) : (
+              <>
+                <Copy size={13} />
+                <code>npm install @krizaka/ui</code>
+              </>
+            )}
+          </button>
+        </div>
       </section>
 
       <section className="st-closing">
@@ -194,7 +238,12 @@ export default function StoryClient() {
               {st.ctaContact}
             </Link>
           </div>
-          <ContinuePrompt label={st.arcade.continue} insertCoin={st.arcade.insertCoin} />
+          <ContinuePrompt
+            label={st.arcade.continue}
+            insertCoin={st.arcade.insertCoin}
+            creditLabel={st.arcade.creditLabel}
+            restartBtn={st.arcade.restartBtn}
+          />
         </div>
         <div className="st-landscape" aria-hidden>
           <KrizakaLandscape relative={false} />
@@ -204,23 +253,45 @@ export default function StoryClient() {
       <style>{`
         .st { position: relative; color: var(--kz-text-primary); }
         .st > :is(header, section) { position: relative; z-index: 1; }
-        .st-mark-slot { display: inline-flex; position: relative; padding: 6px; border-radius: 50%; transition: transform 0.3s ease; }
-        .st-mark-slot:hover { transform: translateY(-2px) scale(1.08); }
-        .st-mark-slot.is-krizaka:hover { box-shadow: 0 0 20px 4px rgba(249, 115, 22, 0.4); }
-        .st-mark-slot.is-orazaka:hover { box-shadow: 0 0 20px 4px rgba(234, 179, 8, 0.4); }
-        .st-mark-slot.is-orochia:hover { box-shadow: 0 0 20px 4px rgba(168, 85, 247, 0.45); }
-        .st-marks { position: relative; overflow: hidden; padding: 10px 14px; margin-top: 28px; }
-        .st-marks::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-          background: linear-gradient(105deg, transparent 35%, color-mix(in srgb, var(--kz-text-primary) 18%, transparent) 50%, transparent 65%);
-          transform: translateX(-120%); animation: st-sweep 1.4s 1.2s cubic-bezier(.16,1,.3,1) forwards; }
-        @keyframes st-sweep { to { transform: translateX(120%); } }
-        @media (prefers-reduced-motion: reduce) { .st-marks::after { display: none; } }
-        .st-hero { max-width: 760px; margin: 0 auto; padding: clamp(128px, 16vw, 176px) 20px 72px; text-align: center; }
+        .st-hero { max-width: 760px; margin: 0 auto; padding: clamp(128px, 16vw, 176px) 20px 56px; text-align: center; }
         .st-eyebrow, .st-num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-accent); margin: 0; }
-        .st-hero h1 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.1rem, 5.6vw, 3.4rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.08; margin: 18px 0 0; }
+        
+        /* Subtle magical ambient sheen ONLY on hero title */
+        .st-hero-title {
+          font-family: var(--font-display), system-ui, sans-serif;
+          font-size: clamp(2.1rem, 5.6vw, 3.4rem);
+          font-weight: 800;
+          letter-spacing: -.035em;
+          line-height: 1.08;
+          margin: 18px 0 0;
+          background: linear-gradient(
+            110deg,
+            var(--kz-text-primary) 0%,
+            var(--kz-text-primary) 42%,
+            color-mix(in srgb, var(--kz-accent) 45%, var(--kz-text-primary)) 50%,
+            var(--kz-text-primary) 58%,
+            var(--kz-text-primary) 100%
+          );
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          animation: st-title-sheen 9s ease-in-out infinite;
+        }
+        @keyframes st-title-sheen {
+          0%, 25% { background-position: 100% 0; }
+          55%, 75% { background-position: 0% 0; }
+          100% { background-position: 100% 0; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .st-hero-title {
+            animation: none !important;
+            background: none !important;
+            -webkit-text-fill-color: initial !important;
+            color: var(--kz-text-primary) !important;
+          }
+        }
+
         .st-lead { font-size: clamp(15px, 1.9vw, 18px); line-height: 1.75; color: var(--kz-text-secondary); margin: 22px auto 28px; max-width: 640px; }
-        .st-marks { display: flex; align-items: center; justify-content: center; gap: 14px; }
-        .st-marks .st-sep { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--kz-border-strong), transparent); }
 
         .st-chapter { max-width: 64rem; margin: 0 auto; padding: 72px 20px; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 80px); align-items: center; border-top: 1px solid var(--kz-border-subtle); }
         .st-chapter.is-flipped .st-mark { order: 2; }
@@ -264,15 +335,66 @@ export default function StoryClient() {
         .st-role { margin: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--kz-accent); }
         .st-bird p:last-child { margin: 6px 0 0; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
 
+        /* The pattern in the steel (Section 05) */
         .st-layers { max-width: 64rem; margin: 0 auto; padding: 72px 20px; border-top: 1px solid var(--kz-border-subtle); text-align: center; --st-fold-step: clamp(0px, 4vw, 44px); }
-        .st-folds { list-style: none; margin: 0 auto; padding: 0; max-width: 720px; display: grid; gap: 12px; text-align: left; }
-        .st-fold { display: flex; gap: 16px; align-items: center; padding: 16px 18px; border-radius: 18px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); }
+        .st-layers-badge-wrap { display: flex; justify-content: center; margin-bottom: 14px; }
+        .st-layers-badge {
+          font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+          letter-spacing: 0.12em; text-transform: uppercase; padding: 4px 14px;
+          border-radius: 9999px;
+          background: color-mix(in srgb, var(--kz-accent-soft) 85%, transparent);
+          color: var(--kz-accent); border: 1px solid var(--kz-border-strong);
+        }
+        .st-folds { list-style: none; margin: 0 auto; padding: 0; max-width: 740px; display: grid; gap: 14px; text-align: left; }
+        .st-fold {
+          display: flex; gap: 20px; align-items: flex-start; padding: 20px 22px; border-radius: 20px;
+          background: color-mix(in srgb, var(--kz-surface-1) 95%, transparent); border: 1px solid var(--kz-border-subtle);
+          box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.25);
+          transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .st-fold:hover {
+          border-color: var(--kz-border-strong); transform: translateY(-2px);
+          box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+        }
         @media (max-width: 640px) { .st-fold { margin-left: 0 !important; } }
-        .st-fold-name { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
+        .st-fold-body { flex: 1; min-width: 0; }
+        .st-fold-head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+        .st-fold-layer-pill {
+          font-family: var(--font-mono); font-size: 10px; font-weight: 800;
+          letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 8px;
+          border-radius: 6px; background: var(--kz-surface-2); color: var(--kz-accent);
+          border: 1px solid var(--kz-border-subtle);
+        }
+        .st-fold-name { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono); font-size: 14px; font-weight: 700; color: var(--kz-text-primary); text-decoration: none; }
         .st-fold-name:hover { color: var(--kz-accent); }
         .st-fold p { margin: 4px 0 0; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary); }
-        .st-install { margin: 28px 0 0; font-size: 13px; color: var(--kz-text-muted); }
-        .st-install code { font-family: var(--font-mono); padding: 6px 10px; margin-left: 6px; border-radius: 8px; background: var(--kz-surface-2); color: var(--kz-text-primary); border: 1px solid var(--kz-border-subtle); }
+        .st-fold-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 12px; }
+        .st-fold-copy-btn {
+          display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px;
+          border-radius: 8px; border: 1px solid var(--kz-border-subtle);
+          background: var(--kz-surface-2); color: var(--kz-text-secondary);
+          font-size: 12px; cursor: pointer; transition: all 0.15s ease;
+        }
+        .st-fold-copy-btn:hover {
+          border-color: var(--kz-border-strong); color: var(--kz-text-primary);
+          background: color-mix(in srgb, var(--kz-surface-3) 80%, transparent);
+        }
+        .st-fold-copy-btn code { font-family: var(--font-mono); font-size: 11px; }
+        .st-fold-npm-link {
+          display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono);
+          font-size: 11.5px; font-weight: 600; color: var(--kz-text-muted); text-decoration: none;
+        }
+        .st-fold-npm-link:hover { color: var(--kz-accent); }
+
+        .st-install { margin: 32px 0 0; font-size: 13.5px; color: var(--kz-text-muted); display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .st-install-pill {
+          display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
+          border-radius: 10px; border: 1px solid var(--kz-border-strong);
+          background: var(--kz-surface-2); color: var(--kz-text-primary); cursor: pointer;
+          transition: all 0.15s ease; font-size: 13px;
+        }
+        .st-install-pill:hover { border-color: var(--kz-accent); transform: translateY(-1px); }
+        .st-install-pill code { font-family: var(--font-mono); }
 
         .st-closing { position: relative; overflow: hidden; padding: 96px 20px clamp(300px, 34vw, 440px); text-align: center; border-top: 1px solid var(--kz-border-subtle); }
         .st-closing-text { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }

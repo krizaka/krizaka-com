@@ -239,7 +239,9 @@
     "sectionLabel": "Documentation",
     "sectionTitle": "Explore la documentation technique",
     "sectionDesc": "Architecture, API, déploiement — tout est documenté et open source.",
-    "viewAllDocs": "Voir toute la documentation"
+    "viewAllDocs": "Voir toute la documentation",
+    "packagesCallout": "Vous cherchez des kits UI réutilisables ou des contrats TypeScript ? Explorez @krizaka sur npm",
+    "packagesCalloutLink": "Explorer les packages"
   },
   "footer": {
     "product": "Produit",
@@ -818,12 +820,23 @@
         "orochiBossTitle": "Yamata no Orochi",
         "orochiBossSub": "Les huit têtes de l'économie des créateurs scellées",
         "sealedBadge": "Scellé",
-        "vatLabel": "Cuve"
+        "vatLabel": "Cuve",
+        "creditLabel": "Crédit 01",
+        "restartBtn": "Appuyez pour relancer l'histoire",
+        "clans": {
+          "krizaka": "Kusanagi · Flamme Solaire Écarlate",
+          "orazaka": "Yata · Miroir Sacré Solaire",
+          "orochia": "Yasakani · Serpent de Lune Violet"
+        }
       },
       "layers": {
         "label": "Le motif dans l'acier",
         "title": "Plié une fois, utilisé partout.",
         "lead": "Un kriss tire sa force de couches d'acier repliées les unes sur les autres. Nos interfaces sont forgées de la même façon : une couche de marque, repliée dans le kit de chaque produit, et chaque couche publiée au grand jour — chacun peut s'en servir, chacun peut vérifier le motif.",
+        "badge": "Architecture partagée · Pas un produit isolé",
+        "copyInstall": "Copier la commande d'installation",
+        "copied": "Copié !",
+        "viewNpm": "Voir sur npm",
         "items": {
           "ui": "Le premier pli : les logos et la façon dont tout bouge.",
           "orochiaDs": "Replié pour Orochia : les couleurs du serpent, chaque contrôle que touche un créateur.",
@@ -1401,6 +1414,7 @@
       "eyebrow": "Sur npm",
       "title": "Les pièces, publiées.",
       "lead": "Ce dont est faite l'interface de chaque produit, sur le registre public npm : installable sans compte ni jeton, chaque version construite en CI avec sa provenance.",
+      "notProductBanner": "Des briques de fondation, pas des applications isolées : ces quatre packages constituent l'infrastructure open source qui anime nos produits. Chacun peut les installer et les réutiliser librement.",
       "npm": "npm",
       "source": "Source",
       "items": {

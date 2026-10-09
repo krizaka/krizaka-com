@@ -314,9 +314,19 @@ export function YearsMarquee() {
   );
 }
 
-/* ── Continue? 9 … 0 Arcade Countdown ───────────────────────────────────────────────── */
+/* ── Continue? 9 … 0 Arcade Countdown Cabinet Bezel ───────────────────────────────── */
 
-export function ContinuePrompt({ label, insertCoin }: { label: string; insertCoin?: string }) {
+export function ContinuePrompt({
+  label,
+  insertCoin,
+  creditLabel,
+  restartBtn,
+}: {
+  label: string;
+  insertCoin?: string;
+  creditLabel?: string;
+  restartBtn?: string;
+}) {
   const [n, setN] = useState(9);
   const [pulsing, setPulsing] = useState(false);
 
@@ -335,13 +345,135 @@ export function ContinuePrompt({ label, insertCoin }: { label: string; insertCoi
   };
 
   return (
-    <div className="an-continue-wrap" aria-hidden>
-      <button type="button" onClick={handleRestart} className="an-continue-btn group">
-        <span className="an-coin-slot">{insertCoin ?? "INSERT COIN"}</span>
-        <p className="an-continue">
-          {label} <b className={pulsing ? "is-pulse" : ""}>{n}</b>
-        </p>
-      </button>
+    <div className="an-bezel-wrap" aria-label="Neo-Geo Arcade Continue Prompt">
+      <div className="an-bezel">
+        {/* Bezel frame header with brass screws & specs */}
+        <div className="an-bezel-top">
+          <span className="an-screw" />
+          <span className="an-mvs-badge">NEO·GEO MVS · 100-MEGA PRO-GEAR SPEC</span>
+          <span className="an-screw" />
+        </div>
+
+        {/* Dual Coin Intake Slot & LED credit indicator */}
+        <div className="an-coin-deck">
+          <div className="an-coin-slot-unit">
+            <span className="an-coin-lit-label">{insertCoin ?? "INSERT COIN"}</span>
+            <span className="an-coin-entry">[ 25¢ / 100¥ ]</span>
+          </div>
+          <div className="an-credit-pill">
+            <span className="an-credit-led" />
+            <span>{creditLabel ?? "CREDIT 01"}</span>
+          </div>
+        </div>
+
+        {/* CRT countdown display screen with scanlines */}
+        <div className="an-crt-screen">
+          <div className="an-crt-scanlines" />
+          <div className="an-crt-content">
+            <span className="an-crt-title">{label}</span>
+            <span className={`an-crt-digit ${pulsing ? "is-pulse" : ""}`}>{n}</span>
+          </div>
+        </div>
+
+        {/* Ergonomic Tactile 1P Start / Restart Button */}
+        <button
+          type="button"
+          onClick={handleRestart}
+          className="an-restart-bar group"
+          aria-label={restartBtn ?? "Press to restart story"}
+        >
+          <span className="an-start-key">1P START</span>
+          <span className="an-start-label">{restartBtn ?? "Press to restart story"}</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" className="an-start-arrow" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="12" y1="19" x2="12" y2="5" />
+            <polyline points="5 12 12 5 19 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/* ── KOF '96 / '97 Three Sacred Clans Hero Marks ────────────────────────────────────── */
+
+export function ClanHeroMarks({
+  krizakaLogo,
+  orazakaLogo,
+  orochiaLogo,
+  clans,
+}: {
+  krizakaLogo: React.ReactNode;
+  orazakaLogo: React.ReactNode;
+  orochiaLogo: React.ReactNode;
+  clans?: {
+    krizaka: string;
+    orazaka: string;
+    orochia: string;
+  };
+}) {
+  const [activeClan, setActiveClan] = useState<string | null>(null);
+
+  return (
+    <div className="an-clan-marks" aria-label="The Three Sacred Clans: Kusanagi, Yata, Yasakani">
+      {/* Hyper-drive energy conduit bridging the 3 clans */}
+      <div className="an-clan-bridge" aria-hidden>
+        <span className="an-bridge-beam" />
+        <span className="an-bridge-pulse" />
+      </div>
+
+      <div className="an-clan-grid">
+        {/* 1. KUSANAGI (Krizaka) — Ancestral Solar Crimson Fire */}
+        <div
+          className={`an-clan-item is-kusanagi ${activeClan === "krizaka" ? "is-active" : ""}`}
+          onMouseEnter={() => setActiveClan("krizaka")}
+          onMouseLeave={() => setActiveClan(null)}
+        >
+          <div className="an-clan-flame-wrap">
+            <div className="an-clan-aura is-kusanagi-aura" />
+            <div className="an-flame-tongues is-crimson-flame" />
+            <div className="an-clan-disc">{krizakaLogo}</div>
+          </div>
+          <div className="an-clan-meta">
+            <span className="an-clan-badge is-crimson">KUSANAGI</span>
+            <span className="an-clan-title">{clans?.krizaka ?? "Kusanagi · Solar Crimson Fire"}</span>
+          </div>
+        </div>
+
+        {/* 2. YATA (Orazaka) — Sacred Golden Mirror */}
+        <div
+          className={`an-clan-item is-yata ${activeClan === "orazaka" ? "is-active" : ""}`}
+          onMouseEnter={() => setActiveClan("orazaka")}
+          onMouseLeave={() => setActiveClan(null)}
+        >
+          <div className="an-clan-flame-wrap">
+            <div className="an-clan-aura is-yata-aura" />
+            <div className="an-mirror-halo" />
+            <div className="an-clan-disc">{orazakaLogo}</div>
+          </div>
+          <div className="an-clan-meta">
+            <span className="an-clan-badge is-gold">YATA</span>
+            <span className="an-clan-title">{clans?.orazaka ?? "Yata · Sacred Golden Mirror"}</span>
+          </div>
+        </div>
+
+        {/* 3. YASAKANI (Orochia) — Iori Yagami Violet Moon Serpent Fire */}
+        <div
+          className={`an-clan-item is-yasakani ${activeClan === "orochia" ? "is-active" : ""}`}
+          onMouseEnter={() => setActiveClan("orochia")}
+          onMouseLeave={() => setActiveClan(null)}
+        >
+          <div className="an-clan-flame-wrap">
+            <div className="an-clan-aura is-yasakani-aura" />
+            <div className="an-flame-tongues is-violet-flame" />
+            <div className="an-moon-crescent" />
+            <div className="an-clan-disc">{orochiaLogo}</div>
+          </div>
+          <div className="an-clan-meta">
+            <span className="an-clan-badge is-violet">YASAKANI</span>
+            <span className="an-clan-title">{clans?.orochia ?? "Yasakani · Violet Moon Serpent"}</span>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -493,41 +625,244 @@ export function ArcadeStyles() {
       }
       @keyframes an-scroll { to { transform: translateX(-50%); } }
 
-      /* Continue 9..0 Countdown Button */
-      .an-continue-wrap {
-        margin: 32px 0 0; display: flex; justify-content: center;
+      /* Continue 9..0 Arcade Cabinet Bezel */
+      .an-bezel-wrap {
+        margin: 44px auto 20px; max-width: 420px; position: relative; z-index: 2;
       }
-      .an-continue-btn {
-        display: flex; flex-direction: column; align-items: center; gap: 6px;
-        background: transparent; border: none; cursor: pointer; padding: 12px 24px;
-        border-radius: 16px; transition: transform 0.2s ease, background 0.2s ease;
+      .an-bezel {
+        position: relative; padding: 16px; border-radius: 20px;
+        background: linear-gradient(160deg, color-mix(in srgb, var(--kz-surface-2) 90%, transparent), color-mix(in srgb, var(--kz-surface-0) 90%, transparent));
+        border: 1px solid var(--kz-border-strong);
+        box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08), 0 18px 40px -10px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(12px);
       }
-      .an-continue-btn:hover {
-        background: color-mix(in srgb, var(--kz-surface-2) 40%, transparent);
-        transform: scale(1.05);
+      .an-bezel-top {
+        display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 0 4px;
       }
-      .an-coin-slot {
+      .an-screw {
+        width: 7px; height: 7px; border-radius: 50%;
+        background: var(--kz-border-strong); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
+      }
+      .an-mvs-badge {
+        font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; letter-spacing: 0.18em;
+        text-transform: uppercase; color: var(--kz-text-muted);
+      }
+      .an-coin-deck {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 8px 12px; margin-bottom: 12px; border-radius: 12px;
+        background: color-mix(in srgb, var(--kz-surface-1) 80%, transparent);
+        border: 1px solid var(--kz-border-subtle);
+      }
+      .an-coin-slot-unit {
+        display: flex; align-items: center; gap: 8px;
+      }
+      .an-coin-lit-label {
         font-family: var(--font-mono); font-size: 10px; font-weight: 800;
-        letter-spacing: 0.25em; text-transform: uppercase; color: #f97316;
-        animation: an-blink 1.2s infinite;
+        letter-spacing: 0.22em; text-transform: uppercase; color: #f97316;
+        animation: an-blink 1.4s infinite; text-shadow: 0 0 8px rgba(249, 115, 22, 0.7);
       }
-      @keyframes an-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
-      .an-continue {
-        margin: 0; font-family: var(--font-mono); font-size: 13px; font-weight: 700;
-        letter-spacing: 0.2em; text-transform: uppercase; color: var(--kz-text-muted);
+      .an-coin-entry {
+        font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+        letter-spacing: 0.1em; color: var(--kz-text-muted);
       }
-      .an-continue b {
-        display: inline-block; min-width: 1.2em; font-weight: 900; font-size: 18px;
-        color: #f97316; text-shadow: 0 0 10px rgba(249, 115, 22, 0.6);
+      .an-credit-pill {
+        display: inline-flex; align-items: center; gap: 6px;
+        font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+        letter-spacing: 0.12em; text-transform: uppercase; color: var(--kz-text-secondary);
+      }
+      .an-credit-led {
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #22c55e; box-shadow: 0 0 8px #22c55e;
+      }
+      .an-crt-screen {
+        position: relative; overflow: hidden; border-radius: 14px;
+        padding: 16px 20px; margin-bottom: 14px;
+        background: #08090d; border: 1px solid rgba(249, 115, 22, 0.35);
+        box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.9), 0 0 16px -4px rgba(249, 115, 22, 0.25);
+      }
+      .an-crt-scanlines {
+        position: absolute; inset: 0; pointer-events: none;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%);
+        background-size: 100% 4px; opacity: 0.75;
+      }
+      .an-crt-content {
+        position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between;
+      }
+      .an-crt-title {
+        font-family: var(--font-mono); font-size: 14px; font-weight: 800;
+        letter-spacing: 0.25em; text-transform: uppercase; color: var(--kz-text-primary);
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+      }
+      .an-crt-digit {
+        display: inline-flex; align-items: center; justify-content: center;
+        min-width: 44px; height: 44px; border-radius: 8px;
+        font-family: var(--font-mono); font-size: 26px; font-weight: 900;
+        color: #f97316; text-shadow: 0 0 14px rgba(249, 115, 22, 0.9), 0 0 28px rgba(249, 115, 22, 0.5);
+        background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.3);
         transition: transform 0.15s ease;
       }
-      .an-continue b.is-pulse {
-        transform: scale(1.3);
+      .an-crt-digit.is-pulse {
+        transform: scale(1.18);
       }
+      .an-restart-bar {
+        width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
+        padding: 12px 18px; border-radius: 12px; border: 1px solid var(--kz-border-strong);
+        background: var(--kz-surface-1); color: var(--kz-text-primary); cursor: pointer;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+      .an-restart-bar:hover {
+        background: color-mix(in srgb, var(--kz-surface-2) 90%, transparent);
+        border-color: #f97316;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px -4px rgba(249, 115, 22, 0.3);
+      }
+      .an-restart-bar:active {
+        transform: translateY(1px);
+      }
+      .an-start-key {
+        font-family: var(--font-mono); font-size: 10.5px; font-weight: 900;
+        letter-spacing: 0.16em; text-transform: uppercase;
+        padding: 3px 8px; border-radius: 6px;
+        background: #f97316; color: #000;
+      }
+      .an-start-label {
+        font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary);
+      }
+      .an-start-arrow {
+        color: #f97316; transition: transform 0.2s ease;
+      }
+      .an-restart-bar:hover .an-start-arrow {
+        transform: translateY(-2px);
+      }
+
+      /* ── KOF Three Sacred Clans Hero Marks ── */
+      .an-clan-marks {
+        position: relative; max-width: 680px; margin: 32px auto 0; padding: 20px 10px;
+      }
+      .an-clan-bridge {
+        position: absolute; top: 58px; left: 14%; right: 14%; height: 2px;
+        background: linear-gradient(90deg, rgba(249, 115, 22, 0.6) 0%, rgba(234, 179, 8, 0.7) 50%, rgba(168, 85, 247, 0.7) 100%);
+        pointer-events: none; z-index: 0;
+      }
+      .an-bridge-beam {
+        position: absolute; inset: -2px; border-radius: 2px;
+        background: inherit; filter: blur(4px); opacity: 0.7;
+      }
+      .an-bridge-pulse {
+        position: absolute; top: -3px; left: 0; width: 28px; height: 8px; border-radius: 9999px;
+        background: #ffffff; box-shadow: 0 0 14px 4px rgba(255, 255, 255, 0.9);
+        animation: an-pulse-slide 4s ease-in-out infinite;
+      }
+      @keyframes an-pulse-slide {
+        0%, 100% { left: 0%; opacity: 0; }
+        20% { opacity: 1; }
+        80% { opacity: 1; }
+        95% { left: calc(100% - 28px); opacity: 0; }
+      }
+      .an-clan-grid {
+        position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 3vw, 28px);
+      }
+      .an-clan-item {
+        display: flex; flex-direction: column; align-items: center; text-align: center;
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        cursor: default;
+      }
+      .an-clan-item:hover {
+        transform: translateY(-4px);
+      }
+      .an-clan-flame-wrap {
+        position: relative; width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;
+        margin-bottom: 14px;
+      }
+      .an-clan-disc {
+        position: relative; z-index: 2; width: 68px; height: 68px; border-radius: 50%;
+        background: radial-gradient(circle at 50% 40%, var(--kz-surface-2), var(--kz-surface-0) 80%);
+        border: 1.5px solid var(--kz-border-strong);
+        display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.4);
+        transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+      }
+      .an-clan-item:hover .an-clan-disc {
+        transform: scale(1.08);
+      }
+      .an-clan-aura {
+        position: absolute; inset: -10px; border-radius: 50%; pointer-events: none;
+        opacity: 0.55; filter: blur(10px); transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+      .an-clan-item:hover .an-clan-aura {
+        opacity: 0.95; transform: scale(1.25);
+      }
+      .is-kusanagi-aura {
+        background: radial-gradient(circle, rgba(249, 115, 22, 0.6) 0%, rgba(234, 88, 12, 0.3) 60%, transparent 80%);
+        animation: an-aura-pulse 2.8s ease-in-out infinite;
+      }
+      .is-yata-aura {
+        background: radial-gradient(circle, rgba(234, 179, 8, 0.6) 0%, rgba(202, 138, 4, 0.3) 60%, transparent 80%);
+        animation: an-aura-pulse 3.2s ease-in-out infinite 0.5s;
+      }
+      .is-yasakani-aura {
+        background: radial-gradient(circle, rgba(168, 85, 247, 0.65) 0%, rgba(147, 51, 234, 0.35) 60%, transparent 80%);
+        animation: an-aura-pulse 2.6s ease-in-out infinite 1s;
+      }
+      @keyframes an-aura-pulse {
+        0%, 100% { transform: scale(0.96); opacity: 0.5; }
+        50% { transform: scale(1.15); opacity: 0.85; }
+      }
+      .an-flame-tongues {
+        position: absolute; inset: -14px; border-radius: 50%; pointer-events: none; opacity: 0.6;
+      }
+      .is-crimson-flame {
+        box-shadow: 0 -8px 24px -2px rgba(249, 115, 22, 0.7);
+        animation: an-flame-wobble 2.2s ease-in-out infinite alternate;
+      }
+      .is-violet-flame {
+        box-shadow: 0 -8px 26px -2px rgba(168, 85, 247, 0.75);
+        animation: an-flame-wobble 1.9s ease-in-out infinite alternate-reverse;
+      }
+      @keyframes an-flame-wobble {
+        0% { transform: rotate(-5deg) scale(0.95); }
+        100% { transform: rotate(5deg) scale(1.08); }
+      }
+      .an-mirror-halo {
+        position: absolute; inset: -6px; border-radius: 50%; pointer-events: none;
+        border: 1px dashed rgba(234, 179, 8, 0.6);
+        animation: an-mirror-spin 14s linear infinite;
+      }
+      @keyframes an-mirror-spin { to { transform: rotate(360deg); } }
+      .an-moon-crescent {
+        position: absolute; top: -6px; right: -4px; width: 14px; height: 14px; border-radius: 50%;
+        box-shadow: 2px 2px 0 0 #c084fc; pointer-events: none; opacity: 0.8;
+      }
+      .an-clan-item.is-kusanagi:hover .an-clan-disc { border-color: #f97316; box-shadow: 0 0 24px rgba(249, 115, 22, 0.5); }
+      .an-clan-item.is-yata:hover .an-clan-disc { border-color: #eab308; box-shadow: 0 0 24px rgba(234, 179, 8, 0.5); }
+      .an-clan-item.is-yasakani:hover .an-clan-disc { border-color: #a855f7; box-shadow: 0 0 26px rgba(168, 85, 247, 0.55); }
+
+      .an-clan-meta { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+      .an-clan-badge {
+        font-family: var(--font-mono); font-size: 9.5px; font-weight: 800; letter-spacing: 0.16em;
+        text-transform: uppercase; padding: 2px 8px; border-radius: 9999px;
+      }
+      .an-clan-badge.is-crimson { background: rgba(249, 115, 22, 0.15); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.35); }
+      .an-clan-badge.is-gold { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.35); }
+      .an-clan-badge.is-violet { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); }
+      .an-clan-title {
+        font-family: var(--font-mono); font-size: 11px; font-weight: 600;
+        color: var(--kz-text-secondary); line-height: 1.4; max-width: 170px;
+      }
+
+      @media (max-width: 600px) {
+        .an-clan-title { font-size: 10px; }
+        .an-clan-flame-wrap { width: 64px; height: 64px; }
+        .an-clan-disc { width: 56px; height: 56px; }
+      }
+
+      @keyframes an-blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0.3; } }
 
       @media (prefers-reduced-motion: reduce) {
         .an-embers, .an-flame-canvas { display: none; }
-        .an-treasures svg, .an-years-track, .an-coin-slot { animation: none !important; }
+        .an-treasures svg, .an-years-track, .an-coin-lit-label, .an-pulse-slide,
+        .an-aura-pulse, .an-flame-wobble, .an-mirror-spin { animation: none !important; }
       }
     `}</style>
   );
