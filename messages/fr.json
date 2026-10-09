@@ -1829,7 +1829,27 @@
     "orazakaOverview": {
       "start": "Démarrer",
       "core": "Cœur",
-      "ops": "Ops"
+      "ops": "Ops",
+      "tourEyebrow": "Visite du produit",
+      "tourTitle": "Orazaka, enregistré sur l'application réelle",
+      "tour": {
+        "home": {
+          "label": "Accueil",
+          "caption": "La page d'accueil publique du client web : la promesse, le chat souverain qui répond, les Studios."
+        },
+        "chat": {
+          "label": "Chat souverain",
+          "caption": "Une question à laquelle llama3.2 répond via Ollama sur la même machine — en streaming, rien ne quitte le réseau."
+        },
+        "studios": {
+          "label": "Studios",
+          "caption": "Les vrais chiffres de l'espace, puis le catalogue des Studios : des parcours prêts à l'emploi, au prix connu avant de lancer."
+        },
+        "settings": {
+          "label": "Packs et apparence",
+          "caption": "Les packs qui ajoutent des capacités, puis le profil : thèmes clair et sombre appliqués instantanément."
+        }
+      }
     },
     "architectureMesh": {
       "requestJourney": "Parcours d'une requête",

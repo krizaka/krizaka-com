@@ -13,8 +13,13 @@ import {
 } from "lucide-react";
 import { useI18n } from "../../../../components/I18nProvider";
 import { PACKAGES } from "@/lib/packages-data";
+import ProductTour from "@/app/components/ProductTour";
 import KrizakaComplianceIllustration from "../../../../components/illustrations/KrizakaComplianceIllustration";
 import KrizakaDemosIllustration from "../../../../components/illustrations/KrizakaDemosIllustration";
+
+/** Screen recordings of the real web client (orazaka-web-client `npm run record:tour`);
+ *  label and caption: messages → pages.orazakaOverview.tour.<id>. */
+const TOUR = ["home", "chat", "studios", "settings"] as const;
 
 /* ─── Tech stack items ─── */
 const STACK = [
@@ -323,6 +328,42 @@ export default function OrazakaOverview() {
             </span>
           ))}
         </div>
+      </section>
+
+      {/* ═══ PRODUCT TOUR (screen recordings of the real application) ═══ */}
+      <section id="tour" style={{ marginBottom: 48, scrollMarginTop: 96 }}>
+        <p
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: 11,
+            fontWeight: 600,
+            textTransform: "uppercase",
+            letterSpacing: "0.16em",
+            color: "var(--kz-accent)",
+            textAlign: "center",
+            margin: "0 0 8px",
+          }}
+        >
+          {t.pages.orazakaOverview.tourEyebrow}
+        </p>
+        <h2
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: 20,
+            fontWeight: 700,
+            letterSpacing: "-0.02em",
+            color: "var(--kz-text-primary)",
+            textAlign: "center",
+            margin: "0 0 20px",
+          }}
+        >
+          {t.pages.orazakaOverview.tourTitle}
+        </h2>
+        <ProductTour
+          clips={TOUR.map((id) => ({ id, src: `/assets/orazaka/tour/${id}`, ...t.pages.orazakaOverview.tour[id] }))}
+          accent="#6366f1"
+          frameLabel="orazaka · localhost"
+        />
       </section>
 
       <hr style={{ border: "none", height: 1, background: "var(--kz-border-subtle)", margin: "0 0 40px" }} />
