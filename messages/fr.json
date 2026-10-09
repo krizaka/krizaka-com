@@ -995,12 +995,16 @@
           "body": "Certification 18+ à l'inscription, vérification des registres 18 U.S.C. § 2257 avant tout téléversement, signalements (mineur présumé, contenu non consenti, DMCA) persistés et traités en priorité."
         },
         "auctions": {
-          "title": "Enchères vidéo en direct",
-          "body": "Le créateur met une vidéo aux enchères ; le prix bouge en direct pour tous ceux qui regardent. Les offres sont bloquées en crédits et rendues dès qu'elles sont dépassées, une offre de dernière minute ajoute deux minutes, et seul le gagnant regarde — ou télécharge — la vidéo."
+          "title": "Enchères vidéo",
+          "body": "Les créateurs mettent une vidéo aux enchères ; le prix bouge en temps réel pour tous ceux qui regardent. Les offres sont bloquées en crédits et libérées dès qu'elles sont dépassées, une offre de dernière minute ajoute deux minutes, et seul le gagnant regarde — ou télécharge — la vidéo."
         },
         "wallet": {
           "title": "Un wallet de crédits",
           "body": "Les membres rechargent une fois via la page de paiement hébergée par la passerelle, puis donnent un pourboire, débloquent et enchérissent en un geste. Le solde est un registre en ajout seul : chaque mouvement écrit une fois, remboursé si un paiement n'aboutit pas."
+        },
+        "challenges": {
+          "title": "Des défis financés sous séquestre",
+          "body": "L'objectif tout-ou-rien d'un créateur, un défi lancé à un créateur, ou un appel ouvert auquel les créateurs postulent. Les fans engagent des crédits bloqués jusqu'à la livraison de la vidéo ou de la story — versés alors, rendus sinon. Cagnotte en temps réel, classement, aucun litige de paiement."
         }
       },
       "tour": {
