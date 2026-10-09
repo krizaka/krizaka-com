@@ -58,6 +58,14 @@ export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     intro:
       "Goals, dares and open calls: fans fund custom videos and stories with credits held in escrow, paid to the creator only on delivery and released otherwise — with what the industry does and why Orochia does it this way.",
   },
+  notifications: {
+    title: "Notifications & Realtime",
+    category: "architecture",
+    order: 6,
+    audience: "developer",
+    intro:
+      "One event, three channels: live toasts over Server-Sent Events, push to phones through FCM and APNs, e-mail at the pace each person chose — and why SSE rather than WebSocket, and why no separate realtime service yet.",
+  },
   media_pipeline: {
     title: "Media Pipeline",
     category: "architecture",
