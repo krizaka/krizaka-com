@@ -24,7 +24,9 @@ const RULES: Record<Field, (v: string) => boolean> = {
 };
 
 function TopicIcon({ topic }: { topic: ContactTopic }) {
-  if (topic === "orazaka" || topic === "orochia") return <ProductLogo id={topic} size={26} animated={false} />;
+  if (topic === "orazaka" || topic === "orochia" || topic === "blocks") {
+    return <ProductLogo id={topic === "blocks" ? "krizaka" : topic} size={26} animated={false} />;
+  }
   const Icon = topic === "partnership" ? Handshake : MessageCircle;
   return <Icon size={22} strokeWidth={1.75} aria-hidden />;
 }

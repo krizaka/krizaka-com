@@ -7,7 +7,7 @@
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
-export const CONTACT_TOPICS = ["orazaka", "orochia", "partnership", "other"] as const;
+export const CONTACT_TOPICS = ["orazaka", "orochia", "blocks", "partnership", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
 /** When the sender needs it (optional): qualifies the request for the team. */
@@ -51,6 +51,7 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
 const TOPIC_LABEL: Record<ContactTopic, string> = {
   orazaka: "Orazaka",
   orochia: "Orochia",
+  blocks: "Building blocks",
   partnership: "Partnership",
   other: "Other",
 };
