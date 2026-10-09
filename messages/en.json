@@ -239,7 +239,9 @@
     "sectionLabel": "Documentation",
     "sectionTitle": "Explore the technical docs",
     "sectionDesc": "Architecture, API, deployment — everything is documented and open source.",
-    "viewAllDocs": "View all documentation"
+    "viewAllDocs": "View all documentation",
+    "packagesCallout": "Looking for reusable UI kits or TypeScript contracts? Explore @krizaka packages on npm",
+    "packagesCalloutLink": "Explore packages"
   },
   "footer": {
     "product": "Product",
@@ -818,12 +820,23 @@
         "orochiBossTitle": "Yamata no Orochi",
         "orochiBossSub": "The eight heads of the creator economy sealed",
         "sealedBadge": "Sealed",
-        "vatLabel": "Vat"
+        "vatLabel": "Vat",
+        "creditLabel": "Credit 01",
+        "restartBtn": "Press to restart story",
+        "clans": {
+          "krizaka": "Kusanagi · Solar Crimson Fire",
+          "orazaka": "Yata · Sacred Golden Mirror",
+          "orochia": "Yasakani · Violet Moon Serpent"
+        }
       },
       "layers": {
         "label": "The pattern in the steel",
         "title": "Folded once, used everywhere.",
         "lead": "A kris draws its strength from layers of steel folded onto each other. Our interfaces are forged the same way: one brand layer, folded into each product's kit, and every layer published in the open — anyone can use it, anyone can check the pattern.",
+        "badge": "Shared Architecture · Not a standalone product",
+        "copyInstall": "Copy install command",
+        "copied": "Copied!",
+        "viewNpm": "View on npm",
         "items": {
           "ui": "The first fold: the marks and the way everything moves.",
           "orochiaDs": "Folded for Orochia: the serpent's colours, every control a creator touches.",
@@ -1401,6 +1414,7 @@
       "eyebrow": "On npm",
       "title": "The pieces, published.",
       "lead": "What every product's interface is made of, on the public npm registry: installable without an account or a token, each release built in CI with provenance.",
+      "notProductBanner": "Foundational building blocks, not standalone applications: these four packages are the open-source infrastructure that powers our products. Anyone can install and reuse them independently.",
       "npm": "npm",
       "source": "Source",
       "items": {

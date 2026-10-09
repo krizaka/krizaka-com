@@ -182,11 +182,68 @@ export default function DocsPreviewSection() {
         </Link>
       </div>
 
+      {/* ─── Packages spotlight callout (Not a standalone product) ─── */}
+      <div
+        className="docs-packages-callout"
+        style={{
+          marginTop: "28px",
+          padding: "16px 20px",
+          borderRadius: "14px",
+          background: "var(--kz-surface-1)",
+          border: "1px solid var(--kz-border-subtle)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+          gap: "14px",
+          transition: "border-color 150ms ease, box-shadow 150ms ease",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div
+            style={{
+              width: "32px",
+              height: "32px",
+              borderRadius: "8px",
+              background: "var(--kz-accent-soft)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
+            }}
+          >
+            <Layers size={16} style={{ color: "var(--kz-accent)" }} />
+          </div>
+          <span style={{ fontSize: "13.5px", color: "var(--kz-text-secondary)" }}>
+            {t.docsPreview.packagesCallout}
+          </span>
+        </div>
+        <Link
+          href="/open-source#packages"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "var(--kz-accent)",
+            textDecoration: "none",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {t.docsPreview.packagesCalloutLink}
+          <ArrowRight size={13} strokeWidth={2} />
+        </Link>
+      </div>
+
       <style>{`
         .doc-card:hover {
           border-color: var(--kz-border-default) !important;
           box-shadow: var(--kz-shadow-sm) !important;
           transform: translateY(-1px) !important;
+        }
+        .docs-packages-callout:hover {
+          border-color: var(--kz-border-strong) !important;
         }
         @media (max-width: 580px) {
           .docs-grid {

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BookOpen, FileCode2, GitBranch, Package, Plug, Scale, ShieldCheck, Workflow } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpen, FileCode2, GitBranch, Layers, Package, Plug, Scale, ShieldCheck, Workflow } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
 import { orgRepositories, type OrgRepository } from "@/lib/org-data";
 import { format, getDictionary } from "@/lib/i18n";
@@ -170,6 +170,10 @@ export default async function OpenSourcePage({ params }: Props) {
         <p className="os-eyebrow">{pk.eyebrow}</p>
         <h2 className="os-h2">{pk.title}</h2>
         <p className="os-pk-lead">{pk.lead}</p>
+        <div className="os-pk-banner">
+          <Layers size={18} aria-hidden />
+          <p>{pk.notProductBanner}</p>
+        </div>
         <div className="os-packages">
           {NPM_PACKAGES.map((p) => (
             <article key={p.id} className="os-package">
@@ -224,7 +228,13 @@ export default async function OpenSourcePage({ params }: Props) {
       <SiteFooter />
 
       <style>{`
-        .os-pk-lead { max-width: 640px; margin: -4px 0 24px; font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); }
+        .os-pk-lead { max-width: 640px; margin: -4px 0 20px; font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); }
+        .os-pk-banner {
+          display: flex; align-items: center; gap: 14px; margin: 0 0 28px; padding: 14px 18px; border-radius: 14px;
+          background: color-mix(in srgb, var(--kz-accent-soft) 80%, transparent); border: 1px solid var(--kz-border-strong);
+        }
+        .os-pk-banner svg { color: var(--kz-accent); flex-shrink: 0; }
+        .os-pk-banner p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
         .os-packages { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 14px; }
         .os-package { display: flex; gap: 16px; padding: 20px; border-radius: 20px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: border-color .25s, transform .25s; }
         .os-package:hover { border-color: var(--kz-border-strong); transform: translateY(-2px); }
