@@ -7,7 +7,7 @@ description: Every HTTP endpoint of the Orochia web app, with the access rule th
 
 > Generated from code by `scripts/generate-docs.mjs` — do not hand-edit.
 
-## Endpoints (135)
+## Endpoints (147)
 
 | Method | Path | Access | Summary |
 | :--- | :--- | :--- | :--- |
@@ -31,13 +31,13 @@ description: Every HTTP endpoint of the Orochia web app, with the access rule th
 | `PATCH` | `/api/admin/users/[id]` | session · ADMIN | Suspends an account (it can no longer sign in, and its open sessions are refused on their next request; its open auctions are cancelled and their bids released), reinstates it, or changes its role. |
 | `GET` | `/api/admin/videos` | session · ADMIN | The catalogue for moderation: every video with its creator, state and open reports; `?state=removed` lists takedowns. |
 | `PATCH` | `/api/admin/videos/[id]` | session · ADMIN | Takes a video down (DMCA, terms, a confirmed report) with a recorded reason — cancelling its auction — or restores it. |
-| `GET` | `/api/auctions` | public · session-aware | Lists auctions by tab: live, upcoming, ended (sold), bidding (yours) or selling (your own). |
+| `GET` | `/api/auctions` | public · session-aware | Lists auctions by tab: open, upcoming, ended (sold), bidding (yours) or selling (your own). |
 | `POST` | `/api/auctions` | session · CREATOR | Puts one of the creator's ready videos up for auction (start, end, starting price, rights, how it ends). |
 | `DELETE` | `/api/auctions/[id]` | session · CREATOR | The creator cancels their auction while nobody has bid; the video gets its previous visibility back. |
 | `GET` | `/api/auctions/[id]` | public · session-aware | An auction as the viewer sees it: price, minimum next bid, timing, recent bids (aliases), and their own standing. |
 | `POST` | `/api/auctions/[id]/bids` | session · MEMBER / CREATOR / ADMIN | Places a bid in Orochia credits; they are held while the bid leads and released when it is outbid. |
 | `POST` | `/api/auctions/[id]/decision` | session · CREATOR | The creator accepts the best bid (the video is sold to its bidder) or declines it (the credits go back). |
-| `GET` | `/api/auctions/[id]/stream` | public | Live Server-Sent Events of an auction: each bid (amount, alias, new end) and every change of state. |
+| `GET` | `/api/auctions/[id]/stream` | public | Server-Sent Events of an auction: each bid (amount, alias, new end) and every change of state. |
 | `POST` | `/api/auth/forgot-password` | public | E-mails a password-reset link (1 h) to the address, if an active account uses it. |
 | `POST` | `/api/auth/login` | public | Password login. |
 | `POST` | `/api/auth/logout` | public | — |
@@ -53,6 +53,18 @@ description: Every HTTP endpoint of the Orochia web app, with the access rule th
 | `GET` | `/api/auth/username` | public | Whether a username is free (unique address orochia.com/@username), with a free one suggested when it is not. |
 | `POST` | `/api/auth/verify-email` | public | Verifies an e-mail address with the link's one-time token (48 h); refreshes the session of that account. |
 | `GET` | `/api/bunny/analytics` | session · ADMIN | Catalogue statistics for administrators, from the database. |
+| `GET` | `/api/challenges` | public · session-aware | Lists challenges by tab: open, calls (open calls), done (delivered), inbox (yours to answer or deliver), mine, backing. |
+| `POST` | `/api/challenges` | session · MEMBER / CREATOR / ADMIN | Opens a challenge: a creator's goal (pledges until the deadline, all or nothing), a request to one creator (the sender's offer is held at once; the creator has three days to answer) or an open call for any creator (the author's pot is held; creators apply and the author picks one). |
+| `GET` | `/api/challenges/[id]` | public · session-aware | A challenge as the viewer sees it: progress, deadlines, backers (aliases), applications and what the viewer may do. |
+| `POST` | `/api/challenges/[id]/answer` | session · CREATOR | The creator a request was sent to accepts it (and must deliver in time) or declines it (every pledge comes back). |
+| `POST` | `/api/challenges/[id]/applications` | session · CREATOR | A verified creator applies to take an open call, with a short note for its author. |
+| `POST` | `/api/challenges/[id]/assign` | session · MEMBER / CREATOR / ADMIN | The author of an open call picks one applicant, who now has the delivery window to make it. |
+| `POST` | `/api/challenges/[id]/cancel` | session · MEMBER / CREATOR / ADMIN | The author withdraws an open challenge (a goal, a request not answered yet, an open call): every pledge comes back. |
+| `GET` | `/api/challenges/[id]/delivery` | session · CREATOR | What the creator can deliver: their ready videos not used elsewhere, or the stories posted since they committed. |
+| `POST` | `/api/challenges/[id]/delivery` | session · CREATOR | The creator delivers a video or a story: the backers' pledges are paid and they can watch it. |
+| `POST` | `/api/challenges/[id]/pledges` | session · MEMBER / CREATOR / ADMIN | Pledges Orochia credits to an open challenge; they are held until it is delivered and come back if it is not. |
+| `POST` | `/api/challenges/[id]/start` | session · CREATOR | A goal's creator starts it as soon as the goal is reached (pledging stops; the delivery window begins). |
+| `GET` | `/api/challenges/[id]/stream` | public | Server-Sent Events of a challenge: each pledge (amount, alias, new total) and every change of state. |
 | `POST` | `/api/contacts` | session · MEMBER / CREATOR / ADMIN | Sends a contact request (accepted at once when the other person already asked). |
 | `DELETE` | `/api/contacts/[id]` | session · MEMBER / CREATOR / ADMIN | Removes a contact or withdraws a request (either side). |
 | `PATCH` | `/api/contacts/[id]` | session · MEMBER / CREATOR / ADMIN | Accepts or rejects a request addressed to you, or blocks the other person. |
@@ -103,8 +115,8 @@ description: Every HTTP endpoint of the Orochia web app, with the access rule th
 | `PUT` | `/api/me/payout-account` | session · CREATOR / ADMIN | Saves (or replaces) where your earnings are sent; the details are checked and encrypted at rest. |
 | `GET` | `/api/me/profile` | session · ADMIN / CREATOR / MEMBER | Reads the signed-in user's own profile and settings (private fields included: e-mail, date of birth). |
 | `PUT` | `/api/me/profile` | session · ADMIN / CREATOR / MEMBER | Updates the signed-in user's own profile and preferences (only the fields sent). |
-| `GET` | `/api/me/stories` | session · CREATOR / ADMIN | Your stories of the last 30 days — live, encoding or expired — with their figures. |
-| `GET` | `/api/me/wallet` | session · MEMBER / CREATOR / ADMIN | Your Orochia credits: balance (and what is held behind your leading bids), the packs you can buy, how you can pay for them, and your history. |
+| `GET` | `/api/me/stories` | session · CREATOR / ADMIN | Your stories of the last 30 days — up, encoding or expired — with their figures. |
+| `GET` | `/api/me/wallet` | session · MEMBER / CREATOR / ADMIN | Your Orochia credits: balance (and what is held behind your leading bids and challenge pledges), the packs you can buy, how you can pay for them, and your history. |
 | `POST` | `/api/me/wallet/topups` | session · MEMBER / CREATOR / ADMIN | Buys credits: returns the gateway's hosted checkout (card, Apple Pay, Google Pay — card details never reach Orochia); the gateway's signed webhook adds the credits. |
 | `GET` | `/api/metrics` | bearer token | Prometheus metrics, behind a bearer token (METRICS_AUTH_TOKEN). |
 | `GET` | `/api/payments/gateways` | public | The ways a buyer can pay on this deployment: credits (the wallet), then the external gateways. |
@@ -120,7 +132,7 @@ description: Every HTTP endpoint of the Orochia web app, with the access rule th
 | `GET` | `/api/reference/content-ratings` | public | Reference content classifications and age ratings (Kids Safe, General, Teens, Mature, Adult). |
 | `GET` | `/api/reference/presets` | public | Default avatar and banner presets users can choose without uploading custom files. |
 | `GET` | `/api/search` | public | — |
-| `GET` | `/api/stories` | public · session-aware | The stories rail: one ring per creator with live stories you may see (yours first, then unseen), signed for you. |
+| `GET` | `/api/stories` | public · session-aware | The stories rail: one ring per creator with current stories you may see (yours first, then unseen), signed for you. |
 | `POST` | `/api/stories` | session · CREATOR / ADMIN | Publishes an image story (24 h) from an image stored by /api/uploads (category "stories"); verified creators only. |
 | `DELETE` | `/api/stories/[id]` | session · CREATOR / ADMIN | Withdraws a story: its creator or an operator. |
 | `DELETE` | `/api/stories/[id]/like` | session · MEMBER / CREATOR / ADMIN | Removes your like (idempotent). |
@@ -130,8 +142,8 @@ description: Every HTTP endpoint of the Orochia web app, with the access rule th
 | `POST` | `/api/uploads` | session · role depends on the request | Stores an avatar or a profile banner (any account), a thumbnail, a story image or a 2257 document (creators); size and type checked per kind. |
 | `DELETE` | `/api/users/[username]/block` | session · ADMIN / CREATOR / MEMBER | Unblocks a previously blocked user. |
 | `POST` | `/api/users/[username]/block` | session · ADMIN / CREATOR / MEMBER | Blocks or unblocks a user: toggles block state on POST. |
-| `DELETE` | `/api/videos/[id]` | session · CREATOR | The creator deletes their video (refused while it is in an auction). |
-| `PATCH` | `/api/videos/[id]` | session · CREATOR | The creator edits their video (an auctioned video keeps its audience): title, description, visibility, unlock price, tags, comments open. |
+| `DELETE` | `/api/videos/[id]` | session · CREATOR | The creator deletes their video (refused while it is in an auction, and for a video its challenge's backers paid for). |
+| `PATCH` | `/api/videos/[id]` | session · CREATOR | The creator edits their video (an auctioned or challenge video keeps its audience): title, description, visibility, unlock price, tags, comments open. |
 | `GET` | `/api/videos/[id]/auction` | public · session-aware | The auction a video is in (open, awaiting its decision or sold), as the viewer sees it; null when there is none. |
 | `GET` | `/api/videos/[id]/comments` | public · session-aware | The comments of a video you may watch, oldest first; removed ones keep their place without text. |
 | `POST` | `/api/videos/[id]/comments` | session · MEMBER / CREATOR / ADMIN | Comments on a video you may watch, or replies to one of its comments. |
@@ -147,7 +159,7 @@ description: Every HTTP endpoint of the Orochia web app, with the access rule th
 | `POST` | `/api/webhooks/bunny` | signed webhook | Bunny Stream encoding events (https://bunny.net/docs/stream/webhooks), signed v1 with the library's Read-Only API key (BUNNY_WEBHOOK_SECRET). |
 | `POST` | `/api/webhooks/payments/[gateway]` | signed webhook | Gateway payment notifications. |
 
-## Database tables (39)
+## Database tables (42)
 
 | Table | Drizzle export | Defined in |
 | :--- | :--- | :--- |
@@ -160,6 +172,9 @@ description: Every HTTP endpoint of the Orochia web app, with the access rule th
 | `playlist_audience_lists` | `playlistAudienceLists` | `packages/db/src/schema/audiences.ts` |
 | `auth_identities` | `authIdentities` | `packages/db/src/schema/auth-identities.ts` |
 | `auth_tokens` | `authTokens` | `packages/db/src/schema/auth-tokens.ts` |
+| `challenges` | `challenges` | `packages/db/src/schema/challenges.ts` |
+| `challenge_pledges` | `challengePledges` | `packages/db/src/schema/challenges.ts` |
+| `challenge_applications` | `challengeApplications` | `packages/db/src/schema/challenges.ts` |
 | `compliance_reports` | `complianceReports` | `packages/db/src/schema/compliance.ts` |
 | `contacts` | `contacts` | `packages/db/src/schema/contacts.ts` |
 | `follows` | `follows` | `packages/db/src/schema/contacts.ts` |

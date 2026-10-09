@@ -995,12 +995,16 @@
           "body": "18+ certification at sign-up, 18 U.S.C. § 2257 record checks before any upload, and content reports (suspected minors, non-consensual content, DMCA) persisted and triaged first."
         },
         "auctions": {
-          "title": "Live video auctions",
-          "body": "Creators put a video up for auction; the price moves live for everyone watching. Bids are held in credits and released the moment they are outbid, a last-minute bid adds two minutes, and only the winner watches — or downloads — the video."
+          "title": "Video auctions",
+          "body": "Creators put a video up for auction; the price moves in real time for everyone watching. Bids are held in credits and released the moment they are outbid, a last-minute bid adds two minutes, and only the winner watches — or downloads — the video."
         },
         "wallet": {
           "title": "A wallet of credits",
           "body": "Members top up once through the gateway's hosted checkout, then tip, unlock and bid in one tap. The balance is an append-only ledger: every movement written once, refunded when a payment does not complete."
+        },
+        "challenges": {
+          "title": "Challenges, funded in escrow",
+          "body": "A creator's all-or-nothing goal, a dare to one creator, or an open call creators apply to. Fans pledge credits that are held until the video or story is delivered — paid then, given back otherwise. Real-time pot, leaderboard, no chargeback race."
         }
       },
       "tour": {
