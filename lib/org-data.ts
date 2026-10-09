@@ -89,7 +89,7 @@ export const PRODUCTS: Product[] = [
     repoUrl: "https://github.com/krizaka/orazaka",
     accent: "#6366f1",
     stack: "Java 21 · Spring Boot 4 · Spring AI 2 · Next.js · Ollama",
-    media: { src: "/assets/orazaka/tour/chat", aspect: "1000 / 497", frame: "orazaka · web client" },
+    media: { src: "/assets/orazaka/tour/chat", aspect: "16 / 10", frame: "orazaka · web client" },
   },
   {
     id: "orochia",

@@ -1829,7 +1829,27 @@
     "orazakaOverview": {
       "start": "Start",
       "core": "Core",
-      "ops": "Ops"
+      "ops": "Ops",
+      "tourEyebrow": "Product tour",
+      "tourTitle": "Orazaka, recorded on the real application",
+      "tour": {
+        "home": {
+          "label": "Home",
+          "caption": "The public home page of the web client: the promise, the sovereign chat answering, the Studios."
+        },
+        "chat": {
+          "label": "Sovereign chat",
+          "caption": "A question answered by llama3.2 through Ollama on the same machine — streamed, nothing leaves the network."
+        },
+        "studios": {
+          "label": "Studios",
+          "caption": "The workspace's real figures, then the Studio catalogue: ready-made workflows with their price before the run."
+        },
+        "settings": {
+          "label": "Packs & appearance",
+          "caption": "Packs that add capabilities, then the profile: light and dark themes applied instantly."
+        }
+      }
     },
     "architectureMesh": {
       "requestJourney": "Request journey",
