@@ -810,7 +810,15 @@
       "ctaProducts": "Explore the products",
       "ctaContact": "Write to us",
       "arcade": {
-        "continue": "Continue?"
+        "continue": "Continue?",
+        "insertCoin": "Insert Coin",
+        "teamTag": "Team Battle · 3 vs 3",
+        "teamSynergy": "The Three Sacred Clans",
+        "stage": "Stage",
+        "orochiBossTitle": "Yamata no Orochi",
+        "orochiBossSub": "The eight heads of the creator economy sealed",
+        "sealedBadge": "Sealed",
+        "vatLabel": "Vat"
       },
       "layers": {
         "label": "The pattern in the steel",
