@@ -810,7 +810,15 @@
       "ctaProducts": "Découvrir les produits",
       "ctaContact": "Nous écrire",
       "arcade": {
-        "continue": "Continuer ?"
+        "continue": "Continuer ?",
+        "insertCoin": "Insérer une pièce",
+        "teamTag": "Combat d'équipe · 3 vs 3",
+        "teamSynergy": "Les Trois Clans Sacrés",
+        "stage": "Étape",
+        "orochiBossTitle": "Yamata no Orochi",
+        "orochiBossSub": "Les huit têtes de l'économie des créateurs scellées",
+        "sealedBadge": "Scellé",
+        "vatLabel": "Cuve"
       },
       "layers": {
         "label": "Le motif dans l'acier",

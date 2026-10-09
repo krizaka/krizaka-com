@@ -13,7 +13,15 @@ import { BirdPortrait, FlockStyles } from "@/app/components/story/Flock";
 import { CHAPTERS, FLOCK } from "@/lib/story";
 import { NPM_PACKAGES, npmUrl } from "@/lib/npm-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
-import { ArcadeStyles, ContinuePrompt, Embers, Treasures, YearsMarquee } from "@/app/components/story/ArcadeNods";
+import {
+  ArcadeStyles,
+  ArcadeStageCut,
+  ArcadeTeamBadge,
+  ContinuePrompt,
+  Embers,
+  Treasures,
+  YearsMarquee,
+} from "@/app/components/story/ArcadeNods";
 import { KrizakaLogo, OrazakaLogo, OrochiaLogo } from "@krizaka/ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -30,6 +38,12 @@ const MARK = {
   orochia: <OrochiaLogo size={150} />,
 };
 
+const MARK_AURA = {
+  krizaka: "is-krizaka",
+  orazaka: "is-orazaka",
+  orochia: "is-orochia",
+} as const;
+
 export default function StoryClient() {
   const { t } = useI18n();
   const st = t.site.story;
@@ -45,13 +59,21 @@ export default function StoryClient() {
         <p className="st-eyebrow">{st.intro.eyebrow}</p>
         <h1>{st.intro.title}</h1>
         <p className="st-lead">{st.intro.lead}</p>
+
+        {/* 1990s Arcade Team Battle Homage: Three Sacred Clans */}
+        <ArcadeTeamBadge tag={st.arcade.teamTag} synergy={st.arcade.teamSynergy} />
+
         {/* Three names, one team: they enter in turn, then a light sweeps across them. */}
         <div className="st-marks" aria-hidden>
-          {[<KrizakaLogo key="k" size={44} />, <OrazakaLogo key="oz" size={40} />, <OrochiaLogo key="oc" size={44} />].map((mark, i) => [
+          {[
+            { mark: <KrizakaLogo key="k" size={44} />, id: "krizaka" },
+            { mark: <OrazakaLogo key="oz" size={40} />, id: "orazaka" },
+            { mark: <OrochiaLogo key="oc" size={44} />, id: "orochia" },
+          ].map(({ mark, id }, i) => [
             i > 0 && <i key={`sep-${i}`} className="st-sep" />,
             <motion.span
               key={`mark-${i}`}
-              className="st-mark-slot"
+              className={`st-mark-slot ${MARK_AURA[id as keyof typeof MARK_AURA]}`}
               initial={{ opacity: 0, x: (i - 1) * -24, scale: 0.85 }}
               animate={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.6, ease: EASE, delay: 0.25 + i * 0.18 }}
@@ -65,12 +87,15 @@ export default function StoryClient() {
       {CHAPTERS.map((ch, i) => (
         <section key={ch.id} className={`st-chapter${i % 2 ? " is-flipped" : ""}`} aria-labelledby={`st-${ch.id}`}>
           <motion.div className="st-mark" {...reveal}>
-            <div className="st-mark-disc">{MARK[ch.id]}</div>
+            <div className={`st-mark-disc is-${ch.id}`}>
+              <div className="st-disc-glow" aria-hidden />
+              {MARK[ch.id]}
+            </div>
             <p className="st-roots">{st.chapters[ch.id].roots}</p>
             {ch.id === "orochia" && <Treasures />}
           </motion.div>
           <motion.div className="st-text" {...reveal} transition={{ ...reveal.transition, delay: 0.12 }}>
-            <p className="st-num">{String(i + 1).padStart(2, "0")} · {ch.name}</p>
+            <ArcadeStageCut stage={`${st.arcade.stage} 0${i + 1}`} name={ch.name} />
             <h2 id={`st-${ch.id}`}>{st.chapters[ch.id].title}</h2>
             {st.chapters[ch.id].body.map((p) => (
               <p key={p}>{p}</p>
@@ -81,16 +106,26 @@ export default function StoryClient() {
 
       <section className="st-heads" aria-label={st.headsAria}>
         <YearsMarquee />
+
+        <div className="st-boss-banner" aria-hidden>
+          <span className="st-boss-title">{st.arcade.orochiBossTitle}</span>
+          <span className="st-boss-sub">{st.arcade.orochiBossSub}</span>
+        </div>
+
         <ol>
           {st.heads.map((h, i) => (
             <motion.li
               key={h.head}
+              className="st-head-card"
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.5, ease: EASE, delay: (i % 4) * 0.08 }}
             >
-              <span className="st-vat">{i + 1}</span>
+              <div className="st-vat-header">
+                <span className="st-vat">{st.arcade.vatLabel} 0{i + 1}</span>
+                <span className="st-vat-tag">{st.arcade.sealedBadge}</span>
+              </div>
               <span className="st-head">{h.head}</span>
               <span className="st-answer">{h.answer}</span>
             </motion.li>
@@ -159,7 +194,7 @@ export default function StoryClient() {
               {st.ctaContact}
             </Link>
           </div>
-          <ContinuePrompt label={st.arcade.continue} />
+          <ContinuePrompt label={st.arcade.continue} insertCoin={st.arcade.insertCoin} />
         </div>
         <div className="st-landscape" aria-hidden>
           <KrizakaLandscape relative={false} />
@@ -169,8 +204,12 @@ export default function StoryClient() {
       <style>{`
         .st { position: relative; color: var(--kz-text-primary); }
         .st > :is(header, section) { position: relative; z-index: 1; }
-        .st-mark-slot { display: inline-flex; }
-        .st-marks { position: relative; overflow: hidden; padding: 6px 4px; }
+        .st-mark-slot { display: inline-flex; position: relative; padding: 6px; border-radius: 50%; transition: transform 0.3s ease; }
+        .st-mark-slot:hover { transform: translateY(-2px) scale(1.08); }
+        .st-mark-slot.is-krizaka:hover { box-shadow: 0 0 20px 4px rgba(249, 115, 22, 0.4); }
+        .st-mark-slot.is-orazaka:hover { box-shadow: 0 0 20px 4px rgba(234, 179, 8, 0.4); }
+        .st-mark-slot.is-orochia:hover { box-shadow: 0 0 20px 4px rgba(168, 85, 247, 0.45); }
+        .st-marks { position: relative; overflow: hidden; padding: 10px 14px; margin-top: 28px; }
         .st-marks::after { content: ""; position: absolute; inset: 0; pointer-events: none;
           background: linear-gradient(105deg, transparent 35%, color-mix(in srgb, var(--kz-text-primary) 18%, transparent) 50%, transparent 65%);
           transform: translateX(-120%); animation: st-sweep 1.4s 1.2s cubic-bezier(.16,1,.3,1) forwards; }
@@ -179,26 +218,41 @@ export default function StoryClient() {
         .st-hero { max-width: 760px; margin: 0 auto; padding: clamp(128px, 16vw, 176px) 20px 72px; text-align: center; }
         .st-eyebrow, .st-num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-accent); margin: 0; }
         .st-hero h1 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.1rem, 5.6vw, 3.4rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.08; margin: 18px 0 0; }
-        .st-lead { font-size: clamp(15px, 1.9vw, 18px); line-height: 1.75; color: var(--kz-text-secondary); margin: 22px auto 0; max-width: 640px; }
-        .st-marks { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 40px; }
+        .st-lead { font-size: clamp(15px, 1.9vw, 18px); line-height: 1.75; color: var(--kz-text-secondary); margin: 22px auto 28px; max-width: 640px; }
+        .st-marks { display: flex; align-items: center; justify-content: center; gap: 14px; }
         .st-marks .st-sep { width: 48px; height: 1px; background: linear-gradient(90deg, transparent, var(--kz-border-strong), transparent); }
 
         .st-chapter { max-width: 64rem; margin: 0 auto; padding: 72px 20px; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 80px); align-items: center; border-top: 1px solid var(--kz-border-subtle); }
         .st-chapter.is-flipped .st-mark { order: 2; }
         @media (max-width: 760px) { .st-chapter { grid-template-columns: 1fr; text-align: center; } .st-chapter.is-flipped .st-mark { order: 0; } }
         .st-mark { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-        .st-mark-disc { display: flex; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%;
-          background: radial-gradient(circle at 50% 40%, var(--kz-surface-2), var(--kz-surface-0) 70%); border: 1px solid var(--kz-border-subtle); }
+        .st-mark-disc { position: relative; display: flex; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%;
+          background: radial-gradient(circle at 50% 40%, var(--kz-surface-2), var(--kz-surface-0) 70%); border: 1px solid var(--kz-border-subtle);
+          transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
+        .st-mark-disc:hover { transform: scale(1.03); }
+        .st-mark-disc.is-krizaka { border-color: rgba(249, 115, 22, 0.35); box-shadow: 0 0 35px -10px rgba(249, 115, 22, 0.25); }
+        .st-mark-disc.is-orazaka { border-color: rgba(234, 179, 8, 0.35); box-shadow: 0 0 35px -10px rgba(234, 179, 8, 0.25); }
+        .st-mark-disc.is-orochia { border-color: rgba(168, 85, 247, 0.35); box-shadow: 0 0 35px -10px rgba(168, 85, 247, 0.3); }
+        .st-disc-glow { position: absolute; inset: -2px; border-radius: 50%; pointer-events: none; opacity: 0.6; filter: blur(8px); }
+        .st-mark-disc.is-krizaka .st-disc-glow { background: radial-gradient(circle, rgba(249, 115, 22, 0.2), transparent 70%); }
+        .st-mark-disc.is-orazaka .st-disc-glow { background: radial-gradient(circle, rgba(234, 179, 8, 0.2), transparent 70%); }
+        .st-mark-disc.is-orochia .st-disc-glow { background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%); }
         .st-roots { font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); margin: 0; }
         .st-text h2, .st-flock h2, .st-layers h2, .st-closing h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.6rem, 3.6vw, 2.3rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.15; margin: 12px 0 18px; }
         .st-text p:not(.st-num) { font-size: 16px; line-height: 1.8; color: var(--kz-text-secondary); margin: 0 0 14px; }
 
         .st-heads { position: relative; max-width: 64rem; margin: -24px auto 0; padding: 24px 20px 96px; }
+        .st-boss-banner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; margin-bottom: 24px; text-align: center; }
+        .st-boss-title { font-family: var(--font-mono); font-size: 12px; font-weight: 900; letter-spacing: 0.25em; text-transform: uppercase; color: #d946ef; text-shadow: 0 0 12px rgba(217, 70, 239, 0.4); }
+        .st-boss-sub { font-size: 13px; color: var(--kz-text-muted); }
         .st-heads ol { position: relative; z-index: 1; }
         .st-heads ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 1px;
           background: var(--kz-border-subtle); border: 1px solid var(--kz-border-subtle); border-radius: 20px; overflow: hidden; }
-        .st-heads li { display: grid; gap: 6px; padding: 20px; background: color-mix(in srgb, var(--kz-surface-0) 88%, transparent); backdrop-filter: blur(2px); }
-        .st-vat { font-family: var(--font-mono); font-size: 11px; color: #d946ef; }
+        .st-head-card { display: grid; gap: 8px; padding: 20px; background: color-mix(in srgb, var(--kz-surface-0) 88%, transparent); backdrop-filter: blur(2px); transition: background 0.2s ease; }
+        .st-head-card:hover { background: color-mix(in srgb, var(--kz-surface-1) 95%, transparent); }
+        .st-vat-header { display: flex; align-items: center; justify-content: space-between; }
+        .st-vat { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #d946ef; }
+        .st-vat-tag { font-family: var(--font-mono); font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: rgba(217, 70, 239, 0.15); color: #d946ef; border: 1px solid rgba(217, 70, 239, 0.3); }
         .st-head { font-size: 13px; color: var(--kz-text-muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, #d946ef 60%, transparent); }
         .st-answer { font-size: 14.5px; font-weight: 600; color: var(--kz-text-primary); }
 
