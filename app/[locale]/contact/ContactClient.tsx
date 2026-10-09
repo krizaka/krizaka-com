@@ -116,6 +116,13 @@ function FalconMascot() {
   );
 }
 
+/* ─── Where each conversation happens: the products, and the building blocks they share ─── */
+const PUBLIC_REPOSITORIES = [
+  { product: "orazaka", repo: "orazaka" },
+  { product: "orochia", repo: "orochia" },
+  { product: "krizaka", repo: "krizaka-platform-kit" },
+] as const;
+
 /* ─── Channel data ─── */
 const CHANNELS = [
   {
@@ -346,17 +353,17 @@ export default function ContactClient() {
                   {ch.cta} — {t.site.contactPage.whichProduct}
                 </span>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center" }}>
-                  {(["orazaka", "orochia"] as const).map((product) => (
+                  {PUBLIC_REPOSITORIES.map(({ product, repo }) => (
                     <a
                       key={product}
-                      href={`https://github.com/krizaka/${product}/${path}`}
+                      href={`https://github.com/krizaka/${repo}/${path}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="contact-product"
                       style={{ ["--accent" as string]: accent }}
                     >
                       <ProductLogo id={product} size={18} animated={false} />
-                      {product === "orazaka" ? "Orazaka" : "Orochia"}
+                      {t.site.contactPage.publicProducts[product]}
                       <ArrowRight size={13} strokeWidth={2} />
                     </a>
                   ))}

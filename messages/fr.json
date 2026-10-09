@@ -662,12 +662,14 @@
       "topics": {
         "orazaka": "Orazaka",
         "orochia": "Orochia",
+        "blocks": "Briques Krizaka",
         "partnership": "Partenariat",
         "other": "Autre chose"
       },
       "topicHints": {
         "orazaka": "Déployer ou auditer la passerelle d'IA souveraine",
         "orochia": "Lancer ou intégrer la plateforme vidéo pour créateurs",
+        "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
         "partnership": "Intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe"
       },
@@ -681,6 +683,7 @@
       "placeholders": {
         "orazaka": "Votre infrastructure (infonuagique, sur site, isolée), les modèles utilisés, vos contraintes de conformité…",
         "orochia": "Vos créateurs et votre public, les moyens de paiement voulus, votre date de lancement…",
+        "blocks": "Le composant (sécurité, messagerie, utilisateurs, notifications, facturation, UI…), votre stack et ce que vous voulez construire…",
         "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
         "other": "Comment pouvons-nous vous aider ?"
       },
@@ -1050,11 +1053,11 @@
         },
         "plug": {
           "title": "Branchez-le",
-          "body": "Parlez-lui via son contrat versionné — les modules *-api et clients typés, publiés en com.orazaka:* sur GitHub Packages."
+          "body": "Parlez-lui via son contrat versionné — les modules *-api et clients typés, publiés en com.krizaka:* sur Maven Central."
         }
       },
       "featured": {
-        "orazaka-users": {
+        "krizaka-users": {
           "title": "Utilisateurs & connexion",
           "gives": [
             "Inscription et vérification d'e-mail",
@@ -1063,7 +1066,7 @@
             "Clés d'API, rôles, JWT"
           ]
         },
-        "orazaka-notifications": {
+        "krizaka-notifications": {
           "title": "Notifications",
           "gives": [
             "E-mail (SMTP), SMS (Twilio), webhooks",
@@ -1072,13 +1075,22 @@
             "Via AMQP, découplé de votre app"
           ]
         },
-        "orazaka-billing": {
+        "krizaka-billing": {
           "title": "Facturation & crédits",
           "gives": [
             "Crédits, portefeuilles et forfaits",
             "Abonnements et grille tarifaire",
             "Mesure : réserver → régler → libérer",
             "Un client typé pour vos services"
+          ]
+        },
+        "krizaka-platform-kit": {
+          "title": "Kit plateforme",
+          "gives": [
+            "Une base de sécurité pour chaque chaîne de filtres",
+            "JWT de session et jetons service à service",
+            "Messages traités une fois, échecs rejoués",
+            "Un relais d'outbox transactionnel"
           ]
         }
       },
@@ -1092,8 +1104,8 @@
           "intro": "Build, contrats, edge et kit UI — pour toute application."
         },
         "domain": {
-          "title": "Services réutilisables",
-          "intro": "Utilisateurs, notifications, facturation."
+          "title": "Briques Krizaka",
+          "intro": "Les composants open source de Krizaka — sécurité, messagerie, utilisateurs, notifications, facturation — publiés sur Maven Central et npm. Les produits les consomment ; toute application peut le faire."
         },
         "ai": {
           "title": "Moteur IA",
@@ -1136,7 +1148,8 @@
       "contributeTitle": "Envie de contribuer ?",
       "contributeBody": "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue.",
       "contributeGuide": "Guide de contribution",
-      "ask": "Poser une question"
+      "ask": "Poser une question",
+      "blocksTitle": "Les briques Krizaka"
     },
     "legal": {
       "back": "← Retour à l'accueil",
@@ -1323,10 +1336,10 @@
     "contactPage": {
       "eyebrow": "Contact",
       "title": "Parlons de votre projet",
-      "lead": "Déploiement d'Orazaka ou d'Orochia, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
+      "lead": "Déploiement d'Orazaka ou d'Orochia, projet bâti sur une brique Krizaka, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
       "publicTitle": "Ou échangeons en public",
       "publicLead": "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub.",
-      "whichProduct": "pour quel produit ?",
+      "whichProduct": "où ?",
       "nextTitle": "La suite",
       "nextSteps": [
         {
@@ -1346,7 +1359,12 @@
         "Réponse sous 2 jours ouvrables",
         "Français · English",
         "Montréal, Québec"
-      ]
+      ],
+      "publicProducts": {
+        "orazaka": "Orazaka",
+        "orochia": "Orochia",
+        "krizaka": "Briques Krizaka"
+      }
     },
     "search": {
       "placeholder": "Rechercher une page, la documentation...",
@@ -1433,6 +1451,57 @@
         "orazakaShared": {
           "role": "Les contrats d'Orazaka",
           "line": "Types TypeScript, schémas Zod et jetons de design partagés par les clients web, mobile et en ligne de commande d'Orazaka."
+        }
+      }
+    },
+    "maven": {
+      "eyebrow": "Sur Maven Central",
+      "title": "Les briques Java, publiées.",
+      "lead": "Les briques sur lesquelles reposent les services de chaque produit, sur Maven Central sous com.krizaka : importez le BOM une fois et chaque artefact se résout en une même version, signée.",
+      "bomNote": "Importez le BOM, puis déclarez les artefacts sans version :",
+      "central": "Maven Central",
+      "source": "Source",
+      "all": "Tous les artefacts",
+      "items": {
+        "bom": {
+          "role": "Une version pour tout",
+          "line": "Chaque artefact com.krizaka à une même version. Il ne change jamais la version d'une bibliothèque tierce."
+        },
+        "security": {
+          "role": "Sécurité",
+          "line": "Vérification locale du JWT de session, la base de sécurité de chaque chaîne de filtres et les jetons SERVICE des appels internes."
+        },
+        "messaging": {
+          "role": "Messagerie",
+          "line": "Une déduplication qui réclame atomiquement et relâche en cas d'échec, et un relais d'outbox transactionnel pour RabbitMQ."
+        },
+        "usersClient": {
+          "role": "Utilisateurs — client",
+          "line": "Le service utilisateurs, typé : qui est un utilisateur, son profil, ses clés et son palier — authentifié et mis en cache."
+        },
+        "usersApi": {
+          "role": "Utilisateurs — contrat",
+          "line": "Les modèles utilisateur, profil et palier, et le port UserDirectoryClient."
+        },
+        "usersCore": {
+          "role": "Utilisateurs — bibliothèque",
+          "line": "Inscription, connexion, OAuth, récupération de mot de passe et émission de JWT, à intégrer dans votre application."
+        },
+        "notificationsApi": {
+          "role": "Notifications — contrat",
+          "line": "Demander un e-mail, un SMS ou un webhook via AMQP."
+        },
+        "billingClient": {
+          "role": "Facturation — client",
+          "line": "Réserver, régler et libérer des crédits, vérifier les droits — inactif quand la facturation est coupée."
+        },
+        "billingApi": {
+          "role": "Facturation — contrat",
+          "line": "Les modèles et ports des crédits, des droits et du comptage."
+        },
+        "testSupport": {
+          "role": "Kit de test",
+          "line": "Règles de code ArchUnit, vérification de la liaison de configuration et aides Testcontainers — en scope test."
         }
       }
     }

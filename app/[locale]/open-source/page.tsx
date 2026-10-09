@@ -7,8 +7,9 @@ import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
-import { ProductLogo } from "@krizaka/ui";
+import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NPM_PACKAGES, npmUrl, repoUrl } from "@/lib/npm-packages";
+import { CENTRAL_NAMESPACE_URL, MAVEN_ARTIFACTS, centralUrl, mavenRepoUrl } from "@/lib/maven-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
 
 /* /open-source — for developers who want to build with Krizaka's pieces: what can be reused, how
@@ -40,14 +41,12 @@ const STEPS = [
   { id: "plug", icon: Plug },
 ] as const;
 
-/** The pieces most applications need first — reusable outside Orazaka as they are. */
-/** The pieces most applications need first — reusable outside Orazaka as they are. */
-const FEATURED = ["orazaka-users", "orazaka-notifications", "orazaka-billing"] as const;
+/** The pieces most applications need first — Krizaka building blocks, reusable by any application. */
+const FEATURED = ["krizaka-users", "krizaka-notifications", "krizaka-billing", "krizaka-platform-kit"] as const;
 
 const GROUPS = [
   { id: "workspace", product: "orazaka" },
   { id: "foundation", product: "orazaka" },
-  { id: "domain", product: "orazaka" },
   { id: "ai", product: "orazaka" },
   { id: "apps", product: "orazaka" },
   { id: "orochia", product: "orochia" },
@@ -78,8 +77,10 @@ export default async function OpenSourcePage({ params }: Props) {
   const { locale } = await params;
   const t = getDictionary(locale).site.openSource;
   const pk = getDictionary(locale).site.packages;
+  const mv = getDictionary(locale).site.maven;
   const repositories = orgRepositories();
   const byName = new Map(repositories.map((r) => [r.name, r]));
+  const blocks = repositories.filter((r) => r.product === "krizaka");
 
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
@@ -132,6 +133,26 @@ export default async function OpenSourcePage({ params }: Props) {
               </article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="os-section" id="building-blocks">
+        <div className="os-product-head">
+          <KrizakaLogo size={40} />
+          <div>
+            <h2 className="os-h2" style={{ margin: 0 }}>{t.blocksTitle}</h2>
+          </div>
+        </div>
+        <div className="os-group">
+          <div className="os-group-head">
+            <h3>{t.groups.domain.title}</h3>
+            <p>{t.groups.domain.intro}</p>
+          </div>
+          <div className="os-repos">
+            {blocks.map((r) => (
+              <RepoCard key={r.name} repo={r} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -197,6 +218,48 @@ export default async function OpenSourcePage({ params }: Props) {
         </div>
       </section>
 
+      <section className="os-section" id="maven">
+        <p className="os-eyebrow">{mv.eyebrow}</p>
+        <h2 className="os-h2">{mv.title}</h2>
+        <p className="os-pk-lead">{mv.lead}</p>
+        <div className="os-pk-banner">
+          <Layers size={18} aria-hidden />
+          <p>{mv.bomNote}</p>
+        </div>
+        <pre className="os-bom">{`<dependency>
+  <groupId>com.krizaka</groupId>
+  <artifactId>krizaka-bom</artifactId>
+  <version>0.1.0</version>
+  <type>pom</type>
+  <scope>import</scope>
+</dependency>`}</pre>
+        <div className="os-packages">
+          {MAVEN_ARTIFACTS.map((a) => (
+            <article key={a.id} className="os-package">
+              <div className="os-package-body">
+                <p className="os-package-role">{mv.items[a.id].role}</p>
+                <h3>{a.artifactId}</h3>
+                <p>{mv.items[a.id].line}</p>
+                <code>{`${a.groupId}:${a.artifactId}`}</code>
+                <div className="os-package-links">
+                  <a href={centralUrl(a)} target="_blank" rel="noopener noreferrer">
+                    {mv.central} <ArrowUpRight size={13} aria-hidden />
+                  </a>
+                  <a href={mavenRepoUrl(a)} target="_blank" rel="noopener noreferrer">
+                    {mv.source} <ArrowUpRight size={13} aria-hidden />
+                  </a>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="os-maven-all">
+          <a href={CENTRAL_NAMESPACE_URL} target="_blank" rel="noopener noreferrer">
+            {mv.all} <ArrowUpRight size={13} aria-hidden />
+          </a>
+        </p>
+      </section>
+
       <section className="os-section">
         <div className="os-promises">
           {PROMISES.map(({ id, icon: Icon }) => (
@@ -228,6 +291,10 @@ export default async function OpenSourcePage({ params }: Props) {
       <SiteFooter />
 
       <style>{`
+        .os-bom { margin: 0 0 20px; padding: 14px 16px; border-radius: 14px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.6; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); color: var(--kz-text-primary); overflow-x: auto; }
+        .os-maven-all { margin: 18px 0 0; }
+        .os-maven-all a { display: inline-flex; align-items: center; gap: 4px; font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
+        .os-maven-all a:hover { color: var(--kz-accent); }
         .os-pk-lead { max-width: 640px; margin: -4px 0 20px; font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); }
         .os-pk-banner {
           display: flex; align-items: center; gap: 14px; margin: 0 0 28px; padding: 14px 18px; border-radius: 14px;
