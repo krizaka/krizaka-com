@@ -7,11 +7,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint && node scripts/check-messages.mjs",
-    "i18n:check": "node scripts/check-messages.mjs"
+    "lint": "eslint && krizaka-i18n check messages",
+    "i18n:check": "krizaka-i18n check messages"
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.0.0",
+    "@krizaka/i18n": "^0.1.0-beta.1",
     "@krizaka/ui": "^1.0.0",
     "@react-three/drei": "^10.0.0",
     "@react-three/fiber": "^9.1.0",

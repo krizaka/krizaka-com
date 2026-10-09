@@ -39,7 +39,7 @@ token system · React Three Fiber/Three.js (3D) · `@xyflow/react` (pipeline gra
 | `lib/seo.ts` | `localizedMetadata()` + `buildAlternates()` — per-page title/description/canonical/hreflang. |
 | `lib/structured-data.ts` | JSON-LD `@graph` builders (Organization · WebSite · SoftwareApplication, Breadcrumb, FAQ). |
 | `lib/site.ts` | External identity (SITE_URL, GitHub, version) — single source. |
-| `lib/i18n.ts` | Translation dictionary (large; FR/EN). |
+| `lib/i18n.ts` | Binds [`@krizaka/i18n`](https://www.npmjs.com/package/@krizaka/i18n) to `messages/en.json` + `messages/fr.json` (`getDictionary`, `asLocale`, `format`). |
 | `lib/docs.ts` · `lib/docs-manifest.ts` | Reads `orazaka-content/docs`, gated by the publish allow-list. |
 | `lib/{use-cases,packages,architecture-mesh,pipeline-mesh}-data.ts` | Page/visualization data. |
 | `orazaka-content/docs/` | **Synced** markdown from Orazaka (read-only). |

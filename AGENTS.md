@@ -48,8 +48,11 @@
 
 - **Every user-facing string lives in `messages/en.json` and `messages/fr.json`** (`lib/i18n.ts`).
   `en.json` is the reference: its shape is the `TranslationDictionary` type, so a missing French key
-  fails type-checking, and `npm run lint` runs `scripts/check-messages.mjs` (same keys, no empty
-  strings, same `{placeholders}`).
+  fails type-checking, and `npm run lint` runs `krizaka-i18n check messages` (same keys, no empty
+  strings, same `{placeholders}`, same markup).
+- The engine is [`@krizaka/i18n`](https://github.com/krizaka/krizaka-ui/tree/main/packages/i18n) on npm,
+  shared with every Krizaka app: `lib/i18n.ts` binds it to the catalogues, `I18nProvider` to the
+  routing, `Rich` re-exports it. Never re-implement `format`, `Rich` or the check here — change the package.
 - Components read `t` from `useI18n()` (client) or `getDictionary(locale)` (server); variables go
   through `format(message, { name })`; emphasis through `<Rich>` (`<b>…</b>` only).
 - **Never** choose a text with `locale === "fr" ? … : …` (or `isFr ? …`): ESLint refuses it. Only
