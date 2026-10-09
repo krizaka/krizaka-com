@@ -1,8 +1,10 @@
 "use client";
 
-/* /story — where the names come from. Restrained layout: generous whitespace, one idea per
-   chapter, the animated marks and the flock as ornaments, sections revealed as they scroll in, and
-   a few quiet arcade nods in the background (ArcadeNods). Tokens only; reduced-motion safe. */
+/* /story — where the names come from. A page to read: generous whitespace, one idea per chapter,
+   the marks and the flock as still ornaments, and a few quiet arcade nods (ArcadeNods).
+   Motion budget: one discreet reveal as each block enters, once, never repeated — nothing loops,
+   nothing moves behind or beside a paragraph. The birds come alive only under the pointer; the
+   landscape stays still. Reduced motion: no reveal offset, no hover motion. Tokens only. */
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -20,24 +22,23 @@ import {
   ArcadeTeamBadge,
   ClanHeroMarks,
   ContinuePrompt,
-  Embers,
   Treasures,
-  YearsMarquee,
 } from "@/app/components/story/ArcadeNods";
 import { KrizakaLogo, OrazakaLogo, OrochiaLogo } from "@krizaka/ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+/* The page's single motion: a short fade-up, once, when a block first enters the viewport. */
 const reveal = {
-  initial: { opacity: 0, y: 28 },
+  initial: { opacity: 0, y: 12 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.7, ease: EASE },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.6, ease: EASE },
 };
 
 const MARK = {
-  krizaka: <KrizakaLogo size={150} />,
-  orazaka: <OrazakaLogo size={132} />,
-  orochia: <OrochiaLogo size={150} />,
+  krizaka: <KrizakaLogo size={150} animated={false} />,
+  orazaka: <OrazakaLogo size={132} animated={false} />,
+  orochia: <OrochiaLogo size={150} animated={false} />,
 };
 
 export default function StoryClient() {
@@ -58,7 +59,6 @@ export default function StoryClient() {
     <div className="st">
       <FlockStyles />
       <ArcadeStyles />
-      <Embers />
 
       <header className="st-hero">
         <p className="st-eyebrow">{st.intro.eyebrow}</p>
@@ -70,60 +70,51 @@ export default function StoryClient() {
 
         {/* The Three Sacred Clans: Kusanagi (Solar Fire), Yata (Mirror), Yasakani (Violet Moon Serpent) */}
         <ClanHeroMarks
-          krizakaLogo={<KrizakaLogo size={42} />}
-          orazakaLogo={<OrazakaLogo size={38} />}
-          orochiaLogo={<OrochiaLogo size={42} />}
+          krizakaLogo={<KrizakaLogo size={42} animated={false} />}
+          orazakaLogo={<OrazakaLogo size={38} animated={false} />}
+          orochiaLogo={<OrochiaLogo size={42} animated={false} />}
           clans={st.arcade.clans}
         />
       </header>
 
       {CHAPTERS.map((ch, i) => (
-        <section key={ch.id} className={`st-chapter${i % 2 ? " is-flipped" : ""}`} aria-labelledby={`st-${ch.id}`}>
-          <motion.div className="st-mark" {...reveal}>
+        <motion.section key={ch.id} className={`st-chapter${i % 2 ? " is-flipped" : ""}`} aria-labelledby={`st-${ch.id}`} {...reveal}>
+          <div className="st-mark">
             <div className={`st-mark-disc is-${ch.id}`}>
               <div className="st-disc-glow" aria-hidden />
               {MARK[ch.id]}
             </div>
             <p className="st-roots">{st.chapters[ch.id].roots}</p>
             {ch.id === "orochia" && <Treasures />}
-          </motion.div>
-          <motion.div className="st-text" {...reveal} transition={{ ...reveal.transition, delay: 0.12 }}>
+          </div>
+          <div className="st-text">
             <ArcadeStageCut stage={`${st.arcade.stage} 0${i + 1}`} name={ch.name} />
             <h2 id={`st-${ch.id}`}>{st.chapters[ch.id].title}</h2>
             {st.chapters[ch.id].body.map((p) => (
               <p key={p}>{p}</p>
             ))}
-          </motion.div>
-        </section>
+          </div>
+        </motion.section>
       ))}
 
       <section className="st-heads" aria-label={st.headsAria}>
-        <YearsMarquee />
-
         <div className="st-boss-banner" aria-hidden>
           <span className="st-boss-title">{st.arcade.orochiBossTitle}</span>
           <span className="st-boss-sub">{st.arcade.orochiBossSub}</span>
         </div>
 
-        <ol>
+        <motion.ol {...reveal}>
           {st.heads.map((h, i) => (
-            <motion.li
-              key={h.head}
-              className="st-head-card"
-              initial={{ opacity: 0, y: 14 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.5, ease: EASE, delay: (i % 4) * 0.08 }}
-            >
+            <li key={h.head} className="st-head-card">
               <div className="st-vat-header">
                 <span className="st-vat">{st.arcade.vatLabel} 0{i + 1}</span>
                 <span className="st-vat-tag">{st.arcade.sealedBadge}</span>
               </div>
               <span className="st-head">{h.head}</span>
               <span className="st-answer">{h.answer}</span>
-            </motion.li>
+            </li>
           ))}
-        </ol>
+        </motion.ol>
       </section>
 
       <section className="st-flock" aria-labelledby="st-flock">
@@ -132,16 +123,16 @@ export default function StoryClient() {
         <p className="st-flock-lead">
           {st.flockLead}
         </p>
-        <div className="st-birds">
+        <motion.div className="st-birds" {...reveal}>
           {FLOCK.map((id) => (
-            <motion.article key={id} className="st-bird" {...reveal}>
+            <article key={id} className="st-bird">
               <BirdPortrait id={id} />
               <h3>{st.flock[id].name}</h3>
               <p className="st-role">{st.flock[id].role}</p>
               <p>{st.flock[id].line}</p>
-            </motion.article>
+            </article>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* The pattern in the steel: the shared interface layers, published on npm (Not standalone products) */}
@@ -152,17 +143,9 @@ export default function StoryClient() {
         <p className="st-num">05 · {st.layers.label}</p>
         <h2 id="st-layers">{st.layers.title}</h2>
         <p className="st-flock-lead">{st.layers.lead}</p>
-        <ol className="st-folds">
+        <motion.ol className="st-folds" {...reveal}>
           {NPM_PACKAGES.map((pkg, i) => (
-            <motion.li
-              key={pkg.id}
-              className="st-fold"
-              initial={{ opacity: 0, x: -18 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, ease: EASE, delay: i * 0.1 }}
-              style={{ marginLeft: `calc(${i} * var(--st-fold-step))` }}
-            >
+            <li key={pkg.id} className="st-fold" style={{ marginLeft: `calc(${i} * var(--st-fold-step))` }}>
               <PackageGlyph id={pkg.id} size={54} />
               <div className="st-fold-body">
                 <div className="st-fold-head">
@@ -201,9 +184,9 @@ export default function StoryClient() {
                   </a>
                 </div>
               </div>
-            </motion.li>
+            </li>
           ))}
-        </ol>
+        </motion.ol>
         <div className="st-install">
           <span>{st.layers.install}</span>
           <button
@@ -256,7 +239,6 @@ export default function StoryClient() {
         .st-hero { max-width: 760px; margin: 0 auto; padding: clamp(128px, 16vw, 176px) 20px 56px; text-align: center; }
         .st-eyebrow, .st-num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-accent); margin: 0; }
         
-        /* Subtle magical ambient sheen ONLY on hero title */
         .st-hero-title {
           font-family: var(--font-display), system-ui, sans-serif;
           font-size: clamp(2.1rem, 5.6vw, 3.4rem);
@@ -264,31 +246,7 @@ export default function StoryClient() {
           letter-spacing: -.035em;
           line-height: 1.08;
           margin: 18px 0 0;
-          background: linear-gradient(
-            110deg,
-            var(--kz-text-primary) 0%,
-            var(--kz-text-primary) 42%,
-            color-mix(in srgb, var(--kz-accent) 45%, var(--kz-text-primary)) 50%,
-            var(--kz-text-primary) 58%,
-            var(--kz-text-primary) 100%
-          );
-          background-size: 200% 100%;
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          animation: st-title-sheen 9s ease-in-out infinite;
-        }
-        @keyframes st-title-sheen {
-          0%, 25% { background-position: 100% 0; }
-          55%, 75% { background-position: 0% 0; }
-          100% { background-position: 100% 0; }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .st-hero-title {
-            animation: none !important;
-            background: none !important;
-            -webkit-text-fill-color: initial !important;
-            color: var(--kz-text-primary) !important;
-          }
+          color: var(--kz-text-primary);
         }
 
         .st-lead { font-size: clamp(15px, 1.9vw, 18px); line-height: 1.75; color: var(--kz-text-secondary); margin: 22px auto 28px; max-width: 640px; }
@@ -403,6 +361,17 @@ export default function StoryClient() {
         .st-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none;
           color: var(--kz-text-primary); border: 1px solid var(--kz-border-default); }
         .st-btn.is-primary { background: var(--kz-accent); color: var(--kz-on-accent); border-color: transparent; }
+        /* Still by default: the flock, the package glyphs and the landscape carry their own idle
+           loops elsewhere on the site; here they hold their first frame. A bird or a layer wakes up
+           only while it is hovered. */
+        .st-bird:not(:hover) *, .st-bird:not(:hover) *::before, .st-bird:not(:hover) *::after,
+        .st-fold:not(:hover) *, .st-fold:not(:hover) *::before, .st-fold:not(:hover) *::after,
+        .st-landscape *, .st-landscape *::before, .st-landscape *::after { animation-play-state: paused !important; }
+        @media (prefers-reduced-motion: reduce) {
+          .st-mark-disc, .st-fold, .st-install-pill { transition: none !important; }
+          .st-mark-disc:hover, .st-fold:hover, .st-install-pill:hover { transform: none !important; }
+        }
+
         .st-landscape { position: absolute; inset: auto 0 0 0; height: 300px; opacity: .7; pointer-events: none;
           -webkit-mask-image: linear-gradient(to top, black 60%, transparent); mask-image: linear-gradient(to top, black 60%, transparent); }
         @media (min-width: 768px) { .st-landscape { height: 440px; } }

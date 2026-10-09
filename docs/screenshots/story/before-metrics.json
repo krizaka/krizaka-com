@@ -1,0 +1,26 @@
+{
+  "dark-desktop": {
+    "rafPer2s": 120,
+    "canvases": 1,
+    "runningAnimations": 187,
+    "infiniteAnimationsAfterScroll": 187
+  },
+  "dark-mobile": {
+    "rafPer2s": 120,
+    "canvases": 1,
+    "runningAnimations": 181,
+    "infiniteAnimationsAfterScroll": 181
+  },
+  "light-desktop": {
+    "rafPer2s": 120,
+    "canvases": 1,
+    "runningAnimations": 187,
+    "infiniteAnimationsAfterScroll": 187
+  },
+  "light-mobile": {
+    "rafPer2s": 120,
+    "canvases": 1,
+    "runningAnimations": 181,
+    "infiniteAnimationsAfterScroll": 181
+  }
+}
