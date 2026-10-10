@@ -1,23 +1,26 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, type ReactNode } from "react";
+import { useCallback, useMemo, type ReactNode } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { createI18nReact } from "@krizaka/i18n/react";
 import type { TranslationDictionary } from "@/lib/i18n";
 import { type Locale, LOCALES, LOCALE_COOKIE, isLocale } from "@/lib/locales";
 
 /* ─── The active catalogue, handed down by the server ───
-   The locale layout resolves the dictionary (getDictionary, @krizaka/i18n) and passes ONLY that one: the client never
-   bundles messages/*.json (both catalogues were ~60 kB of JavaScript on every page, parsed before the first paint
-   counted — Lighthouse LCP). Text components keep reading `t` from useI18n(); format and <Rich> stay @krizaka/i18n. */
+   The locale layout resolves the dictionary (getDictionary) and passes ONLY that one to @krizaka/i18n/react, bound
+   here to the locales alone: the client never bundles messages/*.json (both catalogues were ~60 kB of JavaScript on
+   every page, parsed before the first paint counted — Lighthouse LCP). Text components keep reading `t` (the
+   catalogue) from useI18n(); format and <Rich> stay @krizaka/i18n. */
+
+const engine = createI18nReact<TranslationDictionary, Locale>({ locales: LOCALES, defaultLocale: "en" });
 
 interface I18nValue {
   locale: Locale;
+  /** The active catalogue: t.site.nav… */
   t: TranslationDictionary;
   setLocale: (l: Locale) => void;
   toggleLocale: () => void;
 }
-
-const I18nContext = createContext<I18nValue | null>(null);
 
 export function I18nProvider({ children, locale, messages }: { children: ReactNode; locale: Locale; messages: TranslationDictionary }) {
   const router = useRouter();
@@ -40,18 +43,19 @@ export function I18nProvider({ children, locale, messages }: { children: ReactNo
     router.push(newPath);
   }, [pathname, router]);
 
-  const value = useMemo<I18nValue>(
-    () => ({ locale, t: messages, setLocale, toggleLocale: () => setLocale(LOCALES.find((l) => l !== locale) ?? locale) }),
-    [locale, messages, setLocale],
+  return (
+    <engine.I18nProvider locale={locale} messages={messages} setLocale={setLocale}>
+      {children}
+    </engine.I18nProvider>
   );
-
-  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
 
 /* ─── Hook: `t` is the active catalogue (t.site.nav…), as every component reads it ─── */
 
 export function useI18n(): I18nValue {
-  const value = useContext(I18nContext);
-  if (!value) throw new Error("useI18n() must be used inside <I18nProvider>");
-  return value;
+  const { locale, messages, setLocale } = engine.useI18n();
+  return useMemo(
+    () => ({ locale, t: messages, setLocale, toggleLocale: () => setLocale(LOCALES.find((l) => l !== locale) ?? locale) }),
+    [locale, messages, setLocale],
+  );
 }

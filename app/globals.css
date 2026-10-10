@@ -1657,10 +1657,8 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
    --kz-accent-2, --kz-brand-gradient-*, surfaces and text.
    ═══════════════════════════════════════════════════════════════════ */
 
-/* The last stop of a section is the page surface itself, not a copy of its value: an app that changes
-   --kz-surface-0 (Orochia) would otherwise get a visible line under every section (krizaka/krizaka-ui#38). */
-html .kz-backdrop { background: linear-gradient(180deg, var(--kz-brand-gradient-from), var(--kz-brand-gradient-via) 55%, var(--kz-surface-0)); }
-html .kz-backdrop[data-direction="up"] { background: linear-gradient(0deg, var(--kz-brand-gradient-from), var(--kz-brand-gradient-via) 55%, var(--kz-surface-0)); }
+/* The last stop of a section is the page surface itself: @krizaka/tokens 2 makes --kz-brand-gradient-to an alias of
+   --kz-surface-0 (krizaka/krizaka-ui#38), so `.kz-backdrop` from @krizaka/ui needs no override here. */
 /* `glide`: rises from the page surface into the brand tint and settles back on it — consecutive sections of
    different brands (the home) meet on the surface, never on a hard band. */
 html .kz-backdrop.bp-glide { background: linear-gradient(180deg, var(--kz-surface-0), var(--kz-brand-gradient-from) 24%, var(--kz-brand-gradient-via) 62%, var(--kz-surface-0)); }

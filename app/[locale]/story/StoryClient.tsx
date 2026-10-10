@@ -17,7 +17,7 @@ import { useI18n } from "@/app/components/I18nProvider";
 import KrizakaLandscape from "@/app/components/illustrations/KrizakaLandscape";
 import { BirdPortrait, FlockStyles } from "@/app/components/story/Flock";
 import { CHAPTERS, FLOCK, type ChapterId } from "@/lib/story";
-import { NPM_PACKAGES, npmUrl } from "@/lib/npm-packages";
+import { STORY_PACKAGES as NPM_PACKAGES, npmUrl } from "@/lib/npm-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
 import {
   ArcadeDirector,
