@@ -2,9 +2,7 @@ import type { AnchorHTMLAttributes, ComponentProps } from "react";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import Mermaid from "./LazyMermaid";
-import { ComponentPreview } from "./ComponentPreview";
-import { PropsTable } from "./PropsTable";
-import { StoryFrame } from "./StoryFrame";
+import { ComponentCatalog } from "./ComponentCatalog";
 import { EventSchema } from "./EventSchema";
 import { ComingSoon } from "./ComingSoon";
 import { PRODUCT_MANIFESTS, isProductSection, type DocsSection } from "@/lib/docs-source";
@@ -18,10 +16,8 @@ export function getMdxComponents(locale: Locale, section: DocsSection): MDXCompo
     ...defaultMdxComponents,
     a: ({ href, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => <Anchor href={resolveDocHref(href, locale, product)} {...props} />,
     Mermaid,
-    ComponentPreview: (props: Omit<ComponentProps<typeof ComponentPreview>, "locale">) => <ComponentPreview {...props} locale={locale} />,
-    PropsTable: (props: Omit<ComponentProps<typeof PropsTable>, "locale">) => <PropsTable {...props} locale={locale} />,
+    ComponentCatalog: () => <ComponentCatalog locale={locale} />,
     EventSchema: (props: Omit<ComponentProps<typeof EventSchema>, "locale">) => <EventSchema {...props} locale={locale} />,
     ComingSoon: (props: Omit<ComponentProps<typeof ComingSoon>, "locale">) => <ComingSoon {...props} locale={locale} />,
-    StoryFrame,
   };
 }

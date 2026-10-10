@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { BookOpen, ChevronDown, Globe, Layers, LayoutGrid, Moon, Sun, X } from "lucide-react";
+import { BookOpen, ChevronDown, Globe, LayoutGrid, Moon, Sun, X } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
 import { NAV_ICONS } from "./ProductsMenu";
@@ -174,7 +174,7 @@ export function MobilePanel({
             </summary>
             <div className="kz-mp-links">
               {NAV_DOCS.map((d) => {
-                const Icon = d.id === "storybook" ? Layers : BookOpen;
+                const Icon = BookOpen;
                 const label = docsLinkText(t, d).label;
                 return d.external ? (
                   <a key={d.id} href={d.href} target="_blank" rel="noreferrer" onClick={onClose} className="kz-mp-link">

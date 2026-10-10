@@ -3,9 +3,15 @@ title: Krizaka UI
 description: The design system every Krizaka product is built on — tokens, a Tailwind preset and accessible React primitives.
 ---
 
-`@krizaka/ui` is one set of primitives — buttons, cards, dialogs, menus, fields — written once against semantic
-tokens, so a product changes its identity by changing **values**, never components. Every page of this section renders
-the primitive **live** from the published package, with the code you copy and the props generated from its types.
+`@krizaka/ui` is one set of components — buttons, cards, dialogs, menus, fields — written once against semantic
+tokens, for the web and for React Native, so a product changes its identity by changing **values**, never components.
+
+**The code writes this documentation.** Every component page is generated, at each build of this site, from the
+package's own code: what the component is, when to use it and when not, its examples rendered **live** with the code
+you copy (web and React Native), its props read from its types and its accessibility. One list of components, one link
+to share.
+
+<ComponentCatalog />
 
 ## Install in four lines
 
@@ -41,7 +47,7 @@ Every primitive follows the same rules, checked in the repository before it is r
 | **Accessible** | Radix behaviour for overlays and inputs, visible keyboard focus (`--kz-ring`), names required where a screen reader needs one. |
 | **Server-safe when it can be** | A primitive without state or effect has no `"use client"`: it renders in a Server Component. |
 | **Reduced motion** | Entrance and idle motion stop under `prefers-reduced-motion`. |
-| **A story, a demo, documented props** | Each primitive has its Storybook stories, the demo you see here and a description for every prop. |
+| **Documented by its code** | Each component carries its documentation (`meta.ts`), its named examples and a description for every prop; the release fails without them. |
 
 ## Where the pieces live
 
@@ -52,4 +58,4 @@ Every primitive follows the same rules, checked in the repository before it is r
 | `@krizaka/ui` | The primitives (this section), the brand marks and the motion signature. |
 | [`@krizaka/intl`](/docs/ui/intl) | Money, numbers, dates and plurals, formatted the same way everywhere. |
 
-The source, the Storybook and the release notes are on [GitHub](https://github.com/krizaka/krizaka-ui).
+The source and the release notes are on [GitHub](https://github.com/krizaka/krizaka-ui).

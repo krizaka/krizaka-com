@@ -4,21 +4,21 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node scripts/gen-ui-docs.mjs && next dev",
+    "build": "node scripts/gen-ui-docs.mjs --strict && next build",
     "start": "next start",
     "lint": "eslint && krizaka-i18n check messages && node scripts/gen-ui-docs.mjs --check",
     "i18n:check": "krizaka-i18n check messages",
     "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.mjs",
     "docs:ui": "node scripts/gen-ui-docs.mjs",
-    "postinstall": "fumadocs-mdx"
+    "postinstall": "fumadocs-mdx && node scripts/gen-ui-docs.mjs"
   },
   "dependencies": {
     "@dagrejs/dagre": "^3.0.0",
     "@krizaka/i18n": "^0.1.0-beta.2",
-    "@krizaka/tailwind": "^2.0.0-beta.3",
-    "@krizaka/tokens": "^2.0.0-beta.3",
-    "@krizaka/ui": "^2.0.0-beta.3",
+    "@krizaka/tailwind": "^2.0.0-beta.6",
+    "@krizaka/tokens": "^2.0.0-beta.6",
+    "@krizaka/ui": "^2.0.0-beta.6",
     "@react-three/drei": "^10.0.0",
     "@react-three/fiber": "^9.1.0",
     "@types/mdx": "^2.0.14",

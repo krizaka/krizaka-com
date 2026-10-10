@@ -102,15 +102,23 @@ gated by their manifests). The old article URLs (`/products/orazaka/<category>/<
 `/products/orochia/docs/<slug>`) answer **301** to `/docs/<product>/<slug>`; the product overview pages stay where
 they were.
 
-- **Live components** — every `@krizaka/ui` primitive has a page. `npm run docs:ui` reads the registry of the installed
-  package and (1) rewrites `lib/ui-demos.ts` (the demo import map), (2) scaffolds the missing
-  `content/docs/ui/components/<name>.mdx` — never overwrites an existing page, which is then enriched by hand.
-  `npm run lint` fails when a primitive has no page. Upgrading `@krizaka/ui` = bump, `npm run docs:ui`, add the new
-  titles to `messages/*.json` (`docs.pages.ui.<name>`).
+- **Components, driven by their code** — every component of the installed `@krizaka/ui` has a page, generated at
+  each build from its registry (`lib/docs-source.ts` adds one virtual page per component; `ComponentDoc` renders it):
+  what it is, Web / Mobile / both, stable or beta, when to use it and when not, installation (web and React Native),
+  each named example — live with its code on the web, the screenshot of its story and its code for React Native —
+  the props of its web and native components, its accessibility and the related components. All of it is written in
+  [krizaka-ui](https://github.com/krizaka/krizaka-ui) (`meta.ts`, `registry/examples`, the props' JSDoc), so the code
+  and the documentation cannot drift. `/docs/ui` is the catalogue, filtered by platform. `scripts/gen-ui-docs.mjs`
+  runs on `postinstall`, `dev` and `build` (`--strict`) and writes the git-ignored `lib/ui-examples.ts` (the import
+  map of the live examples) and `public/ui-examples/` (the native screenshots); `npm run lint` checks the registry is
+  complete. An optional `content/docs/ui/components/<name>.mdx` adds notes to a generated page (`card.mdx`).
+- **Upgrading `@krizaka/ui`** — Dependabot (`.github/dependabot.yml`, daily, `@krizaka/*`, pre-releases followed)
+  opens the bump; CI regenerates every page from the new registry. Nothing else to do: merge when green. (Chosen over a
+  `repository_dispatch` from krizaka-ui's release: no cross-repository token to keep, and the bump stays a reviewable
+  pull request.)
 - **Texts** — titles and descriptions of the written pages live in `messages/{en,fr}.json` (`docs.pages.<section>.<page>`);
-  the bodies are English developer documentation, like the synced product docs.
-- **Storybook** — `StoryFrame` embeds `NEXT_PUBLIC_STORYBOOK_URL` (GitHub Pages today, `https://ui.krizaka.com/latest`
-  after the Bunny mirror); a story can size its frame by posting `{ type: "krizaka:story-height", height }`.
+  the bodies are English developer documentation, like the synced product docs. A component page's chrome is in
+  `docs.component.*`; its content is the English its code carries.
 - **Search** — a static index (`/api/search`, built at build time), opened with `/` (⌘K stays the site's palette).
 
 ## Layout and the CSS reset

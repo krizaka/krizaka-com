@@ -1,0 +1,23 @@
+# Keeps the Krizaka packages current — above all @krizaka/ui, whose registry generates /docs/ui at every build.
+# A new @krizaka/ui on npm → a pull request bumping it (package.json + lock) → CI: `npm ci` (postinstall regenerates
+# lib/ui-examples.ts), `npm run lint` (scripts/gen-ui-docs.mjs --check: the registry is complete) and `npm run build`
+# (every component page regenerated from the new registry). Nothing generated is committed, so the bump is the whole
+# change: merge it when it is green. Pre-releases (2.0.0-beta.x) are followed because the site is on one.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: daily
+      time: "06:00"
+      timezone: Europe/Paris
+    allow:
+      - dependency-name: "@krizaka/*"
+    groups:
+      krizaka:
+        patterns: ["@krizaka/*"]
+    versioning-strategy: increase
+    commit-message:
+      prefix: "chore(deps)"
+    labels: [dependencies]
+    open-pull-requests-limit: 5

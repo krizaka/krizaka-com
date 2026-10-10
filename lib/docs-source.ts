@@ -3,17 +3,21 @@
    - ui, java     content/docs/** — MDX written here. Their titles and descriptions on the site come from
                   messages (docs.pages.<section>.<page>), so the sidebar, the page heading and the SEO metadata
                   are translated; the body is English (developer documentation), like the synced product docs.
+   - ui/<name>    one page per component of the @krizaka/ui registry, generated at every build (virtual pages, see
+                  componentFiles): the code of the component drives it. An optional content/docs/ui/components/
+                  <name>.mdx enriches the generated page (its body is rendered under "Notes").
    - orazaka,     synced from the product repositories, compiled only for the files their publication manifest
      orochia      lists (source.config.ts); title, category, order and intro come from that manifest.
 
    Every URL carries the locale (/en/docs/ui/card), so a docs link never goes through the locale redirect. */
 
-import { loader } from "fumadocs-core/source";
+import { loader, update, type VirtualFile } from "fumadocs-core/source";
 import type * as PageTree from "fumadocs-core/page-tree";
 import { java, orazaka, orochia, ui } from "@/.source/server";
 import { DOCS_MANIFEST, type DocManifestEntry } from "@/lib/docs-manifest";
 import { OROCHIA_DOCS_MANIFEST } from "@/lib/orochia-docs-manifest";
 import { getDictionary, type Locale, type TranslationDictionary } from "@/lib/i18n";
+import { CATEGORIES, getRegistryItems, type RegistryItem } from "@/lib/ui-registry";
 
 export const DOCS_SECTIONS = ["ui", "java", "orazaka", "orochia"] as const;
 export type DocsSection = (typeof DOCS_SECTIONS)[number];
@@ -35,10 +39,58 @@ const COLLECTIONS = { ui, java, orazaka, orochia };
 /** A synced file `API_REFERENCE.md` is the page `api_reference` — the manifest's key and the old URL's slug. */
 const productSlug = (path: string) => [path.replace(/\.md$/, "").split("/").pop()!.toLowerCase()];
 
+/** What a generated component page carries: the registry item it renders (title and description are its own). */
+export interface ComponentPageData {
+  component?: string;
+}
+
+/** Plain text of the code-written documentation: `asChild` → asChild (titles, SEO, search, sidebar). */
+const plain = (text: string) => text.replace(/`/g, "");
+
+/** The words of a component for the search index: its summary and when to use it, under its title. */
+function structuredData(item: RegistryItem) {
+  const contents = [item.summary, ...item.whenToUse, ...item.whenNotToUse.map((w) => w.when), ...item.accessibility.notes];
+  return { headings: [], contents: contents.map((content) => ({ heading: undefined, content: plain(content) })) };
+}
+
+/**
+ * The ui collection, plus one page per component of the registry: virtual when there is no enrichment MDX, the MDX
+ * page marked with its component otherwise; and the sidebar of the components, grouped by category.
+ */
+function componentFiles(files: VirtualFile[]): VirtualFile[] {
+  const items = getRegistryItems();
+  const byName = new Map(items.map((item) => [item.name, item]));
+  const pagePath = (name: string) => `components/${name}.mdx`;
+  const written = new Set(files.filter((f) => f.type === "page").map((f) => f.path));
+  const out = files
+    .filter((file) => !(file.type === "meta" && file.path === "components/meta.json"))
+    .map((file) => {
+      const name = file.type === "page" && file.path.startsWith("components/") ? file.path.slice(11, -4) : undefined;
+      const item = name ? byName.get(name) : undefined;
+      if (!item || file.type !== "page") return file;
+      return { ...file, data: { ...file.data, title: item.title, description: plain(item.summary), component: item.name, structuredData: structuredData(item) } };
+    });
+  for (const item of items) {
+    if (written.has(pagePath(item.name))) continue;
+    out.push({
+      type: "page",
+      path: pagePath(item.name),
+      data: { title: item.title, description: plain(item.summary), component: item.name, structuredData: structuredData(item) } as never,
+    });
+  }
+  const pages = CATEGORIES.flatMap((category) => {
+    const names = items.filter((item) => item.category === category).map((item) => item.name);
+    return names.length ? [`---${category}---`, ...names] : [];
+  });
+  out.push({ type: "meta", path: "components/meta.json", data: { title: "Components", pages } });
+  return out;
+}
+
 function createSource(section: DocsSection, locale: Locale) {
+  const source = COLLECTIONS[section].toFumadocsSource();
   return loader({
     baseUrl: `/${locale}/docs/${section}`,
-    source: COLLECTIONS[section].toFumadocsSource(),
+    source: section === "ui" ? update(source).files((files) => componentFiles(files as VirtualFile[]) as typeof files).build() : source,
     slugs: isProductSection(section)
       ? (file) => productSlug(file.path)
       : // The primitives live in content/docs/ui/components/ but are served flat: /docs/ui/card.
@@ -71,6 +123,9 @@ export function pageText(section: DocsSection, page: DocsPage, t: TranslationDic
     const entry = PRODUCT_MANIFESTS[section][pageKey(page.slugs)];
     return { title: entry?.title ?? pageKey(page.slugs), description: entry?.intro ?? page.data.description ?? "" };
   }
+  // A component page: its title and summary come from its code (the registry), in English.
+  const component = (page.data as ComponentPageData).component;
+  if (component) return { title: page.data.title ?? component, description: page.data.description ?? "" };
   const pages: Record<string, PageText | undefined> = t.docs.pages[section];
   const text = pages[pageKey(page.slugs)];
   return { title: text?.title ?? page.data.title ?? "", description: text?.description ?? page.data.description ?? "" };

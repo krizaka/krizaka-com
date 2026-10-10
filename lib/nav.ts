@@ -3,7 +3,6 @@
    overview · how it works · demo · documentation · its signature capability. */
 
 import type { TranslationDictionary } from "@/lib/i18n";
-import { STORYBOOK_URL } from "@/lib/site";
 
 export type ProductLinkId = "overview" | "architecture" | "demo" | "docs" | "signature";
 export type CompanyLinkId = "products" | "story" | "repos" | "contact";
@@ -59,12 +58,13 @@ export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
   { href: "/contact", icon: "contact" },
 ];
 
-/* Developers: how to build with the platform (Krizaka UI, Krizaka Java, the Storybook). One entry point — the "Docs"
+/* Developers: how to build with the platform (Krizaka UI, Krizaka Java). One entry point — the "Docs"
    menu on desktop, the "Docs" group on mobile, "Documentation" in the footer. A product's own docs stay its
    "documentation" entry above (same five entries per product); the hub /docs links everything.
    Open source (/open-source) stays the list of packages and repositories; Docs is how to use them.
-   Texts: ui/java → docs.sections.<id>; storybook and the hub → site.nav.docs.<id>. */
-export type DocsLinkId = "ui" | "java" | "storybook";
+   Krizaka UI is the one public documentation of the components (generated from their code; the visual-test catalogue of
+   krizaka-ui is an internal test tool, never linked). Texts: ui/java → docs.sections.<id>; the hub → site.nav.docs.all. */
+export type DocsLinkId = "ui" | "java";
 export interface DocsNavLink {
   id: DocsLinkId;
   href: string;
@@ -74,10 +74,11 @@ export const NAV_DOCS_HUB = "/docs";
 export const NAV_DOCS: DocsNavLink[] = [
   { id: "ui", href: "/docs/ui" },
   { id: "java", href: "/docs/java" },
-  { id: "storybook", href: STORYBOOK_URL, external: true },
 ];
-export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) =>
-  link.id === "storybook" ? t.site.nav.docs.storybook : { label: t.docs.sections[link.id].title, desc: t.docs.sections[link.id].description };
+export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) => ({
+  label: t.docs.sections[link.id].title,
+  desc: t.docs.sections[link.id].description,
+});
 
 /** True when `pathname` (locale-less) is this link's page — anchors (#…) never mark a link active. */
 export function isNavActive(link: NavLink, pathname: string): boolean {
