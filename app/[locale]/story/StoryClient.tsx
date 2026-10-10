@@ -164,8 +164,8 @@ export default function StoryClient() {
                   >
                     {copiedPkg === pkg.name ? (
                       <>
-                        <Check size={12} style={{ color: "var(--kz-status-success)" }} />
-                        <span style={{ color: "var(--kz-status-success)" }}>{st.layers.copied}</span>
+                        <Check size={12} style={{ color: "var(--kz-success)" }} />
+                        <span style={{ color: "var(--kz-success)" }}>{st.layers.copied}</span>
                       </>
                     ) : (
                       <>
@@ -196,8 +196,8 @@ export default function StoryClient() {
           >
             {copiedPkg === "@krizaka/ui" ? (
               <>
-                <Check size={13} style={{ color: "var(--kz-status-success)" }} />
-                <span style={{ color: "var(--kz-status-success)" }}>{st.layers.copied}</span>
+                <Check size={13} style={{ color: "var(--kz-success)" }} />
+                <span style={{ color: "var(--kz-success)" }}>{st.layers.copied}</span>
               </>
             ) : (
               <>

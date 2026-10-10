@@ -468,10 +468,10 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
         <div className="roi-calc-stat-divider" />
 
         <div className="roi-calc-stat highlight-stat">
-          <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--kz-status-success)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
+          <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--kz-success)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
             {getDictionary(locale).pages.useCase.timeSaved}
           </div>
-          <div style={{ fontSize: "28px", fontWeight: 800, color: "var(--kz-status-success)" }}>
+          <div style={{ fontSize: "28px", fontWeight: 800, color: "var(--kz-success)" }}>
             +{current.saved.toFixed(1)}h <span style={{ fontSize: "14px", fontWeight: 500 }}>/ {getDictionary(locale).pages.useCase.week}</span>
           </div>
         </div>
@@ -746,9 +746,9 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         }
 
         .indicator-manual {
-          background: color-mix(in srgb, var(--kz-status-error) 10%, var(--kz-surface-2));
-          color: var(--kz-status-error);
-          border-color: color-mix(in srgb, var(--kz-status-error) 25%, var(--kz-border-subtle));
+          background: color-mix(in srgb, var(--kz-danger) 10%, var(--kz-surface-2));
+          color: var(--kz-danger);
+          border-color: color-mix(in srgb, var(--kz-danger) 25%, var(--kz-border-subtle));
         }
 
         .indicator-auto {
@@ -843,7 +843,7 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         }
 
         .before-card {
-          border: 1px solid color-mix(in srgb, var(--kz-status-error) 20%, var(--kz-border-subtle));
+          border: 1px solid color-mix(in srgb, var(--kz-danger) 20%, var(--kz-border-subtle));
         }
 
         .after-card {
@@ -866,8 +866,8 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         }
 
         .before-badge {
-          background: color-mix(in srgb, var(--kz-status-error) 10%, transparent);
-          color: var(--kz-status-error);
+          background: color-mix(in srgb, var(--kz-danger) 10%, transparent);
+          color: var(--kz-danger);
         }
 
         .after-badge {
@@ -892,9 +892,9 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
           width: 24px;
           height: 24px;
           border-radius: 50%;
-          background: color-mix(in srgb, var(--kz-status-error) 10%, var(--kz-surface-2));
-          border: 1.5px solid color-mix(in srgb, var(--kz-status-error) 30%, var(--kz-border-subtle));
-          color: var(--kz-status-error);
+          background: color-mix(in srgb, var(--kz-danger) 10%, var(--kz-surface-2));
+          border: 1.5px solid color-mix(in srgb, var(--kz-danger) 30%, var(--kz-border-subtle));
+          color: var(--kz-danger);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -933,15 +933,15 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         }
 
         .before-note {
-          background: color-mix(in srgb, var(--kz-status-error) 6%, var(--kz-surface-2));
-          color: var(--kz-status-error);
-          border-left: 3px solid var(--kz-status-error);
+          background: color-mix(in srgb, var(--kz-danger) 6%, var(--kz-surface-2));
+          color: var(--kz-danger);
+          border-left: 3px solid var(--kz-danger);
         }
 
         .after-note {
-          background: color-mix(in srgb, var(--kz-status-success) 6%, var(--kz-surface-2));
-          color: var(--kz-status-success);
-          border-left: 3px solid var(--kz-status-success);
+          background: color-mix(in srgb, var(--kz-success) 6%, var(--kz-surface-2));
+          color: var(--kz-success);
+          border-left: 3px solid var(--kz-success);
         }
 
         /* Features Grid Styles */
@@ -1076,8 +1076,8 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         }
 
         .highlight-stat {
-          background: color-mix(in srgb, var(--kz-status-success) 5%, var(--kz-surface-2));
-          border: 1px solid color-mix(in srgb, var(--kz-status-success) 12%, var(--kz-border-subtle));
+          background: color-mix(in srgb, var(--kz-success) 5%, var(--kz-surface-2));
+          border: 1px solid color-mix(in srgb, var(--kz-success) 12%, var(--kz-border-subtle));
           border-radius: 12px;
           padding: 12px 20px;
         }

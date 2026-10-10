@@ -1,4 +1,6 @@
 import type { NextConfig } from "next";
+import { createMDX } from "fumadocs-mdx/next";
+import { DOCS_MANIFEST } from "./lib/docs-manifest";
 
 /**
  * Security headers applied to every route. Kept deliberately CSP-free for now —
@@ -33,6 +35,19 @@ const nextConfig: NextConfig = {
     minimumCacheTTL: 31536000,
   },
 
+  // The product docs moved to the documentation (/docs/<product>/<slug>, Fumadocs): the old article URLs answer 301.
+  async redirects() {
+    const categories = [...new Set(Object.values(DOCS_MANIFEST).map((doc) => doc.category))].join("|");
+    return [
+      {
+        source: `/:locale(fr|en)/products/orazaka/:category(${categories})/:slug`,
+        destination: "/:locale/docs/orazaka/:slug",
+        statusCode: 301,
+      },
+      { source: "/:locale(fr|en)/products/orochia/docs/:slug", destination: "/:locale/docs/orochia/:slug", statusCode: 301 },
+    ];
+  },
+
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
@@ -57,4 +72,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+/* Fumadocs: compiles the collections of source.config.ts into .source/ (content/docs, the synced product docs). */
+const withMDX = createMDX();
+
+export default withMDX(nextConfig);

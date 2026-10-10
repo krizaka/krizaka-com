@@ -336,7 +336,7 @@ export default function DemosGallery() {
               <span className="demo-card-badge">
                 {getBadgeLabel(activeMedia.type)}
               </span>
-              <h3 className="font-display font-extrabold text-lg text-kz-text-primary mb-2" style={{ color: "var(--kz-text-primary)", margin: "0 0 8px 0" }}>
+              <h3 className="font-display font-extrabold text-lg text-fg mb-2" style={{ color: "var(--kz-text-primary)", margin: "0 0 8px 0" }}>
                 {activeMedia.title}
               </h3>
               <p style={{ fontSize: "13.5px", color: "var(--kz-text-secondary)", lineHeight: 1.55, margin: 0 }}>

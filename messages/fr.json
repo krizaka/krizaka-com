@@ -552,6 +552,16 @@
           "label": "Contact",
           "desc": "Écrire à l'équipe"
         }
+      },
+      "docs": {
+        "storybook": {
+          "label": "Storybook",
+          "desc": "Toutes les stories @krizaka/ui, telles que testées"
+        },
+        "all": {
+          "label": "Toute la documentation",
+          "desc": "Docs plateforme et produits"
+        }
       }
     },
     "products": {
@@ -649,7 +659,8 @@
       "contact": "Contact",
       "privacy": "Confidentialité",
       "terms": "Conditions",
-      "madeIn": "Fait à Montréal · Apache-2.0"
+      "madeIn": "Fait à Montréal · Apache-2.0",
+      "docs": "Documentation"
     },
     "contactForm": {
       "stepTopic": "Qu'est-ce qui vous amène ?",
@@ -2109,6 +2120,283 @@
           "title": "Déploiement (IaC)"
         }
       ]
+    }
+  },
+  "docs": {
+    "meta": {
+      "title": "Documentation — Krizaka UI, Java et produits",
+      "description": "Une seule documentation pour la plateforme Krizaka : le design system UI avec aperçus en direct, le kit Spring Boot, et les docs produits Orazaka et Orochia."
+    },
+    "hub": {
+      "kicker": "Documentation",
+      "title": "Construire avec Krizaka",
+      "lead": "Les briques dont les produits sont faits, documentées depuis leur source : composants en direct, kit Java, et la documentation de chaque produit.",
+      "open": "Ouvrir",
+      "platform": "Plateforme",
+      "products": "Produits"
+    },
+    "sections": {
+      "ui": {
+        "title": "Krizaka UI",
+        "description": "Tokens, preset Tailwind et primitives React — aperçus en direct, code copiable, props."
+      },
+      "java": {
+        "title": "Krizaka Java",
+        "description": "Parent, BOM, starters, messagerie, Problem Details et les contrats des services."
+      },
+      "orazaka": {
+        "title": "Orazaka",
+        "description": "Le moteur d'IA souverain : démarrage, architecture, API — synchronisés depuis ses dépôts."
+      },
+      "orochia": {
+        "title": "Orochia",
+        "description": "La plateforme de créateurs : architecture, enchères, pipeline média, API et déploiement — synchronisés depuis son code."
+      }
+    },
+    "separators": {
+      "components": "Composants",
+      "modules": "Modules",
+      "contracts": "Contrats"
+    },
+    "categories": {
+      "getting-started": "Démarrage",
+      "architecture": "Architecture",
+      "api": "API",
+      "core-features": "Fonctionnalités",
+      "operations": "Exploitation",
+      "guidelines": "Lignes directrices"
+    },
+    "productIndex": {
+      "lead": "Chaque page ci-dessous est synchronisée depuis le dépôt du produit et publiée par son manifeste.",
+      "overview": "Présentation du produit"
+    },
+    "chrome": {
+      "search": "Rechercher dans la doc",
+      "searchNoResults": "Aucun résultat",
+      "onThisPage": "Sur cette page",
+      "noHeadings": "Aucun titre",
+      "nextPage": "Suivant",
+      "previousPage": "Précédent",
+      "copy": "Copier",
+      "copied": "Copié",
+      "openSidebar": "Ouvrir le menu latéral",
+      "closeSidebar": "Fermer le menu latéral",
+      "collapseSidebar": "Replier le menu latéral",
+      "openSearch": "Ouvrir la recherche",
+      "closeSearch": "Fermer la recherche",
+      "lastUpdated": "Mis à jour le",
+      "chooseSection": "Choisir une documentation"
+    },
+    "preview": {
+      "preview": "Aperçu",
+      "code": "Code",
+      "label": "Aperçu en direct de {name}",
+      "toLight": "Afficher en thème clair",
+      "toDark": "Afficher en thème sombre"
+    },
+    "props": {
+      "prop": "Prop",
+      "type": "Type",
+      "default": "Défaut",
+      "description": "Description",
+      "required": "requis",
+      "none": "Ce module n'a pas de props de composant : voir l'import et l'aperçu ci-dessus."
+    },
+    "story": {
+      "title": "Story Storybook {story}",
+      "open": "Ouvrir dans Storybook"
+    },
+    "schema": {
+      "field": "Champ",
+      "type": "Type",
+      "required": "Requis",
+      "description": "Description",
+      "constraints": "Contraintes",
+      "yes": "oui",
+      "no": "non"
+    },
+    "comingSoon": {
+      "title": "À venir",
+      "body": "Les services ne publient pas encore ces contrats : cette page se remplira dès qu'ils le feront, depuis la source.",
+      "issue": "Suivre l'issue"
+    },
+    "pages": {
+      "ui": {
+        "index": {
+          "title": "Krizaka UI",
+          "description": "Le design system de tous les produits Krizaka — tokens, preset Tailwind et primitives React accessibles."
+        },
+        "tokens": {
+          "title": "Tokens",
+          "description": "Le vocabulaire --kz-* : un seul jeu de rôles sémantiques compilé en CSS, TypeScript et React Native."
+        },
+        "tailwind": {
+          "title": "Preset Tailwind",
+          "description": "Le preset Tailwind CSS v4 qui transforme les tokens --kz-* en utilitaires."
+        },
+        "intl": {
+          "title": "Intl",
+          "description": "Montants, nombres, dates et pluriels formatés de la même façon dans tous les produits Krizaka."
+        },
+        "alert": {
+          "title": "Alert",
+          "description": "Un message dans le fil de la page : information, succès, avertissement ou danger."
+        },
+        "avatar": {
+          "title": "Avatar",
+          "description": "La photo d'une personne avec des initiales de repli, seule ou empilée en groupe."
+        },
+        "badge": {
+          "title": "Badge",
+          "description": "Une étiquette courte : un statut, un compteur, une mention sur une image."
+        },
+        "button": {
+          "title": "Bouton",
+          "description": "L'action : principale, secondaire, contour, fantôme ou danger, avec tailles, chargement et boutons icône."
+        },
+        "card": {
+          "title": "Carte",
+          "description": "Le châssis composé de toute carte Krizaka — média, badges, corps, pied."
+        },
+        "checkbox": {
+          "title": "Case à cocher",
+          "description": "Une case à cocher : cochée, décochée ou indéterminée, avec son libellé."
+        },
+        "chip": {
+          "title": "Puce",
+          "description": "Des puces sélectionnables et supprimables, seules ou en groupe à choix unique ou multiple."
+        },
+        "cn": {
+          "title": "cn",
+          "description": "Fusionne les classes Tailwind : le className d'un produit l'emporte sur celui de la primitive."
+        },
+        "command": {
+          "title": "Palette de commandes",
+          "description": "Une palette de commandes : recherche, groupes, raccourcis — dans la page ou en dialogue."
+        },
+        "confirm-button": {
+          "title": "Bouton de confirmation",
+          "description": "Une action destructive en deux temps : armer, puis confirmer."
+        },
+        "countdown": {
+          "title": "Compte à rebours",
+          "description": "Un compte à rebours vers une date, urgent à l'approche de la fin, avec son hook."
+        },
+        "dialog": {
+          "title": "Dialogue",
+          "description": "Dialogues, panneaux latéraux et alertes — focus piégé, fermeture par Échap."
+        },
+        "dropdown-menu": {
+          "title": "Menu déroulant",
+          "description": "Un menu d'actions ouvert depuis un déclencheur, navigable au clavier."
+        },
+        "empty-state": {
+          "title": "État vide",
+          "description": "Ce qu'une liste dit quand elle est vide, et l'action qui la remplit."
+        },
+        "field": {
+          "title": "Champ",
+          "description": "Libellé, aide et erreur autour d'une saisie, d'une zone de texte ou d'une liste."
+        },
+        "kbd": {
+          "title": "Kbd",
+          "description": "Une touche ou un raccourci clavier, en texte."
+        },
+        "page-header": {
+          "title": "En-tête de page",
+          "description": "Le haut d'une page : titre, description, fil d'Ariane et actions."
+        },
+        "popover": {
+          "title": "Popover",
+          "description": "Un contenu flottant ancré à un déclencheur : un petit formulaire, un détail."
+        },
+        "progress": {
+          "title": "Progression",
+          "description": "Une progression en barre ou en anneau, déterminée ou non."
+        },
+        "radio-group": {
+          "title": "Groupe radio",
+          "description": "Un choix parmi plusieurs, en éléments ou en cartes."
+        },
+        "separator": {
+          "title": "Séparateur",
+          "description": "Un séparateur horizontal ou vertical."
+        },
+        "skeleton": {
+          "title": "Squelette",
+          "description": "Des gabarits qui tiennent la mise en page pendant le chargement."
+        },
+        "slider": {
+          "title": "Curseur",
+          "description": "Une valeur ou une plage choisie sur une piste."
+        },
+        "slot": {
+          "title": "Slot",
+          "description": "Ce que rend asChild, et un nom réservé aux technologies d'assistance."
+        },
+        "spinner": {
+          "title": "Indicateur de chargement",
+          "description": "Une attente indéterminée, en trois tailles."
+        },
+        "stat": {
+          "title": "Statistique",
+          "description": "Un chiffre avec son libellé et sa tendance."
+        },
+        "switch": {
+          "title": "Interrupteur",
+          "description": "Un réglage activé/désactivé qui s'applique immédiatement."
+        },
+        "tabs": {
+          "title": "Onglets",
+          "description": "Des onglets soulignés, en segments ou en pastilles."
+        },
+        "theme": {
+          "title": "Thème",
+          "description": "Le mécanisme de thème de tous les produits : script, provider, hook et bascule."
+        },
+        "toast": {
+          "title": "Toast",
+          "description": "Des notifications qui vont et viennent, stylées par rôle."
+        },
+        "tooltip": {
+          "title": "Infobulle",
+          "description": "Une courte indication au survol et au focus clavier."
+        }
+      },
+      "java": {
+        "index": {
+          "title": "Krizaka Java",
+          "description": "Les briques Spring Boot de tous les services Krizaka — un build, quatre modules, quatre starters."
+        },
+        "build": {
+          "title": "Build, parent et BOM",
+          "description": "krizaka-parent, krizaka-bom et krizaka-test-support : un seul build pour tous les artefacts JVM Krizaka."
+        },
+        "web": {
+          "title": "Web et Problem Details",
+          "description": "krizaka-web : un format d'erreur (RFC 9457), corrélation des requêtes, Jackson, pagination par curseur, CORS."
+        },
+        "security": {
+          "title": "Sécurité",
+          "description": "krizaka-security : vérification locale des jetons de session, un socle pour chaque chaîne de filtres, jetons de service."
+        },
+        "messaging": {
+          "title": "Messagerie",
+          "description": "krizaka-messaging : publier par l'outbox, consommer avec retry puis DLQ, traiter chaque message une fois."
+        },
+        "observability": {
+          "title": "Observabilité",
+          "description": "krizaka-observability : noms de service obligatoires, logs ECS, Prometheus et OpenTelemetry par défaut."
+        },
+        "events": {
+          "title": "Contrats d'événements",
+          "description": "Les événements publiés par les services de domaine Krizaka, chacun avec son JSON Schema."
+        },
+        "openapi": {
+          "title": "API HTTP (OpenAPI)",
+          "description": "Les contrats OpenAPI de krizaka-users, krizaka-billing et krizaka-notifications."
+        }
+      }
     }
   }
 }

@@ -7,10 +7,10 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { ArrowRight, BookOpen, ChevronDown, Compass, Cpu, Feather, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpen, ChevronDown, Layers, Compass, Cpu, Feather, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "./I18nProvider";
-import { NAV_COMPANY, NAV_PRODUCTS, companyLinkText, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
+import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
 import { ProductLogo } from "@krizaka/ui";
 
 export const NAV_ICONS: Record<NavIcon, LucideIcon> = {
@@ -137,20 +137,30 @@ export function ProductsMenu() {
         </div>
       </Dropdown>
 
-      <Dropdown id="nav-docs-trigger" label={m.docs} active={pathname.includes("/docs") || pathname.startsWith("/products/orazaka/getting-started")} width={300}>
-        {NAV_PRODUCTS.map((p) => {
-          const docs = p.links.find((l) => l.icon === "docs")!;
-          return (
-            <Link key={p.id} href={docs.href} className={`kz-menu-link${isNavActive(docs, pathname) ? " is-active" : ""}`}>
-              <ProductLogo id={p.id} size={22} animated={false} />
+      <Dropdown id="nav-docs-trigger" label={m.docs} active={pathname === NAV_DOCS_HUB || pathname.startsWith("/docs/ui") || pathname.startsWith("/docs/java")} width={400}>
+        {NAV_DOCS.map((d) => {
+          const text = docsLinkText(t, d);
+          const content = (
+            <>
+              {d.id === "storybook" ? <Layers size={18} className="kz-menu-icon" aria-hidden /> : <ProductLogo id="krizaka" size={22} animated={false} />}
               <span>
-                <span className="kz-menu-label">{p.name}</span>
-                <span className="kz-menu-desc">{t.site.nav[p.id].links.docs.desc}</span>
+                <span className="kz-menu-label">{text.label}</span>
+                <span className="kz-menu-desc">{text.desc}</span>
               </span>
-              <ArrowRight size={13} className="kz-menu-arrow" aria-hidden />
-            </Link>
+              {d.external ? <ArrowUpRight size={13} className="kz-menu-arrow" aria-hidden /> : <ArrowRight size={13} className="kz-menu-arrow" aria-hidden />}
+            </>
+          );
+          return d.external ? (
+            <a key={d.id} href={d.href} target="_blank" rel="noreferrer" className="kz-menu-link">{content}</a>
+          ) : (
+            <Link key={d.id} href={d.href} className={`kz-menu-link${pathname.startsWith(d.href) ? " is-active" : ""}`}>{content}</Link>
           );
         })}
+        <div className="kz-mega-foot">
+          <Link href={NAV_DOCS_HUB} className="kz-mega-foot-link">
+            <LayoutGrid size={14} aria-hidden /> {t.site.nav.docs.all.label}
+          </Link>
+        </div>
       </Dropdown>
 
       <Link href="/open-source" className={`kz-dd-trigger${pathname === "/open-source" ? " is-active" : ""}`}>
@@ -170,9 +180,8 @@ export function ProductsMenu() {
         .kz-dd-chevron { transition: transform 200ms ease; }
         .kz-dd-trigger[aria-expanded="true"] .kz-dd-chevron { transform: rotate(180deg); }
         .kz-dd-panel { position:absolute; top:calc(100% + 14px); left:50%; padding:14px; border-radius:18px; z-index:60;
-          background:color-mix(in srgb, var(--kz-surface-1) 97%, transparent); backdrop-filter:blur(32px) saturate(200%);
-          -webkit-backdrop-filter:blur(32px) saturate(200%); border:1px solid var(--kz-border-subtle);
-          box-shadow:0 24px 48px rgba(0,0,0,.22), 0 0 32px var(--kz-accent-soft);
+          background:var(--kz-surface-1); border:1px solid var(--kz-border-default);
+          box-shadow:var(--kz-shadow-lg);
           opacity:0; visibility:hidden; pointer-events:none; transform:translateX(-50%) translateY(-6px);
           transition:opacity 200ms cubic-bezier(.16,1,.3,1), transform 200ms cubic-bezier(.16,1,.3,1), visibility 0s linear 200ms; }
         .kz-dd-panel.is-open { opacity:1; visibility:visible; pointer-events:auto; transform:translateX(-50%) translateY(0);

@@ -150,7 +150,7 @@ export default function OrochiaDocsOverview({ docs, modules, stack, endpoints }:
         <h2 className="odo-h3">{c.docs}</h2>
         <div className="odo-doclist">
           {docs.map((d) => (
-            <Link key={d.slug} href={`/products/orochia/docs/${d.slug}`}>
+            <Link key={d.slug} href={`/docs/orochia/${d.slug}`}>
               <span className="odo-tag">{CATEGORY_TAG[d.category] ?? "DOC"}</span>
               <span>{d.title}</span>
               <ArrowRight size={14} aria-hidden />

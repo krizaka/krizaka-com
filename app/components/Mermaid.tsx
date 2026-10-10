@@ -345,7 +345,7 @@ export default function Mermaid({ chart }: { chart: string }) {
           padding: 16,
           borderRadius: "var(--kz-radius-md)",
           background: "hsla(0, 84%, 60%, 0.06)",
-          color: "var(--kz-status-error)",
+          color: "var(--kz-danger)",
           margin: "20px 0",
         }}
       >

@@ -889,7 +889,7 @@ export default function CognitiveEngineeringPageClient() {
                     fontFamily: "var(--font-mono, monospace)",
                     fontSize: "10px",
                     fontWeight: 800,
-                    color: "var(--kz-status-success)",
+                    color: "var(--kz-success)",
                     background: "rgba(16, 185, 129, 0.08)",
                     padding: "3px 8px",
                     borderRadius: "var(--kz-radius-sm)",
@@ -939,7 +939,7 @@ export default function CognitiveEngineeringPageClient() {
                     top: "30px", 
                     bottom: "30px", 
                     width: "2px", 
-                    background: "linear-gradient(to bottom, var(--kz-border-strong), var(--kz-status-success))",
+                    background: "linear-gradient(to bottom, var(--kz-border-strong), var(--kz-success))",
                     zIndex: 0 
                   }} 
                 />
@@ -960,11 +960,11 @@ export default function CognitiveEngineeringPageClient() {
                             height: "30px",
                             borderRadius: "50%",
                             background: i === 2 ? "rgba(16, 185, 129, 0.15)" : "var(--kz-surface-3)",
-                            border: `1.5px solid ${i === 2 ? "var(--kz-status-success)" : "var(--kz-border-strong)"}`,
+                            border: `1.5px solid ${i === 2 ? "var(--kz-success)" : "var(--kz-border-strong)"}`,
                             display: "flex",
                             alignItems: "center",
                             justifyContent: "center",
-                            color: i === 2 ? "var(--kz-status-success)" : "var(--kz-text-primary)",
+                            color: i === 2 ? "var(--kz-success)" : "var(--kz-text-primary)",
                             flexShrink: 0,
                             boxShadow: i === 2 ? "0 0 10px rgba(16, 185, 129, 0.2)" : "none"
                           }}
@@ -1159,7 +1159,7 @@ export default function CognitiveEngineeringPageClient() {
                     fontFamily: "var(--font-mono, monospace)",
                     fontSize: "9px",
                     fontWeight: 800,
-                    color: "var(--kz-status-warning)",
+                    color: "var(--kz-warning)",
                     background: "rgba(245, 158, 11, 0.08)",
                     padding: "2px 6px",
                     borderRadius: "var(--kz-radius-sm)",
@@ -1356,7 +1356,7 @@ export default function CognitiveEngineeringPageClient() {
                     fontFamily: "var(--font-mono, monospace)",
                     fontSize: "9px",
                     fontWeight: 800,
-                    color: "var(--kz-status-success)",
+                    color: "var(--kz-success)",
                     background: "rgba(16, 185, 129, 0.08)",
                     padding: "2px 6px",
                     borderRadius: "var(--kz-radius-sm)",
@@ -1507,7 +1507,7 @@ export default function CognitiveEngineeringPageClient() {
                       width: "20px",
                       height: "20px",
                       borderRadius: "50%",
-                      background: "var(--kz-status-success)",
+                      background: "var(--kz-success)",
                       color: "#fff",
                       display: "flex",
                       alignItems: "center",
@@ -1539,7 +1539,7 @@ export default function CognitiveEngineeringPageClient() {
                   transition={{ delay: 0.5 }}
                   style={{
                     background: "var(--kz-surface-1)",
-                    border: "1.5px solid var(--kz-status-success)",
+                    border: "1.5px solid var(--kz-success)",
                     borderRadius: "var(--kz-radius-md)",
                     padding: "18px 20px",
                     display: "flex",
@@ -1562,7 +1562,7 @@ export default function CognitiveEngineeringPageClient() {
                       flexShrink: 0,
                     }}
                   >
-                    <CheckCircle2 size={22} strokeWidth={1.5} style={{ color: "var(--kz-status-success)" }} />
+                    <CheckCircle2 size={22} strokeWidth={1.5} style={{ color: "var(--kz-success)" }} />
                   </div>
 
                   <div style={{ flex: 1 }}>
@@ -1588,7 +1588,7 @@ export default function CognitiveEngineeringPageClient() {
                             padding: "2px 8px",
                             borderRadius: "9999px",
                             background: "rgba(16, 185, 129, 0.1)",
-                            color: "var(--kz-status-success)",
+                            color: "var(--kz-success)",
                             border: "1px solid rgba(16, 185, 129, 0.2)",
                           }}
                         >
@@ -1606,8 +1606,8 @@ export default function CognitiveEngineeringPageClient() {
                         width: "6px",
                         height: "6px",
                         borderRadius: "50%",
-                        background: "var(--kz-status-success)",
-                        boxShadow: "0 0 6px var(--kz-status-success)",
+                        background: "var(--kz-success)",
+                        boxShadow: "0 0 6px var(--kz-success)",
                       }}
                     />
                     <span
@@ -1615,7 +1615,7 @@ export default function CognitiveEngineeringPageClient() {
                         fontSize: "10px",
                         fontFamily: "var(--font-mono, monospace)",
                         fontWeight: 700,
-                        color: "var(--kz-status-success)",
+                        color: "var(--kz-success)",
                         textTransform: "uppercase",
                       }}
                     >
@@ -1673,7 +1673,7 @@ export default function CognitiveEngineeringPageClient() {
                   left: 0,
                   right: 0,
                   height: "3px",
-                  background: "var(--kz-status-error)",
+                  background: "var(--kz-danger)",
                   opacity: 0.6
                 }}
               />
@@ -1684,7 +1684,7 @@ export default function CognitiveEngineeringPageClient() {
                     fontFamily: "var(--font-mono, monospace)",
                     fontSize: "10px",
                     fontWeight: 700,
-                    color: "var(--kz-status-error)",
+                    color: "var(--kz-danger)",
                     textTransform: "uppercase",
                     letterSpacing: "0.05em",
                     display: "block",
@@ -1740,7 +1740,7 @@ export default function CognitiveEngineeringPageClient() {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          color: i === 2 ? "var(--kz-status-error)" : "var(--kz-text-muted)"
+                          color: i === 2 ? "var(--kz-danger)" : "var(--kz-text-muted)"
                         }}
                       >
                         <Icon size={16} strokeWidth={2} />
@@ -1760,7 +1760,7 @@ export default function CognitiveEngineeringPageClient() {
                       size={16}
                       strokeWidth={2.5}
                       style={{
-                        color: "var(--kz-status-error)",
+                        color: "var(--kz-danger)",
                         marginTop: "3px",
                         flexShrink: 0
                       }}
@@ -1843,12 +1843,12 @@ export default function CognitiveEngineeringPageClient() {
                 }}
               >
                 {/* Horizontal connection line */}
-                <div style={{ position: "absolute", left: "15%", right: "15%", height: "2px", background: "linear-gradient(90deg, var(--kz-accent), var(--kz-status-success))", zIndex: 0 }} />
+                <div style={{ position: "absolute", left: "15%", right: "15%", height: "2px", background: "linear-gradient(90deg, var(--kz-accent), var(--kz-success))", zIndex: 0 }} />
 
                 {[
                   { label: t.pages.cognitive.context, sub: t.pages.cognitive.memoryRag, icon: Database, color: "var(--kz-accent)", shadow: "var(--kz-accent-soft)" },
                   { label: t.pages.cognitive.reasoning, sub: t.pages.cognitive.localLlm, icon: Brain, color: "#a78bfa", shadow: "rgba(167, 139, 250, 0.2)" },
-                  { label: t.pages.cognitive.compliance, sub: t.pages.cognitive.jsonAudit, icon: Shield, color: "var(--kz-status-success)", shadow: "rgba(16, 185, 129, 0.2)" }
+                  { label: t.pages.cognitive.compliance, sub: t.pages.cognitive.jsonAudit, icon: Shield, color: "var(--kz-success)", shadow: "rgba(16, 185, 129, 0.2)" }
                 ].map((step, i) => {
                   const Icon = step.icon;
                   return (
@@ -1884,7 +1884,7 @@ export default function CognitiveEngineeringPageClient() {
                       size={16}
                       strokeWidth={2.8}
                       style={{
-                        color: "var(--kz-status-success)",
+                        color: "var(--kz-success)",
                         marginTop: "2px",
                         flexShrink: 0
                       }}

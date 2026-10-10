@@ -3,6 +3,7 @@
    overview · how it works · demo · documentation · its signature capability. */
 
 import type { TranslationDictionary } from "@/lib/i18n";
+import { STORYBOOK_URL } from "@/lib/site";
 
 export type ProductLinkId = "overview" | "architecture" | "demo" | "docs" | "signature";
 export type CompanyLinkId = "products" | "story" | "repos" | "contact";
@@ -33,7 +34,7 @@ export const NAV_PRODUCTS: NavProduct[] = [
       { href: "/products/orazaka", icon: "overview" },
       { href: "/products/orazaka/architecture", icon: "architecture" },
       { href: "/products/orazaka/demos", icon: "demo" },
-      { href: "/products/orazaka/getting-started/101", icon: "docs", match: ["/products/orazaka/getting-started", "/products/orazaka/api", "/products/orazaka/core-features", "/products/orazaka/guidelines", "/products/orazaka/usecases"] },
+      { href: "/docs/orazaka", icon: "docs", match: ["/docs/orazaka", "/products/orazaka/usecases"] },
       { href: "/products/orazaka/ingenierie-cognitive", icon: "signature", match: ["/products/orazaka/packages"] },
     ],
   },
@@ -45,7 +46,7 @@ export const NAV_PRODUCTS: NavProduct[] = [
       { href: "/products/orochia", icon: "overview" },
       { href: "/products/orochia#architecture", icon: "architecture" },
       { href: "/products/orochia#tour", icon: "demo" },
-      { href: "/products/orochia/docs", icon: "docs", match: ["/products/orochia/docs"] },
+      { href: "/docs/orochia", icon: "docs", match: ["/docs/orochia", "/products/orochia/docs"] },
       { href: "/products/orochia#guarantees", icon: "signature" },
     ],
   },
@@ -57,6 +58,26 @@ export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
   { href: "/open-source", icon: "repos" },
   { href: "/contact", icon: "contact" },
 ];
+
+/* Developers: how to build with the platform (Krizaka UI, Krizaka Java, the Storybook). One entry point — the "Docs"
+   menu on desktop, the "Docs" group on mobile, "Documentation" in the footer. A product's own docs stay its
+   "documentation" entry above (same five entries per product); the hub /docs links everything.
+   Open source (/open-source) stays the list of packages and repositories; Docs is how to use them.
+   Texts: ui/java → docs.sections.<id>; storybook and the hub → site.nav.docs.<id>. */
+export type DocsLinkId = "ui" | "java" | "storybook";
+export interface DocsNavLink {
+  id: DocsLinkId;
+  href: string;
+  external?: boolean;
+}
+export const NAV_DOCS_HUB = "/docs";
+export const NAV_DOCS: DocsNavLink[] = [
+  { id: "ui", href: "/docs/ui" },
+  { id: "java", href: "/docs/java" },
+  { id: "storybook", href: STORYBOOK_URL, external: true },
+];
+export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) =>
+  link.id === "storybook" ? t.site.nav.docs.storybook : { label: t.docs.sections[link.id].title, desc: t.docs.sections[link.id].description };
 
 /** True when `pathname` (locale-less) is this link's page — anchors (#…) never mark a link active. */
 export function isNavActive(link: NavLink, pathname: string): boolean {

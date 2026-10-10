@@ -1,0 +1,68 @@
+---
+title: Tokens
+description: The --kz-* vocabulary — one set of semantic roles compiled to CSS, TypeScript and React Native.
+---
+
+> **A component never reads a palette colour, only a role.** A theme is a set of values, never a set of classes.
+
+`@krizaka/tokens` is written once in [DTCG](https://www.designtokens.org/) JSON and compiled to CSS (dark, light and
+the invariants that sit on a media), typed constants and React Native themes. This site runs on it.
+
+```bash
+npm install @krizaka/tokens@beta
+```
+
+| Entry | For | Gives |
+| :-- | :-- | :-- |
+| `@krizaka/tokens/tokens.css` | Web — usually through `@krizaka/tailwind` | The `--kz-*` custom properties. |
+| `@krizaka/tokens` | TypeScript on the web (canvas, charts, inline styles) | `tokens` (`var(--kz-…)` references), `values.dark` / `values.light` (raw CSS). |
+| `@krizaka/tokens/native` | React Native / Expo | `themes.dark` / `themes.light`, `radius`, `typography`, `motion.ease`. |
+
+```ts
+import { tokens, values } from "@krizaka/tokens";
+
+element.style.color = tokens.textSecondary; // "var(--kz-text-secondary)" — follows the theme
+chart.gridColor = values.dark.borderSubtle;  // "hsl(0 0% 100% / 0.06)"
+```
+
+## Themes
+
+| Selector | Gets |
+| :-- | :-- |
+| `:root`, `.theme-dark` | Dark — the default. `.theme-dark` keeps a player or an editor dark inside a light page. |
+| `html.light` | Light: toggle the `light` class on `<html>`. |
+| `.theme-light` | Light on a subtree — the previews of this documentation use it. |
+| `:root` (invariants) | Identical in both themes: scrims, text on media, statuses, `on-accent`, radii, easing, fonts. |
+
+## Roles
+
+| Role | Tokens |
+| :-- | :-- |
+| Surfaces | `--kz-surface-0` page · `-1` card · `-2` raised, field, hover · `-3` active, chip, track · `--kz-media` |
+| Borders | `--kz-border-subtle` · `--kz-border-default` · `--kz-border-strong` |
+| Text | `--kz-text-primary` · `--kz-text-secondary` (≥ 4.5:1 on every surface) · `--kz-text-muted` (≥ 3:1) · `--kz-text-on-media` |
+| Accent | `--kz-accent` · `--kz-accent-hover` · `--kz-accent-soft` · `--kz-accent-2` · `--kz-on-accent` · `--kz-ring` |
+| Status | `--kz-success` · `--kz-warning` · `--kz-danger` · `--kz-info` |
+| On a media | `--kz-scrim` · `--kz-scrim-strong` · `--kz-overlay` |
+| Shape and depth | `--kz-radius-{sm,md,lg,xl,full}` · `--kz-shadow-{sm,md,lg}` |
+| Type and motion | `--kz-font-sans` · `--kz-font-display` · `--kz-font-mono` · `--kz-ease` |
+
+Contrast is **tested**, not assumed: the package's build fails when a text role drops under its ratio on any surface,
+in either theme.
+
+## A product theme
+
+A product overrides roles, never components:
+
+```css
+:root, .theme-dark {
+  --kz-accent: #8b5cf6;
+  --kz-accent-2: #ec4899;
+  --kz-font-display: Outfit, var(--kz-font-sans);
+}
+html.light {
+  --kz-accent: #7c3aed;
+}
+```
+
+Every utility and every primitive follows, without one line changed in a component.

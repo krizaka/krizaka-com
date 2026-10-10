@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { useI18n } from "./I18nProvider";
-import { NAV_PRODUCTS } from "@/lib/nav";
+import { NAV_DOCS_HUB, NAV_PRODUCTS } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 /* GitHub Icon SVG */
@@ -29,6 +29,7 @@ export default function SiteFooter() {
     { label: f.products, href: "/products" },
     { label: f.story, href: "/story" },
     { label: f.openSource, href: "/open-source" },
+    { label: f.docs, href: NAV_DOCS_HUB },
     { label: f.contact, href: "/contact" },
     { label: f.privacy, href: "/privacy" },
     { label: f.terms, href: "/terms" },
@@ -82,7 +83,7 @@ export default function SiteFooter() {
         .kz-footer-logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display), system-ui, sans-serif; font-size: 16px;
           font-weight: 700; color: var(--kz-text-primary); text-decoration: none; }
         .kz-footer-brand p { margin: 14px 0 16px; max-width: 300px; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
-        .kz-footer-gh { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--kz-text-muted); text-decoration: none; }
+        .kz-footer-gh { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--kz-text-secondary); text-decoration: none; }
         .kz-footer-gh:hover { color: var(--kz-text-primary); }
         .kz-footer-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
         .kz-footer-title { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
@@ -91,7 +92,7 @@ export default function SiteFooter() {
         .kz-footer-col a { font-size: 13.5px; color: var(--kz-text-secondary); text-decoration: none; transition: color 150ms ease; }
         .kz-footer-col a:hover { color: var(--kz-text-primary); }
         .kz-footer-bottom { max-width: 72rem; margin: 48px auto 0; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
-          border-top: 1px solid var(--kz-border-subtle); font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-muted); }
+          border-top: 1px solid var(--kz-border-subtle); font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
         @media (max-width: 860px) {
           .kz-footer-inner { grid-template-columns: 1fr; gap: 36px; }
         }

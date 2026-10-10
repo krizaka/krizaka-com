@@ -9,7 +9,7 @@ import { useI18n } from "./I18nProvider";
 
 const SEARCH_TARGETS = [
   { id: "orazaka", url: "/products/orazaka" },
-  { id: "orazakaDocs", url: "/products/orazaka/getting-started/101" },
+  { id: "orazakaDocs", url: "/docs/orazaka/101" },
   { id: "orazakaDemo", url: "/products/orazaka/demos" },
   { id: "orazakaArch", url: "/products/orazaka/architecture" },
   { id: "orochia", url: "/products/orochia" },

@@ -85,7 +85,7 @@ export const PRODUCTS: Product[] = [
     id: "orazaka",
     name: "Orazaka",
     href: "/products/orazaka",
-    docsHref: "/products/orazaka/getting-started/101",
+    docsHref: "/docs/orazaka/101",
     repoUrl: "https://github.com/krizaka/orazaka",
     accent: "#6366f1",
     stack: "Java 21 · Spring Boot 4 · Spring AI 2 · Next.js · Ollama",

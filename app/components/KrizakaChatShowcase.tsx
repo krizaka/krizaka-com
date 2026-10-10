@@ -228,8 +228,8 @@ export default function KrizakaChatShowcase() {
           width: 6px;
           height: 6px;
           border-radius: 50%;
-          background: var(--kz-status-success);
-          box-shadow: 0 0 0 0 color-mix(in srgb, var(--kz-status-success) 60%, transparent);
+          background: var(--kz-success);
+          box-shadow: 0 0 0 0 color-mix(in srgb, var(--kz-success) 60%, transparent);
           animation: kz-pulse 2s ease-out infinite;
         }
         .kz-chat-model {
@@ -288,7 +288,7 @@ export default function KrizakaChatShowcase() {
           font-weight: 700;
           letter-spacing: 0.04em;
           text-transform: uppercase;
-          color: var(--kz-status-success);
+          color: var(--kz-success);
         }
         .kz-answer { margin: 0; }
         .kz-caret {
@@ -372,12 +372,12 @@ export default function KrizakaChatShowcase() {
           font-weight: 500;
           color: var(--kz-text-secondary);
         }
-        .kz-privacy svg { color: var(--kz-status-success); }
+        .kz-privacy svg { color: var(--kz-success); }
 
         @keyframes kz-pulse {
-          0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--kz-status-success) 55%, transparent); }
-          70%  { box-shadow: 0 0 0 6px color-mix(in srgb, var(--kz-status-success) 0%, transparent); }
-          100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--kz-status-success) 0%, transparent); }
+          0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--kz-success) 55%, transparent); }
+          70%  { box-shadow: 0 0 0 6px color-mix(in srgb, var(--kz-success) 0%, transparent); }
+          100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--kz-success) 0%, transparent); }
         }
         @keyframes kz-typing {
           0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }

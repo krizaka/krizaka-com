@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllUseCaseSlugs } from "@/lib/use-cases-data";
-import { DOCS_MANIFEST } from "@/lib/docs-manifest";
-import { OROCHIA_DOCS_MANIFEST } from "@/lib/orochia-docs-manifest";
+import { allDocsPaths } from "@/lib/docs-source";
 import { SITE_URL } from "@/lib/site";
 
 // A single sitemap is correct here: the protocol limit is 50k URLs / 50 MB, and
@@ -74,14 +73,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     buildEntries(`/products/orazaka/usecases/${slug}`, 0.7, "monthly")
   );
 
-  /* Dynamic documentation pages */
-  const docPages = Object.entries(DOCS_MANIFEST).flatMap(([slug, doc]) =>
-    buildEntries(`/products/orazaka/${doc.category}/${slug}`, 0.8, "weekly")
+  /* Documentation: the hub, each set's home and every page (Krizaka UI, Java, Orazaka, Orochia) */
+  const docPages = ["/docs", ...allDocsPaths()].flatMap((path) =>
+    buildEntries(path, path.split("/").length <= 3 ? 0.8 : 0.7, "weekly")
   );
 
-  const orochiaDocPages = Object.keys(OROCHIA_DOCS_MANIFEST).flatMap((slug) =>
-    buildEntries(`/products/orochia/docs/${slug}`, 0.7, "weekly")
-  );
-
-  return [...staticPages, ...useCasePages, ...docPages, ...orochiaDocPages];
+  return [...staticPages, ...useCasePages, ...docPages];
 }

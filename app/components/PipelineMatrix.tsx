@@ -80,8 +80,8 @@ export default function PipelineStrip() {
                 Interceptor Pipeline
               </span>
             </div>
-            <span className="flex items-center gap-2 text-[11px] font-mono" style={{ color: "var(--kz-status-success)" }}>
-              <span className="status-dot" style={{ color: "var(--kz-status-success)" }} />
+            <span className="flex items-center gap-2 text-[11px] font-mono" style={{ color: "var(--kz-success)" }}>
+              <span className="status-dot" style={{ color: "var(--kz-success)" }} />
               Operational
             </span>
           </div>
@@ -100,7 +100,7 @@ export default function PipelineStrip() {
                     <div
                       className="relative flex items-center justify-center w-11 h-11 rounded-full border"
                       style={{
-                        borderColor: node.active ? "var(--kz-status-success)" : "var(--kz-border-default)",
+                        borderColor: node.active ? "var(--kz-success)" : "var(--kz-border-default)",
                         background: node.active ? "hsla(160, 84%, 39%, 0.06)" : "transparent",
                       }}
                     >
@@ -108,7 +108,7 @@ export default function PipelineStrip() {
                       {node.active && (
                         <span
                           className="absolute inset-0 rounded-full border animate-[status-pulse_2s_ease-in-out_infinite]"
-                          style={{ borderColor: "var(--kz-status-success)", opacity: 0.3 }}
+                          style={{ borderColor: "var(--kz-success)", opacity: 0.3 }}
                         />
                       )}
                       {node.ai && (

@@ -1,0 +1,45 @@
+---
+title: Tailwind preset
+description: The Tailwind CSS v4 preset that turns the --kz-* tokens into utilities.
+---
+
+`@krizaka/tailwind` maps the tokens to utilities with `@theme inline`: a class reads its variable **at use time**, so
+dark, light and a product theme change the values without recompiling a class.
+
+```bash
+npm install -D tailwindcss @krizaka/tailwind@beta @krizaka/tokens@beta @krizaka/ui@beta
+```
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@krizaka/tailwind";        /* tokens + utilities + variants + motion */
+@import "@krizaka/ui/tailwind.css"; /* `@source` of the primitives */
+```
+
+## Utilities by role
+
+| Role | Utilities | Token |
+| :-- | :-- | :-- |
+| Surfaces | `surface-0` · `surface-1` · `surface-2` · `surface-3` | `--kz-surface-*` |
+| Media | `media` · `scrim` · `scrim-strong` · `overlay` | `--kz-media`, `--kz-scrim*`, `--kz-overlay` |
+| Borders | `border-subtle` · `border-default` · `border-strong` (→ `border-border-default`) | `--kz-border-*` |
+| Text | `fg` · `fg-secondary` · `fg-muted` · `fg-on-media` (→ `text-fg-secondary`) | `--kz-text-*` |
+| Accent | `accent` · `accent-hover` · `accent-soft` · `accent-2` · `on-accent` · `ring` | `--kz-accent*` |
+| Status | `success` · `warning` · `danger` · `info` | `--kz-success` … |
+| Radius | `rounded-sm` · `rounded-md` · `rounded-lg` · `rounded-xl` · `rounded-full` | `--kz-radius-*` |
+| Shadow | `shadow-sm` · `shadow-md` · `shadow-lg` | `--kz-shadow-*` |
+| Font | `font-sans` · `font-display` · `font-mono` | `--kz-font-*` |
+| Motion | `ease-kz`; every `transition*` defaults to 200 ms on `--kz-ease` | `--kz-ease` |
+
+Opacity modifiers work on every colour: `bg-surface-1/70`, `shadow-accent/20`.
+
+## `light:` and `dark:` are for illustrations
+
+A component never switches classes with the theme: `bg-zinc-950/70 light:bg-white` is `bg-surface-1/70`, and
+`bg-black/60 text-white` on an image is `bg-scrim text-fg-on-media`. The two variants exist only for what no token can
+express — an illustration with a light and a dark version — and the products refuse them by lint.
+
+| Variant | Matches |
+| :-- | :-- |
+| `light:` | `html.light`, outside any `.theme-dark` island |
+| `dark:` | `:root:not(.light)`, and anything inside `.theme-dark` |

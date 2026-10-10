@@ -9,5 +9,5 @@ export default async function GetStartedPage({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
-  redirect(`/${locale}/products/orazaka/getting-started/101`);
+  redirect(`/${locale}/docs/orazaka/101`);
 }

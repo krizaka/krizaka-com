@@ -25,13 +25,25 @@
 - Products: https://krizaka.com/en/products
 - Open source (every repository): https://krizaka.com/en/open-source
 - Orazaka: https://krizaka.com/en/products/orazaka
-- Orazaka docs: https://krizaka.com/en/products/orazaka/getting-started/101
-- Orazaka repositories map: https://krizaka.com/en/products/orazaka/architecture/repositories
+- Orazaka docs: https://krizaka.com/en/docs/orazaka/101
+- Orazaka repositories map: https://krizaka.com/en/docs/orazaka/repositories
 - Orochia: https://krizaka.com/en/products/orochia
 - Orochia docs: https://krizaka.com/en/products/orochia/docs
 - Orochia (the platform): {{OROCHIA_APP_URL}}
 - Our story (where the names come from): https://krizaka.com/en/story
 - Contact the team: https://krizaka.com/en/contact
+
+## Documentation
+
+- Documentation hub: https://krizaka.com/en/docs
+- Krizaka UI (design system, live components): https://krizaka.com/en/docs/ui
+- Krizaka Java (Spring Boot kit, starters, messaging): https://krizaka.com/en/docs/java
+- Orazaka docs: https://krizaka.com/en/docs/orazaka
+- Orochia docs: https://krizaka.com/en/docs/orochia
+
+Every documentation page:
+
+{{DOCS_PAGES}}
 
 ## Source
 

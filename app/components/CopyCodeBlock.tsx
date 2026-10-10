@@ -117,7 +117,7 @@ export default function CopyCodeBlock({
               border: `1px solid ${copied ? "hsla(160, 84%, 39%, 0.3)" : "var(--kz-border-subtle)"}`,
               borderRadius: 6,
               cursor: "pointer",
-              color: copied ? "var(--kz-status-success)" : "var(--kz-text-muted)",
+              color: copied ? "var(--kz-success)" : "var(--kz-text-muted)",
               fontFamily: "var(--font-mono)",
               fontSize: 11,
               transition: "all 0.15s",

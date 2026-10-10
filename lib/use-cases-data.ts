@@ -54,9 +54,9 @@ export const USE_CASES: UseCaseData[] = [
       { fr: "Isolation 100% souveraine conforme Loi 25 (zéro cloud tiers)", en: "100% sovereign isolation compliant with Law 25 (zero cloud leaks)" },
     ],
     relatedDocs: [
-      { title: "Architecture Core", href: "/products/orazaka/architecture/core" },
-      { title: "CLI Reference", href: "/products/orazaka/api/cli" },
-      { title: "MCP Tool Registry", href: "/products/orazaka/core-features/automation" },
+      { title: "Architecture Core", href: "/docs/orazaka/core" },
+      { title: "CLI Reference", href: "/docs/orazaka/cli" },
+      { title: "MCP Tool Registry", href: "/docs/orazaka/automation" },
     ],
     quebecContext: {
       fr: "Au Québec, la prospection directe est encadrée par de strictes règles de protection de la vie privée et de démarchage électronique. La Loi canadienne anti-spam (LCEE/CASL) interdit formellement l'envoi de messages commerciaux électroniques sans consentement préalable, rendant la prospection B2C par courriel illégale pour cibler de nouveaux propriétaires. Pour le B2C, le publipostage physique postal reste la voie privilégiée et légale car il échappe à la LCEE. Parallèlement, la Loi 25 exige que le profilage ou la gestion de fichiers de clients potentiels respectent le principe de souveraineté des données. Orazaka Sentinelle concilie ces impératifs en exécutant l'intégralité du traitement en local, éliminant le besoin de stocker des renseignements personnels dans des infrastructures cloud tierces, et en automatisant des relances conformes et éthiques.",
