@@ -1,6 +1,8 @@
-/* Site navigation — one source for the desktop mega-menu (ProductsMenu), the mobile panel, the footer and the home
+/* Site navigation — one source for the desktop Products panel (ProductsMenu), the mobile panel, the footer and the home
    spotlights. Every product exposes the same four entries, in the same order, so the two read alike:
-   overview · how it works · demo · its signature capability. Documentation lives under Docs (NAV_DOCS), the one entry
+   overview · how it works · demo · its signature capability. In the menus the product's row is its overview and the
+   three other entries follow it in plain text; NAV_COMPANY adds "All products" there, and the mobile panel lists it whole
+   (story, open source and contact sit in the desktop bar). Documentation lives under Docs (NAV_DOCS), the one entry
    point of every documentation — the products' and the platform's. */
 
 import type { TranslationDictionary } from "@/lib/i18n";
@@ -9,7 +11,7 @@ export type ProductLinkId = "overview" | "architecture" | "demo" | "signature";
 export type CompanyLinkId = "products" | "story" | "repos" | "contact";
 export type NavIcon = ProductLinkId | CompanyLinkId;
 
-/** Texts: messages → site.nav.<product>.links.<icon> (products) or site.nav.company.<icon>. */
+/** Texts: messages → site.nav.<product>.links.<icon>.label (products) or site.nav.company.<icon> (label, desc). */
 export interface NavLink<I extends NavIcon = NavIcon> {
   href: string;
   icon: I;
@@ -99,8 +101,8 @@ export function localeless(pathname: string): string {
   return pathname.replace(/^\/(fr|en)(?=\/|$)/, "") || "/";
 }
 
-/** The label and description of a product's entry. */
-export const productLinkText = (t: TranslationDictionary, product: NavProduct["id"], link: NavLink<ProductLinkId>) => t.site.nav[product].links[link.icon];
+/** The label of a product's entry. */
+export const productLinkText = (t: TranslationDictionary, product: NavProduct["id"], link: NavLink<ProductLinkId>) => t.site.nav[product].links[link.icon].label;
 
 /** The label and description of a company entry. */
 export const companyLinkText = (t: TranslationDictionary, link: NavLink<CompanyLinkId>) => t.site.nav.company[link.icon];
