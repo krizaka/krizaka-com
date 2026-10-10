@@ -1,10 +1,13 @@
 "use client";
 
-/* /story — where the names come from. A page to read: generous whitespace, one idea per chapter,
-   the marks and the flock as still ornaments, and a few quiet arcade nods (ArcadeNods).
-   Motion budget: one discreet reveal as each block enters, once, never repeated — nothing loops,
-   nothing moves behind or beside a paragraph. The birds come alive only under the pointer; the
-   landscape stays still. Reduced motion: no reveal offset, no hover motion. Tokens only. */
+/* /story — where the names come from, told with the grammar of a 1990s arcade fighting game.
+   Hero: the select screen (three clans lock in). Stages 01–03: one per brand, built identically — fighter card
+   (brand mark, treasure, power gauge, roots) on the left, stage announcement and text on the right — and played
+   identically (card enters, impact, gauge fills, announcement, then text). The boss: eight heads sealed one by
+   one while its gauge drains. The flock steps in. Continue? closes the page.
+   Every section plays its entrance once; at most one slow, faint loop per section, never behind a paragraph;
+   reduced motion = everything static. The motion contract lives in ArcadeNods. Tokens only: each clan section
+   is scoped to its brand (`brand-<id>`), so its colours are its mark's. */
 
 import React, { useState } from "react";
 import Link from "next/link";
@@ -13,21 +16,22 @@ import { ArrowRight, ArrowUpRight, Check, Copy } from "lucide-react";
 import { useI18n } from "@/app/components/I18nProvider";
 import KrizakaLandscape from "@/app/components/illustrations/KrizakaLandscape";
 import { BirdPortrait, FlockStyles } from "@/app/components/story/Flock";
-import { CHAPTERS, FLOCK } from "@/lib/story";
+import { CHAPTERS, FLOCK, type ChapterId } from "@/lib/story";
 import { NPM_PACKAGES, npmUrl } from "@/lib/npm-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
 import {
+  ArcadeDirector,
   ArcadeStyles,
-  ArcadeStageCut,
-  ArcadeTeamBadge,
-  ClanHeroMarks,
+  BossGauge,
+  ClanSelect,
   ContinuePrompt,
-  Treasures,
+  FighterCard,
+  StageCall,
 } from "@/app/components/story/ArcadeNods";
-import { KrizakaLogo, OrazakaLogo, OrochiaLogo } from "@krizaka/ui";
+import { ProductLogo } from "@krizaka/ui";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
-/* The page's single motion: a short fade-up, once, when a block first enters the viewport. */
+/* Chapter 05 (the npm layers) keeps its single fade-up, once. */
 const reveal = {
   initial: { opacity: 0, y: 12 },
   whileInView: { opacity: 1, y: 0 },
@@ -35,11 +39,8 @@ const reveal = {
   transition: { duration: 0.6, ease: EASE },
 };
 
-const MARK = {
-  krizaka: <KrizakaLogo size={150} animated={false} />,
-  orazaka: <OrazakaLogo size={132} animated={false} />,
-  orochia: <OrochiaLogo size={150} animated={false} />,
-};
+/* One size for the three marks, in the select screen and in the stages: the stages must read alike. */
+const mark = (id: ChapterId, size: number) => <ProductLogo id={id} size={size} animated={false} />;
 
 export default function StoryClient() {
   const { t } = useI18n();
@@ -56,7 +57,7 @@ export default function StoryClient() {
 
   return (
     <MotionConfig reducedMotion="user">
-    <div className="st">
+    <ArcadeDirector>
       <FlockStyles />
       <ArcadeStyles />
 
@@ -65,74 +66,79 @@ export default function StoryClient() {
         <h1 className="st-hero-title">{st.intro.title}</h1>
         <p className="st-lead">{st.intro.lead}</p>
 
-        {/* 1990s Arcade Team Battle Homage: Three Sacred Clans */}
-        <ArcadeTeamBadge tag={st.arcade.teamTag} synergy={st.arcade.teamSynergy} />
-
-        {/* The Three Sacred Clans: Kusanagi (Solar Fire), Yata (Mirror), Yasakani (Violet Moon Serpent) */}
-        <ClanHeroMarks
-          krizakaLogo={<KrizakaLogo size={42} animated={false} />}
-          orazakaLogo={<OrazakaLogo size={38} animated={false} />}
-          orochiaLogo={<OrochiaLogo size={42} animated={false} />}
-          clans={st.arcade.clans}
+        <ClanSelect
+          aria={st.arcade.selectAria}
+          head={{ tag: st.arcade.teamTag, synergy: st.arcade.teamSynergy }}
+          clans={CHAPTERS.map((ch) => ({
+            id: ch.id,
+            mark: mark(ch.id, 64),
+            name: st.arcade.clanNames[ch.id],
+            title: `${ch.name} · ${st.arcade.clans[ch.id]}`,
+          }))}
         />
       </header>
 
       {CHAPTERS.map((ch, i) => (
-        <motion.section key={ch.id} className={`st-chapter${i % 2 ? " is-flipped" : ""}`} aria-labelledby={`st-${ch.id}`} {...reveal}>
+        <section key={ch.id} className={`st-chapter brand-${ch.id}`} aria-labelledby={`st-${ch.id}`} data-arena>
           <div className="st-mark">
-            <div className={`st-mark-disc is-${ch.id}`}>
-              <div className="st-disc-glow" aria-hidden />
-              {MARK[ch.id]}
-            </div>
-            <p className="st-roots">{st.chapters[ch.id].roots}</p>
-            {ch.id === "orochia" && <Treasures />}
+            <FighterCard
+              id={ch.id}
+              mark={mark(ch.id, 124)}
+              clanName={st.arcade.clanNames[ch.id]}
+              powerLabel={st.arcade.power}
+              roots={st.chapters[ch.id].roots}
+            />
           </div>
           <div className="st-text">
-            <ArcadeStageCut stage={`${st.arcade.stage} 0${i + 1}`} name={ch.name} />
-            <h2 id={`st-${ch.id}`}>{st.chapters[ch.id].title}</h2>
-            {st.chapters[ch.id].body.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
+            <StageCall stage={`${st.arcade.stage} 0${i + 1}`} name={ch.name} />
+            <div className="an-reveal">
+              <h2 id={`st-${ch.id}`}>{st.chapters[ch.id].title}</h2>
+              {st.chapters[ch.id].body.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
           </div>
-        </motion.section>
+        </section>
       ))}
 
-      <section className="st-heads" aria-label={st.headsAria}>
+      <section className="st-heads brand-orochia" aria-label={st.headsAria} data-arena>
         <div className="st-boss-banner" aria-hidden>
+          <span className="st-boss-round an-boss-call text-fg-accent">{st.arcade.finalRound}</span>
           <span className="st-boss-title">{st.arcade.orochiBossTitle}</span>
           <span className="st-boss-sub">{st.arcade.orochiBossSub}</span>
         </div>
+        <BossGauge label={st.arcade.bossGauge} count={st.heads.length} />
 
-        <motion.ol {...reveal}>
+        <ol>
           {st.heads.map((h, i) => (
             <li key={h.head} className="st-head-card">
               <div className="st-vat-header">
-                <span className="st-vat">{st.arcade.vatLabel} 0{i + 1}</span>
-                <span className="st-vat-tag">{st.arcade.sealedBadge}</span>
+                <span className="st-vat text-fg-accent">{st.arcade.vatLabel} 0{i + 1}</span>
+                <span className="st-vat-tag an-vat-stamp" style={{ "--i": i } as React.CSSProperties}>{st.arcade.sealedBadge}</span>
               </div>
               <span className="st-head">{h.head}</span>
               <span className="st-answer">{h.answer}</span>
             </li>
           ))}
-        </motion.ol>
+        </ol>
       </section>
 
-      <section className="st-flock" aria-labelledby="st-flock">
+      <section className="st-flock" aria-labelledby="st-flock" data-arena>
         <p className="st-num">04 · {st.flockLabel}</p>
         <h2 id="st-flock">{st.flockTitle}</h2>
         <p className="st-flock-lead">
           {st.flockLead}
         </p>
-        <motion.div className="st-birds" {...reveal}>
-          {FLOCK.map((id) => (
-            <article key={id} className="st-bird">
+        <div className="st-birds">
+          {FLOCK.map((id, i) => (
+            <article key={id} className="st-bird an-bird-in" style={{ "--i": i } as React.CSSProperties}>
               <BirdPortrait id={id} />
               <h3>{st.flock[id].name}</h3>
               <p className="st-role">{st.flock[id].role}</p>
               <p>{st.flock[id].line}</p>
             </article>
           ))}
-        </motion.div>
+        </div>
       </section>
 
       {/* The pattern in the steel: the shared interface layers, published on npm (Not standalone products) */}
@@ -224,7 +230,10 @@ export default function StoryClient() {
           <ContinuePrompt
             label={st.arcade.continue}
             insertCoin={st.arcade.insertCoin}
+            coinEntry={st.arcade.coinEntry}
             creditLabel={st.arcade.creditLabel}
+            cabinetLabel={st.arcade.cabinetLabel}
+            playerStart={st.arcade.playerStart}
             restartBtn={st.arcade.restartBtn}
           />
         </div>
@@ -237,7 +246,7 @@ export default function StoryClient() {
         .st { position: relative; color: var(--kz-text-primary); }
         .st > :is(header, section) { position: relative; z-index: 1; }
         .st-hero { max-width: 760px; margin: 0 auto; padding: clamp(128px, 16vw, 176px) 20px 56px; text-align: center; }
-        .st-eyebrow, .st-num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-accent); margin: 0; }
+        .st-eyebrow, .st-num { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--site-accent-text); margin: 0; }
         
         .st-hero-title {
           font-family: var(--font-display), system-ui, sans-serif;
@@ -251,46 +260,37 @@ export default function StoryClient() {
 
         .st-lead { font-size: clamp(15px, 1.9vw, 18px); line-height: 1.75; color: var(--kz-text-secondary); margin: 22px auto 28px; max-width: 640px; }
 
-        .st-chapter { max-width: 64rem; margin: 0 auto; padding: 72px 20px; display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 80px); align-items: center; border-top: 1px solid var(--kz-border-subtle); }
-        .st-chapter.is-flipped .st-mark { order: 2; }
-        @media (max-width: 760px) { .st-chapter { grid-template-columns: 1fr; text-align: center; } .st-chapter.is-flipped .st-mark { order: 0; } }
-        .st-mark { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-        .st-mark-disc { position: relative; display: flex; align-items: center; justify-content: center; width: 220px; height: 220px; border-radius: 50%;
-          background: radial-gradient(circle at 50% 40%, var(--kz-surface-2), var(--kz-surface-0) 70%); border: 1px solid var(--kz-border-subtle);
-          transition: transform 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease; }
-        .st-mark-disc:hover { transform: scale(1.03); }
-        .st-mark-disc.is-krizaka { border-color: rgba(249, 115, 22, 0.35); box-shadow: 0 0 35px -10px rgba(249, 115, 22, 0.25); }
-        .st-mark-disc.is-orazaka { border-color: rgba(234, 179, 8, 0.35); box-shadow: 0 0 35px -10px rgba(234, 179, 8, 0.25); }
-        .st-mark-disc.is-orochia { border-color: rgba(168, 85, 247, 0.35); box-shadow: 0 0 35px -10px rgba(168, 85, 247, 0.3); }
-        .st-disc-glow { position: absolute; inset: -2px; border-radius: 50%; pointer-events: none; opacity: 0.6; filter: blur(8px); }
-        .st-mark-disc.is-krizaka .st-disc-glow { background: radial-gradient(circle, rgba(249, 115, 22, 0.2), transparent 70%); }
-        .st-mark-disc.is-orazaka .st-disc-glow { background: radial-gradient(circle, rgba(234, 179, 8, 0.2), transparent 70%); }
-        .st-mark-disc.is-orochia .st-disc-glow { background: radial-gradient(circle, rgba(168, 85, 247, 0.25), transparent 70%); }
-        .st-roots { font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); margin: 0; }
-        .st-text h2, .st-flock h2, .st-layers h2, .st-closing h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.6rem, 3.6vw, 2.3rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.15; margin: 12px 0 18px; }
+        /* The three stages share one grid, one card, one rhythm: card left, text right, same sizes and spacing. */
+        .st-chapter { max-width: 64rem; margin: 0 auto; padding: 80px 20px; display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+          gap: clamp(32px, 6vw, 72px); align-items: center; border-top: 1px solid var(--kz-border-subtle); }
+        @media (max-width: 760px) { .st-chapter { grid-template-columns: 1fr; padding: 64px 20px; text-align: center; } }
+        .st-mark { display: flex; justify-content: center; }
+        .st-text h2, .st-flock h2, .st-layers h2, .st-closing h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.6rem, 3.6vw, 2.3rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.15; margin: 18px 0 18px; }
         .st-text p:not(.st-num) { font-size: 16px; line-height: 1.8; color: var(--kz-text-secondary); margin: 0 0 14px; }
 
-        .st-heads { position: relative; max-width: 64rem; margin: -24px auto 0; padding: 24px 20px 96px; }
-        .st-boss-banner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; margin-bottom: 24px; text-align: center; }
-        .st-boss-title { font-family: var(--font-mono); font-size: 12px; font-weight: 900; letter-spacing: 0.25em; text-transform: uppercase; color: #d946ef; text-shadow: 0 0 12px rgba(217, 70, 239, 0.4); }
+        .st-heads { position: relative; max-width: 64rem; margin: 0 auto; padding: 72px 20px 96px; border-top: 1px solid var(--kz-border-subtle); }
+        .st-boss-banner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; }
+        .st-boss-round { display: inline-block; font-family: var(--font-mono); font-size: 11px; font-weight: 900; letter-spacing: .3em; text-transform: uppercase; transform: skewX(-8deg); }
+        .st-boss-title { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.3rem, 3vw, 1.7rem); font-weight: 800; letter-spacing: -.01em; color: var(--kz-text-primary); }
         .st-boss-sub { font-size: 13px; color: var(--kz-text-muted); }
-        .st-heads ol { position: relative; z-index: 1; }
-        .st-heads ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 1px;
+        .st-heads ol { position: relative; z-index: 1; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 1px;
           background: var(--kz-border-subtle); border: 1px solid var(--kz-border-subtle); border-radius: 20px; overflow: hidden; }
-        .st-head-card { display: grid; gap: 8px; padding: 20px; background: color-mix(in srgb, var(--kz-surface-0) 88%, transparent); backdrop-filter: blur(2px); transition: background 0.2s ease; }
-        .st-head-card:hover { background: color-mix(in srgb, var(--kz-surface-1) 95%, transparent); }
+        .st-head-card { display: grid; gap: 8px; padding: 20px; background: var(--kz-surface-0); transition: background 0.2s ease; }
+        .st-head-card:hover { background: var(--kz-surface-1); }
         .st-vat-header { display: flex; align-items: center; justify-content: space-between; }
-        .st-vat { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #d946ef; }
-        .st-vat-tag { font-family: var(--font-mono); font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; background: rgba(217, 70, 239, 0.15); color: #d946ef; border: 1px solid rgba(217, 70, 239, 0.3); }
-        .st-head { font-size: 13px; color: var(--kz-text-muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, #d946ef 60%, transparent); }
+        .st-vat { font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; }
+        .st-vat-tag { font-family: var(--font-mono); font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px;
+          background: var(--kz-accent-soft); color: var(--kz-accent-text); border: 1px solid color-mix(in srgb, var(--kz-accent-2) 40%, transparent); }
+        .st-head { font-size: 13px; color: var(--kz-text-muted); text-decoration: line-through; text-decoration-color: color-mix(in srgb, var(--kz-accent-2) 70%, transparent); }
         .st-answer { font-size: 14.5px; font-weight: 600; color: var(--kz-text-primary); }
 
         .st-flock { max-width: 64rem; margin: 0 auto; padding: 72px 20px; border-top: 1px solid var(--kz-border-subtle); text-align: center; }
         .st-flock-lead { max-width: 560px; margin: 0 auto 40px; font-size: 16px; line-height: 1.75; color: var(--kz-text-secondary); }
         .st-birds { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 18px; text-align: left; }
-        .st-bird { display: grid; justify-items: start; gap: 4px; padding: 22px; border-radius: 20px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); }
+        .st-bird { display: grid; justify-items: start; align-content: start; gap: 4px; padding: 22px; border-radius: 20px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: border-color .25s ease, transform .25s var(--kz-ease); }
+        .st-bird:hover { border-color: color-mix(in srgb, var(--kz-accent) 50%, var(--kz-border-subtle)); transform: translateY(-3px); }
         .st-bird h3 { margin: 10px 0 0; font-size: 16px; font-weight: 700; }
-        .st-role { margin: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--kz-accent); }
+        .st-role { margin: 0; font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--site-accent-text); }
         .st-bird p:last-child { margin: 6px 0 0; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
 
         /* The pattern in the steel (Section 05) */
@@ -307,12 +307,12 @@ export default function StoryClient() {
         .st-fold {
           display: flex; gap: 20px; align-items: flex-start; padding: 20px 22px; border-radius: 20px;
           background: color-mix(in srgb, var(--kz-surface-1) 95%, transparent); border: 1px solid var(--kz-border-subtle);
-          box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.25);
+          box-shadow: var(--kz-shadow-sm);
           transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
         }
         .st-fold:hover {
           border-color: var(--kz-border-strong); transform: translateY(-2px);
-          box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.35);
+          box-shadow: var(--kz-shadow-md);
         }
         @media (max-width: 640px) { .st-fold { margin-left: 0 !important; } }
         .st-fold-body { flex: 1; min-width: 0; }
@@ -368,15 +368,15 @@ export default function StoryClient() {
         .st-fold:not(:hover) *, .st-fold:not(:hover) *::before, .st-fold:not(:hover) *::after,
         .st-landscape *, .st-landscape *::before, .st-landscape *::after { animation-play-state: paused !important; }
         @media (prefers-reduced-motion: reduce) {
-          .st-mark-disc, .st-fold, .st-install-pill { transition: none !important; }
-          .st-mark-disc:hover, .st-fold:hover, .st-install-pill:hover { transform: none !important; }
+          .st-bird, .st-fold, .st-install-pill { transition: none !important; }
+          .st-bird:hover, .st-fold:hover, .st-install-pill:hover { transform: none !important; }
         }
 
         .st-landscape { position: absolute; inset: auto 0 0 0; height: 300px; opacity: .7; pointer-events: none;
           -webkit-mask-image: linear-gradient(to top, black 60%, transparent); mask-image: linear-gradient(to top, black 60%, transparent); }
         @media (min-width: 768px) { .st-landscape { height: 440px; } }
       `}</style>
-    </div>
+    </ArcadeDirector>
     </MotionConfig>
   );
 }

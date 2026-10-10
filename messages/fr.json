@@ -834,10 +834,23 @@
         "creditLabel": "Crédit 01",
         "restartBtn": "Appuyez pour relancer l'histoire",
         "clans": {
-          "krizaka": "Kusanagi · Flamme Solaire Écarlate",
-          "orazaka": "Yata · Miroir Sacré Solaire",
-          "orochia": "Yasakani · Serpent de Lune Violet"
-        }
+          "krizaka": "le sabre",
+          "orazaka": "le miroir",
+          "orochia": "le joyau"
+        },
+        "clanNames": {
+          "krizaka": "Kusanagi",
+          "orazaka": "Yata",
+          "orochia": "Yasakani"
+        },
+        "selectAria": "Les trois clans : Krizaka, Orazaka et Orochia",
+        "power": "Énergie",
+        "ready": "Prêt",
+        "finalRound": "Dernier round",
+        "bossGauge": "Têtes restantes",
+        "cabinetLabel": "Krizaka · borne d'arcade",
+        "coinEntry": "1 crédit = 1 histoire",
+        "playerStart": "Start 1J"
       },
       "layers": {
         "label": "Le motif dans l'acier",
