@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Monitor, MonitorSmartphone, Smartphone } from "lucide-react";
-import { format } from "@/lib/i18n";
+import { format } from "@krizaka/i18n";
 import type { Category, Platform, Status } from "@/lib/ui-registry";
 import { useI18n } from "../I18nProvider";
 import { InlineCode } from "./InlineCode";

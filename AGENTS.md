@@ -34,8 +34,14 @@
 ## 2.1 Products are presented the same way
 
 - `lib/nav.ts` is the single source of the product navigation: the desktop mega-menu, the mobile
-  panel, the footer and the home spotlights all render it. Every product exposes the same five
-  entries in the same order (overview · how it works · demo · documentation · signature).
+  panel, the footer and the home spotlights all render it. Every product exposes the same four
+  entries in the same order (overview · how it works · demo · signature); documentation lives under **Docs**
+  (`NAV_DOCS`: Orazaka, Orochia, Krizaka UI, Krizaka Java — the one entry point of every documentation). A product
+  page may still link its documentation in context.
+- Each product wears its brand (`@krizaka/tokens/brands/scoped.css`): `/products/orazaka*` under `.brand-orazaka`
+  (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), the rest of the site Krizaka (ink + blue).
+  Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); sections use `SectionBackdrop`
+  (`@krizaka/ui/section-backdrop`) and the `bp-*` classes of `app/globals.css` (BRAND.md §4).
 - Brand marks come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui) on npm (`KrizakaLogo`,
   `OrazakaLogo`, `OrochiaLogo`, `ProductLogo`) — the same package the products use, never a copy in this repo.
   Never a placeholder icon. A change to a mark is made in `krizaka-ui`, released, then adopted here.

@@ -18,7 +18,8 @@ import { createI18n } from "@krizaka/i18n";
 import en from "@/messages/en.json";
 import frMessages from "@/messages/fr.json";
 
-export type Locale = "fr" | "en";
+import type { Locale } from "./locales";
+export type { Locale } from "./locales";
 
 export const DEFAULT_LOCALE: Locale = "en";
 
@@ -41,5 +42,4 @@ export function asLocale(value: string): Locale {
 /** Replaces `{name}` placeholders: format("{count} repositories", { count: 23 }). */
 export { format } from "@krizaka/i18n";
 
-/** Cookie the locale switch writes and `proxy.ts` honours: English unless the visitor chose French. */
-export const LOCALE_COOKIE = "NEXT_LOCALE";
+export { LOCALE_COOKIE } from "./locales";

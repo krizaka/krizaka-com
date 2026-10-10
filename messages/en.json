@@ -499,10 +499,6 @@
             "label": "Demos",
             "desc": "Chat, media and agents in action"
           },
-          "docs": {
-            "label": "Documentation",
-            "desc": "Getting started, API, operations"
-          },
           "signature": {
             "label": "Cognitive engineering",
             "desc": "Why a pipeline, not a prompt"
@@ -524,10 +520,6 @@
           "demo": {
             "label": "Demo",
             "desc": "A video tour of the app"
-          },
-          "docs": {
-            "label": "Documentation",
-            "desc": "Architecture, API, deployment"
           },
           "signature": {
             "label": "Payments & compliance",
@@ -557,6 +549,14 @@
         "all": {
           "label": "All documentation",
           "desc": "Platform and product docs"
+        },
+        "orazaka": {
+          "label": "Orazaka",
+          "desc": "Getting started, API, operations"
+        },
+        "orochia": {
+          "label": "Orochia",
+          "desc": "Architecture, API, deployment"
         }
       }
     },
@@ -1055,14 +1055,72 @@
       "docs": "Documentation",
       "audience": "Software for platform operators; adult content is restricted to adults.",
       "pillarsEyebrow": "What makes it production-ready",
-      "pillarsTitle": "Eight guarantees, enforced in code.",
+      "pillarsTitle": "Nine guarantees, enforced in code.",
       "archEyebrow": "How it works",
       "archTitle": "Follow a request through the platform.",
       "archLead": "Three journeys, step by step. Every API endpoint named here is checked against Orochia's code on every build of this site.",
       "sourceEyebrow": "Source code",
       "sourceTitle": "Three repositories, one platform.",
       "sourceLead": "The app exposes {endpoints} API endpoints and {tables} tables, extracted from the code by the documentation generator.",
-      "openApp": "Open the app"
+      "openApp": "Open the app",
+      "titleLead": "Fans pay.",
+      "titleAccent": "Creators keep 90%.",
+      "heroLead": "Tips, paid unlocks, video auctions and challenges funded in escrow — on a 4K platform built like financial infrastructure. Open source, designed for adult (18+) creators.",
+      "ways": {
+        "tip": {
+          "title": "Tip",
+          "body": "A thank-you in one tap, from the wallet."
+        },
+        "unlock": {
+          "title": "Unlock",
+          "body": "Pay once, watch the video — never below the creator's minimum."
+        },
+        "bid": {
+          "title": "Bid",
+          "body": "Win a video at auction; only the winner watches it."
+        },
+        "challenge": {
+          "title": "Back a challenge",
+          "body": "Pledge to a goal or a dare, held in escrow until delivery."
+        }
+      },
+      "paid": {
+        "eyebrow": "Get paid",
+        "title": "90% to the creator. <b>On every sale.</b>",
+        "lead": "Tips, unlocks, winning bids and challenge pledges all follow the same split: the creator keeps 90%, the platform 10%. Every movement is written once in a double-entry ledger.",
+        "share": "of every sale goes to the creator",
+        "examples": {
+          "tip": "A <b>{gross}</b> tip",
+          "unlock": "A <b>{gross}</b> unlock",
+          "pledge": "A <b>{gross}</b> challenge pledge",
+          "bid": "A <b>{gross}</b> winning bid"
+        },
+        "net": "creator receives {net}",
+        "fine": "Platform fee {fee}%. Payouts from {minimum}. Amounts in US dollars; the winning bid is an example. Payments are confirmed by the provider's signed webhook before anyone is credited.",
+        "percent": "{value}%"
+      },
+      "rules": {
+        "eyebrow": "Auctions · Challenges",
+        "title": "New ways to earn, <b>with rules written in code.</b>",
+        "auctions": {
+          "title": "Video auctions",
+          "body": "A creator puts a video up for auction; the price moves live for everyone watching.",
+          "facts": [
+            "Bids are held in credits and released the moment they are outbid.",
+            "A bid in the last two minutes adds two minutes — no sniping.",
+            "The creator has 48 h to accept the winning bid; only the winner watches."
+          ]
+        },
+        "challenges": {
+          "title": "Challenges in escrow",
+          "body": "An all-or-nothing goal, a dare to one creator, or an open call creators apply to.",
+          "facts": [
+            "Goals from $10, open calls from $5.",
+            "A dare is answered within 72 h.",
+            "Delivered within 14 days, or every pledge comes back."
+          ]
+        }
+      }
     },
     "openSource": {
       "steps": {
@@ -1527,6 +1585,189 @@
           "line": "ArchUnit code rules, configuration-binding checks and Testcontainers helpers — for test scope."
         }
       }
+    },
+    "orazakaPage": {
+      "kicker": "Sovereign AI platform · open source",
+      "titleLead": "The AI that",
+      "titleAccent": "never leaves home.",
+      "lead": "Chat, documents, images, video and agents — on your own machines. Your team gets a modern AI workspace; your prompts, files and customer data never cross your walls.",
+      "ctaTour": "Watch the tour",
+      "ctaHow": "How it works",
+      "proofs": {
+        "local": {
+          "title": "100% local inference",
+          "body": "by default — Ollama on Apple Silicon or Linux"
+        },
+        "capabilities": {
+          "title": "6 AI capabilities",
+          "body": "text, vision, image, video, speech and agents in one runtime"
+        },
+        "pipeline": {
+          "title": "1 governed pipeline",
+          "body": "every request crosses it before a model sees it"
+        },
+        "telemetry": {
+          "title": "0 telemetry",
+          "body": "nothing phones home, everything is auditable"
+        }
+      },
+      "tourEyebrow": "Product tour",
+      "tourTitle": "Recorded on the real application.",
+      "tour": {
+        "home": {
+          "label": "Home",
+          "caption": "The public home page of the web client: the promise, the sovereign chat answering, the Studios."
+        },
+        "chat": {
+          "label": "Sovereign chat",
+          "caption": "A question answered by llama3.2 through Ollama on the same machine — streamed, nothing leaves the network."
+        },
+        "studios": {
+          "label": "Studios",
+          "caption": "The workspace's real figures, then the Studio catalogue: ready-made workflows with their price before the run."
+        },
+        "settings": {
+          "label": "Packs & appearance",
+          "caption": "Packs that add capabilities, then the profile: light and dark themes applied instantly."
+        }
+      },
+      "why": {
+        "eyebrow": "Why Orazaka",
+        "title": "Your data stays home. <b>Your AI comes to it.</b>",
+        "lead": "Cloud assistants ask you to send your work to them. Orazaka runs where your work already is — and keeps every answer, every file and every bill under your roof.",
+        "pillars": {
+          "sovereignty": {
+            "title": "Nothing leaves your infrastructure",
+            "body": "Models run on your machines. No third party sees a prompt, a document or a customer record — unless you connect a provider yourself."
+          },
+          "cost": {
+            "title": "A cost you decide",
+            "body": "No per-token bill from someone else's price list. Credits you set, and every Studio shows its price before it runs."
+          },
+          "control": {
+            "title": "Agents that ask first",
+            "body": "Agents act on your machines only with your approval, over an outbound-only link: no port to open, nothing runs silently."
+          }
+        }
+      },
+      "platform": {
+        "eyebrow": "Platform",
+        "title": "Everything your team expects from AI. <b>In one place you own.</b>",
+        "lead": "One workspace, one identity, one bill — for every way your team works with AI.",
+        "items": {
+          "chat": {
+            "title": "Sovereign chat",
+            "body": "Answers streamed from your own models, with your context and your rules."
+          },
+          "agents": {
+            "title": "Agents",
+            "body": "Plans you approve, actions on your machines, results you can audit."
+          },
+          "knowledge": {
+            "title": "Knowledge",
+            "body": "Your documents indexed on your server, cited in every answer."
+          },
+          "studios": {
+            "title": "Studios",
+            "body": "Ready-made workflows: fill a form, see the price, get the result."
+          },
+          "automation": {
+            "title": "Automation",
+            "body": "Connect your business tools and let approved jobs run on their own."
+          },
+          "packs": {
+            "title": "Packs",
+            "body": "Add a trade's Studios in one click — installed, priced and governed."
+          }
+        }
+      },
+      "compare": {
+        "eyebrow": "Cost & control",
+        "title": "The same AI. <b>Different ownership.</b>",
+        "lead": "What changes when the AI runs at home.",
+        "topic": "Question",
+        "cloud": "A cloud assistant",
+        "orazaka": "Orazaka",
+        "rows": [
+          {
+            "topic": "Where do your prompts go?",
+            "cloud": "To a provider's servers, under their terms.",
+            "orazaka": "To models on your machines. A cloud model only if you connect one."
+          },
+          {
+            "topic": "What do you pay?",
+            "cloud": "Per seat and per token, on a price list you don't control.",
+            "orazaka": "Your hardware and credits you set. Every Studio shows its price first."
+          },
+          {
+            "topic": "Who decides?",
+            "cloud": "The vendor changes models, limits and policies.",
+            "orazaka": "You choose the models, the roles, and what each team can run."
+          },
+          {
+            "topic": "What can agents touch?",
+            "cloud": "Whatever the integration was granted.",
+            "orazaka": "Only what you approve — each action asks first."
+          }
+        ]
+      },
+      "law25": {
+        "eyebrow": "Law 25 · GDPR",
+        "title": "Compliance by architecture, <b>not by paperwork.</b>",
+        "lead": "Sending personal data to a third-party AI cloud is a cross-border transfer to assess, document and justify. When the models run on your servers, that transfer never happens.",
+        "points": [
+          "Prompts, documents and embeddings stay on infrastructure you control.",
+          "Every request crosses the same governed pipeline: identity, security, credits, validation.",
+          "Local audit logs show who asked what, and which model answered."
+        ]
+      },
+      "how": {
+        "eyebrow": "How it works",
+        "title": "From install to first answer <b>in three commands.</b>",
+        "lead": "The CLI checks your machine, starts the services and pulls the models. Nothing to configure in a cloud console.",
+        "terminal": "Your terminal",
+        "steps": {
+          "install": {
+            "title": "Install",
+            "body": "The CLI checks your machine and prepares the local runtime."
+          },
+          "start": {
+            "title": "Start",
+            "body": "Database, queue and services come up on your hardware."
+          },
+          "ask": {
+            "title": "Ask",
+            "body": "Open the workspace: answers stream from your own models."
+          }
+        }
+      },
+      "explore": {
+        "eyebrow": "Go deeper",
+        "title": "See the engine <b>from the inside.</b>",
+        "more": "Open",
+        "items": {
+          "architecture": {
+            "title": "Architecture",
+            "body": "The path of a request through the platform, repository by repository."
+          },
+          "demos": {
+            "title": "Interactive demos",
+            "body": "Run the interceptor pipeline and the sovereignty perimeter in your browser."
+          },
+          "signature": {
+            "title": "Cognitive engineering",
+            "body": "How the engine decides: context, routing, guards and validation."
+          },
+          "docs": {
+            "title": "Documentation",
+            "body": "Onboarding, API, CLI, deployment — generated from the source."
+          },
+          "usecases": {
+            "title": "Use cases",
+            "body": "Domain packages assembled from the same interceptors."
+          }
+        }
+      }
     }
   },
   "pages": {
@@ -1843,31 +2084,6 @@
         "webapp": "Web app & dashboard",
         "image": "SD generations",
         "video": "Video loops"
-      }
-    },
-    "orazakaOverview": {
-      "start": "Start",
-      "core": "Core",
-      "ops": "Ops",
-      "tourEyebrow": "Product tour",
-      "tourTitle": "Orazaka, recorded on the real application",
-      "tour": {
-        "home": {
-          "label": "Home",
-          "caption": "The public home page of the web client: the promise, the sovereign chat answering, the Studios."
-        },
-        "chat": {
-          "label": "Sovereign chat",
-          "caption": "A question answered by llama3.2 through Ollama on the same machine — streamed, nothing leaves the network."
-        },
-        "studios": {
-          "label": "Studios",
-          "caption": "The workspace's real figures, then the Studio catalogue: ready-made workflows with their price before the run."
-        },
-        "settings": {
-          "label": "Packs & appearance",
-          "caption": "Packs that add capabilities, then the profile: light and dark themes applied instantly."
-        }
       }
     },
     "architectureMesh": {

@@ -3,7 +3,7 @@
 /* A quiet pause between the products and the know-how: the flock, one sentence, the way to /story. */
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "../I18nProvider";
 import { BirdPortrait, FlockStyles } from "../story/Flock";
 import { FLOCK } from "@/lib/story";
@@ -25,8 +25,8 @@ export default function StoryTeaser() {
       <p className="kz-teaser-sub">
         {teaser.sub}
       </p>
-      <Link href="/story" className="kz-link-strong">
-        {teaser.cta} <ArrowRight size={14} />
+      <Link href="/story" prefetch={false} className="kz-link-strong">
+        {teaser.cta} <ForwardIcon size={15} />
       </Link>
       <style>{`
         .kz-teaser { text-align: center; }

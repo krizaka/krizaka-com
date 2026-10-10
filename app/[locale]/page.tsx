@@ -9,6 +9,7 @@ import OpenSourceSection from "../components/home/OpenSourceSection";
 import ContactCta from "../components/home/ContactCta";
 import StoryTeaser from "../components/home/StoryTeaser";
 import SiteFooter from "../components/SiteFooter";
+import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -44,7 +45,9 @@ export default function Home() {
       <StoryTeaser />
       <ExpertiseSection />
       <OpenSourceSection orazakaRepos={orazaka} orochiaRepos={orochia} />
-      <ContactCta />
+      <SectionBackdrop className="bp-glide" dome={false}>
+        <ContactCta />
+      </SectionBackdrop>
       <SiteFooter />
     </main>
   );

@@ -8,7 +8,7 @@ import Link from "next/link";
 import { ArrowRight, Check, CreditCard, Database, Film, PlayCircle, ShieldAlert, ShieldCheck, Workflow } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "@/app/components/I18nProvider";
-import { format } from "@/lib/i18n";
+import { format } from "@krizaka/i18n";
 import { ComplianceSentryScene, SignedDeliveryScene, WatchPartyScene } from "@/app/components/illustrations/OrochiaScenes";
 import { OrochiaLogo } from "@krizaka/ui";
 

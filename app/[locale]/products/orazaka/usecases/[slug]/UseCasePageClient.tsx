@@ -20,12 +20,13 @@ import { useI18n } from "../../../../../components/I18nProvider";
 import TopNavBar from "../../../../../components/TopNavBar";
 import SiteFooter from "../../../../../components/SiteFooter";
 import { USE_CASES, getUseCaseBySlug, getLocalizedField, UseCaseActionPlanStep, UseCaseData } from "@/lib/use-cases-data";
-import { TranslationDictionary, getDictionary } from "@/lib/i18n";
+import type { TranslationDictionary } from "@/lib/i18n";
 import Rich from "@/app/components/Rich";
 import MartinFalconSentry from "../../../../../components/illustrations/MartinFalconSentry";
 
 /* ─── Sibling Navigation (Centered) ─── */
 function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr" | "en" }) {
+  const { t: dict } = useI18n();
   const idx = USE_CASES.findIndex((uc) => uc.slug === currentSlug);
   const prev = idx > 0 ? USE_CASES[idx - 1] : null;
   const next = idx < USE_CASES.length - 1 ? USE_CASES[idx + 1] : null;
@@ -65,7 +66,7 @@ function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr"
           <ChevronLeft size={16} style={{ color: "var(--kz-text-muted)", flexShrink: 0 }} />
           <div style={{ minWidth: 0, textAlign: "left" }}>
             <div style={{ fontSize: "10px", fontWeight: 600, color: "var(--kz-text-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "4px" }}>
-              {getDictionary(locale).pages.useCase.previous}
+              {dict.pages.useCase.previous}
             </div>
             <div style={{ fontSize: "13px", fontWeight: 600, color: "var(--kz-text-primary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {getLocalizedField(prev.title, locale)}
@@ -92,7 +93,7 @@ function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr"
         >
           <div style={{ minWidth: 0, textAlign: "right" }}>
             <div style={{ fontSize: "10px", fontWeight: 600, color: "var(--kz-text-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "4px" }}>
-              {getDictionary(locale).pages.useCase.next}
+              {dict.pages.useCase.next}
             </div>
             <div style={{ fontSize: "13px", fontWeight: 600, color: "var(--kz-text-primary)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {getLocalizedField(next.title, locale)}
@@ -107,6 +108,7 @@ function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr"
 
 /* ─── Mini Navigation (Centered) ─── */
 function UseCaseMiniNav({ currentSlug, locale }: { currentSlug: string; locale: "fr" | "en" }) {
+  const { t: dict } = useI18n();
   return (
     <div
       className="uc-mini-nav"
@@ -134,7 +136,7 @@ function UseCaseMiniNav({ currentSlug, locale }: { currentSlug: string; locale: 
           transition: "color 150ms ease, background 150ms ease",
         }}
       >
-        {getDictionary(locale).pages.useCase.allCases}
+        {dict.pages.useCase.allCases}
       </Link>
       {USE_CASES.map((uc) => {
         const isActive = uc.slug === currentSlug;
@@ -168,7 +170,8 @@ function UseCaseMiniNav({ currentSlug, locale }: { currentSlug: string; locale: 
 }
 
 /* ─── Martin Story Hero Banner (Centered) ─── */
-function MartinHero({ title, description, locale }: { title: string; description: string; locale: "fr" | "en" }) {
+function MartinHero({ title, description }: { title: string; description: string; locale: "fr" | "en" }) {
+  const { t: dict } = useI18n();
   return (
     <div className="martin-hero-card">
       <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
@@ -178,7 +181,7 @@ function MartinHero({ title, description, locale }: { title: string; description
       <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "8px", marginBottom: "20px" }}>
         <span className="kw-badge accent-badge">Orazaka Sentinelle</span>
         <span className="kw-badge outline-badge">Loi 25 · LCEE</span>
-        <span className="kw-badge outline-badge">{getDictionary(locale).pages.useCase.sovereignAi}</span>
+        <span className="kw-badge outline-badge">{dict.pages.useCase.sovereignAi}</span>
       </div>
       
       <h1 className="martin-hero-title">{title}</h1>
@@ -187,10 +190,10 @@ function MartinHero({ title, description, locale }: { title: string; description
       <div className="martin-story-box">
         <h3 className="martin-story-heading">
           <span style={{ fontSize: "16px" }}>💡</span> 
-          {getDictionary(locale).pages.useCase.whoIsMartin}
+          {dict.pages.useCase.whoIsMartin}
         </h3>
         <p className="martin-story-text">
-          <Rich text={getDictionary(locale).pages.useCase.martinStory} />
+          <Rich text={dict.pages.useCase.martinStory} />
         </p>
       </div>
     </div>
@@ -198,30 +201,31 @@ function MartinHero({ title, description, locale }: { title: string; description
 }
 
 /* ─── Before vs After Comparison Schema (Centered & Side-by-Side) ─── */
-function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
+function BeforeAfterSchema() {
+  const { t: dict } = useI18n();
   return (
     <div className="comparison-container">
       <h2 className="section-title">
-        {getDictionary(locale).pages.useCase.theUserExperienceReimagined}
+        {dict.pages.useCase.theUserExperienceReimagined}
       </h2>
       <p className="section-desc">
-        {getDictionary(locale).pages.useCase.discoverHowOrazakaSentinelSimplifies}
+        {dict.pages.useCase.discoverHowOrazakaSentinelSimplifies}
       </p>
 
       {/* Empathy Hook Schema */}
       <div className="empathy-schema">
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", zIndex: 2 }}>
           <div className="empathy-question">
-            {getDictionary(locale).pages.useCase.doYouRecognizeYourself}
+            {dict.pages.useCase.doYouRecognizeYourself}
           </div>
           <p className="empathy-text">
-            {getDictionary(locale).pages.useCase.ifYouSpendHoursChasing}
+            {dict.pages.useCase.ifYouSpendHoursChasing}
           </p>
           
           {/* Visual flow indicator arrow (Before -> After) */}
           <div className="visual-transition-bridge" aria-hidden="true">
             <div className="bridge-indicator indicator-manual">
-              {getDictionary(locale).pages.useCase.overloadRisk}
+              {dict.pages.useCase.overloadRisk}
             </div>
             <div className="bridge-arrow-container">
               <div className="bridge-line-dashed" />
@@ -230,7 +234,7 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <div className="bridge-arrow-head" />
             </div>
             <div className="bridge-indicator indicator-auto">
-              {getDictionary(locale).pages.useCase.sovereigntySerenity}
+              {dict.pages.useCase.sovereigntySerenity}
             </div>
           </div>
         </div>
@@ -242,7 +246,7 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
         <div className="comparison-card before-card">
           <div className="panel-badge before-badge">
             <AlertCircle size={13} style={{ marginRight: "4px" }} />
-            {getDictionary(locale).pages.useCase.beforeOrazaka10hWeek}
+            {dict.pages.useCase.beforeOrazaka10hWeek}
           </div>
           
           <div className="flow-steps">
@@ -250,10 +254,10 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num">1</span>
               <div>
                 <h4 className="step-item-title">
-                  {getDictionary(locale).pages.useCase.tiresomeManualSearch}
+                  {dict.pages.useCase.tiresomeManualSearch}
                 </h4>
                 <p className="step-item-desc">
-                  {getDictionary(locale).pages.useCase.martinSpendsEveryEveningScanning}
+                  {dict.pages.useCase.martinSpendsEveryEveningScanning}
                 </p>
               </div>
             </div>
@@ -262,10 +266,10 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num">2</span>
               <div>
                 <h4 className="step-item-title">
-                  {getDictionary(locale).pages.useCase.tediousLandRegistryChecks}
+                  {dict.pages.useCase.tediousLandRegistryChecks}
                 </h4>
                 <p className="step-item-desc">
-                  {getDictionary(locale).pages.useCase.manuallyCheckingTheQuebecLand}
+                  {dict.pages.useCase.manuallyCheckingTheQuebecLand}
                 </p>
               </div>
             </div>
@@ -274,17 +278,17 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num">3</span>
               <div>
                 <h4 className="step-item-title">
-                  {getDictionary(locale).pages.useCase.spamRiskCloudPrivacyLeaks}
+                  {dict.pages.useCase.spamRiskCloudPrivacyLeaks}
                 </h4>
                 <p className="step-item-desc">
-                  {getDictionary(locale).pages.useCase.fearOfViolatingCaslAnti}
+                  {dict.pages.useCase.fearOfViolatingCaslAnti}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="panel-footer-note before-note">
-            {getDictionary(locale).pages.useCase.resultMartinIsOverloadedLoses}
+            {dict.pages.useCase.resultMartinIsOverloadedLoses}
           </div>
         </div>
 
@@ -292,7 +296,7 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
         <div className="comparison-card after-card">
           <div className="panel-badge after-badge">
             <Sparkles size={13} style={{ marginRight: "4px" }} />
-            {getDictionary(locale).pages.useCase.withOrazaka10MinWeek}
+            {dict.pages.useCase.withOrazaka10MinWeek}
           </div>
           
           <div className="flow-steps">
@@ -300,10 +304,10 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num success-num">1</span>
               <div>
                 <h4 className="step-item-title">
-                  {getDictionary(locale).pages.useCase.automatedLocalTerritorialWatch}
+                  {dict.pages.useCase.automatedLocalTerritorialWatch}
                 </h4>
                 <p className="step-item-desc">
-                  {getDictionary(locale).pages.useCase.orazakaSentinelSilentlyScansMunicipal}
+                  {dict.pages.useCase.orazakaSentinelSilentlyScansMunicipal}
                 </p>
               </div>
             </div>
@@ -312,10 +316,10 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num success-num">2</span>
               <div>
                 <h4 className="step-item-title">
-                  {getDictionary(locale).pages.useCase.intelligentSovereignFiltering}
+                  {dict.pages.useCase.intelligentSovereignFiltering}
                 </h4>
                 <p className="step-item-desc">
-                  {getDictionary(locale).pages.useCase.aLocalLlmQualifiesTarget}
+                  {dict.pages.useCase.aLocalLlmQualifiesTarget}
                 </p>
               </div>
             </div>
@@ -324,17 +328,17 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
               <span className="step-num success-num">3</span>
               <div>
                 <h4 className="step-item-title">
-                  {getDictionary(locale).pages.useCase.compliantActionsReadyToMail}
+                  {dict.pages.useCase.compliantActionsReadyToMail}
                 </h4>
                 <p className="step-item-desc">
-                  {getDictionary(locale).pages.useCase.instantPrintReadyPostcardDrafts}
+                  {dict.pages.useCase.instantPrintReadyPostcardDrafts}
                 </p>
               </div>
             </div>
           </div>
 
           <div className="panel-footer-note after-note">
-            {getDictionary(locale).pages.useCase.resultMartinDevotesHisTime}
+            {dict.pages.useCase.resultMartinDevotesHisTime}
           </div>
         </div>
       </div>
@@ -343,34 +347,35 @@ function BeforeAfterSchema({ locale }: { locale: "fr" | "en" }) {
 }
 
 /* ─── Simplified Features Grid ─── */
-function FeaturesBento({ locale }: { locale: "fr" | "en" }) {
+function FeaturesBento() {
+  const { t: dict } = useI18n();
   const cards = [
     {
       icon: <Search size={20} style={{ color: "var(--kz-accent)" }} />,
-      title: getDictionary(locale).pages.useCase.automatedMonitoring,
-      desc: getDictionary(locale).pages.useCase.silentlyScansPublicRegionalRegistries,
+      title: dict.pages.useCase.automatedMonitoring,
+      desc: dict.pages.useCase.silentlyScansPublicRegionalRegistries,
     },
     {
       icon: <Mail size={20} style={{ color: "var(--kz-accent)" }} />,
-      title: getDictionary(locale).pages.useCase.ethicalB2cMailers,
-      desc: getDictionary(locale).pages.useCase.draftsPhysicalDirectMailCampaigns,
+      title: dict.pages.useCase.ethicalB2cMailers,
+      desc: dict.pages.useCase.draftsPhysicalDirectMailCampaigns,
     },
     {
       icon: <Briefcase size={20} style={{ color: "var(--kz-accent)" }} />,
-      title: getDictionary(locale).pages.useCase.targetedB2bEmails,
-      desc: getDictionary(locale).pages.useCase.writesContextualCorporateMessagesAdhering,
+      title: dict.pages.useCase.targetedB2bEmails,
+      desc: dict.pages.useCase.writesContextualCorporateMessagesAdhering,
     },
     {
       icon: <Lock size={20} style={{ color: "var(--kz-accent)" }} />,
-      title: getDictionary(locale).pages.useCase.t100SovereignOffline,
-      desc: getDictionary(locale).pages.useCase.prospectDetailsNeverLeaveYour,
+      title: dict.pages.useCase.t100SovereignOffline,
+      desc: dict.pages.useCase.prospectDetailsNeverLeaveYour,
     }
   ];
 
   return (
     <div style={{ marginBottom: "56px", width: "100%" }}>
       <h2 className="section-title">
-        {getDictionary(locale).pages.useCase.whatOrazakaSentinelDoes}
+        {dict.pages.useCase.whatOrazakaSentinelDoes}
       </h2>
       
       <div className="features-grid">
@@ -388,6 +393,7 @@ function FeaturesBento({ locale }: { locale: "fr" | "en" }) {
 
 /* ─── Time & ROI Calculator (Centered & Simplified) ─── */
 function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
+  const { t: dict } = useI18n();
   const [intensity, setIntensity] = useState<"moderate" | "active" | "intense">("active");
 
   const data = {
@@ -419,7 +425,7 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
         <div style={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center", width: "100%" }}>
           <Clock size={18} style={{ color: "var(--kz-accent)" }} />
           <h3 className="roi-calc-title">
-            {getDictionary(locale).pages.useCase.timeRoiCalculator}
+            {dict.pages.useCase.timeRoiCalculator}
           </h3>
         </div>
         
@@ -447,10 +453,10 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
       <div className="roi-calc-content">
         <div className="roi-calc-stat">
           <div style={{ fontSize: "13px", color: "var(--kz-text-muted)", marginBottom: "8px" }}>
-            {getDictionary(locale).pages.useCase.timeSpentManually}
+            {dict.pages.useCase.timeSpentManually}
           </div>
           <div style={{ fontSize: "24px", fontWeight: 700, color: "var(--kz-text-primary)" }}>
-            {current.totalManual}h <span style={{ fontSize: "14px", color: "var(--kz-text-muted)" }}>/ {getDictionary(locale).pages.useCase.week}</span>
+            {current.totalManual}h <span style={{ fontSize: "14px", color: "var(--kz-text-muted)" }}>/ {dict.pages.useCase.week}</span>
           </div>
         </div>
 
@@ -458,10 +464,10 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
 
         <div className="roi-calc-stat">
           <div style={{ fontSize: "13px", color: "var(--kz-text-muted)", marginBottom: "8px" }}>
-            {getDictionary(locale).pages.useCase.timeWithOrazaka}
+            {dict.pages.useCase.timeWithOrazaka}
           </div>
           <div style={{ fontSize: "24px", fontWeight: 700, color: "var(--kz-accent)" }}>
-            10 min <span style={{ fontSize: "14px", color: "var(--kz-text-muted)" }}>/ {getDictionary(locale).pages.useCase.week}</span>
+            10 min <span style={{ fontSize: "14px", color: "var(--kz-text-muted)" }}>/ {dict.pages.useCase.week}</span>
           </div>
         </div>
 
@@ -469,10 +475,10 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
 
         <div className="roi-calc-stat highlight-stat">
           <div style={{ fontSize: "11px", fontWeight: 700, color: "var(--kz-success)", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: "8px" }}>
-            {getDictionary(locale).pages.useCase.timeSaved}
+            {dict.pages.useCase.timeSaved}
           </div>
           <div style={{ fontSize: "28px", fontWeight: 800, color: "var(--kz-success)" }}>
-            +{current.saved.toFixed(1)}h <span style={{ fontSize: "14px", fontWeight: 500 }}>/ {getDictionary(locale).pages.useCase.week}</span>
+            +{current.saved.toFixed(1)}h <span style={{ fontSize: "14px", fontWeight: 500 }}>/ {dict.pages.useCase.week}</span>
           </div>
         </div>
       </div>
@@ -568,10 +574,10 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         />
 
         {/* Before vs After Schema */}
-        <BeforeAfterSchema locale={locale} />
+        <BeforeAfterSchema />
 
         {/* Bento features */}
-        <FeaturesBento locale={locale} />
+        <FeaturesBento />
 
         {/* ROI Calculator */}
         <TimeCalculator locale={locale} />

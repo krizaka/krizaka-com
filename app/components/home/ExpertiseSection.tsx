@@ -2,11 +2,12 @@
 
 /* Know-how: what Krizaka is good at, as it shows in both products. */
 
-import { Bot, Boxes, CreditCard, Film, Scale, ShieldCheck } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import { AiIcon, BillingIcon, PackIcon, ShieldIcon, VideoIcon, KnowledgeIcon, type IconProps } from "@krizaka/icons";
+import type { ComponentType } from "react";
 import { useI18n } from "../I18nProvider";
 
-const ICONS: LucideIcon[] = [Bot, Boxes, Scale, Film, CreditCard, ShieldCheck];
+/* Sovereign AI · modular architecture · compliance · media · payments · governance (texts: site.expertise.items). */
+const ICONS: ComponentType<IconProps>[] = [AiIcon, PackIcon, ShieldIcon, VideoIcon, BillingIcon, KnowledgeIcon];
 
 export default function ExpertiseSection() {
   const { t } = useI18n();
@@ -23,7 +24,7 @@ export default function ExpertiseSection() {
           const Icon = ICONS[i % ICONS.length];
           return (
             <div key={item.title} className="kz-expertise-item">
-              <Icon size={18} aria-hidden />
+              <Icon size={22} nodeColor="var(--kz-accent)" />
               <h3>{item.title}</h3>
               <p>{item.body}</p>
             </div>
@@ -34,7 +35,7 @@ export default function ExpertiseSection() {
         .kz-expertise { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 1px;
           background: var(--kz-border-subtle); border: 1px solid var(--kz-border-subtle); border-radius: 20px; overflow: hidden; }
         .kz-expertise-item { padding: 24px; background: var(--kz-surface-0); }
-        .kz-expertise-item svg { color: var(--kz-accent); }
+        .kz-expertise-item svg { color: var(--kz-text-primary); }
         .kz-expertise-item h3 { margin: 12px 0 6px; font-size: 16px; font-weight: 700; color: var(--kz-text-primary); }
         .kz-expertise-item p { margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
       `}</style>

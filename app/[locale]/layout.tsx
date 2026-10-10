@@ -4,6 +4,7 @@ import { ThemeProvider } from "../components/ThemeProvider";
 import { I18nProvider } from "../components/I18nProvider";
 import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
+import { getDictionary } from "@/lib/i18n";
 import "../globals.css";
 
 const jakartaSans = Plus_Jakarta_Sans({
@@ -136,7 +137,7 @@ export default async function RootLayout({
       </head>
       <body className="min-h-dvh flex flex-col antialiased">
         <ThemeProvider>
-          <I18nProvider locale={validatedLocale}>
+          <I18nProvider locale={validatedLocale} messages={getDictionary(validatedLocale)}>
             {children}
           </I18nProvider>
         </ThemeProvider>
