@@ -834,10 +834,22 @@
         "creditLabel": "Credit 01",
         "restartBtn": "Press to restart story",
         "clans": {
-          "krizaka": "Kusanagi · Solar Crimson Fire",
-          "orazaka": "Yata · Sacred Golden Mirror",
-          "orochia": "Yasakani · Violet Moon Serpent"
-        }
+          "krizaka": "the sword",
+          "orazaka": "the mirror",
+          "orochia": "the jewel"
+        },
+        "clanNames": {
+          "krizaka": "Kusanagi",
+          "orazaka": "Yata",
+          "orochia": "Yasakani"
+        },
+        "selectAria": "The three clans: Krizaka, Orazaka and Orochia",
+        "power": "Power",
+        "finalRound": "Final round",
+        "bossGauge": "Heads left",
+        "cabinetLabel": "Krizaka · arcade cabinet",
+        "coinEntry": "1 credit = 1 story",
+        "playerStart": "1P Start"
       },
       "layers": {
         "label": "The pattern in the steel",

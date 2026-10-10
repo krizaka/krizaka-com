@@ -1,524 +1,411 @@
 "use client";
 
-/* ── Krizaka /story — King of Fighters 90s Arcade Heritage ─────────────────────────────
-   Homage to the golden arcade fighting game era (1994–2000):
-   Two rival flames (Solar Crimson Forge vs Deep Violet Moon Serpent),
-   the Three Sacred Treasures (Kusanagi blade, Yata mirror, Yasakani magatama),
-   "3 vs 3" team synergy, "STAGE 01..03" battle entrances, eight sealed heads of Orochi,
-   and the iconic "CONTINUE?" screen.
-   100% original artwork in SVG and CSS. Zero copyrighted assets.
-   Calm by design: everything here is static — no canvas, no particles, no loops. The only motion
-   is hover feedback, itself off under reduced motion. Dual theme safe (dark and light).
+/* ── /story — the arcade nods ───────────────────────────────────────────────────────────
+   The page borrows the grammar of a 1990s arcade fighting game — a select screen, power gauges, a stage
+   announcement, a boss gauge, the continue screen — and nothing else: every shape here is ours (the three
+   brand marks, the sacred treasures of the myth, the flock). No sprite, character, name, logo, typeface or
+   sound from any game.
+
+   Motion budget (the contract the PR describes):
+   - each section plays its entrance ONCE, when it first enters the viewport (`data-in`), in sequence —
+     visual first, announcement next, text last; nothing replays;
+   - at most ONE slow, low-contrast loop per section (`.an-loop`), and it only runs while the section is on
+     screen (`data-live`); never behind a paragraph;
+   - the mascots and marks move on hover only;
+   - no canvas, no requestAnimationFrame loop, no pointer tracking: one IntersectionObserver for the page;
+   - prefers-reduced-motion: the director never switches motion on — everything is static and fully visible.
+   Colours: tokens only. Each clan section carries `brand-<id>` (@krizaka/tokens/brands/scoped.css), so
+   --kz-accent, --kz-accent-2 and the brand gradient are that brand's — the same values as its mark.
 ──────────────────────────────────────────────────────────────────────────────────────── */
 
-import type React from "react";
+import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
+import type { ChapterId } from "@/lib/story";
 
-/* ── The 3 vs 3 Team Synergy Arc in Hero ─────────────────────────────────────────────── */
+type Vars = CSSProperties & Record<`--${string}`, string | number>;
 
-export function ArcadeTeamBadge({ tag, synergy }: { tag?: string; synergy?: string }) {
+/* ── The director: one observer, sets data-in (once) and data-live (while visible) ─────── */
+
+export function ArcadeDirector({ children }: { children: ReactNode }) {
+  const root = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = root.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    el.dataset.motion = "on";
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const t = e.target as HTMLElement;
+          if (e.isIntersecting) {
+            t.dataset.in = "";
+            t.dataset.live = "";
+          } else {
+            delete t.dataset.live;
+          }
+        }
+      },
+      { threshold: 0.2 },
+    );
+    el.querySelectorAll<HTMLElement>("[data-arena]").forEach((a) => io.observe(a));
+    return () => io.disconnect();
+  }, []);
   return (
-    <div className="an-team-badge" aria-hidden>
-      <span className="an-team-tag">{tag ?? "TEAM BATTLE · 3 VS 3"}</span>
-      <span className="an-team-synergy">{synergy ?? "THE THREE SACRED CLANS"}</span>
+    <div ref={root} className="st">
+      {children}
     </div>
   );
 }
 
-/* ── Fighting Game Stage Badge (STAGE 01, STAGE 02, STAGE 03) ────────────────────────── */
+/* ── The three sacred treasures of the myth, one per clan ─────────────────────────────── */
 
-export function ArcadeStageCut({ stage, name }: { stage: string; name: string }) {
+export function TreasureIcon({ id, size = 20 }: { id: ChapterId; size?: number }) {
+  const common = {
+    viewBox: "0 0 48 48",
+    width: size,
+    height: size,
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 2.4,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    "aria-hidden": true,
+  };
+  if (id === "krizaka")
+    return (
+      <svg {...common}>
+        <path d="M24 3 L27 28 L24 36 L21 28 Z" />
+        <path d="M15 30 H33 M24 36 V45" />
+      </svg>
+    );
+  if (id === "orazaka")
+    return (
+      <svg {...common}>
+        <circle cx="24" cy="24" r="17" />
+        <circle cx="24" cy="24" r="9" />
+        <path d="M24 2 V6 M24 42 V46 M2 24 H6 M42 24 H46" />
+      </svg>
+    );
   return (
-    <div className="an-stage-cut" aria-hidden>
-      <div className="an-stage-pill">
-        <span className="an-stage-num">{stage}</span>
-        <span className="an-stage-name">{name}</span>
-        <span className="an-stage-slash" />
+    <svg {...common}>
+      <path d="M31 10 a13 13 0 1 1 -15 19 a8 8 0 0 0 8 -9 a8 8 0 0 1 7 -10 Z" />
+      <circle cx="29" cy="17" r="2.6" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+/* ── Hero: the select screen — three slots lock in, one after the other ─────────────────── */
+
+export function ClanSelect({
+  clans,
+  head,
+  aria,
+}: {
+  clans: { id: ChapterId; mark: ReactNode; name: string; title: string }[];
+  head: { tag: string; synergy: string };
+  aria: string;
+}) {
+  return (
+    <div className="an-select" role="group" aria-label={aria} data-arena>
+      <div className="an-crt-lines" aria-hidden />
+      <div className="an-scan an-loop" aria-hidden />
+      <div className="an-select-head" aria-hidden>
+        <span className="an-select-tag">{head.tag}</span>
+        <span className="an-select-synergy">{head.synergy}</span>
+      </div>
+      <ul className="an-select-grid">
+        {clans.map((c, i) => (
+          <li key={c.id} className={`an-slot brand-${c.id}`} style={{ "--i": i } as Vars}>
+            <div className="an-slot-frame">
+              <span className="an-slot-aura" aria-hidden />
+              <span className="an-corner is-tl" aria-hidden />
+              <span className="an-corner is-tr" aria-hidden />
+              <span className="an-corner is-bl" aria-hidden />
+              <span className="an-corner is-br" aria-hidden />
+              <span className="an-slot-mark">{c.mark}</span>
+            </div>
+            <span className="an-slot-name text-fg-accent">
+              <TreasureIcon id={c.id} size={13} />
+              {c.name}
+            </span>
+            <span className="an-slot-title">{c.title}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ── A clan stage: the same fighter card for all three ─────────────────────────────────── */
+
+export function FighterCard({
+  id,
+  mark,
+  clanName,
+  powerLabel,
+  roots,
+}: {
+  id: ChapterId;
+  mark: ReactNode;
+  clanName: string;
+  powerLabel: string;
+  roots: string;
+}) {
+  return (
+    <div className="an-fighter bg-linear-to-b from-brand-from via-brand-via to-brand-to">
+      <div className="an-crt-lines" aria-hidden />
+      <div className="an-fighter-disc">
+        <span className="an-fighter-aura an-loop" aria-hidden />
+        <span className="an-fighter-flash" aria-hidden />
+        <span className="an-fighter-mark">{mark}</span>
+      </div>
+      <div className="an-gauge-head">
+        <span className="an-gauge-name text-fg-accent">
+          <TreasureIcon id={id} size={16} />
+          {clanName}
+        </span>
+        <span className="an-gauge-label">{powerLabel}</span>
+      </div>
+      <div className="an-gauge" aria-hidden>
+        <span className="an-gauge-fill bg-linear-to-r from-accent to-accent-2" />
+      </div>
+      <p className="an-roots">{roots}</p>
+    </div>
+  );
+}
+
+/* ── The stage announcement (STAGE 01 · KRIZAKA) ───────────────────────────────────────── */
+
+export function StageCall({ stage, name }: { stage: string; name: string }) {
+  return (
+    <p className="an-stage">
+      <span className="an-stage-num text-fg-accent">{stage}</span>
+      <span className="an-stage-name">{name}</span>
+    </p>
+  );
+}
+
+/* ── The boss gauge: eight segments, one drained per sealed head ───────────────────────── */
+
+export function BossGauge({ label, count }: { label: string; count: number }) {
+  return (
+    <div className="an-boss-gauge" aria-hidden>
+      <span className="an-boss-gauge-label">{label}</span>
+      <div className="an-boss-cells">
+        {Array.from({ length: count }, (_, i) => (
+          <span key={i} className="an-boss-cell bg-linear-to-r from-accent to-accent-2" style={{ "--i": i } as Vars} />
+        ))}
       </div>
     </div>
   );
 }
 
-/* ── The Three Sacred Treasures: Sword, Jewel (Magatama), Mirror ─────────────────────── */
-
-export function Treasures() {
-  return (
-    <div className="an-treasures" aria-hidden>
-      {/* 1. Kusanagi no Tsurugi — Totsuka Sacred Sword */}
-      <div className="an-treasure-item group" title="Kusanagi no Tsurugi — The Sacred Sword">
-        <div className="an-treasure-aura is-crimson" />
-        <svg viewBox="0 0 48 48" width="38" height="38" className="an-svg-sword">
-          <path d="M24 3 L27 28 L24 36 L21 28 Z" />
-          <path d="M15 30 H33 M24 36 V45" />
-          <path d="M24 10 L24 24" strokeWidth="1" opacity="0.6" />
-        </svg>
-      </div>
-
-      {/* 2. Yasakani no Magatama — The Curved Jewel */}
-      <div className="an-treasure-item group" title="Yasakani no Magatama — The Sacred Jewel">
-        <div className="an-treasure-aura is-violet" />
-        <svg viewBox="0 0 48 48" width="38" height="38" className="an-svg-jewel">
-          <path d="M31 10 a13 13 0 1 1 -15 19 a8 8 0 0 0 8 -9 a8 8 0 0 1 7 -10 Z" />
-          <circle cx="29" cy="17" r="2.8" />
-        </svg>
-      </div>
-
-      {/* 3. Yata no Kagami — The Sacred Mirror */}
-      <div className="an-treasure-item group" title="Yata no Kagami — The Eight-Span Mirror">
-        <div className="an-treasure-aura is-gold" />
-        <svg viewBox="0 0 48 48" width="38" height="38" className="an-svg-mirror">
-          <circle cx="24" cy="24" r="17" />
-          <circle cx="24" cy="24" r="11" />
-          <circle cx="24" cy="24" r="5" opacity="0.5" />
-          <path d="M24 2 V6 M24 42 V46 M2 24 H6 M42 24 H46" />
-        </svg>
-      </div>
-    </div>
-  );
-}
-
-/* ── Continue? 9 … 0 Arcade Countdown Cabinet Bezel ───────────────────────────────── */
+/* ── Continue? — the cabinet at the end of the page ────────────────────────────────────── */
 
 export function ContinuePrompt({
   label,
   insertCoin,
+  coinEntry,
   creditLabel,
+  cabinetLabel,
+  playerStart,
   restartBtn,
 }: {
   label: string;
-  insertCoin?: string;
-  creditLabel?: string;
-  restartBtn?: string;
+  insertCoin: string;
+  coinEntry: string;
+  creditLabel: string;
+  cabinetLabel: string;
+  playerStart: string;
+  restartBtn: string;
 }) {
-  const handleRestart = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <div className="an-bezel-wrap" aria-label="Neo-Geo Arcade Continue Prompt">
-      <div className="an-bezel">
-        {/* Bezel frame header with brass screws & specs */}
-        <div className="an-bezel-top">
-          <span className="an-screw" />
-          <span className="an-mvs-badge">NEO·GEO MVS · 100-MEGA PRO-GEAR SPEC</span>
-          <span className="an-screw" />
-        </div>
-
-        {/* Dual Coin Intake Slot & LED credit indicator */}
-        <div className="an-coin-deck">
-          <div className="an-coin-slot-unit">
-            <span className="an-coin-lit-label">{insertCoin ?? "INSERT COIN"}</span>
-            <span className="an-coin-entry">[ 25¢ / 100¥ ]</span>
-          </div>
-          <div className="an-credit-pill">
-            <span className="an-credit-led" />
-            <span>{creditLabel ?? "CREDIT 01"}</span>
-          </div>
-        </div>
-
-        {/* CRT countdown display screen with scanlines */}
-        <div className="an-crt-screen">
-          <div className="an-crt-scanlines" />
-          <div className="an-crt-content">
-            <span className="an-crt-title">{label}</span>
-            <span className="an-crt-digit">9</span>
-          </div>
-        </div>
-
-        {/* Ergonomic Tactile 1P Start / Restart Button */}
-        <button
-          type="button"
-          onClick={handleRestart}
-          className="an-restart-bar group"
-          aria-label={restartBtn ?? "Press to restart story"}
-        >
-          <span className="an-start-key">1P START</span>
-          <span className="an-start-label">{restartBtn ?? "Press to restart story"}</span>
-          <svg viewBox="0 0 24 24" width="16" height="16" className="an-start-arrow" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="12" y1="19" x2="12" y2="5" />
-            <polyline points="5 12 12 5 19 12" />
-          </svg>
-        </button>
+    <div className="an-bezel brand-krizaka" data-arena>
+      <div className="an-bezel-top" aria-hidden>
+        <span className="an-screw" />
+        <span className="an-bezel-label">{cabinetLabel}</span>
+        <span className="an-screw" />
       </div>
+      <div className="an-coin-deck" aria-hidden>
+        <span className="an-coin-lit text-fg-accent">{insertCoin}</span>
+        <span className="an-coin-entry">{coinEntry}</span>
+        <span className="an-credit">
+          <span className="an-credit-led" />
+          {creditLabel}
+        </span>
+      </div>
+      <div className="an-crt theme-dark brand-krizaka" aria-hidden>
+        <div className="an-crt-lines" />
+        <div className="an-scan an-loop" />
+        <div className="an-crt-content">
+          <span className="an-crt-title">{label}</span>
+          <span className="an-crt-digit text-fg-accent">9</span>
+        </div>
+      </div>
+      <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="an-start">
+        <span className="an-start-key bg-accent text-on-accent">{playerStart}</span>
+        <span className="an-start-label">{restartBtn}</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" className="an-start-arrow text-fg-accent" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <line x1="12" y1="19" x2="12" y2="5" />
+          <polyline points="5 12 12 5 19 12" />
+        </svg>
+      </button>
     </div>
   );
 }
 
-/* ── KOF '96 / '97 Three Sacred Clans Hero Marks ────────────────────────────────────── */
-
-export function ClanHeroMarks({
-  krizakaLogo,
-  orazakaLogo,
-  orochiaLogo,
-  clans,
-}: {
-  krizakaLogo: React.ReactNode;
-  orazakaLogo: React.ReactNode;
-  orochiaLogo: React.ReactNode;
-  clans?: {
-    krizaka: string;
-    orazaka: string;
-    orochia: string;
-  };
-}) {
-  return (
-    <div className="an-clan-marks" aria-label="The Three Sacred Clans: Kusanagi, Yata, Yasakani">
-      {/* Hyper-drive energy conduit bridging the 3 clans */}
-      <div className="an-clan-bridge" aria-hidden>
-        <span className="an-bridge-beam" />
-      </div>
-
-      <div className="an-clan-grid">
-        {/* 1. KUSANAGI (Krizaka) — Ancestral Solar Crimson Fire */}
-        <div
-          className="an-clan-item is-kusanagi"
-        >
-          <div className="an-clan-flame-wrap">
-            <div className="an-clan-aura is-kusanagi-aura" />
-            <div className="an-flame-tongues is-crimson-flame" />
-            <div className="an-clan-disc">{krizakaLogo}</div>
-          </div>
-          <div className="an-clan-meta">
-            <span className="an-clan-badge is-crimson">KUSANAGI</span>
-            <span className="an-clan-title">{clans?.krizaka ?? "Kusanagi · Solar Crimson Fire"}</span>
-          </div>
-        </div>
-
-        {/* 2. YATA (Orazaka) — Sacred Golden Mirror */}
-        <div
-          className="an-clan-item is-yata"
-        >
-          <div className="an-clan-flame-wrap">
-            <div className="an-clan-aura is-yata-aura" />
-            <div className="an-mirror-halo" />
-            <div className="an-clan-disc">{orazakaLogo}</div>
-          </div>
-          <div className="an-clan-meta">
-            <span className="an-clan-badge is-gold">YATA</span>
-            <span className="an-clan-title">{clans?.orazaka ?? "Yata · Sacred Golden Mirror"}</span>
-          </div>
-        </div>
-
-        {/* 3. YASAKANI (Orochia) — Iori Yagami Violet Moon Serpent Fire */}
-        <div
-          className="an-clan-item is-yasakani"
-        >
-          <div className="an-clan-flame-wrap">
-            <div className="an-clan-aura is-yasakani-aura" />
-            <div className="an-flame-tongues is-violet-flame" />
-            <div className="an-moon-crescent" />
-            <div className="an-clan-disc">{orochiaLogo}</div>
-          </div>
-          <div className="an-clan-meta">
-            <span className="an-clan-badge is-violet">YASAKANI</span>
-            <span className="an-clan-title">{clans?.orochia ?? "Yasakani · Violet Moon Serpent"}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Master Arcade Styles & Keyframes ────────────────────────────────────────────────── */
+/* ── Styles & keyframes ────────────────────────────────────────────────────────────────── */
 
 export function ArcadeStyles() {
   return (
     <style>{`
-      /* Arcade Team Synergy Badge */
-      .an-team-badge {
-        display: inline-flex; align-items: center; gap: 8px; margin: 0 auto 16px;
-        padding: 5px 14px; border-radius: 9999px;
-        background: linear-gradient(90deg, rgba(249, 115, 22, 0.15), rgba(168, 85, 247, 0.15));
-        border: 1px solid rgba(249, 115, 22, 0.3);
-        box-shadow: 0 0 20px -4px rgba(249, 115, 22, 0.25);
-      }
-      .an-team-tag {
-        font-family: var(--font-mono); font-size: 10px; font-weight: 800;
-        letter-spacing: 0.2em; text-transform: uppercase;
-        color: #f97316;
-      }
-      .an-team-synergy {
-        font-family: var(--font-mono); font-size: 10px; font-weight: 700;
-        letter-spacing: 0.15em; text-transform: uppercase;
-        color: #a855f7;
-      }
+      /* Shared textures: scanlines (static, 4% ink) and a slow CRT band (the section's one loop). */
+      .an-crt-lines { position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+        background: repeating-linear-gradient(to bottom, color-mix(in srgb, var(--kz-text-primary) 4%, transparent) 0 1px, transparent 1px 4px); }
+      .an-scan { position: absolute; inset: 0; pointer-events: none; overflow: hidden; border-radius: inherit; }
+      .an-scan::before { content: ""; position: absolute; left: 0; right: 0; height: 30%; top: -30%;
+        background: linear-gradient(to bottom, transparent, color-mix(in srgb, var(--kz-text-primary) 5%, transparent), transparent); }
 
-      /* Fighting Game Stage Cut */
-      .an-stage-cut {
-        display: flex; align-items: center; margin-bottom: 12px;
-      }
-      .an-stage-pill {
-        position: relative; display: inline-flex; align-items: center; gap: 8px;
-        padding: 4px 14px; border-radius: 6px;
-        background: linear-gradient(135deg, color-mix(in srgb, var(--kz-surface-2) 90%, transparent), color-mix(in srgb, var(--kz-surface-0) 90%, transparent));
-        border-left: 3px solid var(--kz-accent);
-        border-top: 1px solid var(--kz-border-subtle);
-        border-right: 1px solid var(--kz-border-subtle);
-        border-bottom: 1px solid var(--kz-border-subtle);
-        transform: skewX(-8deg);
-        box-shadow: 0 2px 10px -2px rgba(0,0,0,0.3);
-      }
-      .an-stage-num {
-        font-family: var(--font-mono); font-size: 11px; font-weight: 900;
-        color: var(--kz-accent); letter-spacing: 0.15em;
-        transform: skewX(8deg);
-      }
-      .an-stage-name {
-        font-family: var(--font-display), system-ui, sans-serif; font-size: 11px; font-weight: 800;
-        letter-spacing: 0.1em; text-transform: uppercase; color: var(--kz-text-secondary);
-        transform: skewX(8deg);
-      }
-      .an-stage-slash {
-        position: absolute; right: -8px; top: 0; bottom: 0; width: 4px;
-        background: var(--kz-accent); opacity: 0.7; transform: skewX(-8deg);
-      }
-
-      /* Sacred Treasures with Radiant Energy */
-      .an-treasures {
-        display: flex; justify-content: center; align-items: center; gap: 28px; margin-top: 24px;
-      }
-      .an-treasure-item {
-        position: relative; display: flex; align-items: center; justify-content: center;
-        width: 48px; height: 48px; border-radius: 50%;
-        background: color-mix(in srgb, var(--kz-surface-1) 85%, transparent);
-        border: 1px solid var(--kz-border-subtle);
-        transition: transform 0.3s ease, border-color 0.3s ease;
-      }
-      .an-treasure-item:hover {
-        transform: translateY(-3px) scale(1.08);
-        border-color: #d946ef;
-      }
-      .an-treasure-aura {
-        position: absolute; inset: -4px; border-radius: 50%; opacity: 0;
-        transition: opacity 0.3s ease; filter: blur(6px);
-      }
-      .an-treasure-aura.is-crimson { background: rgba(249, 115, 22, 0.4); }
-      .an-treasure-aura.is-violet { background: rgba(168, 85, 247, 0.4); }
-      .an-treasure-aura.is-gold { background: rgba(234, 179, 8, 0.4); }
-      .an-treasure-item:hover .an-treasure-aura { opacity: 1; }
-
-      .an-treasures svg {
-        fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6;
-        transition: stroke 0.3s ease;
-      }
-      .an-svg-sword {
-        stroke: #f97316; filter: drop-shadow(0 0 5px rgba(249, 115, 22, 0.4));
-      }
-      .an-svg-jewel {
-        stroke: #a855f7; filter: drop-shadow(0 0 5px rgba(168, 85, 247, 0.4));
-      }
-      .an-svg-jewel circle {
-        fill: #a855f7; stroke: none;
-      }
-      .an-svg-mirror {
-        stroke: #eab308; filter: drop-shadow(0 0 5px rgba(234, 179, 8, 0.4));
-      }
-      /* Continue 9..0 Arcade Cabinet Bezel */
-      .an-bezel-wrap {
-        margin: 44px auto 20px; max-width: 420px; position: relative; z-index: 2;
-      }
-      .an-bezel {
-        position: relative; padding: 16px; border-radius: 20px;
-        background: linear-gradient(160deg, color-mix(in srgb, var(--kz-surface-2) 90%, transparent), color-mix(in srgb, var(--kz-surface-0) 90%, transparent));
-        border: 1px solid var(--kz-border-strong);
-        box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08), 0 18px 40px -10px rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(12px);
-      }
-      .an-bezel-top {
-        display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 0 4px;
-      }
-      .an-screw {
-        width: 7px; height: 7px; border-radius: 50%;
-        background: var(--kz-border-strong); box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.6);
-      }
-      .an-mvs-badge {
-        font-family: var(--font-mono); font-size: 8.5px; font-weight: 800; letter-spacing: 0.18em;
-        text-transform: uppercase; color: var(--kz-text-muted);
-      }
-      .an-coin-deck {
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 8px 12px; margin-bottom: 12px; border-radius: 12px;
-        background: color-mix(in srgb, var(--kz-surface-1) 80%, transparent);
-        border: 1px solid var(--kz-border-subtle);
-      }
-      .an-coin-slot-unit {
-        display: flex; align-items: center; gap: 8px;
-      }
-      .an-coin-lit-label {
-        font-family: var(--font-mono); font-size: 10px; font-weight: 800;
-        letter-spacing: 0.22em; text-transform: uppercase; color: #f97316;
-        text-shadow: 0 0 8px rgba(249, 115, 22, 0.7);
-      }
-      .an-coin-entry {
-        font-family: var(--font-mono); font-size: 10px; font-weight: 700;
-        letter-spacing: 0.1em; color: var(--kz-text-muted);
-      }
-      .an-credit-pill {
-        display: inline-flex; align-items: center; gap: 6px;
-        font-family: var(--font-mono); font-size: 10px; font-weight: 700;
-        letter-spacing: 0.12em; text-transform: uppercase; color: var(--kz-text-secondary);
-      }
-      .an-credit-led {
-        width: 6px; height: 6px; border-radius: 50%;
-        background: #22c55e; box-shadow: 0 0 8px #22c55e;
-      }
-      .an-crt-screen {
-        position: relative; overflow: hidden; border-radius: 14px;
-        padding: 16px 20px; margin-bottom: 14px;
-        background: #08090d; border: 1px solid rgba(249, 115, 22, 0.35);
-        box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.9), 0 0 16px -4px rgba(249, 115, 22, 0.25);
-      }
-      .an-crt-scanlines {
-        position: absolute; inset: 0; pointer-events: none;
-        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.45) 50%);
-        background-size: 100% 4px; opacity: 0.75;
-      }
-      .an-crt-content {
-        position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between;
-      }
-      .an-crt-title {
-        font-family: var(--font-mono); font-size: 14px; font-weight: 800;
-        letter-spacing: 0.25em; text-transform: uppercase; color: var(--kz-text-primary);
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-      }
-      .an-crt-digit {
-        display: inline-flex; align-items: center; justify-content: center;
-        min-width: 44px; height: 44px; border-radius: 8px;
-        font-family: var(--font-mono); font-size: 26px; font-weight: 900;
-        color: #f97316; text-shadow: 0 0 14px rgba(249, 115, 22, 0.9), 0 0 28px rgba(249, 115, 22, 0.5);
-        background: rgba(249, 115, 22, 0.1); border: 1px solid rgba(249, 115, 22, 0.3);
-      }
-      .an-restart-bar {
-        width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px;
-        padding: 12px 18px; border-radius: 12px; border: 1px solid var(--kz-border-strong);
-        background: var(--kz-surface-1); color: var(--kz-text-primary); cursor: pointer;
-        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      }
-      .an-restart-bar:hover {
-        background: color-mix(in srgb, var(--kz-surface-2) 90%, transparent);
-        border-color: #f97316;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px -4px rgba(249, 115, 22, 0.3);
-      }
-      .an-restart-bar:active {
-        transform: translateY(1px);
-      }
-      .an-start-key {
-        font-family: var(--font-mono); font-size: 10.5px; font-weight: 900;
-        letter-spacing: 0.16em; text-transform: uppercase;
-        padding: 3px 8px; border-radius: 6px;
-        background: #f97316; color: #000;
-      }
-      .an-start-label {
-        font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary);
-      }
-      .an-start-arrow {
-        color: #f97316; transition: transform 0.2s ease;
-      }
-      .an-restart-bar:hover .an-start-arrow {
-        transform: translateY(-2px);
-      }
-
-      /* ── KOF Three Sacred Clans Hero Marks ── */
-      .an-clan-marks {
-        position: relative; max-width: 680px; margin: 32px auto 0; padding: 20px 10px;
-      }
-      .an-clan-bridge {
-        position: absolute; top: 58px; left: 14%; right: 14%; height: 2px;
-        background: linear-gradient(90deg, rgba(249, 115, 22, 0.6) 0%, rgba(234, 179, 8, 0.7) 50%, rgba(168, 85, 247, 0.7) 100%);
-        pointer-events: none; z-index: 0;
-      }
-      .an-bridge-beam {
-        position: absolute; inset: -2px; border-radius: 2px;
-        background: inherit; filter: blur(4px); opacity: 0.7;
-      }
-      .an-clan-grid {
-        position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 3vw, 28px);
-      }
-      .an-clan-item {
-        display: flex; flex-direction: column; align-items: center; text-align: center;
-        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        cursor: default;
-      }
-      .an-clan-item:hover {
-        transform: translateY(-4px);
-      }
-      .an-clan-flame-wrap {
-        position: relative; width: 78px; height: 78px; display: flex; align-items: center; justify-content: center;
-        margin-bottom: 14px;
-      }
-      .an-clan-disc {
-        position: relative; z-index: 2; width: 68px; height: 68px; border-radius: 50%;
+      /* ── Select screen (hero) ── */
+      .an-select { position: relative; max-width: 720px; margin: 36px auto 0; padding: 18px clamp(12px, 3vw, 28px) 24px;
+        border-radius: 22px; border: 1px solid var(--kz-border-subtle);
+        background: color-mix(in srgb, var(--kz-surface-1) 70%, transparent); overflow: hidden; }
+      .an-select-head { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; margin-bottom: 18px;
+        font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
+      .an-select-tag { color: var(--site-accent-text); }
+      .an-select-synergy { color: var(--kz-text-muted); }
+      .an-select-grid { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 3vw, 28px); }
+      .an-slot { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+      .an-slot-frame { position: relative; width: clamp(76px, 18vw, 112px); aspect-ratio: 1; display: grid; place-items: center;
+        border-radius: 16px; border: 1px solid var(--kz-border-subtle);
         background: radial-gradient(circle at 50% 40%, var(--kz-surface-2), var(--kz-surface-0) 80%);
-        border: 1.5px solid var(--kz-border-strong);
-        display: flex; align-items: center; justify-content: center;
-        box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.4);
-        transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-      }
-      .an-clan-item:hover .an-clan-disc {
-        transform: scale(1.08);
-      }
-      .an-clan-aura {
-        position: absolute; inset: -10px; border-radius: 50%; pointer-events: none;
-        opacity: 0.55; filter: blur(10px); transition: opacity 0.3s ease, transform 0.3s ease;
-      }
-      .an-clan-item:hover .an-clan-aura {
-        opacity: 0.95; transform: scale(1.25);
-      }
-      .is-kusanagi-aura {
-        background: radial-gradient(circle, rgba(249, 115, 22, 0.6) 0%, rgba(234, 88, 12, 0.3) 60%, transparent 80%);
-      }
-      .is-yata-aura {
-        background: radial-gradient(circle, rgba(234, 179, 8, 0.6) 0%, rgba(202, 138, 4, 0.3) 60%, transparent 80%);
-      }
-      .is-yasakani-aura {
-        background: radial-gradient(circle, rgba(168, 85, 247, 0.65) 0%, rgba(147, 51, 234, 0.35) 60%, transparent 80%);
-      }
-      .an-flame-tongues {
-        position: absolute; inset: -14px; border-radius: 50%; pointer-events: none; opacity: 0.6;
-      }
-      .is-crimson-flame {
-        box-shadow: 0 -8px 24px -2px rgba(249, 115, 22, 0.7);
-      }
-      .is-violet-flame {
-        box-shadow: 0 -8px 26px -2px rgba(168, 85, 247, 0.75);
-      }
-      .an-mirror-halo {
-        position: absolute; inset: -6px; border-radius: 50%; pointer-events: none;
-        border: 1px dashed rgba(234, 179, 8, 0.6);
-      }
-      .an-moon-crescent {
-        position: absolute; top: -6px; right: -4px; width: 14px; height: 14px; border-radius: 50%;
-        box-shadow: 2px 2px 0 0 #c084fc; pointer-events: none; opacity: 0.8;
-      }
-      .an-clan-item.is-kusanagi:hover .an-clan-disc { border-color: #f97316; box-shadow: 0 0 24px rgba(249, 115, 22, 0.5); }
-      .an-clan-item.is-yata:hover .an-clan-disc { border-color: #eab308; box-shadow: 0 0 24px rgba(234, 179, 8, 0.5); }
-      .an-clan-item.is-yasakani:hover .an-clan-disc { border-color: #a855f7; box-shadow: 0 0 26px rgba(168, 85, 247, 0.55); }
+        transition: transform .3s var(--kz-ease), border-color .3s ease; }
+      .an-slot-aura { position: absolute; inset: 10%; border-radius: 50%; background: var(--kz-accent); opacity: .16; filter: blur(16px); transition: opacity .3s ease; }
+      .an-slot-mark { position: relative; display: grid; place-items: center; transition: transform .3s var(--kz-ease); }
+      .an-corner { position: absolute; width: 14px; height: 14px; border: 2px solid var(--kz-accent); opacity: .9; }
+      .an-corner.is-tl { top: -1px; left: -1px; border-right: 0; border-bottom: 0; border-top-left-radius: 8px; }
+      .an-corner.is-tr { top: -1px; right: -1px; border-left: 0; border-bottom: 0; border-top-right-radius: 8px; }
+      .an-corner.is-bl { bottom: -1px; left: -1px; border-right: 0; border-top: 0; border-bottom-left-radius: 8px; }
+      .an-corner.is-br { bottom: -1px; right: -1px; border-left: 0; border-top: 0; border-bottom-right-radius: 8px; }
+      .an-slot:hover .an-slot-frame { transform: translateY(-4px); border-color: var(--kz-accent); }
+      .an-slot:hover .an-slot-aura { opacity: .34; }
+      .an-slot:hover .an-slot-mark { transform: scale(1.08); }
+      .an-slot-name { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+      .an-slot-title { font-size: 12px; color: var(--kz-text-secondary); line-height: 1.4; }
+      @media (max-width: 480px) { .an-slot-title { font-size: 11px; } .an-slot-name { letter-spacing: .1em; } }
 
-      .an-clan-meta { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-      .an-clan-badge {
-        font-family: var(--font-mono); font-size: 9.5px; font-weight: 800; letter-spacing: 0.16em;
-        text-transform: uppercase; padding: 2px 8px; border-radius: 9999px;
-      }
-      .an-clan-badge.is-crimson { background: rgba(249, 115, 22, 0.15); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.35); }
-      .an-clan-badge.is-gold { background: rgba(234, 179, 8, 0.15); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.35); }
-      .an-clan-badge.is-violet { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.35); }
-      .an-clan-title {
-        font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-        color: var(--kz-text-secondary); line-height: 1.4; max-width: 170px;
+      /* ── Fighter card (the same visual for the three stages) ── */
+      .an-fighter { position: relative; display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; max-width: 320px;
+        padding: 28px 24px 22px; border-radius: 24px; border: 1px solid var(--kz-border-subtle); overflow: hidden; }
+      .an-fighter-disc { position: relative; width: 176px; height: 176px; display: grid; place-items: center; border-radius: 50%;
+        background: radial-gradient(circle at 50% 40%, var(--kz-surface-2), var(--kz-surface-0) 72%);
+        border: 1px solid color-mix(in srgb, var(--kz-accent) 45%, var(--kz-border-subtle)); transition: transform .4s var(--kz-ease); }
+      .an-fighter-aura { position: absolute; inset: -6px; border-radius: 50%; background: radial-gradient(circle, color-mix(in srgb, var(--kz-accent) 30%, transparent), transparent 70%); opacity: .45; filter: blur(10px); }
+      .an-fighter-flash { position: absolute; inset: 0; border-radius: 50%; border: 2px solid var(--kz-accent); opacity: 0; pointer-events: none; }
+      .an-fighter-mark { position: relative; display: grid; place-items: center; transition: transform .4s var(--kz-ease); }
+      .an-fighter:hover .an-fighter-mark { transform: scale(1.05); }
+      .an-gauge-head { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 8px; }
+      .an-gauge-name { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
+      .an-gauge-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-text-muted); }
+      .an-gauge { position: relative; width: 100%; height: 8px; border-radius: 3px; overflow: hidden; transform: skewX(-14deg);
+        background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle); }
+      .an-gauge-fill { position: absolute; inset: 0; transform-origin: left center; }
+      .an-roots { margin: 2px 0 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); }
+
+      /* ── Stage announcement ── */
+      .an-stage { display: inline-flex; align-items: center; gap: 10px; margin: 0; padding: 5px 14px; border-radius: 6px; transform: skewX(-8deg);
+        border: 1px solid var(--kz-border-subtle); border-left: 3px solid var(--kz-accent); background: var(--kz-surface-1); position: relative; overflow: hidden; }
+      .an-stage > span { transform: skewX(8deg); }
+      .an-stage-num { font-family: var(--font-mono); font-size: 11px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; }
+      .an-stage-name { font-family: var(--font-mono); font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--kz-text-secondary); }
+      .an-stage::after { content: ""; position: absolute; inset: 0; width: 40%; opacity: 0; pointer-events: none;
+        background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--kz-accent) 35%, transparent), transparent); }
+
+      /* ── Boss gauge ── */
+      .an-boss-gauge { display: grid; gap: 8px; max-width: 520px; margin: 18px auto 28px; }
+      .an-boss-gauge-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--kz-text-muted); text-align: center; }
+      .an-boss-cells { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; padding: 3px; border-radius: 4px; transform: skewX(-14deg);
+        border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
+      .an-boss-cell { height: 10px; border-radius: 1px; opacity: .14; }
+
+      /* ── Continue cabinet ── */
+      .an-bezel { position: relative; max-width: 420px; margin: 44px auto 20px; padding: 16px; border-radius: 20px;
+        background: var(--kz-surface-1); border: 1px solid var(--kz-border-strong); box-shadow: var(--kz-shadow-lg); }
+      .an-bezel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 0 4px; }
+      .an-screw { width: 7px; height: 7px; border-radius: 50%; background: var(--kz-border-strong); }
+      .an-bezel-label { font-family: var(--font-mono); font-size: 9px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-text-muted); }
+      .an-coin-deck { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 8px 12px; margin-bottom: 12px;
+        border-radius: 12px; background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle);
+        font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+      .an-coin-lit { font-weight: 800; letter-spacing: .2em; }
+      .an-coin-entry { color: var(--kz-text-muted); }
+      .an-credit { display: inline-flex; align-items: center; gap: 6px; color: var(--kz-text-secondary); }
+      .an-credit-led { width: 6px; height: 6px; border-radius: 50%; background: var(--kz-success); }
+      .an-crt { position: relative; overflow: hidden; border-radius: 14px; padding: 16px 20px; margin-bottom: 14px;
+        background: var(--kz-surface-0); color: var(--kz-text-primary); border: 1px solid color-mix(in srgb, var(--kz-accent) 40%, transparent); }
+      .an-crt-content { position: relative; display: flex; align-items: center; justify-content: space-between; }
+      .an-crt-title { font-family: var(--font-mono); font-size: 14px; font-weight: 800; letter-spacing: .25em; text-transform: uppercase; }
+      .an-crt-digit { display: inline-grid; place-items: center; min-width: 44px; height: 44px; border-radius: 8px;
+        font-family: var(--font-mono); font-size: 26px; font-weight: 900;
+        background: var(--kz-accent-soft); border: 1px solid color-mix(in srgb, var(--kz-accent) 35%, transparent); }
+      .an-start { width: 100%; display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 18px; border-radius: 12px;
+        border: 1px solid var(--kz-border-strong); background: var(--kz-surface-2); color: var(--kz-text-primary);
+        transition: transform .2s var(--kz-ease), border-color .2s ease; }
+      .an-start:hover { border-color: var(--kz-accent); transform: translateY(-2px); }
+      .an-start:active { transform: translateY(1px); }
+      .an-start-key { font-family: var(--font-mono); font-size: 10.5px; font-weight: 900; letter-spacing: .16em; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; }
+      .an-start-label { font-size: 13.5px; font-weight: 600; }
+      .an-start-arrow { transition: transform .2s ease; }
+      .an-start:hover .an-start-arrow { transform: translateY(-2px); }
+
+      /* ════ Motion — only when the user hasn't asked for less ════ */
+      @keyframes an-up { from { opacity: 0; transform: translateY(14px); } }
+      @keyframes an-in-left { from { opacity: 0; transform: translateX(-32px); } }
+      @keyframes an-lock { 0% { opacity: 0; transform: scale(1.6); } 70% { opacity: 1; transform: scale(.94); } 100% { opacity: .9; transform: scale(1); } }
+      @keyframes an-slam { 0% { opacity: 0; transform: skewX(-8deg) scale(1.4); } 60% { opacity: 1; transform: skewX(-8deg) scale(.97); } 100% { opacity: 1; transform: skewX(-8deg) scale(1); } }
+      @keyframes an-sweep { 0% { opacity: 0; transform: translateX(-120%); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateX(260%); } }
+      @keyframes an-flash { 0% { opacity: .9; transform: scale(.7); } 100% { opacity: 0; transform: scale(1.45); } }
+      @keyframes an-fill { from { transform: scaleX(0); } }
+      @keyframes an-drain { from { opacity: 1; } }
+      @keyframes an-stamp { 0% { opacity: 0; transform: scale(1.9) rotate(-10deg); } 70% { opacity: 1; transform: scale(.95) rotate(0); } 100% { opacity: 1; transform: none; } }
+      @keyframes an-crt-on { 0% { opacity: 0; transform: scale(.7, .02); } 45% { opacity: 1; transform: scale(1, .02); } 100% { opacity: 1; transform: none; } }
+      @keyframes an-scan { from { transform: translateY(0); } to { transform: translateY(450%); } }
+      @keyframes an-breathe { from { opacity: .35; transform: scale(1); } to { opacity: .6; transform: scale(1.04); } }
+
+      @media (prefers-reduced-motion: no-preference) {
+        /* Loops: one per section, slow and faint, and only while the section is on screen. */
+        .an-scan.an-loop::before { animation: an-scan 9s linear infinite; animation-play-state: paused; }
+        .an-fighter-aura.an-loop { animation: an-breathe 6s ease-in-out 2.2s infinite alternate; animation-play-state: paused; }
+        [data-live] .an-scan.an-loop::before, [data-live] .an-fighter-aura.an-loop { animation-play-state: running; }
+
+        /* Hero select screen: visible at load, so it plays on mount (pure CSS, no observer needed).
+           The slots come in, then the selection locks on each clan, left to right. */
+        .an-slot { animation: an-up .6s var(--kz-ease) both; animation-delay: calc(.25s + var(--i) * .12s); }
+        .an-corner { animation: an-lock .45s var(--kz-ease) both; animation-delay: calc(.9s + var(--i) * .28s); }
+        .an-slot-aura { animation: an-breathe .6s ease-out calc(.9s + var(--i) * .28s) 2 alternate; }
+
+        /* Below the hero: hidden only once the director is on, played once on data-in. */
+        [data-motion="on"] [data-arena]:not([data-in]) :is(.an-fighter, .an-stage, .an-reveal, .an-boss-call, .an-boss-cell, .an-vat-stamp, .an-bird-in, .an-bezel-in) { opacity: 0; }
+
+        [data-in] .an-fighter { animation: an-in-left .6s var(--kz-ease) both; }
+        [data-in] .an-fighter-flash { animation: an-flash .7s ease-out .45s both; }
+        [data-in] .an-gauge-fill { animation: an-fill 1.1s var(--kz-ease) .55s both; }
+        [data-in] .an-stage { animation: an-slam .5s var(--kz-ease) .35s both; }
+        [data-in] .an-stage::after { animation: an-sweep .7s ease-out .8s both; }
+        [data-in] .an-reveal { animation: an-up .6s var(--kz-ease) .6s both; }
+
+        [data-in] .an-boss-call { animation: an-slam .5s var(--kz-ease) both; }
+        [data-in] .an-boss-cell { animation: an-drain .35s ease-out both; animation-delay: calc(.7s + var(--i) * .16s); }
+        [data-in] .an-vat-stamp { animation: an-stamp .4s var(--kz-ease) both; animation-delay: calc(.7s + var(--i) * .16s); }
+
+        [data-in] .an-bird-in { animation: an-up .55s var(--kz-ease) both; animation-delay: calc(var(--i) * .08s); }
+
+        [data-in] .an-crt { animation: an-crt-on .6s var(--kz-ease) .2s both; }
       }
 
-      @media (max-width: 600px) {
-        .an-clan-title { font-size: 10px; }
-        .an-clan-flame-wrap { width: 64px; height: 64px; }
-        .an-clan-disc { width: 56px; height: 56px; }
-      }
-
-      /* Hover feedback only — nothing on this page moves on its own. */
       @media (prefers-reduced-motion: reduce) {
-        .an-treasure-item, .an-clan-item, .an-clan-disc, .an-clan-aura, .an-restart-bar, .an-start-arrow { transition: none !important; }
-        .an-treasure-item:hover, .an-clan-item:hover, .an-clan-item:hover .an-clan-disc, .an-clan-item:hover .an-clan-aura,
-        .an-restart-bar:hover, .an-restart-bar:hover .an-start-arrow { transform: none !important; }
+        .an-slot-frame, .an-slot-mark, .an-fighter-disc, .an-fighter-mark, .an-start, .an-start-arrow { transition: none !important; }
+        .an-slot:hover .an-slot-frame, .an-slot:hover .an-slot-mark, .an-fighter:hover .an-fighter-mark,
+        .an-start:hover, .an-start:hover .an-start-arrow { transform: none !important; }
       }
     `}</style>
   );

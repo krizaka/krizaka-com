@@ -2,6 +2,9 @@
 /* The Krizaka preset: @krizaka/tokens (every --kz-* colour, radius, shadow, font of both themes) mapped to the
    Tailwind theme (bg-surface-1, text-fg, border-border-default…) + the motion signature. The site dogfoods it. */
 @import "@krizaka/tailwind";
+/* One class per brand (`brand-krizaka`, `brand-orazaka`, `brand-orochia`): a section that shows a product takes its
+   accent, accent-2 and section gradient — the colours of its mark — in both themes. */
+@import "@krizaka/tokens/brands/scoped.css";
 /* The classes the @krizaka/ui primitives use, read from the built package — and those of the registry examples that
    /docs/ui renders live. */
 @import "@krizaka/ui/tailwind.css";
