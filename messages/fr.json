@@ -1619,16 +1619,16 @@
           "caption": "La page d'accueil publique du client web : la promesse, le chat souverain qui répond, les Studios."
         },
         "chat": {
-          "label": "Chat souverain",
-          "caption": "Une question à laquelle llama3.2 répond via Ollama sur la même machine — en streaming, rien ne quitte le réseau."
+          "label": "Depuis vos documents",
+          "caption": "Eric colle la politique de retour sous sa question ; le modèle local y répond, en streaming — rien ne quitte le réseau."
         },
         "studios": {
           "label": "Studios",
-          "caption": "Les vrais chiffres de l'espace, puis le catalogue des Studios : des parcours prêts à l'emploi, au prix connu avant de lancer."
+          "caption": "Ses Studios de vente : des parcours prêts à l'emploi qui qualifient les prospects, écrivent la séquence et relancent."
         },
         "settings": {
-          "label": "Packs et apparence",
-          "caption": "Les packs qui ajoutent des capacités, puis le profil : thèmes clair et sombre appliqués instantanément."
+          "label": "Apparence",
+          "caption": "Le profil : thèmes clair et sombre appliqués instantanément, gardés sur le compte."
         }
       },
       "why": {
@@ -1751,8 +1751,8 @@
             "body": "Le trajet d'une requête dans la plateforme, dépôt par dépôt."
           },
           "demos": {
-            "title": "Démos interactives",
-            "body": "Faites tourner le pipeline d'intercepteurs et le périmètre souverain dans votre navigateur."
+            "title": "La démo",
+            "body": "La journée d'Eric sur Orazaka — documents, visuels, Studios, coûts — enregistrée sur un seul Mac."
           },
           "signature": {
             "title": "Ingénierie cognitive",
@@ -1767,6 +1767,152 @@
             "body": "Des packages métier assemblés avec les mêmes intercepteurs."
           }
         }
+      }
+    },
+    "orazakaDemo": {
+      "meta": {
+        "title": "Démo Orazaka — une journée de travail sur un Mac | Krizaka",
+        "description": "Orazaka au travail : des réponses tirées de vos propres documents, des visuels produit générés en une minute, des Studios qui font le travail répétitif, un coût connu avant de lancer. Enregistré sur la vraie application, sur un seul Mac. Rien n'a quitté la machine."
+      },
+      "eyebrow": "Démo · enregistrée sur la vraie application",
+      "title": "Une journée de travail. <b>Un Mac. Zéro octet sorti.</b>",
+      "lead": "Voici Eric, responsable des ventes d'un petit atelier de luminaires. Il interroge ses propres documents, écrit à ses clients, crée des visuels produit et confie le travail répétitif à des Studios — tout sur Orazaka, tout sur une seule machine. Chaque extrait ci-dessous est la vraie application ; chaque image a été générée sur ce Mac.",
+      "ctaTour": "Voir la visite",
+      "ctaGallery": "Voir ce qu'il a créé",
+      "ctaInstall": "L'installer chez vous",
+      "frameLabel": "orazaka · espace d'eric",
+      "facts": [
+        {
+          "value": "1 Mac",
+          "label": "un portable M1 Max fait tourner toute la plateforme : chat, images, Studios"
+        },
+        {
+          "value": "0 octet",
+          "label": "envoyé à une IA tierce : le modèle et les données ne quittent jamais la machine"
+        },
+        {
+          "value": "100 % réel",
+          "label": "des enregistrements d'écran de l'application, rien de simulé ni de rejoué"
+        }
+      ],
+      "tourEyebrow": "La visite",
+      "tourTitle": "La journée d'Eric, du début à la fin.",
+      "tour": {
+        "dashboard": {
+          "label": "Son espace",
+          "caption": "Bonsoir Eric : ses conversations, ses crédits et ses Studios d'un coup d'œil."
+        },
+        "chat": {
+          "label": "Depuis ses documents",
+          "caption": "Il colle la politique de retour sous sa question ; le modèle local y répond, en streaming."
+        },
+        "create": {
+          "label": "Un visuel produit",
+          "caption": "Une phrase, une photo produit pour la boutique — générée sur le Mac (la minute de génération est coupée)."
+        },
+        "studios": {
+          "label": "Ses Studios",
+          "caption": "Des parcours prêts à l'emploi pour la vente : qualifier des prospects, écrire la séquence, relancer."
+        },
+        "packs": {
+          "label": "Offre et crédits",
+          "caption": "Ce que contient son offre, et les crédits restants — le coût d'un run est connu avant qu'il démarre."
+        },
+        "settings": {
+          "label": "À son image",
+          "caption": "Clair ou sombre, langue, voix : appliqué aussitôt, gardé sur son profil."
+        }
+      },
+      "useCasesEyebrow": "Ce qu'elle fait pour une équipe",
+      "useCasesTitle": "Quatre tâches, <b>faites sur votre propre matériel.</b>",
+      "useCases": {
+        "documents": {
+          "title": "Répondre à partir de vos documents",
+          "body": "Collez une politique, un rapport ou une grille tarifaire et posez votre question. La réponse s'appuie sur ce que vous avez donné — et le document ne quitte jamais votre réseau.",
+          "points": [
+            "Des synthèses pour le conseil en trois points",
+            "Des réponses clients fidèles à votre vraie politique",
+            "Des tableaux lus et expliqués simplement"
+          ]
+        },
+        "visuals": {
+          "title": "Des visuels produit en une minute",
+          "body": "Décrivez la prise de vue ; le moteur d'image de votre machine la rend. Aucun produit inédit envoyé dans le cloud de quelqu'un d'autre.",
+          "points": [
+            "Images de boutique et de catalogue",
+            "Bannières de campagne avec place pour le texte",
+            "Autant d'essais que vous voulez, au prix de l'électricité"
+          ]
+        },
+        "studios": {
+          "title": "Confier le répétitif à un Studio",
+          "body": "Un Studio est un parcours prêt à l'emploi pour un métier : configuré une fois, lancé quand vous voulez. Les Studios de vente d'Eric transforment une liste brute en dossier priorisé et en relances.",
+          "points": [
+            "Qualification, séquences, relances",
+            "Chaque run gardé dans un historique que l'on rouvre",
+            "Des packs ajoutent les Studios d'un métier"
+          ]
+        },
+        "costs": {
+          "title": "Connaître le coût avant de lancer",
+          "body": "Les crédits viennent avec l'offre ; chaque Studio affiche son estimation avant de démarrer, et rien n'est facturé au jeton par un fournisseur que vous ne contrôlez pas.",
+          "points": [
+            "Un solde lisible sur le tableau de bord",
+            "Une estimation à chaque run",
+            "Votre matériel, votre électricité, votre facture"
+          ]
+        }
+      },
+      "gallery": {
+        "eyebrow": "Créé sur ce Mac",
+        "title": "Généré localement. <b>Rien n'a quitté la machine.</b>",
+        "lead": "Huit visuels réalisés par le Studio image d'Orazaka sur un seul MacBook Pro (M1 Max), un à la fois, environ une minute chacun — Stable Diffusion 1.5 sur le processeur graphique du Mac. Montrés tels que générés, en 512 × 512, avec la consigne exacte envoyée.",
+        "promptLabel": "Consigne",
+        "engine": "Stable Diffusion 1.5 · stable-diffusion.cpp sur Metal · 20 étapes · ~60 s",
+        "items": {
+          "lamp": {
+            "alt": "Une lampe de table en céramique orange sur un socle clair, lumière douce de studio",
+            "use": "Photo produit pour la boutique"
+          },
+          "coffee": {
+            "alt": "Une tasse en céramique orange de café noir sur un lin texturé, vue du dessus",
+            "use": "Mise à plat pour le catalogue"
+          },
+          "serum": {
+            "alt": "Un flacon compte-gouttes en verre ambré sur une surface sombre, éclairé par l'arrière",
+            "use": "Publicité cosmétique"
+          },
+          "interior": {
+            "alt": "Un fauteuil orange et des lampadaires dans un salon bleu nuit",
+            "use": "Catalogue déco"
+          },
+          "scarf": {
+            "alt": "Une écharpe en laine orange tricotée sur un mannequin, lumière douce de studio",
+            "use": "Bannière de campagne"
+          },
+          "giftbox": {
+            "alt": "Une boîte cadeau en kraft nouée d'un ruban orange sur une table en noyer",
+            "use": "Emballage saisonnier"
+          },
+          "glass": {
+            "alt": "Des sphères orange brillantes flottant au-dessus d'une surface bleue réfléchissante",
+            "use": "Visuel de marque"
+          },
+          "sneaker": {
+            "alt": "Une basket blanche aux détails orange sur fond sombre",
+            "use": "Lancement produit"
+          }
+        }
+      },
+      "persona": {
+        "title": "Qui est Eric ?",
+        "body": "Eric Morel et Lumen Atelier sont inventés pour cette démo : un prénom dans lequel on se projette, une entreprise qui a des lampes à vendre. Le compte est créé sur la plateforme locale par une commande (orazaka demo seed), qui refuse de tourner ailleurs que sur un poste de développement."
+      },
+      "closing": {
+        "title": "Vos documents, vos visuels, <b>votre machine.</b>",
+        "body": "Installez Orazaka sur votre propre matériel en trois commandes, ou dites-nous ce dont votre équipe a besoin.",
+        "install": "L'installer",
+        "contact": "Nous écrire"
       }
     }
   },
@@ -2031,61 +2177,6 @@
         "Recherche un composant par nom"
       ]
     },
-    "demosGallery": {
-      "filterDemos": "Filtrer les démos",
-      "demos": [
-        {
-          "title": "Console d'Administration",
-          "desc": "Tableau de bord local de configuration et suivi du moteur Orazaka."
-        },
-        {
-          "title": "Portail de Connexion",
-          "desc": "Connexion sécurisée du client et chargement du workspace local."
-        },
-        {
-          "title": "Interface de Dialogue",
-          "desc": "Console de chat multi-agents et flux de réflexion souverain."
-        },
-        {
-          "title": "Pipeline Souverain",
-          "desc": "Architecture locale du traitement d'inférence."
-        },
-        {
-          "title": "Protection des Données",
-          "desc": "Blindage et isolation des métriques locales."
-        },
-        {
-          "title": "Maillage de Contexte",
-          "desc": "Matrice gérant l'intégration des outils et de la mémoire."
-        },
-        {
-          "title": "Régulation Cognitive",
-          "desc": "Ajustement sémantique continu en boucle fermée."
-        },
-        {
-          "title": "Flux Vectoriel RAG",
-          "desc": "Indexation et injection de contexte dynamique."
-        },
-        {
-          "title": "Maillage d'Intercepteurs",
-          "desc": "Passage de la requête à travers le pipeline d'ingénierie."
-        },
-        {
-          "title": "Sécurisation des Flux",
-          "desc": "Contrôle d'accès et filtrage cryptographique des flux de données sortants."
-        },
-        {
-          "title": "Raisonnement Localisé",
-          "desc": "Inférence neuronale optimisée s'exécutant sur le matériel de l'hôte."
-        }
-      ],
-      "tabs": {
-        "all": "Toutes les démos",
-        "webapp": "Web app & tableau de bord",
-        "image": "Générations SD",
-        "video": "Boucles vidéo"
-      }
-    },
     "architectureMesh": {
       "requestJourney": "Parcours d'une requête",
       "leftToRight": "de gauche à droite →",
@@ -2312,10 +2403,6 @@
           "intro": "Les packs de référence du Studio."
         }
       }
-    },
-    "demosMeta": {
-      "demosVisualization": "Démos & Visualisation",
-      "visualProofOfTheLocal": "Démonstrations et preuves visuelles de l'exécution locale du moteur et de son pipeline cognitif."
     },
     "sovereigntyPerimeter": {
       "diagramTheOrazakaProductRuns": "Schéma : le produit Orazaka tourne entièrement dans ton périmètre souverain."
