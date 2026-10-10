@@ -12,6 +12,7 @@ import { NPM_PACKAGES, npmUrl, repoUrl } from "@/lib/npm-packages";
 import { BOM_VERSION, CENTRAL_NAMESPACE_URL, KIT_PREVIOUS_VERSION, MAVEN_ARTIFACTS, centralUrl, mavenRepoUrl } from "@/lib/maven-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
+import { Card } from "@krizaka/ui/card";
 import { reveal } from "@/lib/motion";
 
 /* /open-source — for developers who want to build with Krizaka's pieces: what can be reused, how
@@ -64,14 +65,17 @@ const PROMISES = [
 /** First sentence of a repository description — the card stays one idea long. */
 const short = (d: string) => (d.split(/(?<=[.:])\s/)[0] ?? d).replace(/[:.]$/, "");
 
+/** A repository: the @krizaka/ui card, as a link. */
 function RepoCard({ repo }: { repo: OrgRepository }) {
   return (
-    <a href={repo.url} target="_blank" rel="noopener noreferrer" className="os-repo">
-      <span className="os-repo-name">
-        {repo.name} <ArrowUpRight size={14} aria-hidden />
-      </span>
-      <span className="os-repo-desc">{short(repo.description)}</span>
-    </a>
+    <Card.Root asChild interactive radius="lg">
+      <a href={repo.url} target="_blank" rel="noopener noreferrer" className="os-repo">
+        <span className="os-repo-name">
+          {repo.name} <ArrowUpRight size={14} aria-hidden />
+        </span>
+        <span className="os-repo-desc">{short(repo.description)}</span>
+      </a>
+    </Card.Root>
   );
 }
 
@@ -360,13 +364,10 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-group-head h3 { margin: 0; font-size: 15px; font-weight: 700; }
         .os-group-head p { margin: 4px 0 0; font-size: 13px; line-height: 1.55; color: var(--kz-text-muted); }
         .os-repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; }
-        .os-repo { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 14px; text-decoration: none; color: var(--kz-text-primary);
-          background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: border-color 150ms ease, transform 150ms ease; }
-        .os-repo:hover { border-color: var(--kz-border-strong); transform: translateY(-1px); }
+        .os-repo { gap: 6px; padding: 14px 16px; text-decoration: none; }
         .os-repo-name { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; }
         .os-repo-name svg { color: var(--kz-text-muted); flex-shrink: 0; }
         .os-repo-desc { font-size: 13px; line-height: 1.55; color: var(--kz-text-secondary); }
-        @media (prefers-reduced-motion: reduce) { .os-repo, .os-repo:hover { transition: none; transform: none; } }
 
         .os-promises { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 24px; padding-top: 40px; border-top: 1px solid var(--kz-border-subtle); }
         .os-promises svg { color: var(--kz-accent); }

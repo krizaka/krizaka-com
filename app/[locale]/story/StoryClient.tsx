@@ -12,7 +12,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "@/app/components/I18nProvider";
 import KrizakaLandscape from "@/app/components/illustrations/KrizakaLandscape";
 import { BirdPortrait, FlockStyles } from "@/app/components/story/Flock";
@@ -27,6 +27,7 @@ import {
   StageCall,
 } from "@/app/components/story/ArcadeNods";
 import { ProductLogo } from "@krizaka/ui";
+import { cn } from "@krizaka/ui/cn";
 
 /* One size for the three marks, in the select screen and in the stages: the stages must read alike. */
 const mark = (id: ChapterId, size: number) => <ProductLogo id={id} size={size} animated={false} />;
@@ -58,7 +59,7 @@ export default function StoryClient() {
       </header>
 
       {CHAPTERS.map((ch, i) => (
-        <section key={ch.id} className={`st-chapter brand-${ch.id}`} aria-labelledby={`st-${ch.id}`} data-arena>
+        <section key={ch.id} className={cn("st-chapter", "brand-" + ch.id)} aria-labelledby={`st-${ch.id}`} data-arena>
           <div className="st-mark">
             <FighterCard
               id={ch.id}
@@ -133,7 +134,7 @@ export default function StoryClient() {
             <p key={p}>{p}</p>
           ))}
           <Link href="/open-source" className="st-btn">
-            {st.open.cta} <ArrowRight size={15} />
+            {st.open.cta} <ForwardIcon size={15} />
           </Link>
         </div>
       </section>
@@ -144,7 +145,7 @@ export default function StoryClient() {
           <p>{st.closing.body}</p>
           <div className="st-ctas">
             <Link href="/products" className="st-btn is-primary">
-              {st.ctaProducts} <ArrowRight size={15} />
+              {st.ctaProducts} <ForwardIcon size={15} />
             </Link>
             <Link href="/contact" className="st-btn">
               {st.ctaContact}

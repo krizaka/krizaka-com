@@ -837,7 +837,9 @@
         "stepPrev": "Previous step",
         "stepNext": "Next step",
         "step": "Step",
-        "textVersion": "Text version — the three journeys, step by step"
+        "textVersion": "Text version — the three journeys, step by step",
+        "play": "Play",
+        "pause": "Pause"
       },
       "pillars": {
         "cdn": {
@@ -1362,7 +1364,9 @@
           "category": "Krizaka",
           "desc": "Write to the team."
         }
-      }
+      },
+      "label": "Search the site",
+      "results": "Results"
     },
     "docs": {
       "forDevelopers": "For developers",
@@ -1826,6 +1830,9 @@
         "install": "Install it",
         "contact": "Talk to us"
       }
+    },
+    "tour": {
+      "label": "Product tour"
     }
   },
   "pages": {

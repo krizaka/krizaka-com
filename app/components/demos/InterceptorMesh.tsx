@@ -16,6 +16,7 @@ import { Play, Pause, RotateCcw, ShieldAlert, Cpu, Network } from "lucide-react"
 import { useI18n } from "../I18nProvider";
 import HexNode from "../HexNode";
 import CustomEdge from "../CustomEdge";
+import { cn } from "@krizaka/ui/cn";
 
 // Node registry
 const nodeTypes = {
@@ -420,10 +421,10 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
     return (
       <div 
         style={{ height: compact ? "460px" : "550px" }}
-        className="w-full bg-[var(--kz-surface-0)] border border-[var(--kz-border-default)] rounded-2xl flex flex-col items-center justify-center gap-3 animate-pulse"
+        className="w-full bg-surface-0 border border-border-default rounded-2xl flex flex-col items-center justify-center gap-3 animate-pulse"
       >
-        <Cpu className="w-8 h-8 text-[var(--kz-accent)] animate-spin" />
-        <span className="text-xs font-mono text-[var(--kz-text-muted)] tracking-wider">
+        <Cpu className="w-8 h-8 text-accent animate-spin" />
+        <span className="text-xs font-mono text-fg-muted tracking-wider">
           INITIALIZING COGNITIVE INTERCEPTORMESH ENGINE...
         </span>
       </div>
@@ -600,7 +601,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
       {/* Main Grid: Flow Canvas Left, JSON Console Right */}
       <div 
         style={{ height: compact ? "500px" : "600px", display: "grid", gap: "24px" }}
-        className={`w-full ${compact ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-10"}`}
+        className={cn("w-full grid-cols-1", !compact && "lg:grid-cols-10")}
       >
         {/* Flow Canvas Pane */}
         <div
@@ -613,7 +614,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
             backdropFilter: "blur(4px)",
             height: "100%",
           }}
-          className={`${compact ? "w-full" : "lg:col-span-7"}`}
+          className={compact ? "w-full" : "lg:col-span-7"}
         >
           {/* Legend indicators styled as horizontal glass capsules */}
           <div style={{ position: "absolute", top: "16px", left: "16px", zIndex: 10, display: "flex", flexWrap: "wrap", gap: "8px", pointerEvents: "none" }}>

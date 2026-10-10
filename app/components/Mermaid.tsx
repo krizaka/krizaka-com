@@ -8,10 +8,10 @@
    Theme-aware: re-rendered with the --kz-* values of the active theme. The source stays one click away. */
 
 import { useCallback, useEffect, useState } from 'react';
-import { useTheme } from './ThemeProvider';
+import { useSiteTheme } from './SiteTheme';
 
 export default function Mermaid({ chart }: { chart: string }) {
-  const { theme } = useTheme();
+  const { theme } = useSiteTheme();
   const [svg, setSvg] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
 

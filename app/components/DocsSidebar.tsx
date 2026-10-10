@@ -22,6 +22,7 @@ import {
   X,
 } from "lucide-react";
 import { ProductLogo } from "@krizaka/ui";
+import { cn } from "@krizaka/ui/cn";
 
 const CATEGORY_META: Record<string, { icon: typeof BookOpen; label: string }> = {
   "getting-started": { icon: Rocket, label: "Getting Started" },
@@ -168,7 +169,7 @@ export default function DocsSidebar({ groupedDocs, sortedCategories, product = O
         {/* Overview */}
         <Link
           href={product.overviewHref}
-          className={`docs-nav-link ${pathname === product.overviewHref ? "active" : ""}`}
+          className={cn("docs-nav-link", pathname === product.overviewHref && "active")}
           style={{
             display: "flex",
             alignItems: "center",
@@ -224,7 +225,7 @@ export default function DocsSidebar({ groupedDocs, sortedCategories, product = O
                     <Link
                       key={doc.slug}
                       href={href}
-                      className={`docs-nav-link ${isActive ? "active" : ""}`}
+                      className={cn("docs-nav-link", isActive && "active")}
                       style={{
                         display: "flex",
                         alignItems: "center",

@@ -1,4 +1,4 @@
-import { Clock } from "lucide-react";
+import { ClockIcon } from "@krizaka/icons";
 import { getDictionary, type Locale } from "@/lib/i18n";
 
 /* A contract the services do not publish yet: say so, and link the issue that tracks it. */
@@ -6,7 +6,7 @@ export function ComingSoon({ issue, locale }: { issue: string; locale: Locale })
   const t = getDictionary(locale).docs.comingSoon;
   return (
     <aside className="kz-coming-soon not-prose" role="note">
-      <Clock size={16} aria-hidden className="kz-coming-soon-icon" />
+      <ClockIcon size={16} className="kz-coming-soon-icon" />
       <div>
         <p className="kz-coming-soon-title">{t.title}</p>
         <p>{t.body}</p>

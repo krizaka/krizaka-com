@@ -14,6 +14,7 @@ import type { LucideIcon } from "lucide-react";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { getDictionary, format } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
+import { Card } from "@krizaka/ui/card";
 
 
 export interface RepositoryEntry {
@@ -87,24 +88,18 @@ const KIND_LABEL: Record<string, string> = {
 
 const mix = (color: string, pct: number) => `color-mix(in srgb, ${color} ${pct}%, transparent)`;
 
+/** A repository: the @krizaka/ui card, as a link. */
 function RepositoryCard({ repo, color }: { repo: RepositoryEntry; color: string }) {
   return (
+    <Card.Root asChild interactive radius="xl">
     <a
       href={repo.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="kz-repo-card"
       style={{
-        display: "flex",
-        flexDirection: "column",
         gap: "10px",
         padding: "18px 18px 16px",
-        borderRadius: "16px",
-        background: "var(--kz-surface-1)",
-        border: "1px solid var(--kz-border-subtle)",
-        color: "var(--kz-text-primary)",
         textDecoration: "none",
-        transition: "border-color var(--kz-transition-fast), transform var(--kz-transition-fast)",
         minWidth: 0,
       }}
     >
@@ -154,6 +149,7 @@ function RepositoryCard({ repo, color }: { repo: RepositoryEntry; color: string 
         </p>
       )}
     </a>
+    </Card.Root>
   );
 }
 

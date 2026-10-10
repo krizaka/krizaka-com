@@ -5,6 +5,7 @@ import { ArrowRight, Boxes, Layers, Cpu } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { PACKAGES, type Package, type LocalizedText } from "@/lib/packages-data";
 import { motion } from "framer-motion";
+import { Card } from "@krizaka/ui/card";
 import CarrierPigeonBot from "./illustrations/CarrierPigeonBot";
 import { FalconAvatar, MascotStyles } from "./illustrations/MascotAvatars";
 
@@ -32,41 +33,15 @@ function PackageCard({ pkg, idx }: { pkg: Package; idx: number }) {
   };
 
   return (
-    <motion.article
+    /* The @krizaka/ui card (spotlight, lift on hover, reveal on scroll); the pipeline inside is the package's own. */
+    <Card.Root asChild interactive radius="xl" reveal={idx}>
+    <article
       className="pkg-card"
-      initial={{ opacity: 0, y: 25 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay: idx * 0.08, ease: "easeOut" }}
       style={{
-        display: "flex",
-        flexDirection: "column",
         padding: "32px 28px",
-        borderRadius: "20px",
-        background: "var(--kz-surface-1)",
-        border: "1px solid var(--kz-border-subtle)",
-        transition: "border-color 250ms ease, box-shadow 250ms ease, transform 250ms ease",
-        position: "relative",
-        overflow: "hidden",
+        borderColor: "var(--kz-border-subtle)",
       }}
     >
-      {/* Decorative accent card glow */}
-      <div
-        className="card-hover-glow"
-        style={{
-          position: "absolute",
-          top: "-50px",
-          right: "-50px",
-          width: "120px",
-          height: "120px",
-          background: "radial-gradient(circle, var(--kz-accent-soft) 0%, transparent 70%)",
-          pointerEvents: "none",
-          opacity: 0,
-          transition: "opacity 300ms ease",
-          zIndex: 0,
-        }}
-      />
-
       {/* Header Info */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "16px", marginBottom: "16px", zIndex: 1 }}>
         <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -166,7 +141,8 @@ function PackageCard({ pkg, idx }: { pkg: Package; idx: number }) {
           {t.packages.viewUseCase} <ArrowRight size={13} strokeWidth={2} />
         </MotionLink>
       </div>
-    </motion.article>
+    </article>
+    </Card.Root>
   );
 }
 
@@ -256,17 +232,6 @@ export default function PackagesSection({ full = false }: { full?: boolean }) {
       )}
 
       <style>{`
-        /* Premium Card Interaction Styles */
-        .pkg-card:hover {
-          border-color: var(--kz-accent) !important;
-          box-shadow: 0 12px 40px var(--kz-accent-soft), var(--kz-shadow-lg) !important;
-          transform: translateY(-4px) !important;
-        }
-
-        .pkg-card:hover .card-hover-glow {
-          opacity: 1 !important;
-        }
-
         /* Highlight timeline nodes on card hover */
         .pkg-card:hover .pipeline-node {
           transform: scale(1.15);
@@ -314,14 +279,10 @@ export default function PackagesSection({ full = false }: { full?: boolean }) {
 
         /* Reduced Motion Fallbacks */
         @media (prefers-reduced-motion: reduce) {
-          .pkg-card, .pipeline-node, .pipeline-flow-dot, .mascot-header-wrapper {
+          .pipeline-node, .pipeline-flow-dot, .mascot-header-wrapper {
             transition: none !important;
             animation: none !important;
             transform: none !important;
-          }
-          .pkg-card:hover {
-            transform: none !important;
-            box-shadow: none !important;
           }
           .pkg-card:hover .pipeline-flow-dot {
             animation: none !important;

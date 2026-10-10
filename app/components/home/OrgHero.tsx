@@ -14,6 +14,7 @@ import RotatingWord from "./RotatingWord";
 import { PRODUCTS } from "@/lib/org-data";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { ProductLogo } from "@krizaka/ui";
+import { cn } from "@krizaka/ui/cn";
 
 export default function OrgHero({ repositoryCount }: { repositoryCount: number }) {
   const { t, locale } = useI18n();
@@ -58,7 +59,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
 
         <div className="org-hero-products">
           {PRODUCTS.map((p) => (
-            <Link key={p.id} href={p.href} prefetch={false} className={`org-hero-product brand-${p.id}`}>
+            <Link key={p.id} href={p.href} prefetch={false} className={cn("org-hero-product", "brand-" + p.id)}>
               <ProductLogo id={p.id} size={34} />
               <span>
                 <strong>{p.name}</strong>

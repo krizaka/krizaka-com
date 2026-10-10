@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ForwardIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
@@ -45,7 +45,7 @@ export default async function DocsHub({ params }: Props) {
                   <span className="kz-docs-hub-card-title">{t.sections[section].title}</span>
                   <span className="kz-docs-hub-card-text">{t.sections[section].description}</span>
                   <span className="kz-docs-hub-card-cta">
-                    {t.hub.open} <ArrowRight size={14} aria-hidden />
+                    {t.hub.open} <ForwardIcon size={14} />
                   </span>
                 </Link>
               ))}

@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ChevronDownIcon, CloseIcon, GlobeIcon, KnowledgeIcon, MoonIcon, SunIcon } from "@krizaka/icons";
+import { useEffect } from "react";
+import { ChevronDownIcon, GlobeIcon, KnowledgeIcon, MoonIcon, SunIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
-import { useTheme } from "./ThemeProvider";
+import { useSiteTheme } from "./SiteTheme";
+import { Dialog } from "@krizaka/ui/dialog";
 import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isDocsActive, isDocsSection, isNavActive, localeless, productLinkText } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
+import { cn } from "@krizaka/ui/cn";
 
 /* ─── Mobile Menu Panel ─── */
 
@@ -19,127 +21,38 @@ export function MobilePanel({
   onClose: () => void;
 }) {
   const { t, toggleLocale } = useI18n();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useSiteTheme();
   const pathname = usePathname();
   const path = localeless(pathname);
-  const [seen, setSeen] = useState(false);
-  if (isOpen && !seen) setSeen(true);
 
   /* Close on route change */
   useEffect(() => {
     onClose();
   }, [pathname, onClose]);
 
-  /* Trap scroll when open */
-  useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
+  /* The @krizaka/ui dialog, as a side panel: focus trap, Escape, scroll lock, focus back to the menu button. */
   return (
-    <>
-      {/* Backdrop */}
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 98,
-          background: "hsla(0, 0%, 0%, 0.5)",
-          backdropFilter: "blur(4px)",
-          WebkitBackdropFilter: "blur(4px)",
-          opacity: isOpen ? 1 : 0,
-          pointerEvents: isOpen ? "auto" : "none",
-          transition: "opacity 250ms ease",
-        }}
-        onClick={onClose}
-        aria-hidden="true"
-      />
-
-      {/* Panel */}
-      <nav
+    <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <Dialog.Content
         id="mobile-menu-panel"
-        role="dialog"
-        aria-modal="true"
-        aria-label={t.nav.menu}
-        style={{
-          position: "fixed",
-          top: 0,
-          right: 0,
-          bottom: 0,
-          width: "min(320px, 85vw)",
-          zIndex: 99,
-          background: "var(--kz-surface-1)",
-          borderLeft: "1px solid var(--kz-border-subtle)",
-          boxShadow: "-8px 0 32px hsla(0, 0%, 0%, 0.3)",
-          transform: isOpen ? "translateX(0)" : "translateX(100%)",
-          // Closed: hidden after the slide-out, so neither its shadow nor its links leak on screen / to Tab.
-          visibility: isOpen ? "visible" : "hidden",
-          transition: isOpen
-            ? "transform 300ms cubic-bezier(0.16, 1, 0.3, 1)"
-            : "transform 300ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s linear 300ms",
-          display: "flex",
-          flexDirection: "column",
-          overflowY: "auto",
-        }}
+        placement="right"
+        closeLabel={t.nav.close}
+        aria-describedby={undefined}
+        className="max-w-[min(320px,85vw)] overflow-y-auto"
       >
-        {/* Close button */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "16px 20px",
-            borderBottom: "1px solid var(--kz-border-subtle)",
-          }}
-        >
-          <span
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontFamily: "var(--font-display), system-ui, sans-serif",
-              fontSize: "15px",
-              fontWeight: 700,
-              color: "var(--kz-text-primary)",
-            }}
-          >
+        <Dialog.Header className="border-b border-border-subtle px-5 py-4">
+          <Dialog.Title className="inline-flex items-center gap-2 font-display text-[15px]">
             <KrizakaLogo size={22} />
             Krizaka
-          </span>
-          <button
-            id="mobile-menu-close"
-            type="button"
-            onClick={onClose}
-            aria-label={t.nav.close}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              width: "36px",
-              height: "36px",
-              borderRadius: "8px",
-              background: "var(--kz-surface-2)",
-              border: "1px solid var(--kz-border-subtle)",
-              color: "var(--kz-text-secondary)",
-              cursor: "pointer",
-            }}
-          >
-            <CloseIcon size={18} />
-          </button>
-        </div>
+          </Dialog.Title>
+        </Dialog.Header>
 
-        {/* Products — one accordion per product, the same entries as the desktop panel, in plain text (lib/nav.ts). Mounted on first open: the
-            links of a closed panel would otherwise be prefetched on every page load (performance). */}
-        {seen && (
+        <nav aria-label={t.nav.menu} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
+        {/* Products — one accordion per product, the same entries as the desktop panel, in plain text (lib/nav.ts). The dialog mounts
+            its content only while open: the links of a closed panel are never prefetched (performance). */}
         <div style={{ flex: 1, padding: "14px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
           {NAV_PRODUCTS.map((p) => (
-            <details key={p.id} className={`kz-mp-product brand-${p.id}`} open={path.startsWith(p.href)}>
+            <details key={p.id} className={cn("kz-mp-product", "brand-" + p.id)} open={path.startsWith(p.href)}>
               <summary>
                 <span className="kz-mp-logo">
                   <ProductLogo id={p.id} size={26} />
@@ -152,7 +65,7 @@ export function MobilePanel({
               </summary>
               <div className="kz-mp-links">
                 {p.links.map((l) => (
-                  <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
+                  <Link key={l.href} href={l.href} onClick={onClose} className={cn("kz-mp-link", isNavActive(l, path) && "is-active")}>
                     {productLinkText(t, p.id, l)}
                   </Link>
                 ))}
@@ -174,11 +87,11 @@ export function MobilePanel({
             </summary>
             <div className="kz-mp-links">
               {NAV_DOCS.map((d) => (
-                <Link key={d.id} href={d.href} onClick={onClose} className={`kz-mp-link${isDocsActive(d, path) ? " is-active" : ""}`}>
+                <Link key={d.id} href={d.href} onClick={onClose} className={cn("kz-mp-link", isDocsActive(d, path) && "is-active")}>
                   <ProductLogo id={d.id === "orazaka" || d.id === "orochia" ? d.id : "krizaka"} size={18} animated={false} /> {docsLinkText(t, d).label}
                 </Link>
               ))}
-              <Link href={NAV_DOCS_HUB} onClick={onClose} className={`kz-mp-link${path === NAV_DOCS_HUB ? " is-active" : ""}`}>
+              <Link href={NAV_DOCS_HUB} onClick={onClose} className={cn("kz-mp-link", path === NAV_DOCS_HUB && "is-active")}>
                 <KnowledgeIcon size={18} /> {t.site.nav.docs.all.label}
               </Link>
             </div>
@@ -187,14 +100,12 @@ export function MobilePanel({
           <div className="kz-mp-links" style={{ marginTop: "4px", paddingTop: "10px", borderTop: "1px solid var(--kz-border-subtle)" }}>
             {/* The desktop bar's other entries (story, open source, contact) live here on mobile. */}
             {NAV_COMPANY.map((l) => (
-              <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
+              <Link key={l.href} href={l.href} onClick={onClose} className={cn("kz-mp-link", isNavActive(l, path) && "is-active")}>
                 {companyLinkText(t, l).label}
               </Link>
             ))}
           </div>
         </div>
-        )}
-
         <style>{`
           .kz-mp-product { border-radius: 14px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-2); overflow: hidden; }
           .kz-mp-product summary { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; list-style: none; }
@@ -277,7 +188,8 @@ export function MobilePanel({
             {t.site.menu.otherLanguage}
           </button>
         </div>
-      </nav>
-    </>
+        </nav>
+      </Dialog.Content>
+    </Dialog.Root>
   );
 }

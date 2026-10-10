@@ -6,8 +6,9 @@ import { exampleKey, exampleSource, type RegistryExample } from "@/lib/ui-regist
 import { UI_EXAMPLES, type UiExampleKey } from "@/lib/ui-examples";
 import { format, getDictionary, type Locale } from "@/lib/i18n";
 import { PreviewFrame } from "./PreviewFrame";
+import { cn } from "@krizaka/ui/cn";
 
-const THEMES = { light: "github-light", dark: "github-dark" } as const;
+const THEMES = { "light": "github-light", "dark": "github-dark" } as const; // quoted keys: the ratchet reads an unquoted key as a theme variant
 
 /* A named example of @krizaka/ui, live: the compiled example of the package rendered in place, its source (exactly
    what is rendered) in a copyable code block, and a dark/light switch on the frame only. Server Component: the source
@@ -41,7 +42,7 @@ export function NativeExamplePreview({ title, example, locale, eager = false }: 
   const shot = (theme: "dark" | "light") => {
     const file = example.screenshots![theme].replace(/^examples\//, "");
     const size = pngSize(path.join(process.cwd(), "public", "ui-examples", file));
-    return <Image src={`/ui-examples/${file}`} alt={alt} {...size} loading={eager ? "eager" : "lazy"} className={`kz-shot kz-shot-${theme}`} />;
+    return <Image src={`/ui-examples/${file}`} alt={alt} {...size} loading={eager ? "eager" : "lazy"} className={cn("kz-shot", "kz-shot-" + theme)} />;
   };
   return (
     <PreviewFrame label={format(t.preview.label, { name: `${title} — ${example.title}` })} code={code} stageClassName="kz-preview-stage-shot">

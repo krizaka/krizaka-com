@@ -6,6 +6,7 @@
    animation library. Still under prefers-reduced-motion. Decorative: the heading carries a stable aria-label. */
 
 import { useEffect, useState } from "react";
+import { cn } from "@krizaka/ui/cn";
 
 export default function RotatingWord({ words, interval = 2600, className }: { words: string[]; interval?: number; className?: string }) {
   const [i, setI] = useState(0);
@@ -19,7 +20,7 @@ export default function RotatingWord({ words, interval = 2600, className }: { wo
   return (
     <span aria-hidden className="kz-rot">
       {words.map((word, k) => (
-        <span key={word} className={`kz-rot-word${className ? ` ${className}` : ""}`} data-on={k === i ? "" : undefined}>
+        <span key={word} className={cn("kz-rot-word", className)} data-on={k === i ? "" : undefined}>
           {word}
         </span>
       ))}

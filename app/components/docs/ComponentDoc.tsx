@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { CheckCircle2, MonitorSmartphone, Smartphone, Monitor, XCircle } from "lucide-react";
-import { Tab, Tabs } from "fumadocs-ui/components/tabs";
+// Named exports: a Server Component cannot dot into a client module (`Tabs.Root`).
+import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "@krizaka/ui/tabs";
 import type { TOCItemType } from "fumadocs-core/toc";
 import Rich from "@/app/components/Rich";
 import { format, getDictionary, type Locale, type TranslationDictionary } from "@/lib/i18n";
@@ -63,15 +64,19 @@ export function PlatformBadges({ item, t }: { item: Pick<RegistryItem, "platform
   );
 }
 
-/** One tab per platform the component exists on; a single platform needs no tabs. */
+/** One tab per platform the component exists on (@krizaka/ui tabs); a single platform needs no tabs. */
 function PlatformTabs({ item, t, web, native }: { item: RegistryItem; t: TranslationDictionary; web: ReactNode; native: ReactNode }) {
   const c = t.docs.component;
   if (item.web && item.native) {
     return (
-      <Tabs items={[c.web, c.native]}>
-        <Tab value={c.web}>{web}</Tab>
-        <Tab value={c.native}>{native}</Tab>
-      </Tabs>
+      <TabsRoot defaultValue="web" className="my-4 gap-3">
+        <TabsList aria-label={c.platformsLabel}>
+          <TabsTrigger value="web">{c.web}</TabsTrigger>
+          <TabsTrigger value="native">{c.native}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="web">{web}</TabsContent>
+        <TabsContent value="native">{native}</TabsContent>
+      </TabsRoot>
     );
   }
   return <>{item.web ? web : native}</>;
