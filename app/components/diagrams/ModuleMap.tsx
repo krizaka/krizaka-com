@@ -20,6 +20,7 @@ import { AgentIcon, AiIcon, GlobeIcon, LinkIcon, LockIcon, PackIcon, SearchIcon,
 import { format } from "@krizaka/i18n";
 import { useI18n } from "@/app/components/I18nProvider";
 import type { MapModule, ModuleMapData, Owner, RoleId } from "@/lib/architecture-model";
+import { cn } from "@krizaka/ui/cn";
 import s from "./diagrams.module.css";
 
 const ROLE_ICON: Record<RoleId, typeof AiIcon> = {
@@ -292,7 +293,7 @@ export default function ModuleMap({ data, compact = false }: { data: ModuleMapDa
           const Icon = ROLE_ICON[role];
           return (
             <Fragment key={role}>
-              <div className={`${s.band} ${s[`g-${role}`]}`} ref={(el) => { if (el) bandRefs.current.set(role, el); else bandRefs.current.delete(role); }}>
+              <div className={cn(s.band, s[`g-${role}`])} ref={(el) => { if (el) bandRefs.current.set(role, el); else bandRefs.current.delete(role); }}>
                 <div className={s.bandHead}>
                   <span className={s.bandIcon}><Icon size={17} /></span>
                   <div>
@@ -314,7 +315,7 @@ export default function ModuleMap({ data, compact = false }: { data: ModuleMapDa
                         key={m.id}
                         type="button"
                         ref={(el) => { if (el) chipRefs.current.set(m.id, el); else chipRefs.current.delete(m.id); }}
-                        className={`${s.chip} ${s[`g-${m.role}`]}`}
+                        className={cn(s.chip, s[`g-${m.role}`])}
                         data-state={state}
                         aria-pressed={selected[mode] === m.id}
                         onClick={() => select(m.id)}
@@ -420,7 +421,7 @@ function Detail({
       <ul className={s.relList}>
         {items.map((it) => (
           <li key={it.id}>
-            <button type="button" className={`${s.linkButton} ${s[`g-${byId.get(it.id)?.role ?? "contract"}`]}`} onClick={() => onJump(it.id)}>
+            <button type="button" className={cn(s.linkButton, s[`g-${byId.get(it.id)?.role ?? "contract"}`])} onClick={() => onJump(it.id)}>
               <i aria-hidden="true" />
               {it.id}
               {it.via && <small>{it.via}</small>}
@@ -432,7 +433,7 @@ function Detail({
       <span className={s.none}>{text.detail.none}</span>
     );
   return (
-    <div className={`${s.detail} ${s[`g-${m.role}`]}`} role="region" aria-label={m.id}>
+    <div className={cn(s.detail, s[`g-${m.role}`])} role="region" aria-label={m.id}>
       <div>
         <div style={{ display: "flex", justifyContent: "space-between", gap: 12 }}>
           <div style={{ minWidth: 0 }}>

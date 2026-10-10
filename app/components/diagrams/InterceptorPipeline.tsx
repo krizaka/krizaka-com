@@ -12,6 +12,7 @@
 import { LockIcon, SettingsIcon, WarningIcon } from "@krizaka/icons";
 import type { PipelineStep } from "@/lib/architecture-model";
 import type { TranslationDictionary } from "@/lib/i18n";
+import { cn } from "@krizaka/ui/cn";
 import s from "./diagrams.module.css";
 
 type Text = TranslationDictionary["diagrams"]["pipeline"];
@@ -52,7 +53,7 @@ export default function InterceptorPipeline({ steps, text }: { steps: PipelineSt
   return (
     <section className={s.root} aria-label={text.label}>
       <div className={s.phases}>
-        <div className={`${s.phase} ${s["g-domain"]}`}>
+        <div className={cn(s.phase, s["g-domain"])}>
           <div className={s.phaseHead}>
             <span className={s.bandIcon}><LockIcon size={17} /></span>
             <div>
@@ -69,7 +70,7 @@ export default function InterceptorPipeline({ steps, text }: { steps: PipelineSt
             ))}
           </ol>
         </div>
-        <div className={`${s.phase} ${s["g-application"]}`}>
+        <div className={cn(s.phase, s["g-application"])}>
           <div className={s.phaseHead}>
             <span className={s.bandIcon}><SettingsIcon size={17} /></span>
             <div>
