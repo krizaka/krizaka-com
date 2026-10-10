@@ -24,7 +24,7 @@ hand-authored here. Governance contract: [`AGENTS.md`](AGENTS.md).
 
 Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 with the Krizaka preset
 ([`@krizaka/tailwind`](https://www.npmjs.com/package/@krizaka/tailwind): the `--kz-*` tokens of `@krizaka/tokens`) ·
-[`@krizaka/ui`](https://www.npmjs.com/package/@krizaka/ui) · Fumadocs (docs) · React Three Fiber/Three.js (3D) ·
+[`@krizaka/ui`](https://www.npmjs.com/package/@krizaka/ui) · Fumadocs (docs) ·
 `@xyflow/react` (pipeline graphs) · `framer-motion`.
 
 ## Where things live
@@ -32,7 +32,7 @@ Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 with the K
 | Path | Role |
 |---|---|
 | `app/[locale]/` | All routes; `[locale]` is `fr` (Québec) or `en`. `layout.tsx` wires fonts, theme, i18n, the sitewide JSON-LD graph and base metadata. |
-| `app/components/` | UI. Big ones: `TopNavBar`, `EngineShowcaseSection`, `ArchitectureScene3D` (3D), `Mermaid`, `MdxComponents`, `DemosGallery`. |
+| `app/components/` | UI. Big ones: `TopNavBar`, `EngineShowcaseSection`, `diagrams/` (module map, pipeline, messaging), `Mermaid`, `MdxComponents`, `DemosGallery`. |
 | `app/robots.ts` · `app/sitemap.ts` · `app/manifest.ts` | SEO route handlers. |
 | `app/data/architecture.json` | **Generated** module graph + Orazaka repository map (read-only). |
 | `proxy.ts` | Edge middleware (Next 16 name): no-locale URL → `/fr` or `/en` by `Accept-Language`, sticky `NEXT_LOCALE` cookie. |
@@ -53,7 +53,7 @@ Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 with the K
 
 ```
 products/orazaka (workspace)  ──  orazaka docs sync  ──▶  orazaka-content/docs/   (markdown)
-                                                      └▶  app/data/architecture.json (3D model + repository map)
+                                                      └▶  app/data/architecture.json (schemas + repository map)
 ```
 
 `products/orazaka` is a local clone of the **Orazaka workspace** ([`krizaka/orazaka`](https://github.com/krizaka/orazaka))
@@ -91,8 +91,8 @@ to [`lib/docs-manifest.ts`](lib/docs-manifest.ts) (curated title/category/order/
 
 - **SEO**: every page sets `alternates`/title/description via `localizedMetadata(locale, { path, en, fr })` from `lib/seo`. The bare `/` and any unprefixed path 307-redirect (via `proxy.ts`), so canonicals are always the localized self URL.
 - **Theming**: `var(--kz-*)` tokens only — dark on `:root`, light on `html.light`, persisted as `kz-theme`. **Verify every new view in both themes.** No hard-coded hex / Tailwind color literals for surfaces.
-- **Reduced motion**: honor `prefers-reduced-motion` (disable 3D orbits, entrance animations).
-- **3D scenes**: client-only — `dynamic(() => import(...), { ssr: false })` with a themed fallback.
+- **Reduced motion**: honor `prefers-reduced-motion` (no entrance or idle animation).
+- **Schemas**: 2D, labels in full, a text version of what they draw (AGENTS.md §4).
 
 ## Documentation (`/docs`)
 

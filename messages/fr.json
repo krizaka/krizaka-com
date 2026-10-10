@@ -978,7 +978,8 @@
         },
         "stepPrev": "Étape précédente",
         "stepNext": "Étape suivante",
-        "step": "Étape"
+        "step": "Étape",
+        "textVersion": "Version texte — les trois parcours, étape par étape"
       },
       "pillars": {
         "cdn": {
@@ -2200,12 +2201,12 @@
         },
         {
           "title": "Portail d'entrée",
-          "what": "Le portail réceptionne la requête et l'achemine vers le moteur — en streaming (SSE) quand la réponse arrive au fil de l'eau.",
-          "why": "Un point d'entrée unique et contrôlé : rien n'accède directement aux modèles."
+          "what": "L'edge reçoit chaque requête, échange une clé d'API contre un jeton de session et route par chemin : identité, facturation et studio vers leurs services, tout le reste vers le service de conversation.",
+          "why": "Un point d'entrée unique et contrôlé : rien n'atteint un modèle directement."
         },
         {
           "title": "Sécurité & Métier",
-          "what": "Avant tout calcul, Orazaka t'authentifie, vérifie tes permissions (RBAC), applique les quotas et les règles métier.",
+          "what": "Avant tout calcul, le jeton de session est vérifié (JWT sans état, krizaka-security) et l'intercepteur de droits contrôle ce que tu peux faire et ce que tu peux payer.",
           "why": "La sécurité et la gouvernance passent avant l'inférence — pas après."
         },
         {
@@ -2215,7 +2216,7 @@
         },
         {
           "title": "Workers & Pipeline",
-          "what": "La requête traverse les 15 intercepteurs (contexte système, mémoire, RAG, garde-fous), pendant que les workers asynchrones gèrent médias et intégrations MCP.",
+          "what": "Le tour traverse {core} intercepteurs non contournables, puis {configured} intercepteurs configurés (mémoire, MCP, outils…) ; les jobs longs passent par RabbitMQ vers le service de jobs et le worker média.",
           "why": "C'est ici que la « cognition » s'assemble, étape ordonnée après étape ordonnée."
         },
         {
@@ -2228,126 +2229,8 @@
         "Survole une carte pour l'éclairer",
         "Clique pour épingler le détail",
         "Recherche un composant par nom"
-      ]
-    },
-    "architectureMesh": {
-      "requestJourney": "Parcours d'une requête",
-      "leftToRight": "de gauche à droite →",
-      "searchAComponent": "Rechercher un composant…",
-      "searchAComponent2": "Rechercher un composant",
-      "clear": "Effacer",
-      "stages": [
-        {
-          "title": "Présentation",
-          "subtitle": "Points d'entrée"
-        },
-        {
-          "title": "Portail d'entrée",
-          "subtitle": "Routage REST · SSE"
-        },
-        {
-          "title": "Sécurité & Métier",
-          "subtitle": "RBAC · règles"
-        },
-        {
-          "title": "Moteur Cognitif",
-          "subtitle": "Le cœur hexagonal"
-        },
-        {
-          "title": "Workers & Pipeline",
-          "subtitle": "Async · intercepteurs"
-        },
-        {
-          "title": "Stockage",
-          "subtitle": "Données souveraines"
-        }
       ],
-      "nodes": [
-        {
-          "tag": "Web",
-          "layer": "Application",
-          "label": "Console Client Web",
-          "desc": "Application client Next.js principale : chat, génération d'images/vidéos et interaction avec l'IA."
-        },
-        {
-          "tag": "Admin",
-          "layer": "Application",
-          "label": "Console d'Administration",
-          "desc": "Console SecOps isolée (port 3001) pour gérer les modèles, le pipeline et la conformité."
-        },
-        {
-          "tag": "Mobile",
-          "layer": "Application",
-          "label": "Application Mobile",
-          "desc": "Application mobile cross-platform (Expo SDK 53) pour l'accès à l'IA en déplacement."
-        },
-        {
-          "tag": "CLI",
-          "layer": "Application",
-          "label": "CLI Orazaka",
-          "desc": "Interface en ligne de commande pour l'automatisation, avec file d'attente locale SQLite."
-        },
-        {
-          "tag": "API",
-          "layer": "Application",
-          "label": "Portail d'entrée",
-          "desc": "Réceptionne les requêtes (API REST & SSE) et les achemine vers le moteur d'orchestration."
-        },
-        {
-          "tag": "RBAC",
-          "layer": "Framework",
-          "label": "Sécurité & RBAC",
-          "desc": "Authentifie les requêtes, valide les permissions (RBAC) et applique les quotas par locataire."
-        },
-        {
-          "tag": "Métier",
-          "layer": "Framework",
-          "label": "Gouvernance Métier",
-          "desc": "Règles d'affaires, gabarits de prompts et structuration des cas d'usage cognitifs."
-        },
-        {
-          "tag": "Core",
-          "layer": "Framework",
-          "label": "Moteur Cognitif",
-          "desc": "Le cœur d'Orazaka. Coordonne l'exécution sans état des requêtes IA et orchestre le flux de données."
-        },
-        {
-          "tag": "Pipeline",
-          "layer": "Framework",
-          "label": "Pipeline de Cognition",
-          "desc": "Assemble les 15 intercepteurs (contexte système, mémoire, RAG, sécurité) pour enrichir la requête."
-        },
-        {
-          "tag": "Intégrations",
-          "layer": "Application",
-          "label": "Worker Intégrations",
-          "desc": "Service d'arrière-plan asynchrone : files d'intégration et tâches système."
-        },
-        {
-          "tag": "Médias",
-          "layer": "Application",
-          "label": "Worker Médias",
-          "desc": "Traitement lourd d'images, vidéos et voix, hors du thread d'API principal."
-        },
-        {
-          "tag": "MCP",
-          "layer": "Framework",
-          "label": "Intégrations MCP",
-          "desc": "Connexion sécurisée aux outils externes (bases, APIs) via le Model Context Protocol."
-        },
-        {
-          "tag": "Identité",
-          "layer": "Framework",
-          "label": "Base de Données Identité",
-          "desc": "Stockage sécurisé et isolé des identités, clés d'accès et politiques RBAC."
-        },
-        {
-          "tag": "App · RAG",
-          "layer": "Framework",
-          "label": "Base de Données Applicative",
-          "desc": "Base relationnelle et vectorielle (pgvector) : sessions, contextes et données RAG."
-        }
-      ]
+      "inTheCode": "Dans le code"
     },
     "sovereignSimulator": {
       "selectAScenarioAndClick": "Sélectionnez un scénario et cliquez sur Simuler...",
@@ -2456,12 +2339,6 @@
           "intro": "Les packs de référence du Studio."
         }
       }
-    },
-    "sovereigntyPerimeter": {
-      "diagramTheOrazakaProductRuns": "Schéma : le produit Orazaka tourne entièrement dans ton périmètre souverain."
-    },
-    "pipelineMesh": {
-      "startUserIntention": "DÉPART / INTENTION UTILISATEUR"
     },
     "docsPreview": {
       "docCards": [
@@ -2707,6 +2584,195 @@
           "title": "API HTTP (OpenAPI)",
           "description": "Les contrats OpenAPI de krizaka-users, krizaka-billing et krizaka-notifications."
         }
+      }
+    }
+  },
+  "diagrams": {
+    "textVersion": "Version texte",
+    "roles": {
+      "client": {
+        "title": "Clients",
+        "summary": "Là où une personne pose sa question : le client web, la console d'administration, l'app mobile, le CLI."
+      },
+      "service": {
+        "title": "Services & workers",
+        "summary": "Ce qui tourne et se déploie : l'edge, les services Orazaka, les services Krizaka, le worker média."
+      },
+      "adapter": {
+        "title": "Adaptateurs",
+        "summary": "Comment l'intérieur atteint l'extérieur : persistance, clients HTTP typés, stockage chiffré des assets."
+      },
+      "application": {
+        "title": "Application",
+        "summary": "Autour du cœur : l'orchestration des cas d'usage, le pipeline d'intercepteurs, les outils (MCP, RAG)."
+      },
+      "domain": {
+        "title": "Cœur du domaine",
+        "summary": "Le centre de chaque hexagone : le moteur cognitif et l'identité. Les dépendances pointent ici."
+      },
+      "contract": {
+        "title": "Contrats",
+        "summary": "Interfaces et records de niveau 1 : la seule façon pour un contexte d'en appeler un autre."
+      },
+      "platform": {
+        "title": "Kit plateforme Krizaka",
+        "summary": "Publié sur Maven Central : sécurité, messagerie (outbox, relances, lettres mortes), web, observabilité, et leurs quatre starters."
+      }
+    },
+    "owners": {
+      "all": "Tous",
+      "orazaka": "Orazaka",
+      "krizaka": "Krizaka"
+    },
+    "moduleMap": {
+      "label": "Carte des modules d'Orazaka",
+      "search": "Trouver un module…",
+      "searchLabel": "Trouver un module par nom ou description",
+      "clear": "Effacer la recherche",
+      "modeLabel": "Ce que montrent les liens",
+      "ownerLabel": "Modules de",
+      "modes": {
+        "build": "Dépendances",
+        "runtime": "Appels à l'exécution"
+      },
+      "hint": {
+        "build": "Sélectionne un module pour l'isoler : ce dont il dépend et ce qui dépend de lui restent allumés, reliés par des liens sur grand écran. Lecture de haut en bas — les dépendances pointent vers le cœur.",
+        "runtime": "Sélectionne un client ou un service : qui il appelle et qui l'appelle restent allumés — HTTP en trait plein, messages en pointillés."
+      },
+      "legend": {
+        "dependency": "dépend de",
+        "outward": "s'éloigne du cœur",
+        "http": "appel HTTP",
+        "amqp": "message (RabbitMQ)"
+      },
+      "rel": {
+        "uses": "utilise",
+        "usedBy": "utilisé par",
+        "both": "dans les deux sens",
+        "calls": "appelle",
+        "calledBy": "appelé par"
+      },
+      "announce": {
+        "build": "{module} : utilise {uses}, utilisé par {usedBy}.",
+        "runtime": "{module} : appelle {calls}, appelé par {calledBy}."
+      },
+      "detail": {
+        "repository": "Dépôt",
+        "version": "version {version}",
+        "ports": "{inbound} ports entrants · {outbound} sortants",
+        "uses": "Dépend de",
+        "usedBy": "Utilisé par",
+        "calls": "Appelle",
+        "calledBy": "Appelé par",
+        "none": "Rien",
+        "outward": "{from} → {to} s'éloigne du cœur. La règle hexagonale veut des dépendances tournées vers l'intérieur : la carte montre le code tel qu'il est.",
+        "close": "Effacer la sélection"
+      },
+      "count": "{count} modules",
+      "empty": "Aucun module ne correspond ici.",
+      "table": {
+        "modulesCaption": "Les modules et leurs dépendances de build",
+        "flowsCaption": "Appels à l'exécution",
+        "module": "Module",
+        "role": "Rôle",
+        "repository": "Dépôt",
+        "dependsOn": "Dépend de",
+        "usedBy": "Utilisé par",
+        "from": "De",
+        "to": "Vers",
+        "kind": "Type",
+        "via": "Via"
+      },
+      "kinds": {
+        "http": "HTTP",
+        "amqp": "message"
+      }
+    },
+    "pipeline": {
+      "label": "Pipeline d'intercepteurs",
+      "core": {
+        "title": "Phase 1 · chaîne cœur",
+        "sub": "Fixée dans le code. Passe en premier, à chaque tour, et ne se désactive pas."
+      },
+      "dynamic": {
+        "title": "Phase 2 · chaîne configurée",
+        "sub": "Ordre et interrupteur lus en base (pipeline_interceptor_config), rechargés sans redémarrage."
+      },
+      "locked": "non contournable",
+      "off": "désactivé",
+      "noClass": "ligne sans implémentation",
+      "sameOrder": "même ordre",
+      "concerns": {
+        "validation": "validation",
+        "governance": "gouvernance",
+        "context": "contexte",
+        "enrichment": "enrichissement",
+        "reformulation": "reformulation",
+        "tooling": "outils",
+        "translation": "traduction"
+      }
+    },
+    "messaging": {
+      "label": "Topologie de messagerie",
+      "hint": "Sélectionne un émetteur : les files que ses messages atteignent s'allument, avec les services qui les consomment.",
+      "exchanges": {
+        "jobs": "Le travail à faire. Un job est publié une fois et consommé par la voie qui lie sa clé.",
+        "events": "Ce qui s'est passé. Événements du domaine et issues des jobs, diffusés à chaque file qui les lie.",
+        "dlx": "Les lettres mortes. Chaque file range ce qu'elle n'a pas pu traiter dans ‹queue›.dlq."
+      },
+      "types": {
+        "topic": "échange topic",
+        "direct": "échange direct"
+      },
+      "cols": {
+        "producers": "Publié par",
+        "queues": "File · liaisons",
+        "consumers": "Consommé par"
+      },
+      "capabilityRoute": "la route de la capacité",
+      "dynamicKey": "clé choisie à l'exécution",
+      "dlq": "lettres mortes → {dlq}",
+      "ownRetry": "relances propres",
+      "retry": {
+        "title": "Relancer, puis lettre morte",
+        "attempts": "{count} tentatives",
+        "wait": "{initial} ms ×{multiplier}, jusqu'à {max} s",
+        "parked": "‹queue›.dlq",
+        "note": "Tout consommateur bâti sur {module} ({property}) relance avant d'abandonner ; le message est alors rangé, pas perdu."
+      },
+      "table": {
+        "caption": "Les files, leurs liaisons et leurs consommateurs",
+        "queue": "File",
+        "exchange": "Échange",
+        "bindings": "Liaisons",
+        "consumers": "Consommé par",
+        "dlq": "File de lettres mortes",
+        "producersCaption": "Émetteurs",
+        "module": "Module",
+        "routingKey": "Clé de routage"
+      },
+      "capabilities": {
+        "caption": "Routes des capacités (orazaka_capabilities)",
+        "capability": "Capacité",
+        "handler": "Handler",
+        "routingKey": "Clé de routage"
+      }
+    },
+    "sections": {
+      "map": {
+        "kicker": "La vraie carte",
+        "title": "Chaque module, dans son anneau.",
+        "sub": "{modules} modules lus dans le réacteur Maven et le manifeste du workspace, rangés comme l'hexagone : les clients dehors, le cœur du domaine au milieu, les contrats et le kit Krizaka en dessous."
+      },
+      "pipeline": {
+        "kicker": "Le pipeline",
+        "title": "Ce que traverse un tour, dans l'ordre.",
+        "sub": "{core} intercepteurs que le code ne laisse jamais sauter, puis {configured} que la base ordonne et active."
+      },
+      "messaging": {
+        "kicker": "Messagerie",
+        "title": "Qui parle à qui sur RabbitMQ.",
+        "sub": "{queues} files, chacune avec sa file de lettres mortes. Liaisons, émetteurs et consommateurs lus dans le code."
       }
     }
   }
