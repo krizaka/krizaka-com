@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useCallback, useEffect } from "react";
 import { MenuIcon, MoonIcon, SearchIcon, SunIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
-import { useTheme } from "./ThemeProvider";
+import { useSiteTheme } from "./SiteTheme";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
@@ -13,7 +13,7 @@ import { KrizakaLogo } from "@krizaka/ui";
 
 export default function TopNavBar() {
   const { t, toggleLocale } = useI18n();
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useSiteTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -335,16 +335,6 @@ export default function TopNavBar() {
           background-color: var(--kz-surface-3) !important;
           border-color: var(--kz-border-default) !important;
           color: var(--kz-text-primary) !important;
-        }
-        @keyframes navSearchFadeIn {
-          from {
-            opacity: 0;
-            transform: scale(0.97) translateY(-8px);
-          }
-          to {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-          }
         }
       `}</style>
     </>

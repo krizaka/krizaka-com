@@ -123,7 +123,7 @@ function Dropdown({ id, label, active, width, children }: { id: string; label: s
         ref={trigger}
         id={id}
         type="button"
-        className={`kz-dd-trigger${active ? " is-active" : ""}`}
+        className={cn("kz-dd-trigger", active && "is-active")}
         aria-expanded={open}
         aria-controls={`${id}-panel`}
         onClick={(e) => {
@@ -138,7 +138,7 @@ function Dropdown({ id, label, active, width, children }: { id: string; label: s
       <div
         ref={panel}
         id={`${id}-panel`}
-        className={`kz-dd-panel${open ? " is-open" : ""}`}
+        className={cn("kz-dd-panel", open && "is-open")}
         style={{ width }}
         // Following a link closes the menu.
         onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}
@@ -202,7 +202,7 @@ export function ProductsMenu() {
         {NAV_DOCS.map((d) => {
           const text = docsLinkText(t, d);
           return (
-            <Link key={d.id} href={d.href} className={`kz-menu-link${isDocsActive(d, pathname) ? " is-active" : ""}`}>
+            <Link key={d.id} href={d.href} className={cn("kz-menu-link", isDocsActive(d, pathname) && "is-active")}>
               <ProductLogo id={d.id === "orazaka" || d.id === "orochia" ? d.id : "krizaka"} size={22} animated={false} />
               <span>
                 <span className="kz-menu-label">{text.label}</span>
@@ -219,10 +219,10 @@ export function ProductsMenu() {
         </div>
       </Dropdown>
 
-      <Link href="/open-source" className={`kz-dd-trigger${pathname === "/open-source" ? " is-active" : ""}`}>
+      <Link href="/open-source" className={cn("kz-dd-trigger", pathname === "/open-source" && "is-active")}>
         {m.openSource}
       </Link>
-      <Link href="/story" className={`kz-dd-trigger${pathname === "/story" ? " is-active" : ""}`}>
+      <Link href="/story" className={cn("kz-dd-trigger", pathname === "/story" && "is-active")}>
         {t.site.nav.company.story.label}
       </Link>
 

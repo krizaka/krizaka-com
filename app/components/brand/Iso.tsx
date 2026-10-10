@@ -5,14 +5,15 @@
    (.iso-* in globals.css). Server components: static SVG, no client JavaScript. */
 
 import { cutRect, hexagon, isoCircle, prism, project, pts, type Face, type P2 } from "@/lib/iso";
+import { cn } from "@krizaka/ui/cn";
 
 type Material = "base" | "accent" | "glass" | "accent2";
 
 function Solid({ faces, material, className }: { faces: Face[]; material: Material; className?: string }) {
   return (
-    <g className={`iso-${material}${className ? ` ${className}` : ""}`}>
+    <g className={cn("iso-" + material, className)}>
       {faces.map((f, i) => (
-        <polygon key={i} points={f.points} className={`iso-face iso-${f.kind}`} />
+        <polygon key={i} points={f.points} className={cn("iso-face", "iso-" + f.kind)} />
       ))}
     </g>
   );

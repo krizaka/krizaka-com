@@ -22,7 +22,9 @@ import SiteFooter from "../../../../../components/SiteFooter";
 import { USE_CASES, getUseCaseBySlug, getLocalizedField, UseCaseActionPlanStep, UseCaseData } from "@/lib/use-cases-data";
 import type { TranslationDictionary } from "@/lib/i18n";
 import Rich from "@/app/components/Rich";
+import { Card } from "@krizaka/ui/card";
 import MartinFalconSentry from "../../../../../components/illustrations/MartinFalconSentry";
+import { cn } from "@krizaka/ui/cn";
 
 /* ─── Sibling Navigation (Centered) ─── */
 function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr" | "en" }) {
@@ -441,7 +443,7 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
               <button
                 key={lvl}
                 onClick={() => setIntensity(lvl)}
-                className={`roi-selector-btn ${isActive ? "active" : ""}`}
+                className={cn("roi-selector-btn", isActive && "active")}
               >
                 {label}
               </button>
@@ -488,8 +490,9 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
 
 /* ─── Quebec Regulatory Context (Centered) ─── */
 function QuebecContextCard({ uc, locale, t }: { uc: UseCaseData; locale: "fr" | "en"; t: TranslationDictionary }) {
+  /* The @krizaka/ui card around the Québec context of the use case. */
   return (
-    <div className="quebec-context-card">
+    <Card.Root radius="xl" className="quebec-context-card">
       <div style={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center", marginBottom: "16px" }}>
         <ShieldCheck size={20} style={{ color: "var(--kz-accent)" }} />
         <h3 className="section-title" style={{ margin: 0 }}>
@@ -515,7 +518,7 @@ function QuebecContextCard({ uc, locale, t }: { uc: UseCaseData; locale: "fr" | 
           </a>
         ))}
       </div>
-    </div>
+    </Card.Root>
   );
 }
 
@@ -1091,9 +1094,7 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         /* Quebec Regulatory Card */
         .quebec-context-card {
           width: 100%;
-          background: var(--kz-surface-1);
-          border-radius: 20px;
-          border: 1px solid var(--kz-border-subtle);
+          border-color: var(--kz-border-subtle);
           padding: 32px;
           margin-bottom: 56px;
           text-align: center;

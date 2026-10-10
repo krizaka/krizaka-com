@@ -6,8 +6,8 @@
   ],
   "counters": {
     "palette": 0,
-    "light": 1,
-    "arbitraryVar": 4,
-    "classNameTemplate": 32
+    "light": 0,
+    "arbitraryVar": 0,
+    "classNameTemplate": 0
   }
 }

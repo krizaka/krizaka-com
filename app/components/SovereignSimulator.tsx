@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useI18n } from "./I18nProvider";
 import { CheckCircle2, Lock, Play, RefreshCw } from "lucide-react";
+import { cn } from "@krizaka/ui/cn";
 
 const SCENARIOS = [
   {
@@ -160,7 +161,7 @@ export function SovereignSimulator() {
                   key={s.id}
                   onClick={() => handleSelectScenario(s.id)}
                   disabled={isSimulating}
-                  className={`scenario-btn ${isActive ? "active" : ""}`}
+                  className={cn("scenario-btn", isActive && "active")}
                 >
                   <span className="scenario-icon">{s.icon}</span>
                   <span className="scenario-label">
@@ -182,7 +183,7 @@ export function SovereignSimulator() {
               if (isPassed) stepClass = "step-passed";
 
               return (
-                <div key={idx} className={`pipeline-step-item ${stepClass}`}>
+                <div key={idx} className={cn("pipeline-step-item", stepClass)}>
                   <div className="step-num-circle">
                     {isPassed ? <CheckCircle2 size={13} style={{ color: "var(--kz-success)" }} /> : `0${idx + 1}`}
                   </div>
@@ -202,7 +203,7 @@ export function SovereignSimulator() {
         </div>
 
         {/* Right Side: Monospace console output */}
-        <div className={`simulator-console-wrapper ${isSimulating ? "computing" : ""}`}>
+        <div className={cn("simulator-console-wrapper", isSimulating && "computing")}>
           <div className="console-titlebar">
             <div className="mac-dots">
               <span className="dot red-dot" />

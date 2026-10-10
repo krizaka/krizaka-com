@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
-import { ThemeProvider } from "../components/ThemeProvider";
+import { ThemeProvider, ThemeScript } from "@krizaka/ui/theme";
+import { ThemeSync } from "../components/SiteTheme";
 import { I18nProvider } from "../components/I18nProvider";
 import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
@@ -8,6 +9,7 @@ import { getDictionary } from "@/lib/i18n";
 import "../globals.css";
 import "../motion.css";
 import SiteMotion from "../components/motion/SiteMotion";
+import { cn } from "@krizaka/ui/cn";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-display",
@@ -129,10 +131,13 @@ export default async function RootLayout({
   return (
     <html
       lang={validatedLocale}
-      className={`${jakartaSans.variable} ${jetbrainsMono.variable} h-full dark`}
+      className={cn(jakartaSans.variable, jetbrainsMono.variable, "h-full dark")}
       data-scroll-behavior="smooth"
+      suppressHydrationWarning
     >
       <head>
+        {/* Applies the persisted theme (`kz-theme`) before the first paint: no flash. */}
+        <ThemeScript />
         {/* Sitewide linked @graph: Organization · WebSite · SoftwareApplication.
             Page-scoped schema (BreadcrumbList, FAQPage) is emitted per page. */}
         <JsonLd data={buildSiteGraph(validatedLocale)} />
@@ -142,7 +147,8 @@ export default async function RootLayout({
         </noscript>
       </head>
       <body className="min-h-dvh flex flex-col antialiased">
-        <ThemeProvider>
+        <ThemeProvider defaultMode="system">
+          <ThemeSync />
           <I18nProvider locale={validatedLocale} messages={getDictionary(validatedLocale)}>
             {children}
           </I18nProvider>

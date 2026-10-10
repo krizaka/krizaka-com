@@ -20,6 +20,7 @@
 
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import type { ChapterId } from "@/lib/story";
+import { cn } from "@krizaka/ui/cn";
 
 type Vars = CSSProperties & Record<`--${string}`, string | number>;
 
@@ -114,7 +115,7 @@ export function ClanSelect({
       </div>
       <ul className="an-select-grid">
         {clans.map((c, i) => (
-          <li key={c.id} className={`an-slot brand-${c.id}`} style={{ "--i": i } as Vars}>
+          <li key={c.id} className={cn("an-slot", "brand-" + c.id)} style={{ "--i": i } as Vars}>
             <div className="an-slot-frame">
               <span className="an-slot-aura" aria-hidden />
               <span className="an-corner is-tl" aria-hidden />

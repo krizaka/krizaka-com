@@ -155,6 +155,11 @@ body {
   outline: none;
 }
 
+/* The search field of the command palette (@krizaka/ui/command) is its whole bar: the palette marks it, not a ring. */
+[cmdk-input]:focus-visible {
+  outline: none;
+}
+
 ::selection {
   background: hsla(217, 92%, 60%, 0.25);
   color: hsl(217, 92%, 80%);
@@ -1193,8 +1198,6 @@ body {
 .kz-link:hover { color: var(--kz-text-primary); }
 
 /* RepositoryMap */
-.kz-repo-card:hover{border-color:var(--kz-accent);transform:translateY(-2px)}
-@media (prefers-reduced-motion: reduce){.kz-repo-card,.kz-repo-card:hover{transition:none;transform:none}}
 
 
 /* React Flow controls follow the theme (the default buttons are white on both themes). */
@@ -1293,8 +1296,6 @@ body {
   padding: 6px 8px;
   border-bottom: 1px solid var(--kz-border-subtle);
 }
-.kz-preview-tabs { display: flex; gap: 2px; }
-.kz-preview-tab,
 .kz-preview-theme {
   display: inline-flex;
   align-items: center;
@@ -1311,9 +1312,7 @@ body {
   transition: color var(--kz-transition-fast), background-color var(--kz-transition-fast);
 }
 .kz-preview-theme { width: 30px; padding: 0; justify-content: center; }
-.kz-preview-tab:hover,
 .kz-preview-theme:hover { color: var(--kz-text-primary); background: var(--kz-surface-2); }
-.kz-preview-tab[aria-selected="true"] { color: var(--kz-text-primary); background: var(--kz-surface-3); }
 .kz-preview-stage {
   display: flex;
   align-items: center;
@@ -1446,9 +1445,6 @@ body {
 /* In light, the docs set accent text on tinted chips, tabs and type cells: lifted towards the text colour (AA, 4.5:1) */
 html.light .kz-docs { --kz-accent-text: color-mix(in srgb, var(--kz-accent) 82%, var(--kz-text-primary)); }
 html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70%, var(--kz-text-primary)); }
-
-/* The Fumadocs tabs (platform tabs of a component page): the active tab in the accent text role, AA on every surface */
-.kz-docs [role="tablist"] > [role="tab"][data-state="active"] { color: var(--kz-accent-text); }
 
 /* The catalogue of /docs/ui: one list of components, filtered by platform */
 .kz-catalog { margin: 1rem 0 2rem; }

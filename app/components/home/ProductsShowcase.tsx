@@ -14,6 +14,7 @@ import { PRODUCTS } from "@/lib/org-data";
 import { NAV_PRODUCTS } from "@/lib/nav";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
+import { cn } from "@krizaka/ui/cn";
 
 /* prefers-reduced-motion, read without an animation library; the server and the first client render say "still". */
 const REDUCE = "(prefers-reduced-motion: reduce)";
@@ -68,8 +69,8 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
           // Where the showcase is the page (/products), its first product is the first screen: painted at once.
           const firstScreen = Heading === "h1" && i === 0;
           return (
-            <SectionBackdrop key={p.id} as="div" className={`brand-${p.id} bp-glide`} dome={false}>
-            <article className={`kz-spot kz-section${i % 2 ? " is-flipped" : ""}`}>
+            <SectionBackdrop key={p.id} as="div" className={cn("brand-" + p.id, "bp-glide")} dome={false}>
+            <article className={cn("kz-spot kz-section", i % 2 === 1 && "is-flipped")}>
               <div className="kz-spot-copy" {...(firstScreen ? {} : reveal())}>
                 <div className="kz-spot-head">
                   <ProductLogo id={p.id} size={56} />

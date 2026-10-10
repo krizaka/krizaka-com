@@ -837,7 +837,9 @@
         "stepPrev": "Étape précédente",
         "stepNext": "Étape suivante",
         "step": "Étape",
-        "textVersion": "Version texte — les trois parcours, étape par étape"
+        "textVersion": "Version texte — les trois parcours, étape par étape",
+        "play": "Lecture",
+        "pause": "Pause"
       },
       "pillars": {
         "cdn": {
@@ -1362,7 +1364,9 @@
           "category": "Krizaka",
           "desc": "Écrire à l'équipe."
         }
-      }
+      },
+      "label": "Rechercher sur le site",
+      "results": "Résultats"
     },
     "docs": {
       "forDevelopers": "Pour les développeurs",
@@ -1826,6 +1830,9 @@
         "install": "L'installer",
         "contact": "Nous écrire"
       }
+    },
+    "tour": {
+      "label": "Visite du produit"
     }
   },
   "pages": {

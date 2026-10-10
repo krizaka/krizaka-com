@@ -10,9 +10,11 @@
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
+import { Tabs } from "@krizaka/ui/tabs";
 import { useI18n } from "./I18nProvider";
 import { ARCH_NODES, type ArchNode, type Journey, type NodeId } from "@/lib/orochia-journeys";
 import type { TranslationDictionary } from "@/lib/i18n";
+import { cn } from "@krizaka/ui/cn";
 
 type ArchText = TranslationDictionary["site"]["orochia"]["arch"];
 
@@ -152,23 +154,27 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
   const go = (d: number) => setStep((x) => Math.min(journey.steps.length - 1, Math.max(0, x + d)));
 
   return (
-    <div
+    <Tabs.Root
       ref={ref}
-      className="oa"
+      variant="pills"
+      value={journey.id}
+      onValueChange={(id) => { setJ(Math.max(0, journeys.findIndex((x) => x.id === id))); setStep(0); }}
+      className="oa gap-0"
       style={{ ["--j" as string]: journey.color }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <div className="oa-tabs" role="tablist" aria-label={t.site.menu.journeysAria}>
-        {journeys.map((x, i) => (
-          <button key={x.id} role="tab" aria-selected={i === j} className="oa-tab" style={{ ["--c" as string]: x.color }}
-            onClick={() => { setJ(i); setStep(0); }}>
+      {/* The @krizaka/ui tabs, one per journey; the panel is the animated diagram and its step card. */}
+      <Tabs.List aria-label={t.site.menu.journeysAria} className="flex-wrap">
+        {journeys.map((x) => (
+          <Tabs.Trigger key={x.id} value={x.id} className="oa-tab" style={{ ["--c" as string]: x.color }}>
             <span className="oa-dot" aria-hidden /> {text.journeys[x.id].name}
-          </button>
+          </Tabs.Trigger>
         ))}
-      </div>
+      </Tabs.List>
+      <Tabs.Content value={journey.id} className="rounded-none">
       <p className="oa-summary">{text.journeys[journey.id].summary}</p>
 
       <div className="oa-stage">
@@ -187,18 +193,19 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
           <button onClick={() => go(-1)} disabled={step === 0} aria-label={text.stepPrev}><ChevronLeft size={16} /></button>
           <div className="oa-steps">
             {journey.steps.map((_, i) => (
-              <button key={i} className={`oa-step${i === step ? " is-on" : ""}${i < step ? " is-done" : ""}`} onClick={() => setStep(i)}
+              <button key={i} className={cn("oa-step", i === step && "is-on", i < step && "is-done")} onClick={() => setStep(i)}
                 aria-label={`${text.step} ${i + 1}`} aria-current={i === step ? "step" : undefined} />
             ))}
           </div>
           <button onClick={() => go(1)} disabled={step === journey.steps.length - 1} aria-label={text.stepNext}><ChevronRight size={16} /></button>
           {!reduce && (
-            <button className="oa-play" onClick={() => setPaused((p) => !p)} aria-label={paused ? "Play" : "Pause"}>
+            <button className="oa-play" onClick={() => setPaused((p) => !p)} aria-label={paused ? text.play : text.pause}>
               {paused ? <Play size={14} /> : <Pause size={14} />}
             </button>
           )}
         </div>
       </div>
+      </Tabs.Content>
 
       {/* Text version: every journey, every step, every endpoint. */}
       <details className="oa-text">
@@ -227,10 +234,8 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
         .oa-text ol { margin: 0; padding-left: 20px; line-height: 1.6; }
         .oa-text code { font-family: var(--font-mono); font-size: 12px; }
         .oa { border-radius: 22px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); padding: clamp(16px, 3vw, 28px); }
-        .oa-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
-        .oa-tab { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 600;
-          color: var(--kz-text-secondary); background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: border-color 150ms ease, color 150ms ease; }
-        .oa-tab[aria-selected="true"] { color: var(--kz-text-primary); border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent); }
+        .oa-tab { font-size: 13px; }
+        .oa-tab[data-state="active"] { border-color: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent); }
         .oa-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--c); }
         .oa-summary { margin: 14px 0 0; font-size: 14px; color: var(--kz-text-secondary); }
         .oa-stage { margin-top: 10px; }
@@ -256,6 +261,6 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
         .oa-step.is-done { background: color-mix(in srgb, var(--j) 50%, transparent); }
         .oa-step.is-on { width: 34px; background: var(--j); }
       `}</style>
-    </div>
+    </Tabs.Root>
   );
 }

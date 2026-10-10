@@ -12,6 +12,7 @@ import ProductTour from "@/app/components/ProductTour";
 import DemoClip from "@/app/components/demos/DemoClip";
 import Rich from "@/app/components/Rich";
 import { reveal } from "@/lib/motion";
+import { cn } from "@krizaka/ui/cn";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -100,7 +101,7 @@ export default async function OrazakaDemoPage({ params }: Props) {
             const Icon = ICONS[icon];
             const uc = t.useCases[id];
             return (
-              <article key={id} className={`bp-split od-case${k % 2 ? " od-case-flip" : ""}`}>
+              <article key={id} className={cn("bp-split od-case", k % 2 === 1 && "od-case-flip")}>
                 <div {...reveal()}>
                   <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
                   <h3 className="od-case-title">{uc.title}</h3>

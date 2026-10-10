@@ -1,6 +1,7 @@
 "use client";
 
 import { Handle, Position } from "@xyflow/react";
+import { cn } from "@krizaka/ui/cn";
 
 interface HexNodeProps {
   data: {
@@ -87,7 +88,7 @@ export default function HexNode({ data }: HexNodeProps) {
       <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-center z-10 pointer-events-none">
         <div className="flex items-center gap-1.5 mb-1.5">
           <span
-            className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${isActive ? "animate-pulse" : ""}`}
+            className={cn("w-1.5 h-1.5 rounded-full transition-all duration-300", isActive && "animate-pulse")}
             style={{ 
               background: isActive ? p.accent : "var(--kz-text-muted)",
               boxShadow: isActive ? `0 0 8px ${p.accent}` : "none" 
