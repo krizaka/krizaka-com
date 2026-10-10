@@ -9,7 +9,6 @@
    identity colours (mid-tones that read on both themes). */
 
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { ARCH_NODES, type ArchNode, type Journey, type NodeId } from "@/lib/orochia-journeys";
@@ -19,6 +18,12 @@ type ArchText = TranslationDictionary["site"]["orochia"]["arch"];
 
 const STEP_MS = 3200;
 const noop = () => () => {};
+const REDUCE = "(prefers-reduced-motion: reduce)";
+const subscribeReduce = (cb: () => void) => {
+  const mq = window.matchMedia(REDUCE);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
 
 type Layout = { w: number; h: number; pos: Record<NodeId, [number, number]>; bend: (a: NodeId, b: NodeId) => number; nodeW: number };
 
@@ -54,13 +59,12 @@ function curve(l: Layout, a: NodeId, b: NodeId) {
   return { d: `M${x1},${y1} Q${cx},${cy} ${x2},${y2}`, at: (t: number) => [(1 - t) ** 2 * x1 + 2 * (1 - t) * t * cx + t * t * x2, (1 - t) ** 2 * y1 + 2 * (1 - t) * t * cy + t * t * y2] };
 }
 
-function Diagram({ layout, journey, step, reduce, text, className }: { layout: Layout; journey: Journey; step: number; reduce: boolean; text: ArchText; className: string }) {
+function Diagram({ layout, journey, step, travel, text, className }: { layout: Layout; journey: Journey; step: number; travel: boolean; text: ArchText; className: string }) {
   const jt = text.journeys[journey.id];
   const s = journey.steps[step];
   const pairs = useMemo(() => [...new Set(journey.steps.map((x) => pair(x.from, x.to)))], [journey]);
   const done = new Set(journey.steps.slice(0, step).map((x) => pair(x.from, x.to)));
   const active = curve(layout, s.from, s.to);
-  const samples = Array.from({ length: 13 }, (_, i) => active.at(i / 12));
   const nodeH = 64;
 
   return (
@@ -76,16 +80,13 @@ function Diagram({ layout, journey, step, reduce, text, className }: { layout: L
       })}
       {/* The active hop */}
       <path d={active.d} fill="none" stroke={journey.color} strokeWidth={3} strokeLinecap="round" />
-      {!reduce && (
-        <motion.circle
-          key={`${journey.id}-${step}-${layout.w}`}
-          r={8}
-          fill={journey.color}
-          style={{ filter: `drop-shadow(0 0 8px ${journey.color})` }}
-          initial={{ cx: samples[0][0], cy: samples[0][1] }}
-          animate={{ cx: samples.map((p) => p[0]), cy: samples.map((p) => p[1]) }}
-          transition={{ duration: 1.3, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.7 }}
-        />
+      {/* The packet travels the active hop (1.3 s, a 0.7 s rest) — SVG animateMotion, so no script runs per frame, and
+          only while the schema is on screen and motion is welcome. */}
+      {travel && (
+        <circle key={`${journey.id}-${step}-${layout.w}`} r={8} fill={journey.color} style={{ filter: `drop-shadow(0 0 8px ${journey.color})` }}>
+          <animateMotion dur="2s" repeatCount="indefinite" path={active.d} calcMode="spline" keyPoints="0;1;1" keyTimes="0;0.65;1"
+            keySplines="0.42 0 0.58 1;0 0 1 1" />
+        </circle>
       )}
 
       {ARCH_NODES.map((n: ArchNode) => {
@@ -117,8 +118,7 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
   const text = t.site.orochia.arch;
   // Unknown during SSR: honour the preference only once mounted (no hydration mismatch).
   const mounted = useSyncExternalStore(noop, () => true, () => false);
-  const prefersReduced = useReducedMotion();
-  const reduce = mounted && !!prefersReduced;
+  const reduce = useSyncExternalStore(subscribeReduce, () => window.matchMedia(REDUCE).matches, () => false);
 
   const [j, setJ] = useState(0);
   const [step, setStep] = useState(0);
@@ -172,8 +172,8 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
       <p className="oa-summary">{text.journeys[journey.id].summary}</p>
 
       <div className="oa-stage">
-        <Diagram layout={WIDE} journey={journey} step={step} reduce={reduce} text={text} className="oa-svg oa-wide" />
-        <Diagram layout={NARROW} journey={journey} step={step} reduce={reduce} text={text} className="oa-svg oa-narrow" />
+        <Diagram layout={WIDE} journey={journey} step={step} travel={mounted && !reduce && visible} text={text} className="oa-svg oa-wide" />
+        <Diagram layout={NARROW} journey={journey} step={step} travel={mounted && !reduce && visible} text={text} className="oa-svg oa-narrow" />
       </div>
 
       <div className="oa-card" aria-live="polite">

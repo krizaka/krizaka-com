@@ -6,9 +6,11 @@ import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "../I18nProvider";
 import { format } from "@krizaka/i18n";
+import { reveal } from "@/lib/motion";
+import CountUp from "../motion/CountUp";
 
 export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { orazakaRepos: number; orochiaRepos: number }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const o = t.site.home.openSource;
   const stats = [
     { value: orazakaRepos + orochiaRepos, label: o.repos },
@@ -17,7 +19,7 @@ export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { oraz
   ];
   return (
     <section id="open-source" className="kz-section">
-      <div className="kz-oss">
+      <div className="kz-oss" {...reveal()}>
         <div>
           <p className="kz-eyebrow">Open source</p>
           <h2 className="kz-h2" style={{ marginBottom: 12 }}>
@@ -31,9 +33,9 @@ export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { oraz
           </Link>
         </div>
         <dl className="kz-oss-stats">
-          {stats.map((s) => (
-            <div key={s.label}>
-              <dt>{s.value}</dt>
+          {stats.map((s, i) => (
+            <div key={s.label} {...reveal(i + 1)}>
+              <dt>{typeof s.value === "number" ? <CountUp value={s.value} locale={locale} /> : s.value}</dt>
               <dd>{s.label}</dd>
             </div>
           ))}

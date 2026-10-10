@@ -7,6 +7,7 @@ import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "../I18nProvider";
 import { BirdPortrait, FlockStyles } from "../story/Flock";
 import { FLOCK } from "@/lib/story";
+import { reveal } from "@/lib/motion";
 
 export default function StoryTeaser() {
   const { t } = useI18n();
@@ -15,19 +16,21 @@ export default function StoryTeaser() {
   return (
     <section className="kz-section kz-teaser" aria-labelledby="teaser-title">
       <FlockStyles />
-      <div className="kz-teaser-flock" aria-hidden>
+      <div className="kz-teaser-flock" aria-hidden {...reveal()}>
         {FLOCK.map((id) => (
           <BirdPortrait key={id} id={id} size={64} />
         ))}
       </div>
-      <p className="kz-eyebrow">{st.intro.eyebrow}</p>
-      <h2 id="teaser-title" className="kz-teaser-title">{st.intro.title}</h2>
-      <p className="kz-teaser-sub">
-        {teaser.sub}
-      </p>
-      <Link href="/story" prefetch={false} className="kz-link-strong">
-        {teaser.cta} <ForwardIcon size={15} />
-      </Link>
+      <div {...reveal(1)}>
+        <p className="kz-eyebrow">{st.intro.eyebrow}</p>
+        <h2 id="teaser-title" className="kz-teaser-title">{st.intro.title}</h2>
+        <p className="kz-teaser-sub">
+          {teaser.sub}
+        </p>
+        <Link href="/story" prefetch={false} className="kz-link-strong">
+          {teaser.cta} <ForwardIcon size={15} />
+        </Link>
+      </div>
       <style>{`
         .kz-teaser { text-align: center; }
         .kz-teaser-flock { display: flex; justify-content: center; align-items: flex-end; gap: clamp(4px, 2vw, 18px); flex-wrap: wrap; margin-bottom: 28px; }

@@ -1,10 +1,4 @@
 {
-  "meta": {
-    "siteTitle": "Krizaka — Orazaka, moteur d'orchestration IA souverain open source",
-    "siteDescription": "Orazaka est un moteur d'orchestration IA souverain et open source — Java 21, Spring AI, pipeline à 15 intercepteurs, multimodal. Auto-héberge une IA locale conçue pour faciliter la conformité Loi 25 et RGPD. Conçu au Québec.",
-    "ogTitle": "Orazaka — moteur d'orchestration IA souverain, open source",
-    "ogDescription": "Le moteur d'orchestration IA que tu héberges toi-même. Java 21 · Spring AI · 15 intercepteurs · multimodal. Open source, souverain, conçu au Québec."
-  },
   "nav": {
     "products": "Produits",
     "solutions": "Solutions",
@@ -29,14 +23,6 @@
     "start": "Démarrer",
     "githubAria": "Voir le dépôt sur GitHub",
     "starsAria": "étoiles GitHub"
-  },
-  "hero": {
-    "headline": "Le moteur d'orchestration IA souverain.",
-    "headlineAccent": "Open source.",
-    "sub": "Java 21 · Spring AI · 15 intercepteurs · multimodal. Une infrastructure cognitive que tu héberges toi-même — conçue au Québec.\nTes données ne quittent jamais ton réseau.",
-    "ctaPrimary": "Démarrer en 3 commandes",
-    "ctaSecondary": "Star sur GitHub",
-    "badge": "Open Source"
   },
   "homeHero": {
     "badge": "IA cognitive souveraine · Loi 25 · RGPD",
@@ -75,37 +61,6 @@
     "note": "Besoin du détail ? Le guide d'installation couvre Docker, Ollama et la configuration.",
     "docsCta": "Lire les docs",
     "communityCta": "Rejoindre la communauté"
-  },
-  "pillars": {
-    "sectionLabel": "Ce que fait Orazaka",
-    "sectionTitle": "Toute l'IA moderne, dans un seul moteur.",
-    "items": [
-      {
-        "keyword": "Souverain",
-        "title": "Tes données ne sortent jamais",
-        "desc": "Chaque inférence tourne sur ton infra, rien ne quitte ton réseau — conforme Loi 25 et aligné RGPD par construction."
-      },
-      {
-        "keyword": "Multi-Modal",
-        "title": "Chat · Image · Vidéo · Voix",
-        "desc": "Un seul moteur pour chaque modalité IA — unifié sous une couche d'orchestration à 15 intercepteurs."
-      },
-      {
-        "keyword": "Hybride",
-        "title": "Tes clés, ton choix",
-        "desc": "Besoin de GPT-4, Claude ou Gemini ? Apporte tes clés API — Orazaka route intelligemment tout en gardant ton orchestration souveraine."
-      },
-      {
-        "keyword": "Open Source",
-        "title": "Code ouvert, auditable",
-        "desc": "Architecture hexagonale vérifiée par ArchUnit. Chaque décision architecturale est documentée et le code est disponible sur GitHub."
-      },
-      {
-        "keyword": "Validé",
-        "title": "Vérification en boucle fermée",
-        "desc": "Chaque réponse passe par une matrice de validation multi-étapes avant d'atteindre tes utilisateurs."
-      }
-    ]
   },
   "techStack": {
     "sectionLabel": "Stack technologique",
@@ -173,24 +128,6 @@
     "cogTitle": "La Science Cognitive dans l'IA",
     "cogDesc": "Plutôt que d'utiliser l'IA comme une simple boîte noire génératrice de texte, l'ingénierie cognitive structure le raisonnement artificiel. En découpant le flux en étapes ordonnées — analyse d'intention, contextualisation factuelle et auto-surveillance —, elle garantit le déterminisme, la sécurité logique et l'alignement métier indispensables aux architectures de production d'entreprise.",
     "cogCta": "Explorer l'ingénierie cognitive",
-    "highlights": [
-      {
-        "label": "Intercepteurs",
-        "value": "15"
-      },
-      {
-        "label": "Pipeline par défaut",
-        "value": "9 étapes"
-      },
-      {
-        "label": "Familles",
-        "value": "5"
-      },
-      {
-        "label": "Modes",
-        "value": "3"
-      }
-    ],
     "simulatorTitle": "Simulateur de Traitement Souverain d'Orazaka",
     "simulatorSubtitle": "Visualisez comment Orazaka, l'engin d'automatisation cognitive souverain conçu par Krizaka, traite vos flux d'affaires locaux de manière hermétique et sécurisée.",
     "runSim": "Simuler l'exécution",
@@ -266,85 +203,6 @@
     "github": "GitHub",
     "tagline": "Le moteur d'orchestration IA souverain, open source. Conçu au Québec."
   },
-  "cognitiveEngineering": {
-    "sectionLabel": "Ingénierie cognitive",
-    "sectionTitle": "Au-delà du prompt",
-    "sectionSub": "L'intelligence est dans le pipeline.",
-    "sectionDesc": "Orazaka ne se contente pas de relayer tes prompts à un modèle. Par défaut, chaque requête traverse un cycle de traitement à 9 étapes séquentielles. Cependant, la force d'Orazaka réside dans sa bibliothèque complète de 15 intercepteurs modulaires (débat multi-agents, bac à sable MCP, audit, validation humaine) que vous pouvez assembler pour composer vos propres Packages de gouvernance.",
-    "ctaLabel": "Explorer l'ingénierie cognitive",
-    "ctaHref": "/products/orazaka/ingenierie-cognitive",
-    "agnosticTitle": "Mode Agnostique (Souveraineté)",
-    "agnosticDesc": "Libre choix du modèle : Ollama en local, ou API cloud (OpenAI, Anthropic, Gemini). Orazaka s'adapte sans verrouillage propriétaire.",
-    "deterministicTitle": "Mode Déterministe (Précision)",
-    "deterministicDesc": "Contrôle total du flux : température à 0.0, schémas de sortie stricts (JSON), validation en boucle fermée. Zéro hallucination.",
-    "effortTitle": "Mode Effort (Profondeur adaptative)",
-    "effortDesc": "Orazaka jauge la complexité de l'intention et alloue l'effort de raisonnement en conséquence — réponse directe pour le trivial, délibération approfondie pour le critique.",
-    "stages": [
-      {
-        "order": "01",
-        "name": "Résolution du contexte utilisateur",
-        "desc": "Profil, rôle RBAC, tier de rate-limiting"
-      },
-      {
-        "order": "02",
-        "name": "Injection du contexte système",
-        "desc": "Variables d'environnement, outils, signaux système"
-      },
-      {
-        "order": "03",
-        "name": "Enrichissement RAG",
-        "desc": "Récupération vectorielle → injection de connaissances"
-      },
-      {
-        "order": "04",
-        "name": "Résolution MCP",
-        "desc": "Sources de connaissance externes via Model Context Protocol"
-      },
-      {
-        "order": "05",
-        "name": "Mémoire conversationnelle",
-        "desc": "Historique FIFO avec fenêtre de 50 messages"
-      },
-      {
-        "order": "06",
-        "name": "Raffinement sémantique",
-        "desc": "Requête floue → instruction précise"
-      },
-      {
-        "order": "07",
-        "name": "Routage intentionnel",
-        "desc": "Intention → provider optimal (temp: 0.0)"
-      },
-      {
-        "order": "08",
-        "name": "Attachement d'outils",
-        "desc": "Callbacks d'outils à la demande"
-      },
-      {
-        "order": "09",
-        "name": "Assemblage multi-modal",
-        "desc": "Extraction media base64 et assemblage"
-      }
-    ],
-    "principles": [
-      {
-        "title": "Enrichissement contextuel",
-        "desc": "Chaque prompt est enrichi avec le profil utilisateur, l'historique de conversation et les connaissances RAG avant d'atteindre le modèle."
-      },
-      {
-        "title": "Routage intentionnel",
-        "desc": "L'intention de l'utilisateur est analysée pour router vers le modèle optimal — local Ollama ou provider cloud — avec une température de 0.0 pour maximiser le déterminisme."
-      },
-      {
-        "title": "Mémoire architecturale",
-        "desc": "La mémoire conversationnelle n'est pas un simple buffer. C'est un système FIFO à fenêtre glissante qui préserve le contexte pertinent sans surcharger le context window."
-      },
-      {
-        "title": "Validation en boucle fermée",
-        "desc": "Les réponses sont validées par une matrice multi-étapes — schéma JSON, sandbox MCP, débat multi-agents — avant d'atteindre l'utilisateur."
-      }
-    ]
-  },
   "cognitiveEngineeringPage": {
     "pageTitle": "Ingénierie cognitive IA — Pipeline cognitif Orazaka | Krizaka",
     "pageDesc": "Découvrez comment l'ingénierie cognitive structure l'intelligence artificielle pour la rendre fiable, sécurisée et souveraine.",
@@ -407,7 +265,7 @@
     "effortTitle": "Ajustement dynamique de l'effort",
     "effortDesc": "L'effort n'est pas un mode, mais un paramètre d'ajustement. Le moteur analyse la complexité de l'intention utilisateur pour calibrer les tokens de réflexion et le nombre d'intercepteurs actifs.",
     "extensibilityTitle": "Extensibilité & Modes Personnalisés",
-    "extensibilityDesc": "Assemblez les 15 intercepteurs d'Orazaka pour concevoir des modes sur mesure. Configurez vos propres règles métiers, audits et topologies de sécurité.",
+    "extensibilityDesc": "Assemblez les {interceptors} intercepteurs d'Orazaka pour concevoir des modes sur mesure. Configurez vos propres règles métiers, audits et topologies de sécurité.",
     "diffTitle": "Cloud Stateless API vs. Moteur de Raisonnement Orazaka",
     "diffLeftTitle": "API & Chatbot Cloud Classique",
     "diffLeftSub": "Générateur de texte simple (Stateless)",
@@ -434,7 +292,7 @@
     "diffRightFeatures": [
       {
         "title": "Pipeline d'intercepteurs cognitifs",
-        "desc": "La requête traverse 9 à 15 intercepteurs pour valider l'intention et optimiser le prompt."
+        "desc": "La requête traverse {core} intercepteurs non contournables, puis {configured} intercepteurs configurés, pour valider l'intention et optimiser le prompt."
       },
       {
         "title": "Mémoire & RAG locaux",
@@ -2005,7 +1863,7 @@
       "balancedBudget": "Budget équilibré",
       "high": "Haut",
       "deepDeliberation": "Délibération profonde",
-      "t1215Interceptors": "12–15 intercepteurs",
+      "t1215Interceptors": "11–{interceptors} intercepteurs",
       "maximumBudget": "Budget maximal",
       "activeExtensibility": "EXTENSIBILITÉ ACTIVE",
       "chooseYourInterceptors": "Choisissez vos intercepteurs",

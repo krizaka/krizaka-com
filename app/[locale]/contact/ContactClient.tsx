@@ -1,12 +1,12 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ArrowRight, MessagesSquare, CircleDot } from "lucide-react";
 import TopNavBar from "../../components/TopNavBar";
 import SiteFooter from "../../components/SiteFooter";
 import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
 import { ProductLogo } from "@krizaka/ui";
+import { reveal } from "@/lib/motion";
 
 /* ─── Mascot: Owl (Questions & help) ─── */
 function OwlMascot() {
@@ -29,35 +29,15 @@ function OwlMascot() {
         {/* Eyes */}
         <circle cx="24" cy="18" r="4.5" fill="var(--kz-surface-0)" stroke="var(--kz-border-strong)" strokeWidth="1" />
         <circle cx="36" cy="18" r="4.5" fill="var(--kz-surface-0)" stroke="var(--kz-border-strong)" strokeWidth="1" />
-        <motion.circle
-          cx="24" cy="18" r="1.5" fill="#00ff66"
-          animate={{ opacity: [1, 1, 0.1, 1, 1] }}
-          transition={{ duration: 4, repeat: Infinity, times: [0, 0.43, 0.46, 0.5, 1] }}
-        />
-        <motion.circle
-          cx="36" cy="18" r="1.5" fill="#00ff66"
-          animate={{ opacity: [1, 1, 0.1, 1, 1] }}
-          transition={{ duration: 4, repeat: Infinity, times: [0, 0.43, 0.46, 0.5, 1] }}
-        />
+        <circle className="ct-blink" cx="24" cy="18" r="1.5" fill="#00ff66" />
+        <circle className="ct-blink" cx="36" cy="18" r="1.5" fill="#00ff66" />
         {/* Beak */}
         <polygon points="28,20 32,20 30,25" fill="#fbbf24" stroke="var(--kz-border-strong)" strokeWidth="1" />
         {/* Ears */}
-        <motion.polygon
-          points="20,11 24,14 18,18"
-          fill="#7c3aed"
-          stroke="var(--kz-border-strong)" strokeWidth="1"
-          animate={{ rotate: [-5, 5, -5] }}
-          transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "24px 14px" }}
-        />
-        <motion.polygon
-          points="40,11 36,14 42,18"
-          fill="#7c3aed"
-          stroke="var(--kz-border-strong)" strokeWidth="1"
-          animate={{ rotate: [5, -5, 5] }}
-          transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "36px 14px" }}
-        />
+        <polygon className="ct-sway" points="20,11 24,14 18,18" fill="#7c3aed" stroke="var(--kz-border-strong)" strokeWidth="1"
+          style={{ transformOrigin: "24px 14px" }} />
+        <polygon className="ct-sway ct-sway-rev" points="40,11 36,14 42,18" fill="#7c3aed" stroke="var(--kz-border-strong)" strokeWidth="1"
+          style={{ transformOrigin: "36px 14px" }} />
       </g>
     </svg>
   );
@@ -89,28 +69,15 @@ function FalconMascot() {
         <polygon points="27,16 33,16 30,24" fill="#ffb300" stroke="var(--kz-border-strong)" strokeWidth="1.2" />
         {/* Visor */}
         <rect x="20" y="7" width="20" height="7" rx="2" fill="var(--kz-surface-0)" stroke="var(--kz-border-strong)" strokeWidth="1.2" />
-        <motion.g
-          animate={{ opacity: [0.3, 1, 0.3] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-        >
+        <g className="ct-scan">
           <circle cx="25" cy="10.5" r="1.5" fill="#00f2fe" />
           <circle cx="35" cy="10.5" r="1.5" fill="#00f2fe" />
-        </motion.g>
+        </g>
         {/* Wings */}
-        <motion.path
-          d="M 14 22 C 6 28, 8 40, 18 38"
-          fill="none" stroke="#d84315" strokeWidth="3.5" strokeLinecap="round"
-          animate={{ rotate: [-4, 4, -4] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "18px 38px" }}
-        />
-        <motion.path
-          d="M 46 22 C 54 28, 52 40, 42 38"
-          fill="none" stroke="#d84315" strokeWidth="3.5" strokeLinecap="round"
-          animate={{ rotate: [4, -4, 4] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "42px 38px" }}
-        />
+        <path className="ct-flap" d="M 14 22 C 6 28, 8 40, 18 38" fill="none" stroke="#d84315" strokeWidth="3.5" strokeLinecap="round"
+          style={{ transformOrigin: "18px 38px" }} />
+        <path className="ct-flap ct-flap-rev" d="M 46 22 C 54 28, 52 40, 42 38" fill="none" stroke="#d84315" strokeWidth="3.5" strokeLinecap="round"
+          style={{ transformOrigin: "42px 38px" }} />
       </g>
     </svg>
   );
@@ -161,12 +128,8 @@ export default function ContactClient() {
         }}
       >
         {/* ─── Header ─── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          style={{ marginBottom: "56px" }}
-        >
+        {/* The first screen is painted at once (no entrance: LCP). */}
+        <div style={{ marginBottom: "56px" }}>
           <span
             style={{
               display: "block",
@@ -204,7 +167,7 @@ export default function ContactClient() {
           >
             {t.site.contactPage.lead}
           </p>
-        </motion.div>
+        </div>
 
         {/* ─── Private message to the team, and what happens after ─── */}
         <div className="contact-main">
@@ -213,18 +176,13 @@ export default function ContactClient() {
             <h2 id="contact-next-title">{t.site.contactPage.nextTitle}</h2>
             <ol>
               {t.site.contactPage.nextSteps.map((step, i) => (
-                <motion.li
-                  key={step.title}
-                  initial={{ opacity: 0, x: 12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.2 + i * 0.1 }}
-                >
+                <li key={step.title}>
                   <span className="contact-next-num">{i + 1}</span>
                   <div>
                     <strong>{step.title}</strong>
                     <p>{step.text}</p>
                   </div>
-                </motion.li>
+                </li>
               ))}
             </ol>
             <ul className="contact-facts">
@@ -266,18 +224,14 @@ export default function ContactClient() {
             const { Mascot, Icon, accent, glow, path } = channelDef;
 
             return (
-              <motion.div
+              <div
                 key={ch.kind}
                 className="contact-card"
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.15 + index * 0.1 }}
-                whileHover={{
-                  y: -4,
-                  borderColor: accent,
-                  boxShadow: `0 16px 40px rgba(0,0,0,0.12), 0 0 24px ${glow}`,
-                }}
+                {...reveal(index)}
                 style={{
+                  ...reveal(index).style,
+                  ["--ch" as string]: accent,
+                  ["--ch-glow" as string]: glow,
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
@@ -287,7 +241,6 @@ export default function ContactClient() {
                   border: "1px solid var(--kz-border-subtle)",
                   background: "color-mix(in srgb, var(--kz-surface-1) 70%, transparent)",
                   backdropFilter: "blur(16px)",
-                  transition: "border-color 250ms ease, box-shadow 250ms ease",
                 }}
               >
                 {/* Mascot */}
@@ -368,7 +321,7 @@ export default function ContactClient() {
                     </a>
                   ))}
                 </div>
-              </motion.div>
+              </div>
             );
           })}
         </div>
@@ -381,6 +334,25 @@ export default function ContactClient() {
           text-decoration: none; color: var(--kz-text-primary); background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle);
           transition: border-color 150ms ease, transform 150ms ease; }
         .contact-product:hover { border-color: var(--accent); transform: translateY(-1px); }
+
+        /* The channel cards answer the pointer, and their mascot wakes up (still otherwise: nothing loops by itself). */
+        .contact-card { transition: border-color 250ms var(--kz-ease), box-shadow 250ms var(--kz-ease), transform 250ms var(--kz-ease), opacity .8s var(--kz-ease), filter .8s var(--kz-ease); }
+        @media (hover: hover) {
+          .contact-card:hover { transform: translateY(-4px); border-color: var(--ch) !important; box-shadow: 0 16px 40px -18px var(--ch), 0 0 24px var(--ch-glow); }
+          .contact-card:hover .ct-blink { animation: ct-blink 4s infinite; }
+          .contact-card:hover .ct-sway { animation: ct-sway 2.8s ease-in-out infinite; }
+          .contact-card:hover .ct-sway-rev, .contact-card:hover .ct-flap-rev { animation-direction: reverse; }
+          .contact-card:hover .ct-scan { animation: ct-scan 2.2s ease-in-out infinite; }
+          .contact-card:hover .ct-flap { animation: ct-flap 3.2s ease-in-out infinite; }
+        }
+        @keyframes ct-blink { 0%, 43%, 50%, 100% { opacity: 1; } 46% { opacity: .1; } }
+        @keyframes ct-sway { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
+        @keyframes ct-scan { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
+        @keyframes ct-flap { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+        @media (prefers-reduced-motion: reduce) {
+          .contact-card, .contact-card:hover { transform: none; }
+          .contact-card :is(.ct-blink, .ct-sway, .ct-scan, .ct-flap) { animation: none !important; }
+        }
 
         .contact-main { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: clamp(24px, 4vw, 48px);
           align-items: start; margin-bottom: 72px; }

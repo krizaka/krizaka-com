@@ -1,0 +1,103 @@
+{
+  "after": {
+    "en": [
+      {
+        "perf": 91,
+        "a11y": 100,
+        "lcpMs": 3419,
+        "cls": 0,
+        "tbtMs": 25
+      },
+      {
+        "perf": 91,
+        "a11y": 100,
+        "lcpMs": 3419,
+        "cls": 0,
+        "tbtMs": 25
+      }
+    ],
+    "en/products/orazaka": [
+      {
+        "perf": 91,
+        "a11y": 100,
+        "lcpMs": 3486,
+        "cls": 0,
+        "tbtMs": 25
+      },
+      {
+        "perf": 91,
+        "a11y": 100,
+        "lcpMs": 3486,
+        "cls": 0,
+        "tbtMs": 26
+      }
+    ],
+    "en/products/orochia": [
+      {
+        "perf": 90,
+        "a11y": 100,
+        "lcpMs": 3634,
+        "cls": 0,
+        "tbtMs": 25
+      },
+      {
+        "perf": 90,
+        "a11y": 100,
+        "lcpMs": 3632,
+        "cls": 0,
+        "tbtMs": 24
+      }
+    ]
+  },
+  "before": {
+    "en": [
+      {
+        "perf": 92,
+        "a11y": 100,
+        "lcpMs": 3337,
+        "cls": 0,
+        "tbtMs": 18
+      },
+      {
+        "perf": 91,
+        "a11y": 100,
+        "lcpMs": 3428,
+        "cls": 0,
+        "tbtMs": 28
+      }
+    ],
+    "en/products/orazaka": [
+      {
+        "perf": 90,
+        "a11y": 100,
+        "lcpMs": 3548,
+        "cls": 0,
+        "tbtMs": 43
+      },
+      {
+        "perf": 91,
+        "a11y": 100,
+        "lcpMs": 3493,
+        "cls": 0,
+        "tbtMs": 28
+      }
+    ],
+    "en/products/orochia": [
+      {
+        "perf": 89,
+        "a11y": 100,
+        "lcpMs": 3798,
+        "cls": 0,
+        "tbtMs": 26
+      },
+      {
+        "perf": 89,
+        "a11y": 100,
+        "lcpMs": 3790,
+        "cls": 0,
+        "tbtMs": 27
+      }
+    ]
+  },
+  "note": "Lighthouse 12, mobile preset (simulated throttling), production build (next start), 2 runs each, 2026-10-10"
+}

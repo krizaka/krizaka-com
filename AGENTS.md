@@ -117,6 +117,12 @@
 - Every schema reads correctly at phone width (one column, top to bottom), works with the keyboard,
   honours `prefers-reduced-motion`, and carries a **text version** (tables or ordered lists) of
   everything it draws.
+- **Motion is one system** (`app/motion.css`, conducted by `app/components/motion/SiteMotion.tsx`, props from
+  `lib/motion.ts`): blocks arrive once with `reveal(i)` (`[data-reveal]` of @krizaka/ui, staggered 70 ms, never on the
+  first screen), figures climb with `CountUp`, loops pause off screen and wait for the page to settle, the pointer lights
+  the node of the signature icons. No animation library for new work, no permanent `requestAnimationFrame`, no canvas;
+  docs stay almost still (a reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui
+  (krizaka/krizaka-ui#41), not into a copy here.
 - Mermaid is a **print/fallback only** for diagrams written inside synced docs — drawn natively by
   mermaid.js at a readable size (wider than the column → it scrolls, never shrinks).
 

@@ -1,0 +1,230 @@
+/* ═══════════════════════════════════════════════════════════════════
+   KRIZAKA.COM — the motion system
+   ─────────────────────────────────────────────────────────────────
+   One place for how the site moves. It extends the signature of @krizaka/ui (motion.css, through @krizaka/tailwind:
+   `--kz-ease`, `[data-reveal]`, `.kz-backdrop-drift`, the animated marks) and is conducted by SiteMotion
+   (app/components/motion/SiteMotion.tsx) — no animation library, no permanent requestAnimationFrame, no canvas.
+
+   The rules (BRAND.md §4 and the site's direction):
+   - alive, never busy: what loops is slow (the light drifts over 40 s, marks turn over 30–35 s) and only on screen;
+   - things arrive once — a block rises as it enters the viewport, siblings 70 ms apart — then never move again
+     behind the paragraph being read;
+   - the first screen is painted still (LCP) and starts breathing once the page has settled;
+   - the pointer wakes things up: cards answer, the node of a signature icon lights up, arrows lean forward;
+   - under prefers-reduced-motion everything is still and fully visible.
+   Composited properties only (opacity, transform; filter on small SVG nodes).
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Arrival ─── */
+
+/* A softer reveal for schemas and dense blocks: shorter travel, no blur (lib/motion.ts reveal(i, "soft")). */
+[data-reveal="soft"] {
+  transform: translateY(12px);
+  filter: none;
+  transition-duration: 0.6s;
+}
+
+/* ─── The first screen settles before it breathes; what is off screen holds still ─── */
+
+/* Until SiteMotion marks the page ready (1.2 s after load), the hero's loops hold their first frame. */
+html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type) :is(*, *::before, *::after):not(.kz-backdrop-media) {
+  animation-play-state: paused !important;
+}
+/* Off screen (data-offscreen, SiteMotion): looping animations wait for the section to come back. */
+[data-offscreen] :is(*, *::before, *::after):not(.kz-backdrop-media) {
+  animation-play-state: paused !important;
+}
+
+/* ─── Depth: the blurred footage behind a hero drifts a little slower than the page (scroll-driven, no JS) ─── */
+
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    header.kz-backdrop > .kz-backdrop-media {
+      animation: kz-parallax linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+  }
+}
+@keyframes kz-parallax {
+  to { transform: translate3d(0, 14%, 0); }
+}
+
+/* ─── Figures that climb (CountUp) ─── */
+
+.kz-count-box {
+  display: inline-grid;
+  justify-items: end;
+  font-variant-numeric: tabular-nums;
+}
+.kz-count-box > * { grid-area: 1 / 1; }
+.kz-count-ghost { visibility: hidden; }
+/* Inside gradient text (background-clip: text) every box carries the gradient itself: an inline-grid is not clipped
+   with its parent's text. */
+.kz-count,
+.kz-count-box,
+.kz-count-box > [data-count-to] {
+  background: inherit;
+  -webkit-background-clip: inherit;
+  background-clip: inherit;
+}
+
+/* ─── The pointer wakes things up ─── */
+
+/* The node of a signature icon (@krizaka/icons, `circle[data-node]`) lights up when its card, link or button is
+   hovered or focused. */
+svg[data-kz-icon] [data-node] {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 320ms var(--kz-ease), filter 320ms var(--kz-ease);
+}
+:is(a, button, .bp-card, .bp-proof, .bp-ledger li, .kz-expertise-item, .od-case):is(:hover, :focus-visible) svg[data-kz-icon] [data-node] {
+  transform: scale(1.5);
+  filter: drop-shadow(0 0 3px var(--kz-accent));
+}
+
+/* Arrows lean toward where they lead. */
+svg[data-kz-icon="ForwardIcon"],
+svg[data-kz-icon="ExternalIcon"] {
+  transition: transform 220ms var(--kz-ease);
+}
+:is(a, button):is(:hover, :focus-visible) > svg[data-kz-icon="ForwardIcon"],
+:is(a, button):is(:hover, :focus-visible) > span > svg[data-kz-icon="ForwardIcon"],
+.bp-card:is(:hover, :focus-visible) .bp-card-more > svg[data-kz-icon="ForwardIcon"] {
+  transform: translateX(3px);
+}
+:is(a, button):is(:hover, :focus-visible) > svg[data-kz-icon="ExternalIcon"] {
+  transform: translate(2px, -2px);
+}
+
+/* Cards answer: every card tints its border toward the accent; cards that are links also rise. */
+.bp-card,
+.bp-proof,
+.bp-ledger li,
+.kz-expertise-item {
+  transition: border-color var(--kz-transition-smooth), transform var(--kz-transition-smooth), box-shadow var(--kz-transition-smooth),
+    background-color var(--kz-transition-smooth);
+}
+@media (hover: hover) {
+  .bp-card:hover,
+  .bp-proof:hover,
+  .bp-ledger li:hover {
+    border-color: color-mix(in srgb, var(--kz-accent) 45%, var(--kz-border-default));
+  }
+  a.bp-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--kz-accent) 55%, transparent);
+  }
+  .kz-expertise-item:hover {
+    background-color: color-mix(in srgb, var(--kz-accent) 5%, var(--kz-surface-0));
+  }
+}
+.bp-icon {
+  transition: transform var(--kz-transition-smooth), border-color var(--kz-transition-smooth), box-shadow var(--kz-transition-smooth);
+}
+.bp-card:is(:hover, :focus-visible) .bp-icon,
+.bp-ledger li:hover .bp-icon,
+.od-case:hover .bp-icon {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--kz-accent) 50%, transparent);
+  box-shadow: 0 10px 22px -12px var(--kz-accent);
+}
+
+/* Buttons: a press you can feel. */
+:is(.bp-btn, .org-btn, .kz-cta-link, .kz-spot-primary) {
+  transition: transform var(--kz-transition-fast), border-color var(--kz-transition-fast), background-color var(--kz-transition-fast),
+    box-shadow var(--kz-transition-smooth);
+}
+@media (hover: hover) {
+  :is(.org-btn-primary, .kz-spot-primary):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 26px -14px var(--kz-accent);
+  }
+  .bp-btn-primary:hover {
+    box-shadow: 0 12px 26px -14px var(--kz-accent);
+  }
+  .org-btn-ghost:hover,
+  .bp-btn-ghost:hover {
+    border-color: var(--kz-border-strong);
+    background-color: color-mix(in srgb, var(--kz-surface-2) 70%, transparent);
+  }
+}
+:is(.bp-btn, .org-btn, .kz-cta-link, .kz-spot-primary):active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* The recordings of the products: the frame comes forward a little under the pointer. */
+@media (hover: hover) {
+  .kz-spot-media {
+    transition: transform 500ms var(--kz-ease), box-shadow 500ms var(--kz-ease);
+  }
+  .kz-spot-media:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 40px 70px -32px color-mix(in srgb, var(--kz-accent) 55%, transparent);
+  }
+}
+
+/* ─── Long reads: a hairline that fills with the page (docs; scroll-driven, no JS, absent where unsupported) ─── */
+
+.kz-read-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .kz-read-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 60;
+      height: 2px;
+      pointer-events: none;
+      background: linear-gradient(90deg, var(--kz-accent), var(--kz-accent-2, var(--kz-accent)));
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      animation: kz-read linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+@keyframes kz-read {
+  to { transform: scaleX(1); }
+}
+
+/* ─── Reduced motion: still, and everything readable ─── */
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal="soft"] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  svg[data-kz-icon] [data-node],
+  svg[data-kz-icon="ForwardIcon"],
+  svg[data-kz-icon="ExternalIcon"],
+  .bp-card,
+  .bp-proof,
+  .bp-ledger li,
+  .bp-icon,
+  .kz-spot-media,
+  :is(.bp-btn, .org-btn, .kz-cta-link, .kz-spot-primary) {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ─── The Orazaka terminal: its three commands are typed in, one after the other, when it arrives ─── */
+
+.bp-term[data-reveal] pre > div {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.45s var(--kz-ease), transform 0.45s var(--kz-ease);
+}
+.bp-term.kz-in pre > div { opacity: 1; transform: none; }
+.bp-term.kz-in pre > div:nth-child(1) { transition-delay: 450ms; }
+.bp-term.kz-in pre > div:nth-child(2) { transition-delay: 900ms; }
+.bp-term.kz-in pre > div:nth-child(3) { transition-delay: 1350ms; }
+@media (prefers-reduced-motion: reduce) {
+  .bp-term[data-reveal] pre > div { opacity: 1; transform: none; transition: none; }
+}

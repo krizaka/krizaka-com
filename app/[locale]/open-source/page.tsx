@@ -11,6 +11,8 @@ import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NPM_PACKAGES, npmUrl, repoUrl } from "@/lib/npm-packages";
 import { BOM_VERSION, CENTRAL_NAMESPACE_URL, KIT_PREVIOUS_VERSION, MAVEN_ARTIFACTS, centralUrl, mavenRepoUrl } from "@/lib/maven-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
+import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
+import { reveal } from "@/lib/motion";
 
 /* /open-source — for developers who want to build with Krizaka's pieces: what can be reused, how
    to take it, and every public repository. The repository list comes from the generated product
@@ -86,7 +88,8 @@ export default async function OpenSourcePage({ params }: Props) {
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
       <TopNavBar />
 
-      <header className="os-hero">
+      <SectionBackdrop as="header" grid>
+      <div className="os-hero">
         <p className="os-eyebrow">Open source · Apache-2.0</p>
         <h1>{t.title}</h1>
         <p className="os-lead">
@@ -96,10 +99,11 @@ export default async function OpenSourcePage({ params }: Props) {
           {format(t.count, { count: repositories.length })}
           <a href={GITHUB_ORG_URL}>github.com/krizaka</a>
         </p>
-      </header>
+      </div>
+      </SectionBackdrop>
 
       <section className="os-section">
-        <ol className="os-steps">
+        <ol className="os-steps" {...reveal()}>
           {STEPS.map(({ id, icon: Icon }, i) => (
             <li key={id}>
               <span className="os-step-n">{String(i + 1).padStart(2, "0")}</span>
@@ -112,14 +116,16 @@ export default async function OpenSourcePage({ params }: Props) {
       </section>
 
       <section className="os-section">
-        <p className="os-eyebrow">{t.mostReused}</p>
-        <h2 className="os-h2">{t.mostReusedTitle}</h2>
+        <div {...reveal()}>
+          <p className="os-eyebrow">{t.mostReused}</p>
+          <h2 className="os-h2">{t.mostReusedTitle}</h2>
+        </div>
         <div className="os-featured">
-          {FEATURED.map((name) => {
+          {FEATURED.map((name, i) => {
             const repo = byName.get(name);
             if (!repo) return null;
             return (
-              <article key={name} className="os-feature">
+              <article key={name} className="os-feature" {...reveal(i + 1)}>
                 <p className="os-feature-repo">{name}</p>
                 <h3>{t.featured[name].title}</h3>
                 <ul>
@@ -137,13 +143,13 @@ export default async function OpenSourcePage({ params }: Props) {
       </section>
 
       <section className="os-section" id="building-blocks">
-        <div className="os-product-head">
+        <div className="os-product-head" {...reveal()}>
           <KrizakaLogo size={40} />
           <div>
             <h2 className="os-h2" style={{ margin: 0 }}>{t.blocksTitle}</h2>
           </div>
         </div>
-        <div className="os-group">
+        <div className="os-group" {...reveal(0, "soft")}>
           <div className="os-group-head">
             <h3>{t.groups.domain.title}</h3>
             <p>{t.groups.domain.intro}</p>
@@ -158,7 +164,7 @@ export default async function OpenSourcePage({ params }: Props) {
 
       {(["orazaka", "orochia"] as const).map((product) => (
         <section key={product} className="os-section">
-          <div className="os-product-head">
+          <div className="os-product-head" {...reveal()}>
             <ProductLogo id={product} size={40} />
             <div>
               <h2 className="os-h2" style={{ margin: 0 }}>{product === "orazaka" ? "Orazaka" : "Orochia"}</h2>
@@ -171,7 +177,7 @@ export default async function OpenSourcePage({ params }: Props) {
             const repos = repositories.filter((r) => r.group === group.id);
             if (repos.length === 0) return null;
             return (
-              <div key={group.id} className="os-group">
+              <div key={group.id} className="os-group" {...reveal(0, "soft")}>
                 <div className="os-group-head">
                   <h3>{t.groups[group.id].title}</h3>
                   <p>{t.groups[group.id].intro}</p>
@@ -188,16 +194,18 @@ export default async function OpenSourcePage({ params }: Props) {
       ))}
 
       <section className="os-section" id="packages">
-        <p className="os-eyebrow">{pk.eyebrow}</p>
-        <h2 className="os-h2">{pk.title}</h2>
-        <p className="os-pk-lead">{pk.lead}</p>
+        <div {...reveal()}>
+          <p className="os-eyebrow">{pk.eyebrow}</p>
+          <h2 className="os-h2">{pk.title}</h2>
+          <p className="os-pk-lead">{pk.lead}</p>
+        </div>
         <div className="os-pk-banner">
           <Layers size={18} aria-hidden />
           <p>{format(pk.notProductBanner, { count: NPM_PACKAGES.length })}</p>
         </div>
         <div className="os-packages">
-          {NPM_PACKAGES.map((p) => (
-            <article key={p.id} className="os-package">
+          {NPM_PACKAGES.map((p, i) => (
+            <article key={p.id} className="os-package" {...reveal(i % 3)}>
               <PackageGlyph id={p.id} size={48} />
               <div className="os-package-body">
                 <p className="os-package-role">{pk.items[p.id].role}</p>
@@ -219,9 +227,11 @@ export default async function OpenSourcePage({ params }: Props) {
       </section>
 
       <section className="os-section" id="maven">
-        <p className="os-eyebrow">{mv.eyebrow}</p>
-        <h2 className="os-h2">{mv.title}</h2>
-        <p className="os-pk-lead">{mv.lead}</p>
+        <div {...reveal()}>
+          <p className="os-eyebrow">{mv.eyebrow}</p>
+          <h2 className="os-h2">{mv.title}</h2>
+          <p className="os-pk-lead">{mv.lead}</p>
+        </div>
         <div className="os-pk-banner">
           <Layers size={18} aria-hidden />
           <p>{mv.bomNote}</p>
@@ -235,8 +245,8 @@ export default async function OpenSourcePage({ params }: Props) {
 </dependency>`}</pre>
         <p className="os-pk-note">{format(mv.pinnedNote, { previous: KIT_PREVIOUS_VERSION, current: BOM_VERSION })}</p>
         <div className="os-packages">
-          {MAVEN_ARTIFACTS.map((a) => (
-            <article key={a.id} className="os-package">
+          {MAVEN_ARTIFACTS.map((a, i) => (
+            <article key={a.id} className="os-package" {...reveal(i % 3)}>
               <div className="os-package-body">
                 <p className="os-package-role">{mv.items[a.id].role}</p>
                 <h3>{a.artifactId}</h3>
@@ -262,7 +272,7 @@ export default async function OpenSourcePage({ params }: Props) {
       </section>
 
       <section className="os-section">
-        <div className="os-promises">
+        <div className="os-promises" {...reveal()}>
           {PROMISES.map(({ id, icon: Icon }) => (
             <div key={id}>
               <Icon size={18} aria-hidden />
@@ -271,7 +281,7 @@ export default async function OpenSourcePage({ params }: Props) {
             </div>
           ))}
         </div>
-        <div className="os-contribute">
+        <div className="os-contribute" {...reveal()}>
           <div>
             <h2>{t.contributeTitle}</h2>
             <p>

@@ -7,6 +7,7 @@ import { ArrowLeft, Check, X, Shield, Cpu, Database, ChevronRight, MessageSquare
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import { useI18n } from "../../../../components/I18nProvider";
+import { format } from "@krizaka/i18n";
 
 /* ─── Animated Owl Mascot SVG ─── */
 function OwlMascotLarge({ size = 140 }: { size?: number }) {
@@ -96,7 +97,7 @@ function OwlMascotLarge({ size = 140 }: { size?: number }) {
 const NEUROMORPHIC_ICONS = [Cpu, Database, Shield];
 const CARD_COLORS = ["#f43f5e", "#3b82f6", "#10b981"];
 
-export default function CognitiveEngineeringPageClient() {
+export default function CognitiveEngineeringPageClient({ interceptors }: { interceptors: { core: number; configured: number; total: number } }) {
   const { t } = useI18n();
   const p = t.cognitiveEngineeringPage;
 
@@ -1227,7 +1228,7 @@ export default function CognitiveEngineeringPageClient() {
                 {
                   level: t.pages.cognitive.high,
                   sub: t.pages.cognitive.deepDeliberation,
-                  interceptors: t.pages.cognitive.t1215Interceptors,
+                  interceptors: format(t.pages.cognitive.t1215Interceptors, { interceptors: interceptors.total }),
                   tokens: t.pages.cognitive.maximumBudget,
                   color: "#ef4444",
                   bar: "90%",
@@ -1388,7 +1389,7 @@ export default function CognitiveEngineeringPageClient() {
                     maxWidth: "640px",
                   }}
                 >
-                  {p.extensibilityDesc}
+                  {format(p.extensibilityDesc, { interceptors: interceptors.total })}
                 </p>
               </div>
             </div>
@@ -1891,7 +1892,7 @@ export default function CognitiveEngineeringPageClient() {
                     />
                     <div>
                       <h4 style={{ fontSize: "13.5px", fontWeight: 700, color: "var(--kz-text-primary)" }}>{feat.title}</h4>
-                      <p style={{ fontSize: "12px", color: "var(--kz-text-secondary)", lineHeight: 1.5, marginTop: "2px" }}>{feat.desc}</p>
+                      <p style={{ fontSize: "12px", color: "var(--kz-text-secondary)", lineHeight: 1.5, marginTop: "2px" }}>{format(feat.desc, { core: interceptors.core, configured: interceptors.configured })}</p>
                     </div>
                   </div>
                 ))}

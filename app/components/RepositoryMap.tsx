@@ -13,6 +13,7 @@ import { ArrowUpRight, Boxes, Cpu, LayoutGrid, Layers, Package } from "lucide-re
 import type { LucideIcon } from "lucide-react";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { getDictionary, format } from "@/lib/i18n";
+import { reveal } from "@/lib/motion";
 
 
 export interface RepositoryEntry {
@@ -172,7 +173,7 @@ export default function RepositoryMap({
       aria-labelledby="repositories-title"
       style={{ maxWidth: "80rem", margin: "0 auto", padding: "8px 20px 96px" }}
     >
-      <div style={{ maxWidth: "700px", margin: "0 auto 40px", textAlign: "center" }}>
+      <div style={{ maxWidth: "700px", margin: "0 auto 40px", textAlign: "center" }} {...reveal()}>
         <p
           style={{
             fontFamily: "var(--font-mono, monospace)",
@@ -213,7 +214,7 @@ export default function RepositoryMap({
           if (inLayer.length === 0) return null;
           const Icon = meta.icon;
           return (
-            <div key={layer}>
+            <div key={layer} {...reveal(0, "soft")}>
               <div style={{ display: "flex", alignItems: "baseline", gap: "10px", flexWrap: "wrap", margin: "0 0 14px" }}>
                 <Icon size={16} aria-hidden="true" style={{ color: meta.color, alignSelf: "center" }} />
                 <h3

@@ -28,6 +28,7 @@ import ContactCta from "@/app/components/home/ContactCta";
 import Rich from "@/app/components/Rich";
 import { IsoSovereignStack } from "@/app/components/brand/Iso";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
+import { reveal } from "@/lib/motion";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -122,7 +123,7 @@ export default async function OrazakaPage({ params }: Props) {
           <div className="bp-hero-grid">
             <div>
               <p className="bp-eyebrow">
-                <OrazakaLogo size={28} animated={false} /> {t.kicker}
+                <OrazakaLogo size={28} /> {t.kicker}
               </p>
               <h1 className="bp-h1">
                 {t.titleLead} <span className="bp-accent">{t.titleAccent}</span>
@@ -158,25 +159,29 @@ export default async function OrazakaPage({ params }: Props) {
 
       {/* ─── Product tour (recordings of the real application) ─── */}
       <section id="tour" className="bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
-        <div className="bp-center" style={{ marginBottom: 28 }}>
+        <div className="bp-center" style={{ marginBottom: 28 }} {...reveal()}>
           <p className="bp-eyebrow">{t.tourEyebrow}</p>
           <h2 className="bp-h2">{t.tourTitle}</h2>
         </div>
-        <ProductTour
-          clips={TOUR.map((id) => ({ id, src: `/assets/orazaka/tour/${id}`, ...t.tour[id] }))}
-          frameLabel="orazaka · localhost"
-        />
+        <div {...reveal(1)}>
+          <ProductTour
+            clips={TOUR.map((id) => ({ id, src: `/assets/orazaka/tour/${id}`, ...t.tour[id] }))}
+            frameLabel="orazaka · localhost"
+          />
+        </div>
       </section>
 
       {/* ─── Why: sovereignty, cost, control ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="why">
         <div className="bp-wrap">
-          <p className="bp-eyebrow">{t.why.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.why.title} /></h2>
-          <p className="bp-lead">{t.why.lead}</p>
+          <div {...reveal()}>
+            <p className="bp-eyebrow">{t.why.eyebrow}</p>
+            <h2 className="bp-h2"><Rich text={t.why.title} /></h2>
+            <p className="bp-lead">{t.why.lead}</p>
+          </div>
           <div className="bp-cards">
-            {PILLARS.map(({ id, Icon }) => (
-              <div key={id} className="bp-card">
+            {PILLARS.map(({ id, Icon }, i) => (
+              <div key={id} className="bp-card" {...reveal(i + 1)}>
                 <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
                 <h3>{t.why.pillars[id].title}</h3>
                 <p>{t.why.pillars[id].body}</p>
@@ -188,12 +193,14 @@ export default async function OrazakaPage({ params }: Props) {
 
       {/* ─── Platform: six capabilities ─── */}
       <section className="bp-wrap">
-        <p className="bp-eyebrow">{t.platform.eyebrow}</p>
-        <h2 className="bp-h2"><Rich text={t.platform.title} /></h2>
-        <p className="bp-lead">{t.platform.lead}</p>
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.platform.eyebrow}</p>
+          <h2 className="bp-h2"><Rich text={t.platform.title} /></h2>
+          <p className="bp-lead">{t.platform.lead}</p>
+        </div>
         <div className="bp-cards">
-          {PLATFORM.map(({ id, Icon }) => (
-            <div key={id} className="bp-card">
+          {PLATFORM.map(({ id, Icon }, i) => (
+            <div key={id} className="bp-card" {...reveal(i + 1)}>
               <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
               <h3>{t.platform.items[id].title}</h3>
               <p>{t.platform.items[id].body}</p>
@@ -205,10 +212,12 @@ export default async function OrazakaPage({ params }: Props) {
       {/* ─── Cost & control: the same questions, two answers ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="compare">
         <div className="bp-wrap">
-          <p className="bp-eyebrow">{t.compare.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.compare.title} /></h2>
-          <p className="bp-lead">{t.compare.lead}</p>
-          <table className="bp-compare">
+          <div {...reveal()}>
+            <p className="bp-eyebrow">{t.compare.eyebrow}</p>
+            <h2 className="bp-h2"><Rich text={t.compare.title} /></h2>
+            <p className="bp-lead">{t.compare.lead}</p>
+          </div>
+          <table className="bp-compare" {...reveal(1, "soft")}>
             <thead>
               <tr>
                 <th scope="col">{t.compare.topic}</th>
@@ -232,14 +241,14 @@ export default async function OrazakaPage({ params }: Props) {
       {/* ─── Law 25 · GDPR ─── */}
       <section className="bp-wrap">
         <div className="bp-split">
-          <div>
+          <div {...reveal()}>
             <p className="bp-eyebrow">{t.law25.eyebrow}</p>
             <h2 className="bp-h2"><Rich text={t.law25.title} /></h2>
             <p className="bp-lead">{t.law25.lead}</p>
           </div>
           <ul className="bp-ledger">
-            {t.law25.points.map((point) => (
-              <li key={point} style={{ gridTemplateColumns: "auto minmax(0, 1fr)" }}>
+            {t.law25.points.map((point, i) => (
+              <li key={point} {...reveal(i + 1)} style={{ gridTemplateColumns: "auto minmax(0, 1fr)", ...reveal(i + 1).style }}>
                 <span className="bp-icon"><CheckIcon size={18} /></span>
                 <span className="bp-ledger-what">{point}</span>
               </li>
@@ -252,7 +261,7 @@ export default async function OrazakaPage({ params }: Props) {
       <SectionBackdrop className="bp-glide" dome={false} grid id="how" style={{ scrollMarginTop: 72 }}>
         <div className="bp-wrap">
           <div className="bp-split">
-            <div>
+            <div {...reveal()}>
               <p className="bp-eyebrow">{t.how.eyebrow}</p>
               <h2 className="bp-h2"><Rich text={t.how.title} /></h2>
               <p className="bp-lead">{t.how.lead}</p>
@@ -267,7 +276,7 @@ export default async function OrazakaPage({ params }: Props) {
                 ))}
               </ol>
             </div>
-            <div className="bp-term">
+            <div className="bp-term" {...reveal(2)}>
               <div className="bp-term-bar" aria-hidden>
                 <i /><i /><i /> {t.how.terminal}
               </div>
@@ -285,11 +294,13 @@ export default async function OrazakaPage({ params }: Props) {
 
       {/* ─── Go deeper ─── */}
       <section className="bp-wrap">
-        <p className="bp-eyebrow">{t.explore.eyebrow}</p>
-        <h2 className="bp-h2"><Rich text={t.explore.title} /></h2>
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.explore.eyebrow}</p>
+          <h2 className="bp-h2"><Rich text={t.explore.title} /></h2>
+        </div>
         <div className="bp-cards">
-          {EXPLORE.map(({ id, href, Icon }) => (
-            <Link key={id} href={href} className="bp-card">
+          {EXPLORE.map(({ id, href, Icon }, i) => (
+            <Link key={id} href={href} className="bp-card" {...reveal(i + 1)}>
               <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
               <h3>{t.explore.items[id].title}</h3>
               <p>{t.explore.items[id].body}</p>

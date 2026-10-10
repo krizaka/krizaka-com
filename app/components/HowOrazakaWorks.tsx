@@ -14,7 +14,7 @@
    theme-aware, reduced-motion safe.
    ───────────────────────────────────────────────────────────────────────── */
 
-import { motion, useReducedMotion } from "framer-motion";
+import type { CSSProperties } from "react";
 import {
   ShieldCheck,
   Workflow,
@@ -100,18 +100,8 @@ export default function HowOrazakaWorks({
   // Structure here, words in messages → pages.howOrazakaWorks.
   const principles = PRINCIPLES.map((p, i) => ({ ...p, ...text.principles[i] }));
   const steps = STEPS.map((s, i) => ({ ...s, ...text.steps[i] }));
-  const reduce = useReducedMotion();
-
-  // Same markup on the server and the client (useReducedMotion is unknown during SSR, and
-  // branching on it caused a hydration mismatch); reduced motion only zeroes the transition.
-  const reveal = (delay = 0) => ({
-    initial: { opacity: 0, y: 18 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-12%" },
-    transition: reduce
-      ? { duration: 0 }
-      : { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const, delay },
-  });
+  // Each block rises once as it enters the viewport (data-reveal, app/motion.css · SiteMotion); still under reduced motion.
+  const stagger = (i: number) => ({ "--kz-delay": `${Math.min(i, 5) * 70}ms` }) as CSSProperties;
 
   return (
     <section
@@ -119,7 +109,7 @@ export default function HowOrazakaWorks({
       style={{ maxWidth: "820px", margin: "0 auto", padding: "8px 20px 24px" }}
     >
       {/* ── Mental model ── */}
-      <motion.div {...reveal()} style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto" }}>
+      <div data-reveal="" style={{ textAlign: "center", maxWidth: "680px", margin: "0 auto" }}>
         <p
           style={{
             fontFamily: "var(--font-mono, monospace)",
@@ -150,17 +140,18 @@ export default function HowOrazakaWorks({
         <p style={{ fontSize: "15.5px", lineHeight: 1.7, color: "var(--kz-text-secondary)", margin: "14px 0 0" }}>
           {t.pages.howOrazakaWorks.beforeYouDiveIntoThe}
         </p>
-      </motion.div>
+      </div>
 
       {/* ── Three principles ── */}
       <div className="how-principles" style={{ display: "grid", gap: "12px", margin: "32px 0 8px" }}>
         {principles.map((p, i) => {
           const Icon = p.icon;
           return (
-            <motion.div
+            <div
               key={p.title}
-              {...reveal(0.06 * i)}
+              data-reveal=""
               style={{
+                ...stagger(i),
                 display: "flex",
                 flexDirection: "column",
                 gap: "10px",
@@ -198,13 +189,13 @@ export default function HowOrazakaWorks({
               <span style={{ fontSize: "13.5px", lineHeight: 1.6, color: "var(--kz-text-secondary)" }}>
                 {p.desc}
               </span>
-            </motion.div>
+            </div>
           );
         })}
       </div>
 
       {/* ── Worked example: follow one request ── */}
-      <motion.div {...reveal()} style={{ margin: "44px 0 0" }}>
+      <div data-reveal="" style={{ margin: "44px 0 0" }}>
         <h3
           style={{
             fontFamily: "var(--font-display), system-ui, sans-serif",
@@ -247,14 +238,14 @@ export default function HowOrazakaWorks({
         <p style={{ fontSize: "14.5px", lineHeight: 1.65, color: "var(--kz-text-secondary)", margin: "12px 2px 0" }}>
           {t.pages.howOrazakaWorks.hereSWhatHappensTo}
         </p>
-      </motion.div>
+      </div>
 
       {/* ── The narrated timeline ── */}
       <ol style={{ listStyle: "none", padding: 0, margin: "24px 0 0" }}>
         {steps.map((s, i) => {
           const last = i === steps.length - 1;
           return (
-            <motion.li key={s.num} {...reveal(0.04 * Math.min(i, 5))} style={{ display: "flex", gap: "16px" }}>
+            <li key={s.num} data-reveal="" style={{ ...stagger(i), display: "flex", gap: "16px" }}>
               {/* spine + badge */}
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0 }}>
                 <span
@@ -354,14 +345,14 @@ export default function HowOrazakaWorks({
                   <span>{s.why}</span>
                 </p>
               </div>
-            </motion.li>
+            </li>
           );
         })}
       </ol>
 
       {/* ── The answer returns ── */}
-      <motion.p
-        {...reveal()}
+      <p
+        data-reveal=""
         style={{
           margin: "4px 0 0",
           paddingLeft: "54px",
@@ -372,11 +363,11 @@ export default function HowOrazakaWorks({
         }}
       >
         {t.pages.howOrazakaWorks.theLocallyValidatedAnswerComes}
-      </motion.p>
+      </p>
 
       {/* ── Hand-off to the live map ── */}
-      <motion.div
-        {...reveal()}
+      <div
+        data-reveal=""
         style={{
           margin: "40px 0 0",
           padding: "20px",
@@ -436,7 +427,7 @@ export default function HowOrazakaWorks({
           className="how-bounce"
           style={{ color: "var(--kz-text-muted)", margin: "16px 0 0" }}
         />
-      </motion.div>
+      </div>
 
       <style>{`
         .how-principles { grid-template-columns: 1fr; }

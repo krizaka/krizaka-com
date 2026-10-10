@@ -435,6 +435,21 @@ button.card:focus-visible { outline: 2px solid var(--kz-accent); outline-offset:
   .parallel { grid-template-columns: 1fr; }
 }
 
+/* ── Hover: the schemas move only under the pointer (they arrive once, softly: DiagramSection) ── */
+
+.stepNum { transition: box-shadow 220ms var(--kz-ease, ease), border-color 220ms ease, background 220ms ease; }
+.phase { transition: border-color 220ms ease; }
+@media (hover: hover) {
+  .phase:hover { border-color: color-mix(in srgb, var(--g) 32%, var(--kz-border-subtle)); }
+  .step:hover .stepNum {
+    background: color-mix(in srgb, var(--g) 22%, transparent);
+    border-color: var(--g);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--g) 16%, transparent);
+  }
+  .step:hover .stepName code { color: var(--g-ink); }
+  button.card:hover { border-color: color-mix(in srgb, var(--kz-accent) 55%, var(--kz-border-default)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .chip, .card { transition: none; }
+  .chip, .card, .stepNum, .phase { transition: none; }
 }

@@ -7,12 +7,13 @@ import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "../I18nProvider";
 import type { ContactTopic } from "@/lib/contact";
+import { reveal } from "@/lib/motion";
 
 export default function ContactCta({ topic }: { topic?: ContactTopic }) {
   const { t } = useI18n();
   const c = t.site.home.contact;
   return (
-    <section id="contact" className="kz-section kz-cta">
+    <section id="contact" className="kz-section kz-cta" {...reveal()}>
       <h2 className="kz-h2">{c.title}</h2>
       <Link href={topic ? `/contact?topic=${topic}` : "/contact"} prefetch={false} className="kz-cta-link btn-sheen">
         {c.cta} <ForwardIcon size={17} />

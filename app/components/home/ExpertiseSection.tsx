@@ -5,6 +5,7 @@
 import { AiIcon, BillingIcon, PackIcon, ShieldIcon, VideoIcon, KnowledgeIcon, type IconProps } from "@krizaka/icons";
 import type { ComponentType } from "react";
 import { useI18n } from "../I18nProvider";
+import { reveal } from "@/lib/motion";
 
 /* Sovereign AI · modular architecture · compliance · media · payments · governance (texts: site.expertise.items). */
 const ICONS: ComponentType<IconProps>[] = [AiIcon, PackIcon, ShieldIcon, VideoIcon, BillingIcon, KnowledgeIcon];
@@ -15,11 +16,13 @@ export default function ExpertiseSection() {
 
   return (
     <section id="expertise" className="kz-section">
-      <p className="kz-eyebrow">{e.eyebrow}</p>
-      <h2 className="kz-h2">
-        {e.title}
-      </h2>
-      <div className="kz-expertise">
+      <div {...reveal()}>
+        <p className="kz-eyebrow">{e.eyebrow}</p>
+        <h2 className="kz-h2">
+          {e.title}
+        </h2>
+      </div>
+      <div className="kz-expertise" {...reveal(1)}>
         {e.items.map((item, i) => {
           const Icon = ICONS[i % ICONS.length];
           return (
