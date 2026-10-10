@@ -978,7 +978,8 @@
         },
         "stepPrev": "Previous step",
         "stepNext": "Next step",
-        "step": "Step"
+        "step": "Step",
+        "textVersion": "Text version — the three journeys, step by step"
       },
       "pillars": {
         "cdn": {
@@ -2200,12 +2201,12 @@
         },
         {
           "title": "Entry Gate",
-          "what": "The gate receives the request and routes it into the engine — streaming (SSE) when the answer arrives token by token.",
-          "why": "One controlled entry point: nothing touches the models directly."
+          "what": "The edge receives every request, exchanges an API key for a session token, and routes by path: identity, billing and studio to their services, everything else to the conversation service.",
+          "why": "One controlled entry point: nothing reaches a model directly."
         },
         {
           "title": "Security & Logic",
-          "what": "Before any compute, Orazaka authenticates you, checks permissions (RBAC), and enforces quotas and business rules.",
+          "what": "Before any compute, the session token is checked (stateless JWT, krizaka-security) and the entitlement interceptor verifies what you may do and can afford.",
           "why": "Security and governance happen before inference — not after."
         },
         {
@@ -2215,7 +2216,7 @@
         },
         {
           "title": "Workers & Pipeline",
-          "what": "The request flows through 15 interceptors (system context, memory, RAG, safety), while async workers handle media and MCP integrations.",
+          "what": "The turn goes through {core} non-bypassable interceptors, then {configured} configured ones (memory, MCP, tools…); long jobs travel over RabbitMQ to the job service and the media worker.",
           "why": "This is where “cognition” is assembled, one ordered step after another."
         },
         {
@@ -2228,126 +2229,8 @@
         "Hover a card to light it up",
         "Click to pin its detail",
         "Search a component by name"
-      ]
-    },
-    "architectureMesh": {
-      "requestJourney": "Request journey",
-      "leftToRight": "left to right →",
-      "searchAComponent": "Search a component…",
-      "searchAComponent2": "Search a component",
-      "clear": "Clear",
-      "stages": [
-        {
-          "title": "Presentation",
-          "subtitle": "Entry points"
-        },
-        {
-          "title": "Entry Gate",
-          "subtitle": "REST · SSE routing"
-        },
-        {
-          "title": "Security & Logic",
-          "subtitle": "RBAC · rules"
-        },
-        {
-          "title": "Cognitive Engine",
-          "subtitle": "The hexagonal core"
-        },
-        {
-          "title": "Workers & Pipeline",
-          "subtitle": "Async · interceptors"
-        },
-        {
-          "title": "Persistence",
-          "subtitle": "Sovereign data"
-        }
       ],
-      "nodes": [
-        {
-          "tag": "Web",
-          "layer": "Application",
-          "label": "Web Client Console",
-          "desc": "Main Next.js client application: chat, image/video generation and AI interaction."
-        },
-        {
-          "tag": "Admin",
-          "layer": "Application",
-          "label": "Administration Console",
-          "desc": "Isolated SecOps console (port 3001) for model, pipeline and compliance management."
-        },
-        {
-          "tag": "Mobile",
-          "layer": "Application",
-          "label": "Mobile Application",
-          "desc": "Cross-platform mobile app (Expo SDK 53) for on-the-go access to the AI engine."
-        },
-        {
-          "tag": "CLI",
-          "layer": "Application",
-          "label": "Orazaka CLI",
-          "desc": "Command-line interface for automation, with a local SQLite job queue."
-        },
-        {
-          "tag": "API",
-          "layer": "Application",
-          "label": "Entry Gate",
-          "desc": "Receives requests (REST & SSE API) and routes them into the orchestration engine."
-        },
-        {
-          "tag": "RBAC",
-          "layer": "Framework",
-          "label": "Security & RBAC",
-          "desc": "Authenticates requests, validates permissions (RBAC) and enforces per-tenant quotas."
-        },
-        {
-          "tag": "Logic",
-          "layer": "Framework",
-          "label": "Business Logic",
-          "desc": "Business rules, prompt templates and structuring of cognitive use-cases."
-        },
-        {
-          "tag": "Core",
-          "layer": "Framework",
-          "label": "Cognitive Engine",
-          "desc": "The heart of Orazaka. Coordinates stateless AI request execution and orchestrates the data flow."
-        },
-        {
-          "tag": "Pipeline",
-          "layer": "Framework",
-          "label": "Cognitive Pipeline",
-          "desc": "Assembles the 15 interceptors (system context, memory, RAG, safety) to enrich requests."
-        },
-        {
-          "tag": "Integrations",
-          "layer": "Application",
-          "label": "Integrations Worker",
-          "desc": "Asynchronous background service running integration queues and system tasks."
-        },
-        {
-          "tag": "Media",
-          "layer": "Application",
-          "label": "Media Worker",
-          "desc": "Heavy image, video and audio generation, off the main API thread."
-        },
-        {
-          "tag": "MCP",
-          "layer": "Framework",
-          "label": "MCP Integrations",
-          "desc": "Secure connections to external tools (databases, APIs) via the Model Context Protocol."
-        },
-        {
-          "tag": "Identity",
-          "layer": "Framework",
-          "label": "Identity Database",
-          "desc": "Secure, isolated store for identities, credentials and RBAC policies."
-        },
-        {
-          "tag": "App · RAG",
-          "layer": "Framework",
-          "label": "Application Database",
-          "desc": "Relational and vector database (pgvector): sessions, contexts and RAG data."
-        }
-      ]
+      "inTheCode": "In the code"
     },
     "sovereignSimulator": {
       "selectAScenarioAndClick": "Select a scenario and click Run Simulation...",
@@ -2456,12 +2339,6 @@
           "intro": "The Studio's reference packs."
         }
       }
-    },
-    "sovereigntyPerimeter": {
-      "diagramTheOrazakaProductRuns": "Diagram: the Orazaka product runs entirely inside your sovereign perimeter."
-    },
-    "pipelineMesh": {
-      "startUserIntention": "START / USER INTENTION"
     },
     "docsPreview": {
       "docCards": [
@@ -2707,6 +2584,195 @@
           "title": "HTTP APIs (OpenAPI)",
           "description": "The OpenAPI contracts of krizaka-users, krizaka-billing and krizaka-notifications."
         }
+      }
+    }
+  },
+  "diagrams": {
+    "textVersion": "Text version",
+    "roles": {
+      "client": {
+        "title": "Clients",
+        "summary": "Where a person asks: the web client, the admin console, the mobile app, the CLI."
+      },
+      "service": {
+        "title": "Services & workers",
+        "summary": "What runs and is deployed: the edge, the Orazaka services, the Krizaka services, the media worker."
+      },
+      "adapter": {
+        "title": "Adapters",
+        "summary": "How the inside reaches the outside: persistence, typed HTTP clients, the encrypted asset store."
+      },
+      "application": {
+        "title": "Application",
+        "summary": "Around the core: use-case orchestration, the interceptor pipeline, tools (MCP, RAG)."
+      },
+      "domain": {
+        "title": "Domain core",
+        "summary": "The centre of each hexagon: the cognitive engine and identity. Dependencies point here."
+      },
+      "contract": {
+        "title": "Contracts",
+        "summary": "Tier-1 interfaces and records: the only way one context calls another."
+      },
+      "platform": {
+        "title": "Krizaka platform kit",
+        "summary": "Published on Maven Central: security, messaging (outbox, retry, dead letters), web, observability, and their four starters."
+      }
+    },
+    "owners": {
+      "all": "All",
+      "orazaka": "Orazaka",
+      "krizaka": "Krizaka"
+    },
+    "moduleMap": {
+      "label": "Orazaka module map",
+      "search": "Find a module…",
+      "searchLabel": "Find a module by name or description",
+      "clear": "Clear the search",
+      "modeLabel": "What the lines show",
+      "ownerLabel": "Whose modules",
+      "modes": {
+        "build": "Dependencies",
+        "runtime": "Runtime calls"
+      },
+      "hint": {
+        "build": "Select a module to isolate it: what it depends on and what depends on it stay lit, linked by lines on wide screens. Read top to bottom — dependencies point toward the core.",
+        "runtime": "Select a client or a service: who it calls and who calls it stay lit — HTTP lines solid, messages dashed."
+      },
+      "legend": {
+        "dependency": "depends on",
+        "outward": "points away from the core",
+        "http": "HTTP call",
+        "amqp": "message (RabbitMQ)"
+      },
+      "rel": {
+        "uses": "uses",
+        "usedBy": "used by",
+        "both": "both ways",
+        "calls": "calls",
+        "calledBy": "called by"
+      },
+      "announce": {
+        "build": "{module}: uses {uses}, used by {usedBy}.",
+        "runtime": "{module}: calls {calls}, called by {calledBy}."
+      },
+      "detail": {
+        "repository": "Repository",
+        "version": "version {version}",
+        "ports": "{inbound} inbound · {outbound} outbound ports",
+        "uses": "Depends on",
+        "usedBy": "Used by",
+        "calls": "Calls",
+        "calledBy": "Called by",
+        "none": "Nothing",
+        "outward": "{from} → {to} points away from the core. The hexagonal rule says dependencies point inward: the map shows the code as it is.",
+        "close": "Clear the selection"
+      },
+      "count": "{count} modules",
+      "empty": "No module here matches.",
+      "table": {
+        "modulesCaption": "Modules and their build dependencies",
+        "flowsCaption": "Runtime calls",
+        "module": "Module",
+        "role": "Role",
+        "repository": "Repository",
+        "dependsOn": "Depends on",
+        "usedBy": "Used by",
+        "from": "From",
+        "to": "To",
+        "kind": "Kind",
+        "via": "Via"
+      },
+      "kinds": {
+        "http": "HTTP",
+        "amqp": "message"
+      }
+    },
+    "pipeline": {
+      "label": "Interceptor pipeline",
+      "core": {
+        "title": "Phase 1 · core chain",
+        "sub": "Fixed in code. Runs first, on every turn, and cannot be switched off."
+      },
+      "dynamic": {
+        "title": "Phase 2 · configured chain",
+        "sub": "Order and switch read from the database (pipeline_interceptor_config), reloaded without a restart."
+      },
+      "locked": "non-bypassable",
+      "off": "disabled",
+      "noClass": "row without an implementation",
+      "sameOrder": "same order",
+      "concerns": {
+        "validation": "validation",
+        "governance": "governance",
+        "context": "context",
+        "enrichment": "enrichment",
+        "reformulation": "reformulation",
+        "tooling": "tooling",
+        "translation": "translation"
+      }
+    },
+    "messaging": {
+      "label": "Messaging topology",
+      "hint": "Select a publisher: the queues its messages reach light up, with the services that drain them.",
+      "exchanges": {
+        "jobs": "Work to do. A job is published once and drained by the lane that binds its key.",
+        "events": "What happened. Domain events and job outcomes, fanned out to every queue that binds them.",
+        "dlx": "Dead letters. Every queue parks what it could not process in ‹queue›.dlq."
+      },
+      "types": {
+        "topic": "topic exchange",
+        "direct": "direct exchange"
+      },
+      "cols": {
+        "producers": "Published by",
+        "queues": "Queue · bindings",
+        "consumers": "Consumed by"
+      },
+      "capabilityRoute": "the capability's route",
+      "dynamicKey": "key chosen at runtime",
+      "dlq": "dead letters → {dlq}",
+      "ownRetry": "own retry",
+      "retry": {
+        "title": "Retry, then dead letter",
+        "attempts": "{count} attempts",
+        "wait": "{initial} ms ×{multiplier}, up to {max} s",
+        "parked": "‹queue›.dlq",
+        "note": "Every consumer built on {module} ({property}) retries before it gives up; the message is then parked, not lost."
+      },
+      "table": {
+        "caption": "Queues, their bindings and consumers",
+        "queue": "Queue",
+        "exchange": "Exchange",
+        "bindings": "Bindings",
+        "consumers": "Consumed by",
+        "dlq": "Dead-letter queue",
+        "producersCaption": "Publishers",
+        "module": "Module",
+        "routingKey": "Routing key"
+      },
+      "capabilities": {
+        "caption": "Capability routes (orazaka_capabilities)",
+        "capability": "Capability",
+        "handler": "Handler",
+        "routingKey": "Routing key"
+      }
+    },
+    "sections": {
+      "map": {
+        "kicker": "The real map",
+        "title": "Every module, in its ring.",
+        "sub": "{modules} modules read from the Maven reactor and the workspace manifest, grouped the way the hexagon is: clients outside, the domain core in the middle, contracts and the Krizaka kit underneath."
+      },
+      "pipeline": {
+        "kicker": "The pipeline",
+        "title": "What a turn goes through, in order.",
+        "sub": "{core} interceptors the code never lets you skip, then {configured} that the database orders and switches."
+      },
+      "messaging": {
+        "kicker": "Messaging",
+        "title": "Who talks to whom over RabbitMQ.",
+        "sub": "{queues} queues, each with its dead-letter queue. Bindings, publishers and consumers read from the code."
       }
     }
   }

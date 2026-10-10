@@ -43,7 +43,7 @@ export const DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     order: 1,
     audience: "developer",
     intro:
-      "How Orazaka is built: a Ports & Adapters (hexagonal) engine with a curated module topology. Read this to understand the moving parts before going deeper — the interactive 3D model above mirrors the same structure.",
+      "How Orazaka is built: a Ports & Adapters (hexagonal) engine, every module in its ring. The map and the messaging topology below are drawn from the same generated model as the tables that follow — select a module to see what it depends on.",
   },
   core: {
     title: "Core Engine & Pipeline",
@@ -76,14 +76,6 @@ export const DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     audience: "developer",
     intro:
       "Operate and script the engine from the terminal. For developers and operators automating Orazaka.",
-  },
-  master_features: {
-    title: "Feature Matrix",
-    category: "core-features",
-    order: 1,
-    audience: "decision-maker",
-    intro:
-      "A single matrix of what Orazaka can do — chat, RAG, agents, image, audio, video — and the status of each capability. The fastest way to evaluate fit.",
   },
   auth: {
     title: "Authentication",

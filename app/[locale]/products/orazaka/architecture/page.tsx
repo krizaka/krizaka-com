@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
 import { buildAlternates } from "@/lib/seo";
 import architecture from "@/app/data/architecture.json";
-import ArchitectureMesh from "../../../../components/illustrations/ArchitectureMesh";
 import HowOrazakaWorks from "../../../../components/HowOrazakaWorks";
+import ModuleMap from "@/app/components/diagrams/ModuleMap";
+import InterceptorPipeline from "@/app/components/diagrams/InterceptorPipeline";
+import MessagingTopology from "@/app/components/diagrams/MessagingTopology";
+import DiagramSection from "@/app/components/diagrams/DiagramSection";
+import { architectureCounts, messagingData, moduleMapData, pipelineSteps } from "@/lib/architecture-model";
+import { verifiedJourneyModules } from "@/lib/orazaka-journey";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import RepositoryMap, { type RepositoryEntry } from "../../../../components/RepositoryMap";
-import { getDictionary } from "@/lib/i18n";
+import { format, getDictionary } from "@/lib/i18n";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -24,14 +29,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-/* The six-stage journey — mirrors the stage colors in ArchitectureMesh so the
-   header hints at the flow the reader is about to explore. */
+/* The six-stage journey — the stage colours of HowOrazakaWorks, so the header hints at the story below. */
 const STAGE_COLORS = ["#0ea5e9", "#8b5cf6", "#f59e0b", "#6366f1", "#10b981", "#f43f5e"];
 // Names: messages → pages.orazakaArchitecture.stageHints[i].
 
 export default async function ArchitecturePage({ params }: Props) {
   const { locale } = await params;
-  const text = getDictionary(locale).pages.orazakaArchitecture;
+  const t = getDictionary(locale);
+  const text = t.pages.orazakaArchitecture;
+  const counts = architectureCounts();
+  const sections = t.diagrams.sections;
 
   return (
     <main style={{ background: "var(--kz-surface-0)", color: "var(--kz-text-primary)", minHeight: "100vh" }}>
@@ -157,13 +164,28 @@ export default async function ArchitecturePage({ params }: Props) {
         </div>
       </section>
 
-      {/* ─── Evangelist teaching layer — the mental model + a narrated request ─── */}
-      <HowOrazakaWorks />
+      {/* ─── Evangelist teaching layer — the mental model + a narrated request, its modules checked against the code ─── */}
+      <HowOrazakaWorks counts={{ core: counts.coreInterceptors, configured: counts.configuredInterceptors }} stepModules={verifiedJourneyModules()} />
 
-      {/* ─── Interactive journey schema (the live map to explore) ─── */}
-      <section style={{ maxWidth: "80rem", margin: "0 auto", padding: "32px 20px 100px" }}>
-        <ArchitectureMesh modules={architecture.modules} dependencies={architecture.dependencies} />
-      </section>
+      {/* ─── The real map: every module in its ring (generated) ─── */}
+      <DiagramSection id="map" kicker={sections.map.kicker} title={sections.map.title} sub={format(sections.map.sub, { modules: counts.modules })}>
+        <ModuleMap data={moduleMapData()} />
+      </DiagramSection>
+
+      {/* ─── The interceptor pipeline, in order (generated) ─── */}
+      <DiagramSection
+        id="pipeline"
+        kicker={sections.pipeline.kicker}
+        title={sections.pipeline.title}
+        sub={format(sections.pipeline.sub, { core: counts.coreInterceptors, configured: counts.configuredInterceptors })}
+      >
+        <InterceptorPipeline steps={pipelineSteps()} text={t.diagrams.pipeline} />
+      </DiagramSection>
+
+      {/* ─── The messaging topology (generated) ─── */}
+      <DiagramSection id="messaging" kicker={sections.messaging.kicker} title={sections.messaging.title} sub={format(sections.messaging.sub, { queues: counts.queues })}>
+        <MessagingTopology data={messagingData()} />
+      </DiagramSection>
 
       {/* ─── Where each component lives: one GitHub repository per component (generated) ─── */}
       <RepositoryMap

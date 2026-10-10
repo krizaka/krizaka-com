@@ -94,9 +94,11 @@ function Diagram({ layout, journey, step, reduce, text, className }: { layout: L
         const used = journey.steps.some((st) => st.from === n.id || st.to === n.id);
         return (
           <g key={n.id} transform={`translate(${x - layout.nodeW / 2}, ${y - nodeH / 2})`} opacity={used ? 1 : 0.35} style={{ transition: "opacity 300ms ease" }}>
-            <rect width={layout.nodeW} height={nodeH} rx={14} fill="var(--kz-surface-1)"
-              stroke={on ? journey.color : "var(--kz-border-default)"} strokeWidth={on ? 2.5 : 1}
-              style={{ filter: on ? `drop-shadow(0 0 14px color-mix(in srgb, ${journey.color} 45%, transparent))` : undefined, transition: "stroke 250ms ease" }} />
+            {/* The chip of every schema of the site (diagrams.module.css): opaque card, 11px radius, a rail in the group colour. */}
+            <rect width={layout.nodeW} height={nodeH} rx={11} fill="var(--kz-surface-1)"
+              stroke={on ? journey.color : "var(--kz-border-default)"} strokeWidth={on ? 2 : 1}
+              style={{ filter: on ? `drop-shadow(0 6px 16px color-mix(in srgb, ${journey.color} 30%, transparent))` : undefined, transition: "stroke 250ms ease" }} />
+            <rect x={0} y={10} width={3} height={nodeH - 20} rx={1.5} fill={used ? journey.color : "var(--kz-border-strong)"} />
             <text x={layout.nodeW / 2} y={27} textAnchor="middle" fontSize={17} fontWeight={700} fill="var(--kz-text-primary)" fontFamily="var(--font-display), system-ui, sans-serif">
               {text.nodes[n.id].label}
             </text>
@@ -198,7 +200,32 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
         </div>
       </div>
 
+      {/* Text version: every journey, every step, every endpoint. */}
+      <details className="oa-text">
+        <summary>{text.textVersion}</summary>
+        {journeys.map((x) => (
+          <div key={x.id}>
+            <h4>{text.journeys[x.id].name}</h4>
+            <p>{text.journeys[x.id].summary}</p>
+            <ol>
+              {x.steps.map((st, i) => (
+                <li key={i}>
+                  <strong>{text.nodes[st.from].label} → {text.nodes[st.to].label}</strong> — {text.journeys[x.id].steps[i].title}
+                  {st.endpoint && <> (<code>{st.endpoint}</code>)</>}: {text.journeys[x.id].steps[i].detail}
+                </li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </details>
+
       <style>{`
+        .oa-text { margin-top: 14px; border-top: 1px solid var(--kz-border-subtle); padding-top: 12px; font-size: 13.5px; color: var(--kz-text-secondary); }
+        .oa-text summary { cursor: pointer; font-weight: 600; font-size: 13px; }
+        .oa-text h4 { margin: 14px 0 4px; font-size: 14px; color: var(--kz-text-primary); }
+        .oa-text p { margin: 0 0 6px; }
+        .oa-text ol { margin: 0; padding-left: 20px; line-height: 1.6; }
+        .oa-text code { font-family: var(--font-mono); font-size: 12px; }
         .oa { border-radius: 22px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); padding: clamp(16px, 3vw, 28px); }
         .oa-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
         .oa-tab { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 600;

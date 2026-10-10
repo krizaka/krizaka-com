@@ -26,8 +26,11 @@
   curated title/category/order/audience/intro). Docs not in the manifest stay
   internal. Add a manifest entry to publish a synced doc — do not copy markdown
   into the repo by hand.
-- The 3D architecture scene renders `app/data/architecture.json`; treat it as
-  read-only generated data.
+- The architecture schemas (module map, interceptor pipeline, messaging topology, the Orazaka
+  request journey) render `app/data/architecture.json` through `lib/architecture-model.ts`, which
+  checks at build time the shape they rely on; treat the JSON as read-only generated data. A fact
+  the schemas need and the model lacks (a role, a flow, a binding) is added to the **generator**
+  (`products/orazaka/scripts/generate-docs.mjs`), never to the site.
 - The Orazaka repository map (`RepositoryMap`, architecture page `#repositories`) renders
   `repositories` from the same generated file — never hard-code a repository list in a component.
 
@@ -106,22 +109,24 @@
 
 ## 4. Visualizations
 
-- 3D scenes load client-only: `dynamic(() => import(...), { ssr: false })` with a
-  themed loading fallback (WebGL has no SSR).
-- All schemas are **theme-aware** and **reduced-motion safe**
-  (`prefers-reduced-motion` disables idle/entrance motion), keyed off
-  `--kz-accent`. Keep the visual language homogeneous across the site
-  (ArchitectureScene3D · InterceptorMesh/HexNode · PipelineMesh).
-- Mermaid is a **print/fallback only** — main schemas are the interactive
-  components.
+- One visual language for every schema: `app/components/diagrams/` (`ModuleMap`,
+  `InterceptorPipeline`, `MessagingTopology`, `diagrams.module.css`) and `OrochiaArchitecture`
+  share the same chip (opaque card, 11px radius, a rail in the group colour), one semantic colour
+  per group (`--dg-<group>`, with an AA `-ink` variant for text), the domain core in the page's
+  brand accent. 2D, labels in full — a schema whose labels need zooming is not done.
+- Every schema reads correctly at phone width (one column, top to bottom), works with the keyboard,
+  honours `prefers-reduced-motion`, and carries a **text version** (tables or ordered lists) of
+  everything it draws.
+- Mermaid is a **print/fallback only** for diagrams written inside synced docs — drawn natively by
+  mermaid.js at a readable size (wider than the column → it scrolls, never shrinks).
 
 ## 5. Code conventions
 
 - TypeScript, App Router. UI in `app/components/`, logic/data access in `lib/`.
 - Server Components by default; add `"use client"` only when needed (state,
   effects, WebGL, browser APIs).
-- Prefer static generation; keep client bundles lean (the 3D libs are the only
-  heavy deps and are code-split behind `ssr: false`).
+- Prefer static generation; keep client bundles lean: schemas receive the slice of generated data
+  they draw as props from a server component, never the whole JSON.
 - i18n via `app/components/I18nProvider` where text is user-facing.
 
 - Links to the running Orochia go through `OROCHIA_APP_URL` (`lib/site.ts`), set by

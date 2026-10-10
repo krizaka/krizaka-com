@@ -25,6 +25,7 @@ import {
   ArrowDown,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { format } from "@krizaka/i18n";
 import { useI18n } from "./I18nProvider";
 
 
@@ -85,7 +86,15 @@ const STEPS: Step[] = [
   },
 ];
 
-export default function HowOrazakaWorks() {
+/** `counts` fill the step texts ({core}, {configured}); `stepModules` are the modules each step names, checked
+ *  against the generated architecture by the page (lib/orazaka-journey.ts). */
+export default function HowOrazakaWorks({
+  counts,
+  stepModules,
+}: {
+  counts: { core: number; configured: number };
+  stepModules: readonly (readonly string[])[];
+}) {
   const { t } = useI18n();
   const text = t.pages.howOrazakaWorks;
   // Structure here, words in messages → pages.howOrazakaWorks.
@@ -295,8 +304,29 @@ export default function HowOrazakaWorks() {
                   {s.title}
                 </div>
                 <p style={{ margin: "6px 0 0", fontSize: "14.5px", lineHeight: 1.65, color: "var(--kz-text-secondary)" }}>
-                  {s.what}
+                  {format(s.what, counts)}
                 </p>
+                {stepModules[i]?.length > 0 && (
+                  <p style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px", margin: "8px 0 0" }}>
+                    <span style={{ fontSize: "12px", fontWeight: 600, color: "var(--kz-text-muted)" }}>{t.pages.howOrazakaWorks.inTheCode}</span>
+                    {stepModules[i].map((id) => (
+                      <code
+                        key={id}
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "12px",
+                          padding: "1px 7px",
+                          borderRadius: "6px",
+                          color: "var(--kz-text-primary)",
+                          background: "var(--kz-surface-2)",
+                          border: "1px solid var(--kz-border-subtle)",
+                        }}
+                      >
+                        {id}
+                      </code>
+                    ))}
+                  </p>
+                )}
                 <p
                   style={{
                     display: "flex",
@@ -305,17 +335,17 @@ export default function HowOrazakaWorks() {
                     margin: "8px 0 0",
                     fontSize: "13px",
                     lineHeight: 1.55,
-                    color: s.color,
+                    color: "var(--kz-text-secondary)",
                   }}
                 >
                   <span
                     style={{
                       fontFamily: "var(--font-mono)",
-                      fontSize: "9px",
+                      fontSize: "10.5px",
                       fontWeight: 700,
                       textTransform: "uppercase",
                       letterSpacing: "0.08em",
-                      opacity: 0.85,
+                      color: "var(--kz-text-muted)",
                       flexShrink: 0,
                     }}
                   >

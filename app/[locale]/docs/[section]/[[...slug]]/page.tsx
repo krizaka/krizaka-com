@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/layouts/docs/page";
-import ArchitectureDocHero from "@/app/components/ArchitectureDocHero";
+import ArchitectureDocDiagram from "@/app/components/docs/ArchitectureDocDiagram";
 import { getMdxComponents } from "@/app/components/docs/mdx";
 import { ProductDocsIndex } from "@/app/components/docs/ProductDocsIndex";
 import { ComponentDoc, componentToc } from "@/app/components/docs/ComponentDoc";
@@ -109,7 +109,7 @@ export default async function DocsSectionPage({ params }: Props) {
         </div>
       )}
       <DocsBody>
-        {section === "orazaka" && pageKey(page.slugs) === "architecture" && <ArchitectureDocHero />}
+        {section === "orazaka" && <ArchitectureDocDiagram page={pageKey(page.slugs)} t={t} />}
         <MDX components={getMdxComponents(locale, section)} />
         {entry && (
           <p className="kz-docs-note">
