@@ -1,6 +1,5 @@
 /* The @krizaka packages published on npm — structure only (ids, names, repositories, layer, product); their words live
-   in messages/<locale>.json under site.packages.items.<id>. Shown on /open-source; the story (chapter 05, "the
-   pattern in the steel") shows STORY_PACKAGES, its four original layers. */
+   in messages/<locale>.json under site.packages.items.<id>. Shown on /open-source. */
 
 export type PackageId =
   | "tokens"
@@ -39,11 +38,6 @@ export const NPM_PACKAGES: readonly NpmPackage[] = [
   { id: "orazakaDs", name: "@krizaka/orazaka-design-system", repo: "orazaka-ui-kit", dir: "orazaka-design-system", layer: "products", product: "orazaka" },
   { id: "orazakaShared", name: "@krizaka/orazaka-shared", repo: "orazaka-ui-kit", dir: "orazaka-shared", layer: "products", product: "orazaka" },
 ];
-
-/** The story (chapter 05) still shows its four original layers: an explicit filter until it is redesigned (PY3). */
-export type StoryPackageId = "ui" | "orochiaDs" | "orazakaDs" | "orazakaShared";
-const STORY_IDS: readonly PackageId[] = ["ui", "orochiaDs", "orazakaDs", "orazakaShared"];
-export const STORY_PACKAGES = NPM_PACKAGES.filter((p): p is NpmPackage & { id: StoryPackageId } => STORY_IDS.includes(p.id));
 
 export const npmUrl = (p: NpmPackage) => `https://www.npmjs.com/package/${p.name}`;
 export const repoUrl = (p: NpmPackage) => `https://github.com/krizaka/${p.repo}${p.dir ? `/tree/main/${p.dir}` : ""}`;

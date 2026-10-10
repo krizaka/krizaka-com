@@ -1,0 +1,10 @@
+{
+  "menu": {
+    "before": { "panelWidthPx": 640, "productEntries": 8, "footerLinks": 4, "subtitles": 8, "icons": 12 },
+    "after": { "panelWidthPx": 440, "panelHeightPx": 292, "productRows": 2, "plainTextLinks": 6, "footerLinks": 1, "subtitles": 0, "keyboard": "Enter/ArrowDown opens + focuses first link, ArrowUp/Down/Left/Right walk (wrap), Home/End, Escape returns focus to trigger, Tab out closes" }
+  },
+  "story": {
+    "lighthouseA11y": { "before": { "/en/story": 96, "/fr/story": 96, "failing": "color-contrast (--kz-text-muted on boss banner, heads, cabinet labels)" }, "after": { "/en/story": 100, "/fr/story": 100 } },
+    "chapter05": "npm layers stack removed; replaced by 'Bonus stage — the folded blade: everything is open' linking to /open-source"
+  }
+}

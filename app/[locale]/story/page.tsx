@@ -13,12 +13,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/story",
     en: {
-      title: "Our story — where Krizaka, Orazaka and Orochia get their names",
-      description: "A forge on a slope, an oracle that stays home, an eight-headed serpent from myth and arcade legend — and the flock that keeps watch.",
+      title: "Our story — why Krizaka, Orazaka and Orochia exist",
+      description: "A blade folded in the open, an AI that never leaves home, a video platform where creators keep 90% — told like an arcade fight, and everything open source.",
     },
     fr: {
-      title: "Notre histoire — d'où viennent les noms Krizaka, Orazaka et Orochia",
-      description: "Une forge à mi-pente, un oracle qui ne quitte pas la maison, un serpent à huit têtes venu du mythe et de l'arcade — et la volée qui veille.",
+      title: "Notre histoire — pourquoi Krizaka, Orazaka et Orochia existent",
+      description: "Une lame pliée au grand jour, une IA qui ne quitte jamais la maison, une plateforme vidéo où les créateurs gardent 90 % — racontées comme un combat d'arcade, et tout en open source.",
     },
   });
 }

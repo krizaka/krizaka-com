@@ -1,5 +1,6 @@
 /* "Our story" — the structure of /story and its home teaser. Every text lives in
-   messages/<locale>.json under site.story (intro, chapters.<id>, heads, flock.<id>, closing). */
+   messages/<locale>.json under site.story (intro, chapters.<id> with its special move, heads, flock.<id>, open,
+   closing, arcade). */
 
 export const CHAPTERS = [
   { id: "krizaka", name: "Krizaka" },

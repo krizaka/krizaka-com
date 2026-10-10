@@ -33,11 +33,15 @@
 
 ## 2.1 Products are presented the same way
 
-- `lib/nav.ts` is the single source of the product navigation: the desktop mega-menu, the mobile
+- `lib/nav.ts` is the single source of the product navigation: the desktop Products panel, the mobile
   panel, the footer and the home spotlights all render it. Every product exposes the same four
   entries in the same order (overview · how it works · demo · signature); documentation lives under **Docs**
   (`NAV_DOCS`: Orazaka, Orochia, Krizaka UI, Krizaka Java — the one entry point of every documentation). A product
   page may still link its documentation in context.
+- The desktop Products panel stays compact (~440 px): one row per product (mark · name · tagline → its overview),
+  its three other entries in plain text under it, no per-link icons or subtitles, and only "All products" below —
+  Our story, Open source and Contact are already in the bar (the mobile accordion lists them). Menus are keyboard
+  operable (Enter/↓ opens, ↑/↓ · Home/End walk, Escape closes and returns focus, Tab out closes) with a visible ring.
 - Each product wears its brand (`@krizaka/tokens/brands/scoped.css`): `/products/orazaka*` under `.brand-orazaka`
   (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), the rest of the site Krizaka (ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); sections use `SectionBackdrop`

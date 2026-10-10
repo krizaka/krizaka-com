@@ -488,20 +488,16 @@
         "badge": "AI",
         "links": {
           "overview": {
-            "label": "Overview",
-            "desc": "The engine and its components"
+            "label": "Overview"
           },
           "architecture": {
-            "label": "How it works",
-            "desc": "A request's journey, animated"
+            "label": "How it works"
           },
           "demo": {
-            "label": "Demos",
-            "desc": "Chat, media and agents in action"
+            "label": "Demos"
           },
           "signature": {
-            "label": "Cognitive engineering",
-            "desc": "Why a pipeline, not a prompt"
+            "label": "Cognitive engineering"
           }
         }
       },
@@ -510,20 +506,16 @@
         "badge": "Video",
         "links": {
           "overview": {
-            "label": "Overview",
-            "desc": "Streaming, paywalls, payouts"
+            "label": "Overview"
           },
           "architecture": {
-            "label": "How it works",
-            "desc": "Playback, unlock and upload, animated"
+            "label": "How it works"
           },
           "demo": {
-            "label": "Demo",
-            "desc": "A video tour of the app"
+            "label": "Demo"
           },
           "signature": {
-            "label": "Payments & compliance",
-            "desc": "Signed webhooks, 2257 records"
+            "label": "Payments & compliance"
           }
         }
       },
@@ -639,7 +631,7 @@
         "ci": "build, tests and architecture rules on every commit"
       },
       "storyTeaser": {
-        "sub": "A forge halfway up a slope, an oracle that stays home, an eight-headed serpent — and the flock that keeps watch.",
+        "sub": "A blade folded in the open, an AI that never leaves home, a video platform where creators keep 90% — and the flock that keeps watch.",
         "cta": "Read the story"
       },
       "contact": {
@@ -716,33 +708,39 @@
     "story": {
       "intro": {
         "eyebrow": "Our story",
-        "title": "Every name here is a legend we chose to keep.",
-        "lead": "We grew up between arcade cabinets and old myths. When we started building software that people would have to trust with their words, their work and their income, we named it after the stories that taught us what trust costs."
+        "title": "Three clans. One fight: what's yours stays yours.",
+        "lead": "Krizaka began with a refusal. Your data shouldn't have to leave home to be useful. A creator shouldn't have to hand a fortune to a platform to get paid. And nobody should have to take software on faith. So we forge our own — in the open, line by line — and we named it after the legends that taught us what trust costs."
       },
       "chapters": {
         "krizaka": {
           "roots": "kris + zaka (坂)",
-          "title": "The forge on the slope",
+          "title": "The blade folded in the open",
           "body": [
-            "A kris is a blade forged in layers — iron folded onto iron, again and again, until a pattern appears in the steel. Zaka is the slope you climb, one step after another.",
-            "Krizaka is the forge halfway up the hill. Nothing leaves it that hasn't been folded, tested and written down — and everything that leaves it is open, so anyone can check the pattern."
-          ]
+            "A kris is a blade forged in layers: iron folded onto iron, again and again, until a pattern rises in the steel. Zaka is the slope you climb, one step at a time. Krizaka is the forge halfway up that hill.",
+            "Why a forge? Because the software we were asked to trust had turned into a black box — data shipped to someone else's cloud, income routed through someone else's rules, code nobody outside could read. We set out to build the opposite, and to prove it rather than promise it.",
+            "Nothing leaves the forge unfolded, untested or undocumented, and everything that leaves it is open source under Apache-2.0. You don't have to believe us: read the pattern in the steel."
+          ],
+          "move": "Prove it, don't promise it."
         },
         "orazaka": {
           "roots": "ōrāre (to speak) + zaka",
-          "title": "The oracle that stays home",
+          "title": "The oracle that never leaves home",
           "body": [
             "Ōrāre: to speak, to ask — the Latin root of oracle. In the old stories you climbed to the oracle with your question, and you trusted it with something private.",
-            "Orazaka is an oracle on your own hill. It answers, it reasons, it creates — and it never carries your words down to someone else's valley. AI you can consult without giving anything away."
-          ]
+            "Today, asking an AI usually means carrying your contracts, your files and your ideas down to someone else's valley. For a lot of teams that's a deal-breaker, so they do without. We think that's the wrong trade.",
+            "Orazaka brings the oracle to your hill: answers drawn from your own documents, visuals generated on your machines, Studios that take the repeat work — on your infrastructure, under your rules. Your questions and your answers stay in the house, and every line that touches them is public, so your security team can check instead of trust."
+          ],
+          "move": "Your data never leaves home."
         },
         "orochia": {
           "roots": "Yamata no Orochi",
-          "title": "Eight heads, eight answers",
+          "title": "Eight heads, one deal: the creator keeps 90%",
           "body": [
-            "Yamata no Orochi is the eight-headed serpent of Japan's oldest chronicles. Players of a certain age met it elsewhere: the final boss of The King of Fighters '97, sealed by three clans and their sacred treasures.",
-            "In the myth, Susanoo doesn't win by force. He sets out eight vats, one for each head, and waits. The creator economy has eight heads of its own — Orochia sets out one answer for each, so that creators are paid, every cent, exactly once."
-          ]
+            "Yamata no Orochi is the eight-headed serpent of Japan's oldest chronicles. Players of a certain age met it somewhere else too: waiting at the end of a 1990s arcade tournament, sealed by three clans and their sacred treasures.",
+            "The creator economy has a serpent of its own: heavy cuts, payouts nobody can audit, links that leak, accounts closed overnight. Creators do the work and carry the risk — and too often they're the last to be paid.",
+            "Orochia is our answer: a video platform where the creator keeps 90% of every sale, every movement is written once in a double-entry ledger, and the whole thing runs on servers you choose. In the myth, Susanoo doesn't win by force — he sets out eight vats, one for each head. Orochia sets out one answer for each."
+          ],
+          "move": "90% to the creator. On every sale."
         }
       },
       "heads": [
@@ -812,36 +810,36 @@
         }
       },
       "closing": {
-        "title": "Old stories, kept promises.",
-        "body": "That is the whole idea. The legends gave us the names; the work is making sure the software deserves them."
+        "title": "Round one is over. Continue?",
+        "body": "We don't have a trophy case to show you yet. We have something better to start from: two products you can run today, every line in the open, and promises written down where you can hold us to them. The next rounds are played with the people who use them — try them, read them, or write to us."
       },
       "headsAria": "The eight heads",
       "flockLabel": "The flock",
       "flockTitle": "The ones keeping watch.",
-      "flockLead": "Our mascots aren't decoration. Each one carries something we don't compromise on.",
+      "flockLead": "Our mascots aren't decoration. Each one carries a promise we don't compromise on.",
       "ctaProducts": "Explore the products",
       "ctaContact": "Write to us",
       "arcade": {
         "continue": "Continue?",
         "insertCoin": "Insert Coin",
         "teamTag": "Team Battle · 3 vs 3",
-        "teamSynergy": "The Three Sacred Clans",
+        "teamSynergy": "The Three Sacred Treasures",
         "stage": "Stage",
         "orochiBossTitle": "Yamata no Orochi",
-        "orochiBossSub": "The eight heads of the creator economy sealed",
+        "orochiBossSub": "The eight heads of the creator economy — eight answers, sealed in code",
         "sealedBadge": "Sealed",
         "vatLabel": "Vat",
         "creditLabel": "Credit 01",
-        "restartBtn": "Press to restart story",
+        "restartBtn": "Back to the select screen",
         "clans": {
-          "krizaka": "the sword",
-          "orazaka": "the mirror",
-          "orochia": "the jewel"
+          "krizaka": "the forge",
+          "orazaka": "sovereign AI",
+          "orochia": "creator video"
         },
         "clanNames": {
-          "krizaka": "Kusanagi",
-          "orazaka": "Yata",
-          "orochia": "Yasakani"
+          "krizaka": "Sword clan",
+          "orazaka": "Mirror clan",
+          "orochia": "Jewel clan"
         },
         "selectAria": "The three clans: Krizaka, Orazaka and Orochia",
         "power": "Power",
@@ -849,23 +847,17 @@
         "bossGauge": "Heads left",
         "cabinetLabel": "Krizaka · arcade cabinet",
         "coinEntry": "1 credit = 1 story",
-        "playerStart": "1P Start"
+        "playerStart": "1P Start",
+        "specialMove": "Special move"
       },
-      "layers": {
-        "label": "The pattern in the steel",
-        "title": "Folded once, used everywhere.",
-        "lead": "A kris draws its strength from layers of steel folded onto each other. Our interfaces are forged the same way: one brand layer, folded into each product's kit, and every layer published in the open — anyone can use it, anyone can check the pattern.",
-        "badge": "Shared Architecture · Not a standalone product",
-        "copyInstall": "Copy install command",
-        "copied": "Copied!",
-        "viewNpm": "View on npm",
-        "items": {
-          "ui": "The first fold: the marks and the way everything moves.",
-          "orochiaDs": "Folded for Orochia: the serpent's colours, every control a creator touches.",
-          "orazakaDs": "Folded for Orazaka: the oracle's interface, on every screen it speaks from.",
-          "orazakaShared": "The core of the blade: the shapes every Orazaka client agrees on."
-        },
-        "install": "Take a layer"
+      "open": {
+        "label": "Bonus stage",
+        "title": "The folded blade: everything is open.",
+        "body": [
+          "A kris is only as strong as the layers you can't see. Ours are all in plain sight: the AI engine, the video platform, the design system, the icons, the Java building blocks — public repositories and published packages, Apache-2.0.",
+          "That's our proof. No benchmark to take on faith, no borrowed logo wall: clone it, run it, read it, fork it. If something on this page isn't in the code, the code wins."
+        ],
+        "cta": "See everything we've opened"
       }
     },
     "orochia": {

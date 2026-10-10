@@ -271,8 +271,8 @@ export function ArcadeStyles() {
         background: color-mix(in srgb, var(--kz-surface-1) 70%, transparent); overflow: hidden; }
       .an-select-head { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 12px; margin-bottom: 18px;
         font-family: var(--font-mono); font-size: 10px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; }
-      .an-select-tag { color: var(--site-accent-text); }
-      .an-select-synergy { color: var(--kz-text-muted); }
+      .an-select-tag { color: var(--kz-accent-text); }
+      .an-select-synergy { color: var(--kz-text-secondary); }
       .an-select-grid { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 3vw, 28px); }
       .an-slot { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
       .an-slot-frame { position: relative; width: clamp(76px, 18vw, 112px); aspect-ratio: 1; display: grid; place-items: center;
@@ -305,11 +305,11 @@ export function ArcadeStyles() {
       .an-fighter:hover .an-fighter-mark { transform: scale(1.05); }
       .an-gauge-head { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 8px; }
       .an-gauge-name { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 11px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; }
-      .an-gauge-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-text-muted); }
+      .an-gauge-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-text-secondary); }
       .an-gauge { position: relative; width: 100%; height: 8px; border-radius: 3px; overflow: hidden; transform: skewX(-14deg);
         background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle); }
       .an-gauge-fill { position: absolute; inset: 0; transform-origin: left center; }
-      .an-roots { margin: 2px 0 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); }
+      .an-roots { margin: 2px 0 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-secondary); }
 
       /* ── Stage announcement ── */
       .an-stage { display: inline-flex; align-items: center; gap: 10px; margin: 0; padding: 5px 14px; border-radius: 6px; transform: skewX(-8deg);
@@ -322,7 +322,7 @@ export function ArcadeStyles() {
 
       /* ── Boss gauge ── */
       .an-boss-gauge { display: grid; gap: 8px; max-width: 520px; margin: 18px auto 28px; }
-      .an-boss-gauge-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--kz-text-muted); text-align: center; }
+      .an-boss-gauge-label { font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--kz-text-secondary); text-align: center; }
       .an-boss-cells { display: grid; grid-template-columns: repeat(8, 1fr); gap: 4px; padding: 3px; border-radius: 4px; transform: skewX(-14deg);
         border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
       .an-boss-cell { height: 10px; border-radius: 1px; opacity: .14; }
@@ -332,12 +332,12 @@ export function ArcadeStyles() {
         background: var(--kz-surface-1); border: 1px solid var(--kz-border-strong); box-shadow: var(--kz-shadow-lg); }
       .an-bezel-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding: 0 4px; }
       .an-screw { width: 7px; height: 7px; border-radius: 50%; background: var(--kz-border-strong); }
-      .an-bezel-label { font-family: var(--font-mono); font-size: 9px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-text-muted); }
+      .an-bezel-label { font-family: var(--font-mono); font-size: 9px; font-weight: 800; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-text-secondary); }
       .an-coin-deck { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 12px; padding: 8px 12px; margin-bottom: 12px;
         border-radius: 12px; background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle);
         font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
       .an-coin-lit { font-weight: 800; letter-spacing: .2em; }
-      .an-coin-entry { color: var(--kz-text-muted); }
+      .an-coin-entry { color: var(--kz-text-secondary); }
       .an-credit { display: inline-flex; align-items: center; gap: 6px; color: var(--kz-text-secondary); }
       .an-credit-led { width: 6px; height: 6px; border-radius: 50%; background: var(--kz-success); }
       .an-crt { position: relative; overflow: hidden; border-radius: 14px; padding: 16px 20px; margin-bottom: 14px;

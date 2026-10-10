@@ -6,8 +6,7 @@ import { useEffect, useState } from "react";
 import { ChevronDownIcon, CloseIcon, GlobeIcon, KnowledgeIcon, MoonIcon, SunIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
-import { NAV_ICONS, SIGNATURE_ICONS } from "./ProductsMenu";
-import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isDocsActive, isDocsSection, isNavActive, localeless } from "@/lib/nav";
+import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isDocsActive, isDocsSection, isNavActive, localeless, productLinkText } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 /* ─── Mobile Menu Panel ─── */
@@ -135,12 +134,12 @@ export function MobilePanel({
           </button>
         </div>
 
-        {/* Products — same five entries per product as the desktop mega-menu (lib/nav.ts). Mounted on first open: the
+        {/* Products — one accordion per product, the same entries as the desktop panel, in plain text (lib/nav.ts). Mounted on first open: the
             links of a closed panel would otherwise be prefetched on every page load (performance). */}
         {seen && (
         <div style={{ flex: 1, padding: "14px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
           {NAV_PRODUCTS.map((p) => (
-            <details key={p.id} className={`kz-mp-product brand-${p.id}`} open={path.startsWith(p.href) || (!path.startsWith("/products/") && p.id === "orazaka")}>
+            <details key={p.id} className={`kz-mp-product brand-${p.id}`} open={path.startsWith(p.href)}>
               <summary>
                 <span className="kz-mp-logo">
                   <ProductLogo id={p.id} size={26} />
@@ -152,14 +151,11 @@ export function MobilePanel({
                 <ChevronDownIcon size={16} className="kz-mp-chevron" />
               </summary>
               <div className="kz-mp-links">
-                {p.links.map((l) => {
-                  const Icon = l.icon === "signature" ? SIGNATURE_ICONS[p.id] : NAV_ICONS[l.icon];
-                  return (
-                    <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
-                      <Icon size={18} nodeColor="var(--kz-accent)" /> {t.site.nav[p.id].links[l.icon].label}
-                    </Link>
-                  );
-                })}
+                {p.links.map((l) => (
+                  <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
+                    {productLinkText(t, p.id, l)}
+                  </Link>
+                ))}
               </div>
             </details>
           ))}
@@ -189,14 +185,12 @@ export function MobilePanel({
           </details>
 
           <div className="kz-mp-links" style={{ marginTop: "4px", paddingTop: "10px", borderTop: "1px solid var(--kz-border-subtle)" }}>
-            {NAV_COMPANY.map((l) => {
-              const Icon = NAV_ICONS[l.icon];
-              return (
-                <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
-                  <Icon size={18} /> {companyLinkText(t, l).label}
-                </Link>
-              );
-            })}
+            {/* The desktop bar's other entries (story, open source, contact) live here on mobile. */}
+            {NAV_COMPANY.map((l) => (
+              <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
+                {companyLinkText(t, l).label}
+              </Link>
+            ))}
           </div>
         </div>
         )}
@@ -211,9 +205,10 @@ export function MobilePanel({
           .kz-mp-tagline { display: block; font-size: 12px; color: var(--kz-text-secondary); }
           .kz-mp-chevron { color: var(--kz-text-muted); transition: transform 200ms ease; flex-shrink: 0; }
           .kz-mp-product[open] .kz-mp-chevron { transform: rotate(180deg); }
-          .kz-mp-product .kz-mp-links { padding: 0 8px 8px; }
+          .kz-mp-product .kz-mp-links { padding: 0 8px 8px 58px; }
+          .kz-mp-product summary:focus-visible, .kz-mp-link:focus-visible { outline: 2px solid var(--kz-ring); outline-offset: -2px; border-radius: 10px; }
           .kz-mp-links { display: flex; flex-direction: column; gap: 2px; }
-          .kz-mp-link { display: flex; align-items: center; gap: 10px; padding: 10px 10px; border-radius: 8px; font-size: 14px; font-weight: 500;
+          .kz-mp-link { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 10px; border-radius: 8px; font-size: 14px; font-weight: 500;
             color: var(--kz-text-secondary); text-decoration: none; font-family: var(--font-display), system-ui, sans-serif; }
           .kz-mp-link svg { color: var(--kz-text-muted); }
           .kz-mp-link.is-active { color: var(--kz-accent-text); font-weight: 600; background: var(--kz-surface-1); }
