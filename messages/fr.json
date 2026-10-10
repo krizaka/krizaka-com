@@ -1020,20 +1020,32 @@
       },
       "tour": {
         "feed": {
-          "label": "Fil public",
-          "caption": "Porte d'âge 18+, fil des créateurs, profil créatrice — enregistré sur la dernière version d'Orochia."
-        },
-        "unlock": {
-          "label": "Lecture & pourboire",
-          "caption": "Lecture protégée et pourboire : montant, passerelle configurée, confirmation par la passerelle."
+          "label": "Découvrir",
+          "caption": "L’accueil des fans : la porte 18+, les stories des créateurs, les quatre façons de les payer, les enchères et défis ouverts."
         },
         "community": {
-          "label": "Explorer & playlists",
-          "caption": "Recherche et tags, une vidéo réservée aux abonnés approuvés, l'enregistrement dans une playlist."
+          "label": "Explorer",
+          "caption": "L’Explorer n’est jamais vide : tendances, nouveautés, stories, créateurs à suivre, enchères et défis ouverts — puis un tag et une recherche."
+        },
+        "stories": {
+          "label": "Des stories qui rapportent",
+          "caption": "Alex ouvre la story d’Elena depuis l’anneau de son profil, active le son, l’aime, répond en privé et lui donne 10 $ de pourboire — directement."
+        },
+        "unlock": {
+          "label": "Déblocage payant",
+          "caption": "La répétition de Mia se débloque dès 8 $ : Alex paie en crédits, le serveur ouvre l’accès et la vidéo démarre aussitôt."
+        },
+        "auctions": {
+          "label": "Enchères",
+          "caption": "Elena met un premier montage aux enchères : Alex mise 22 $ et prend la tête — ses crédits ne sont bloqués que tant qu’il mène."
+        },
+        "challenges": {
+          "label": "Financer un objectif",
+          "caption": "L’objectif d’épisode d’Elena : Alex le soutient avec 25 $, bloqués jusqu’à la livraison et rendus si elle ne livre pas."
         },
         "studio": {
-          "label": "Studio créateur",
-          "caption": "Tableau de bord, approbation des abonnés, édition d'une vidéo, téléversement direct vers Bunny."
+          "label": "Être payé à 90 %",
+          "caption": "Les revenus d’Elena, lus dans le registre : 90 % de chaque paiement, le pourboire d’Alex déjà là, puis la destination de ses versements."
         },
         "admin": {
           "label": "Console d'administration",
