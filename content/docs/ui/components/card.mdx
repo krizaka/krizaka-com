@@ -1,20 +1,12 @@
 ---
 title: Card
-description: "The composed chassis of every Krizaka card — media, badges, body, footer"
 ---
 
-{/* Scaffolded by scripts/gen-ui-docs.mjs from @krizaka/ui/registry/card, then enriched by hand — never overwritten.
-    Title and description shown on the site: messages → docs.pages.ui.card. */}
+{/* Optional enrichment of the generated /docs/ui/card page (scripts/gen-ui-docs.mjs, lib/docs-source.ts): everything
+    else on the page — summary, when to use, examples, props, accessibility — comes from @krizaka/ui's code. Rendered
+    under "Notes". English, like the rest of the component's documentation. */}
 
-<ComponentPreview name="card" />
-
-## Import
-
-```tsx
-import { Card } from "@krizaka/ui/card";
-```
-
-## Anatomy
+### Anatomy
 
 `Card.Root` · `Card.Media` · `Card.Image` · `Card.Overlay` · `Card.Body` · `Card.Title` · `Card.Description` ·
 `Card.Stat` · `Card.Footer`
@@ -29,11 +21,3 @@ import { Card } from "@krizaka/ui/card";
 - **`Card.Body`** carries the title, the description, the stats and the footer.
 
 Products build their own cards from these parts and override any of them through `className` — never a fork.
-
-## Props
-
-<PropsTable of="card" />
-
-## In Storybook
-
-<StoryFrame story="primitives-card--interactive-link" />

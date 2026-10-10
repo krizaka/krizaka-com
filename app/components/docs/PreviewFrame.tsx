@@ -7,7 +7,7 @@ import { useI18n } from "../I18nProvider";
 
 /* The frame of a live preview: Preview / Code tabs, and a theme switch that applies to the frame only
    (`.theme-light` / `.theme-dark` of @krizaka/tokens re-declare the values on the subtree). */
-export function PreviewFrame({ label, code, children }: { label: string; code: ReactNode; children: ReactNode }) {
+export function PreviewFrame({ label, code, children, stageClassName = "" }: { label: string; code: ReactNode; children: ReactNode; stageClassName?: string }) {
   const { t } = useI18n();
   const text = t.docs.preview;
   const { theme: pageTheme } = useTheme();
@@ -17,9 +17,7 @@ export function PreviewFrame({ label, code, children }: { label: string; code: R
   const theme = frameTheme ?? pageTheme;
 
   return (
-    <div className="kz-preview not-prose">
-      {/* The section's heading for assistive technology (the demo's own headings sit below it). */}
-      <h2 className="sr-only">{label}</h2>
+    <div role="group" aria-label={label} className="kz-preview not-prose">
       <div className="kz-preview-bar">
         <div role="tablist" aria-label={label} className="kz-preview-tabs">
           {(["preview", "code"] as const).map((value) => (
@@ -54,11 +52,12 @@ export function PreviewFrame({ label, code, children }: { label: string; code: R
         id={`${id}-preview`}
         aria-labelledby={`${id}-preview-tab`}
         hidden={tab !== "preview"}
-        className={`kz-preview-stage theme-${theme}`}
+        tabIndex={0}
+        className={`kz-preview-stage theme-${theme} ${stageClassName}`}
       >
         {children}
       </div>
-      <div role="tabpanel" id={`${id}-code`} aria-labelledby={`${id}-code-tab`} hidden={tab !== "code"} className="kz-preview-code">
+      <div role="tabpanel" id={`${id}-code`} aria-labelledby={`${id}-code-tab`} hidden={tab !== "code"} tabIndex={0} className="kz-preview-code">
         {code}
       </div>
     </div>

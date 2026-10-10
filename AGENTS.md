@@ -66,10 +66,20 @@
 
 - `/docs/{ui,java,orazaka,orochia}` render four Fumadocs collections (`source.config.ts`, `lib/docs-source.ts`).
   Product docs stay synced and manifest-gated (§2); `content/docs/ui` and `content/docs/java` are written here.
-- UI pages render the primitives **from the published `@krizaka/ui` registry** (`ComponentPreview`, `PropsTable`):
-  never copy a demo, a prop table or a component into this repository. `npm run docs:ui` regenerates `lib/ui-demos.ts`
-  and scaffolds missing pages (an existing page is never overwritten).
-- Titles and descriptions of written pages: `messages/*.json` → `docs.pages.<section>.<page>`.
+- **The code drives `/docs/ui`.** One page per component of the **published `@krizaka/ui` registry**, generated at
+  every build (virtual pages in `lib/docs-source.ts`, rendered by `ComponentDoc`): summary, platforms (Web · Mobile ·
+  both), status, when to use / not, installation, every named example (web: live + code; React Native: its story's
+  screenshots + code), props (web and native), accessibility, related. That content is written **in krizaka-ui**
+  (`meta.ts`, `registry/examples`, the props' JSDoc) — never here: no page, demo, prop table or component is copied
+  into this repository. An optional `content/docs/ui/components/<name>.mdx` adds notes to a generated page.
+  `scripts/gen-ui-docs.mjs` (on `postinstall`, `dev`, `build --strict`; `lint` runs `--check`) writes the git-ignored
+  `lib/ui-examples.ts` and `public/ui-examples/`. `/docs/ui` lists every component (`<ComponentCatalog />`, filtered
+  by platform). A new `@krizaka/ui` arrives as a Dependabot pull request (`.github/dependabot.yml`): merge it when CI
+  is green — nothing else to regenerate.
+- The documentation of the components is **only** here: there is no public Storybook (krizaka-ui's is an internal test
+  tool) — never link one.
+- Titles and descriptions of written pages: `messages/*.json` → `docs.pages.<section>.<page>`; a component page's come
+  from its code (English, like its content); its chrome (headings, badges, tabs) from `docs.component.*`.
 
 ## 3. Theming — dark **and** light are first-class
 

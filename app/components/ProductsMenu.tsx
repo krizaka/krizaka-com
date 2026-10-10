@@ -7,7 +7,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BookOpen, ChevronDown, Layers, Compass, Cpu, Feather, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BookOpen, ChevronDown, Compass, Cpu, Feather, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
@@ -142,7 +142,7 @@ export function ProductsMenu() {
           const text = docsLinkText(t, d);
           const content = (
             <>
-              {d.id === "storybook" ? <Layers size={18} className="kz-menu-icon" aria-hidden /> : <ProductLogo id="krizaka" size={22} animated={false} />}
+              <ProductLogo id="krizaka" size={22} animated={false} />
               <span>
                 <span className="kz-menu-label">{text.label}</span>
                 <span className="kz-menu-desc">{text.desc}</span>

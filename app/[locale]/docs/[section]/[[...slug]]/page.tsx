@@ -5,7 +5,19 @@ import { DocsBody, DocsDescription, DocsPage, DocsTitle } from "fumadocs-ui/layo
 import ArchitectureDocHero from "@/app/components/ArchitectureDocHero";
 import { getMdxComponents } from "@/app/components/docs/mdx";
 import { ProductDocsIndex } from "@/app/components/docs/ProductDocsIndex";
-import { DOCS_SECTIONS, getSource, isProductSection, pageKey, pageText, PRODUCT_MANIFESTS, type DocsSection } from "@/lib/docs-source";
+import { ComponentDoc, componentToc } from "@/app/components/docs/ComponentDoc";
+import { InlineCode } from "@/app/components/docs/InlineCode";
+import { getRegistryItem } from "@/lib/ui-registry";
+import {
+  type ComponentPageData,
+  DOCS_SECTIONS,
+  getSource,
+  isProductSection,
+  pageKey,
+  pageText,
+  PRODUCT_MANIFESTS,
+  type DocsSection,
+} from "@/lib/docs-source";
 import { asLocale, getDictionary } from "@/lib/i18n";
 import { localizedMetadata } from "@/lib/seo";
 
@@ -65,6 +77,24 @@ export default async function DocsSectionPage({ params }: Props) {
   }
 
   const { title, description } = pageText(section, page, t);
+
+  // A component of @krizaka/ui: generated from the registry; an enrichment MDX, if any, becomes its notes.
+  const component = (page.data as ComponentPageData).component;
+  if (component) {
+    const Notes = "body" in page.data ? page.data.body : undefined;
+    return (
+      <DocsPage toc={componentToc(component, t, Boolean(Notes))}>
+        <DocsTitle>{title}</DocsTitle>
+        <DocsDescription>
+          <InlineCode text={getRegistryItem(component).summary} />
+        </DocsDescription>
+        <DocsBody>
+          <ComponentDoc name={component} locale={locale} notes={Notes && <Notes components={getMdxComponents(locale, section)} />} />
+        </DocsBody>
+      </DocsPage>
+    );
+  }
+
   const MDX = page.data.body;
   const entry = isProductSection(section) ? PRODUCT_MANIFESTS[section][pageKey(page.slugs)] : undefined;
 

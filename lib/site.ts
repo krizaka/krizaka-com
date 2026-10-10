@@ -36,13 +36,6 @@ export const MASTER_FEATURES_URL = `${SITE_REPO_URL}/blob/main/orazaka-content/d
 /** Orazaka is one repository per component; the workspace (GITHUB_REPO_URL) assembles them. */
 export const GITHUB_REPOSITORIES_URL = `${GITHUB_ORG_URL}?q=orazaka&type=all`;
 
-/**
- * Where the @krizaka/ui Storybook is published — /docs/ui embeds its stories (StoryFrame).
- * NEXT_PUBLIC_STORYBOOK_URL switches it (GitHub Pages today, https://ui.krizaka.com/latest once the Bunny mirror
- * is live); read at build time.
- */
-export const STORYBOOK_URL = (process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://krizaka.github.io/krizaka-ui/latest").replace(/\/$/, "");
-
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;
 export const PLATFORM_KIT_REPO_URL = `${GITHUB_ORG_URL}/krizaka-platform-kit`;

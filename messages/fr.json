@@ -554,10 +554,6 @@
         }
       },
       "docs": {
-        "storybook": {
-          "label": "Storybook",
-          "desc": "Toutes les stories @krizaka/ui, telles que testées"
-        },
         "all": {
           "label": "Toute la documentation",
           "desc": "Docs plateforme et produits"
@@ -2156,7 +2152,15 @@
     "separators": {
       "components": "Composants",
       "modules": "Modules",
-      "contracts": "Contrats"
+      "contracts": "Contrats",
+      "actions": "Actions",
+      "forms": "Formulaires",
+      "navigation": "Navigation",
+      "overlays": "Superpositions",
+      "feedback": "Retours",
+      "data-display": "Affichage de données",
+      "layout": "Mise en page",
+      "foundations": "Fondations"
     },
     "categories": {
       "getting-started": "Démarrage",
@@ -2202,9 +2206,72 @@
       "required": "requis",
       "none": "Ce module n'a pas de props de composant : voir l'import et l'aperçu ci-dessus."
     },
-    "story": {
-      "title": "Story Storybook {story}",
-      "open": "Ouvrir dans Storybook"
+    "component": {
+      "platformsLabel": "Plateformes",
+      "statusLabel": "Statut",
+      "categoryLabel": "Catégorie",
+      "platforms": {
+        "web": "Web",
+        "native": "Mobile",
+        "both": "Web + Mobile"
+      },
+      "platformsLong": {
+        "web": "Web uniquement — React, depuis @krizaka/ui/{name}.",
+        "native": "Mobile uniquement — React Native, depuis @krizaka/ui/native.",
+        "both": "Web et mobile — le même composant pour React et React Native."
+      },
+      "status": {
+        "stable": "Stable",
+        "beta": "Bêta"
+      },
+      "statusLong": {
+        "stable": "Stable : son API ne change qu’à une version majeure.",
+        "beta": "Bêta : son API peut encore changer à une version mineure."
+      },
+      "categories": {
+        "actions": "Actions",
+        "forms": "Formulaires",
+        "navigation": "Navigation",
+        "overlays": "Superpositions",
+        "feedback": "Retours",
+        "data-display": "Affichage de données",
+        "layout": "Mise en page",
+        "foundations": "Fondations"
+      },
+      "whenToUse": "Quand l’utiliser",
+      "whenNotToUse": "Quand ne pas l’utiliser",
+      "instead": "À la place :",
+      "installation": "Installation",
+      "install": "Installer",
+      "styles": "Styles",
+      "import": "Importer",
+      "nativeSetup": "Enveloppez l’application une fois dans <b>ThemeProvider</b> de @krizaka/ui/native : chaque composant lit ses rôles de couleur.",
+      "web": "Web",
+      "native": "React Native",
+      "examples": "Exemples",
+      "differences": "Différences avec l’API web",
+      "nativeCode": "React Native n’a pas d’aperçu en direct sur le web : chaque exemple montre la capture de sa story, testée dans les deux thèmes, et le code à copier.",
+      "props": "Props",
+      "accessibility": "Accessibilité",
+      "keyboard": "Clavier",
+      "keys": "Touches",
+      "action": "Action",
+      "bestPractices": "Bonnes pratiques",
+      "related": "Composants liés",
+      "notes": "Notes",
+      "source": "Générée depuis le code de @krizaka/ui {version} : son meta.ts, ses exemples et ses types.",
+      "edit": "Modifier cette documentation sur GitHub",
+      "nativeShot": "{name}, tel que React Native le rend"
+    },
+    "catalog": {
+      "heading": "Tous les composants",
+      "filter": "Filtrer par plateforme",
+      "all": "Tous",
+      "web": "Web",
+      "native": "Mobile",
+      "both": "Web + Mobile",
+      "count": "{count} composants",
+      "examples": "{count} exemples"
     },
     "schema": {
       "field": "Champ",
@@ -2237,130 +2304,6 @@
         "intl": {
           "title": "Intl",
           "description": "Montants, nombres, dates et pluriels formatés de la même façon dans tous les produits Krizaka."
-        },
-        "alert": {
-          "title": "Alert",
-          "description": "Un message dans le fil de la page : information, succès, avertissement ou danger."
-        },
-        "avatar": {
-          "title": "Avatar",
-          "description": "La photo d'une personne avec des initiales de repli, seule ou empilée en groupe."
-        },
-        "badge": {
-          "title": "Badge",
-          "description": "Une étiquette courte : un statut, un compteur, une mention sur une image."
-        },
-        "button": {
-          "title": "Bouton",
-          "description": "L'action : principale, secondaire, contour, fantôme ou danger, avec tailles, chargement et boutons icône."
-        },
-        "card": {
-          "title": "Carte",
-          "description": "Le châssis composé de toute carte Krizaka — média, badges, corps, pied."
-        },
-        "checkbox": {
-          "title": "Case à cocher",
-          "description": "Une case à cocher : cochée, décochée ou indéterminée, avec son libellé."
-        },
-        "chip": {
-          "title": "Puce",
-          "description": "Des puces sélectionnables et supprimables, seules ou en groupe à choix unique ou multiple."
-        },
-        "cn": {
-          "title": "cn",
-          "description": "Fusionne les classes Tailwind : le className d'un produit l'emporte sur celui de la primitive."
-        },
-        "command": {
-          "title": "Palette de commandes",
-          "description": "Une palette de commandes : recherche, groupes, raccourcis — dans la page ou en dialogue."
-        },
-        "confirm-button": {
-          "title": "Bouton de confirmation",
-          "description": "Une action destructive en deux temps : armer, puis confirmer."
-        },
-        "countdown": {
-          "title": "Compte à rebours",
-          "description": "Un compte à rebours vers une date, urgent à l'approche de la fin, avec son hook."
-        },
-        "dialog": {
-          "title": "Dialogue",
-          "description": "Dialogues, panneaux latéraux et alertes — focus piégé, fermeture par Échap."
-        },
-        "dropdown-menu": {
-          "title": "Menu déroulant",
-          "description": "Un menu d'actions ouvert depuis un déclencheur, navigable au clavier."
-        },
-        "empty-state": {
-          "title": "État vide",
-          "description": "Ce qu'une liste dit quand elle est vide, et l'action qui la remplit."
-        },
-        "field": {
-          "title": "Champ",
-          "description": "Libellé, aide et erreur autour d'une saisie, d'une zone de texte ou d'une liste."
-        },
-        "kbd": {
-          "title": "Kbd",
-          "description": "Une touche ou un raccourci clavier, en texte."
-        },
-        "page-header": {
-          "title": "En-tête de page",
-          "description": "Le haut d'une page : titre, description, fil d'Ariane et actions."
-        },
-        "popover": {
-          "title": "Popover",
-          "description": "Un contenu flottant ancré à un déclencheur : un petit formulaire, un détail."
-        },
-        "progress": {
-          "title": "Progression",
-          "description": "Une progression en barre ou en anneau, déterminée ou non."
-        },
-        "radio-group": {
-          "title": "Groupe radio",
-          "description": "Un choix parmi plusieurs, en éléments ou en cartes."
-        },
-        "separator": {
-          "title": "Séparateur",
-          "description": "Un séparateur horizontal ou vertical."
-        },
-        "skeleton": {
-          "title": "Squelette",
-          "description": "Des gabarits qui tiennent la mise en page pendant le chargement."
-        },
-        "slider": {
-          "title": "Curseur",
-          "description": "Une valeur ou une plage choisie sur une piste."
-        },
-        "slot": {
-          "title": "Slot",
-          "description": "Ce que rend asChild, et un nom réservé aux technologies d'assistance."
-        },
-        "spinner": {
-          "title": "Indicateur de chargement",
-          "description": "Une attente indéterminée, en trois tailles."
-        },
-        "stat": {
-          "title": "Statistique",
-          "description": "Un chiffre avec son libellé et sa tendance."
-        },
-        "switch": {
-          "title": "Interrupteur",
-          "description": "Un réglage activé/désactivé qui s'applique immédiatement."
-        },
-        "tabs": {
-          "title": "Onglets",
-          "description": "Des onglets soulignés, en segments ou en pastilles."
-        },
-        "theme": {
-          "title": "Thème",
-          "description": "Le mécanisme de thème de tous les produits : script, provider, hook et bascule."
-        },
-        "toast": {
-          "title": "Toast",
-          "description": "Des notifications qui vont et viennent, stylées par rôle."
-        },
-        "tooltip": {
-          "title": "Infobulle",
-          "description": "Une courte indication au survol et au focus clavier."
         }
       },
       "java": {

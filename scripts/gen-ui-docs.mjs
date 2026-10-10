@@ -1,117 +1,101 @@
 #!/usr/bin/env node
-/* Generates the /docs/ui component pages from the @krizaka/ui registry (installed package).
+/* /docs/ui is generated from the @krizaka/ui registry (the installed package) at every build — the code of each
+   component drives its page: meta.ts (summary, when to use, accessibility, platforms), its named examples and its
+   props. Nothing about a component is written here.
 
-   - lib/ui-demos.ts                         ALWAYS rewritten: the import map of the live demos (one per primitive).
-   - content/docs/ui/components/<name>.mdx   written ONLY when missing: a scaffold (front matter, live preview,
-                                             import, props, Storybook story) that is then enriched by hand —
-                                             an existing page is never overwritten.
+   This script writes what a bundler and a static host need (git-ignored, rewritten by `postinstall`, `dev` and
+   `build`; the pages themselves are virtual: lib/docs-source.ts reads the registry):
+   - lib/ui-examples.ts      the import map of the live web examples;
+   - public/ui-examples/     the screenshots of the React Native examples (dark and light: the Linux baselines of
+                             their stories, shipped in the package), which have no live preview on the web.
+   and checks that the registry is complete enough to render: every component has its title, summary, platforms and
+   at least one example per platform, every example's compiled module is in the package, every related component
+   exists, and every optional enrichment page (content/docs/ui/components/<name>.mdx) is a component of the registry.
 
-   The Storybook story of each page is the first story titled `Primitives/<Name>` in the published Storybook
-   index (NEXT_PUBLIC_STORYBOOK_URL); offline, or when none matches, the page has no story.
+   Usage: node scripts/gen-ui-docs.mjs [--strict | --check]
+     (none)     writes lib/ui-examples.ts; reports an incomplete registry without failing (`postinstall`, `dev`).
+     --strict   writes it and exits 1 when the registry is incomplete (`npm run build`).
+     --check    writes nothing; exits 1 when lib/ui-examples.ts is stale or the registry incomplete (`npm run lint`). */
 
-   Usage: node scripts/gen-ui-docs.mjs [--check]
-     --check   writes nothing; exits 1 when a primitive has no page or lib/ui-demos.ts is stale (CI). */
-
-import { existsSync, readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
-const registryDir = path.join(root, "node_modules", "@krizaka", "ui", "registry");
-const pagesDir = path.join(root, "content", "docs", "ui", "components");
-const demosFile = path.join(root, "lib", "ui-demos.ts");
+const pkgDir = path.join(root, "node_modules", "@krizaka", "ui");
+const registryDir = path.join(pkgDir, "registry");
+const enrichDir = path.join(root, "content", "docs", "ui", "components");
+const examplesFile = path.join(root, "lib", "ui-examples.ts");
+const shotsDir = path.join(root, "public", "ui-examples");
 const check = process.argv.includes("--check");
-const storybookUrl = (process.env.NEXT_PUBLIC_STORYBOOK_URL || "https://krizaka.github.io/krizaka-ui/latest").replace(/\/$/, "");
+const strict = check || process.argv.includes("--strict");
 
 const index = JSON.parse(readFileSync(path.join(registryDir, "index.json"), "utf8"));
 const items = index.items.map((entry) => JSON.parse(readFileSync(path.join(registryDir, `${entry.name}.json`), "utf8")));
+const names = new Set(items.map((item) => item.name));
+const problems = [];
 
-const pascal = (name) => name.split("-").map((w) => w[0].toUpperCase() + w.slice(1)).join("");
-
-async function storyIds() {
-  if (check) return new Map();
-  try {
-    const res = await fetch(`${storybookUrl}/index.json`, { signal: AbortSignal.timeout(10_000) });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const { entries } = await res.json();
-    const first = new Map();
-    for (const [id, entry] of Object.entries(entries)) {
-      if (entry.type === "story" && !first.has(entry.title)) first.set(entry.title, id);
+for (const item of items) {
+  const where = `@krizaka/ui/registry/${item.name}`;
+  if (!item.title || !item.summary) problems.push(`${where}: no title or summary (meta.ts)`);
+  if (!["web", "native", "both"].includes(item.platforms)) problems.push(`${where}: unknown platforms "${item.platforms}"`);
+  if (!item.whenToUse?.length || !item.accessibility) problems.push(`${where}: no "when to use" or accessibility (meta.ts)`);
+  for (const side of ["web", "native"]) {
+    const expected = item.platforms === "both" || item.platforms === side;
+    if (expected && !item[side]?.examples?.length) problems.push(`${where}: no ${side} example`);
+    for (const example of item[side]?.examples ?? []) {
+      const compiled = path.join(registryDir, `${example.path.replace(/\.tsx$/, "")}.js`);
+      if (side === "web" && !existsSync(compiled)) problems.push(`${where}: ${example.path} is not compiled in the package`);
+      if (!example.code) problems.push(`${where}: ${example.path} has no code`);
     }
-    return first;
-  } catch (error) {
-    console.warn(`gen-ui-docs: Storybook index unavailable (${error.message}) — pages are written without a story.`);
-    return new Map();
+  }
+  for (const related of [...(item.related ?? []), ...(item.whenNotToUse ?? []).map((w) => w.use).filter(Boolean)]) {
+    if (!names.has(related)) problems.push(`${where}: unknown related component "${related}"`);
+  }
+}
+for (const file of existsSync(enrichDir) ? readdirSync(enrichDir) : []) {
+  if (file.endsWith(".mdx") && !names.has(file.replace(/\.mdx$/, ""))) {
+    problems.push(`content/docs/ui/components/${file}: no component of that name in the registry (an enrichment page needs one)`);
   }
 }
 
-function demosModule() {
-  const lines = items.map((item) => `  "${item.name}": () => import("@krizaka/ui/registry/demos/${item.name}"),`);
-  return `/* GENERATED by scripts/gen-ui-docs.mjs from @krizaka/ui@${index.version}/registry — do not edit.
-   One live demo per primitive (client modules of the package), loaded by ComponentPreview. */
+const key = (example) => example.module.replace("@krizaka/ui/registry/examples/", "");
+const webExamples = items.flatMap((item) => item.web?.examples ?? []);
+const expected = `/* GENERATED by scripts/gen-ui-docs.mjs from @krizaka/ui@${index.version}/registry — do not edit (git-ignored).
+   The live web examples of /docs/ui (client modules of the package), loaded by ExamplePreview. */
 
-export const UI_DEMOS = {
-${lines.join("\n")}
+export const UI_EXAMPLES = {
+${webExamples.map((example) => `  "${key(example)}": () => import("${example.module}"),`).join("\n")}
 } as const;
 
-export type UiDemoName = keyof typeof UI_DEMOS;
+export type UiExampleKey = keyof typeof UI_EXAMPLES;
 
 export const UI_REGISTRY_VERSION = "${index.version}";
 `;
-}
 
-function scaffold(item, story) {
-  const imports = (item.demo?.content ?? "")
-    .split("\n")
-    .filter((line) => line.includes(`from "@krizaka/ui/${item.name}"`));
-  const description = item.description.replace(/\s*(Server-safe|Client \("use client"\))\.?$/, "").replace(/\.$/, "");
-  return `---
-title: ${pascal(item.name)}
-description: ${JSON.stringify(description)}
----
-
-{/* Scaffolded by scripts/gen-ui-docs.mjs from @krizaka/ui/registry/${item.name} — enrich freely: it is never overwritten.
-    Title and description shown on the site: messages → docs.pages.ui.${item.name}. */}
-
-<ComponentPreview name="${item.name}" />
-
-## Import
-
-\`\`\`tsx
-${imports.join("\n") || `import {} from "@krizaka/ui/${item.name}";`}
-\`\`\`
-
-## Props
-
-<PropsTable of="${item.name}" />
-${story ? `\n## In Storybook\n\n<StoryFrame story="${story}" />\n` : ""}`;
-}
-
-const stories = await storyIds();
-let failures = 0;
-
-const expected = demosModule();
-const current = existsSync(demosFile) ? readFileSync(demosFile, "utf8") : "";
+const current = existsSync(examplesFile) ? readFileSync(examplesFile, "utf8") : "";
 if (current !== expected) {
-  if (check) {
-    console.error("gen-ui-docs: lib/ui-demos.ts is stale — run `npm run docs:ui`.");
-    failures++;
-  } else {
-    writeFileSync(demosFile, expected);
-    console.log("gen-ui-docs: lib/ui-demos.ts written");
+  if (check) problems.push("lib/ui-examples.ts is stale — run `npm run docs:ui` (or `npm install`).");
+  else {
+    writeFileSync(examplesFile, expected);
+    console.log(`gen-ui-docs: lib/ui-examples.ts — ${webExamples.length} examples of ${items.length} components (@krizaka/ui@${index.version})`);
   }
 }
 
-mkdirSync(pagesDir, { recursive: true });
-for (const item of items) {
-  const page = path.join(pagesDir, `${item.name}.mdx`);
-  if (existsSync(page)) continue;
-  if (check) {
-    console.error(`gen-ui-docs: ${item.name} has no page — run \`npm run docs:ui\`.`);
-    failures++;
-    continue;
+// The screenshots of the native examples, served next to the pages: public/ui-examples/<name>/native/<example>.<theme>.png.
+const shots = items.flatMap((item) => (item.native?.examples ?? []).flatMap((example) => Object.values(example.screenshots ?? {})));
+for (const shot of shots) {
+  if (!existsSync(path.join(registryDir, shot))) problems.push(`@krizaka/ui/registry/${shot}: missing screenshot`);
+}
+if (!check) {
+  rmSync(shotsDir, { recursive: true, force: true });
+  for (const shot of shots) {
+    const from = path.join(registryDir, shot);
+    if (!existsSync(from)) continue;
+    const to = path.join(shotsDir, shot.replace(/^examples\//, ""));
+    mkdirSync(path.dirname(to), { recursive: true });
+    copyFileSync(from, to);
   }
-  writeFileSync(page, scaffold(item, stories.get(`Primitives/${pascal(item.name)}`)));
-  console.log(`gen-ui-docs: content/docs/ui/components/${item.name}.mdx scaffolded`);
 }
 
-process.exit(failures ? 1 : 0);
+for (const problem of problems) console.error(`gen-ui-docs: ${problem}`);
+process.exit(strict && problems.length ? 1 : 0);

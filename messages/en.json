@@ -554,10 +554,6 @@
         }
       },
       "docs": {
-        "storybook": {
-          "label": "Storybook",
-          "desc": "Every @krizaka/ui story, as tested"
-        },
         "all": {
           "label": "All documentation",
           "desc": "Platform and product docs"
@@ -2156,7 +2152,15 @@
     "separators": {
       "components": "Components",
       "modules": "Modules",
-      "contracts": "Contracts"
+      "contracts": "Contracts",
+      "actions": "Actions",
+      "forms": "Forms",
+      "navigation": "Navigation",
+      "overlays": "Overlays",
+      "feedback": "Feedback",
+      "data-display": "Data display",
+      "layout": "Layout",
+      "foundations": "Foundations"
     },
     "categories": {
       "getting-started": "Getting started",
@@ -2202,9 +2206,72 @@
       "required": "required",
       "none": "This module has no component props: see the import and the preview above."
     },
-    "story": {
-      "title": "Storybook story {story}",
-      "open": "Open in Storybook"
+    "component": {
+      "platformsLabel": "Platforms",
+      "statusLabel": "Status",
+      "categoryLabel": "Category",
+      "platforms": {
+        "web": "Web",
+        "native": "Mobile",
+        "both": "Web + Mobile"
+      },
+      "platformsLong": {
+        "web": "Web only — React, from @krizaka/ui/{name}.",
+        "native": "Mobile only — React Native, from @krizaka/ui/native.",
+        "both": "Web and mobile — the same component for React and React Native."
+      },
+      "status": {
+        "stable": "Stable",
+        "beta": "Beta"
+      },
+      "statusLong": {
+        "stable": "Stable: its API only changes in a major version.",
+        "beta": "Beta: its API may still change in a minor version."
+      },
+      "categories": {
+        "actions": "Actions",
+        "forms": "Forms",
+        "navigation": "Navigation",
+        "overlays": "Overlays",
+        "feedback": "Feedback",
+        "data-display": "Data display",
+        "layout": "Layout",
+        "foundations": "Foundations"
+      },
+      "whenToUse": "When to use",
+      "whenNotToUse": "When not to use",
+      "instead": "Use instead:",
+      "installation": "Installation",
+      "install": "Install",
+      "styles": "Styles",
+      "import": "Import",
+      "nativeSetup": "Wrap the app once in <b>ThemeProvider</b> from @krizaka/ui/native: every component reads its colour roles.",
+      "web": "Web",
+      "native": "React Native",
+      "examples": "Examples",
+      "differences": "Differences from the web API",
+      "nativeCode": "React Native has no live preview on the web: each example shows the screenshot of its story, tested in both themes, and the code to copy.",
+      "props": "Props",
+      "accessibility": "Accessibility",
+      "keyboard": "Keyboard",
+      "keys": "Keys",
+      "action": "Action",
+      "bestPractices": "Best practices",
+      "related": "Related components",
+      "notes": "Notes",
+      "source": "Generated from the code of @krizaka/ui {version}: its meta.ts, its examples and its types.",
+      "edit": "Edit this documentation on GitHub",
+      "nativeShot": "{name}, as React Native renders it"
+    },
+    "catalog": {
+      "heading": "All components",
+      "filter": "Filter by platform",
+      "all": "All",
+      "web": "Web",
+      "native": "Mobile",
+      "both": "Web + Mobile",
+      "count": "{count} components",
+      "examples": "{count} examples"
     },
     "schema": {
       "field": "Field",
@@ -2237,130 +2304,6 @@
         "intl": {
           "title": "Intl",
           "description": "Money, numbers, dates and plurals formatted the same way in every Krizaka product."
-        },
-        "alert": {
-          "title": "Alert",
-          "description": "A message in the flow of the page: information, success, warning or danger."
-        },
-        "avatar": {
-          "title": "Avatar",
-          "description": "A person's picture with an initials fallback, alone or stacked in a group."
-        },
-        "badge": {
-          "title": "Badge",
-          "description": "A short label: a status, a count, a tag over an image."
-        },
-        "button": {
-          "title": "Button",
-          "description": "The action: primary, secondary, outline, ghost or danger, with sizes, loading and icon-only buttons."
-        },
-        "card": {
-          "title": "Card",
-          "description": "The composed chassis of every Krizaka card — media, badges, body, footer."
-        },
-        "checkbox": {
-          "title": "Checkbox",
-          "description": "A checkbox: checked, unchecked or indeterminate, with its label."
-        },
-        "chip": {
-          "title": "Chip",
-          "description": "Selectable and removable chips, alone or in a single- or multiple-choice group."
-        },
-        "cn": {
-          "title": "cn",
-          "description": "Merges Tailwind classes so that a product's className overrides the primitive's."
-        },
-        "command": {
-          "title": "Command",
-          "description": "A command palette: search, groups, shortcuts — inline or in a dialog."
-        },
-        "confirm-button": {
-          "title": "Confirm button",
-          "description": "A destructive action in two steps: arm, then confirm."
-        },
-        "countdown": {
-          "title": "Countdown",
-          "description": "A live countdown to a date, urgent near the end, with its hook."
-        },
-        "dialog": {
-          "title": "Dialog",
-          "description": "Dialogs, sheets and alert dialogs — focus trapped, closed with Escape."
-        },
-        "dropdown-menu": {
-          "title": "Dropdown menu",
-          "description": "A menu of actions opened from a trigger, keyboard-navigable."
-        },
-        "empty-state": {
-          "title": "Empty state",
-          "description": "What a list says when it has nothing yet, and the action that fills it."
-        },
-        "field": {
-          "title": "Field",
-          "description": "Label, hint and error around an input, a textarea or a select."
-        },
-        "kbd": {
-          "title": "Kbd",
-          "description": "A keyboard key or shortcut, as text."
-        },
-        "page-header": {
-          "title": "Page header",
-          "description": "The top of a page: title, description, breadcrumb and actions."
-        },
-        "popover": {
-          "title": "Popover",
-          "description": "Floating content anchored to a trigger: a small form, a detail."
-        },
-        "progress": {
-          "title": "Progress",
-          "description": "Progress as a bar or a ring, determinate or not."
-        },
-        "radio-group": {
-          "title": "Radio group",
-          "description": "One choice among several, as items or as cards."
-        },
-        "separator": {
-          "title": "Separator",
-          "description": "A horizontal or vertical divider."
-        },
-        "skeleton": {
-          "title": "Skeleton",
-          "description": "Placeholders that hold the layout while content loads."
-        },
-        "slider": {
-          "title": "Slider",
-          "description": "A value or a range picked on a track."
-        },
-        "slot": {
-          "title": "Slot",
-          "description": "What asChild renders, and a name for assistive technology only."
-        },
-        "spinner": {
-          "title": "Spinner",
-          "description": "An indeterminate wait, in three sizes."
-        },
-        "stat": {
-          "title": "Stat",
-          "description": "A figure with its label and its trend."
-        },
-        "switch": {
-          "title": "Switch",
-          "description": "An on/off setting that applies at once."
-        },
-        "tabs": {
-          "title": "Tabs",
-          "description": "Tabs as underline, segmented control or pills."
-        },
-        "theme": {
-          "title": "Theme",
-          "description": "The theme mechanism of every product: script, provider, hook and toggle."
-        },
-        "toast": {
-          "title": "Toast",
-          "description": "Notifications that come and go, styled by role."
-        },
-        "tooltip": {
-          "title": "Tooltip",
-          "description": "A short hint on hover and on keyboard focus."
         }
       },
       "java": {
