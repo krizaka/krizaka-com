@@ -98,9 +98,23 @@ the app. A free trial library is enough:
 4. Fill `BUNNY_STREAM_API_KEY`, `BUNNY_STREAM_LIBRARY_ID`, `BUNNY_STREAM_HOSTNAME`, `BUNNY_STREAM_TOKEN_AUTH_KEY` and
    `BUNNY_WEBHOOK_SECRET` (the Read-Only key), then restart `npm run dev`.
 
-Bunny cannot call `localhost`, so locally a video stays "processing" until its webhook arrives: expose the app with a
-tunnel (`cloudflared tunnel --url http://localhost:3000`, `ngrok http 3000`) and set the library's webhook to
-`<tunnel>/api/webhooks/bunny`. The in-browser editor (ffmpeg.wasm) needs nothing: its engine is fetched once from a CDN.
+Bunny cannot call `localhost`, and a library has **one** webhook URL — a library shared by several environments (local
+and dev) notifies only one of them. Without the webhook, **video stories still go live**: the stories rail asks the
+Stream API about any video story unsettled for 20 s (`reconcileStoryVideos`, `lib/stories.ts`) and settles it as the
+webhook would, and the author sees their story as *Processing* meanwhile. Videos and drafts still wait for the webhook:
+to exercise it, expose the app with a tunnel (`cloudflared tunnel --url http://localhost:3000`, `ngrok http 3000`) and
+set the library's webhook to `<tunnel>/api/webhooks/bunny`. The in-browser editor (ffmpeg.wasm) needs nothing: its engine is fetched once from a CDN.
+
+### E-mail templates
+
+Every e-mail is a template in `apps/web/mail-templates/<id>/<locale>/` (`subject.txt`, `body.html`, `body.txt`), inside
+the shared `_layout/` (rules: AGENTS.md §3.G). Locally they are read from those files (`MAIL_TEMPLATES_SOURCE=local`)
+and the messages go to the log; `MAIL_DELIVERY=on` with a Resend or Mailgun key really sends them.
+
+```bash
+npm run mail:templates:preview   # apps/web/.mail-preview/index.html — every template, en and fr
+npm run mail:templates:push      # dry run against Bunny Storage; -- --apply publishes (production credentials)
+```
 
 ## Troubleshooting
 
@@ -113,4 +127,4 @@ tunnel (`cloudflared tunnel --url http://localhost:3000`, `ngrok http 3000`) and
 | Docs check fails in CI | `npm run docs:generate` and commit the regenerated files |
 | A page reloads again and again | A stale build cache (often after `npm run build`): stop the server, `rm -rf apps/web/.next`, `npm run dev` |
 | Thumbnails or draft clips answer 403 | Bunny's allowed domains do not include `localhost` (library → Security) |
-| Uploaded videos stay "processing" | Bunny's webhook cannot reach `localhost` — use a tunnel (see *Video features locally*) |
+| Uploaded videos stay "processing" | Bunny's webhook cannot reach `localhost` — use a tunnel (see *Video features locally*). Video stories catch up on their own (the rail asks Bunny) |
