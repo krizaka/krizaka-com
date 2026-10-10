@@ -488,20 +488,16 @@
         "badge": "IA",
         "links": {
           "overview": {
-            "label": "Vue d'ensemble",
-            "desc": "Le moteur et ses composants"
+            "label": "Vue d'ensemble"
           },
           "architecture": {
-            "label": "Fonctionnement",
-            "desc": "Le parcours d'une requête, animé"
+            "label": "Fonctionnement"
           },
           "demo": {
-            "label": "Démos",
-            "desc": "Chat, médias et agents en action"
+            "label": "Démos"
           },
           "signature": {
-            "label": "Ingénierie cognitive",
-            "desc": "Pourquoi un pipeline plutôt qu'un prompt"
+            "label": "Ingénierie cognitive"
           }
         }
       },
@@ -510,20 +506,16 @@
         "badge": "Vidéo",
         "links": {
           "overview": {
-            "label": "Vue d'ensemble",
-            "desc": "Streaming, paywalls, versements"
+            "label": "Vue d'ensemble"
           },
           "architecture": {
-            "label": "Fonctionnement",
-            "desc": "Lecture, déblocage et téléversement, animés"
+            "label": "Fonctionnement"
           },
           "demo": {
-            "label": "Démo",
-            "desc": "Visite vidéo de l'application"
+            "label": "Démo"
           },
           "signature": {
-            "label": "Paiements & conformité",
-            "desc": "Webhooks signés, registres 2257"
+            "label": "Paiements & conformité"
           }
         }
       },
@@ -639,7 +631,7 @@
         "ci": "build, tests et règles d'architecture à chaque commit"
       },
       "storyTeaser": {
-        "sub": "Une forge à mi-pente, un oracle qui ne quitte pas la maison, un serpent à huit têtes — et la volée qui veille.",
+        "sub": "Une lame pliée au grand jour, une IA qui ne quitte jamais la maison, une plateforme vidéo où les créateurs gardent 90 % — et la volée qui veille.",
         "cta": "Lire l'histoire"
       },
       "contact": {
@@ -716,33 +708,39 @@
     "story": {
       "intro": {
         "eyebrow": "Notre histoire",
-        "title": "Chaque nom ici est une légende que nous avons choisi de garder.",
-        "lead": "Nous avons grandi entre les bornes d'arcade et les vieux mythes. Quand nous avons commencé à construire des logiciels à qui l'on confierait ses mots, son travail et ses revenus, nous les avons nommés d'après les histoires qui nous ont appris ce que coûte la confiance."
+        "title": "Trois clans. Un seul combat : ce qui est à vous reste à vous.",
+        "lead": "Krizaka est né d'un refus. Vos données ne devraient pas avoir à quitter la maison pour être utiles. Un créateur ne devrait pas laisser une fortune à une plateforme pour être payé. Et personne ne devrait avoir à croire un logiciel sur parole. Alors nous forgeons les nôtres — au grand jour, ligne par ligne — et nous leur avons donné le nom des légendes qui nous ont appris ce que coûte la confiance."
       },
       "chapters": {
         "krizaka": {
           "roots": "kris + zaka (坂)",
-          "title": "La forge à mi-pente",
+          "title": "La lame pliée au grand jour",
           "body": [
-            "Le kris est une lame forgée par couches — le fer replié sur le fer, encore et encore, jusqu'à ce qu'un motif apparaisse dans l'acier. Zaka, c'est la pente que l'on gravit, un pas après l'autre.",
-            "Krizaka, c'est la forge à mi-pente. Rien n'en sort sans avoir été replié, éprouvé et documenté — et tout ce qui en sort est ouvert, pour que chacun puisse vérifier le motif."
-          ]
+            "Le kris est une lame forgée par couches : le fer replié sur le fer, encore et encore, jusqu'à ce qu'un motif monte dans l'acier. Zaka, c'est la pente que l'on gravit, un pas après l'autre. Krizaka, c'est la forge à mi-pente.",
+            "Pourquoi une forge ? Parce que les logiciels qu'on nous demandait de croire étaient devenus des boîtes noires — des données expédiées dans le nuage d'un autre, des revenus soumis aux règles d'un autre, un code que personne ne pouvait lire. Nous avons décidé de construire l'inverse, et de le prouver plutôt que de le promettre.",
+            "Rien ne sort de la forge sans avoir été replié, éprouvé et documenté, et tout ce qui en sort est open source, sous Apache-2.0. Inutile de nous croire : lisez le motif dans l'acier."
+          ],
+          "move": "Le prouver, pas le promettre."
         },
         "orazaka": {
           "roots": "ōrāre (parler) + zaka",
-          "title": "L'oracle qui ne quitte pas la maison",
+          "title": "L'oracle qui ne quitte jamais la maison",
           "body": [
             "Ōrāre : parler, demander — la racine latine d'oracle. Dans les vieilles histoires, on montait jusqu'à l'oracle avec sa question, et on lui confiait quelque chose d'intime.",
-            "Orazaka est un oracle sur votre propre colline. Il répond, il raisonne, il crée — et il ne descend jamais vos mots dans la vallée d'un autre. Une IA que l'on consulte sans rien céder."
-          ]
+            "Aujourd'hui, interroger une IA revient souvent à descendre ses contrats, ses fichiers et ses idées dans la vallée d'un autre. Pour beaucoup d'équipes, c'est rédhibitoire : alors elles s'en passent. Nous pensons que c'est le mauvais marché.",
+            "Orazaka installe l'oracle sur votre colline : des réponses tirées de vos propres documents, des visuels générés sur vos machines, des Studios qui prennent le travail répétitif — sur votre infrastructure, selon vos règles. Vos questions et vos réponses restent à la maison, et chaque ligne qui les touche est publique : votre équipe sécurité vérifie au lieu de croire."
+          ],
+          "move": "Vos données ne quittent jamais la maison."
         },
         "orochia": {
           "roots": "Yamata no Orochi",
-          "title": "Huit têtes, huit réponses",
+          "title": "Huit têtes, un seul pacte : le créateur garde 90 %",
           "body": [
-            "Yamata no Orochi est le serpent à huit têtes des plus anciennes chroniques du Japon. Les joueurs d'une certaine génération l'ont croisé ailleurs : le boss final de The King of Fighters '97, scellé par trois clans et leurs trésors sacrés.",
-            "Dans le mythe, Susanoo ne gagne pas par la force. Il dispose huit cuves, une pour chaque tête, et il attend. L'économie des créateurs a ses huit têtes — Orochia pose une réponse devant chacune, pour que les créateurs soient payés, chaque cent, une seule fois."
-          ]
+            "Yamata no Orochi est le serpent à huit têtes des plus anciennes chroniques du Japon. Les joueurs d'une certaine génération l'ont croisé ailleurs : au bout d'un tournoi d'arcade des années 1990, scellé par trois clans et leurs trésors sacrés.",
+            "L'économie des créateurs a son propre serpent : des commissions lourdes, des versements que personne ne peut vérifier, des liens qui fuient, des comptes fermés du jour au lendemain. Les créateurs font le travail et portent le risque — et trop souvent, ils sont payés les derniers.",
+            "Orochia est notre réponse : une plateforme vidéo où le créateur garde 90 % de chaque vente, où chaque mouvement est écrit une seule fois dans un grand livre en partie double, et qui tourne entière sur les serveurs de votre choix. Dans le mythe, Susanoo ne gagne pas par la force : il dispose huit cuves, une pour chaque tête. Orochia pose une réponse devant chacune."
+          ],
+          "move": "90 % au créateur. Sur chaque vente."
         }
       },
       "heads": [
@@ -812,36 +810,36 @@
         }
       },
       "closing": {
-        "title": "De vieilles histoires, des promesses tenues.",
-        "body": "C'est toute l'idée. Les légendes nous ont donné les noms ; le travail, c'est de faire en sorte que les logiciels les méritent."
+        "title": "Premier round terminé. Continuer ?",
+        "body": "Nous n'avons pas encore de vitrine à trophées à vous montrer. Nous avons mieux pour commencer : deux produits que vous pouvez faire tourner aujourd'hui, chaque ligne au grand jour, et des promesses écrites là où vous pouvez nous les rappeler. Les prochains rounds se jouent avec ceux qui les utilisent — essayez-les, lisez-les, ou écrivez-nous."
       },
       "headsAria": "Les huit têtes",
       "flockLabel": "La volée",
       "flockTitle": "Ceux qui veillent.",
-      "flockLead": "Nos mascottes ne sont pas un décor. Chacune porte une chose sur laquelle nous ne transigeons pas.",
+      "flockLead": "Nos mascottes ne sont pas un décor. Chacune porte une promesse sur laquelle nous ne transigeons pas.",
       "ctaProducts": "Découvrir les produits",
       "ctaContact": "Nous écrire",
       "arcade": {
         "continue": "Continuer ?",
         "insertCoin": "Insérer une pièce",
         "teamTag": "Combat d'équipe · 3 vs 3",
-        "teamSynergy": "Les Trois Clans Sacrés",
+        "teamSynergy": "Les Trois Trésors Sacrés",
         "stage": "Étape",
         "orochiBossTitle": "Yamata no Orochi",
-        "orochiBossSub": "Les huit têtes de l'économie des créateurs scellées",
+        "orochiBossSub": "Les huit têtes de l'économie des créateurs — huit réponses, scellées dans le code",
         "sealedBadge": "Scellé",
         "vatLabel": "Cuve",
         "creditLabel": "Crédit 01",
-        "restartBtn": "Appuyez pour relancer l'histoire",
+        "restartBtn": "Retour à l'écran de sélection",
         "clans": {
-          "krizaka": "le sabre",
-          "orazaka": "le miroir",
-          "orochia": "le joyau"
+          "krizaka": "la forge",
+          "orazaka": "l'IA souveraine",
+          "orochia": "la vidéo des créateurs"
         },
         "clanNames": {
-          "krizaka": "Kusanagi",
-          "orazaka": "Yata",
-          "orochia": "Yasakani"
+          "krizaka": "Clan du sabre",
+          "orazaka": "Clan du miroir",
+          "orochia": "Clan du joyau"
         },
         "selectAria": "Les trois clans : Krizaka, Orazaka et Orochia",
         "power": "Énergie",
@@ -849,23 +847,17 @@
         "bossGauge": "Têtes restantes",
         "cabinetLabel": "Krizaka · borne d'arcade",
         "coinEntry": "1 crédit = 1 histoire",
-        "playerStart": "Start 1J"
+        "playerStart": "Start 1J",
+        "specialMove": "Coup spécial"
       },
-      "layers": {
-        "label": "Le motif dans l'acier",
-        "title": "Plié une fois, utilisé partout.",
-        "lead": "Un kriss tire sa force de couches d'acier repliées les unes sur les autres. Nos interfaces sont forgées de la même façon : une couche de marque, repliée dans le kit de chaque produit, et chaque couche publiée au grand jour — chacun peut s'en servir, chacun peut vérifier le motif.",
-        "badge": "Architecture partagée · Pas un produit isolé",
-        "copyInstall": "Copier la commande d'installation",
-        "copied": "Copié !",
-        "viewNpm": "Voir sur npm",
-        "items": {
-          "ui": "Le premier pli : les logos et la façon dont tout bouge.",
-          "orochiaDs": "Replié pour Orochia : les couleurs du serpent, chaque contrôle que touche un créateur.",
-          "orazakaDs": "Replié pour Orazaka : l'interface de l'oracle, sur chaque écran où il parle.",
-          "orazakaShared": "Le cœur de la lame : les formes sur lesquelles tous les clients d'Orazaka s'accordent."
-        },
-        "install": "Prendre une couche"
+      "open": {
+        "label": "Étape bonus",
+        "title": "La lame pliée : tout est ouvert.",
+        "body": [
+          "Un kris ne vaut que par les couches qu'on ne voit pas. Les nôtres sont toutes à découvert : le moteur d'IA, la plateforme vidéo, le design system, les icônes, les briques Java — des dépôts publics et des paquets publiés, sous Apache-2.0.",
+          "C'est notre preuve. Aucun benchmark à croire sur parole, aucun mur de logos empruntés : clonez, lancez, lisez, forkez. Si quelque chose sur cette page n'est pas dans le code, c'est le code qui a raison."
+        ],
+        "cta": "Voir tout ce que nous avons ouvert"
       }
     },
     "orochia": {

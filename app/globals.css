@@ -54,13 +54,6 @@ html.light {
   --kz-grid-color: hsla(240, 6%, 0%, 0.03);
 }
 
-/* Deprecated alias of the shared accent text role, kept for /story (owned by another session): remove it once /story
-   reads --kz-accent-text. Re-declared on the brand classes so it follows the brand of the section. */
-:root,
-.brand-krizaka,
-.brand-orazaka,
-.brand-orochia { --site-accent-text: var(--kz-accent-text); }
-
 html.light ::selection {
   background: hsla(217, 92%, 50%, 0.18);
   color: hsl(217, 92%, 30%);
