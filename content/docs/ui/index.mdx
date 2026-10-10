@@ -1,0 +1,55 @@
+---
+title: Krizaka UI
+description: The design system every Krizaka product is built on — tokens, a Tailwind preset and accessible React primitives.
+---
+
+`@krizaka/ui` is one set of primitives — buttons, cards, dialogs, menus, fields — written once against semantic
+tokens, so a product changes its identity by changing **values**, never components. Every page of this section renders
+the primitive **live** from the published package, with the code you copy and the props generated from its types.
+
+## Install in four lines
+
+```bash
+npm install @krizaka/ui@beta @krizaka/tailwind@beta @krizaka/tokens@beta tailwindcss
+```
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@krizaka/tailwind";        /* tokens + utilities + motion signature */
+@import "@krizaka/ui/tailwind.css"; /* Tailwind generates the classes the primitives use */
+```
+
+```tsx
+import { Button } from "@krizaka/ui/button";
+
+export default function Save() {
+  return <Button variant="primary">Save</Button>;
+}
+```
+
+One entry point per primitive (`@krizaka/ui/card`, `@krizaka/ui/dialog`…): an app ships only what it imports.
+
+## The component contract
+
+Every primitive follows the same rules, checked in the repository before it is released:
+
+| Rule | What it means for you |
+| :-- | :-- |
+| **Tokens only** | No palette colour, no `light:` / `dark:` class: dark, light and a product theme only change `--kz-*` values. |
+| **Composable** | Compound parts (`Card.Root`, `Card.Media`…) and `asChild` to render your own link or element. |
+| **`className` wins** | Your classes are merged last (tailwind-merge): override any part without forking. |
+| **Accessible** | Radix behaviour for overlays and inputs, visible keyboard focus (`--kz-ring`), names required where a screen reader needs one. |
+| **Server-safe when it can be** | A primitive without state or effect has no `"use client"`: it renders in a Server Component. |
+| **Reduced motion** | Entrance and idle motion stop under `prefers-reduced-motion`. |
+| **A story, a demo, documented props** | Each primitive has its Storybook stories, the demo you see here and a description for every prop. |
+
+## Where the pieces live
+
+| Package | Role |
+| :-- | :-- |
+| [`@krizaka/tokens`](/docs/ui/tokens) | The `--kz-*` vocabulary: CSS, typed constants, React Native themes. |
+| [`@krizaka/tailwind`](/docs/ui/tailwind) | The Tailwind v4 preset: `bg-surface-1`, `text-fg-secondary`, `border-border-default`… |
+| `@krizaka/ui` | The primitives (this section), the brand marks and the motion signature. |
+| [`@krizaka/intl`](/docs/ui/intl) | Money, numbers, dates and plurals, formatted the same way everywhere. |
+
+The source, the Storybook and the release notes are on [GitHub](https://github.com/krizaka/krizaka-ui).

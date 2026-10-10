@@ -15,27 +15,27 @@ import { useI18n } from "./I18nProvider";
 const DOC_CARDS = [
   {
     icon: BookOpen,
-    href: "/products/orazaka/getting-started/101",
+    href: "/docs/orazaka/101",
   },
   {
     icon: Cpu,
-    href: "/products/orazaka/architecture/architecture",
+    href: "/docs/orazaka/architecture",
   },
   {
     icon: Layers,
-    href: "/products/orazaka/api/api_reference",
+    href: "/docs/orazaka/api_reference",
   },
   {
     icon: Shield,
-    href: "/products/orazaka/core-features/auth",
+    href: "/docs/orazaka/auth",
   },
   {
     icon: Terminal,
-    href: "/products/orazaka/api/cli",
+    href: "/docs/orazaka/cli",
   },
   {
     icon: Server,
-    href: "/products/orazaka/operations/deploy",
+    href: "/docs/orazaka/deploy",
   },
 ];
 

@@ -1,0 +1,4 @@
+{
+  "title": "Krizaka UI",
+  "pages": ["index", "tokens", "tailwind", "intl", "---Components---", "...components"]
+}

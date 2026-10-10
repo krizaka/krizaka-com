@@ -62,10 +62,20 @@
   structured content collections (`lib/use-cases-data.ts`, `lib/packages-data.ts`) may hold
   `{ fr, en }` fields read with the locale key — never with a ternary.
 
+## 2.3 Documentation — one engine (Fumadocs)
+
+- `/docs/{ui,java,orazaka,orochia}` render four Fumadocs collections (`source.config.ts`, `lib/docs-source.ts`).
+  Product docs stay synced and manifest-gated (§2); `content/docs/ui` and `content/docs/java` are written here.
+- UI pages render the primitives **from the published `@krizaka/ui` registry** (`ComponentPreview`, `PropsTable`):
+  never copy a demo, a prop table or a component into this repository. `npm run docs:ui` regenerates `lib/ui-demos.ts`
+  and scaffolds missing pages (an existing page is never overwritten).
+- Titles and descriptions of written pages: `messages/*.json` → `docs.pages.<section>.<page>`.
+
 ## 3. Theming — dark **and** light are first-class
 
-- One token system in `app/globals.css`: dark on `:root`, light on `html.light`,
-  toggled by `app/components/ThemeProvider.tsx` (persisted as `kz-theme`).
+- One token system: `@krizaka/tokens` through the `@krizaka/tailwind` preset (imported by `app/globals.css`) —
+  dark on `:root`, light on `html.light`, toggled by `app/components/ThemeProvider.tsx` (persisted as `kz-theme`).
+  `app/globals.css` only adds the site's own tokens (font, grid, sheen, transitions) and maps Fumadocs' colours to them.
 - **Components use `var(--kz-*)` only.** No hard-coded hex/rgb/zinc colors, no
   Tailwind literal color utilities (`bg-zinc-900`, `text-blue-400`, …) for
   surfaces/text/borders. Semantic accents (e.g. per-phase/per-layer identity)
@@ -111,3 +121,13 @@
 
 *Agent-neutral contract for `krizaka-com`. The Orazaka engine contract lives at
 `products/orazaka/AGENTS.md`.*
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

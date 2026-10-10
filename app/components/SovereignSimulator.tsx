@@ -184,7 +184,7 @@ export function SovereignSimulator() {
               return (
                 <div key={idx} className={`pipeline-step-item ${stepClass}`}>
                   <div className="step-num-circle">
-                    {isPassed ? <CheckCircle2 size={13} style={{ color: "var(--kz-status-success)" }} /> : `0${idx + 1}`}
+                    {isPassed ? <CheckCircle2 size={13} style={{ color: "var(--kz-success)" }} /> : `0${idx + 1}`}
                   </div>
                   <div className="step-text-content">
                     <div className="step-name-row">
@@ -239,7 +239,7 @@ export function SovereignSimulator() {
                 {showOutput && (
                   <div className="console-output-card">
                     <div className="output-card-header">
-                      <Lock size={12} style={{ color: "var(--kz-status-success)" }} />
+                      <Lock size={12} style={{ color: "var(--kz-success)" }} />
                       <span className="output-card-title">{t.engineShowcase.simOutput}</span>
                     </div>
                     <pre className="output-card-body">

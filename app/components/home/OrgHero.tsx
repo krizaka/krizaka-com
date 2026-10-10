@@ -66,7 +66,7 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
 
       <style>{`
         .org-hero { position: relative; overflow: hidden; padding: clamp(120px, 15vw, 168px) 20px clamp(280px, 30vw, 400px); }
-        .org-hero-glow { position:absolute; top:-12%; left:50%; transform:translateX(-50%); width:min(820px,95vw); height:420px;
+        .org-hero-glow { position:absolute; top:-120px; /* px, not %: the glow must not move when the hero grows (CLS) */ left:50%; transform:translateX(-50%); width:min(820px,95vw); height:420px;
           background: radial-gradient(ellipse at center, var(--kz-accent-soft) 0%, transparent 66%); pointer-events:none; }
         /* The signature landscape at its original scale (mascots whole), fading only at its top edge. */
         .org-hero-landscape { position:absolute; inset:auto 0 0 0; height:300px; opacity:.6; pointer-events:none;

@@ -274,7 +274,7 @@ export default function SovereigntyPerimeter({
 
       {/* Inspect caption — updates on hover/focus, defaults to the sovereignty promise */}
       <div aria-live="polite" style={{ minHeight: "40px", display: "flex", alignItems: "center", gap: "8px", padding: "10px 16px 14px" }}>
-        <span style={{ width: "6px", height: "6px", borderRadius: "50%", flexShrink: 0, background: active ? "var(--kz-accent)" : "var(--kz-status-success)" }} className={reduce ? "" : "sp-dot"} />
+        <span style={{ width: "6px", height: "6px", borderRadius: "50%", flexShrink: 0, background: active ? "var(--kz-accent)" : "var(--kz-success)" }} className={reduce ? "" : "sp-dot"} />
         <p style={{ margin: 0, fontSize: "12px", lineHeight: 1.45, color: active ? "var(--kz-text-secondary)" : "var(--kz-text-muted)" }}>
           {active ? c.nodes[active].role : c.idle}
         </p>

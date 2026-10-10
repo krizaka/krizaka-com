@@ -22,9 +22,10 @@ hand-authored here. Governance contract: [`AGENTS.md`](AGENTS.md).
 
 ## Stack
 
-Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 + a `var(--kz-*)`
-token system · React Three Fiber/Three.js (3D) · `@xyflow/react` (pipeline graphs) ·
-`next-mdx-remote` (docs) · `framer-motion`.
+Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 with the Krizaka preset
+([`@krizaka/tailwind`](https://www.npmjs.com/package/@krizaka/tailwind): the `--kz-*` tokens of `@krizaka/tokens`) ·
+[`@krizaka/ui`](https://www.npmjs.com/package/@krizaka/ui) · Fumadocs (docs) · React Three Fiber/Three.js (3D) ·
+`@xyflow/react` (pipeline graphs) · `framer-motion`.
 
 ## Where things live
 
@@ -40,7 +41,11 @@ token system · React Three Fiber/Three.js (3D) · `@xyflow/react` (pipeline gra
 | `lib/structured-data.ts` | JSON-LD `@graph` builders (Organization · WebSite · SoftwareApplication, Breadcrumb, FAQ). |
 | `lib/site.ts` | External identity (SITE_URL, GitHub, version) — single source. |
 | `lib/i18n.ts` | Binds [`@krizaka/i18n`](https://www.npmjs.com/package/@krizaka/i18n) to `messages/en.json` + `messages/fr.json` (`getDictionary`, `asLocale`, `format`). |
-| `lib/docs.ts` · `lib/docs-manifest.ts` | Reads `orazaka-content/docs`, gated by the publish allow-list. |
+| `app/[locale]/docs/` | The documentation (Fumadocs): hub, then `[section]` = `ui`, `java`, `orazaka`, `orochia`. |
+| `source.config.ts` · `lib/docs-source.ts` | The four Fumadocs collections and their loaders, sidebars, titles (messages or manifest). |
+| `content/docs/ui/` · `content/docs/java/` | Written docs (MDX). `content/docs/ui/components/<name>.mdx` are scaffolded by `npm run docs:ui`. |
+| `app/components/docs/` | MDX components: `ComponentPreview`, `PropsTable`, `StoryFrame`, `EventSchema`, `ComingSoon`. |
+| `lib/docs-manifest.ts` · `lib/orochia-docs-manifest.ts` | Publication allow-lists of the synced product docs (only listed files are even compiled). |
 | `lib/{use-cases,packages,architecture-mesh,pipeline-mesh}-data.ts` | Page/visualization data. |
 | `orazaka-content/docs/` | **Synced** markdown from Orazaka (read-only). |
 
@@ -89,13 +94,30 @@ to [`lib/docs-manifest.ts`](lib/docs-manifest.ts) (curated title/category/order/
 - **Reduced motion**: honor `prefers-reduced-motion` (disable 3D orbits, entrance animations).
 - **3D scenes**: client-only — `dynamic(() => import(...), { ssr: false })` with a themed fallback.
 
-## ⚠️ Gotcha: the unlayered CSS reset
+## Documentation (`/docs`)
 
-`app/globals.css` has an **unlayered** `* { margin: 0; padding: 0 }` reset that overrides
-Tailwind's *layered* spacing utilities (`mx-auto`, `px-*`, `pt-*` silently do nothing for
-layout). That's why inner pages use **inline `style`** for container width/padding. Use
-inline styles (or non-spacing classes) for page layout until the reset is moved into a
-`@layer`.
+One engine, [Fumadocs](https://fumadocs.dev), for four sets: **Krizaka UI** (`content/docs/ui`), **Krizaka Java**
+(`content/docs/java`), and the synced **Orazaka** / **Orochia** docs (`orazaka-content/docs`, `orochia-content/docs`,
+gated by their manifests). The old article URLs (`/products/orazaka/<category>/<slug>`,
+`/products/orochia/docs/<slug>`) answer **301** to `/docs/<product>/<slug>`; the product overview pages stay where
+they were.
+
+- **Live components** — every `@krizaka/ui` primitive has a page. `npm run docs:ui` reads the registry of the installed
+  package and (1) rewrites `lib/ui-demos.ts` (the demo import map), (2) scaffolds the missing
+  `content/docs/ui/components/<name>.mdx` — never overwrites an existing page, which is then enriched by hand.
+  `npm run lint` fails when a primitive has no page. Upgrading `@krizaka/ui` = bump, `npm run docs:ui`, add the new
+  titles to `messages/*.json` (`docs.pages.ui.<name>`).
+- **Texts** — titles and descriptions of the written pages live in `messages/{en,fr}.json` (`docs.pages.<section>.<page>`);
+  the bodies are English developer documentation, like the synced product docs.
+- **Storybook** — `StoryFrame` embeds `NEXT_PUBLIC_STORYBOOK_URL` (GitHub Pages today, `https://ui.krizaka.com/latest`
+  after the Bunny mirror); a story can size its frame by posting `{ type: "krizaka:story-height", height }`.
+- **Search** — a static index (`/api/search`, built at build time), opened with `/` (⌘K stays the site's palette).
+
+## Layout and the CSS reset
+
+The `* { margin: 0; padding: 0 }` reset is in `@layer base`, so Tailwind's spacing utilities work. Older pages still
+set their container width and padding with inline `style`: they render correctly and were left as they are; new
+views (docs) use classes.
 
 ## Contact form
 
@@ -122,7 +144,9 @@ logged (`contact: mailgun refused (…)`) and the visitor gets a `502`.
 ```bash
 npm install
 npm run dev      # http://localhost:3000  (→ redirects to /fr or /en)
-npm run lint
+npm run lint     # ESLint + messages + every @krizaka/ui primitive has a docs page
+npm test         # node:test — tests/*.test.mjs
+npm run docs:ui  # after a @krizaka/ui upgrade: demo map + scaffolds of the new primitives
 npm run build    # SSG build — run before pushing
 npm run start
 ```

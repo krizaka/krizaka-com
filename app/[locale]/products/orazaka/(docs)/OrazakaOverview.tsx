@@ -47,7 +47,7 @@ const MODULES = [
         <line x1="1" y1="9" x2="4" y2="9" /><line x1="1" y1="14" x2="4" y2="14" />
       </svg>
     ),
-    href: "/products/orazaka/architecture/core",
+    href: "/docs/orazaka/core",
   },
   {
     id: "identity",
@@ -59,7 +59,7 @@ const MODULES = [
         <path d="M9 12l2 2 4-4" />
       </svg>
     ),
-    href: "/products/orazaka/core-features/auth",
+    href: "/docs/orazaka/auth",
   },
   {
     id: "gateway",
@@ -70,7 +70,7 @@ const MODULES = [
         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
       </svg>
     ),
-    href: "/products/orazaka/architecture/architecture",
+    href: "/docs/orazaka/architecture",
   },
   {
     id: "tools",
@@ -81,7 +81,7 @@ const MODULES = [
         <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z" />
       </svg>
     ),
-    href: "/products/orazaka/core-features/automation",
+    href: "/docs/orazaka/automation",
   },
   {
     id: "cli",
@@ -93,7 +93,7 @@ const MODULES = [
         <line x1="12" y1="19" x2="20" y2="19" />
       </svg>
     ),
-    href: "/products/orazaka/api/cli",
+    href: "/docs/orazaka/cli",
   },
   {
     id: "ui",
@@ -106,7 +106,7 @@ const MODULES = [
         <line x1="12" y1="17" x2="12" y2="21" />
       </svg>
     ),
-    href: "/products/orazaka/ui-guidelines/ui_reference",
+    href: "/docs/orazaka/ui_reference",
   },
 ];
 
@@ -207,14 +207,14 @@ export default function OrazakaOverview() {
   const c = COPY[locale];
 
   const DOCS = [
-    { title: "Developer Onboarding (101)", href: "/products/orazaka/getting-started/101", category: t.pages.orazakaOverview.start },
-    { title: "Architecture Reference", href: "/products/orazaka/architecture/architecture", category: t.pages.orazakaOverview.core },
-    { title: "API Reference", href: "/products/orazaka/api/api_reference", category: t.pages.orazakaOverview.core },
-    { title: "Auth & Security", href: "/products/orazaka/core-features/auth", category: t.pages.orazakaOverview.core },
-    { title: "Model Catalog", href: "/products/orazaka/architecture/models", category: t.pages.orazakaOverview.core },
-    { title: "CLI Reference", href: "/products/orazaka/api/cli", category: t.pages.orazakaOverview.ops },
-    { title: "Deployment (IaC)", href: "/products/orazaka/operations/deploy", category: t.pages.orazakaOverview.ops },
-    { title: "Feature Matrix", href: "/products/orazaka/core-features/master_features", category: t.pages.orazakaOverview.ops },
+    { title: "Developer Onboarding (101)", href: "/docs/orazaka/101", category: t.pages.orazakaOverview.start },
+    { title: "Architecture Reference", href: "/docs/orazaka/architecture", category: t.pages.orazakaOverview.core },
+    { title: "API Reference", href: "/docs/orazaka/api_reference", category: t.pages.orazakaOverview.core },
+    { title: "Auth & Security", href: "/docs/orazaka/auth", category: t.pages.orazakaOverview.core },
+    { title: "Model Catalog", href: "/docs/orazaka/models", category: t.pages.orazakaOverview.core },
+    { title: "CLI Reference", href: "/docs/orazaka/cli", category: t.pages.orazakaOverview.ops },
+    { title: "Deployment (IaC)", href: "/docs/orazaka/deploy", category: t.pages.orazakaOverview.ops },
+    { title: "Feature Matrix", href: "/docs/orazaka/master_features", category: t.pages.orazakaOverview.ops },
   ];
 
   return (
@@ -428,8 +428,8 @@ export default function OrazakaOverview() {
               style={{
                 padding: "20px",
                 borderRadius: "var(--kz-radius-lg)",
-                background: "color-mix(in srgb, var(--kz-status-error) 4%, var(--kz-surface-1))",
-                border: "1px solid color-mix(in srgb, var(--kz-status-error) 18%, var(--kz-border-subtle))",
+                background: "color-mix(in srgb, var(--kz-danger) 4%, var(--kz-surface-1))",
+                border: "1px solid color-mix(in srgb, var(--kz-danger) 18%, var(--kz-border-subtle))",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
@@ -441,8 +441,8 @@ export default function OrazakaOverview() {
                     borderRadius: "8px",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "color-mix(in srgb, var(--kz-status-error) 12%, transparent)",
-                    color: "var(--kz-status-error)",
+                    background: "color-mix(in srgb, var(--kz-danger) 12%, transparent)",
+                    color: "var(--kz-danger)",
                   }}
                 >
                   <ShieldAlert size={16} />
@@ -454,7 +454,7 @@ export default function OrazakaOverview() {
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
                 {c.risks.map((item, idx) => (
                   <li key={idx} style={{ display: "flex", gap: 8, fontSize: "12.5px", color: "var(--kz-text-secondary)", lineHeight: 1.45 }}>
-                    <span style={{ color: "var(--kz-status-error)", fontWeight: 700 }}>•</span>
+                    <span style={{ color: "var(--kz-danger)", fontWeight: 700 }}>•</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -466,8 +466,8 @@ export default function OrazakaOverview() {
               style={{
                 padding: "20px",
                 borderRadius: "var(--kz-radius-lg)",
-                background: "color-mix(in srgb, var(--kz-status-success) 4%, var(--kz-surface-1))",
-                border: "1px solid color-mix(in srgb, var(--kz-status-success) 18%, var(--kz-border-subtle))",
+                background: "color-mix(in srgb, var(--kz-success) 4%, var(--kz-surface-1))",
+                border: "1px solid color-mix(in srgb, var(--kz-success) 18%, var(--kz-border-subtle))",
               }}
             >
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
@@ -479,8 +479,8 @@ export default function OrazakaOverview() {
                     borderRadius: "8px",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "color-mix(in srgb, var(--kz-status-success) 12%, transparent)",
-                    color: "var(--kz-status-success)",
+                    background: "color-mix(in srgb, var(--kz-success) 12%, transparent)",
+                    color: "var(--kz-success)",
                   }}
                 >
                   <ShieldCheck size={16} />
@@ -492,7 +492,7 @@ export default function OrazakaOverview() {
               <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
                 {c.shields.map((item, idx) => (
                   <li key={idx} style={{ display: "flex", gap: 8, fontSize: "12.5px", color: "var(--kz-text-secondary)", lineHeight: 1.45 }}>
-                    <Check size={14} style={{ color: "var(--kz-status-success)", flexShrink: 0, marginTop: 2 }} />
+                    <Check size={14} style={{ color: "var(--kz-success)", flexShrink: 0, marginTop: 2 }} />
                     <span>{item}</span>
                   </li>
                 ))}

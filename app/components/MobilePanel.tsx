@@ -3,11 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { ChevronDown, Globe, Moon, Sun, X } from "lucide-react";
+import { BookOpen, ChevronDown, Globe, Layers, LayoutGrid, Moon, Sun, X } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
 import { NAV_ICONS } from "./ProductsMenu";
-import { NAV_COMPANY, NAV_PRODUCTS, companyLinkText, isNavActive, localeless } from "@/lib/nav";
+import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isNavActive, localeless } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 /* ─── Mobile Menu Panel ─── */
@@ -159,6 +159,38 @@ export function MobilePanel({
               </div>
             </details>
           ))}
+
+          {/* Developers: the platform docs (lib/nav.ts NAV_DOCS) — the products' own docs are in their group above */}
+          <details className="kz-mp-product" open={path === NAV_DOCS_HUB || path.startsWith("/docs/ui") || path.startsWith("/docs/java")}>
+            <summary>
+              <span className="kz-mp-logo">
+                <BookOpen size={20} aria-hidden />
+              </span>
+              <span style={{ flex: 1, minWidth: 0 }}>
+                <span className="kz-mp-name">{t.site.menu.docs}</span>
+                <span className="kz-mp-tagline">{t.site.nav.docs.all.desc}</span>
+              </span>
+              <ChevronDown size={16} className="kz-mp-chevron" aria-hidden />
+            </summary>
+            <div className="kz-mp-links">
+              {NAV_DOCS.map((d) => {
+                const Icon = d.id === "storybook" ? Layers : BookOpen;
+                const label = docsLinkText(t, d).label;
+                return d.external ? (
+                  <a key={d.id} href={d.href} target="_blank" rel="noreferrer" onClick={onClose} className="kz-mp-link">
+                    <Icon size={16} strokeWidth={1.6} aria-hidden /> {label}
+                  </a>
+                ) : (
+                  <Link key={d.id} href={d.href} onClick={onClose} className={`kz-mp-link${path.startsWith(d.href) ? " is-active" : ""}`}>
+                    <Icon size={16} strokeWidth={1.6} aria-hidden /> {label}
+                  </Link>
+                );
+              })}
+              <Link href={NAV_DOCS_HUB} onClick={onClose} className={`kz-mp-link${path === NAV_DOCS_HUB ? " is-active" : ""}`}>
+                <LayoutGrid size={16} strokeWidth={1.6} aria-hidden /> {t.site.nav.docs.all.label}
+              </Link>
+            </div>
+          </details>
 
           <div className="kz-mp-links" style={{ marginTop: "4px", paddingTop: "10px", borderTop: "1px solid var(--kz-border-subtle)" }}>
             {NAV_COMPANY.map((l) => {

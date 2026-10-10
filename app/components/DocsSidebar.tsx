@@ -59,8 +59,8 @@ const ORAZAKA_DOCS = { id: "orazaka", name: "Orazaka", kicker: "Documentation", 
 
 export default function DocsSidebar({ groupedDocs, sortedCategories, product = ORAZAKA_DOCS }: DocsSidebarProps) {
   const pathname = localeless(usePathname());
-  const docHref = (doc: DocMeta) =>
-    product.docUrls === "category" ? `${product.overviewHref}/${doc.category}/${doc.slug}` : `${product.overviewHref}/${doc.slug}`;
+  // The articles live in the documentation (/docs/<product>/<slug>); this sidebar stays on the product overview.
+  const docHref = (doc: DocMeta) => `/docs/${product.id}/${doc.slug}`;
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Close on navigation

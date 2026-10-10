@@ -105,13 +105,13 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
         .kz-spot-copy { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
         .kz-spot-head { display: flex; align-items: center; gap: 14px; }
         .kz-spot-head h3 { margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: 28px; font-weight: 800; letter-spacing: -.02em; color: var(--kz-text-primary); }
-        .kz-spot-badge { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--product-accent); }
+        .kz-spot-badge { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: color-mix(in srgb, var(--product-accent) 70%, var(--kz-text-primary)); }
         .kz-spot-tagline { margin: 4px 0 0; font-size: 18px; font-weight: 700; color: var(--kz-text-primary); }
         .kz-spot-summary { margin: 0; font-size: 14.5px; line-height: 1.7; color: var(--kz-text-secondary); }
         .kz-spot-points { list-style: none; padding: 0; margin: 2px 0 0; display: grid; gap: 8px; }
         .kz-spot-points li { display: flex; gap: 8px; align-items: baseline; font-size: 14px; color: var(--kz-text-secondary); }
         .kz-spot-points svg { color: var(--product-accent); flex-shrink: 0; transform: translateY(2px); }
-        .kz-spot-stack { margin: 2px 0 0; font-family: var(--font-mono); font-size: 11.5px; color: var(--kz-text-muted); }
+        .kz-spot-stack { margin: 2px 0 0; font-family: var(--font-mono); font-size: 11.5px; color: var(--kz-text-secondary); }
         .kz-spot-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
         .kz-spot-primary, .kz-spot-chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; text-decoration: none; }
         .kz-spot-primary { background: var(--kz-text-primary); color: var(--kz-surface-0); }
@@ -121,7 +121,7 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
           box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--product-accent) 45%, transparent); }
         .kz-spot-chrome { display: flex; align-items: center; gap: 6px; padding: 9px 12px; background: var(--kz-surface-2); border-bottom: 1px solid var(--kz-border-subtle); }
         .kz-spot-chrome span { width: 9px; height: 9px; border-radius: 50%; background: var(--kz-border-strong); }
-        .kz-spot-chrome em { margin-left: 8px; font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-muted); }
+        .kz-spot-chrome em { margin-left: 8px; font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
         .kz-spot-media video { display: block; width: 100%; height: auto; object-fit: cover; }
       `}</style>
     </section>

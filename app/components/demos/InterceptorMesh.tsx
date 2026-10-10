@@ -478,7 +478,7 @@ export default function InterceptorMesh({ compact = false }: { compact?: boolean
               {t.pages.interceptorMesh.interactiveCognitiveConsole}
             </h3>
             <p style={{ fontSize: "10.5px", fontFamily: "var(--font-mono)", color: "var(--kz-text-muted)", margin: "2px 0 0" }}>
-              STATUS: <span style={{ color: isPlaying ? "var(--kz-status-success)" : "var(--kz-status-warning)" }}>{isPlaying ? "WAVE_PROPAGATION_ACTIVE" : "ENGINE_PAUSED"}</span> | STEP: 0{activeStep + 1}
+              STATUS: <span style={{ color: isPlaying ? "var(--kz-success)" : "var(--kz-warning)" }}>{isPlaying ? "WAVE_PROPAGATION_ACTIVE" : "ENGINE_PAUSED"}</span> | STEP: 0{activeStep + 1}
             </p>
           </div>
         </div>

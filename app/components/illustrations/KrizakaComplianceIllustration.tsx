@@ -49,7 +49,7 @@ export default function KrizakaComplianceIllustration() {
 
           {/* Cloud Threat Gradient */}
           <linearGradient id="cloud-threat" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="var(--kz-status-error)" stopOpacity="0.35" />
+            <stop offset="0%" stopColor="var(--kz-danger)" stopOpacity="0.35" />
             <stop offset="100%" stopColor="transparent" stopOpacity="0" />
           </linearGradient>
 
@@ -67,11 +67,11 @@ export default function KrizakaComplianceIllustration() {
         {/* ─── OUTSIDE: Cloud Threats (GDPR/Law 25 Audit Pressure) ─── */}
         <g transform="translate(60, 40)" opacity="0.8">
           {/* Cloud symbol */}
-          <path d="M 10 20 C 10 10, 25 5, 35 12 C 42 2, 60 5, 62 15 C 70 15, 75 25, 70 32 C 65 38, 15 38, 10 32 C 5 28, 5 22, 10 20 Z" fill="url(#cloud-threat)" stroke="var(--kz-status-error)" strokeWidth="1" opacity="0.6" />
+          <path d="M 10 20 C 10 10, 25 5, 35 12 C 42 2, 60 5, 62 15 C 70 15, 75 25, 70 32 C 65 38, 15 38, 10 32 C 5 28, 5 22, 10 20 Z" fill="url(#cloud-threat)" stroke="var(--kz-danger)" strokeWidth="1" opacity="0.6" />
           
           {/* Animated incoming packet ray (Stops at shield) */}
-          <path d="M 50 35 L 120 115" stroke="var(--kz-status-error)" strokeWidth="2" strokeDasharray="6,6" opacity="0.6" className="threat-ray-1" />
-          <circle cx="120" cy="115" r="4" fill="var(--kz-status-error)" opacity="0.8" className="threat-burst" />
+          <path d="M 50 35 L 120 115" stroke="var(--kz-danger)" strokeWidth="2" strokeDasharray="6,6" opacity="0.6" className="threat-ray-1" />
+          <circle cx="120" cy="115" r="4" fill="var(--kz-danger)" opacity="0.8" className="threat-burst" />
         </g>
 
         {/* ─── SOVEREIGN SHIELD DOME (Local Infrastructure Boundary) ─── */}

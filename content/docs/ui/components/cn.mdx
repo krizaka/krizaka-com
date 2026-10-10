@@ -1,0 +1,19 @@
+---
+title: Cn
+description: "Merges Tailwind classes: the last one wins — a product's `className` overrides the primitive's. The merge engine is tailwind-merge as tailwind-variants ships it (the one `tv` uses), so the platform carries a single copy of it. tailwind-variants bundles that engine since 3.3 (it never imports the `tailwind-merge` package, an optional peer): hence `tailwind-variants ^3.3.1` and no `tailwind-merge` dependency — `scripts/consumer.mjs` checks it on a clean install of the packed package"
+---
+
+{/* Scaffolded by scripts/gen-ui-docs.mjs from @krizaka/ui/registry/cn — enrich freely: it is never overwritten.
+    Title and description shown on the site: messages → docs.pages.ui.cn. */}
+
+<ComponentPreview name="cn" />
+
+## Import
+
+```tsx
+import { cn } from "@krizaka/ui/cn";
+```
+
+## Props
+
+<PropsTable of="cn" />

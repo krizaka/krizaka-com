@@ -76,7 +76,7 @@ export default function MartinFalconSentry({ size = 180 }: { size?: number }) {
             <polygon points="-30,6 30,6 22,-4 -22,-4" fill="var(--kz-surface-2)" stroke="var(--kz-border-strong)" strokeWidth="1.2" />
             <line x1="-15" y1="1" x2="15" y2="1" stroke="var(--kz-accent)" strokeWidth="1" opacity="0.6" />
             {/* Status led */}
-            <circle cx="0" cy="-1" r="2.5" fill="var(--kz-status-success)" className="pedestal-led" />
+            <circle cx="0" cy="-1" r="2.5" fill="var(--kz-success)" className="pedestal-led" />
           </g>
 
           {/* Floating Data Particles */}
@@ -234,7 +234,7 @@ export default function MartinFalconSentry({ size = 180 }: { size?: number }) {
         /* Pedestal LED pulsing */
         @keyframes led-pulse {
           0%, 100% { opacity: 0.6; }
-          50%      { opacity: 1; filter: drop-shadow(0 0 2px var(--kz-status-success)); }
+          50%      { opacity: 1; filter: drop-shadow(0 0 2px var(--kz-success)); }
         }
         .pedestal-led {
           animation: led-pulse 1.8s infinite;

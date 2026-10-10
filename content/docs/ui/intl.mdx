@@ -1,0 +1,39 @@
+---
+title: Intl
+description: Money, numbers, dates and plurals formatted the same way in every Krizaka product.
+---
+
+`@krizaka/intl` has no dependency: it is built on `Intl`, with one cached formatter per locale and options.
+
+```bash
+npm install @krizaka/intl@beta
+```
+
+> **The cents are the ledger's money, never a float.** An amount travels as an integer of minor units from the
+> database to the screen; only `formatMoney` turns it into text. The locale is always passed: a server render and a
+> browser render say the same thing.
+
+| Function | Example (en-US) | Example (fr-CA) |
+| :-- | :-- | :-- |
+| `formatMoney(123450, { currency: "USD", locale })` | `$1,234.50` | `1 234,50 $ US` |
+| `formatNumber(1234567.891, { locale })` | `1,234,567.891` | `1 234 567,891` |
+| `formatCompact(12345, { locale })` | `12.3K` | `12,3 k` |
+| `formatPercent(0.125, { locale })` | `13%` | `13 %` |
+| `formatDate(date, { locale })` | `Oct 9, 2026` | `9 oct. 2026` |
+| `formatRelative(date, { locale, now })` | `3 hours ago`, `yesterday` | `il y a 3 heures`, `hier` |
+| `plural(1, locale, { one: "bid", other: "bids" })` | `bid` | `0` and `1` are `one` |
+
+Sub-paths (`@krizaka/intl/money`, `/number`, `/date`, `/plural`) import one family; the root imports all of them.
+
+## Bind it once in the app
+
+The app knows its currency and its locale; the components only pass cents:
+
+```ts title="lib/money.ts"
+import { formatMoney } from "@krizaka/intl";
+import { currentLocale } from "@/lib/i18n";
+
+export const money = (cents: number) => formatMoney(cents, { currency: "USD", locale: currentLocale() });
+```
+
+`formatMoney(12.5, …)` throws a `TypeError`: a float never reaches the screen as money.

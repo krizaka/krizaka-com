@@ -16,7 +16,6 @@ function productDocs(product: Product): { dir: string; manifest: Record<string, 
     ? { dir: OROCHIA_DOCS_DIR, manifest: OROCHIA_DOCS_MANIFEST }
     : { dir: ORAZAKA_DOCS_DIR, manifest: DOCS_MANIFEST };
 }
-const README_PATH = path.join(process.cwd(), 'orazaka-content/README.md');
 
 export interface DocContent {
   slug: string;
@@ -30,11 +29,6 @@ export interface DocContent {
   intro?: string;
   /** Audience badge from the manifest. */
   audience?: Audience;
-}
-
-function extractTitleFromMarkdown(markdown: string): string {
-  const match = markdown.match(/^#\s+(.+)$/m);
-  return match ? match[1].trim() : 'Documentation';
 }
 
 function extractDescriptionFromMarkdown(markdown: string): string {
@@ -87,55 +81,5 @@ export async function getDocsList(product: Product = 'orazaka'): Promise<Omit<Do
   } catch (error) {
     console.error('Error reading docs directory:', error);
     return [];
-  }
-}
-
-export async function getDocBySlugAndCategory(
-  category: string,
-  slug: string,
-  product: Product = 'orazaka',
-): Promise<DocContent | null> {
-  const DOCS_DIR = productDocs(product).dir;
-  const list = await getDocsList(product);
-  const docMeta = list.find(d => d.slug === slug && d.category === category);
-  
-  if (!docMeta) return null;
-  
-  try {
-    const files = await fs.readdir(DOCS_DIR);
-    const fileName = files.find((f) => f.replace(/\.md$/, '').toLowerCase() === slug);
-    if (!fileName) return null;
-
-    const fullPath = path.join(DOCS_DIR, fileName);
-    const fileContents = await fs.readFile(fullPath, 'utf8');
-    const { content } = matter(fileContents);
-
-    return { ...docMeta, content };
-  } catch (error) {
-    console.error(`Error loading doc for category ${category} and slug ${slug}:`, error);
-    return null;
-  }
-}
-
-export async function getRootReadme(): Promise<DocContent | null> {
-  try {
-    const fileContents = await fs.readFile(README_PATH, 'utf8');
-    const { data, content } = matter(fileContents);
-    
-    const title = data.title || extractTitleFromMarkdown(content);
-    const description = data.description || extractDescriptionFromMarkdown(content);
-
-    return {
-      slug: 'index',
-      category: 'root',
-      order: 0,
-      title,
-      description,
-      content,
-      frontMatter: data,
-    };
-  } catch (error) {
-    console.error('Error loading root README:', error);
-    return null;
   }
 }

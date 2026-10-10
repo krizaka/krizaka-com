@@ -552,6 +552,16 @@
           "label": "Contact",
           "desc": "Write to the team"
         }
+      },
+      "docs": {
+        "storybook": {
+          "label": "Storybook",
+          "desc": "Every @krizaka/ui story, as tested"
+        },
+        "all": {
+          "label": "All documentation",
+          "desc": "Platform and product docs"
+        }
       }
     },
     "products": {
@@ -649,7 +659,8 @@
       "contact": "Contact",
       "privacy": "Privacy",
       "terms": "Terms",
-      "madeIn": "Made in Montréal · Apache-2.0"
+      "madeIn": "Made in Montréal · Apache-2.0",
+      "docs": "Documentation"
     },
     "contactForm": {
       "stepTopic": "What brings you here?",
@@ -2109,6 +2120,283 @@
           "title": "Deployment (IaC)"
         }
       ]
+    }
+  },
+  "docs": {
+    "meta": {
+      "title": "Documentation — Krizaka UI, Java and products",
+      "description": "One documentation for the Krizaka platform: the UI design system with live previews, the Spring Boot kit, and the Orazaka and Orochia product docs."
+    },
+    "hub": {
+      "kicker": "Documentation",
+      "title": "Build with Krizaka",
+      "lead": "The building blocks the products are made of, documented from their source: live components, the Java kit, and each product's own documentation.",
+      "open": "Open",
+      "platform": "Platform",
+      "products": "Products"
+    },
+    "sections": {
+      "ui": {
+        "title": "Krizaka UI",
+        "description": "Tokens, Tailwind preset and React primitives — live previews, copyable code, props."
+      },
+      "java": {
+        "title": "Krizaka Java",
+        "description": "Parent, BOM, starters, messaging, Problem Details and the service contracts."
+      },
+      "orazaka": {
+        "title": "Orazaka",
+        "description": "The sovereign AI engine: getting started, architecture, APIs — synced from its repositories."
+      },
+      "orochia": {
+        "title": "Orochia",
+        "description": "The creator platform: architecture, auctions, media pipeline, API and deployment — synced from its code."
+      }
+    },
+    "separators": {
+      "components": "Components",
+      "modules": "Modules",
+      "contracts": "Contracts"
+    },
+    "categories": {
+      "getting-started": "Getting started",
+      "architecture": "Architecture",
+      "api": "API",
+      "core-features": "Core features",
+      "operations": "Operations",
+      "guidelines": "Guidelines"
+    },
+    "productIndex": {
+      "lead": "Every page below is synced from the product's own repository and published by its manifest.",
+      "overview": "Product overview"
+    },
+    "chrome": {
+      "search": "Search the docs",
+      "searchNoResults": "No results found",
+      "onThisPage": "On this page",
+      "noHeadings": "No headings",
+      "nextPage": "Next",
+      "previousPage": "Previous",
+      "copy": "Copy",
+      "copied": "Copied",
+      "openSidebar": "Open the sidebar",
+      "closeSidebar": "Close the sidebar",
+      "collapseSidebar": "Collapse the sidebar",
+      "openSearch": "Open the search",
+      "closeSearch": "Close the search",
+      "lastUpdated": "Last updated on",
+      "chooseSection": "Choose a documentation"
+    },
+    "preview": {
+      "preview": "Preview",
+      "code": "Code",
+      "label": "Live preview of {name}",
+      "toLight": "Show in light theme",
+      "toDark": "Show in dark theme"
+    },
+    "props": {
+      "prop": "Prop",
+      "type": "Type",
+      "default": "Default",
+      "description": "Description",
+      "required": "required",
+      "none": "This module has no component props: see the import and the preview above."
+    },
+    "story": {
+      "title": "Storybook story {story}",
+      "open": "Open in Storybook"
+    },
+    "schema": {
+      "field": "Field",
+      "type": "Type",
+      "required": "Required",
+      "description": "Description",
+      "constraints": "Constraints",
+      "yes": "yes",
+      "no": "no"
+    },
+    "comingSoon": {
+      "title": "Coming soon",
+      "body": "The contracts are not published by the services yet: this page fills in as soon as they are, from the source.",
+      "issue": "Follow the issue"
+    },
+    "pages": {
+      "ui": {
+        "index": {
+          "title": "Krizaka UI",
+          "description": "The design system every Krizaka product is built on — tokens, a Tailwind preset and accessible React primitives."
+        },
+        "tokens": {
+          "title": "Tokens",
+          "description": "The --kz-* vocabulary: one set of semantic roles compiled to CSS, TypeScript and React Native."
+        },
+        "tailwind": {
+          "title": "Tailwind preset",
+          "description": "The Tailwind CSS v4 preset that turns the --kz-* tokens into utilities."
+        },
+        "intl": {
+          "title": "Intl",
+          "description": "Money, numbers, dates and plurals formatted the same way in every Krizaka product."
+        },
+        "alert": {
+          "title": "Alert",
+          "description": "A message in the flow of the page: information, success, warning or danger."
+        },
+        "avatar": {
+          "title": "Avatar",
+          "description": "A person's picture with an initials fallback, alone or stacked in a group."
+        },
+        "badge": {
+          "title": "Badge",
+          "description": "A short label: a status, a count, a tag over an image."
+        },
+        "button": {
+          "title": "Button",
+          "description": "The action: primary, secondary, outline, ghost or danger, with sizes, loading and icon-only buttons."
+        },
+        "card": {
+          "title": "Card",
+          "description": "The composed chassis of every Krizaka card — media, badges, body, footer."
+        },
+        "checkbox": {
+          "title": "Checkbox",
+          "description": "A checkbox: checked, unchecked or indeterminate, with its label."
+        },
+        "chip": {
+          "title": "Chip",
+          "description": "Selectable and removable chips, alone or in a single- or multiple-choice group."
+        },
+        "cn": {
+          "title": "cn",
+          "description": "Merges Tailwind classes so that a product's className overrides the primitive's."
+        },
+        "command": {
+          "title": "Command",
+          "description": "A command palette: search, groups, shortcuts — inline or in a dialog."
+        },
+        "confirm-button": {
+          "title": "Confirm button",
+          "description": "A destructive action in two steps: arm, then confirm."
+        },
+        "countdown": {
+          "title": "Countdown",
+          "description": "A live countdown to a date, urgent near the end, with its hook."
+        },
+        "dialog": {
+          "title": "Dialog",
+          "description": "Dialogs, sheets and alert dialogs — focus trapped, closed with Escape."
+        },
+        "dropdown-menu": {
+          "title": "Dropdown menu",
+          "description": "A menu of actions opened from a trigger, keyboard-navigable."
+        },
+        "empty-state": {
+          "title": "Empty state",
+          "description": "What a list says when it has nothing yet, and the action that fills it."
+        },
+        "field": {
+          "title": "Field",
+          "description": "Label, hint and error around an input, a textarea or a select."
+        },
+        "kbd": {
+          "title": "Kbd",
+          "description": "A keyboard key or shortcut, as text."
+        },
+        "page-header": {
+          "title": "Page header",
+          "description": "The top of a page: title, description, breadcrumb and actions."
+        },
+        "popover": {
+          "title": "Popover",
+          "description": "Floating content anchored to a trigger: a small form, a detail."
+        },
+        "progress": {
+          "title": "Progress",
+          "description": "Progress as a bar or a ring, determinate or not."
+        },
+        "radio-group": {
+          "title": "Radio group",
+          "description": "One choice among several, as items or as cards."
+        },
+        "separator": {
+          "title": "Separator",
+          "description": "A horizontal or vertical divider."
+        },
+        "skeleton": {
+          "title": "Skeleton",
+          "description": "Placeholders that hold the layout while content loads."
+        },
+        "slider": {
+          "title": "Slider",
+          "description": "A value or a range picked on a track."
+        },
+        "slot": {
+          "title": "Slot",
+          "description": "What asChild renders, and a name for assistive technology only."
+        },
+        "spinner": {
+          "title": "Spinner",
+          "description": "An indeterminate wait, in three sizes."
+        },
+        "stat": {
+          "title": "Stat",
+          "description": "A figure with its label and its trend."
+        },
+        "switch": {
+          "title": "Switch",
+          "description": "An on/off setting that applies at once."
+        },
+        "tabs": {
+          "title": "Tabs",
+          "description": "Tabs as underline, segmented control or pills."
+        },
+        "theme": {
+          "title": "Theme",
+          "description": "The theme mechanism of every product: script, provider, hook and toggle."
+        },
+        "toast": {
+          "title": "Toast",
+          "description": "Notifications that come and go, styled by role."
+        },
+        "tooltip": {
+          "title": "Tooltip",
+          "description": "A short hint on hover and on keyboard focus."
+        }
+      },
+      "java": {
+        "index": {
+          "title": "Krizaka Java",
+          "description": "The Spring Boot building blocks of every Krizaka service — one build, four modules, four starters."
+        },
+        "build": {
+          "title": "Build, parent and BOM",
+          "description": "krizaka-parent, krizaka-bom and krizaka-test-support: one build for every Krizaka JVM artifact."
+        },
+        "web": {
+          "title": "Web and Problem Details",
+          "description": "krizaka-web: one error format (RFC 9457), request correlation, Jackson defaults, cursor pagination, CORS."
+        },
+        "security": {
+          "title": "Security",
+          "description": "krizaka-security: local session-token verification, one baseline for every filter chain, service tokens."
+        },
+        "messaging": {
+          "title": "Messaging",
+          "description": "krizaka-messaging: publish through the outbox, consume with retry then DLQ, process each message once."
+        },
+        "observability": {
+          "title": "Observability",
+          "description": "krizaka-observability: required service names, ECS logs, Prometheus and OpenTelemetry defaults."
+        },
+        "events": {
+          "title": "Event contracts",
+          "description": "The events the Krizaka domain services publish, each with its JSON Schema."
+        },
+        "openapi": {
+          "title": "HTTP APIs (OpenAPI)",
+          "description": "The OpenAPI contracts of krizaka-users, krizaka-billing and krizaka-notifications."
+        }
+      }
     }
   }
 }

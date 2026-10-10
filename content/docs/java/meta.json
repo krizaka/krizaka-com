@@ -1,0 +1,4 @@
+{
+  "title": "Krizaka Java",
+  "pages": ["index", "build", "---Modules---", "web", "security", "messaging", "observability", "---Contracts---", "events", "openapi"]
+}

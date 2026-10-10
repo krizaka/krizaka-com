@@ -309,12 +309,12 @@ const STYLES = `
   .kz-cf textarea::placeholder { color:var(--kz-text-muted); }
   .kz-cf :is(input,textarea):focus-visible { outline:none; border-color:var(--kz-accent);
     box-shadow:0 0 0 3px color-mix(in srgb, var(--kz-accent) 22%, transparent); }
-  .kz-cf [aria-invalid="true"] { border-color:var(--kz-status-error); }
-  .kz-cf-field em, .kz-cf-under em { font-style:normal; font-weight:500; font-size:12.5px; color:var(--kz-status-error); }
+  .kz-cf [aria-invalid="true"] { border-color:var(--kz-danger); }
+  .kz-cf-field em, .kz-cf-under em { font-style:normal; font-weight:500; font-size:12.5px; color:var(--kz-danger); }
   .kz-cf-under { display:flex; justify-content:space-between; gap:12px; font-weight:400; }
   .kz-cf-hint { font-size:12px; color:var(--kz-text-muted); }
   .kz-cf-count { margin-left:auto; font-family:var(--font-mono, monospace); font-size:11.5px; color:var(--kz-text-muted); }
-  .kz-cf-count[data-near] { color:var(--kz-status-error); }
+  .kz-cf-count[data-near] { color:var(--kz-danger); }
 
   .kz-cf-chips { display:flex; flex-wrap:wrap; gap:8px; }
   .kz-cf-chip { padding:8px 14px; border-radius:999px; font:inherit; font-size:13px; font-weight:500; cursor:pointer;
@@ -326,7 +326,7 @@ const STYLES = `
   .kz-cf-chip:focus-visible { outline:2px solid var(--kz-accent); outline-offset:2px; }
 
   .kz-cf-hp { position:absolute; left:-10000px; width:1px; height:1px; opacity:0; }
-  .kz-cf-error { display:flex; gap:8px; align-items:center; margin:0; font-size:13px; color:var(--kz-status-error); }
+  .kz-cf-error { display:flex; gap:8px; align-items:center; margin:0; font-size:13px; color:var(--kz-danger); }
   .kz-cf-foot { display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px; padding-top:4px; }
   .kz-cf-foot > span { font-size:12px; color:var(--kz-text-muted); }
   .kz-cf-submit { display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 24px; border:0; border-radius:12px;
@@ -343,7 +343,7 @@ const STYLES = `
   .kz-cf-done h2 { margin:6px 0 0; font-family:var(--font-display), system-ui, sans-serif; font-size:22px; color:var(--kz-text-primary); }
   .kz-cf-done p { margin:0; max-width:420px; font-size:15px; line-height:1.6; color:var(--kz-text-secondary); }
   .kz-cf-done-mark { display:grid; place-items:center; width:56px; height:56px; border-radius:50%;
-    color:var(--kz-status-success); background:color-mix(in srgb, var(--kz-status-success) 14%, transparent);
+    color:var(--kz-success); background:color-mix(in srgb, var(--kz-success) 14%, transparent);
     animation:kz-cf-pop 420ms cubic-bezier(.16,1,.3,1) both; }
   @keyframes kz-cf-pop { from { transform:scale(.5); opacity:0; } to { transform:scale(1); opacity:1; } }
   .kz-cf-ghost { display:inline-flex; align-items:center; gap:8px; margin-top:8px; padding:10px 16px; border-radius:10px; cursor:pointer;

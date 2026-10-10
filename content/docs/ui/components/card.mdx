@@ -1,0 +1,39 @@
+---
+title: Card
+description: "The composed chassis of every Krizaka card — media, badges, body, footer"
+---
+
+{/* Scaffolded by scripts/gen-ui-docs.mjs from @krizaka/ui/registry/card, then enriched by hand — never overwritten.
+    Title and description shown on the site: messages → docs.pages.ui.card. */}
+
+<ComponentPreview name="card" />
+
+## Import
+
+```tsx
+import { Card } from "@krizaka/ui/card";
+```
+
+## Anatomy
+
+`Card.Root` · `Card.Media` · `Card.Image` · `Card.Overlay` · `Card.Body` · `Card.Title` · `Card.Description` ·
+`Card.Stat` · `Card.Footer`
+
+- **`Card.Root`** is the frame: `tone` (default, elevated, glass), `radius`, and `interactive` for a card that is a
+  link — the spotlight follows the pointer, the card lifts on hover. With `asChild` it renders your `<a>` or
+  `<article>`.
+- **`Card.Media`** holds the image at a fixed `aspect` (video, square, portrait, auto); `Card.Image` falls back to
+  `fallback` when there is no `src`.
+- **`Card.Overlay`** sits on the media in a `corner` — badges and durations use `tone="scrim"`, identical in both
+  themes.
+- **`Card.Body`** carries the title, the description, the stats and the footer.
+
+Products build their own cards from these parts and override any of them through `className` — never a fork.
+
+## Props
+
+<PropsTable of="card" />
+
+## In Storybook
+
+<StoryFrame story="primitives-card--interactive-link" />
