@@ -58,3 +58,7 @@ PLAN_DEPLOIEMENT.md
 # The import map of the /docs/ui live examples (scripts/gen-ui-docs.mjs, on install, dev and build)
 /lib/ui-examples.ts
 /public/ui-examples/
+
+# PR captures go to Bunny Storage (scripts/pr-assets.mjs), never into the repository
+docs/screenshots/
+.github/pr-assets/
