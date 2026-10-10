@@ -9,7 +9,7 @@ import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NPM_PACKAGES, npmUrl, repoUrl } from "@/lib/npm-packages";
-import { CENTRAL_NAMESPACE_URL, MAVEN_ARTIFACTS, centralUrl, mavenRepoUrl } from "@/lib/maven-packages";
+import { BOM_VERSION, CENTRAL_NAMESPACE_URL, KIT_PREVIOUS_VERSION, MAVEN_ARTIFACTS, centralUrl, mavenRepoUrl } from "@/lib/maven-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
 
 /* /open-source — for developers who want to build with Krizaka's pieces: what can be reused, how
@@ -193,7 +193,7 @@ export default async function OpenSourcePage({ params }: Props) {
         <p className="os-pk-lead">{pk.lead}</p>
         <div className="os-pk-banner">
           <Layers size={18} aria-hidden />
-          <p>{pk.notProductBanner}</p>
+          <p>{format(pk.notProductBanner, { count: NPM_PACKAGES.length })}</p>
         </div>
         <div className="os-packages">
           {NPM_PACKAGES.map((p) => (
@@ -229,10 +229,11 @@ export default async function OpenSourcePage({ params }: Props) {
         <pre className="os-bom">{`<dependency>
   <groupId>com.krizaka</groupId>
   <artifactId>krizaka-bom</artifactId>
-  <version>0.1.0</version>
+  <version>${BOM_VERSION}</version>
   <type>pom</type>
   <scope>import</scope>
 </dependency>`}</pre>
+        <p className="os-pk-note">{format(mv.pinnedNote, { previous: KIT_PREVIOUS_VERSION, current: BOM_VERSION })}</p>
         <div className="os-packages">
           {MAVEN_ARTIFACTS.map((a) => (
             <article key={a.id} className="os-package">
@@ -240,7 +241,7 @@ export default async function OpenSourcePage({ params }: Props) {
                 <p className="os-package-role">{mv.items[a.id].role}</p>
                 <h3>{a.artifactId}</h3>
                 <p>{mv.items[a.id].line}</p>
-                <code>{`${a.groupId}:${a.artifactId}`}</code>
+                <code>{`${a.groupId}:${a.artifactId}:${a.version}`}</code>
                 <div className="os-package-links">
                   <a href={centralUrl(a)} target="_blank" rel="noopener noreferrer">
                     {mv.central} <ArrowUpRight size={13} aria-hidden />
@@ -293,6 +294,7 @@ export default async function OpenSourcePage({ params }: Props) {
       <style>{`
         .os-bom { margin: 0 0 20px; padding: 14px 16px; border-radius: 14px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.6; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); color: var(--kz-text-primary); overflow-x: auto; }
         .os-maven-all { margin: 18px 0 0; }
+        .os-pk-note { max-width: 640px; margin: -8px 0 24px; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-muted); }
         .os-maven-all a { display: inline-flex; align-items: center; gap: 4px; font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
         .os-maven-all a:hover { color: var(--kz-accent); }
         .os-pk-lead { max-width: 640px; margin: -4px 0 20px; font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); }

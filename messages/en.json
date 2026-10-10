@@ -1513,21 +1513,45 @@
       "eyebrow": "On npm",
       "title": "The pieces, published.",
       "lead": "What every product's interface is made of, on the public npm registry: installable without an account or a token, each release built in CI with provenance.",
-      "notProductBanner": "Foundational building blocks, not standalone applications: these four packages are the open-source infrastructure that powers our products. Anyone can install and reuse them independently.",
+      "notProductBanner": "Foundational building blocks, not standalone applications: these {count} packages are the open-source infrastructure that powers our products. Anyone can install and reuse them independently.",
       "npm": "npm",
       "source": "Source",
       "items": {
+        "tokens": {
+          "role": "The vocabulary",
+          "line": "The semantic --kz-* tokens — surfaces, text, accent, statuses — in dark and light, with the brand themes of Krizaka, Orazaka and Orochia: CSS, TypeScript and React Native from one source."
+        },
+        "tailwind": {
+          "role": "The preset",
+          "line": "The tokens as Tailwind CSS v4 utilities (bg-surface-1, text-fg-danger, rounded-xl), the Krizaka easing and the illustration-only variants."
+        },
+        "config": {
+          "role": "The guardrails",
+          "line": "ESLint, tsconfig and Prettier for every app, the four UI rules, and krizaka-ratchet — the counter that lets interface debt only go down."
+        },
         "ui": {
-          "role": "The brand layer",
-          "line": "The animated marks of Krizaka, Orazaka and Orochia, and the Krizaka motion signature — one easing, one way to enter, reveal and open."
+          "role": "The primitives",
+          "line": "Button, card, dialog, toast, tabs, command palette, countdown… for the web, one entry each, and for React Native — with the Krizaka marks, the motion signature and the registry behind krizaka.com/docs/ui."
+        },
+        "icons": {
+          "role": "The signature icons",
+          "line": "Seventy icons drawn in code in one grammar — cut corners, one node — for React and React Native, tree-shakable."
+        },
+        "intl": {
+          "role": "Numbers and dates",
+          "line": "Money from integer minor units, numbers, dates, relative times and plurals on Intl, with zero dependency."
+        },
+        "i18n": {
+          "role": "The words",
+          "line": "Typed message keys and placeholders, plurals, rich text, a React provider that ships one language, and the krizaka-i18n check."
         },
         "orochiaDs": {
           "role": "Orochia's kit",
-          "line": "Buttons, sheets, switches, sliders, two-tap confirmations — the components of the Orochia apps, on Tailwind CSS v4, in both themes."
+          "line": "Orochia's theme on the primitives, and the components that speak its language — live badges, auctions, stories — in both themes."
         },
         "orazakaDs": {
           "role": "Orazaka's kit",
-          "line": "The React components, theme and icon registry of the Orazaka web clients."
+          "line": "Orazaka's theme on the primitives, and the components and icon registry of its web clients."
         },
         "orazakaShared": {
           "role": "Orazaka's contracts",
@@ -1538,15 +1562,36 @@
     "maven": {
       "eyebrow": "On Maven Central",
       "title": "The Java pieces, published.",
-      "lead": "The building blocks every product's services stand on, on Maven Central under com.krizaka: import the BOM once and every artifact resolves to one coherent, signed release.",
+      "lead": "The building blocks every product's services stand on, on Maven Central under com.krizaka: import the BOM once, add a starter, and every artifact resolves to one coherent, signed release.",
       "bomNote": "Import the BOM, then declare artifacts without a version:",
       "central": "Maven Central",
       "source": "Source",
       "all": "All artifacts",
+      "pinnedNote": "Users, notifications and billing are published at {previous}: declare them with version {previous} until their {current} (November).",
       "items": {
         "bom": {
           "role": "One version for all",
           "line": "Every com.krizaka artifact at one version. It never changes the version of a third-party library."
+        },
+        "starterWeb": {
+          "role": "Starter — web",
+          "line": "One dependency for a web service: krizaka-web and its auto-configuration."
+        },
+        "starterSecurity": {
+          "role": "Starter — security",
+          "line": "One dependency for a secured service: krizaka-security, session JWT and SERVICE tokens configured."
+        },
+        "starterRabbitmq": {
+          "role": "Starter — RabbitMQ",
+          "line": "One dependency for events: krizaka-messaging with the outbox, deduplication and the retry/DLQ topology."
+        },
+        "starterObservability": {
+          "role": "Starter — observability",
+          "line": "One dependency for traces, metrics and logs: krizaka-observability, wired."
+        },
+        "web": {
+          "role": "Web",
+          "line": "The error response (RFC 9457 problem details), the correlation id and the JSON serialisation of every service, written once."
         },
         "security": {
           "role": "Security",
@@ -1554,7 +1599,11 @@
         },
         "messaging": {
           "role": "Messaging",
-          "line": "Deduplication that claims atomically and releases on failure, and a transactional outbox relay for RabbitMQ."
+          "line": "Events with their envelope in AMQP headers, published through a transactional outbox, deduplicated atomically, with a retry and dead-letter topology."
+        },
+        "observability": {
+          "role": "Observability",
+          "line": "Traces, metrics and structured logs on OpenTelemetry and Micrometer, with the configuration standard every service shares."
         },
         "usersClient": {
           "role": "Users — client",

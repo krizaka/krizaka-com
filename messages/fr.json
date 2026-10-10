@@ -1513,21 +1513,45 @@
       "eyebrow": "Sur npm",
       "title": "Les pièces, publiées.",
       "lead": "Ce dont est faite l'interface de chaque produit, sur le registre public npm : installable sans compte ni jeton, chaque version construite en CI avec sa provenance.",
-      "notProductBanner": "Des briques de fondation, pas des applications isolées : ces quatre packages constituent l'infrastructure open source qui anime nos produits. Chacun peut les installer et les réutiliser librement.",
+      "notProductBanner": "Des briques de fondation, pas des applications isolées : ces {count} packages constituent l'infrastructure open source qui anime nos produits. Chacun peut les installer et les réutiliser librement.",
       "npm": "npm",
       "source": "Source",
       "items": {
+        "tokens": {
+          "role": "Le vocabulaire",
+          "line": "Les jetons sémantiques --kz-* — surfaces, texte, accent, statuts — en sombre et en clair, avec les thèmes de marque de Krizaka, Orazaka et Orochia : CSS, TypeScript et React Native depuis une seule source."
+        },
+        "tailwind": {
+          "role": "Le preset",
+          "line": "Les jetons en utilitaires Tailwind CSS v4 (bg-surface-1, text-fg-danger, rounded-xl), la courbe Krizaka et les variantes réservées aux illustrations."
+        },
+        "config": {
+          "role": "Les garde-fous",
+          "line": "ESLint, tsconfig et Prettier pour chaque application, les quatre règles d'interface, et krizaka-ratchet — le compteur qui ne laisse la dette d'interface que baisser."
+        },
         "ui": {
-          "role": "La couche de marque",
-          "line": "Les logos animés de Krizaka, Orazaka et Orochia, et la signature de mouvement Krizaka — une courbe, une même façon d'entrer, d'apparaître et de s'ouvrir."
+          "role": "Les primitives",
+          "line": "Bouton, carte, dialogue, toast, onglets, palette de commandes, compte à rebours… pour le web, une entrée chacun, et pour React Native — avec les logos Krizaka, la signature de mouvement et le registre derrière krizaka.com/docs/ui."
+        },
+        "icons": {
+          "role": "Les icônes signature",
+          "line": "Soixante-dix icônes dessinées en code dans une même grammaire — angles coupés, un nœud — pour React et React Native, importables une à une."
+        },
+        "intl": {
+          "role": "Nombres et dates",
+          "line": "L'argent en unités mineures entières, les nombres, les dates, les durées relatives et les pluriels sur Intl, sans aucune dépendance."
+        },
+        "i18n": {
+          "role": "Les mots",
+          "line": "Clés de messages et paramètres typés, pluriels, texte enrichi, un provider React qui ne livre qu'une langue, et la vérification krizaka-i18n."
         },
         "orochiaDs": {
           "role": "Le kit d'Orochia",
-          "line": "Boutons, panneaux, interrupteurs, curseurs, confirmations en deux temps — les composants des applications Orochia, sur Tailwind CSS v4, dans les deux thèmes."
+          "line": "Le thème d'Orochia sur les primitives, et les composants qui parlent sa langue — badges en direct, enchères, stories — dans les deux thèmes."
         },
         "orazakaDs": {
           "role": "Le kit d'Orazaka",
-          "line": "Les composants React, le thème et le registre d'icônes des clients web d'Orazaka."
+          "line": "Le thème d'Orazaka sur les primitives, et les composants et le registre d'icônes de ses clients web."
         },
         "orazakaShared": {
           "role": "Les contrats d'Orazaka",
@@ -1538,15 +1562,36 @@
     "maven": {
       "eyebrow": "Sur Maven Central",
       "title": "Les briques Java, publiées.",
-      "lead": "Les briques sur lesquelles reposent les services de chaque produit, sur Maven Central sous com.krizaka : importez le BOM une fois et chaque artefact se résout en une même version, signée.",
+      "lead": "Les briques sur lesquelles reposent les services de chaque produit, sur Maven Central sous com.krizaka : importez le BOM une fois, ajoutez un starter, et chaque artefact se résout en une même version, signée.",
       "bomNote": "Importez le BOM, puis déclarez les artefacts sans version :",
       "central": "Maven Central",
       "source": "Source",
       "all": "Tous les artefacts",
+      "pinnedNote": "Users, notifications et billing sont publiés en {previous} : déclarez-les avec la version {previous} jusqu'à leur {current} (novembre).",
       "items": {
         "bom": {
           "role": "Une version pour tout",
           "line": "Chaque artefact com.krizaka à une même version. Il ne change jamais la version d'une bibliothèque tierce."
+        },
+        "starterWeb": {
+          "role": "Starter — web",
+          "line": "Une seule dépendance pour un service web : krizaka-web et son auto-configuration."
+        },
+        "starterSecurity": {
+          "role": "Starter — sécurité",
+          "line": "Une seule dépendance pour un service sécurisé : krizaka-security, JWT de session et jetons SERVICE configurés."
+        },
+        "starterRabbitmq": {
+          "role": "Starter — RabbitMQ",
+          "line": "Une seule dépendance pour les événements : krizaka-messaging avec l'outbox, la déduplication et la topologie retry/DLQ."
+        },
+        "starterObservability": {
+          "role": "Starter — observabilité",
+          "line": "Une seule dépendance pour les traces, métriques et journaux : krizaka-observability, câblé."
+        },
+        "web": {
+          "role": "Web",
+          "line": "La réponse d'erreur (problem details RFC 9457), l'identifiant de corrélation et la sérialisation JSON de chaque service, écrits une seule fois."
         },
         "security": {
           "role": "Sécurité",
@@ -1554,7 +1599,11 @@
         },
         "messaging": {
           "role": "Messagerie",
-          "line": "Une déduplication qui réclame atomiquement et relâche en cas d'échec, et un relais d'outbox transactionnel pour RabbitMQ."
+          "line": "Des événements à l'enveloppe en en-têtes AMQP, publiés par une outbox transactionnelle, dédupliqués atomiquement, avec une topologie de retry et de lettres mortes."
+        },
+        "observability": {
+          "role": "Observabilité",
+          "line": "Traces, métriques et journaux structurés sur OpenTelemetry et Micrometer, avec le standard de configuration commun à tous les services."
         },
         "usersClient": {
           "role": "Utilisateurs — client",
