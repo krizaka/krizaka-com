@@ -1634,7 +1634,7 @@ a.bp-card:hover { border-color: color-mix(in srgb, var(--kz-accent) 55%, var(--k
 .bp-share { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; }
 .bp-share b { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(3.4rem, 9vw, 5.4rem); font-weight: 800; letter-spacing: -.04em; line-height: 1;
   background: linear-gradient(120deg, var(--kz-accent-text), var(--kz-accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.bp-share span { font-size: 15px; color: var(--kz-text-secondary); }
+.bp-share > span { font-size: 15px; color: var(--kz-text-secondary); }
 .bp-fine { margin: 16px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--kz-text-secondary); }
 
 /* Terminal (Orazaka three commands) */

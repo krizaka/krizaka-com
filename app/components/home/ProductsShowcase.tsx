@@ -13,6 +13,7 @@ import { GitHubMark } from "../brand/GitHubMark";
 import { PRODUCTS } from "@/lib/org-data";
 import { NAV_PRODUCTS } from "@/lib/nav";
 import { ProductLogo } from "@krizaka/ui";
+import { reveal } from "@/lib/motion";
 
 /* prefers-reduced-motion, read without an animation library; the server and the first client render say "still". */
 const REDUCE = "(prefers-reduced-motion: reduce)";
@@ -57,17 +58,19 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
   return (
     <section id="products">
       <div className="kz-section" style={{ paddingBottom: 0 }}>
-        <Heading className="kz-h2" style={{ marginBottom: 0 }}>{h.title}</Heading>
+        <Heading className="kz-h2" style={{ marginBottom: 0 }} {...(Heading === "h2" ? reveal() : {})}>{h.title}</Heading>
       </div>
 
       {/* Each product in its own brand (BRAND.md): the section rises from the page into its colour and settles back. */}
       <div className="kz-spots">
         {PRODUCTS.map((p, i) => {
           const nav = NAV_PRODUCTS.find((n) => n.id === p.id)!;
+          // Where the showcase is the page (/products), its first product is the first screen: painted at once.
+          const firstScreen = Heading === "h1" && i === 0;
           return (
             <SectionBackdrop key={p.id} as="div" className={`brand-${p.id} bp-glide`} dome={false}>
             <article className={`kz-spot kz-section${i % 2 ? " is-flipped" : ""}`}>
-              <div className="kz-spot-copy">
+              <div className="kz-spot-copy" {...(firstScreen ? {} : reveal())}>
                 <div className="kz-spot-head">
                   <ProductLogo id={p.id} size={56} />
                   <div>
@@ -108,7 +111,7 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
                 </nav>
               </div>
 
-              <figure className="kz-spot-media">
+              <figure className="kz-spot-media" {...(firstScreen ? {} : reveal(2))}>
                 <div className="kz-spot-chrome" aria-hidden>
                   <span /><span /><span /> <em>{p.media.frame}</em>
                 </div>

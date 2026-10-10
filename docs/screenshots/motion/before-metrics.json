@@ -1,0 +1,382 @@
+{
+  "home": {
+    "desktop": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 87,
+      "animationsTop": 87,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 87,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 87,
+      "animationsTop": 87,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 87,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 0,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "products": {
+    "desktop": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 17,
+      "animationsTop": 17,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 17,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 17,
+      "animationsTop": 17,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 17,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 0,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "orazaka": {
+    "desktop": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 20,
+      "animationsTop": 20,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 20,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 20,
+      "animationsTop": 20,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 20,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 0,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "orochia": {
+    "desktop": {
+      "rafPer2sIdleTop": 120,
+      "infiniteRunningTop": 20,
+      "animationsTop": 20,
+      "rafPer2sIdleBottom": 120,
+      "infiniteRunningBottom": 20,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 120,
+      "infiniteRunningTop": 20,
+      "animationsTop": 20,
+      "rafPer2sIdleBottom": 120,
+      "infiniteRunningBottom": 20,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 0,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "demos": {
+    "desktop": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 12,
+      "animationsTop": 12,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 12,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 12,
+      "animationsTop": 12,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 12,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 0,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "architecture": {
+    "desktop": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 10,
+      "animationsTop": 10,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 10,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 10,
+      "animationsTop": 10,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 10,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 0,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "open-source": {
+    "desktop": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 40,
+      "animationsTop": 40,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 40,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 40,
+      "animationsTop": 40,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 40,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 0,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "docs": {
+    "desktop": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 9,
+      "animationsTop": 9,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 9,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 9,
+      "animationsTop": 9,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 9,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 0,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "story": {
+    "desktop": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 10,
+      "animationsTop": 91,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 9,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 10,
+      "animationsTop": 91,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 9,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 0,
+      "infiniteRunningTop": 0,
+      "animationsTop": 36,
+      "rafPer2sIdleBottom": 0,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  },
+  "contact": {
+    "desktop": {
+      "rafPer2sIdleTop": 120,
+      "infiniteRunningTop": 9,
+      "animationsTop": 9,
+      "rafPer2sIdleBottom": 120,
+      "infiniteRunningBottom": 9,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "mobile": {
+      "rafPer2sIdleTop": 121,
+      "infiniteRunningTop": 9,
+      "animationsTop": 9,
+      "rafPer2sIdleBottom": 120,
+      "infiniteRunningBottom": 9,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    },
+    "reducedMotion": {
+      "rafPer2sIdleTop": 120,
+      "infiniteRunningTop": 0,
+      "animationsTop": 5,
+      "rafPer2sIdleBottom": 120,
+      "infiniteRunningBottom": 0,
+      "canvases": 0,
+      "reveals": 0,
+      "revealsStillHidden": 0,
+      "counters": 0,
+      "cls": 0
+    }
+  }
+}

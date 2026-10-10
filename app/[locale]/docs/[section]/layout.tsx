@@ -32,6 +32,8 @@ export default async function DocsSectionLayout({ children, params }: { children
 
   return (
     <>
+      {/* A hairline that fills as the page is read (app/motion.css; scroll-driven, no script, absent under reduced motion). */}
+      <div className="kz-read-progress" aria-hidden />
       <TopNavBar />
       <DocsLayout
         tree={getPageTree(section, locale)}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
 import CognitiveEngineeringPageClient from "./CognitiveEngineeringPageClient";
+import { architectureCounts } from "@/lib/architecture-model";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -50,6 +51,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+/* The interceptor counts quoted on the page come from the generated model (app/data/architecture.json), never typed. */
 export default function CognitiveEngineeringPage() {
-  return <CognitiveEngineeringPageClient />;
+  const counts = architectureCounts();
+  return (
+    <CognitiveEngineeringPageClient
+      interceptors={{ core: counts.coreInterceptors, configured: counts.configuredInterceptors, total: counts.coreInterceptors + counts.configuredInterceptors }}
+    />
+  );
 }

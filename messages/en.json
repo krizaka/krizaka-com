@@ -1,10 +1,4 @@
 {
-  "meta": {
-    "siteTitle": "Krizaka — Orazaka, the sovereign open-source AI orchestration engine",
-    "siteDescription": "Orazaka is a sovereign, open-source AI orchestration engine — Java 21, Spring AI, 15-interceptor pipeline, multimodal. Self-host local AI designed to ease Law 25 and GDPR compliance. Built in Québec.",
-    "ogTitle": "Orazaka — the sovereign AI orchestration engine, open source",
-    "ogDescription": "The AI orchestration engine you self-host. Java 21 · Spring AI · 15 interceptors · multimodal. Open source, sovereign, built in Québec."
-  },
   "nav": {
     "products": "Products",
     "solutions": "Solutions",
@@ -60,14 +54,6 @@
       "placeholder": "Ask your sovereign AI…"
     }
   },
-  "hero": {
-    "headline": "The sovereign AI orchestration engine.",
-    "headlineAccent": "Open source.",
-    "sub": "Java 21 · Spring AI · 15 interceptors · multimodal. A cognitive infrastructure you self-host — built in Québec.\nYour data never leaves your network.",
-    "ctaPrimary": "Get started in 3 commands",
-    "ctaSecondary": "Star on GitHub",
-    "badge": "Open Source"
-  },
   "quickstart": {
     "sectionLabel": "Quickstart",
     "sectionTitle": "Get started in 3 commands",
@@ -75,37 +61,6 @@
     "note": "Need the details? The install guide covers Docker, Ollama and configuration.",
     "docsCta": "Read the docs",
     "communityCta": "Join the community"
-  },
-  "pillars": {
-    "sectionLabel": "What Orazaka does",
-    "sectionTitle": "All of modern AI, in one engine.",
-    "items": [
-      {
-        "keyword": "Sovereign",
-        "title": "Your data never leaves",
-        "desc": "Every inference runs on your own infra, nothing leaves your network — Law 25 compliant and GDPR-aligned by construction."
-      },
-      {
-        "keyword": "Multi-Modal",
-        "title": "Chat · Image · Video · Voice",
-        "desc": "One engine for every AI modality — unified under a single orchestration layer with 15 interceptors."
-      },
-      {
-        "keyword": "Hybrid",
-        "title": "Your keys, your choice",
-        "desc": "Need GPT-4, Claude, or Gemini? Bring your API keys — Orazaka routes seamlessly while keeping your orchestration sovereign."
-      },
-      {
-        "keyword": "Open Source",
-        "title": "Open code, auditable",
-        "desc": "Hexagonal architecture verified by ArchUnit. Every architectural decision is documented and code is available on GitHub."
-      },
-      {
-        "keyword": "Validated",
-        "title": "Closed-loop verification",
-        "desc": "Every response passes through a multi-stage validation matrix before reaching your users."
-      }
-    ]
   },
   "techStack": {
     "sectionLabel": "Tech Stack",
@@ -173,24 +128,6 @@
     "cogTitle": "Cognitive Science in AI",
     "cogDesc": "Instead of using AI as a simple text-generating black box, cognitive engineering structures artificial reasoning. By dividing the flow into orderly stages — intent analysis, factual context enrichment, and self-monitoring —, it guarantees the determinism, logical safety, and business alignment essential for enterprise production architectures.",
     "cogCta": "Explore cognitive engineering",
-    "highlights": [
-      {
-        "label": "Interceptors",
-        "value": "15"
-      },
-      {
-        "label": "Default pipeline",
-        "value": "9 stages"
-      },
-      {
-        "label": "Families",
-        "value": "5"
-      },
-      {
-        "label": "Modes",
-        "value": "3"
-      }
-    ],
     "simulatorTitle": "Orazaka Sovereign Pipeline Simulator",
     "simulatorSubtitle": "Visualize how Orazaka, the sovereign cognitive automation engine designed by Krizaka, processes local business flows inside your own secure perimeter.",
     "runSim": "Run Simulation",
@@ -266,85 +203,6 @@
     "github": "GitHub",
     "tagline": "The sovereign AI orchestration engine, open source. Built in Québec."
   },
-  "cognitiveEngineering": {
-    "sectionLabel": "Cognitive Engineering",
-    "sectionTitle": "Beyond the prompt",
-    "sectionSub": "The intelligence is in the pipeline.",
-    "sectionDesc": "Orazaka doesn't just relay your prompts to a model. By default, each request traverses a 9-stage sequential processing cycle. However, Orazaka's strength lies in its full library of 15 modular interceptors (multi-agent debate, MCP sandbox, auditing, human-in-the-loop) that you can assemble to build your own custom governance Packages.",
-    "ctaLabel": "Explore cognitive engineering",
-    "ctaHref": "/products/orazaka/ingenierie-cognitive",
-    "agnosticTitle": "Agnostic Mode (Sovereignty)",
-    "agnosticDesc": "Free choice of models: local Ollama, or cloud APIs (OpenAI, Anthropic, Gemini). Orazaka adapts without vendor lock-in.",
-    "deterministicTitle": "Deterministic Mode (Precision)",
-    "deterministicDesc": "Total flow control: temperature at 0.0, strict output schemas (JSON), closed-loop verification. Zero hallucinations.",
-    "effortTitle": "Effort Mode (Adaptive depth)",
-    "effortDesc": "Orazaka gauges the complexity of the intent and allocates reasoning effort accordingly — a direct answer for the trivial, deep deliberation for the critical.",
-    "stages": [
-      {
-        "order": "01",
-        "name": "User context resolution",
-        "desc": "Profile, RBAC role, rate-limiting tier"
-      },
-      {
-        "order": "02",
-        "name": "System context injection",
-        "desc": "Environment variables, tools, system signals"
-      },
-      {
-        "order": "03",
-        "name": "RAG enrichment",
-        "desc": "Vector retrieval → knowledge injection"
-      },
-      {
-        "order": "04",
-        "name": "MCP resolution",
-        "desc": "External knowledge via Model Context Protocol"
-      },
-      {
-        "order": "05",
-        "name": "Conversational memory",
-        "desc": "FIFO history with 50-message window"
-      },
-      {
-        "order": "06",
-        "name": "Semantic refinement",
-        "desc": "Fuzzy query → precise instruction"
-      },
-      {
-        "order": "07",
-        "name": "Intent routing",
-        "desc": "Intent → optimal provider (temp: 0.0)"
-      },
-      {
-        "order": "08",
-        "name": "Tool attachment",
-        "desc": "Demand-driven tool callbacks"
-      },
-      {
-        "order": "09",
-        "name": "Multi-modal assembly",
-        "desc": "Base64 media extraction and assembly"
-      }
-    ],
-    "principles": [
-      {
-        "title": "Contextual enrichment",
-        "desc": "Every prompt is enriched with user profile, conversation history, and RAG knowledge before reaching the model."
-      },
-      {
-        "title": "Intent routing",
-        "desc": "User intent is analyzed to route to the optimal model — local Ollama or cloud provider — at temperature 0.0 for maximum determinism."
-      },
-      {
-        "title": "Architectural memory",
-        "desc": "Conversational memory isn't a simple buffer. It's a sliding-window FIFO system that preserves relevant context without overloading the context window."
-      },
-      {
-        "title": "Closed-loop validation",
-        "desc": "Responses are validated through a multi-stage matrix — JSON schema, MCP sandbox, multi-agent debate — before reaching the user."
-      }
-    ]
-  },
   "cognitiveEngineeringPage": {
     "pageTitle": "Cognitive Engineering & Sovereign AI — Orazaka | Krizaka",
     "pageDesc": "Discover how cognitive engineering structures artificial intelligence to make it reliable, secure, and sovereign.",
@@ -407,7 +265,7 @@
     "effortTitle": "Dynamic Effort Adjustment",
     "effortDesc": "Effort is not a mode, but an adjustment parameter. The engine analyzes user intent complexity to calibrate reflection tokens and active interceptor depth.",
     "extensibilityTitle": "Extensibility & Custom Modes",
-    "extensibilityDesc": "Assemble Orazaka's 15 interceptors to design tailored modes. Configure custom business rules, auditing, and security topologies.",
+    "extensibilityDesc": "Assemble Orazaka's {interceptors} interceptors to design tailored modes. Configure custom business rules, auditing, and security topologies.",
     "diffTitle": "Cloud Stateless API vs. Orazaka Reasoning Engine",
     "diffLeftTitle": "Classic Cloud API & Chatbot",
     "diffLeftSub": "Simple text generator (Stateless)",
@@ -434,7 +292,7 @@
     "diffRightFeatures": [
       {
         "title": "Cognitive interceptor mesh",
-        "desc": "Queries traverse 9 to 15 modular interceptors to validate intent and refine the prompt."
+        "desc": "Each query traverses {core} non-bypassable interceptors, then {configured} configured ones, to validate intent and refine the prompt."
       },
       {
         "title": "Local memory & RAG",
@@ -2005,7 +1863,7 @@
       "balancedBudget": "Balanced budget",
       "high": "High",
       "deepDeliberation": "Deep deliberation",
-      "t1215Interceptors": "12–15 interceptors",
+      "t1215Interceptors": "11–{interceptors} interceptors",
       "maximumBudget": "Maximum budget",
       "activeExtensibility": "ACTIVE EXTENSIBILITY",
       "chooseYourInterceptors": "Choose your interceptors",

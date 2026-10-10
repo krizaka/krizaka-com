@@ -6,6 +6,8 @@ import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
 import "../globals.css";
+import "../motion.css";
+import SiteMotion from "../components/motion/SiteMotion";
 
 const jakartaSans = Plus_Jakarta_Sans({
   variable: "--font-display",
@@ -134,12 +136,17 @@ export default async function RootLayout({
         {/* Sitewide linked @graph: Organization · WebSite · SoftwareApplication.
             Page-scoped schema (BreadcrumbList, FAQPage) is emitted per page. */}
         <JsonLd data={buildSiteGraph(validatedLocale)} />
+        {/* Without JavaScript nothing waits to be revealed (app/motion.css, SiteMotion). */}
+        <noscript>
+          <style>{"[data-reveal],.bp-term pre>div{opacity:1!important;transform:none!important;filter:none!important}"}</style>
+        </noscript>
       </head>
       <body className="min-h-dvh flex flex-col antialiased">
         <ThemeProvider>
           <I18nProvider locale={validatedLocale} messages={getDictionary(validatedLocale)}>
             {children}
           </I18nProvider>
+          <SiteMotion />
         </ThemeProvider>
       </body>
     </html>

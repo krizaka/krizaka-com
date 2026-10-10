@@ -11,6 +11,7 @@ import SiteFooter from "@/app/components/SiteFooter";
 import ProductTour from "@/app/components/ProductTour";
 import DemoClip from "@/app/components/demos/DemoClip";
 import Rich from "@/app/components/Rich";
+import { reveal } from "@/lib/motion";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -79,17 +80,19 @@ export default async function OrazakaDemoPage({ params }: Props) {
 
       {/* ─── The whole day, chained ─── */}
       <section id="tour" className="bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
-        <div className="bp-center" style={{ marginBottom: 28 }}>
+        <div className="bp-center" style={{ marginBottom: 28 }} {...reveal()}>
           <p className="bp-eyebrow">{t.tourEyebrow}</p>
           <h2 className="bp-h2">{t.tourTitle}</h2>
         </div>
-        <ProductTour clips={DEMO_TOUR.map((id) => ({ id, src: tourSrc(id), ...t.tour[id] }))} frameLabel={t.frameLabel} />
+        <div {...reveal(1)}>
+          <ProductTour clips={DEMO_TOUR.map((id) => ({ id, src: tourSrc(id), ...t.tour[id] }))} frameLabel={t.frameLabel} />
+        </div>
       </section>
 
       {/* ─── One section per job a client wants done ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="use-cases">
         <div className="bp-wrap">
-          <div className="bp-center">
+          <div className="bp-center" {...reveal()}>
             <p className="bp-eyebrow">{t.useCasesEyebrow}</p>
             <h2 className="bp-h2"><Rich text={t.useCasesTitle} /></h2>
           </div>
@@ -98,7 +101,7 @@ export default async function OrazakaDemoPage({ params }: Props) {
             const uc = t.useCases[id];
             return (
               <article key={id} className={`bp-split od-case${k % 2 ? " od-case-flip" : ""}`}>
-                <div>
+                <div {...reveal()}>
                   <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
                   <h3 className="od-case-title">{uc.title}</h3>
                   <p className="bp-lead">{uc.body}</p>
@@ -108,7 +111,9 @@ export default async function OrazakaDemoPage({ params }: Props) {
                     ))}
                   </ul>
                 </div>
-                <DemoClip src={tourSrc(clip)} label={t.tour[clip].caption} frameLabel={t.frameLabel} />
+                <div {...reveal(2)}>
+                  <DemoClip src={tourSrc(clip)} label={t.tour[clip].caption} frameLabel={t.frameLabel} />
+                </div>
               </article>
             );
           })}
@@ -117,13 +122,15 @@ export default async function OrazakaDemoPage({ params }: Props) {
 
       {/* ─── What the image Studio made on the Mac, with the prompts ─── */}
       <section id="made-here" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
-        <p className="bp-eyebrow"><LocalIcon size={18} nodeColor={node} /> {t.gallery.eyebrow}</p>
-        <h2 className="bp-h2"><Rich text={t.gallery.title} /></h2>
-        <p className="bp-lead">{t.gallery.lead}</p>
-        <p className="od-engine">{t.gallery.engine}</p>
+        <div {...reveal()}>
+          <p className="bp-eyebrow"><LocalIcon size={18} nodeColor={node} /> {t.gallery.eyebrow}</p>
+          <h2 className="bp-h2"><Rich text={t.gallery.title} /></h2>
+          <p className="bp-lead">{t.gallery.lead}</p>
+          <p className="od-engine">{t.gallery.engine}</p>
+        </div>
         <ul className="od-gallery">
-          {DEMO_GALLERY.map(({ id, prompt }) => (
-            <li key={id}>
+          {DEMO_GALLERY.map(({ id, prompt }, i) => (
+            <li key={id} {...reveal(i + 1)}>
               <figure>
                 <Image src={gallerySrc(id)} alt={t.gallery.items[id].alt} width={512} height={512} sizes="(max-width: 640px) 100vw, 300px" />
                 <figcaption>
@@ -135,14 +142,14 @@ export default async function OrazakaDemoPage({ params }: Props) {
             </li>
           ))}
         </ul>
-        <aside className="od-persona">
+        <aside className="od-persona" {...reveal()}>
           <strong>{t.persona.title}</strong> {t.persona.body}
         </aside>
       </section>
 
       {/* ─── Closing ─── */}
       <SectionBackdrop className="bp-glide" dome={false}>
-        <div className="bp-wrap bp-center">
+        <div className="bp-wrap bp-center" {...reveal()}>
           <h2 className="bp-h2"><Rich text={t.closing.title} /></h2>
           <p className="bp-lead">{t.closing.body}</p>
           <div className="bp-actions">

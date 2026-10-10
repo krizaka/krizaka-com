@@ -25,6 +25,8 @@ import orochia from "@/app/data/orochia-architecture.json";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import OrochiaArchitecture from "@/app/components/OrochiaArchitecture";
+import CountUp from "@/app/components/motion/CountUp";
+import { reveal } from "@/lib/motion";
 import ProductTour from "@/app/components/ProductTour";
 import { format, getDictionary } from "@/lib/i18n";
 import ContactCta from "@/app/components/home/ContactCta";
@@ -89,6 +91,8 @@ export default async function OrochiaPage({ params }: Props) {
   const tables = orochia.modules.find((m) => m.id === "data")?.tables ?? [];
   const journeys = verifiedJourneys();
   const money = (cents: number) => formatUsd(cents, locale);
+  /* "{value} %": the figure climbs (CountUp), the words around it stay the message's. */
+  const share = t.paid.percent.split("{value}");
 
   return (
     <main style={{ background: "var(--kz-surface-0)", color: "var(--kz-text-primary)", minHeight: "100vh" }}>
@@ -143,19 +147,21 @@ export default async function OrochiaPage({ params }: Props) {
       {/* ─── Get paid: the 90 / 10 split, worked examples ─── */}
       <section id="get-paid" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
         <div className="bp-split">
-          <IsoSplit share={100 - PLATFORM_FEE_PERCENTAGE} className="bp-hero-art" />
-          <div>
+          <div {...reveal()}>
+            <IsoSplit share={100 - PLATFORM_FEE_PERCENTAGE} className="bp-hero-art" />
+          </div>
+          <div {...reveal(1)}>
             <p className="bp-eyebrow">{t.paid.eyebrow}</p>
             <h2 className="bp-h2"><Rich text={t.paid.title} /></h2>
             <p className="bp-lead">{t.paid.lead}</p>
             <p className="bp-share">
-              <b>{format(t.paid.percent, { value: 100 - PLATFORM_FEE_PERCENTAGE })}</b> <span>{t.paid.share}</span>
+              <b>{share[0]}<CountUp value={100 - PLATFORM_FEE_PERCENTAGE} locale={locale} />{share[1]}</b> <span>{t.paid.share}</span>
             </p>
             <ul className="bp-ledger">
-              {SPLIT_EXAMPLES.map(({ id, grossCents }) => {
+              {SPLIT_EXAMPLES.map(({ id, grossCents }, i) => {
                 const Icon = { tip: TipIcon, unlock: UnlockIcon, pledge: ChallengeIcon, bid: AuctionIcon }[id];
                 return (
-                  <li key={id}>
+                  <li key={id} {...reveal(i + 2)}>
                     <span className="bp-icon"><Icon size={20} nodeColor={node} /></span>
                     <span className="bp-ledger-what"><Rich text={format(t.paid.examples[id], { gross: money(grossCents) })} /></span>
                     <span className="bp-ledger-net">{format(t.paid.net, { net: money(creatorNetCents(grossCents)) })}</span>
@@ -171,13 +177,15 @@ export default async function OrochiaPage({ params }: Props) {
       {/* ─── Auctions · challenges: the rules, as the code applies them ─── */}
       <SectionBackdrop className="bp-glide" dome={false}>
         <div className="bp-wrap">
-          <p className="bp-eyebrow">{t.rules.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.rules.title} /></h2>
+          <div {...reveal()}>
+            <p className="bp-eyebrow">{t.rules.eyebrow}</p>
+            <h2 className="bp-h2"><Rich text={t.rules.title} /></h2>
+          </div>
           <div className="bp-cards" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))" }}>
-            {(["auctions", "challenges"] as const).map((id) => {
+            {(["auctions", "challenges"] as const).map((id, i) => {
               const Icon = id === "auctions" ? AuctionIcon : ChallengeIcon;
               return (
-                <div key={id} className="bp-card">
+                <div key={id} className="bp-card" {...reveal(i + 1)}>
                   <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
                   <h3>{t.rules[id].title}</h3>
                   <p>{t.rules[id].body}</p>
@@ -197,20 +205,24 @@ export default async function OrochiaPage({ params }: Props) {
 
       {/* ─── Product tour (screen recordings of the real app) ─── */}
       <section id="tour" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
-        <ProductTour
-          clips={TOUR.map((id) => ({ id, src: `/assets/orochia/tour/${id}`, ...t.tour[id] }))}
-          frameLabel="orochia · localhost"
-        />
+        <div {...reveal()}>
+          <ProductTour
+            clips={TOUR.map((id) => ({ id, src: `/assets/orochia/tour/${id}`, ...t.tour[id] }))}
+            frameLabel="orochia · localhost"
+          />
+        </div>
       </section>
 
       {/* ─── Guarantees ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="guarantees" style={{ scrollMarginTop: 72 }}>
         <div className="bp-wrap">
-          <p className="bp-eyebrow">{t.pillarsEyebrow}</p>
-          <h2 className="bp-h2">{t.pillarsTitle}</h2>
+          <div {...reveal()}>
+            <p className="bp-eyebrow">{t.pillarsEyebrow}</p>
+            <h2 className="bp-h2">{t.pillarsTitle}</h2>
+          </div>
           <div className="bp-cards">
-            {PILLARS.map(({ id, Icon }) => (
-              <div key={id} className="bp-card">
+            {PILLARS.map(({ id, Icon }, i) => (
+              <div key={id} className="bp-card" {...reveal(i % 3 + 1)}>
                 <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
                 <h3>{t.pillars[id].title}</h3>
                 <p>{t.pillars[id].body}</p>
@@ -222,22 +234,28 @@ export default async function OrochiaPage({ params }: Props) {
 
       {/* ─── How it works: animated journeys ─── */}
       <section id="architecture" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
-        <p className="bp-eyebrow">{t.archEyebrow}</p>
-        <h2 className="bp-h2">{t.archTitle}</h2>
-        <p className="bp-lead" style={{ marginBottom: 24 }}>{t.archLead}</p>
-        <OrochiaArchitecture journeys={journeys} />
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.archEyebrow}</p>
+          <h2 className="bp-h2">{t.archTitle}</h2>
+          <p className="bp-lead" style={{ marginBottom: 24 }}>{t.archLead}</p>
+        </div>
+        <div {...reveal(1, "soft")}>
+          <OrochiaArchitecture journeys={journeys} />
+        </div>
       </section>
 
       {/* ─── Repositories & facts ─── */}
       <section className="bp-wrap" style={{ paddingTop: 0 }}>
-        <p className="bp-eyebrow">{t.sourceEyebrow}</p>
-        <h2 className="bp-h2">{t.sourceTitle}</h2>
-        <p className="bp-lead" style={{ marginBottom: 24 }}>
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.sourceEyebrow}</p>
+          <h2 className="bp-h2">{t.sourceTitle}</h2>
+          <p className="bp-lead" style={{ marginBottom: 24 }}>
           {format(t.sourceLead, { endpoints: orochia.apiEndpoints.length, tables: tables.length })}
-        </p>
+          </p>
+        </div>
         <div className="bp-cards" style={{ marginTop: 0 }}>
-          {orochia.repositories.map((r) => (
-            <a key={r.name} href={r.url} target="_blank" rel="noopener noreferrer" className="bp-card">
+          {orochia.repositories.map((r, i) => (
+            <a key={r.name} href={r.url} target="_blank" rel="noopener noreferrer" className="bp-card" {...reveal(i + 1)}>
               <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontFamily: "var(--font-mono)", fontWeight: 700, fontSize: 13.5 }}>
                 {r.repo} <ForwardIcon size={14} style={{ color: "var(--kz-text-secondary)" }} />
               </span>

@@ -6,6 +6,7 @@ import ModuleMap from "@/app/components/diagrams/ModuleMap";
 import InterceptorPipeline from "@/app/components/diagrams/InterceptorPipeline";
 import MessagingTopology from "@/app/components/diagrams/MessagingTopology";
 import DiagramSection from "@/app/components/diagrams/DiagramSection";
+import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { architectureCounts, messagingData, moduleMapData, pipelineSteps } from "@/lib/architecture-model";
 import { verifiedJourneyModules } from "@/lib/orazaka-journey";
 import TopNavBar from "../../../../components/TopNavBar";
@@ -44,49 +45,9 @@ export default async function ArchitecturePage({ params }: Props) {
     <main style={{ background: "var(--kz-surface-0)", color: "var(--kz-text-primary)", minHeight: "100vh" }}>
       <TopNavBar />
 
-      {/* ─── Premium, calm hero header ─── */}
-      <section
-        style={{
-          position: "relative",
-          padding: "clamp(104px, 12vw, 148px) 20px 40px",
-          textAlign: "center",
-          maxWidth: "1120px",
-          margin: "0 auto",
-          overflow: "hidden",
-        }}
-      >
-        {/* soft accent glow */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: "-10%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "min(720px, 92vw)",
-            height: "360px",
-            background: "radial-gradient(60% 60% at 50% 30%, color-mix(in srgb, var(--kz-accent) 14%, transparent) 0%, transparent 70%)",
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-        />
-        {/* faint blueprint grid, masked to fade at the edges */}
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "linear-gradient(var(--kz-grid-color) 1px, transparent 1px), linear-gradient(90deg, var(--kz-grid-color) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-            maskImage: "radial-gradient(80% 70% at 50% 30%, black 40%, transparent 100%)",
-            WebkitMaskImage: "radial-gradient(80% 70% at 50% 30%, black 40%, transparent 100%)",
-            pointerEvents: "none",
-            zIndex: 0,
-          }}
-        />
-
-        <div style={{ position: "relative", zIndex: 1, maxWidth: "700px", margin: "0 auto" }}>
+      {/* ─── Hero: the Krizaka section backdrop (BRAND.md §4) — dome, perspective grid, the light drifting slowly ─── */}
+      <SectionBackdrop as="header" grid>
+        <div style={{ position: "relative", padding: "clamp(104px, 12vw, 148px) 20px 48px", textAlign: "center", maxWidth: "700px", margin: "0 auto" }}>
           <p
             style={{
               fontFamily: "var(--font-mono, monospace)",
@@ -94,7 +55,7 @@ export default async function ArchitecturePage({ params }: Props) {
               fontWeight: 600,
               textTransform: "uppercase",
               letterSpacing: "0.18em",
-              color: "var(--kz-accent)",
+              color: "var(--kz-accent-text)",
               margin: 0,
             }}
           >
@@ -162,7 +123,7 @@ export default async function ArchitecturePage({ params }: Props) {
             ))}
           </div>
         </div>
-      </section>
+      </SectionBackdrop>
 
       {/* ─── Evangelist teaching layer — the mental model + a narrated request, its modules checked against the code ─── */}
       <HowOrazakaWorks counts={{ core: counts.coreInterceptors, configured: counts.configuredInterceptors }} stepModules={verifiedJourneyModules()} />
