@@ -100,7 +100,7 @@ function Diagram({ layout, journey, step, reduce, text, className }: { layout: L
             <text x={layout.nodeW / 2} y={27} textAnchor="middle" fontSize={17} fontWeight={700} fill="var(--kz-text-primary)" fontFamily="var(--font-display), system-ui, sans-serif">
               {text.nodes[n.id].label}
             </text>
-            <text x={layout.nodeW / 2} y={47} textAnchor="middle" fontSize={11.5} fill="var(--kz-text-muted)" fontFamily="var(--font-mono), monospace">
+            <text x={layout.nodeW / 2} y={47} textAnchor="middle" fontSize={11.5} fill="var(--kz-text-secondary)" fontFamily="var(--font-mono), monospace">
               {text.nodes[n.id].sub}
             </text>
           </g>
@@ -215,7 +215,7 @@ export default function OrochiaArchitecture({ journeys }: { journeys: Journey[] 
         .oa-card-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
         .oa-card-head strong { font-family: var(--font-display), system-ui, sans-serif; font-size: 16px; color: var(--kz-text-primary); }
         .oa-num { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--j); }
-        .oa-num span { color: var(--kz-text-muted); font-weight: 500; }
+        .oa-num span { color: var(--kz-text-secondary); font-weight: 500; }
         .oa-endpoint { font-family: var(--font-mono); font-size: 11.5px; padding: 3px 8px; border-radius: 6px; color: var(--kz-text-secondary);
           background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle); overflow-wrap: anywhere; }
         .oa-card p { margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary); min-height: 3.2em; }

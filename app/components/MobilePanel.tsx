@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { BookOpen, ChevronDown, Globe, LayoutGrid, Moon, Sun, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ChevronDownIcon, CloseIcon, GlobeIcon, KnowledgeIcon, MoonIcon, SunIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
-import { NAV_ICONS } from "./ProductsMenu";
-import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isNavActive, localeless } from "@/lib/nav";
+import { NAV_ICONS, SIGNATURE_ICONS } from "./ProductsMenu";
+import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isDocsActive, isDocsSection, isNavActive, localeless } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 /* ─── Mobile Menu Panel ─── */
@@ -23,6 +23,8 @@ export function MobilePanel({
   const { theme, toggleTheme } = useTheme();
   const pathname = usePathname();
   const path = localeless(pathname);
+  const [seen, setSeen] = useState(false);
+  if (isOpen && !seen) setSeen(true);
 
   /* Close on route change */
   useEffect(() => {
@@ -129,14 +131,16 @@ export function MobilePanel({
               cursor: "pointer",
             }}
           >
-            <X size={18} strokeWidth={1.5} />
+            <CloseIcon size={18} />
           </button>
         </div>
 
-        {/* Products — same five entries per product as the desktop mega-menu (lib/nav.ts) */}
+        {/* Products — same five entries per product as the desktop mega-menu (lib/nav.ts). Mounted on first open: the
+            links of a closed panel would otherwise be prefetched on every page load (performance). */}
+        {seen && (
         <div style={{ flex: 1, padding: "14px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
           {NAV_PRODUCTS.map((p) => (
-            <details key={p.id} className="kz-mp-product" open={path.startsWith(p.href) || (!path.startsWith("/products/") && p.id === "orazaka")}>
+            <details key={p.id} className={`kz-mp-product brand-${p.id}`} open={path.startsWith(p.href) || (!path.startsWith("/products/") && p.id === "orazaka")}>
               <summary>
                 <span className="kz-mp-logo">
                   <ProductLogo id={p.id} size={26} />
@@ -145,14 +149,14 @@ export function MobilePanel({
                   <span className="kz-mp-name">{p.name}</span>
                   <span className="kz-mp-tagline">{t.site.nav[p.id].tagline}</span>
                 </span>
-                <ChevronDown size={16} className="kz-mp-chevron" aria-hidden />
+                <ChevronDownIcon size={16} className="kz-mp-chevron" />
               </summary>
               <div className="kz-mp-links">
                 {p.links.map((l) => {
-                  const Icon = NAV_ICONS[l.icon];
+                  const Icon = l.icon === "signature" ? SIGNATURE_ICONS[p.id] : NAV_ICONS[l.icon];
                   return (
                     <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
-                      <Icon size={16} strokeWidth={1.6} aria-hidden /> {t.site.nav[p.id].links[l.icon].label}
+                      <Icon size={18} nodeColor="var(--kz-accent)" /> {t.site.nav[p.id].links[l.icon].label}
                     </Link>
                   );
                 })}
@@ -160,34 +164,26 @@ export function MobilePanel({
             </details>
           ))}
 
-          {/* Developers: the platform docs (lib/nav.ts NAV_DOCS) — the products' own docs are in their group above */}
-          <details className="kz-mp-product" open={path === NAV_DOCS_HUB || path.startsWith("/docs/ui") || path.startsWith("/docs/java")}>
+          {/* Docs: every documentation, the products' and the platform's (lib/nav.ts NAV_DOCS) */}
+          <details className="kz-mp-product" open={isDocsSection(path)}>
             <summary>
               <span className="kz-mp-logo">
-                <BookOpen size={20} aria-hidden />
+                <KnowledgeIcon size={20} />
               </span>
               <span style={{ flex: 1, minWidth: 0 }}>
                 <span className="kz-mp-name">{t.site.menu.docs}</span>
                 <span className="kz-mp-tagline">{t.site.nav.docs.all.desc}</span>
               </span>
-              <ChevronDown size={16} className="kz-mp-chevron" aria-hidden />
+              <ChevronDownIcon size={16} className="kz-mp-chevron" />
             </summary>
             <div className="kz-mp-links">
-              {NAV_DOCS.map((d) => {
-                const Icon = BookOpen;
-                const label = docsLinkText(t, d).label;
-                return d.external ? (
-                  <a key={d.id} href={d.href} target="_blank" rel="noreferrer" onClick={onClose} className="kz-mp-link">
-                    <Icon size={16} strokeWidth={1.6} aria-hidden /> {label}
-                  </a>
-                ) : (
-                  <Link key={d.id} href={d.href} onClick={onClose} className={`kz-mp-link${path.startsWith(d.href) ? " is-active" : ""}`}>
-                    <Icon size={16} strokeWidth={1.6} aria-hidden /> {label}
-                  </Link>
-                );
-              })}
+              {NAV_DOCS.map((d) => (
+                <Link key={d.id} href={d.href} onClick={onClose} className={`kz-mp-link${isDocsActive(d, path) ? " is-active" : ""}`}>
+                  <ProductLogo id={d.id === "orazaka" || d.id === "orochia" ? d.id : "krizaka"} size={18} animated={false} /> {docsLinkText(t, d).label}
+                </Link>
+              ))}
               <Link href={NAV_DOCS_HUB} onClick={onClose} className={`kz-mp-link${path === NAV_DOCS_HUB ? " is-active" : ""}`}>
-                <LayoutGrid size={16} strokeWidth={1.6} aria-hidden /> {t.site.nav.docs.all.label}
+                <KnowledgeIcon size={18} /> {t.site.nav.docs.all.label}
               </Link>
             </div>
           </details>
@@ -197,12 +193,13 @@ export function MobilePanel({
               const Icon = NAV_ICONS[l.icon];
               return (
                 <Link key={l.href} href={l.href} onClick={onClose} className={`kz-mp-link${isNavActive(l, path) ? " is-active" : ""}`}>
-                  <Icon size={16} strokeWidth={1.6} aria-hidden /> {companyLinkText(t, l).label}
+                  <Icon size={18} /> {companyLinkText(t, l).label}
                 </Link>
               );
             })}
           </div>
         </div>
+        )}
 
         <style>{`
           .kz-mp-product { border-radius: 14px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-2); overflow: hidden; }
@@ -211,7 +208,7 @@ export function MobilePanel({
           .kz-mp-logo { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px;
             background: var(--kz-surface-0); border: 1px solid var(--kz-border-subtle); flex-shrink: 0; }
           .kz-mp-name { display: block; font-family: var(--font-display), system-ui, sans-serif; font-size: 14px; font-weight: 700; color: var(--kz-text-primary); }
-          .kz-mp-tagline { display: block; font-size: 12px; color: var(--kz-text-muted); }
+          .kz-mp-tagline { display: block; font-size: 12px; color: var(--kz-text-secondary); }
           .kz-mp-chevron { color: var(--kz-text-muted); transition: transform 200ms ease; flex-shrink: 0; }
           .kz-mp-product[open] .kz-mp-chevron { transform: rotate(180deg); }
           .kz-mp-product .kz-mp-links { padding: 0 8px 8px; }
@@ -219,7 +216,7 @@ export function MobilePanel({
           .kz-mp-link { display: flex; align-items: center; gap: 10px; padding: 10px 10px; border-radius: 8px; font-size: 14px; font-weight: 500;
             color: var(--kz-text-secondary); text-decoration: none; font-family: var(--font-display), system-ui, sans-serif; }
           .kz-mp-link svg { color: var(--kz-text-muted); }
-          .kz-mp-link.is-active { color: var(--kz-accent); font-weight: 600; background: var(--kz-surface-1); }
+          .kz-mp-link.is-active { color: var(--kz-accent-text); font-weight: 600; background: var(--kz-surface-1); }
           .kz-mp-link.is-active svg { color: var(--kz-accent); }
         `}</style>
 
@@ -255,7 +252,7 @@ export function MobilePanel({
               textAlign: "left",
             }}
           >
-            {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+            {theme === "dark" ? <SunIcon size={16} /> : <MoonIcon size={16} />}
             {theme === "dark" ? t.nav.lightMode : t.nav.darkMode}
           </button>
 
@@ -281,7 +278,7 @@ export function MobilePanel({
               textAlign: "left",
             }}
           >
-            <Globe size={16} />
+            <GlobeIcon size={16} />
             {t.site.menu.otherLanguage}
           </button>
         </div>

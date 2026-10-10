@@ -73,7 +73,6 @@ export interface Product {
   repoUrl: string;
   /** The running application, when there is one to open (OROCHIA_APP_URL). */
   appUrl?: string;
-  accent: string;
   /* Tagline, summary and points: messages → site.products.<id>. */
   stack: string;
   /** Screen recording of the product: `${src}.webm|.mp4|.jpg` under /public. */
@@ -87,7 +86,6 @@ export const PRODUCTS: Product[] = [
     href: "/products/orazaka",
     docsHref: "/docs/orazaka/101",
     repoUrl: "https://github.com/krizaka/orazaka",
-    accent: "#6366f1",
     stack: "Java 21 · Spring Boot 4 · Spring AI 2 · Next.js · Ollama",
     media: { src: "/assets/orazaka/tour/chat", aspect: "16 / 10", frame: "orazaka · web client" },
   },
@@ -98,7 +96,6 @@ export const PRODUCTS: Product[] = [
     docsHref: "/products/orochia/docs",
     repoUrl: "https://github.com/krizaka/orochia",
     appUrl: OROCHIA_APP_URL,
-    accent: "#a855f7",
     stack: "Next.js 16 · PostgreSQL · Drizzle · Bunny Stream",
     media: { src: "/assets/orochia/tour/feed", aspect: "16 / 10", frame: "orochia · web" },
   },

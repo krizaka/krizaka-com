@@ -2,8 +2,8 @@
 /* The Krizaka preset: @krizaka/tokens (every --kz-* colour, radius, shadow, font of both themes) mapped to the
    Tailwind theme (bg-surface-1, text-fg, border-border-default…) + the motion signature. The site dogfoods it. */
 @import "@krizaka/tailwind";
-/* One class per brand (`brand-krizaka`, `brand-orazaka`, `brand-orochia`): a section that shows a product takes its
-   accent, accent-2 and section gradient — the colours of its mark — in both themes. */
+/* One class per brand (BRAND.md): `.brand-orazaka` (orange) on the Orazaka pages, `.brand-orochia` (violet to magenta)
+   on the Orochia pages, any section that shows a product; the rest of the site is Krizaka (ink + blue, the defaults). */
 @import "@krizaka/tokens/brands/scoped.css";
 /* The classes the @krizaka/ui primitives use, read from the built package — and those of the registry examples that
    /docs/ui renders live. */
@@ -19,18 +19,13 @@
    The shared tokens (surfaces, borders, text, accent, status, radii,
    shadows) come from @krizaka/tokens through @krizaka/tailwind — dark on
    :root, light on html.light, exactly the contract the site already used.
-   Only what is the site's own lives here.
+   Only what belongs to the site lives here.
    ═══════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* The site's typeface: the primitives (font-sans / font-display) read it too. */
+  /* The site typeface: the primitives (font-sans / font-display) read it too. */
   --kz-font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
   --kz-font-display: var(--kz-font-sans);
-
-  /* Accent as small TEXT (eyebrows, inline links): on the dark surfaces the shared accent is tuned for white text on
-     it, not for 11–13px text on the page (4.2:1, @krizaka/tokens README) — lifted towards the text colour to reach 4.5:1.
-     Light keeps the accent itself. */
-  --site-accent-text: color-mix(in srgb, var(--kz-accent) 78%, var(--kz-text-primary));
 
   /* Focus halo around fields. */
   --kz-accent-glow: 0 0 0 3px color-mix(in srgb, var(--kz-accent) 12%, transparent);
@@ -47,7 +42,7 @@
 
   /* Metallic headline sheen — top-lit brushed gradient. Built from the text
      tokens so it adapts to dark/light automatically (custom props resolve
-     lazily against the element's own cascade). */
+     lazily against the cascade of the element). */
   --kz-sheen: linear-gradient(
     180deg,
     var(--kz-text-primary) 0%,
@@ -57,8 +52,14 @@
 
 html.light {
   --kz-grid-color: hsla(240, 6%, 0%, 0.03);
-  --site-accent-text: var(--kz-accent);
 }
+
+/* Deprecated alias of the shared accent text role, kept for /story (owned by another session): remove it once /story
+   reads --kz-accent-text. Re-declared on the brand classes so it follows the brand of the section. */
+:root,
+.brand-krizaka,
+.brand-orazaka,
+.brand-orochia { --site-accent-text: var(--kz-accent-text); }
 
 html.light ::selection {
   background: hsla(217, 92%, 50%, 0.18);
@@ -87,13 +88,17 @@ html.light {
   --color-fd-ring: var(--kz-ring);
   --color-fd-overlay: var(--kz-overlay);
 }
+/* Light theme: the active page of the Fumadocs sidebar and TOC is accent TEXT, so it takes the accent text role
+   (AA on the tinted row), not the raw accent (4.4:1). */
+html.light #nd-sidebar,
+html.light #nd-toc { --color-fd-primary: var(--kz-accent-text); }
 .dark #nd-sidebar {
   --color-fd-muted: var(--kz-surface-2);
   --color-fd-secondary: var(--kz-surface-2);
   --color-fd-muted-foreground: var(--kz-text-secondary);
 }
 
-/* The site's display and mono faces (next/font sets the variables on <html>). */
+/* The site display and mono faces (next/font sets the variables on <html>). */
 @theme inline {
   --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono:    "JetBrains Mono", ui-monospace, monospace;
@@ -145,7 +150,7 @@ body {
 
 /* ─── Accessibility: Focus Visible ─── */
 /* Keyboard users get a visible accent ring everywhere; it follows the active
-   theme via --kz-accent. Pointer interactions don't trigger it. */
+   theme via --kz-accent. Pointer interactions do not trigger it. */
 
 :focus-visible {
   outline: 2px solid var(--kz-accent);
@@ -1287,10 +1292,10 @@ body {
 
 /* ─── Organisation sections (home, /products, /open-source) ─── */
 .kz-section { max-width: 72rem; margin: 0 auto; padding: 72px 20px; }
-.kz-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--site-accent-text); margin: 0 0 10px; }
+.kz-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--kz-accent-text); margin: 0 0 10px; }
 .kz-h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 800; letter-spacing: -.025em; color: var(--kz-text-primary); margin: 0 0 28px; }
 .kz-link-strong, .kz-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; text-decoration: none; }
-.kz-link-strong { color: var(--site-accent-text); font-weight: 700; }
+.kz-link-strong { color: var(--kz-accent-text); font-weight: 700; }
 .kz-link { color: var(--kz-text-secondary); }
 .kz-link:hover { color: var(--kz-text-primary); }
 
@@ -1317,7 +1322,7 @@ body {
    ═══════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* The fixed site navigation (12px offset + 52px bar) plus air: Fumadocs' sticky sidebar and TOC start below it. */
+  /* The fixed site navigation (12px offset + 52px bar) plus air: Fumadocs sticky sidebar and TOC start below it. */
   --kz-docs-top: 76px;
 }
 
@@ -1340,7 +1345,7 @@ body {
   font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--site-accent-text);
+  color: var(--kz-accent-text);
   margin-bottom: 12px;
 }
 .kz-docs-hub-header h1 {
@@ -1377,7 +1382,7 @@ body {
 .kz-docs-hub-card:hover { border-color: var(--kz-border-strong); background: var(--kz-surface-2); }
 .kz-docs-hub-card-title { font-size: 1.125rem; font-weight: 700; }
 .kz-docs-hub-card-text { color: var(--kz-text-secondary); font-size: 0.9375rem; line-height: 1.55; flex: 1; }
-.kz-docs-hub-card-cta { display: inline-flex; align-items: center; gap: 6px; color: var(--site-accent-text); font-size: 0.875rem; font-weight: 600; }
+.kz-docs-hub-card-cta { display: inline-flex; align-items: center; gap: 6px; color: var(--kz-accent-text); font-size: 0.875rem; font-weight: 600; }
 
 /* Live preview */
 .kz-preview {
@@ -1466,7 +1471,7 @@ body {
   background: var(--kz-surface-2);
   color: var(--kz-text-primary);
 }
-.kz-table code.kz-type { color: var(--site-accent-text); background: var(--kz-accent-soft); white-space: pre-wrap; overflow-wrap: anywhere; }
+.kz-table code.kz-type { color: var(--kz-accent-text); background: var(--kz-accent-soft); white-space: pre-wrap; overflow-wrap: anywhere; }
 .kz-table td:has(> .kz-type) { min-width: 7.5rem; }
 .kz-required {
   margin-inline-start: 6px;
@@ -1491,7 +1496,7 @@ body {
   color: var(--kz-text-secondary);
   background: var(--kz-surface-1);
 }
-.kz-chip-meta[data-tone="accent"] { color: var(--site-accent-text); border-color: color-mix(in srgb, var(--kz-accent) 40%, transparent); background: var(--kz-accent-soft); }
+.kz-chip-meta[data-tone="accent"] { color: var(--kz-accent-text); border-color: color-mix(in srgb, var(--kz-accent) 40%, transparent); background: var(--kz-accent-soft); }
 .kz-chip-meta[data-tone="beta"] { color: var(--kz-text-primary); border-color: color-mix(in srgb, var(--kz-warning) 55%, transparent); background: color-mix(in srgb, var(--kz-warning) 12%, transparent); }
 .kz-chip-meta svg { width: 13px; height: 13px; }
 .kz-when { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); margin: 1rem 0 1.5rem; }
@@ -1502,7 +1507,7 @@ body {
 .kz-when-card [data-icon="do"] { color: var(--kz-success); }
 .kz-when-card [data-icon="dont"] { color: var(--kz-danger); }
 .kz-when-instead { display: block; color: var(--kz-text-secondary); font-size: 0.875rem; }
-.kz-when-instead a { color: var(--site-accent-text); font-weight: 600; }
+.kz-when-instead a { color: var(--kz-accent-text); font-weight: 600; }
 .kz-example { margin: 1.75rem 0 0; }
 .kz-example > h3 { margin: 0 0 0.25rem; }
 .kz-example > p { margin: 0 0 0.75rem; color: var(--kz-text-secondary); }
@@ -1540,17 +1545,17 @@ body {
 .kz-related-title { font-weight: 700; font-size: 0.9375rem; }
 .kz-related-text { color: var(--kz-text-secondary); font-size: 0.8125rem; line-height: 1.5; }
 .kz-component-source { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--kz-border-subtle); color: var(--kz-text-secondary); font-size: 0.8125rem; display: flex; flex-wrap: wrap; gap: 6px 16px; }
-.kz-component-source a { color: var(--site-accent-text); font-weight: 600; }
+.kz-component-source a { color: var(--kz-accent-text); font-weight: 600; }
 
 /* Code comments of the dark code theme (github-dark #6A737D) are under AA on our surfaces: the secondary text role */
 [style*="--shiki-dark:#6A737D"] { --shiki-dark: var(--kz-text-secondary) !important; }
 
 /* In light, the docs set accent text on tinted chips, tabs and type cells: lifted towards the text colour (AA, 4.5:1) */
-html.light .kz-docs { --site-accent-text: color-mix(in srgb, var(--kz-accent) 82%, var(--kz-text-primary)); }
+html.light .kz-docs { --kz-accent-text: color-mix(in srgb, var(--kz-accent) 82%, var(--kz-text-primary)); }
 html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70%, var(--kz-text-primary)); }
 
 /* The Fumadocs tabs (platform tabs of a component page): the active tab in the accent text role, AA on every surface */
-.kz-docs [role="tablist"] > [role="tab"][data-state="active"] { color: var(--site-accent-text); }
+.kz-docs [role="tablist"] > [role="tab"][data-state="active"] { color: var(--kz-accent-text); }
 
 /* The catalogue of /docs/ui: one list of components, filtered by platform */
 .kz-catalog { margin: 1rem 0 2rem; }
@@ -1597,7 +1602,7 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
 
 /* Notes, intro, coming soon, product index */
 .kz-docs-note { color: var(--kz-text-secondary); font-size: 0.9375rem; }
-.kz-docs-note a { color: var(--site-accent-text); font-weight: 600; }
+.kz-docs-note a { color: var(--kz-accent-text); font-weight: 600; }
 .kz-doc-intro {
   display: flex;
   gap: 14px;
@@ -1619,7 +1624,7 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--site-accent-text);
+  color: var(--kz-accent-text);
   background: var(--kz-accent-soft);
 }
 .kz-coming-soon {
@@ -1634,12 +1639,171 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
   line-height: 1.6;
   color: var(--kz-text-secondary);
 }
-.kz-coming-soon-icon { flex-shrink: 0; margin-top: 3px; color: var(--site-accent-text); }
+.kz-coming-soon-icon { flex-shrink: 0; margin-top: 3px; color: var(--kz-accent-text); }
 .kz-coming-soon-title { font-weight: 700; color: var(--kz-text-primary); }
-.kz-coming-soon a { color: var(--site-accent-text); font-weight: 600; text-decoration: none; }
+.kz-coming-soon a { color: var(--kz-accent-text); font-weight: 600; text-decoration: none; }
 .kz-doc-index { display: flex; flex-direction: column; gap: 1.75rem; }
 .kz-doc-index-group h2 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
 .kz-doc-index-group ul { list-style: none; display: grid; gap: 4px 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
 .kz-doc-index-group a { color: var(--kz-text-secondary); text-decoration: none; font-size: 0.9375rem; }
-.kz-doc-index-group a:hover { color: var(--site-accent-text); }
+.kz-doc-index-group a:hover { color: var(--kz-accent-text); }
 .kz-mermaid-placeholder { min-height: 240px; margin: 1.5rem 0; border-radius: var(--kz-radius-lg); border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Brand pages — the Krizaka visual language (BRAND.md §4) on the site
+   ─────────────────────────────────────────────────────────────────
+   Sections are SectionBackdrop (@krizaka/ui/section-backdrop) under a
+   `.brand-<id>` class. Roles only: --kz-accent, --kz-accent-text,
+   --kz-accent-2, --kz-brand-gradient-*, surfaces and text.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* The last stop of a section is the page surface itself, not a copy of its value: an app that changes
+   --kz-surface-0 (Orochia) would otherwise get a visible line under every section (krizaka/krizaka-ui#38). */
+html .kz-backdrop { background: linear-gradient(180deg, var(--kz-brand-gradient-from), var(--kz-brand-gradient-via) 55%, var(--kz-surface-0)); }
+html .kz-backdrop[data-direction="up"] { background: linear-gradient(0deg, var(--kz-brand-gradient-from), var(--kz-brand-gradient-via) 55%, var(--kz-surface-0)); }
+/* `glide`: rises from the page surface into the brand tint and settles back on it — consecutive sections of
+   different brands (the home) meet on the surface, never on a hard band. */
+html .kz-backdrop.bp-glide { background: linear-gradient(180deg, var(--kz-surface-0), var(--kz-brand-gradient-from) 24%, var(--kz-brand-gradient-via) 62%, var(--kz-surface-0)); }
+html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
+
+.bp-wrap { position: relative; max-width: 72rem; margin: 0 auto; padding: clamp(64px, 9vw, 112px) 20px; }
+.bp-hero { padding-top: clamp(112px, 13vw, 152px); }
+.bp-eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px; font-family: var(--font-mono); font-size: 11px; font-weight: 700;
+  letter-spacing: .16em; text-transform: uppercase; color: var(--kz-accent-text); }
+.bp-h1 { margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.4rem, 6.4vw, 4.2rem); font-weight: 800;
+  letter-spacing: -.035em; line-height: 1.04; color: var(--kz-text-primary); }
+.bp-h2 { margin: 0 0 14px; font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
+  letter-spacing: -.028em; line-height: 1.1; color: var(--kz-text-primary); max-width: 760px; }
+.bp-accent { color: var(--kz-accent-text); }
+.bp-lead { margin: 0; font-size: clamp(15.5px, 1.6vw, 17.5px); line-height: 1.7; color: var(--kz-text-secondary); max-width: 640px; }
+.bp-center { text-align: center; }
+.bp-center .bp-h2, .bp-center .bp-lead { margin-left: auto; margin-right: auto; }
+
+.bp-hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+@media (max-width: 960px) { .bp-hero-grid { grid-template-columns: 1fr; } }
+.bp-hero-art { width: 100%; height: auto; max-width: 560px; justify-self: center; }
+
+.bp-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.bp-center .bp-actions { justify-content: center; }
+.bp-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none;
+  transition: transform var(--kz-transition-fast), border-color var(--kz-transition-fast), background-color var(--kz-transition-fast); }
+.bp-btn-primary { background: var(--kz-accent); color: var(--kz-on-accent); }
+.bp-btn-primary:hover { background: var(--kz-accent-hover); transform: translateY(-1px); }
+.bp-btn-ghost { color: var(--kz-text-primary); border: 1px solid var(--kz-border-default); background: color-mix(in srgb, var(--kz-surface-1) 60%, transparent); font-weight: 600; }
+.bp-btn-ghost:hover { border-color: var(--kz-border-strong); }
+
+.bp-proofs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; margin-top: 40px; list-style: none; padding: 0; }
+.bp-proof { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--kz-border-subtle);
+  background: color-mix(in srgb, var(--kz-surface-1) 70%, transparent); backdrop-filter: blur(6px); font-size: 13.5px; line-height: 1.5; color: var(--kz-text-secondary); }
+.bp-proof strong { display: block; color: var(--kz-text-primary); font-size: 14px; }
+.bp-proof svg { flex-shrink: 0; color: var(--kz-text-primary); }
+
+.bp-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 14px; margin-top: 36px; }
+.bp-card { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 18px; border: 1px solid var(--kz-border-subtle);
+  background: color-mix(in srgb, var(--kz-surface-1) 82%, transparent); color: var(--kz-text-primary); text-decoration: none;
+  transition: border-color var(--kz-transition-fast), transform var(--kz-transition-fast); }
+a.bp-card:hover { border-color: color-mix(in srgb, var(--kz-accent) 55%, var(--kz-border-default)); transform: translateY(-2px); }
+.bp-card h3 { margin: 6px 0 0; font-size: 16.5px; font-weight: 700; letter-spacing: -.01em; }
+.bp-card p { margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
+.bp-card .bp-card-more { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--kz-accent-text); }
+.bp-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px;
+  color: var(--kz-text-primary); background: var(--kz-accent-soft); border: 1px solid color-mix(in srgb, var(--kz-accent) 22%, transparent); }
+
+.bp-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); align-items: center; }
+@media (max-width: 900px) { .bp-split { grid-template-columns: 1fr; } }
+
+/* Comparison: a table on wide screens, labelled cards on phones. */
+.bp-compare { width: 100%; margin-top: 32px; border-collapse: separate; border-spacing: 0; border: 1px solid var(--kz-border-subtle); border-radius: 18px; overflow: hidden;
+  background: color-mix(in srgb, var(--kz-surface-1) 80%, transparent); font-size: 14px; }
+.bp-compare th, .bp-compare td { padding: 16px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--kz-border-subtle); line-height: 1.55; }
+.bp-compare tr:last-child > * { border-bottom: 0; }
+.bp-compare thead th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--kz-text-secondary); }
+.bp-compare tbody th { font-weight: 700; color: var(--kz-text-primary); width: 26%; }
+.bp-compare td { color: var(--kz-text-secondary); }
+.bp-compare td.bp-ours { color: var(--kz-text-primary); background: var(--kz-accent-soft); }
+.bp-compare thead th.bp-ours { color: var(--kz-accent-text); background: var(--kz-accent-soft); }
+@media (max-width: 720px) {
+  .bp-compare thead { display: none; }
+  .bp-compare, .bp-compare tbody, .bp-compare tr, .bp-compare th, .bp-compare td { display: block; width: auto; }
+  .bp-compare tr { border-bottom: 1px solid var(--kz-border-subtle); }
+  .bp-compare tbody th { width: auto; border: 0; padding-bottom: 6px; }
+  .bp-compare td { border: 0; padding-top: 6px; }
+  .bp-compare td::before { content: attr(data-label); display: block; margin-bottom: 2px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--kz-text-secondary); }
+  .bp-compare td.bp-ours::before { color: var(--kz-accent-text); }
+}
+
+/* Worked examples (Orochia split) */
+.bp-ledger { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.bp-ledger li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 14px;
+  border: 1px solid var(--kz-border-subtle); background: color-mix(in srgb, var(--kz-surface-1) 80%, transparent); }
+.bp-ledger-what { font-size: 14px; color: var(--kz-text-secondary); }
+.bp-ledger-what strong { color: var(--kz-text-primary); }
+.bp-ledger-net { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--kz-accent-text); white-space: nowrap; }
+.bp-share { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; }
+.bp-share b { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(3.4rem, 9vw, 5.4rem); font-weight: 800; letter-spacing: -.04em; line-height: 1;
+  background: linear-gradient(120deg, var(--kz-accent-text), var(--kz-accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.bp-share span { font-size: 15px; color: var(--kz-text-secondary); }
+.bp-fine { margin: 16px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--kz-text-secondary); }
+
+/* Terminal (Orazaka three commands) */
+.bp-term { border-radius: 16px; overflow: hidden; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1); box-shadow: var(--kz-shadow-lg); }
+.bp-term-bar { display: flex; gap: 6px; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--kz-border-subtle); background: var(--kz-surface-2);
+  font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
+.bp-term-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--kz-border-strong); }
+.bp-term-bar i:last-of-type { margin-right: 8px; }
+.bp-term pre { margin: 0; padding: 18px; font-family: var(--font-mono); font-size: 13.5px; line-height: 2; color: var(--kz-text-primary); overflow-x: auto; }
+.bp-term pre span { color: var(--kz-accent-text); }
+.bp-steps { margin: 28px 0 0; padding: 0; list-style: none; display: grid; gap: 18px; counter-reset: step; }
+.bp-steps li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; }
+.bp-steps li::before { counter-increment: step; content: counter(step); display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px;
+  border-radius: 50%; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--kz-accent-text); background: var(--kz-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--kz-accent) 30%, transparent); }
+.bp-steps strong { display: block; font-size: 15.5px; color: var(--kz-text-primary); }
+.bp-steps p { margin: 2px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
+
+/* Blurred footage behind a hero (depth of field, SectionBackdrop `media`). */
+.bp-media { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6%; padding: 6% 4%; }
+
+/* Isometric illustrations (app/components/brand/Iso.tsx) */
+.iso-floor { fill: none; stroke: var(--kz-border-strong); stroke-width: .8; }
+.iso-face { stroke: color-mix(in oklab, var(--kz-accent-text) 40%, transparent); stroke-width: .8; stroke-linejoin: round; }
+.iso-base .iso-top { fill: var(--kz-surface-3); }
+.iso-base .iso-left { fill: var(--kz-surface-2); }
+.iso-base .iso-right { fill: var(--kz-surface-1); }
+.iso-base .iso-face { stroke: color-mix(in oklab, var(--kz-accent-text) 22%, var(--kz-border-default)); }
+.iso-accent .iso-top { fill: color-mix(in oklab, var(--kz-accent) 72%, var(--kz-surface-3)); }
+.iso-accent .iso-left { fill: color-mix(in oklab, var(--kz-accent) 50%, var(--kz-surface-1)); }
+.iso-accent .iso-right { fill: color-mix(in oklab, var(--kz-accent) 32%, var(--kz-surface-0)); }
+.iso-accent2 .iso-top { fill: color-mix(in oklab, var(--kz-accent-2) 70%, var(--kz-surface-3)); }
+.iso-accent2 .iso-left { fill: color-mix(in oklab, var(--kz-accent) 62%, var(--kz-surface-1)); }
+.iso-accent2 .iso-right { fill: color-mix(in oklab, var(--kz-accent-2) 40%, var(--kz-surface-0)); }
+.iso-glass .iso-face { fill: color-mix(in oklab, var(--kz-accent) 14%, var(--kz-surface-1)); fill-opacity: .9; }
+.iso-glass .iso-top { fill: color-mix(in oklab, var(--kz-accent) 10%, var(--kz-surface-2)); }
+.iso-strip { fill: none; stroke: var(--kz-accent-text); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 2 7; opacity: .85; }
+.iso-lines { stroke: var(--kz-text-secondary); stroke-width: 2; stroke-linecap: round; opacity: .6; }
+.iso-dot { fill: var(--kz-on-accent); opacity: .85; }
+.iso-node { fill: var(--kz-accent-text); }
+.iso-glow-stop { stop-color: var(--kz-accent); }
+.iso-rim { fill: color-mix(in oklab, var(--kz-accent) 6%, transparent); stroke: color-mix(in oklab, var(--kz-accent-text) 30%, transparent); stroke-width: 1; }
+.iso-dome { fill: color-mix(in oklab, var(--kz-accent) 5%, transparent); stroke: color-mix(in oklab, var(--kz-accent-text) 34%, transparent); stroke-width: 1.2; }
+.iso-flow { fill: none; stroke: var(--kz-accent-text); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 3 9; animation: iso-flow 6s linear infinite; }
+.iso-float { animation: iso-float 9s ease-in-out infinite alternate; }
+.iso-float-late { animation-delay: -4s; }
+.iso-breathe { animation: iso-breathe 5s ease-in-out infinite alternate; }
+@keyframes iso-flow { to { stroke-dashoffset: -48; } }
+@keyframes iso-float { from { transform: translateY(0); } to { transform: translateY(-8px); } }
+@keyframes iso-breathe { from { opacity: .65; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .iso-flow, .iso-float, .iso-breathe { animation: none; } }
+.bp-h1 b, .bp-h2 b { font-weight: inherit; color: var(--kz-accent-text); }
+.bp-ledger-what b { color: var(--kz-text-primary); }
+@media (max-width: 720px) { .bp-media { display: none; } }
+.bp-media > div { border-radius: 28px; background-size: cover; background-position: center top; opacity: .55; }
+.bp-media > div:nth-child(2) { transform: translateY(18%) scale(.9); opacity: .4; }
+html.light .bp-media > div { opacity: .3; }
+/* Light theme: the footage is screened onto the tint (its shadows vanish), never a grey panel. */
+html.light .kz-backdrop-media { mix-blend-mode: screen; }
+@media (max-width: 560px) {
+  .bp-ledger li { grid-template-columns: auto minmax(0, 1fr); row-gap: 4px; }
+  .bp-ledger-net { grid-column: 2; font-size: 13.5px; }
+}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useCallback, useEffect } from "react";
-import { Menu, Sun, Moon, Search } from "lucide-react";
+import { MenuIcon, MoonIcon, SearchIcon, SunIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
 import { useTheme } from "./ThemeProvider";
 import { GITHUB_ORG_URL } from "@/lib/site";
@@ -107,7 +107,7 @@ export default function TopNavBar() {
                   borderRadius: "9999px",
                   background: "var(--kz-surface-2)",
                   border: "1px solid var(--kz-border-subtle)",
-                  color: "var(--kz-text-muted)",
+                  color: "var(--kz-text-secondary)",
                   cursor: "pointer",
                   fontSize: "12.5px",
                   transition: "all 150ms ease",
@@ -115,7 +115,7 @@ export default function TopNavBar() {
                 }}
                 className="nav-search-btn"
               >
-                <Search size={12} style={{ color: "var(--kz-text-muted)" }} />
+                <SearchIcon size={14} style={{ color: "var(--kz-text-secondary)" }} />
                 <span className="search-placeholder-text">
                   {t.site.menu.search}
                 </span>
@@ -126,7 +126,7 @@ export default function TopNavBar() {
                     borderRadius: "4px",
                     background: "var(--kz-surface-3)",
                     border: "1px solid var(--kz-border-default)",
-                    color: "var(--kz-text-muted)",
+                    color: "var(--kz-text-secondary)",
                     fontFamily: "var(--font-mono, monospace)",
                     marginLeft: "2px",
                   }}
@@ -150,11 +150,11 @@ export default function TopNavBar() {
                 borderRadius: "8px",
                 background: "none",
                 border: "none",
-                color: "var(--kz-text-muted)",
+                color: "var(--kz-text-secondary)",
                 cursor: "pointer",
               }}
             >
-              <Search size={15} />
+              <SearchIcon size={17} />
             </button>
 
             <span className="nav-controls-divider" style={{ width: "1px", height: "16px", background: "var(--kz-border-subtle)" }} />
@@ -173,7 +173,7 @@ export default function TopNavBar() {
                 width: "32px",
                 height: "32px",
                 borderRadius: "8px",
-                color: "var(--kz-text-muted)",
+                color: "var(--kz-text-secondary)",
                 transition: "color 150ms ease",
               }}
             >
@@ -197,12 +197,12 @@ export default function TopNavBar() {
                 borderRadius: "8px",
                 background: "none",
                 border: "none",
-                color: "var(--kz-text-muted)",
+                color: "var(--kz-text-secondary)",
                 cursor: "pointer",
                 transition: "color 150ms ease",
               }}
             >
-              {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+              {theme === "dark" ? <SunIcon size={16} /> : <MoonIcon size={16} />}
             </button>
 
             {/* Desktop Lang toggle */}
@@ -217,7 +217,7 @@ export default function TopNavBar() {
                 justifyContent: "center",
                 fontSize: "11px",
                 fontWeight: 600,
-                color: "var(--kz-text-muted)",
+                color: "var(--kz-text-secondary)",
                 background: "none",
                 border: "1px solid var(--kz-border-subtle)",
                 borderRadius: "6px",
@@ -259,7 +259,7 @@ export default function TopNavBar() {
                 cursor: "pointer",
               }}
             >
-              <Menu size={16} strokeWidth={1.5} />
+              <MenuIcon size={18} />
             </button>
           </div>
         </nav>
@@ -316,7 +316,7 @@ export default function TopNavBar() {
           color: var(--kz-text-primary) !important;
         }
         .nav-top-link-active {
-          color: var(--kz-accent) !important;
+          color: var(--kz-accent-text) !important;
         }
         #nav-products-trigger:hover {
           color: var(--kz-text-primary) !important;

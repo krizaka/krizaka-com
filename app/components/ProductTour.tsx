@@ -5,7 +5,6 @@
    prefers-reduced-motion nothing autoplays: the poster shows and the native controls play on demand. */
 
 import { useRef, useState, useSyncExternalStore } from "react";
-import { useReducedMotion } from "framer-motion";
 
 export interface TourClip {
   id: string;
@@ -15,12 +14,16 @@ export interface TourClip {
   src: string;
 }
 
-const noop = () => () => {};
+/* prefers-reduced-motion without an animation library; the server and the first client render say "still". */
+const REDUCE = "(prefers-reduced-motion: reduce)";
+const subscribe = (cb: () => void) => {
+  const mq = window.matchMedia(REDUCE);
+  mq.addEventListener("change", cb);
+  return () => mq.removeEventListener("change", cb);
+};
 
 export default function ProductTour({ clips, accent = "var(--kz-accent)", frameLabel }: { clips: TourClip[]; accent?: string; frameLabel: string }) {
-  const mounted = useSyncExternalStore(noop, () => true, () => false);
-  const prefersReduced = useReducedMotion();
-  const reduce = !mounted || !!prefersReduced;
+  const reduce = useSyncExternalStore(subscribe, () => window.matchMedia(REDUCE).matches, () => true);
   const [i, setIndex] = useState(0);
   const [progress, setProgress] = useState(0);
   const setI = (next: number | ((k: number) => number)) => {
@@ -75,13 +78,13 @@ export default function ProductTour({ clips, accent = "var(--kz-accent)", frameL
           font-weight: 600; color: var(--kz-text-secondary); background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: all 150ms ease; }
         .pt-tab:hover { color: var(--kz-text-primary); }
         .pt-tab[aria-selected="true"] { color: var(--kz-text-primary); border-color: var(--pt); box-shadow: 0 0 0 3px color-mix(in srgb, var(--pt) 18%, transparent); }
-        .pt-tab-num { font-family: var(--font-mono); font-size: 11px; color: var(--pt); }
+        .pt-tab-num { font-family: var(--font-mono); font-size: 11px; color: var(--kz-accent-text); }
         .pt-frame { position: relative; margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--kz-border-default);
-          background: #09090b; box-shadow: var(--kz-shadow-lg), 0 0 60px color-mix(in srgb, var(--pt) 16%, transparent); }
+          background: var(--kz-media); box-shadow: var(--kz-shadow-lg), 0 0 60px color-mix(in srgb, var(--pt) 16%, transparent); }
         .pt-chrome { display: flex; align-items: center; gap: 6px; padding: 10px 14px; background: var(--kz-surface-2); border-bottom: 1px solid var(--kz-border-subtle); }
         .pt-chrome span { width: 10px; height: 10px; border-radius: 50%; background: var(--kz-border-strong); }
-        .pt-chrome em { margin-left: 10px; font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-muted); }
-        .pt-video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #09090b; }
+        .pt-chrome em { margin-left: 10px; font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
+        .pt-video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--kz-media); }
         .pt-progress { position: absolute; left: 0; right: 0; top: 41px; height: 2px; background: var(--pt); transform-origin: left; transition: transform 250ms linear; opacity: .8; }
         .pt-caption { padding: 12px 16px; font-size: 13px; color: var(--kz-text-secondary); background: var(--kz-surface-1); border-top: 1px solid var(--kz-border-subtle); }
       `}</style>

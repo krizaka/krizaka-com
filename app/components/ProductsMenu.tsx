@@ -7,26 +7,45 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BookOpen, ChevronDown, Compass, Cpu, Feather, GitBranch, LayoutGrid, Mail, PlayCircle, Sparkles } from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import {
+  AiIcon,
+  BookmarkIcon,
+  ChevronDownIcon,
+  ForwardIcon,
+  HomeIcon,
+  KnowledgeIcon,
+  MessageIcon,
+  PackIcon,
+  PlayIcon,
+  ServerIcon,
+  ShieldIcon,
+  StudioIcon,
+  type IconProps,
+} from "@krizaka/icons";
+import type { ComponentType } from "react";
 import { useI18n } from "./I18nProvider";
-import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
+import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isDocsActive, isDocsSection, isNavActive, localeless, type NavIcon, type NavLink } from "@/lib/nav";
 import { ProductLogo } from "@krizaka/ui";
 
-export const NAV_ICONS: Record<NavIcon, LucideIcon> = {
-  overview: Compass,
-  architecture: Cpu,
-  demo: PlayCircle,
-  docs: BookOpen,
-  signature: Sparkles,
-  repos: GitBranch,
-  contact: Mail,
-  products: LayoutGrid,
-  story: Feather,
+/* The navigation icons (@krizaka/icons): one per entry, the same in the mega-menu, the mobile panel and the home
+   spotlights. The "signature" entry is each product's own: Orazaka's engine, Orochia's guarantees. */
+export const NAV_ICONS: Record<NavIcon, ComponentType<IconProps>> = {
+  overview: HomeIcon,
+  architecture: ServerIcon,
+  demo: PlayIcon,
+  signature: AiIcon,
+  repos: PackIcon,
+  contact: MessageIcon,
+  products: StudioIcon,
+  story: BookmarkIcon,
 };
+export const SIGNATURE_ICONS: Record<"orazaka" | "orochia", ComponentType<IconProps>> = { orazaka: AiIcon, orochia: ShieldIcon };
 
 function Dropdown({ id, label, active, width, children }: { id: string; label: string; active: boolean; width: number; children: ReactNode }) {
   const [open, setOpen] = useState(false);
+  // The panel's links mount on first open: hidden links would otherwise be prefetched on every page load (performance).
+  const [seen, setSeen] = useState(false);
+  if (open && !seen) setSeen(true);
   const ref = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -64,7 +83,7 @@ function Dropdown({ id, label, active, width, children }: { id: string; label: s
         onClick={() => setOpen((o) => !o)}
       >
         {label}
-        <ChevronDown size={12} strokeWidth={2} className="kz-dd-chevron" />
+        <ChevronDownIcon size={13} strokeWidth={2} className="kz-dd-chevron" />
       </button>
       <div
         id={`${id}-panel`}
@@ -74,18 +93,18 @@ function Dropdown({ id, label, active, width, children }: { id: string; label: s
         onClick={(e) => (e.target as HTMLElement).closest("a") && setOpen(false)}
       >
         <div className="kz-dd-bridge" />
-        {children}
+        {seen ? children : null}
       </div>
     </div>
   );
 }
 
-function MenuLink({ link, text, pathname }: { link: NavLink; text: { label: string; desc: string }; pathname: string }) {
-  const Icon = NAV_ICONS[link.icon];
+function MenuLink({ link, text, pathname, product }: { link: NavLink; text: { label: string; desc: string }; pathname: string; product?: "orazaka" | "orochia" }) {
+  const Icon = link.icon === "signature" && product ? SIGNATURE_ICONS[product] : NAV_ICONS[link.icon];
   const active = isNavActive(link, pathname);
   return (
     <Link href={link.href} className={`kz-menu-link${active ? " is-active" : ""}`}>
-      <Icon size={15} strokeWidth={1.8} className="kz-menu-icon" aria-hidden />
+      <Icon size={16} className="kz-menu-icon" nodeColor="var(--kz-accent)" />
       <span>
         <span className="kz-menu-label">{text.label}</span>
         <span className="kz-menu-desc">{text.desc}</span>
@@ -105,7 +124,7 @@ export function ProductsMenu() {
       <Dropdown id="nav-products-trigger" label={m.products} active={productsActive} width={640}>
         <div className="kz-mega">
           {NAV_PRODUCTS.map((p) => (
-            <div key={p.id} className="kz-mega-col">
+            <div key={p.id} className={`kz-mega-col brand-${p.id}`}>
               <Link href={p.href} className="kz-mega-head">
                 <span className="kz-mega-logo">
                   <ProductLogo id={p.id} size={30} />
@@ -119,7 +138,7 @@ export function ProductsMenu() {
               </Link>
               <div className="kz-mega-links">
                 {p.links.map((l) => (
-                  <MenuLink key={l.href} link={l} text={t.site.nav[p.id].links[l.icon]} pathname={pathname} />
+                  <MenuLink key={l.href} link={l} text={t.site.nav[p.id].links[l.icon]} pathname={pathname} product={p.id} />
                 ))}
               </div>
             </div>
@@ -130,35 +149,30 @@ export function ProductsMenu() {
             const Icon = NAV_ICONS[l.icon];
             return (
               <Link key={l.href} href={l.href} className="kz-mega-foot-link">
-                <Icon size={14} aria-hidden /> {companyLinkText(t, l).label}
+                <Icon size={16} /> {companyLinkText(t, l).label}
               </Link>
             );
           })}
         </div>
       </Dropdown>
 
-      <Dropdown id="nav-docs-trigger" label={m.docs} active={pathname === NAV_DOCS_HUB || pathname.startsWith("/docs/ui") || pathname.startsWith("/docs/java")} width={400}>
+      <Dropdown id="nav-docs-trigger" label={m.docs} active={isDocsSection(pathname)} width={400}>
         {NAV_DOCS.map((d) => {
           const text = docsLinkText(t, d);
-          const content = (
-            <>
-              <ProductLogo id="krizaka" size={22} animated={false} />
+          return (
+            <Link key={d.id} href={d.href} className={`kz-menu-link${isDocsActive(d, pathname) ? " is-active" : ""}`}>
+              <ProductLogo id={d.id === "orazaka" || d.id === "orochia" ? d.id : "krizaka"} size={22} animated={false} />
               <span>
                 <span className="kz-menu-label">{text.label}</span>
                 <span className="kz-menu-desc">{text.desc}</span>
               </span>
-              {d.external ? <ArrowUpRight size={13} className="kz-menu-arrow" aria-hidden /> : <ArrowRight size={13} className="kz-menu-arrow" aria-hidden />}
-            </>
-          );
-          return d.external ? (
-            <a key={d.id} href={d.href} target="_blank" rel="noreferrer" className="kz-menu-link">{content}</a>
-          ) : (
-            <Link key={d.id} href={d.href} className={`kz-menu-link${pathname.startsWith(d.href) ? " is-active" : ""}`}>{content}</Link>
+              <ForwardIcon size={14} className="kz-menu-arrow" />
+            </Link>
           );
         })}
         <div className="kz-mega-foot">
           <Link href={NAV_DOCS_HUB} className="kz-mega-foot-link">
-            <LayoutGrid size={14} aria-hidden /> {t.site.nav.docs.all.label}
+            <KnowledgeIcon size={16} /> {t.site.nav.docs.all.label}
           </Link>
         </div>
       </Dropdown>
@@ -173,10 +187,10 @@ export function ProductsMenu() {
       <style>{`
         .kz-dd { position: relative; }
         .kz-dd-trigger { display:inline-flex; align-items:center; gap:4px; padding:6px 12px; border-radius:9999px; border:0; background:none;
-          font:inherit; font-size:13px; font-weight:500; line-height:1; color:var(--kz-text-muted); cursor:pointer; text-decoration:none;
+          font:inherit; font-size:13px; font-weight:500; line-height:1; color:var(--kz-text-secondary); cursor:pointer; text-decoration:none;
           transition:color 150ms ease, background-color 150ms ease; white-space:nowrap; }
         .kz-dd-trigger:hover, .kz-dd-trigger[aria-expanded="true"] { color:var(--kz-text-primary); background:var(--kz-surface-2); }
-        .kz-dd-trigger.is-active { color:var(--kz-accent); font-weight:600; }
+        .kz-dd-trigger.is-active { color:var(--kz-accent-text); font-weight:600; }
         .kz-dd-chevron { transition: transform 200ms ease; }
         .kz-dd-trigger[aria-expanded="true"] .kz-dd-chevron { transform: rotate(180deg); }
         .kz-dd-panel { position:absolute; top:calc(100% + 14px); left:50%; padding:14px; border-radius:18px; z-index:60;
@@ -197,7 +211,7 @@ export function ProductsMenu() {
         .kz-mega-name { display:flex; align-items:center; gap:6px; font-family:var(--font-display), system-ui, sans-serif; font-size:14px;
           font-weight:700; color:var(--kz-text-primary); }
         .kz-mega-badge { font-family:var(--font-mono); font-size:9px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-          padding:2px 6px; border-radius:999px; color:var(--kz-text-muted); border:1px solid var(--kz-border-default); }
+          padding:2px 6px; border-radius:999px; color:var(--kz-text-secondary); border:1px solid var(--kz-border-default); }
         .kz-mega-tagline { display:block; font-size:11.5px; color:var(--kz-text-secondary); margin-top:2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .kz-mega-links { display:flex; flex-direction:column; gap:1px; }
         .kz-menu-link { display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:9px; text-decoration:none;
@@ -206,7 +220,7 @@ export function ProductsMenu() {
         .kz-menu-icon { color:var(--kz-text-muted); flex-shrink:0; transition:color 150ms ease, transform 200ms ease; }
         .kz-menu-link:hover .kz-menu-icon, .kz-menu-link.is-active .kz-menu-icon { color:var(--kz-accent); transform:scale(1.1); }
         .kz-menu-label { display:block; font-family:var(--font-display), system-ui, sans-serif; font-size:12.5px; font-weight:600; color:var(--kz-text-primary); }
-        .kz-menu-desc { display:block; font-size:11px; color:var(--kz-text-muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+        .kz-menu-desc { display:block; font-size:11px; color:var(--kz-text-secondary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
         .kz-menu-link > span { flex:1; min-width:0; }
         .kz-menu-arrow { color:var(--kz-text-muted); flex-shrink:0; }
         .kz-mega-foot { display:flex; gap:6px; margin-top:12px; padding-top:12px; border-top:1px solid var(--kz-border-subtle); }

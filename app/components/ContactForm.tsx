@@ -8,7 +8,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { AlertTriangle, ArrowRight, Check, Handshake, Loader2, MessageCircle, RotateCcw } from "lucide-react";
 import { useI18n } from "./I18nProvider";
-import { format } from "@/lib/i18n";
+import { format } from "@krizaka/i18n";
 import { CONTACT_TIMELINES, CONTACT_TOPICS, type ContactTimeline, type ContactTopic } from "@/lib/contact";
 import { ProductLogo } from "@krizaka/ui";
 

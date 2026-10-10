@@ -16,6 +16,7 @@
   "dependencies": {
     "@dagrejs/dagre": "^3.0.0",
     "@krizaka/i18n": "^0.1.0-beta.2",
+    "@krizaka/icons": "^0.1.0-beta.0",
     "@krizaka/tailwind": "^2.0.0-beta.6",
     "@krizaka/tokens": "^2.0.0-beta.6",
     "@krizaka/ui": "^2.0.0-beta.6",

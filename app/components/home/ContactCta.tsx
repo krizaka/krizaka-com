@@ -4,7 +4,7 @@
    the contact page, where the form lives (pre-set on the page's product). */
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "../I18nProvider";
 import type { ContactTopic } from "@/lib/contact";
 
@@ -14,8 +14,8 @@ export default function ContactCta({ topic }: { topic?: ContactTopic }) {
   return (
     <section id="contact" className="kz-section kz-cta">
       <h2 className="kz-h2">{c.title}</h2>
-      <Link href={topic ? `/contact?topic=${topic}` : "/contact"} className="kz-cta-link btn-sheen">
-        {c.cta} <ArrowRight size={16} aria-hidden />
+      <Link href={topic ? `/contact?topic=${topic}` : "/contact"} prefetch={false} className="kz-cta-link btn-sheen">
+        {c.cta} <ForwardIcon size={17} />
       </Link>
       <style>{`
         .kz-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 32px;

@@ -3,9 +3,9 @@
 /* Open source at a glance — figures come from the generated repository data (server-side). */
 
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "../I18nProvider";
-import { format } from "@/lib/i18n";
+import { format } from "@krizaka/i18n";
 
 export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { orazakaRepos: number; orochiaRepos: number }) {
   const { t } = useI18n();
@@ -26,8 +26,8 @@ export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { oraz
           <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7, color: "var(--kz-text-secondary)", maxWidth: 520 }}>
             {format(o.body, { orazaka: orazakaRepos, orochia: orochiaRepos })}
           </p>
-          <Link href="/open-source" className="kz-link-strong" style={{ marginTop: 18 }}>
-            {o.browse} <ArrowRight size={14} />
+          <Link href="/open-source" prefetch={false} className="kz-link-strong" style={{ marginTop: 18 }}>
+            {o.browse} <ForwardIcon size={15} />
           </Link>
         </div>
         <dl className="kz-oss-stats">
