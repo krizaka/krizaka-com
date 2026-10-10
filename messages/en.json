@@ -1020,20 +1020,32 @@
       },
       "tour": {
         "feed": {
-          "label": "Public feed",
-          "caption": "18+ age gate, creator feed, creator profile — recorded on the latest Orochia build."
-        },
-        "unlock": {
-          "label": "Watch & tip",
-          "caption": "Protected playback and tipping: amount, configured gateway, gateway confirmation."
+          "label": "Discover",
+          "caption": "The home fans land on: the 18+ gate, creators’ stories, the four ways to pay them, open auctions and challenges."
         },
         "community": {
-          "label": "Explore & playlists",
-          "caption": "Search and tags, a video for approved followers, saving it to a playlist."
+          "label": "Explore",
+          "caption": "Explore is never empty: trending, new, stories, creators to follow, open auctions and challenges — then a tag and a search."
+        },
+        "stories": {
+          "label": "Stories that pay",
+          "caption": "Alex opens Elena’s story from her profile ring, turns the sound on, likes it, replies privately and tips $10 — straight to her."
+        },
+        "unlock": {
+          "label": "Paid unlock",
+          "caption": "Mia’s rehearsal unlocks from $8: Alex pays in credits, the server grants access and the video plays at once."
+        },
+        "auctions": {
+          "label": "Auctions",
+          "caption": "Elena auctions a rough cut: Alex bids $22 and takes the lead — his credits are held only while he leads."
+        },
+        "challenges": {
+          "label": "Fund a goal",
+          "caption": "Elena’s episode goal: Alex backs it with $25, held until she delivers and returned if she does not."
         },
         "studio": {
-          "label": "Creator studio",
-          "caption": "Dashboard, approving followers, editing a video, direct-to-Bunny upload."
+          "label": "Get paid 90 %",
+          "caption": "Elena’s earnings, read from the ledger: 90 % of every payment, Alex’s tip already in, then where her payouts go."
         },
         "admin": {
           "label": "Admin console",

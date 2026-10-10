@@ -79,7 +79,7 @@ const WAYS = [
 ] as const;
 
 /** Screen recordings of the real app; label and caption: messages → site.orochia.tour.<id>. */
-const TOUR = ["feed", "unlock", "community", "studio", "admin"] as const;
+const TOUR = ["feed", "community", "stories", "unlock", "auctions", "challenges", "studio", "admin"] as const;
 
 const node = "var(--kz-accent-2)";
 
