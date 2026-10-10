@@ -143,6 +143,24 @@
   `MAILGUN_API_KEY` + `MAILGUN_DOMAIN` + `CONTACT_TO_EMAIL` (+ `MAILGUN_API_URL`, `CONTACT_FROM_EMAIL`)
   and/or `CONTACT_WEBHOOK_URL`. Template: `.env.example`.
 
+## 5.1 PR captures — never committed
+
+- Screenshots, recordings and metrics of a PR (before/after, Lighthouse…) are **never committed**, in
+  any `krizaka` repository, nor pushed to a `pr-assets/*` branch. They go to Bunny Storage under
+  `pr-assets/<repo>/<pr-or-topic>/` and the PR body links their CDN URLs:
+
+  ```bash
+  node scripts/pr-assets.mjs upload <dir> --repo <repo> --key <pr-or-topic> --env-file <path/to/.env>  # --dry-run to preview
+  ```
+
+  It prints each CDN URL and a Markdown block to paste in the PR. Credentials come from the
+  environment or `--env-file`: `BUNNY_STORAGE_API_KEY`, `BUNNY_STORAGE_ZONE`,
+  `BUNNY_STORAGE_ENDPOINT` (default `storage.bunnycdn.com`), `BUNNY_PULL_ZONE_HOSTNAME` — never
+  printed, never committed. The upload fails if the pull zone does not serve the first file publicly.
+- `node scripts/pr-assets.mjs rewrite <file> --repo <repo> [--write]` turns links to a committed
+  `docs/screenshots/<key>/…` folder into the CDN URLs of the same key (migration of old PR bodies).
+- `docs/screenshots/` and `.github/pr-assets/` are git-ignored; keep captures in a scratch folder.
+
 ## 6. Definition of done
 
 1. `npm run build` is green and the route is statically generated.
