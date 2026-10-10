@@ -1,0 +1,117 @@
+{
+  "dark-desktop": {
+    "rafPer2s": 0,
+    "atLoad": {
+      "running": 25,
+      "infinite": 23,
+      "storyRunning": 4,
+      "storyInfinite": 2,
+      "storyInfiniteNames": [
+        "an-scan",
+        "an-breathe"
+      ],
+      "canvases": 0
+    },
+    "afterScroll": {
+      "running": 23,
+      "infinite": 23,
+      "storyRunning": 2,
+      "storyInfinite": 2,
+      "storyInfiniteNames": [
+        "an-scan",
+        "an-breathe"
+      ],
+      "canvases": 0
+    }
+  },
+  "dark-desktop-reduced": {
+    "rafPer2s": 0,
+    "atLoad": {
+      "running": 0,
+      "infinite": 0,
+      "storyRunning": 0,
+      "storyInfinite": 0,
+      "storyInfiniteNames": [],
+      "canvases": 0
+    },
+    "afterScroll": {
+      "running": 0,
+      "infinite": 0,
+      "storyRunning": 0,
+      "storyInfinite": 0,
+      "storyInfiniteNames": [],
+      "canvases": 0
+    }
+  },
+  "dark-mobile": {
+    "rafPer2s": 0,
+    "atLoad": {
+      "running": 18,
+      "infinite": 16,
+      "storyRunning": 3,
+      "storyInfinite": 1,
+      "storyInfiniteNames": [
+        "an-scan"
+      ],
+      "canvases": 0
+    },
+    "afterScroll": {
+      "running": 16,
+      "infinite": 16,
+      "storyRunning": 1,
+      "storyInfinite": 1,
+      "storyInfiniteNames": [
+        "an-scan"
+      ],
+      "canvases": 0
+    }
+  },
+  "light-desktop": {
+    "rafPer2s": 0,
+    "atLoad": {
+      "running": 24,
+      "infinite": 23,
+      "storyRunning": 3,
+      "storyInfinite": 2,
+      "storyInfiniteNames": [
+        "an-scan",
+        "an-breathe"
+      ],
+      "canvases": 0
+    },
+    "afterScroll": {
+      "running": 23,
+      "infinite": 23,
+      "storyRunning": 2,
+      "storyInfinite": 2,
+      "storyInfiniteNames": [
+        "an-scan",
+        "an-breathe"
+      ],
+      "canvases": 0
+    }
+  },
+  "light-mobile": {
+    "rafPer2s": 0,
+    "atLoad": {
+      "running": 18,
+      "infinite": 16,
+      "storyRunning": 3,
+      "storyInfinite": 1,
+      "storyInfiniteNames": [
+        "an-scan"
+      ],
+      "canvases": 0
+    },
+    "afterScroll": {
+      "running": 16,
+      "infinite": 16,
+      "storyRunning": 1,
+      "storyInfinite": 1,
+      "storyInfiniteNames": [
+        "an-scan"
+      ],
+      "canvases": 0
+    }
+  }
+}
