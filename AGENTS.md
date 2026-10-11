@@ -121,6 +121,17 @@
   `.kz-kit-<product>-<named theme>`) so a kit's example wears its product, in both modes, without the kit's theme ever
   reaching the rest of the site. The kits are in `transpilePackages` (they ship their examples as `.tsx`); product docs
   wear their brand (`.brand-<product>` on the docs container). `/docs/ui` links them (`<ProductKits />`).
+- **Krizaka UI is several packages, one catalogue.** `/docs/ui` reads the registries of `@krizaka/ui` **and
+  `@krizaka/charts`** (`UI_PACKAGES` in `lib/ui-registry.ts`, `KITS` with `part: "ui"` in `scripts/gen-ui-docs.mjs`):
+  the charts are the `charts` category, their install line and source link come from each item (`install`, `source`).
+  An ECharts chart loads its engine on its own page only (dynamic import in the package).
+- **The foundations are generated too.** `/docs/ui/typography` and `/docs/ui/icons` are virtual pages
+  (`lib/ui-foundations.ts`, `TypographyDoc`, `IconsDoc`/`IconGallery`) laid out from the packages' data:
+  `@krizaka/fonts` (`fonts`, `rules`), `@krizaka/tokens` (`typeScale`), `@krizaka/icons/glyphs` (`glyphIndex`,
+  `iconGroups`, `iconGuidelines`). Their words are written in krizaka-ui; the chrome and sample sentences are messages
+  (`docs.foundations.*`).
+- **The site's faces are `@krizaka/fonts`**, loaded by `next/font/local` in the locale layout (preloaded, fingerprinted,
+  CLS 0) and mapped to the token roles in `app/globals.css`. Never `next/font/google`, never a font file committed here.
 - The documentation of the components is **only** here: there is no public Storybook (krizaka-ui's is an internal test
   tool) — never link one.
 - Titles and descriptions of written pages: `messages/*.json` → `docs.pages.<section>.<page>`; a component page's come

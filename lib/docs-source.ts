@@ -21,6 +21,7 @@ import { DOCS_MANIFEST, type DocManifestEntry } from "@/lib/docs-manifest";
 import { OROCHIA_DOCS_MANIFEST } from "@/lib/orochia-docs-manifest";
 import { format, getDictionary, type Locale, type TranslationDictionary } from "@/lib/i18n";
 import { CATEGORIES, getKitFoundations, getRegistryItems, type ProductKit, type RegistryItem } from "@/lib/ui-registry";
+import { type Foundation, FOUNDATIONS, foundationStructuredData } from "@/lib/ui-foundations";
 
 export const DOCS_SECTIONS = ["ui", "java", "orazaka", "orochia"] as const;
 export type DocsSection = (typeof DOCS_SECTIONS)[number];
@@ -42,12 +43,15 @@ const COLLECTIONS = { ui, java, orazaka, orochia };
 /** A synced file `API_REFERENCE.md` is the page `api_reference` — the manifest's key and the old URL's slug. */
 const productSlug = (path: string) => [path.replace(/\.md$/, "").split("/").pop()!.toLowerCase()];
 
-/** What a generated component page carries: the registry item it renders (title and description are its own). */
+/** What a generated page carries: the registry item it renders (title and description are its own), or the
+    foundation it lays out from the packages' data (Typography, Icons: title and description from messages). */
 export interface ComponentPageData {
   component?: string;
   /** A page of a product kit: its overview, its foundations, or one of its components (`component`). */
   kit?: ProductKit;
   kitPage?: "overview" | "foundations" | "component";
+  /** A foundation of Krizaka UI laid out from the packages' data (Typography, Icons). */
+  foundation?: Foundation;
 }
 
 /** The pages of a product's UI section, as Fumadocs files: `ui/index`, `ui/foundations`, `ui/<component>`. */
@@ -85,6 +89,16 @@ function componentFiles(files: VirtualFile[]): VirtualFile[] {
       type: "page",
       path: pagePath(item.name),
       data: { title: item.title, description: plain(item.summary), component: item.name, structuredData: structuredData(item) } as never,
+    });
+  }
+  // The foundations generated from the packages' data (@krizaka/fonts, @krizaka/tokens, @krizaka/icons): virtual pages
+  // at /docs/ui/typography and /docs/ui/icons, placed by content/docs/ui/meta.json.
+  for (const foundation of FOUNDATIONS) {
+    if (written.has(`${foundation}.mdx`)) continue;
+    out.push({
+      type: "page",
+      path: `${foundation}.mdx`,
+      data: { title: foundation, foundation, structuredData: foundationStructuredData(foundation) } as never,
     });
   }
   const pages = CATEGORIES.flatMap((category) => {

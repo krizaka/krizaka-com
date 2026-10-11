@@ -45,7 +45,8 @@ chart.gridColor = values.dark.borderSubtle;  // "hsl(0 0% 100% / 0.06)"
 | Status | `--kz-success` · `--kz-warning` · `--kz-danger` · `--kz-info` |
 | On a media | `--kz-scrim` · `--kz-scrim-strong` · `--kz-overlay` |
 | Shape and depth | `--kz-radius-{sm,md,lg,xl,full}` · `--kz-shadow-{sm,md,lg}` |
-| Type and motion | `--kz-font-sans` · `--kz-font-display` · `--kz-font-mono` · `--kz-ease` |
+| Type | `--kz-font-display` · `--kz-font-text` (= `--kz-font-sans`) · `--kz-font-mono` · the scale `--kz-type-<step>-{size,line-height,weight,tracking}` — see [Typography](/docs/ui/typography) |
+| Motion | `--kz-ease` |
 
 Contrast is **tested**, not assumed: the package's build fails when a text role drops under its ratio on any surface,
 in either theme.

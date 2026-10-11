@@ -2762,9 +2762,11 @@
       "feedback": "Feedback",
       "data-display": "Data display",
       "media": "Media",
+      "charts": "Charts",
       "layout": "Layout",
       "foundations": "Foundations",
-      "domain services": "Domain services"
+      "domain services": "Domain services",
+      "tooling": "Tooling"
     },
     "categories": {
       "getting-started": "Getting started",
@@ -2820,8 +2822,8 @@
         "both": "Web + Mobile"
       },
       "platformsLong": {
-        "web": "Web only — React, from @krizaka/ui/{name}.",
-        "native": "Mobile only — React Native, from @krizaka/ui/native.",
+        "web": "Web only — React, from {entry}.",
+        "native": "Mobile only — React Native, from {entry}.",
         "both": "Web and mobile — the same component for React and React Native."
       },
       "status": {
@@ -2842,6 +2844,7 @@
         "feedback": "Feedback",
         "data-display": "Data display",
         "media": "Media",
+        "charts": "Charts",
         "layout": "Layout",
         "foundations": "Foundations"
       },
@@ -2901,8 +2904,8 @@
           "description": "The design system every Krizaka product is built on — tokens, a Tailwind preset and accessible React primitives."
         },
         "tokens": {
-          "title": "Tokens",
-          "description": "The --kz-* vocabulary: one set of semantic roles compiled to CSS, TypeScript and React Native."
+          "title": "Colours & tokens",
+          "description": "The --kz-* vocabulary: colours, surfaces, radii, shadows — one set of semantic roles compiled to CSS, TypeScript and React Native."
         },
         "tailwind": {
           "title": "Tailwind preset",
@@ -2911,6 +2914,14 @@
         "intl": {
           "title": "Intl",
           "description": "Money, numbers, dates and plurals formatted the same way in every Krizaka product."
+        },
+        "typography": {
+          "title": "Typography",
+          "description": "Plus Jakarta Sans speaks, Inter reads, JetBrains Mono labels: the Krizaka faces, their scale and their rules — self-hosted, web and mobile."
+        },
+        "icons": {
+          "title": "Icons",
+          "description": "The Krizaka signature icons: cut corners, a node at the core — search, copy, and the rules of use."
         }
       },
       "java": {
@@ -3046,6 +3057,74 @@
       "lead": "Each product wears Krizaka UI through its own kit: a theme of token values and the few components that carry its vocabulary — documented the same way, from their code.",
       "components": "{count} components",
       "open": "Open its UI"
+    },
+    "foundations": {
+      "source": "Generated from {packages}.",
+      "edit": "Edit in krizaka-ui",
+      "installation": "Installation",
+      "typography": {
+        "families": "The three families",
+        "scale": "The scale",
+        "rules": "Rules",
+        "licences": "Licences",
+        "roles": {
+          "display": "Display",
+          "text": "Text",
+          "mono": "Mono"
+        },
+        "why": "Why this face",
+        "use": "Use it for",
+        "avoid": "Avoid",
+        "meta": "{designer} · weights {min}–{max} · version {version}",
+        "fallback": "Until it loads: {fallback}, adjusted to its metrics (size-adjust {size}) — the text does not move.",
+        "headline": "Sovereign AI, on your own servers.",
+        "paragraph": "Your documents stay in Montréal. The answers cite their sources, the costs are counted in advance — 1 234,56 $ for 12 000 requests.",
+        "code": "POST /api/v1/chat → 200 · 0O 1lI",
+        "glyphs": "Aa Bb Gg Kk Rr Zz 0123456789 é è à ç œ « » ’ → €",
+        "step": "Step",
+        "sample": "Sample",
+        "values": "Size / line height · weight · tracking",
+        "utility": "Utility",
+        "family": "Family",
+        "web": "Web (CSS)",
+        "next": "Next.js",
+        "native": "React Native / Expo",
+        "webIntro": "Import the faces once, next to the preset: the tokens already name them.",
+        "nextIntro": "Import the CSS in the root layout — the bundler copies and fingerprints the files; the fallbacks keep CLS at 0.",
+        "nativeIntro": "Load the static files with expo-font, then take a step of the scale and the name of its face.",
+        "licenceIntro": "Every face is under the SIL Open Font License 1.1: bundle it with any software, never sell it on its own. The licences ship in the package.",
+        "licence": "Licence",
+        "upstream": "Upstream",
+        "files": "Files",
+        "web_files": "{count} WOFF2 ({size} kB for latin)",
+        "native_files": "{count} TrueType"
+      },
+      "icons": {
+        "set": "The set",
+        "search": "Search the icons",
+        "placeholder": "Search {count} icons — by name or meaning",
+        "all": "All",
+        "count": "{count} icons",
+        "none": "No icon for “{query}”. Ask for it below.",
+        "groupsLabel": "Filter by group",
+        "selected": "Selected icon",
+        "sizes": "Sizes",
+        "node": "Node colour",
+        "nodeText": "Text colour",
+        "nodeAccent": "Brand accent",
+        "copyReact": "Copy the React import",
+        "copyNative": "Copy the React Native import",
+        "copied": "Copied",
+        "grammar": "The grammar",
+        "sizeGuide": "Sizes",
+        "size": "Size",
+        "use": "Use",
+        "color": "Colour and the node",
+        "accessibility": "Accessibility",
+        "request": "Ask for an icon",
+        "requestCta": "Open an issue on krizaka-ui",
+        "installIntro": "One named export per icon, the same names on the web and in React Native."
+      }
     }
   },
   "diagrams": {

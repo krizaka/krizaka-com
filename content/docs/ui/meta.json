@@ -1,4 +1,4 @@
 {
   "title": "Krizaka UI",
-  "pages": ["index", "tokens", "tailwind", "intl", "...components"]
+  "pages": ["index", "---Foundations---", "tokens", "typography", "icons", "---Tooling---", "tailwind", "intl", "...components"]
 }
