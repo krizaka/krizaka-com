@@ -179,6 +179,9 @@
   for the one action a block is about, `secondary` for the others, `ghost` for quiet chips; the Krizaka chamfer
   (`shape="cut"`) everywhere; `lg` on a hero or a closing call, `md` in a section. `shimmer` + `magnetic` only on a
   hero's main action. No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
+- **Product heroes are `IsoHub`** (`@krizaka/ui/iso`), driven by data — Orazaka's stack under its dome, Orochia's
+  creator with the four ways fans pay converging on her; names and labels in `messages/*.json`, the light from the
+  brand (`.brand-orazaka` / `.brand-orochia`). Never an isometric drawing of the site's own.
 
 ## 4.1 The Krizaka page language
 

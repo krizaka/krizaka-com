@@ -804,7 +804,6 @@
         "eyebrow": "Être payé",
         "title": "90 % au créateur. <b>Sur chaque vente.</b>",
         "lead": "Pourboires, déblocages, enchères gagnantes et promesses de défi suivent le même partage : le créateur garde 90 %, la plateforme 10 %. Chaque mouvement est écrit une fois dans un grand livre en partie double.",
-        "share": "de chaque vente va au créateur",
         "examples": {
           "tip": "Un pourboire de <b>{gross}</b>",
           "unlock": "Un déblocage à <b>{gross}</b>",
@@ -813,7 +812,13 @@
         },
         "net": "le créateur reçoit {net}",
         "fine": "Commission de la plateforme : {fee} %. Versements dès {minimum}. Montants en dollars américains ; l'enchère gagnante est un exemple. Les paiements sont confirmés par le webhook signé du fournisseur avant tout crédit.",
-        "percent": "{value} %"
+        "percent": "{value} %",
+        "meter": {
+          "label": "Partage de chaque vente",
+          "creator": "Au créateur",
+          "platform": "À la plateforme",
+          "caption": "au créateur"
+        }
       },
       "rules": {
         "eyebrow": "Enchères · Défis",
@@ -839,7 +844,23 @@
       },
       "tourEyebrow": "La démo",
       "tourTitle": "Une journée sur Orochia, côté fan ou côté créatrice.",
-      "tourMore": "Voir toute la démo"
+      "tourMore": "Voir toute la démo",
+      "iso": {
+        "label": "Chaque soutien va au créateur",
+        "description": "Une créatrice au centre, sur sa communauté ; pourboires, déblocages, enchères et promesses de défis convergent vers elle, et {share} de chacun lui revient.",
+        "core": "Versements",
+        "highlight": "au créateur",
+        "layers": {
+          "community": "Communauté",
+          "creator": "La créatrice"
+        },
+        "satellites": {
+          "tips": "Pourboires",
+          "unlocks": "Déblocages",
+          "auctions": "Enchères",
+          "challenges": "Défis"
+        }
+      }
     },
     "openSource": {
       "steps": {
@@ -1546,6 +1567,22 @@
             "title": "Bien-être, pas thérapie",
             "body": "Journaling guidé, préparation de séance, suivi d'humeur : ce qu'une personne apporte à un professionnel, jamais à sa place. Données de santé, 30 jours au plus."
           }
+        }
+      },
+      "iso": {
+        "label": "Votre IA tourne sur vos propres serveurs",
+        "description": "Une pile de trois serveurs — passerelle, modèles, données — sous un dôme qui figure votre infrastructure ; conversations et documents entrent, les réponses sortent, et rien ne franchit le dôme.",
+        "dome": "Votre infrastructure",
+        "core": "Orchestrateur",
+        "layers": {
+          "data": "Données · Postgres + vecteurs",
+          "models": "Modèles · Ollama",
+          "gateway": "Passerelle · chaque requête vérifiée"
+        },
+        "satellites": {
+          "chats": "Conversations",
+          "documents": "Documents",
+          "answers": "Réponses"
         }
       }
     },

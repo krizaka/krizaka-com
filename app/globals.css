@@ -1545,12 +1545,14 @@ html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
 .bp-center { text-align: center; }
 .bp-center .bp-h2, .bp-center .bp-lead { margin-left: auto; margin-right: auto; }
 
-.bp-hero-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.bp-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
 @media (max-width: 960px) { .bp-hero-grid { grid-template-columns: 1fr; } }
 .bp-hero-art { width: 100%; height: auto; max-width: 560px; justify-self: center; }
 
 .bp-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .bp-center .bp-actions { justify-content: center; }
+/* On a phone the actions of a block stack at full width, the main one first: one even column of buttons. */
+@media (max-width: 560px) { .bp-actions > * { flex: 1 1 100%; } }
 
 .bp-proofs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; margin-top: 40px; list-style: none; padding: 0; }
 .bp-proof { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--kz-border-subtle);
@@ -1625,36 +1627,6 @@ a.bp-card:hover { border-color: color-mix(in srgb, var(--kz-accent) 55%, var(--k
 /* Blurred footage behind a hero (depth of field, SectionBackdrop `media`). */
 .bp-media { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6%; padding: 6% 4%; }
 
-/* Isometric illustrations (app/components/brand/Iso.tsx) */
-.iso-floor { fill: none; stroke: var(--kz-border-strong); stroke-width: .8; }
-.iso-face { stroke: color-mix(in oklab, var(--kz-accent-text) 40%, transparent); stroke-width: .8; stroke-linejoin: round; }
-.iso-base .iso-top { fill: var(--kz-surface-3); }
-.iso-base .iso-left { fill: var(--kz-surface-2); }
-.iso-base .iso-right { fill: var(--kz-surface-1); }
-.iso-base .iso-face { stroke: color-mix(in oklab, var(--kz-accent-text) 22%, var(--kz-border-default)); }
-.iso-accent .iso-top { fill: color-mix(in oklab, var(--kz-accent) 72%, var(--kz-surface-3)); }
-.iso-accent .iso-left { fill: color-mix(in oklab, var(--kz-accent) 50%, var(--kz-surface-1)); }
-.iso-accent .iso-right { fill: color-mix(in oklab, var(--kz-accent) 32%, var(--kz-surface-0)); }
-.iso-accent2 .iso-top { fill: color-mix(in oklab, var(--kz-accent-2) 70%, var(--kz-surface-3)); }
-.iso-accent2 .iso-left { fill: color-mix(in oklab, var(--kz-accent) 62%, var(--kz-surface-1)); }
-.iso-accent2 .iso-right { fill: color-mix(in oklab, var(--kz-accent-2) 40%, var(--kz-surface-0)); }
-.iso-glass .iso-face { fill: color-mix(in oklab, var(--kz-accent) 14%, var(--kz-surface-1)); fill-opacity: .9; }
-.iso-glass .iso-top { fill: color-mix(in oklab, var(--kz-accent) 10%, var(--kz-surface-2)); }
-.iso-strip { fill: none; stroke: var(--kz-accent-text); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 2 7; opacity: .85; }
-.iso-lines { stroke: var(--kz-text-secondary); stroke-width: 2; stroke-linecap: round; opacity: .6; }
-.iso-dot { fill: var(--kz-on-accent); opacity: .85; }
-.iso-node { fill: var(--kz-accent-text); }
-.iso-glow-stop { stop-color: var(--kz-accent); }
-.iso-rim { fill: color-mix(in oklab, var(--kz-accent) 6%, transparent); stroke: color-mix(in oklab, var(--kz-accent-text) 30%, transparent); stroke-width: 1; }
-.iso-dome { fill: color-mix(in oklab, var(--kz-accent) 5%, transparent); stroke: color-mix(in oklab, var(--kz-accent-text) 34%, transparent); stroke-width: 1.2; }
-.iso-flow { fill: none; stroke: var(--kz-accent-text); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 3 9; animation: iso-flow 6s linear infinite; }
-.iso-float { animation: iso-float 9s ease-in-out infinite alternate; }
-.iso-float-late { animation-delay: -4s; }
-.iso-breathe { animation: iso-breathe 5s ease-in-out infinite alternate; }
-@keyframes iso-flow { to { stroke-dashoffset: -48; } }
-@keyframes iso-float { from { transform: translateY(0); } to { transform: translateY(-8px); } }
-@keyframes iso-breathe { from { opacity: .65; } to { opacity: 1; } }
-@media (prefers-reduced-motion: reduce) { .iso-flow, .iso-float, .iso-breathe { animation: none; } }
 .bp-h1 b, .bp-h2 b { font-weight: inherit; color: var(--kz-accent-text); }
 .bp-ledger-what b { color: var(--kz-text-primary); }
 @media (max-width: 720px) { .bp-media { display: none; } }

@@ -804,7 +804,6 @@
         "eyebrow": "Get paid",
         "title": "90% to the creator. <b>On every sale.</b>",
         "lead": "Tips, unlocks, winning bids and challenge pledges all follow the same split: the creator keeps 90%, the platform 10%. Every movement is written once in a double-entry ledger.",
-        "share": "of every sale goes to the creator",
         "examples": {
           "tip": "A <b>{gross}</b> tip",
           "unlock": "A <b>{gross}</b> unlock",
@@ -813,7 +812,13 @@
         },
         "net": "creator receives {net}",
         "fine": "Platform fee {fee}%. Payouts from {minimum}. Amounts in US dollars; the winning bid is an example. Payments are confirmed by the provider's signed webhook before anyone is credited.",
-        "percent": "{value}%"
+        "percent": "{value}%",
+        "meter": {
+          "label": "Split of every sale",
+          "creator": "To the creator",
+          "platform": "To the platform",
+          "caption": "to the creator"
+        }
       },
       "rules": {
         "eyebrow": "Auctions · Challenges",
@@ -839,7 +844,23 @@
       },
       "tourEyebrow": "The demo",
       "tourTitle": "A day on Orochia, as a fan or as a creator.",
-      "tourMore": "See the whole demo"
+      "tourMore": "See the whole demo",
+      "iso": {
+        "label": "Every support flows to the creator",
+        "description": "A creator at the centre, on her community; tips, unlocks, auction bids and challenge pledges flow toward her, and {share} of each one is hers.",
+        "core": "Payouts",
+        "highlight": "to the creator",
+        "layers": {
+          "community": "Community",
+          "creator": "The creator"
+        },
+        "satellites": {
+          "tips": "Tips",
+          "unlocks": "Unlocks",
+          "auctions": "Auctions",
+          "challenges": "Challenges"
+        }
+      }
     },
     "openSource": {
       "steps": {
@@ -1546,6 +1567,22 @@
             "title": "Wellbeing, not therapy",
             "body": "Guided journaling, session preparation, mood tracking: what a person brings to a professional, never instead of one. Health data, 30 days at most."
           }
+        }
+      },
+      "iso": {
+        "label": "Your AI runs on your own servers",
+        "description": "A stack of three servers — gateway, models, data — under a dome that stands for your infrastructure; chats and documents flow in, answers flow out, and nothing crosses the dome.",
+        "dome": "Your infrastructure",
+        "core": "Orchestrator",
+        "layers": {
+          "data": "Data · Postgres + vectors",
+          "models": "Models · Ollama",
+          "gateway": "Gateway · every request checked"
+        },
+        "satellites": {
+          "chats": "Chats",
+          "documents": "Documents",
+          "answers": "Answers"
         }
       }
     },
