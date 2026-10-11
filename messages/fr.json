@@ -581,7 +581,7 @@
     "story": {
       "intro": {
         "eyebrow": "Notre histoire",
-        "title": "Trois clans. Un seul combat : ce qui est à vous reste à vous.",
+        "title": "Trois clans. Un seul combat : <b>ce qui est à vous reste à vous.</b>",
         "lead": "Krizaka est né d'un refus. Vos données ne devraient pas avoir à quitter la maison pour être utiles. Un créateur ne devrait pas laisser une fortune à une plateforme pour être payé. Et personne ne devrait avoir à croire un logiciel sur parole. Alors nous forgeons les nôtres — au grand jour, ligne par ligne — et nous leur avons donné le nom des légendes qui nous ont appris ce que coûte la confiance."
       },
       "chapters": {
@@ -721,7 +721,14 @@
         "cabinetLabel": "Krizaka · borne d'arcade",
         "coinEntry": "1 crédit = 1 histoire",
         "playerStart": "Start 1J",
-        "specialMove": "Coup spécial"
+        "specialMove": "Coup spécial",
+        "selectPrompt": "Choisissez votre clan",
+        "corner": "Dans son coin",
+        "stats": {
+          "krizaka": "Code au grand jour",
+          "orazaka": "Données gardées chez vous",
+          "orochia": "Part du créateur"
+        }
       },
       "open": {
         "label": "Étape bonus",
