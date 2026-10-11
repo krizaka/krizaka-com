@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { contactHref } from "@/lib/contact";
-import Image from "next/image";
 import { CheckIcon, CreditsIcon, ForwardIcon, ImageIcon, KnowledgeIcon, LocalIcon, NotificationIcon, PlayIcon, ShieldIcon, SoundIcon, StudioIcon } from "@krizaka/icons";
 import { Mascot } from "@krizaka/ui/mascots";
 import { OrazakaLogo } from "@krizaka/ui";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { localizedMetadata } from "@/lib/seo";
 import { getDictionary } from "@/lib/i18n";
-import { DEMO_GALLERY, DEMO_TOUR, DEMO_USE_CASES, gallerySrc, tourSrc } from "@/lib/orazaka-demo";
+import { DEMO_TOUR, DEMO_USE_CASES, tourSrc } from "@/lib/orazaka-demo";
+import MadeHereGallery from "@/app/components/demos/MadeHereGallery";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ProductTour from "@/app/components/ProductTour";
@@ -140,20 +140,7 @@ export default async function OrazakaDemoPage({ params }: Props) {
           <p className="bp-lead">{t.gallery.lead}</p>
           <p className="od-engine">{t.gallery.engine}</p>
         </div>
-        <ul className="od-gallery">
-          {DEMO_GALLERY.map(({ id, prompt }, i) => (
-            <li key={id} {...reveal(i + 1)}>
-              <figure>
-                <Image src={gallerySrc(id)} alt={t.gallery.items[id].alt} width={512} height={512} sizes="(max-width: 640px) 100vw, 300px" />
-                <figcaption>
-                  <strong>{t.gallery.items[id].use}</strong>
-                  <span className="od-prompt-label">{t.gallery.promptLabel}</span>
-                  <q lang="en">{prompt}</q>
-                </figcaption>
-              </figure>
-            </li>
-          ))}
-        </ul>
+        <MadeHereGallery t={t.gallery} />
         <aside className="od-persona" {...reveal()}>
           <strong>{t.persona.title}</strong> {t.persona.body}
         </aside>
@@ -187,13 +174,6 @@ export default async function OrazakaDemoPage({ params }: Props) {
         .od-points li { display: flex; gap: 10px; align-items: center; font-size: 14px; color: var(--kz-text-secondary); }
         .od-points svg { flex-shrink: 0; color: var(--kz-accent-text); }
         .od-engine { margin: 14px 0 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-secondary); }
-        .od-gallery { margin: 28px 0 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 16px; }
-        .od-gallery figure { margin: 0; height: 100%; display: flex; flex-direction: column; border-radius: 16px; overflow: hidden; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
-        .od-gallery img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; background: var(--kz-media); }
-        .od-gallery figcaption { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px 14px; }
-        .od-gallery strong { font-size: 14px; color: var(--kz-text-primary); }
-        .od-prompt-label { margin-top: 4px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--kz-text-secondary); }
-        .od-gallery q { font-size: 12.5px; line-height: 1.55; color: var(--kz-text-secondary); quotes: "“" "”"; }
         .od-persona { margin-top: 28px; padding: 16px 18px; border-radius: 14px; border: 1px dashed var(--kz-border-default); font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
         .od-persona strong { color: var(--kz-text-primary); }
         @media (max-width: 900px) { .od-case-flip > :first-child { order: 0; } }

@@ -1645,6 +1645,12 @@
           }
         }
       },
+      "made": {
+        "eyebrow": "Créé sur ce Mac",
+        "title": "La direction artistique, <b>sur votre propre machine.</b>",
+        "lead": "Donnez un sujet à Orazaka et choisissez une direction : la lumière, l'objectif, les matières et la palette sont réglés. FLUX.2 [klein] 4B (Apache-2.0) le rend en 1024 px sur le GPU du Mac en moins de deux minutes — et chaque image revient avec la graine qui la refait.",
+        "cta": "Voir toute la série, avec les consignes"
+      },
       "iso": {
         "label": "Votre IA tourne sur vos propres serveurs",
         "description": "Une pile de trois serveurs — passerelle, modèles, données — sous un dôme qui figure votre infrastructure ; conversations et documents entrent, les réponses sortent, et rien ne franchit le dôme.",
@@ -1821,41 +1827,68 @@
       "gallery": {
         "eyebrow": "Créé sur ce Mac",
         "title": "Généré localement. <b>Rien n'a quitté la machine.</b>",
-        "lead": "Huit visuels réalisés par le Studio image d'Orazaka sur un seul MacBook Pro (M1 Max), un à la fois, environ une minute chacun — Stable Diffusion 1.5 sur le processeur graphique du Mac. Montrés tels que générés, en 512 × 512, avec la consigne exacte envoyée.",
+        "lead": "Eric a écrit un sujet et choisi une direction artistique — éditorial lumière dorée, diorama miniature, nature morte artisanale, Montréal la nuit. Chaque image est un run de ces Studios Orazaka sur un seul MacBook Pro (M1 Max), un à la fois, moins de deux minutes chacun, sur le processeur graphique du Mac. Montrées telles que générées, avec la consigne exacte, la graine qui la refait et le temps qu'il a fallu.",
         "promptLabel": "Consigne",
-        "engine": "Stable Diffusion 1.5 · stable-diffusion.cpp sur Metal · 20 étapes · ~60 s",
+        "engine": "FLUX.2 [klein] 4B (Apache-2.0) · stable-diffusion.cpp sur Metal · 4 étapes · 1024 px",
+        "seedLabel": "graine",
+        "local": "Générée localement en {seconds} s sur un Mac — rien n'a quitté la machine.",
+        "styles": {
+          "golden": "Éditorial lumière dorée",
+          "miniature": "Diorama miniature tilt-shift",
+          "stillLife": "Nature morte artisanale",
+          "montreal": "Montréal la nuit"
+        },
         "items": {
-          "lamp": {
-            "alt": "Une lampe de table en céramique orange sur un socle clair, lumière douce de studio",
-            "use": "Photo produit pour la boutique"
+          "tea-pour": {
+            "alt": "Un homme en djellaba blanche verse le thé à la menthe de haut dans un verre sous une tente du désert, menthe et amandes sur une table patinée"
           },
-          "coffee": {
-            "alt": "Une tasse en céramique orange de café noir sur un lin texturé, vue du dessus",
-            "use": "Mise à plat pour le catalogue"
+          "mini-ironing": {
+            "alt": "Diorama miniature : deux grand-mères en caftans brodés sur un tapis berbère, l'une repasse une nappe de lin blanc, l'autre sirote un thé"
           },
-          "serum": {
-            "alt": "Un flacon compte-gouttes en verre ambré sur une surface sombre, éclairé par l'arrière",
-            "use": "Publicité cosmétique"
+          "mtl-ruelle": {
+            "alt": "Une ruelle de Montréal la nuit après la pluie, escaliers en colimaçon et néons reflétés dans les pavés mouillés"
           },
-          "interior": {
-            "alt": "Un fauteuil orange et des lampadaires dans un salon bleu nuit",
-            "use": "Catalogue déco"
+          "still-tea": {
+            "alt": "Nature morte : théière en cuivre martelé, verres ciselés, figues et dattes sur du lin dans la lumière d'une fenêtre"
           },
-          "scarf": {
-            "alt": "Une écharpe en laine orange tricotée sur un mannequin, lumière douce de studio",
-            "use": "Bannière de campagne"
+          "mini-souk": {
+            "alt": "Ruelle de souk miniature, pyramides d'épices, lanternes de laiton et un chat endormi sur un seuil bleu"
           },
-          "giftbox": {
-            "alt": "Une boîte cadeau en kraft nouée d'un ruban orange sur une table en noyer",
-            "use": "Emballage saisonnier"
+          "mtl-mont-royal": {
+            "alt": "Montréal depuis un belvédère du mont Royal à l'automne, érables pourpres et dorés"
           },
-          "glass": {
-            "alt": "Des sphères orange brillantes flottant au-dessus d'une surface bleue réfléchissante",
-            "use": "Visuel de marque"
+          "tea-hands": {
+            "alt": "Les mains d'une femme âgée ajoutent de la menthe fraîche dans une théière en argent sur un plateau de laiton, les dunes dorées derrière la tente"
           },
-          "sneaker": {
-            "alt": "Une basket blanche aux détails orange sur fond sombre",
-            "use": "Lancement produit"
+          "mini-bagels": {
+            "alt": "Boulangerie de bagels montréalaise en miniature : des boulangers sortent des bagels au sésame du four à bois"
+          },
+          "mtl-terrasse": {
+            "alt": "Une terrasse de café à Montréal au crépuscule sous les guirlandes, façades en pierre grise et balcons en fer forgé"
+          },
+          "desert-camp": {
+            "alt": "Une tente berbère au crépuscule, tapis sur le sable, bouilloire en cuivre sur les braises et deux chameaux au repos"
+          },
+          "mini-picnic": {
+            "alt": "Pique-nique miniature dans une oliveraie : un grand-père raconte une histoire aux enfants sur un tapis à motifs"
+          },
+          "mtl-snow": {
+            "alt": "Une rue résidentielle de Montréal à la première neige, la nuit, escaliers poudrés de neige"
+          },
+          "tea-glass": {
+            "alt": "Un verre de thé à la menthe dans le soleil rasant sur une table en bois, dattes et amandes à côté"
+          },
+          "still-table": {
+            "alt": "Nature morte : bols en céramique d'olives et de citrons confits, pain et branche d'olivier sur une table en chêne"
+          },
+          "mini-skating": {
+            "alt": "Parc d'hiver montréalais en miniature : des figurines patinent sur un étang gelé sous les guirlandes"
+          },
+          "mtl-jean-talon": {
+            "alt": "Un marché public couvert à la fin de l'été : cageots de tomates, maïs, bleuets et fleurs des champs"
+          },
+          "tea-friends": {
+            "alt": "Trois amis rient sur des coussins sous une tente du désert pendant qu'on sert le thé"
           }
         }
       },

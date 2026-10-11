@@ -1645,6 +1645,12 @@
           }
         }
       },
+      "made": {
+        "eyebrow": "Made on this Mac",
+        "title": "Art direction, <b>on your own machine.</b>",
+        "lead": "Give Orazaka a subject and pick a direction: the light, the lens, the materials and the palette are taken care of. FLUX.2 [klein] 4B (Apache-2.0) renders it at 1024 px on the Mac's GPU in under two minutes — and every image comes back with the seed that makes it again.",
+        "cta": "See the whole series, with their prompts"
+      },
       "iso": {
         "label": "Your AI runs on your own servers",
         "description": "A stack of three servers — gateway, models, data — under a dome that stands for your infrastructure; chats and documents flow in, answers flow out, and nothing crosses the dome.",
@@ -1821,41 +1827,68 @@
       "gallery": {
         "eyebrow": "Made on this Mac",
         "title": "Generated locally. <b>Nothing left the machine.</b>",
-        "lead": "Eight visuals made by Orazaka's image Studio on one MacBook Pro (M1 Max), one at a time, about a minute each — Stable Diffusion 1.5 running on the Mac's own GPU. Shown as generated, at 512 × 512, with the exact prompt that was sent.",
+        "lead": "Eric typed a subject and chose an art direction — golden-hour editorial, tilt-shift miniature, artisanal still life, Montreal at night. Each image is one run of those Orazaka Studios on a single MacBook Pro (M1 Max), one at a time, under two minutes each, on the Mac's own GPU. Shown as generated, with the exact prompt, the seed that makes it again and the time it took.",
         "promptLabel": "Prompt",
-        "engine": "Stable Diffusion 1.5 · stable-diffusion.cpp on Metal · 20 steps · ~60 s",
+        "engine": "FLUX.2 [klein] 4B (Apache-2.0) · stable-diffusion.cpp on Metal · 4 steps · 1024 px",
+        "seedLabel": "seed",
+        "local": "Generated locally in {seconds} s on a Mac — nothing left the machine.",
+        "styles": {
+          "golden": "Golden-hour editorial",
+          "miniature": "Tilt-shift miniature",
+          "stillLife": "Artisanal still life",
+          "montreal": "Montreal at night"
+        },
         "items": {
-          "lamp": {
-            "alt": "An orange ceramic table lamp on a pale plinth, soft studio light",
-            "use": "Shop product shot"
+          "tea-pour": {
+            "alt": "A man in a white djellaba pours mint tea from high above a glass in a desert tent, mint and almonds on a weathered table"
           },
-          "coffee": {
-            "alt": "An orange ceramic cup of black coffee on textured linen, seen from above",
-            "use": "Catalogue flat lay"
+          "mini-ironing": {
+            "alt": "Miniature diorama: two grandmother figurines in embroidered kaftans on a Berber rug, one pressing a white linen cloth, the other sipping tea"
           },
-          "serum": {
-            "alt": "An amber glass dropper bottle on a dark surface, lit from behind",
-            "use": "Cosmetics advertising"
+          "mtl-ruelle": {
+            "alt": "A Montreal back alley at night after rain, spiral staircases and neon reflected in wet cobblestones"
           },
-          "interior": {
-            "alt": "An orange armchair and floor lamps in a dark blue living room",
-            "use": "Interior catalogue"
+          "still-tea": {
+            "alt": "Still life: a hammered copper teapot, engraved tea glasses, figs and dates on linen in window light"
           },
-          "scarf": {
-            "alt": "An orange knitted wool scarf on a mannequin, soft studio light",
-            "use": "Campaign banner"
+          "mini-souk": {
+            "alt": "Miniature souk alley with pyramids of spices, brass lanterns and a cat asleep on a blue doorstep"
           },
-          "giftbox": {
-            "alt": "A kraft gift box tied with an orange ribbon on a walnut table",
-            "use": "Seasonal packaging"
+          "mtl-mont-royal": {
+            "alt": "Montreal seen from a lookout on Mount Royal in autumn, maples in crimson and gold"
           },
-          "glass": {
-            "alt": "Glossy orange spheres floating above a blue reflective surface",
-            "use": "Brand visual"
+          "tea-hands": {
+            "alt": "An elderly woman's hands add fresh mint to a silver teapot on a brass tray, dunes glowing through the tent"
           },
-          "sneaker": {
-            "alt": "A plain white sneaker with orange details on a dark background",
-            "use": "Product launch"
+          "mini-bagels": {
+            "alt": "Miniature Montreal bagel bakery: baker figurines pulling sesame bagels from a wood-fired oven"
+          },
+          "mtl-terrasse": {
+            "alt": "A Montreal café terrace at dusk under string lights, greystone facades and wrought-iron balconies"
+          },
+          "desert-camp": {
+            "alt": "A Berber tent at dusk with carpets on the sand, a copper kettle on embers and two camels resting"
+          },
+          "mini-picnic": {
+            "alt": "Miniature picnic in an olive grove: a grandfather figurine telling a story to children on a patterned rug"
+          },
+          "mtl-snow": {
+            "alt": "A Montreal residential street during the first snowfall at night, staircases dusted with snow"
+          },
+          "tea-glass": {
+            "alt": "A glass of mint tea catching the low sun on a wooden table, dates and almonds beside it"
+          },
+          "still-table": {
+            "alt": "Still life: ceramic bowls of olives and preserved lemons, bread and an olive branch on an oak table"
+          },
+          "mini-skating": {
+            "alt": "Miniature winter park in Montreal: figurines skating on a frozen pond under string lights"
+          },
+          "mtl-jean-talon": {
+            "alt": "A covered farmers' market in late summer: crates of tomatoes, corn, blueberries and wildflowers"
+          },
+          "tea-friends": {
+            "alt": "Three friends laughing on cushions in a desert tent while tea is poured"
           }
         }
       },
