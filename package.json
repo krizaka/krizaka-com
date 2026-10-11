@@ -4,15 +4,15 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "dev": "node scripts/gen-ui-docs.mjs && node scripts/gen-org-stats.mjs && next dev",
-    "build": "node scripts/gen-ui-docs.mjs --strict && node scripts/gen-org-stats.mjs && next build",
+    "dev": "node scripts/gen-ui-docs.mjs && node scripts/gen-org-stats.mjs && node scripts/gen-registry-versions.mjs && next dev",
+    "build": "node scripts/gen-ui-docs.mjs --strict && node scripts/gen-org-stats.mjs && node scripts/gen-registry-versions.mjs && next build",
     "start": "next start",
     "lint": "eslint && krizaka-i18n check messages && node scripts/gen-ui-docs.mjs --check && krizaka-ratchet",
     "ratchet": "krizaka-ratchet",
     "i18n:check": "krizaka-i18n check messages",
     "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.mjs",
     "docs:ui": "node scripts/gen-ui-docs.mjs",
-    "postinstall": "fumadocs-mdx && node scripts/gen-ui-docs.mjs"
+    "postinstall": "fumadocs-mdx && node scripts/gen-ui-docs.mjs && node scripts/gen-registry-versions.mjs"
   },
   "dependencies": {
     "@krizaka/charts": "^0.1.0",

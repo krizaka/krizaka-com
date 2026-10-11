@@ -222,7 +222,10 @@ export default async function OpenSourcePage({ params }: Props) {
   <type>pom</type>
   <scope>import</scope>
 </dependency>`}</pre>
-        <p className="os-pk-note">{format(mv.pinnedNote, { previous: KIT_PREVIOUS_VERSION, current: BOM_VERSION })}</p>
+        {/* Only while the BOM names kit modules that are not published yet (both versions read from Maven Central). */}
+        {KIT_PREVIOUS_VERSION !== BOM_VERSION && (
+          <p className="os-pk-note">{format(mv.pinnedNote, { previous: KIT_PREVIOUS_VERSION, current: BOM_VERSION })}</p>
+        )}
         <div className="os-packages">
           {MAVEN_ARTIFACTS.map((a, i) => (
             <article key={a.id} className="os-package" {...reveal(i % 3)}>

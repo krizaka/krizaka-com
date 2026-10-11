@@ -229,6 +229,7 @@ export default async function OrochiaPage({ params }: Props) {
                   id={`rules-${id}`}
                   icon={<Icon size={20} nodeColor={node} />}
                   title={t.rules[id].title}
+                  expand={b.details}
                   hook={{ label: b.trap, text: t.rules[id].trap }}
                   points={{ label: b.answer, items: [t.rules[id].body, ...t.rules[id].facts] }}
                   rule={{ bird, label: format(b.birdSays, { bird: b.birds[bird] }), text: t.rules[id].rule }}

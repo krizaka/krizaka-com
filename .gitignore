@@ -61,6 +61,8 @@ PLAN_DEPLOIEMENT.md
 
 # The organisation's figures read from GitHub at build (scripts/gen-org-stats.mjs)
 /lib/org-stats.json
+# The published versions of the packages, read from npm and Maven Central at build (scripts/gen-registry-versions.mjs)
+lib/registry-versions.json
 
 # PR captures go to Bunny Storage (scripts/pr-assets.mjs), never into the repository
 docs/screenshots/
