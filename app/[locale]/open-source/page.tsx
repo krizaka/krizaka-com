@@ -8,13 +8,17 @@ import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
-import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
+import { ProductLogo } from "@krizaka/ui";
 import { NPM_PACKAGES, npmUrl, repoUrl } from "@/lib/npm-packages";
 import { BOM_VERSION, CENTRAL_NAMESPACE_URL, KIT_PREVIOUS_VERSION, MAVEN_ARTIFACTS, centralUrl, mavenRepoUrl } from "@/lib/maven-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
-import { Card } from "@krizaka/ui/card";
 import { reveal } from "@/lib/motion";
+import { BUILDING_BLOCKS, FORUMS } from "@/lib/building-blocks";
+import BlockCard from "@/app/components/blocks/BlockCard";
+import "@/app/components/sections/sections.css";
+import { CardGrid, DiscussionCta, SectionHeading } from "@/app/components/sections";
+import { ExternalIcon } from "@krizaka/icons";
 
 /* /open-source — for developers who want to build with Krizaka's pieces: what can be reused, how
    to take it, and every public repository. The repository list comes from the generated product
@@ -45,9 +49,6 @@ const STEPS = [
   { id: "plug", icon: Plug },
 ] as const;
 
-/** The pieces most applications need first — Krizaka building blocks, reusable by any application. */
-const FEATURED = ["krizaka-users", "krizaka-notifications", "krizaka-billing", "krizaka-platform-kit"] as const;
-
 const GROUPS = [
   { id: "workspace", product: "orazaka" },
   { id: "foundation", product: "orazaka" },
@@ -63,20 +64,18 @@ const PROMISES = [
   { id: "security", icon: ShieldCheck },
 ] as const;
 
-/** First sentence of a repository description — the card stays one idea long. */
+/** First sentence of a repository description — one idea per line. */
 const short = (d: string) => (d.split(/(?<=[.:])\s/)[0] ?? d).replace(/[:.]$/, "");
 
-/** A repository: the @krizaka/ui card, as a link. */
-function RepoCard({ repo }: { repo: OrgRepository }) {
+/** A repository, one line: its name and the first sentence of its description (from the generated product data). */
+function RepoLine({ repo }: { repo: OrgRepository }) {
   return (
-    <Card.Root asChild interactive radius="lg">
+    <li>
       <a href={repo.url} target="_blank" rel="noopener noreferrer" className="os-repo">
-        <span className="os-repo-name">
-          {repo.name} <ArrowUpRight size={14} aria-hidden />
-        </span>
+        <span className="os-repo-name">{repo.name}</span>
         <span className="os-repo-desc">{short(repo.description)}</span>
       </a>
-    </Card.Root>
+    </li>
   );
 }
 
@@ -86,8 +85,7 @@ export default async function OpenSourcePage({ params }: Props) {
   const pk = getDictionary(locale).site.packages;
   const mv = getDictionary(locale).site.maven;
   const repositories = orgRepositories();
-  const byName = new Map(repositories.map((r) => [r.name, r]));
-  const blocks = repositories.filter((r) => r.product === "krizaka");
+  const w = getDictionary(locale).site.blocks;
 
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
@@ -120,51 +118,21 @@ export default async function OpenSourcePage({ params }: Props) {
         </ol>
       </section>
 
-      <section className="os-section">
-        <div {...reveal()}>
-          <p className="os-eyebrow">{t.mostReused}</p>
-          <h2 className="os-h2">{t.mostReusedTitle}</h2>
-        </div>
-        <div className="os-featured">
-          {FEATURED.map((name, i) => {
-            const repo = byName.get(name);
-            if (!repo) return null;
-            return (
-              <article key={name} className="os-feature" {...reveal(i + 1)}>
-                <p className="os-feature-repo">{name}</p>
-                <h3>{t.featured[name].title}</h3>
-                <ul>
-                  {t.featured[name].gives.map((g) => (
-                    <li key={g}>{g}</li>
-                  ))}
-                </ul>
-                <a href={repo.url} target="_blank" rel="noopener noreferrer" className="os-feature-link">
-                  {t.viewRepo} <ArrowUpRight size={14} />
-                </a>
-              </article>
-            );
-          })}
-        </div>
-      </section>
-
-      <section className="os-section" id="building-blocks">
-        <div className="os-product-head" {...reveal()}>
-          <KrizakaLogo size={40} />
-          <div>
-            <h2 className="os-h2" style={{ margin: 0 }}>{t.blocksTitle}</h2>
-          </div>
-        </div>
-        <div className="os-group" {...reveal(0, "soft")}>
-          <div className="os-group-head">
-            <h3>{t.groups.domain.title}</h3>
-            <p>{t.groups.domain.intro}</p>
-          </div>
-          <div className="os-repos">
-            {blocks.map((r) => (
-              <RepoCard key={r.name} repo={r} />
-            ))}
-          </div>
-        </div>
+      <section className="os-section" id="building-blocks" aria-labelledby="blocks-title">
+        <SectionHeading id="blocks-title" eyebrow={w.eyebrow} title={w.title} lead={w.lead} />
+        <CardGrid columns={3}>
+          {BUILDING_BLOCKS.map((block) => (
+            <BlockCard key={block.id} block={block} w={w} />
+          ))}
+        </CardGrid>
+        <DiscussionCta id="forums-title" level={3} title={w.forums.title} body={w.forums.body}>
+          <a href={FORUMS.java.url} target="_blank" rel="noopener noreferrer" className="ps-btn is-primary">
+            {w.forums.java} <ExternalIcon size={13} aria-hidden />
+          </a>
+          <a href={FORUMS.ui.url} target="_blank" rel="noopener noreferrer" className="ps-btn">
+            {w.forums.ui} <ExternalIcon size={13} aria-hidden />
+          </a>
+        </DiscussionCta>
       </section>
 
       {(["orazaka", "orochia"] as const).map((product) => (
@@ -187,11 +155,11 @@ export default async function OpenSourcePage({ params }: Props) {
                   <h3>{t.groups[group.id].title}</h3>
                   <p>{t.groups[group.id].intro}</p>
                 </div>
-                <div className="os-repos">
+                <ul className="os-repos">
                   {repos.map((r) => (
-                    <RepoCard key={r.name} repo={r} />
+                    <RepoLine key={r.name} repo={r} />
                   ))}
-                </div>
+                </ul>
               </div>
             );
           })}
@@ -297,8 +265,11 @@ export default async function OpenSourcePage({ params }: Props) {
             <a href="https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="os-btn is-primary">
               <BookOpen size={15} /> {t.contributeGuide}
             </a>
-            <Link href={contactHref("open-source", "blocks")} className="os-btn">
+            <a href={FORUMS.java.url} target="_blank" rel="noopener noreferrer" className="os-btn">
               {t.ask}
+            </a>
+            <Link href={contactHref("open-source", "blocks")} className="os-btn">
+              {t.write}
             </Link>
           </div>
         </div>
@@ -309,7 +280,7 @@ export default async function OpenSourcePage({ params }: Props) {
       <style>{`
         .os-bom { margin: 0 0 20px; padding: 14px 16px; border-radius: 14px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.6; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); color: var(--kz-text-primary); overflow-x: auto; }
         .os-maven-all { margin: 18px 0 0; }
-        .os-pk-note { max-width: 640px; margin: -8px 0 24px; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-muted); }
+        .os-pk-note { max-width: 640px; margin: -8px 0 24px; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
         .os-maven-all a { display: inline-flex; align-items: center; gap: 4px; font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
         .os-maven-all a:hover { color: var(--kz-accent); }
         .os-pk-lead { max-width: 640px; margin: -4px 0 20px; font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); }
@@ -344,18 +315,9 @@ export default async function OpenSourcePage({ params }: Props) {
           background: var(--kz-border-subtle); border: 1px solid var(--kz-border-subtle); border-radius: 20px; overflow: hidden; }
         .os-steps li { padding: 26px; background: var(--kz-surface-0); }
         .os-steps svg { color: var(--kz-accent); }
-        .os-step-n { display: block; margin-bottom: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-muted); }
+        .os-step-n { display: block; margin-bottom: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
         .os-steps h2 { margin: 12px 0 6px; font-size: 16px; font-weight: 700; }
         .os-steps p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
-
-        .os-featured { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 16px; }
-        .os-feature { display: flex; flex-direction: column; padding: 24px; border-radius: 20px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); }
-        .os-feature-repo { margin: 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); }
-        .os-feature h3 { margin: 6px 0 14px; font-size: 18px; font-weight: 700; }
-        .os-feature ul { margin: 0 0 18px; padding: 0; list-style: none; display: grid; gap: 8px; }
-        .os-feature li { position: relative; padding-left: 16px; font-size: 14px; line-height: 1.5; color: var(--kz-text-secondary); }
-        .os-feature li::before { content: ""; position: absolute; left: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--kz-accent); }
-        .os-feature-link { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--kz-accent); text-decoration: none; }
 
         .os-product-head { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-top: 8px; border-top: 1px solid var(--kz-border-subtle); padding-top: 40px; }
         .os-product-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 13px; color: var(--kz-text-secondary); text-decoration: none; }
@@ -364,11 +326,11 @@ export default async function OpenSourcePage({ params }: Props) {
         @media (max-width: 760px) { .os-group { grid-template-columns: 1fr; gap: 12px; } }
         .os-group-head h3 { margin: 0; font-size: 15px; font-weight: 700; }
         .os-group-head p { margin: 4px 0 0; font-size: 13px; line-height: 1.55; color: var(--kz-text-muted); }
-        .os-repos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; }
-        .os-repo { gap: 6px; padding: 14px 16px; text-decoration: none; }
-        .os-repo-name { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; }
-        .os-repo-name svg { color: var(--kz-text-muted); flex-shrink: 0; }
-        .os-repo-desc { font-size: 13px; line-height: 1.55; color: var(--kz-text-secondary); }
+        .os-repos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 2px 20px; }
+        .os-repo { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; text-decoration: none; border-bottom: 1px solid var(--kz-border-subtle); }
+        .os-repo-name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--kz-text-primary); }
+        .os-repo:hover .os-repo-name { color: var(--kz-accent); }
+        .os-repo-desc { font-size: 12.5px; line-height: 1.5; color: var(--kz-text-muted); }
 
         .os-promises { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 24px; padding-top: 40px; border-top: 1px solid var(--kz-border-subtle); }
         .os-promises svg { color: var(--kz-accent); }

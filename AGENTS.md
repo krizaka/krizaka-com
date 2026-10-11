@@ -126,6 +126,23 @@
 - Mermaid is a **print/fallback only** for diagrams written inside synced docs — drawn natively by
   mermaid.js at a readable size (wider than the column → it scrolls, never shrinks).
 
+## 4.1 The Krizaka page language
+
+- A page that **argues** (a product, a block, a decision, a promise) is built from `app/components/sections`
+  (`import { … } from "@/app/components/sections"`, styles in `sections.css`, classes `ps-*`), first used by
+  `/open-source` and `/open-source/<block>`:
+  - `PageHero` — sub-page first screen: back link, eyebrow, h1, lead, the page's bird. Painted at once, no reveal.
+  - `SectionHeading` (eyebrow · h2 · lead) and `ContentSection` (a hairline above = the transition, an h2, content).
+  - `CardGrid` + `ArgumentCard` — cards that argue: icon, title, mono meta, labelled points in order (the trap → what
+    it does), an optional `MascotRule`, a "why/how" link and secondary actions.
+  - `MascotRule` — a rule told by a bird (`inline` in a card, `callout` in a section). The bird carries a promise, never
+    decoration: the falcon watches (security), the owl reads (documents), the duck builds (code), the flamingo answers or
+    gets paid, the pigeon delivers. One bird per idea, birds from `@krizaka/ui/mascots` only.
+  - `DecisionList` — chose · refused · because · what it costs; `CodeSample` — file name, code that scrolls, copy;
+    `ActionLinks` and `DiscussionCta` — discuss · propose · report, where to talk back.
+- Words come from `messages/*.json`; data modules keep links and code. The first section under a `PageHero` is on a
+  phone's first screen: no `reveal` there (LCP). Anything generic enough for a product goes to krizaka-ui, not here.
+
 ## 5. Code conventions
 
 - TypeScript, App Router. UI in `app/components/`, logic/data access in `lib/`.

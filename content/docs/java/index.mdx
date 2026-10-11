@@ -16,7 +16,7 @@ real PostgreSQL and RabbitMQ. Everything is published on Maven Central under `co
     <dependency>
       <groupId>com.krizaka</groupId>
       <artifactId>krizaka-bom</artifactId>
-      <version>0.1.0</version>
+      <version>0.2.0</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -34,6 +34,10 @@ real PostgreSQL and RabbitMQ. Everything is published on Maven Central under `co
   </dependency>
 </dependencies>
 ```
+
+> **Users, notifications and billing:** BOM 0.2.0 manages them at 0.2.0, which is not on Maven Central yet (November).
+> Until BOM 0.3.0, declare them with `<version>0.1.0</version>` ([krizaka-build#11](https://github.com/krizaka/krizaka-build/issues/11)).
+> Why each block is built the way it is: [krizaka.com/open-source](/open-source#building-blocks).
 
 A starter is a POM: the kit module and the Spring Boot starters the capability needs. A product declares
 **capabilities**, never the Spring list behind them.
