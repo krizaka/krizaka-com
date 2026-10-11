@@ -6,6 +6,8 @@ import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import { DOCS_SECTIONS, getPageTree, type DocsSection } from "@/lib/docs-source";
 import { asLocale, getDictionary } from "@/lib/i18n";
+// The product kits' themes as scopes (generated from their registries): the live examples of /docs/<product>/ui.
+import "@/app/components/docs/kit-themes.css";
 
 export const dynamicParams = false;
 
@@ -40,7 +42,8 @@ export default async function DocsSectionLayout({ children, params }: { children
         tabs={tabs}
         nav={{ title: t.hub.kicker, url: `/${locale}/docs` }}
         themeSwitch={{ enabled: false }}
-        containerProps={{ className: "kz-docs", style: { "--fd-banner-height": "var(--kz-docs-top)" } as CSSProperties }}
+        // A product's documentation wears its brand (@krizaka/tokens/brands/scoped.css), like its product pages.
+        containerProps={{ className: section === "orazaka" || section === "orochia" ? "kz-docs brand-" + section : "kz-docs", style: { "--fd-banner-height": "var(--kz-docs-top)" } as CSSProperties }}
       >
         {children}
       </DocsLayout>

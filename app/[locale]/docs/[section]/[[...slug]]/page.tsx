@@ -6,6 +6,8 @@ import ArchitectureDocDiagram from "@/app/components/docs/ArchitectureDocDiagram
 import { getMdxComponents } from "@/app/components/docs/mdx";
 import { ProductDocsIndex } from "@/app/components/docs/ProductDocsIndex";
 import { ComponentDoc, componentToc } from "@/app/components/docs/ComponentDoc";
+import { KitFoundations, foundationsToc } from "@/app/components/docs/KitFoundations";
+import { KitOverview, overviewToc } from "@/app/components/docs/KitOverview";
 import { InlineCode } from "@/app/components/docs/InlineCode";
 import { getRegistryItem } from "@/lib/ui-registry";
 import {
@@ -13,6 +15,7 @@ import {
   DOCS_SECTIONS,
   getSource,
   isProductSection,
+  isPublished,
   pageKey,
   pageText,
   PRODUCT_MANIFESTS,
@@ -31,7 +34,7 @@ export function generateStaticParams({ params }: { params: { locale: string; sec
   const section = params.section as DocsSection;
   const slugs = getSource(section, asLocale(params.locale))
     .getPages()
-    .filter((page) => !isProductSection(section) || pageKey(page.slugs) in PRODUCT_MANIFESTS[section])
+    .filter((page) => isPublished(section, page))
     .map((page) => ({ slug: page.slugs }));
   // A product section's home is its catalogue: the synced docs have no index file.
   return isProductSection(section) ? [{ slug: [] }, ...slugs] : slugs;
@@ -45,7 +48,7 @@ async function resolve(params: Props["params"]) {
   const t = getDictionary(locale);
   if (isProductSection(section) && slug.length === 0) return { locale, section, slug, t, page: null };
   const page = getSource(section, locale).getPage(slug);
-  if (!page || (isProductSection(section) && !(pageKey(page.slugs) in PRODUCT_MANIFESTS[section]))) notFound();
+  if (!page || !isPublished(section, page)) notFound();
   return { locale, section, slug, t, page };
 }
 
@@ -78,8 +81,45 @@ export default async function DocsSectionPage({ params }: Props) {
 
   const { title, description } = pageText(section, page, t);
 
+  // The UI section of a product: generated from its kit's registry.
+  const { kit, kitPage, component } = page.data as ComponentPageData;
+  if (kit && kitPage === "overview") {
+    return (
+      <DocsPage toc={overviewToc(kit, t)}>
+        <DocsTitle>{title}</DocsTitle>
+        <DocsDescription>{description}</DocsDescription>
+        <DocsBody>
+          <KitOverview kit={kit} locale={locale} />
+        </DocsBody>
+      </DocsPage>
+    );
+  }
+  if (kit && kitPage === "foundations") {
+    return (
+      <DocsPage toc={foundationsToc(kit, t)}>
+        <DocsTitle>{title}</DocsTitle>
+        <DocsDescription>{description}</DocsDescription>
+        <DocsBody>
+          <KitFoundations kit={kit} locale={locale} />
+        </DocsBody>
+      </DocsPage>
+    );
+  }
+  if (kit && component) {
+    return (
+      <DocsPage toc={componentToc(component, t, false, kit)}>
+        <DocsTitle>{title}</DocsTitle>
+        <DocsDescription>
+          <InlineCode text={getRegistryItem(component, kit).summary} />
+        </DocsDescription>
+        <DocsBody>
+          <ComponentDoc name={component} locale={locale} kit={kit} />
+        </DocsBody>
+      </DocsPage>
+    );
+  }
+
   // A component of @krizaka/ui: generated from the registry; an enrichment MDX, if any, becomes its notes.
-  const component = (page.data as ComponentPageData).component;
   if (component) {
     const Notes = "body" in page.data ? page.data.body : undefined;
     return (

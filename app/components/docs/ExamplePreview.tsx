@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import Image from "next/image";
 import { ServerCodeBlock } from "fumadocs-ui/components/codeblock.rsc";
-import { exampleKey, exampleSource, type RegistryExample } from "@/lib/ui-registry";
+import { exampleKey, exampleSource, type Kit, type RegistryExample } from "@/lib/ui-registry";
 import { UI_EXAMPLES, type UiExampleKey } from "@/lib/ui-examples";
 import { format, getDictionary, type Locale } from "@/lib/i18n";
 import { PreviewFrame } from "./PreviewFrame";
@@ -12,15 +12,16 @@ const THEMES = { "light": "github-light", "dark": "github-dark" } as const; // q
 
 /* A named example of @krizaka/ui, live: the compiled example of the package rendered in place, its source (exactly
    what is rendered) in a copyable code block, and a dark/light switch on the frame only. Server Component: the source
-   is read at build time from the installed package. */
-export async function ExamplePreview({ title, example, locale }: { title: string; example: RegistryExample; locale: Locale }) {
+   is read at build time from the installed package. An example of a product kit renders on a stage that wears the
+   kit's theme (`.kz-kit-<product>`, app/components/docs/kit-themes.css, generated from the kit's foundations). */
+export async function ExamplePreview({ title, example, locale, kit = "ui" }: { title: string; example: RegistryExample; locale: Locale; kit?: Kit }) {
   const load = UI_EXAMPLES[exampleKey(example) as UiExampleKey];
   const t = getDictionary(locale).docs.preview;
   const code = <ServerCodeBlock code={exampleSource(example)} lang="tsx" themes={THEMES} />;
   if (!load) return code;
   const { default: Example } = await load();
   return (
-    <PreviewFrame label={format(t.label, { name: `${title} — ${example.title}` })} code={code}>
+    <PreviewFrame label={format(t.label, { name: `${title} — ${example.title}` })} code={code} stageClassName={kit === "ui" ? "" : cn("kz-kit-scope", "kz-kit-" + kit)}>
       <Example />
     </PreviewFrame>
   );
