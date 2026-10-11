@@ -1,6 +1,7 @@
 "use client";
 
-/* Open source at a glance — figures come from the generated repository data (server-side). */
+/* Open source at a glance — figures come from the generated repository data and the organisation count read from
+   GitHub at build (lib/org-stats.ts), passed by the server page. */
 
 import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
@@ -9,11 +10,11 @@ import { format } from "@krizaka/i18n";
 import { reveal } from "@/lib/motion";
 import CountUp from "../motion/CountUp";
 
-export default function OpenSourceSection({ orazakaRepos, orochiaRepos }: { orazakaRepos: number; orochiaRepos: number }) {
+export default function OpenSourceSection({ orazakaRepos, orochiaRepos, publicRepositories }: { orazakaRepos: number; orochiaRepos: number; publicRepositories: number }) {
   const { t, locale } = useI18n();
   const o = t.site.home.openSource;
   const stats = [
-    { value: orazakaRepos + orochiaRepos, label: o.repos },
+    { value: publicRepositories, label: o.repos },
     { value: "Apache-2.0", label: o.license },
     { value: "CI", label: o.ci },
   ];

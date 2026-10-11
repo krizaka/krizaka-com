@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
 import { orgRepositories } from "@/lib/org-data";
+import { publicRepositoryCount } from "@/lib/org-stats";
 import TopNavBar from "../components/TopNavBar";
 import OrgHero from "../components/home/OrgHero";
 import ProductsShowcase from "../components/home/ProductsShowcase";
@@ -33,18 +34,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 /* HOME — the organisation first: who we are, our two products, our know-how, our open source. */
-export default function Home() {
+export default async function Home({ params }: Props) {
+  const { locale } = await params;
   const repositories = orgRepositories();
   const orazaka = repositories.filter((r) => r.product === "orazaka").length;
   const orochia = repositories.filter((r) => r.product === "orochia").length;
+  const publicRepositories = publicRepositoryCount();
   return (
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
       <TopNavBar />
-      <OrgHero repositoryCount={repositories.length} />
+      <OrgHero locale={locale} repositoryCount={publicRepositories} />
       <ProductsShowcase />
       <StoryTeaser />
       <ExpertiseSection />
-      <OpenSourceSection orazakaRepos={orazaka} orochiaRepos={orochia} />
+      <OpenSourceSection orazakaRepos={orazaka} orochiaRepos={orochia} publicRepositories={publicRepositories} />
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta />
       </SectionBackdrop>

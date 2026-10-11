@@ -464,7 +464,8 @@
           "aux raccourcis."
         ],
         "sub": "Vos données restent chez vous. Vos créateurs sont payés. Votre code reste le vôtre. Nous construisons, en open source, les logiciels qui n'ont pas le droit de casser — {count} dépôts publics, à lire ligne par ligne.",
-        "cta": "Découvrir les produits"
+        "cta": "Découvrir les produits",
+        "scroll": "Voir ce que nous construisons"
       },
       "products": {
         "title": "Produits",
