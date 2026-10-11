@@ -62,3 +62,4 @@ PLAN_DEPLOIEMENT.md
 # PR captures go to Bunny Storage (scripts/pr-assets.mjs), never into the repository
 docs/screenshots/
 .github/pr-assets/
+.github/screenshots/

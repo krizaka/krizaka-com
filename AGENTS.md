@@ -159,7 +159,8 @@
   printed, never committed. The upload fails if the pull zone does not serve the first file publicly.
 - `node scripts/pr-assets.mjs rewrite <file> --repo <repo> [--write]` turns links to a committed
   `docs/screenshots/<key>/…` folder into the CDN URLs of the same key (migration of old PR bodies).
-- `docs/screenshots/` and `.github/pr-assets/` are git-ignored; keep captures in a scratch folder.
+- `docs/screenshots/`, `.github/pr-assets/` and `.github/screenshots/` are git-ignored (the old committed captures
+  were moved to Bunny with their PR bodies rewritten); keep captures in a scratch folder.
 
 ## 6. Definition of done
 
