@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [main, master]
 
+# Read-only token: the build only reads public data (the org's repository count).
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
