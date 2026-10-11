@@ -110,8 +110,9 @@ export const isDocsActive = (link: DocsNavLink, pathname: string) =>
 export const isDocsSection = (pathname: string) =>
   pathname === NAV_DOCS_HUB || pathname.startsWith(`${NAV_DOCS_HUB}/`) || NAV_DOCS.some((d) => isDocsActive(d, pathname));
 
-/** The documentation set `pathname` (locale-less) belongs to, for the bar's breadcrumb. */
-export const docsSectionOf = (pathname: string) => NAV_DOCS.find((d) => isDocsActive(d, pathname));
+/** The documentation entry `pathname` (locale-less) belongs to — the most specific one (the CLI inside Orazaka's docs). */
+export const docsSectionOf = (pathname: string) =>
+  NAV_DOCS.filter((d) => isDocsActive(d, pathname)).sort((a, b) => b.href.length - a.href.length)[0];
 
 /** True when `pathname` (locale-less) is this link's page — anchors (#…) never mark a link active. */
 export function isNavActive(link: NavLink, pathname: string): boolean {

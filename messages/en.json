@@ -330,7 +330,8 @@
       "breadcrumb": "Breadcrumb",
       "searchAria": "Search the site",
       "githubAria": "Krizaka on GitHub",
-      "preferences": "Preferences"
+      "preferences": "Preferences",
+      "mainAria": "Main navigation"
     },
     "nav": {
       "orazaka": {
