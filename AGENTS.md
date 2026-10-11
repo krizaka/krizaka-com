@@ -39,16 +39,27 @@
 
 ## 2.1 Products are presented the same way
 
-- `lib/nav.ts` is the single source of the product navigation: the desktop Products panel, the mobile
-  panel, the footer and the home spotlights all render it. Every product exposes the same four
-  entries in the same order (overview · how it works · demo · signature); documentation lives under **Docs**
-  (`NAV_DOCS`: Orazaka, CLI, Orochia, Krizaka UI, Krizaka Java — the one entry point of every documentation; the CLI
-  entry is a direct link to the generated `/docs/orazaka/cli`, also in the footer and the ⌘K search). A product
-  page may still link its documentation in context.
-- The desktop Products panel stays compact (~440 px): one row per product (mark · name · tagline → its overview),
-  its three other entries in plain text under it, no per-link icons or subtitles, and only "All products" below —
-  Our story, Open source and Contact are already in the bar (the mobile accordion lists them). Menus are keyboard
-  operable (Enter/↓ opens, ↑/↓ · Home/End walk, Escape closes and returns focus, Tab out closes) with a visible ring.
+- `lib/nav.ts` is the single source of the navigation: the desktop bar (`TopNavBar` · `ProductsMenu`), the mobile
+  panel, the footer, the ⌘K search and the home spotlights all render it. Every product exposes the same four
+  entries in the same order (overview · how it works · demo · signature), each with a label and a short line
+  (`site.nav.<product>.links.<id>.{label,desc}`); documentation lives under **Docs** (`NAV_DOCS`: Orazaka, CLI, Orochia,
+  Krizaka UI, Krizaka Java — the one entry point of every documentation, also listed by the ⌘K search and the footer's
+  Documentation column; the CLI entry is a direct link to the generated `/docs/orazaka/cli`). A product page may still link its documentation in context.
+- **The bar.** Left: the mark · **Products** (the bar's only menu) · Open source · Our story (`NAV_BAR_LINKS`), under
+  one indicator that glides to the hovered/focused item and rests on the current page's. Right: Search ⌘K · **Docs**
+  (a plain link to the hub `/docs`, never a menu — it never covers Products) · GitHub · theme · language · Contact
+  us. Under `/docs` the left group becomes a breadcrumb (Docs / <set>, `docsSectionOf`): the sets are switched from
+  the documentation's own sidebar, never from a second menu. The floating bar condenses on scroll (lower, denser).
+- **The Products panel** (~640 px, anchored under its trigger, kept inside the viewport) has two columns: on the left
+  the products (mark · name · tagline, the selected one marked in its brand colour; the current page's product is
+  selected when it opens) and "All products"; on the right the selected product's four entries as real targets —
+  `@krizaka/icons` icon, label, one short line, never truncated. Hover or focus selects a product. Keyboard:
+  Enter/Space/↓ on the trigger opens on the selected product; ↑/↓ change product (Home/End jump), → enters its
+  entries, ↑/↓ walk them, ← returns; Escape closes and returns the focus; Tab out closes; `aria-expanded`, a visible
+  ring, `prefers-reduced-motion` honoured. The panel's links mount on first open (no prefetch of hidden links).
+- **Mobile**: one panel, every destination once — Products (an accordion per product whose entries are readable:
+  icon, label, short line, ≥ 44 px targets) and All products, Docs (NAV_DOCS + the hub), Open source, Our story, then
+  Contact us, theme and language.
 - Each product wears its brand (`@krizaka/tokens/brands/scoped.css`): `/products/orazaka*` under `.brand-orazaka`
   (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), the rest of the site Krizaka (ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); sections use `SectionBackdrop`
