@@ -8,6 +8,8 @@ import { DOCS_SECTIONS, getPageTree, type DocsSection } from "@/lib/docs-source"
 import { asLocale, getDictionary } from "@/lib/i18n";
 // The product kits' themes as scopes (generated from their registries): the live examples of /docs/<product>/ui.
 import "@/app/components/docs/kit-themes.css";
+// The CLI reference's replay, journey and command explorer (/docs/orazaka/cli).
+import "@/app/components/docs/cli/cli.css";
 
 export const dynamicParams = false;
 

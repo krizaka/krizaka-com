@@ -16,6 +16,8 @@ export interface CatalogEntry {
   status: Status;
   category: Category;
   href: string;
+  /** A line under the summary: what a kit's component is built on. */
+  note?: string;
 }
 
 type Filter = "all" | Platform;
@@ -68,6 +70,7 @@ export function CatalogFilter({ entries, groups }: { entries: CatalogEntry[]; gr
                       <span className="kz-catalog-card-text">
                         <InlineCode text={entry.summary} />
                       </span>
+                      {entry.note && <span className="kz-related-kit">{entry.note}</span>}
                       <span className="kz-catalog-card-foot">
                         <span className="kz-chip-meta" data-tone="accent">
                           <Icon aria-hidden />

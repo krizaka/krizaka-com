@@ -7,6 +7,9 @@ import { EventSchema } from "./EventSchema";
 import { ComingSoon } from "./ComingSoon";
 import { DocVideo } from "./DocVideo";
 import { paragraphVideo } from "@/lib/doc-video";
+import { CliCommands } from "./cli/CliCommands";
+import { CliJourney } from "./cli/CliJourney";
+import { CliReplay } from "./cli/CliReplay";
 import { PRODUCT_MANIFESTS, isProductSection, type DocsSection } from "@/lib/docs-source";
 import type { Locale } from "@/lib/i18n";
 import { resolveDocHref } from "@/lib/doc-links";
@@ -41,6 +44,10 @@ export function getMdxComponents(locale: Locale, section: DocsSection): MDXCompo
     ),
     SequenceDiagram: ({ source }: { source: string }) => <SequenceDiagram source={source} product={SECTION_PRODUCT[section]} locale={locale} />,
     StateDiagram: ({ source }: { source: string }) => <StateDiagram source={source} product={SECTION_PRODUCT[section]} locale={locale} />,
+    // The CLI blocks of the synced CLI.md (Orazaka): drawn from architecture.json · cli and the recorded session.
+    CliReplay: () => <CliReplay locale={locale} />,
+    CliJourney: () => <CliJourney locale={locale} />,
+    CliCommands: () => <CliCommands locale={locale} />,
     ComponentCatalog: () => <ComponentCatalog locale={locale} />,
     ProductKits: () => <ProductKits locale={locale} />,
     EventSchema: (props: Omit<ComponentProps<typeof EventSchema>, "locale">) => <EventSchema {...props} locale={locale} />,

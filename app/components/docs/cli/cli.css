@@ -1,0 +1,325 @@
+/* The CLI reference of /docs/orazaka/cli (CliReplay, CliJourney, CliExplorer): tokens only, both themes, one column at
+   phone width. The accent is the page's brand (.brand-orazaka). Motion: the replay's own (@krizaka/ui TerminalReplay). */
+
+/* ── The replay ─────────────────────────────────────────────────── */
+.kz-cli-replay {
+  margin: 1.5rem 0 2rem;
+}
+.kz-cli-replay .kz-replay {
+  box-shadow: var(--kz-shadow-lg);
+}
+.kz-cli-caption {
+  margin-top: 0.625rem;
+  color: var(--kz-text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* ── The journey: three commands, their phases ───────────────────── */
+.kz-cli-journey {
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0 2rem;
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
+  counter-reset: none;
+}
+.kz-cli-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  border: 1px solid var(--kz-border-default);
+  border-radius: 14px;
+  background: var(--kz-surface-1);
+}
+.kz-cli-step::before {
+  /* The rail of the brand accent: the order of the journey, read at a glance. */
+  content: "";
+  position: absolute;
+  inset: 12px auto 12px -1px;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--kz-accent);
+}
+.kz-cli-step-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.kz-cli-step-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: var(--kz-accent-soft);
+  color: var(--kz-accent-text);
+}
+.kz-cli-step-n {
+  color: var(--kz-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.kz-cli-step-run {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 8px 8px 12px;
+  border: 1px solid var(--kz-border-subtle);
+  border-radius: 10px;
+  background: var(--kz-surface-0);
+}
+.kz-cli-step-command {
+  font-family: var(--kz-font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--kz-text-primary);
+  overflow-wrap: anywhere;
+}
+.kz-cli-step-text {
+  margin: 0;
+  color: var(--kz-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.kz-cli-phases {
+  list-style: none;
+  padding: 0;
+  margin: 2px 0 0;
+  display: grid;
+  gap: 6px;
+}
+.kz-cli-phases li {
+  display: grid;
+  grid-template-columns: 15px 1.5rem 1fr;
+  align-items: start;
+  gap: 8px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--kz-text-primary);
+}
+.kz-cli-phases li > svg {
+  margin-top: 2px;
+  color: var(--kz-accent-text);
+}
+.kz-cli-phases li[data-optional] {
+  color: var(--kz-text-secondary);
+}
+.kz-cli-phase-id {
+  font-family: var(--kz-font-mono);
+  font-size: 0.75rem;
+  color: var(--kz-text-secondary);
+  padding-top: 1px;
+}
+.kz-cli-phase-detail {
+  grid-column: 3;
+  font-size: 0.75rem;
+  color: var(--kz-text-secondary);
+}
+.kz-cli-launched {
+  margin: 4px 0 0;
+  color: var(--kz-text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.kz-cli-processes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.kz-cli-processes li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 8px;
+  border: 1px solid var(--kz-border-subtle);
+  border-radius: 999px;
+  background: var(--kz-surface-2);
+  font-family: var(--kz-font-mono);
+  font-size: 0.75rem;
+}
+.kz-cli-process-name {
+  color: var(--kz-text-primary);
+  font-weight: 600;
+}
+.kz-cli-process-port {
+  color: var(--kz-text-secondary);
+}
+
+/* ── The explorer: chips, then the chosen command ────────────────── */
+.kz-cli-explorer {
+  margin: 1.25rem 0 0.75rem;
+  display: grid;
+  gap: 12px;
+}
+.kz-cli-explorer-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.kz-cli-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 16rem;
+  max-width: 24rem;
+  padding: 0 12px;
+  height: 38px;
+  border: 1px solid var(--kz-border-default);
+  border-radius: 10px;
+  background: var(--kz-surface-1);
+  color: var(--kz-text-secondary);
+}
+.kz-cli-search:focus-within {
+  border-color: var(--kz-accent);
+  box-shadow: 0 0 0 3px var(--kz-ring-halo, var(--kz-accent-soft));
+}
+.kz-cli-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--kz-text-primary);
+  font-size: 0.875rem;
+}
+.kz-cli-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.kz-cli-chips button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--kz-border-default);
+  border-radius: 999px;
+  background: var(--kz-surface-1);
+  color: var(--kz-text-primary);
+  font-family: var(--kz-font-mono);
+  font-size: 0.8125rem;
+  cursor: pointer;
+  transition: border-color var(--kz-duration-fast, 150ms) var(--kz-ease, ease), background var(--kz-duration-fast, 150ms) var(--kz-ease, ease);
+}
+.kz-cli-chips button:hover {
+  border-color: var(--kz-border-strong);
+  background: var(--kz-surface-2);
+}
+.kz-cli-chips button[aria-pressed="true"] {
+  border-color: var(--kz-accent);
+  background: var(--kz-accent-soft);
+  color: var(--kz-accent-text);
+  font-weight: 600;
+}
+.kz-cli-chips button:focus-visible {
+  outline: 2px solid var(--kz-ring);
+  outline-offset: 2px;
+}
+.kz-cli-chip-count {
+  min-width: 1.25rem;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--kz-surface-3);
+  color: var(--kz-text-secondary);
+  font-size: 0.6875rem;
+  text-align: center;
+}
+.kz-cli-panel {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--kz-border-default);
+  border-radius: 14px;
+  background: var(--kz-surface-1);
+}
+.kz-cli-cmd {
+  display: grid;
+  gap: 8px;
+}
+.kz-cli-cmd[data-nested] {
+  padding: 12px 0 0 14px;
+  border-top: 1px solid var(--kz-border-subtle);
+  border-left: 2px solid var(--kz-accent-soft);
+}
+.kz-cli-cmd-usage {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+}
+.kz-cli-cmd-usage code {
+  font-family: var(--kz-font-mono);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--kz-text-primary);
+  overflow-wrap: anywhere;
+}
+.kz-cli-cmd-text {
+  margin: 0;
+  color: var(--kz-text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.kz-cli-cmd-meta {
+  margin: 0;
+  color: var(--kz-text-secondary);
+  font-family: var(--kz-font-mono);
+  font-size: 0.75rem;
+}
+.kz-cli-flags {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+.kz-cli-flags > div {
+  display: grid;
+  grid-template-columns: minmax(9rem, 13rem) 1fr;
+  gap: 4px 14px;
+  padding: 6px 0;
+  border-top: 1px dashed var(--kz-border-subtle);
+  font-size: 0.8125rem;
+}
+.kz-cli-flags dt code {
+  font-family: var(--kz-font-mono);
+  color: var(--kz-accent-text);
+  overflow-wrap: anywhere;
+}
+.kz-cli-flags dd {
+  margin: 0;
+  color: var(--kz-text-primary);
+  line-height: 1.5;
+}
+.kz-cli-default {
+  margin-left: 8px;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: var(--kz-surface-3);
+  color: var(--kz-text-secondary);
+  font-family: var(--kz-font-mono);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+.kz-cli-none {
+  color: var(--kz-text-secondary);
+}
+@media (max-width: 40rem) {
+  .kz-cli-flags > div {
+    grid-template-columns: 1fr;
+  }
+}

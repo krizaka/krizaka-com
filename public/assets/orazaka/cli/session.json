@@ -1,0 +1,747 @@
+{
+  "package": "@krizaka/orazaka-cli",
+  "version": "1.0.0",
+  "recordedAt": "2026-10-11",
+  "steps": [
+    {
+      "command": "npx orazaka install --yes",
+      "output": [
+        {
+          "text": "┌  🥷 Orazaka Setup Wizard",
+          "tone": "muted"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◇  Phase 1 — Tool Verification",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◇  Tool Status Report ───────────────╮",
+          "tone": "success"
+        },
+        {
+          "text": "│                                    │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  🐳 Infrastructure                 │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ Docker             29.6.2     │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ Docker Compose     5.3.1      │",
+          "tone": "muted"
+        },
+        {
+          "text": "│                                    │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  ⚙️  Runtime                       │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ Java 21            21.0.6     │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ Node.js            22.23.3    │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ Python 3           3.14.5     │",
+          "tone": "muted"
+        },
+        {
+          "text": "│                                    │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  🤖 AI Engines                     │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ Ollama             installed  │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ LocalAI            4.3.1      │",
+          "tone": "muted"
+        },
+        {
+          "text": "│                                    │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  🎬 Media Processing               │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ FFmpeg             8.1.1      │",
+          "tone": "muted"
+        },
+        {
+          "text": "│                                    │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  🔧 Build Tools                    │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    ✔ Git                2.54.0     │",
+          "tone": "muted"
+        },
+        {
+          "text": "│                                    │",
+          "tone": "muted"
+        },
+        {
+          "text": "│                                    │",
+          "tone": "muted"
+        },
+        {
+          "text": "├────────────────────────────────────╯",
+          "tone": "muted"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◆  All critical tools are available ✔",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◇  Workspace — no Orazaka workspace here",
+          "tone": "success"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/krizaka-build.git ~/projects/orazaka/krizaka/krizaka-build"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/krizaka/krizaka-build'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/krizaka-platform-kit.git ~/projects/orazaka/krizaka/krizaka-platform-kit"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/krizaka/krizaka-platform-kit'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/krizaka-users.git ~/projects/orazaka/krizaka/krizaka-users"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/krizaka/krizaka-users'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/krizaka-notifications.git ~/projects/orazaka/krizaka/krizaka-notifications"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/krizaka/krizaka-notifications'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/krizaka-billing.git ~/projects/orazaka/krizaka/krizaka-billing"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/krizaka/krizaka-billing'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-build.git ~/projects/orazaka/orazaka-libs/orazaka-build"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-libs/orazaka-build'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-contracts.git ~/projects/orazaka/orazaka-libs/orazaka-contracts"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-libs/orazaka-contracts'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-studio.git ~/projects/orazaka/orazaka-apps/services/orazaka-studio"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/services/orazaka-studio'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-ai-engine.git ~/projects/orazaka/orazaka-libs/orazaka-ai-engine"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-libs/orazaka-ai-engine'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-conversation-service.git ~/projects/orazaka/orazaka-apps/services/orazaka-conversation-service"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/services/orazaka-conversation-service'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-job-service.git ~/projects/orazaka/orazaka-apps/services/orazaka-job-service"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/services/orazaka-job-service'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-knowledge-service.git ~/projects/orazaka/orazaka-apps/services/orazaka-knowledge-service"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/services/orazaka-knowledge-service'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-automation-service.git ~/projects/orazaka/orazaka-apps/services/orazaka-automation-service"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/services/orazaka-automation-service'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-edge.git ~/projects/orazaka/orazaka-apps/services/orazaka-edge"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/services/orazaka-edge'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-worker-media.git ~/projects/orazaka/orazaka-apps/workers/orazaka-worker-media"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/workers/orazaka-worker-media'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-ui-kit.git ~/projects/orazaka/orazaka-apps/ui/orazaka-ui-kit"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/ui/orazaka-ui-kit'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-web-client.git ~/projects/orazaka/orazaka-apps/ui/orazaka-web-client"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/ui/orazaka-web-client'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-web-admin.git ~/projects/orazaka/orazaka-apps/ui/orazaka-web-admin"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/ui/orazaka-web-admin'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-mobile-client.git ~/projects/orazaka/orazaka-apps/ui/orazaka-mobile-client"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/ui/orazaka-mobile-client'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-cli.git ~/projects/orazaka/orazaka-apps/ui/orazaka-cli"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-apps/ui/orazaka-cli'..."
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "$ git clone --depth 1 https://github.com/krizaka/orazaka-packs.git ~/projects/orazaka/orazaka-packs"
+        },
+        {
+          "text": "Cloning into '~/projects/orazaka/orazaka-packs'..."
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◆  Workspace ready in ~/projects/orazaka",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "◇  Phase 3 — Media Worker Python Environment",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◆  Media worker venv already exists ✔",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◇  Phase 4 — Deployment Topology Configuration",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◇  Deployment artifacts generated ✔",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◆  ✔ .env already complete — no keys added",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "▲  Kept your existing .env values (not overwritten). These differ from the selected topology:",
+          "tone": "warning"
+        },
+        {
+          "text": "│    VIDEO_WORKER_PYTHON_PATH = python3 (topology suggests ~/projects/orazaka/orazaka-apps/workers/orazaka-worker-media/.venv/bin/python3)",
+          "tone": "muted"
+        },
+        {
+          "text": "│    Edit .env manually if you want the suggested values.",
+          "tone": "muted"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◇  ✨ Setup Complete ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮",
+          "tone": "success"
+        },
+        {
+          "text": "│                                                                                                                                                                                                             │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  ✔ Target: Local Dev (Apple Silicon)                                                                                                                                                                        │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  ✔ Infra:  Bundled (Docker)                                                                                                                                                                                 │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  ✔ Generated: docker-compose.override.yml                                                                                                                                                                   │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  ✔ .env: unchanged, 1 existing value(s) kept                                                                                                                                                                │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  ✔ Media Worker Python: ~/projects/orazaka/orazaka-apps/workers/orazaka-worker-media/.venv/bin/python3  │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  ✔ Apple Silicon Metal MPS: enabled                                                                                                                                                                         │",
+          "tone": "muted"
+        },
+        {
+          "text": "│                                                                                                                                                                                                             │",
+          "tone": "muted"
+        },
+        {
+          "text": "│  Next steps:                                                                                                                                                                                                │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    1. ./mvnw install                — Build every JVM repository (one reactor)                                                                                                                              │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    2. (cd orazaka-apps/ui && npm install) — Link the web, mobile and CLI workspaces                                                                                                                         │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    3. npx orazaka start --mode dev  — Launch middleware + AI engines                                                                                                                                        │",
+          "tone": "muted"
+        },
+        {
+          "text": "│    4. npx orazaka dev               — Spawn Router + Web + Admin + Mobile                                                                                                                                   │",
+          "tone": "muted"
+        },
+        {
+          "text": "│                                                                                                                                                                                                             │",
+          "tone": "muted"
+        },
+        {
+          "text": "├─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯",
+          "tone": "muted"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "└  Orazaka ready. Happy building! 🚀",
+          "tone": "muted"
+        }
+      ]
+    },
+    {
+      "command": "npx orazaka start",
+      "output": [
+        {
+          "text": "┌  🥷 Orazaka Dev Infrastructure",
+          "tone": "muted"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "◇  Phase 1: Docker Services (Postgres, Redis, RabbitMQ)",
+          "tone": "success"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "■  Failed to launch Docker containers",
+          "tone": "danger"
+        },
+        {
+          "text": "│",
+          "tone": "muted"
+        },
+        {
+          "text": "■  Docker error: Command failed: docker-compose -p orazaka -f \"~/projects/orazaka/infra/docker-compose.yml\" up -d db-vector redis rabbitmq mailpit",
+          "tone": "danger"
+        }
+      ],
+      "trimmed": "ai-engines"
+    },
+    {
+      "command": "npx orazaka dev",
+      "output": [
+        {
+          "text": "  ┌──────────────────────────────────────────────────────┐",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  🥷  Orazaka Dev Stack                               │",
+          "tone": "accent"
+        },
+        {
+          "text": "  ├──────────────────────────────────────────────────────┤",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● EDGE          :8088  http://localhost:8088        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● ROUTER        :8080  http://localhost:8080        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● IDENTITY      :8083  http://localhost:8083        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● AUTOMATION    :8082  http://localhost:8082        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● KNOWLEDGE     :8084  http://localhost:8084        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● JOB           :8090  http://localhost:8090        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● BILLING       :8095  http://localhost:8095        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● STUDIO        :8096  http://localhost:8096        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● NOTIFICATIONS :8097  http://localhost:8097        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● WEB-CLIENT    :3000  http://localhost:3000        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● WEB-ADMIN     :3001  http://localhost:3001        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● MOBILE        :8081  http://localhost:8081        │",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● ORAZAKA-WORKER-MEDIA:undefined  http://localhost:undefined│",
+          "tone": "accent"
+        },
+        {
+          "text": "  │  ● ORAZAKA-WORKER-VALIDATION:undefined  http://localhost:undefined│",
+          "tone": "accent"
+        },
+        {
+          "text": "  └──────────────────────────────────────────────────────┘",
+          "tone": "accent"
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "  Press Ctrl+C to stop all processes",
+          "tone": "muted"
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "  ORAZAKA-WORKER-VALIDATION │ ✗ Failed to start: spawn ../.venv/bin/python3 ENOENT",
+          "tone": "danger"
+        },
+        {
+          "text": "  ORAZAKA-WORKER-MEDIA │ Traceback (most recent call last):",
+          "tone": "muted"
+        },
+        {
+          "text": "  ORAZAKA-WORKER-MEDIA │   File \"<frozen runpy>\", line 203, in _run_module_as_main",
+          "tone": "muted"
+        },
+        {
+          "text": "  ORAZAKA-WORKER-MEDIA │   File \"<frozen runpy>\", line 88, in _run_code",
+          "tone": "muted"
+        },
+        {
+          "text": "  ORAZAKA-WORKER-MEDIA │   File \"~/projects/orazaka/orazaka-apps/workers/orazaka-worker-media/app/consumer.py\", line 32, in <module>",
+          "tone": "muted"
+        },
+        {
+          "text": "  ORAZAKA-WORKER-MEDIA │     import pika",
+          "tone": "muted"
+        },
+        {
+          "text": "  ORAZAKA-WORKER-MEDIA │ ModuleNotFoundError: No module named 'pika'",
+          "tone": "muted"
+        },
+        {
+          "text": "  ORAZAKA-WORKER-MEDIA │ ✗ Exited with code 1",
+          "tone": "danger"
+        },
+        {
+          "text": "  WEB-CLIENT   │ sh: next: command not found",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-CLIENT   │ npm error Lifecycle script `dev` failed with error:",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-CLIENT   │ npm error code 127",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-CLIENT   │ npm error path ~/projects/orazaka/orazaka-apps/ui/orazaka-web-client",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-CLIENT   │ npm error workspace orazaka-web-client@1.0.0",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-CLIENT   │ npm error location ~/projects/orazaka/orazaka-apps/ui/orazaka-web-client",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-CLIENT   │ npm error command failed",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-CLIENT   │ npm error command sh -c next dev --port 3000",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-CLIENT   │ ✗ Exited with code 127",
+          "tone": "accent"
+        },
+        {
+          "text": "  WEB-ADMIN    │ sh: next: command not found",
+          "tone": "muted"
+        },
+        {
+          "text": "  WEB-ADMIN    │ npm error Lifecycle script `dev` failed with error:",
+          "tone": "muted"
+        },
+        {
+          "text": "  WEB-ADMIN    │ npm error code 127",
+          "tone": "muted"
+        },
+        {
+          "text": "  WEB-ADMIN    │ npm error path ~/projects/orazaka/orazaka-apps/ui/orazaka-web-admin",
+          "tone": "muted"
+        },
+        {
+          "text": "  WEB-ADMIN    │ npm error workspace orazaka-web-admin@1.0.0",
+          "tone": "muted"
+        },
+        {
+          "text": "  WEB-ADMIN    │ npm error location ~/projects/orazaka/orazaka-apps/ui/orazaka-web-admin",
+          "tone": "muted"
+        },
+        {
+          "text": "  WEB-ADMIN    │ npm error command failed",
+          "tone": "muted"
+        },
+        {
+          "text": "  WEB-ADMIN    │ npm error command sh -c next dev --port 3001",
+          "tone": "muted"
+        },
+        {
+          "text": "  WEB-ADMIN    │ ✗ Exited with code 127",
+          "tone": "danger"
+        },
+        {
+          "text": "  AUTOMATION   │ ○ Stopped",
+          "tone": "muted"
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "  ⏹  Shutting down…",
+          "tone": "warning"
+        },
+        {
+          "text": ""
+        },
+        {
+          "text": "  EDGE         │ ○ Stopped",
+          "tone": "accent"
+        },
+        {
+          "text": "  IDENTITY     │ ○ Stopped",
+          "tone": "muted"
+        },
+        {
+          "text": "  KNOWLEDGE    │ ○ Stopped",
+          "tone": "muted"
+        },
+        {
+          "text": "  JOB          │ ○ Stopped",
+          "tone": "muted"
+        },
+        {
+          "text": "  BILLING      │ ○ Stopped",
+          "tone": "success"
+        },
+        {
+          "text": "  STUDIO       │ ○ Stopped",
+          "tone": "warning"
+        },
+        {
+          "text": "  NOTIFICATIONS │ ✗ Exited with code 130",
+          "tone": "accent"
+        },
+        {
+          "text": "  MOBILE       │ ○ Stopped",
+          "tone": "warning"
+        },
+        {
+          "text": "  ROUTER       │ ✗ Exited with code 130",
+          "tone": "success"
+        }
+      ],
+      "trimmed": "interrupted"
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 /* The schemas a doc asks for, as fenced blocks (AGENTS.md §4): ```architecture, ```pipeline, ```sequence and
-   ```states become the site's structured components, drawn from the generated model — the same blocks read as plain
-   text on GitHub. Mermaid is retired: a ```mermaid fence in a published doc fails the build, with what to write
-   instead. The blocks' own grammar is parsed and checked where they render (lib/structured-diagrams.ts). */
+   ```states become the site's structured components, drawn from the generated model (and ```cli-replay, ```cli-journey,
+   ```cli-commands the CLI's: lib/cli-model.ts) — the same blocks read as plain text on GitHub. Mermaid is retired: a
+   ```mermaid fence in a published doc fails the build, with what to write instead. The blocks' own
+   grammar is parsed and checked where they render (lib/structured-diagrams.ts). */
 
 import type { Code, Root } from "mdast";
 
@@ -10,6 +11,10 @@ const COMPONENT: Record<string, string> = {
   pipeline: "PipelineView",
   sequence: "SequenceDiagram",
   states: "StateDiagram",
+  // The CLI reference of a product (CLI.md): a replay of its quick start, its journey, its command explorer.
+  "cli-replay": "CliReplay",
+  "cli-journey": "CliJourney",
+  "cli-commands": "CliCommands",
 };
 
 type Parent = { children: unknown[] };
