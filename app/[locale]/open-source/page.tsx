@@ -20,6 +20,7 @@ import BlockCard from "@/app/components/blocks/BlockCard";
 import "@/app/components/sections/sections.css";
 import { CardGrid, DiscussionCta, SectionHeading } from "@/app/components/sections";
 import { ExternalIcon } from "@krizaka/icons";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 /* /open-source — for developers who want to build with Krizaka's pieces: what can be reused, how
    to take it, and every public repository. The repository list comes from the generated product
@@ -130,12 +131,12 @@ export default async function OpenSourcePage({ params }: Props) {
           ))}
         </CardGrid>
         <DiscussionCta id="forums-title" level={3} title={w.forums.title} body={w.forums.body}>
-          <a href={FORUMS.java.url} target="_blank" rel="noopener noreferrer" className="ps-btn is-primary">
+          <ButtonLink href={FORUMS.java.url} variant="primary" size="lg">
             {w.forums.java} <ExternalIcon size={13} aria-hidden />
-          </a>
-          <a href={FORUMS.ui.url} target="_blank" rel="noopener noreferrer" className="ps-btn">
+          </ButtonLink>
+          <ButtonLink href={FORUMS.ui.url} size="lg">
             {w.forums.ui} <ExternalIcon size={13} aria-hidden />
-          </a>
+          </ButtonLink>
         </DiscussionCta>
       </div>
       </SectionBackdrop>
@@ -267,15 +268,15 @@ export default async function OpenSourcePage({ params }: Props) {
             </p>
           </div>
           <div className="os-contribute-links">
-            <a href="https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="os-btn is-primary">
+            <ButtonLink href="https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md" variant="primary" size="lg">
               <BookOpen size={15} /> {t.contributeGuide}
-            </a>
-            <a href={FORUMS.java.url} target="_blank" rel="noopener noreferrer" className="os-btn">
+            </ButtonLink>
+            <ButtonLink href={FORUMS.java.url} size="lg">
               {t.ask}
-            </a>
-            <Link href={contactHref("open-source", "blocks")} className="os-btn">
+            </ButtonLink>
+            <ButtonLink href={contactHref("open-source", "blocks")} size="lg">
               {t.write}
-            </Link>
+            </ButtonLink>
           </div>
         </div>
       </section>
@@ -348,9 +349,6 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-contribute h2 { margin: 0 0 6px; font-size: 20px; font-weight: 800; }
         .os-contribute p { margin: 0; max-width: 520px; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
         .os-contribute-links { display: flex; flex-wrap: wrap; gap: 10px; }
-        .os-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none;
-          color: var(--kz-text-primary); border: 1px solid var(--kz-border-default); }
-        .os-btn.is-primary { background: var(--kz-accent); color: var(--kz-on-accent); border-color: transparent; }
       `}</style>
     </main>
   );

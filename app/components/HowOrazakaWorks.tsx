@@ -100,7 +100,7 @@ export default function HowOrazakaWorks({
   // Structure here, words in messages → pages.howOrazakaWorks.
   const principles = PRINCIPLES.map((p, i) => ({ ...p, ...text.principles[i] }));
   const steps = STEPS.map((s, i) => ({ ...s, ...text.steps[i] }));
-  // Each block rises once as it enters the viewport (data-reveal, app/motion.css · SiteMotion); still under reduced motion.
+  // Each block rises once as it enters the viewport (data-reveal, @krizaka/ui MotionObserver); still under reduced motion.
   const stagger = (i: number) => ({ "--kz-delay": `${Math.min(i, 5) * 70}ms` }) as CSSProperties;
 
   return (

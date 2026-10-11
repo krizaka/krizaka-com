@@ -3,7 +3,6 @@
 /* The two Krizaka products, presented the same way: animated mark, promise, proof points, stack,
    a recording of the real product, and the same five entry points as the navigation (lib/nav.ts). */
 
-import Link from "next/link";
 import { useSyncExternalStore } from "react";
 import { CheckIcon, ExternalIcon, ForwardIcon } from "@krizaka/icons";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
@@ -15,6 +14,7 @@ import { NAV_PRODUCTS } from "@/lib/nav";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
 import { cn } from "@krizaka/ui/cn";
+import ButtonLink from "../sections/ButtonLink";
 
 /* prefers-reduced-motion, read without an animation library; the server and the first client render say "still". */
 const REDUCE = "(prefers-reduced-motion: reduce)";
@@ -95,20 +95,20 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
                     .map((l) => {
                       const Icon = l.icon === "signature" ? SIGNATURE_ICONS[p.id] : NAV_ICONS[l.icon];
                       return (
-                        <Link key={l.href} href={l.href} prefetch={false} className={l.icon === "overview" ? "kz-spot-primary" : "kz-spot-chip"}>
+                        <ButtonLink key={l.href} href={l.href} prefetch={false} variant={l.icon === "overview" ? "primary" : "ghost"}>
                           {l.icon !== "overview" && <Icon size={16} nodeColor="var(--kz-accent)" />} {l.icon === "overview" ? h.discover : t.site.nav[p.id].links[l.icon].label}
                           {l.icon === "overview" && <ForwardIcon size={15} />}
-                        </Link>
+                        </ButtonLink>
                       );
                     })}
                   {p.appUrl && (
-                    <a href={p.appUrl} target="_blank" rel="noopener" className="kz-spot-chip">
+                    <ButtonLink href={p.appUrl} rel="noopener" variant="ghost">
                       <ExternalIcon size={16} /> {h.openApp}
-                    </a>
+                    </ButtonLink>
                   )}
-                  <a href={p.repoUrl} target="_blank" rel="noopener noreferrer" className="kz-spot-chip">
+                  <ButtonLink href={p.repoUrl} variant="ghost">
                     <GitHubMark size={14} /> GitHub
-                  </a>
+                  </ButtonLink>
                 </nav>
               </div>
 
@@ -153,10 +153,6 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
         .kz-spot-points svg { color: var(--kz-accent-text); flex-shrink: 0; transform: translateY(2px); }
         .kz-spot-stack { margin: 2px 0 0; font-family: var(--font-mono); font-size: 11.5px; color: var(--kz-text-secondary); }
         .kz-spot-links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
-        .kz-spot-primary, .kz-spot-chip { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: 10px; font-size: 13px; font-weight: 600; text-decoration: none; }
-        .kz-spot-primary { background: var(--kz-accent); color: var(--kz-on-accent); }
-        .kz-spot-chip { color: var(--kz-text-secondary); transition: color 150ms ease; padding-left: 4px; padding-right: 4px; }
-        .kz-spot-chip:hover { color: var(--kz-text-primary); }
         .kz-spot-media { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--kz-border-default); background: var(--kz-media);
           box-shadow: 0 30px 60px -30px color-mix(in srgb, var(--kz-accent) 45%, transparent); }
         .kz-spot-chrome { display: flex; align-items: center; gap: 6px; padding: 9px 12px; background: var(--kz-surface-2); border-bottom: 1px solid var(--kz-border-subtle); }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { contactHref } from "@/lib/contact";
 import Image from "next/image";
-import Link from "next/link";
 import { CheckIcon, CreditsIcon, ForwardIcon, ImageIcon, KnowledgeIcon, LocalIcon, NotificationIcon, PlayIcon, ShieldIcon, SoundIcon, StudioIcon } from "@krizaka/icons";
 import { Mascot } from "@krizaka/ui/mascots";
 import { OrazakaLogo } from "@krizaka/ui";
@@ -16,6 +15,7 @@ import DemoClip from "@/app/components/demos/DemoClip";
 import Rich from "@/app/components/Rich";
 import { reveal } from "@/lib/motion";
 import { cn } from "@krizaka/ui/cn";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -66,15 +66,15 @@ export default async function OrazakaDemoPage({ params }: Props) {
           </h1>
           <p className="bp-lead" style={{ marginTop: 20 }}>{t.lead}</p>
           <div className="bp-actions">
-            <Link href="#tour" className="bp-btn bp-btn-primary btn-sheen">
+            <ButtonLink href="#tour" variant="primary" size="lg" shimmer magnetic>
               <PlayIcon size={18} /> {t.ctaTour}
-            </Link>
-            <Link href="#made-here" className="bp-btn bp-btn-ghost">
+            </ButtonLink>
+            <ButtonLink href="#made-here" size="lg">
               <ImageIcon size={16} /> {t.ctaGallery}
-            </Link>
-            <Link href="/products/orazaka#how" className="bp-btn bp-btn-ghost">
+            </ButtonLink>
+            <ButtonLink href="/products/orazaka#how" size="lg">
               {t.ctaInstall} <ForwardIcon size={16} />
-            </Link>
+            </ButtonLink>
           </div>
           <dl className="od-facts">
             {t.facts.map((fact) => (
@@ -165,8 +165,8 @@ export default async function OrazakaDemoPage({ params }: Props) {
           <h2 className="bp-h2"><Rich text={t.closing.title} /></h2>
           <p className="bp-lead">{t.closing.body}</p>
           <div className="bp-actions">
-            <Link href="/products/orazaka#how" className="bp-btn bp-btn-primary btn-sheen">{t.closing.install}</Link>
-            <Link href={contactHref("orazaka", "orazaka")} className="bp-btn bp-btn-ghost">{t.closing.contact} <ForwardIcon size={16} /></Link>
+            <ButtonLink href="/products/orazaka#how" variant="primary" size="lg">{t.closing.install}</ButtonLink>
+            <ButtonLink href={contactHref("orazaka", "orazaka")} size="lg">{t.closing.contact} <ForwardIcon size={16} /></ButtonLink>
           </div>
         </div>
       </SectionBackdrop>

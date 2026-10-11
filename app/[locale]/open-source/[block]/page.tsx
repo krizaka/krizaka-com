@@ -13,6 +13,7 @@ import { LOCALES } from "@/lib/locales";
 import { format, getDictionary } from "@/lib/i18n";
 import { buildAlternates } from "@/lib/seo";
 import { reveal } from "@/lib/motion";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 /* /open-source/<block> — why a Krizaka building block exists, for an engineer deciding whether to adopt it: the
    problem it removes, the decisions and what they cost, the code, when not to use it, where it stands, how to adopt
@@ -202,17 +203,17 @@ export default async function BuildingBlockPage({ params }: Props) {
               )}
               <div className="ps-links">
                 {block.docs.startsWith("/") ? (
-                  <Link href={block.docs} className="ps-btn is-primary">
+                  <ButtonLink href={block.docs} variant="primary" size="lg">
                     {p.docs} <ForwardIcon size={14} aria-hidden />
-                  </Link>
+                  </ButtonLink>
                 ) : (
-                  <a href={block.docs} target="_blank" rel="noopener noreferrer" className="ps-btn is-primary">
+                  <ButtonLink href={block.docs} variant="primary" size="lg">
                     {p.docs} <ExternalIcon size={13} aria-hidden />
-                  </a>
+                  </ButtonLink>
                 )}
-                <a href={blockRepoUrl(block)} target="_blank" rel="noopener noreferrer" className="ps-btn">
+                <ButtonLink href={blockRepoUrl(block)} size="lg">
                   {p.repo} <ExternalIcon size={13} aria-hidden />
-                </a>
+                </ButtonLink>
               </div>
             </div>
           </ContentSection>

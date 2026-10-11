@@ -12,7 +12,6 @@
 
 import { contactHref } from "@/lib/contact";
 import React from "react";
-import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "@/app/components/I18nProvider";
 import KrizakaLandscape from "@/app/components/illustrations/KrizakaLandscape";
@@ -29,6 +28,7 @@ import {
 } from "@/app/components/story/ArcadeNods";
 import { ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 /* One size for the three marks, in the select screen and in the stages: the stages must read alike. */
 const mark = (id: ChapterId, size: number) => <ProductLogo id={id} size={size} animated={false} />;
@@ -134,9 +134,9 @@ export default function StoryClient() {
           {st.open.body.map((p) => (
             <p key={p}>{p}</p>
           ))}
-          <Link href="/open-source" className="st-btn">
+          <ButtonLink href="/open-source" size="lg" className="st-open-cta">
             {st.open.cta} <ForwardIcon size={15} />
-          </Link>
+          </ButtonLink>
         </div>
       </section>
 
@@ -145,12 +145,12 @@ export default function StoryClient() {
           <h2>{st.closing.title}</h2>
           <p>{st.closing.body}</p>
           <div className="st-ctas">
-            <Link href="/products" className="st-btn is-primary">
+            <ButtonLink href="/products" variant="primary" size="lg">
               {st.ctaProducts} <ForwardIcon size={15} />
-            </Link>
-            <Link href={contactHref("story")} className="st-btn">
+            </ButtonLink>
+            <ButtonLink href={contactHref("story")} size="lg">
               {st.ctaContact}
-            </Link>
+            </ButtonLink>
           </div>
           <ContinuePrompt
             label={st.arcade.continue}
@@ -226,21 +226,18 @@ export default function StoryClient() {
 
         .st-open { max-width: 46rem; margin: 0 auto; padding: 72px 20px; border-top: 1px solid var(--kz-border-subtle); text-align: center; }
         .st-open p { font-size: 16px; line-height: 1.8; color: var(--kz-text-secondary); margin: 0 auto 14px; max-width: 620px; }
-        .st-open .st-btn { margin-top: 14px; }
+        .st-open .st-open-cta { margin-top: 14px; }
 
         .st-closing { position: relative; overflow: hidden; padding: 96px 20px clamp(300px, 34vw, 440px); text-align: center; border-top: 1px solid var(--kz-border-subtle); }
         .st-closing-text { position: relative; z-index: 1; max-width: 620px; margin: 0 auto; }
         .st-closing p { font-size: 16px; line-height: 1.75; color: var(--kz-text-secondary); margin: 0; }
         .st-ctas { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 28px; }
-        .st-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none;
-          color: var(--kz-text-primary); border: 1px solid var(--kz-border-default); }
-        .st-btn.is-primary { background: var(--kz-accent); color: var(--kz-on-accent); border-color: transparent; }
         /* Still by default: the flock and the landscape carry their own idle loops elsewhere on the site; here they
            hold their first frame. A bird wakes up only while it is hovered. */
         .st-bird:not(:hover) *, .st-bird:not(:hover) *::before, .st-bird:not(:hover) *::after,
         .st-landscape *, .st-landscape *::before, .st-landscape *::after { animation-play-state: paused !important; }
         @media (prefers-reduced-motion: reduce) {
-          .st-bird, .st-btn { transition: none !important; }
+          .st-bird { transition: none !important; }
           .st-bird:hover { transform: none !important; }
         }
 

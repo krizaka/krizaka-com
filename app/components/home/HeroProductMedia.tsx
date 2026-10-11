@@ -5,7 +5,7 @@
    the right, each in its brand. A teaser, not a player: you see that something lives there, never what.
 
    Nothing of it belongs to the first paint (LCP): the panes start as a still brand tint, the poster arrives once the
-   page has loaded and settled (as SiteMotion does, 1.2 s after `load`), and the loop only on a wide screen, without
+   page has loaded and settled (as MotionObserver does, 1.2 s after `load`), and the loop only on a wide screen, without
    prefers-reduced-motion or a data saver; it plays while the hero is on screen and pauses off it. On a phone, under
    reduced motion or a data saver, the poster stays: still, and a few kilobytes. Decorative: hidden from assistive
    technology. The hovered product card brightens its pane (CSS :has(), OrgHero). */

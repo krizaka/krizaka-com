@@ -14,3 +14,4 @@ export { default as PageHero } from "./PageHero";
 export { default as PageMascot } from "./PageMascot";
 export { default as PageToc } from "./PageToc";
 export { default as SectionHeading } from "./SectionHeading";
+export { default as ButtonLink } from "./ButtonLink";

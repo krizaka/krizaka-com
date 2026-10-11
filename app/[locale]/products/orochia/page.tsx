@@ -25,7 +25,7 @@ import orochia from "@/app/data/orochia-architecture.json";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ModuleMap from "@/app/components/diagrams/ModuleMap";
-import CountUp from "@/app/components/motion/CountUp";
+import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { reveal } from "@/lib/motion";
 import OrochiaTour from "@/app/components/OrochiaTour";
 import { tourSrc } from "@/lib/orochia-demo";
@@ -39,6 +39,7 @@ import Rich from "@/app/components/Rich";
 import { IsoSplit } from "@/app/components/brand/Iso";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
 import { PAYOUT_MINIMUM_CENTS, PLATFORM_FEE_PERCENTAGE, SPLIT_EXAMPLES, creatorNetCents, formatUsd } from "@/lib/orochia-economics";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -91,7 +92,7 @@ export default async function OrochiaPage({ params }: Props) {
   const tables = orochia.modules.find((m) => m.id === "data")?.tables ?? [];
   const journeys = journeysFor("orochia", getDictionary(locale));
   const money = (cents: number) => formatUsd(cents, locale);
-  /* "{value} %": the figure climbs (CountUp), the words around it stay the message's. */
+  /* "{value} %": the figure climbs (NumberTicker), the words around it stay the message's. */
   const share = t.paid.percent.split("{value}");
 
   return (
@@ -121,15 +122,15 @@ export default async function OrochiaPage({ params }: Props) {
           </h1>
           <p className="bp-lead" style={{ margin: "20px auto 0" }}>{t.heroLead}</p>
           <div className="bp-actions">
-            <Link href="/products/orochia/demos" className="bp-btn bp-btn-primary btn-sheen">
+            <ButtonLink href="/products/orochia/demos" variant="primary" size="lg" shimmer magnetic>
               <PlayIcon size={18} /> {t.watchDemo}
-            </Link>
-            <a href={OROCHIA_APP_URL} target="_blank" rel="noopener" className="bp-btn bp-btn-ghost">
+            </ButtonLink>
+            <ButtonLink href={OROCHIA_APP_URL} size="lg" rel="noopener">
               <ExternalIcon size={16} /> {t.openApp}
-            </a>
-            <a href="https://github.com/krizaka/orochia" target="_blank" rel="noopener noreferrer" className="bp-btn bp-btn-ghost">
+            </ButtonLink>
+            <ButtonLink href="https://github.com/krizaka/orochia" size="lg">
               <GitHubMark size={16} /> krizaka/orochia
-            </a>
+            </ButtonLink>
           </div>
           <ul className="bp-proofs" style={{ textAlign: "left" }}>
             {WAYS.map(({ id, Icon }) => (
@@ -157,7 +158,7 @@ export default async function OrochiaPage({ params }: Props) {
             <h2 className="bp-h2"><Rich text={t.paid.title} /></h2>
             <p className="bp-lead">{t.paid.lead}</p>
             <p className="bp-share">
-              <b>{share[0]}<CountUp value={100 - PLATFORM_FEE_PERCENTAGE} locale={locale} />{share[1]}</b> <span>{t.paid.share}</span>
+              <b>{share[0]}<NumberTicker value={100 - PLATFORM_FEE_PERCENTAGE} locale={locale} />{share[1]}</b> <span>{t.paid.share}</span>
             </p>
             <ul className="bp-ledger">
               {SPLIT_EXAMPLES.map(({ id, grossCents }, i) => {

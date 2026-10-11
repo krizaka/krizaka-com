@@ -1,6 +1,6 @@
 /* The Krizaka page language (AGENTS.md §4.1) — the styles of app/components/sections, first used by /open-source and
    /open-source/<block>. Tokens only (var(--kz-*)): dark and light alike, every brand (.brand-orazaka, .brand-orochia)
-   through --kz-accent. Motion comes from app/motion.css ([data-reveal]); nothing here loops — the pointer lights, lifts
+   through --kz-accent. Motion comes from @krizaka/ui ([data-reveal], MotionObserver); nothing here loops — the pointer lights, lifts
    and wakes, and under reduced motion everything is still. */
 
 /* ─── Hues: the accent of one subject on a page (a building block…) — rail, icon node, bird, light, numbers ───
@@ -145,34 +145,25 @@ a.ps-badge:hover { border-color: var(--kz-border-strong); }
 
 /* ─── Buttons ─── */
 .ps-cta-actions, .ps-links { display: flex; flex-wrap: wrap; gap: 10px; }
-.ps-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 12px;
-  font-size: 14px; font-weight: 700; text-decoration: none; color: var(--kz-text-primary); border: 1px solid var(--kz-border-default);
-  background: var(--kz-surface-0); transition: border-color .2s var(--kz-ease, ease), background-color .2s var(--kz-ease, ease), transform .15s var(--kz-ease, ease); }
-.ps-btn:hover { border-color: var(--kz-border-strong); }
-.ps-btn:active { transform: scale(.98); }
-.ps-btn.is-primary { background: var(--kz-accent); color: var(--kz-on-accent); border-color: transparent; }
-.ps-btn.is-primary:hover { background: var(--kz-accent-hover); }
-/* The way into a subject: its hue, softly — text stays the primary text colour (AA on any hue). */
-.ps-btn.is-soft { color: var(--kz-text-primary); background: color-mix(in srgb, var(--ps-hue, var(--kz-accent)) 14%, var(--kz-surface-1));
+/* Every action is the @krizaka/ui Button (ButtonLink). The way into a subject wears its hue, softly — text stays the
+   primary text colour (AA on any hue) — and may wrap on two lines in a narrow card. */
+.ps-more { justify-content: space-between; height: auto; min-height: 40px; padding-block: 6px; white-space: normal; text-align: left; line-height: 1.25;
+  color: var(--kz-text-primary); background: color-mix(in srgb, var(--ps-hue, var(--kz-accent)) 14%, var(--kz-surface-1));
   border-color: color-mix(in srgb, var(--ps-hue, var(--kz-accent)) 38%, transparent); }
-.ps-btn.is-soft:hover { background: color-mix(in srgb, var(--ps-hue, var(--kz-accent)) 24%, var(--kz-surface-1)); }
-.ps-btn:focus-visible, .ps-icon-btn:focus-visible, .ps-badge:focus-visible, .ps-toc a:focus-visible, .ps-tiles a:focus-visible {
+.ps-more:hover { background: color-mix(in srgb, var(--ps-hue, var(--kz-accent)) 24%, var(--kz-surface-1));
+  border-color: color-mix(in srgb, var(--ps-hue, var(--kz-accent)) 55%, transparent); }
+.ps-badge:focus-visible, .ps-toc a:focus-visible, .ps-tiles a:focus-visible {
   outline: 2px solid var(--kz-accent); outline-offset: 2px; }
 
 /* Card foot: the way in on the left, the icon actions on the right, always at the bottom. */
 .ps-card-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; padding-top: 16px;
   border-top: 1px solid var(--kz-border-subtle); }
-.ps-card-foot .ps-btn { justify-content: space-between; min-height: 42px; padding: 6px 12px 6px 14px; font-size: 13.5px; line-height: 1.25; }
 .ps-card-foot > :only-child { grid-column: 1 / -1; }
 .ps-icon-actions { margin: 0; padding: 0; list-style: none; display: flex; gap: 2px; }
-.ps-icon-btn { display: inline-flex; align-items: center; justify-content: center; width: 38px; height: 42px; border-radius: 12px;
-  color: var(--kz-text-secondary); border: 1px solid transparent; transition: color .2s, border-color .2s, background-color .2s; }
-.ps-icon-btn:hover { color: var(--kz-text-primary); background: var(--kz-surface-2); border-color: var(--kz-border-default); }
 
 /* ─── ActionLinks (buttons) ─── */
 .ps-actions { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.ps-actions .ps-btn { min-height: 44px; font-size: 13.5px; }
-.ps-actions .ps-btn > svg:first-child { color: var(--ps-hue-text, var(--kz-accent-text)); }
+.ps-actions a > svg:first-child { color: var(--ps-hue-text, var(--kz-accent-text)); }
 
 /* ─── MascotRule: a quote in a speech bubble, the bird under its tail ─── */
 .ps-bird { flex-shrink: 0; }
@@ -306,7 +297,7 @@ a.ps-badge:hover { border-color: var(--kz-border-strong); }
 .ps-tiles a:hover { border-color: color-mix(in srgb, var(--ps-hue, var(--kz-accent)) 45%, var(--kz-border-default)); transform: translateY(-2px); }
 
 @media (prefers-reduced-motion: reduce) {
-  .ps-card, .ps-card::after, .ps-card-icon, .ps-tiles a, .ps-btn, .ps-details summary svg { transition: none !important; }
+  .ps-card, .ps-card::after, .ps-card-icon, .ps-tiles a, .ps-details summary svg { transition: none !important; }
   .ps-card:hover, .ps-card:hover .ps-card-icon, .ps-tiles a:hover { transform: none !important; }
   .ps-card .ps-bird { animation: none !important; }
 }

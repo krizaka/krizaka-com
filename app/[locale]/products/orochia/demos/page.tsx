@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { AuctionIcon, ChallengeIcon, CheckIcon, ExternalIcon, ForwardIcon, HeartIcon, PlayIcon, TipIcon, UnlockIcon, VideoIcon, WalletIcon } from "@krizaka/icons";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { OrochiaLogo } from "@krizaka/ui";
@@ -15,6 +14,7 @@ import SiteFooter from "@/app/components/SiteFooter";
 import OrochiaTour from "@/app/components/OrochiaTour";
 import DemoClip from "@/app/components/demos/DemoClip";
 import Rich from "@/app/components/Rich";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -63,15 +63,15 @@ export default async function OrochiaDemoPage({ params }: Props) {
           </h1>
           <p className="bp-lead" style={{ marginTop: 20 }}>{t.lead}</p>
           <div className="bp-actions">
-            <Link href="#tour" className="bp-btn bp-btn-primary btn-sheen">
+            <ButtonLink href="#tour" variant="primary" size="lg" shimmer magnetic>
               <PlayIcon size={18} /> {t.ctaTour}
-            </Link>
-            <Link href="#use-cases" className="bp-btn bp-btn-ghost">
+            </ButtonLink>
+            <ButtonLink href="#use-cases" size="lg">
               {t.ctaCases}
-            </Link>
-            <a href={OROCHIA_APP_URL} target="_blank" rel="noopener" className="bp-btn bp-btn-ghost">
+            </ButtonLink>
+            <ButtonLink href={OROCHIA_APP_URL} size="lg" rel="noopener">
               <ExternalIcon size={16} /> {t.ctaApp}
-            </a>
+            </ButtonLink>
           </div>
           <dl className="ocd-facts">
             {t.facts.map((fact) => (
@@ -137,12 +137,12 @@ export default async function OrochiaDemoPage({ params }: Props) {
         <h2 className="bp-h2"><Rich text={t.closing.title} /></h2>
         <p className="bp-lead">{t.closing.body}</p>
         <div className="bp-actions">
-          <a href={OROCHIA_APP_URL} target="_blank" rel="noopener" className="bp-btn bp-btn-primary btn-sheen">
+          <ButtonLink href={OROCHIA_APP_URL} variant="primary" size="lg" rel="noopener">
             <ExternalIcon size={16} /> {t.closing.app}
-          </a>
-          <Link href={contactHref("orochia", "orochia")} className="bp-btn bp-btn-ghost">
+          </ButtonLink>
+          <ButtonLink href={contactHref("orochia", "orochia")} size="lg">
             {t.closing.contact} <ForwardIcon size={16} />
-          </Link>
+          </ButtonLink>
         </div>
       </section>
       <SiteFooter />

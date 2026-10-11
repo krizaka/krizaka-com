@@ -1,5 +1,5 @@
-/* The home hero (OrgHero.tsx): layout and layers. Its motion — the breathing aurora, the parallax, the scroll cue —
-   lives in app/motion.css with the rest of the site's motion. */
+/* The home hero (OrgHero.tsx): layout, layers and their motion — the breathing aurora, the parallax, the scroll cue.
+   The rest of the motion comes from @krizaka/ui (motion.css, MotionObserver). */
 
 .org-hero { padding: clamp(112px, 13vw, 156px) 20px clamp(120px, 13vw, 170px); }
 
@@ -80,10 +80,6 @@ html.light .org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :f
 .org-hero-product-text { flex:1; display:flex; flex-direction:column; gap:2px; font-size:15px; }
 .org-hero-product-tag { font-size:12.5px; color:var(--kz-text-secondary); font-weight:400; }
 .org-hero-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
-.org-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:12px; font-weight:700; font-size:14px; text-decoration:none; }
-.org-btn-primary { background:var(--kz-accent); color:var(--kz-on-accent); }
-.org-btn-ghost { border:1px solid var(--kz-border-default); color:var(--kz-text-primary); font-weight:600;
-  background: color-mix(in srgb, var(--kz-surface-0) 55%, transparent); }
 
 /* The invitation to scroll: a real link to the products, a slow light running down a hairline. */
 .org-hero-scroll { display:inline-flex; flex-direction:column; align-items:center; gap:10px; margin-top:clamp(40px, 6vw, 64px);
@@ -110,4 +106,63 @@ html.light .org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :f
   .org-hero-product, .org-hero-product:is(:hover, :focus-visible), .org-hero-mark, .org-hero-pane { transition:none; }
   .org-hero-product:is(:hover, :focus-visible) { transform:none; }
   .org-hero-pane > :is(img, video) { animation:none; }
+}
+
+
+/* ─── Motion of the hero (was app/motion.css): layers at different depths, a light that breathes, an invitation to
+   scroll. Scroll-driven, no JS: over the first screen of scrolling, the far layers drift down slower than the page (the
+   aurora least, the products a little more) and the horizon rises into view. `[data-parallax]` is a scroll position,
+   not a loop: it never pauses off screen. Where unsupported, or under reduced motion, the composition is still. ─── */
+html [data-offscreen] [data-parallax],
+html:not([data-motion="ready"]) [data-parallax] {
+  animation-play-state: running !important;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .org-hero-aurora[data-parallax],
+    .org-hero-pane-depth[data-parallax],
+    .org-hero-horizon[data-parallax] {
+      animation: kz-hero-far linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+    .org-hero-pane-depth[data-parallax] { animation-name: kz-hero-mid; }
+    .org-hero-horizon[data-parallax] { animation-name: kz-hero-rise; animation-range: 0 70vh; }
+  }
+}
+@keyframes kz-hero-far {
+  to { transform: translate3d(0, 12%, 0); }
+}
+@keyframes kz-hero-mid {
+  to { transform: translate3d(0, 55%, 0); }
+}
+@keyframes kz-hero-rise {
+  from { transform: translate3d(0, 14%, 0); opacity: 0.45; }
+  to { transform: none; opacity: 0.8; }
+}
+
+/* The aurora breathes: each light swells and settles on its own slow beat (20–26 s), offset from the others. */
+.org-aurora {
+  animation: kz-breathe 22s ease-in-out infinite alternate;
+}
+.org-aurora.brand-orazaka { animation-duration: 20s; }
+.org-aurora.brand-orochia { animation-duration: 26s; animation-delay: -9s; }
+@keyframes kz-breathe {
+  from { transform: scale(0.92); opacity: 0.7; }
+  to { transform: scale(1.1) translate3d(2%, -3%, 0); opacity: 1; }
+}
+
+/* The scroll cue: a light runs down a hairline, slowly, then rests. */
+.org-hero-scroll-line::after {
+  animation: kz-scroll-cue 2.8s var(--kz-ease) infinite;
+}
+@keyframes kz-scroll-cue {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(300%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .org-aurora,
+  .org-hero-scroll-line::after {
+    animation: none;
+  }
 }

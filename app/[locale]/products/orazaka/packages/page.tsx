@@ -28,6 +28,7 @@ import { packText, packTitle, showcasePacks, type Pack } from "@/lib/orazaka-pac
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import Rich from "@/app/components/Rich";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -97,12 +98,12 @@ export default async function OrazakaPacksPage({ params }: Props) {
           </h1>
           <p className="bp-lead" style={{ marginTop: 20 }}>{t.lead}</p>
           <div className="bp-actions">
-            <Link href="#packs" className="bp-btn bp-btn-primary btn-sheen">
+            <ButtonLink href="#packs" variant="primary" size="lg" shimmer magnetic>
               {format(t.ctaBrowse, { count: packs.length })}
-            </Link>
-            <Link href={DOCS} className="bp-btn bp-btn-ghost">
+            </ButtonLink>
+            <ButtonLink href={DOCS} size="lg">
               <KnowledgeIcon size={16} /> {t.ctaDocs}
-            </Link>
+            </ButtonLink>
           </div>
           <dl className="opk-facts">
             <div>
@@ -208,10 +209,10 @@ export default async function OrazakaPacksPage({ params }: Props) {
           <h2 className="bp-h2"><Rich text={t.closing.title} /></h2>
           <p className="bp-lead">{t.closing.body}</p>
           <div className="bp-actions">
-            <Link href={`${DOCS}#writing-a-pack`} className="bp-btn bp-btn-primary btn-sheen">
+            <ButtonLink href={`${DOCS}#writing-a-pack`} variant="primary" size="lg">
               {t.closing.write} <ForwardIcon size={16} />
-            </Link>
-            <Link href={contactHref("orazaka", "orazaka")} className="bp-btn bp-btn-ghost">{t.closing.contact}</Link>
+            </ButtonLink>
+            <ButtonLink href={contactHref("orazaka", "orazaka")} size="lg">{t.closing.contact}</ButtonLink>
           </div>
         </div>
       </SectionBackdrop>

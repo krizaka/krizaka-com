@@ -33,6 +33,7 @@ import Rich from "@/app/components/Rich";
 import { IsoSovereignStack } from "@/app/components/brand/Iso";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
 import { reveal } from "@/lib/motion";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -146,15 +147,15 @@ export default async function OrazakaPage({ params }: Props) {
               </h1>
               <p className="bp-lead" style={{ marginTop: 20 }}>{t.lead}</p>
               <div className="bp-actions">
-                <Link href="#tour" className="bp-btn bp-btn-primary btn-sheen">
+                <ButtonLink href="#tour" variant="primary" size="lg" shimmer magnetic>
                   <PlayIcon size={18} /> {t.ctaTour}
-                </Link>
-                <Link href="#how" className="bp-btn bp-btn-ghost">
+                </ButtonLink>
+                <ButtonLink href="#how" size="lg">
                   {t.ctaHow} <ForwardIcon size={16} />
-                </Link>
-                <a href="https://github.com/krizaka/orazaka" target="_blank" rel="noopener noreferrer" className="bp-btn bp-btn-ghost">
+                </ButtonLink>
+                <ButtonLink href="https://github.com/krizaka/orazaka" size="lg">
                   <GitHubMark size={16} /> krizaka/orazaka
-                </a>
+                </ButtonLink>
               </div>
             </div>
             <IsoSovereignStack className="bp-hero-art" />
