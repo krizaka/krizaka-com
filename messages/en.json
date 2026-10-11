@@ -2508,6 +2508,81 @@
         "contact": "Talk to us"
       }
     },
+    "orazakaUnfiltered": {
+      "badge": "Unfiltered models — your rules",
+      "eyebrow": "Unfiltered models · your rules",
+      "title": "No vendor filter between your team and <b>its work</b>.",
+      "lead": "Hosted assistants carry their vendor's refusal policy into every answer: the security analyst, the nurse, the reporter and the novelist get a refusal or a page of disclaimers. Orazaka serves open-weight models without that layer, on your machines — and the only rules are the ones you write.",
+      "pillars": {
+        "freedom": {
+          "title": "Freedom",
+          "body": "Unfiltered open-weight models in the catalogue — Qwen 2.5, Dolphin Llama 3, Gemma 3, abliterated or fine-tuned without refusals. Frank answers to legitimate professional questions, no silent refusals."
+        },
+        "sovereignty": {
+          "title": "Sovereignty",
+          "body": "No prompt leaves for a provider abroad: the model runs where your data lives, and nobody else's policy is applied to your questions."
+        },
+        "responsibility": {
+          "title": "Responsibility",
+          "body": "The policy is yours: a pack declares what it refuses, the engine enforces it before any model runs, and every turn is accounted for in the audit trail (Law 25)."
+        }
+      },
+      "rule": "Free to answer, never free of rules: the operator writes them, the engine keeps them.",
+      "limits": {
+        "title": "What “uncensored” does not mean",
+        "body": "Uncensored means not over-refusing legitimate work. We never show — and never build demos for — content sexualising minors, explicit sexual content, real persons, weapons, explosives or bio-chemical procedures, working malware or exploit code, or anything that enables serious harm. Your policy can, and should, refuse more."
+      },
+      "cta": "See it answer",
+      "demo": {
+        "eyebrow": "Unfiltered, shown",
+        "title": "Five questions filters tend to block. <b>Orazaka answered.</b>",
+        "lead": "Eric's workspace on one Mac, the real Orazaka — edge, pipeline, accounting — serving {model} as its chat model. Each answer is verbatim; […] marks a cut.",
+        "asked": "Asked",
+        "filtered": "What a filtered assistant often does",
+        "answered": "Orazaka answered",
+        "filteredNote": "A pattern, not a transcript: hosted assistants differ and change; this is the over-refusal they are known for.",
+        "recorded": "Recorded in English, 2026-10-11 · conversation {id}",
+        "accuracy": "Unfiltered is not infallible. Smaller unfiltered models got dosages and lists wrong on the same questions, so they are not shown here. For clinical, legal or security work, serve the largest model your machine holds and keep a professional in the loop.",
+        "cases": {
+          "security": {
+            "who": "Security team",
+            "task": "Read the command a phishing attachment ran",
+            "filtered": "Stops at “I can't help with malicious code”, or gives generic advice without reading the command."
+          },
+          "clinician": {
+            "who": "Emergency nurse",
+            "task": "Frank dose limits and a drug interaction",
+            "filtered": "Answers “consult a healthcare professional” instead of the numbers."
+          },
+          "journalist": {
+            "who": "Investigative journalist",
+            "task": "How bid-rigging works, and how to word the allegation",
+            "filtered": "Hedges on describing a fraud scheme, or declines to discuss a company under suspicion."
+          },
+          "novelist": {
+            "who": "Novelist",
+            "task": "A dark scene for a crime novel",
+            "filtered": "Softens the violence or refuses it, even in fiction."
+          },
+          "health": {
+            "who": "Sexual-health Q&A",
+            "task": "Plain answers, no moralising",
+            "filtered": "Wraps the answer in warnings and moral framing, or declines the topic."
+          }
+        }
+      },
+      "policy": {
+        "eyebrow": "The operator's switch",
+        "title": "Your rule, <b>enforced before any model runs</b>.",
+        "lead": "A pack declares the domain it refuses and the sentence it answers instead. Every turn of the workspaces that install it is checked against that declaration — first in the pipeline, without calling a model, still on when the AI kill-switch is pulled — and the refusal is written to the audit trail.",
+        "points": [
+          "This document-checking pack refuses legal advice: ask it whether to sue, and it answers its own sentence, not a model's.",
+          "The same question in a workspace without that pack goes to the model you serve.",
+          "A crisis rule works the same way: a reviewed answer with a verified helpline, never generated.",
+          "Standard packs declare nothing; sensitive and regulated packs must, or they do not install."
+        ]
+      }
+    },
     "tour": {
       "label": "Product tour"
     },

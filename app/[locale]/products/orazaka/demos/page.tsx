@@ -7,13 +7,14 @@ import { Mascot } from "@krizaka/ui/mascots";
 import { OrazakaLogo } from "@krizaka/ui";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { localizedMetadata } from "@/lib/seo";
-import { getDictionary } from "@/lib/i18n";
+import { asLocale, getDictionary } from "@/lib/i18n";
 import { DEMO_TOUR, DEMO_USE_CASES, tourSrc } from "@/lib/orazaka-demo";
 import MadeHereGallery from "@/app/components/demos/MadeHereGallery";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ProductTour from "@/app/components/ProductTour";
 import DemoClip from "@/app/components/demos/DemoClip";
+import UnfilteredModels from "@/app/components/orazaka/UnfilteredModels";
 import Rich from "@/app/components/Rich";
 import { reveal } from "@/lib/motion";
 import { cn } from "@krizaka/ui/cn";
@@ -127,6 +128,9 @@ export default async function OrazakaDemoPage({ params }: Props) {
           })}
         </div>
       </SectionBackdrop>
+
+      {/* ─── Unfiltered models, your rules: real answers, then the operator's rule ─── */}
+      <UnfilteredModels locale={asLocale(locale)} variant="demo" />
 
       {/* ─── What the image Studio made on the Mac, with the prompts ─── */}
       <section id="made-here" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }}>
