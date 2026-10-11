@@ -4,7 +4,6 @@ import {
   AuctionIcon,
   BillingIcon,
   ChallengeIcon,
-  CheckIcon,
   ExternalIcon,
   ForwardIcon,
   HeartIcon,
@@ -36,6 +35,8 @@ import { moduleMapData } from "@/lib/architecture-model";
 import { journeysFor } from "@/lib/journeys";
 import { OrochiaLogo } from "@krizaka/ui";
 import Rich from "@/app/components/Rich";
+import { ArgumentCard, CardGrid, DecisionList } from "@/app/components/sections";
+import "@/app/components/sections/sections.css";
 import { OrochiaIso } from "@/app/components/products/ProductIso";
 import { GlowCard } from "@krizaka/ui/glow-card";
 import { Meter } from "@krizaka/ui/meter";
@@ -86,11 +87,22 @@ const WAYS = [
   { id: "challenge", Icon: ChallengeIcon },
 ] as const;
 
+/** Auctions and challenges, argued: the flamingo gets paid (the winner pays, the creator is paid), the pigeon delivers
+    (pledges wait for the video). Words: site.orochia.rules.<id>. */
+const RULES = [
+  { id: "auctions", Icon: AuctionIcon, bird: "flamingo" },
+  { id: "challenges", Icon: ChallengeIcon, bird: "pigeon" },
+] as const;
+
 const node = "var(--kz-accent-2)";
 
 export default async function OrochiaPage({ params }: Props) {
   const { locale } = await params;
-  const t = getDictionary(locale).site.orochia;
+  const dict = getDictionary(locale);
+  const t = dict.site.orochia;
+  /* The page language's labels, shared with /open-source (site.blocks). */
+  const b = dict.site.blocks;
+  const dl = { chose: b.page.chose, refused: b.page.refused, because: b.page.because, cost: b.page.cost };
   const tables = orochia.modules.find((m) => m.id === "data")?.tables ?? [];
   const journeys = journeysFor("orochia", getDictionary(locale));
   const money = (cents: number) => formatUsd(cents, locale);
@@ -209,24 +221,20 @@ export default async function OrochiaPage({ params }: Props) {
             <p className="bp-eyebrow">{t.rules.eyebrow}</p>
             <h2 className="bp-h2"><Rich text={t.rules.title} /></h2>
           </div>
-          <div className="bp-cards" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))" }}>
-            {(["auctions", "challenges"] as const).map((id, i) => {
-              const Icon = id === "auctions" ? AuctionIcon : ChallengeIcon;
-              return (
-                <div key={id} className="bp-card" {...reveal(i + 1)}>
-                  <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
-                  <h3>{t.rules[id].title}</h3>
-                  <p>{t.rules[id].body}</p>
-                  <ul style={{ listStyle: "none", padding: 0, margin: "8px 0 0", display: "grid", gap: 8 }}>
-                    {t.rules[id].facts.map((fact) => (
-                      <li key={fact} style={{ display: "flex", gap: 8, fontSize: 13.5, lineHeight: 1.55, color: "var(--kz-text-primary)" }}>
-                        <CheckIcon size={16} style={{ flexShrink: 0, marginTop: 2, color: "var(--kz-accent-text)" }} /> {fact}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
+          <div className="bp-argue">
+            <CardGrid columns={2} min={320}>
+              {RULES.map(({ id, Icon, bird }) => (
+                <ArgumentCard
+                  key={id}
+                  id={`rules-${id}`}
+                  icon={<Icon size={20} nodeColor={node} />}
+                  title={t.rules[id].title}
+                  hook={{ label: b.trap, text: t.rules[id].trap }}
+                  points={{ label: b.answer, items: [t.rules[id].body, ...t.rules[id].facts] }}
+                  rule={{ bird, label: format(b.birdSays, { bird: b.birds[bird] }), text: t.rules[id].rule }}
+                />
+              ))}
+            </CardGrid>
           </div>
         </div>
       </SectionBackdrop>
@@ -265,6 +273,18 @@ export default async function OrochiaPage({ params }: Props) {
           </div>
         </div>
       </SectionBackdrop>
+
+      {/* ─── Decisions: built like financial infrastructure, and what it costs ─── */}
+      <section className="bp-wrap" id="decisions" style={{ scrollMarginTop: 72 }}>
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.decisions.eyebrow}</p>
+          <h2 className="bp-h2"><Rich text={t.decisions.title} /></h2>
+          <p className="bp-lead">{t.decisions.lead}</p>
+        </div>
+        <div className="bp-argue">
+          <DecisionList decisions={t.decisions.items} labels={dl} />
+        </div>
+      </section>
 
       {/* ─── How it works: the module map, its three journeys played step by step (lib/journeys.ts) ─── */}
       <section id="architecture" className="bp-wrap" style={{ scrollMarginTop: 72 }}>

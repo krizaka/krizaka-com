@@ -25,6 +25,8 @@ import Rich from "@/app/components/Rich";
 import { Card } from "@krizaka/ui/card";
 import { Mascot } from "@krizaka/ui/mascots";
 import { cn } from "@krizaka/ui/cn";
+import ButtonLink from "@/app/components/sections/ButtonLink";
+import { Stepper, type StepStatus } from "@krizaka/ui/stepper";
 
 /* ─── Sibling Navigation (Centered) ─── */
 function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr" | "en" }) {
@@ -523,22 +525,21 @@ function QuebecContextCard({ uc, locale, t }: { uc: UseCaseData; locale: "fr" | 
 }
 
 /* ─── Deployment Action Plan (Centered) ─── */
-function DeploymentPlan({ actionPlan, title, locale }: { actionPlan: UseCaseActionPlanStep[]; title: string; locale: "fr" | "en" }) {
+/* The deployment plan is a journey: the @krizaka/ui Stepper (an ordered list, each state said in words), the first
+   phase marked as where to start. */
+function DeploymentPlan({ actionPlan, title, locale, labels }: { actionPlan: UseCaseActionPlanStep[]; title: string; locale: "fr" | "en"; labels: Readonly<Record<StepStatus, string>> }) {
   return (
     <div style={{ marginBottom: "56px", width: "100%" }}>
       <h2 className="section-title">{title}</h2>
-      
-      <div className="action-plan-timeline">
-        {actionPlan.map((step, idx) => (
-          <div key={idx} className="action-plan-step">
-            <div className="step-badge">{step.phase}</div>
-            <div className="step-content">
-              <h3 className="step-title">{getLocalizedField(step.title, locale)}</h3>
-              <p className="step-desc">{getLocalizedField(step.desc, locale)}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <Stepper
+        className="uc-plan"
+        current={0}
+        labels={labels}
+        steps={actionPlan.map((step) => ({
+          title: `${step.phase} · ${getLocalizedField(step.title, locale)}`,
+          description: getLocalizedField(step.desc, locale),
+        }))}
+      />
     </div>
   );
 }
@@ -593,6 +594,7 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
           actionPlan={uc.actionPlan} 
           title={t.useCasePage.actionPlanTitle} 
           locale={locale} 
+          labels={t.useCasePage.stepper}
         />
 
         {/* Sibling navigation */}
@@ -611,10 +613,10 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         <div className="cta-container">
           <h2 className="cta-title">{t.useCasePage.ctaTitle}</h2>
           <p className="cta-desc">{t.useCasePage.ctaDesc}</p>
-          <Link href="/products/orazaka" className="cta-btn">
+          <ButtonLink href="/products/orazaka" variant="primary" size="lg">
             {t.useCasePage.ctaButton}
             <ArrowRight size={15} strokeWidth={2} />
-          </Link>
+          </ButtonLink>
         </div>
       </section>
 
@@ -1137,68 +1139,13 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         }
 
         /* Timeline Action Plan */
-        .action-plan-timeline {
-          position: relative;
-          padding-left: 20px;
-          display: flex;
-          flex-direction: column;
-          gap: 28px;
-          max-width: 720px;
-          margin: 0 auto;
-          text-align: left;
-        }
+        .uc-plan { max-width: 640px; margin: 0 auto; text-align: left; }
 
-        .action-plan-timeline::before {
-          content: '';
-          position: absolute;
-          left: 31px;
-          top: 14px;
-          bottom: 14px;
-          width: 2px;
-          border-left: 2px dashed var(--kz-border-default);
-          z-index: 0;
-        }
 
-        .action-plan-step {
-          display: flex;
-          gap: 20px;
-          position: relative;
-          z-index: 1;
-        }
 
-        .step-badge {
-          width: 24px;
-          height: 24px;
-          border-radius: 50%;
-          background: var(--kz-surface-2);
-          border: 2px solid var(--kz-border-subtle);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 10px;
-          font-family: var(--font-mono, monospace);
-          font-weight: 700;
-          color: var(--kz-accent);
-          flex-shrink: 0;
-        }
 
-        .step-content {
-          padding-top: 2px;
-        }
 
-        .step-title {
-          font-size: 14px;
-          font-weight: 650;
-          color: var(--kz-text-primary);
-          margin: 0 0 4px 0;
-        }
 
-        .step-desc {
-          margin: 0;
-          font-size: 12.5px;
-          color: var(--kz-text-muted);
-          line-height: 1.5;
-        }
 
         /* Sibling Nav Hover */
         .uc-sibling-link:hover {
@@ -1237,25 +1184,6 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
           line-height: 1.6;
         }
 
-        .cta-btn {
-          display: inline-flex;
-          align-items: center;
-          gap: 8px;
-          padding: 14px 28px;
-          border-radius: 9999px;
-          font-size: 13.5px;
-          font-weight: 600;
-          background: var(--kz-accent);
-          color: var(--kz-on-accent);
-          text-decoration: none;
-          font-family: var(--font-display), system-ui, sans-serif;
-          transition: transform 150ms ease, opacity 150ms ease;
-        }
-
-        .cta-btn:hover {
-          transform: translateY(-1px);
-          opacity: 0.95;
-        }
 
         /* Responsive styling */
         @media (max-width: 768px) {

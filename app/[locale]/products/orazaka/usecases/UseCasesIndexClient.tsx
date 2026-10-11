@@ -1,20 +1,19 @@
 "use client";
 
+/* The Orazaka use cases, in the Krizaka page language: the sub-page hero (back to the product, the falcon that watches
+   compliance), then one card per sector — lit by the brand under the pointer (GlowCard), rising once as it arrives. */
+
 import Link from "next/link";
-import {
-  ArrowRight,
-  ArrowLeft,
-  Megaphone,
-  TrendingUp,
-  Scale,
-  Headphones,
-  Building2,
-  Heart,
-} from "lucide-react";
+import { Megaphone, TrendingUp, Scale, Headphones, Building2, Heart } from "lucide-react";
+import { ForwardIcon } from "@krizaka/icons";
+import { GlowCard } from "@krizaka/ui/glow-card";
 import { useI18n } from "../../../../components/I18nProvider";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
+import { PageHero } from "../../../../components/sections";
+import "../../../../components/sections/sections.css";
 import { USE_CASES, getLocalizedField } from "@/lib/use-cases-data";
+import { reveal } from "@/lib/motion";
 
 const ICONS = [Megaphone, TrendingUp, Scale, Headphones, Building2, Heart];
 
@@ -22,185 +21,60 @@ export default function UseCasesIndexClient() {
   const { t, locale } = useI18n();
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
       <TopNavBar />
 
-      {/* Hero */}
-      <section
-        style={{
-          padding: "140px 24px 60px",
-          textAlign: "center",
-        }}
-      >
-        <Link
-          href="/"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "6px",
-            fontSize: "13px",
-            color: "var(--kz-text-muted)",
-            textDecoration: "none",
-            marginBottom: "24px",
-          }}
-        >
-          <ArrowLeft size={14} strokeWidth={1.5} />
-          Krizaka
-        </Link>
+      <PageHero
+        back={{ href: "/products/orazaka", label: "Orazaka" }}
+        eyebrow={t.useCases.sectionLabel}
+        title={t.useCases.sectionTitle}
+        lead={t.useCases.sectionDesc}
+        mascot={{ bird: "falcon", mood: "welcome" }}
+      />
 
-        <h1
-          style={{
-            fontFamily: "var(--font-display), system-ui, sans-serif",
-            fontSize: "clamp(2rem, 5vw, 3rem)",
-            fontWeight: 800,
-            letterSpacing: "-0.035em",
-            color: "var(--kz-text-primary)",
-            marginBottom: "16px",
-          }}
-        >
-          {t.useCases.sectionTitle}
-        </h1>
-        <p
-          style={{
-            fontSize: "16px",
-            color: "var(--kz-text-secondary)",
-            maxWidth: "520px",
-            margin: "0 auto",
-            lineHeight: 1.6,
-          }}
-        >
-          {t.useCases.sectionDesc}
-        </p>
-      </section>
-
-      {/* Grid */}
-      <section
-        style={{
-          maxWidth: "1120px",
-          margin: "0 auto",
-          padding: "0 24px 80px",
-        }}
-      >
-        <div
-          className="ucidx-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
-            gap: "14px",
-          }}
-        >
+      <section className="ucidx">
+        <ul className="ucidx-grid">
           {USE_CASES.map((uc, idx) => {
-            const Icon = ICONS[idx];
+            const Icon = ICONS[idx % ICONS.length];
             return (
-              <Link
-                key={uc.slug}
-                href={`/products/orazaka/usecases/${uc.slug}`}
-                className="ucidx-card"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  padding: "32px 28px 28px",
-                  borderRadius: "18px",
-                  background: "var(--kz-surface-1)",
-                  border: "1px solid var(--kz-border-subtle)",
-                  textDecoration: "none",
-                  transition: "border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    marginBottom: "20px",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "42px",
-                      height: "42px",
-                      borderRadius: "11px",
-                      background: "var(--kz-accent-soft)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <Icon size={18} strokeWidth={1.5} style={{ color: "var(--kz-accent)" }} />
-                  </div>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-mono, monospace)",
-                      fontSize: "10px",
-                      fontWeight: 600,
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      color: "var(--kz-accent)",
-                    }}
-                  >
-                    {getLocalizedField(uc.industry, locale)}
-                  </span>
-                </div>
-
-                <h2
-                  style={{
-                    fontFamily: "var(--font-display), system-ui, sans-serif",
-                    fontSize: "18px",
-                    fontWeight: 650,
-                    color: "var(--kz-text-primary)",
-                    letterSpacing: "-0.02em",
-                    marginBottom: "10px",
-                    lineHeight: 1.3,
-                  }}
-                >
-                  {getLocalizedField(uc.title, locale)}
-                </h2>
-
-                <p
-                  style={{
-                    fontSize: "14px",
-                    color: "var(--kz-text-muted)",
-                    lineHeight: 1.6,
-                    flex: 1,
-                    marginBottom: "16px",
-                  }}
-                >
-                  {getLocalizedField(uc.metaDescription, locale)}
-                </p>
-
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    color: "var(--kz-accent)",
-                  }}
-                >
-                  {t.useCases.learnMore}
-                  <ArrowRight size={13} strokeWidth={2} />
-                </div>
-              </Link>
+              <li key={uc.slug} {...reveal(idx % 3)}>
+                <GlowCard asChild className="ucidx-card">
+                  <Link href={`/products/orazaka/usecases/${uc.slug}`}>
+                    <span className="ucidx-head">
+                      <span className="ucidx-icon">
+                        <Icon size={18} strokeWidth={1.6} aria-hidden />
+                      </span>
+                      <span className="ucidx-industry">{getLocalizedField(uc.industry, locale)}</span>
+                    </span>
+                    <h2>{getLocalizedField(uc.title, locale)}</h2>
+                    <p>{getLocalizedField(uc.metaDescription, locale)}</p>
+                    <span className="ucidx-more">
+                      {t.useCases.learnMore} <ForwardIcon size={14} aria-hidden />
+                    </span>
+                  </Link>
+                </GlowCard>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </section>
 
       <SiteFooter />
 
       <style>{`
-        .ucidx-card:hover {
-          border-color: var(--kz-border-default) !important;
-          box-shadow: var(--kz-shadow-md) !important;
-          transform: translateY(-2px) !important;
-        }
-        @media (max-width: 720px) {
-          .ucidx-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
+        .ucidx { max-width: 72rem; margin: 0 auto; padding: 56px 20px 96px; }
+        .ucidx-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+        .ucidx-grid > li { display: flex; }
+        .ucidx-card { display: flex; flex-direction: column; gap: 10px; width: 100%; padding: 26px 24px 22px; border-radius: 20px; text-decoration: none;
+          background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); color: var(--kz-text-primary); }
+        .ucidx-card:focus-visible { outline: 2px solid var(--kz-accent); outline-offset: 3px; }
+        .ucidx-head { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+        .ucidx-icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; color: var(--kz-accent-text);
+          background: color-mix(in srgb, var(--kz-accent) 14%, var(--kz-surface-1)); border: 1px solid color-mix(in srgb, var(--kz-accent) 30%, transparent); }
+        .ucidx-industry { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--kz-accent-text); }
+        .ucidx-card h2 { margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: 18px; font-weight: 750; letter-spacing: -.02em; line-height: 1.3; }
+        .ucidx-card p { flex: 1; margin: 0; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
+        .ucidx-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 13.5px; font-weight: 700; color: var(--kz-accent-text); }
       `}</style>
     </main>
   );

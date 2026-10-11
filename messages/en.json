@@ -298,7 +298,9 @@
     "ctaTitle": "Ready to get started with cognitive engineering?",
     "ctaDesc": "Deploy Orazaka and configure your own compliance rules in minutes.",
     "ctaButton": "Explore Orazaka Packages",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "eyebrow": "Orazaka · cognitive engineering",
+    "backProduct": "Orazaka"
   },
   "useCasePage": {
     "backToUseCases": "Back to use cases",
@@ -313,7 +315,13 @@
     "composePackage": "Compose this package",
     "quebecContextTitle": "Regulatory Framework & Sovereignty in Quebec",
     "actionPlanTitle": "Projected Deployment & Integration Plan",
-    "topologyTitle": "Orazaka Interceptor Package Topology"
+    "topologyTitle": "Orazaka Interceptor Package Topology",
+    "stepper": {
+      "done": "Done",
+      "current": "Start here",
+      "upcoming": "Then",
+      "error": "Blocked"
+    }
   },
   "site": {
     "menu": {
@@ -830,7 +838,9 @@
             "Bids are held in credits and released the moment they are outbid.",
             "A bid in the last two minutes adds two minutes — no sniping.",
             "The creator has 48 h to accept the winning bid; only the winner watches."
-          ]
+          ],
+          "trap": "A video sold at a fixed price leaves money on the table — or never sells.",
+          "rule": "The winner pays, the creator is paid: outbid credits come back at once, nobody pays for a video they didn't win."
         },
         "challenges": {
           "title": "Challenges in escrow",
@@ -839,7 +849,9 @@
             "Goals from $10, open calls from $5.",
             "A dare is answered within 72 h.",
             "Delivered within 14 days, or every pledge comes back."
-          ]
+          ],
+          "trap": "Fans promise a creator money for a video, the video comes, and half the promises vanish.",
+          "rule": "Pledges wait in escrow until the video is delivered: then the creator is paid, otherwise every fan gets their credits back."
         }
       },
       "tourEyebrow": "The demo",
@@ -860,6 +872,37 @@
           "auctions": "Auctions",
           "challenges": "Challenges"
         }
+      },
+      "decisions": {
+        "eyebrow": "Decisions",
+        "title": "Built like financial infrastructure. <b>Here is what that costs.</b>",
+        "lead": "Every guarantee on this page is a decision in krizaka/orochia — what we chose, what we refused, why, and what you give up.",
+        "items": [
+          {
+            "chose": "Access granted only on the payment provider's signed webhook — exactly once.",
+            "refused": "Unlocking as soon as the checkout page says \"thank you\".",
+            "because": "A redirect can be forged or replayed; a signed webhook cannot.",
+            "cost": "A few seconds between payment and playback."
+          },
+          {
+            "chose": "A wallet of credits on an append-only, double-entry ledger.",
+            "refused": "A card charge for every tip, unlock and bid.",
+            "because": "One top-up, then one tap — and every movement written once, auditable, refundable.",
+            "cost": "Fans top up before they spend; a balance to keep in mind."
+          },
+          {
+            "chose": "Video straight to the CDN, played through signed links that expire after 5 minutes.",
+            "refused": "Serving media through the application servers.",
+            "because": "No raw URL to share or hotlink, and the servers never carry video.",
+            "cost": "Links cannot be bookmarked or embedded elsewhere — by design."
+          },
+          {
+            "chose": "18+ certification and § 2257 record checks before the first upload.",
+            "refused": "Moderating only after publication.",
+            "because": "Some content must never go online, not even for a minute.",
+            "cost": "A creator's onboarding takes longer than a sign-up."
+          }
+        ]
       }
     },
     "openSource": {
@@ -1407,15 +1450,36 @@
         "pillars": {
           "sovereignty": {
             "title": "Nothing leaves your infrastructure",
-            "body": "Models run on your machines. No third party sees a prompt, a document or a customer record — unless you connect a provider yourself."
+            "body": "Models run on your machines. No third party sees a prompt, a document or a customer record — unless you connect a provider yourself.",
+            "trap": "Your team pastes a client file into a cloud assistant. It has just left the country.",
+            "points": [
+              "Models run on your machines — Ollama on Apple Silicon or Linux.",
+              "A cloud provider only if you connect one, per model.",
+              "Prompts, files and embeddings never leave your network."
+            ],
+            "rule": "Nothing crosses the walls unless someone inside opened the door — and the log says who."
           },
           "cost": {
             "title": "A cost you decide",
-            "body": "No per-token bill from someone else's price list. Credits you set, and every Studio shows its price before it runs."
+            "body": "No per-token bill from someone else's price list. Credits you set, and every Studio shows its price before it runs.",
+            "trap": "The bill arrives at the end of the month, priced per token on a list someone else changes.",
+            "points": [
+              "Credits you set, per team and per Studio.",
+              "Every Studio shows its price before it runs.",
+              "Your hardware is the only fixed cost."
+            ],
+            "rule": "Paid for what was done, once — never for what failed, never twice."
           },
           "control": {
             "title": "Agents that ask first",
-            "body": "Agents act on your machines only with your approval, over an outbound-only link: no port to open, nothing runs silently."
+            "body": "Agents act on your machines only with your approval, over an outbound-only link: no port to open, nothing runs silently.",
+            "trap": "An agent with a token can touch everything its integration was granted — at 3 a.m., silently.",
+            "points": [
+              "Each action asks first; you approve, it runs.",
+              "An outbound-only link: no port to open on your network.",
+              "Every step written in the local audit log."
+            ],
+            "rule": "A message delivered is a message approved: nothing runs that nobody asked for."
           }
         }
       },
@@ -1488,7 +1552,8 @@
           "Prompts, documents and embeddings stay on infrastructure you control.",
           "Every request crosses the same governed pipeline: identity, security, credits, validation.",
           "Local audit logs show who asked what, and which model answered."
-        ]
+        ],
+        "rule": "I read every document where it lives. The personal data in it never leaves your servers, so there is no transfer to justify."
       },
       "how": {
         "eyebrow": "How it works",
@@ -1584,6 +1649,37 @@
           "documents": "Documents",
           "answers": "Answers"
         }
+      },
+      "decisions": {
+        "eyebrow": "Decisions",
+        "title": "What we chose, <b>and what it costs you.</b>",
+        "lead": "Every promise above is a decision in the code. Here is what we refused, why, and the price you pay for it — said plainly.",
+        "items": [
+          {
+            "chose": "Local inference by default — Ollama on your machines.",
+            "refused": "A cloud API as the default model, with \"privacy mode\" as an option.",
+            "because": "A default is what 90 % of requests use: the safe path has to be the easy one.",
+            "cost": "You need a machine that can run models (Apple Silicon, or a Linux box with a GPU)."
+          },
+          {
+            "chose": "One governed pipeline for every request: identity, security, credits, validation.",
+            "refused": "Checks written feature by feature, in each service.",
+            "because": "A rule enforced in one place cannot be forgotten in the next feature.",
+            "cost": "A few milliseconds per request, and a new capability must go through the pipeline."
+          },
+          {
+            "chose": "Zero telemetry. Nothing phones home.",
+            "refused": "Usage analytics \"to improve the product\".",
+            "because": "A sovereign tool that reports on you is not sovereign — and you can audit that it doesn't.",
+            "cost": "We learn from you only when you tell us: Discussions, issues, the contact form."
+          },
+          {
+            "chose": "Agents that ask before acting.",
+            "refused": "Autonomous agents with standing permissions.",
+            "because": "An approval is the cheapest audit there is.",
+            "cost": "One more click per action — on purpose."
+          }
+        ]
       }
     },
     "orazakaDemo": {

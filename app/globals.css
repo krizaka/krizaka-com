@@ -1550,6 +1550,8 @@ html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
 
 .bp-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .bp-center .bp-actions { justify-content: center; }
+/* The page language (app/components/sections) inside a brand page: its cards, decisions and rules under a bp heading. */
+.bp-argue { margin-top: 32px; }
 /* On a phone the actions of a block stack at full width, the main one first: one even column of buttons. */
 @media (max-width: 560px) { .bp-actions > * { flex: 1 1 100%; } }
 

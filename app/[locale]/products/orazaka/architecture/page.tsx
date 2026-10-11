@@ -6,10 +6,11 @@ import ModuleMap from "@/app/components/diagrams/ModuleMap";
 import InterceptorPipeline from "@/app/components/diagrams/InterceptorPipeline";
 import MessagingTopology from "@/app/components/diagrams/MessagingTopology";
 import DiagramSection from "@/app/components/diagrams/DiagramSection";
-import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { architectureCounts, messagingData, moduleMapData, pipelineSteps } from "@/lib/architecture-model";
 import { verifiedJourneyModules } from "@/lib/orazaka-journey";
 import { journeysFor } from "@/lib/journeys";
+import { PageHero } from "@/app/components/sections";
+import "@/app/components/sections/sections.css";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import RepositoryMap, { type RepositoryEntry } from "../../../../components/RepositoryMap";
@@ -46,47 +47,20 @@ export default async function ArchitecturePage({ params }: Props) {
     <main style={{ background: "var(--kz-surface-0)", color: "var(--kz-text-primary)", minHeight: "100vh" }}>
       <TopNavBar />
 
-      {/* ─── Hero: the Krizaka section backdrop (BRAND.md §4) — dome, perspective grid, the light drifting slowly ─── */}
-      <SectionBackdrop as="header" grid>
-        <div style={{ position: "relative", padding: "clamp(104px, 12vw, 148px) 20px 48px", textAlign: "center", maxWidth: "700px", margin: "0 auto" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-mono, monospace)",
-              fontSize: "11px",
-              fontWeight: 600,
-              textTransform: "uppercase",
-              letterSpacing: "0.18em",
-              color: "var(--kz-accent-text)",
-              margin: 0,
-            }}
-          >
-            {text.howItWorks}
-          </p>
-          <h1
-            style={{
-              fontFamily: "var(--font-display), system-ui, sans-serif",
-              fontSize: "clamp(2rem, 5.5vw, 2.75rem)",
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              lineHeight: 1.1,
-              color: "var(--kz-text-primary)",
-              margin: "14px 0 0",
-            }}
-          >
-            {text.theJourneyOfARequest}
-          </h1>
-          <p style={{ fontSize: "15px", lineHeight: 1.7, color: "var(--kz-text-secondary)", margin: "16px 0 0" }}>
-            {text.orazakaOrchestratesAModularSecure}
-          </p>
-
+      {/* ─── Hero: the sub-page first screen of the page language — back to the product, the duck that builds ─── */}
+      <PageHero
+        back={{ href: "/products/orazaka", label: "Orazaka" }}
+        eyebrow={text.howItWorks}
+        title={text.theJourneyOfARequest}
+        lead={text.orazakaOrchestratesAModularSecure}
+        mascot={{ bird: "duck", mood: "thinking" }}
+      >
           {/* six-stage hint chips */}
           <div
             style={{
               display: "flex",
               flexWrap: "wrap",
-              justifyContent: "center",
               gap: "8px",
-              margin: "24px auto 0",
               maxWidth: "620px",
             }}
           >
@@ -123,8 +97,7 @@ export default async function ArchitecturePage({ params }: Props) {
               </span>
             ))}
           </div>
-        </div>
-      </SectionBackdrop>
+      </PageHero>
 
       {/* ─── Evangelist teaching layer — the mental model + a narrated request, its modules checked against the code ─── */}
       <HowOrazakaWorks counts={{ core: counts.coreInterceptors, configured: counts.configuredInterceptors }} stepModules={verifiedJourneyModules()} />

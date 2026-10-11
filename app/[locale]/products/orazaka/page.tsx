@@ -22,7 +22,9 @@ import { OrazakaLogo } from "@krizaka/ui";
 import { Mascot } from "@krizaka/ui/mascots";
 import { DEMO_TOUR, tourSrc } from "@/lib/orazaka-demo";
 import { localizedMetadata } from "@/lib/seo";
-import { asLocale, getDictionary } from "@/lib/i18n";
+import { asLocale, format, getDictionary } from "@/lib/i18n";
+import { ArgumentCard, CardGrid, DecisionList, MascotRule } from "@/app/components/sections";
+import "@/app/components/sections/sections.css";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ProductTour from "@/app/components/ProductTour";
@@ -74,10 +76,12 @@ const PROOFS = [
   { id: "pipeline", Icon: ShieldIcon },
   { id: "telemetry", Icon: EyeOffIcon },
 ] as const;
+/** Why, argued: the trap elsewhere, what Orazaka does, the rule a bird stands for (one bird, one idea — the falcon
+    watches, the flamingo gets paid, the pigeon delivers). Words: site.orazakaPage.why.pillars.<id>. */
 const PILLARS = [
-  { id: "sovereignty", Icon: ShieldIcon },
-  { id: "cost", Icon: CreditsIcon },
-  { id: "control", Icon: AgentIcon },
+  { id: "sovereignty", Icon: ShieldIcon, bird: "falcon" },
+  { id: "cost", Icon: CreditsIcon, bird: "flamingo" },
+  { id: "control", Icon: AgentIcon, bird: "pigeon" },
 ] as const;
 const PLATFORM = [
   { id: "chat", Icon: ChatIcon },
@@ -104,7 +108,11 @@ const node = "var(--kz-accent)";
 
 export default async function OrazakaPage({ params }: Props) {
   const { locale } = await params;
-  const t = getDictionary(locale).site.orazakaPage;
+  const dict = getDictionary(locale);
+  const t = dict.site.orazakaPage;
+  /* The page language's labels, shared with /open-source (site.blocks). */
+  const b = dict.site.blocks;
+  const dl = { chose: b.page.chose, refused: b.page.refused, because: b.page.because, cost: b.page.cost };
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -217,14 +225,20 @@ export default async function OrazakaPage({ params }: Props) {
             <h2 className="bp-h2"><Rich text={t.why.title} /></h2>
             <p className="bp-lead">{t.why.lead}</p>
           </div>
-          <div className="bp-cards">
-            {PILLARS.map(({ id, Icon }, i) => (
-              <div key={id} className="bp-card" {...reveal(i + 1)}>
-                <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
-                <h3>{t.why.pillars[id].title}</h3>
-                <p>{t.why.pillars[id].body}</p>
-              </div>
-            ))}
+          <div className="bp-argue">
+            <CardGrid columns={3} min={300}>
+              {PILLARS.map(({ id, Icon, bird }) => (
+                <ArgumentCard
+                  key={id}
+                  id={`why-${id}`}
+                  icon={<Icon size={20} nodeColor={node} />}
+                  title={t.why.pillars[id].title}
+                  hook={{ label: b.trap, text: t.why.pillars[id].trap }}
+                  points={{ label: b.answer, items: t.why.pillars[id].points }}
+                  rule={{ bird, label: format(b.birdSays, { bird: b.birds[bird] }), text: t.why.pillars[id].rule }}
+                />
+              ))}
+            </CardGrid>
           </div>
         </div>
       </SectionBackdrop>
@@ -276,6 +290,18 @@ export default async function OrazakaPage({ params }: Props) {
         </div>
       </SectionBackdrop>
 
+      {/* ─── Decisions: what we chose, refused, why, and what it costs ─── */}
+      <section className="bp-wrap" id="decisions" style={{ scrollMarginTop: 72 }}>
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.decisions.eyebrow}</p>
+          <h2 className="bp-h2"><Rich text={t.decisions.title} /></h2>
+          <p className="bp-lead">{t.decisions.lead}</p>
+        </div>
+        <div className="bp-argue">
+          <DecisionList decisions={t.decisions.items} labels={dl} />
+        </div>
+      </section>
+
       {/* ─── Law 25 · GDPR ─── */}
       <section className="bp-wrap">
         <div className="bp-split">
@@ -283,6 +309,9 @@ export default async function OrazakaPage({ params }: Props) {
             <p className="bp-eyebrow">{t.law25.eyebrow}</p>
             <h2 className="bp-h2"><Rich text={t.law25.title} /></h2>
             <p className="bp-lead">{t.law25.lead}</p>
+            <div className="bp-argue" style={{ marginTop: 24 }}>
+              <MascotRule variant="callout" bird="owl" mood="welcome" label={format(b.birdSays, { bird: b.birds.owl })} text={t.law25.rule} />
+            </div>
           </div>
           <ul className="bp-ledger">
             {t.law25.points.map((point, i) => (

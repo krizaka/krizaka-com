@@ -298,7 +298,9 @@
     "ctaTitle": "Prêt à démarrer avec l'ingénierie cognitive ?",
     "ctaDesc": "Déployez Orazaka et configurez vos propres règles de conformité en quelques minutes.",
     "ctaButton": "Découvrir les Packages Orazaka",
-    "backHome": "Retour à l'accueil"
+    "backHome": "Retour à l'accueil",
+    "eyebrow": "Orazaka · ingénierie cognitive",
+    "backProduct": "Orazaka"
   },
   "useCasePage": {
     "backToUseCases": "Retour aux cas d'usage",
@@ -313,7 +315,13 @@
     "composePackage": "Composer ce package",
     "quebecContextTitle": "Cadre réglementaire & Souveraineté au Québec",
     "actionPlanTitle": "Plan de déploiement et intégration projetée",
-    "topologyTitle": "Topologie du Package d'Intercepteurs Orazaka"
+    "topologyTitle": "Topologie du Package d'Intercepteurs Orazaka",
+    "stepper": {
+      "done": "Fait",
+      "current": "Commencez ici",
+      "upcoming": "Ensuite",
+      "error": "Bloqué"
+    }
   },
   "site": {
     "menu": {
@@ -830,7 +838,9 @@
             "Les offres sont bloquées en crédits et libérées dès qu'elles sont dépassées.",
             "Une offre dans les deux dernières minutes ajoute deux minutes — pas d'enchère de dernière seconde.",
             "Le créateur a 48 h pour accepter l'offre gagnante ; seul le gagnant regarde."
-          ]
+          ],
+          "trap": "Une vidéo vendue à prix fixe laisse de l'argent sur la table — ou ne se vend jamais.",
+          "rule": "Le gagnant paie, le créateur est payé : les crédits surenchéris reviennent aussitôt, personne ne paie une vidéo qu'il n'a pas gagnée."
         },
         "challenges": {
           "title": "Défis sous séquestre",
@@ -839,7 +849,9 @@
             "Objectifs dès 10 $, appels ouverts dès 5 $.",
             "Un défi reçoit une réponse sous 72 h.",
             "Livré sous 14 jours, sinon chaque promesse est rendue."
-          ]
+          ],
+          "trap": "Des fans promettent de l'argent pour une vidéo, la vidéo arrive, et la moitié des promesses s'évanouit.",
+          "rule": "Les promesses attendent sous séquestre la livraison de la vidéo : le créateur est alors payé, sinon chaque fan récupère ses crédits."
         }
       },
       "tourEyebrow": "La démo",
@@ -860,6 +872,37 @@
           "auctions": "Enchères",
           "challenges": "Défis"
         }
+      },
+      "decisions": {
+        "eyebrow": "Décisions",
+        "title": "Bâti comme une infrastructure financière. <b>Voici ce que ça coûte.</b>",
+        "lead": "Chaque garantie de cette page est une décision dans krizaka/orochia — ce que nous avons choisi, refusé, pourquoi, et ce à quoi vous renoncez.",
+        "items": [
+          {
+            "chose": "L'accès accordé seulement sur le webhook signé du prestataire de paiement — exactement une fois.",
+            "refused": "Débloquer dès que la page de paiement affiche « merci ».",
+            "because": "Une redirection peut être falsifiée ou rejouée ; un webhook signé, non.",
+            "cost": "Quelques secondes entre le paiement et la lecture."
+          },
+          {
+            "chose": "Un portefeuille de crédits sur un grand livre en partie double, en ajout seul.",
+            "refused": "Un paiement par carte pour chaque pourboire, déblocage et enchère.",
+            "because": "Une recharge, puis un geste — et chaque mouvement écrit une fois, auditable, remboursable.",
+            "cost": "Les fans rechargent avant de dépenser ; un solde à garder en tête."
+          },
+          {
+            "chose": "La vidéo envoyée directement au CDN, lue par des liens signés qui expirent après 5 minutes.",
+            "refused": "Servir les médias par les serveurs applicatifs.",
+            "because": "Aucune URL brute à partager ou à aspirer, et les serveurs ne transportent jamais de vidéo.",
+            "cost": "Les liens ne peuvent être ni mis en favori ni intégrés ailleurs — c'est voulu."
+          },
+          {
+            "chose": "Certification 18+ et contrôle des registres § 2257 avant le premier téléversement.",
+            "refused": "Modérer seulement après publication.",
+            "because": "Certains contenus ne doivent jamais être en ligne, pas même une minute.",
+            "cost": "L'arrivée d'un créateur prend plus de temps qu'une inscription."
+          }
+        ]
       }
     },
     "openSource": {
@@ -1407,15 +1450,36 @@
         "pillars": {
           "sovereignty": {
             "title": "Rien ne quitte votre infrastructure",
-            "body": "Les modèles tournent sur vos machines. Aucun tiers ne voit un prompt, un document ou un dossier client — sauf si vous branchez vous-même un fournisseur."
+            "body": "Les modèles tournent sur vos machines. Aucun tiers ne voit un prompt, un document ou un dossier client — sauf si vous branchez vous-même un fournisseur.",
+            "trap": "Votre équipe colle un dossier client dans un assistant cloud. Il vient de quitter le pays.",
+            "points": [
+              "Les modèles tournent sur vos machines — Ollama sur Apple Silicon ou Linux.",
+              "Un fournisseur cloud seulement si vous en branchez un, modèle par modèle.",
+              "Requêtes, fichiers et vecteurs ne quittent jamais votre réseau."
+            ],
+            "rule": "Rien ne franchit les murs sans qu'une personne à l'intérieur ait ouvert la porte — et le journal dit qui."
           },
           "cost": {
             "title": "Un coût que vous décidez",
-            "body": "Pas de facture au token sur la grille d'un autre. Des crédits que vous fixez, et chaque Studio affiche son prix avant de démarrer."
+            "body": "Pas de facture au token sur la grille d'un autre. Des crédits que vous fixez, et chaque Studio affiche son prix avant de démarrer.",
+            "trap": "La facture arrive en fin de mois, au jeton, sur une grille que quelqu'un d'autre modifie.",
+            "points": [
+              "Des crédits que vous fixez, par équipe et par Studio.",
+              "Chaque Studio affiche son prix avant de s'exécuter.",
+              "Votre matériel est le seul coût fixe."
+            ],
+            "rule": "Payé pour ce qui a été fait, une fois — jamais pour un échec, jamais deux fois."
           },
           "control": {
             "title": "Des agents qui demandent d'abord",
-            "body": "Les agents agissent sur vos machines uniquement avec votre accord, par une liaison sortante : aucun port à ouvrir, rien ne s'exécute en silence."
+            "body": "Les agents agissent sur vos machines uniquement avec votre accord, par une liaison sortante : aucun port à ouvrir, rien ne s'exécute en silence.",
+            "trap": "Un agent muni d'un jeton peut toucher tout ce que son intégration autorise — à 3 h du matin, en silence.",
+            "points": [
+              "Chaque action demande d'abord ; vous approuvez, elle s'exécute.",
+              "Un lien sortant uniquement : aucun port à ouvrir sur votre réseau.",
+              "Chaque étape écrite dans le journal d'audit local."
+            ],
+            "rule": "Un message livré est un message approuvé : rien ne s'exécute sans que quelqu'un l'ait demandé."
           }
         }
       },
@@ -1488,7 +1552,8 @@
           "Prompts, documents et vecteurs restent sur une infrastructure que vous contrôlez.",
           "Chaque requête traverse le même pipeline gouverné : identité, sécurité, crédits, validation.",
           "Des journaux d'audit locaux montrent qui a demandé quoi, et quel modèle a répondu."
-        ]
+        ],
+        "rule": "Je lis chaque document là où il vit. Les renseignements personnels qu'il contient ne quittent jamais vos serveurs : il n'y a aucun transfert à justifier."
       },
       "how": {
         "eyebrow": "Fonctionnement",
@@ -1584,6 +1649,37 @@
           "documents": "Documents",
           "answers": "Réponses"
         }
+      },
+      "decisions": {
+        "eyebrow": "Décisions",
+        "title": "Ce que nous avons choisi, <b>et ce que ça vous coûte.</b>",
+        "lead": "Chaque promesse ci-dessus est une décision dans le code. Voici ce que nous avons refusé, pourquoi, et le prix que vous payez — dit simplement.",
+        "items": [
+          {
+            "chose": "L'inférence locale par défaut — Ollama sur vos machines.",
+            "refused": "Une API cloud comme modèle par défaut, avec un « mode confidentialité » en option.",
+            "because": "Le défaut, c'est ce qu'utilisent 90 % des requêtes : le chemin sûr doit être le plus simple.",
+            "cost": "Il vous faut une machine capable de faire tourner des modèles (Apple Silicon, ou un Linux avec GPU)."
+          },
+          {
+            "chose": "Un seul pipeline gouverné pour chaque requête : identité, sécurité, crédits, validation.",
+            "refused": "Des contrôles écrits fonctionnalité par fonctionnalité, dans chaque service.",
+            "because": "Une règle appliquée à un seul endroit ne peut pas être oubliée dans la prochaine fonctionnalité.",
+            "cost": "Quelques millisecondes par requête, et toute nouvelle capacité doit passer par le pipeline."
+          },
+          {
+            "chose": "Zéro télémétrie. Rien ne rappelle la maison.",
+            "refused": "Des statistiques d'usage « pour améliorer le produit ».",
+            "because": "Un outil souverain qui rend compte de vous n'est pas souverain — et vous pouvez vérifier qu'il ne le fait pas.",
+            "cost": "Nous n'apprenons de vous que ce que vous nous dites : Discussions, tickets, formulaire de contact."
+          },
+          {
+            "chose": "Des agents qui demandent avant d'agir.",
+            "refused": "Des agents autonomes aux permissions permanentes.",
+            "because": "Une approbation est l'audit le moins cher qui soit.",
+            "cost": "Un clic de plus par action — volontairement."
+          }
+        ]
       }
     },
     "orazakaDemo": {
