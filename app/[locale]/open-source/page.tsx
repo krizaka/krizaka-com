@@ -118,7 +118,10 @@ export default async function OpenSourcePage({ params }: Props) {
         </ol>
       </section>
 
-      <section className="os-section" id="building-blocks" aria-labelledby="blocks-title">
+      {/* The building blocks stand on their own backdrop (BRAND.md §4): the brand gradient and a light dome mark the
+          section the page is about. */}
+      <SectionBackdrop as="section" id="building-blocks" aria-labelledby="blocks-title" className="os-blocks">
+      <div className="os-section">
         <SectionHeading id="blocks-title" eyebrow={w.eyebrow} title={w.title} lead={w.lead} />
         <CardGrid columns={3}>
           {BUILDING_BLOCKS.map((block) => (
@@ -133,7 +136,8 @@ export default async function OpenSourcePage({ params }: Props) {
             {w.forums.ui} <ExternalIcon size={13} aria-hidden />
           </a>
         </DiscussionCta>
-      </section>
+      </div>
+      </SectionBackdrop>
 
       {(["orazaka", "orochia"] as const).map((product) => (
         <section key={product} className="os-section">
@@ -309,6 +313,8 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-count { margin: 18px 0 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); }
         .os-count a { color: var(--kz-accent); text-decoration: none; }
         .os-section { max-width: 72rem; margin: 0 auto; padding: 56px 20px; }
+        .os-blocks { scroll-margin-top: 64px; }
+        .os-blocks > .os-section { padding-top: 72px; padding-bottom: 72px; }
         .os-h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 800; letter-spacing: -.025em; margin: 0 0 28px; }
 
         .os-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1px;

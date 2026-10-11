@@ -1818,71 +1818,79 @@
         "feedbackTitle": "Tell us where it hurts.",
         "feedbackBody": "A block is right when it survives your code base, not ours. Ask in the block's thread, propose a change as an idea, or report a bug on its repository — every decision on this page is open to a better argument.",
         "others": "The other blocks",
-        "metaTitle": "{name} — what it removes, what we chose and why"
+        "metaTitle": "{name} — what it removes, what we chose and why",
+        "toc": "On this page",
+        "buildTool": "Build tool"
       },
       "items": {
         "krizaka-platform-kit": {
           "name": "Platform kit",
           "tagline": "The cross-cutting code every Spring Boot service writes — written once, with its invariants tested.",
-          "trap": "Publishing an event right after the database write: on a crash between the two, the event is lost; send it first and a rollback has already told the world. A failing @RabbitListener requeued forever blocks its queue. Every service invents its own error JSON. Across Orazaka's services this code existed five to seven times — with three live bugs between the copies.",
+          "trap": "Publishing an event right after the database write: on a crash between the two, the event is lost; send it first and a rollback has already told the world. A failing `@RabbitListener` requeued forever blocks its queue. Every service invents its own error JSON. Across Orazaka's services this code existed five to seven times — with three live bugs between the copies.",
           "answer": "Four modules and four starters: one security baseline for every filter chain, events through a transactional outbox, consumer queues that retry then dead-letter, idempotent consumption, RFC 9457 errors with a request id, and required service names on every metric.",
-          "rule": "Nothing is open by omission. SecurityBaseline ends every chain with anyRequest().authenticated(): the path you forgot to list is closed, not public.",
+          "rule": "Nothing is open by omission. `SecurityBaseline` ends every chain with `anyRequest().authenticated()`: the path you forgot to list is closed, not public.",
           "problem": [
-            "Dual write: a service that writes its row then calls rabbitTemplate.convertAndSend loses the event when it crashes in between, and one that sends first announces changes that roll back.",
+            "Dual write: a service that writes its row then calls `rabbitTemplate.convertAndSend` loses the event when it crashes in between, and one that sends first announces changes that roll back.",
             "Poison messages: a listener that throws on a malformed message is redelivered at once, forever, and nothing else in the queue moves.",
             "Deduplication done by hand: a \"does it exist? then insert\" lets two overlapping deliveries both through — exactly when a broker redelivers a slow first attempt — and a claim kept after a failure silently drops the retry.",
             "Security chains copied per service: two of six had drifted in Orazaka; one answered a CORS preflight with 401."
           ],
           "decisions": [
             {
-              "chose": "A transactional outbox: EventPublisher.publish writes a row of your outbox in your transaction; a relay claims rows with FOR UPDATE SKIP LOCKED and publishes them, with a messageId chosen at write time.",
+              "chose": "A transactional outbox: `EventPublisher.publish` writes a row of your outbox in your transaction; a relay claims rows with `FOR UPDATE SKIP LOCKED` and publishes them, with a `messageId` chosen at write time.",
               "refused": "Publishing to the broker from the service method, and a distributed transaction (XA) across database and broker.",
-              "because": "The event commits or rolls back with the change. A relay that crashes republishes the same messageId, and the consumer's dedup makes it a no-op.",
-              "cost": "An outbox table per context (you implement OutboxStore over your schema) and a polling delay between commit and publish."
+              "because": "The event commits or rolls back with the change. A relay that crashes republishes the same `messageId`, and the consumer's dedup makes it a no-op.",
+              "cost": "An outbox table per context (you implement `OutboxStore` over your schema) and a polling delay between commit and publish."
             },
             {
-              "chose": "The envelope in AMQP headers (kz-type, kz-version, kz-producer, kz-correlation-id, kz-occurred-at), the body the bare event, and a JSON Schema per event in the producer's -api module.",
+              "chose": "The envelope in AMQP headers (`kz-type`, `kz-version`, `kz-producer`, `kz-correlation-id`, `kz-occurred-at`), the body the bare event, and a JSON Schema per event in the producer's `-api` module.",
               "refused": "A shared jar of event DTOs, and a JSON wrapper around every body.",
-              "because": "A shared DTO jar ties every service's release to every other's. A schema checked by tests on both sides (EventContractTest) gives the contract without the coupling, and the body stays readable by any language.",
+              "because": "A shared DTO jar ties every service's release to every other's. A schema checked by tests on both sides (`EventContractTest`) gives the contract without the coupling, and the body stays readable by any language.",
               "cost": "Each consumer keeps its own tolerant copy of the event and one contract test."
             },
             {
-              "chose": "Quorum queues declared in one line (KrizakaQueues.consumer), a stateless retry with back-off — 5 attempts from 500 ms — then the queue’s .dlq twin with the original headers and the exception.",
+              "chose": "Quorum queues declared in one line (`KrizakaQueues.consumer`), a stateless retry with back-off — 5 attempts from 500 ms — then the queue’s `.dlq` twin with the original headers and the exception.",
               "refused": "Spring's default requeue on failure.",
               "because": "A requeued poison message loops forever; in the DLQ it is visible, with the reason, and can be replayed by hand.",
               "cost": "A queue already declared as classic must be drained and redeclared once."
             },
             {
-              "chose": "RFC 9457 Problem Details for every error: a DomainException becomes its 4xx with a stable code and the requestId; bean validation a 422 with errors[]; anything unexpected a 500 that never carries its message.",
+              "chose": "RFC 9457 Problem Details for every error: a `DomainException` becomes its 4xx with a stable code and the `requestId`; bean validation a 422 with `errors[]`; anything unexpected a 500 that never carries its message.",
               "refused": "Free-form error bodies per service, and stack traces or exception messages in 500 responses.",
-              "because": "A client handles one shape, and the requestId in the response is the one in the log line — a support ticket points at the failure.",
-              "cost": "Your exceptions extend DomainException (NotFoundException, ConflictException…) to choose their status."
+              "because": "A client handles one shape, and the `requestId` in the response is the one in the log line — a support ticket points at the failure.",
+              "cost": "Your exceptions extend `DomainException` (`NotFoundException`, `ConflictException`…) to choose their status."
             },
             {
               "chose": "Starters that are POMs only, over modules usable alone; defaults applied at the lowest priority.",
-              "refused": "Renaming the modules into starters, and defaults that override application.yml.",
-              "because": "A product declares capabilities, not the Spring list behind them; a Spring Boot upgrade changes the starters, not your POM — and your application.yml always wins.",
+              "refused": "Renaming the modules into starters, and defaults that override `application.yml`.",
+              "because": "A product declares capabilities, not the Spring list behind them; a Spring Boot upgrade changes the starters, not your POM — and your `application.yml` always wins.",
               "cost": "Java 21 and Spring Boot 4.0 only."
             }
           ],
           "notFor": [
             "Your services run on Spring Boot 3 or Java 17 — the kit targets Spring Boot 4.0 and Java 21.",
-            "Your HTTP layer is WebFlux: krizaka-web configures servlet applications only.",
-            "Your bus is Kafka: krizaka-messaging is RabbitMQ (AMQP 0-9-1) only.",
-            "Your tokens come from an external identity provider signing with RS256 or ES256: krizaka-security verifies HS256 today."
+            "Your HTTP layer is WebFlux: `krizaka-web` configures servlet applications only.",
+            "Your bus is Kafka: `krizaka-messaging` is RabbitMQ (AMQP 0-9-1) only.",
+            "Your tokens come from an external identity provider signing with RS256 or ES256: `krizaka-security` verifies HS256 today."
           ],
           "status": "0.2.0 on Maven Central (2026-10-10): the four modules and the four starters, built and tested on real PostgreSQL and RabbitMQ in CI.",
           "next": {
-            "processOnce": "MessageDedup.processOnce — claim, run, give the claim back on failure. Five listeners in notifications and billing repeat those eight lines today; one of them documents the forgotten release as \"the settlement is lost forever\". Lands in 0.3.0.",
+            "processOnce": "`MessageDedup.processOnce` — claim, run, give the claim back on failure. Five listeners in notifications and billing repeat those eight lines today; one of them documents the forgotten release as \"the settlement is lost forever\". Lands in 0.3.0.",
             "keys": "One shared HS256 secret signs and verifies: a service that can verify can mint. Decided: issuer-signed session tokens (JWKS) and per-caller service tokens, HS256 deprecated over one minor."
-          }
+          },
+          "headline": "An event published after the commit is lost on the next crash.",
+          "does": [
+            "Events go through a transactional outbox: they commit or roll back with your data.",
+            "Queues retry 5 times, then dead-letter to `.dlq` — a poison message never loops.",
+            "One security baseline and RFC 9457 errors with a `requestId`, in every service."
+          ]
         },
         "krizaka-users": {
           "name": "Users",
           "tagline": "Sign-up, login, profiles, API keys and roles as a service — with a typed client for the others.",
           "trap": "Sign-up looks like a weekend. Then come e-mail verification, reset tokens that must expire and be single-use, Google and GitHub accounts to link, API keys, roles in a JWT — and every other service validating that JWT its own way.",
-          "answer": "A Spring Boot service (or the -core you embed) that registers, verifies, logs in with a password or Google/GitHub, resets passwords, issues API keys and session JWTs carrying roles — and a client that every other service calls with a SERVICE token.",
-          "rule": "The falcon watches the door: a reset token is single-use, stored as a SHA-256 hash and dead after 15 minutes; a password is a BCrypt hash; a provider key is encrypted with AES-256 before it touches the disk.",
+          "answer": "A Spring Boot service (or the `-core` you embed) that registers, verifies, logs in with a password or Google/GitHub, resets passwords, issues API keys and session JWTs carrying roles — and a client that every other service calls with a `SERVICE` token.",
+          "rule": "The owl knows every face and keeps no secret in clear: a reset token is single-use, stored as a SHA-256 hash and dead after 15 minutes; a password is a BCrypt hash; a provider key is encrypted with AES-256 before it touches the disk.",
           "problem": [
             "Reset links that work twice, never expire, or sit in the database in clear text — readable by anyone with a backup.",
             "A users table that grows a column per product feature until another product cannot reuse it.",
@@ -1890,10 +1898,10 @@
           ],
           "decisions": [
             {
-              "chose": "Other services verify the session JWT locally (krizaka-security), with roles in the token.",
+              "chose": "Other services verify the session JWT locally (`krizaka-security`), with roles in the token.",
               "refused": "Calling the users service (token introspection) on every request.",
               "because": "The users service being down does not take the platform down, and a request costs no network hop.",
-              "cost": "A revoked session stays valid until it expires (PT12H by default, IDENTITY_JWT_TTL)."
+              "cost": "A revoked session stays valid until it expires (`PT12H` by default, `IDENTITY_JWT_TTL`)."
             },
             {
               "chose": "A profile is a theme plus attributes your application defines — the answers of an onboarding form whose JSON schema you supply — stored as given and never interpreted.",
@@ -1902,10 +1910,10 @@
               "cost": "Your code reads its attributes with its own defaults."
             },
             {
-              "chose": "A published contract (krizaka-users-api), a client with a per-entry cache, and an embeddable -core.",
+              "chose": "A published contract (`krizaka-users-api`), a client with a per-entry cache, and an embeddable `-core`.",
               "refused": "A library that each application wires to its own tables.",
               "because": "One place hashes passwords and signs tokens; a fix lands once.",
-              "cost": "A PostgreSQL database and RabbitMQ for its events (evt.user.registered, evt.password.reset)."
+              "cost": "A PostgreSQL database and RabbitMQ for its events (`evt.user.registered`, `evt.password.reset`)."
             }
           ],
           "notFor": [
@@ -1917,13 +1925,19 @@
           "next": {
             "release": "BOM 0.2.0 manages this block at an unpublished 0.2.0: declare 0.1.0 explicitly until BOM 0.3.0.",
             "keys": "Session tokens signed by this service only, verified with its JWKS by the others — no shared secret."
-          }
+          },
+          "headline": "Sign-up looks like a weekend. Reset tokens, OAuth and JWTs make it a quarter.",
+          "does": [
+            "Register, verify, log in with a password or Google/GitHub, reset — as a service.",
+            "Session JWTs carry the roles; every other service verifies them locally.",
+            "A typed `UserDirectoryClient` with a `SERVICE` token and a per-entry cache."
+          ]
         },
         "krizaka-notifications": {
           "name": "Notifications",
           "tagline": "E-mail, SMS and webhooks behind one event: applications never talk to an SMTP server again.",
           "trap": "Each service that sends its own e-mails embeds an SMTP client, templates and retries. A provider outage becomes a bug in every one of them, and an e-mail sent inside a transaction that then rolls back cannot be unsent.",
-          "answer": "A service that consumes evt.notification.requested (and the users events), renders a template for the locale and delivers on the requested channel: SMTP, Twilio SMS, or an HTTP webhook.",
+          "answer": "A service that consumes `evt.notification.requested` (and the users events), renders a template for the locale and delivers on the requested channel: SMTP, Twilio SMS, or an HTTP webhook.",
           "rule": "The pigeon delivers each message once — or fails where you can see it. A channel that is not configured fails and goes to the dead-letter queue; it is never skipped in silence.",
           "problem": [
             "A sign-up that fails because the mail server is slow.",
@@ -1934,7 +1948,7 @@
             {
               "chose": "An event, published through the producer's outbox.",
               "refused": "A synchronous \"send e-mail\" HTTP endpoint.",
-              "because": "No e-mail for a rolled-back change; an SMTP outage delays mail instead of failing sign-ups; a redelivery is sent once (deduplicated by messageId).",
+              "because": "No e-mail for a rolled-back change; an SMTP outage delays mail instead of failing sign-ups; a redelivery is sent once (deduplicated by `messageId`).",
               "cost": "RabbitMQ between your application and the service."
             },
             {
@@ -1955,10 +1969,16 @@
             "Your application has no message broker and won't run one.",
             "You need mobile push: not a channel yet (Orochia uses Expo's push service on its own)."
           ],
-          "status": "0.1.0 on Maven Central (the -api contract). The service is built from source or as an image; 0.2.0 ships in November.",
+          "status": "0.1.0 on Maven Central (the `-api` contract). The service is built from source or as an image; 0.2.0 ships in November.",
           "next": {
             "release": "BOM 0.2.0 manages this block at an unpublished 0.2.0: declare 0.1.0 explicitly until BOM 0.3.0."
-          }
+          },
+          "headline": "An e-mail sent inside a transaction that rolls back can't be unsent.",
+          "does": [
+            "Publish `evt.notification.requested` in your transaction — no SMTP client in your service.",
+            "Plain-text templates per locale, `en` as the fallback.",
+            "E-mail (SMTP), SMS (Twilio) or a webhook to allow-listed hosts: the same request."
+          ]
         },
         "krizaka-billing": {
           "name": "Billing & credits",
@@ -1991,8 +2011,8 @@
               "cost": "A price change is a data migration you review."
             },
             {
-              "chose": "A no-op adapter when krizaka.billing.enabled is false.",
-              "refused": "if (billingEnabled) at every call site.",
+              "chose": "A no-op adapter when `krizaka.billing.enabled` is false.",
+              "refused": "`if (billingEnabled)` at every call site.",
               "because": "The same code runs metered and unmetered.",
               "cost": "None worth naming."
             }
@@ -2001,17 +2021,23 @@
             "You need invoices, taxes or card payments: billing counts credits; collecting money is yours (a top-up credits a wallet).",
             "Your capabilities are not AI work — today. The contract still names Orazaka's (CHAT, IMAGE, AUDIO, VIDEO, AGENT) and its measurements (tokens, GPU seconds…); see below."
           ],
-          "status": "0.1.0 on Maven Central (api, client). 0.2.0 — the outbox implements OutboxStore.append, every event has its JSON Schema — is merged and ships in November.",
+          "status": "0.1.0 on Maven Central (api, client). 0.2.0 — the outbox implements `OutboxStore.append`, every event has its JSON Schema — is merged and ships in November.",
           "next": {
             "vocabulary": "Decided: capabilities and units become keys declared in the price book, measurements a map of quantities; Orazaka keeps its enums in Orazaka. A reusable billing block cannot speak one product's vocabulary.",
             "release": "BOM 0.2.0 manages this block at an unpublished 0.2.0: declare 0.1.0 explicitly until BOM 0.3.0."
-          }
+          },
+          "headline": "Debit after and the work ran on credit nobody had. Debit before and failures get billed.",
+          "does": [
+            "`hold` the estimate before the work, then `settleMeasured` or `release`.",
+            "Every debit carries an idempotency key: a redelivered message is charged once.",
+            "Plans, subscriptions, packs and wallets around an append-only ledger."
+          ]
         },
         "krizaka-build": {
           "name": "Build, BOM & test kit",
           "tagline": "The parent POM, the BOM and the governance tests behind every com.krizaka artifact.",
           "trap": "Every multi-repository Java organisation ends up with parent POMs that drift: a module on another Java, unpinned plugins, a POM that Maven Central rejects for a missing licence block. And a BOM that imports Spring's silently overrides the Spring Boot version you chose.",
-          "answer": "krizaka-parent (Central metadata, Java 21, formatting checked, unit and integration tests, coverage, a signed release in one command), krizaka-bom (the compatible set of every com.krizaka artifact) and krizaka-test-support (architecture rules, one PostgreSQL + RabbitMQ per test run, event contract tests).",
+          "answer": "`krizaka-parent` (Central metadata, Java 21, formatting checked, unit and integration tests, coverage, a signed release in one command), `krizaka-bom` (the compatible set of every com.krizaka artifact) and `krizaka-test-support` (architecture rules, one PostgreSQL + RabbitMQ per test run, event contract tests).",
           "rule": "A rule that judges nothing passes nothing. Every rule of the test kit fails on an empty population — a typo in a package name cannot turn a check into a green tick.",
           "problem": [
             "Conventions in a wiki: true on the day they are written.",
@@ -2020,13 +2046,13 @@
           ],
           "decisions": [
             {
-              "chose": "A BOM that carries only com.krizaka artifacts; the parent has no dependencyManagement of its own.",
-              "refused": "Importing spring-boot-dependencies in our BOM.",
-              "because": "Importing krizaka-bom must never pin a version you chose. Your Spring Boot BOM stays yours; ours sits beside it.",
+              "chose": "A BOM that carries only com.krizaka artifacts; the parent has no `dependencyManagement` of its own.",
+              "refused": "Importing `spring-boot-dependencies` in our BOM.",
+              "because": "Importing `krizaka-bom` must never pin a version you chose. Your Spring Boot BOM stays yours; ours sits beside it.",
               "cost": "You import Spring Boot's BOM (or parent) yourself."
             },
             {
-              "chose": "Architecture rules as tests (CodeRules, SourceRules, ConfigBindingRules: layering, constructor injection, private state, no Environment injection…).",
+              "chose": "Architecture rules as tests (`CodeRules`, `SourceRules`, `ConfigBindingRules`: layering, constructor injection, private state, no Environment injection…).",
               "refused": "A review checklist.",
               "because": "A rule that runs on every build is the only kind still true six months later.",
               "cost": "Rules are opinionated: take the ones that fit, call them from your own test."
@@ -2042,28 +2068,34 @@
             "You do not publish to Maven Central and don't want our conventions (google-java-format, Java 21) on your build: import the BOM, skip the parent.",
             "You are on Java 17 or earlier."
           ],
-          "status": "0.2.0 on Maven Central: krizaka-parent, krizaka-bom, krizaka-test-support (with EventContractTest).",
+          "status": "0.2.0 on Maven Central: `krizaka-parent`, `krizaka-bom`, `krizaka-test-support` (with `EventContractTest`).",
           "next": {
             "bom": "BOM 0.2.0 names users, notifications and billing at a 0.2.0 that is not published yet. Decided: a BOM release resolves every artifact it manages before it is signed; BOM 0.3.0 waits for the three."
-          }
+          },
+          "headline": "Parent POMs drift — and a Spring BOM silently overrides the Boot version you chose.",
+          "does": [
+            "`krizaka-parent`: Java 21, pinned plugins, Central metadata, a signed release in one command.",
+            "`krizaka-bom`: the compatible set of every `com.krizaka` artifact, and nothing else.",
+            "`krizaka-test-support`: architecture rules, real PostgreSQL + RabbitMQ, event contract tests."
+          ]
         },
         "krizaka-ui": {
           "name": "Krizaka UI",
           "tagline": "Tokens, a Tailwind v4 preset, accessible primitives, icons and i18n — web and React Native.",
-          "trap": "Three products, three token vocabularies: we measured 1,153 light: overrides in one application, the same card written five times, and focus traps, keyboard handling and ARIA rewritten by hand in each kit.",
-          "answer": "One semantic vocabulary (--kz-*) compiled from design tokens, a preset that turns it into Tailwind utilities, and primitives — button, card, dialog, field, tabs, toast, command palette… — with React Native parity, one entry point each. The documentation of every component is generated from its code.",
-          "rule": "The owl reads the code, not a wiki: every component's page on krizaka.com/docs/ui is generated from its meta.ts and its named examples, and the registry tests fail when one is missing.",
+          "trap": "Three products, three token vocabularies: we measured 1,153 `light:` overrides in one application, the same card written five times, and focus traps, keyboard handling and ARIA rewritten by hand in each kit.",
+          "answer": "One semantic vocabulary (`--kz-*`) compiled from design tokens, a preset that turns it into Tailwind utilities, and primitives — button, card, dialog, field, tabs, toast, command palette… — with React Native parity, one entry point each. The documentation of every component is generated from its code.",
+          "rule": "The owl reads the code, not a wiki: every component's page on krizaka.com/docs/ui is generated from its `meta.ts` and its named examples, and the registry tests fail when one is missing.",
           "problem": [
-            "A theme implemented as light: and dark: variants in every component — a new theme means touching all of them.",
+            "A theme implemented as `light:` and dark: variants in every component — a new theme means touching all of them.",
             "Accessibility rewritten per product, and wrong in at least one.",
             "A documentation site that describes last quarter's props."
           ],
           "decisions": [
             {
-              "chose": "One token vocabulary; dark on :root, light on html.light; a brand overrides values (brands/scoped.css).",
-              "refused": "light:/dark: variants in components, and a token set per product.",
+              "chose": "One token vocabulary; dark on `:root`, light on `html.light`; a brand overrides values (`brands/scoped.css`).",
+              "refused": "`light:/dark:` variants in components, and a token set per product.",
               "because": "A theme or a brand is a set of values: Orazaka's orange and Orochia's violet use the same components as this site.",
-              "cost": "Components read var(--kz-*) only; raw palette colours are refused by the lint rules."
+              "cost": "Components read `var(--kz-*)` only; raw palette colours are refused by the lint rules."
             },
             {
               "chose": "Radix for every non-trivial interaction, variants with tailwind-variants, every story audited by axe in dark and light on each pull request.",
@@ -2074,29 +2106,39 @@
             {
               "chose": "Words arrive as props; no translation function inside the library.",
               "refused": "Bundling a translation runtime.",
-              "because": "Any i18n works — ours (@krizaka/i18n, typed catalogues and a CI check) or yours.",
+              "because": "Any i18n works — ours (`@krizaka/i18n`, typed catalogues and a CI check) or yours.",
               "cost": "You pass the labels."
             },
             {
-              "chose": "A ratchet: per-repository counters of raw palette classes, light: variants, [var(--…)] utilities and className templates that may only go down.",
+              "chose": "A ratchet: per-repository counters of raw palette classes, `light:` variants, `[var(--…)]` utilities and className templates that may only go down.",
               "refused": "A big-bang migration, and a lint rule switched on at once.",
               "because": "An existing application adopts it screen by screen without letting the debt grow back.",
-              "cost": "A lint-ratchet.json to commit and a check in CI."
+              "cost": "A `lint-ratchet.json` to commit and a check in CI."
             }
           ],
           "notFor": [
             "You don't use Tailwind v4: the preset requires it (the tokens alone are plain CSS variables).",
             "You want an unstyled kit and own every pixel: use Radix directly.",
-            "You need charts today: @krizaka/charts is being built."
+            "You need charts today: `@krizaka/charts` is being built."
           ],
-          "status": "@krizaka/ui, tokens and tailwind 2.2.0 on npm (latest) — 2.2.0 brought the five birds of this page (@krizaka/ui/mascots); icons, i18n, intl and config 0.1.0. Supported: majors N and N-1, fixes for six months after N+1.",
+          "status": "@krizaka/ui, tokens and tailwind 2.2.0 on npm (latest) — 2.2.0 brought the five birds of this page (`@krizaka/ui/mascots`); icons, i18n, intl and config 0.1.0. Supported: majors N and N-1, fixes for six months after N+1.",
           "next": {
-            "charts": "@krizaka/charts — theme- and brand-aware charts on Apache ECharts, each with an accessible data table, and the effects and blocks after it: the roadmap is an open epic."
-          }
+            "charts": "`@krizaka/charts` — theme- and brand-aware charts on Apache ECharts, each with an accessible data table, and the effects and blocks after it: the roadmap is an open epic."
+          },
+          "headline": "Three products, three token vocabularies, 1,153 `light:` overrides in one app.",
+          "does": [
+            "One semantic vocabulary, `--kz-*`, compiled from design tokens — dark and light alike.",
+            "Accessible primitives with React Native parity, one entry point each.",
+            "Every component's documentation generated from its code."
+          ]
         }
       },
       "copy": "Copy",
-      "copied": "Copied"
+      "copied": "Copied",
+      "more": "The trap in detail",
+      "inProgress": "{count} in progress",
+      "feedback": "Talk back",
+      "statusLink": "What is in progress"
     },
     "orochiaDemo": {
       "meta": {

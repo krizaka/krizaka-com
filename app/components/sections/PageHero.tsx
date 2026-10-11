@@ -5,8 +5,9 @@ import type { MascotBird, MascotMood } from "@krizaka/ui/mascots";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import PageMascot from "./PageMascot";
 
-/** The first screen of a sub-page: back link, eyebrow, h1, lead, and the bird of the page. Painted at once (no reveal). */
-export default function PageHero({ back, eyebrow, title, lead, mascot }: { back?: { href: string; label: string }; eyebrow: ReactNode; title: string; lead: string; mascot?: { bird: MascotBird; mood?: MascotMood } }) {
+/** The first screen of a sub-page: back link, eyebrow, h1, lead, optional facts under it (Badges), and the bird of the
+    page. Painted at once (no reveal). */
+export default function PageHero({ back, eyebrow, title, lead, mascot, children }: { back?: { href: string; label: string }; eyebrow: ReactNode; title: string; lead: string; mascot?: { bird: MascotBird; mood?: MascotMood }; children?: ReactNode }) {
   return (
     <SectionBackdrop as="header" grid>
       <div className="ps-page">
@@ -20,6 +21,7 @@ export default function PageHero({ back, eyebrow, title, lead, mascot }: { back?
             <p className="ps-eyebrow">{eyebrow}</p>
             <h1>{title}</h1>
             <p className="ps-hero-lead">{lead}</p>
+            {children && <div className="ps-hero-extra">{children}</div>}
           </div>
           {mascot && <PageMascot bird={mascot.bird} mood={mascot.mood ?? "welcome"} size={112} />}
         </div>
