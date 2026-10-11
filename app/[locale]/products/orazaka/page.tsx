@@ -21,6 +21,8 @@ import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { OrazakaLogo } from "@krizaka/ui";
 import { Mascot } from "@krizaka/ui/mascots";
 import { DEMO_TOUR, tourSrc } from "@/lib/orazaka-demo";
+import MadeHereGallery from "@/app/components/demos/MadeHereGallery";
+import type { GalleryItem } from "@/lib/orazaka-gallery";
 import { localizedMetadata } from "@/lib/seo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
 import { ArgumentCard, CardGrid, DecisionList, MascotRule } from "@/app/components/sections";
@@ -104,6 +106,9 @@ const EXPLORE = [
 ] as const;
 
 const node = "var(--kz-accent)";
+
+/** The images the product page shows from the "Made on this Mac" gallery — one per art direction, Montreal twice. */
+const MADE_PICKS: readonly GalleryItem["id"][] = ["tea-pour", "mini-ironing", "mtl-ruelle", "still-tea", "mini-souk", "mtl-mont-royal"];
 
 export default async function OrazakaPage({ params }: Props) {
   const { locale } = await params;
@@ -213,6 +218,21 @@ export default async function OrazakaPage({ params }: Props) {
               </span>
             </Link>
           ))}
+        </div>
+      </section>
+
+      {/* ─── Made on this Mac: art-direction Studios, one Mac, nothing sent anywhere ─── */}
+      <section className="bp-wrap" id="made" style={{ scrollMarginTop: 72 }}>
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.made.eyebrow}</p>
+          <h2 className="bp-h2"><Rich text={t.made.title} /></h2>
+          <p className="bp-lead">{t.made.lead}</p>
+        </div>
+        <MadeHereGallery t={dict.site.orazakaDemo.gallery} only={MADE_PICKS} compact />
+        <div className="bp-actions" style={{ marginTop: 24 }} {...reveal()}>
+          <ButtonLink href="/products/orazaka/demos#made-here" size="lg">
+            {t.made.cta} <ForwardIcon size={16} />
+          </ButtonLink>
         </div>
       </section>
 
