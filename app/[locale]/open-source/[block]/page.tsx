@@ -6,7 +6,7 @@ import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import BlockIcon from "@/app/components/blocks/BlockIcon";
 import FeedbackLinks from "@/app/components/blocks/FeedbackLinks";
-import { CodeSample, ContentSection, DecisionList, DiscussionCta, MascotRule, PageHero } from "@/app/components/sections";
+import { Badges, CodeSample, CodeTabs, ContentSection, DecisionList, DiscussionCta, Inline, MascotRule, PageHero, PageToc } from "@/app/components/sections";
 import "@/app/components/sections/sections.css";
 import { BUILDING_BLOCKS, blockById, blockRepoUrl } from "@/lib/building-blocks";
 import { LOCALES } from "@/lib/locales";
@@ -17,7 +17,8 @@ import { reveal } from "@/lib/motion";
 /* /open-source/<block> — why a Krizaka building block exists, for an engineer deciding whether to adopt it: the
    problem it removes, the decisions and what they cost, the code, when not to use it, where it stands, how to adopt
    it and where to argue. The "how" stays in the documentation it links to (/docs/java, /docs/ui, the README).
-   Built from the page language (app/components/sections, AGENTS.md §4.1). */
+   Built from the page language (app/components/sections, AGENTS.md §4.1): the page wears the block's hue, a sticky
+   table of contents follows the reading. */
 
 interface Props {
   params: Promise<{ locale: string; block: string }>;
@@ -54,8 +55,19 @@ export default async function BuildingBlockPage({ params }: Props) {
   const item = w.items[block.id];
   const next = item.next as Record<string, string>;
 
+  const toc = [
+    { id: "problem", label: p.problem },
+    { id: "answer", label: w.answer },
+    { id: "decisions", label: p.decisions },
+    { id: "code", label: p.code },
+    { id: "status", label: p.status },
+    { id: "adopt", label: p.adopt },
+    { id: "feedback-title", label: w.discuss },
+  ];
+  const release = block.releases[0];
+
   return (
-    <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
+    <main data-hue={block.hue} style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
       <TopNavBar />
 
       <PageHero
@@ -67,119 +79,168 @@ export default async function BuildingBlockPage({ params }: Props) {
         }
         title={item.name}
         lead={item.tagline}
-        mascot={{ bird: block.bird }}
-      />
+        mascot={{ bird: block.bird, mood: block.mood }}
+      >
+        <Badges
+          items={[
+            { label: `${w[block.registry]} ${release.version}`, tone: "ok", href: release.url },
+            ...(block.next.length > 0 ? [{ label: format(w.inProgress, { count: block.next.length }), tone: "wip" as const, href: "#status" }] : []),
+          ]}
+        />
+      </PageHero>
 
-      <div className="ps-page">
-        {/* The first section is on the first screen of a phone: painted at once, no reveal (LCP). */}
-        <ContentSection id="problem" title={p.problem}>
-          <div className="ps-two">
-            <p className="ps-prose">{item.trap}</p>
-            <ul className="ps-list">
-              {item.problem.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </div>
-        </ContentSection>
-
-        <ContentSection id="answer" title={w.answer}>
-          <div className="ps-stack" {...reveal()}>
-            <p className="ps-prose">{item.answer}</p>
-            <MascotRule variant="callout" bird={block.bird} label={format(w.birdSays, { bird: w.birds[block.bird] })} text={item.rule} />
-          </div>
-        </ContentSection>
-
-        <ContentSection id="decisions" title={p.decisions}>
-          <DecisionList decisions={item.decisions} labels={p} />
-        </ContentSection>
-
-        <ContentSection id="code" title={p.code}>
-          <div {...reveal(0, "soft")}>
-            <CodeSample sample={block.sample} copy={w.copy} copied={w.copied} />
-          </div>
-        </ContentSection>
-
-        <ContentSection id="fit">
-          <div className="ps-two">
-            <div className="ps-stack" {...reveal()}>
-              <h2 id="not-for" className="ps-h2">{p.notFor}</h2>
-              <ul className="ps-list is-no" aria-labelledby="not-for">
-                {item.notFor.map((line) => (
-                  <li key={line}>{line}</li>
+      <div className="ps-page ps-doc">
+        <aside className="ps-doc-aside">
+          <PageToc label={p.toc} items={toc} />
+        </aside>
+        <div className="ps-doc-main">
+          {/* The first section is on the first screen of a phone: painted at once, no reveal (LCP). */}
+          <ContentSection id="problem" title={p.problem}>
+            <p className="ps-hook">
+              <Inline text={item.headline} />
+            </p>
+            <div className="ps-two">
+              <p className="ps-prose">
+                <Inline text={item.trap} />
+              </p>
+              <ul className="ps-list is-no">
+                {item.problem.map((line) => (
+                  <li key={line}>
+                    <Inline text={line} />
+                  </li>
                 ))}
               </ul>
             </div>
-            <div className="ps-stack" {...reveal(1)}>
-              <h2 className="ps-h2">{p.status}</h2>
-              <p className="ps-prose is-small">{item.status}</p>
-              <p className="ps-label">{p.published}</p>
-              <div className="ps-status">
-                {block.releases.map((r) => (
-                  <a key={r.coordinate} href={r.url} target="_blank" rel="noopener noreferrer" className="ps-release">
-                    <code>{r.coordinate}</code>
-                    <span>
-                      {r.version} · {w[block.registry]}
-                    </span>
-                  </a>
+          </ContentSection>
+
+          <ContentSection id="answer" title={w.answer}>
+            <div className="ps-stack" {...reveal()}>
+              <ul className="ps-list is-yes is-large">
+                {item.does.map((line) => (
+                  <li key={line}>
+                    <Inline text={line} />
+                  </li>
                 ))}
+              </ul>
+              <p className="ps-prose">
+                <Inline text={item.answer} />
+              </p>
+              <MascotRule variant="callout" bird={block.bird} mood={block.mood} label={format(w.birdSays, { bird: w.birds[block.bird] })} text={item.rule} />
+            </div>
+          </ContentSection>
+
+          <ContentSection id="decisions" title={p.decisions}>
+            <DecisionList decisions={item.decisions} labels={p} />
+          </ContentSection>
+
+          <ContentSection id="code" title={p.code}>
+            <div {...reveal(0, "soft")}>
+              <CodeSample sample={block.sample} copy={w.copy} copied={w.copied} />
+            </div>
+          </ContentSection>
+
+          <ContentSection id="fit">
+            <div className="ps-two">
+              <div className="ps-stack" {...reveal()}>
+                <h2 id="not-for" className="ps-h2">{p.notFor}</h2>
+                <ul className="ps-list is-no" aria-labelledby="not-for">
+                  {item.notFor.map((line) => (
+                    <li key={line}>
+                      <Inline text={line} />
+                    </li>
+                  ))}
+                </ul>
               </div>
-              {block.next.length > 0 && (
-                <>
-                  <p className="ps-label">{p.next}</p>
-                  <ul className="ps-next">
-                    {block.next.map((n) => (
-                      <li key={n.key}>
-                        {next[n.key]}
-                        <a href={n.url} target="_blank" rel="noopener noreferrer">
-                          {shortRef(n.url)} <ExternalIcon size={11} aria-hidden />
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+              <div className="ps-stack" {...reveal(1)}>
+                <h2 id="status" className="ps-h2">{p.status}</h2>
+                <p className="ps-prose is-small">
+                  <Inline text={item.status} />
+                </p>
+                <p className="ps-label">{p.published}</p>
+                <div className="ps-status">
+                  {block.releases.map((r) => (
+                    <a key={r.coordinate} href={r.url} target="_blank" rel="noopener noreferrer" className="ps-release">
+                      <code>{r.coordinate}</code>
+                      <span className="ps-badge is-ok">
+                        <span className="ps-badge-dot" aria-hidden /> {r.version} · {w[block.registry]}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+                {block.next.length > 0 && (
+                  <>
+                    <p className="ps-label">{p.next}</p>
+                    <ul className="ps-next">
+                      {block.next.map((n) => (
+                        <li key={n.key}>
+                          <Inline text={next[n.key]} />
+                          <a href={n.url} target="_blank" rel="noopener noreferrer">
+                            {shortRef(n.url)} <ExternalIcon size={11} aria-hidden />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        </ContentSection>
+          </ContentSection>
 
-        <ContentSection id="adopt" title={p.adopt}>
-          <div className="ps-stack" {...reveal(0, "soft")}>
-            <CodeSample sample={block.install} copy={w.copy} copied={w.copied} />
-            <div className="ps-links">
-              {block.docs.startsWith("/") ? (
-                <Link href={block.docs} className="ps-btn is-primary">
-                  {p.docs} <ForwardIcon size={14} aria-hidden />
-                </Link>
+          <ContentSection id="adopt" title={p.adopt}>
+            <div className="ps-stack" {...reveal(0, "soft")}>
+              {block.install.length > 1 ? (
+                <CodeTabs
+                  label={p.buildTool}
+                  tabs={block.install.map((s, i) => ({
+                    id: s.tab ?? String(i),
+                    label: s.tab ?? s.file,
+                    content: <CodeSample sample={s} copy={w.copy} copied={w.copied} />,
+                  }))}
+                />
               ) : (
-                <a href={block.docs} target="_blank" rel="noopener noreferrer" className="ps-btn is-primary">
-                  {p.docs} <ExternalIcon size={13} aria-hidden />
-                </a>
+                <CodeSample sample={block.install[0]} copy={w.copy} copied={w.copied} />
               )}
-              <a href={blockRepoUrl(block)} target="_blank" rel="noopener noreferrer" className="ps-btn">
-                {p.repo} <ExternalIcon size={13} aria-hidden />
-              </a>
+              <div className="ps-links">
+                {block.docs.startsWith("/") ? (
+                  <Link href={block.docs} className="ps-btn is-primary">
+                    {p.docs} <ForwardIcon size={14} aria-hidden />
+                  </Link>
+                ) : (
+                  <a href={block.docs} target="_blank" rel="noopener noreferrer" className="ps-btn is-primary">
+                    {p.docs} <ExternalIcon size={13} aria-hidden />
+                  </a>
+                )}
+                <a href={blockRepoUrl(block)} target="_blank" rel="noopener noreferrer" className="ps-btn">
+                  {p.repo} <ExternalIcon size={13} aria-hidden />
+                </a>
+              </div>
             </div>
-          </div>
-        </ContentSection>
+          </ContentSection>
 
-        <ContentSection id="feedback">
-          <DiscussionCta id="feedback-title" title={p.feedbackTitle} body={p.feedbackBody}>
-            <FeedbackLinks block={block} labels={w} />
-          </DiscussionCta>
-        </ContentSection>
+          <ContentSection id="feedback">
+            <DiscussionCta id="feedback-title" title={p.feedbackTitle} body={p.feedbackBody}>
+              <FeedbackLinks block={block} labels={w} />
+            </DiscussionCta>
+          </ContentSection>
 
-        <ContentSection id="others" title={p.others} className="is-last">
-          <ul className="ps-tiles">
-            {BUILDING_BLOCKS.filter((b) => b.id !== block.id).map((b) => (
-              <li key={b.id}>
-                <Link href={`/open-source/${b.id}`}>
-                  <BlockIcon icon={b.icon} size={20} /> {w.items[b.id].name}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </ContentSection>
+          <ContentSection id="others" title={p.others} className="is-last">
+            <ul className="ps-tiles">
+              {BUILDING_BLOCKS.filter((b) => b.id !== block.id).map((b) => (
+                <li key={b.id} data-hue={b.hue}>
+                  <Link href={`/open-source/${b.id}`}>
+                    <BlockIcon icon={b.icon} size={20} />
+                    <span>
+                      <strong>{w.items[b.id].name}</strong>
+                      <span>
+                        <Inline text={w.items[b.id].headline} />
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </ContentSection>
+        </div>
       </div>
 
       <SiteFooter />

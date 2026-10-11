@@ -134,18 +134,38 @@
 
 - A page that **argues** (a product, a block, a decision, a promise) is built from `app/components/sections`
   (`import { … } from "@/app/components/sections"`, styles in `sections.css`, classes `ps-*`), first used by
-  `/open-source` and `/open-source/<block>`:
-  - `PageHero` — sub-page first screen: back link, eyebrow, h1, lead, the page's bird. Painted at once, no reveal.
+  `/open-source` and `/open-source/<block>`. The rule of the language: **read in five seconds, then go deeper on demand.**
+  - `PageHero` — sub-page first screen: back link, eyebrow, h1, lead, facts under it (`Badges`), the page's bird.
+    Painted at once, no reveal.
   - `SectionHeading` (eyebrow · h2 · lead) and `ContentSection` (a hairline above = the transition, an h2, content).
-  - `CardGrid` + `ArgumentCard` — cards that argue: icon, title, mono meta, labelled points in order (the trap → what
-    it does), an optional `MascotRule`, a "why/how" link and secondary actions.
-  - `MascotRule` — a rule told by a bird (`inline` in a card, `callout` in a section). The bird carries a promise, never
-    decoration: the falcon watches (security), the owl reads (documents), the duck builds (code), the flamingo answers or
-    gets paid, the pigeon delivers. One bird per idea, birds from `@krizaka/ui/mascots` only.
-  - `DecisionList` — chose · refused · because · what it costs; `CodeSample` — file name, code that scrolls, copy;
-    `ActionLinks` and `DiscussionCta` — discuss · propose · report, where to talk back.
-- Words come from `messages/*.json`; data modules keep links and code. The first section under a `PageHero` is on a
-  phone's first screen: no `reveal` there (LCP). Anything generic enough for a product goes to krizaka-ui, not here.
+    The section a page is about stands on a `SectionBackdrop` (BRAND.md §4).
+  - `CardGrid` + `ArgumentCard` — cards that argue, always in this order: icon · name · mono meta, `Badges` (registry and
+    version `ok`, work in progress `wip` — said honestly, linked to where it is explained), the **hook** (the problem in
+    one sentence, large), three short **points**, the `MascotRule` quote, the long version folded in a native
+    `<details>`, then the foot: one primary button (the way in) and `ActionLinks variant="icons"` (tooltips). Cards of
+    a row share their height; the fold and the foot sit at the bottom. The pointer lifts the card, carries a light
+    over it (`PointerLight`), lights its icon's node and makes its bird hop once — all still under reduced motion.
+  - **Hues**: a card or a page about one subject wears `data-hue` (`cobalt · sky · cyan · indigo · steel · ink`,
+    sections.css): its rail, icon node, bird, light and numbers. Krizaka palette only (blues and ink, never a product
+    colour); `--ps-hue` is decorative (≥ 3:1), `--ps-hue-text` is for small text (≥ 4.5:1, both themes). Without a
+    hue everything falls back to the page's accent, so a brand page stays on brand.
+  - `MascotRule` — a rule told by a bird, as a quote: a speech bubble (opening quote mark, the hue), the bird and who
+    speaks under its tail; `inline` in a card (still, it answers the pointer), `callout` in a section (larger, alive).
+    The bird carries a promise, never decoration: the falcon watches (security), the owl reads and knows every face
+    (documents, identity), the duck builds (code), the flamingo answers or gets paid, the pigeon delivers. Birds from
+    `@krizaka/ui/mascots` only; on one page no two subjects wear the same bird in the same mood and hue (five birds
+    for six blocks: the owl appears twice on /open-source, in two moods and two hues).
+  - `Inline` — words between backticks in a message (`` `requestId` ``) render as inline code: the technical keyword
+    stands out without markup in the catalogue. Prefer three short points to a paragraph.
+  - `DecisionList` — one card per decision: the choice large (✓), then refused (✕) · because (→) · what it costs (!)
+    side by side, each with its colour. `CodeSample` — language, file name, server-side highlighting
+    (`highlight.tsx`, token colours only), code that scrolls, copy; `CodeTabs` (@krizaka/ui/tabs) when there are
+    several ways to write it (Maven · Gradle). `PageToc` — a reading page's table of contents, sticky beside the
+    content (chips that scroll on a phone), the section being read marked.
+  - `ActionLinks` (`buttons` | `icons`) and `DiscussionCta` — discuss · propose · report, where to talk back.
+- Words come from `messages/*.json`; data modules keep links, code, birds and hues. The first section under a `PageHero`
+  is on a phone's first screen: no `reveal` there (LCP). Anything generic enough for a product goes to krizaka-ui
+  (krizaka/krizaka-ui#63), not here.
 
 ## 5. Code conventions
 

@@ -6,7 +6,7 @@
    The samples are copied from the published API and checked against the repositories (READMEs, javadoc, tests):
    a sample that no longer compiles against the version shown here is a bug of this page. */
 
-import type { MascotBird } from "@krizaka/ui/mascots";
+import type { MascotBird, MascotMood } from "@krizaka/ui/mascots";
 
 export type BlockId =
   | "krizaka-build"
@@ -18,6 +18,10 @@ export type BlockId =
 
 export type BlockIcon = "build" | "shield" | "users" | "notification" | "credits" | "theme";
 
+/** The accent a block wears on its card and its page — one per block, all in the Krizaka palette (blues and ink, never a
+    product colour). Defined in app/components/sections/sections.css (`[data-hue]`), dark and light. */
+export type BlockHue = "cobalt" | "sky" | "cyan" | "indigo" | "steel" | "ink";
+
 /** Where questions about a block go: one forum per ecosystem (see site.blocks.forums). */
 export type Forum = "java" | "ui";
 
@@ -27,9 +31,11 @@ export const FORUMS: Record<Forum, { repo: string; url: string }> = {
 };
 
 export interface Sample {
+  /** The tab that shows this sample when there are several ways to write it (Maven · Gradle). */
+  tab?: string;
   /** File name shown above the code. */
   file: string;
-  lang: "java" | "xml" | "yaml" | "tsx" | "css" | "bash";
+  lang: "java" | "xml" | "yaml" | "tsx" | "css" | "bash" | "kotlin";
   code: string;
 }
 
@@ -43,8 +49,11 @@ export interface Release {
 export interface BuildingBlock {
   id: BlockId;
   repo: string;
-  /** The bird whose rule explains the block's main decision (@krizaka/ui/mascots: the falcon watches — security). */
+  /** The bird whose rule explains the block's main decision (@krizaka/ui/mascots: the falcon watches — security). Six
+      blocks, five birds: no two blocks wear the same bird in the same mood and hue. */
   bird: MascotBird;
+  mood: MascotMood;
+  hue: BlockHue;
   icon: BlockIcon;
   registry: "maven" | "npm";
   forum: Forum;
@@ -57,7 +66,8 @@ export interface BuildingBlock {
   /** Work in progress the page states honestly: keyed like site.blocks.items.<id>.next.<key>. */
   next: readonly { key: string; url: string }[];
   sample: Sample;
-  install: Sample;
+  /** How to add it — one sample, or one per build tool (tabs). */
+  install: readonly Sample[];
 }
 
 const central = (artifact: string) => `https://central.sonatype.com/artifact/com.krizaka/${artifact}`;
@@ -86,6 +96,8 @@ export const BUILDING_BLOCKS: readonly BuildingBlock[] = [
     id: "krizaka-platform-kit",
     repo: "krizaka-platform-kit",
     bird: "falcon",
+    mood: "thinking",
+    hue: "cobalt",
     icon: "shield",
     registry: "maven",
     forum: "java",
@@ -122,10 +134,12 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
   catch (RuntimeException e) { dedup.release("notifications.user-events", messageId); throw e; }
 }`,
     },
-    install: {
-      file: "pom.xml",
-      lang: "xml",
-      code: `${BOM}
+    install: [
+      {
+        tab: "Maven",
+        file: "pom.xml",
+        lang: "xml",
+        code: `${BOM}
 
 <dependencies>
   <dependency><groupId>com.krizaka</groupId><artifactId>krizaka-spring-boot-starter-web</artifactId></dependency>
@@ -133,12 +147,27 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
   <dependency><groupId>com.krizaka</groupId><artifactId>krizaka-spring-boot-starter-rabbitmq</artifactId></dependency>
   <dependency><groupId>com.krizaka</groupId><artifactId>krizaka-spring-boot-starter-observability</artifactId></dependency>
 </dependencies>`,
-    },
+      },
+      {
+        tab: "Gradle",
+        file: "build.gradle.kts",
+        lang: "kotlin",
+        code: `dependencies {
+  implementation(platform("com.krizaka:krizaka-bom:0.2.0"))
+  implementation("com.krizaka:krizaka-spring-boot-starter-web")
+  implementation("com.krizaka:krizaka-spring-boot-starter-security")
+  implementation("com.krizaka:krizaka-spring-boot-starter-rabbitmq")
+  implementation("com.krizaka:krizaka-spring-boot-starter-observability")
+}`,
+      },
+    ],
   },
   {
     id: "krizaka-users",
     repo: "krizaka-users",
-    bird: "falcon",
+    bird: "owl",
+    mood: "welcome",
+    hue: "sky",
     icon: "users",
     registry: "maven",
     forum: "java",
@@ -176,21 +205,35 @@ krizaka.users.client:
   service-name: billing-service
   cache-ttl: PT60S`,
     },
-    install: {
-      file: "pom.xml",
-      lang: "xml",
-      code: `<!-- BOM 0.2.0 names an unpublished 0.2.0 of this block: declare 0.1.0 until BOM 0.3.0 -->
+    install: [
+      {
+        tab: "Maven",
+        file: "pom.xml",
+        lang: "xml",
+        code: `<!-- BOM 0.2.0 names an unpublished 0.2.0 of this block: declare 0.1.0 until BOM 0.3.0 -->
 <dependency>
   <groupId>com.krizaka</groupId>
   <artifactId>krizaka-users-client</artifactId>
   <version>0.1.0</version>
 </dependency>`,
-    },
+      },
+      {
+        tab: "Gradle",
+        file: "build.gradle.kts",
+        lang: "kotlin",
+        code: `dependencies {
+  // BOM 0.2.0 names an unpublished 0.2.0 of this block: declare 0.1.0 until BOM 0.3.0
+  implementation("com.krizaka:krizaka-users-client:0.1.0")
+}`,
+      },
+    ],
   },
   {
     id: "krizaka-notifications",
     repo: "krizaka-notifications",
     bird: "pigeon",
+    mood: "success",
+    hue: "cyan",
     icon: "notification",
     registry: "maven",
     forum: "java",
@@ -214,21 +257,35 @@ public Order confirm(Order order) {
 // templates/order-confirmed/fr.txt — first line "Subject: …", then {{order}}; "en" is the fallback.
 // SMS (Twilio) and WEBHOOK (allow-listed hosts) are the same request with another Channel.`,
     },
-    install: {
-      file: "pom.xml",
-      lang: "xml",
-      code: `<dependency>
+    install: [
+      {
+        tab: "Maven",
+        file: "pom.xml",
+        lang: "xml",
+        code: `<dependency>
   <groupId>com.krizaka</groupId>
   <artifactId>krizaka-notifications-api</artifactId>
   <version>0.1.0</version>
 </dependency>
 <!-- the service itself: ./mvnw -pl krizaka-notifications-service -am spring-boot:run (port 8097) -->`,
-    },
+      },
+      {
+        tab: "Gradle",
+        file: "build.gradle.kts",
+        lang: "kotlin",
+        code: `dependencies {
+  implementation("com.krizaka:krizaka-notifications-api:0.1.0")
+}
+// the service itself: ./mvnw -pl krizaka-notifications-service -am spring-boot:run (port 8097)`,
+      },
+    ],
   },
   {
     id: "krizaka-billing",
     repo: "krizaka-billing",
     bird: "flamingo",
+    mood: "welcome",
+    hue: "indigo",
     icon: "credits",
     registry: "maven",
     forum: "java",
@@ -255,22 +312,36 @@ try {
   throw failed;
 }`,
     },
-    install: {
-      file: "pom.xml · application.yml",
-      lang: "xml",
-      code: `<dependency>
+    install: [
+      {
+        tab: "Maven",
+        file: "pom.xml · application.yml",
+        lang: "xml",
+        code: `<dependency>
   <groupId>com.krizaka</groupId>
   <artifactId>krizaka-billing-client</artifactId>
   <version>0.1.0</version>
 </dependency>
 
 <!-- krizaka.billing.enabled: false wires a no-op adapter: no call site branches on "is billing on" -->`,
-    },
+      },
+      {
+        tab: "Gradle",
+        file: "build.gradle.kts",
+        lang: "kotlin",
+        code: `dependencies {
+  implementation("com.krizaka:krizaka-billing-client:0.1.0")
+}
+// krizaka.billing.enabled: false wires a no-op adapter: no call site branches on "is billing on"`,
+      },
+    ],
   },
   {
     id: "krizaka-build",
     repo: "krizaka-build",
     bird: "duck",
+    mood: "thinking",
+    hue: "steel",
     icon: "build",
     registry: "maven",
     forum: "java",
@@ -297,22 +368,37 @@ class NotificationRequestContractTest extends EventContractTest {
   }
 }`,
     },
-    install: {
-      file: "pom.xml",
-      lang: "xml",
-      code: `${BOM}
+    install: [
+      {
+        tab: "Maven",
+        file: "pom.xml",
+        lang: "xml",
+        code: `${BOM}
 
 <dependency>
   <groupId>com.krizaka</groupId>
   <artifactId>krizaka-test-support</artifactId>
   <scope>test</scope>
 </dependency>`,
-    },
+      },
+      {
+        tab: "Gradle",
+        file: "build.gradle.kts",
+        lang: "kotlin",
+        code: `dependencies {
+  testImplementation(platform("com.krizaka:krizaka-bom:0.2.0"))
+  testImplementation("com.krizaka:krizaka-test-support")
+}
+// krizaka-parent is a Maven parent POM: a Gradle build takes the BOM and the test kit`,
+      },
+    ],
   },
   {
     id: "krizaka-ui",
     repo: "krizaka-ui",
     bird: "owl",
+    mood: "success",
+    hue: "ink",
     icon: "theme",
     registry: "npm",
     forum: "ui",
@@ -340,13 +426,15 @@ export function Save({ label }: { label: string }) { // words arrive as props: a
   return <Button variant="primary">{label}</Button>;
 }`,
     },
-    install: {
-      file: "terminal",
-      lang: "bash",
-      code: `npm install @krizaka/ui @krizaka/tailwind @krizaka/tokens tailwindcss
+    install: [
+      {
+        file: "terminal",
+        lang: "bash",
+        code: `npm install @krizaka/ui @krizaka/tailwind @krizaka/tokens tailwindcss
 # the debt counters of an existing app (raw palette, light:, [var(--…)], className templates):
 npx -p @krizaka/config krizaka-ratchet --json --root .`,
-    },
+      },
+    ],
   },
 ];
 
