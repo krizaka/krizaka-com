@@ -28,7 +28,7 @@ async function npmVersions() {
   const { objects } = await get("https://registry.npmjs.org/-/v1/search?text=%40krizaka&size=100");
   const names = objects.map((o) => o.package.name).filter((n) => n.startsWith("@krizaka/"));
   const entries = await Promise.all(
-    names.map(async (name) => [name, (await get(`https://registry.npmjs.org/${name.replace("/", "%2f")}/latest`)).version]),
+    names.map(async (name) => [name, (await get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`)).version]),
   );
   return Object.fromEntries(entries.filter(([, v]) => typeof v === "string"));
 }
