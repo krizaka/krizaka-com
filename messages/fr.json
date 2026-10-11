@@ -3415,6 +3415,8 @@
       "media": "Médias",
       "charts": "Graphiques",
       "blocks": "Blocs",
+      "layouts": "Mises en page",
+      "templates": "Modèles",
       "layout": "Mise en page",
       "foundations": "Fondations",
       "domain services": "Services métier",
@@ -3448,6 +3450,11 @@
       "closeSearch": "Fermer la recherche",
       "lastUpdated": "Mis à jour le",
       "chooseSection": "Choisir une documentation"
+    },
+    "screens": {
+      "intro": "Un écran est un exemple de mise en page qui est un écran entier d'un produit : de vrais mots, les blocs qui le composent, sa version mobile pensée. Copiez-le dans le produit, gardez sa structure, changez les mots.",
+      "layout": "Construit sur",
+      "phone": "Sur un téléphone, réduisez le cadre ou ouvrez la page de la mise en page : chaque modèle se lit sur une colonne."
     },
     "preview": {
       "preview": "Aperçu",
@@ -3498,6 +3505,8 @@
         "media": "Médias",
         "charts": "Graphiques",
         "blocks": "Blocs",
+        "layouts": "Mises en page",
+        "templates": "Modèles",
         "layout": "Mise en page",
         "foundations": "Fondations"
       },
@@ -3567,6 +3576,10 @@
         "intl": {
           "title": "Intl",
           "description": "Montants, nombres, dates et pluriels formatés de la même façon dans tous les produits Krizaka."
+        },
+        "screens": {
+          "title": "Écrans",
+          "description": "Des écrans entiers des produits composés avec Krizaka UI — un studio de créatrice, une console, la connexion, les réglages, la messagerie — chacun avec sa version mobile, prêts à copier."
         },
         "typography": {
           "title": "Typographie",

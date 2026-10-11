@@ -3415,6 +3415,8 @@
       "media": "Media",
       "charts": "Charts",
       "blocks": "Blocks",
+      "layouts": "Layouts",
+      "templates": "Templates",
       "layout": "Layout",
       "foundations": "Foundations",
       "domain services": "Domain services",
@@ -3448,6 +3450,11 @@
       "closeSearch": "Close the search",
       "lastUpdated": "Last updated on",
       "chooseSection": "Choose a documentation"
+    },
+    "screens": {
+      "intro": "A screen is a layout's example that is a whole screen of a product: real words, the blocks it is made of, its phone version thought out. Copy it into the product, keep its structure, change the words.",
+      "layout": "Built on",
+      "phone": "On a phone, resize the frame or open the layout's page: every template reads in one column."
     },
     "preview": {
       "preview": "Preview",
@@ -3498,6 +3505,8 @@
         "media": "Media",
         "charts": "Charts",
         "blocks": "Blocks",
+        "layouts": "Layouts",
+        "templates": "Templates",
         "layout": "Layout",
         "foundations": "Foundations"
       },
@@ -3567,6 +3576,10 @@
         "intl": {
           "title": "Intl",
           "description": "Money, numbers, dates and plurals formatted the same way in every Krizaka product."
+        },
+        "screens": {
+          "title": "Screens",
+          "description": "Whole screens of the products composed from Krizaka UI — a creator studio, a console, sign-in, settings, messages — each with its phone version, ready to copy."
         },
         "typography": {
           "title": "Typography",

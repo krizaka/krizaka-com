@@ -6,11 +6,12 @@
 import { fonts, rules } from "@krizaka/fonts";
 import { glyphIndex, iconGroups, iconGuidelines } from "@krizaka/icons/glyphs";
 import { typeScale } from "@krizaka/tokens";
+import { getRegistryItems, type RegistryExample, type RegistryItem } from "@/lib/ui-registry";
 
 export { fonts, glyphIndex, iconGroups, iconGuidelines, rules, typeScale };
 
 /** The generated foundation pages of /docs/ui, by slug. */
-export const FOUNDATIONS = ["typography", "icons"] as const;
+export const FOUNDATIONS = ["typography", "icons", "screens"] as const;
 export type Foundation = (typeof FOUNDATIONS)[number];
 export const isFoundation = (slug: string): slug is Foundation => (FOUNDATIONS as readonly string[]).includes(slug);
 
@@ -28,10 +29,17 @@ export function iconEntries(): IconEntry[] {
 
 const plain = (text: string) => text.replace(/`/g, "");
 
+/** The screens of @krizaka/ui: the examples of its layouts flagged `template` — whole screens, in registry order. */
+export function templateEntries(): { item: RegistryItem; example: RegistryExample }[] {
+  return getRegistryItems().flatMap((item) => (item.web?.examples ?? []).filter((example) => example.template).map((example) => ({ item, example })));
+}
+
 /** The words of a foundation page for the search index (Fumadocs structured data). */
 export function foundationStructuredData(page: Foundation) {
   const contents =
-    page === "typography"
+    page === "screens"
+      ? templateEntries().map(({ item, example }) => `${example.title} (${item.title}): ${example.description}`)
+      : page === "typography"
       ? [
           ...fonts.flatMap((f) => [`${f.family} — ${f.role}. ${f.description}`, f.why, ...f.use, ...f.avoid]),
           ...typeScale.map((s) => `text-${s.name}: ${s.size} / ${s.lineHeight} · ${s.weight} — ${s.description}`),

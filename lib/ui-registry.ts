@@ -24,8 +24,8 @@ export interface RegistryComponent {
 
 export type Platform = "web" | "native" | "both";
 export type Status = "stable" | "beta" | "deprecated";
-export type Category = "actions" | "forms" | "navigation" | "overlays" | "feedback" | "data-display" | "media" | "charts" | "blocks" | "layout" | "foundations";
-export const CATEGORIES: Category[] = ["actions", "forms", "navigation", "overlays", "feedback", "data-display", "media", "charts", "blocks", "layout", "foundations"];
+export type Category = "actions" | "forms" | "navigation" | "overlays" | "feedback" | "data-display" | "media" | "charts" | "blocks" | "layouts" | "templates" | "layout" | "foundations";
+export const CATEGORIES: Category[] = ["actions", "forms", "navigation", "overlays", "feedback", "data-display", "media", "charts", "blocks", "layouts", "templates", "layout", "foundations"];
 
 export interface RegistryExample {
   name: string;
@@ -38,6 +38,8 @@ export interface RegistryExample {
   code: string;
   /** React Native: the screenshots of its story, `examples/button/native/primary.dark.png` (and `.light.png`). */
   screenshots?: { dark: string; light: string };
+  /** A template: a whole screen composed from the platform (a layout's example), listed on /docs/ui/screens. */
+  template?: boolean;
 }
 
 export interface RegistryPlatform {
