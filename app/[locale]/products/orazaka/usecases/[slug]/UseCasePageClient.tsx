@@ -2,20 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { 
-  ArrowRight, 
-  ChevronLeft, 
-  ChevronRight, 
-  ArrowUpRight, 
-  ShieldCheck,
-  Search,
-  Mail,
-  Briefcase,
-  Clock,
-  Lock,
-  AlertCircle,
-  Sparkles
-} from "lucide-react";
+import { AiIcon, BackIcon, ChevronRightIcon, ClockIcon, ExternalIcon, ForwardIcon, LockIcon, MessageIcon, PackIcon, SearchIcon, ShieldIcon, WarningIcon } from "@krizaka/icons";
+import { CtaPanel } from "@krizaka/ui/cta-panel";
+import { Section } from "@krizaka/ui/page";
 import { useI18n } from "../../../../../components/I18nProvider";
 import TopNavBar from "../../../../../components/TopNavBar";
 import SiteFooter from "../../../../../components/SiteFooter";
@@ -67,7 +56,7 @@ function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr"
             transition: "border-color 150ms ease, background 150ms ease",
           }}
         >
-          <ChevronLeft size={16} style={{ color: "var(--kz-text-muted)", flexShrink: 0 }} />
+          <BackIcon size={16} style={{ color: "var(--kz-text-muted)", flexShrink: 0 }} />
           <div style={{ minWidth: 0, textAlign: "left" }}>
             <div style={{ fontSize: "10px", fontWeight: 600, color: "var(--kz-text-muted)", fontFamily: "var(--font-mono, monospace)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "4px" }}>
               {dict.pages.useCase.previous}
@@ -103,7 +92,7 @@ function SiblingNav({ currentSlug, locale }: { currentSlug: string; locale: "fr"
               {getLocalizedField(next.title, locale)}
             </div>
           </div>
-          <ChevronRight size={16} style={{ color: "var(--kz-text-muted)", flexShrink: 0 }} />
+          <ChevronRightIcon size={16} style={{ color: "var(--kz-text-muted)", flexShrink: 0 }} />
         </Link>
       )}
     </div>
@@ -249,7 +238,7 @@ function BeforeAfterSchema() {
         {/* Before Card */}
         <div className="comparison-card before-card">
           <div className="panel-badge before-badge">
-            <AlertCircle size={13} style={{ marginRight: "4px" }} />
+            <WarningIcon size={13} style={{ marginRight: "4px" }} />
             {dict.pages.useCase.beforeOrazaka10hWeek}
           </div>
           
@@ -299,7 +288,7 @@ function BeforeAfterSchema() {
         {/* After Card */}
         <div className="comparison-card after-card">
           <div className="panel-badge after-badge">
-            <Sparkles size={13} style={{ marginRight: "4px" }} />
+            <AiIcon size={13} style={{ marginRight: "4px" }} />
             {dict.pages.useCase.withOrazaka10MinWeek}
           </div>
           
@@ -355,22 +344,22 @@ function FeaturesBento() {
   const { t: dict } = useI18n();
   const cards = [
     {
-      icon: <Search size={20} style={{ color: "var(--kz-accent)" }} />,
+      icon: <SearchIcon size={20} style={{ color: "var(--kz-accent)" }} />,
       title: dict.pages.useCase.automatedMonitoring,
       desc: dict.pages.useCase.silentlyScansPublicRegionalRegistries,
     },
     {
-      icon: <Mail size={20} style={{ color: "var(--kz-accent)" }} />,
+      icon: <MessageIcon size={20} style={{ color: "var(--kz-accent)" }} />,
       title: dict.pages.useCase.ethicalB2cMailers,
       desc: dict.pages.useCase.draftsPhysicalDirectMailCampaigns,
     },
     {
-      icon: <Briefcase size={20} style={{ color: "var(--kz-accent)" }} />,
+      icon: <PackIcon size={20} style={{ color: "var(--kz-accent)" }} />,
       title: dict.pages.useCase.targetedB2bEmails,
       desc: dict.pages.useCase.writesContextualCorporateMessagesAdhering,
     },
     {
-      icon: <Lock size={20} style={{ color: "var(--kz-accent)" }} />,
+      icon: <LockIcon size={20} style={{ color: "var(--kz-accent)" }} />,
       title: dict.pages.useCase.t100SovereignOffline,
       desc: dict.pages.useCase.prospectDetailsNeverLeaveYour,
     }
@@ -427,7 +416,7 @@ function TimeCalculator({ locale }: { locale: "fr" | "en" }) {
     <div className="roi-calculator-card">
       <div className="roi-calc-header">
         <div style={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center", width: "100%" }}>
-          <Clock size={18} style={{ color: "var(--kz-accent)" }} />
+          <ClockIcon size={18} style={{ color: "var(--kz-accent)" }} />
           <h3 className="roi-calc-title">
             {dict.pages.useCase.timeRoiCalculator}
           </h3>
@@ -496,7 +485,7 @@ function QuebecContextCard({ uc, locale, t }: { uc: UseCaseData; locale: "fr" | 
   return (
     <Card.Root radius="xl" className="quebec-context-card">
       <div style={{ display: "flex", alignItems: "center", gap: "10px", justifyContent: "center", marginBottom: "16px" }}>
-        <ShieldCheck size={20} style={{ color: "var(--kz-accent)" }} />
+        <ShieldIcon size={20} style={{ color: "var(--kz-accent)" }} />
         <h3 className="section-title" style={{ margin: 0 }}>
           {t.useCasePage.quebecContextTitle}
         </h3>
@@ -516,7 +505,7 @@ function QuebecContextCard({ uc, locale, t }: { uc: UseCaseData; locale: "fr" | 
             className="sidebar-link"
           >
             <span>{link.title}</span>
-            <ArrowUpRight size={13} />
+            <ExternalIcon size={13} />
           </a>
         ))}
       </div>
@@ -556,11 +545,10 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
       <TopNavBar />
 
       <div
-        className="usecase-page-container"
+        className="kz-frame usecase-page-container"
+        data-size="narrow"
         style={{
-          maxWidth: "840px",
-          margin: "0 auto",
-          padding: "120px 24px 0",
+          paddingTop: "var(--kz-hero-top)",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -602,23 +590,14 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
       </div>
 
       {/* ─── CTA ─── */}
-      <section
-        style={{
-          padding: "56px 24px 80px",
-          maxWidth: "840px",
-          margin: "0 auto",
-          textAlign: "center",
-        }}
-      >
-        <div className="cta-container">
-          <h2 className="cta-title">{t.useCasePage.ctaTitle}</h2>
-          <p className="cta-desc">{t.useCasePage.ctaDesc}</p>
-          <ButtonLink href="/products/orazaka" variant="primary" size="lg">
+      <Section size="narrow" aria-labelledby="usecase-cta">
+        <CtaPanel id="usecase-cta" title={t.useCasePage.ctaTitle} body={t.useCasePage.ctaDesc} reveal>
+          <ButtonLink href="/products/orazaka" variant="primary" size="lg" shimmer>
             {t.useCasePage.ctaButton}
-            <ArrowRight size={15} strokeWidth={2} />
+            <ForwardIcon size={15} aria-hidden />
           </ButtonLink>
-        </div>
-      </section>
+        </CtaPanel>
+      </Section>
 
       <SiteFooter />
 
@@ -1159,30 +1138,8 @@ export default function UseCasePageClient({ slug }: { slug: string }) {
         }
 
         /* CTA Panel */
-        .cta-container {
-          padding: 40px 32px;
-          border-radius: 20px;
-          background: var(--kz-surface-1);
-          border: 1px solid var(--kz-border-subtle);
-          text-align: center;
-          box-shadow: var(--kz-shadow-sm);
-        }
 
-        .cta-title {
-          font-family: var(--font-display), system-ui, sans-serif;
-          font-size: 22px;
-          font-weight: 750;
-          letter-spacing: -0.02em;
-          color: var(--kz-text-primary);
-          margin: 0 0 8px 0;
-        }
 
-        .cta-desc {
-          font-size: 13.5px;
-          color: var(--kz-text-muted);
-          margin: 0 0 24px 0;
-          line-height: 1.6;
-        }
 
 
         /* Responsive styling */
