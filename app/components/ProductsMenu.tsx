@@ -24,7 +24,7 @@ import {
 } from "@krizaka/icons";
 import type { ComponentType } from "react";
 import { useI18n } from "./I18nProvider";
-import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isDocsActive, isDocsSection, isNavActive, localeless, productLinkText, type NavIcon } from "@/lib/nav";
+import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, docsLinkLogo, isDocsActive, isDocsSection, isNavActive, localeless, productLinkText, type NavIcon } from "@/lib/nav";
 import { ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
 
@@ -203,7 +203,7 @@ export function ProductsMenu() {
           const text = docsLinkText(t, d);
           return (
             <Link key={d.id} href={d.href} className={cn("kz-menu-link", isDocsActive(d, pathname) && "is-active")}>
-              <ProductLogo id={d.id === "orazaka" || d.id === "orochia" ? d.id : "krizaka"} size={22} animated={false} />
+              <ProductLogo id={docsLinkLogo(d)} size={22} animated={false} />
               <span>
                 <span className="kz-menu-label">{text.label}</span>
                 <span className="kz-menu-desc">{text.desc}</span>

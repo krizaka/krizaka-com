@@ -82,18 +82,6 @@
       }
     ]
   },
-  "packages": {
-    "sectionLabel": "Governance",
-    "sectionTitle": "Orazaka Interceptor Packages",
-    "sectionDesc": "Pre-configured security topologies to encapsulate your cognitive apps according to strict compliance standards.",
-    "concept": "Every data stream sequentially traverses the Orazaka mesh. A Package groups and configures a set of interceptors (e.g. RAG + Audit + Router) to certify compliance for your operations.",
-    "composedOf": "Chained interceptors",
-    "manualNote": "Composable manually in Orazaka Community — open source, no vendor lock-in.",
-    "viewUseCase": "Configure package",
-    "viewAll": "Discover the Package",
-    "pageTitle": "AI Governance Packages — Orazaka",
-    "pageDesc": "Encapsulate your AI queries with our local Orazaka Sentinel package: Law 25 and CASL compliance for local prospecting."
-  },
   "community": {
     "sectionLabel": "Community",
     "sectionTitle": "Let's build it together",
@@ -407,6 +395,10 @@
         "orochia": {
           "label": "Orochia",
           "desc": "Architecture, API, deployment"
+        },
+        "cli": {
+          "label": "CLI",
+          "desc": "npx orazaka — install, start, develop: every command"
         }
       }
     },
@@ -506,7 +498,8 @@
       "privacy": "Privacy",
       "terms": "Terms",
       "madeIn": "Made in Montréal · Apache-2.0",
-      "docs": "Documentation"
+      "docs": "Documentation",
+      "cli": "CLI"
     },
     "contactForm": {
       "stepTopic": "What brings you here?",
@@ -1288,6 +1281,26 @@
           "title": "Contact",
           "category": "Krizaka",
           "desc": "Write to the team."
+        },
+        "cli": {
+          "title": "Orazaka CLI",
+          "category": "Documentation",
+          "desc": "npx orazaka install, start, dev — every command and option."
+        },
+        "packs": {
+          "title": "Orazaka packs & Studios",
+          "category": "Product",
+          "desc": "The packs Orazaka installs without code, and their Studios."
+        },
+        "orazakaAdmin": {
+          "title": "Orazaka administration",
+          "category": "Documentation",
+          "desc": "What an administrator controls, and how it is secured."
+        },
+        "orochiaAdmin": {
+          "title": "Orochia admin console",
+          "category": "Documentation",
+          "desc": "Moderation, 2257, payouts, accounts, backups — and its four gates."
         }
       },
       "label": "Search the site",
@@ -2243,6 +2256,120 @@
         "app": "Open Orochia",
         "contact": "Talk to us"
       }
+    },
+    "adminCallout": {
+      "orazaka": {
+        "eyebrow": "What you control",
+        "title": "The whole platform, <b>under your hand.</b>",
+        "body": "Everything commercial and operational in Orazaka is data an administrator edits — never a redeploy. From the SecOps console or the API, with an administrator's account checked on every call.",
+        "points": [
+          {
+            "title": "The AI.",
+            "text": "The model catalogue, the interceptor pipeline (order, on/off), the capabilities and the MCP servers."
+          },
+          {
+            "title": "The money.",
+            "text": "Plans, packs and prices, the price book, wallets and manual credit adjustments, consumption per capability."
+          },
+          {
+            "title": "The Studios.",
+            "text": "Blueprint versions drafted, published or deprecated, installs and runs per Studio."
+          },
+          {
+            "title": "The perimeter.",
+            "text": "Administrator role required on the server, a console that only reaches the public API through its own backend."
+          }
+        ],
+        "cta": "What an administrator controls"
+      },
+      "orochia": {
+        "eyebrow": "What you control",
+        "title": "An operator console <b>behind four gates.</b>",
+        "body": "A separate application with its own database and its own single account: it decides through Orochia's admin API, and every decision is recorded.",
+        "points": [
+          {
+            "title": "Compliance.",
+            "text": "2257 creator verification, content reports, video takedowns with a recorded reason."
+          },
+          {
+            "title": "Money.",
+            "text": "Ledger revenue, payouts settled with their transfer reference or failed with a reason."
+          },
+          {
+            "title": "People and auctions.",
+            "text": "Suspend, reinstate or change the role of an account; cancel an auction and release its bid."
+          },
+          {
+            "title": "The platform.",
+            "text": "Migrations, backups and a factory reset armed by a typed phrase — never on the public production."
+          }
+        ],
+        "cta": "Read the console's documentation"
+      }
+    },
+    "orazakaPacks": {
+      "meta": {
+        "title": "Orazaka Packs — Studios for your profession, installed without code | Krizaka",
+        "description": "Prospecting, document verification, real-estate reels, media, wellbeing, trade showcases: the Orazaka packs and their Studios, installed without code."
+      },
+      "eyebrow": "Packs & Studios",
+      "title": "Install a profession, <b>not a project.</b>",
+      "lead": "A pack is a set of Studios — ready-made workflows with their own form — for one job. Installing one writes data, never code: the Studios appear in the catalogue, priced and ready to run.",
+      "ctaBrowse": "See the {count} packs",
+      "ctaDocs": "Read the documentation",
+      "facts": {
+        "packs": "packs ready to install",
+        "studios": "Studios across them",
+        "code": "lines of code to install one"
+      },
+      "badges": {
+        "label": "What this pack brings",
+        "worker": "Its own worker",
+        "rulesets": "{count} versioned rulesets",
+        "sensitive": "Sensitive data: scope guard, 30-day retention, audit log",
+        "regulated": "Regulated: consent first, fixed crisis response",
+        "toolkit": "Platform toolkit"
+      },
+      "studiosTitle": "{count} Studios",
+      "creditsHint": "Credits held when a run starts; a run is charged what it actually used.",
+      "creditsNote": "The figure beside each Studio is the credit hold of a run — released, not charged: a run settles what it measured.",
+      "rulesetsLine": "Rulesets: {list}",
+      "how": {
+        "eyebrow": "How a pack arrives",
+        "title": "Three commands, <b>no deploy.</b>",
+        "lead": "A pack is a directory — a manifest, its translations, its Studios. The platform checks it, installs it and puts it on the shelf.",
+        "steps": [
+          {
+            "title": "Check it",
+            "text": "The manifest against the platform's schema, then whether every capability it names can run here."
+          },
+          {
+            "title": "Install it",
+            "text": "Capabilities, price and catalogue entries are written in one go — or none of them."
+          },
+          {
+            "title": "Run a Studio",
+            "text": "From the app's form, the chat composer or the terminal — every step's progress, live."
+          }
+        ],
+        "useCases": "<b>Packs are not use-cases.</b> A pack is a business offer; a use-case is a technical entry point of the engine, written in Java — every Studio run goes through one.",
+        "useCasesLink": "The technical use-cases"
+      },
+      "closing": {
+        "title": "Your profession <b>is not on the list?</b>",
+        "body": "Write the pack: YAML and JSON, no Java. Or tell us the job — we will build its Studios with you.",
+        "write": "Write a pack",
+        "contact": "Talk to us"
+      },
+      "callout": {
+        "eyebrow": "Packs & Studios",
+        "title": "Ready-made jobs, <b>installed in one command.</b>",
+        "body": "{packs} packs, {studios} Studios — prospecting, document verification, real-estate reels, media, wellbeing — each installed as data, without a deploy.",
+        "studios": "{count} Studios",
+        "cta": "Every pack",
+        "studiosOne": "1 Studio"
+      },
+      "studiosTitleOne": "1 Studio"
     }
   },
   "pages": {
@@ -2649,7 +2776,28 @@
       "lead": "The building blocks the products are made of, documented from their source: live components, the Java kit, and each product's own documentation.",
       "open": "Open",
       "platform": "Platform",
-      "products": "Products"
+      "products": "Products",
+      "shortcuts": {
+        "title": "Start here",
+        "items": {
+          "cli": {
+            "title": "The CLI",
+            "text": "npx orazaka install, start, dev — then every command, subcommand and option."
+          },
+          "packs": {
+            "title": "Packs & Studios",
+            "text": "The business offers Orazaka installs without code — and how to write your own."
+          },
+          "orazakaAdmin": {
+            "title": "Orazaka administration",
+            "text": "Models, pipeline, capabilities, plans, prices, wallets, Studios: what an administrator controls."
+          },
+          "orochiaAdmin": {
+            "title": "Orochia admin console",
+            "text": "Creator verification, moderation, payouts, accounts, backups — behind four gates."
+          }
+        }
+      }
     },
     "sections": {
       "ui": {
@@ -2680,7 +2828,8 @@
       "feedback": "Feedback",
       "data-display": "Data display",
       "layout": "Layout",
-      "foundations": "Foundations"
+      "foundations": "Foundations",
+      "domain services": "Domain services"
     },
     "categories": {
       "getting-started": "Getting started",
@@ -2858,6 +3007,22 @@
         "openapi": {
           "title": "HTTP APIs (OpenAPI)",
           "description": "The OpenAPI contracts of krizaka-users, krizaka-billing and krizaka-notifications."
+        },
+        "architecture": {
+          "title": "Ports and adapters",
+          "description": "How a Krizaka domain service is cut — contract, client, core, persistence, host — and what lives in which package."
+        },
+        "users": {
+          "title": "Users",
+          "description": "krizaka-users: registration, login (password, Google, GitHub), password recovery, profiles, API keys, RBAC, session tokens."
+        },
+        "billing": {
+          "title": "Billing",
+          "description": "krizaka-billing: credits, wallets, plans, subscriptions, a versioned price book and metering — hold, settle, release."
+        },
+        "notifications": {
+          "title": "Notifications",
+          "description": "krizaka-notifications: e-mail, SMS and webhooks behind one port, driven by events, templates per locale."
         }
       }
     }

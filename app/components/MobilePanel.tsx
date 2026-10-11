@@ -8,7 +8,7 @@ import { ChevronDownIcon, GlobeIcon, KnowledgeIcon, MoonIcon, SunIcon } from "@k
 import { useI18n } from "./I18nProvider";
 import { useSiteTheme } from "./SiteTheme";
 import { Dialog } from "@krizaka/ui/dialog";
-import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, isDocsActive, isDocsSection, isNavActive, localeless, productLinkText } from "@/lib/nav";
+import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, docsLinkLogo, isDocsActive, isDocsSection, isNavActive, localeless, productLinkText } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
 
@@ -89,7 +89,7 @@ export function MobilePanel({
             <div className="kz-mp-links">
               {NAV_DOCS.map((d) => (
                 <Link key={d.id} href={d.href} onClick={onClose} className={cn("kz-mp-link", isDocsActive(d, path) && "is-active")}>
-                  <ProductLogo id={d.id === "orazaka" || d.id === "orochia" ? d.id : "krizaka"} size={18} animated={false} /> {docsLinkText(t, d).label}
+                  <ProductLogo id={docsLinkLogo(d)} size={18} animated={false} /> {docsLinkText(t, d).label}
                 </Link>
               ))}
               <Link href={NAV_DOCS_HUB} onClick={onClose} className={cn("kz-mp-link", path === NAV_DOCS_HUB && "is-active")}>

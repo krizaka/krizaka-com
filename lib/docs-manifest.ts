@@ -70,12 +70,52 @@ export const DOCS_MANIFEST: Record<string, DocManifestEntry> = {
       "The HTTP/GraphQL surface for integrating Orazaka into your product. For developers building against the engine.",
   },
   cli: {
-    title: "CLI Reference",
-    category: "api",
+    title: "CLI",
+    category: "getting-started",
     order: 2,
     audience: "developer",
     intro:
-      "Operate and script the engine from the terminal. For developers and operators automating Orazaka.",
+      "One tool for the whole platform: npx orazaka install, start, dev and you are running — then test, build these docs, install packs, seed the demo. Every command, subcommand and option, generated from the CLI's code.",
+  },
+  business: {
+    title: "Business Layer",
+    category: "architecture",
+    order: 3,
+    audience: "developer",
+    intro:
+      "Where a request becomes business: the Intention, the use-cases that serve it, the dispatcher that checks who may run what, and where each piece lives (ports & adapters). Generated from orazaka-business.",
+  },
+  packs: {
+    title: "Packs & Studios",
+    category: "core-features",
+    order: 1,
+    audience: "decision-maker",
+    intro:
+      "The business offers Orazaka installs without code: each pack, who it serves, its Studios and what they do — then how to install one and how to write your own. Generated from the orazaka-packs repository.",
+  },
+  tools: {
+    title: "Tools & MCP",
+    category: "core-features",
+    order: 6,
+    audience: "developer",
+    intro:
+      "What a model may call during a turn: the registered tools, when they are attached, the tool cache, the MCP servers (platform and per user) and the sandbox that isolates tools which write. Generated from orazaka-tools.",
+  },
+  jobs: {
+    title: "Jobs, Schedules & Automation",
+    category: "core-features",
+    order: 7,
+    audience: "developer",
+    intro:
+      "Everything that runs without a user waiting: the job plane and its executors, every scheduled task of the platform, the automation connectors and the CLI agent. Generated from the code.",
+  },
+  admin: {
+    title: "Administration",
+    category: "operations",
+    order: 1,
+    audience: "decision-maker",
+    intro:
+      "What an administrator controls — models, the interceptor pipeline, capabilities, MCP servers, plans, prices, wallets, Studios — from the SecOps console or the API, and how that surface is secured. Generated from the code.",
   },
   auth: {
     title: "Authentication",
@@ -84,14 +124,6 @@ export const DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     audience: "developer",
     intro:
       "How identity, sessions and access control work in Orazaka. For developers securing a deployment.",
-  },
-  automation: {
-    title: "Automation & Agents",
-    category: "core-features",
-    order: 3,
-    audience: "developer",
-    intro:
-      "The automation layer and local agent protocol — how Orazaka plans, calls tools, and acts on your systems. For developers building autonomous workflows.",
   },
   business_implementation: {
     title: "Business Implementation Playbook",
@@ -110,12 +142,12 @@ export const DOCS_MANIFEST: Record<string, DocManifestEntry> = {
       "Every cross-cutting interceptor in the cognitive pipeline and its DB-driven order — generated from the code. For developers reasoning about how a request is enriched, routed and validated.",
   },
   use_cases: {
-    title: "Use-Case Catalog",
+    title: "Use-Cases (technical)",
     category: "core-features",
     order: 5,
     audience: "developer",
     intro:
-      "The App-Factory use-cases discovered in the engine, with their capability and domain — generated from the code. For developers extending Orazaka with new products.",
+      "The technical entry points of the engine (App-Factory use-cases), generated from the Java code. Not the business offers: those are the packs and their Studios — see Packs & Studios.",
   },
   interface_contracts: {
     title: "Interface Contracts",

@@ -29,8 +29,9 @@ import CountUp from "@/app/components/motion/CountUp";
 import { reveal } from "@/lib/motion";
 import OrochiaTour from "@/app/components/OrochiaTour";
 import { tourSrc } from "@/lib/orochia-demo";
-import { format, getDictionary } from "@/lib/i18n";
+import { asLocale, format, getDictionary } from "@/lib/i18n";
 import ContactCta from "@/app/components/home/ContactCta";
+import AdminCallout from "@/app/components/products/AdminCallout";
 import { verifiedJourneys } from "@/lib/orochia-journeys";
 import { OrochiaLogo } from "@krizaka/ui";
 import Rich from "@/app/components/Rich";
@@ -277,6 +278,8 @@ export default async function OrochiaPage({ params }: Props) {
           </Link>
         </p>
       </section>
+
+      <AdminCallout product="orochia" locale={asLocale(locale)} />
 
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta topic="orochia" />

@@ -45,6 +45,8 @@ const nextConfig: NextConfig = {
         statusCode: 301,
       },
       { source: "/:locale(fr|en)/products/orochia/docs/:slug", destination: "/:locale/docs/orochia/:slug", statusCode: 301 },
+      // The automation page described the pre-split topology; jobs, schedules and automation are one generated page now.
+      { source: "/:locale(fr|en)/docs/orazaka/automation", destination: "/:locale/docs/orazaka/jobs", statusCode: 301 },
     ];
   },
 

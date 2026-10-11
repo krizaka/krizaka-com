@@ -22,7 +22,15 @@ const GROUPS = [
   { id: "products", sections: ["orazaka", "orochia"] },
 ] as const;
 
-/* The documentation hub: the platform's building blocks, then each product's docs. */
+/* Straight to what developers and operators ask for first: the CLI, the packs, what an administrator controls. */
+const SHORTCUTS = [
+  { id: "cli", href: "/docs/orazaka/cli", logo: "orazaka" },
+  { id: "packs", href: "/docs/orazaka/packs", logo: "orazaka" },
+  { id: "orazakaAdmin", href: "/docs/orazaka/admin", logo: "orazaka" },
+  { id: "orochiaAdmin", href: "/docs/orochia/admin_console", logo: "orochia" },
+] as const;
+
+/* The documentation hub: shortcuts, the platform's building blocks, then each product's docs. */
 export default async function DocsHub({ params }: Props) {
   const locale = asLocale((await params).locale);
   const t = getDictionary(locale).docs;
@@ -35,6 +43,21 @@ export default async function DocsHub({ params }: Props) {
           <h1>{t.hub.title}</h1>
           <p>{t.hub.lead}</p>
         </header>
+        <section aria-labelledby="docs-shortcuts" className="kz-docs-hub-group">
+          <h2 id="docs-shortcuts">{t.hub.shortcuts.title}</h2>
+          <div className="kz-docs-hub-grid">
+            {SHORTCUTS.map(({ id, href, logo }) => (
+              <Link key={id} href={`/${locale}${href}`} className="kz-docs-hub-card">
+                <ProductLogo id={logo} size={28} animated={false} />
+                <span className="kz-docs-hub-card-title">{t.hub.shortcuts.items[id].title}</span>
+                <span className="kz-docs-hub-card-text">{t.hub.shortcuts.items[id].text}</span>
+                <span className="kz-docs-hub-card-cta">
+                  {t.hub.open} <ForwardIcon size={14} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </section>
         {GROUPS.map((group) => (
           <section key={group.id} aria-labelledby={`docs-${group.id}`} className="kz-docs-hub-group">
             <h2 id={`docs-${group.id}`}>{t.hub[group.id]}</h2>

@@ -33,13 +33,17 @@
   (`products/orazaka/scripts/generate-docs.mjs`), never to the site.
 - The Orazaka repository map (`RepositoryMap`, architecture page `#repositories`) renders
   `repositories` from the same generated file — never hard-code a repository list in a component.
+- The Orazaka packs (`/products/orazaka/packages`, the packs section of `/products/orazaka`) render `packs` from the
+  same generated file (`lib/orazaka-packs.ts`, read from krizaka/orazaka-packs by the generator) — never a hand-written
+  list; a bundle with `catalog.status: DRAFT` (the test pack) is never shown. A pack's words are its own translations.
 
 ## 2.1 Products are presented the same way
 
 - `lib/nav.ts` is the single source of the product navigation: the desktop Products panel, the mobile
   panel, the footer and the home spotlights all render it. Every product exposes the same four
   entries in the same order (overview · how it works · demo · signature); documentation lives under **Docs**
-  (`NAV_DOCS`: Orazaka, Orochia, Krizaka UI, Krizaka Java — the one entry point of every documentation). A product
+  (`NAV_DOCS`: Orazaka, CLI, Orochia, Krizaka UI, Krizaka Java — the one entry point of every documentation; the CLI
+  entry is a direct link to the generated `/docs/orazaka/cli`, also in the footer and the ⌘K search). A product
   page may still link its documentation in context.
 - The desktop Products panel stays compact (~440 px): one row per product (mark · name · tagline → its overview),
   its three other entries in plain text under it, no per-link icons or subtitles, and only "All products" below —
@@ -72,7 +76,7 @@
   routing code (`proxy.ts`, `lib/i18n.ts`, `lib/seo.ts`, the locale layout) compares locales.
 - Data modules keep **structure** (ids, links, colors, endpoints); their words are messages keyed by
   the same ids (e.g. `site.nav.<product>.links.<id>`, `site.orochia.arch.journeys.<id>`). Long,
-  structured content collections (`lib/use-cases-data.ts`, `lib/packages-data.ts`) may hold
+  structured content collections (`lib/use-cases-data.ts`) may hold
   `{ fr, en }` fields read with the locale key — never with a ternary.
 
 ## 2.3 Documentation — one engine (Fumadocs)
