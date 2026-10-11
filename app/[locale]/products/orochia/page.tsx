@@ -36,7 +36,9 @@ import { moduleMapData } from "@/lib/architecture-model";
 import { journeysFor } from "@/lib/journeys";
 import { OrochiaLogo } from "@krizaka/ui";
 import Rich from "@/app/components/Rich";
-import { IsoSplit } from "@/app/components/brand/Iso";
+import { OrochiaIso } from "@/app/components/products/ProductIso";
+import { GlowCard } from "@krizaka/ui/glow-card";
+import { Meter } from "@krizaka/ui/meter";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
 import { PAYOUT_MINIMUM_CENTS, PLATFORM_FEE_PERCENTAGE, SPLIT_EXAMPLES, creatorNetCents, formatUsd } from "@/lib/orochia-economics";
 import ButtonLink from "@/app/components/sections/ButtonLink";
@@ -110,8 +112,10 @@ export default async function OrochiaPage({ params }: Props) {
           </div>
         }
       >
-        <div className="bp-wrap bp-hero bp-center">
-          {/* The product's name first — the mark and the word together, as in the menu and on the home. */}
+        <div className="bp-wrap bp-hero">
+          <div className="bp-hero-grid">
+          <div>
+          {/* The product's name first — the mark and the word together, as in the menu, on the home and on Orazaka. */}
           <p className="oc-lockup">
             <OrochiaLogo size={72} />
             <span>Orochia</span>
@@ -120,7 +124,7 @@ export default async function OrochiaPage({ params }: Props) {
           <h1 className="bp-h1">
             {t.titleLead} <span style={{ display: "block" }} className="bp-accent">{t.titleAccent}</span>
           </h1>
-          <p className="bp-lead" style={{ margin: "20px auto 0" }}>{t.heroLead}</p>
+          <p className="bp-lead" style={{ marginTop: 20 }}>{t.heroLead}</p>
           <div className="bp-actions">
             <ButtonLink href="/products/orochia/demos" variant="primary" size="lg" shimmer magnetic>
               <PlayIcon size={18} /> {t.watchDemo}
@@ -132,7 +136,10 @@ export default async function OrochiaPage({ params }: Props) {
               <GitHubMark size={16} /> krizaka/orochia
             </ButtonLink>
           </div>
-          <ul className="bp-proofs" style={{ textAlign: "left" }}>
+          </div>
+          <OrochiaIso locale={asLocale(locale)} className="bp-hero-art" />
+          </div>
+          <ul className="bp-proofs">
             {WAYS.map(({ id, Icon }) => (
               <li key={id} className="bp-proof">
                 <Icon size={22} nodeColor={node} />
@@ -143,23 +150,41 @@ export default async function OrochiaPage({ params }: Props) {
               </li>
             ))}
           </ul>
-          <p style={{ fontSize: 12, color: "var(--kz-text-secondary)", margin: "20px 0 0" }}>{t.audience}</p>
+          <p style={{ fontSize: 12, color: "var(--kz-text-secondary)", margin: "20px 0 0", textAlign: "center" }}>{t.audience}</p>
         </div>
       </SectionBackdrop>
 
       {/* ─── Get paid: the 90 / 10 split, worked examples ─── */}
       <section id="get-paid" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
         <div className="bp-split">
+          {/* The split, drawn: a ring of the creator's share, the figure climbing in its centre. */}
           <div {...reveal()}>
-            <IsoSplit share={100 - PLATFORM_FEE_PERCENTAGE} className="bp-hero-art" />
+            <GlowCard className="oc-split">
+              <p className="bp-eyebrow" aria-hidden>{t.paid.meter.label}</p>
+              <Meter
+                variant="ring"
+                size="lg"
+                className="oc-ring"
+                label={t.paid.meter.label}
+                max={100}
+                parts={[
+                  { label: t.paid.meter.creator, value: 100 - PLATFORM_FEE_PERCENTAGE, valueText: format(t.paid.percent, { value: 100 - PLATFORM_FEE_PERCENTAGE }) },
+                  { label: t.paid.meter.platform, value: PLATFORM_FEE_PERCENTAGE, valueText: format(t.paid.percent, { value: PLATFORM_FEE_PERCENTAGE }) },
+                ]}
+              >
+                <span className="oc-ring-figure">
+                  {share[0]}
+                  <NumberTicker value={100 - PLATFORM_FEE_PERCENTAGE} locale={locale} />
+                  {share[1]}
+                </span>
+                <span className="oc-ring-caption">{t.paid.meter.caption}</span>
+              </Meter>
+            </GlowCard>
           </div>
           <div {...reveal(1)}>
             <p className="bp-eyebrow">{t.paid.eyebrow}</p>
             <h2 className="bp-h2"><Rich text={t.paid.title} /></h2>
             <p className="bp-lead">{t.paid.lead}</p>
-            <p className="bp-share">
-              <b>{share[0]}<NumberTicker value={100 - PLATFORM_FEE_PERCENTAGE} locale={locale} />{share[1]}</b> <span>{t.paid.share}</span>
-            </p>
             <ul className="bp-ledger">
               {SPLIT_EXAMPLES.map(({ id, grossCents }, i) => {
                 const Icon = { tip: TipIcon, unlock: UnlockIcon, pledge: ChallengeIcon, bid: AuctionIcon }[id];
@@ -288,8 +313,20 @@ export default async function OrochiaPage({ params }: Props) {
       </SectionBackdrop>
       <SiteFooter />
       <style>{`
-        .oc-lockup { display: flex; width: fit-content; align-items: center; gap: 14px; margin: 0 auto 18px; font-family: var(--font-display), system-ui, sans-serif;
+        .oc-lockup { display: flex; width: fit-content; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-display), system-ui, sans-serif;
           font-size: clamp(2.25rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--kz-text-primary); }
+        .oc-split { display: grid; justify-items: center; gap: 18px; padding: clamp(24px, 4vw, 44px); border-radius: 24px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); }
+        .oc-split .bp-eyebrow { margin: 0; }
+        .oc-ring { gap: 18px; font-size: 13.5px; }
+        .oc-ring > div:first-child { width: min(260px, 62vw); height: auto; aspect-ratio: 1; }
+        .oc-ring-figure { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.8rem, 7vw, 4rem); font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--kz-accent-text); }
+        .oc-ring-caption { margin-top: 6px; font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--kz-text-secondary); }
+        /* The ring draws itself when the card arrives (the reveal of its column); still under reduced motion. */
+        @media (prefers-reduced-motion: no-preference) {
+          .kz-in .oc-ring circle + circle { animation: oc-draw 1.4s var(--kz-ease) both; }
+          .kz-in .oc-ring circle + circle + circle { animation-delay: .5s; }
+        }
+        @keyframes oc-draw { from { stroke-dasharray: 0 100; } }
       `}</style>
     </main>
   );

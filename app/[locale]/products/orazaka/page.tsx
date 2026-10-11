@@ -30,7 +30,7 @@ import ContactCta from "@/app/components/home/ContactCta";
 import PacksCallout from "@/app/components/products/PacksCallout";
 import AdminCallout from "@/app/components/products/AdminCallout";
 import Rich from "@/app/components/Rich";
-import { IsoSovereignStack } from "@/app/components/brand/Iso";
+import { OrazakaIso } from "@/app/components/products/ProductIso";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
 import { reveal } from "@/lib/motion";
 import ButtonLink from "@/app/components/sections/ButtonLink";
@@ -158,7 +158,7 @@ export default async function OrazakaPage({ params }: Props) {
                 </ButtonLink>
               </div>
             </div>
-            <IsoSovereignStack className="bp-hero-art" />
+            <OrazakaIso locale={asLocale(locale)} className="bp-hero-art" />
           </div>
           <ul className="bp-proofs">
             {PROOFS.map(({ id, Icon }) => (
