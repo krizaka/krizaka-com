@@ -45,7 +45,7 @@ hand-authored here. Governance contract: [`AGENTS.md`](AGENTS.md).
 Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 with the Krizaka preset
 ([`@krizaka/tailwind`](https://www.npmjs.com/package/@krizaka/tailwind): the `--kz-*` tokens of `@krizaka/tokens`) ·
 [`@krizaka/ui`](https://www.npmjs.com/package/@krizaka/ui) · Fumadocs (docs) ·
-one schema component for every product (`app/components/diagrams/`, no diagram library, no Mermaid) · one motion system in CSS (`app/motion.css`, no animation library for new work).
+one schema component for every product (`app/components/diagrams/`, no diagram library, no Mermaid) · one motion system, @krizaka/ui's (`MotionObserver`, `NumberTicker`, `[data-reveal]`; no animation library for new work).
 
 ## Where things live
 

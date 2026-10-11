@@ -7,8 +7,7 @@ import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
 import "../globals.css";
-import "../motion.css";
-import SiteMotion from "../components/motion/SiteMotion";
+import { MotionObserver } from "@krizaka/ui/motion";
 import { cn } from "@krizaka/ui/cn";
 
 const jakartaSans = Plus_Jakarta_Sans({
@@ -142,7 +141,7 @@ export default async function RootLayout({
         {/* Sitewide linked @graph: Organization · WebSite · SoftwareApplication.
             Page-scoped schema (BreadcrumbList, FAQPage) is emitted per page. */}
         <JsonLd data={buildSiteGraph(validatedLocale)} />
-        {/* Without JavaScript nothing waits to be revealed (app/motion.css, SiteMotion). */}
+        {/* Without JavaScript nothing waits to be revealed (@krizaka/ui motion.css, MotionObserver). */}
         <noscript>
           <style>{"[data-reveal],.bp-term pre>div{opacity:1!important;transform:none!important;filter:none!important}"}</style>
         </noscript>
@@ -153,7 +152,8 @@ export default async function RootLayout({
           <I18nProvider locale={validatedLocale} messages={getDictionary(validatedLocale)}>
             {children}
           </I18nProvider>
-          <SiteMotion />
+          {/* The Krizaka motion conductor (@krizaka/ui/motion): reveals, off-screen pause, settle, pointer — no rAF loop. */}
+          <MotionObserver />
         </ThemeProvider>
       </body>
     </html>

@@ -1,4 +1,5 @@
-/* The site's motion vocabulary, as props for server or client components (app/motion.css, SiteMotion).
+/* The site's motion vocabulary, as props for server or client components — the `[data-reveal]` signature of
+   @krizaka/ui (motion.css), revealed by its MotionObserver (mounted once in the locale layout).
 
    reveal(i)        — a block that rises into place once, as it enters the viewport; `i` staggers siblings
                       (70 ms apart, capped so a long list never makes the reader wait).

@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
 import { ChevronDownIcon, ForwardIcon } from "@krizaka/icons";
 import type { MascotBird, MascotMood } from "@krizaka/ui/mascots";
 import Badges, { type Badge } from "./Badges";
 import Inline from "./Inline";
 import MascotRule from "./MascotRule";
+import ButtonLink from "./ButtonLink";
 
 export interface ArgumentCardProps {
   id: string;
@@ -33,7 +33,7 @@ export interface ArgumentCardProps {
 /** A card that argues, in reading order: who (icon, name, badges) → the problem in one line → what it does in three
     points → the rule told by a bird → the long version, folded → the way in. Cards of a row share their height; the
     fold and the foot sit at the bottom, so the eye finds them at the same place on every card. (The foot is a div, not
-    a footer: SiteMotion watches page footers.) */
+    a footer: MotionObserver watches page footers.) */
 export default function ArgumentCard({ id, hue, icon, title, meta, badges, hook, points, details, rule, more, actions }: ArgumentCardProps) {
   return (
     <article className="ps-card" data-hue={hue} aria-labelledby={id}>
@@ -84,10 +84,10 @@ export default function ArgumentCard({ id, hue, icon, title, meta, badges, hook,
       {(more || actions) && (
         <div className="ps-card-foot">
           {more && (
-            <Link href={more.href} className="ps-btn is-soft">
+            <ButtonLink href={more.href} className="ps-more">
               {more.label} <ForwardIcon size={14} aria-hidden />
               <span className="sr-only"> — {title}</span>
-            </Link>
+            </ButtonLink>
           )}
           {actions}
         </div>

@@ -1,5 +1,6 @@
 import { ExternalIcon, type Icon } from "@krizaka/icons";
 import IconActions from "./IconActions";
+import ButtonLink from "./ButtonLink";
 
 /** External actions (discuss, propose, report…). `buttons` (default): ghost buttons with their words — the end of a
     page or a section. `icons`: icon buttons with a tooltip — the foot of a card, where room is short. */
@@ -18,9 +19,9 @@ export default function ActionLinks({
     <ul className="ps-actions" aria-label={label}>
       {links.map(({ href, label, Icon }) => (
         <li key={href}>
-          <a href={href} target="_blank" rel="noopener noreferrer" className="ps-btn">
+          <ButtonLink href={href}>
             <Icon size={16} aria-hidden /> {label} <ExternalIcon size={12} aria-hidden />
-          </a>
+          </ButtonLink>
         </li>
       ))}
     </ul>

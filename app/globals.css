@@ -1150,40 +1150,6 @@ body {
   color: transparent;
 }
 
-/* CTA glare sweep — a single light band crosses the button on hover. */
-.btn-sheen {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.btn-sheen::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 45%;
-  height: 100%;
-  transform: translateX(-160%) skewX(-18deg);
-  background: linear-gradient(
-    100deg,
-    transparent,
-    color-mix(in srgb, var(--kz-on-accent) 42%, transparent),
-    transparent
-  );
-  opacity: 0;
-  pointer-events: none;
-}
-@media (hover: hover) and (pointer: fine) {
-  .btn-sheen:hover::after {
-    animation: btn-sheen-sweep 720ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-}
-@keyframes btn-sheen-sweep {
-  0%   { opacity: 0; transform: translateX(-160%) skewX(-18deg); }
-  18%  { opacity: 1; }
-  100% { opacity: 0; transform: translateX(360%) skewX(-18deg); }
-}
-
 /* Cursor-tracked spotlight — a soft accent bloom follows the pointer across
    a card. --spot-x/--spot-y are written by an onMouseMove handler; they fall
    back to the card centre so the hover still reads without JS. */
@@ -1585,12 +1551,6 @@ html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
 
 .bp-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .bp-center .bp-actions { justify-content: center; }
-.bp-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; font-size: 14px; font-weight: 700; text-decoration: none;
-  transition: transform var(--kz-transition-fast), border-color var(--kz-transition-fast), background-color var(--kz-transition-fast); }
-.bp-btn-primary { background: var(--kz-accent); color: var(--kz-on-accent); }
-.bp-btn-primary:hover { background: var(--kz-accent-hover); transform: translateY(-1px); }
-.bp-btn-ghost { color: var(--kz-text-primary); border: 1px solid var(--kz-border-default); background: color-mix(in srgb, var(--kz-surface-1) 60%, transparent); font-weight: 600; }
-.bp-btn-ghost:hover { border-color: var(--kz-border-strong); }
 
 .bp-proofs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; margin-top: 40px; list-style: none; padding: 0; }
 .bp-proof { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--kz-border-subtle);
@@ -1781,3 +1741,139 @@ html.light .kz-backdrop-media { mix-blend-mode: screen; }
 .kz-kit-rule-title { font-weight: 700; color: var(--kz-text-primary); }
 .kz-kit-rule-text { font-size: 0.9375rem; color: var(--kz-text-secondary); }
 .kz-kit-rule-source { margin-top: auto; font-size: 0.8125rem; color: var(--kz-accent-text); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   SITE MOTION — what krizaka.com adds to the Krizaka motion signature
+   ─────────────────────────────────────────────────────────────────
+   The vocabulary is @krizaka/ui's (motion.css through @krizaka/tailwind; conducted by MotionObserver, mounted once in
+   the locale layout): `[data-reveal]` / `[data-reveal="soft"]` (lib/motion.ts `reveal(i)`), NumberTicker, the
+   off-screen pause (`data-offscreen`), the settle step (`html[data-motion]`), the node of the signature icons, magnetic
+   buttons. Below, only what is the site's own. No animation library, no permanent requestAnimationFrame, no canvas;
+   composited properties only; still under prefers-reduced-motion.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* The first screen is painted still (LCP): its loops wait for the page to settle (MotionObserver sets data-motion). */
+html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type) :is(*, *::before, *::after):not(.kz-backdrop-media, [data-parallax]) {
+  animation-play-state: paused !important;
+}
+
+/* Depth: the blurred footage behind a hero drifts a little slower than the page (scroll-driven, no JS). */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    header.kz-backdrop > .kz-backdrop-media {
+      animation: kz-parallax linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+  }
+}
+@keyframes kz-parallax {
+  to { transform: translate3d(0, 14%, 0); }
+}
+
+/* The node of a signature icon also lights when the card that holds it is hovered (the package lights it in links and
+   buttons). */
+:is(.bp-card, .bp-proof, .bp-ledger li, .kz-expertise-item, .od-case, .ps-card):is(:hover, :focus-within) svg[data-kz-icon] [data-node] {
+  transform: scale(1.5);
+  filter: drop-shadow(0 0 3px var(--kz-accent));
+}
+
+/* Cards answer: every card tints its border toward the accent; cards that are links also rise. */
+.bp-card,
+.bp-proof,
+.bp-ledger li,
+.kz-expertise-item {
+  transition: border-color var(--kz-transition-smooth), transform var(--kz-transition-smooth), box-shadow var(--kz-transition-smooth),
+    background-color var(--kz-transition-smooth);
+}
+@media (hover: hover) {
+  .bp-card:hover,
+  .bp-proof:hover,
+  .bp-ledger li:hover {
+    border-color: color-mix(in srgb, var(--kz-accent) 45%, var(--kz-border-default));
+  }
+  a.bp-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--kz-accent) 55%, transparent);
+  }
+  .kz-expertise-item:hover {
+    background-color: color-mix(in srgb, var(--kz-accent) 5%, var(--kz-surface-0));
+  }
+}
+.bp-icon {
+  transition: transform var(--kz-transition-smooth), border-color var(--kz-transition-smooth), box-shadow var(--kz-transition-smooth);
+}
+.bp-card:is(:hover, :focus-visible) .bp-icon,
+.bp-ledger li:hover .bp-icon,
+.od-case:hover .bp-icon {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--kz-accent) 50%, transparent);
+  box-shadow: 0 10px 22px -12px var(--kz-accent);
+}
+
+/* The recordings of the products: the frame comes forward a little under the pointer. */
+@media (hover: hover) {
+  .kz-spot-media {
+    transition: transform 500ms var(--kz-ease), box-shadow 500ms var(--kz-ease);
+  }
+  .kz-spot-media:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 40px 70px -32px color-mix(in srgb, var(--kz-accent) 55%, transparent);
+  }
+}
+
+/* Long reads: a hairline that fills with the page (docs; scroll-driven, no JS, absent where unsupported). */
+.kz-read-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .kz-read-progress {
+      display: block;
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 60;
+      height: 2px;
+      pointer-events: none;
+      background: linear-gradient(90deg, var(--kz-accent), var(--kz-accent-2, var(--kz-accent)));
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      animation: kz-read linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+}
+@keyframes kz-read {
+  to { transform: scaleX(1); }
+}
+
+/* The Orazaka terminal: its three commands are typed in, one after the other, when it arrives. */
+.bp-term[data-reveal] pre > div {
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.45s var(--kz-ease), transform 0.45s var(--kz-ease);
+}
+.bp-term.kz-in pre > div { opacity: 1; transform: none; }
+.bp-term.kz-in pre > div:nth-child(1) { transition-delay: 450ms; }
+.bp-term.kz-in pre > div:nth-child(2) { transition-delay: 900ms; }
+.bp-term.kz-in pre > div:nth-child(3) { transition-delay: 1350ms; }
+
+/* Reduced motion: still, and everything readable. */
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal="soft"],
+  .bp-term[data-reveal] pre > div {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+  .bp-card,
+  .bp-proof,
+  .bp-ledger li,
+  .bp-icon,
+  .kz-spot-media {
+    transition: none !important;
+    transform: none !important;
+  }
+}

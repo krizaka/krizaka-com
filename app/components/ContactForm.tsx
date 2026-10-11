@@ -6,11 +6,12 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { AlertTriangle, ArrowRight, Check, Handshake, Loader2, MessageCircle, RotateCcw } from "lucide-react";
+import { AlertTriangle, ArrowRight, Check, Handshake, MessageCircle, RotateCcw } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { format } from "@krizaka/i18n";
 import { CONTACT_TIMELINES, CONTACT_TOPICS, cleanSource, topicForSource, type ContactTimeline, type ContactTopic } from "@/lib/contact";
 import { ProductLogo } from "@krizaka/ui";
+import { Button } from "@krizaka/ui/button";
 
 type Status = "idle" | "sending" | "sent" | "error";
 type Field = "name" | "email" | "message";
@@ -274,11 +275,19 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
       )}
 
       <div className="kz-cf-foot">
-        <button type="submit" className="kz-cf-submit btn-sheen" disabled={status === "sending"}>
-          {status === "sending" ? <Loader2 size={16} className="kz-cf-spin" aria-hidden /> : null}
+        <Button
+          type="submit"
+          variant="primary"
+          size="lg"
+          shape="cut"
+          shimmer
+          className="kz-cf-submit"
+          loading={status === "sending"}
+          status={serverError ? "error" : null}
+        >
           {status === "sending" ? c.sending : c.send}
           {status !== "sending" && <ArrowRight size={16} aria-hidden />}
-        </button>
+        </Button>
         <span>{c.privacy}</span>
       </div>
       <style>{STYLES}</style>
@@ -344,14 +353,6 @@ const STYLES = `
   .kz-cf-error { display:flex; gap:8px; align-items:center; margin:0; font-size:13px; color:var(--kz-danger); }
   .kz-cf-foot { display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px; padding-top:4px; }
   .kz-cf-foot > span { font-size:12px; color:var(--kz-text-muted); }
-  .kz-cf-submit { display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:14px 24px; border:0; border-radius:12px;
-    cursor:pointer; font:inherit; font-size:15px; font-weight:700; background:var(--kz-accent); color:var(--kz-on-accent);
-    transition:transform 150ms ease; }
-  .kz-cf-submit:hover:not(:disabled) { transform:translateY(-1px); }
-  .kz-cf-submit:disabled { opacity:.7; cursor:progress; }
-  .kz-cf-submit:focus-visible { outline:2px solid var(--kz-accent); outline-offset:3px; }
-  .kz-cf-spin { animation:kz-cf-spin 900ms linear infinite; }
-  @keyframes kz-cf-spin { to { transform:rotate(360deg); } }
   @media (max-width:560px) { .kz-cf-submit { width:100%; } }
 
   .kz-cf-done { justify-items:center; text-align:center; gap:12px; padding:clamp(32px, 6vw, 56px) 24px; outline:none; }

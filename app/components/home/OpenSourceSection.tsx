@@ -8,7 +8,7 @@ import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "../I18nProvider";
 import { format } from "@krizaka/i18n";
 import { reveal } from "@/lib/motion";
-import CountUp from "../motion/CountUp";
+import { NumberTicker } from "@krizaka/ui/number-ticker";
 
 export default function OpenSourceSection({ orazakaRepos, orochiaRepos, publicRepositories }: { orazakaRepos: number; orochiaRepos: number; publicRepositories: number }) {
   const { t, locale } = useI18n();
@@ -36,7 +36,7 @@ export default function OpenSourceSection({ orazakaRepos, orochiaRepos, publicRe
         <dl className="kz-oss-stats">
           {stats.map((s, i) => (
             <div key={s.label} {...reveal(i + 1)}>
-              <dt>{typeof s.value === "number" ? <CountUp value={s.value} locale={locale} /> : s.value}</dt>
+              <dt>{typeof s.value === "number" ? <NumberTicker value={s.value} locale={locale} /> : s.value}</dt>
               <dd>{s.label}</dd>
             </div>
           ))}

@@ -4,13 +4,13 @@
    Depth, back to front (BRAND.md §4), every layer decorative and still under prefers-reduced-motion:
    - the section gradient and its drifting light (SectionBackdrop), a light dome and a perspective floor;
    - an aurora in the three brand colours — Orazaka orange on the left, Krizaka blue in the middle, Orochia violet on
-     the right — that breathes very slowly (app/motion.css);
+     the right — that breathes very slowly (org-hero.css);
    - the two products glimpsed through depth of field on their side (HeroProductMedia): hovering a card brightens its
      product and lights its mark;
    - the signature landscape as the horizon: it rises as the page scrolls and fades into the next section — no hard
      edge, never behind the title;
    - an invitation to scroll that is a real link to the products.
-   The parallax and the breathing are CSS (scroll-driven animations, app/motion.css): no script runs for them. */
+   The parallax and the breathing are CSS (scroll-driven animations, org-hero.css): no script runs for them. */
 
 import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
@@ -26,6 +26,7 @@ import { getDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/org-data";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import "./org-hero.css";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 export default function OrgHero({ locale, repositoryCount }: { locale: string; repositoryCount: number }) {
   const t = getDictionary(locale);
@@ -71,12 +72,12 @@ export default function OrgHero({ locale, repositoryCount }: { locale: string; r
         </div>
 
         <div className="org-hero-cta">
-          <Link href="/products" className="org-btn org-btn-primary btn-sheen">
+          <ButtonLink href="/products" variant="primary" size="lg" shimmer magnetic>
             {h.cta} <ForwardIcon size={16} strokeWidth={2.25} />
-          </Link>
-          <a href={GITHUB_ORG_URL} target="_blank" rel="noopener noreferrer" className="org-btn org-btn-ghost">
+          </ButtonLink>
+          <ButtonLink href={GITHUB_ORG_URL} size="lg">
             <GitHubMark size={15} /> github.com/krizaka
-          </a>
+          </ButtonLink>
         </div>
 
         <a href="#products" className="org-hero-scroll">

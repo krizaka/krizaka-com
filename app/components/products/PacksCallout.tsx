@@ -4,6 +4,7 @@ import { getDictionary, format, type Locale } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import { packText, packTitle, showcasePacks } from "@/lib/orazaka-packs";
 import Rich from "@/app/components/Rich";
+import ButtonLink from "@/app/components/sections/ButtonLink";
 
 /* The packs, on the Orazaka product page: every pack on the shelf (generated from krizaka/orazaka-packs), each a link
    to its card on /products/orazaka/packages. Words: site.orazakaPacks.callout; the packs' own words are theirs. */
@@ -32,9 +33,9 @@ export default function PacksCallout({ locale }: { locale: Locale }) {
         ))}
       </ul>
       <div className="bp-actions bp-center" style={{ justifyContent: "center" }} {...reveal()}>
-        <Link href="/products/orazaka/packages" className="bp-btn bp-btn-primary btn-sheen">
+        <ButtonLink href="/products/orazaka/packages" variant="primary" size="lg">
           {t.cta} <ForwardIcon size={16} />
-        </Link>
+        </ButtonLink>
       </div>
     </section>
   );

@@ -167,12 +167,18 @@
 - Every schema reads correctly at phone width (one column, top to bottom), works with the keyboard,
   honours `prefers-reduced-motion` (a journey never plays by itself then), and carries a **text version** (tables or
   ordered lists) of everything it draws.
-- **Motion is one system** (`app/motion.css`, conducted by `app/components/motion/SiteMotion.tsx`, props from
-  `lib/motion.ts`): blocks arrive once with `reveal(i)` (`[data-reveal]` of @krizaka/ui, staggered 70 ms, never on the
-  first screen), figures climb with `CountUp`, loops pause off screen and wait for the page to settle, the pointer lights
-  the node of the signature icons. No animation library for new work, no permanent `requestAnimationFrame`, no canvas;
-  docs stay almost still (a reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui
-  (krizaka/krizaka-ui#41), not into a copy here.
+- **Motion is one system — @krizaka/ui's.** `MotionObserver` (`@krizaka/ui/motion`) is mounted once in the locale
+  layout: blocks arrive once with `reveal(i)` (`lib/motion.ts` → `[data-reveal]`, staggered 70 ms; `reveal(i, "soft")`
+  for schemas and dense content; never on the first screen), figures climb with `NumberTicker`
+  (`@krizaka/ui/number-ticker`), loops pause off screen (`data-offscreen`) and wait for the page to settle
+  (`html[data-motion]`), the pointer lights the node of the signature icons and pulls `magnetic` buttons. The site only
+  adds what is its own, in `app/globals.css` (« SITE MOTION ») and `org-hero.css`: no second conductor, no counter of its
+  own. No animation library for new work, no permanent `requestAnimationFrame`, no canvas; docs stay almost still (a
+  reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui, not into a copy here.
+- **Every action is the @krizaka/ui `Button`** — through `ButtonLink` (`app/components/sections`) for links: `primary`
+  for the one action a block is about, `secondary` for the others, `ghost` for quiet chips; the Krizaka chamfer
+  (`shape="cut"`) everywhere; `lg` on a hero or a closing call, `md` in a section. `shimmer` + `magnetic` only on a
+  hero's main action. No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
 
 ## 4.1 The Krizaka page language
 
