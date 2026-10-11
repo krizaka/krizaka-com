@@ -6,24 +6,24 @@ import { Command, CommandDialog } from "@krizaka/ui/command";
 import { Kbd } from "@krizaka/ui/kbd";
 import { useI18n } from "./I18nProvider";
 import { useContactHref } from "./useContactHref";
+import { NAV_DOCS, NAV_DOCS_HUB, docsLinkText } from "@/lib/nav";
 
 /* The site search (⌘K): the @krizaka/ui command palette (focus trap, Escape, arrow keys, filter) over the
-   site's destinations. The destinations are structure; their words are messages → site.search.items.<id>. */
+   site's destinations. The destinations are structure; their words are messages → site.search.items.<id>. The
+   documentation entries are every NAV_DOCS set (lib/nav.ts) and the hub — a set added there is searchable here. */
 
 const SEARCH_TARGETS = [
   { id: "orazaka", url: "/products/orazaka" },
-  { id: "orazakaDocs", url: "/docs/orazaka/101" },
   { id: "orazakaDemo", url: "/products/orazaka/demos" },
   { id: "orazakaArch", url: "/products/orazaka/architecture" },
   { id: "orochia", url: "/products/orochia" },
-  { id: "orochiaDocs", url: "/docs/orochia" },
-  { id: "cli", url: "/docs/orazaka/cli" },
-  { id: "packs", url: "/products/orazaka/packages" },
-  { id: "orazakaAdmin", url: "/docs/orazaka/admin" },
-  { id: "orochiaAdmin", url: "/docs/orochia/admin_console" },
+  { id: "docs", url: NAV_DOCS_HUB },
   { id: "story", url: "/story" },
   { id: "openSource", url: "/open-source" },
   { id: "contact", url: "/contact" },
+  { id: "packs", url: "/products/orazaka/packages" },
+  { id: "orazakaAdmin", url: "/docs/orazaka/admin" },
+  { id: "orochiaAdmin", url: "/docs/orochia/admin_console" },
 ] as const;
 
 export function SearchCommand({
@@ -49,6 +49,14 @@ export function SearchCommand({
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [setOpen]);
+
+  const targets = [
+    ...SEARCH_TARGETS.map(({ id, url }) => ({ key: id, url, ...s.items[id] })),
+    ...NAV_DOCS.map((d) => {
+      const text = docsLinkText(t, d);
+      return { key: `docs-${d.id}`, url: d.href, title: text.label, desc: text.desc, category: s.docsCategory };
+    }),
+  ];
 
   const go = (url: string) => {
     setOpen(false);
@@ -80,12 +88,12 @@ export function SearchCommand({
     >
       <Command.Input placeholder={s.placeholder} />
       <Command.List label={s.results} emptyLabel={s.empty}>
-        {SEARCH_TARGETS.map(({ id, url }) => {
-          const item = s.items[id];
+        {targets.map((item) => {
+          const { key, url } = item;
           return (
             <Command.Item
-              key={id}
-              value={`${item.title} ${id}`}
+              key={key}
+              value={`${item.title} ${item.category} ${key}`}
               keywords={[item.desc, item.category]}
               onSelect={() => go(url)}
               className="flex-col items-start gap-0.5"

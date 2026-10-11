@@ -5,7 +5,7 @@ import { ExternalIcon } from "@krizaka/icons";
 import { GitHubMark } from "./brand/GitHubMark";
 import { useI18n } from "./I18nProvider";
 import { useContactHref } from "./useContactHref";
-import { NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS } from "@/lib/nav";
+import { NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, docsLinkText } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 export default function SiteFooter() {
@@ -13,7 +13,7 @@ export default function SiteFooter() {
   const f = t.site.footer;
   const contactHref = useContactHref();
 
-  // Same five entries per product as the menus (lib/nav.ts).
+  // Same four entries per product as the menus (lib/nav.ts).
   const linksOf = (id: "orazaka" | "orochia") =>
     NAV_PRODUCTS.find((p) => p.id === id)!.links.map((l) => ({ label: t.site.nav[id].links[l.icon].label, href: l.href }));
   const orazakaLinks = linksOf("orazaka");
@@ -23,16 +23,18 @@ export default function SiteFooter() {
     { label: f.products, href: "/products" },
     { label: f.story, href: "/story" },
     { label: f.openSource, href: "/open-source" },
-    { label: f.docs, href: NAV_DOCS_HUB },
-    { label: f.cli, href: NAV_DOCS.find((d) => d.id === "cli")!.href },
     { label: f.contact, href: contactHref },
     { label: f.privacy, href: "/privacy" },
     { label: f.terms, href: "/terms" },
   ];
 
+  // Every documentation (NAV_DOCS), then the hub.
+  const docsLinks = [...NAV_DOCS.map((d) => ({ label: docsLinkText(t, d).label, href: d.href })), { label: t.site.nav.docs.all.label, href: NAV_DOCS_HUB }];
+
   const columns = [
     { key: "orazaka", title: <><ProductLogo id="orazaka" size={18} animated={false} /> Orazaka</>, links: orazakaLinks },
     { key: "orochia", title: <><ProductLogo id="orochia" size={18} animated={false} /> Orochia</>, links: orochiaLinks },
+    { key: "docs", title: <>{f.docs}</>, links: docsLinks },
     { key: "krizaka", title: <><ProductLogo id="krizaka" size={18} animated={false} /> Krizaka</>, links: krizakaLinks },
   ];
 
@@ -74,13 +76,13 @@ export default function SiteFooter() {
 
       <style>{`
         .kz-footer { padding: 64px 20px 28px; background: var(--kz-surface-0); border-top: 1px solid var(--kz-border-subtle); text-align: left; }
-        .kz-footer-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr); gap: 48px; }
+        .kz-footer-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr); gap: 48px; }
         .kz-footer-logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display), system-ui, sans-serif; font-size: 16px;
           font-weight: 700; color: var(--kz-text-primary); text-decoration: none; }
         .kz-footer-brand p { margin: 14px 0 16px; max-width: 300px; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
         .kz-footer-gh { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--kz-text-secondary); text-decoration: none; }
         .kz-footer-gh:hover { color: var(--kz-text-primary); }
-        .kz-footer-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+        .kz-footer-cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
         .kz-footer-title { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
           letter-spacing: .12em; text-transform: uppercase; color: var(--kz-text-primary); }
         .kz-footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
@@ -88,7 +90,7 @@ export default function SiteFooter() {
         .kz-footer-col a:hover { color: var(--kz-text-primary); }
         .kz-footer-bottom { max-width: 72rem; margin: 48px auto 0; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
           border-top: 1px solid var(--kz-border-subtle); font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
-        @media (max-width: 860px) {
+        @media (max-width: 1000px) {
           .kz-footer-inner { grid-template-columns: 1fr; gap: 36px; }
         }
         @media (max-width: 560px) {

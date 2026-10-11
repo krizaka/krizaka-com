@@ -1,196 +1,152 @@
 "use client";
 
-import { contactHref, contactSourceFromPath } from "@/lib/contact";
+/* The mobile panel (below md), inside @krizaka/ui's NavBar.Mobile (a disclosure under the bar: Escape and a link close
+   it, the focus returns to the toggle). One panel, every destination once (lib/nav.ts): Products — an accordion per
+   product whose entries read clearly (icon, label, a short line, 56 px targets) — and All products; Docs; Open source
+   and Our story; then Contact us, theme and language. */
+
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import { ChevronDownIcon, GlobeIcon, KnowledgeIcon, MoonIcon, SunIcon } from "@krizaka/icons";
+import { ChevronDownIcon, GlobeIcon, KnowledgeIcon, MoonIcon, StudioIcon, SunIcon } from "@krizaka/icons";
+import { NavBar } from "@krizaka/ui/nav-bar";
+import { Button } from "@krizaka/ui/button";
+import { ProductLogo } from "@krizaka/ui";
+import { cn } from "@krizaka/ui/cn";
 import { useI18n } from "./I18nProvider";
 import { useSiteTheme } from "./SiteTheme";
-import { Dialog } from "@krizaka/ui/dialog";
-import { NAV_COMPANY, NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, companyLinkText, docsLinkText, docsLinkLogo, isDocsActive, isDocsSection, isNavActive, localeless, productLinkText } from "@/lib/nav";
-import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
-import { cn } from "@krizaka/ui/cn";
+import { useContactHref } from "./useContactHref";
+import { NAV_ICONS, productLinkIcon } from "./ProductsMenu";
+import {
+  NAV_BAR_LINKS,
+  NAV_COMPANY,
+  NAV_DOCS,
+  NAV_DOCS_HUB,
+  NAV_PRODUCTS,
+  companyLinkText,
+  docsLinkLogo,
+  docsLinkText,
+  docsSectionOf,
+  isNavActive,
+  productLinkDesc,
+  productLinkText,
+} from "@/lib/nav";
 
-/* ─── Mobile Menu Panel ─── */
+const heading = "mx-1 mb-2 mt-0 font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-fg-secondary";
+const row = "gap-3 [&>svg]:shrink-0 [&>svg]:text-fg-secondary aria-[current=page]:bg-surface-2 aria-[current=page]:font-semibold";
 
-export function MobilePanel({
-  isOpen,
-  onClose,
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-}) {
+export function MobilePanel({ path }: { path: string }) {
   const { t, toggleLocale } = useI18n();
   const { theme, toggleTheme } = useSiteTheme();
-  const pathname = usePathname();
-  const path = localeless(pathname);
+  const contact = useContactHref();
+  const all = NAV_COMPANY.find((l) => l.icon === "products")!;
 
-  /* Close on route change */
-  useEffect(() => {
-    onClose();
-  }, [pathname, onClose]);
-
-  /* The @krizaka/ui dialog, as a side panel: focus trap, Escape, scroll lock, focus back to the menu button. */
   return (
-    <Dialog.Root open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <Dialog.Content
-        id="mobile-menu-panel"
-        placement="right"
-        closeLabel={t.nav.close}
-        aria-describedby={undefined}
-        className="max-w-[min(320px,85vw)] overflow-y-auto"
-      >
-        <Dialog.Header className="border-b border-border-subtle px-5 py-4">
-          <Dialog.Title className="inline-flex items-center gap-2 font-display text-[15px]">
-            <KrizakaLogo size={22} />
-            Krizaka
-          </Dialog.Title>
-        </Dialog.Header>
-
-        <nav aria-label={t.nav.menu} style={{ flex: 1, display: "flex", flexDirection: "column" }}>
-        {/* Products — one accordion per product, the same entries as the desktop panel, in plain text (lib/nav.ts). The dialog mounts
-            its content only while open: the links of a closed panel are never prefetched (performance). */}
-        <div style={{ flex: 1, padding: "14px 16px", display: "flex", flexDirection: "column", gap: "10px" }}>
+    <NavBar.Mobile openLabel={t.nav.menu} closeLabel={t.nav.close} className="max-h-[calc(100dvh-6rem)] gap-5 overflow-y-auto overscroll-contain p-3">
+      <section aria-labelledby="kz-mp-products">
+        <h2 id="kz-mp-products" className={heading}>
+          {t.site.menu.products}
+        </h2>
+        <div className="flex flex-col gap-1.5">
           {NAV_PRODUCTS.map((p) => (
-            <details key={p.id} className={cn("kz-mp-product", "brand-" + p.id)} open={path.startsWith(p.href)}>
-              <summary>
-                <span className="kz-mp-logo">
+            <details key={p.id} className={cn("brand-" + p.id, "group/product overflow-hidden rounded-2xl border border-border-subtle bg-surface-2")} open={path.startsWith(p.href)}>
+              <summary className="flex min-h-15 cursor-pointer list-none items-center gap-3 rounded-2xl px-3.5 py-2.5 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring [&::-webkit-details-marker]:hidden">
+                <span className="flex h-9.5 w-9.5 shrink-0 items-center justify-center rounded-[10px] border border-border-subtle bg-surface-0">
                   <ProductLogo id={p.id} size={26} />
                 </span>
-                <span style={{ flex: 1, minWidth: 0 }}>
-                  <span className="kz-mp-name">{p.name}</span>
-                  <span className="kz-mp-tagline">{t.site.nav[p.id].tagline}</span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-display text-[15px] font-bold text-fg group-open/product:text-fg-accent">{p.name}</span>
+                  <span className="block text-[12.5px] text-fg-secondary">{t.site.nav[p.id].tagline}</span>
                 </span>
-                <ChevronDownIcon size={16} className="kz-mp-chevron" />
+                <ChevronDownIcon size={16} className="shrink-0 text-fg-muted transition-transform duration-200 group-open/product:rotate-180 motion-reduce:transition-none" />
               </summary>
-              <div className="kz-mp-links">
-                {p.links.map((l) => (
-                  <Link key={l.href} href={l.href === "/contact" ? contactHref(contactSourceFromPath(path), undefined) : l.href} onClick={onClose} className={cn("kz-mp-link", isNavActive(l, path) && "is-active")}>
-                    {productLinkText(t, p.id, l)}
-                  </Link>
-                ))}
-              </div>
+              <ul className="m-0 flex list-none flex-col gap-0.5 px-1.5 pb-2">
+                {p.links.map((l) => {
+                  const Icon = productLinkIcon(p.id, l.icon);
+                  const active = isNavActive(l, path);
+                  return (
+                    <li key={l.href}>
+                      <Link
+                        href={l.href}
+                        aria-current={active ? "page" : undefined}
+                        className="flex min-h-14 items-center gap-3 rounded-xl px-2.5 py-2 no-underline hover:bg-surface-1 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring aria-[current=page]:bg-surface-1"
+                      >
+                        <span className="flex h-8.5 w-8.5 shrink-0 items-center justify-center rounded-[9px] border border-border-default bg-surface-1 text-fg-accent">
+                          <Icon size={18} />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className={cn("block font-display text-[15px] font-semibold", active ? "text-fg-accent" : "text-fg")}>{productLinkText(t, p.id, l)}</span>
+                          <span className="mt-0.5 block text-[13px] leading-snug text-fg-secondary">{productLinkDesc(t, p.id, l)}</span>
+                        </span>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </details>
           ))}
-
-          {/* Docs: every documentation, the products' and the platform's (lib/nav.ts NAV_DOCS) */}
-          <details className="kz-mp-product" open={isDocsSection(path)}>
-            <summary>
-              <span className="kz-mp-logo">
-                <KnowledgeIcon size={20} />
+          <NavBar.MobileLink asChild active={isNavActive(all, path)} className={row}>
+            <Link href={all.href}>
+              <span className="flex items-center gap-3">
+                <StudioIcon size={18} /> {companyLinkText(t, all).label}
               </span>
-              <span style={{ flex: 1, minWidth: 0 }}>
-                <span className="kz-mp-name">{t.site.menu.docs}</span>
-                <span className="kz-mp-tagline">{t.site.nav.docs.all.desc}</span>
-              </span>
-              <ChevronDownIcon size={16} className="kz-mp-chevron" />
-            </summary>
-            <div className="kz-mp-links">
-              {NAV_DOCS.map((d) => (
-                <Link key={d.id} href={d.href} onClick={onClose} className={cn("kz-mp-link", isDocsActive(d, path) && "is-active")}>
-                  <ProductLogo id={docsLinkLogo(d)} size={18} animated={false} /> {docsLinkText(t, d).label}
-                </Link>
-              ))}
-              <Link href={NAV_DOCS_HUB} onClick={onClose} className={cn("kz-mp-link", path === NAV_DOCS_HUB && "is-active")}>
-                <KnowledgeIcon size={18} /> {t.site.nav.docs.all.label}
-              </Link>
-            </div>
-          </details>
-
-          <div className="kz-mp-links" style={{ marginTop: "4px", paddingTop: "10px", borderTop: "1px solid var(--kz-border-subtle)" }}>
-            {/* The desktop bar's other entries (story, open source, contact) live here on mobile. */}
-            {NAV_COMPANY.map((l) => (
-              <Link key={l.href} href={l.href} onClick={onClose} className={cn("kz-mp-link", isNavActive(l, path) && "is-active")}>
-                {companyLinkText(t, l).label}
-              </Link>
-            ))}
-          </div>
+            </Link>
+          </NavBar.MobileLink>
         </div>
-        <style>{`
-          .kz-mp-product { border-radius: 14px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-2); overflow: hidden; }
-          .kz-mp-product summary { display: flex; align-items: center; gap: 12px; padding: 12px 14px; cursor: pointer; list-style: none; }
-          .kz-mp-product summary::-webkit-details-marker { display: none; }
-          .kz-mp-logo { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px;
-            background: var(--kz-surface-0); border: 1px solid var(--kz-border-subtle); flex-shrink: 0; }
-          .kz-mp-name { display: block; font-family: var(--font-display), system-ui, sans-serif; font-size: 14px; font-weight: 700; color: var(--kz-text-primary); }
-          .kz-mp-tagline { display: block; font-size: 12px; color: var(--kz-text-secondary); }
-          .kz-mp-chevron { color: var(--kz-text-muted); transition: transform 200ms ease; flex-shrink: 0; }
-          .kz-mp-product[open] .kz-mp-chevron { transform: rotate(180deg); }
-          .kz-mp-product .kz-mp-links { padding: 0 8px 8px 58px; }
-          .kz-mp-product summary:focus-visible, .kz-mp-link:focus-visible { outline: 2px solid var(--kz-ring); outline-offset: -2px; border-radius: 10px; }
-          .kz-mp-links { display: flex; flex-direction: column; gap: 2px; }
-          .kz-mp-link { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 10px; border-radius: 8px; font-size: 14px; font-weight: 500;
-            color: var(--kz-text-secondary); text-decoration: none; font-family: var(--font-display), system-ui, sans-serif; }
-          .kz-mp-link svg { color: var(--kz-text-muted); }
-          .kz-mp-link.is-active { color: var(--kz-accent-text); font-weight: 600; background: var(--kz-surface-1); }
-          .kz-mp-link.is-active svg { color: var(--kz-accent); }
-        `}</style>
+      </section>
 
-        {/* Controls */}
-        <div
-          style={{
-            padding: "16px 20px",
-            borderTop: "1px solid var(--kz-border-subtle)",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-          }}
-        >
-          {/* Theme toggle */}
-          <button
-            id="mobile-theme-toggle"
-            type="button"
-            onClick={toggleTheme}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              padding: "10px 12px",
-              borderRadius: "8px",
-              fontSize: "13px",
-              fontWeight: 500,
-              color: "var(--kz-text-secondary)",
-              background: "var(--kz-surface-2)",
-              border: "1px solid var(--kz-border-subtle)",
-              cursor: "pointer",
-              fontFamily: "var(--font-display), system-ui, sans-serif",
-              width: "100%",
-              textAlign: "left",
-            }}
-          >
+      <section aria-labelledby="kz-mp-docs">
+        <h2 id="kz-mp-docs" className={heading}>
+          {t.site.menu.docs}
+        </h2>
+        <div className="flex flex-col gap-0.5">
+          {NAV_DOCS.map((d) => (
+            <NavBar.MobileLink key={d.id} asChild active={docsSectionOf(path)?.id === d.id} className={row}>
+              <Link href={d.href}>
+                <span className="flex items-center gap-3">
+                  <ProductLogo id={docsLinkLogo(d)} size={18} animated={false} /> {docsLinkText(t, d).label}
+                </span>
+              </Link>
+            </NavBar.MobileLink>
+          ))}
+          <NavBar.MobileLink asChild active={path === NAV_DOCS_HUB} className={row}>
+            <Link href={NAV_DOCS_HUB}>
+              <span className="flex items-center gap-3">
+                <KnowledgeIcon size={18} /> {t.site.nav.docs.all.label}
+              </span>
+            </Link>
+          </NavBar.MobileLink>
+        </div>
+      </section>
+
+      <section aria-label="Krizaka" className="flex flex-col gap-0.5 border-t border-border-subtle pt-3">
+        {NAV_BAR_LINKS.map((l) => {
+          const Icon = NAV_ICONS[l.icon];
+          return (
+            <NavBar.MobileLink key={l.href} asChild active={isNavActive(l, path)} className={row}>
+              <Link href={l.href}>
+                <span className="flex items-center gap-3">
+                  <Icon size={18} /> {companyLinkText(t, l).label}
+                </span>
+              </Link>
+            </NavBar.MobileLink>
+          );
+        })}
+      </section>
+
+      <div className="flex flex-col gap-2.5 border-t border-border-subtle pt-3">
+        <Button asChild variant="primary" shape="pill" size="lg" className="w-full">
+          <Link href={contact}>{t.site.menu.contactCta}</Link>
+        </Button>
+        <div role="group" aria-label={t.site.menu.preferences} className="grid grid-cols-2 gap-2">
+          <Button type="button" variant="secondary" onClick={toggleTheme} className="min-h-11">
             {theme === "dark" ? <SunIcon size={16} /> : <MoonIcon size={16} />}
             {theme === "dark" ? t.nav.lightMode : t.nav.darkMode}
-          </button>
-
-          {/* Language toggle */}
-          <button
-            id="mobile-lang-toggle"
-            type="button"
-            onClick={toggleLocale}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              padding: "10px 12px",
-              borderRadius: "8px",
-              fontSize: "13px",
-              fontWeight: 500,
-              color: "var(--kz-text-secondary)",
-              background: "var(--kz-surface-2)",
-              border: "1px solid var(--kz-border-subtle)",
-              cursor: "pointer",
-              fontFamily: "var(--font-display), system-ui, sans-serif",
-              width: "100%",
-              textAlign: "left",
-            }}
-          >
+          </Button>
+          <Button type="button" variant="secondary" onClick={toggleLocale} className="min-h-11" lang={t.site.menu.languageShort.toLowerCase()}>
             <GlobeIcon size={16} />
             {t.site.menu.otherLanguage}
-          </button>
+          </Button>
         </div>
-        </nav>
-      </Dialog.Content>
-    </Dialog.Root>
+      </div>
+    </NavBar.Mobile>
   );
 }

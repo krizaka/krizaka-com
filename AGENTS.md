@@ -39,16 +39,30 @@
 
 ## 2.1 Products are presented the same way
 
-- `lib/nav.ts` is the single source of the product navigation: the desktop Products panel, the mobile
-  panel, the footer and the home spotlights all render it. Every product exposes the same four
-  entries in the same order (overview · how it works · demo · signature); documentation lives under **Docs**
-  (`NAV_DOCS`: Orazaka, CLI, Orochia, Krizaka UI, Krizaka Java — the one entry point of every documentation; the CLI
-  entry is a direct link to the generated `/docs/orazaka/cli`, also in the footer and the ⌘K search). A product
-  page may still link its documentation in context.
-- The desktop Products panel stays compact (~440 px): one row per product (mark · name · tagline → its overview),
-  its three other entries in plain text under it, no per-link icons or subtitles, and only "All products" below —
-  Our story, Open source and Contact are already in the bar (the mobile accordion lists them). Menus are keyboard
-  operable (Enter/↓ opens, ↑/↓ · Home/End walk, Escape closes and returns focus, Tab out closes) with a visible ring.
+- `lib/nav.ts` is the single source of the navigation: the desktop bar (`TopNavBar` · `ProductsMenu`), the mobile
+  panel, the footer, the ⌘K search and the home spotlights all render it. Every product exposes the same four
+  entries in the same order (overview · how it works · demo · signature), each with a label and a short line
+  (`site.nav.<product>.links.<id>.{label,desc}`); documentation lives under **Docs** (`NAV_DOCS`: Orazaka, CLI, Orochia,
+  Krizaka UI, Krizaka Java — the one entry point of every documentation, also listed by the ⌘K search and the footer's
+  Documentation column; the CLI entry is a direct link to the generated `/docs/orazaka/cli`). A product page may still link its documentation in context.
+- **The bar** is `@krizaka/ui/nav-bar` (`NavBar.Root/Brand/Items/Menu/MenuLink/Link/Actions/Mobile`), composed in
+  `TopNavBar` and fed by `lib/nav.ts` — never a hand-made bar, no inline styles; buttons are `@krizaka/ui/button`
+  (`asChild` with Next's `Link`, Contact us `primary` + `shimmer`). Left: the mark · **Products** (the bar's only menu) ·
+  Open source · Our story (`NAV_BAR_LINKS`), under NavBar's light that glides to the hovered/focused item and rests on
+  the current page's (`active`). Right (`NavBar.Actions`): Search ⌘K · **Docs** (a plain link to the hub `/docs`, never
+  a menu — it never covers Products) · GitHub · theme · language · Contact us. Under `/docs` the left group becomes a
+  breadcrumb (Docs / <entry>, `docsSectionOf`, the most specific entry): the sets are switched from the documentation's
+  own sidebar, never from a second menu. The bar tightens on scroll (NavBar `compactAfter`).
+- **The Products panel** is composed inside `NavBar.Menu` (`ProductsPanel`), in two columns: on the left the products
+  (mark · name, the selected one on a surface with a rail in its brand colour; the current page's product is selected
+  when it opens) and "All products"; on the right the selected product's name and tagline, then its four entries as
+  `NavBar.MenuLink` — `@krizaka/icons` icon, label, one short line, never truncated. Hover or focus selects a product.
+  Keyboard: Radix opens it (Enter, Space, ↓), Tab/↓ enter it, Escape closes and returns the focus, Tab out closes; in the
+  panel ↑/↓ (Home/End) change product, → enters its entries, ↑/↓ walk them, ← returns. NavBar's panel is capped at
+  30 rem: a wider mega-panel waits for krizaka-ui ([krizaka/krizaka-ui#69](https://github.com/krizaka/krizaka-ui/issues/69)), never a CSS override here.
+- **Mobile** (`MobilePanel`, inside `NavBar.Mobile`): one panel, every destination once — Products (an accordion per
+  product whose entries read clearly: icon, label, short line, ≥ 44 px targets) and All products, Docs (NAV_DOCS + the
+  hub), Open source, Our story, then Contact us, theme and language. It scrolls inside the viewport.
 - Each product wears its brand (`@krizaka/tokens/brands/scoped.css`): `/products/orazaka*` under `.brand-orazaka`
   (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), the rest of the site Krizaka (ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); sections use `SectionBackdrop`

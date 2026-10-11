@@ -326,7 +326,12 @@
       "languageShort": "EN",
       "otherLanguage": "English",
       "footerAria": "Pied de page",
-      "journeysAria": "Parcours"
+      "journeysAria": "Parcours",
+      "breadcrumb": "Fil d'Ariane",
+      "searchAria": "Rechercher sur le site",
+      "githubAria": "Krizaka sur GitHub",
+      "preferences": "Préférences",
+      "mainAria": "Navigation principale"
     },
     "nav": {
       "orazaka": {
@@ -334,16 +339,20 @@
         "badge": "IA",
         "links": {
           "overview": {
-            "label": "Vue d'ensemble"
+            "label": "Vue d'ensemble",
+            "desc": "Ce qu'il fait, et pour qui"
           },
           "architecture": {
-            "label": "Fonctionnement"
+            "label": "Fonctionnement",
+            "desc": "Le parcours d'une requête dans le moteur"
           },
           "demo": {
-            "label": "Démos"
+            "label": "Démos",
+            "desc": "Chat, médias et agents, filmés en vrai"
           },
           "signature": {
-            "label": "Ingénierie cognitive"
+            "label": "Ingénierie cognitive",
+            "desc": "Packs, cas d'usage, le moteur cognitif"
           }
         }
       },
@@ -352,16 +361,20 @@
         "badge": "Vidéo",
         "links": {
           "overview": {
-            "label": "Vue d'ensemble"
+            "label": "Vue d'ensemble",
+            "desc": "Ce qu'elle fait, et pour qui"
           },
           "architecture": {
-            "label": "Fonctionnement"
+            "label": "Fonctionnement",
+            "desc": "Services et flux, tirés du code"
           },
           "demo": {
-            "label": "Démo"
+            "label": "Démo",
+            "desc": "Une journée avec Elena et Alex, créatrice et fan"
           },
           "signature": {
-            "label": "Paiements & conformité"
+            "label": "Paiements & conformité",
+            "desc": "Crédits sous séquestre, versements, conformité"
           }
         }
       },
@@ -1243,11 +1256,6 @@
           "category": "Produit",
           "desc": "L'IA qui ne quitte jamais la maison : orchestration locale, RAG, agents."
         },
-        "orazakaDocs": {
-          "title": "Documentation Orazaka",
-          "category": "Documentation",
-          "desc": "Démarrage, API, exploitation."
-        },
         "orazakaDemo": {
           "title": "Démos Orazaka",
           "category": "Produit",
@@ -1262,11 +1270,6 @@
           "title": "Orochia",
           "category": "Produit",
           "desc": "La plateforme vidéo des créateurs : streaming, paywalls, versements."
-        },
-        "orochiaDocs": {
-          "title": "Documentation Orochia",
-          "category": "Documentation",
-          "desc": "Démarrage, architecture, API, base de données, déploiement."
         },
         "story": {
           "title": "Notre histoire",
@@ -1283,11 +1286,6 @@
           "category": "Krizaka",
           "desc": "Écrire à l'équipe."
         },
-        "cli": {
-          "title": "CLI Orazaka",
-          "category": "Documentation",
-          "desc": "npx orazaka install, start, dev — chaque commande et option."
-        },
         "packs": {
           "title": "Packs et Studios Orazaka",
           "category": "Produit",
@@ -1302,10 +1300,16 @@
           "title": "Console d'administration Orochia",
           "category": "Documentation",
           "desc": "Modération, 2257, versements, comptes, sauvegardes — et ses quatre verrous."
+        },
+        "docs": {
+          "title": "Toute la documentation",
+          "category": "Documentation",
+          "desc": "Toutes les documentations, produits et plateforme."
         }
       },
       "label": "Rechercher sur le site",
-      "results": "Résultats"
+      "results": "Résultats",
+      "docsCategory": "Documentation"
     },
     "docs": {
       "forDevelopers": "Pour les développeurs",
