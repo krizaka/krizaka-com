@@ -1,6 +1,7 @@
 /* The glyphs of the @krizaka packages — one drawing per layer, in the marks' motion grammar (slow, looping, stilled
    under prefers-reduced-motion). Accent colours are each product's identity and read on both themes; neutral
-   strokes use --kz-* tokens.
+   strokes use --kz-* tokens. The product gradients are the marks' own (`marks` of @krizaka/tokens): Krizaka blue,
+   Orochia's serpent, Orazaka's orange.
    tokens        the vocabulary: swatches of the roles, one breathing at a time
    tailwind      the preset: utility bars of varying length, the accent one lit
    config        the guardrails: three sliders, their knobs held in place
@@ -12,6 +13,7 @@
    orazakaDs     the kit: Orazaka's hexagon, its shards turning
    orazakaShared the contracts: braces holding a chain of typed nodes */
 
+import { marks } from "@krizaka/tokens";
 import { useId } from "react";
 import type { PackageId } from "@/lib/npm-packages";
 
@@ -34,19 +36,19 @@ export default function PackageGlyph({ id, size = 56 }: { id: PackageId; size?: 
     <svg width={size} height={size} viewBox="0 0 64 64" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
       <style>{CSS}</style>
       <defs>
-        <linearGradient id={g("blue")} x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stopColor="#2563eb" />
-          <stop offset="1" stopColor="#60a5fa" />
-        </linearGradient>
-        <linearGradient id={g("serpent")} x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stopColor="#7c3aed" />
-          <stop offset=".55" stopColor="#d946ef" />
-          <stop offset="1" stopColor="#f472b6" />
-        </linearGradient>
-        <linearGradient id={g("amber")} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#f59e0b" />
-          <stop offset="1" stopColor="#b45309" />
-        </linearGradient>
+        {(
+          [
+            ["blue", marks.krizaka],
+            ["serpent", marks.orochia],
+            ["orange", marks.orazaka],
+          ] as const
+        ).map(([name, stops]) => (
+          <linearGradient key={name} id={g(name)} x1="0" y1="1" x2="1" y2="0">
+            {stops.map(([offset, color]) => (
+              <stop key={offset} offset={offset} stopColor={color} />
+            ))}
+          </linearGradient>
+        ))}
       </defs>
       <rect x="1" y="1" width="62" height="62" rx="16" fill="var(--kz-surface-2)" stroke="var(--kz-border-default)" />
       {id === "tokens" && (
@@ -157,9 +159,9 @@ export default function PackageGlyph({ id, size = 56 }: { id: PackageId; size?: 
           <g className="pg-turn">
             <path d="M24 22 L32 17.4 L40 22 V28" stroke="var(--kz-text-muted)" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M20 34 L24 41 L32 45.6" stroke="var(--kz-text-secondary)" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M44 34 L40 41 L32 45.6" stroke={`url(#${g("amber")})`} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M44 34 L40 41 L32 45.6" stroke={`url(#${g("orange")})`} strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
           </g>
-          <circle cx="32" cy="32" r="4.5" fill={`url(#${g("amber")})`} />
+          <circle cx="32" cy="32" r="4.5" fill={`url(#${g("orange")})`} />
         </g>
       )}
       {id === "orazakaShared" && (
@@ -168,7 +170,7 @@ export default function PackageGlyph({ id, size = 56 }: { id: PackageId; size?: 
           <path d="M42 14 C 49 14, 47 26, 52 32 C 47 38, 49 50, 42 50" stroke="var(--kz-text-secondary)" strokeWidth="2.4" />
           <path d="M24 32 H40" stroke="var(--kz-border-strong)" strokeWidth="1.6" />
           {[24, 32, 40].map((x, i) => (
-            <circle key={x} cx={x} cy="32" r="3.6" fill={`url(#${g("amber")})`} className="pg-node" style={{ animationDelay: `${i * 0.4}s` }} />
+            <circle key={x} cx={x} cy="32" r="3.6" fill={`url(#${g("orange")})`} className="pg-node" style={{ animationDelay: `${i * 0.4}s` }} />
           ))}
         </g>
       )}
