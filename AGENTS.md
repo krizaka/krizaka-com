@@ -72,7 +72,7 @@
   Never a placeholder icon. A change to a mark is made in `krizaka-ui`, released, then adopted here.
 - Product recordings live in `public/assets/<product>/tour/<clip>.{webm,mp4,jpg}`, recorded on the
   real application; endpoints named by the Orochia journeys are verified against the generated
-  architecture data at build time (`lib/orochia-journeys.ts`).
+  architecture data at build time (`lib/journeys.ts`).
 - English is the default language; French is served when chosen (cookie `NEXT_LOCALE`) or opened.
 
 ## 2.2 Text & languages — nothing hard-coded
@@ -89,7 +89,7 @@
 - **Never** choose a text with `locale === "fr" ? … : …` (or `isFr ? …`): ESLint refuses it. Only
   routing code (`proxy.ts`, `lib/i18n.ts`, `lib/seo.ts`, the locale layout) compares locales.
 - Data modules keep **structure** (ids, links, colors, endpoints); their words are messages keyed by
-  the same ids (e.g. `site.nav.<product>.links.<id>`, `site.orochia.arch.journeys.<id>`). Long,
+  the same ids (e.g. `site.nav.<product>.links.<id>`, `diagrams.journeys.<product>.<id>`). Long,
   structured content collections (`lib/use-cases-data.ts`) may hold
   `{ fr, en }` fields read with the locale key — never with a ternary.
 
@@ -136,27 +136,43 @@
   surfaces/text/borders. Semantic accents (e.g. per-phase/per-layer identity)
   may use fixed mid-tone colors that read on both themes.
 - `color-scheme` is pinned to the active theme (`:root` dark / `html.light`
-  light) so scrollbars, controls and third-party CSS (React Flow) follow it.
+  light) so scrollbars, controls and third-party CSS follow it.
 - Every new view must be verified in **both** themes before it is considered done.
 
 ## 4. Visualizations
 
-- One visual language for every schema: `app/components/diagrams/` (`ModuleMap`,
-  `InterceptorPipeline`, `MessagingTopology`, `diagrams.module.css`) and `OrochiaArchitecture`
-  share the same chip (opaque card, 11px radius, a rail in the group colour), one semantic colour
-  per group (`--dg-<group>`, with an AA `-ink` variant for text), the domain core in the page's
-  brand accent. 2D, labels in full — a schema whose labels need zooming is not done.
+- **One way to see an architecture, for every product.** `ModuleMap` (`app/components/diagrams/`) draws the generated
+  model of Orazaka (`architecture.json`), Krizaka Java (`architecture.json` · `buildingBlocks`, from the POMs) and
+  Orochia (`orochia-architecture.json` · `map`): one band per role, chips with their owner and version, a
+  Dependencies / Runtime calls toggle (requests solid, events — messages, webhooks, SSE, NOTIFY, push — dashed), the
+  owner filter, search, selection that lights *uses / used by* or *calls / called by*, and **Journeys**: a real request
+  played step by step on the same map (the modules and links of the step lit, the rest dimmed, the numbered steps
+  beside it — `lib/journeys.ts`, every module, link and endpoint checked against the model at build time). A product's
+  page, its docs and `/docs/java` show the same component; there is no other architecture drawing (no floating nodes,
+  no graph library).
+- `lib/architecture-model.ts` checks the shape of each model at build time (roles, modules, relations, flow kinds, the
+  words of every role); a fact the map lacks is added to the product's **generator**, never to the site.
+- With it, the same visual language (chip, 11px radius, a rail in the group colour, `--dg-<group>` with an AA `-ink`
+  variant, the domain core in the page's brand accent): `InterceptorPipeline`, `MessagingTopology`, `SequenceDiagram`
+  (numbered steps by phase, participants as chips) and `StateDiagram` (one card per state, in reading order).
+  2D, labels in full — a schema whose labels need zooming is not done.
+- **Docs ask for a schema with a fenced block** (`lib/remark-diagrams.ts`): ` ```architecture ` (`product`, `focus`,
+  `mode` build|runtime|journey, `journey`, `owner`), ` ```pipeline `, ` ```sequence ` (participants — `@module` ids are
+  checked against the model — then `a -> b: …` / `a --> b: …`, `## phase`, `if … / else … / end`) and ` ```states `
+  (`enum: <pg enum>` checks every state against the Orochia schema). In MDX: `<ArchitectureView product="orazaka"
+  focus="krizaka-billing-service" mode="runtime" />`. Blocks are written in the source repository and synced.
+- **Mermaid is retired**, with no fallback: a ` ```mermaid ` fence in a published doc fails the build. (Unpublished
+  internal design notes of the product repositories may still hold some; they never reach the site — converting one is
+  part of publishing it.)
 - Every schema reads correctly at phone width (one column, top to bottom), works with the keyboard,
-  honours `prefers-reduced-motion`, and carries a **text version** (tables or ordered lists) of
-  everything it draws.
+  honours `prefers-reduced-motion` (a journey never plays by itself then), and carries a **text version** (tables or
+  ordered lists) of everything it draws.
 - **Motion is one system** (`app/motion.css`, conducted by `app/components/motion/SiteMotion.tsx`, props from
   `lib/motion.ts`): blocks arrive once with `reveal(i)` (`[data-reveal]` of @krizaka/ui, staggered 70 ms, never on the
   first screen), figures climb with `CountUp`, loops pause off screen and wait for the page to settle, the pointer lights
   the node of the signature icons. No animation library for new work, no permanent `requestAnimationFrame`, no canvas;
   docs stay almost still (a reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui
   (krizaka/krizaka-ui#41), not into a copy here.
-- Mermaid is a **print/fallback only** for diagrams written inside synced docs — drawn natively by
-  mermaid.js at a readable size (wider than the column → it scrolls, never shrinks).
 
 ## 4.1 The Krizaka page language
 

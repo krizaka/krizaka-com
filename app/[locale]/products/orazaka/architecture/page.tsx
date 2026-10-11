@@ -9,6 +9,7 @@ import DiagramSection from "@/app/components/diagrams/DiagramSection";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { architectureCounts, messagingData, moduleMapData, pipelineSteps } from "@/lib/architecture-model";
 import { verifiedJourneyModules } from "@/lib/orazaka-journey";
+import { journeysFor } from "@/lib/journeys";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import RepositoryMap, { type RepositoryEntry } from "../../../../components/RepositoryMap";
@@ -130,7 +131,7 @@ export default async function ArchitecturePage({ params }: Props) {
 
       {/* ─── The real map: every module in its ring (generated) ─── */}
       <DiagramSection id="map" kicker={sections.map.kicker} title={sections.map.title} sub={format(sections.map.sub, { modules: counts.modules })}>
-        <ModuleMap data={moduleMapData()} />
+        <ModuleMap data={moduleMapData("orazaka")} journeys={journeysFor("orazaka", t, { core: counts.coreInterceptors, configured: counts.configuredInterceptors })} />
       </DiagramSection>
 
       {/* ─── The interceptor pipeline, in order (generated) ─── */}

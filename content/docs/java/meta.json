@@ -2,6 +2,7 @@
   "title": "Krizaka Java",
   "pages": [
     "index",
+    "map",
     "build",
     "---Modules---",
     "web",

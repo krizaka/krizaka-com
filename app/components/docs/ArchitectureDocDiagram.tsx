@@ -5,16 +5,18 @@
 import ModuleMap from "@/app/components/diagrams/ModuleMap";
 import InterceptorPipeline from "@/app/components/diagrams/InterceptorPipeline";
 import MessagingTopology from "@/app/components/diagrams/MessagingTopology";
-import { messagingData, moduleMapData, pipelineSteps } from "@/lib/architecture-model";
+import { architectureCounts, messagingData, moduleMapData, pipelineSteps } from "@/lib/architecture-model";
+import { journeysFor } from "@/lib/journeys";
 import type { TranslationDictionary } from "@/lib/i18n";
 
 export const DOC_DIAGRAMS = ["architecture", "interceptors"] as const;
 
 export default function ArchitectureDocDiagram({ page, t }: { page: string; t: TranslationDictionary }) {
   if (page === "architecture") {
+    const counts = architectureCounts();
     return (
       <div className="not-prose" style={{ display: "flex", flexDirection: "column", gap: 40, margin: "0 0 40px" }}>
-        <ModuleMap data={moduleMapData()} compact />
+        <ModuleMap data={moduleMapData("orazaka")} journeys={journeysFor("orazaka", t, { core: counts.coreInterceptors, configured: counts.configuredInterceptors })} compact />
         <MessagingTopology data={messagingData()} />
       </div>
     );

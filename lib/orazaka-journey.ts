@@ -1,20 +1,8 @@
-/* The six steps of an Orazaka request (HowOrazakaWorks) and the modules each one names.
-   Words: messages → pages.howOrazakaWorks.steps[i]. Every module id is checked against the generated
-   architecture (app/data/architecture.json): a renamed or removed module fails the build instead of
-   leaving the story wrong — the same rule as the Orochia journeys (lib/orochia-journeys.ts). */
+/* The six stages of an Orazaka request (HowOrazakaWorks) and the modules each one names — the same journey the module
+   map plays (lib/journeys.ts), where every module and link is checked against the generated architecture. */
 
-import { checkModules } from "@/lib/architecture-model";
-
-export const JOURNEY_STEP_MODULES = [
-  ["orazaka-web-client", "orazaka-web-admin", "orazaka-mobile-client", "orazaka-cli"],
-  ["orazaka-edge", "orazaka-conversation-service"],
-  ["krizaka-security", "krizaka-users-service", "orazaka-interceptors"],
-  ["orazaka-business", "orazaka-core"],
-  ["orazaka-interceptors", "orazaka-job-service", "orazaka-worker-media"],
-  ["orazaka-persistence-app", "krizaka-users-persistence"],
-] as const;
+import { orazakaStageModules } from "@/lib/journeys";
 
 export function verifiedJourneyModules(): readonly (readonly string[])[] {
-  checkModules(JOURNEY_STEP_MODULES.flat(), "the Orazaka request journey (lib/orazaka-journey.ts)");
-  return JOURNEY_STEP_MODULES;
+  return orazakaStageModules();
 }

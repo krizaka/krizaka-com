@@ -453,3 +453,180 @@ button.card:focus-visible { outline: 2px solid var(--kz-accent); outline-offset:
 @media (prefers-reduced-motion: reduce) {
   .chip, .card, .stepNum, .phase { transition: none; }
 }
+
+/* ── The roles of the other products: one mid-tone each, an AA "-ink" for text ── */
+
+.root {
+  --dg-starter: hsl(199 89% 52%);
+  --dg-starter-ink: hsl(199 89% 68%);
+  --dg-build: hsl(215 14% 52%);
+  --dg-build-ink: hsl(215 18% 70%);
+  --dg-library: hsl(189 85% 45%);
+  --dg-library-ink: hsl(189 80% 62%);
+  --dg-design: hsl(292 70% 62%);
+  --dg-design-ink: hsl(292 80% 76%);
+  --dg-data: hsl(38 92% 52%);
+  --dg-data-ink: hsl(38 92% 64%);
+  --dg-external: hsl(215 16% 58%);
+  --dg-external-ink: hsl(215 20% 72%);
+}
+:global(html.light) .root {
+  --dg-starter: hsl(199 89% 38%);
+  --dg-starter-ink: hsl(200 90% 28%);
+  --dg-build: hsl(215 14% 42%);
+  --dg-build-ink: hsl(215 22% 30%);
+  --dg-library: hsl(189 90% 34%);
+  --dg-library-ink: hsl(192 90% 26%);
+  --dg-design: hsl(292 60% 46%);
+  --dg-design-ink: hsl(292 64% 36%);
+  --dg-data: hsl(32 95% 44%);
+  --dg-data-ink: hsl(28 90% 32%);
+  --dg-external: hsl(215 16% 46%);
+  --dg-external-ink: hsl(215 25% 32%);
+}
+.g-starter { --g: var(--dg-starter); --g-ink: var(--dg-starter-ink); }
+.g-build { --g: var(--dg-build); --g-ink: var(--dg-build-ink); }
+.g-library { --g: var(--dg-library); --g-ink: var(--dg-library-ink); }
+.g-design { --g: var(--dg-design); --g-ink: var(--dg-design-ink); }
+.g-data { --g: var(--dg-data); --g-ink: var(--dg-data-ink); }
+.g-external { --g: var(--dg-external); --g-ink: var(--dg-external-ink); }
+
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0; }
+.caption { text-align: left; font-weight: 700; padding: 4px 0 8px; margin: 0; font-size: 13px; color: var(--kz-text-primary); }
+.textSteps { margin: 0; padding-left: 22px; font-size: 13px; line-height: 1.6; color: var(--kz-text-secondary); }
+.textSteps strong { color: var(--kz-text-primary); }
+.textSteps code { font-family: var(--font-mono), monospace; font-size: 12px; overflow-wrap: anywhere; }
+.detailHead { display: flex; justify-content: space-between; gap: 12px; }
+.linkButton:disabled { opacity: 0.45; cursor: default; }
+
+/* A module of the journey, not lit at this step: present, quieter than the lit ones, clearer than the rest. */
+.chip[data-state="path"] { border-color: color-mix(in srgb, var(--g) 40%, var(--kz-border-default)); }
+.chip[data-state="path"] > *, .chip[data-state="path"]::before { opacity: 0.8; }
+
+/* ── Journeys: the map, and the numbered steps beside it (under it on narrow screens) ── */
+
+.journeyLayout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (min-width: 1180px) {
+  .journeyLayout { grid-template-columns: minmax(0, 1fr) 340px; }
+  .journey { position: sticky; top: 88px; }
+}
+.journey {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid var(--kz-border-subtle);
+  background: var(--kz-surface-1);
+}
+.journeyHead { display: flex; flex-direction: column; gap: 4px; }
+.journeyName { margin: 0; font-size: 15px; font-weight: 700; color: var(--kz-text-primary); }
+.journeySummary { margin: 0; font-size: 13px; line-height: 1.5; color: var(--kz-text-secondary); }
+.journeyControls { display: flex; align-items: center; gap: 6px; }
+.journeyControls .linkButton { padding: 6px 8px; }
+.journeyCount { margin-left: auto; font-family: var(--font-mono), monospace; font-size: 12px; color: var(--kz-text-muted); }
+.journeySteps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.journeyStep {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px 8px 8px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  cursor: pointer;
+}
+.journeyStep:hover { background: var(--kz-surface-2); }
+.journeyStep:focus-visible { outline: 2px solid var(--kz-accent); outline-offset: 2px; }
+.journeyStep[aria-current="step"] { background: var(--kz-surface-2); border-color: var(--kz-accent); }
+.journeyNum {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--kz-text-secondary);
+  background: var(--kz-surface-2);
+  border: 1px solid var(--kz-border-default);
+}
+.journeyStep[aria-current="step"] .journeyNum { color: var(--kz-accent-text); border-color: var(--kz-accent); background: var(--kz-accent-soft); }
+.journeyBody { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.journeyTitle { font-size: 13.5px; font-weight: 700; color: var(--kz-text-primary); }
+.journeyEndpoint { align-self: flex-start; font-family: var(--font-mono), monospace; font-size: 11.5px; padding: 1px 6px; border-radius: 6px; color: var(--kz-text-secondary); background: var(--kz-surface-3); border: 1px solid var(--kz-border-subtle); overflow-wrap: anywhere; }
+.journeyDetail { font-size: 12.5px; line-height: 1.5; color: var(--kz-text-secondary); }
+/* The detail of the steps not shown stays readable in the list, quieter. */
+.journeyStep:not([aria-current="step"]) .journeyDetail { color: var(--kz-text-muted); }
+.journeyEdge { transition: opacity 220ms var(--kz-ease, ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  .journeyEdge { transition: none; }
+}
+
+/* ── Sequences (```sequence): participants, then numbered steps by phase ── */
+
+.seq { gap: 14px; margin: 24px 0 32px; padding: 16px; border-radius: 16px; border: 1px solid var(--kz-border-subtle); background: color-mix(in srgb, var(--kz-surface-1) 55%, transparent); }
+.seqParticipants { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.seqParticipants ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.seqLabel { font-size: 11.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--kz-text-muted); }
+.who {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 2px 8px 2px 7px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--kz-text-primary);
+  background: var(--kz-surface-1);
+  border: 1px solid color-mix(in srgb, var(--g) 45%, var(--kz-border-default));
+  border-radius: 7px;
+  overflow-wrap: anywhere;
+}
+.who i { flex-shrink: 0; width: 7px; height: 7px; border-radius: 50%; background: var(--g); }
+.whoPlain { --g: var(--kz-text-muted); font-family: var(--font-display), system-ui, sans-serif; font-weight: 600; border-color: var(--kz-border-default); }
+.seqGroup { display: flex; flex-direction: column; gap: 8px; }
+.seqPhase { margin: 4px 0 0; font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--kz-text-muted); }
+.seqLine { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.seqArrow { font-size: 15px; line-height: 1; color: var(--kz-text-muted); }
+.seqArrow[data-reply="true"] { color: var(--kz-text-secondary); }
+.seqSelf { font-size: 12px; color: var(--kz-text-muted); }
+.seqText { margin: 5px 0 0; font-family: var(--font-mono), monospace; font-size: 12.5px; line-height: 1.55; color: var(--kz-text-secondary); overflow-wrap: anywhere; }
+.step[data-branch="true"] .stepBody { padding-left: 10px; border-left: 2px solid var(--kz-border-default); }
+
+/* ── State machines (```states): one card per state, in reading order ── */
+
+.states { margin: 24px 0 32px; }
+.stateGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); align-items: start; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.stateCard {
+  --g: var(--kz-accent);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 14px 12px 16px;
+  border-radius: 12px;
+  background: var(--kz-surface-1);
+  border: 1px solid var(--kz-border-default);
+}
+.stateCard::before { content: ""; position: absolute; left: 0; top: 10px; bottom: 10px; width: 3px; border-radius: 0 3px 3px 0; background: var(--g); }
+.stateCard[data-final="true"] { --g: var(--kz-text-muted); }
+.stateStart { --g: var(--kz-text-secondary); border-style: dashed; }
+.stateHead { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.stateName { font-family: var(--font-mono), monospace; font-size: 13px; font-weight: 700; color: var(--kz-text-primary); overflow-wrap: anywhere; }
+.stateLabel { margin: 0; font-size: 13px; line-height: 1.45; color: var(--kz-text-secondary); }
+.stateOut { display: flex; flex-direction: column; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.stateOut li { display: flex; flex-direction: column; gap: 2px; }
+.stateTo { font-family: var(--font-mono), monospace; font-size: 12px; font-weight: 600; color: var(--kz-accent-text); }
+.stateTo[data-self="true"], .stateTo[data-end="true"] { color: var(--kz-text-secondary); }
+.stateWhy { font-size: 12.5px; line-height: 1.45; color: var(--kz-text-secondary); }
+@media (max-width: 640px) {
+  .stateGrid { grid-template-columns: 1fr; }
+}

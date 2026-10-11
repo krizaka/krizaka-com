@@ -1218,11 +1218,6 @@ body {
 /* RepositoryMap */
 
 
-/* React Flow controls follow the theme (the default buttons are white on both themes). */
-.react-flow__controls { box-shadow: var(--kz-shadow-lg); border-radius: 10px; overflow: hidden; border: 1px solid var(--kz-border-subtle); }
-.react-flow__controls-button { background: var(--kz-surface-2); border-bottom: 1px solid var(--kz-border-subtle); color: var(--kz-text-secondary); fill: var(--kz-text-secondary); }
-.react-flow__controls-button:hover { background: var(--kz-surface-3); }
-.react-flow__controls-button svg { fill: currentColor; }
 
 /* Story page — the phoenix floats, its core breathes. */
 @keyframes phx-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
@@ -1555,7 +1550,6 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
 .kz-doc-index-group ul { list-style: none; display: grid; gap: 4px 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
 .kz-doc-index-group a { color: var(--kz-text-secondary); text-decoration: none; font-size: 0.9375rem; }
 .kz-doc-index-group a:hover { color: var(--kz-accent-text); }
-.kz-mermaid-placeholder { min-height: 240px; margin: 1.5rem 0; border-radius: var(--kz-radius-lg); border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
 
 /* ═══════════════════════════════════════════════════════════════════
    Brand pages — the Krizaka visual language (BRAND.md §4) on the site

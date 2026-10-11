@@ -326,7 +326,6 @@
       "languageShort": "EN",
       "otherLanguage": "English",
       "footerAria": "Pied de page",
-      "journeysAria": "Parcours",
       "breadcrumb": "Fil d'Ariane",
       "searchAria": "Rechercher sur le site",
       "githubAria": "Krizaka sur GitHub",
@@ -727,128 +726,6 @@
       }
     },
     "orochia": {
-      "arch": {
-        "nodes": {
-          "viewer": {
-            "label": "Spectateur",
-            "sub": "Navigateur · lecteur HLS"
-          },
-          "creator": {
-            "label": "Créateur",
-            "sub": "Studio · envoi Tus"
-          },
-          "app": {
-            "label": "Orochia",
-            "sub": "Next.js · API · accès"
-          },
-          "gateway": {
-            "label": "Passerelle",
-            "sub": "Cartes · crypto"
-          },
-          "db": {
-            "label": "PostgreSQL",
-            "sub": "Grand livre · accès"
-          },
-          "bunny": {
-            "label": "Bunny Stream",
-            "sub": "Ingestion · encodage · CDN"
-          }
-        },
-        "journeys": {
-          "playback": {
-            "name": "Lecture",
-            "summary": "Aucune URL vidéo brute n'atteint jamais le client.",
-            "steps": [
-              {
-                "title": "Demande de lecture",
-                "detail": "Le lecteur ne détient aucune URL média : il en demande une à Orochia."
-              },
-              {
-                "title": "Contrôle d'accès",
-                "detail": "Publique, contacts, abonnés ou déblocage payant : la visibilité est vérifiée contre les contacts, abonnements et droits d'accès."
-              },
-              {
-                "title": "Décision",
-                "detail": "Pas de droit, pas d'URL : la réponse est un refus ou le paywall."
-              },
-              {
-                "title": "URL signée · 300 s",
-                "detail": "Un jeton HMAC-SHA256 lié à la vidéo et à son expiration : un lien partagé meurt en cinq minutes."
-              },
-              {
-                "title": "Diffusion 4K HLS",
-                "detail": "Les segments viennent directement du CDN de Bunny, jamais des serveurs applicatifs."
-              }
-            ]
-          },
-          "unlock": {
-            "name": "Déblocage payant",
-            "summary": "Le client ne dit jamais qu'il a payé : la passerelle le prouve.",
-            "steps": [
-              {
-                "title": "Demande de déblocage",
-                "detail": "L'acheteur choisit un montant et une passerelle configurée."
-              },
-              {
-                "title": "Intention de paiement",
-                "detail": "Acheteur, créateur, vidéo et montant sont enregistrés avant tout mouvement d'argent."
-              },
-              {
-                "title": "Page de paiement",
-                "detail": "L'acheteur part sur la page hébergée du prestataire : Orochia ne voit jamais de carte."
-              },
-              {
-                "title": "Paiement",
-                "detail": "Seules les passerelles dont tous les identifiants sont configurés sont proposées."
-              },
-              {
-                "title": "Webhook signé",
-                "detail": "Signature vérifiée en temps constant sur le corps brut — aucun mode permissif."
-              },
-              {
-                "title": "Règlement, une seule fois",
-                "detail": "Crédit au grand livre et droit d'accès dans une même transaction ; un webhook rejoué ne change rien."
-              }
-            ]
-          },
-          "upload": {
-            "name": "Téléversement",
-            "summary": "Les fichiers lourds ne traversent jamais les serveurs web.",
-            "steps": [
-              {
-                "title": "Ouverture d'envoi",
-                "detail": "Seuls les créateurs vérifiés (registres 18 U.S.C. § 2257) peuvent ouvrir une session."
-              },
-              {
-                "title": "Création de la vidéo",
-                "detail": "Orochia enregistre la vidéo chez Bunny Stream et signe une session Tus."
-              },
-              {
-                "title": "Session Tus signée",
-                "detail": "Le studio reçoit l'adresse d'envoi et sa signature, valables pour cette seule vidéo."
-              },
-              {
-                "title": "Envoi reprenable",
-                "detail": "Le fichier part directement vers Bunny et reprend après une coupure."
-              },
-              {
-                "title": "Encodage terminé",
-                "detail": "Bunny signale la fin du transcodage par un webhook signé."
-              },
-              {
-                "title": "Prête à diffuser",
-                "detail": "La vidéo devient lisible, sous la visibilité choisie par son créateur."
-              }
-            ]
-          }
-        },
-        "stepPrev": "Étape précédente",
-        "stepNext": "Étape suivante",
-        "step": "Étape",
-        "textVersion": "Version texte — les trois parcours, étape par étape",
-        "play": "Lecture",
-        "pause": "Pause"
-      },
       "pillars": {
         "cdn": {
           "title": "Vidéo directe sur le CDN",
@@ -2591,108 +2468,6 @@
       "timeSaved": "Temps libéré",
       "martinStory": "<b>Martin</b> est électricien à Montréal. Comme beaucoup d'artisans, il veut développer sa clientèle sans passer ses soirées à éplucher les registres publics, et surtout, <b>sans enfreindre la loi</b>. Le Québec impose des règles strictes : la <b>LCEE</b> interdit les courriels commerciaux froids B2C, et la <b>Loi 25</b> interdit d'envoyer les données personnelles de ses prospects dans des serveurs cloud tiers. Orazaka Sentinelle résout ce casse-tête en exécutant tout le processus localement sur son ordinateur."
     },
-    "interceptorMesh": {
-      "interactiveCognitiveConsole": "Console Cognitive Interactive",
-      "pause": "PAUSE",
-      "resume": "LANCER",
-      "reset": "RÉINITIALISER",
-      "hudReasoningLogs": "HUD: LOGS DE RAISONNEMENT",
-      "contextEnrichmentLogs": "LOGS D'ENRICHISSEMENT CONTEXTUEL",
-      "enrichmentParameters": "Paramètres d'enrichissement :",
-      "inComplianceWithLoi25": "Conformément à la Loi 25, les données personnelles de l'utilisateur sont anonymisées au niveau de l'intercepteur AuditLog avant d'entrer dans le pipeline central d'inférence.",
-      "interceptorData": {
-        "node-1": {
-          "desc": "Résout le profil utilisateur, ses rôles RBAC et son tier de rate-limiting.",
-          "details": {
-            "title": "Résolution Contexte Utilisateur"
-          }
-        },
-        "node-2": {
-          "desc": "Injecte les signaux système, les contraintes matérielles et les variables d'environnement.",
-          "details": {
-            "title": "Injection Contexte Système"
-          }
-        },
-        "node-3": {
-          "desc": "Assure la traduction du raisonnement et maintient l'alignement sémantique du dictionnaire.",
-          "details": {
-            "title": "Alignement Linguistique"
-          }
-        },
-        "node-4": {
-          "desc": "Récupère et formate la fenêtre de conversation historique FIFO (glissante).",
-          "details": {
-            "title": "Fenêtre Mémoire Conversationnelle"
-          }
-        },
-        "node-5": {
-          "desc": "Enrichit le prompt avec des contextes pertinents récupérés de pgvector.",
-          "details": {
-            "title": "Enrichissement Vectoriel RAG"
-          }
-        },
-        "node-6": {
-          "desc": "Résout les outils externes et les serveurs Model Context Protocol connectés.",
-          "details": {
-            "title": "Résolution de Protocole MCP"
-          }
-        },
-        "node-7": {
-          "desc": "Re-formule les instructions floues en commandes précises et structurées.",
-          "details": {
-            "title": "Raffinement Sémantique"
-          }
-        },
-        "node-8": {
-          "desc": "Analyse l'intention de la requête et la route vers le modèle LLM optimal.",
-          "details": {
-            "title": "Routage Intentionnel"
-          }
-        },
-        "node-9": {
-          "desc": "Exécute les callbacks d'outils dynamiques et valide les schémas d'entrée.",
-          "details": {
-            "title": "Exécution des Outils / Callbacks"
-          }
-        },
-        "node-10": {
-          "desc": "Surveille le budget de jetons et bloque les requêtes hors limite financière.",
-          "details": {
-            "title": "Bouclier Anti-Surcoût"
-          }
-        },
-        "node-11": {
-          "desc": "Exécute des validations multi-agents rigoureuses sur la réponse produite.",
-          "details": {
-            "title": "Validation Multi-Agents de Sortie"
-          }
-        },
-        "node-12": {
-          "desc": "Décode et vérifie l'intégrité des entrées multi-modales (Base64).",
-          "details": {
-            "title": "Extraction Média Multi-Modale"
-          }
-        },
-        "node-13": {
-          "desc": "Enregistre des journaux chiffrés pour la conformité Loi 25 (anonymisés).",
-          "details": {
-            "title": "Journalisation SecOps & Loi 25"
-          }
-        },
-        "node-14": {
-          "desc": "Filtre les contenus toxiques ou inappropriés via des filtres système locaux.",
-          "details": {
-            "title": "Garde-Fous de Sécurité"
-          }
-        },
-        "node-15": {
-          "desc": "Assemble, compresse et formate la réponse finale pour le client BFF.",
-          "details": {
-            "title": "Assemblage & Streaming BFF"
-          }
-        }
-      }
-    },
     "howOrazakaWorks": {
       "readingGuide": "Guide de lecture",
       "orazakaExplainedSimply": "Orazaka, expliqué simplement.",
@@ -3108,6 +2883,10 @@
           "title": "Build, parent et BOM",
           "description": "krizaka-parent, krizaka-bom et krizaka-test-support : un seul build pour tous les artefacts JVM Krizaka."
         },
+        "map": {
+          "title": "Carte des briques",
+          "description": "Chaque artefact Krizaka Java — build, kit plateforme, starters, users, notifications, billing — avec sa version et ses vraies dépendances, lues dans les POM."
+        },
         "web": {
           "title": "Web et Problem Details",
           "description": "krizaka-web : un format d'erreur (RFC 9457), corrélation des requêtes, Jackson, pagination par curseur, CORS."
@@ -3233,42 +3012,106 @@
   "diagrams": {
     "textVersion": "Version texte",
     "roles": {
-      "client": {
-        "title": "Clients",
-        "summary": "Là où une personne pose sa question : le client web, la console d'administration, l'app mobile, le CLI."
+      "orazaka": {
+        "client": {
+          "title": "Clients",
+          "summary": "Là où une personne pose sa question : le client web, la console d'administration, l'app mobile, le CLI."
+        },
+        "service": {
+          "title": "Services & workers",
+          "summary": "Ce qui tourne et se déploie : l'edge, les services Orazaka, les services Krizaka, le worker média."
+        },
+        "adapter": {
+          "title": "Adaptateurs",
+          "summary": "Comment l'intérieur atteint l'extérieur : persistance, clients HTTP typés, stockage chiffré des assets."
+        },
+        "application": {
+          "title": "Application",
+          "summary": "Autour du cœur : l'orchestration des cas d'usage, le pipeline d'intercepteurs, les outils (MCP, RAG)."
+        },
+        "domain": {
+          "title": "Cœur du domaine",
+          "summary": "Le centre de chaque hexagone : le moteur cognitif et l'identité. Les dépendances pointent ici."
+        },
+        "contract": {
+          "title": "Contrats",
+          "summary": "Interfaces et records de niveau 1 : la seule façon pour un contexte d'en appeler un autre."
+        },
+        "platform": {
+          "title": "Kit plateforme Krizaka",
+          "summary": "Publié sur Maven Central : sécurité, messagerie (outbox, relances, lettres mortes), web, observabilité, et leurs quatre starters."
+        }
       },
-      "service": {
-        "title": "Services & workers",
-        "summary": "Ce qui tourne et se déploie : l'edge, les services Orazaka, les services Krizaka, le worker média."
+      "orochia": {
+        "client": {
+          "title": "Clients",
+          "summary": "Ce qu'une personne utilise : l'app web dans le navigateur, la console des opérateurs, l'app iOS et Android."
+        },
+        "service": {
+          "title": "Application",
+          "summary": "L'API d'apps/web : chaque route — accès, médias signés, paiements, temps réel. Un seul processus sert tous les clients."
+        },
+        "library": {
+          "title": "Paquets",
+          "summary": "Les paquets du workspace sur lesquels l'API est construite : base de données, médias, paiements, push, configuration partagée."
+        },
+        "design": {
+          "title": "Design system",
+          "summary": "L'identité Orochia et les paquets Krizaka dessous (@krizaka/ui, tokens, preset Tailwind, i18n…), installés depuis npm."
+        },
+        "data": {
+          "title": "Données",
+          "summary": "PostgreSQL : la base d'Orochia, qui sert aussi de bus temps réel, et la petite base propre à la console."
+        },
+        "external": {
+          "title": "Services externes",
+          "summary": "Ce que le code appelle dehors : Bunny Stream pour les médias, les passerelles de paiement, l'e-mail, le push, les fournisseurs de connexion."
+        }
       },
-      "adapter": {
-        "title": "Adaptateurs",
-        "summary": "Comment l'intérieur atteint l'extérieur : persistance, clients HTTP typés, stockage chiffré des assets."
-      },
-      "application": {
-        "title": "Application",
-        "summary": "Autour du cœur : l'orchestration des cas d'usage, le pipeline d'intercepteurs, les outils (MCP, RAG)."
-      },
-      "domain": {
-        "title": "Cœur du domaine",
-        "summary": "Le centre de chaque hexagone : le moteur cognitif et l'identité. Les dépendances pointent ici."
-      },
-      "contract": {
-        "title": "Contrats",
-        "summary": "Interfaces et records de niveau 1 : la seule façon pour un contexte d'en appeler un autre."
-      },
-      "platform": {
-        "title": "Kit plateforme Krizaka",
-        "summary": "Publié sur Maven Central : sécurité, messagerie (outbox, relances, lettres mortes), web, observabilité, et leurs quatre starters."
+      "java": {
+        "service": {
+          "title": "Services",
+          "summary": "Les services Krizaka déployables : users, notifications, billing."
+        },
+        "adapter": {
+          "title": "Adaptateurs",
+          "summary": "Les clients HTTP typés et la persistance JPA d'un domaine."
+        },
+        "domain": {
+          "title": "Cœur du domaine",
+          "summary": "Le centre d'un dépôt de domaine : krizaka-users-core."
+        },
+        "contract": {
+          "title": "Contrats",
+          "summary": "Les modules *-api : interfaces, records et événements — ce dont un autre service dépend."
+        },
+        "starter": {
+          "title": "Starters",
+          "summary": "Une dépendance active un module, avec son auto-configuration."
+        },
+        "platform": {
+          "title": "Kit plateforme",
+          "summary": "Le code transverse à un seul auteur : web, sécurité, messagerie, observabilité."
+        },
+        "build": {
+          "title": "Build",
+          "summary": "Le POM parent, le BOM d'où se résolvent toutes les versions, et le kit de test."
+        }
       }
     },
     "owners": {
       "all": "Tous",
       "orazaka": "Orazaka",
-      "krizaka": "Krizaka"
+      "krizaka": "Krizaka",
+      "orochia": "Orochia",
+      "external": "Tiers"
     },
     "moduleMap": {
-      "label": "Carte des modules d'Orazaka",
+      "label": {
+        "orazaka": "Carte des modules d'Orazaka",
+        "orochia": "Carte des modules d'Orochia",
+        "java": "Les briques Krizaka Java"
+      },
       "search": "Trouver un module…",
       "searchLabel": "Trouver un module par nom ou description",
       "clear": "Effacer la recherche",
@@ -3276,17 +3119,22 @@
       "ownerLabel": "Modules de",
       "modes": {
         "build": "Dépendances",
-        "runtime": "Appels à l'exécution"
+        "runtime": "Appels à l'exécution",
+        "journey": "Parcours"
       },
       "hint": {
         "build": "Sélectionne un module pour l'isoler : ce dont il dépend et ce qui dépend de lui restent allumés, reliés par des liens sur grand écran. Lecture de haut en bas — les dépendances pointent vers le cœur.",
-        "runtime": "Sélectionne un client ou un service : qui il appelle et qui l'appelle restent allumés — HTTP en trait plein, messages en pointillés."
+        "runtime": "Sélectionne un module : qui il appelle et qui l'appelle restent allumés — requêtes (HTTP, SQL) en trait plein, événements (messages, webhooks, SSE, NOTIFY, push) en pointillés.",
+        "journey": "Choisis un parcours : les modules qu'il traverse s'allument étape par étape, le reste de la carte reste en place. Avance avec les flèches ou la liste.",
+        "buildJava": "Sélectionne un artefact : ce dont il dépend (compile, test, son POM parent, le BOM qu'il importe) et ce qui dépend de lui restent allumés. Lecture de haut en bas — les services en haut, le build en dessous.",
+        "buildOrochia": "Sélectionne un module : ce sur quoi il est construit et ce qui est construit sur lui restent allumés — les apps en haut, les paquets et le design system qu'elles installent en dessous."
       },
       "legend": {
         "dependency": "dépend de",
         "outward": "s'éloigne du cœur",
-        "http": "appel HTTP",
-        "amqp": "message (RabbitMQ)"
+        "indirect": "POM parent · import du BOM · portée test",
+        "sync": "{kinds} — requête",
+        "async": "{kinds} — événement"
       },
       "rel": {
         "uses": "utilise",
@@ -3309,7 +3157,9 @@
         "calledBy": "Appelé par",
         "none": "Rien",
         "outward": "{from} → {to} s'éloigne du cœur. La règle hexagonale veut des dépendances tournées vers l'intérieur : la carte montre le code tel qu'il est.",
-        "close": "Effacer la sélection"
+        "close": "Effacer la sélection",
+        "central": "Maven Central {version}",
+        "package": "paquet {name}"
       },
       "count": "{count} modules",
       "empty": "Aucun module ne correspond ici.",
@@ -3319,6 +3169,7 @@
         "module": "Module",
         "role": "Rôle",
         "repository": "Dépôt",
+        "version": "Version",
         "dependsOn": "Dépend de",
         "usedBy": "Utilisé par",
         "from": "De",
@@ -3328,7 +3179,23 @@
       },
       "kinds": {
         "http": "HTTP",
-        "amqp": "message"
+        "sql": "SQL",
+        "amqp": "message",
+        "webhook": "webhook",
+        "sse": "SSE",
+        "notify": "LISTEN/NOTIFY",
+        "push": "push"
+      },
+      "journey": {
+        "label": "Parcours",
+        "steps": "Étapes du parcours",
+        "step": "Étape {n} sur {total}",
+        "prev": "Étape précédente",
+        "next": "Étape suivante",
+        "play": "Lire le parcours",
+        "pause": "Pause",
+        "endpoint": "Endpoint",
+        "announce": "Étape {n} : {title}."
       }
     },
     "pipeline": {
@@ -3417,6 +3284,117 @@
         "title": "Qui parle à qui sur RabbitMQ.",
         "sub": "{queues} files, chacune avec sa file de lettres mortes. Liaisons, émetteurs et consommateurs lus dans le code."
       }
+    },
+    "journeys": {
+      "orazaka": {
+        "request": {
+          "name": "Une requête",
+          "summary": "De ta question à la réponse, à travers les modules qui la portent."
+        }
+      },
+      "orochia": {
+        "playback": {
+          "name": "Lecture",
+          "summary": "Aucune URL vidéo brute n'atteint jamais le client.",
+          "steps": [
+            {
+              "title": "Demande de lecture",
+              "detail": "Le lecteur ne détient aucune URL média : il en demande une à Orochia."
+            },
+            {
+              "title": "Contrôle d'accès",
+              "detail": "Publique, contacts, abonnés ou déblocage payant : la visibilité est vérifiée contre les contacts, abonnements et droits d'accès."
+            },
+            {
+              "title": "Décision",
+              "detail": "Pas de droit, pas d'URL : la réponse est un refus ou le paywall."
+            },
+            {
+              "title": "URL signée · 300 s",
+              "detail": "Un jeton HMAC-SHA256 lié à la vidéo et à son expiration : un lien partagé meurt en cinq minutes."
+            },
+            {
+              "title": "Diffusion 4K HLS",
+              "detail": "Les segments viennent directement du CDN de Bunny, jamais des serveurs applicatifs."
+            }
+          ]
+        },
+        "unlock": {
+          "name": "Déblocage payant",
+          "summary": "Le client ne dit jamais qu'il a payé : la passerelle le prouve.",
+          "steps": [
+            {
+              "title": "Demande de déblocage",
+              "detail": "L'acheteur choisit un montant et une passerelle configurée."
+            },
+            {
+              "title": "Intention de paiement",
+              "detail": "Acheteur, créateur, vidéo et montant sont enregistrés avant tout mouvement d'argent."
+            },
+            {
+              "title": "Page de paiement",
+              "detail": "L'acheteur part sur la page hébergée du prestataire : Orochia ne voit jamais de carte."
+            },
+            {
+              "title": "Paiement",
+              "detail": "Seules les passerelles dont tous les identifiants sont configurés sont proposées."
+            },
+            {
+              "title": "Webhook signé",
+              "detail": "Signature vérifiée en temps constant sur le corps brut — aucun mode permissif."
+            },
+            {
+              "title": "Règlement, une seule fois",
+              "detail": "Crédit au grand livre et droit d'accès dans une même transaction ; un webhook rejoué ne change rien."
+            }
+          ]
+        },
+        "upload": {
+          "name": "Téléversement",
+          "summary": "Les fichiers lourds ne traversent jamais les serveurs web.",
+          "steps": [
+            {
+              "title": "Ouverture d'envoi",
+              "detail": "Seuls les créateurs vérifiés (registres 18 U.S.C. § 2257) peuvent ouvrir une session."
+            },
+            {
+              "title": "Création de la vidéo",
+              "detail": "Orochia enregistre la vidéo chez Bunny Stream et signe une session Tus."
+            },
+            {
+              "title": "Session Tus signée",
+              "detail": "Le studio reçoit l'adresse d'envoi et sa signature, valables pour cette seule vidéo."
+            },
+            {
+              "title": "Envoi reprenable",
+              "detail": "Le fichier part directement vers Bunny et reprend après une coupure."
+            },
+            {
+              "title": "Encodage terminé",
+              "detail": "Bunny signale la fin du transcodage par un webhook signé."
+            },
+            {
+              "title": "Prête à diffuser",
+              "detail": "La vidéo devient lisible, sous la visibilité choisie par son créateur."
+            }
+          ]
+        }
+      }
+    },
+    "sequence": {
+      "label": "Séquence",
+      "participants": "Participants",
+      "reply": "répond",
+      "internal": "dans {name}",
+      "if": "si {condition}",
+      "else": "sinon : {condition}"
+    },
+    "states": {
+      "label": "Machine à états",
+      "start": "Départ",
+      "end": "Fin",
+      "final": "finale",
+      "initial": "point de départ"
     }
   }
 }

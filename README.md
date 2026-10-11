@@ -45,14 +45,14 @@ hand-authored here. Governance contract: [`AGENTS.md`](AGENTS.md).
 Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 with the Krizaka preset
 ([`@krizaka/tailwind`](https://www.npmjs.com/package/@krizaka/tailwind): the `--kz-*` tokens of `@krizaka/tokens`) ·
 [`@krizaka/ui`](https://www.npmjs.com/package/@krizaka/ui) · Fumadocs (docs) ·
-`@xyflow/react` (pipeline graphs) · one motion system in CSS (`app/motion.css`, no animation library for new work).
+one schema component for every product (`app/components/diagrams/`, no diagram library, no Mermaid) · one motion system in CSS (`app/motion.css`, no animation library for new work).
 
 ## Where things live
 
 | Path | Role |
 |---|---|
 | `app/[locale]/` | All routes; `[locale]` is `en` (default) or `fr` (Québec). `layout.tsx` wires fonts, theme, i18n, the sitewide JSON-LD graph and base metadata. |
-| `app/components/` | UI. Big ones: `TopNavBar`, `EngineShowcaseSection`, `diagrams/` (module map, pipeline, messaging), `Mermaid`, `MdxComponents`, `DemosGallery`. |
+| `app/components/` | UI. Big ones: `TopNavBar`, `EngineShowcaseSection`, `diagrams/` (module map with its journeys for Orazaka, Orochia and Krizaka Java, pipeline, messaging, sequences, state machines), `MdxComponents`, `DemosGallery`. |
 | `app/robots.ts` · `app/sitemap.ts` · `app/manifest.ts` | SEO route handlers. |
 | `app/data/architecture.json` | **Generated** module graph + Orazaka repository map (read-only). |
 | `proxy.ts` | Edge middleware (Next 16 name): no-locale URL → `/en` by default, `/fr` when the `NEXT_LOCALE` cookie says so; a `/fr` or `/en` page sets that cookie. |
