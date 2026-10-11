@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookOpen, FileCode2, GitBranch, Layers, Package, Plug, Scale, ShieldCheck, Workflow } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
 import { orgRepositories, type OrgRepository } from "@/lib/org-data";
+import { publicRepositoryCount } from "@/lib/org-stats";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
@@ -99,7 +100,7 @@ export default async function OpenSourcePage({ params }: Props) {
           {t.lead}
         </p>
         <p className="os-count">
-          {format(t.count, { count: repositories.length })}
+          {format(t.count, { count: publicRepositoryCount() })}
           <a href={GITHUB_ORG_URL}>github.com/krizaka</a>
         </p>
       </div>

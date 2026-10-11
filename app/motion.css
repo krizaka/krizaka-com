@@ -27,11 +27,11 @@
 /* ─── The first screen settles before it breathes; what is off screen holds still ─── */
 
 /* Until SiteMotion marks the page ready (1.2 s after load), the hero's loops hold their first frame. */
-html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type) :is(*, *::before, *::after):not(.kz-backdrop-media) {
+html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type) :is(*, *::before, *::after):not(.kz-backdrop-media, [data-parallax]) {
   animation-play-state: paused !important;
 }
 /* Off screen (data-offscreen, SiteMotion): looping animations wait for the section to come back. */
-[data-offscreen] :is(*, *::before, *::after):not(.kz-backdrop-media) {
+[data-offscreen] :is(*, *::before, *::after):not(.kz-backdrop-media, [data-parallax]) {
   animation-play-state: paused !important;
 }
 
@@ -48,6 +48,61 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
 }
 @keyframes kz-parallax {
   to { transform: translate3d(0, 14%, 0); }
+}
+
+/* ─── The home hero (OrgHero): layers at different depths, a light that breathes, an invitation to scroll ─── */
+
+/* Scroll-driven, no JS: over the first screen of scrolling, the far layers drift down slower than the page (the aurora
+   least, the products a little more) and the horizon rises into view. `[data-parallax]` is a scroll position, not a
+   loop: the pause rules above leave it alone. Where unsupported, or under reduced motion, the composition is still. */
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .org-hero-aurora[data-parallax],
+    .org-hero-pane-depth[data-parallax],
+    .org-hero-horizon[data-parallax] {
+      animation: kz-hero-far linear both;
+      animation-timeline: scroll(root block);
+      animation-range: 0 100vh;
+    }
+    .org-hero-pane-depth[data-parallax] { animation-name: kz-hero-mid; }
+    .org-hero-horizon[data-parallax] { animation-name: kz-hero-rise; animation-range: 0 70vh; }
+  }
+}
+@keyframes kz-hero-far {
+  to { transform: translate3d(0, 12%, 0); }
+}
+@keyframes kz-hero-mid {
+  to { transform: translate3d(0, 55%, 0); }
+}
+@keyframes kz-hero-rise {
+  from { transform: translate3d(0, 14%, 0); opacity: 0.45; }
+  to { transform: none; opacity: 0.8; }
+}
+
+/* The aurora breathes: each light swells and settles on its own slow beat (20–26 s), offset from the others. */
+.org-aurora {
+  animation: kz-breathe 22s ease-in-out infinite alternate;
+}
+.org-aurora.brand-orazaka { animation-duration: 20s; }
+.org-aurora.brand-orochia { animation-duration: 26s; animation-delay: -9s; }
+@keyframes kz-breathe {
+  from { transform: scale(0.92); opacity: 0.7; }
+  to { transform: scale(1.1) translate3d(2%, -3%, 0); opacity: 1; }
+}
+
+/* The scroll cue: a light runs down a hairline, slowly, then rests. */
+.org-hero-scroll-line::after {
+  animation: kz-scroll-cue 2.8s var(--kz-ease) infinite;
+}
+@keyframes kz-scroll-cue {
+  0% { transform: translateY(-100%); }
+  60%, 100% { transform: translateY(300%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .org-aurora,
+  .org-hero-scroll-line::after {
+    animation: none;
+  }
 }
 
 /* ─── Figures that climb (CountUp) ─── */

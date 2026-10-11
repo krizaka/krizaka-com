@@ -1,0 +1,113 @@
+/* The home hero (OrgHero.tsx): layout and layers. Its motion — the breathing aurora, the parallax, the scroll cue —
+   lives in app/motion.css with the rest of the site's motion. */
+
+.org-hero { padding: clamp(112px, 13vw, 156px) 20px clamp(120px, 13vw, 170px); }
+
+/* The aurora: three wide, soft lights in the brand colours (each lit by its own brand's accent). */
+.org-hero-aurora { inset: 0; }
+.org-aurora { position:absolute; border-radius:50%; aspect-ratio:1; }
+.org-aurora.brand-orazaka { width:min(70vw, 820px); left:-22%; top:34%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--kz-accent) var(--org-aurora-mix), transparent), transparent); }
+.org-aurora.brand-orochia { width:min(70vw, 820px); right:-22%; top:28%;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--kz-accent) var(--org-aurora-mix), transparent), transparent); }
+.org-hero { --org-aurora-mix: 20%; }
+html.light .org-hero { --org-aurora-mix: 11%; }
+.org-aurora-core { width:min(80vw, 900px); left:50%; top:46%; margin-left:max(-40vw, -450px);
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--kz-accent) calc(var(--org-aurora-mix) * .6), transparent), transparent); }
+
+/* The products glimpsed on their side, tilted toward the centre, blurred and dimmed (depth of field). */
+.org-hero-media { inset: 0; }
+.org-hero-pane-depth { position:absolute; top: clamp(400px, 34vw, 470px); width: clamp(340px, 34vw, 540px); perspective: 900px; }
+.org-hero-pane-depth[data-product="orazaka"] { right: calc(50% + 330px); }
+.org-hero-pane-depth[data-product="orochia"] { left: calc(50% + 330px); }
+.org-hero-pane { position:relative; aspect-ratio:16 / 10; border-radius:22px; overflow:hidden; opacity:.6;
+  background: linear-gradient(135deg, color-mix(in oklab, var(--kz-accent) 30%, var(--kz-surface-1)), var(--kz-surface-1) 70%);
+  box-shadow: 0 0 120px -20px var(--kz-accent);
+  filter: blur(9px) saturate(1.15);
+  transition: opacity 600ms var(--kz-ease), transform 600ms var(--kz-ease), filter 600ms var(--kz-ease); }
+.org-hero-pane[data-product="orazaka"] { transform: rotateY(22deg) rotateZ(-2deg); }
+.org-hero-pane[data-product="orochia"] { transform: rotateY(-22deg) rotateZ(2deg); }
+/* Nothing behind the cards on the first paint: the panes appear with their media, once the page has settled. */
+.org-hero-pane[data-stage="tint"] { visibility:hidden; opacity:0; }
+.org-hero-pane > :is(img, video) { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; animation: kz-fade-in 1.2s var(--kz-ease) both; }
+/* The brand veil over the footage: the product's colour, fading toward the centre of the page. */
+.org-hero-pane::after { content:""; position:absolute; inset:0;
+  background: linear-gradient(var(--org-pane-dir, 90deg), color-mix(in oklab, var(--kz-accent) 28%, transparent), color-mix(in oklab, var(--kz-surface-0) 55%, transparent)); }
+.org-hero-pane[data-product="orochia"] { --org-pane-dir: 270deg; }
+/* Dark: the footage glows (its dark background vanishes). Light: the same footage turned to a light screen. */
+.org-hero-pane { mix-blend-mode: screen; }
+html.light .org-hero-pane { mix-blend-mode: multiply; opacity:.4; }
+html.light .org-hero-pane > :is(img, video) { filter: invert(1) hue-rotate(180deg); }
+/* A product card answers: its product brightens and comes forward. */
+.org-hero:has(.org-hero-product[data-product="orazaka"]:is(:hover, :focus-visible)) .org-hero-pane[data-product="orazaka"],
+.org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :focus-visible)) .org-hero-pane[data-product="orochia"] {
+  opacity:.95; filter: blur(4px) saturate(1.2); }
+html.light .org-hero:has(.org-hero-product[data-product="orazaka"]:is(:hover, :focus-visible)) .org-hero-pane[data-product="orazaka"],
+html.light .org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :focus-visible)) .org-hero-pane[data-product="orochia"] { opacity:.62; }
+.org-hero:has(.org-hero-product[data-product="orazaka"]:is(:hover, :focus-visible)) .org-hero-pane[data-product="orazaka"] { transform: rotateY(14deg) rotateZ(-1deg) scale(1.04); }
+.org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :focus-visible)) .org-hero-pane[data-product="orochia"] { transform: rotateY(-14deg) rotateZ(1deg) scale(1.04); }
+
+/* The section's last third settles on the page surface whatever drifts behind it: the next section starts there. */
+.org-hero-fade { inset:auto 0 0 0; height:34%; background: linear-gradient(to bottom, transparent, var(--kz-surface-0) 88%); }
+/* The horizon: the signature landscape, faded at both edges so it never cuts the page. */
+.org-hero-horizon { inset:auto 0 0 0; height:340px; opacity:.6; transform: translate3d(0, 14%, 0);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 34%, #000 56%, transparent 84%);
+          mask-image: linear-gradient(to bottom, transparent, #000 34%, #000 56%, transparent 84%); }
+/* The floor fades out before the end of the section, which ends on the page surface like the next one starts. */
+.org-hero > .kz-backdrop-grid { height:46%; opacity:.7;
+  -webkit-mask-image: linear-gradient(to top, transparent, #000 30%, transparent 90%);
+          mask-image: linear-gradient(to top, transparent, #000 30%, transparent 90%); }
+
+.org-hero-inner { position:relative; z-index:1; max-width:880px; margin:0 auto; text-align:center; }
+.org-hero-badge { display:inline-block; padding:6px 12px; border-radius:999px; font-family:var(--font-mono); font-size:11px; font-weight:600;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--kz-accent-text); background:color-mix(in srgb, var(--kz-accent) 10%, var(--kz-surface-0));
+  border:1px solid color-mix(in srgb, var(--kz-accent) 25%, transparent); }
+.org-hero-title { font-family:var(--font-display), system-ui, sans-serif; font-size:clamp(2.3rem,6.4vw,3.9rem); font-weight:800;
+  letter-spacing:-.035em; line-height:1.05; margin:20px 0 0; color:var(--kz-text-primary); }
+.org-hero-line { display:block; }
+.org-hero-accent { background:var(--kz-sheen); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.org-hero-sub { font-size:clamp(15px,1.8vw,17px); line-height:1.7; color:var(--kz-text-secondary); max-width:660px; margin:20px auto 0; }
+.org-hero-products { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:12px; margin:32px auto 0; max-width:720px; text-align:left; }
+.org-hero-product { position:relative; display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:14px; text-decoration:none;
+  color:var(--kz-text-primary); background:color-mix(in srgb, var(--kz-surface-1) 88%, transparent); border:1px solid var(--kz-border-subtle);
+  transition:border-color var(--kz-transition-smooth), transform var(--kz-transition-fast), box-shadow var(--kz-transition-smooth); }
+.org-hero-product:is(:hover, :focus-visible) { border-color:color-mix(in srgb, var(--kz-accent) 60%, var(--kz-border-default)); transform:translateY(-2px);
+  box-shadow: 0 18px 44px -24px var(--kz-accent), inset 0 1px 0 color-mix(in srgb, var(--kz-accent) 18%, transparent); }
+.org-hero-product:focus-visible { outline:2px solid var(--kz-ring); outline-offset:3px; }
+.org-hero-product > svg { color:var(--kz-accent-text); }
+.org-hero-mark { display:inline-flex; border-radius:50%; transition: filter 320ms var(--kz-ease), transform 320ms var(--kz-ease); }
+.org-hero-product:is(:hover, :focus-visible) .org-hero-mark { filter: drop-shadow(0 0 10px var(--kz-accent)); transform: scale(1.06); }
+.org-hero-product-text { flex:1; display:flex; flex-direction:column; gap:2px; font-size:15px; }
+.org-hero-product-tag { font-size:12.5px; color:var(--kz-text-secondary); font-weight:400; }
+.org-hero-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
+.org-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:12px; font-weight:700; font-size:14px; text-decoration:none; }
+.org-btn-primary { background:var(--kz-accent); color:var(--kz-on-accent); }
+.org-btn-ghost { border:1px solid var(--kz-border-default); color:var(--kz-text-primary); font-weight:600;
+  background: color-mix(in srgb, var(--kz-surface-0) 55%, transparent); }
+
+/* The invitation to scroll: a real link to the products, a slow light running down a hairline. */
+.org-hero-scroll { display:inline-flex; flex-direction:column; align-items:center; gap:10px; margin-top:clamp(40px, 6vw, 64px);
+  padding:4px; border-radius:12px; text-decoration:none; font-family:var(--font-mono); font-size:11px; font-weight:600;
+  letter-spacing:.12em; text-transform:uppercase; color:var(--kz-text-secondary); transition: color var(--kz-transition-fast); }
+.org-hero-scroll > span:first-child { padding:4px 10px; border-radius:999px; background: color-mix(in srgb, var(--kz-surface-0) 72%, transparent); }
+.org-hero-scroll:hover { color:var(--kz-text-primary); }
+.org-hero-scroll:focus-visible { outline:2px solid var(--kz-ring); outline-offset:2px; }
+.org-hero-scroll-line { position:relative; width:1px; height:44px; overflow:hidden; background: var(--kz-border-default); }
+.org-hero-scroll-line::after { content:""; position:absolute; left:0; top:0; width:1px; height:16px;
+  background: linear-gradient(to bottom, transparent, var(--kz-accent-text)); }
+
+@media (max-width: 767px) {
+  /* Phones: the products wait below the cards, side by side under the call to action (posters, never a loop). */
+  .org-hero-pane-depth { top:auto; bottom: 150px; width: 62vw; }
+  .org-hero-pane-depth[data-product="orazaka"] { right:auto; left:-20vw; }
+  .org-hero-pane-depth[data-product="orochia"] { left:auto; right:-20vw; }
+  .org-hero-pane { filter: blur(7px) saturate(1.15); opacity:.38; }
+  .org-hero-horizon { height:260px; }
+  .org-aurora.brand-orazaka { top:52%; left:-45%; width:110vw; }
+  .org-aurora.brand-orochia { top:62%; right:-45%; width:110vw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .org-hero-product, .org-hero-product:is(:hover, :focus-visible), .org-hero-mark, .org-hero-pane { transition:none; }
+  .org-hero-product:is(:hover, :focus-visible) { transform:none; }
+  .org-hero-pane > :is(img, video) { animation:none; }
+}

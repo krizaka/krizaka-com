@@ -59,6 +59,9 @@ PLAN_DEPLOIEMENT.md
 /lib/ui-examples.ts
 /public/ui-examples/
 
+# The organisation's figures read from GitHub at build (scripts/gen-org-stats.mjs)
+/lib/org-stats.json
+
 # PR captures go to Bunny Storage (scripts/pr-assets.mjs), never into the repository
 docs/screenshots/
 .github/pr-assets/

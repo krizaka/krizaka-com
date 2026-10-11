@@ -464,7 +464,8 @@
           "shortcuts."
         ],
         "sub": "Your data stays home. Your creators get paid. Your code stays yours. We build, in the open, the software that isn't allowed to break — {count} public repositories, readable line by line.",
-        "cta": "Explore the products"
+        "cta": "Explore the products",
+        "scroll": "See what we build"
       },
       "products": {
         "title": "Products",

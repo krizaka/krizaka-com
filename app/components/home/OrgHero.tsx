@@ -1,67 +1,67 @@
-"use client";
+/* Home hero — Krizaka as an organisation: what we build (two products) and how. A server component: the title, the
+   promise and the two product cards are the first paint (LCP); everything behind them is decoration that arrives later.
 
-/* Home hero — Krizaka as an organisation: what we build (two products) and how. */
+   Depth, back to front (BRAND.md §4), every layer decorative and still under prefers-reduced-motion:
+   - the section gradient and its drifting light (SectionBackdrop), a light dome and a perspective floor;
+   - an aurora in the three brand colours — Orazaka orange on the left, Krizaka blue in the middle, Orochia violet on
+     the right — that breathes very slowly (app/motion.css);
+   - the two products glimpsed through depth of field on their side (HeroProductMedia): hovering a card brightens its
+     product and lights its mark;
+   - the signature landscape as the horizon: it rises as the page scrolls and fades into the next section — no hard
+     edge, never behind the title;
+   - an invitation to scroll that is a real link to the products.
+   The parallax and the breathing are CSS (scroll-driven animations, app/motion.css): no script runs for them. */
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { ForwardIcon } from "@krizaka/icons";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
-import { GitHubMark } from "../brand/GitHubMark";
-import { useI18n } from "../I18nProvider";
-import { format } from "@krizaka/i18n";
-import KrizakaLandscape from "../illustrations/KrizakaLandscape";
-import RotatingWord from "./RotatingWord";
-import { PRODUCTS } from "@/lib/org-data";
-import { GITHUB_ORG_URL } from "@/lib/site";
 import { ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
+import { format } from "@krizaka/i18n";
+import { GitHubMark } from "../brand/GitHubMark";
+import KrizakaLandscape from "../illustrations/KrizakaLandscape";
+import RotatingWord from "./RotatingWord";
+import HeroProductMedia from "./HeroProductMedia";
+import { getDictionary } from "@/lib/i18n";
+import { PRODUCTS } from "@/lib/org-data";
+import { GITHUB_ORG_URL } from "@/lib/site";
+import "./org-hero.css";
 
-export default function OrgHero({ repositoryCount }: { repositoryCount: number }) {
-  const { t, locale } = useI18n();
+export default function OrgHero({ locale, repositoryCount }: { locale: string; repositoryCount: number }) {
+  const t = getDictionary(locale);
   const h = t.site.home.hero;
-  // The landscape and the light start moving once the page has loaded and settled: their animated filters would
-  // otherwise repaint the hero while it paints (Lighthouse LCP). The still frame is the same picture.
-  const [ready, setReady] = useState(false);
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout>;
-    const start = () => (timer = setTimeout(() => setReady(true), 1200));
-    if (document.readyState === "complete") start();
-    else window.addEventListener("load", start, { once: true });
-    return () => {
-      clearTimeout(timer);
-      window.removeEventListener("load", start);
-    };
-  }, []);
 
   return (
-    <SectionBackdrop as="section" id="hero" className="org-hero" data-ready={ready ? "" : undefined}>
-      <div className="org-hero-landscape" aria-hidden>
+    <SectionBackdrop as="section" id="hero" className="org-hero" grid>
+      <div data-backdrop-layer aria-hidden className="org-hero-aurora" data-parallax="">
+        <span className="org-aurora brand-orazaka" />
+        <span className="org-aurora org-aurora-core" />
+        <span className="org-aurora brand-orochia" />
+      </div>
+      <HeroProductMedia />
+      <div data-backdrop-layer aria-hidden className="org-hero-fade" />
+      <div data-backdrop-layer aria-hidden className="org-hero-horizon" data-parallax="">
         <KrizakaLandscape relative={false} />
       </div>
+
       <div className="org-hero-inner">
-        <span className="org-hero-badge">
-          {h.badge}
-        </span>
+        <span className="org-hero-badge">{h.badge}</span>
         <h1 className="org-hero-title" aria-label={h.titleAria}>
           <span className="org-hero-line">Open source.</span>
           <span className="org-hero-line">
             {h.closedTo}
-            <RotatingWord
-              key={locale}
-              className="org-hero-accent"
-              words={h.words}
-            />
+            <RotatingWord key={locale} className="org-hero-accent" words={h.words} />
           </span>
         </h1>
-        <p className="org-hero-sub">
-          {format(h.sub, { count: repositoryCount })}
-        </p>
+        <p className="org-hero-sub">{format(h.sub, { count: repositoryCount })}</p>
 
         <div className="org-hero-products">
           {PRODUCTS.map((p) => (
-            <Link key={p.id} href={p.href} prefetch={false} className={cn("org-hero-product", "brand-" + p.id)}>
-              <ProductLogo id={p.id} size={34} />
-              <span>
+            <Link key={p.id} href={p.href} prefetch={false} className={cn("org-hero-product", "brand-" + p.id)} data-product={p.id}>
+              <span className="org-hero-mark">
+                <ProductLogo id={p.id} size={34} />
+              </span>
+              <span className="org-hero-product-text">
                 <strong>{p.name}</strong>
                 <span className="org-hero-product-tag">{t.site.products[p.id].tagline}</span>
               </span>
@@ -78,38 +78,13 @@ export default function OrgHero({ repositoryCount }: { repositoryCount: number }
             <GitHubMark size={15} /> github.com/krizaka
           </a>
         </div>
+
+        <a href="#products" className="org-hero-scroll">
+          <span>{h.scroll}</span>
+          <span className="org-hero-scroll-line" aria-hidden />
+        </a>
       </div>
 
-      <style>{`
-        .org-hero { padding: clamp(120px, 15vw, 168px) 20px clamp(280px, 30vw, 400px); }
-        .org-hero:not([data-ready]) .org-hero-landscape *, .org-hero:not([data-ready]) .kz-backdrop-drift { animation-play-state: paused !important; }
-        /* The signature landscape at its original scale (mascots whole), fading only at its top edge. */
-        .org-hero-landscape { position:absolute; inset:auto 0 0 0; height:300px; opacity:.6; pointer-events:none;
-          -webkit-mask-image: linear-gradient(to top, black 60%, transparent); mask-image: linear-gradient(to top, black 60%, transparent); }
-        @media (min-width: 768px) { .org-hero-landscape { height:420px; } }
-        .org-hero-inner { position:relative; z-index:1; max-width:880px; margin:0 auto; text-align:center; }
-        .org-hero-badge { display:inline-block; padding:6px 12px; border-radius:999px; font-family:var(--font-mono); font-size:11px; font-weight:600;
-          letter-spacing:.08em; text-transform:uppercase; color:var(--kz-accent-text); background:var(--kz-accent-soft);
-          border:1px solid color-mix(in srgb, var(--kz-accent) 25%, transparent); }
-        .org-hero-title { font-family:var(--font-display), system-ui, sans-serif; font-size:clamp(2.3rem,6.4vw,3.9rem); font-weight:800;
-          letter-spacing:-.035em; line-height:1.05; margin:20px 0 0; color:var(--kz-text-primary); }
-        .org-hero-line { display:block; }
-        .org-hero-accent { background:var(--kz-sheen); -webkit-background-clip:text; background-clip:text; color:transparent; }
-        .org-hero-sub { font-size:clamp(15px,1.8vw,17px); line-height:1.7; color:var(--kz-text-secondary); max-width:660px; margin:20px auto 0; }
-        .org-hero-products { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); gap:12px; margin:32px auto 0; max-width:720px; text-align:left; }
-        .org-hero-product { display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:14px; text-decoration:none;
-          color:var(--kz-text-primary); background:color-mix(in srgb, var(--kz-surface-1) 85%, transparent); border:1px solid var(--kz-border-subtle);
-          transition:border-color var(--kz-transition-fast), transform var(--kz-transition-fast); }
-        .org-hero-product:hover { border-color:color-mix(in srgb, var(--kz-accent) 60%, var(--kz-border-default)); transform:translateY(-1px); }
-        .org-hero-product > svg { color:var(--kz-accent-text); }
-        .org-hero-product > span:nth-child(2) { flex:1; display:flex; flex-direction:column; gap:2px; font-size:15px; }
-        .org-hero-product-tag { font-size:12.5px; color:var(--kz-text-secondary); font-weight:400; }
-        .org-hero-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
-        .org-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 20px; border-radius:12px; font-weight:700; font-size:14px; text-decoration:none; }
-        .org-btn-primary { background:var(--kz-accent); color:var(--kz-on-accent); }
-        .org-btn-ghost { border:1px solid var(--kz-border-default); color:var(--kz-text-primary); font-weight:600; }
-        @media (prefers-reduced-motion: reduce) { .org-hero-product, .org-hero-product:hover { transition:none; transform:none; } }
-      `}</style>
     </SectionBackdrop>
   );
 }
