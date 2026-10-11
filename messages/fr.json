@@ -82,18 +82,6 @@
       }
     ]
   },
-  "packages": {
-    "sectionLabel": "Gouvernance",
-    "sectionTitle": "Les Packages d'Intercepteurs Orazaka",
-    "sectionDesc": "Des topologies de sécurité pré-configurées pour encapsuler vos applications intelligentes selon les normes industrielles.",
-    "concept": "Chaque flux de données traverse séquentiellement le maillage d'Orazaka. Un Package assemble et configure un groupe d'intercepteurs (ex. RAG + Audit + Router) pour certifier la conformité de vos processus.",
-    "composedOf": "Intercepteurs chaînés",
-    "manualNote": "Composables manuellement dans Orazaka Community — open source, sans verrou propriétaire.",
-    "viewUseCase": "Configurer le package",
-    "viewAll": "Découvrir le Package",
-    "pageTitle": "Packages de Gouvernance IA — Orazaka",
-    "pageDesc": "Encapsulez vos requêtes IA avec notre Package de gouvernance local Orazaka Sentinelle : conformité Loi 25 et LCEE pour la prospection locale."
-  },
   "community": {
     "sectionLabel": "Communauté",
     "sectionTitle": "Construisons-le ensemble",
@@ -407,6 +395,10 @@
         "orochia": {
           "label": "Orochia",
           "desc": "Architecture, API, déploiement"
+        },
+        "cli": {
+          "label": "CLI",
+          "desc": "npx orazaka — installer, démarrer, développer : chaque commande"
         }
       }
     },
@@ -506,7 +498,8 @@
       "privacy": "Confidentialité",
       "terms": "Conditions",
       "madeIn": "Fait à Montréal · Apache-2.0",
-      "docs": "Documentation"
+      "docs": "Documentation",
+      "cli": "CLI"
     },
     "contactForm": {
       "stepTopic": "Qu'est-ce qui vous amène ?",
@@ -1288,6 +1281,26 @@
           "title": "Contact",
           "category": "Krizaka",
           "desc": "Écrire à l'équipe."
+        },
+        "cli": {
+          "title": "CLI Orazaka",
+          "category": "Documentation",
+          "desc": "npx orazaka install, start, dev — chaque commande et option."
+        },
+        "packs": {
+          "title": "Packs et Studios Orazaka",
+          "category": "Produit",
+          "desc": "Les packs qu'Orazaka installe sans code, et leurs Studios."
+        },
+        "orazakaAdmin": {
+          "title": "Administration Orazaka",
+          "category": "Documentation",
+          "desc": "Ce qu'un administrateur contrôle, et comment c'est protégé."
+        },
+        "orochiaAdmin": {
+          "title": "Console d'administration Orochia",
+          "category": "Documentation",
+          "desc": "Modération, 2257, versements, comptes, sauvegardes — et ses quatre verrous."
         }
       },
       "label": "Rechercher sur le site",
@@ -2243,6 +2256,120 @@
         "app": "Ouvrir Orochia",
         "contact": "Nous écrire"
       }
+    },
+    "adminCallout": {
+      "orazaka": {
+        "eyebrow": "Ce que vous contrôlez",
+        "title": "Toute la plateforme, <b>sous votre main.</b>",
+        "body": "Tout ce qui est commercial et opérationnel dans Orazaka est une donnée qu'un administrateur modifie — jamais un redéploiement. Depuis la console SecOps ou l'API, avec un compte administrateur vérifié à chaque appel.",
+        "points": [
+          {
+            "title": "L'IA.",
+            "text": "Le catalogue de modèles, le pipeline d'intercepteurs (ordre, activation), les capacités et les serveurs MCP."
+          },
+          {
+            "title": "L'argent.",
+            "text": "Offres, packs et tarifs, le barème, les portefeuilles et les ajustements de crédits, la consommation par capacité."
+          },
+          {
+            "title": "Les Studios.",
+            "text": "Versions de blueprint en brouillon, publiées ou retirées, installations et exécutions par Studio."
+          },
+          {
+            "title": "Le périmètre.",
+            "text": "Rôle administrateur exigé côté serveur, une console qui n'atteint que l'API publique, par son propre backend."
+          }
+        ],
+        "cta": "Ce qu'un administrateur contrôle"
+      },
+      "orochia": {
+        "eyebrow": "Ce que vous contrôlez",
+        "title": "Une console d'exploitation <b>derrière quatre verrous.</b>",
+        "body": "Une application à part, avec sa base et son unique compte : elle décide par l'API d'administration d'Orochia, et chaque décision est consignée.",
+        "points": [
+          {
+            "title": "Conformité.",
+            "text": "Vérification 2257 des créateurs, signalements, retraits de vidéos avec un motif consigné."
+          },
+          {
+            "title": "Argent.",
+            "text": "Revenus du grand livre, versements réglés avec leur référence de virement ou refusés avec un motif."
+          },
+          {
+            "title": "Comptes et enchères.",
+            "text": "Suspendre, rétablir ou changer le rôle d'un compte ; annuler une enchère et libérer son offre."
+          },
+          {
+            "title": "La plateforme.",
+            "text": "Migrations, sauvegardes et réinitialisation armée par une phrase à taper — jamais sur la production publique."
+          }
+        ],
+        "cta": "Lire la documentation de la console"
+      }
+    },
+    "orazakaPacks": {
+      "meta": {
+        "title": "Packs Orazaka — des Studios pour votre métier, installés sans code | Krizaka",
+        "description": "Prospection, vérification de documents, reels immobiliers, médias, bien-être, vitrines de chantier : les packs Orazaka et leurs Studios, installés sans code."
+      },
+      "eyebrow": "Packs et Studios",
+      "title": "Installez un métier, <b>pas un projet.</b>",
+      "lead": "Un pack est un ensemble de Studios — des workflows prêts à l'emploi, avec leur formulaire — pour un métier. L'installer écrit des données, jamais du code : les Studios apparaissent au catalogue, tarifés et prêts à tourner.",
+      "ctaBrowse": "Voir les {count} packs",
+      "ctaDocs": "Lire la documentation",
+      "facts": {
+        "packs": "packs prêts à installer",
+        "studios": "Studios au total",
+        "code": "ligne de code pour en installer un"
+      },
+      "badges": {
+        "label": "Ce que ce pack apporte",
+        "worker": "Son propre worker",
+        "rulesets": "{count} corpus de règles versionnés",
+        "sensitive": "Données sensibles : garde de périmètre, rétention 30 jours, journal d'audit",
+        "regulated": "Réglementé : consentement d'abord, réponse de crise fixe",
+        "toolkit": "Boîte à outils de la plateforme"
+      },
+      "studiosTitle": "{count} Studios",
+      "creditsHint": "Crédits réservés au démarrage d'une exécution ; elle est facturée ce qu'elle a réellement consommé.",
+      "creditsNote": "Le chiffre à côté de chaque Studio est la réserve de crédits d'une exécution — libérée, pas facturée : une exécution règle ce qu'elle a mesuré.",
+      "rulesetsLine": "Corpus de règles : {list}",
+      "how": {
+        "eyebrow": "Comment arrive un pack",
+        "title": "Trois commandes, <b>aucun déploiement.</b>",
+        "lead": "Un pack est un dossier — un manifeste, ses traductions, ses Studios. La plateforme le vérifie, l'installe et le met en rayon.",
+        "steps": [
+          {
+            "title": "Le vérifier",
+            "text": "Le manifeste contre le schéma de la plateforme, puis chaque capacité qu'il nomme : peut-elle tourner ici ?"
+          },
+          {
+            "title": "L'installer",
+            "text": "Capacités, prix et entrées du catalogue s'écrivent d'un coup — ou rien du tout."
+          },
+          {
+            "title": "Lancer un Studio",
+            "text": "Depuis le formulaire de l'app, la barre de chat ou le terminal — la progression de chaque étape, en direct."
+          }
+        ],
+        "useCases": "<b>Un pack n'est pas un use-case.</b> Le pack est une offre métier ; le use-case est un point d'entrée technique du moteur, écrit en Java — chaque exécution de Studio passe par l'un d'eux.",
+        "useCasesLink": "Les use-cases techniques"
+      },
+      "closing": {
+        "title": "Votre métier <b>n'est pas dans la liste ?</b>",
+        "body": "Écrivez le pack : du YAML et du JSON, pas de Java. Ou décrivez-nous le métier — nous construirons ses Studios avec vous.",
+        "write": "Écrire un pack",
+        "contact": "Nous parler"
+      },
+      "callout": {
+        "eyebrow": "Packs et Studios",
+        "title": "Des métiers prêts à l'emploi, <b>installés en une commande.</b>",
+        "body": "{packs} packs, {studios} Studios — prospection, vérification de documents, reels immobiliers, médias, bien-être — chacun installé comme une donnée, sans déploiement.",
+        "studios": "{count} Studios",
+        "cta": "Tous les packs",
+        "studiosOne": "1 Studio"
+      },
+      "studiosTitleOne": "1 Studio"
     }
   },
   "pages": {
@@ -2649,7 +2776,28 @@
       "lead": "Les briques dont les produits sont faits, documentées depuis leur source : composants en direct, kit Java, et la documentation de chaque produit.",
       "open": "Ouvrir",
       "platform": "Plateforme",
-      "products": "Produits"
+      "products": "Produits",
+      "shortcuts": {
+        "title": "Pour commencer",
+        "items": {
+          "cli": {
+            "title": "Le CLI",
+            "text": "npx orazaka install, start, dev — puis chaque commande, sous-commande et option."
+          },
+          "packs": {
+            "title": "Packs et Studios",
+            "text": "Les offres métier qu'Orazaka installe sans code — et comment écrire la vôtre."
+          },
+          "orazakaAdmin": {
+            "title": "Administration Orazaka",
+            "text": "Modèles, pipeline, capacités, offres, tarifs, portefeuilles, Studios : ce qu'un administrateur contrôle."
+          },
+          "orochiaAdmin": {
+            "title": "Console d'administration Orochia",
+            "text": "Vérification des créateurs, modération, versements, comptes, sauvegardes — derrière quatre verrous."
+          }
+        }
+      }
     },
     "sections": {
       "ui": {
@@ -2680,7 +2828,8 @@
       "feedback": "Retours",
       "data-display": "Affichage de données",
       "layout": "Mise en page",
-      "foundations": "Fondations"
+      "foundations": "Fondations",
+      "domain services": "Services métier"
     },
     "categories": {
       "getting-started": "Démarrage",
@@ -2858,6 +3007,22 @@
         "openapi": {
           "title": "API HTTP (OpenAPI)",
           "description": "Les contrats OpenAPI de krizaka-users, krizaka-billing et krizaka-notifications."
+        },
+        "architecture": {
+          "title": "Ports et adaptateurs",
+          "description": "Comment est découpé un service métier Krizaka — contrat, client, cœur, persistance, hôte — et ce que contient chaque paquet."
+        },
+        "users": {
+          "title": "Utilisateurs",
+          "description": "krizaka-users : inscription, connexion (mot de passe, Google, GitHub), récupération de mot de passe, profils, clés d'API, RBAC, jetons de session."
+        },
+        "billing": {
+          "title": "Facturation",
+          "description": "krizaka-billing : crédits, portefeuilles, offres, abonnements, barème versionné et mesure — réserver, régler, libérer."
+        },
+        "notifications": {
+          "title": "Notifications",
+          "description": "krizaka-notifications : e-mail, SMS et webhooks derrière un seul port, pilotés par les événements, gabarits par langue."
         }
       }
     }

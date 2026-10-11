@@ -5,7 +5,7 @@ import { ExternalIcon } from "@krizaka/icons";
 import { GitHubMark } from "./brand/GitHubMark";
 import { useI18n } from "./I18nProvider";
 import { useContactHref } from "./useContactHref";
-import { NAV_DOCS_HUB, NAV_PRODUCTS } from "@/lib/nav";
+import { NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 export default function SiteFooter() {
@@ -24,6 +24,7 @@ export default function SiteFooter() {
     { label: f.story, href: "/story" },
     { label: f.openSource, href: "/open-source" },
     { label: f.docs, href: NAV_DOCS_HUB },
+    { label: f.cli, href: NAV_DOCS.find((d) => d.id === "cli")!.href },
     { label: f.contact, href: contactHref },
     { label: f.privacy, href: "/privacy" },
     { label: f.terms, href: "/terms" },

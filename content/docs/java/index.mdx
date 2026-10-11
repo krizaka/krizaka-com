@@ -76,3 +76,17 @@ krizaka:
 | [`krizaka-security`](/docs/java/security) | HS256 session-token verification, `roles` authorities, one security baseline, `SERVICE` tokens for `/internal/v1/**` |
 | [`krizaka-messaging`](/docs/java/messaging) | Events through the outbox, envelope in AMQP headers, retry then DLQ, idempotent consumption |
 | [`krizaka-observability`](/docs/java/observability) | Required service names as metric tags, ECS JSON logs, health/info/prometheus, 10 % trace sampling |
+
+## Domain services
+
+The business layer built on the kit — reusable by any application, used by Orazaka. Each is cut the same way
+([ports and adapters](/docs/java/architecture)): a published `*-api` contract and `*-client`, a host you deploy.
+
+| Service | What it does |
+| :-- | :-- |
+| [`krizaka-users`](/docs/java/users) | Registration, login (password, Google, GitHub), password recovery, profiles, API keys, RBAC, session tokens |
+| [`krizaka-billing`](/docs/java/billing) | Credits, wallets, plans, subscriptions, a versioned price book, metering (hold → settle → release) |
+| [`krizaka-notifications`](/docs/java/notifications) | E-mail, SMS and webhooks behind one port, driven by events |
+
+Orazaka's own business layer — intentions and use-cases — is documented with the engine:
+[Business Layer](/docs/orazaka/business).

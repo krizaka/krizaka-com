@@ -20,11 +20,13 @@ import {
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { OrazakaLogo } from "@krizaka/ui";
 import { localizedMetadata } from "@/lib/seo";
-import { getDictionary } from "@/lib/i18n";
+import { asLocale, getDictionary } from "@/lib/i18n";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ProductTour from "@/app/components/ProductTour";
 import ContactCta from "@/app/components/home/ContactCta";
+import PacksCallout from "@/app/components/products/PacksCallout";
+import AdminCallout from "@/app/components/products/AdminCallout";
 import Rich from "@/app/components/Rich";
 import { IsoSovereignStack } from "@/app/components/brand/Iso";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
@@ -291,6 +293,9 @@ export default async function OrazakaPage({ params }: Props) {
           </div>
         </div>
       </SectionBackdrop>
+
+      <PacksCallout locale={asLocale(locale)} />
+      <AdminCallout product="orazaka" locale={asLocale(locale)} />
 
       {/* ─── Go deeper ─── */}
       <section className="bp-wrap">

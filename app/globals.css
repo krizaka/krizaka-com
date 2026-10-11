@@ -85,6 +85,9 @@ html.light {
    (AA on the tinted row), not the raw accent (4.4:1). */
 html.light #nd-sidebar,
 html.light #nd-toc { --color-fd-primary: var(--kz-accent-text); }
+/* The page's breadcrumb (its category) is accent TEXT on the page surface: the text role in both themes (the raw accent
+   is 4.2:1 on the dark surface). */
+#nd-page .text-fd-primary { color: var(--kz-accent-text); }
 .dark #nd-sidebar {
   --color-fd-muted: var(--kz-surface-2);
   --color-fd-secondary: var(--kz-surface-2);

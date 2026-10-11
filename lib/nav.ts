@@ -64,8 +64,10 @@ export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
    hub /docs links everything. Open source (/open-source) stays the list of packages and repositories; Docs is how to
    use them. Krizaka UI is the one public documentation of the components (generated from their code; the visual-test
    catalogue of krizaka-ui is an internal test tool, never linked).
-   Texts: products → site.nav.docs.<id>; ui/java → docs.sections.<id>; the hub → site.nav.docs.all. */
-export type DocsLinkId = "orazaka" | "orochia" | "ui" | "java";
+   The CLI has its own entry — the tool a developer reaches for first (one command per intent) — pointing at its
+   generated reference in the Orazaka docs.
+   Texts: products and the CLI → site.nav.docs.<id>; ui/java → docs.sections.<id>; the hub → site.nav.docs.all. */
+export type DocsLinkId = "orazaka" | "cli" | "orochia" | "ui" | "java";
 export interface DocsNavLink {
   id: DocsLinkId;
   href: string;
@@ -75,16 +77,24 @@ export interface DocsNavLink {
 export const NAV_DOCS_HUB = "/docs";
 export const NAV_DOCS: DocsNavLink[] = [
   { id: "orazaka", href: "/docs/orazaka" },
+  { id: "cli", href: "/docs/orazaka/cli" },
   { id: "orochia", href: "/docs/orochia", match: ["/products/orochia/docs"] },
   { id: "ui", href: "/docs/ui" },
   { id: "java", href: "/docs/java" },
 ];
 export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) =>
-  link.id === "orazaka" || link.id === "orochia"
-    ? t.site.nav.docs[link.id]
-    : { label: t.docs.sections[link.id].title, desc: t.docs.sections[link.id].description };
-export const isDocsActive = (link: DocsNavLink, pathname: string) =>
+  link.id === "ui" || link.id === "java"
+    ? { label: t.docs.sections[link.id].title, desc: t.docs.sections[link.id].description }
+    : t.site.nav.docs[link.id];
+/** The mark beside a docs entry: the product's, the CLI wears Orazaka's (it is the Orazaka CLI), Krizaka's otherwise. */
+export const docsLinkLogo = (link: DocsNavLink): "orazaka" | "orochia" | "krizaka" =>
+  link.id === "orazaka" || link.id === "cli" ? "orazaka" : link.id === "orochia" ? "orochia" : "krizaka";
+const docsLinkMatches = (link: DocsNavLink, pathname: string) =>
   pathname.startsWith(link.href) || (link.match ?? []).some((p) => pathname.startsWith(p));
+/** Active on its pages — but not where a more specific entry (the CLI inside the Orazaka docs) is. */
+export const isDocsActive = (link: DocsNavLink, pathname: string) =>
+  docsLinkMatches(link, pathname) &&
+  !NAV_DOCS.some((other) => other !== link && other.href.length > link.href.length && other.href.startsWith(link.href) && docsLinkMatches(other, pathname));
 /** The Docs menu is active anywhere under /docs (and on the legacy product doc routes). */
 export const isDocsSection = (pathname: string) =>
   pathname === NAV_DOCS_HUB || pathname.startsWith(`${NAV_DOCS_HUB}/`) || NAV_DOCS.some((d) => isDocsActive(d, pathname));

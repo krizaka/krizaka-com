@@ -10,6 +10,14 @@
 import type { DocManifestEntry } from "./docs-manifest";
 
 export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
+  admin_console: {
+    title: "Admin Console",
+    category: "operations",
+    order: 1,
+    audience: "decision-maker",
+    intro:
+      "What an operator controls from orochia-admin — creator verification, moderation, payouts, auctions, accounts, backups — and the four gates around it: IP allow-list, one account, a service token, armed confirmations.",
+  },
   getting_started: {
     title: "Getting Started",
     category: "getting-started",

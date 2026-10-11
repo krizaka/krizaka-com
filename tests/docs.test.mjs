@@ -19,6 +19,9 @@ test("synced product links resolve through the manifest, internal docs keep thei
   assert.equal(resolveDocHref("ARCHITECTURE.md", "en", product), "/en/docs/orazaka/architecture");
   assert.equal(resolveDocHref("./docs/AUTH.md#jwt", "fr", product), "/fr/docs/orazaka/auth#jwt");
   assert.equal(resolveDocHref("../AGENTS.md", "en", product), "../AGENTS.md");
+  // From docs/_generated/ to a sibling or to a curated doc one level up.
+  assert.equal(resolveDocHref("_generated/ARCHITECTURE.md", "en", product), "/en/docs/orazaka/architecture");
+  assert.equal(resolveDocHref("../AUTH.md", "fr", product), "/fr/docs/orazaka/auth");
 });
 
 test("every @krizaka/ui component is documented by its code: meta, examples, a live preview for each web example", () => {

@@ -44,14 +44,18 @@ short-circuitable pipeline of interceptors to the optimal local model.
 ## Editions
 
 - Orazaka Community: the complete open-source engine. Self-hosted, free forever.
-- Packages: composable interceptor bundles that configure the engine into tailored
-  business solutions — agencies, sales, legal, customer support, real estate,
-  healthcare.
+- Packs: business offers installed as data, without code — each a set of Studios
+  (ready-made workflows): outbound prospecting, document verification (rulesets,
+  PDF authenticity), real-estate reels, media generation and analysis, wellbeing
+  journaling, trade showcases. Catalogue generated from krizaka/orazaka-packs:
+  https://krizaka.com/en/products/orazaka/packages
 
 ## Getting started
 
-Local loop via the orazaka CLI: install → start (Docker infra) → models pull →
-dev → onboard. Stateful infra (PostgreSQL+pgvector, Redis, RabbitMQ) runs in
+Local loop via the orazaka CLI (npm: `orazaka`, alias of `@krizaka/orazaka-cli`):
+`npx orazaka install` (clones and configures the workspace) → `npx orazaka start`
+(Docker infra) → `npx orazaka dev` (every service, web, admin, mobile). Reference:
+https://krizaka.com/en/docs/orazaka/cli Stateful infra (PostgreSQL+pgvector, Redis, RabbitMQ) runs in
 Docker; AI inference runs natively on the host (Metal on macOS).
 
 ## Identity & links
