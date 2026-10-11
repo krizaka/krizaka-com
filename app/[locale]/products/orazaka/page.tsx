@@ -19,6 +19,8 @@ import {
 } from "@krizaka/icons";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { OrazakaLogo } from "@krizaka/ui";
+import { Mascot } from "@krizaka/ui/mascots";
+import { DEMO_TOUR, tourSrc } from "@/lib/orazaka-demo";
 import { localizedMetadata } from "@/lib/seo";
 import { asLocale, getDictionary } from "@/lib/i18n";
 import TopNavBar from "@/app/components/TopNavBar";
@@ -55,7 +57,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 /** Screen recordings of the real web client (orazaka-web-client `npm run record:tour`, Orazaka orange);
  *  label and caption: messages → site.orazakaPage.tour.<id>. */
-const TOUR = ["home", "chat", "studios", "settings"] as const;
+const TOUR = DEMO_TOUR;
+/** What the product does, shown: each capability, its bird of the flock, the demo section that plays it. */
+const SHOWN = [
+  { id: "creations", bird: "duck", demo: "visuals" },
+  { id: "documents", bird: "owl", demo: "documents" },
+  { id: "studios", bird: "falcon", demo: "studios" },
+  { id: "jobs", bird: "pigeon", demo: "jobs" },
+  { id: "chat", bird: "owl", demo: "chat" },
+  { id: "wellbeing", bird: "flamingo", demo: "costs" },
+] as const;
 const PROOFS = [
   { id: "local", Icon: LocalIcon },
   { id: "capabilities", Icon: AiIcon },
@@ -116,17 +127,20 @@ export default async function OrazakaPage({ params }: Props) {
         grid
         media={
           <div className="bp-media">
-            <div style={{ backgroundImage: "url(/assets/orazaka/tour/chat.jpg)" }} />
-            <div style={{ backgroundImage: "url(/assets/orazaka/tour/studios.jpg)" }} />
+            <div style={{ backgroundImage: `url(${tourSrc("creations")}.jpg)` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("documents")}.jpg)` }} />
           </div>
         }
       >
         <div className="bp-wrap bp-hero">
           <div className="bp-hero-grid">
             <div>
-              <p className="bp-eyebrow">
-                <OrazakaLogo size={28} /> {t.kicker}
+              {/* The product's name first — the mark and the word together, as in the menu, on the home and on Orochia. */}
+              <p className="oz-lockup">
+                <OrazakaLogo size={72} />
+                <span>Orazaka</span>
               </p>
+              <p className="bp-eyebrow">{t.kicker}</p>
               <h1 className="bp-h1">
                 {t.titleLead} <span className="bp-accent">{t.titleAccent}</span>
               </h1>
@@ -167,9 +181,30 @@ export default async function OrazakaPage({ params }: Props) {
         </div>
         <div {...reveal(1)}>
           <ProductTour
-            clips={TOUR.map((id) => ({ id, src: `/assets/orazaka/tour/${id}`, ...t.tour[id] }))}
+            clips={TOUR.map((id) => ({ id, src: tourSrc(id), ...t.tour[id] }))}
             frameLabel="orazaka · localhost"
           />
+        </div>
+      </section>
+
+      {/* ─── What it does, shown: six capabilities, each watched over by a bird of the flock ─── */}
+      <section className="bp-wrap" id="shown" style={{ scrollMarginTop: 72 }}>
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.shown.eyebrow}</p>
+          <h2 className="bp-h2"><Rich text={t.shown.title} /></h2>
+          <p className="bp-lead">{t.shown.lead}</p>
+        </div>
+        <div className="bp-cards">
+          {SHOWN.map(({ id, bird, demo }, i) => (
+            <Link key={id} href={`/products/orazaka/demos#${demo}`} className="bp-card oz-shown" {...reveal(i + 1)}>
+              <Mascot bird={bird} mood={id === "jobs" ? "thinking" : "welcome"} size={84} />
+              <h3>{t.shown.items[id].title}</h3>
+              <p>{t.shown.items[id].body}</p>
+              <span className="bp-card-more">
+                {t.shown.more} <ForwardIcon size={14} />
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -321,6 +356,11 @@ export default async function OrazakaPage({ params }: Props) {
         <ContactCta topic="orazaka" />
       </SectionBackdrop>
       <SiteFooter />
+      <style>{`
+        .oz-lockup { display: flex; width: fit-content; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-display), system-ui, sans-serif;
+          font-size: clamp(2.25rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--kz-text-primary); }
+        .oz-shown svg[data-bird] { margin: -6px 0 4px -6px; }
+      `}</style>
     </main>
   );
 }

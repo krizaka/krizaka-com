@@ -1473,21 +1473,33 @@
       "tourEyebrow": "Visite du produit",
       "tourTitle": "Enregistrée sur la vraie application.",
       "tour": {
-        "home": {
-          "label": "Accueil",
-          "caption": "La page d'accueil publique du client web : la promesse, le chat souverain qui répond, les Studios."
-        },
-        "chat": {
-          "label": "Depuis vos documents",
-          "caption": "Eric colle la politique de retour sous sa question ; le modèle local y répond, en streaming — rien ne quitte le réseau."
+        "creations": {
+          "label": "Fait sur votre machine",
+          "caption": "Une photo produit apparaît quand le Studio image termine (la minute de génération est coupée), puis le clip et la voix off qu'Eric a générés sur le même Mac."
         },
         "studios": {
           "label": "Studios",
-          "caption": "Ses Studios de vente : des parcours prêts à l'emploi qui qualifient les prospects, écrivent la séquence et relancent."
+          "caption": "Le catalogue par métier — juridique, vente, immobilier, média — et la page d'un Studio : ce qu'il fait, ce que coûte une exécution, installé en un clic."
         },
-        "settings": {
-          "label": "Apparence",
-          "caption": "Le profil : thèmes clair et sombre appliqués instantanément, gardés sur le compte."
+        "documents": {
+          "label": "Contrôle de documents",
+          "caption": "Un bail contrôlé contre le droit français : deux clauses illicites trouvées, chacune avec son extrait et son article. Puis le PDF d'un fournisseur examiné pour ses retouches."
+        },
+        "voice": {
+          "label": "Voix off",
+          "caption": "Une phrase tapée, lue par le moteur vocal local : la forme d'onde du vrai fichier, en lecture."
+        },
+        "notifications": {
+          "label": "Tâches & notifications",
+          "caption": "La cloche liste ce qui a tourné — avec la vignette de ce qui a été produit — et ouvre le résultat."
+        },
+        "chat": {
+          "label": "Depuis vos documents",
+          "caption": "Eric colle la politique de retour sous sa question ; le modèle local répond à partir d'elle, en streaming — rien ne quitte le réseau."
+        },
+        "packs": {
+          "label": "Packs",
+          "caption": "Ce que son offre inclut et ce qu'un pack ajoute : Vérification de documents, Prospection Outbound, Bien-être — chaque Studio nommé, chaque prix affiché."
         }
       },
       "why": {
@@ -1626,6 +1638,38 @@
             "body": "Des packages métier assemblés avec les mêmes intercepteurs."
           }
         }
+      },
+      "shown": {
+        "eyebrow": "Ce qu'il fait, montré",
+        "title": "Six choses que votre équipe <b>fait dès le premier jour</b>",
+        "lead": "Chacune est un Studio ou une capacité du produit que vous installez — filmée sur la vraie application, sur un seul Mac. Un oiseau de la volée Krizaka veille sur chacune.",
+        "more": "Le voir dans la démo",
+        "items": {
+          "creations": {
+            "title": "Photos produit, clips et voix off",
+            "body": "Décrivez le plan ou tapez la phrase : les moteurs image, vidéo et voix de votre propre machine le rendent. Un produit inédit reste inédit."
+          },
+          "documents": {
+            "title": "Vérification de documents",
+            "body": "Un bail contrôlé contre le droit de sa juridiction, constat par constat, avec l'extrait et l'article. Un PDF examiné pour ses retouches. Des rapports, jamais un conseil juridique."
+          },
+          "studios": {
+            "title": "Des Studios pour votre métier",
+            "body": "Des workflows prêts à l'emploi — prospection, relances, reels immobiliers, contrôle de documents. Installés une fois, lancés quand vous voulez ; chaque exécution conservée."
+          },
+          "jobs": {
+            "title": "Tâches et notifications",
+            "body": "Le travail long tourne en arrière-plan sur votre matériel. La cloche vous prévient quand il est fini et montre ce qu'il a produit."
+          },
+          "chat": {
+            "title": "Des réponses depuis vos documents",
+            "body": "Collez une politique, un rapport ou une grille tarifaire et demandez : le modèle local répond à partir de ce que vous lui donnez."
+          },
+          "wellbeing": {
+            "title": "Bien-être, pas thérapie",
+            "body": "Journaling guidé, préparation de séance, suivi d'humeur : ce qu'une personne apporte à un professionnel, jamais à sa place. Données de santé, 30 jours au plus."
+          }
+        }
       }
     },
     "orazakaDemo": {
@@ -1657,41 +1701,45 @@
       "tourEyebrow": "La visite",
       "tourTitle": "La journée d'Eric, du début à la fin.",
       "tour": {
-        "dashboard": {
-          "label": "Son espace",
-          "caption": "Bonsoir Eric : ses conversations, ses crédits et ses Studios d'un coup d'œil."
-        },
-        "chat": {
-          "label": "Depuis ses documents",
-          "caption": "Il colle la politique de retour sous sa question ; le modèle local y répond, en streaming."
-        },
-        "create": {
-          "label": "Un visuel produit",
-          "caption": "Une phrase, une photo produit pour la boutique — générée sur le Mac (la minute de génération est coupée)."
+        "creations": {
+          "label": "Fait sur votre machine",
+          "caption": "Une photo produit apparaît quand le Studio image termine (la minute de génération est coupée), puis le clip et la voix off qu'Eric a générés sur le même Mac."
         },
         "studios": {
-          "label": "Ses Studios",
-          "caption": "Des parcours prêts à l'emploi pour la vente : qualifier des prospects, écrire la séquence, relancer."
+          "label": "Studios",
+          "caption": "Le catalogue par métier — juridique, vente, immobilier, média — et la page d'un Studio : ce qu'il fait, ce que coûte une exécution, installé en un clic."
+        },
+        "documents": {
+          "label": "Contrôle de documents",
+          "caption": "Un bail contrôlé contre le droit français : deux clauses illicites trouvées, chacune avec son extrait et son article. Puis le PDF d'un fournisseur examiné pour ses retouches."
+        },
+        "voice": {
+          "label": "Voix off",
+          "caption": "Une phrase tapée, lue par le moteur vocal local : la forme d'onde du vrai fichier, en lecture."
+        },
+        "notifications": {
+          "label": "Tâches & notifications",
+          "caption": "La cloche liste ce qui a tourné — avec la vignette de ce qui a été produit — et ouvre le résultat."
+        },
+        "chat": {
+          "label": "Depuis vos documents",
+          "caption": "Eric colle la politique de retour sous sa question ; le modèle local répond à partir d'elle, en streaming — rien ne quitte le réseau."
         },
         "packs": {
-          "label": "Offre et crédits",
-          "caption": "Ce que contient son offre, et les crédits restants — le coût d'un run est connu avant qu'il démarre."
-        },
-        "settings": {
-          "label": "À son image",
-          "caption": "Clair ou sombre, langue, voix : appliqué aussitôt, gardé sur son profil."
+          "label": "Packs",
+          "caption": "Ce que son offre inclut et ce qu'un pack ajoute : Vérification de documents, Prospection Outbound, Bien-être — chaque Studio nommé, chaque prix affiché."
         }
       },
       "useCasesEyebrow": "Ce qu'elle fait pour une équipe",
       "useCasesTitle": "Quatre tâches, <b>faites sur votre propre matériel.</b>",
       "useCases": {
         "documents": {
-          "title": "Répondre à partir de vos documents",
-          "body": "Collez une politique, un rapport ou une grille tarifaire et posez votre question. La réponse s'appuie sur ce que vous avez donné — et le document ne quitte jamais votre réseau.",
+          "title": "Vérifier un document avant de signer",
+          "body": "Passez un bail ou un contrat aux règles de sa juridiction : chaque constat cite la règle, l'article et l'extrait sur lequel il repose. Le PDF d'un fournisseur peut être examiné pour ses retouches.",
           "points": [
-            "Des synthèses pour le conseil en trois points",
-            "Des réponses clients fidèles à votre vraie politique",
-            "Des tableaux lus et expliqués simplement"
+            "Des constats, pas des avis : règle, extrait, article",
+            "Règles du bail d'habitation français et belge aujourd'hui",
+            "Un rapport, jamais un conseil juridique"
           ]
         },
         "visuals": {
@@ -1719,6 +1767,33 @@
             "Un solde lisible sur le tableau de bord",
             "Une estimation à chaque run",
             "Votre matériel, votre électricité, votre facture"
+          ]
+        },
+        "voice": {
+          "title": "Une voix pour chaque produit",
+          "body": "Tapez la phrase ; le moteur vocal de votre machine la lit. Le fichier est à vous — sur la fiche produit, dans la vidéo, en boutique.",
+          "points": [
+            "Des voix off produit en quelques secondes",
+            "Relues avec leur vraie forme d'onde",
+            "Aucune voix envoyée à un service tiers"
+          ]
+        },
+        "jobs": {
+          "title": "Le travail long, en arrière-plan",
+          "body": "Images, clips, contrôles de documents tournent en tâches sur votre matériel. Continuez à travailler : la cloche vous prévient quand chacune est finie.",
+          "points": [
+            "Une galerie de ce qui a été produit",
+            "L'entrée et le résultat de chaque tâche, conservés",
+            "Des notifications avec vignette"
+          ]
+        },
+        "chat": {
+          "title": "Répondre à partir de vos documents",
+          "body": "Collez une politique, un rapport ou une grille tarifaire et posez votre question. La réponse s'appuie sur ce que vous avez donné — et le document ne quitte jamais votre réseau.",
+          "points": [
+            "Des synthèses pour le conseil en trois points",
+            "Des réponses clients fidèles à votre vraie politique",
+            "Des tableaux lus et expliqués simplement"
           ]
         }
       },

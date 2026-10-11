@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Send, Check, Lock } from "lucide-react";
 import { useI18n } from "./I18nProvider";
-import { OwlSVG } from "./OwlSVG";
+import { Mascot } from "@krizaka/ui/mascots";
 
 export default function KrizakaChatShowcase() {
   const { t } = useI18n();
@@ -69,7 +69,7 @@ export default function KrizakaChatShowcase() {
         <div className="kz-chat-head">
           <div className="kz-chat-id">
             <span className="kz-chat-avatar">
-              <OwlSVG size={22} />
+              <Mascot bird="owl" mood="welcome" size={22} animated={false} />
             </span>
             <span className="kz-chat-idtext">
               <span className="kz-chat-name">Orazaka</span>

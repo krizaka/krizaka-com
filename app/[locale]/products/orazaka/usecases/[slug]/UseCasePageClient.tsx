@@ -23,7 +23,7 @@ import { USE_CASES, getUseCaseBySlug, getLocalizedField, UseCaseActionPlanStep, 
 import type { TranslationDictionary } from "@/lib/i18n";
 import Rich from "@/app/components/Rich";
 import { Card } from "@krizaka/ui/card";
-import MartinFalconSentry from "../../../../../components/illustrations/MartinFalconSentry";
+import { Mascot } from "@krizaka/ui/mascots";
 import { cn } from "@krizaka/ui/cn";
 
 /* ─── Sibling Navigation (Centered) ─── */
@@ -177,7 +177,7 @@ function MartinHero({ title, description }: { title: string; description: string
   return (
     <div className="martin-hero-card">
       <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px" }}>
-        <MartinFalconSentry size={180} />
+        <Mascot bird="falcon" mood="welcome" size={180} />
       </div>
 
       <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "8px", marginBottom: "20px" }}>
