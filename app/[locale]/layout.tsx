@@ -8,6 +8,7 @@ import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
 import "../globals.css";
 import { MotionObserver } from "@krizaka/ui/motion";
+import { cn } from "@krizaka/ui/cn";
 
 /* The Krizaka typefaces — the files of @krizaka/fonts (SIL OFL 1.1), loaded by next/font/local so the two faces of the
    first screen are preloaded and fingerprinted, with next/font's metric-adjusted fallback (CLS 0). The latin file of
@@ -141,7 +142,7 @@ export default async function RootLayout({
   return (
     <html
       lang={validatedLocale}
-      className={`${textFace.variable} ${displayFace.variable} ${monoFace.variable} h-full dark`}
+      className={cn(textFace.variable, displayFace.variable, monoFace.variable, "h-full dark")}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
