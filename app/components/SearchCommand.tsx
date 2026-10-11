@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Command, CommandDialog } from "@krizaka/ui/command";
 import { Kbd } from "@krizaka/ui/kbd";
 import { useI18n } from "./I18nProvider";
+import { useContactHref } from "./useContactHref";
 
 /* The site search (⌘K): the @krizaka/ui command palette (focus trap, Escape, arrow keys, filter) over the
    site's destinations. The destinations are structure; their words are messages → site.search.items.<id>. */
@@ -31,6 +32,7 @@ export function SearchCommand({
   const { t } = useI18n();
   const s = t.site.search;
   const router = useRouter();
+  const contactHref = useContactHref();
 
   // ⌘K / Ctrl+K opens and closes it from anywhere.
   useEffect(() => {
@@ -46,7 +48,7 @@ export function SearchCommand({
 
   const go = (url: string) => {
     setOpen(false);
-    router.push(url);
+    router.push(url === "/contact" ? contactHref : url);
   };
 
   return (

@@ -10,6 +10,7 @@
    reduced motion = everything static. The motion contract lives in ArcadeNods. Tokens only: each clan section
    is scoped to its brand (`brand-<id>`), so its colours are its mark's. */
 
+import { contactHref } from "@/lib/contact";
 import React from "react";
 import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
@@ -147,7 +148,7 @@ export default function StoryClient() {
             <Link href="/products" className="st-btn is-primary">
               {st.ctaProducts} <ForwardIcon size={15} />
             </Link>
-            <Link href="/contact" className="st-btn">
+            <Link href={contactHref("story")} className="st-btn">
               {st.ctaContact}
             </Link>
           </div>

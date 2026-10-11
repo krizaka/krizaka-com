@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import { AlertTriangle, ArrowRight, Check, Handshake, Loader2, MessageCircle, RotateCcw } from "lucide-react";
 import { useI18n } from "./I18nProvider";
 import { format } from "@krizaka/i18n";
-import { CONTACT_TIMELINES, CONTACT_TOPICS, type ContactTimeline, type ContactTopic } from "@/lib/contact";
+import { CONTACT_TIMELINES, CONTACT_TOPICS, cleanSource, topicForSource, type ContactTimeline, type ContactTopic } from "@/lib/contact";
 import { ProductLogo } from "@krizaka/ui";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -31,25 +31,30 @@ function TopicIcon({ topic }: { topic: ContactTopic }) {
   return <Icon size={22} strokeWidth={1.75} aria-hidden />;
 }
 
-/** A product page links here with ?topic=<product>; the static page renders the default until then. */
-export default function ContactForm({ defaultTopic = "orazaka" }: { defaultTopic?: ContactTopic }) {
+/** Every link to this page carries ?source=<page> (and ?topic= when the page knows it): the topic is pre-selected from
+    it — Orochia from Orochia, the building blocks from open source — and nothing is pre-selected from a page about
+    Krizaka as a whole. The static page renders without a choice until the URL is read. */
+export default function ContactForm({ defaultTopic = null }: { defaultTopic?: ContactTopic | null }) {
   return (
-    <Suspense fallback={<Form defaultTopic={defaultTopic} />}>
+    <Suspense fallback={<Form defaultTopic={defaultTopic} source={null} />}>
       <FromUrl defaultTopic={defaultTopic} />
     </Suspense>
   );
 }
 
-function FromUrl({ defaultTopic }: { defaultTopic: ContactTopic }) {
-  const requested = useSearchParams().get("topic");
-  const topic = CONTACT_TOPICS.includes(requested as ContactTopic) ? (requested as ContactTopic) : defaultTopic;
-  return <Form key={topic} defaultTopic={topic} />;
+function FromUrl({ defaultTopic }: { defaultTopic: ContactTopic | null }) {
+  const params = useSearchParams();
+  const requested = params.get("topic");
+  const source = cleanSource(params.get("source"));
+  const topic = CONTACT_TOPICS.includes(requested as ContactTopic) ? (requested as ContactTopic) : (topicForSource(source) ?? defaultTopic);
+  return <Form key={`${topic}-${source}`} defaultTopic={topic} source={source} />;
 }
 
-function Form({ defaultTopic }: { defaultTopic: ContactTopic }) {
+function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; source: string | null }) {
   const { t, locale } = useI18n();
   const c = t.site.contactForm;
-  const [topic, setTopic] = useState<ContactTopic>(defaultTopic);
+  const [topic, setTopic] = useState<ContactTopic | null>(defaultTopic);
+  const [topicMissing, setTopicMissing] = useState(false);
   const [timeline, setTimeline] = useState<ContactTimeline | null>(null);
   const [values, setValues] = useState({ name: "", email: "", company: "", message: "" });
   const [touched, setTouched] = useState<Partial<Record<Field, boolean>>>({});
@@ -72,6 +77,11 @@ function Form({ defaultTopic }: { defaultTopic: ContactTopic }) {
     e.preventDefault();
     const fields: Field[] = ["name", "email", "message"];
     setTouched({ name: true, email: true, message: true });
+    if (!topic) {
+      setTopicMissing(true);
+      formRef.current?.querySelector<HTMLElement>('input[name="topic"]')?.focus();
+      return;
+    }
     const firstInvalid = fields.find((f) => !RULES[f](values[f]));
     if (firstInvalid) {
       formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
@@ -84,7 +94,7 @@ function Form({ defaultTopic }: { defaultTopic: ContactTopic }) {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, topic, timeline, website, locale }),
+        body: JSON.stringify({ ...values, topic, timeline, website, locale, source }),
       });
       if (res.ok) {
         setSentTo({ name: values.name.trim().split(/\s+/)[0], email: values.email.trim() });
@@ -142,10 +152,10 @@ function Form({ defaultTopic }: { defaultTopic: ContactTopic }) {
         <legend>
           <span className="kz-cf-num">1</span> {c.stepTopic}
         </legend>
-        <div className="kz-cf-topics" role="radiogroup">
+        <div className="kz-cf-topics" role="radiogroup" aria-required="true" aria-invalid={topicMissing || undefined} aria-describedby={topicMissing ? "kz-cf-topic-error" : undefined}>
           {CONTACT_TOPICS.map((id) => (
             <label key={id} className="kz-cf-topic" data-selected={topic === id || undefined}>
-              <input type="radio" name="topic" value={id} checked={topic === id} onChange={() => setTopic(id)} />
+              <input type="radio" name="topic" value={id} checked={topic === id} onChange={() => { setTopic(id); setTopicMissing(false); }} />
               <span className="kz-cf-topic-icon">
                 <TopicIcon topic={id} />
               </span>
@@ -159,6 +169,11 @@ function Form({ defaultTopic }: { defaultTopic: ContactTopic }) {
             </label>
           ))}
         </div>
+        {topicMissing && (
+          <p id="kz-cf-topic-error" className="kz-cf-error" role="alert">
+            {c.errors.topic}
+          </p>
+        )}
       </fieldset>
 
       <fieldset className="kz-cf-step">
@@ -236,7 +251,7 @@ function Form({ defaultTopic }: { defaultTopic: ContactTopic }) {
             onBlur={leave("message")}
             maxLength={MESSAGE_MAX}
             rows={6}
-            placeholder={c.placeholders[topic]}
+            placeholder={c.placeholders[topic ?? "other"]}
             aria-invalid={invalid("message") || undefined}
             aria-describedby={invalid("message") ? "cf-message-error" : "cf-message-count"}
           />

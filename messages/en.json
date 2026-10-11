@@ -557,6 +557,7 @@
         "message": "A few more words please — 10 characters at least."
       },
       "errors": {
+        "topic": "Choose what your message is about.",
         "invalid": "Please check the highlighted field.",
         "rate_limited": "Too many messages sent. Please try again in a few minutes.",
         "other": "Sending failed. Reach us on GitHub Discussions in the meantime."

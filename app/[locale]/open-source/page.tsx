@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { contactHref } from "@/lib/contact";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BookOpen, FileCode2, GitBranch, Layers, Package, Plug, Scale, ShieldCheck, Workflow } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
@@ -296,7 +297,7 @@ export default async function OpenSourcePage({ params }: Props) {
             <a href="https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" className="os-btn is-primary">
               <BookOpen size={15} /> {t.contributeGuide}
             </a>
-            <Link href="/contact" className="os-btn">
+            <Link href={contactHref("open-source", "blocks")} className="os-btn">
               {t.ask}
             </Link>
           </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { contactHref, contactSourceFromPath } from "@/lib/contact";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
@@ -65,7 +66,7 @@ export function MobilePanel({
               </summary>
               <div className="kz-mp-links">
                 {p.links.map((l) => (
-                  <Link key={l.href} href={l.href} onClick={onClose} className={cn("kz-mp-link", isNavActive(l, path) && "is-active")}>
+                  <Link key={l.href} href={l.href === "/contact" ? contactHref(contactSourceFromPath(path), undefined) : l.href} onClick={onClose} className={cn("kz-mp-link", isNavActive(l, path) && "is-active")}>
                     {productLinkText(t, p.id, l)}
                   </Link>
                 ))}
