@@ -17,9 +17,6 @@
 @source "../node_modules/@krizaka/orazaka-design-system/registry/examples";
 /* Fumadocs (docs layout, TOC, search, code blocks): its colours are mapped to --kz-* below. */
 @import "fumadocs-ui/css/neutral.css";
-/* The Krizaka page language (app/components/sections): used on most pages, so it ships inside the site's stylesheet —
-   not as a second render-blocking stylesheet per page. */
-@import "./components/sections/sections.css";
 @import "fumadocs-ui/css/preset.css";
 
 /* ═══════════════════════════════════════════════════════════════════
