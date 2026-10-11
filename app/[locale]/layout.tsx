@@ -136,8 +136,9 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Applies the persisted theme (`kz-theme`) before the first paint: no flash. */}
-        <ThemeScript />
+        {/* Applies the persisted theme (`kz-theme`), else the site's default — dark — before the first paint: no flash.
+            The same defaultMode as the provider below. */}
+        <ThemeScript defaultMode="dark" />
         {/* Sitewide linked @graph: Organization · WebSite · SoftwareApplication.
             Page-scoped schema (BreadcrumbList, FAQPage) is emitted per page. */}
         <JsonLd data={buildSiteGraph(validatedLocale)} />
@@ -147,7 +148,7 @@ export default async function RootLayout({
         </noscript>
       </head>
       <body className="min-h-dvh flex flex-col antialiased">
-        <ThemeProvider defaultMode="system">
+        <ThemeProvider defaultMode="dark">
           <ThemeSync />
           <I18nProvider locale={validatedLocale} messages={getDictionary(validatedLocale)}>
             {children}

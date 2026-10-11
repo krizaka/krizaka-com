@@ -354,7 +354,7 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-feature h3 { margin: 6px 0 14px; font-size: 18px; font-weight: 700; }
         .os-feature ul { margin: 0 0 18px; padding: 0; list-style: none; display: grid; gap: 8px; }
         .os-feature li { position: relative; padding-left: 16px; font-size: 14px; line-height: 1.5; color: var(--kz-text-secondary); }
-        .os-feature li::before { content: ""; position: absolute; left: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; }
+        .os-feature li::before { content: ""; position: absolute; left: 0; top: .6em; width: 6px; height: 6px; border-radius: 50%; background: var(--kz-accent); }
         .os-feature-link { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 700; color: var(--kz-accent); text-decoration: none; }
 
         .os-product-head { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-top: 8px; border-top: 1px solid var(--kz-border-subtle); padding-top: 40px; }
