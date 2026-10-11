@@ -499,7 +499,11 @@
         "browse": "Parcourir les dépôts",
         "repos": "dépôts publics",
         "license": "licence de tous les dépôts",
-        "ci": "build, tests et règles d'architecture à chaque commit"
+        "ci": "build, tests et règles d'architecture à chaque commit",
+        "eyebrow": "Open source",
+        "band": "Tous les dépôts Krizaka",
+        "bandPause": "Mettre la bande en pause",
+        "bandPlay": "Relancer la bande"
       },
       "storyTeaser": {
         "sub": "Une lame pliée au grand jour, une IA qui ne quitte jamais la maison, une plateforme vidéo où les créateurs gardent 90 % — et la volée qui veille.",

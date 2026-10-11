@@ -17,7 +17,6 @@ import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { reveal } from "@/lib/motion";
 import { BUILDING_BLOCKS, FORUMS } from "@/lib/building-blocks";
 import BlockCard from "@/app/components/blocks/BlockCard";
-import "@/app/components/sections/sections.css";
 import { CardGrid, DiscussionCta, SectionHeading } from "@/app/components/sections";
 import { ExternalIcon } from "@krizaka/icons";
 import ButtonLink from "@/app/components/sections/ButtonLink";

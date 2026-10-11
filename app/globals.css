@@ -17,6 +17,9 @@
 @source "../node_modules/@krizaka/orazaka-design-system/registry/examples";
 /* Fumadocs (docs layout, TOC, search, code blocks): its colours are mapped to --kz-* below. */
 @import "fumadocs-ui/css/neutral.css";
+/* The Krizaka page language (app/components/sections): used on most pages, so it ships inside the site's stylesheet —
+   not as a second render-blocking stylesheet per page. */
+@import "./components/sections/sections.css";
 @import "fumadocs-ui/css/preset.css";
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1746,7 +1749,7 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
 
 /* The node of a signature icon also lights when the card that holds it is hovered (the package lights it in links and
    buttons). */
-:is(.bp-card, .bp-proof, .bp-ledger li, .kz-expertise-item, .od-case, .ps-card):is(:hover, :focus-within) svg[data-kz-icon] [data-node] {
+:is(.bp-card, .bp-proof, .bp-ledger li, .od-case, .ps-card):is(:hover, :focus-within) svg[data-kz-icon] [data-node] {
   transform: scale(1.5);
   filter: drop-shadow(0 0 3px var(--kz-accent));
 }
@@ -1754,8 +1757,7 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
 /* Cards answer: every card tints its border toward the accent; cards that are links also rise. */
 .bp-card,
 .bp-proof,
-.bp-ledger li,
-.kz-expertise-item {
+.bp-ledger li {
   transition: border-color var(--kz-transition-smooth), transform var(--kz-transition-smooth), box-shadow var(--kz-transition-smooth),
     background-color var(--kz-transition-smooth);
 }
@@ -1768,9 +1770,6 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
   a.bp-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--kz-accent) 55%, transparent);
-  }
-  .kz-expertise-item:hover {
-    background-color: color-mix(in srgb, var(--kz-accent) 5%, var(--kz-surface-0));
   }
 }
 .bp-icon {

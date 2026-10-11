@@ -47,7 +47,12 @@ export default async function Home({ params }: Props) {
       <ProductsShowcase />
       <StoryTeaser />
       <ExpertiseSection />
-      <OpenSourceSection orazakaRepos={orazaka} orochiaRepos={orochia} publicRepositories={publicRepositories} />
+      <OpenSourceSection
+        orazakaRepos={orazaka}
+        orochiaRepos={orochia}
+        publicRepositories={publicRepositories}
+        repositories={repositories.map(({ name }) => ({ name }))}
+      />
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta />
       </SectionBackdrop>

@@ -499,7 +499,11 @@
         "browse": "Browse the repositories",
         "repos": "public repositories",
         "license": "license of every repository",
-        "ci": "build, tests and architecture rules on every commit"
+        "ci": "build, tests and architecture rules on every commit",
+        "eyebrow": "Open source",
+        "band": "Every Krizaka repository",
+        "bandPause": "Pause the band",
+        "bandPlay": "Play the band"
       },
       "storyTeaser": {
         "sub": "A blade folded in the open, an AI that never leaves home, a video platform where creators keep 90% — and the flock that keeps watch.",

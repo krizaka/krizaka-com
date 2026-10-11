@@ -8,7 +8,6 @@ import SiteFooter from "../../../../components/SiteFooter";
 import { useI18n } from "../../../../components/I18nProvider";
 import { format } from "@krizaka/i18n";
 import { ButtonLink, PageHero } from "../../../../components/sections";
-import "../../../../components/sections/sections.css";
 
 
 const NEUROMORPHIC_ICONS = [Cpu, Database, Shield];
