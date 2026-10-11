@@ -125,7 +125,7 @@ export default async function OrazakaPage({ params }: Props) {
     operatingSystem: "macOS, Linux",
     description: t.lead,
     license: "https://www.apache.org/licenses/LICENSE-2.0",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
     publisher: { "@type": "Organization", name: "Krizaka" },
   };
 
