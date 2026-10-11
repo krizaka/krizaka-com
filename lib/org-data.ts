@@ -97,6 +97,6 @@ export const PRODUCTS: Product[] = [
     repoUrl: "https://github.com/krizaka/orochia",
     appUrl: OROCHIA_APP_URL,
     stack: "Next.js 16 · PostgreSQL · Drizzle · Bunny Stream",
-    media: { src: "/assets/orochia/tour/feed", aspect: "16 / 10", frame: "orochia · web" },
+    media: { src: "/assets/orochia/tour/showcase", aspect: "16 / 10", frame: "orochia · web" },
   },
 ];

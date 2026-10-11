@@ -880,41 +880,7 @@
           "body": "A creator's all-or-nothing goal, a dare to one creator, or an open call creators apply to. Fans pledge credits that are held until the video or story is delivered — paid then, given back otherwise. Real-time pot, leaderboard, no chargeback race."
         }
       },
-      "tour": {
-        "feed": {
-          "label": "Discover",
-          "caption": "The home fans land on: the 18+ gate, creators’ stories, the four ways to pay them, open auctions and challenges."
-        },
-        "community": {
-          "label": "Explore",
-          "caption": "Explore is never empty: trending, new, stories, creators to follow, open auctions and challenges — then a tag and a search."
-        },
-        "stories": {
-          "label": "Stories that pay",
-          "caption": "Alex opens Elena’s story from her profile ring, turns the sound on, likes it, replies privately and tips $10 — straight to her."
-        },
-        "unlock": {
-          "label": "Paid unlock",
-          "caption": "Mia’s rehearsal unlocks from $8: Alex pays in credits, the server grants access and the video plays at once."
-        },
-        "auctions": {
-          "label": "Auctions",
-          "caption": "Elena auctions a rough cut: Alex bids $22 and takes the lead — his credits are held only while he leads."
-        },
-        "challenges": {
-          "label": "Fund a goal",
-          "caption": "Elena’s episode goal: Alex backs it with $25, held until she delivers and returned if she does not."
-        },
-        "studio": {
-          "label": "Get paid 90 %",
-          "caption": "Elena’s earnings, read from the ledger: 90 % of every payment, Alex’s tip already in, then where her payouts go."
-        },
-        "admin": {
-          "label": "Admin console",
-          "caption": "orochia-admin: 2257 verification, reports, catalogue and takedowns, accounts, treasury."
-        }
-      },
-      "kicker": "Krizaka product · open source",
+      "kicker": "The video platform for creators · open source",
       "subtitle": "The video platform for independent creators.",
       "lead": "4K streaming, paywalls, tips and creator payouts — with the rigour of financial infrastructure: access decided on the server, payments confirmed by the gateway, a double-entry ledger. Designed for adult (18+) content, Apache-2.0 licensed.",
       "watchDemo": "Watch the demo",
@@ -986,7 +952,10 @@
             "Delivered within 14 days, or every pledge comes back."
           ]
         }
-      }
+      },
+      "tourEyebrow": "The demo",
+      "tourTitle": "A day on Orochia, as a fan or as a creator.",
+      "tourMore": "See the whole demo"
     },
     "openSource": {
       "steps": {
@@ -2115,6 +2084,165 @@
       },
       "copy": "Copy",
       "copied": "Copied"
+    },
+    "orochiaDemo": {
+      "meta": {
+        "title": "Orochia demo — a day as a creator and as a fan | Krizaka",
+        "description": "Watch Orochia at work: Elena publishes a paid video, gets tipped and outbid live, reads who paid and withdraws 90 % of it; Alex discovers her, tips her story, unlocks a session, bids and backs her next video. Recorded on the real application."
+      },
+      "eyebrow": "Orochia demo · recorded on the real application",
+      "title": "One creator, one fan. <b>Every payment on screen.</b>",
+      "lead": "Meet Elena, a singer-songwriter who films her own music videos, and Alex, who plays them on repeat. He finds her, tips her story, unlocks a session, bids on a cut and backs her next shoot; she publishes, watches the money arrive live and withdraws 90 % of it. Every clip below is the real Orochia.",
+      "ctaTour": "Watch the tour",
+      "ctaCases": "What it does for you",
+      "ctaApp": "Open Orochia",
+      "frameLabel": "orochia · web",
+      "facts": [
+        {
+          "value": "90 %",
+          "label": "of every tip, unlock, winning bid and pledge goes to the creator"
+        },
+        {
+          "value": "4 ways",
+          "label": "to pay a creator: tips, paid unlocks, auctions and funded goals"
+        },
+        {
+          "value": "100 % real",
+          "label": "screen recordings of the application, nothing mocked or replayed"
+        }
+      ],
+      "tourEyebrow": "The tour",
+      "tourTitle": "Pick a side: Alex's day, or Elena's.",
+      "sides": {
+        "label": "Whose day",
+        "fan": "I'm a fan",
+        "creator": "I'm a creator",
+        "fanLead": "Alex finds Elena, watches her story with the sound on and pays her four ways — each in two taps, in credits.",
+        "creatorLead": "Elena publishes, sees the payments arrive while she works, knows who paid for what and withdraws to her bank."
+      },
+      "tour": {
+        "alex-discover": {
+          "label": "Discover",
+          "caption": "Explore: today's stories, a search for “rain”, and Elena's music video playing at once."
+        },
+        "alex-story": {
+          "label": "A story that pays",
+          "caption": "Elena's story, sound on: Alex likes it and tips $5 — straight to her."
+        },
+        "alex-unlock": {
+          "label": "Unlock a session",
+          "caption": "Her acoustic session costs $8: paid in credits, the access is granted by the server and it plays."
+        },
+        "alex-bid": {
+          "label": "Bid on a cut",
+          "caption": "The director's cut is up for auction: Alex bids and leads. His credits are held only while he leads."
+        },
+        "alex-back": {
+          "label": "Back the next shoot",
+          "caption": "Elena's goal is at 60 %: Alex pledges $25, held until she delivers, returned if she does not."
+        },
+        "elena-publish": {
+          "label": "Publish",
+          "caption": "A new video, a title, “Paid unlock” at $6 — the form shows she keeps $5.40 — then straight to the CDN."
+        },
+        "elena-live": {
+          "label": "Paid, live",
+          "caption": "While she works, a $15 tip and a new bid arrive live, then wait in her notifications."
+        },
+        "elena-story": {
+          "label": "Who paid",
+          "caption": "Her story's activity, for her only: who watched, who liked it and who tipped."
+        },
+        "elena-earnings": {
+          "label": "Withdraw 90 %",
+          "caption": "Her earnings, read from the ledger — 90 % of every payment — then everything to her bank in two taps."
+        },
+        "showcase": {
+          "label": "A day on Orochia",
+          "caption": "Alex discovers Elena, tips her story and unlocks her session; Elena is paid live and withdraws 90 %."
+        }
+      },
+      "useCasesEyebrow": "What it does for you",
+      "useCasesTitle": "Seven moments, <b>money on every one.</b>",
+      "sideBadge": {
+        "creator": "Creator",
+        "fan": "Fan"
+      },
+      "useCases": {
+        "publish": {
+          "title": "Publish and set your price",
+          "body": "Drop a video, choose who can watch — everyone, followers, contacts, an invited list or a paid unlock — and see what you keep before you publish.",
+          "points": [
+            "Your price, the 10 % fee and your share, side by side",
+            "Straight to a global video network: nothing waits on our servers",
+            "Up to 4 GB and 3 hours, resumable"
+          ]
+        },
+        "live": {
+          "title": "Get paid while you work",
+          "body": "Tips, unlocks, bids and pledges arrive as they happen — a notice on screen, a line in your notifications, on your phone too.",
+          "points": [
+            "Live, on every open page",
+            "Each kind of notice can be turned off, in the app or by e-mail",
+            "Every payment confirmed by the payment provider, never by a click"
+          ]
+        },
+        "stories": {
+          "title": "Stories that pay",
+          "body": "A 24-hour story with the sound on; your fans like it, reply privately or tip from it — and you see who did.",
+          "points": [
+            "Who watched, liked and tipped, for you only",
+            "The audience of your choice, changeable at once",
+            "A tip goes straight to you, 90 % of it"
+          ]
+        },
+        "unlock": {
+          "title": "Paid unlocks, without friction",
+          "body": "A fan unlocks a video in two taps with Orochia credits; the server grants the access, then the video plays.",
+          "points": [
+            "Your minimum is the price, always respected",
+            "Credits bought in packs: card details never reach Orochia",
+            "Signed playback links that expire in five minutes"
+          ]
+        },
+        "auction": {
+          "title": "Auction a video",
+          "body": "Put an exclusive cut up for auction: fans bid in credits, the price climbs in the open, the winner — only the winner — watches it.",
+          "points": [
+            "Credits held only while a bid leads",
+            "A last-minute bid adds two minutes: no sniping",
+            "You accept the result, or it settles itself"
+          ]
+        },
+        "goal": {
+          "title": "Get your next video funded",
+          "body": "Set a goal and a deadline; fans back it in credits held in escrow. You are paid when you deliver — they get everything back if you do not.",
+          "points": [
+            "A progress ring everyone can see",
+            "Backers watch the result first",
+            "Nobody pays for nothing"
+          ]
+        },
+        "earnings": {
+          "title": "Keep 90 %, withdraw in two taps",
+          "body": "Every payment, read from an immutable ledger: by period, by video, by month. Withdraw to your bank, PayPal or crypto from $20.",
+          "points": [
+            "90 % of every payment, the fee shown on each line",
+            "Your account encrypted, only a masked hint shown",
+            "CSV exports for your accountant"
+          ]
+        }
+      },
+      "persona": {
+        "title": "Who are Elena and Alex?",
+        "body": "Elena Marlow and Alex Carter are invented for this demo, with illustrated avatars; their videos play licensed stock footage. The accounts live in a separate demo database created by one command (npm run demo:seed), which refuses to run anywhere but a developer's machine."
+      },
+      "closing": {
+        "title": "Your audience, your prices, <b>90 % for you.</b>",
+        "body": "Run Orochia for your creators, or tell us what your platform needs.",
+        "app": "Open Orochia",
+        "contact": "Talk to us"
+      }
     }
   },
   "pages": {

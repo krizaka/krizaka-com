@@ -1,7 +1,8 @@
 "use client";
 
-/* One recording of the real application, framed like the product tour. It plays muted and in a loop only while it
-   is on screen, so a page of clips never runs four videos at once; under prefers-reduced-motion nothing plays on
+/* One recording of the real application, framed like the product tour. Its poster loads only near the screen (a page
+   of clips never competes with its first paint); it plays muted and in a loop only while it is on screen, so a page
+   of clips never runs four videos at once; under prefers-reduced-motion nothing plays on
    its own — the poster shows and the native controls play on demand. */
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
@@ -16,6 +17,21 @@ const subscribe = (cb: () => void) => {
 export default function DemoClip({ src, label, frameLabel }: { src: string; label: string; frameLabel: string }) {
   const reduce = useSyncExternalStore(subscribe, () => window.matchMedia(REDUCE).matches, () => true);
   const video = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = video.current;
+    if (!el) return;
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        el.poster = `${src}.jpg`;
+        near.disconnect();
+      },
+      { rootMargin: "400px 0px" },
+    );
+    near.observe(el);
+    return () => near.disconnect();
+  }, [src]);
 
   useEffect(() => {
     const el = video.current;
@@ -40,7 +56,6 @@ export default function DemoClip({ src, label, frameLabel }: { src: string; labe
       <video
         ref={video}
         className="dc-video"
-        poster={`${src}.jpg`}
         muted
         loop
         playsInline
