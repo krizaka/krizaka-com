@@ -1475,7 +1475,7 @@
       "tour": {
         "creations": {
           "label": "Fait sur votre machine",
-          "caption": "Une photo produit apparaît quand le Studio image termine (la minute de génération est coupée), puis le clip et la voix off qu'Eric a générés sur le même Mac."
+          "caption": "Une photo produit apparaît quand le Studio image termine (la minute de génération est coupée), puis la galerie de ce qu'Eric a produit sur le même Mac, une voix off en lecture."
         },
         "studios": {
           "label": "Studios",
@@ -1623,7 +1623,7 @@
           },
           "demos": {
             "title": "La démo",
-            "body": "La journée d'Eric sur Orazaka — documents, visuels, Studios, coûts — enregistrée sur un seul Mac."
+            "body": "La journée d'Eric sur Orazaka — photos produit, voix off, contrôle de documents, Studios — filmée sur un Mac."
           },
           "signature": {
             "title": "Ingénierie cognitive",
@@ -1646,8 +1646,8 @@
         "more": "Le voir dans la démo",
         "items": {
           "creations": {
-            "title": "Photos produit, clips et voix off",
-            "body": "Décrivez le plan ou tapez la phrase : les moteurs image, vidéo et voix de votre propre machine le rendent. Un produit inédit reste inédit."
+            "title": "Photos produit et voix off",
+            "body": "Décrivez le plan ou tapez la phrase : les moteurs image et voix de votre propre machine le rendent. Un produit inédit reste inédit."
           },
           "documents": {
             "title": "Vérification de documents",
@@ -1675,11 +1675,11 @@
     "orazakaDemo": {
       "meta": {
         "title": "Démo Orazaka — une journée de travail sur un Mac | Krizaka",
-        "description": "Orazaka au travail : des réponses tirées de vos propres documents, des visuels produit générés en une minute, des Studios qui font le travail répétitif, un coût connu avant de lancer. Enregistré sur la vraie application, sur un seul Mac. Rien n'a quitté la machine."
+        "description": "Orazaka au travail : des photos produit et des voix off générées sur un Mac, un bail contrôlé contre la loi avec chaque constat cité, des Studios par métier, des tâches et des notifications, des réponses depuis vos propres documents. Filmé sur la vraie application, sur une seule machine."
       },
       "eyebrow": "Démo · enregistrée sur la vraie application",
       "title": "Une journée de travail. <b>Un Mac. Zéro octet sorti.</b>",
-      "lead": "Voici Eric, responsable des ventes d'un petit atelier de luminaires. Il interroge ses propres documents, écrit à ses clients, crée des visuels produit et confie le travail répétitif à des Studios — tout sur Orazaka, tout sur une seule machine. Chaque extrait ci-dessous est la vraie application ; chaque image a été générée sur ce Mac.",
+      "lead": "Voici Eric, responsable commercial d'un petit atelier de luminaires. Il génère des photos produit et des voix off, contrôle un bail et une facture fournisseur, confie le travail répétitif à des Studios et interroge ses propres documents — tout sur Orazaka, tout sur une seule machine. Chaque image ci-dessous est la vraie application.",
       "ctaTour": "Voir la visite",
       "ctaGallery": "Voir ce qu'il a créé",
       "ctaInstall": "L'installer chez vous",
@@ -1703,7 +1703,7 @@
       "tour": {
         "creations": {
           "label": "Fait sur votre machine",
-          "caption": "Une photo produit apparaît quand le Studio image termine (la minute de génération est coupée), puis le clip et la voix off qu'Eric a générés sur le même Mac."
+          "caption": "Une photo produit apparaît quand le Studio image termine (la minute de génération est coupée), puis la galerie de ce qu'Eric a produit sur le même Mac, une voix off en lecture."
         },
         "studios": {
           "label": "Studios",

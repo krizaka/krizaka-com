@@ -1475,7 +1475,7 @@
       "tour": {
         "creations": {
           "label": "Made on your machine",
-          "caption": "A product photo lands as the image Studio finishes (the minute of generation is cut), then the clip and the voice-over Eric generated on the same Mac."
+          "caption": "A product photo lands as the image Studio finishes (the minute of generation is cut), then the gallery of what Eric made on the same Mac, a voice-over playing."
         },
         "studios": {
           "label": "Studios",
@@ -1623,7 +1623,7 @@
           },
           "demos": {
             "title": "The demo",
-            "body": "Eric's day on Orazaka — documents, visuals, Studios, costs — recorded on one Mac."
+            "body": "Eric's day on Orazaka — product photos, voice-overs, document checks, Studios — recorded on one Mac."
           },
           "signature": {
             "title": "Cognitive engineering",
@@ -1646,8 +1646,8 @@
         "more": "See it in the demo",
         "items": {
           "creations": {
-            "title": "Product photos, clips and voice-overs",
-            "body": "Describe the shot or type the line: the image, video and speech engines on your own machine render it. Unreleased products stay unreleased."
+            "title": "Product photos and voice-overs",
+            "body": "Describe the shot or type the line: the image and speech engines on your own machine render it. Unreleased products stay unreleased."
           },
           "documents": {
             "title": "Document verification",
@@ -1675,11 +1675,11 @@
     "orazakaDemo": {
       "meta": {
         "title": "Orazaka demo — a day of work on one Mac | Krizaka",
-        "description": "Watch Orazaka at work: answers drawn from your own documents, product visuals generated in a minute, Studios that do the repeat work, costs known before you run. Recorded on the real application, on one Mac. Nothing left the machine."
+        "description": "Watch Orazaka at work: product photos and voice-overs generated on one Mac, a lease checked against the law with every finding cited, Studios for each trade, jobs and notifications, answers from your own documents. Recorded on the real application, on one machine."
       },
       "eyebrow": "Demo · recorded on the real application",
       "title": "A day of work. <b>One Mac. Zero bytes out.</b>",
-      "lead": "Meet Eric, head of sales at a small lamp studio. He asks about his own documents, drafts to clients, makes product visuals and hands repeat work to Studios — all on Orazaka, all on one machine. Every clip below is the real application; every image was generated on that Mac.",
+      "lead": "Meet Eric, head of sales at a small lamp studio. He generates product photos and voice-overs, checks a lease and a supplier invoice, hands repeat work to Studios and asks about his own documents — all on Orazaka, all on one machine. Every frame below is the real application.",
       "ctaTour": "Watch the tour",
       "ctaGallery": "See what it made",
       "ctaInstall": "Run it yourself",
@@ -1703,7 +1703,7 @@
       "tour": {
         "creations": {
           "label": "Made on your machine",
-          "caption": "A product photo lands as the image Studio finishes (the minute of generation is cut), then the clip and the voice-over Eric generated on the same Mac."
+          "caption": "A product photo lands as the image Studio finishes (the minute of generation is cut), then the gallery of what Eric made on the same Mac, a voice-over playing."
         },
         "studios": {
           "label": "Studios",
