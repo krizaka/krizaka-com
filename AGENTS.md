@@ -82,7 +82,8 @@
 ## 2.3 Documentation — one engine (Fumadocs)
 
 - `/docs/{ui,java,orazaka,orochia}` render four Fumadocs collections (`source.config.ts`, `lib/docs-source.ts`).
-  Product docs stay synced and manifest-gated (§2); `content/docs/ui` and `content/docs/java` are written here.
+  Product docs stay synced and manifest-gated (§2); `content/docs/ui` and `content/docs/java` are written here; the
+  `ui/` pages of a product are generated from its kit (below).
 - **The code drives `/docs/ui`.** One page per component of the **published `@krizaka/ui` registry**, generated at
   every build (virtual pages in `lib/docs-source.ts`, rendered by `ComponentDoc`): summary, platforms (Web · Mobile ·
   both), status, when to use / not, installation, every named example (web: live + code; React Native: its story's
@@ -93,6 +94,19 @@
   `lib/ui-examples.ts` and `public/ui-examples/`. `/docs/ui` lists every component (`<ComponentCatalog />`, filtered
   by platform). A new `@krizaka/ui` arrives as a Dependabot pull request (`.github/dependabot.yml`): merge it when CI
   is green — nothing else to regenerate.
+- **The code of each product kit drives `/docs/<product>/ui`** (the "UI" section of `/docs/orazaka` and `/docs/orochia`):
+  an overview (how the kit extends Krizaka UI — its theme's layers, install, what it adds, what is deprecated, what it
+  re-exports), **Foundations** (the palette resolved in both modes with the layer that sets each role, WCAG contrasts,
+  Orazaka's named themes drawn live, product tokens, typography, icons, the product rules quoted from the contracts,
+  React Native) and one page per component (why it exists above Krizaka UI, the primitives it is built on, deprecated →
+  its replacement), generated at every build from the **published registries** of `@krizaka/orazaka-design-system` and
+  `@krizaka/orochia-design-system` — the format of `@krizaka/ui`'s, plus `why`, `builtOn`, `deprecated` and
+  `registry/foundations.json`. That content is written **in the kit** (`<name>.meta.ts`, `registry/examples`, JSDoc,
+  `foundations.meta.ts`), never here. `scripts/gen-ui-docs.mjs` reads the three registries: the import map of the live
+  examples, and `app/components/docs/kit-themes.css` (git-ignored) — each kit's theme as a scope (`.kz-kit-<product>`,
+  `.kz-kit-<product>-<named theme>`) so a kit's example wears its product, in both modes, without the kit's theme ever
+  reaching the rest of the site. The kits are in `transpilePackages` (they ship their examples as `.tsx`); product docs
+  wear their brand (`.brand-<product>` on the docs container). `/docs/ui` links them (`<ProductKits />`).
 - The documentation of the components is **only** here: there is no public Storybook (krizaka-ui's is an internal test
   tool) — never link one.
 - Titles and descriptions of written pages: `messages/*.json` → `docs.pages.<section>.<page>`; a component page's come

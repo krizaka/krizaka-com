@@ -28,6 +28,10 @@ const nextConfig: NextConfig = {
   compress: true, // Vercel adds Brotli at the edge; this covers other runtimes.
   reactStrictMode: true,
 
+  // The product kits ship their registry examples as TypeScript sources (and Orazaka's kit its whole source):
+  // /docs/<product>/ui renders them live.
+  transpilePackages: ["@krizaka/orazaka-design-system", "@krizaka/orazaka-shared", "@krizaka/orochia-design-system"],
+
   // Serve next-gen formats first; AVIF → WebP → original. Cache optimized images
   // for a year (LCP wins; bytes only re-fetched when the source URL changes).
   images: {

@@ -1,5 +1,5 @@
 import { createSearchAPI } from "fumadocs-core/search/server";
-import { DOCS_SECTIONS, getSource, isProductSection, pageKey, pageText, PRODUCT_MANIFESTS } from "@/lib/docs-source";
+import { DOCS_SECTIONS, getSource, isPublished, pageText } from "@/lib/docs-source";
 import { getDictionary } from "@/lib/i18n";
 
 /* The docs search index, built once at build time and downloaded by the search dialog (static: no server).
@@ -13,7 +13,7 @@ export const { staticGET: GET } = createSearchAPI("advanced", {
   indexes: DOCS_SECTIONS.flatMap((section) =>
     getSource(section, "en")
       .getPages()
-      .filter((page) => !isProductSection(section) || pageKey(page.slugs) in PRODUCT_MANIFESTS[section])
+      .filter((page) => isPublished(section, page))
       .map((page) => {
         const { title, description } = pageText(section, page, t);
         return {

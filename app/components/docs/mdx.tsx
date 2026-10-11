@@ -3,6 +3,7 @@ import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import Mermaid from "./LazyMermaid";
 import { ComponentCatalog } from "./ComponentCatalog";
+import { ProductKits } from "./ProductKits";
 import { EventSchema } from "./EventSchema";
 import { ComingSoon } from "./ComingSoon";
 import { PRODUCT_MANIFESTS, isProductSection, type DocsSection } from "@/lib/docs-source";
@@ -17,6 +18,7 @@ export function getMdxComponents(locale: Locale, section: DocsSection): MDXCompo
     a: ({ href, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => <Anchor href={resolveDocHref(href, locale, product)} {...props} />,
     Mermaid,
     ComponentCatalog: () => <ComponentCatalog locale={locale} />,
+    ProductKits: () => <ProductKits locale={locale} />,
     EventSchema: (props: Omit<ComponentProps<typeof EventSchema>, "locale">) => <EventSchema {...props} locale={locale} />,
     ComingSoon: (props: Omit<ComponentProps<typeof ComingSoon>, "locale">) => <ComingSoon {...props} locale={locale} />,
   };

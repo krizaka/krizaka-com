@@ -2934,11 +2934,13 @@
       },
       "status": {
         "stable": "Stable",
-        "beta": "Beta"
+        "beta": "Beta",
+        "deprecated": "Deprecated"
       },
       "statusLong": {
         "stable": "Stable: its API only changes in a major version.",
-        "beta": "Beta: its API may still change in a minor version."
+        "beta": "Beta: its API may still change in a minor version.",
+        "deprecated": "Deprecated: kept for the apps that still use it, removed in its next major."
       },
       "categories": {
         "actions": "Actions",
@@ -3068,6 +3070,85 @@
           "description": "krizaka-notifications: e-mail, SMS and webhooks behind one port, driven by events, templates per locale."
         }
       }
+    },
+    "kit": {
+      "sidebar": "UI",
+      "overview": "Overview",
+      "overviewTitle": "{product} UI",
+      "overviewLead": "How the product's design system extends Krizaka UI: its theme, its components, what it re-exports — generated from the kit's code at every build.",
+      "foundations": "Foundations",
+      "foundationsTitle": "{product} UI — Foundations",
+      "foundationsLead": "The palette, both modes and their contrasts, the product tokens, the typography, the icons and the product rules — read from the kit's tokens at every build.",
+      "components": "Components",
+      "deprecatedName": "{name} (deprecated)",
+      "why": "Why it exists above Krizaka UI",
+      "builtOn": "Built on",
+      "useInstead": "Use instead:",
+      "fromKrizakaUi": "Krizaka UI",
+      "deprecatedSince": "Since {since}, removed in {removedIn}.",
+      "platformLong": "Web — React, from {package}. The {product} mobile app takes the kit's tokens, not its components.",
+      "source": "Generated from the code of {package} {version}: its meta.ts, its examples and its types.",
+      "intro": "<b>{package}</b> {version} is {product}'s design system: the Krizaka platform worn by {product}. It overrides the values of the --kz-* roles — never the components — and adds the few components that carry the product's vocabulary, each built on a @krizaka/ui primitive.",
+      "layersTitle": "How it extends Krizaka UI",
+      "layers": {
+        "platform": "The platform: every role — surfaces, text, accent, status — with its Krizaka value, in both modes.",
+        "brand": "The product's brand: the accent family and the section gradient of its mark.",
+        "kit": "The kit's theme: the values the product changes on top, and its own tokens."
+      },
+      "layersComponents": "Components on top: a product component composes @krizaka/ui primitives (a token, then a variant, then a composite) — it never copies one.",
+      "installTitle": "Install",
+      "componentsTitle": "What the kit adds",
+      "componentsLead": "Each component says why Krizaka UI alone was not enough, and which primitive it is built on.",
+      "deprecatedTitle": "Deprecated",
+      "deprecatedLead": "Kept for the apps that still use them, each with its replacement.",
+      "reexportsTitle": "Re-exported from Krizaka UI",
+      "reexportsLead": "Imported from the kit by older code; new code imports them from @krizaka/ui.",
+      "foundationsCta": "The palette, the contrasts and the product rules",
+      "open": "Open",
+      "paletteTitle": "Palette",
+      "paletteLead": "Every role as an app resolves it: the platform, then the brand, then the kit. The roles the product sets are marked.",
+      "role": "Role",
+      "dark": "Dark",
+      "light": "Light",
+      "setBy": "Set by",
+      "use": "Use",
+      "sources": {
+        "platform": "Platform",
+        "brand": "Brand",
+        "kit": "Kit",
+        "base": "Base"
+      },
+      "contrastsTitle": "Contrasts",
+      "contrastsLead": "The pairs every Krizaka theme is held to (WCAG 2.2): text on every surface, text on the accent, the accent as text, the focus ring.",
+      "pair": "Pair",
+      "minimum": "Minimum",
+      "pass": "Passes AA",
+      "fail": "Below AA",
+      "on": "on",
+      "namedTitle": "Named themes",
+      "namedLead": "Chosen by the person, orthogonal to dark and light: each one sets every role, so it reads the same in either mode. Live, with the kit's components.",
+      "namedPass": "{passed} of {total} pairs at AA · lowest {lowest}:1",
+      "sampleTitle": "Answered locally",
+      "sampleText": "3 contracts cited · 0 bytes left the network",
+      "samplePrimary": "Send",
+      "sampleSecondary": "Details",
+      "tokensTitle": "Product tokens",
+      "tokensLead": "What the roles cannot say, prefixed with the product's name — never generic.",
+      "token": "Token",
+      "value": "Value",
+      "typeScaleTitle": "Type scale",
+      "typographyTitle": "Typography",
+      "family": "Family",
+      "iconsTitle": "Icons and marks",
+      "rulesTitle": "Product rules",
+      "rulesLead": "What every screen of the product respects — each rule quoted from the contract that states it.",
+      "nativeTitle": "React Native"
+    },
+    "kits": {
+      "title": "Product kits",
+      "lead": "Each product wears Krizaka UI through its own kit: a theme of token values and the few components that carry its vocabulary — documented the same way, from their code.",
+      "components": "{count} components",
+      "open": "Open its UI"
     }
   },
   "diagrams": {
