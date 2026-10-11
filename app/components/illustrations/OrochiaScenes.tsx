@@ -10,9 +10,7 @@
 
 import { useSyncExternalStore } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import CarrierPigeonBot from "./CarrierPigeonBot";
-import MartinFalconSentry from "./MartinFalconSentry";
-import { FlamingoAvatar, OwlAvatar, MascotStyles } from "./MascotAvatars";
+import { Mascot } from "@krizaka/ui/mascots";
 
 const noop = () => () => {};
 function useStill() {
@@ -59,7 +57,7 @@ export function SignedDeliveryScene() {
         animate={still ? undefined : { left: ["14%", "50%", "84%"], top: ["66%", "18%", "66%"], rotate: [-8, 0, 8] }}
         transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", repeatDelay: 0.6 }}
       >
-        <CarrierPigeonBot size={92} />
+        <Mascot bird="pigeon" mood="welcome" tone="own" size={92} />
       </motion.div>
       <motion.div
         style={{ position: "absolute", right: "9%", top: "26%", fontFamily: "var(--font-mono)", fontSize: 10.5, fontWeight: 700, color: "#10b981" }}
@@ -99,7 +97,7 @@ export function ComplianceSentryScene() {
         animate={still ? undefined : { y: [0, -6, 0] }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       >
-        <MartinFalconSentry size={150} />
+        <Mascot bird="falcon" mood="thinking" tone="own" size={150} />
       </motion.div>
     </div>
   );
@@ -109,7 +107,6 @@ export function WatchPartyScene() {
   const still = useStill();
   return (
     <div style={frame} aria-hidden>
-      <MascotStyles />
       <div
         style={{
           position: "absolute", left: "50%", top: "16%", transform: "translateX(-50%)", width: "58%", aspectRatio: "16 / 9", borderRadius: 12,
@@ -129,8 +126,8 @@ export function WatchPartyScene() {
         />
         <span style={{ position: "absolute", right: 8, top: 6, fontFamily: "var(--font-mono)", fontSize: 9, fontWeight: 700, color: "white" }}>4K · 300 s</span>
       </div>
-      <div style={{ position: "absolute", left: "16%", bottom: "6%", width: 70 }}><FlamingoAvatar /></div>
-      <div style={{ position: "absolute", right: "16%", bottom: "6%", width: 64 }}><OwlAvatar /></div>
+      <div style={{ position: "absolute", left: "16%", bottom: "6%", width: 70 }}><Mascot bird="flamingo" mood="welcome" tone="own" size={70} /></div>
+      <div style={{ position: "absolute", right: "16%", bottom: "6%", width: 64 }}><Mascot bird="owl" mood="welcome" tone="own" size={64} /></div>
     </div>
   );
 }

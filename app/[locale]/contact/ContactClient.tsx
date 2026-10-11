@@ -1,5 +1,6 @@
 "use client";
 
+import { Mascot } from "@krizaka/ui/mascots";
 import { ArrowRight, MessagesSquare, CircleDot } from "lucide-react";
 import TopNavBar from "../../components/TopNavBar";
 import SiteFooter from "../../components/SiteFooter";
@@ -8,79 +9,13 @@ import ContactForm from "../../components/ContactForm";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
 
-/* ─── Mascot: Owl (Questions & help) ─── */
+/* ─── Mascots: the owl answers questions, the falcon watches over bugs (@krizaka/ui/mascots, story colours) ─── */
 function OwlMascot() {
-  return (
-    <svg width="64" height="64" viewBox="0 0 60 60" fill="none" style={{ overflow: "visible" }}>
-      <defs>
-        <linearGradient id="contact-owl-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#a78bfa" />
-          <stop offset="100%" stopColor="#6d28d9" />
-        </linearGradient>
-      </defs>
-      <g>
-        {/* Body */}
-        <path
-          d="M 18 22 C 18 10, 42 10, 42 22 C 42 38, 36 45, 30 45 C 24 45, 18 38, 18 22 Z"
-          fill="url(#contact-owl-grad)"
-          stroke="var(--kz-border-strong)"
-          strokeWidth="1.5"
-        />
-        {/* Eyes */}
-        <circle cx="24" cy="18" r="4.5" fill="var(--kz-surface-0)" stroke="var(--kz-border-strong)" strokeWidth="1" />
-        <circle cx="36" cy="18" r="4.5" fill="var(--kz-surface-0)" stroke="var(--kz-border-strong)" strokeWidth="1" />
-        <circle className="ct-blink" cx="24" cy="18" r="1.5" fill="#00ff66" />
-        <circle className="ct-blink" cx="36" cy="18" r="1.5" fill="#00ff66" />
-        {/* Beak */}
-        <polygon points="28,20 32,20 30,25" fill="#fbbf24" stroke="var(--kz-border-strong)" strokeWidth="1" />
-        {/* Ears */}
-        <polygon className="ct-sway" points="20,11 24,14 18,18" fill="#7c3aed" stroke="var(--kz-border-strong)" strokeWidth="1"
-          style={{ transformOrigin: "24px 14px" }} />
-        <polygon className="ct-sway ct-sway-rev" points="40,11 36,14 42,18" fill="#7c3aed" stroke="var(--kz-border-strong)" strokeWidth="1"
-          style={{ transformOrigin: "36px 14px" }} />
-      </g>
-    </svg>
-  );
+  return <Mascot bird="owl" mood="welcome" tone="own" size={64} />;
 }
 
-/* ─── Mascot: Falcon (Bugs & features) ─── */
 function FalconMascot() {
-  return (
-    <svg width="64" height="64" viewBox="0 0 60 60" fill="none" style={{ overflow: "visible" }}>
-      <defs>
-        <linearGradient id="contact-falcon-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#ff9f00" />
-          <stop offset="100%" stopColor="#ff2a00" />
-        </linearGradient>
-      </defs>
-      <g>
-        {/* Legs */}
-        <line x1="24" y1="38" x2="21" y2="48" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
-        <line x1="36" y1="38" x2="39" y2="48" stroke="#f97316" strokeWidth="2.5" strokeLinecap="round" />
-        {/* Body */}
-        <path
-          d="M 15 24 C 15 12, 45 12, 45 24 C 45 38, 38 45, 30 45 C 22 45, 15 38, 15 24 Z"
-          fill="url(#contact-falcon-grad)"
-          stroke="var(--kz-border-strong)"
-          strokeWidth="1.5"
-        />
-        {/* Head */}
-        <circle cx="30" cy="15" r="11" fill="url(#contact-falcon-grad)" stroke="var(--kz-border-strong)" strokeWidth="1.5" />
-        <polygon points="27,16 33,16 30,24" fill="#ffb300" stroke="var(--kz-border-strong)" strokeWidth="1.2" />
-        {/* Visor */}
-        <rect x="20" y="7" width="20" height="7" rx="2" fill="var(--kz-surface-0)" stroke="var(--kz-border-strong)" strokeWidth="1.2" />
-        <g className="ct-scan">
-          <circle cx="25" cy="10.5" r="1.5" fill="#00f2fe" />
-          <circle cx="35" cy="10.5" r="1.5" fill="#00f2fe" />
-        </g>
-        {/* Wings */}
-        <path className="ct-flap" d="M 14 22 C 6 28, 8 40, 18 38" fill="none" stroke="#d84315" strokeWidth="3.5" strokeLinecap="round"
-          style={{ transformOrigin: "18px 38px" }} />
-        <path className="ct-flap ct-flap-rev" d="M 46 22 C 54 28, 52 40, 42 38" fill="none" stroke="#d84315" strokeWidth="3.5" strokeLinecap="round"
-          style={{ transformOrigin: "42px 38px" }} />
-      </g>
-    </svg>
-  );
+  return <Mascot bird="falcon" mood="thinking" tone="own" size={64} />;
 }
 
 /* ─── Where each conversation happens: the products, and the building blocks they share ─── */

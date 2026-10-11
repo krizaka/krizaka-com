@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { contactHref } from "@/lib/contact";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckIcon, CreditsIcon, ForwardIcon, ImageIcon, KnowledgeIcon, LocalIcon, PlayIcon, StudioIcon } from "@krizaka/icons";
+import { CheckIcon, CreditsIcon, ForwardIcon, ImageIcon, KnowledgeIcon, LocalIcon, NotificationIcon, PlayIcon, ShieldIcon, SoundIcon, StudioIcon } from "@krizaka/icons";
+import { Mascot } from "@krizaka/ui/mascots";
+import { OrazakaLogo } from "@krizaka/ui";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { localizedMetadata } from "@/lib/seo";
 import { getDictionary } from "@/lib/i18n";
@@ -28,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-const ICONS = { knowledge: KnowledgeIcon, image: ImageIcon, studio: StudioIcon, credits: CreditsIcon } as const;
+const ICONS = { knowledge: KnowledgeIcon, image: ImageIcon, studio: StudioIcon, credits: CreditsIcon, shield: ShieldIcon, sound: SoundIcon, notification: NotificationIcon } as const;
 const node = "var(--kz-accent)";
 
 export default async function OrazakaDemoPage({ params }: Props) {
@@ -45,12 +47,17 @@ export default async function OrazakaDemoPage({ params }: Props) {
         grid
         media={
           <div className="bp-media">
-            <div style={{ backgroundImage: `url(${tourSrc("dashboard")}.jpg)` }} />
-            <div style={{ backgroundImage: `url(${tourSrc("create")}.jpg)` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("creations")}.jpg)` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("documents")}.jpg)` }} />
           </div>
         }
       >
         <div className="bp-wrap bp-hero bp-center">
+          {/* The product's name first — the mark and the word together, as in the menu, on the home and on Orochia. */}
+          <p className="oz-lockup">
+            <OrazakaLogo size={72} />
+            <span>Orazaka</span>
+          </p>
           <p className="bp-eyebrow">
             <LocalIcon size={18} nodeColor={node} /> {t.eyebrow}
           </p>
@@ -98,13 +105,16 @@ export default async function OrazakaDemoPage({ params }: Props) {
             <p className="bp-eyebrow">{t.useCasesEyebrow}</p>
             <h2 className="bp-h2"><Rich text={t.useCasesTitle} /></h2>
           </div>
-          {DEMO_USE_CASES.map(({ id, clip, icon }, k) => {
+          {DEMO_USE_CASES.map(({ id, clip, icon, bird }, k) => {
             const Icon = ICONS[icon];
             const uc = t.useCases[id];
             return (
-              <article key={id} className={cn("bp-split od-case", k % 2 === 1 && "od-case-flip")}>
+              <article key={id} id={id} className={cn("bp-split od-case", k % 2 === 1 && "od-case-flip")} style={{ scrollMarginTop: 72 }}>
                 <div {...reveal()}>
-                  <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
+                  <span className="od-case-head">
+                    <span className="bp-icon"><Icon size={22} nodeColor={node} /></span>
+                    <Mascot bird={bird} mood="welcome" size={64} />
+                  </span>
                   <h3 className="od-case-title">{uc.title}</h3>
                   <p className="bp-lead">{uc.body}</p>
                   <ul className="od-points">
@@ -163,6 +173,9 @@ export default async function OrazakaDemoPage({ params }: Props) {
       <SiteFooter />
 
       <style>{`
+        .oz-lockup { display: flex; width: fit-content; align-items: center; gap: 14px; margin: 0 auto 18px; font-family: var(--font-display), system-ui, sans-serif;
+          font-size: clamp(2.25rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--kz-text-primary); }
+        .od-case-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; }
         .od-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; margin: 40px auto 0; max-width: 52rem; text-align: left; }
         .od-facts div { padding: 14px 16px; border-radius: 14px; border: 1px solid var(--kz-border-subtle); background: color-mix(in srgb, var(--kz-surface-1) 80%, transparent); }
         .od-facts dt { font-family: var(--font-display), system-ui, sans-serif; font-size: 22px; font-weight: 800; letter-spacing: -.02em; color: var(--kz-accent-text); }

@@ -1473,21 +1473,33 @@
       "tourEyebrow": "Product tour",
       "tourTitle": "Recorded on the real application.",
       "tour": {
-        "home": {
-          "label": "Home",
-          "caption": "The public home page of the web client: the promise, the sovereign chat answering, the Studios."
+        "creations": {
+          "label": "Made on your machine",
+          "caption": "A product photo lands as the image Studio finishes (the minute of generation is cut), then the gallery of what Eric made on the same Mac, a voice-over playing."
+        },
+        "studios": {
+          "label": "Studios",
+          "caption": "The catalogue by trade — legal, sales, real estate, media — and a Studio's page: what it does, what a run costs, installed in one click."
+        },
+        "documents": {
+          "label": "Document checks",
+          "caption": "A lease checked against French law: two unlawful clauses found, each with the passage and the article. Then a supplier's PDF examined for signs of tampering."
+        },
+        "voice": {
+          "label": "Voice-over",
+          "caption": "A line typed, read aloud by the local speech engine: the waveform of the real file, playing."
+        },
+        "notifications": {
+          "label": "Jobs & notifications",
+          "caption": "The bell lists what ran — thumbnails of what it made — and opens the result."
         },
         "chat": {
           "label": "From your documents",
           "caption": "Eric pastes the returns policy under his question; the local model answers from it, streamed — nothing leaves the network."
         },
-        "studios": {
-          "label": "Studios",
-          "caption": "His sales Studios: ready-made workflows that research leads, write the sequence and follow up."
-        },
-        "settings": {
-          "label": "Appearance",
-          "caption": "The profile: light and dark themes applied instantly, kept on the account."
+        "packs": {
+          "label": "Packs",
+          "caption": "What his plan includes and what a pack adds: Document Verification, Outbound Prospecting, Wellbeing — each Studio named, each price shown."
         }
       },
       "why": {
@@ -1611,7 +1623,7 @@
           },
           "demos": {
             "title": "The demo",
-            "body": "Eric's day on Orazaka — documents, visuals, Studios, costs — recorded on one Mac."
+            "body": "Eric's day on Orazaka — product photos, voice-overs, document checks, Studios — recorded on one Mac."
           },
           "signature": {
             "title": "Cognitive engineering",
@@ -1626,16 +1638,48 @@
             "body": "Domain packages assembled from the same interceptors."
           }
         }
+      },
+      "shown": {
+        "eyebrow": "What it does, shown",
+        "title": "Six things your team <b>does on day one</b>",
+        "lead": "Each one is a Studio or a capability of the product you install — recorded on the real application, on one Mac. A bird of the Krizaka flock watches over each.",
+        "more": "See it in the demo",
+        "items": {
+          "creations": {
+            "title": "Product photos and voice-overs",
+            "body": "Describe the shot or type the line: the image and speech engines on your own machine render it. Unreleased products stay unreleased."
+          },
+          "documents": {
+            "title": "Document verification",
+            "body": "A lease checked against the law of its jurisdiction, finding by finding, with the passage and the article. A PDF examined for signs of tampering. Reports, never legal advice."
+          },
+          "studios": {
+            "title": "Studios for your trade",
+            "body": "Ready-made workflows — prospecting, follow-ups, real-estate reels, document checks. Install once, run whenever; every run kept."
+          },
+          "jobs": {
+            "title": "Jobs and notifications",
+            "body": "Long work runs in the background on your hardware. The bell tells you when it is done and shows what it made."
+          },
+          "chat": {
+            "title": "Answers from your documents",
+            "body": "Paste a policy, a report or a price list and ask: the local model answers from what you gave it."
+          },
+          "wellbeing": {
+            "title": "Wellbeing, not therapy",
+            "body": "Guided journaling, session preparation, mood tracking: what a person brings to a professional, never instead of one. Health data, 30 days at most."
+          }
+        }
       }
     },
     "orazakaDemo": {
       "meta": {
         "title": "Orazaka demo — a day of work on one Mac | Krizaka",
-        "description": "Watch Orazaka at work: answers drawn from your own documents, product visuals generated in a minute, Studios that do the repeat work, costs known before you run. Recorded on the real application, on one Mac. Nothing left the machine."
+        "description": "Watch Orazaka at work: product photos and voice-overs generated on one Mac, a lease checked against the law with every finding cited, Studios for each trade, jobs and notifications, answers from your own documents. Recorded on the real application, on one machine."
       },
       "eyebrow": "Demo · recorded on the real application",
       "title": "A day of work. <b>One Mac. Zero bytes out.</b>",
-      "lead": "Meet Eric, head of sales at a small lamp studio. He asks about his own documents, drafts to clients, makes product visuals and hands repeat work to Studios — all on Orazaka, all on one machine. Every clip below is the real application; every image was generated on that Mac.",
+      "lead": "Meet Eric, head of sales at a small lamp studio. He generates product photos and voice-overs, checks a lease and a supplier invoice, hands repeat work to Studios and asks about his own documents — all on Orazaka, all on one machine. Every frame below is the real application.",
       "ctaTour": "Watch the tour",
       "ctaGallery": "See what it made",
       "ctaInstall": "Run it yourself",
@@ -1657,41 +1701,45 @@
       "tourEyebrow": "The tour",
       "tourTitle": "Eric's day, start to finish.",
       "tour": {
-        "dashboard": {
-          "label": "His workspace",
-          "caption": "Good evening, Eric: his conversations, his credits and his Studios at a glance."
-        },
-        "chat": {
-          "label": "From his documents",
-          "caption": "He pastes the returns policy under his question; the local model answers from it, streamed."
-        },
-        "create": {
-          "label": "A product visual",
-          "caption": "One sentence, one product photo for the shop — generated on the Mac (the minute of generation is cut)."
+        "creations": {
+          "label": "Made on your machine",
+          "caption": "A product photo lands as the image Studio finishes (the minute of generation is cut), then the gallery of what Eric made on the same Mac, a voice-over playing."
         },
         "studios": {
-          "label": "His Studios",
-          "caption": "Ready-made workflows for sales: research leads, write the sequence, follow up."
+          "label": "Studios",
+          "caption": "The catalogue by trade — legal, sales, real estate, media — and a Studio's page: what it does, what a run costs, installed in one click."
+        },
+        "documents": {
+          "label": "Document checks",
+          "caption": "A lease checked against French law: two unlawful clauses found, each with the passage and the article. Then a supplier's PDF examined for signs of tampering."
+        },
+        "voice": {
+          "label": "Voice-over",
+          "caption": "A line typed, read aloud by the local speech engine: the waveform of the real file, playing."
+        },
+        "notifications": {
+          "label": "Jobs & notifications",
+          "caption": "The bell lists what ran — thumbnails of what it made — and opens the result."
+        },
+        "chat": {
+          "label": "From your documents",
+          "caption": "Eric pastes the returns policy under his question; the local model answers from it, streamed — nothing leaves the network."
         },
         "packs": {
-          "label": "Plan & credits",
-          "caption": "What his plan holds, and the credits left — a run's cost is known before it starts."
-        },
-        "settings": {
-          "label": "Made his own",
-          "caption": "Light or dark, language, voice: applied instantly, kept on his profile."
+          "label": "Packs",
+          "caption": "What his plan includes and what a pack adds: Document Verification, Outbound Prospecting, Wellbeing — each Studio named, each price shown."
         }
       },
       "useCasesEyebrow": "What it does for a team",
-      "useCasesTitle": "Four jobs, <b>done on your own hardware.</b>",
+      "useCasesTitle": "Seven jobs, <b>done on your own hardware.</b>",
       "useCases": {
         "documents": {
-          "title": "Answer from your own documents",
-          "body": "Paste a policy, a report or a price list and ask. The answer quotes what you gave it — and the document never leaves your network.",
+          "title": "Check a document before you sign",
+          "body": "Run a lease or a contract through the rules of its jurisdiction: each finding cites the rule, the article and the passage it rests on. A supplier's PDF can be examined for signs of tampering.",
           "points": [
-            "Summaries for the board in three bullets",
-            "Client replies that follow your actual policy",
-            "Tables read and explained in plain words"
+            "Findings, not opinions: rule, passage, article",
+            "French and Belgian residential lease rules today",
+            "A report, never legal advice"
           ]
         },
         "visuals": {
@@ -1719,6 +1767,33 @@
             "A balance you can read on the dashboard",
             "An estimate on every run",
             "Your hardware, your electricity, your bill"
+          ]
+        },
+        "voice": {
+          "title": "A voice for every product",
+          "body": "Type the line; the speech engine on your machine reads it. The file is yours — on the product page, in the video, in the shop.",
+          "points": [
+            "Product voice-overs in a few seconds",
+            "Played back with its real waveform",
+            "No voice sent to a third-party service"
+          ]
+        },
+        "jobs": {
+          "title": "Long work, in the background",
+          "body": "Images, clips, document checks run as jobs on your hardware. Keep working: the bell tells you when each one is done.",
+          "points": [
+            "A gallery of what was made",
+            "Every job's input and result, kept",
+            "Notifications with a thumbnail"
+          ]
+        },
+        "chat": {
+          "title": "Answer from your own documents",
+          "body": "Paste a policy, a report or a price list and ask. The answer quotes what you gave it — and the document never leaves your network.",
+          "points": [
+            "Summaries for the board in three bullets",
+            "Client replies that follow your actual policy",
+            "Tables read and explained in plain words"
           ]
         }
       },

@@ -4,7 +4,7 @@
    ends the next tab starts. Muted, inline, lazy (only the active clip loads). Under
    prefers-reduced-motion nothing autoplays: the poster shows and the native controls play on demand. */
 
-import { useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Tabs } from "@krizaka/ui/tabs";
 import { useI18n } from "./I18nProvider";
 
@@ -35,6 +35,17 @@ export default function ProductTour({ clips, accent = "var(--kz-accent)", frameL
   };
   const video = useRef<HTMLVideoElement>(null);
   const clip = clips[i];
+  // The clips load once the tour comes near the viewport, never with the first screen: a video below the fold would
+  // otherwise compete with the hero for bandwidth. Once near, it stays loaded.
+  const frame = useRef<HTMLElement>(null);
+  const [near, setNear] = useState(false);
+  useEffect(() => {
+    const el = frame.current;
+    if (!el || near) return;
+    const io = new IntersectionObserver((entries) => entries.some((e) => e.isIntersecting) && setNear(true), { rootMargin: "300px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [near]);
 
   return (
     <Tabs.Root
@@ -54,21 +65,21 @@ export default function ProductTour({ clips, accent = "var(--kz-accent)", frameL
       </Tabs.List>
 
       <Tabs.Content value={clip.id}>
-      <figure className="pt-frame">
+      <figure ref={frame} className="pt-frame">
         <div className="pt-chrome" aria-hidden>
           <span /><span /><span />
           <em>{frameLabel}</em>
         </div>
         <video
-          key={clip.id}
+          key={`${clip.id}-${near}`}
           ref={video}
           className="pt-video"
           poster={`${clip.src}.jpg`}
           muted
           playsInline
-          autoPlay={!reduce}
+          autoPlay={!reduce && near}
           controls={reduce}
-          preload={reduce ? "none" : "auto"}
+          preload={reduce || !near ? "none" : "auto"}
           onEnded={() => setI((k) => (k + 1) % clips.length)}
           onTimeUpdate={(e) => {
             const v = e.currentTarget;
@@ -76,8 +87,8 @@ export default function ProductTour({ clips, accent = "var(--kz-accent)", frameL
           }}
           aria-label={clip.caption}
         >
-          <source src={`${clip.src}.webm`} type="video/webm" />
-          <source src={`${clip.src}.mp4`} type="video/mp4" />
+          {(near || reduce) && <source src={`${clip.src}.webm`} type="video/webm" />}
+          {(near || reduce) && <source src={`${clip.src}.mp4`} type="video/mp4" />}
         </video>
         {!reduce && <div className="pt-progress" style={{ transform: `scaleX(${progress})` }} />}
         <figcaption className="pt-caption">{clip.caption}</figcaption>
