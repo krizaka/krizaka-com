@@ -24,8 +24,8 @@ export interface RegistryComponent {
 
 export type Platform = "web" | "native" | "both";
 export type Status = "stable" | "beta" | "deprecated";
-export type Category = "actions" | "forms" | "navigation" | "overlays" | "feedback" | "data-display" | "media" | "layout" | "foundations";
-export const CATEGORIES: Category[] = ["actions", "forms", "navigation", "overlays", "feedback", "data-display", "media", "layout", "foundations"];
+export type Category = "actions" | "forms" | "navigation" | "overlays" | "feedback" | "data-display" | "media" | "charts" | "layout" | "foundations";
+export const CATEGORIES: Category[] = ["actions", "forms", "navigation", "overlays", "feedback", "data-display", "media", "charts", "layout", "foundations"];
 
 export interface RegistryExample {
   name: string;
@@ -66,7 +66,15 @@ export const KIT_SOURCES: Record<ProductKit, string> = {
 
 export interface RegistryItem {
   name: string;
-  type: "primitive" | "native" | "composite";
+  type: "primitive" | "native" | "composite" | "chart";
+  /** The package that ships it, when not @krizaka/ui (`@krizaka/charts`). */
+  package?: string;
+  /** A chart: drawn in SVG by the package, or by Apache ECharts loaded on demand. */
+  engine?: "svg" | "echarts";
+  /** Where its documentation is written, from the repository root (`packages/charts/src/meta/line-chart.ts`). */
+  source?: string;
+  /** How to install it, when it is not @krizaka/ui's line. */
+  install?: { web?: string; native?: string };
   title: string;
   summary: string;
   description: string;
@@ -153,22 +161,38 @@ export interface KitFoundations {
   native: { summary: string; code: string };
 }
 
-const registryDir = (kit: Kit) => path.join(process.cwd(), "node_modules", ...KIT_PACKAGES[kit].split("/"), "registry");
+/** The packages whose registries make Krizaka UI (/docs/ui): the primitives, then the charts — one catalogue. */
+export const UI_PACKAGES = ["@krizaka/ui", "@krizaka/charts"] as const;
 
+const packageDir = (pkg: string) => path.join(process.cwd(), "node_modules", ...pkg.split("/"), "registry");
 const cache = new Map<string, unknown>();
-function readJson<T>(kit: Kit, file: string): T {
-  const key = `${kit}/${file}`;
-  if (!cache.has(key)) cache.set(key, JSON.parse(readFileSync(path.join(registryDir(kit), file), "utf8")));
+function readPackageJson<T>(pkg: string, file: string): T {
+  const key = `${pkg}/${file}`;
+  if (!cache.has(key)) cache.set(key, JSON.parse(readFileSync(path.join(packageDir(pkg), file), "utf8")));
   return cache.get(key) as T;
 }
+/** The package that documents a name: a kit's own, or — for Krizaka UI — the first of UI_PACKAGES that has it. */
+function packageOf(name: string, kit: Kit): string {
+  if (kit !== "ui") return KIT_PACKAGES[kit];
+  return UI_PACKAGES.find((pkg) => readPackageJson<RegistryIndex>(pkg, "index.json").items.some((i) => i.name === name)) ?? KIT_PACKAGES.ui;
+}
+function readJson<T>(kit: Kit, file: string): T {
+  return readPackageJson<T>(KIT_PACKAGES[kit], file);
+}
 
+/** The registry index of a design system (Krizaka UI: @krizaka/ui's — its version names the release). */
 export function getRegistryIndex(kit: Kit = "ui"): RegistryIndex {
   return readJson<RegistryIndex>(kit, "index.json");
 }
 
+/** The registry index of one package (`@krizaka/charts`). */
+export function getPackageIndex(pkg: string): RegistryIndex {
+  return readPackageJson<RegistryIndex>(pkg, "index.json");
+}
+
 export function getRegistryItem(name: string, kit: Kit = "ui"): RegistryItem {
   if (!/^[a-z0-9-]+$/.test(name)) throw new Error(`Invalid registry item name: ${name}`);
-  return readJson<RegistryItem>(kit, `${name}.json`);
+  return readPackageJson<RegistryItem>(packageOf(name, kit), `${name}.json`);
 }
 
 export function getKitFoundations(kit: ProductKit): KitFoundations {
@@ -178,8 +202,9 @@ export function getKitFoundations(kit: ProductKit): KitFoundations {
 /** Every documented component, in the catalogue's order: by category, then by title (a kit's deprecated ones last). */
 export function getRegistryItems(kit: Kit = "ui"): RegistryItem[] {
   const retired = (item: RegistryItem) => Number(item.status === "deprecated");
-  return getRegistryIndex(kit)
-    .items.map((entry) => getRegistryItem(entry.name, kit))
+  const entries = kit === "ui" ? UI_PACKAGES.flatMap((pkg) => getPackageIndex(pkg).items) : getRegistryIndex(kit).items;
+  return entries
+    .map((entry) => getRegistryItem(entry.name, kit))
     .sort(
       (a, b) =>
         retired(a) - retired(b) || CATEGORIES.indexOf(a.category) - CATEGORIES.indexOf(b.category) || a.title.localeCompare(b.title),
@@ -202,8 +227,9 @@ export const componentHref = (locale: string, kit: Kit, name: string) =>
 export const exampleSource = (example: RegistryExample): string => example.code.trimEnd();
 
 /** The key of an example in the generated import map (lib/ui-examples.ts): `button/primary`, `button/native/primary`
-    for @krizaka/ui, `orochia/status-badge/auction-open` for a kit. */
+    for @krizaka/ui, `charts/line-chart/creator-earnings` for @krizaka/charts, `orochia/status-badge/auction-open` for a kit. */
 export const exampleKey = (example: RegistryExample) =>
   example.module
     .replace("@krizaka/ui/registry/examples/", "")
+    .replace("@krizaka/charts/registry/examples/", "charts/")
     .replace(/^@krizaka\/(orazaka|orochia)-design-system\/registry\/examples\//, "$1/");

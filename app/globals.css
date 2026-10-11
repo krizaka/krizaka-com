@@ -29,9 +29,14 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* The site typeface: the primitives (font-sans / font-display) read it too. */
-  --kz-font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
-  --kz-font-display: var(--kz-font-sans);
+  /* The Krizaka typography: the files of @krizaka/fonts, loaded and preloaded by next/font/local in the locale layout
+     (--font-kz-*: hashed families with their own adjusted fallback), in the token roles. The site's older styles read
+     --font-display / --font-mono: they follow the tokens. */
+  --kz-font-sans: var(--font-kz-text), Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --kz-font-display: var(--font-kz-display), "Plus Jakarta Sans", var(--font-kz-text), system-ui, sans-serif;
+  --kz-font-mono: var(--font-kz-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-display: var(--kz-font-display);
+  --font-mono: var(--kz-font-mono);
 
   /* Focus halo around fields. */
   --kz-accent-glow: 0 0 0 3px color-mix(in srgb, var(--kz-accent) 12%, transparent);
@@ -108,12 +113,6 @@ html.light #nd-toc { --color-fd-primary: var(--kz-accent-text); }
   --color-fd-muted-foreground: var(--kz-text-secondary);
 }
 
-/* The site display and mono faces (next/font sets the variables on <html>). */
-@theme inline {
-  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
-  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
-}
-
 /* ─── Base Reset ─── */
 /* Kept in @layer base so Tailwind utilities (mx-auto, px-*, pt-*, gap is unaffected)
    win over the margin/padding zeroing. Previously this reset was unlayered and beat
@@ -139,9 +138,9 @@ html {
 body {
   background: var(--kz-surface-0);
   color: var(--kz-text-primary);
-  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  font-family: var(--kz-font-text);
   font-feature-settings: 'cv02', 'cv03', 'cv04';
-  letter-spacing: -0.018em;
+  letter-spacing: -0.011em; /* Inter at 16 px (the body-md step of the type scale) */
   min-height: 100dvh;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -1849,3 +1848,50 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
     transform: none !important;
   }
 }
+/* ─── /docs/ui foundations: Typography and Icons (generated from @krizaka/fonts, @krizaka/tokens, @krizaka/icons) ─── */
+.kz-type-families { display: grid; gap: 16px; margin: 1rem 0 2rem; }
+.kz-type-family { border: 1px solid var(--kz-border-subtle); border-radius: var(--kz-radius-lg); background: var(--kz-surface-1); padding: 20px; min-width: 0; }
+.kz-type-family header { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 10px; }
+.kz-type-family header code { font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-secondary); }
+.kz-type-family h3 { margin: 0; font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem); line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; color: var(--kz-text-primary); }
+.kz-type-family p { margin: 8px 0 0; color: var(--kz-text-secondary); font-size: 0.9375rem; line-height: 1.6; }
+.kz-type-family .kz-type-glyphs { font-size: 1.375rem; line-height: 1.4; color: var(--kz-text-primary); overflow-wrap: anywhere; }
+.kz-type-family .kz-type-sample { font-size: 1.125rem; color: var(--kz-text-primary); }
+.kz-type-meta { color: var(--kz-text-secondary); font-size: 0.8125rem; }
+.kz-type-dl { margin: 12px 0 0; display: grid; gap: 4px; font-size: 0.875rem; color: var(--kz-text-secondary); }
+.kz-type-dl dt { font-weight: 600; color: var(--kz-text-primary); margin-top: 8px; }
+.kz-type-dl dd { margin: 0; }
+.kz-type-dl ul { margin: 4px 0 0; padding-left: 1.1rem; list-style: disc; }
+.kz-type-scale { list-style: none; padding: 0; margin: 1rem 0 1.5rem; display: grid; gap: 0; }
+.kz-type-scale li { border-top: 1px solid var(--kz-border-subtle); padding: 16px 0; min-width: 0; }
+.kz-type-scale li > p:first-of-type { margin: 6px 0 0; color: var(--kz-text-primary); overflow-wrap: anywhere; }
+.kz-type-step-meta { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12px; color: var(--kz-text-secondary); }
+.kz-type-step-meta code { font-family: var(--kz-font-mono); color: var(--kz-accent-text); }
+
+.kz-icons { margin: 1rem 0 2rem; }
+.kz-icons-tools { display: grid; gap: 12px; }
+.kz-icons-search { width: 100%; padding: 10px 14px; border-radius: var(--kz-radius-md); border: 1px solid var(--kz-border-default); background: var(--kz-surface-2); color: var(--kz-text-primary); font: inherit; font-size: 0.9375rem; }
+.kz-icons-search::placeholder { color: var(--kz-text-muted); }
+.kz-icons-search:focus-visible { outline: 2px solid var(--kz-ring); outline-offset: 2px; }
+.kz-icons-groups { display: flex; flex-wrap: wrap; gap: 6px; }
+.kz-icons-groups button, .kz-icons-actions button { padding: 6px 12px; border-radius: var(--kz-radius-full); border: 1px solid var(--kz-border-default); background: var(--kz-surface-1); color: var(--kz-text-secondary); font-size: 0.8125rem; font-weight: 600; }
+.kz-icons-groups button[aria-pressed="true"] { background: var(--kz-accent-soft); color: var(--kz-accent-text); border-color: color-mix(in srgb, var(--kz-accent) 45%, transparent); }
+.kz-icons-groups button:focus-visible, .kz-icons-actions button:focus-visible, .kz-icons-grid button:focus-visible { outline: 2px solid var(--kz-ring); outline-offset: 2px; }
+.kz-icons-count { margin: 12px 0; font-size: 0.8125rem; color: var(--kz-text-secondary); }
+.kz-icons-layout { display: grid; gap: 16px; align-items: start; }
+@media (min-width: 900px) { .kz-icons-layout { grid-template-columns: minmax(0, 1fr) 17rem; } .kz-icons-detail { position: sticky; top: 88px; } }
+.kz-icons-grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr)); }
+.kz-icons-grid button { width: 100%; min-height: 84px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 10px 4px; border-radius: var(--kz-radius-md); border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); color: var(--kz-text-primary); transition: background-color var(--kz-transition-fast), border-color var(--kz-transition-fast); }
+.kz-icons-grid button:hover { background: var(--kz-surface-2); border-color: var(--kz-border-default); }
+.kz-icons-grid button[aria-pressed="true"] { border-color: var(--kz-accent); background: var(--kz-accent-soft); }
+.kz-icons-grid span { font-size: 11px; color: var(--kz-text-secondary); text-align: center; overflow-wrap: anywhere; }
+.kz-icons-detail { border: 1px solid var(--kz-border-subtle); border-radius: var(--kz-radius-lg); background: var(--kz-surface-1); padding: 16px; display: grid; gap: 10px; min-width: 0; }
+.kz-icons-name code { font-family: var(--kz-font-mono); font-size: 0.9375rem; font-weight: 600; color: var(--kz-text-primary); }
+.kz-icons-keywords, .kz-icons-label { margin: 0; font-size: 0.8125rem; color: var(--kz-text-secondary); }
+.kz-icons-label { font-weight: 600; color: var(--kz-text-primary); }
+.kz-icons-sizes { display: flex; align-items: flex-end; gap: 16px; color: var(--kz-text-primary); }
+.kz-icons-sizes figure { margin: 0; display: grid; justify-items: center; gap: 4px; }
+.kz-icons-sizes figcaption { font-size: 11px; color: var(--kz-text-secondary); font-family: var(--kz-font-mono); }
+.kz-icons-code { margin: 0; padding: 10px 12px; border-radius: var(--kz-radius-sm); background: var(--kz-surface-2); font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-primary); white-space: pre-wrap; overflow-wrap: anywhere; }
+.kz-icons-actions { display: flex; flex-wrap: wrap; gap: 6px; }
+.kz-icons-actions button:hover { color: var(--kz-text-primary); border-color: var(--kz-border-strong); }

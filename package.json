@@ -15,8 +15,10 @@
     "postinstall": "fumadocs-mdx && node scripts/gen-ui-docs.mjs"
   },
   "dependencies": {
+    "@krizaka/charts": "^0.1.0",
+    "@krizaka/fonts": "^0.1.0",
     "@krizaka/i18n": "^0.1.0",
-    "@krizaka/icons": "^0.1.0",
+    "@krizaka/icons": "^0.2.0",
     "@krizaka/orazaka-design-system": "^2.5.0",
     "@krizaka/orochia-design-system": "^4.1.0",
     "@krizaka/tailwind": "^2.4.0",

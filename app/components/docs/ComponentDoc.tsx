@@ -32,15 +32,17 @@ import { PropsTable } from "./PropsTable";
 
 const PLATFORM_ICON = { web: Monitor, native: Smartphone, both: MonitorSmartphone } satisfies Record<Platform, unknown>;
 
-const WEB_INSTALL = "npm install @krizaka/ui@beta @krizaka/tailwind@beta @krizaka/tokens@beta tailwindcss";
+const WEB_INSTALL = "npm install @krizaka/ui @krizaka/tailwind @krizaka/tokens tailwindcss";
 const WEB_CSS = `@import "tailwindcss";
 @import "@krizaka/tailwind";
 @import "@krizaka/ui/tailwind.css";`;
-const NATIVE_INSTALL = "npx expo install react-native-svg\nnpm install @krizaka/ui@beta";
+const NATIVE_INSTALL = "npx expo install react-native-svg\nnpm install @krizaka/ui";
 
 /** Where the documentation of a component is written: its meta.ts in krizaka-ui, or in the product kit. */
 export function metaSourceUrl(item: RegistryItem, kit: Kit = "ui"): string {
   if (kit !== "ui") return `${KIT_SOURCES[kit]}/${item.name}.meta.ts`;
+  // Another package of Krizaka UI (@krizaka/charts) says where its meta is, from the repository root.
+  if (item.source) return `${KRIZAKA_UI_REPO_URL}/blob/main/${item.source}`;
   const file = item.type === "native" ? `src/native/meta/${item.name}.ts` : item.name === "cn" ? "src/cn.meta.ts" : `src/${item.name}/meta.ts`;
   return `${KRIZAKA_UI_REPO_URL}/blob/main/packages/ui/${file}`;
 }
@@ -115,7 +117,7 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
         <span className="kz-chip-meta">{c.categories[item.category]}</span>
       </div>
       <p className="kz-docs-note">
-        {kitWords ? format(k.platformLong, kitWords) : format(c.platformsLong[item.platforms], { name: item.name })} {c.statusLong[item.status]}
+        {kitWords ? format(k.platformLong, kitWords) : format(c.platformsLong[item.platforms], { entry: (item.platforms === "native" ? item.native?.entry : item.web?.entry) ?? `@krizaka/ui/${item.name}` })} {c.statusLong[item.status]}
       </p>
 
       {item.deprecated && (
@@ -190,9 +192,14 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
           item.web && (
             <>
               <p>{c.install}</p>
-              <CodeBlock code={index.install?.command ?? WEB_INSTALL} lang="bash" />
-              <p>{c.styles}</p>
-              <CodeBlock code={index.install?.css ?? WEB_CSS} lang="css" />
+              <CodeBlock code={item.install?.web ?? index.install?.command ?? WEB_INSTALL} lang="bash" />
+              {/* A package that carries its own styles (@krizaka/charts: an embedded stylesheet) needs no CSS line. */}
+              {!item.install?.web && (
+                <>
+                  <p>{c.styles}</p>
+                  <CodeBlock code={index.install?.css ?? WEB_CSS} lang="css" />
+                </>
+              )}
               {index.install?.note && (
                 <p className="kz-docs-note">
                   <InlineCode text={index.install.note} />
@@ -207,7 +214,7 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
           item.native && (
             <>
               <p>{c.install}</p>
-              <CodeBlock code={NATIVE_INSTALL} lang="bash" />
+              <CodeBlock code={item.install?.native ?? NATIVE_INSTALL} lang="bash" />
               <p>{c.import}</p>
               <CodeBlock code={item.native.import} lang="tsx" />
               <p>

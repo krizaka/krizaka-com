@@ -9,6 +9,8 @@ import { ComponentDoc, componentToc } from "@/app/components/docs/ComponentDoc";
 import { KitFoundations, foundationsToc } from "@/app/components/docs/KitFoundations";
 import { KitOverview, overviewToc } from "@/app/components/docs/KitOverview";
 import { InlineCode } from "@/app/components/docs/InlineCode";
+import { IconsDoc, iconsToc } from "@/app/components/docs/IconsDoc";
+import { TypographyDoc, typographyToc } from "@/app/components/docs/TypographyDoc";
 import { getRegistryItem } from "@/lib/ui-registry";
 import {
   type ComponentPageData,
@@ -131,6 +133,18 @@ export default async function DocsSectionPage({ params }: Props) {
         <DocsBody>
           <ComponentDoc name={component} locale={locale} notes={Notes && <Notes components={getMdxComponents(locale, section)} />} />
         </DocsBody>
+      </DocsPage>
+    );
+  }
+
+  // A foundation of Krizaka UI (Typography, Icons): laid out from the data of the packages that ship it.
+  const foundation = (page.data as ComponentPageData).foundation;
+  if (foundation) {
+    return (
+      <DocsPage toc={foundation === "icons" ? iconsToc(t) : typographyToc(t)}>
+        <DocsTitle>{title}</DocsTitle>
+        <DocsDescription>{description}</DocsDescription>
+        <DocsBody>{foundation === "icons" ? <IconsDoc locale={locale} /> : <TypographyDoc locale={locale} />}</DocsBody>
       </DocsPage>
     );
   }

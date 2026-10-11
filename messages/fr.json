@@ -2762,9 +2762,11 @@
       "feedback": "Retours",
       "data-display": "Affichage de données",
       "media": "Médias",
+      "charts": "Graphiques",
       "layout": "Mise en page",
       "foundations": "Fondations",
-      "domain services": "Services métier"
+      "domain services": "Services métier",
+      "tooling": "Outillage"
     },
     "categories": {
       "getting-started": "Démarrage",
@@ -2820,8 +2822,8 @@
         "both": "Web + Mobile"
       },
       "platformsLong": {
-        "web": "Web uniquement — React, depuis @krizaka/ui/{name}.",
-        "native": "Mobile uniquement — React Native, depuis @krizaka/ui/native.",
+        "web": "Web uniquement — React, depuis {entry}.",
+        "native": "Mobile uniquement — React Native, depuis {entry}.",
         "both": "Web et mobile — le même composant pour React et React Native."
       },
       "status": {
@@ -2842,6 +2844,7 @@
         "feedback": "Retours",
         "data-display": "Affichage de données",
         "media": "Médias",
+        "charts": "Graphiques",
         "layout": "Mise en page",
         "foundations": "Fondations"
       },
@@ -2901,8 +2904,8 @@
           "description": "Le design system de tous les produits Krizaka — tokens, preset Tailwind et primitives React accessibles."
         },
         "tokens": {
-          "title": "Tokens",
-          "description": "Le vocabulaire --kz-* : un seul jeu de rôles sémantiques compilé en CSS, TypeScript et React Native."
+          "title": "Couleurs et tokens",
+          "description": "Le vocabulaire --kz-* : couleurs, surfaces, rayons, ombres — un jeu de rôles sémantiques compilé en CSS, TypeScript et React Native."
         },
         "tailwind": {
           "title": "Preset Tailwind",
@@ -2911,6 +2914,14 @@
         "intl": {
           "title": "Intl",
           "description": "Montants, nombres, dates et pluriels formatés de la même façon dans tous les produits Krizaka."
+        },
+        "typography": {
+          "title": "Typographie",
+          "description": "Plus Jakarta Sans parle, Inter se lit, JetBrains Mono étiquette : les polices Krizaka, leur échelle et leurs règles — auto-hébergées, web et mobile."
+        },
+        "icons": {
+          "title": "Icônes",
+          "description": "Les icônes signature Krizaka : coins coupés, un nœud au cœur — chercher, copier, et les règles d'usage."
         }
       },
       "java": {
@@ -3046,6 +3057,74 @@
       "lead": "Chaque produit porte Krizaka UI à travers son kit : un thème de valeurs de tokens et les quelques composants qui portent son vocabulaire — documentés de la même façon, depuis leur code.",
       "components": "{count} composants",
       "open": "Ouvrir son UI"
+    },
+    "foundations": {
+      "source": "Généré depuis {packages}.",
+      "edit": "Modifier dans krizaka-ui",
+      "installation": "Installation",
+      "typography": {
+        "families": "Les trois familles",
+        "scale": "L'échelle",
+        "rules": "Règles",
+        "licences": "Licences",
+        "roles": {
+          "display": "Affichage",
+          "text": "Texte",
+          "mono": "Mono"
+        },
+        "why": "Pourquoi cette police",
+        "use": "À utiliser pour",
+        "avoid": "À éviter",
+        "meta": "{designer} · graisses {min}–{max} · version {version}",
+        "fallback": "Avant son chargement : {fallback}, ajustée à ses métriques (size-adjust {size}) — le texte ne bouge pas.",
+        "headline": "L'IA souveraine, sur vos propres serveurs.",
+        "paragraph": "Vos documents restent à Montréal. Les réponses citent leurs sources, les coûts sont comptés d'avance — 1 234,56 $ pour 12 000 requêtes.",
+        "code": "POST /api/v1/chat → 200 · 0O 1lI",
+        "glyphs": "Aa Bb Gg Kk Rr Zz 0123456789 é è à ç œ « » ’ → €",
+        "step": "Étape",
+        "sample": "Exemple",
+        "values": "Taille / interligne · graisse · approche",
+        "utility": "Utilitaire",
+        "family": "Famille",
+        "web": "Web (CSS)",
+        "next": "Next.js",
+        "native": "React Native / Expo",
+        "webIntro": "Importez les polices une fois, à côté du preset : les tokens les nomment déjà.",
+        "nextIntro": "Importez le CSS dans le layout racine — le bundler copie et empreinte les fichiers ; les replis gardent le CLS à 0.",
+        "nativeIntro": "Chargez les fichiers statiques avec expo-font, puis prenez une étape de l'échelle et le nom de sa police.",
+        "licenceIntro": "Chaque police est sous SIL Open Font License 1.1 : à embarquer avec n'importe quel logiciel, jamais à vendre seule. Les licences sont livrées dans le paquet.",
+        "licence": "Licence",
+        "upstream": "Source",
+        "files": "Fichiers",
+        "web_files": "{count} WOFF2 ({size} ko pour latin)",
+        "native_files": "{count} TrueType"
+      },
+      "icons": {
+        "set": "Le jeu",
+        "search": "Chercher une icône",
+        "placeholder": "Chercher parmi {count} icônes — par nom ou par sens",
+        "all": "Toutes",
+        "count": "{count} icônes",
+        "none": "Aucune icône pour « {query} ». Demandez-la plus bas.",
+        "groupsLabel": "Filtrer par groupe",
+        "selected": "Icône choisie",
+        "sizes": "Tailles",
+        "node": "Couleur du nœud",
+        "nodeText": "Couleur du texte",
+        "nodeAccent": "Accent de la marque",
+        "copyReact": "Copier l'import React",
+        "copyNative": "Copier l'import React Native",
+        "copied": "Copié",
+        "grammar": "La grammaire",
+        "sizeGuide": "Tailles",
+        "size": "Taille",
+        "use": "Usage",
+        "color": "Couleur et nœud",
+        "accessibility": "Accessibilité",
+        "request": "Demander une icône",
+        "requestCta": "Ouvrir une issue sur krizaka-ui",
+        "installIntro": "Un export nommé par icône, les mêmes noms sur le web et en React Native."
+      }
     }
   },
   "diagrams": {

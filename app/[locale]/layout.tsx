@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { ThemeProvider, ThemeScript } from "@krizaka/ui/theme";
 import { ThemeSync } from "../components/SiteTheme";
 import { I18nProvider } from "../components/I18nProvider";
@@ -10,18 +10,30 @@ import "../globals.css";
 import { MotionObserver } from "@krizaka/ui/motion";
 import { cn } from "@krizaka/ui/cn";
 
-const jakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-display",
-  subsets: ["latin"],
-  weight: ["400", "500", "700", "800"],
+/* The Krizaka typefaces — the files of @krizaka/fonts (SIL OFL 1.1), loaded by next/font/local so the two faces of the
+   first screen are preloaded and fingerprinted, with next/font's metric-adjusted fallback (CLS 0). The latin file of
+   each family covers English and French; globals.css puts them in the token roles (--kz-font-*). The arguments must be
+   literals, relative to this file. */
+const textFace = localFont({
+  src: "../../node_modules/@krizaka/fonts/files/web/inter-latin-wght.woff2",
+  weight: "400 700",
+  variable: "--font-kz-text",
   display: "swap",
 });
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+const displayFace = localFont({
+  src: "../../node_modules/@krizaka/fonts/files/web/plus-jakarta-sans-latin-wght.woff2",
+  weight: "500 800",
+  variable: "--font-kz-display",
   display: "swap",
+});
+const monoFace = localFont({
+  src: "../../node_modules/@krizaka/fonts/files/web/jetbrains-mono-latin-wght.woff2",
+  weight: "400 700",
+  variable: "--font-kz-mono",
+  display: "swap",
+  preload: false, // labels and code, never the first paint
+  adjustFontFallback: false,
+  fallback: ["ui-monospace", "Menlo", "Consolas", "monospace"],
 });
 
 /* ─── SEO METADATA ─── */
@@ -130,7 +142,7 @@ export default async function RootLayout({
   return (
     <html
       lang={validatedLocale}
-      className={cn(jakartaSans.variable, jetbrainsMono.variable, "h-full dark")}
+      className={cn(textFace.variable, displayFace.variable, monoFace.variable, "h-full dark")}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
