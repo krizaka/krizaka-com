@@ -2761,6 +2761,7 @@
       "overlays": "Overlays",
       "feedback": "Feedback",
       "data-display": "Data display",
+      "media": "Media",
       "layout": "Layout",
       "foundations": "Foundations",
       "domain services": "Domain services"
@@ -2840,6 +2841,7 @@
         "overlays": "Overlays",
         "feedback": "Feedback",
         "data-display": "Data display",
+        "media": "Media",
         "layout": "Layout",
         "foundations": "Foundations"
       },

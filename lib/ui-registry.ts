@@ -24,8 +24,8 @@ export interface RegistryComponent {
 
 export type Platform = "web" | "native" | "both";
 export type Status = "stable" | "beta" | "deprecated";
-export type Category = "actions" | "forms" | "navigation" | "overlays" | "feedback" | "data-display" | "layout" | "foundations";
-export const CATEGORIES: Category[] = ["actions", "forms", "navigation", "overlays", "feedback", "data-display", "layout", "foundations"];
+export type Category = "actions" | "forms" | "navigation" | "overlays" | "feedback" | "data-display" | "media" | "layout" | "foundations";
+export const CATEGORIES: Category[] = ["actions", "forms", "navigation", "overlays", "feedback", "data-display", "media", "layout", "foundations"];
 
 export interface RegistryExample {
   name: string;
