@@ -66,8 +66,9 @@
 - Each product wears its brand (`@krizaka/tokens/brands/scoped.css`): `/products/orazaka*` under `.brand-orazaka`
   (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), `/products/yazakia*` under `.brand-yazakia`
   (emerald → turquoise), the rest of the site Krizaka (ink + blue).
-  Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); sections use `SectionBackdrop`
-  (`@krizaka/ui/section-backdrop`) and the `bp-*` classes of `app/globals.css` (BRAND.md §4).
+  Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons) (never lucide for new work); sections
+  are the page blocks of `@krizaka/ui` (§4.1) on `SectionBackdrop` (BRAND.md §4); the remaining `bp-*` classes of
+  `app/globals.css` only style what is the brand page's own (ledger, comparison table, terminal), inside the frame.
 - Brand marks come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui) on npm (`KrizakaLogo`,
   `OrazakaLogo`, `OrochiaLogo`, `YazakiaLogo`, `ProductLogo`) — the same package the products use, never a copy in this repo.
   Never a placeholder icon. A change to a mark is made in `krizaka-ui`, released, then adopted here.
@@ -191,58 +192,56 @@
   adds what is its own, in `app/globals.css` (« SITE MOTION ») and `org-hero.css`: no second conductor, no counter of its
   own. No animation library for new work, no permanent `requestAnimationFrame`, no canvas; docs stay almost still (a
   reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui, not into a copy here.
-- **Every action is the @krizaka/ui `Button`** — through `ButtonLink` (`app/components/sections`) for links: `primary`
-  for the one action a block is about, `secondary` for the others, `ghost` for quiet chips; the Krizaka chamfer
-  (`shape="cut"`) everywhere; `lg` on a hero or a closing call, `md` in a section. `shimmer` + `magnetic` only on a
-  hero's main action. No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
+- **Every action is the @krizaka/ui `Button`** — through `ButtonLink` (`app/components/ButtonLink.tsx`, the router
+  adapter) for links: `primary` for the one action a block is about, `secondary` for the others, `ghost` for quiet chips;
+  the Krizaka chamfer (`shape="cut"`) on every call to action — heroes, closing calls, contact, featured cards, the bar's
+  « Contact us »; `lg` on a hero or a closing call, `md` in a section. `shimmer` only on **the** main action of a page
+  (with `magnetic` on a hero). No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
 - **Product heroes are `IsoHub`** (`@krizaka/ui/iso`), driven by data — Orazaka's stack under its dome, Orochia's
   creator with the four ways fans pay converging on her; names and labels in `messages/*.json`, the light from the
   brand (`.brand-orazaka` / `.brand-orochia`). Never an isometric drawing of the site's own.
 
-## 4.1 The Krizaka page language
+## 4.1 The Krizaka page language — from `@krizaka/ui` blocks
 
-- A page that **argues** (a product, a block, a decision, a promise) is built from `app/components/sections`
-  (`import { … } from "@/app/components/sections"`, styles in `sections.css`, classes `ps-*`), first used by
-  `/open-source` and `/open-source/<block>`. The rule of the language: **read in five seconds, then go deeper on demand.**
-  - `PageHero` — sub-page first screen: back link, eyebrow, h1, lead, facts under it (`Badges`), the page's bird.
-    Painted at once, no reveal.
-  - `SectionHeading` (eyebrow · h2 · lead) and `ContentSection` (a hairline above = the transition, an h2, content).
-    The section a page is about stands on a `SectionBackdrop` (BRAND.md §4).
-  - `CardGrid` + `ArgumentCard` — cards that argue, **compact by default** (about a third of a full card): icon · name ·
-    mono meta, the bird **small in the corner** (whose rule it is), the **hook in one line** (≤ 90 characters, regular
-    weight — never three bold lines), compact `Badges` (registry and version `ok`, work in progress `wip` — said
-    honestly, linked to where it is explained), then the foot: **one short primary action** on one line (« Details → »)
-    and, discreet, `ActionLinks variant="icons"`. What it does, the bird's quote and the long version are **never on
-    the face of a card**: they live on the detail page (`more`, e.g. `/open-source/<block>`) or, without one, in the card
-    unfolded in place (`expand`, a native `<details>`; a grid with folds aligns its cards at the top so opening one
-    never stretches its neighbours). The pointer lifts the card, carries a light over it (`PointerLight`) and lights
-    its icon's node — still under reduced motion. A list (one row per subject) was evaluated against it on
-    /open-source: denser, but it loses each subject's hue, bird and actions; the compact card stays the reference.
-  - **Versions are data.** Every version the site shows (badges, the Maven list, the module map, code samples) is
-    read from npm and Maven Central at build (`scripts/gen-registry-versions.mjs` → git-ignored
-    `lib/registry-versions.json`, read by `lib/registry-versions.ts`): never a version typed in a module or a message.
-  - **Hues**: a card or a page about one subject wears `data-hue` (`cobalt · sky · cyan · indigo · steel · ink`,
-    sections.css): its rail, icon node, bird, light and numbers. Krizaka palette only (blues and ink, never a product
-    colour); `--ps-hue` is decorative (≥ 3:1), `--ps-hue-text` is for small text (≥ 4.5:1, both themes). Without a
-    hue everything falls back to the page's accent, so a brand page stays on brand.
-  - `MascotRule` — a rule told by a bird, as a quote: a speech bubble (opening quote mark, the hue), the bird and who
-    speaks under its tail; `inline` in an unfolded card or a detail page, `callout` in a section (larger, alive) — at
-    most one rule put forward per section.
-    The bird carries a promise, never decoration: the falcon watches (security), the owl reads and knows every face
-    (documents, identity), the duck builds (code), the flamingo answers or gets paid, the pigeon delivers. Birds from
-    `@krizaka/ui/mascots` only; on one page no two subjects wear the same bird in the same mood and hue (five birds
-    for six blocks: the owl appears twice on /open-source, in two moods and two hues).
-  - `Inline` — words between backticks in a message (`` `requestId` ``) render as inline code: the technical keyword
-    stands out without markup in the catalogue. Prefer three short points to a paragraph.
-  - `DecisionList` — one card per decision: the choice large (✓), then refused (✕) · because (→) · what it costs (!)
-    side by side, each with its colour. `CodeSample` — language, file name, server-side highlighting
-    (`highlight.tsx`, token colours only), code that scrolls, copy; `CodeTabs` (@krizaka/ui/tabs) when there are
-    several ways to write it (Maven · Gradle). `PageToc` — a reading page's table of contents, sticky beside the
-    content (chips that scroll on a phone), the section being read marked.
-  - `ActionLinks` (`buttons` | `icons`) and `DiscussionCta` — discuss · propose · report, where to talk back.
-- Words come from `messages/*.json`; data modules keep links, code, birds and hues. The first section under a `PageHero`
-  is on a phone's first screen: no `reveal` there (LCP). Anything generic enough for a product goes to krizaka-ui
-  (krizaka/krizaka-ui#63), not here.
+- **Every page is made of the page blocks of [`@krizaka/ui`](https://www.krizaka.com/docs/ui) (category *Blocks*),
+  never of a copy here.** There is no `app/components/sections` any more: a missing block or variant is added to
+  krizaka-ui (meta, examples, stories, tests), released, then used here. The rule of the language: **read in five
+  seconds, then go deeper on demand.**
+- **One shell.** `Page` (`@krizaka/ui/page`) is the frame of everything: the content is at most `--kz-page-max` (72rem)
+  wide between the gutters `--kz-page-gutter` (16 → 32 px); the documentation uses `--kz-page-max-docs` (88rem). The
+  bar (`TopNavBar`, `.kz-site-bar`), every hero, section, the footer and Fumadocs' grid (`.kz-docs`) share those edges —
+  no page centres its own container (`maxWidth: 1100px`, `.os-section`…). Settings live in `app/globals.css` (« One
+  frame for every page »): `--kz-hero-top` clears the bar, `--kz-anchor-offset` places anchors.
+- The blocks, by role:
+  - `PageHero` (`@krizaka/ui/page-hero`) — the first screen of every page but the home: back link (`linkAs={Link}`),
+    eyebrow, h1, lead, facts or actions as children, the page's bird in `aside`. Painted at once, never revealed (LCP).
+  - `Section` + `SectionHeading` (`@krizaka/ui/page`) — eyebrow · h2 · lead · actions; `divider` (a hairline) or
+    `backdrop` (the brand's colour transition) between sections; `Facts` (registry and version `ok`, work in progress
+    `wip` — said honestly); `Ticks` — words between backticks in a message (`` `requestId` ``) read as code.
+  - `CardGrid` + `LinkCard` — entry points (the docs hub, a product's docs index, « the other blocks »): the whole card
+    one link, icon · title · one sentence · the way in.
+  - `CardGrid` + `ArgumentCard` — cards that argue, **compact**: icon · name · mono meta, the bird **small in the
+    corner** (`mark`), the **hook in one line** (≤ 90 characters, regular weight), compact `facts`, **one short action**
+    (`more`, « Details → ») and discreet icon actions (`ActionBar variant="icons"`). What it does, the bird's quote and
+    the long version are **never on the face**: on the detail page (`more`) or unfolded in place (`panelLabel`, a
+    native `<details>`; a grid with folds aligns its cards at the top). The pointer lifts the card and carries a light
+    over it (`PointerLight`, built into `CardGrid`) — still under reduced motion.
+  - `MascotQuote` — a rule told by a bird (`inline` in an unfolded card or a detail page, `callout` in a section, at
+    most one per section). The bird carries a promise, never decoration: the falcon watches (security), the owl reads
+    and knows every face (documents, identity), the duck builds (code), the flamingo answers or gets paid, the pigeon
+    delivers. On one page no two subjects wear the same bird in the same mood and hue.
+  - `DecisionList` — chose (✓) · refused (✕) · because (→) · what it costs (!). `CodeBlock` / `CodeTabs` — file name,
+    highlighted code on the tokens, copy (Maven · Gradle). `TocLayout` + `Toc` — a reading page's sticky contents.
+  - `ActionBar` (`buttons` | `icons`) and `CtaPanel` — discuss · propose · report, contact, get started.
+- **Hues**: a card or a page about one subject wears `data-hue` (`cobalt · sky · cyan · indigo · steel · ink`), mapped
+  in `app/globals.css` onto the blocks' contract `--kz-hue` (decorative, ≥ 3:1), `--kz-hue-2`, `--kz-hue-text` (small
+  text, ≥ 4.5:1, both themes). Krizaka palette only; without a hue, blocks fall back to the page's brand accent.
+- **Versions are data.** Every version the site shows (facts, the Maven list, the module map, code samples) is read
+  from npm and Maven Central at build (`scripts/gen-registry-versions.mjs` → git-ignored `lib/registry-versions.json`,
+  read by `lib/registry-versions.ts`): never a version typed in a module or a message.
+- What the blocks leave to a page (prose, two columns, yes/no lists, release lines) is the small `rd-*` set of
+  `app/globals.css` (« Reading pages »). Words come from `messages/*.json`; data modules keep links, code, birds and
+  hues. The first section under a `PageHero` is on a phone's first screen: no `reveal` there (LCP).
 
 ## 5. Code conventions
 

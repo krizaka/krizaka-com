@@ -95,7 +95,7 @@ export const PRODUCTS: Product[] = [
     id: "orochia",
     name: "Orochia",
     href: "/products/orochia",
-    docsHref: "/products/orochia/docs",
+    docsHref: "/docs/orochia",
     repoUrl: "https://github.com/krizaka/orochia",
     appUrl: OROCHIA_APP_URL,
     stack: "Next.js 16 · PostgreSQL · Drizzle · Bunny Stream",

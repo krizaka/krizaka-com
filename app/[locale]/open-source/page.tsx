@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { contactHref } from "@/lib/contact";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BookOpen, FileCode2, GitBranch, Layers, Package, Plug, Scale, ShieldCheck, Workflow } from "lucide-react";
 import { localizedMetadata } from "@/lib/seo";
 import { orgRepositories, type OrgRepository } from "@/lib/org-data";
 import { publicRepositoryCount } from "@/lib/org-stats";
@@ -13,13 +12,15 @@ import { ProductLogo } from "@krizaka/ui";
 import { NPM_PACKAGES, npmUrl, repoUrl } from "@/lib/npm-packages";
 import { BOM_VERSION, CENTRAL_NAMESPACE_URL, KIT_PREVIOUS_VERSION, MAVEN_ARTIFACTS, centralUrl, mavenRepoUrl } from "@/lib/maven-packages";
 import PackageGlyph from "@/app/components/packages/PackageGlyph";
-import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { reveal } from "@/lib/motion";
 import { BUILDING_BLOCKS, FORUMS } from "@/lib/building-blocks";
 import BlockCard from "@/app/components/blocks/BlockCard";
-import { CardGrid, DiscussionCta, SectionHeading } from "@/app/components/sections";
-import { ExternalIcon } from "@krizaka/icons";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import { CardGrid } from "@krizaka/ui/card-grid";
+import { CtaPanel } from "@krizaka/ui/cta-panel";
+import { Section } from "@krizaka/ui/page";
+import { PageHero } from "@krizaka/ui/page-hero";
+import { AutomationIcon, BookmarkIcon, ExternalIcon, ForwardIcon, KnowledgeIcon, LinkIcon, PackIcon, ServerIcon, ShieldIcon } from "@krizaka/icons";
+import ButtonLink from "@/app/components/ButtonLink";
 
 /* /open-source — for developers who want to build with Krizaka's pieces: what can be reused, how
    to take it, and every public repository. The repository list comes from the generated product
@@ -45,9 +46,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const STEPS = [
-  { id: "pick", icon: Package },
-  { id: "run", icon: GitBranch },
-  { id: "plug", icon: Plug },
+  { id: "pick", icon: PackIcon },
+  { id: "run", icon: ServerIcon },
+  { id: "plug", icon: LinkIcon },
 ] as const;
 
 const GROUPS = [
@@ -59,10 +60,10 @@ const GROUPS = [
 ] as const;
 
 const PROMISES = [
-  { id: "license", icon: Scale },
-  { id: "ci", icon: Workflow },
-  { id: "docs", icon: FileCode2 },
-  { id: "security", icon: ShieldCheck },
+  { id: "license", icon: KnowledgeIcon },
+  { id: "ci", icon: AutomationIcon },
+  { id: "docs", icon: BookmarkIcon },
+  { id: "security", icon: ShieldIcon },
 ] as const;
 
 /** First sentence of a repository description — one idea per line. */
@@ -92,21 +93,14 @@ export default async function OpenSourcePage({ params }: Props) {
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
       <TopNavBar />
 
-      <SectionBackdrop as="header" grid>
-      <div className="os-hero">
-        <p className="os-eyebrow">Open source · Apache-2.0</p>
-        <h1>{t.title}</h1>
-        <p className="os-lead">
-          {t.lead}
-        </p>
+      <PageHero eyebrow="Open source · Apache-2.0" title={t.title} lead={t.lead} align="center">
         <p className="os-count">
           {format(t.count, { count: publicRepositoryCount() })}
           <a href={GITHUB_ORG_URL}>github.com/krizaka</a>
         </p>
-      </div>
-      </SectionBackdrop>
+      </PageHero>
 
-      <section className="os-section">
+      <Section spacing="sm" aria-label={t.title}>
         <ol className="os-steps" {...reveal()}>
           {STEPS.map(({ id, icon: Icon }, i) => (
             <li key={id}>
@@ -117,37 +111,33 @@ export default async function OpenSourcePage({ params }: Props) {
             </li>
           ))}
         </ol>
-      </section>
+      </Section>
 
-      {/* The building blocks stand on their own backdrop (BRAND.md §4): the brand gradient and a light dome mark the
-          section the page is about. */}
-      <SectionBackdrop as="section" id="building-blocks" aria-labelledby="blocks-title" className="os-blocks">
-      <div className="os-section">
-        <SectionHeading id="blocks-title" eyebrow={w.eyebrow} title={w.title} lead={w.lead} />
-        <CardGrid columns={3}>
+      {/* The building blocks stand on the brand's backdrop (BRAND.md §4): the section the page is about. */}
+      <Section id="blocks-title" eyebrow={w.eyebrow} title={w.title} lead={w.lead} reveal backdrop={{ dome: true }} className="os-blocks">
+        <CardGrid columns={3} min={300}>
           {BUILDING_BLOCKS.map((block) => (
             <BlockCard key={block.id} block={block} w={w} />
           ))}
         </CardGrid>
-        <DiscussionCta id="forums-title" level={3} title={w.forums.title} body={w.forums.body}>
+        <CtaPanel id="forums-title" level={3} title={w.forums.title} body={w.forums.body} reveal className="os-forums">
           <ButtonLink href={FORUMS.java.url} variant="primary" size="lg">
             {w.forums.java} <ExternalIcon size={13} aria-hidden />
           </ButtonLink>
           <ButtonLink href={FORUMS.ui.url} size="lg">
             {w.forums.ui} <ExternalIcon size={13} aria-hidden />
           </ButtonLink>
-        </DiscussionCta>
-      </div>
-      </SectionBackdrop>
+        </CtaPanel>
+      </Section>
 
       {(["orazaka", "orochia"] as const).map((product) => (
-        <section key={product} className="os-section">
+        <Section key={product} spacing="sm" aria-labelledby={`os-${product}`}>
           <div className="os-product-head" {...reveal()}>
             <ProductLogo id={product} size={40} />
             <div>
-              <h2 className="os-h2" style={{ margin: 0 }}>{product === "orazaka" ? "Orazaka" : "Orochia"}</h2>
+              <h2 id={`os-${product}`} className="kz-heading-title">{product === "orazaka" ? "Orazaka" : "Orochia"}</h2>
               <Link href={`/products/${product}`} className="os-product-link">
-                {t.discoverProduct} <ArrowRight size={13} />
+                {t.discoverProduct} <ForwardIcon size={13} />
               </Link>
             </div>
           </div>
@@ -168,17 +158,12 @@ export default async function OpenSourcePage({ params }: Props) {
               </div>
             );
           })}
-        </section>
+        </Section>
       ))}
 
-      <section className="os-section" id="packages">
-        <div {...reveal()}>
-          <p className="os-eyebrow">{pk.eyebrow}</p>
-          <h2 className="os-h2">{pk.title}</h2>
-          <p className="os-pk-lead">{pk.lead}</p>
-        </div>
+      <Section id="packages" eyebrow={pk.eyebrow} title={pk.title} lead={pk.lead} reveal divider>
         <div className="os-pk-banner">
-          <Layers size={18} aria-hidden />
+          <PackIcon size={18} aria-hidden />
           <p>{format(pk.notProductBanner, { count: NPM_PACKAGES.length })}</p>
         </div>
         <div className="os-packages">
@@ -192,26 +177,21 @@ export default async function OpenSourcePage({ params }: Props) {
                 <code>npm install {p.name}</code>
                 <div className="os-package-links">
                   <a href={npmUrl(p)} target="_blank" rel="noopener noreferrer">
-                    {pk.npm} <ArrowUpRight size={13} aria-hidden />
+                    {pk.npm} <ExternalIcon size={12} aria-hidden />
                   </a>
                   <a href={repoUrl(p)} target="_blank" rel="noopener noreferrer">
-                    {pk.source} <ArrowUpRight size={13} aria-hidden />
+                    {pk.source} <ExternalIcon size={12} aria-hidden />
                   </a>
                 </div>
               </div>
             </article>
           ))}
         </div>
-      </section>
+      </Section>
 
-      <section className="os-section" id="maven">
-        <div {...reveal()}>
-          <p className="os-eyebrow">{mv.eyebrow}</p>
-          <h2 className="os-h2">{mv.title}</h2>
-          <p className="os-pk-lead">{mv.lead}</p>
-        </div>
+      <Section id="maven" eyebrow={mv.eyebrow} title={mv.title} lead={mv.lead} reveal divider>
         <div className="os-pk-banner">
-          <Layers size={18} aria-hidden />
+          <PackIcon size={18} aria-hidden />
           <p>{mv.bomNote}</p>
         </div>
         <pre className="os-bom">{`<dependency>
@@ -235,10 +215,10 @@ export default async function OpenSourcePage({ params }: Props) {
                 <code>{`${a.groupId}:${a.artifactId}:${a.version}`}</code>
                 <div className="os-package-links">
                   <a href={centralUrl(a)} target="_blank" rel="noopener noreferrer">
-                    {mv.central} <ArrowUpRight size={13} aria-hidden />
+                    {mv.central} <ExternalIcon size={12} aria-hidden />
                   </a>
                   <a href={mavenRepoUrl(a)} target="_blank" rel="noopener noreferrer">
-                    {mv.source} <ArrowUpRight size={13} aria-hidden />
+                    {mv.source} <ExternalIcon size={12} aria-hidden />
                   </a>
                 </div>
               </div>
@@ -247,12 +227,12 @@ export default async function OpenSourcePage({ params }: Props) {
         </div>
         <p className="os-maven-all">
           <a href={CENTRAL_NAMESPACE_URL} target="_blank" rel="noopener noreferrer">
-            {mv.all} <ArrowUpRight size={13} aria-hidden />
+            {mv.all} <ExternalIcon size={12} aria-hidden />
           </a>
         </p>
-      </section>
+      </Section>
 
-      <section className="os-section">
+      <Section divider aria-labelledby="os-contribute">
         <div className="os-promises" {...reveal()}>
           {PROMISES.map(({ id, icon: Icon }) => (
             <div key={id}>
@@ -262,16 +242,9 @@ export default async function OpenSourcePage({ params }: Props) {
             </div>
           ))}
         </div>
-        <div className="os-contribute" {...reveal()}>
-          <div>
-            <h2>{t.contributeTitle}</h2>
-            <p>
-              {t.contributeBody}
-            </p>
-          </div>
-          <div className="os-contribute-links">
+        <CtaPanel id="os-contribute" title={t.contributeTitle} body={t.contributeBody} reveal className="os-contribute">
             <ButtonLink href="https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md" variant="primary" size="lg">
-              <BookOpen size={15} /> {t.contributeGuide}
+              <KnowledgeIcon size={15} /> {t.contributeGuide}
             </ButtonLink>
             <ButtonLink href={FORUMS.java.url} size="lg">
               {t.ask}
@@ -279,9 +252,8 @@ export default async function OpenSourcePage({ params }: Props) {
             <ButtonLink href={contactHref("open-source", "blocks")} size="lg">
               {t.write}
             </ButtonLink>
-          </div>
-        </div>
-      </section>
+        </CtaPanel>
+      </Section>
 
       <SiteFooter />
 
@@ -291,7 +263,6 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-pk-note { max-width: 640px; margin: -8px 0 24px; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
         .os-maven-all a { display: inline-flex; align-items: center; gap: 4px; font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
         .os-maven-all a:hover { color: var(--kz-accent); }
-        .os-pk-lead { max-width: 640px; margin: -4px 0 20px; font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); }
         .os-pk-banner {
           display: flex; align-items: center; gap: 14px; margin: 0 0 28px; padding: 14px 18px; border-radius: 14px;
           background: color-mix(in srgb, var(--kz-accent-soft) 80%, transparent); border: 1px solid var(--kz-border-strong);
@@ -310,16 +281,10 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-package-links { display: flex; gap: 14px; margin-top: 12px; }
         .os-package-links a { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
         .os-package-links a:hover { color: var(--kz-accent); }
-        .os-hero { max-width: 760px; margin: 0 auto; padding: clamp(128px, 16vw, 176px) 20px 40px; text-align: center; }
-        .os-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--kz-accent); margin: 0 0 12px; }
-        .os-hero h1 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 800; letter-spacing: -.035em; line-height: 1.08; margin: 0; }
-        .os-lead { font-size: clamp(15px, 1.9vw, 17.5px); line-height: 1.75; color: var(--kz-text-secondary); margin: 20px auto 0; max-width: 640px; }
-        .os-count { margin: 18px 0 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); }
+        .os-forums, .os-contribute { margin-top: 24px; }
+        .os-count { margin: 0 auto; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); }
         .os-count a { color: var(--kz-accent); text-decoration: none; }
-        .os-section { max-width: 72rem; margin: 0 auto; padding: 56px 20px; }
         .os-blocks { scroll-margin-top: 64px; }
-        .os-blocks > .os-section { padding-top: 72px; padding-bottom: 72px; }
-        .os-h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 800; letter-spacing: -.025em; margin: 0 0 28px; }
 
         .os-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1px;
           background: var(--kz-border-subtle); border: 1px solid var(--kz-border-subtle); border-radius: 20px; overflow: hidden; }
@@ -329,7 +294,7 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-steps h2 { margin: 12px 0 6px; font-size: 16px; font-weight: 700; }
         .os-steps p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
 
-        .os-product-head { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-top: 8px; border-top: 1px solid var(--kz-border-subtle); padding-top: 40px; }
+        .os-product-head { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
         .os-product-link { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 13px; color: var(--kz-text-secondary); text-decoration: none; }
         .os-product-link:hover { color: var(--kz-text-primary); }
         .os-group { display: grid; grid-template-columns: minmax(0, 220px) minmax(0, 1fr); gap: 24px; padding: 18px 0; }
@@ -342,15 +307,10 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-repo:hover .os-repo-name { color: var(--kz-accent); }
         .os-repo-desc { font-size: 12.5px; line-height: 1.5; color: var(--kz-text-muted); }
 
-        .os-promises { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 24px; padding-top: 40px; border-top: 1px solid var(--kz-border-subtle); }
+        .os-promises { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 24px; }
         .os-promises svg { color: var(--kz-accent); }
         .os-promises h3 { margin: 10px 0 4px; font-size: 15px; font-weight: 700; }
         .os-promises p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
-        .os-contribute { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; margin-top: 48px; padding: 28px;
-          border-radius: 20px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); }
-        .os-contribute h2 { margin: 0 0 6px; font-size: 20px; font-weight: 800; }
-        .os-contribute p { margin: 0; max-width: 520px; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
-        .os-contribute-links { display: flex; flex-wrap: wrap; gap: 10px; }
       `}</style>
     </main>
   );

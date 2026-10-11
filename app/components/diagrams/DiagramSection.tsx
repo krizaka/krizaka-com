@@ -17,7 +17,7 @@ export default function DiagramSection({
   children: ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} style={{ maxWidth: "80rem", margin: "0 auto", padding: "40px 20px 56px", scrollMarginTop: 96 }}>
+    <section id={id} aria-labelledby={`${id}-title`} className="kz-frame" data-size="wide" style={{ paddingBlock: "40px 56px", scrollMarginTop: 96 }}>
       <div style={{ maxWidth: 720, margin: "0 0 24px" }} {...reveal()}>
         <p
           style={{

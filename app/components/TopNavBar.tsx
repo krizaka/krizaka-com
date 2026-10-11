@@ -35,8 +35,8 @@ export default function TopNavBar() {
 
   return (
     <>
-      <div className="pointer-events-none fixed inset-x-0 top-3 z-50 px-4">
-        <NavBar.Root label={t.site.menu.mainAria} className="pointer-events-auto">
+      <div className="kz-site-bar-wrap pointer-events-none fixed inset-x-0 top-3 z-50">
+        <NavBar.Root label={t.site.menu.mainAria} className="kz-site-bar pointer-events-auto" data-frame={docs ? "docs" : undefined}>
           <NavBar.Brand asChild>
             <Link href="/">
               <KrizakaLogo size={26} />
@@ -112,7 +112,7 @@ export default function TopNavBar() {
               {m.languageShort}
             </Button>
 
-            <Button asChild variant="primary" size="sm" shape="pill" shimmer className="ml-1 hidden font-bold md:inline-flex">
+            <Button asChild variant="primary" size="sm" shape="cut" className="ml-1 hidden font-bold md:inline-flex">
               <Link href={contactHref}>{m.contactCta}</Link>
             </Button>
 

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SectionHeading } from "@krizaka/ui/page";
 import Link from "next/link";
 import {
   AuctionIcon,
@@ -35,13 +36,18 @@ import { moduleMapData } from "@/lib/architecture-model";
 import { journeysFor } from "@/lib/journeys";
 import { OrochiaLogo } from "@krizaka/ui";
 import Rich from "@/app/components/Rich";
-import { ArgumentCard, CardGrid, DecisionList } from "@/app/components/sections";
+import { ArgumentCard } from "@krizaka/ui/argument-card";
+import { CardGrid } from "@krizaka/ui/card-grid";
+import { DecisionList } from "@krizaka/ui/decision-list";
+import { MascotQuote } from "@krizaka/ui/mascot-quote";
+import { Mascot } from "@krizaka/ui/mascots";
+import { Ticks } from "@krizaka/ui/page";
 import { OrochiaIso } from "@/app/components/products/ProductIso";
 import { GlowCard } from "@krizaka/ui/glow-card";
 import { Meter } from "@krizaka/ui/meter";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
 import { PAYOUT_MINIMUM_CENTS, PLATFORM_FEE_PERCENTAGE, SPLIT_EXAMPLES, creatorNetCents, formatUsd } from "@/lib/orochia-economics";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 /** Whole numbers while the figure climbs (NumberTicker formats every frame). */
 const WHOLE = { maximumFractionDigits: 0 } as const;
@@ -126,7 +132,7 @@ export default async function OrochiaPage({ params }: Props) {
           </div>
         }
       >
-        <div className="bp-wrap bp-hero">
+        <div className="kz-frame bp-wrap bp-hero">
           <div className="bp-hero-grid">
           <div>
           {/* The product's name first — the mark and the word together, as in the menu, on the home and on Orazaka. */}
@@ -169,7 +175,7 @@ export default async function OrochiaPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── Get paid: the 90 / 10 split, worked examples ─── */}
-      <section id="get-paid" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
+      <section id="get-paid" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }}>
         <div className="bp-split">
           {/* The split, drawn: a ring of the creator's share, the figure climbing in its centre. */}
           <div {...reveal()}>
@@ -196,9 +202,7 @@ export default async function OrochiaPage({ params }: Props) {
             </GlowCard>
           </div>
           <div {...reveal(1)}>
-            <p className="bp-eyebrow">{t.paid.eyebrow}</p>
-            <h2 className="bp-h2"><Rich text={t.paid.title} /></h2>
-            <p className="bp-lead">{t.paid.lead}</p>
+            <SectionHeading eyebrow={t.paid.eyebrow} title={<Rich text={t.paid.title} />} lead={t.paid.lead} />
             <ul className="bp-ledger">
               {SPLIT_EXAMPLES.map(({ id, grossCents }, i) => {
                 const Icon = { tip: TipIcon, unlock: UnlockIcon, pledge: ChallengeIcon, bid: AuctionIcon }[id];
@@ -218,11 +222,8 @@ export default async function OrochiaPage({ params }: Props) {
 
       {/* ─── Auctions · challenges: the rules, as the code applies them ─── */}
       <SectionBackdrop className="bp-glide" dome={false}>
-        <div className="bp-wrap">
-          <div {...reveal()}>
-            <p className="bp-eyebrow">{t.rules.eyebrow}</p>
-            <h2 className="bp-h2"><Rich text={t.rules.title} /></h2>
-          </div>
+        <div className="kz-frame bp-wrap">
+          <SectionHeading eyebrow={t.rules.eyebrow} title={<Rich text={t.rules.title} />} reveal />
           <div className="bp-argue">
             <CardGrid columns={2} min={320}>
               {RULES.map(({ id, Icon, bird }) => (
@@ -231,10 +232,11 @@ export default async function OrochiaPage({ params }: Props) {
                   id={`rules-${id}`}
                   icon={<Icon size={20} nodeColor={node} />}
                   title={t.rules[id].title}
-                  expand={b.details}
-                  hook={{ label: b.trap, text: t.rules[id].trap }}
-                  points={{ label: b.answer, items: [t.rules[id].body, ...t.rules[id].facts] }}
-                  rule={{ bird, label: format(b.birdSays, { bird: b.birds[bird] }), text: t.rules[id].rule }}
+                  panelLabel={b.details}
+                  mark={<Mascot bird={bird} size={40} animated={false} />}
+                  hook={{ label: b.trap, text: <Ticks>{t.rules[id].trap}</Ticks> }}
+                  points={{ label: b.answer, items: ([t.rules[id].body, ...t.rules[id].facts]).map((x) => <Ticks key={x}>{x}</Ticks>) }}
+                  rule={<MascotQuote bird={bird} label={format(b.birdSays, { bird: b.birds[bird] })}><Ticks>{t.rules[id].rule}</Ticks></MascotQuote>}
                 />
               ))}
             </CardGrid>
@@ -243,11 +245,8 @@ export default async function OrochiaPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── Product tour (screen recordings of the real app) ─── */}
-      <section id="tour" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
-        <div className="bp-center" style={{ marginBottom: 24 }} {...reveal()}>
-          <p className="bp-eyebrow">{t.tourEyebrow}</p>
-          <h2 className="bp-h2">{t.tourTitle}</h2>
-        </div>
+      <section id="tour" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }}>
+        <SectionHeading eyebrow={t.tourEyebrow} title={t.tourTitle} align="center" reveal />
         <div {...reveal(1)}>
           <OrochiaTour />
         </div>
@@ -260,11 +259,8 @@ export default async function OrochiaPage({ params }: Props) {
 
       {/* ─── Guarantees ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="guarantees" style={{ scrollMarginTop: 72 }}>
-        <div className="bp-wrap">
-          <div {...reveal()}>
-            <p className="bp-eyebrow">{t.pillarsEyebrow}</p>
-            <h2 className="bp-h2">{t.pillarsTitle}</h2>
-          </div>
+        <div className="kz-frame bp-wrap">
+          <SectionHeading eyebrow={t.pillarsEyebrow} title={t.pillarsTitle} reveal />
           <div className="bp-cards">
             {PILLARS.map(({ id, Icon }, i) => (
               <div key={id} className="bp-card" {...reveal(i % 3 + 1)}>
@@ -278,38 +274,24 @@ export default async function OrochiaPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── Decisions: built like financial infrastructure, and what it costs ─── */}
-      <section className="bp-wrap" id="decisions" style={{ scrollMarginTop: 72 }}>
-        <div {...reveal()}>
-          <p className="bp-eyebrow">{t.decisions.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.decisions.title} /></h2>
-          <p className="bp-lead">{t.decisions.lead}</p>
-        </div>
+      <section className="kz-frame bp-wrap" id="decisions" style={{ scrollMarginTop: 72 }}>
+        <SectionHeading eyebrow={t.decisions.eyebrow} title={<Rich text={t.decisions.title} />} lead={t.decisions.lead} reveal />
         <div className="bp-argue">
-          <DecisionList decisions={t.decisions.items} labels={dl} />
+          <DecisionList decisions={t.decisions.items.map((d) => ({ id: d.chose, chose: <Ticks>{d.chose}</Ticks>, refused: <Ticks>{d.refused}</Ticks>, because: <Ticks>{d.because}</Ticks>, cost: <Ticks>{d.cost}</Ticks> }))} labels={dl} />
         </div>
       </section>
 
       {/* ─── How it works: the module map, its three journeys played step by step (lib/journeys.ts) ─── */}
-      <section id="architecture" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
-        <div {...reveal()}>
-          <p className="bp-eyebrow">{t.archEyebrow}</p>
-          <h2 className="bp-h2">{t.archTitle}</h2>
-          <p className="bp-lead" style={{ marginBottom: 24 }}>{t.archLead}</p>
-        </div>
+      <section id="architecture" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }}>
+        <SectionHeading eyebrow={t.archEyebrow} title={t.archTitle} lead={t.archLead} reveal />
         <div {...reveal(1, "soft")}>
           <ModuleMap data={moduleMapData("orochia")} journeys={journeys} initial={{ view: "journey" }} />
         </div>
       </section>
 
       {/* ─── Repositories & facts ─── */}
-      <section className="bp-wrap" style={{ paddingTop: 0 }}>
-        <div {...reveal()}>
-          <p className="bp-eyebrow">{t.sourceEyebrow}</p>
-          <h2 className="bp-h2">{t.sourceTitle}</h2>
-          <p className="bp-lead" style={{ marginBottom: 24 }}>
-          {format(t.sourceLead, { endpoints: orochia.apiEndpoints.length, tables: tables.length })}
-          </p>
-        </div>
+      <section className="kz-frame bp-wrap" style={{ paddingTop: 0 }}>
+        <SectionHeading eyebrow={t.sourceEyebrow} title={t.sourceTitle} lead={format(t.sourceLead, { endpoints: orochia.apiEndpoints.length, tables: tables.length })} reveal />
         <div className="bp-cards" style={{ marginTop: 0 }}>
           {orochia.repositories.map((r, i) => (
             <a key={r.name} href={r.url} target="_blank" rel="noopener noreferrer" className="bp-card" {...reveal(i + 1)}>
@@ -323,7 +305,7 @@ export default async function OrochiaPage({ params }: Props) {
           ))}
         </div>
         <p style={{ marginTop: 20 }}>
-          <Link href="/products/orochia/docs" className="kz-link-strong">
+          <Link href="/docs/orochia" className="kz-link-strong">
             <KnowledgeIcon size={16} /> {t.docs}
           </Link>
         </p>

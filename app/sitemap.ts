@@ -20,7 +20,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/story",
     "/products/orazaka",
     "/products/orochia",
-    "/products/orochia/docs",
     "/products/orochia/demos",
     "/products/yazakia",
     "/products/orazaka/packages",

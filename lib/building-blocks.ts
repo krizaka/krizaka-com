@@ -30,7 +30,7 @@ export type BlockId =
 export type BlockIcon = "build" | "shield" | "users" | "notification" | "credits" | "theme";
 
 /** The accent a block wears on its card and its page — one per block, all in the Krizaka palette (blues and ink, never a
-    product colour). Defined in app/components/sections/sections.css (`[data-hue]`), dark and light. */
+    product colour). Defined in app/globals.css (`[data-hue]` → the `--kz-hue` contract of @krizaka/ui blocks), dark and light. */
 export type BlockHue = "cobalt" | "sky" | "cyan" | "indigo" | "steel" | "ink";
 
 /** Where questions about a block go: one forum per ecosystem (see site.blocks.forums). */

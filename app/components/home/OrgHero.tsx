@@ -27,7 +27,7 @@ import { PRODUCTS } from "@/lib/org-data";
 import { NAV_PRODUCTS } from "@/lib/nav";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import "./org-hero.css";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 export default function OrgHero({ locale, repositoryCount }: { locale: string; repositoryCount: number }) {
   const t = getDictionary(locale);

@@ -10,6 +10,7 @@ import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
 import { Marquee } from "@krizaka/ui/marquee";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
+import { Section, SectionHeading } from "@krizaka/ui/page";
 import { useI18n } from "../I18nProvider";
 import { format } from "@krizaka/i18n";
 import { reveal } from "@/lib/motion";
@@ -36,16 +37,10 @@ export default function OpenSourceSection({
     { value: "CI", label: o.ci },
   ];
   return (
-    <section id="open-source" className="kz-section">
+    <Section id="open-source" aria-labelledby="open-source-title">
       <div className="kz-oss" {...reveal()}>
         <div>
-          <p className="kz-eyebrow">{o.eyebrow}</p>
-          <h2 className="kz-h2" style={{ marginBottom: 12 }}>
-            {o.title}
-          </h2>
-          <p style={{ margin: 0, fontSize: 15, lineHeight: 1.7, color: "var(--kz-text-secondary)", maxWidth: 520 }}>
-            {format(o.body, { orazaka: orazakaRepos, orochia: orochiaRepos })}
-          </p>
+          <SectionHeading id="open-source-title" eyebrow={o.eyebrow} title={o.title} lead={format(o.body, { orazaka: orazakaRepos, orochia: orochiaRepos })} className="kz-oss-heading" />
           <Link href="/open-source" prefetch={false} className="kz-link-strong" style={{ marginTop: 18 }}>
             {o.browse} <ForwardIcon size={15} />
           </Link>
@@ -80,7 +75,8 @@ export default function OpenSourceSection({
           font-family: var(--font-mono); font-size: 12.5px; font-weight: 600; color: var(--kz-text-primary);
           background: var(--kz-surface-0); border: 1px solid var(--kz-border-subtle); }
         .kz-oss-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--kz-accent); }
+        .kz-oss-heading { margin-bottom: 0; }
       `}</style>
-    </section>
+    </Section>
   );
 }

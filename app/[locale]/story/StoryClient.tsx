@@ -30,7 +30,7 @@ import {
   FighterCard,
   StageCall,
 } from "@/app/components/story/ArcadeNods";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 /* One mark per size, the same for the three clans: the stages must read alike. */
 const mark = (id: ChapterId, size: number) => <ProductLogo id={id} size={size} animated={false} />;

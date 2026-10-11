@@ -167,7 +167,9 @@ export default function RepositoryMap({
     <section
       id="repositories"
       aria-labelledby="repositories-title"
-      style={{ maxWidth: "80rem", margin: "0 auto", padding: "8px 20px 96px" }}
+      className="kz-frame"
+      data-size="wide"
+      style={{ paddingBlock: "8px 96px" }}
     >
       <div style={{ maxWidth: "700px", margin: "0 auto 40px", textAlign: "center" }} {...reveal()}>
         <p

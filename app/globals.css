@@ -28,6 +28,40 @@
    Only what belongs to the site lives here.
    ═══════════════════════════════════════════════════════════════════ */
 
+/* ─── One frame for every page (@krizaka/ui/page, blocks.css) ───
+   The navigation bar, the heroes, every section and the documentation share one width and one pair of gutters, so
+   their edges line up at every width (no page drifts to one side on a wide screen). Pages build on the blocks of
+   @krizaka/ui (Page, Section, PageHero…); these values are the site's settings of their contract. */
+:root {
+  --kz-page-max: 72rem;                           /* the content of a page (1152 px) */
+  --kz-page-max-docs: 88rem;                      /* the documentation: sidebar · page · table of contents */
+  --kz-hero-top: clamp(112px, 14vw, 156px);       /* a hero clears the floating bar */
+  --kz-anchor-offset: 96px;                       /* an anchor lands under the bar */
+}
+/* The bar is as wide as the page under it (the frame of the docs on /docs): its edges are the content's edges. Not
+   in a layer, so it wins over NavBar's own max-width utilities; it keeps that width when it tightens on scroll. */
+.kz-site-bar-wrap { padding-inline: var(--kz-page-gutter, clamp(16px, 3.2vw, 32px)); }
+.kz-site-bar, .kz-site-bar[data-compact] { max-width: var(--kz-page-max); }
+.kz-site-bar[data-frame="docs"] { max-width: var(--kz-page-max-docs); }
+/* A subject's hue (a building block…): its rail, icon tile, bird, light and numbers — the --kz-hue contract of the
+   blocks. Krizaka palette only (blues and ink, never a product colour); --kz-hue is decorative (≥ 3:1 on the surfaces),
+   --kz-hue-text is for small text (≥ 4.5:1 on surface-0, -1 and -2, both themes). Without a hue, blocks fall back to
+   the page's accent, so a brand page stays on brand. */
+[data-hue="cobalt"] { --kz-hue: hsl(217 92% 60%); --kz-hue-2: hsl(206 92% 62%); --kz-hue-text: hsl(217 92% 74%); }
+[data-hue="sky"]    { --kz-hue: hsl(199 89% 52%); --kz-hue-2: hsl(190 85% 52%); --kz-hue-text: hsl(199 89% 66%); }
+[data-hue="cyan"]   { --kz-hue: hsl(186 72% 45%); --kz-hue-2: hsl(196 80% 52%); --kz-hue-text: hsl(186 70% 58%); }
+[data-hue="indigo"] { --kz-hue: hsl(234 85% 68%); --kz-hue-2: hsl(222 90% 64%); --kz-hue-text: hsl(234 90% 80%); }
+[data-hue="steel"]  { --kz-hue: hsl(212 32% 62%); --kz-hue-2: hsl(206 40% 70%); --kz-hue-text: hsl(212 36% 74%); }
+[data-hue="ink"]    { --kz-hue: hsl(220 16% 80%); --kz-hue-2: hsl(217 40% 70%); --kz-hue-text: hsl(220 16% 86%); }
+html.light [data-hue="cobalt"] { --kz-hue: hsl(217 92% 50%); --kz-hue-2: hsl(206 92% 48%); --kz-hue-text: hsl(217 92% 40%); }
+html.light [data-hue="sky"]    { --kz-hue: hsl(199 89% 40%); --kz-hue-2: hsl(190 85% 38%); --kz-hue-text: hsl(200 90% 29%); }
+html.light [data-hue="cyan"]   { --kz-hue: hsl(186 80% 32%); --kz-hue-2: hsl(196 80% 38%); --kz-hue-text: hsl(188 85% 24%); }
+html.light [data-hue="indigo"] { --kz-hue: hsl(234 66% 52%); --kz-hue-2: hsl(222 80% 52%); --kz-hue-text: hsl(234 60% 45%); }
+html.light [data-hue="steel"]  { --kz-hue: hsl(212 28% 46%); --kz-hue-2: hsl(206 34% 50%); --kz-hue-text: hsl(212 30% 34%); }
+html.light [data-hue="ink"]    { --kz-hue: hsl(222 30% 22%); --kz-hue-2: hsl(217 50% 40%); --kz-hue-text: hsl(222 30% 20%); }
+/* The bird and the icon node of a subject wear its hue. */
+[data-hue] :is(.kz-block-icon, .kz-arg-mark, .kz-quote-bird, .kz-hero-aside) { --kz-accent: var(--kz-hue); --kz-accent-2: var(--kz-hue-2); }
+
 :root {
   /* The Krizaka typography: the files of @krizaka/fonts, loaded and preloaded by next/font/local in the locale layout
      (--font-kz-*: hashed families with their own adjusted fallback), in the token roles. The site's older styles read
@@ -555,584 +589,6 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   DOCUMENTATION — Layout, Sidebar, Prose
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* ─── Root + Layout Grid ─── */
-
-.docs-root {
-  min-height: 100dvh;
-  background: var(--kz-surface-0);
-  display: flex;
-  flex-direction: column;
-}
-
-.docs-layout {
-  flex: 1;
-  display: flex;
-  max-width: 1400px;
-  margin: 0 auto;
-  width: 100%;
-  padding-top: 80px; /* navbar clearance */
-}
-
-/* ─── Sidebar ─── */
-
-.docs-sidebar {
-  width: 260px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 80px;
-  height: calc(100dvh - 80px);
-  display: flex;
-  flex-direction: column;
-  border-right: 1px solid var(--kz-border-subtle);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 0;
-}
-
-.docs-sidebar::-webkit-scrollbar {
-  width: 2px;
-}
-.docs-sidebar::-webkit-scrollbar-thumb {
-  background: var(--kz-border-default);
-  border-radius: 99px;
-}
-
-.docs-sidebar-header {
-  padding: 20px 20px 16px;
-}
-
-.docs-sidebar-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  transition: opacity 200ms ease;
-}
-.docs-sidebar-brand:hover {
-  opacity: 0.8;
-}
-
-.docs-sidebar-brand-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--kz-radius-sm);
-  background: color-mix(in srgb, var(--kz-surface-2) 60%, transparent);
-  border: 1px solid var(--kz-border-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.docs-sidebar-brand-name {
-  font-family: var(--font-display);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--kz-text-primary);
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-}
-
-.docs-sidebar-brand-label {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  color: var(--kz-text-muted);
-  letter-spacing: 0.04em;
-}
-
-/* ─── Sidebar Nav ─── */
-
-.docs-sidebar-nav {
-  flex: 1;
-  padding: 4px 12px 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.docs-nav-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 8px;
-  border-radius: var(--kz-radius-sm);
-  font-size: 13px;
-  font-family: var(--font-display);
-  color: var(--kz-text-secondary);
-  text-decoration: none;
-  transition: background 150ms ease, color 150ms ease;
-  position: relative;
-}
-.docs-nav-link:hover {
-  background: hsla(0, 0%, 100%, 0.04);
-  color: var(--kz-text-primary);
-}
-.docs-nav-link.active {
-  background: var(--kz-accent-soft);
-  color: var(--kz-accent);
-  font-weight: 600;
-}
-.docs-nav-link.active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 6px;
-  bottom: 6px;
-  width: 2px;
-  border-radius: 9999px;
-  background: var(--kz-accent);
-}
-
-.docs-nav-section {
-  margin-top: 8px;
-}
-
-.docs-nav-section-label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px 6px;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--kz-text-muted);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-.docs-nav-section-items {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.docs-nav-child {
-  padding-left: 28px;
-  font-size: 12.5px;
-}
-
-/* ─── Sidebar Footer ─── */
-
-.docs-sidebar-footer {
-  padding: 12px 16px 16px;
-  border-top: 1px solid var(--kz-border-subtle);
-}
-
-.docs-footer-github {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  border-radius: var(--kz-radius-sm);
-  font-size: 12px;
-  font-family: var(--font-display);
-  font-weight: 500;
-  color: var(--kz-text-muted);
-  text-decoration: none;
-  transition: background 150ms ease, color 150ms ease;
-}
-.docs-footer-github:hover {
-  background: hsla(0, 0%, 100%, 0.04);
-  color: var(--kz-text-secondary);
-}
-
-/* ─── Main Content ─── */
-
-.docs-main {
-  flex: 1;
-  min-width: 0;
-  overflow-x: hidden;
-}
-
-.docs-content {
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 32px 40px 80px;
-}
-
-/* ─── Breadcrumb ─── */
-
-.docs-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--kz-text-muted);
-  margin-bottom: 24px;
-  letter-spacing: 0.02em;
-}
-.docs-breadcrumb-sep {
-  margin: 0 6px;
-  opacity: 0.4;
-}
-.docs-breadcrumb-cat {
-  color: var(--kz-accent);
-  text-transform: capitalize;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   DOCUMENTATION — Article Prose Styles
-   ═══════════════════════════════════════════════════════════════════ */
-
-.docs-article {
-  font-family: var(--font-display);
-  color: var(--kz-text-primary);
-  line-height: 1.75;
-  font-size: 14.5px;
-}
-
-/* ─── Headings ─── */
-
-.docs-article h1 {
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--kz-text-primary);
-  margin: 0 0 8px;
-  line-height: 1.2;
-}
-
-.docs-article h2 {
-  font-family: var(--font-display);
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--kz-text-primary);
-  margin: 48px 0 16px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--kz-border-subtle);
-  line-height: 1.3;
-}
-
-.docs-article h3 {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  color: var(--kz-text-primary);
-  margin: 32px 0 12px;
-  line-height: 1.4;
-}
-
-.docs-article h4 {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--kz-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin: 24px 0 8px;
-}
-
-/* ─── Paragraphs ─── */
-
-.docs-article p {
-  margin: 12px 0;
-  color: var(--kz-text-secondary);
-}
-
-.docs-article strong {
-  color: var(--kz-text-primary);
-  font-weight: 600;
-}
-
-/* ─── Links ─── */
-
-.docs-article a {
-  color: var(--kz-accent);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 200ms ease;
-}
-.docs-article a:hover {
-  border-bottom-color: var(--kz-accent);
-}
-
-/* ─── Lists ─── */
-
-.docs-article ul,
-.docs-article ol {
-  margin: 12px 0;
-  padding-left: 20px;
-  color: var(--kz-text-secondary);
-}
-.docs-article li {
-  margin: 4px 0;
-}
-.docs-article li::marker {
-  color: var(--kz-accent);
-}
-
-/* ─── Inline Code ─── */
-
-.docs-article code:not(pre code) {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: hsla(217, 92%, 60%, 0.08);
-  color: hsl(217, 92%, 72%);
-  border: 1px solid hsla(217, 92%, 60%, 0.1);
-}
-
-/* ─── Code Blocks ─── */
-
-.mdx-code-block {
-  margin: 20px 0;
-  border-radius: var(--kz-radius-md);
-  overflow: hidden;
-  border: 1px solid var(--kz-border-subtle);
-  background: var(--kz-surface-1);
-}
-
-.mdx-code-block pre {
-  margin: 0;
-  padding: 16px 20px;
-  overflow-x: auto;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  line-height: 1.65;
-  background: transparent !important;
-}
-
-.mdx-code-block pre code {
-  background: none !important;
-  border: none !important;
-  padding: 0 !important;
-  font-size: inherit;
-  color: var(--kz-text-secondary);
-}
-
-/* ─── Tables ─── */
-
-.mdx-table-wrap {
-  margin: 20px 0;
-  border-radius: var(--kz-radius-md);
-  border: 1px solid var(--kz-border-subtle);
-  overflow: hidden;
-  background: color-mix(in srgb, var(--kz-surface-1) 50%, transparent);
-}
-
-.mdx-table-wrap table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 12.5px;
-  font-family: var(--font-display);
-}
-
-.mdx-table-wrap thead {
-  background: var(--kz-surface-2);
-}
-
-.mdx-table-wrap th {
-  padding: 10px 14px;
-  font-family: var(--font-mono);
-  font-size: 10.5px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--kz-text-muted);
-  text-align: left;
-  border-bottom: 1px solid var(--kz-border-subtle);
-}
-
-.mdx-table-wrap td {
-  padding: 10px 14px;
-  color: var(--kz-text-secondary);
-  border-bottom: 1px solid hsla(0, 0%, 100%, 0.03);
-  vertical-align: top;
-}
-
-.mdx-table-wrap tr:last-child td {
-  border-bottom: none;
-}
-
-.mdx-table-wrap tr:hover td {
-  background: hsla(0, 0%, 100%, 0.02);
-}
-
-.mdx-table-wrap td code {
-  font-size: 11.5px;
-}
-
-/* ─── Blockquotes / Alerts ─── */
-
-.docs-article blockquote {
-  margin: 20px 0;
-  padding: 14px 16px 14px 20px;
-  border-radius: var(--kz-radius-sm);
-  border: 1px solid var(--kz-border-subtle);
-  border-left: 3px solid var(--kz-accent);
-  background: color-mix(in srgb, var(--kz-surface-1) 60%, transparent);
-  font-size: 13.5px;
-}
-
-.docs-article blockquote p {
-  margin: 4px 0;
-}
-
-.docs-article blockquote[data-variant="warning"] {
-  border-left-color: var(--kz-warning);
-  background: hsla(38, 92%, 50%, 0.04);
-}
-
-.docs-article blockquote[data-variant="critical"] {
-  border-left-color: var(--kz-danger);
-  background: hsla(0, 84%, 60%, 0.04);
-}
-
-.docs-article blockquote[data-variant="note"] {
-  border-left-color: var(--kz-success);
-  background: hsla(160, 84%, 39%, 0.04);
-}
-
-/* ─── Horizontal Rule ─── */
-
-.mdx-hr,
-.docs-article hr {
-  border: none;
-  height: 1px;
-  margin: 40px 0;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    var(--kz-border-default) 20%,
-    var(--kz-border-default) 80%,
-    transparent
-  );
-}
-
-/* ─── Images ─── */
-
-.mdx-image-wrap {
-  display: block;
-  margin: 24px 0;
-  border-radius: var(--kz-radius-md);
-  overflow: hidden;
-  border: 1px solid var(--kz-border-subtle);
-}
-
-.mdx-image-wrap img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.mdx-image-caption {
-  display: block;
-  padding: 8px 14px;
-  font-size: 11px;
-  font-family: var(--font-mono);
-  color: var(--kz-text-muted);
-  background: var(--kz-surface-1);
-  border-top: 1px solid var(--kz-border-subtle);
-}
-
-/* ─── Video ─── */
-
-.docs-article video {
-  border-radius: var(--kz-radius-md);
-  border: 1px solid var(--kz-border-subtle);
-  margin: 16px 0;
-}
-
-/* ─── Details / Summary ─── */
-
-.docs-article details {
-  margin: 16px 0;
-  border: 1px solid var(--kz-border-subtle);
-  border-radius: var(--kz-radius-sm);
-  overflow: hidden;
-}
-
-.docs-article summary {
-  padding: 10px 14px;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--kz-text-primary);
-  cursor: pointer;
-  background: var(--kz-surface-1);
-  transition: background 150ms ease;
-}
-.docs-article summary:hover {
-  background: var(--kz-surface-2);
-}
-
-.docs-article details[open] > summary {
-  border-bottom: 1px solid var(--kz-border-subtle);
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   DOCUMENTATION — Responsive
-   ═══════════════════════════════════════════════════════════════════ */
-
-@media (max-width: 1024px) {
-  .docs-sidebar {
-    display: none;
-  }
-
-  .docs-content {
-    padding: 24px 20px 60px;
-  }
-}
-
-@media (max-width: 768px) {
-  .docs-layout {
-    padding-top: 72px;
-  }
-
-  .docs-article h1 {
-    font-size: 22px;
-  }
-  .docs-article h2 {
-    font-size: 17px;
-  }
-}
-
-/* ─── Brand illustrations (sovereignty motifs) ─── */
-@keyframes kz-dash-flow { to { stroke-dashoffset: -26; } }
-@keyframes kz-float-y { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-@keyframes kz-spin-slow { to { transform: rotate(360deg); } }
-@keyframes kz-pulse-core { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-@keyframes kz-packet-drift { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(118px); } }
-
-.kz-perim-dash { animation: kz-dash-flow 2.6s linear infinite; }
-.kz-perim-float { animation: kz-float-y 5s ease-in-out infinite; }
-.kz-perim-packet { animation: kz-packet-drift 6s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
-.kz-hex-spin { animation: kz-spin-slow 28s linear infinite; }
-.kz-hex-core { animation: kz-pulse-core 3s ease-in-out infinite; }
-
-@media (prefers-reduced-motion: reduce) {
-  .kz-perim-dash,
-  .kz-perim-float,
-  .kz-perim-packet,
-  .kz-hex-spin,
-  .kz-hex-core {
-    animation: none !important;
-  }
-}
-
-/* Premium dynamic glow and tech-border utilities */
-.glow-card-cyber {
-  position: relative;
-  background: color-mix(in srgb, var(--kz-surface-1) 85%, transparent);
-  border: 1px solid var(--kz-border-subtle);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
-  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glow-card-cyber:hover {
-  border-color: var(--kz-accent) !important;
-  box-shadow: 0 12px 30px -4px hsla(217, 92%, 60%, 0.18), 0 4px 10px -2px hsla(217, 92%, 60%, 0.08);
-  transform: translateY(-4px);
-}
-
-/* ═══════════════════════════════════════════════════════════════════
    PREMIUM MICRO-INTERACTIONS — metal headline · CTA glare · spotlight
    ─────────────────────────────────────────────────────────────────
    Token-only, theme-aware, and reduced-motion safe (the global animation
@@ -1171,10 +627,7 @@ body {
 }
 
 
-/* ─── Organisation sections (home, /products, /open-source) ─── */
-.kz-section { max-width: 72rem; margin: 0 auto; padding: 72px 20px; }
-.kz-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--kz-accent-text); margin: 0 0 10px; }
-.kz-h2 { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 800; letter-spacing: -.025em; color: var(--kz-text-primary); margin: 0 0 28px; }
+/* ─── Links of the organisation pages (sections, frame and headings come from @krizaka/ui/page) ─── */
 .kz-link-strong, .kz-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; text-decoration: none; }
 .kz-link-strong { color: var(--kz-accent-text); font-weight: 700; }
 .kz-link { color: var(--kz-text-secondary); }
@@ -1205,58 +658,14 @@ body {
   font-family: var(--kz-font-sans);
   letter-spacing: normal;
 }
-
-/* Hub */
-.kz-docs-hub {
-  width: 100%;
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: calc(var(--kz-docs-top) + 48px) 16px 96px;
-}
-.kz-docs-hub-header { max-width: 680px; margin-bottom: 48px; }
-.kz-docs-hub-kicker {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--kz-accent-text);
-  margin-bottom: 12px;
-}
-.kz-docs-hub-header h1 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin-bottom: 16px;
-}
-.kz-docs-hub-header p:last-child { color: var(--kz-text-secondary); font-size: 1.0625rem; line-height: 1.6; }
-.kz-docs-hub-group { margin-top: 40px; }
-.kz-docs-hub-group h2 {
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--kz-text-secondary);
-  margin-bottom: 16px;
-}
-.kz-docs-hub-grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
-.kz-docs-hub-card {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 24px;
-  border-radius: var(--kz-radius-lg);
-  border: 1px solid var(--kz-border-subtle);
-  background: var(--kz-surface-1);
-  color: var(--kz-text-primary);
-  text-decoration: none;
-  transition: border-color var(--kz-transition-fast), background-color var(--kz-transition-fast);
-}
-.kz-docs-hub-card:hover { border-color: var(--kz-border-strong); background: var(--kz-surface-2); }
-.kz-docs-hub-card-title { font-size: 1.125rem; font-weight: 700; }
-.kz-docs-hub-card-text { color: var(--kz-text-secondary); font-size: 0.9375rem; line-height: 1.55; flex: 1; }
-.kz-docs-hub-card-cta { display: inline-flex; align-items: center; gap: 6px; color: var(--kz-accent-text); font-size: 0.875rem; font-weight: 600; }
+/* The documentation in the frame (one shell with the rest of the site): Fumadocs' grid is as wide as the bar above it
+   (--kz-page-max-docs), centred between the page gutters; the sidebar is a panel inside the frame — its surface no
+   longer runs to the window's edge — and the page sits against it, never centred in an empty column when it has no
+   table of contents (the right-shifted pages of a wide screen). */
+.kz-docs { --fd-layout-width: var(--kz-page-max-docs); }
+@media (min-width: 768px) { .kz-docs { padding-inline: var(--kz-page-gutter, clamp(16px, 3.2vw, 32px)); } }
+.kz-docs #nd-sidebar:not([data-collapsed="true"]) { background: transparent; }
+.kz-docs [data-layout-main] { justify-items: start; }
 
 /* Live preview */
 .kz-preview {
@@ -1511,10 +920,7 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
 .kz-coming-soon-title { font-weight: 700; color: var(--kz-text-primary); }
 .kz-coming-soon a { color: var(--kz-accent-text); font-weight: 600; text-decoration: none; }
 .kz-doc-index { display: flex; flex-direction: column; gap: 1.75rem; }
-.kz-doc-index-group h2 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
-.kz-doc-index-group ul { list-style: none; display: grid; gap: 4px 24px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
-.kz-doc-index-group a { color: var(--kz-text-secondary); text-decoration: none; font-size: 0.9375rem; }
-.kz-doc-index-group a:hover { color: var(--kz-accent-text); }
+.kz-doc-index-group h2 { margin-bottom: 0.75rem; font-family: var(--kz-font-display); font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; }
 
 /* ═══════════════════════════════════════════════════════════════════
    Brand pages — the Krizaka visual language (BRAND.md §4) on the site
@@ -1531,8 +937,9 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
 html .kz-backdrop.bp-glide { background: linear-gradient(180deg, var(--kz-surface-0), var(--kz-brand-gradient-from) 24%, var(--kz-brand-gradient-via) 62%, var(--kz-surface-0)); }
 html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
 
-.bp-wrap { position: relative; max-width: 72rem; margin: 0 auto; padding: clamp(64px, 9vw, 112px) 20px; }
-.bp-hero { padding-top: clamp(112px, 13vw, 152px); }
+/* A brand section's content: the page frame (`kz-frame`, @krizaka/ui) and the rhythm of a brand page. */
+.bp-wrap { position: relative; padding-block: clamp(64px, 9vw, 112px); }
+.bp-hero { padding-top: var(--kz-hero-top); }
 .bp-eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px; font-family: var(--font-mono); font-size: 11px; font-weight: 700;
   letter-spacing: .16em; text-transform: uppercase; color: var(--kz-accent-text); }
 .bp-h1 { margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.4rem, 6.4vw, 4.2rem); font-weight: 800;
@@ -1550,7 +957,7 @@ html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
 
 .bp-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .bp-center .bp-actions { justify-content: center; }
-/* The page language (app/components/sections) inside a brand page: its cards, decisions and rules under a bp heading. */
+/* The page blocks of @krizaka/ui inside a brand page: its cards, decisions and rules under a bp heading. */
 .bp-argue { margin-top: 32px; }
 /* On a phone the actions of a block stack at full width, the main one first: one even column of buttons. */
 @media (max-width: 560px) { .bp-actions > * { flex: 1 1 100%; } }
@@ -1893,3 +1300,37 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
 .kz-icons-code { margin: 0; padding: 10px 12px; border-radius: var(--kz-radius-sm); background: var(--kz-surface-2); font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-primary); white-space: pre-wrap; overflow-wrap: anywhere; }
 .kz-icons-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .kz-icons-actions button:hover { color: var(--kz-text-primary); border-color: var(--kz-border-strong); }
+
+/* ═══════════════════════════════════════════════════════════════════
+   Reading pages (/open-source/<block>, product sub-pages) — what the page blocks of @krizaka/ui leave to the page:
+   prose, two columns, lists that say yes or no, release lines. Frame, headings, cards, decisions, code and calls to
+   act are the blocks' (AGENTS.md §4.1).
+   ═══════════════════════════════════════════════════════════════════ */
+.rd-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
+@media (max-width: 860px) { .rd-two { grid-template-columns: minmax(0, 1fr); } }
+.rd-stack { display: grid; gap: 16px; min-width: 0; align-content: start; }
+.rd-prose { margin: 0; font-size: 15.5px; line-height: 1.75; color: var(--kz-text-secondary); }
+.rd-prose.is-small { font-size: 14.5px; }
+.rd-h2 { font-size: clamp(1.25rem, 2.6vw, 1.6rem); scroll-margin-top: var(--kz-anchor-offset); }
+/* The problem in one sentence, large: what a reader keeps if they read nothing else. */
+.rd-hook { margin: 0 0 22px; max-width: 34ch; font-family: var(--kz-font-display); font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  font-weight: 750; line-height: 1.3; letter-spacing: -.015em; color: var(--kz-text-primary); text-wrap: balance; }
+.kz-list.rd-no li::before { width: 9px; height: 2px; top: .78em; border-radius: 1px; background: var(--kz-text-secondary); }
+.kz-list.rd-large li { font-size: 16px; color: var(--kz-text-primary); padding-left: 24px; }
+.kz-list.rd-large li::before { top: .5em; width: 10px; height: 10px; border-radius: 3px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--kz-hue, var(--kz-accent)) 18%, transparent); }
+.rd-links { display: flex; flex-wrap: wrap; gap: 10px; }
+.rd-status { display: grid; gap: 10px; }
+.rd-release { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 14px;
+  border-radius: 14px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-default); text-decoration: none; color: inherit; }
+.rd-release:hover { border-color: var(--kz-border-strong); }
+.rd-release:focus-visible { outline: 2px solid var(--kz-accent); outline-offset: 2px; }
+.rd-release > code { font-family: var(--kz-font-mono); font-size: 12.5px; color: var(--kz-text-primary); overflow-wrap: anywhere; }
+.rd-next { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.rd-next li { padding: 12px 14px 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary);
+  background: color-mix(in srgb, var(--kz-warning) 6%, var(--kz-surface-1)); border: 1px solid color-mix(in srgb, var(--kz-warning) 26%, transparent);
+  box-shadow: inset 3px 0 0 var(--kz-warning); }
+.rd-next a { display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; font-family: var(--kz-font-mono); font-size: 12px; font-weight: 700;
+  color: var(--kz-accent-text); text-decoration: none; white-space: nowrap; }
+.rd-next a:hover { text-decoration: underline; }
+.rd-last { padding-bottom: 40px; }

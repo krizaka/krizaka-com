@@ -524,6 +524,9 @@
       },
       "products": {
         "title": "Produits",
+        "pageEyebrow": "Les produits Krizaka",
+        "pageTitle": "Deux produits, une même façon de construire",
+        "pageLead": "Deux produits open source, présentés de la même façon : ce que chacun fait, un enregistrement de la vraie application et où aller ensuite.",
         "discover": "Découvrir",
         "demo": "démonstration",
         "openApp": "Ouvrir l'application",
@@ -1164,7 +1167,7 @@
       "write": "Nous écrire"
     },
     "legal": {
-      "back": "← Retour à l'accueil",
+      "back": "Retour à l'accueil",
       "updated": "Dernière mise à jour : octobre 2026",
       "privacy": {
         "metaTitle": "Politique de confidentialité — Krizaka",
@@ -3088,6 +3091,7 @@
       "data-display": "Affichage de données",
       "media": "Médias",
       "charts": "Graphiques",
+      "blocks": "Blocs",
       "layout": "Mise en page",
       "foundations": "Fondations",
       "domain services": "Services métier",
@@ -3170,6 +3174,7 @@
         "data-display": "Affichage de données",
         "media": "Médias",
         "charts": "Graphiques",
+        "blocks": "Blocs",
         "layout": "Mise en page",
         "foundations": "Fondations"
       },

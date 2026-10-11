@@ -25,7 +25,7 @@ import Rich from "@/app/components/Rich";
 import { Card } from "@krizaka/ui/card";
 import { Mascot } from "@krizaka/ui/mascots";
 import { cn } from "@krizaka/ui/cn";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 import { Stepper, type StepStatus } from "@krizaka/ui/stepper";
 
 /* ─── Sibling Navigation (Centered) ─── */

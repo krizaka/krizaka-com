@@ -1,14 +1,16 @@
 "use client";
 
 import { Mascot } from "@krizaka/ui/mascots";
-import { ArrowRight, MessagesSquare, CircleDot } from "lucide-react";
+import { ChatIcon, FlagIcon, ForwardIcon } from "@krizaka/icons";
 import TopNavBar from "../../components/TopNavBar";
 import SiteFooter from "../../components/SiteFooter";
 import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
-import { ButtonLink, PageHero } from "../../components/sections";
+import { PageHero } from "@krizaka/ui/page-hero";
+import ButtonLink from "../../components/ButtonLink";
+import Link from "next/link";
 
 /* ─── Mascots: the owl answers questions, the falcon watches over bugs (@krizaka/ui/mascots, story colours) ─── */
 function OwlMascot() {
@@ -30,18 +32,18 @@ const PUBLIC_REPOSITORIES = [
 const CHANNELS = [
   {
     id: "discussions",
-    Icon: MessagesSquare,
+    Icon: ChatIcon,
     Mascot: OwlMascot,
-    accent: "#a78bfa",
-    glow: "rgba(167, 139, 250, 0.08)",
+    accent: "var(--kz-info-text)",
+    glow: "color-mix(in srgb, var(--kz-info) 8%, transparent)",
     path: "discussions/new/choose",
   },
   {
     id: "issues",
-    Icon: CircleDot,
+    Icon: FlagIcon,
     Mascot: FalconMascot,
-    accent: "#ff9f00",
-    glow: "rgba(255, 159, 0, 0.08)",
+    accent: "var(--kz-warning-text)",
+    glow: "color-mix(in srgb, var(--kz-warning) 8%, transparent)",
     path: "issues/new/choose",
   },
 ];
@@ -61,16 +63,11 @@ export default function ContactClient() {
         eyebrow={t.site.contactPage.eyebrow}
         title={t.site.contactPage.title}
         lead={t.site.contactPage.lead}
-        mascot={{ bird: "flamingo", mood: "welcome" }}
+        aside={<Mascot bird="flamingo" mood="welcome" size={112} />}
+        linkAs={Link}
       />
 
-      <div
-        style={{
-          maxWidth: "1120px",
-          margin: "0 auto",
-          padding: "56px 24px 80px",
-        }}
-      >
+      <div className="kz-frame" style={{ paddingBlock: "56px 80px" }}>
         {/* ─── Private message to the team, and what happens after ─── */}
         <div className="contact-main">
           <ContactForm />
@@ -160,7 +157,7 @@ export default function ContactClient() {
                   }}
                 >
                   <span style={{ color: accent, display: "flex" }}>
-                    <Icon size={15} strokeWidth={2} />
+                    <Icon size={15} aria-hidden />
                   </span>
                   <span
                     style={{
@@ -212,7 +209,7 @@ export default function ContactClient() {
                     <ButtonLink key={product} href={`https://github.com/krizaka/${repo}/${path}`}>
                       <ProductLogo id={product} size={18} animated={false} />
                       {t.site.contactPage.publicProducts[product]}
-                      <ArrowRight size={13} strokeWidth={2} />
+                      <ForwardIcon size={13} aria-hidden />
                     </ButtonLink>
                   ))}
                 </div>

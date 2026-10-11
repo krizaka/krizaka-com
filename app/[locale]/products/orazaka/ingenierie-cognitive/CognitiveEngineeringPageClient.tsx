@@ -7,7 +7,10 @@ import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import { useI18n } from "../../../../components/I18nProvider";
 import { format } from "@krizaka/i18n";
-import { ButtonLink, PageHero } from "../../../../components/sections";
+import { PageHero } from "@krizaka/ui/page-hero";
+import { Mascot } from "@krizaka/ui/mascots";
+import ButtonLink from "../../../../components/ButtonLink";
+import Link from "next/link";
 
 
 const NEUROMORPHIC_ICONS = [Cpu, Database, Shield];
@@ -27,16 +30,11 @@ export default function CognitiveEngineeringPageClient({ interceptors }: { inter
         eyebrow={p.eyebrow}
         title={p.introTitle}
         lead={p.introText}
-        mascot={{ bird: "owl", mood: "thinking" }}
+        aside={<Mascot bird="owl" mood="thinking" size={112} />}
+        linkAs={Link}
       />
 
-      <div
-        style={{
-          maxWidth: "1100px",
-          margin: "0 auto",
-          padding: "64px 24px 100px",
-        }}
-      >
+      <div className="kz-frame" style={{ paddingBlock: "64px 100px" }}>
         {/* ─── KRIZAKA VISION PANEL ─── */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}

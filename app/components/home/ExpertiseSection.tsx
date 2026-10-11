@@ -7,6 +7,7 @@ import type { ComponentType } from "react";
 import { useI18n } from "../I18nProvider";
 import { reveal } from "@/lib/motion";
 import { GlowCard } from "@krizaka/ui/glow-card";
+import { Section } from "@krizaka/ui/page";
 
 /* Sovereign AI · modular architecture · compliance · media · payments · governance (texts: site.expertise.items). */
 const ICONS: ComponentType<IconProps>[] = [AiIcon, PackIcon, ShieldIcon, VideoIcon, BillingIcon, KnowledgeIcon];
@@ -16,13 +17,7 @@ export default function ExpertiseSection() {
   const e = t.site.expertise;
 
   return (
-    <section id="expertise" className="kz-section">
-      <div {...reveal()}>
-        <p className="kz-eyebrow">{e.eyebrow}</p>
-        <h2 className="kz-h2">
-          {e.title}
-        </h2>
-      </div>
+    <Section id="expertise-title" eyebrow={e.eyebrow} title={e.title} reveal>
       <ul className="kz-expertise">
         {e.items.map((item, i) => {
           const Icon = ICONS[i % ICONS.length];
@@ -49,6 +44,6 @@ export default function ExpertiseSection() {
         .kz-expertise-item h3 { margin: 12px 0 6px; font-size: 16px; font-weight: 700; color: var(--kz-text-primary); }
         .kz-expertise-item p { margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
       `}</style>
-    </section>
+    </Section>
   );
 }

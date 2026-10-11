@@ -2,23 +2,32 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalIcon, ForwardIcon } from "@krizaka/icons";
+import { CardGrid } from "@krizaka/ui/card-grid";
+import { CodeBlock, CodeTabs } from "@krizaka/ui/code-block";
+import { CtaPanel } from "@krizaka/ui/cta-panel";
+import { DecisionList } from "@krizaka/ui/decision-list";
+import { LinkCard } from "@krizaka/ui/link-card";
+import { MascotQuote } from "@krizaka/ui/mascot-quote";
+import { Mascot } from "@krizaka/ui/mascots";
+import { Facts, Page, Section, Ticks } from "@krizaka/ui/page";
+import { PageHero } from "@krizaka/ui/page-hero";
+import { Toc, TocLayout } from "@krizaka/ui/toc";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import BlockIcon from "@/app/components/blocks/BlockIcon";
 import FeedbackLinks from "@/app/components/blocks/FeedbackLinks";
-import { Badges, CodeSample, CodeTabs, ContentSection, DecisionList, DiscussionCta, Inline, MascotRule, PageHero, PageToc } from "@/app/components/sections";
 import { BUILDING_BLOCKS, blockById, blockRepoUrl } from "@/lib/building-blocks";
 import { LOCALES } from "@/lib/locales";
 import { format, getDictionary } from "@/lib/i18n";
 import { buildAlternates } from "@/lib/seo";
 import { reveal } from "@/lib/motion";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 /* /open-source/<block> — why a Krizaka building block exists, for an engineer deciding whether to adopt it: the
    problem it removes, the decisions and what they cost, the code, when not to use it, where it stands, how to adopt
    it and where to argue. The "how" stays in the documentation it links to (/docs/java, /docs/ui, the README).
-   Built from the page language (app/components/sections, AGENTS.md §4.1): the page wears the block's hue, a sticky
-   table of contents follows the reading. */
+   Built from the page blocks of @krizaka/ui (AGENTS.md §4.1): the page wears the block's hue (`data-hue` → --kz-hue),
+   a sticky table of contents follows the reading. */
 
 interface Props {
   params: Promise<{ locale: string; block: string }>;
@@ -71,7 +80,8 @@ export default async function BuildingBlockPage({ params }: Props) {
       <TopNavBar />
 
       <PageHero
-        back={{ href: "/open-source#building-blocks", label: p.back }}
+        back={{ href: "/open-source#blocks-title", label: p.back }}
+        linkAs={Link}
         eyebrow={
           <>
             <BlockIcon icon={block.icon} size={18} /> {block.repo}
@@ -79,101 +89,109 @@ export default async function BuildingBlockPage({ params }: Props) {
         }
         title={item.name}
         lead={item.tagline}
-        mascot={{ bird: block.bird, mood: block.mood }}
+        aside={<Mascot bird={block.bird} mood={block.mood} size={112} />}
       >
-        <Badges
+        <Facts
           items={[
             { label: `${w[block.registry]} ${release.version}`, tone: "ok", href: release.url },
-            ...(block.next.length > 0 ? [{ label: format(w.inProgress, { count: block.next.length }), tone: "wip" as const, href: "#status" }] : []),
+            ...(block.next.length > 0 ? [{ label: format(w.inProgress, { count: block.next.length }), tone: "wip" as const }] : []),
           ]}
         />
       </PageHero>
 
-      <div className="ps-page ps-doc">
-        <aside className="ps-doc-aside">
-          <PageToc label={p.toc} items={toc} />
-        </aside>
-        <div className="ps-doc-main">
+      <Page>
+        <TocLayout toc={<Toc label={p.toc} items={toc} />}>
           {/* The first section is on the first screen of a phone: painted at once, no reveal (LCP). */}
-          <ContentSection id="problem" title={p.problem}>
-            <p className="ps-hook">
-              <Inline text={item.headline} />
+          <Section id="problem" title={p.problem} headingSize="sm" spacing="sm">
+            <p className="rd-hook">
+              <Ticks>{item.headline}</Ticks>
             </p>
-            <div className="ps-two">
-              <p className="ps-prose">
-                <Inline text={item.trap} />
+            <div className="rd-two">
+              <p className="rd-prose">
+                <Ticks>{item.trap}</Ticks>
               </p>
-              <ul className="ps-list is-no">
+              <ul className="kz-list rd-no">
                 {item.problem.map((line) => (
                   <li key={line}>
-                    <Inline text={line} />
+                    <Ticks>{line}</Ticks>
                   </li>
                 ))}
               </ul>
             </div>
-          </ContentSection>
+          </Section>
 
-          <ContentSection id="answer" title={w.answer}>
-            <div className="ps-stack" {...reveal()}>
-              <ul className="ps-list is-yes is-large">
+          <Section id="answer" title={w.answer} headingSize="sm" spacing="sm" divider>
+            <div className="rd-stack" {...reveal()}>
+              <ul className="kz-list rd-large">
                 {item.does.map((line) => (
                   <li key={line}>
-                    <Inline text={line} />
+                    <Ticks>{line}</Ticks>
                   </li>
                 ))}
               </ul>
-              <p className="ps-prose">
-                <Inline text={item.answer} />
+              <p className="rd-prose">
+                <Ticks>{item.answer}</Ticks>
               </p>
-              <MascotRule variant="callout" bird={block.bird} mood={block.mood} label={format(w.birdSays, { bird: w.birds[block.bird] })} text={item.rule} />
+              <MascotQuote variant="callout" bird={block.bird} mood={block.mood} label={format(w.birdSays, { bird: w.birds[block.bird] })}>
+                <Ticks>{item.rule}</Ticks>
+              </MascotQuote>
             </div>
-          </ContentSection>
+          </Section>
 
-          <ContentSection id="decisions" title={p.decisions}>
-            <DecisionList decisions={item.decisions} labels={p} />
-          </ContentSection>
+          <Section id="decisions" title={p.decisions} headingSize="sm" spacing="sm" divider>
+            <DecisionList
+              decisions={item.decisions.map((d) => ({
+                id: d.chose,
+                chose: <Ticks>{d.chose}</Ticks>,
+                refused: <Ticks>{d.refused}</Ticks>,
+                because: <Ticks>{d.because}</Ticks>,
+                cost: <Ticks>{d.cost}</Ticks>,
+              }))}
+              labels={p}
+            />
+          </Section>
 
-          <ContentSection id="code" title={p.code}>
+          <Section id="code" title={p.code} headingSize="sm" spacing="sm" divider>
             <div {...reveal(0, "soft")}>
-              <CodeSample sample={block.sample} copy={w.copy} copied={w.copied} />
+              <CodeBlock code={block.sample.code} language={block.sample.lang} file={block.sample.file} copyLabel={w.copy} copiedLabel={w.copied} />
             </div>
-          </ContentSection>
+          </Section>
 
-          <ContentSection id="fit">
-            <div className="ps-two">
-              <div className="ps-stack" {...reveal()}>
-                <h2 id="not-for" className="ps-h2">{p.notFor}</h2>
-                <ul className="ps-list is-no" aria-labelledby="not-for">
+          <Section spacing="sm" divider aria-label={`${p.notFor} · ${p.status}`}>
+            <div className="rd-two">
+              <div className="rd-stack" {...reveal()}>
+                <h2 id="not-for" className="kz-heading-title rd-h2">{p.notFor}</h2>
+                <ul className="kz-list rd-no" aria-labelledby="not-for">
                   {item.notFor.map((line) => (
                     <li key={line}>
-                      <Inline text={line} />
+                      <Ticks>{line}</Ticks>
                     </li>
                   ))}
                 </ul>
               </div>
-              <div className="ps-stack" {...reveal(1)}>
-                <h2 id="status" className="ps-h2">{p.status}</h2>
-                <p className="ps-prose is-small">
-                  <Inline text={item.status} />
+              <div className="rd-stack" {...reveal(1)}>
+                <h2 id="status" className="kz-heading-title rd-h2">{p.status}</h2>
+                <p className="rd-prose is-small">
+                  <Ticks>{item.status}</Ticks>
                 </p>
-                <p className="ps-label">{p.published}</p>
-                <div className="ps-status">
+                <p className="kz-label">{p.published}</p>
+                <div className="rd-status">
                   {block.releases.map((r) => (
-                    <a key={r.coordinate} href={r.url} target="_blank" rel="noopener noreferrer" className="ps-release">
+                    <a key={r.coordinate} href={r.url} target="_blank" rel="noopener noreferrer" className="rd-release">
                       <code>{r.coordinate}</code>
-                      <span className="ps-badge is-ok">
-                        <span className="ps-badge-dot" aria-hidden /> {r.version} · {w[block.registry]}
+                      <span className="kz-fact" data-tone="ok">
+                        <span className="kz-fact-dot" aria-hidden /> {r.version} · {w[block.registry]}
                       </span>
                     </a>
                   ))}
                 </div>
                 {block.next.length > 0 && (
                   <>
-                    <p className="ps-label">{p.next}</p>
-                    <ul className="ps-next">
+                    <p className="kz-label">{p.next}</p>
+                    <ul className="rd-next">
                       {block.next.map((n) => (
                         <li key={n.key}>
-                          <Inline text={next[n.key]} />
+                          <Ticks>{next[n.key]}</Ticks>
                           <a href={n.url} target="_blank" rel="noopener noreferrer">
                             {shortRef(n.url)} <ExternalIcon size={11} aria-hidden />
                           </a>
@@ -184,64 +202,57 @@ export default async function BuildingBlockPage({ params }: Props) {
                 )}
               </div>
             </div>
-          </ContentSection>
+          </Section>
 
-          <ContentSection id="adopt" title={p.adopt}>
-            <div className="ps-stack" {...reveal(0, "soft")}>
+          <Section id="adopt" title={p.adopt} headingSize="sm" spacing="sm" divider>
+            <div className="rd-stack" {...reveal(0, "soft")}>
               {block.install.length > 1 ? (
                 <CodeTabs
                   label={p.buildTool}
                   tabs={block.install.map((s, i) => ({
                     id: s.tab ?? String(i),
                     label: s.tab ?? s.file,
-                    content: <CodeSample sample={s} copy={w.copy} copied={w.copied} />,
+                    content: <CodeBlock code={s.code} language={s.lang} file={s.file} copyLabel={w.copy} copiedLabel={w.copied} />,
                   }))}
                 />
               ) : (
-                <CodeSample sample={block.install[0]} copy={w.copy} copied={w.copied} />
+                <CodeBlock code={block.install[0].code} language={block.install[0].lang} file={block.install[0].file} copyLabel={w.copy} copiedLabel={w.copied} />
               )}
-              <div className="ps-links">
-                {block.docs.startsWith("/") ? (
-                  <ButtonLink href={block.docs} variant="primary" size="lg">
-                    {p.docs} <ForwardIcon size={14} aria-hidden />
-                  </ButtonLink>
-                ) : (
-                  <ButtonLink href={block.docs} variant="primary" size="lg">
-                    {p.docs} <ExternalIcon size={13} aria-hidden />
-                  </ButtonLink>
-                )}
+              <div className="rd-links">
+                <ButtonLink href={block.docs} variant="primary" size="lg" shimmer>
+                  {p.docs} {block.docs.startsWith("/") ? <ForwardIcon size={14} aria-hidden /> : <ExternalIcon size={13} aria-hidden />}
+                </ButtonLink>
                 <ButtonLink href={blockRepoUrl(block)} size="lg">
                   {p.repo} <ExternalIcon size={13} aria-hidden />
                 </ButtonLink>
               </div>
             </div>
-          </ContentSection>
+          </Section>
 
-          <ContentSection id="feedback">
-            <DiscussionCta id="feedback-title" title={p.feedbackTitle} body={p.feedbackBody}>
+          <Section spacing="sm" divider aria-labelledby="feedback-title">
+            <CtaPanel id="feedback-title" title={p.feedbackTitle} body={p.feedbackBody} reveal>
               <FeedbackLinks block={block} labels={w} />
-            </DiscussionCta>
-          </ContentSection>
+            </CtaPanel>
+          </Section>
 
-          <ContentSection id="others" title={p.others} className="is-last">
-            <ul className="ps-tiles">
+          <Section id="others" title={p.others} headingSize="sm" spacing="sm" divider className="rd-last">
+            <CardGrid as="ul" min={260} columns={2}>
               {BUILDING_BLOCKS.filter((b) => b.id !== block.id).map((b) => (
-                <li key={b.id} data-hue={b.hue}>
-                  <Link href={`/open-source/${b.id}`}>
-                    <BlockIcon icon={b.icon} size={20} />
-                    <span>
-                      <strong>{w.items[b.id].name}</strong>
-                      <span>
-                        <Inline text={w.items[b.id].headline} />
-                      </span>
-                    </span>
-                  </Link>
-                </li>
+                <LinkCard
+                  key={b.id}
+                  data-hue={b.hue}
+                  href={`/open-source/${b.id}`}
+                  linkAs={Link}
+                  icon={<BlockIcon icon={b.icon} size={20} />}
+                  title={w.items[b.id].name}
+                  titleAs="span"
+                  description={<Ticks>{w.items[b.id].headline}</Ticks>}
+                />
               ))}
-            </ul>
-          </ContentSection>
-        </div>
-      </div>
+            </CardGrid>
+          </Section>
+        </TocLayout>
+      </Page>
 
       <SiteFooter />
     </main>

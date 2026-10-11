@@ -4,7 +4,7 @@ import { getDictionary, format, type Locale } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import { packText, packTitle, showcasePacks } from "@/lib/orazaka-packs";
 import Rich from "@/app/components/Rich";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 /* The packs, on the Orazaka product page: every pack on the shelf (generated from krizaka/orazaka-packs), each a link
    to its card on /products/orazaka/packages. Words: site.orazakaPacks.callout; the packs' own words are theirs. */
@@ -13,7 +13,7 @@ export default function PacksCallout({ locale }: { locale: Locale }) {
   const packs = showcasePacks();
   const studios = packs.reduce((n, p) => n + p.studios.length, 0);
   return (
-    <section id="packs" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
+    <section id="packs" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }}>
       <div className="bp-center" {...reveal()}>
         <p className="bp-eyebrow">
           <PackIcon size={18} nodeColor="var(--kz-accent)" /> {t.eyebrow}
