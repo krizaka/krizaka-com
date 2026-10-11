@@ -573,7 +573,7 @@
     "story": {
       "intro": {
         "eyebrow": "Our story",
-        "title": "Three clans. One fight: what's yours stays yours.",
+        "title": "Three clans. One fight: <b>what's yours stays yours.</b>",
         "lead": "Krizaka began with a refusal. Your data shouldn't have to leave home to be useful. A creator shouldn't have to hand a fortune to a platform to get paid. And nobody should have to take software on faith. So we forge our own — in the open, line by line — and we named it after the legends that taught us what trust costs."
       },
       "chapters": {
@@ -713,7 +713,14 @@
         "cabinetLabel": "Krizaka · arcade cabinet",
         "coinEntry": "1 credit = 1 story",
         "playerStart": "1P Start",
-        "specialMove": "Special move"
+        "specialMove": "Special move",
+        "selectPrompt": "Choose your clan",
+        "corner": "In the corner",
+        "stats": {
+          "krizaka": "Code in the open",
+          "orazaka": "Data kept at home",
+          "orochia": "Creator share"
+        }
       },
       "open": {
         "label": "Bonus stage",
