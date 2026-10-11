@@ -1,98 +1,15 @@
 "use client";
 
 
-import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowLeft, Check, X, Shield, Cpu, Database, ChevronRight, MessageSquare, Lock, CheckCircle2, Brain, Globe, AlertTriangle } from "lucide-react";
+import { Check, X, Shield, Cpu, Database, ChevronRight, MessageSquare, Lock, CheckCircle2, Brain, Globe, AlertTriangle } from "lucide-react";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import { useI18n } from "../../../../components/I18nProvider";
 import { format } from "@krizaka/i18n";
+import { ButtonLink, PageHero } from "../../../../components/sections";
+import "../../../../components/sections/sections.css";
 
-/* ─── Animated Owl Mascot SVG ─── */
-function OwlMascotLarge({ size = 140 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 60 60"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      style={{ overflow: "visible" }}
-    >
-      <defs>
-        <linearGradient id="large-owl-grad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#a78bfa" />
-          <stop offset="100%" stopColor="#6d28d9" />
-        </linearGradient>
-        <radialGradient id="owl-glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#a78bfa" stopOpacity="0.25" />
-          <stop offset="100%" stopColor="#a78bfa" stopOpacity="0" />
-        </radialGradient>
-      </defs>
-      <g>
-        {/* Ambient Glow */}
-        <motion.circle
-          cx="30"
-          cy="30"
-          r="42"
-          fill="url(#owl-glow)"
-          animate={{ scale: [0.95, 1.15, 0.95], opacity: [0.6, 0.95, 0.6] }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-        />
-        
-        {/* Body */}
-        <motion.path
-          d="M 18 22 C 18 10, 42 10, 42 22 C 42 38, 36 45, 30 45 C 24 45, 18 38, 18 22 Z"
-          fill="url(#large-owl-grad)"
-          stroke="var(--kz-border-strong)"
-          strokeWidth="1.5"
-          animate={{ y: [-2, 2, -2] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        />
-
-        {/* Eyes & Pupils */}
-        <g>
-          <circle cx="24" cy="18" r="4.5" fill="var(--kz-surface-0)" stroke="var(--kz-border-strong)" strokeWidth="1" />
-          <circle cx="36" cy="18" r="4.5" fill="var(--kz-surface-0)" stroke="var(--kz-border-strong)" strokeWidth="1" />
-          <motion.circle
-            cx="24" cy="18" r="1.5" fill="#00ff66"
-            animate={{ scaleY: [1, 1, 0.1, 1, 1] }}
-            transition={{ duration: 4.5, repeat: Infinity, times: [0, 0.45, 0.47, 0.5, 1] }}
-            style={{ transformOrigin: "24px 18px" }}
-          />
-          <motion.circle
-            cx="36" cy="18" r="1.5" fill="#00ff66"
-            animate={{ scaleY: [1, 1, 0.1, 1, 1] }}
-            transition={{ duration: 4.5, repeat: Infinity, times: [0, 0.45, 0.47, 0.5, 1] }}
-            style={{ transformOrigin: "36px 18px" }}
-          />
-        </g>
-
-        {/* Beak */}
-        <polygon points="28,20 32,20 30,25" fill="#fbbf24" stroke="var(--kz-border-strong)" strokeWidth="1" />
-
-        {/* Ears / Horns */}
-        <motion.polygon
-          points="20,11 24,14 18,18"
-          fill="#7c3aed"
-          stroke="var(--kz-border-strong)" strokeWidth="1"
-          animate={{ rotate: [-5, 5, -5] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "24px 14px" }}
-        />
-        <motion.polygon
-          points="40,11 36,14 42,18"
-          fill="#7c3aed"
-          stroke="var(--kz-border-strong)" strokeWidth="1"
-          animate={{ rotate: [5, -5, 5] }}
-          transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut" }}
-          style={{ transformOrigin: "36px 14px" }}
-        />
-      </g>
-    </svg>
-  );
-}
 
 const NEUROMORPHIC_ICONS = [Cpu, Database, Shield];
 const CARD_COLORS = ["#f43f5e", "#3b82f6", "#10b981"];
@@ -105,134 +22,22 @@ export default function CognitiveEngineeringPageClient({ interceptors }: { inter
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)", overflowX: "hidden" }}>
       <TopNavBar />
 
+      {/* The first screen of a sub-page, in the Krizaka page language: back to the product, the owl that reads. */}
+      <PageHero
+        back={{ href: "/products/orazaka", label: p.backProduct }}
+        eyebrow={p.eyebrow}
+        title={p.introTitle}
+        lead={p.introText}
+        mascot={{ bird: "owl", mood: "thinking" }}
+      />
+
       <div
         style={{
           maxWidth: "1100px",
           margin: "0 auto",
-          padding: "120px 24px 100px",
+          padding: "64px 24px 100px",
         }}
       >
-        {/* ─── Elegant Back Link ─── */}
-        <motion.div
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.4 }}
-        >
-          <Link
-            href="/"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              fontSize: "12px",
-              fontWeight: 700,
-              color: "var(--kz-text-muted)",
-              textDecoration: "none",
-              marginBottom: "40px",
-              fontFamily: "var(--font-mono, monospace)",
-              transition: "color 150ms ease",
-              textTransform: "uppercase",
-              letterSpacing: "0.05em"
-            }}
-            className="back-btn"
-          >
-            <ArrowLeft size={13} strokeWidth={2.5} />
-            {p.backHome}
-          </Link>
-        </motion.div>
-
-        {/* ─── HERO SECTION: Centered Layout ─── */}
-        <section
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            textAlign: "center",
-            gap: "32px",
-            marginBottom: "80px",
-          }}
-          className="hero-section-centered"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-          >
-            <span
-              style={{
-                fontFamily: "var(--font-mono, monospace)",
-                fontSize: "10.5px",
-                fontWeight: 800,
-                color: "var(--kz-accent)",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                display: "block",
-                marginBottom: "14px",
-              }}
-            >
-              Orazaka Cognitive Infrastructure
-            </span>
-            <h1
-              style={{
-                fontFamily: "var(--font-display), system-ui, sans-serif",
-                fontSize: "clamp(2rem, 5vw, 2.7rem)",
-                fontWeight: 850,
-                letterSpacing: "-0.03em",
-                color: "var(--kz-text-primary)",
-                lineHeight: 1.12,
-                marginBottom: "24px",
-                maxWidth: "800px",
-              }}
-            >
-              {p.introTitle}
-            </h1>
-            <p
-              style={{
-                fontSize: "15px",
-                color: "var(--kz-text-secondary)",
-                lineHeight: 1.75,
-                maxWidth: "720px",
-                margin: "0 auto",
-                whiteSpace: "pre-line",
-              }}
-            >
-              {p.introText}
-            </p>
-          </motion.div>
-
-          {/* Hero Mascot Illustration */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              position: "relative",
-              marginTop: "16px",
-            }}
-          >
-            <div
-              style={{
-                width: "200px",
-                height: "200px",
-                borderRadius: "50%",
-                background: "var(--kz-surface-1)",
-                border: "1.5px solid var(--kz-border-strong)",
-                boxShadow: "var(--kz-shadow-lg), 0 0 40px rgba(167, 139, 250, 0.05)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                position: "relative",
-              }}
-            >
-              <OwlMascotLarge size={140} />
-            </div>
-          </motion.div>
-        </section>
-
         {/* ─── KRIZAKA VISION PANEL ─── */}
         <motion.section
           initial={{ opacity: 0, y: 30 }}
@@ -1936,27 +1741,10 @@ export default function CognitiveEngineeringPageClient({ interceptors }: { inter
           >
             {p.ctaDesc}
           </p>
-          <Link
-            href="/products/orazaka/packages"
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "14px 28px",
-              borderRadius: "9999px",
-              fontSize: "14px",
-              fontWeight: 600,
-              background: "var(--kz-accent)",
-              color: "var(--kz-on-accent)",
-              textDecoration: "none",
-              fontFamily: "var(--font-display), system-ui, sans-serif",
-              transition: "background 150ms ease",
-            }}
-            className="cta-button"
-          >
+          <ButtonLink href="/products/orazaka/packages" variant="primary" size="lg">
             {p.ctaButton}
             <ChevronRight size={15} strokeWidth={2.5} />
-          </Link>
+          </ButtonLink>
         </section>
       </div>
 
@@ -1964,9 +1752,6 @@ export default function CognitiveEngineeringPageClient({ interceptors }: { inter
 
       {/* ─── Interactive styles for premium animations ─── */}
       <style>{`
-        .back-btn:hover {
-          color: var(--kz-text-primary) !important;
-        }
 
         .family-card:hover {
           border-color: var(--kz-accent) !important;
