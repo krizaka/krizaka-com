@@ -212,6 +212,8 @@
   bar (`TopNavBar`, `.kz-site-bar`), every hero, section, the footer and Fumadocs' grid (`.kz-docs`) share those edges —
   no page centres its own container (`maxWidth: 1100px`, `.os-section`…). Settings live in `app/globals.css` (« One
   frame for every page »): `--kz-hero-top` clears the bar, `--kz-anchor-offset` places anchors.
+- **Styles.** The blocks' stylesheet is `@krizaka/ui/blocks.css`, imported once by package path in
+  `app/[locale]/layout.tsx` — never by a relative `@import` inside `globals.css` (the production build dropped one, #74).
 - The blocks, by role:
   - `PageHero` (`@krizaka/ui/page-hero`) — the first screen of every page but the home: back link (`linkAs={Link}`),
     eyebrow, h1, lead, facts or actions as children, the page's bird in `aside`. Painted at once, never revealed (LCP).

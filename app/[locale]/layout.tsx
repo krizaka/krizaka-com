@@ -7,9 +7,9 @@ import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
 import "../globals.css";
-/* The Krizaka page language (app/components/sections): used on most pages, so it ships with the layout's stylesheet —
-   not per page. Imported here, not by an @import in globals.css: the production build dropped that one (#74). */
-import "../components/sections/sections.css";
+/* The page blocks of @krizaka/ui (AGENTS.md §4.1): their stylesheet, imported by package path from the layout — never by
+   a relative @import inside globals.css, which the production build dropped (#74). */
+import "@krizaka/ui/blocks.css";
 import { MotionObserver } from "@krizaka/ui/motion";
 import { cn } from "@krizaka/ui/cn";
 
