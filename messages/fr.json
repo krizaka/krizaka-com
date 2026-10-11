@@ -880,41 +880,7 @@
           "body": "L'objectif tout-ou-rien d'un créateur, un défi lancé à un créateur, ou un appel ouvert auquel les créateurs postulent. Les fans engagent des crédits bloqués jusqu'à la livraison de la vidéo ou de la story — versés alors, rendus sinon. Cagnotte en temps réel, classement, aucun litige de paiement."
         }
       },
-      "tour": {
-        "feed": {
-          "label": "Découvrir",
-          "caption": "L’accueil des fans : la porte 18+, les stories des créateurs, les quatre façons de les payer, les enchères et défis ouverts."
-        },
-        "community": {
-          "label": "Explorer",
-          "caption": "L’Explorer n’est jamais vide : tendances, nouveautés, stories, créateurs à suivre, enchères et défis ouverts — puis un tag et une recherche."
-        },
-        "stories": {
-          "label": "Des stories qui rapportent",
-          "caption": "Alex ouvre la story d’Elena depuis l’anneau de son profil, active le son, l’aime, répond en privé et lui donne 10 $ de pourboire — directement."
-        },
-        "unlock": {
-          "label": "Déblocage payant",
-          "caption": "La répétition de Mia se débloque dès 8 $ : Alex paie en crédits, le serveur ouvre l’accès et la vidéo démarre aussitôt."
-        },
-        "auctions": {
-          "label": "Enchères",
-          "caption": "Elena met un premier montage aux enchères : Alex mise 22 $ et prend la tête — ses crédits ne sont bloqués que tant qu’il mène."
-        },
-        "challenges": {
-          "label": "Financer un objectif",
-          "caption": "L’objectif d’épisode d’Elena : Alex le soutient avec 25 $, bloqués jusqu’à la livraison et rendus si elle ne livre pas."
-        },
-        "studio": {
-          "label": "Être payé à 90 %",
-          "caption": "Les revenus d’Elena, lus dans le registre : 90 % de chaque paiement, le pourboire d’Alex déjà là, puis la destination de ses versements."
-        },
-        "admin": {
-          "label": "Console d'administration",
-          "caption": "orochia-admin : vérification 2257, signalements, catalogue et retraits, comptes, trésorerie."
-        }
-      },
-      "kicker": "Produit Krizaka · open source",
+      "kicker": "La plateforme vidéo des créateurs · open source",
       "subtitle": "La plateforme vidéo des créateurs indépendants.",
       "lead": "Diffusion 4K, paywalls, pourboires et versements créateurs — avec la rigueur d'une infrastructure financière : accès décidé sur le serveur, paiements confirmés par la passerelle, grand livre en partie double. Conçue pour les contenus adultes (18+), sous licence Apache-2.0.",
       "watchDemo": "Voir la démo",
@@ -986,7 +952,10 @@
             "Livré sous 14 jours, sinon chaque promesse est rendue."
           ]
         }
-      }
+      },
+      "tourEyebrow": "La démo",
+      "tourTitle": "Une journée sur Orochia, côté fan ou côté créatrice.",
+      "tourMore": "Voir toute la démo"
     },
     "openSource": {
       "steps": {
@@ -2115,6 +2084,165 @@
       },
       "copy": "Copier",
       "copied": "Copié"
+    },
+    "orochiaDemo": {
+      "meta": {
+        "title": "Démo Orochia — une journée côté créatrice et côté fan | Krizaka",
+        "description": "Orochia au travail : Elena publie une vidéo payante, reçoit un pourboire et une enchère en direct, voit qui a payé et retire 90 % ; Alex la découvre, soutient sa story, débloque une session, enchérit et finance sa prochaine vidéo. Enregistré sur la vraie application."
+      },
+      "eyebrow": "Démo Orochia · enregistrée sur la vraie application",
+      "title": "Une créatrice, un fan. <b>Chaque paiement à l'écran.</b>",
+      "lead": "Voici Elena, autrice-compositrice qui filme ses propres clips, et Alex, qui les écoute en boucle. Il la découvre, soutient sa story, débloque une session, enchérit sur un montage et finance son prochain tournage ; elle publie, voit l'argent arriver en direct et en retire 90 %. Chaque extrait ci-dessous est le vrai Orochia.",
+      "ctaTour": "Voir la visite",
+      "ctaCases": "Ce que ça vous apporte",
+      "ctaApp": "Ouvrir Orochia",
+      "frameLabel": "orochia · web",
+      "facts": [
+        {
+          "value": "90 %",
+          "label": "de chaque pourboire, déblocage, enchère gagnante et promesse revient à la créatrice"
+        },
+        {
+          "value": "4 façons",
+          "label": "de payer une créatrice : pourboires, déblocages payants, enchères et objectifs financés"
+        },
+        {
+          "value": "100 % réel",
+          "label": "des enregistrements d'écran de l'application, rien de simulé ni de rejoué"
+        }
+      ],
+      "tourEyebrow": "La visite",
+      "tourTitle": "Choisissez votre côté : la journée d'Alex, ou celle d'Elena.",
+      "sides": {
+        "label": "La journée de qui",
+        "fan": "Je suis fan",
+        "creator": "Je suis créatrice",
+        "fanLead": "Alex découvre Elena, regarde sa story avec le son et la paie de quatre façons — chacune en deux gestes, en crédits.",
+        "creatorLead": "Elena publie, voit les paiements arriver pendant qu'elle travaille, sait qui a payé quoi et retire vers sa banque."
+      },
+      "tour": {
+        "alex-discover": {
+          "label": "Découvrir",
+          "caption": "Explorer : les stories du jour, une recherche « rain », et le clip d'Elena qui se lance aussitôt."
+        },
+        "alex-story": {
+          "label": "Une story qui rapporte",
+          "caption": "La story d'Elena, son activé : Alex l'aime et envoie 5 $ — directement à elle."
+        },
+        "alex-unlock": {
+          "label": "Débloquer une session",
+          "caption": "Sa session acoustique coûte 8 $ : payée en crédits, l'accès est accordé par le serveur et la vidéo démarre."
+        },
+        "alex-bid": {
+          "label": "Enchérir",
+          "caption": "Le director's cut est aux enchères : Alex enchérit et prend la tête. Ses crédits ne sont bloqués que tant qu'il mène."
+        },
+        "alex-back": {
+          "label": "Financer le tournage",
+          "caption": "L'objectif d'Elena est à 60 % : Alex promet 25 $, bloqués jusqu'à la livraison, rendus si elle ne livre pas."
+        },
+        "elena-publish": {
+          "label": "Publier",
+          "caption": "Une nouvelle vidéo, un titre, « Déblocage payant » à 6 $ — le formulaire montre qu'elle garde 5,40 $ — puis directement vers le CDN."
+        },
+        "elena-live": {
+          "label": "Payée en direct",
+          "caption": "Pendant qu'elle travaille, un pourboire de 15 $ et une nouvelle enchère arrivent en direct, puis l'attendent dans ses notifications."
+        },
+        "elena-story": {
+          "label": "Qui a payé",
+          "caption": "L'activité de sa story, pour elle seule : qui l'a vue, qui l'a aimée, qui a donné."
+        },
+        "elena-earnings": {
+          "label": "Retirer 90 %",
+          "caption": "Ses revenus, lus dans le grand livre — 90 % de chaque paiement — puis tout vers sa banque en deux gestes."
+        },
+        "showcase": {
+          "label": "Une journée sur Orochia",
+          "caption": "Alex découvre Elena, soutient sa story et débloque sa session ; Elena est payée en direct et retire 90 %."
+        }
+      },
+      "useCasesEyebrow": "Ce que ça vous apporte",
+      "useCasesTitle": "Sept moments, <b>de l'argent à chacun.</b>",
+      "sideBadge": {
+        "creator": "Créatrice",
+        "fan": "Fan"
+      },
+      "useCases": {
+        "publish": {
+          "title": "Publier et fixer son prix",
+          "body": "Déposez une vidéo, choisissez qui peut la voir — tout le monde, vos abonnés, vos contacts, une liste d'invités ou un déblocage payant — et voyez ce que vous gardez avant de publier.",
+          "points": [
+            "Votre prix, les 10 % de frais et votre part, côte à côte",
+            "Directement vers un réseau vidéo mondial : rien n'attend sur nos serveurs",
+            "Jusqu'à 4 Go et 3 heures, avec reprise"
+          ]
+        },
+        "live": {
+          "title": "Être payée en travaillant",
+          "body": "Pourboires, déblocages, enchères et promesses arrivent au moment où ils ont lieu — un avis à l'écran, une ligne dans vos notifications, sur votre téléphone aussi.",
+          "points": [
+            "En direct, sur chaque page ouverte",
+            "Chaque type d'avis se coupe, dans l'app ou par e-mail",
+            "Chaque paiement confirmé par le prestataire de paiement, jamais par un clic"
+          ]
+        },
+        "stories": {
+          "title": "Des stories qui rapportent",
+          "body": "Une story de 24 heures, avec le son ; vos fans l'aiment, vous répondent en privé ou vous donnent un pourboire — et vous voyez qui.",
+          "points": [
+            "Qui a vu, aimé et donné, pour vous seule",
+            "Le public de votre choix, modifiable à tout moment",
+            "Un pourboire vous arrive directement, à 90 %"
+          ]
+        },
+        "unlock": {
+          "title": "Des déblocages sans friction",
+          "body": "Un fan débloque une vidéo en deux gestes avec des crédits Orochia ; le serveur accorde l'accès, puis la vidéo démarre.",
+          "points": [
+            "Votre minimum est le prix, toujours respecté",
+            "Crédits achetés en packs : les données de carte n'atteignent jamais Orochia",
+            "Des liens de lecture signés qui expirent en cinq minutes"
+          ]
+        },
+        "auction": {
+          "title": "Mettre une vidéo aux enchères",
+          "body": "Proposez un montage exclusif aux enchères : les fans enchérissent en crédits, le prix monte au grand jour, le gagnant — lui seul — la regarde.",
+          "points": [
+            "Crédits bloqués seulement tant qu'une enchère mène",
+            "Une enchère de dernière minute ajoute deux minutes : pas de sniping",
+            "Vous acceptez le résultat, ou il se règle seul"
+          ]
+        },
+        "goal": {
+          "title": "Faire financer sa prochaine vidéo",
+          "body": "Fixez un objectif et une échéance ; les fans le soutiennent en crédits placés sous séquestre. Vous êtes payée à la livraison — ils récupèrent tout sinon.",
+          "points": [
+            "Un anneau de progression visible de tous",
+            "Les soutiens voient le résultat en premier",
+            "Personne ne paie pour rien"
+          ]
+        },
+        "earnings": {
+          "title": "Garder 90 %, retirer en deux gestes",
+          "body": "Chaque paiement, lu dans un grand livre immuable : par période, par vidéo, par mois. Retrait vers votre banque, PayPal ou crypto dès 20 $.",
+          "points": [
+            "90 % de chaque paiement, les frais affichés à chaque ligne",
+            "Votre compte chiffré, seul un indice masqué est affiché",
+            "Exports CSV pour votre comptable"
+          ]
+        }
+      },
+      "persona": {
+        "title": "Qui sont Elena et Alex ?",
+        "body": "Elena Marlow et Alex Carter sont inventés pour cette démo, avec des avatars illustrés ; leurs vidéos sont des images d'archives sous licence. Les comptes vivent dans une base de démo séparée, créée par une commande (npm run demo:seed) qui refuse de s'exécuter ailleurs que sur un poste de développement."
+      },
+      "closing": {
+        "title": "Votre public, vos prix, <b>90 % pour vous.</b>",
+        "body": "Faites tourner Orochia pour vos créateurs, ou dites-nous ce dont votre plateforme a besoin.",
+        "app": "Ouvrir Orochia",
+        "contact": "Nous écrire"
+      }
     }
   },
   "pages": {

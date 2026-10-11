@@ -97,7 +97,7 @@ export default function OrochiaDocsOverview({ docs, modules, stack, endpoints }:
             <div className="odo-card">
               <h3><PlayCircle size={16} aria-hidden /> {c.run.tour[0]}</h3>
               <p>{c.run.tour[1]}</p>
-              <Link href="/products/orochia#tour" className="odo-btn is-primary">{c.run.tourCta} <ArrowRight size={14} /></Link>
+              <Link href="/products/orochia/demos" className="odo-btn is-primary">{c.run.tourCta} <ArrowRight size={14} /></Link>
             </div>
             <div className="odo-card">
               <h3><Workflow size={16} aria-hidden /> {c.run.arch[0]}</h3>

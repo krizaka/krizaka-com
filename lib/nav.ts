@@ -46,7 +46,7 @@ export const NAV_PRODUCTS: NavProduct[] = [
     links: [
       { href: "/products/orochia", icon: "overview" },
       { href: "/products/orochia#architecture", icon: "architecture" },
-      { href: "/products/orochia#tour", icon: "demo" },
+      { href: "/products/orochia/demos", icon: "demo" },
       { href: "/products/orochia#guarantees", icon: "signature" },
     ],
   },

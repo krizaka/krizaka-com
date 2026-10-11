@@ -27,7 +27,8 @@ import SiteFooter from "@/app/components/SiteFooter";
 import OrochiaArchitecture from "@/app/components/OrochiaArchitecture";
 import CountUp from "@/app/components/motion/CountUp";
 import { reveal } from "@/lib/motion";
-import ProductTour from "@/app/components/ProductTour";
+import OrochiaTour from "@/app/components/OrochiaTour";
+import { tourSrc } from "@/lib/orochia-demo";
 import { format, getDictionary } from "@/lib/i18n";
 import ContactCta from "@/app/components/home/ContactCta";
 import { verifiedJourneys } from "@/lib/orochia-journeys";
@@ -80,9 +81,6 @@ const WAYS = [
   { id: "challenge", Icon: ChallengeIcon },
 ] as const;
 
-/** Screen recordings of the real app; label and caption: messages → site.orochia.tour.<id>. */
-const TOUR = ["feed", "community", "stories", "unlock", "auctions", "challenges", "studio", "admin"] as const;
-
 const node = "var(--kz-accent-2)";
 
 export default async function OrochiaPage({ params }: Props) {
@@ -104,22 +102,24 @@ export default async function OrochiaPage({ params }: Props) {
         grid
         media={
           <div className="bp-media">
-            <div style={{ backgroundImage: "url(/assets/orochia/tour/feed.jpg)" }} />
-            <div style={{ backgroundImage: "url(/assets/orochia/tour/community.jpg)" }} />
+            <div style={{ backgroundImage: `url(${tourSrc("alex-discover")}.jpg)` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("elena-earnings")}.jpg)` }} />
           </div>
         }
       >
         <div className="bp-wrap bp-hero bp-center">
-          <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
-            <OrochiaLogo size={104} />
-          </div>
+          {/* The product's name first — the mark and the word together, as in the menu and on the home. */}
+          <p className="oc-lockup">
+            <OrochiaLogo size={72} />
+            <span>Orochia</span>
+          </p>
           <p className="bp-eyebrow">{t.kicker}</p>
           <h1 className="bp-h1">
             {t.titleLead} <span style={{ display: "block" }} className="bp-accent">{t.titleAccent}</span>
           </h1>
           <p className="bp-lead" style={{ margin: "20px auto 0" }}>{t.heroLead}</p>
           <div className="bp-actions">
-            <Link href="#tour" className="bp-btn bp-btn-primary btn-sheen">
+            <Link href="/products/orochia/demos" className="bp-btn bp-btn-primary btn-sheen">
               <PlayIcon size={18} /> {t.watchDemo}
             </Link>
             <a href={OROCHIA_APP_URL} target="_blank" rel="noopener" className="bp-btn bp-btn-ghost">
@@ -205,12 +205,18 @@ export default async function OrochiaPage({ params }: Props) {
 
       {/* ─── Product tour (screen recordings of the real app) ─── */}
       <section id="tour" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
-        <div {...reveal()}>
-          <ProductTour
-            clips={TOUR.map((id) => ({ id, src: `/assets/orochia/tour/${id}`, ...t.tour[id] }))}
-            frameLabel="orochia · localhost"
-          />
+        <div className="bp-center" style={{ marginBottom: 24 }} {...reveal()}>
+          <p className="bp-eyebrow">{t.tourEyebrow}</p>
+          <h2 className="bp-h2">{t.tourTitle}</h2>
         </div>
+        <div {...reveal(1)}>
+          <OrochiaTour />
+        </div>
+        <p className="bp-center" style={{ marginTop: 20 }}>
+          <Link href="/products/orochia/demos" className="kz-link-strong">
+            <PlayIcon size={16} /> {t.tourMore}
+          </Link>
+        </p>
       </section>
 
       {/* ─── Guarantees ─── */}
@@ -276,6 +282,10 @@ export default async function OrochiaPage({ params }: Props) {
         <ContactCta topic="orochia" />
       </SectionBackdrop>
       <SiteFooter />
+      <style>{`
+        .oc-lockup { display: flex; width: fit-content; align-items: center; gap: 14px; margin: 0 auto 18px; font-family: var(--font-display), system-ui, sans-serif;
+          font-size: clamp(2.25rem, 5vw, 3.25rem); font-weight: 800; letter-spacing: -.03em; line-height: 1; color: var(--kz-text-primary); }
+      `}</style>
     </main>
   );
 }

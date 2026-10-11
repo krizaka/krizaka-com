@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/products/orazaka",
     "/products/orochia",
     "/products/orochia/docs",
+    "/products/orochia/demos",
     "/products/orazaka/packages",
     "/products/orazaka/usecases",
     "/products/orazaka/ingenierie-cognitive",
@@ -63,7 +64,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     } else if (path === "/contact" || path === "/privacy" || path === "/terms") {
       priority = 0.5;
       freq = "yearly";
-    } else if (path === "/products/orazaka/demos" || path === "/products/orazaka/architecture" || path === "/products/orazaka/ingenierie-cognitive") {
+    } else if (path === "/products/orazaka/demos" || path === "/products/orochia/demos" || path === "/products/orazaka/architecture" || path === "/products/orazaka/ingenierie-cognitive") {
       priority = 0.7;
       freq = "monthly";
     }
