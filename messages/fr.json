@@ -2761,6 +2761,7 @@
       "overlays": "Superpositions",
       "feedback": "Retours",
       "data-display": "Affichage de données",
+      "media": "Médias",
       "layout": "Mise en page",
       "foundations": "Fondations",
       "domain services": "Services métier"
@@ -2840,6 +2841,7 @@
         "overlays": "Superpositions",
         "feedback": "Retours",
         "data-display": "Affichage de données",
+        "media": "Médias",
         "layout": "Mise en page",
         "foundations": "Fondations"
       },
