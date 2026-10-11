@@ -50,7 +50,7 @@ html.light .org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :f
 /* The section's last third settles on the page surface whatever drifts behind it: the next section starts there. */
 .org-hero-fade { inset:auto 0 0 0; height:34%; background: linear-gradient(to bottom, transparent, var(--kz-surface-0) 88%); }
 /* The horizon: the signature landscape, faded at both edges so it never cuts the page. */
-.org-hero-horizon { inset:auto 0 0 0; height:340px; opacity:.6;
+.org-hero-horizon { inset:auto 0 0 0; height:340px; opacity:.6; transform: translate3d(0, 14%, 0);
   -webkit-mask-image: linear-gradient(to bottom, transparent, #000 34%, #000 56%, transparent 84%);
           mask-image: linear-gradient(to bottom, transparent, #000 34%, #000 56%, transparent 84%); }
 /* The floor fades out before the end of the section, which ends on the page surface like the next one starts. */
@@ -60,7 +60,7 @@ html.light .org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :f
 
 .org-hero-inner { position:relative; z-index:1; max-width:880px; margin:0 auto; text-align:center; }
 .org-hero-badge { display:inline-block; padding:6px 12px; border-radius:999px; font-family:var(--font-mono); font-size:11px; font-weight:600;
-  letter-spacing:.08em; text-transform:uppercase; color:var(--kz-accent-text); background:var(--kz-accent-soft);
+  letter-spacing:.08em; text-transform:uppercase; color:var(--kz-accent-text); background:color-mix(in srgb, var(--kz-accent) 10%, var(--kz-surface-0));
   border:1px solid color-mix(in srgb, var(--kz-accent) 25%, transparent); }
 .org-hero-title { font-family:var(--font-display), system-ui, sans-serif; font-size:clamp(2.3rem,6.4vw,3.9rem); font-weight:800;
   letter-spacing:-.035em; line-height:1.05; margin:20px 0 0; color:var(--kz-text-primary); }
@@ -87,8 +87,9 @@ html.light .org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :f
 
 /* The invitation to scroll: a real link to the products, a slow light running down a hairline. */
 .org-hero-scroll { display:inline-flex; flex-direction:column; align-items:center; gap:10px; margin-top:clamp(40px, 6vw, 64px);
-  padding:6px 12px; border-radius:999px; background: color-mix(in srgb, var(--kz-surface-0) 72%, transparent); text-decoration:none; font-family:var(--font-mono); font-size:11px; font-weight:600;
+  padding:4px; border-radius:12px; text-decoration:none; font-family:var(--font-mono); font-size:11px; font-weight:600;
   letter-spacing:.12em; text-transform:uppercase; color:var(--kz-text-secondary); transition: color var(--kz-transition-fast); }
+.org-hero-scroll > span:first-child { padding:4px 10px; border-radius:999px; background: color-mix(in srgb, var(--kz-surface-0) 72%, transparent); }
 .org-hero-scroll:hover { color:var(--kz-text-primary); }
 .org-hero-scroll:focus-visible { outline:2px solid var(--kz-ring); outline-offset:2px; }
 .org-hero-scroll-line { position:relative; width:1px; height:44px; overflow:hidden; background: var(--kz-border-default); }
