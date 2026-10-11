@@ -1003,44 +1003,6 @@
           "body": "Parlez-lui via son contrat versionné — les modules *-api et clients typés, publiés en com.krizaka:* sur Maven Central."
         }
       },
-      "featured": {
-        "krizaka-users": {
-          "title": "Utilisateurs & connexion",
-          "gives": [
-            "Inscription et vérification d'e-mail",
-            "Connexion mot de passe, Google, GitHub",
-            "Mot de passe oublié, profils",
-            "Clés d'API, rôles, JWT"
-          ]
-        },
-        "krizaka-notifications": {
-          "title": "Notifications",
-          "gives": [
-            "E-mail (SMTP), SMS (Twilio), webhooks",
-            "Un seul port de livraison pour tous les canaux",
-            "Déclenché par événement ou à la demande",
-            "Via AMQP, découplé de votre app"
-          ]
-        },
-        "krizaka-billing": {
-          "title": "Facturation & crédits",
-          "gives": [
-            "Crédits, portefeuilles et forfaits",
-            "Abonnements et grille tarifaire",
-            "Mesure : réserver → régler → libérer",
-            "Un client typé pour vos services"
-          ]
-        },
-        "krizaka-platform-kit": {
-          "title": "Kit plateforme",
-          "gives": [
-            "Une base de sécurité pour chaque chaîne de filtres",
-            "JWT de session et jetons service à service",
-            "Messages traités une fois, échecs rejoués",
-            "Un relais d'outbox transactionnel"
-          ]
-        }
-      },
       "groups": {
         "workspace": {
           "title": "Espace de travail",
@@ -1049,10 +1011,6 @@
         "foundation": {
           "title": "Fondations",
           "intro": "Build, contrats, edge et kit UI — pour toute application."
-        },
-        "domain": {
-          "title": "Briques Krizaka",
-          "intro": "Les composants open source de Krizaka — sécurité, messagerie, utilisateurs, notifications, facturation — publiés sur Maven Central et npm. Les produits les consomment ; toute application peut le faire."
         },
         "ai": {
           "title": "Moteur IA",
@@ -1088,15 +1046,12 @@
       "title": "Construisez avec nos briques.",
       "lead": "Tout ce que nous construisons est public. Cette page est pour les développeurs : prenez la gestion des utilisateurs, les notifications ou la facturation pour votre propre application — ou déployez un produit entier.",
       "count": "{count} dépôts publics · ",
-      "mostReused": "Les plus réutilisées",
-      "mostReusedTitle": "Ce dont chaque application a besoin d'abord.",
-      "viewRepo": "Voir le dépôt",
       "discoverProduct": "Découvrir le produit",
       "contributeTitle": "Envie de contribuer ?",
       "contributeBody": "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue.",
       "contributeGuide": "Guide de contribution",
-      "ask": "Poser une question",
-      "blocksTitle": "Les briques Krizaka"
+      "ask": "Demander dans les Discussions",
+      "write": "Nous écrire"
     },
     "legal": {
       "back": "← Retour à l'accueil",
@@ -1834,6 +1789,332 @@
     },
     "tour": {
       "label": "Visite du produit"
+    },
+    "blocks": {
+      "eyebrow": "Briques",
+      "title": "Six briques. Chacune supprime un bug que vous alliez écrire.",
+      "lead": "Pas une liste de dépôts : pour chaque brique, le piège dans lequel tombent la plupart des équipes, ce que la brique y fait, ce que nous avons refusé et ce que cela vous coûte. Chaque affirmation renvoie à du code ou à un test que vous pouvez lire.",
+      "trap": "Le piège",
+      "answer": "Ce qu'elle fait",
+      "rule": "La règle",
+      "whyHow": "Pourquoi, décisions, code",
+      "discuss": "Discuter",
+      "propose": "Proposer",
+      "report": "Signaler un bug",
+      "maven": "Maven Central",
+      "npm": "npm",
+      "birdSays": "La règle {bird}",
+      "birds": {
+        "falcon": "du faucon",
+        "owl": "du hibou",
+        "duck": "du canard",
+        "flamingo": "du flamant",
+        "pigeon": "du pigeon"
+      },
+      "forums": {
+        "title": "Les questions vont dans deux forums, pas six.",
+        "body": "Les cinq briques Java sortent en un seul BOM pour un même public, et les questions utiles les traversent (utilisateurs + facturation + jeton de service) : elles partagent les Discussions de krizaka-platform-kit, un fil par brique. Krizaka UI a les siennes — un autre écosystème, un autre rythme de version. Les bugs restent sur le dépôt concerné.",
+        "java": "Briques Java — Discussions",
+        "ui": "Krizaka UI — Discussions"
+      },
+      "page": {
+        "back": "Toutes les briques",
+        "problem": "Le problème qu'elle supprime",
+        "decisions": "Décisions et compromis",
+        "chose": "Nous avons choisi",
+        "refused": "Nous avons refusé",
+        "because": "Parce que",
+        "cost": "Ce que cela vous coûte",
+        "code": "En code",
+        "notFor": "Ne l'utilisez pas quand",
+        "status": "Où elle en est",
+        "published": "Publié",
+        "next": "En cours",
+        "adopt": "L'adopter",
+        "docs": "Lire le mode d'emploi",
+        "repo": "Le dépôt",
+        "feedbackTitle": "Dites-nous où ça coince.",
+        "feedbackBody": "Une brique est juste quand elle survit à votre code, pas au nôtre. Posez votre question dans le fil de la brique, proposez un changement comme idée, ou signalez un bug sur son dépôt — chaque décision de cette page reste ouverte à un meilleur argument.",
+        "others": "Les autres briques",
+        "metaTitle": "{name} — ce qu'elle supprime, nos choix et pourquoi"
+      },
+      "items": {
+        "krizaka-platform-kit": {
+          "name": "Platform kit",
+          "tagline": "Le code transverse que chaque service Spring Boot écrit — écrit une fois, avec ses invariants testés.",
+          "trap": "Publier un événement juste après l'écriture en base : un crash entre les deux et l'événement est perdu ; l'envoyer avant, et un rollback a déjà prévenu tout le monde. Un @RabbitListener en échec remis en file à l'infini bloque sa file. Chaque service invente son JSON d'erreur. Dans les services d'Orazaka, ce code existait cinq à sept fois — avec trois bugs actifs entre les copies.",
+          "answer": "Quatre modules et quatre starters : une base de sécurité pour chaque chaîne de filtres, des événements par outbox transactionnel, des files consommatrices qui réessaient puis passent en dead-letter, une consommation idempotente, des erreurs RFC 9457 avec un identifiant de requête, et des noms de service obligatoires sur chaque métrique.",
+          "rule": "Rien n'est ouvert par oubli. SecurityBaseline termine chaque chaîne par anyRequest().authenticated() : le chemin que vous avez oublié de lister est fermé, pas public.",
+          "problem": [
+            "Double écriture : un service qui écrit sa ligne puis appelle rabbitTemplate.convertAndSend perd l'événement s'il plante entre les deux, et celui qui envoie d'abord annonce des changements annulés.",
+            "Messages empoisonnés : un listener qui lève une exception sur un message malformé le reçoit de nouveau, aussitôt, pour toujours, et plus rien ne passe dans la file.",
+            "Déduplication à la main : un « existe-t-il ? alors j'insère » laisse passer deux livraisons qui se chevauchent — exactement quand le broker relivre une première tentative lente — et une réservation gardée après un échec perd la relivraison en silence.",
+            "Chaînes de sécurité copiées par service : deux sur six avaient dérivé dans Orazaka ; l'une répondait 401 à un preflight CORS."
+          ],
+          "decisions": [
+            {
+              "chose": "Un outbox transactionnel : EventPublisher.publish écrit une ligne de votre outbox dans votre transaction ; un relais réserve les lignes avec FOR UPDATE SKIP LOCKED et les publie, avec un messageId choisi à l'écriture.",
+              "refused": "Publier vers le broker depuis la méthode métier, et une transaction distribuée (XA) entre base et broker.",
+              "because": "L'événement est validé ou annulé avec le changement. Un relais qui plante republie le même messageId, et la déduplication du consommateur en fait un non-événement.",
+              "cost": "Une table d'outbox par contexte (vous implémentez OutboxStore sur votre schéma) et un délai de scrutation entre le commit et la publication."
+            },
+            {
+              "chose": "L'enveloppe dans les en-têtes AMQP (kz-type, kz-version, kz-producer, kz-correlation-id, kz-occurred-at), le corps = l'événement nu, et un JSON Schema par événement dans le module -api du producteur.",
+              "refused": "Un jar partagé de DTO d'événements, et une enveloppe JSON autour de chaque corps.",
+              "because": "Un jar de DTO partagé lie la version de chaque service à celle de tous les autres. Un schéma vérifié par des tests des deux côtés (EventContractTest) donne le contrat sans le couplage, et le corps reste lisible dans n'importe quel langage.",
+              "cost": "Chaque consommateur garde sa propre copie tolérante de l'événement et un test de contrat."
+            },
+            {
+              "chose": "Des files quorum déclarées en une ligne (KrizakaQueues.consumer), une relance sans état avec back-off — 5 tentatives à partir de 500 ms — puis sa jumelle .dlq avec les en-têtes d'origine et l'exception.",
+              "refused": "La remise en file par défaut de Spring en cas d'échec.",
+              "because": "Un message empoisonné remis en file tourne en boucle ; dans la DLQ il est visible, avec sa raison, et se rejoue à la main.",
+              "cost": "Une file déjà déclarée « classic » doit être vidée et redéclarée une fois."
+            },
+            {
+              "chose": "RFC 9457 Problem Details pour toute erreur : une DomainException devient son 4xx avec un code stable et le requestId ; la validation un 422 avec errors[] ; tout l'inattendu un 500 qui ne porte jamais son message.",
+              "refused": "Des corps d'erreur libres par service, et des traces ou messages d'exception dans les réponses 500.",
+              "because": "Un client gère une seule forme, et le requestId de la réponse est celui de la ligne de log — un ticket de support pointe l'échec.",
+              "cost": "Vos exceptions étendent DomainException (NotFoundException, ConflictException…) pour choisir leur statut."
+            },
+            {
+              "chose": "Des starters qui ne sont que des POM, au-dessus de modules utilisables seuls ; des valeurs par défaut à la plus basse priorité.",
+              "refused": "Renommer les modules en starters, et des défauts qui écrasent application.yml.",
+              "because": "Un produit déclare des capacités, pas la liste Spring derrière ; une montée de Spring Boot change les starters, pas votre POM — et votre application.yml gagne toujours.",
+              "cost": "Java 21 et Spring Boot 4.0 uniquement."
+            }
+          ],
+          "notFor": [
+            "Vos services tournent sur Spring Boot 3 ou Java 17 — le kit cible Spring Boot 4.0 et Java 21.",
+            "Votre couche HTTP est WebFlux : krizaka-web ne configure que les applications servlet.",
+            "Votre bus est Kafka : krizaka-messaging est RabbitMQ (AMQP 0-9-1) seulement.",
+            "Vos jetons viennent d'un fournisseur d'identité externe qui signe en RS256 ou ES256 : krizaka-security vérifie du HS256 aujourd'hui."
+          ],
+          "status": "0.2.0 sur Maven Central (2026-10-10) : les quatre modules et les quatre starters, construits et testés sur un vrai PostgreSQL et un vrai RabbitMQ en CI.",
+          "next": {
+            "processOnce": "MessageDedup.processOnce — réserver, exécuter, rendre la réservation en cas d'échec. Cinq listeners de notifications et de billing répètent ces huit lignes aujourd'hui ; l'un d'eux décrit l'oubli du release comme « le règlement perdu pour toujours ». Arrive en 0.3.0.",
+            "keys": "Un seul secret HS256 signe et vérifie : un service qui peut vérifier peut émettre. Décidé : des jetons de session signés par leur émetteur (JWKS) et des jetons de service par appelant, HS256 déprécié sur une mineure."
+          }
+        },
+        "krizaka-users": {
+          "name": "Utilisateurs",
+          "tagline": "Inscription, connexion, profils, clés d'API et rôles en service — avec un client typé pour les autres.",
+          "trap": "L'inscription ressemble à un week-end. Viennent ensuite la vérification d'e-mail, les jetons de réinitialisation qui doivent expirer et ne servir qu'une fois, les comptes Google et GitHub à lier, les clés d'API, les rôles dans un JWT — et chaque autre service qui valide ce JWT à sa façon.",
+          "answer": "Un service Spring Boot (ou le -core que vous embarquez) qui inscrit, vérifie, connecte par mot de passe ou Google/GitHub, réinitialise les mots de passe, émet des clés d'API et des JWT de session porteurs des rôles — et un client que chaque autre service appelle avec un jeton SERVICE.",
+          "rule": "Le faucon garde la porte : un jeton de réinitialisation sert une fois, est stocké en empreinte SHA-256 et meurt après 15 minutes ; un mot de passe est une empreinte BCrypt ; une clé de fournisseur est chiffrée en AES-256 avant de toucher le disque.",
+          "problem": [
+            "Des liens de réinitialisation qui marchent deux fois, n'expirent jamais, ou dorment en clair dans la base — lisibles par quiconque a une sauvegarde.",
+            "Une table d'utilisateurs qui gagne une colonne par fonctionnalité produit, jusqu'à ce qu'aucun autre produit ne puisse la réutiliser.",
+            "Chaque service qui appelle le service d'identité à chaque requête — identité en panne, tout en panne."
+          ],
+          "decisions": [
+            {
+              "chose": "Les autres services vérifient le JWT de session localement (krizaka-security), avec les rôles dans le jeton.",
+              "refused": "Appeler le service utilisateurs (introspection) à chaque requête.",
+              "because": "Une panne du service utilisateurs ne fait pas tomber la plateforme, et une requête ne coûte aucun aller-retour réseau.",
+              "cost": "Une session révoquée reste valide jusqu'à son expiration (PT12H par défaut, IDENTITY_JWT_TTL)."
+            },
+            {
+              "chose": "Un profil = un thème plus des attributs définis par votre application — les réponses d'un formulaire d'onboarding dont vous fournissez le JSON Schema — stockés tels quels, jamais interprétés.",
+              "refused": "Un modèle de profil figé avec des champs produit.",
+              "because": "Le service connaît des utilisateurs, pas votre produit ; les champs propres à Orazaka en sont sortis pour devenir ses réponses d'onboarding.",
+              "cost": "Votre code lit ses attributs avec ses propres valeurs par défaut."
+            },
+            {
+              "chose": "Un contrat publié (krizaka-users-api), un client avec cache par entrée, et un -core embarquable.",
+              "refused": "Une bibliothèque que chaque application branche sur ses propres tables.",
+              "because": "Un seul endroit hache les mots de passe et signe les jetons ; un correctif arrive une fois.",
+              "cost": "Une base PostgreSQL et RabbitMQ pour ses événements (evt.user.registered, evt.password.reset)."
+            }
+          ],
+          "notFor": [
+            "Vous avez déjà un fournisseur d'identité (Keycloak, Auth0, Entra ID) : gardez-le.",
+            "Il vous faut SAML, du SSO d'entreprise ou l'authentification multifacteur : rien de cela n'est fourni.",
+            "Il vous faut une révocation effective avant l'expiration du jeton."
+          ],
+          "status": "0.1.0 sur Maven Central (api, client, core). La 0.2.0 — schémas d'événements vérifiés contre leurs producteurs — est fusionnée et sort en novembre.",
+          "next": {
+            "release": "Le BOM 0.2.0 gère cette brique en 0.2.0, non publiée : déclarez 0.1.0 explicitement jusqu'au BOM 0.3.0.",
+            "keys": "Des jetons de session signés par ce service seul, vérifiés par les autres via son JWKS — plus de secret partagé."
+          }
+        },
+        "krizaka-notifications": {
+          "name": "Notifications",
+          "tagline": "E-mail, SMS et webhooks derrière un seul événement : les applications ne parlent plus jamais à un serveur SMTP.",
+          "trap": "Chaque service qui envoie ses propres e-mails embarque un client SMTP, des gabarits et des relances. Une panne du fournisseur devient un bug dans chacun d'eux, et un e-mail envoyé dans une transaction ensuite annulée ne se rattrape pas.",
+          "answer": "Un service qui consomme evt.notification.requested (et les événements utilisateurs), rend un gabarit dans la langue demandée et livre sur le canal voulu : SMTP, SMS Twilio ou webhook HTTP.",
+          "rule": "Le pigeon livre chaque message une fois — ou échoue là où vous le voyez. Un canal non configuré échoue et part en dead-letter ; il n'est jamais sauté en silence.",
+          "problem": [
+            "Une inscription qui échoue parce que le serveur de mail est lent.",
+            "Un e-mail de bienvenue pour un compte dont la création a été annulée.",
+            "Le même message relivré qui envoie deux fois le même e-mail."
+          ],
+          "decisions": [
+            {
+              "chose": "Un événement, publié par l'outbox du producteur.",
+              "refused": "Un endpoint HTTP synchrone « envoie un e-mail ».",
+              "because": "Pas d'e-mail pour un changement annulé ; une panne SMTP retarde le courrier au lieu de faire échouer les inscriptions ; une relivraison n'est envoyée qu'une fois (dédupliquée par messageId).",
+              "cost": "RabbitMQ entre votre application et le service."
+            },
+            {
+              "chose": "Des gabarits texte sur disque, un fichier par gabarit et par langue, repli sur en, un dossier que vous pouvez pointer ailleurs sans recompiler.",
+              "refused": "Un moteur de gabarits HTML, pour l'instant.",
+              "because": "Un gabarit qu'une personne non développeuse peut modifier, et rien à rendre qui puisse casser.",
+              "cost": "Texte brut uniquement aujourd'hui."
+            },
+            {
+              "chose": "Des webhooks uniquement vers des hôtes en liste blanche (vide = pas de webhook).",
+              "refused": "N'importe quelle URL envoyée par le demandeur.",
+              "because": "Un webhook ouvert est une falsification de requête côté serveur (SSRF) qui attend son heure.",
+              "cost": "Vous déclarez les hôtes."
+            }
+          ],
+          "notFor": [
+            "Il vous faut le suivi d'ouverture et de clic, des campagnes ou des e-mails HTML riches : prenez un service d'e-mail marketing.",
+            "Votre application n'a pas de broker de messages et n'en veut pas.",
+            "Il vous faut des notifications push mobiles : pas encore un canal (Orochia utilise le service push d'Expo de son côté)."
+          ],
+          "status": "0.1.0 sur Maven Central (le contrat -api). Le service se construit depuis les sources ou en image ; la 0.2.0 sort en novembre.",
+          "next": {
+            "release": "Le BOM 0.2.0 gère cette brique en 0.2.0, non publiée : déclarez 0.1.0 explicitement jusqu'au BOM 0.3.0."
+          }
+        },
+        "krizaka-billing": {
+          "name": "Facturation & crédits",
+          "tagline": "Crédits, portefeuilles, plans, une grille tarifaire versionnée et le comptage : réserver → régler → libérer.",
+          "trap": "Facturer un travail coûteux échoue de deux façons : débiter après, et le travail a tourné sur un crédit que personne n'avait ; débiter avant, et un job échoué est facturé. Puis un message « job terminé » est relivré et le même job est débité deux fois.",
+          "answer": "Un service et un client typé : l'appelant réserve les crédits estimés avant un travail coûteux, puis règle le coût mesuré ou libère la réservation. Les réservations jamais réglées expirent. Autour : plans, abonnements, packs, portefeuilles et statistiques d'usage.",
+          "rule": "Le flamant est payé pour ce qui a été fait, une fois — et personne ne paie un travail qui a échoué. Un job en échec libère sa réservation ; chaque débit porte une clé d'idempotence.",
+          "problem": [
+            "Un utilisateur qui lance dix jobs coûteux d'un coup avec le crédit d'un seul.",
+            "Un rendu échoué facturé à son estimation.",
+            "Un règlement relivré qui débite deux fois."
+          ],
+          "decisions": [
+            {
+              "chose": "Réserver → régler → libérer, avec une expiration sur les réservations.",
+              "refused": "Débiter après le travail, et prépayer sans réservation.",
+              "because": "Un travail ne démarre jamais sans le crédit pour le couvrir, et un échec ne coûte rien.",
+              "cost": "Un appel synchrone (la réservation) sur le chemin de la requête ; régler et libérer en sont hors."
+            },
+            {
+              "chose": "Un grand livre en ajout seul où chaque débit porte une clé d'idempotence, en plus de la déduplication des messages.",
+              "refused": "Se fier à la seule déduplication.",
+              "because": "Deux gardes indépendantes : une relivraison qui passe l'une débite quand même une seule fois.",
+              "cost": "Le grand livre ne fait que grandir ; une correction est une nouvelle écriture."
+            },
+            {
+              "chose": "Les prix et la durée de vie d'une réservation sont des lignes d'une grille tarifaire versionnée ; une réservation fige la version à laquelle elle a été tarifée.",
+              "refused": "Des prix dans le code ou la configuration.",
+              "because": "Changer un prix ne change jamais ce que coûte un job en cours, et ne demande aucun déploiement.",
+              "cost": "Un changement de prix est une migration de données que vous relisez."
+            },
+            {
+              "chose": "Un adaptateur neutre quand krizaka.billing.enabled vaut false.",
+              "refused": "Un if (billingEnabled) à chaque appel.",
+              "because": "Le même code tourne avec et sans comptage.",
+              "cost": "Rien qui vaille d'être cité."
+            }
+          ],
+          "notFor": [
+            "Il vous faut des factures, des taxes ou des paiements par carte : billing compte des crédits ; encaisser reste à vous (une recharge crédite un portefeuille).",
+            "Vos capacités ne sont pas du travail d'IA — aujourd'hui. Le contrat nomme encore celles d'Orazaka (CHAT, IMAGE, AUDIO, VIDEO, AGENT) et ses mesures (jetons, secondes GPU…) ; voir plus bas."
+          ],
+          "status": "0.1.0 sur Maven Central (api, client). La 0.2.0 — l'outbox implémente OutboxStore.append, chaque événement a son JSON Schema — est fusionnée et sort en novembre.",
+          "next": {
+            "vocabulary": "Décidé : capacités et unités deviennent des clés déclarées dans la grille tarifaire, les mesures une table de quantités ; Orazaka garde ses enums chez Orazaka. Une brique de facturation réutilisable ne peut pas parler le vocabulaire d'un seul produit.",
+            "release": "Le BOM 0.2.0 gère cette brique en 0.2.0, non publiée : déclarez 0.1.0 explicitement jusqu'au BOM 0.3.0."
+          }
+        },
+        "krizaka-build": {
+          "name": "Build, BOM & kit de test",
+          "tagline": "Le POM parent, le BOM et les tests de gouvernance derrière chaque artefact com.krizaka.",
+          "trap": "Toute organisation Java multi-dépôts finit avec des POM parents qui dérivent : un module sur un autre Java, des plugins non figés, un POM que Maven Central refuse faute de bloc de licence. Et un BOM qui importe celui de Spring écrase en silence la version de Spring Boot que vous aviez choisie.",
+          "answer": "krizaka-parent (métadonnées Central, Java 21, formatage vérifié, tests unitaires et d'intégration, couverture, une release signée en une commande), krizaka-bom (l'ensemble compatible de tout artefact com.krizaka) et krizaka-test-support (règles d'architecture, un PostgreSQL + RabbitMQ par exécution de tests, tests de contrat d'événements).",
+          "rule": "Une règle qui ne juge rien ne laisse rien passer. Chaque règle du kit de test échoue sur une population vide — une faute de frappe dans un nom de package ne peut pas transformer un contrôle en coche verte.",
+          "problem": [
+            "Des conventions dans un wiki : vraies le jour où on les écrit.",
+            "Une configuration Testcontainers par dépôt, chacune démarrant sa base par classe de test.",
+            "Une version mineure qui casse la compatibilité binaire, découverte par ceux qui ont mis à jour."
+          ],
+          "decisions": [
+            {
+              "chose": "Un BOM qui ne porte que des artefacts com.krizaka ; le parent n'a pas de dependencyManagement à lui.",
+              "refused": "Importer spring-boot-dependencies dans notre BOM.",
+              "because": "Importer krizaka-bom ne doit jamais figer une version que vous avez choisie. Votre BOM Spring Boot reste le vôtre ; le nôtre se pose à côté.",
+              "cost": "Vous importez vous-même le BOM (ou le parent) de Spring Boot."
+            },
+            {
+              "chose": "Les règles d'architecture en tests (CodeRules, SourceRules, ConfigBindingRules : couches, injection par constructeur, état privé, pas d'injection d'Environment…).",
+              "refused": "Une check-list de revue.",
+              "because": "Une règle exécutée à chaque build est la seule encore vraie six mois plus tard.",
+              "cost": "Les règles ont des opinions : prenez celles qui vous vont, appelez-les depuis votre propre test."
+            },
+            {
+              "chose": "japicmp dans le profil release : une rupture binaire dans une mineure fait échouer la release ; publication sur Central confirmée à la main.",
+              "refused": "Le SemVer de bonne volonté, et la publication automatique.",
+              "because": "Une release sur Central ne s'efface jamais : une rupture livrée l'est pour toujours.",
+              "cost": "Une rupture volontaire se déclare dans le dépôt pour cette release."
+            }
+          ],
+          "notFor": [
+            "Vous ne publiez pas sur Maven Central et ne voulez pas nos conventions (google-java-format, Java 21) dans votre build : importez le BOM, laissez le parent.",
+            "Vous êtes en Java 17 ou avant."
+          ],
+          "status": "0.2.0 sur Maven Central : krizaka-parent, krizaka-bom, krizaka-test-support (avec EventContractTest).",
+          "next": {
+            "bom": "Le BOM 0.2.0 nomme users, notifications et billing en 0.2.0, pas encore publiée. Décidé : une release du BOM résout chaque artefact qu'elle gère avant d'être signée ; le BOM 0.3.0 attend les trois."
+          }
+        },
+        "krizaka-ui": {
+          "name": "Krizaka UI",
+          "tagline": "Jetons, preset Tailwind v4, primitives accessibles, icônes et i18n — web et React Native.",
+          "trap": "Trois produits, trois vocabulaires de jetons : nous avons mesuré 1 153 surcharges light: dans une seule application, la même carte écrite cinq fois, et pièges à focus, clavier et ARIA réécrits à la main dans chaque kit.",
+          "answer": "Un vocabulaire sémantique (--kz-*) compilé depuis des design tokens, un preset qui en fait des utilitaires Tailwind, et des primitives — bouton, carte, dialogue, champ, onglets, toast, palette de commandes… — avec parité React Native, un point d'entrée chacune. La documentation de chaque composant est générée depuis son code.",
+          "rule": "Le hibou lit le code, pas un wiki : la page de chaque composant sur krizaka.com/docs/ui est générée depuis son meta.ts et ses exemples nommés, et les tests du registre échouent s'il en manque un.",
+          "problem": [
+            "Un thème fait de variantes light: et dark: dans chaque composant — un nouveau thème, et il faut tous les toucher.",
+            "L'accessibilité réécrite par produit, et fausse dans au moins l'un d'eux.",
+            "Un site de documentation qui décrit les props du trimestre dernier."
+          ],
+          "decisions": [
+            {
+              "chose": "Un seul vocabulaire de jetons ; le sombre sur :root, le clair sur html.light ; une marque surcharge des valeurs (brands/scoped.css).",
+              "refused": "Des variantes light:/dark: dans les composants, et un jeu de jetons par produit.",
+              "because": "Un thème ou une marque est un jeu de valeurs : l'orange d'Orazaka et le violet d'Orochia utilisent les mêmes composants que ce site.",
+              "cost": "Les composants ne lisent que var(--kz-*) ; les couleurs de palette brutes sont refusées par les règles de lint."
+            },
+            {
+              "chose": "Radix pour toute interaction non triviale, des variantes tailwind-variants, chaque story auditée par axe en sombre et en clair à chaque pull request.",
+              "refused": "Des pièges à focus et une gestion du clavier écrits à la main.",
+              "because": "L'accessibilité est écrite une fois et testée là où elle est écrite.",
+              "cost": "Radix dans votre bundle ; des budgets size-limit par point d'entrée le tiennent en respect."
+            },
+            {
+              "chose": "Les mots arrivent en props ; aucune fonction de traduction dans la bibliothèque.",
+              "refused": "Embarquer un moteur de traduction.",
+              "because": "N'importe quelle i18n convient — la nôtre (@krizaka/i18n, catalogues typés et contrôle en CI) ou la vôtre.",
+              "cost": "Vous passez les libellés."
+            },
+            {
+              "chose": "Un cliquet : par dépôt, des compteurs de classes de palette brutes, de variantes light:, d'utilitaires [var(--…)] et de className en template qui ne peuvent que descendre.",
+              "refused": "Une migration big bang, et une règle de lint activée d'un coup.",
+              "because": "Une application existante l'adopte écran par écran sans laisser la dette repousser.",
+              "cost": "Un lint-ratchet.json à commiter et un contrôle en CI."
+            }
+          ],
+          "notFor": [
+            "Vous n'utilisez pas Tailwind v4 : le preset l'exige (les jetons seuls sont de simples variables CSS).",
+            "Vous voulez un kit sans style et maîtriser chaque pixel : utilisez Radix directement.",
+            "Il vous faut des graphiques aujourd'hui : @krizaka/charts est en construction."
+          ],
+          "status": "@krizaka/ui, tokens et tailwind 2.2.0 sur npm (latest) — la 2.2.0 a apporté les cinq oiseaux de cette page (@krizaka/ui/mascots) ; icons, i18n, intl et config 0.1.0. Supportées : majeures N et N-1, correctifs six mois après N+1.",
+          "next": {
+            "charts": "@krizaka/charts — des graphiques qui suivent thème et marque, sur Apache ECharts, chacun avec un tableau de données accessible, puis les effets et les blocs : la feuille de route est un epic ouvert."
+          }
+        }
+      },
+      "copy": "Copier",
+      "copied": "Copié"
     }
   },
   "pages": {
