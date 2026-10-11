@@ -7,9 +7,9 @@ import FeedbackLinks from "./FeedbackLinks";
 
 type Words = TranslationDictionary["site"]["blocks"];
 
-/** One building block on /open-source, in the page language: its hue, icon and badges (registry · version, what is in
-    progress), the trap in one line, what it does in three points, the long version folded, the rule its bird stands
-    for, then why/how and the feedback icons. */
+/** One building block on /open-source, a compact ArgumentCard: its hue, icon, name and repository, its bird in the
+    corner, the trap in one line, the badges (registry · version read at build, what is in progress), "Details" and the
+    feedback icons. What it does, the decisions and the bird's rule live on /open-source/<block>. */
 export default function BlockCard({ block, w }: { block: BuildingBlock; w: Words }) {
   const item = w.items[block.id];
   const release = block.releases[0];
@@ -25,16 +25,8 @@ export default function BlockCard({ block, w }: { block: BuildingBlock; w: Words
         ...(block.next.length > 0 ? [{ label: format(w.inProgress, { count: block.next.length }), tone: "wip" as const, href: `/open-source/${block.id}#status` }] : []),
       ]}
       hook={{ label: w.trap, text: item.headline }}
-      points={{ label: w.answer, items: item.does }}
-      details={{
-        summary: w.more,
-        points: [
-          { label: w.trap, text: item.trap },
-          { label: w.answer, text: item.answer },
-        ],
-      }}
       rule={{ bird: block.bird, mood: block.mood, label: format(w.birdSays, { bird: w.birds[block.bird] }), text: item.rule }}
-      more={{ href: `/open-source/${block.id}`, label: w.whyHow }}
+      more={{ href: `/open-source/${block.id}`, label: w.details }}
       actions={<FeedbackLinks block={block} labels={w} variant="icons" />}
     />
   );

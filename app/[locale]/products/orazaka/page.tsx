@@ -233,6 +233,7 @@ export default async function OrazakaPage({ params }: Props) {
                   id={`why-${id}`}
                   icon={<Icon size={20} nodeColor={node} />}
                   title={t.why.pillars[id].title}
+                  expand={b.details}
                   hook={{ label: b.trap, text: t.why.pillars[id].trap }}
                   points={{ label: b.answer, items: t.why.pillars[id].points }}
                   rule={{ bird, label: format(b.birdSays, { bird: b.birds[bird] }), text: t.why.pillars[id].rule }}

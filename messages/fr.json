@@ -839,7 +839,7 @@
             "Une offre dans les deux dernières minutes ajoute deux minutes — pas d'enchère de dernière seconde.",
             "Le créateur a 48 h pour accepter l'offre gagnante ; seul le gagnant regarde."
           ],
-          "trap": "Une vidéo vendue à prix fixe laisse de l'argent sur la table — ou ne se vend jamais.",
+          "trap": "Une vidéo à prix fixe laisse de l'argent sur la table — ou ne se vend jamais.",
           "rule": "Le gagnant paie, le créateur est payé : les crédits surenchéris reviennent aussitôt, personne ne paie une vidéo qu'il n'a pas gagnée."
         },
         "challenges": {
@@ -850,7 +850,7 @@
             "Un défi reçoit une réponse sous 72 h.",
             "Livré sous 14 jours, sinon chaque promesse est rendue."
           ],
-          "trap": "Des fans promettent de l'argent pour une vidéo, la vidéo arrive, et la moitié des promesses s'évanouit.",
+          "trap": "Des fans promettent pour une vidéo ; elle arrive, et la moitié des promesses s'évanouit.",
           "rule": "Les promesses attendent sous séquestre la livraison de la vidéo : le créateur est alors payé, sinon chaque fan récupère ses crédits."
         }
       },
@@ -1451,7 +1451,7 @@
           "sovereignty": {
             "title": "Rien ne quitte votre infrastructure",
             "body": "Les modèles tournent sur vos machines. Aucun tiers ne voit un prompt, un document ou un dossier client — sauf si vous branchez vous-même un fournisseur.",
-            "trap": "Votre équipe colle un dossier client dans un assistant cloud. Il vient de quitter le pays.",
+            "trap": "Votre équipe colle un dossier client dans un assistant cloud. Il a quitté le pays.",
             "points": [
               "Les modèles tournent sur vos machines — Ollama sur Apple Silicon ou Linux.",
               "Un fournisseur cloud seulement si vous en branchez un, modèle par modèle.",
@@ -1462,7 +1462,7 @@
           "cost": {
             "title": "Un coût que vous décidez",
             "body": "Pas de facture au token sur la grille d'un autre. Des crédits que vous fixez, et chaque Studio affiche son prix avant de démarrer.",
-            "trap": "La facture arrive en fin de mois, au jeton, sur une grille que quelqu'un d'autre modifie.",
+            "trap": "La facture tombe en fin de mois, au jeton, sur une grille que d'autres modifient.",
             "points": [
               "Des crédits que vous fixez, par équipe et par Studio.",
               "Chaque Studio affiche son prix avant de s'exécuter.",
@@ -1473,7 +1473,7 @@
           "control": {
             "title": "Des agents qui demandent d'abord",
             "body": "Les agents agissent sur vos machines uniquement avec votre accord, par une liaison sortante : aucun port à ouvrir, rien ne s'exécute en silence.",
-            "trap": "Un agent muni d'un jeton peut toucher tout ce que son intégration autorise — à 3 h du matin, en silence.",
+            "trap": "Un agent muni d'un jeton touche tout ce qu'on lui a permis — à 3 h, en silence.",
             "points": [
               "Chaque action demande d'abord ; vous approuvez, elle s'exécute.",
               "Un lien sortant uniquement : aucun port à ouvrir sur votre réseau.",
@@ -2215,7 +2215,7 @@
           "next": {
             "charts": "`@krizaka/charts` — des graphiques qui suivent thème et marque, sur Apache ECharts, chacun avec un tableau de données accessible, puis les effets et les blocs : la feuille de route est un epic ouvert."
           },
-          "headline": "Trois produits, trois vocabulaires de jetons, 1 153 surcharges `light:` dans une seule app.",
+          "headline": "Trois produits, trois vocabulaires de jetons, 1 153 `light:` dans une seule app.",
           "does": [
             "Un vocabulaire sémantique, `--kz-*`, compilé depuis des design tokens — sombre et clair à égalité.",
             "Des primitives accessibles avec parité React Native, un point d'entrée chacune.",
@@ -2228,7 +2228,8 @@
       "more": "Le piège en détail",
       "inProgress": "{count} en cours",
       "feedback": "Vos retours",
-      "statusLink": "Ce qui est en cours"
+      "statusLink": "Ce qui est en cours",
+      "details": "Détails"
     },
     "orochiaDemo": {
       "meta": {

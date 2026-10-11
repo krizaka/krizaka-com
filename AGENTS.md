@@ -203,18 +203,26 @@
     Painted at once, no reveal.
   - `SectionHeading` (eyebrow · h2 · lead) and `ContentSection` (a hairline above = the transition, an h2, content).
     The section a page is about stands on a `SectionBackdrop` (BRAND.md §4).
-  - `CardGrid` + `ArgumentCard` — cards that argue, always in this order: icon · name · mono meta, `Badges` (registry and
-    version `ok`, work in progress `wip` — said honestly, linked to where it is explained), the **hook** (the problem in
-    one sentence, large), three short **points**, the `MascotRule` quote, the long version folded in a native
-    `<details>`, then the foot: one primary button (the way in) and `ActionLinks variant="icons"` (tooltips). Cards of
-    a row share their height; the fold and the foot sit at the bottom. The pointer lifts the card, carries a light
-    over it (`PointerLight`), lights its icon's node and makes its bird hop once — all still under reduced motion.
+  - `CardGrid` + `ArgumentCard` — cards that argue, **compact by default** (about a third of a full card): icon · name ·
+    mono meta, the bird **small in the corner** (whose rule it is), the **hook in one line** (≤ 90 characters, regular
+    weight — never three bold lines), compact `Badges` (registry and version `ok`, work in progress `wip` — said
+    honestly, linked to where it is explained), then the foot: **one short primary action** on one line (« Details → »)
+    and, discreet, `ActionLinks variant="icons"`. What it does, the bird's quote and the long version are **never on
+    the face of a card**: they live on the detail page (`more`, e.g. `/open-source/<block>`) or, without one, in the card
+    unfolded in place (`expand`, a native `<details>`; a grid with folds aligns its cards at the top so opening one
+    never stretches its neighbours). The pointer lifts the card, carries a light over it (`PointerLight`) and lights
+    its icon's node — still under reduced motion. A list (one row per subject) was evaluated against it on
+    /open-source: denser, but it loses each subject's hue, bird and actions; the compact card stays the reference.
+  - **Versions are data.** Every version the site shows (badges, the Maven list, the module map, code samples) is
+    read from npm and Maven Central at build (`scripts/gen-registry-versions.mjs` → git-ignored
+    `lib/registry-versions.json`, read by `lib/registry-versions.ts`): never a version typed in a module or a message.
   - **Hues**: a card or a page about one subject wears `data-hue` (`cobalt · sky · cyan · indigo · steel · ink`,
     sections.css): its rail, icon node, bird, light and numbers. Krizaka palette only (blues and ink, never a product
     colour); `--ps-hue` is decorative (≥ 3:1), `--ps-hue-text` is for small text (≥ 4.5:1, both themes). Without a
     hue everything falls back to the page's accent, so a brand page stays on brand.
   - `MascotRule` — a rule told by a bird, as a quote: a speech bubble (opening quote mark, the hue), the bird and who
-    speaks under its tail; `inline` in a card (still, it answers the pointer), `callout` in a section (larger, alive).
+    speaks under its tail; `inline` in an unfolded card or a detail page, `callout` in a section (larger, alive) — at
+    most one rule put forward per section.
     The bird carries a promise, never decoration: the falcon watches (security), the owl reads and knows every face
     (documents, identity), the duck builds (code), the flamingo answers or gets paid, the pigeon delivers. Birds from
     `@krizaka/ui/mascots` only; on one page no two subjects wear the same bird in the same mood and hue (five birds

@@ -7,6 +7,17 @@
    a sample that no longer compiles against the version shown here is a bug of this page. */
 
 import type { MascotBird, MascotMood } from "@krizaka/ui/mascots";
+import { publishedVersion } from "./registry-versions";
+
+/** Every version on this page is read from the registries at build (lib/registry-versions.ts) — none is typed here. */
+const ver = (coordinate: string) => publishedVersion(coordinate) ?? "LATEST";
+const BOM_V = ver("com.krizaka:krizaka-bom");
+/** While the BOM names a version of a kit module that is not published yet, the samples declare the published one and
+    say why; once both agree, the note disappears. */
+const pinXml = (artifact: string) =>
+  ver(artifact) === BOM_V ? "" : `<!-- BOM ${BOM_V} names an unpublished ${BOM_V} of this block: declare ${ver(artifact)} until it is published -->\n`;
+const pinKts = (artifact: string) =>
+  ver(artifact) === BOM_V ? "" : `  // BOM ${BOM_V} names an unpublished ${BOM_V} of this block: declare ${ver(artifact)} until it is published\n`;
 
 export type BlockId =
   | "krizaka-build"
@@ -42,6 +53,7 @@ export interface Sample {
 export interface Release {
   /** What is published, e.g. "com.krizaka:krizaka-bom" or "@krizaka/ui". */
   coordinate: string;
+  /** Its version, read from the registry at build (`ver`). */
   version: string;
   url: string;
 }
@@ -84,7 +96,7 @@ const BOM = `<dependencyManagement>
     <dependency>
       <groupId>com.krizaka</groupId>
       <artifactId>krizaka-bom</artifactId>
-      <version>0.2.0</version>
+      <version>${BOM_V}</version>
       <type>pom</type>
       <scope>import</scope>
     </dependency>
@@ -104,8 +116,8 @@ export const BUILDING_BLOCKS: readonly BuildingBlock[] = [
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/14",
     docs: "/docs/java",
     releases: [
-      { coordinate: "com.krizaka:krizaka-spring-boot-starter-*", version: "0.2.0", url: central("krizaka-spring-boot-starter-web") },
-      { coordinate: "com.krizaka:krizaka-web · -security · -messaging · -observability", version: "0.2.0", url: central("krizaka-messaging") },
+      { coordinate: "com.krizaka:krizaka-spring-boot-starter-*", version: ver("com.krizaka:krizaka-spring-boot-starter-web"), url: central("krizaka-spring-boot-starter-web") },
+      { coordinate: "com.krizaka:krizaka-web · -security · -messaging · -observability", version: ver("com.krizaka:krizaka-messaging"), url: central("krizaka-messaging") },
     ],
     next: [
       { key: "processOnce", url: "https://github.com/krizaka/krizaka-platform-kit/pull/12" },
@@ -153,7 +165,7 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
         file: "build.gradle.kts",
         lang: "kotlin",
         code: `dependencies {
-  implementation(platform("com.krizaka:krizaka-bom:0.2.0"))
+  implementation(platform("com.krizaka:krizaka-bom:${BOM_V}"))
   implementation("com.krizaka:krizaka-spring-boot-starter-web")
   implementation("com.krizaka:krizaka-spring-boot-starter-security")
   implementation("com.krizaka:krizaka-spring-boot-starter-rabbitmq")
@@ -174,7 +186,7 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/15",
     docs: "https://github.com/krizaka/krizaka-users#readme",
     releases: [
-      { coordinate: "com.krizaka:krizaka-users-api · -client · -core", version: "0.1.0", url: central("krizaka-users-client") },
+      { coordinate: "com.krizaka:krizaka-users-api · -client · -core", version: ver("com.krizaka:krizaka-users-client"), url: central("krizaka-users-client") },
     ],
     next: [
       { key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" },
@@ -210,11 +222,10 @@ krizaka.users.client:
         tab: "Maven",
         file: "pom.xml",
         lang: "xml",
-        code: `<!-- BOM 0.2.0 names an unpublished 0.2.0 of this block: declare 0.1.0 until BOM 0.3.0 -->
-<dependency>
+        code: `${pinXml("com.krizaka:krizaka-users-client")}<dependency>
   <groupId>com.krizaka</groupId>
   <artifactId>krizaka-users-client</artifactId>
-  <version>0.1.0</version>
+  <version>${ver("com.krizaka:krizaka-users-client")}</version>
 </dependency>`,
       },
       {
@@ -222,8 +233,7 @@ krizaka.users.client:
         file: "build.gradle.kts",
         lang: "kotlin",
         code: `dependencies {
-  // BOM 0.2.0 names an unpublished 0.2.0 of this block: declare 0.1.0 until BOM 0.3.0
-  implementation("com.krizaka:krizaka-users-client:0.1.0")
+${pinKts("com.krizaka:krizaka-users-client")}  implementation("com.krizaka:krizaka-users-client:${ver("com.krizaka:krizaka-users-client")}")
 }`,
       },
     ],
@@ -239,7 +249,7 @@ krizaka.users.client:
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/16",
     docs: "https://github.com/krizaka/krizaka-notifications#readme",
-    releases: [{ coordinate: "com.krizaka:krizaka-notifications-api", version: "0.1.0", url: central("krizaka-notifications-api") }],
+    releases: [{ coordinate: "com.krizaka:krizaka-notifications-api", version: ver("com.krizaka:krizaka-notifications-api"), url: central("krizaka-notifications-api") }],
     next: [{ key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" }],
     sample: {
       file: "OrderService.java",
@@ -265,7 +275,7 @@ public Order confirm(Order order) {
         code: `<dependency>
   <groupId>com.krizaka</groupId>
   <artifactId>krizaka-notifications-api</artifactId>
-  <version>0.1.0</version>
+  <version>${ver("com.krizaka:krizaka-notifications-api")}</version>
 </dependency>
 <!-- the service itself: ./mvnw -pl krizaka-notifications-service -am spring-boot:run (port 8097) -->`,
       },
@@ -274,7 +284,7 @@ public Order confirm(Order order) {
         file: "build.gradle.kts",
         lang: "kotlin",
         code: `dependencies {
-  implementation("com.krizaka:krizaka-notifications-api:0.1.0")
+  implementation("com.krizaka:krizaka-notifications-api:${ver("com.krizaka:krizaka-notifications-api")}")
 }
 // the service itself: ./mvnw -pl krizaka-notifications-service -am spring-boot:run (port 8097)`,
       },
@@ -291,7 +301,7 @@ public Order confirm(Order order) {
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/17",
     docs: "https://github.com/krizaka/krizaka-billing#readme",
-    releases: [{ coordinate: "com.krizaka:krizaka-billing-api · -client", version: "0.1.0", url: central("krizaka-billing-client") }],
+    releases: [{ coordinate: "com.krizaka:krizaka-billing-api · -client", version: ver("com.krizaka:krizaka-billing-client"), url: central("krizaka-billing-client") }],
     next: [
       { key: "vocabulary", url: "https://github.com/krizaka/krizaka-billing/issues/7" },
       { key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" },
@@ -320,7 +330,7 @@ try {
         code: `<dependency>
   <groupId>com.krizaka</groupId>
   <artifactId>krizaka-billing-client</artifactId>
-  <version>0.1.0</version>
+  <version>${ver("com.krizaka:krizaka-billing-client")}</version>
 </dependency>
 
 <!-- krizaka.billing.enabled: false wires a no-op adapter: no call site branches on "is billing on" -->`,
@@ -330,7 +340,7 @@ try {
         file: "build.gradle.kts",
         lang: "kotlin",
         code: `dependencies {
-  implementation("com.krizaka:krizaka-billing-client:0.1.0")
+  implementation("com.krizaka:krizaka-billing-client:${ver("com.krizaka:krizaka-billing-client")}")
 }
 // krizaka.billing.enabled: false wires a no-op adapter: no call site branches on "is billing on"`,
       },
@@ -348,8 +358,8 @@ try {
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/13",
     docs: "/docs/java/build",
     releases: [
-      { coordinate: "com.krizaka:krizaka-bom · krizaka-parent", version: "0.2.0", url: central("krizaka-bom") },
-      { coordinate: "com.krizaka:krizaka-test-support", version: "0.2.0", url: central("krizaka-test-support") },
+      { coordinate: "com.krizaka:krizaka-bom · krizaka-parent", version: ver("com.krizaka:krizaka-bom"), url: central("krizaka-bom") },
+      { coordinate: "com.krizaka:krizaka-test-support", version: ver("com.krizaka:krizaka-test-support"), url: central("krizaka-test-support") },
     ],
     next: [{ key: "bom", url: "https://github.com/krizaka/krizaka-build/issues/11" }],
     sample: {
@@ -386,7 +396,7 @@ class NotificationRequestContractTest extends EventContractTest {
         file: "build.gradle.kts",
         lang: "kotlin",
         code: `dependencies {
-  testImplementation(platform("com.krizaka:krizaka-bom:0.2.0"))
+  testImplementation(platform("com.krizaka:krizaka-bom:${BOM_V}"))
   testImplementation("com.krizaka:krizaka-test-support")
 }
 // krizaka-parent is a Maven parent POM: a Gradle build takes the BOM and the test kit`,
@@ -405,8 +415,8 @@ class NotificationRequestContractTest extends EventContractTest {
     thread: "https://github.com/krizaka/krizaka-ui/discussions/55",
     docs: "/docs/ui",
     releases: [
-      { coordinate: "@krizaka/ui · @krizaka/tokens · @krizaka/tailwind", version: "2.2.0", url: npm("@krizaka/ui") },
-      { coordinate: "@krizaka/icons · i18n · intl · config", version: "0.1.0", url: npm("@krizaka/icons") },
+      { coordinate: "@krizaka/ui · @krizaka/tokens · @krizaka/tailwind", version: ver("@krizaka/ui"), url: npm("@krizaka/ui") },
+      { coordinate: "@krizaka/icons · i18n · intl · config", version: ver("@krizaka/icons"), url: npm("@krizaka/icons") },
     ],
     next: [{ key: "charts", url: "https://github.com/krizaka/krizaka-ui/issues/49" }],
     sample: {

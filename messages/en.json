@@ -1462,7 +1462,7 @@
           "cost": {
             "title": "A cost you decide",
             "body": "No per-token bill from someone else's price list. Credits you set, and every Studio shows its price before it runs.",
-            "trap": "The bill arrives at the end of the month, priced per token on a list someone else changes.",
+            "trap": "The bill comes at month's end, per token, on a price list someone else changes.",
             "points": [
               "Credits you set, per team and per Studio.",
               "Every Studio shows its price before it runs.",
@@ -1473,7 +1473,7 @@
           "control": {
             "title": "Agents that ask first",
             "body": "Agents act on your machines only with your approval, over an outbound-only link: no port to open, nothing runs silently.",
-            "trap": "An agent with a token can touch everything its integration was granted — at 3 a.m., silently.",
+            "trap": "An agent with a token can touch anything it was granted — at 3 a.m., silently.",
             "points": [
               "Each action asks first; you approve, it runs.",
               "An outbound-only link: no port to open on your network.",
@@ -2228,7 +2228,8 @@
       "more": "The trap in detail",
       "inProgress": "{count} in progress",
       "feedback": "Talk back",
-      "statusLink": "What is in progress"
+      "statusLink": "What is in progress",
+      "details": "Details"
     },
     "orochiaDemo": {
       "meta": {
