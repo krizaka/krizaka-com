@@ -11,7 +11,6 @@ import { useI18n } from "../../../../components/I18nProvider";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import { PageHero } from "../../../../components/sections";
-import "../../../../components/sections/sections.css";
 import { USE_CASES, getLocalizedField } from "@/lib/use-cases-data";
 import { reveal } from "@/lib/motion";
 

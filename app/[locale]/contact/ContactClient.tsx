@@ -8,6 +8,7 @@ import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
+import { ButtonLink, PageHero } from "../../components/sections";
 
 /* ─── Mascots: the owl answers questions, the falcon watches over bugs (@krizaka/ui/mascots, story colours) ─── */
 function OwlMascot() {
@@ -55,55 +56,21 @@ export default function ContactClient() {
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
       <TopNavBar />
 
+      {/* The first screen of the page language (painted at once, no entrance: LCP); the flamingo answers. */}
+      <PageHero
+        eyebrow={t.site.contactPage.eyebrow}
+        title={t.site.contactPage.title}
+        lead={t.site.contactPage.lead}
+        mascot={{ bird: "flamingo", mood: "welcome" }}
+      />
+
       <div
         style={{
           maxWidth: "1120px",
           margin: "0 auto",
-          padding: "140px 24px 80px",
+          padding: "56px 24px 80px",
         }}
       >
-        {/* ─── Header ─── */}
-        {/* The first screen is painted at once (no entrance: LCP). */}
-        <div style={{ marginBottom: "56px" }}>
-          <span
-            style={{
-              display: "block",
-              fontFamily: "var(--font-mono, monospace)",
-              fontSize: "11px",
-              fontWeight: 700,
-              color: "var(--kz-accent)",
-              letterSpacing: "0.15em",
-              textTransform: "uppercase",
-              marginBottom: "14px",
-            }}
-          >
-            {t.site.contactPage.eyebrow}
-          </span>
-          <h1
-            style={{
-              fontFamily: "var(--font-display), system-ui, sans-serif",
-              fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
-              fontWeight: 800,
-              letterSpacing: "-0.03em",
-              color: "var(--kz-text-primary)",
-              lineHeight: 1.15,
-              marginBottom: "16px",
-            }}
-          >
-            {t.site.contactPage.title}
-          </h1>
-          <p
-            style={{
-              fontSize: "15px",
-              color: "var(--kz-text-secondary)",
-              lineHeight: 1.7,
-              maxWidth: "620px",
-            }}
-          >
-            {t.site.contactPage.lead}
-          </p>
-        </div>
-
         {/* ─── Private message to the team, and what happens after ─── */}
         <div className="contact-main">
           <ContactForm />
@@ -200,7 +167,7 @@ export default function ContactClient() {
                       fontFamily: "var(--font-mono, monospace)",
                       fontSize: "10px",
                       fontWeight: 700,
-                      color: "var(--kz-text-muted)",
+                      color: "var(--kz-text-secondary)",
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
                     }}
@@ -237,23 +204,16 @@ export default function ContactClient() {
                 </p>
 
                 {/* CTA — one link per product: each has its own repository */}
-                <span style={{ fontSize: "11px", color: "var(--kz-text-muted)", marginBottom: "10px" }}>
+                <span style={{ fontSize: "12px", color: "var(--kz-text-secondary)", marginBottom: "10px" }}>
                   {ch.cta} — {t.site.contactPage.whichProduct}
                 </span>
                 <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center" }}>
                   {PUBLIC_REPOSITORIES.map(({ product, repo }) => (
-                    <a
-                      key={product}
-                      href={`https://github.com/krizaka/${repo}/${path}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="contact-product"
-                      style={{ ["--accent" as string]: accent }}
-                    >
+                    <ButtonLink key={product} href={`https://github.com/krizaka/${repo}/${path}`}>
                       <ProductLogo id={product} size={18} animated={false} />
                       {t.site.contactPage.publicProducts[product]}
                       <ArrowRight size={13} strokeWidth={2} />
-                    </a>
+                    </ButtonLink>
                   ))}
                 </div>
               </div>
@@ -265,10 +225,6 @@ export default function ContactClient() {
       <SiteFooter />
 
       <style>{`
-        .contact-product { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 12px; font-size: 13px; font-weight: 600;
-          text-decoration: none; color: var(--kz-text-primary); background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle);
-          transition: border-color 150ms ease, transform 150ms ease; }
-        .contact-product:hover { border-color: var(--accent); transform: translateY(-1px); }
 
         /* The channel cards answer the pointer, and their mascot wakes up (still otherwise: nothing loops by itself). */
         .contact-card { transition: border-color 250ms var(--kz-ease), box-shadow 250ms var(--kz-ease), transform 250ms var(--kz-ease), opacity .8s var(--kz-ease), filter .8s var(--kz-ease); }
@@ -301,7 +257,7 @@ export default function ContactClient() {
         .contact-next strong { display: block; font-size: 14px; color: var(--kz-text-primary); margin: 3px 0 4px; }
         .contact-next p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
         .contact-facts { margin: 28px 0 0; padding: 18px 0 0; list-style: none; display: grid; gap: 8px; border-top: 1px solid var(--kz-border-subtle); }
-        .contact-facts li { font-size: 13px; color: var(--kz-text-muted); }
+        .contact-facts li { font-size: 13px; color: var(--kz-text-secondary); }
         @media (max-width: 900px) {
           .contact-main { grid-template-columns: 1fr; }
           .contact-next { position: static; }

@@ -36,13 +36,15 @@ import { journeysFor } from "@/lib/journeys";
 import { OrochiaLogo } from "@krizaka/ui";
 import Rich from "@/app/components/Rich";
 import { ArgumentCard, CardGrid, DecisionList } from "@/app/components/sections";
-import "@/app/components/sections/sections.css";
 import { OrochiaIso } from "@/app/components/products/ProductIso";
 import { GlowCard } from "@krizaka/ui/glow-card";
 import { Meter } from "@krizaka/ui/meter";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
 import { PAYOUT_MINIMUM_CENTS, PLATFORM_FEE_PERCENTAGE, SPLIT_EXAMPLES, creatorNetCents, formatUsd } from "@/lib/orochia-economics";
 import ButtonLink from "@/app/components/sections/ButtonLink";
+
+/** Whole numbers while the figure climbs (NumberTicker formats every frame). */
+const WHOLE = { maximumFractionDigits: 0 } as const;
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -186,7 +188,7 @@ export default async function OrochiaPage({ params }: Props) {
               >
                 <span className="oc-ring-figure">
                   {share[0]}
-                  <NumberTicker value={100 - PLATFORM_FEE_PERCENTAGE} locale={locale} />
+                  <NumberTicker value={100 - PLATFORM_FEE_PERCENTAGE} locale={locale} format={WHOLE} />
                   {share[1]}
                 </span>
                 <span className="oc-ring-caption">{t.paid.meter.caption}</span>

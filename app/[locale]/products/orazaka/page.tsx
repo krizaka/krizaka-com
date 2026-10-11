@@ -24,7 +24,6 @@ import { DEMO_TOUR, tourSrc } from "@/lib/orazaka-demo";
 import { localizedMetadata } from "@/lib/seo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
 import { ArgumentCard, CardGrid, DecisionList, MascotRule } from "@/app/components/sections";
-import "@/app/components/sections/sections.css";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ProductTour from "@/app/components/ProductTour";

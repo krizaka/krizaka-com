@@ -7,7 +7,6 @@ import SiteFooter from "@/app/components/SiteFooter";
 import BlockIcon from "@/app/components/blocks/BlockIcon";
 import FeedbackLinks from "@/app/components/blocks/FeedbackLinks";
 import { Badges, CodeSample, CodeTabs, ContentSection, DecisionList, DiscussionCta, Inline, MascotRule, PageHero, PageToc } from "@/app/components/sections";
-import "@/app/components/sections/sections.css";
 import { BUILDING_BLOCKS, blockById, blockRepoUrl } from "@/lib/building-blocks";
 import { LOCALES } from "@/lib/locales";
 import { format, getDictionary } from "@/lib/i18n";

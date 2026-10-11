@@ -10,7 +10,6 @@ import { architectureCounts, messagingData, moduleMapData, pipelineSteps } from 
 import { verifiedJourneyModules } from "@/lib/orazaka-journey";
 import { journeysFor } from "@/lib/journeys";
 import { PageHero } from "@/app/components/sections";
-import "@/app/components/sections/sections.css";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import RepositoryMap, { type RepositoryEntry } from "../../../../components/RepositoryMap";
