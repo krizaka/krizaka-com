@@ -9,10 +9,12 @@ import { GITHUB_ORG_URL } from "@/lib/site";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
 import { ProductsMenu } from "./ProductsMenu";
+import { useContactHref } from "./useContactHref";
 import { KrizakaLogo } from "@krizaka/ui";
 
 export default function TopNavBar() {
   const { t, toggleLocale } = useI18n();
+  const contactHref = useContactHref();
   const { theme, toggleTheme } = useSiteTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -234,7 +236,7 @@ export default function TopNavBar() {
             </button>
 
             {/* Primary call to action */}
-            <Link href="/contact" id="nav-contact-cta" className="btn-sheen">
+            <Link href={contactHref} id="nav-contact-cta" className="btn-sheen">
               {t.site.menu.contactCta}
             </Link>
 

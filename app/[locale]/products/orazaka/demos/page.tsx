@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { contactHref } from "@/lib/contact";
 import Image from "next/image";
 import Link from "next/link";
 import { CheckIcon, CreditsIcon, ForwardIcon, ImageIcon, KnowledgeIcon, LocalIcon, PlayIcon, StudioIcon } from "@krizaka/icons";
@@ -155,7 +156,7 @@ export default async function OrazakaDemoPage({ params }: Props) {
           <p className="bp-lead">{t.closing.body}</p>
           <div className="bp-actions">
             <Link href="/products/orazaka#how" className="bp-btn bp-btn-primary btn-sheen">{t.closing.install}</Link>
-            <Link href="/contact" className="bp-btn bp-btn-ghost">{t.closing.contact} <ForwardIcon size={16} /></Link>
+            <Link href={contactHref("orazaka", "orazaka")} className="bp-btn bp-btn-ghost">{t.closing.contact} <ForwardIcon size={16} /></Link>
           </div>
         </div>
       </SectionBackdrop>

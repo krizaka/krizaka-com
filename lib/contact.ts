@@ -10,6 +10,37 @@ const CONTACT_LOCALES = ["en", "fr"] as const;
 export const CONTACT_TOPICS = ["orazaka", "orochia", "blocks", "partnership", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
+/* Where a visitor came from (`/contact?source=<slug>`): pre-selects the topic and travels with the message, so the
+   team knows which page sent it. A slug, never free text. */
+const SOURCE = /^[a-z0-9][a-z0-9-]{0,39}$/;
+export const cleanSource = (v: unknown): string | null => (typeof v === "string" && SOURCE.test(v) ? v : null);
+
+/** The source of a page: its product, its documentation or open source, else its first segment ("home" for /). */
+export function contactSourceFromPath(pathname: string): string {
+  const path = pathname.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
+  if (/^\/(products|docs)\/orochia(\/|$)/.test(path)) return "orochia";
+  if (/^\/(products|docs)\/orazaka(\/|$)/.test(path)) return "orazaka";
+  if (/^\/open-source(\/|$)/.test(path)) return "open-source";
+  if (/^\/docs\/(ui|java)(\/|$)/.test(path)) return `docs-${path.split("/")[2]}`;
+  return cleanSource(path.split("/")[1]) ?? "home";
+}
+
+/** The topic a source implies — none when the page is about Krizaka as a whole (home, story…). */
+export function topicForSource(source: string | null): ContactTopic | null {
+  if (source === "orochia" || source === "orazaka") return source;
+  if (source === "open-source" || source === "docs-ui" || source === "docs-java") return "blocks";
+  return null;
+}
+
+/** The contact page link, carrying where the visitor is and, when the page knows it, the topic. */
+export function contactHref(source: string | null, topic?: ContactTopic): string {
+  const q = new URLSearchParams();
+  if (topic) q.set("topic", topic);
+  if (source) q.set("source", source);
+  const s = q.toString();
+  return s ? `/contact?${s}` : "/contact";
+}
+
 /** When the sender needs it (optional): qualifies the request for the team. */
 export const CONTACT_TIMELINES = ["now", "quarter", "exploring"] as const;
 export type ContactTimeline = (typeof CONTACT_TIMELINES)[number];
@@ -22,6 +53,8 @@ export interface ContactMessage {
   timeline: ContactTimeline | null;
   message: string;
   locale: "fr" | "en";
+  /** The page the visitor came from (`?source=`), when known. */
+  source: string | null;
 }
 
 export type ContactValidation = { ok: true; value: ContactMessage } | { ok: false; field: string };
@@ -45,7 +78,7 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
   const timeline = CONTACT_TIMELINES.includes(b.timeline as ContactTimeline) ? (b.timeline as ContactTimeline) : null;
   if (b.timeline !== undefined && b.timeline !== null && b.timeline !== "" && !timeline) return { ok: false, field: "timeline" };
   if (message.length < 10 || message.length > 5000) return { ok: false, field: "message" };
-  return { ok: true, value: { name, email, company, topic, timeline, message, locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en" } };
+  return { ok: true, value: { name, email, company, topic, timeline, message, locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en", source: cleanSource(b.source) } };
 }
 
 const TOPIC_LABEL: Record<ContactTopic, string> = {
@@ -75,7 +108,7 @@ export function contactChannels(env: NodeJS.ProcessEnv = process.env) {
 /** Delivers to every configured channel. Returns how many accepted it. */
 export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv = process.env): Promise<number> {
   const subject = `[krizaka.com] ${TOPIC_LABEL[m.topic]} — ${m.name}${m.company ? ` (${m.company})` : ""}`;
-  const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${TOPIC_LABEL[m.topic]}${m.timeline ? ` · ${TIMELINE_LABEL[m.timeline]}` : ""} · ${m.locale}`;
+  const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${TOPIC_LABEL[m.topic]}${m.timeline ? ` · ${TIMELINE_LABEL[m.timeline]}` : ""} · ${m.locale}${m.source ? ` · from ${m.source}` : ""}`;
   const jobs: Promise<boolean>[] = [];
 
   if (env.MAILGUN_API_KEY && env.MAILGUN_DOMAIN && env.CONTACT_TO_EMAIL) {
@@ -93,6 +126,7 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
       ["Topic", TOPIC_LABEL[m.topic]],
       ["Timeline", m.timeline ? TIMELINE_LABEL[m.timeline] : "—"],
       ["Language", m.locale],
+      ["Source", m.source ?? "—"],
       ["Message", m.message],
     ];
     form.append("text", fields.map(([k, v]) => `${k}: ${v}`).join("\n"));

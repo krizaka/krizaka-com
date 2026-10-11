@@ -4,12 +4,14 @@ import Link from "next/link";
 import { ExternalIcon } from "@krizaka/icons";
 import { GitHubMark } from "./brand/GitHubMark";
 import { useI18n } from "./I18nProvider";
+import { useContactHref } from "./useContactHref";
 import { NAV_DOCS_HUB, NAV_PRODUCTS } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
 export default function SiteFooter() {
   const { t } = useI18n();
   const f = t.site.footer;
+  const contactHref = useContactHref();
 
   // Same five entries per product as the menus (lib/nav.ts).
   const linksOf = (id: "orazaka" | "orochia") =>
@@ -22,7 +24,7 @@ export default function SiteFooter() {
     { label: f.story, href: "/story" },
     { label: f.openSource, href: "/open-source" },
     { label: f.docs, href: NAV_DOCS_HUB },
-    { label: f.contact, href: "/contact" },
+    { label: f.contact, href: contactHref },
     { label: f.privacy, href: "/privacy" },
     { label: f.terms, href: "/terms" },
   ];
