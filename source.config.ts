@@ -5,12 +5,12 @@
 
 import { readdirSync } from "node:fs";
 import path from "node:path";
-import { remarkMdxMermaid } from "fumadocs-core/mdx-plugins";
 import { pageSchema } from "fumadocs-core/source/schema";
 import { defineConfig, defineDocs } from "fumadocs-mdx/config";
 import type { Root } from "mdast";
 import { DOCS_MANIFEST } from "./lib/docs-manifest";
 import { OROCHIA_DOCS_MANIFEST } from "./lib/orochia-docs-manifest";
+import { remarkStructuredDiagrams } from "./lib/remark-diagrams";
 
 /** The synced markdown files a manifest publishes (the manifest is keyed by the lower-cased file name). */
 function published(dir: string, manifest: Record<string, unknown>): string[] {
@@ -44,7 +44,8 @@ function remarkDropLeadingTitle() {
 export default defineConfig({
   mdxOptions: {
     // Before the defaults, so the table of contents never lists the dropped title.
-    remarkPlugins: (defaults) => [remarkDropLeadingTitle, ...defaults, remarkMdxMermaid],
+    // The schema blocks (```architecture, ```pipeline, ```sequence, ```states) become components; ```mermaid fails.
+    remarkPlugins: (defaults) => [remarkDropLeadingTitle, remarkStructuredDiagrams, ...defaults],
     rehypeCodeOptions: { themes: { light: "github-light", dark: "github-dark" } },
   },
 });

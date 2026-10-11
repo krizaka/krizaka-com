@@ -24,7 +24,7 @@ import { localizedMetadata } from "@/lib/seo";
 import orochia from "@/app/data/orochia-architecture.json";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
-import OrochiaArchitecture from "@/app/components/OrochiaArchitecture";
+import ModuleMap from "@/app/components/diagrams/ModuleMap";
 import CountUp from "@/app/components/motion/CountUp";
 import { reveal } from "@/lib/motion";
 import OrochiaTour from "@/app/components/OrochiaTour";
@@ -32,7 +32,8 @@ import { tourSrc } from "@/lib/orochia-demo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
 import ContactCta from "@/app/components/home/ContactCta";
 import AdminCallout from "@/app/components/products/AdminCallout";
-import { verifiedJourneys } from "@/lib/orochia-journeys";
+import { moduleMapData } from "@/lib/architecture-model";
+import { journeysFor } from "@/lib/journeys";
 import { OrochiaLogo } from "@krizaka/ui";
 import Rich from "@/app/components/Rich";
 import { IsoSplit } from "@/app/components/brand/Iso";
@@ -88,7 +89,7 @@ export default async function OrochiaPage({ params }: Props) {
   const { locale } = await params;
   const t = getDictionary(locale).site.orochia;
   const tables = orochia.modules.find((m) => m.id === "data")?.tables ?? [];
-  const journeys = verifiedJourneys();
+  const journeys = journeysFor("orochia", getDictionary(locale));
   const money = (cents: number) => formatUsd(cents, locale);
   /* "{value} %": the figure climbs (CountUp), the words around it stay the message's. */
   const share = t.paid.percent.split("{value}");
@@ -239,7 +240,7 @@ export default async function OrochiaPage({ params }: Props) {
         </div>
       </SectionBackdrop>
 
-      {/* ─── How it works: animated journeys ─── */}
+      {/* ─── How it works: the module map, its three journeys played step by step (lib/journeys.ts) ─── */}
       <section id="architecture" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
         <div {...reveal()}>
           <p className="bp-eyebrow">{t.archEyebrow}</p>
@@ -247,7 +248,7 @@ export default async function OrochiaPage({ params }: Props) {
           <p className="bp-lead" style={{ marginBottom: 24 }}>{t.archLead}</p>
         </div>
         <div {...reveal(1, "soft")}>
-          <OrochiaArchitecture journeys={journeys} />
+          <ModuleMap data={moduleMapData("orochia")} journeys={journeys} initial={{ view: "journey" }} />
         </div>
       </section>
 

@@ -50,10 +50,13 @@ PostgreSQL runs in the `orochia-postgres-dev` container
 | browse and edit data | `npm run db:studio` (Drizzle Studio) or `npm run db:psql` |
 | start over from a clean state | `npm run db:reset -- --yes` |
 | keep a copy before an experiment | `npm run db:dump` → `backups/orochia-<date>.sql` |
-| come back to that copy | `npm run db:restore -- backups/orochia-<date>.sql` |
+| come back to that copy | `npm run db:restore -- backups/orochia-<database>-<date>.sql` |
 
 `db:reset`, `db:restore` and `db:psql` work only on the local container: they refuse `NODE_ENV=production` and any
-`DATABASE_URL` that does not point at this machine.
+`DATABASE_URL` that does not point at this machine. They act on the database **named in `DATABASE_URL`**, so a worktree
+working on its own database (`create database orochia_<topic>` in the container, `DATABASE_URL=…/orochia_<topic>`) resets
+only that one — never the shared `orochia_db`. `npm run test:e2e` reads `DATABASE_URL` from the environment (not `.env`):
+export it too when the scenarios run against another database.
 
 ### Changing the schema
 
@@ -69,6 +72,21 @@ PostgreSQL runs in the `orochia-postgres-dev` container
 `packages/db/src/seed.ts` builds a small, coherent platform that exercises every feature. It is idempotent
 (rows are keyed by e-mail, Bunny video id, gateway reference…), so `npm run db:seed` can run any time; it writes
 ledger rows exactly as settlement does (10 % platform fee) and refuses to run with `NODE_ENV=production`.
+
+### The demo
+
+The official demo — Elena Marlow, a singer-songwriter who films her songs, and Alex Carter, a fan — lives in its own
+database (`orochia_demo` on the dev container), so it never touches the shared development data:
+
+```bash
+npm run demo:seed                # rebuilds orochia_demo from scratch: people, videos, stories, payments, an auction,
+                                 # a goal at 60 %, payouts (scripts/demo/cast.json); refuses production and remote hosts
+npm run build && npm run demo:start   # the production build on the demo database, http://localhost:3100
+npm run record:tour              # the krizaka.com clips (needs ffmpeg and Playwright's chromium)
+```
+
+Sign in as `elena@example.com` or `alex@example.com` (password `orochia-demo`). Avatars are the illustrated presets,
+videos and stories play the licensed showcase clips in the recordings, e-mails are on `example.com`.
 
 ## Tests
 
