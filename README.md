@@ -1,5 +1,8 @@
 <p align="center">
-  <img src="public/krizaka.svg" alt="KRIZAKA" width="96" height="96" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/krizaka/.github/main/profile/assets/krizaka-dark.svg">
+    <img src="https://raw.githubusercontent.com/krizaka/.github/main/profile/assets/krizaka-light.svg" alt="Krizaka" width="96">
+  </picture>
 </p>
 
 <h1 align="center">krizaka-com</h1>
@@ -8,11 +11,28 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Next.js-16-blueviolet?style=flat-square" alt="Next.js 16" />
-  <a href="https://github.com/krizaka/orazaka"><img src="https://img.shields.io/badge/AI_Engine-Orazaka-blue?style=flat-square" alt="Orazaka" /></a>
-  <a href="https://github.com/krizaka/orochia"><img src="https://img.shields.io/badge/Streaming-Orochia-magenta?style=flat-square" alt="Orochia" /></a>
-  <a href="https://github.com/krizaka"><img src="https://img.shields.io/badge/GitHub_Org-krizaka-informational?style=flat-square" alt="Krizaka Organization" /></a>
+  <a href="https://github.com/krizaka/orazaka"><img src="https://img.shields.io/badge/AI_Engine-Orazaka-f67e23?style=flat-square" alt="Orazaka" /></a>
+  <a href="https://github.com/krizaka/orochia"><img src="https://img.shields.io/badge/Streaming-Orochia-7c3aed?style=flat-square" alt="Orochia" /></a>
+  <a href="https://github.com/krizaka"><img src="https://img.shields.io/badge/GitHub_Org-krizaka-196df5?style=flat-square" alt="Krizaka Organization" /></a>
   <img src="https://img.shields.io/badge/Loi%2025%20%2F%20GDPR%20%2F%202257-success?style=flat-square" alt="Compliance" />
 </p>
+
+<p align="center">
+  <a href="https://www.krizaka.com">Website</a> · <a href="https://www.krizaka.com/docs">Docs</a> · <a href="https://www.krizaka.com/en/products">Products</a> · <a href="https://www.krizaka.com/en/open-source">Open source</a>
+</p>
+
+<table>
+<tr>
+<td width="50%" valign="top"><a href="https://www.krizaka.com/en/products/orazaka/demos"><img src="https://raw.githubusercontent.com/krizaka/.github/main/profile/assets/orazaka-tour.gif" alt="Orazaka's web client, signed in as Eric: a customer's return request answered from his own returns policy, then a product photo generated locally"></a></td>
+<td width="50%" valign="top"><a href="https://www.krizaka.com/en/products/orochia#tour"><img src="https://raw.githubusercontent.com/krizaka/.github/main/profile/assets/orochia-tour.gif" alt="Orochia, signed in as Alex: Elena's story opened from the ring on her profile, sound on, a like, a private reply and a $10 tip"></a></td>
+</tr>
+<tr>
+<td align="center"><sub>Orazaka — Eric answers a customer from his own documents, then generates the product photo. Everything ran on one Mac.</sub></td>
+<td align="center"><sub>Orochia — Alex opens Elena's story, likes it, replies privately and tips her; Elena keeps 90 %.</sub></td>
+</tr>
+</table>
+
+<p align="center"><sub>The two products this site presents, recorded on the real applications — the same clips play on krizaka.com.</sub></p>
 
 ---
 
@@ -25,17 +45,17 @@ hand-authored here. Governance contract: [`AGENTS.md`](AGENTS.md).
 Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 with the Krizaka preset
 ([`@krizaka/tailwind`](https://www.npmjs.com/package/@krizaka/tailwind): the `--kz-*` tokens of `@krizaka/tokens`) ·
 [`@krizaka/ui`](https://www.npmjs.com/package/@krizaka/ui) · Fumadocs (docs) ·
-`@xyflow/react` (pipeline graphs) · `framer-motion`.
+`@xyflow/react` (pipeline graphs) · one motion system in CSS (`app/motion.css`, no animation library for new work).
 
 ## Where things live
 
 | Path | Role |
 |---|---|
-| `app/[locale]/` | All routes; `[locale]` is `fr` (Québec) or `en`. `layout.tsx` wires fonts, theme, i18n, the sitewide JSON-LD graph and base metadata. |
+| `app/[locale]/` | All routes; `[locale]` is `en` (default) or `fr` (Québec). `layout.tsx` wires fonts, theme, i18n, the sitewide JSON-LD graph and base metadata. |
 | `app/components/` | UI. Big ones: `TopNavBar`, `EngineShowcaseSection`, `diagrams/` (module map, pipeline, messaging), `Mermaid`, `MdxComponents`, `DemosGallery`. |
 | `app/robots.ts` · `app/sitemap.ts` · `app/manifest.ts` | SEO route handlers. |
 | `app/data/architecture.json` | **Generated** module graph + Orazaka repository map (read-only). |
-| `proxy.ts` | Edge middleware (Next 16 name): no-locale URL → `/fr` or `/en` by `Accept-Language`, sticky `NEXT_LOCALE` cookie. |
+| `proxy.ts` | Edge middleware (Next 16 name): no-locale URL → `/en` by default, `/fr` when the `NEXT_LOCALE` cookie says so; a `/fr` or `/en` page sets that cookie. |
 | `next.config.ts` | Security headers, AVIF/WebP, cache policy. |
 | `lib/seo.ts` | `localizedMetadata()` + `buildAlternates()` — per-page title/description/canonical/hreflang. |
 | `lib/structured-data.ts` | JSON-LD `@graph` builders (Organization · WebSite · SoftwareApplication, Breadcrumb, FAQ). |
@@ -70,19 +90,22 @@ organisation; the site renders the list from the generated `architecture.json`
 |---|---|
 | Workspace | [orazaka](https://github.com/krizaka/orazaka) — governance, manifest, infra, e2e, docs |
 | Foundation | [orazaka-build](https://github.com/krizaka/orazaka-build) · [orazaka-contracts](https://github.com/krizaka/orazaka-contracts) · [orazaka-edge](https://github.com/krizaka/orazaka-edge) · [orazaka-ui-kit](https://github.com/krizaka/orazaka-ui-kit) |
-| Domain services | [orazaka-users](https://github.com/krizaka/orazaka-users) · [orazaka-notifications](https://github.com/krizaka/orazaka-notifications) · [orazaka-billing](https://github.com/krizaka/orazaka-billing) |
+| Krizaka building blocks (Maven Central, `com.krizaka` 0.2.0) | [krizaka-build](https://github.com/krizaka/krizaka-build) · [krizaka-platform-kit](https://github.com/krizaka/krizaka-platform-kit) · [krizaka-users](https://github.com/krizaka/krizaka-users) · [krizaka-notifications](https://github.com/krizaka/krizaka-notifications) · [krizaka-billing](https://github.com/krizaka/krizaka-billing) — documented at [/docs/java](https://www.krizaka.com/docs/java) |
 | AI engine | [orazaka-ai-engine](https://github.com/krizaka/orazaka-ai-engine) · [orazaka-studio](https://github.com/krizaka/orazaka-studio) · [orazaka-conversation-service](https://github.com/krizaka/orazaka-conversation-service) · [orazaka-job-service](https://github.com/krizaka/orazaka-job-service) · [orazaka-knowledge-service](https://github.com/krizaka/orazaka-knowledge-service) · [orazaka-automation-service](https://github.com/krizaka/orazaka-automation-service) · [orazaka-worker-media](https://github.com/krizaka/orazaka-worker-media) |
 | Apps & content | [orazaka-web-client](https://github.com/krizaka/orazaka-web-client) · [orazaka-web-admin](https://github.com/krizaka/orazaka-web-admin) · [orazaka-mobile-client](https://github.com/krizaka/orazaka-mobile-client) · [orazaka-cli](https://github.com/krizaka/orazaka-cli) · [orazaka-packs](https://github.com/krizaka/orazaka-packs) |
 
 ## Orochia repositories
 
-Orochia is published as a dedicated 3-tier creator & streaming platform in the [krizaka](https://github.com/krizaka) organisation; the architecture is code-generated in `app/data/orochia-architecture.json` and presented at `/products/orochia`.
+Orochia, the creator video platform, lives in four repositories of the [krizaka](https://github.com/krizaka)
+organisation; its architecture is generated in `app/data/orochia-architecture.json` and presented at
+`/products/orochia`, its docs at [/docs/orochia](https://www.krizaka.com/docs/orochia).
 
-| Layer / App | Repository | Port | Description |
-|---|---|---|---|
-| Consumer Web | [orochia](https://github.com/krizaka/orochia) | `3000` | 4K HLS player, direct Bunny Tus ingest, PostgreSQL scrypt auth, paywalls |
-| Control Plane | [orochia-admin](https://github.com/krizaka/orochia-admin) | `3001` | 18 U.S.C. § 2257 federal compliance vault, instant CDN purge, treasury rake |
-| Design System | [orochia-design-system](https://github.com/krizaka/orochia-design-system) | `3002` | Obsidian Velvet Noir tokens, interactive components & live showcase |
+| Repository | What it is |
+|---|---|
+| [orochia](https://github.com/krizaka/orochia) | The web app: 4K HLS playback from Bunny Stream, the Explorer, stories, unlocks, auctions and challenges in escrowed credits, 90 % to the creator on a double-entry ledger |
+| [orochia-admin](https://github.com/krizaka/orochia-admin) | The operator console: 18 U.S.C. § 2257 creator verification, content-report triage, catalogue, auctions, treasury and payouts — its own database, one operator account |
+| [orochia-design-system](https://github.com/krizaka/orochia-design-system) | [`@krizaka/orochia-design-system`](https://www.npmjs.com/package/@krizaka/orochia-design-system): the Orochia theme on `@krizaka/ui` and its product composites |
+| [orochia-mobile](https://github.com/krizaka/orochia-mobile) | Orochia for iOS and Android (Expo), on the same API and rules as the web |
 
 Never hand-edit `orazaka-content/` or `app/data/`. To publish a synced doc, add an entry
 to [`lib/docs-manifest.ts`](lib/docs-manifest.ts) (curated title/category/order/audience).
