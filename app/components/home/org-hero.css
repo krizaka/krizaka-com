@@ -78,8 +78,7 @@ html.light .org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :f
 .org-hero-mark { display:inline-flex; border-radius:50%; transition: filter 320ms var(--kz-ease), transform 320ms var(--kz-ease); }
 .org-hero-product:is(:hover, :focus-visible) .org-hero-mark { filter: drop-shadow(0 0 10px var(--kz-accent)); transform: scale(1.06); }
 .org-hero-product-text { flex:1; display:flex; flex-direction:column; gap:2px; font-size:15px; }
-.org-hero-soon { margin-left:8px; padding:1px 7px; border-radius:999px; border:1px solid var(--kz-border-default); vertical-align:2px;
-  font-family:var(--font-mono); font-size:9.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--kz-accent-text); }
+.org-hero-status { margin-left:6px; vertical-align:2px; }
 .org-hero-product-tag { font-size:12.5px; color:var(--kz-text-secondary); font-weight:400; }
 .org-hero-cta { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:28px; }
 

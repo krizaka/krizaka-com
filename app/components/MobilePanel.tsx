@@ -12,6 +12,7 @@ import { Button } from "@krizaka/ui/button";
 import { ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
 import { useI18n } from "./I18nProvider";
+import { ProductStatus } from "./ProductStatus";
 import { useSiteTheme } from "./SiteTheme";
 import { useContactHref } from "./useContactHref";
 import { NAV_ICONS, productLinkIcon } from "./ProductsMenu";
@@ -53,13 +54,9 @@ export function MobilePanel({ path }: { path: string }) {
                   <ProductLogo id={p.id} size={26} />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="flex items-center gap-2 font-display text-[15px] font-bold text-fg group-open/product:text-fg-accent">
+                  <span className="flex items-center gap-2 whitespace-nowrap font-display text-[15px] font-bold text-fg group-open/product:text-fg-accent">
                     {p.name}
-                    {p.soon && (
-                      <span className="rounded-full border border-border-default px-2 py-px font-mono text-[10px] font-semibold uppercase tracking-[0.1em] text-fg-accent">
-                        {t.site.nav[p.id].badge}
-                      </span>
-                    )}
+                    {p.status && <ProductStatus status={p.status} t={t} />}
                   </span>
                   <span className="block text-[12.5px] text-fg-secondary">{t.site.nav[p.id].tagline}</span>
                 </span>

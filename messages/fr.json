@@ -387,7 +387,7 @@
       },
       "yazakia": {
         "tagline": "L'app de rencontre où l'on se parle d'abord",
-        "badge": "Bientôt",
+        "badge": "Rencontres",
         "links": {
           "overview": {
             "label": "Vue d'ensemble",
@@ -405,6 +405,16 @@
             "label": "Lots réciproques",
             "desc": "Dans les deux sens, ou pas du tout"
           }
+        }
+      },
+      "status": {
+        "upcoming": {
+          "label": "Bientôt",
+          "long": "Bientôt disponible"
+        },
+        "construction": {
+          "label": "En construction",
+          "long": "En construction"
         }
       },
       "company": {

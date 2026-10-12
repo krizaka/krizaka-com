@@ -387,7 +387,7 @@
       },
       "yazakia": {
         "tagline": "The dating app where you talk first",
-        "badge": "Coming soon",
+        "badge": "Dating",
         "links": {
           "overview": {
             "label": "Overview",
@@ -405,6 +405,16 @@
             "label": "Mutual batches",
             "desc": "Both ways, or not at all"
           }
+        }
+      },
+      "status": {
+        "upcoming": {
+          "label": "Soon",
+          "long": "Coming soon"
+        },
+        "construction": {
+          "label": "In construction",
+          "long": "Under construction"
         }
       },
       "company": {

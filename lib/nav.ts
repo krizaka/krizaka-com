@@ -25,12 +25,18 @@ export interface NavLink<I extends NavIcon = NavIcon> {
   match?: string[];
 }
 
+/** Where a product not released yet stands — each status has its own words (site.nav.status.<status>: a short
+ *  `label` for the chip, a `long` form for the screen readers and the home). `upcoming`: announced, coming ("Soon");
+ *  `construction`: being built, nothing offered yet ("In construction") — a product in construction never says
+ *  "coming soon", "beta" or "waitlist". No status: released. */
+export type ProductStatus = "upcoming" | "construction";
+
 export interface NavProduct {
   id: "orazaka" | "orochia" | "yazakia";
   name: string;
   href: string;
-  /** Not released yet: the menus and the home say so (site.nav.<id>.badge, "Coming soon"). */
-  soon?: boolean;
+  /** Not released yet: the menus, the footer and the home show it as a compact chip (ProductStatus). */
+  status?: ProductStatus;
   /** Tagline and badge: messages → site.nav.<id>. */
   links: NavLink<ProductLinkId>[];
 }
@@ -58,13 +64,13 @@ export const NAV_PRODUCTS: NavProduct[] = [
       { href: "/products/orochia#guarantees", icon: "signature" },
     ],
   },
-  /* Coming soon: only what exists today — the teaser page and its sections. The demo and the documentation join the
+  /* Upcoming: only what exists today — the teaser page and its sections. The demo and the documentation join the
      four entries when the app and its docs exist (no dead link). */
   {
     id: "yazakia",
     name: "Yazakia",
     href: "/products/yazakia",
-    soon: true,
+    status: "upcoming",
     links: [
       { href: "/products/yazakia", icon: "overview" },
       { href: "/products/yazakia#architecture", icon: "architecture" },

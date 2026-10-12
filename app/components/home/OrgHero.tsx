@@ -22,9 +22,10 @@ import { GitHubMark } from "../brand/GitHubMark";
 import KrizakaLandscape from "../illustrations/KrizakaLandscape";
 import RotatingWord from "./RotatingWord";
 import HeroProductMedia from "./HeroProductMedia";
-import { getDictionary } from "@/lib/i18n";
+import { getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/org-data";
 import { NAV_PRODUCTS } from "@/lib/nav";
+import { ProductStatus } from "../ProductStatus";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import "./org-hero.css";
 import ButtonLink from "@/app/components/ButtonLink";
@@ -66,7 +67,7 @@ export default function OrgHero({ locale, repositoryCount }: { locale: string; r
               <span className="org-hero-product-text">
                 <strong>
                   {p.name}{" "}
-                  {NAV_PRODUCTS.find((n) => n.id === p.id)?.soon && <span className="org-hero-soon">{t.site.nav[p.id].badge}</span>}
+                  <HeroStatus id={p.id} t={t} />
                 </strong>
                 <span className="org-hero-product-tag">{t.site.products[p.id].tagline}</span>
               </span>
@@ -92,4 +93,10 @@ export default function OrgHero({ locale, repositoryCount }: { locale: string; r
 
     </SectionBackdrop>
   );
+}
+
+/** The product's status chip (lib/nav.ts) beside its name, when it is not released yet. */
+function HeroStatus({ id, t }: { id: string; t: TranslationDictionary }) {
+  const status = NAV_PRODUCTS.find((n) => n.id === id)?.status;
+  return status ? <ProductStatus status={status} t={t} className="org-hero-status" /> : null;
 }

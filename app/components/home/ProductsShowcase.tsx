@@ -1,7 +1,7 @@
 "use client";
 
 /* The Krizaka products, presented the same way: animated mark, promise, proof points, stack, a recording of the real
-   product, and the same entry points as the navigation (lib/nav.ts). A product not released yet (`soon`) says so in its
+   product, and the same entry points as the navigation (lib/nav.ts). A product not released yet (`status`) says so in its
    badge and shows its animated mark where the recording will be — never an invented screenshot. */
 
 import { useSyncExternalStore } from "react";
@@ -12,6 +12,7 @@ import { NAV_ICONS, SIGNATURE_ICONS } from "../ProductsMenu";
 import { GitHubMark } from "../brand/GitHubMark";
 import { PRODUCTS } from "@/lib/org-data";
 import { NAV_PRODUCTS } from "@/lib/nav";
+import { ProductStatus } from "../ProductStatus";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
 import { cn } from "@krizaka/ui/cn";
@@ -79,7 +80,10 @@ export default function ProductsShowcase({ heading = "h2" }: { heading?: "h2" | 
                 <div className="kz-spot-head">
                   <ProductLogo id={p.id} size={56} />
                   <div>
-                    <h3>{p.name}</h3>
+                    <h3>
+                      {p.name}
+                      {nav.status && <ProductStatus status={nav.status} t={t} className="kz-spot-status" />}
+                    </h3>
                     <span className="kz-spot-badge">{t.site.nav[p.id].badge} · open source</span>
                   </div>
                 </div>
@@ -140,7 +144,8 @@ export default function ProductsShowcase({ heading = "h2" }: { heading?: "h2" | 
                 /* Nothing recorded yet: the mark, alive, where the app will be — the words say it is coming. */
                 <figure className="kz-spot-media is-mark" {...(firstScreen ? {} : reveal(2))}>
                   <ProductLogo id={p.id} size={148} />
-                  <figcaption>{h.soon}</figcaption>
+                  {/* The words follow the status: an upcoming app is "coming to iOS and Android", one in construction only says so. */}
+                  <figcaption>{nav.status === "construction" ? t.site.nav.status.construction.long : h.soon}</figcaption>
                 </figure>
               )}
             </Page>
@@ -157,6 +162,7 @@ export default function ProductsShowcase({ heading = "h2" }: { heading?: "h2" | 
         @media (max-width: 900px) { .kz-spot { grid-template-columns: 1fr; } .kz-spot.is-flipped .kz-spot-copy { order: 0; } }
         .kz-spot-copy { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
         .kz-spot-head { display: flex; align-items: center; gap: 14px; }
+        .kz-spot-head h3 .kz-spot-status { margin-left: 10px; vertical-align: 6px; }
         .kz-spot-head h3 { margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: 28px; font-weight: 800; letter-spacing: -.02em; color: var(--kz-text-primary); }
         .kz-spot-badge { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--kz-accent-text); }
         .kz-spot-tagline { margin: 4px 0 0; font-size: 18px; font-weight: 700; color: var(--kz-text-primary); }
