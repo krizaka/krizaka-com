@@ -1,4 +1,4 @@
-import { OROCHIA_APP_URL } from "./site";
+import { OROCHIA_APP_URL, YAZAKIA_REPO_URL } from "./site";
 /* ═══════════════════════════════════════════════════════════════════
    KRIZAKA — organisation-level data for the home page and /open-source.
    Repository lists are NOT written here: they come from the generated
@@ -66,17 +66,19 @@ export function orgRepositories(): OrgRepository[] {
 }
 
 export interface Product {
-  id: "orazaka" | "orochia";
+  id: "orazaka" | "orochia" | "yazakia";
   name: string;
   href: string;
-  docsHref: string;
+  /** Its documentation — none until it is published. */
+  docsHref?: string;
   repoUrl: string;
   /** The running application, when there is one to open (OROCHIA_APP_URL). */
   appUrl?: string;
   /* Tagline, summary and points: messages → site.products.<id>. */
   stack: string;
-  /** Screen recording of the product: `${src}.webm|.mp4|.jpg` under /public. */
-  media: { src: string; aspect: string; frame: string };
+  /** Screen recording of the product: `${src}.webm|.mp4|.jpg` under /public. None until the real application can be
+      recorded: the home shows its animated mark instead — never an invented screenshot. */
+  media?: { src: string; aspect: string; frame: string };
 }
 
 export const PRODUCTS: Product[] = [
@@ -98,5 +100,12 @@ export const PRODUCTS: Product[] = [
     appUrl: OROCHIA_APP_URL,
     stack: "Next.js 16 · PostgreSQL · Drizzle · Bunny Stream",
     media: { src: "/assets/orochia/tour/showcase", aspect: "16 / 10", frame: "orochia · web" },
+  },
+  {
+    id: "yazakia",
+    name: "Yazakia",
+    href: "/products/yazakia",
+    repoUrl: YAZAKIA_REPO_URL,
+    stack: "Expo · Next.js 16 API · PostgreSQL + pgvector · Orazaka",
   },
 ];

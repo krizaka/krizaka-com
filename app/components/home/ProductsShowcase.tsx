@@ -1,7 +1,8 @@
 "use client";
 
-/* The two Krizaka products, presented the same way: animated mark, promise, proof points, stack,
-   a recording of the real product, and the same five entry points as the navigation (lib/nav.ts). */
+/* The Krizaka products, presented the same way: animated mark, promise, proof points, stack, a recording of the real
+   product, and the same entry points as the navigation (lib/nav.ts). A product not released yet (`soon`) says so in its
+   badge and shows its animated mark where the recording will be — never an invented screenshot. */
 
 import { useSyncExternalStore } from "react";
 import { CheckIcon, ExternalIcon, ForwardIcon } from "@krizaka/icons";
@@ -112,25 +113,33 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
                 </nav>
               </div>
 
-              <figure className="kz-spot-media" {...(firstScreen ? {} : reveal(2))}>
-                <div className="kz-spot-chrome" aria-hidden>
-                  <span /><span /><span /> <em>{p.media.frame}</em>
-                </div>
-                <video
-                  ref={playWhenVisible}
-                  muted
-                  loop
-                  playsInline
-                  controls={still}
-                  preload="none"
-                  data-poster={`${p.media.src}.jpg`}
-                  style={{ aspectRatio: p.media.aspect }}
-                  aria-label={`${p.name} — ${h.demo}`}
-                >
-                  <source src={`${p.media.src}.webm`} type="video/webm" />
-                  <source src={`${p.media.src}.mp4`} type="video/mp4" />
-                </video>
-              </figure>
+              {p.media ? (
+                <figure className="kz-spot-media" {...(firstScreen ? {} : reveal(2))}>
+                  <div className="kz-spot-chrome" aria-hidden>
+                    <span /><span /><span /> <em>{p.media.frame}</em>
+                  </div>
+                  <video
+                    ref={playWhenVisible}
+                    muted
+                    loop
+                    playsInline
+                    controls={still}
+                    preload="none"
+                    data-poster={`${p.media.src}.jpg`}
+                    style={{ aspectRatio: p.media.aspect }}
+                    aria-label={`${p.name} — ${h.demo}`}
+                  >
+                    <source src={`${p.media.src}.webm`} type="video/webm" />
+                    <source src={`${p.media.src}.mp4`} type="video/mp4" />
+                  </video>
+                </figure>
+              ) : (
+                /* Nothing recorded yet: the mark, alive, where the app will be — the words say it is coming. */
+                <figure className="kz-spot-media is-mark" {...(firstScreen ? {} : reveal(2))}>
+                  <ProductLogo id={p.id} size={148} />
+                  <figcaption>{h.soon}</figcaption>
+                </figure>
+              )}
             </article>
             </SectionBackdrop>
           );
@@ -159,6 +168,10 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
         .kz-spot-chrome span { width: 9px; height: 9px; border-radius: 50%; background: var(--kz-border-strong); }
         .kz-spot-chrome em { margin-left: 8px; font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
         .kz-spot-media video { display: block; width: 100%; height: auto; object-fit: cover; }
+        .kz-spot-media.is-mark { display: grid; place-items: center; align-content: center; gap: 22px; aspect-ratio: 16 / 10; padding: 24px;
+          background: radial-gradient(60% 70% at 50% 42%, color-mix(in srgb, var(--kz-accent) 16%, var(--kz-surface-1)), var(--kz-surface-1)); }
+        .kz-spot-media.is-mark figcaption { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+          color: var(--kz-accent-text); text-align: center; }
       `}</style>
     </section>
   );

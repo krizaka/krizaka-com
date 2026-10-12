@@ -385,10 +385,32 @@
           }
         }
       },
+      "yazakia": {
+        "tagline": "L'app de rencontre où l'on se parle d'abord",
+        "badge": "Bientôt",
+        "links": {
+          "overview": {
+            "label": "Vue d'ensemble",
+            "desc": "La promesse, avant l'app"
+          },
+          "architecture": {
+            "label": "Comment ça marche",
+            "desc": "Parler, un lot, un débrief, l'intro"
+          },
+          "demo": {
+            "label": "Démo",
+            "desc": "Avec la première version"
+          },
+          "signature": {
+            "label": "Lots réciproques",
+            "desc": "Dans les deux sens, ou pas du tout"
+          }
+        }
+      },
       "company": {
         "products": {
           "label": "Tous les produits",
-          "desc": "Comparer Orazaka et Orochia"
+          "desc": "Tous les produits, côte à côte"
         },
         "story": {
           "label": "Notre histoire",
@@ -440,7 +462,20 @@
           "Paiements confirmés par webhook signé, réglés une seule fois",
           "Conformité 18+ et registres 2257 intégrés"
         ]
+      },
+      "yazakia": {
+        "tagline": "L'app de rencontre où l'on se parle d'abord.",
+        "summary": "Pas de swipe, pas de catalogue, pas de note. Un agent IA apprend à vous connaître, puis vous ouvre un petit lot de personnes compatibles dans les deux sens — et le lot suivant attend votre débrief. Bientôt sur iOS et Android.",
+        "points": [
+          "Une conversation plutôt qu'un formulaire",
+          "3 à 5 personnes à la fois, compatibles dans les deux sens",
+          "Des raisons en mots — jamais une note"
+        ]
       }
+    },
+    "productsPage": {
+      "title": "Produits — Orazaka, Orochia, Yazakia | Krizaka",
+      "description": "Les produits open source de Krizaka : Orazaka (orchestration IA souveraine), Orochia (la plateforme vidéo des créateurs) et Yazakia (l'app de rencontre où l'on se parle d'abord, bientôt)."
     },
     "expertise": {
       "eyebrow": "Savoir-faire",
@@ -491,7 +526,8 @@
         "title": "Produits",
         "discover": "Découvrir",
         "demo": "démonstration",
-        "openApp": "Ouvrir l'application"
+        "openApp": "Ouvrir l'application",
+        "soon": "Bientôt sur iOS et Android"
       },
       "openSource": {
         "title": "Lisez chaque ligne.",
@@ -515,7 +551,7 @@
       }
     },
     "footer": {
-      "tagline": "Studio logiciel open source à Montréal. Créateurs d'Orazaka et d'Orochia.",
+      "tagline": "Studio logiciel open source à Montréal. Créateurs d'Orazaka, d'Orochia et de Yazakia.",
       "products": "Produits",
       "story": "Notre histoire",
       "openSource": "Open source",
@@ -537,6 +573,7 @@
       "topics": {
         "orazaka": "Orazaka",
         "orochia": "Orochia",
+        "yazakia": "Yazakia",
         "blocks": "Briques Krizaka",
         "partnership": "Partenariat",
         "other": "Autre chose"
@@ -544,6 +581,7 @@
       "topicHints": {
         "orazaka": "Déployer ou auditer la passerelle d'IA souveraine",
         "orochia": "Lancer ou intégrer la plateforme vidéo pour créateurs",
+        "yazakia": "Savoir quand l'app de rencontre ouvre, ou aider à la construire",
         "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
         "partnership": "Intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe"
@@ -558,6 +596,7 @@
       "placeholders": {
         "orazaka": "Votre infrastructure (infonuagique, sur site, isolée), les modèles utilisés, vos contraintes de conformité…",
         "orochia": "Vos créateurs et votre public, les moyens de paiement voulus, votre date de lancement…",
+        "yazakia": "Quand vous aimeriez l'essayer, sur quel téléphone, ce que vous attendez d'une app de rencontre…",
         "blocks": "Le composant (sécurité, messagerie, utilisateurs, notifications, facturation, UI…), votre stack et ce que vous voulez construire…",
         "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
         "other": "Comment pouvons-nous vous aider ?"
@@ -916,6 +955,149 @@
         ]
       }
     },
+    "yazakia": {
+      "meta": {
+        "title": "Yazakia — L'app de rencontre où l'on se parle d'abord | Krizaka",
+        "description": "Yazakia arrive sur iOS et Android : un agent IA apprend à vous connaître, puis vous ouvre de petits lots de personnes compatibles dans les deux sens — des raisons, jamais des notes. Open source, par Krizaka."
+      },
+      "hero": {
+        "back": "Tous les produits",
+        "eyebrow": "Yazakia · le troisième produit Krizaka",
+        "title": "L'app de rencontre où l'on se parle d'abord.",
+        "lead": "Yazakia commence par une conversation, pas par un catalogue. Un agent IA apprend qui vous êtes et qui vous cherchez, puis vous ouvre un petit lot de personnes qui pourraient vous choisir aussi — avec les raisons, jamais une note. Bientôt sur iOS et Android, construite au grand jour.",
+        "notify": "Me prévenir",
+        "github": "Suivre sur GitHub",
+        "badges": {
+          "soon": "Bientôt",
+          "platforms": "iOS · Android",
+          "license": "Apache-2.0"
+        },
+        "badgesLabel": "Où en est Yazakia"
+      },
+      "trap": {
+        "title": "Le piège",
+        "hook": "Les apps à swipe réduisent les gens à des vignettes — et vendent une pile sans fin comme une chance.",
+        "body": "Plus on swipe, moins on regarde. Un « j'aime » ne coûte rien, donc il ne veut rien dire : des matchs qui ne mènent nulle part, des profils qui ne répondent jamais, et une app qui gagne plus tant que vous restez célibataire.",
+        "items": [
+          "La fatigue du swipe : une pile sans fin, jugée en une demi-seconde",
+          "Les faux matchs : deux pouces levés, aucune raison de se parler",
+          "Un classement caché qui décide qui a le droit de vous voir",
+          "Payer pour être vu, payer pour passer devant"
+        ]
+      },
+      "loop": {
+        "eyebrow": "Comment ça marche",
+        "title": "Quatre temps, toujours dans cet ordre",
+        "lead": "Yazakia renverse la mécanique : comprendre avant de montrer, et chaque lot apprend du précédent.",
+        "expand": "En détail",
+        "what": "Ce qui se passe",
+        "steps": {
+          "talk": {
+            "title": "On se parle d'abord",
+            "meta": "01 · dix minutes",
+            "hook": "Un agent, pas un formulaire : une question à la fois, des choix rapides, de la place pour l'humour.",
+            "items": [
+              "Il apprend vos valeurs, votre rythme de vie, vos non-négociables",
+              "Il vous rend un portrait — qui vous êtes, qui vous cherchez — que vous pouvez corriger",
+              "Le portrait vaut déjà quelque chose avant même que votre premier lot existe"
+            ]
+          },
+          "batch": {
+            "title": "Un lot, pas un catalogue",
+            "meta": "02 · 3 à 5 personnes · 72 h",
+            "hook": "Seulement des personnes compatibles dans les deux sens, chacune avec « pourquoi vous deux », en mots.",
+            "items": [
+              "Il s'ouvre quand l'agent en sait assez — et seulement si quelqu'un pourrait vous choisir aussi",
+              "Pour chaque personne : intéressé·e · je passe · dis-m'en plus",
+              "Le lot expire après 72 heures : rien ne s'empile"
+            ]
+          },
+          "debrief": {
+            "title": "On débriefe avant le suivant",
+            "meta": "03 · deux minutes",
+            "hook": "Trois questions déverrouillent le lot suivant — et changent ce que l'agent cherche pour vous.",
+            "items": [
+              "Des choix rapides, du texte libre si le cœur vous en dit",
+              "Vos réponses retouchent le portrait : « la distance compte moins que tu ne le disais »",
+              "Chaque lot est plus juste que le précédent"
+            ]
+          },
+          "intro": {
+            "title": "L'intro",
+            "meta": "04 · sept jours",
+            "hook": "Un intérêt réciproque ouvre une intro de sept jours : deux personnes se parlent, l'agent s'efface.",
+            "items": [
+              "Chaque agent souffle une première phrase, en privé, à sa propre personne",
+              "Ensuite, c'est entre vous deux — l'agent ne lit jamais l'intro",
+              "Au bout de sept jours : continuer ensemble, ou laisser filer"
+            ]
+          }
+        },
+        "rule": "Je vous présente, puis je quitte la pièce. Ce que vous vous dites n'appartient qu'à vous.",
+        "promise": "La promesse"
+      },
+      "matching": {
+        "title": "Les lots réciproques, notre signature",
+        "lead": "La plupart des apps classent les gens. Yazakia pose une autre question : ces deux-là se choisiraient-ils ?",
+        "decisions": [
+          {
+            "chose": "Une paire vaut son sens le plus faible : ce que A cherche chez B et ce que B cherche chez A — le plus bas des deux, `min(A→B, B→A)`.",
+            "refused": "Un classement à sens unique qui vous montre qui vous convient, que vous lui conveniez ou non.",
+            "because": "C'est ainsi que naissent les profils fantômes et les matchs sans issue. Avec le minimum, B n'apparaît chez A que si A a ses chances chez B.",
+            "cost": "Des lots plus petits, parfois aucun : quand le bassin est mince, l'agent le dit franchement et vous prévient quand un lot est prêt."
+          },
+          {
+            "chose": "Des raisons rédigées, dans les deux sens : « pourquoi vous deux ».",
+            "refused": "Un pourcentage de compatibilité.",
+            "because": "Un chiffre invite à comparer les gens comme des produits ; une raison invite à la conversation.",
+            "cost": "Chaque raison s'écrit à partir des deux portraits — plus de travail pour l'agent, rien à afficher pour briller."
+          },
+          {
+            "chose": "Le lot suivant attend votre débrief.",
+            "refused": "Payer pour sauter le débrief ou pour agrandir le lot — dans aucune formule, jamais.",
+            "because": "C'est le débrief qui rend le lot suivant meilleur ; vendre un raccourci casserait la boucle.",
+            "cost": "Deux minutes de votre temps avant chaque lot."
+          }
+        ]
+      },
+      "privacy": {
+        "title": "La vie privée dès la conception",
+        "lead": "Une app de rencontre apprend des choses intimes. Yazakia est construite pour que ce qu'elle sait reste peu, protégé, et à vous.",
+        "items": [
+          "18 ans et plus : votre date de naissance est vérifiée par le serveur à l'inscription",
+          "Votre position est arrondie à environ 1 km avant d'être enregistrée — le point exact n'existe nulle part chez nous",
+          "Les réponses sensibles sont chiffrées au repos ; les photos restent privées, visibles seulement par votre lot et vos intros, par des liens qui expirent après cinq minutes",
+          "Bloquer et signaler en un geste ; supprimer votre compte depuis l'app, exporter vos données en JSON",
+          "Rien de ce que vous dites ne sert à entraîner un modèle"
+        ],
+        "rule": "Je veille sur ce que vous confiez. Moins on garde, moins il y a à perdre."
+      },
+      "built": {
+        "title": "Construite avec Krizaka",
+        "lead": "Yazakia est open source, et assemblée à partir de briques que les autres produits ont déjà éprouvées.",
+        "items": {
+          "orazaka": {
+            "name": "Orazaka, pour l'agent",
+            "line": "La conversation et l'extraction passent par l'API d'Orazaka — Yazakia en est le premier vrai client."
+          },
+          "ui": {
+            "name": "@krizaka/ui, en natif",
+            "line": "Les marques, les thèmes et les composants de krizaka.com et d'Orochia, sur iOS et Android."
+          },
+          "realtime": {
+            "name": "Temps réel et notifications",
+            "line": "Le clavardage en continu et les notifications éprouvés dans Orochia, extraits en briques partagées maintenant qu'un deuxième produit en a besoin."
+          }
+        }
+      },
+      "follow": {
+        "title": "Soyez là dès le premier jour",
+        "body": "Yazakia n'est pas encore dans les magasins d'applications. Laissez-nous un mot et nous vous écrirons à l'ouverture de la première version — ou regardez-la se construire, commit après commit.",
+        "api": "yazakia · l'API",
+        "mobile": "yazakia-mobile · l'app",
+        "reposLabel": "Les dépôts de Yazakia"
+      }
+    },
     "openSource": {
       "steps": {
         "pick": {
@@ -1269,7 +1451,8 @@
       "products": "Produits"
     },
     "structuredData": {
-      "orochia": "Plateforme vidéo open source pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle, conformité 18+."
+      "orochia": "Plateforme vidéo open source pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle, conformité 18+.",
+      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; et Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt)."
     },
     "packages": {
       "eyebrow": "Sur npm",
@@ -1281,7 +1464,7 @@
       "items": {
         "tokens": {
           "role": "Le vocabulaire",
-          "line": "Les jetons sémantiques --kz-* — surfaces, texte, accent, statuts — en sombre et en clair, avec les thèmes de marque de Krizaka, Orazaka et Orochia : CSS, TypeScript et React Native depuis une seule source."
+          "line": "Les jetons sémantiques --kz-* — surfaces, texte, accent, statuts — en sombre et en clair, avec les thèmes de marque de Krizaka, Orazaka, Orochia et Yazakia : CSS, TypeScript et React Native depuis une seule source."
         },
         "tailwind": {
           "role": "Le preset",
@@ -1925,7 +2108,8 @@
         "owl": "du hibou",
         "duck": "du canard",
         "flamingo": "du flamant",
-        "pigeon": "du pigeon"
+        "pigeon": "du pigeon",
+        "lovebird": "de l'inséparable"
       },
       "forums": {
         "title": "Les questions vont dans deux forums, pas six.",

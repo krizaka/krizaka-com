@@ -11,7 +11,7 @@
 
 import { useState, type ComponentType, type KeyboardEvent } from "react";
 import Link from "next/link";
-import { AiIcon, BookmarkIcon, HomeIcon, MessageIcon, PackIcon, PlayIcon, ServerIcon, ShieldIcon, StudioIcon, type IconProps } from "@krizaka/icons";
+import { AiIcon, BatchIcon, BookmarkIcon, HomeIcon, MessageIcon, PackIcon, PlayIcon, ServerIcon, ShieldIcon, StudioIcon, type IconProps } from "@krizaka/icons";
 import { NavBar } from "@krizaka/ui/nav-bar";
 import { ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
@@ -32,7 +32,8 @@ import {
 } from "@/lib/nav";
 
 /* The navigation icons (@krizaka/icons): one per entry, used by the Products panel, the mobile panel and the home
-   spotlights. The "signature" entry is each product's own: Orazaka's engine, Orochia's guarantees. */
+   spotlights. The "signature" entry is each product's own: Orazaka's engine, Orochia's guarantees, Yazakia's mutual
+   batches. */
 export const NAV_ICONS: Record<NavIcon, ComponentType<IconProps>> = {
   overview: HomeIcon,
   architecture: ServerIcon,
@@ -43,7 +44,7 @@ export const NAV_ICONS: Record<NavIcon, ComponentType<IconProps>> = {
   products: StudioIcon,
   story: BookmarkIcon,
 };
-export const SIGNATURE_ICONS: Record<NavProduct["id"], ComponentType<IconProps>> = { orazaka: AiIcon, orochia: ShieldIcon };
+export const SIGNATURE_ICONS: Record<NavProduct["id"], ComponentType<IconProps>> = { orazaka: AiIcon, orochia: ShieldIcon, yazakia: BatchIcon };
 export const productLinkIcon = (product: NavProduct["id"], icon: NavIcon) => (icon === "signature" ? SIGNATURE_ICONS[product] : NAV_ICONS[icon]);
 
 /** The content of the Products menu (rendered by NavBar.Menu, mounted while it is open). */
@@ -84,6 +85,7 @@ export function ProductsPanel({ pathname }: { pathname: string }) {
             data-product={p.id}
             data-selected={p.id === selected ? "" : undefined}
             title={p.name}
+            description={p.soon ? t.site.nav[p.id].badge : undefined}
             icon={<ProductLogo id={p.id} size={22} />}
             active={pathname === p.href}
             onMouseEnter={() => setSelected(p.id)}

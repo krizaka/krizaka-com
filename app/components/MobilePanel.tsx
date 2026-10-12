@@ -53,7 +53,14 @@ export function MobilePanel({ path }: { path: string }) {
                   <ProductLogo id={p.id} size={26} />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block font-display text-[15px] font-bold text-fg group-open/product:text-fg-accent">{p.name}</span>
+                  <span className="flex items-center gap-2 font-display text-[15px] font-bold text-fg group-open/product:text-fg-accent">
+                    {p.name}
+                    {p.soon && (
+                      <span className="rounded-full border border-border-default px-2 py-px font-mono text-[10px] font-semibold uppercase tracking-[0.1em] text-fg-accent">
+                        {t.site.nav[p.id].badge}
+                      </span>
+                    )}
+                  </span>
                   <span className="block text-[12.5px] text-fg-secondary">{t.site.nav[p.id].tagline}</span>
                 </span>
                 <ChevronDownIcon size={16} className="shrink-0 text-fg-muted transition-transform duration-200 group-open/product:rotate-180 motion-reduce:transition-none" />

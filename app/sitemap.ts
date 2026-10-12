@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/products/orochia",
     "/products/orochia/docs",
     "/products/orochia/demos",
+    "/products/yazakia",
     "/products/orazaka/packages",
     "/products/orazaka/usecases",
     "/products/orazaka/ingenierie-cognitive",
@@ -59,7 +60,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     let freq: "weekly" | "monthly" | "yearly" = "weekly";
     if (path === "") {
       priority = 1.0;
-    } else if (path === "/products/orazaka" || path === "/products/orochia" || path === "/products" || path === "/products/orazaka/packages") {
+    } else if (path === "/products/orazaka" || path === "/products/orochia" || path === "/products/yazakia" || path === "/products" || path === "/products/orazaka/packages") {
       priority = 0.9;
     } else if (path === "/contact" || path === "/privacy" || path === "/terms") {
       priority = 0.5;

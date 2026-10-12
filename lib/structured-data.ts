@@ -4,8 +4,11 @@ import { getDictionary } from "@/lib/i18n";
 
    Entities are emitted as a single linked @graph and cross-referenced by
    stable @id, so Google's Knowledge Graph reads Krizaka (Organization),
-   krizaka.com (WebSite) and Orazaka (SoftwareApplication) as one connected
-   knowledge unit rather than three disconnected blobs.
+   krizaka.com (WebSite) and its released products (SoftwareApplication:
+   Orazaka, Orochia) as one connected knowledge unit. The Organization names
+   all three products in its description; Yazakia gets no application node
+   until it is released — schema.org has no "upcoming" state for software,
+   and an application node without a store or a download would misinform.
    ═══════════════════════════════════════════════════════════════════ */
 
 import {
@@ -25,11 +28,6 @@ const SOFTWARE_ID = `${SITE_URL}/#orazaka`;
 const HREFLANG: Record<Locale, string> = { fr: "fr-CA", en: "en" };
 const hreflangOf = (locale: Locale) => HREFLANG[locale];
 
-const ORG_DESCRIPTION: Record<Locale, string> = {
-  fr: "Krizaka conçoit Orazaka, un moteur d'orchestration d'IA souverain et open source. Déployez une IA multimodale (chat, image, vidéo, voix) entièrement sur votre propre infrastructure — conforme à la Loi 25, au RGPD et à PIPEDA.",
-  en: "Krizaka builds Orazaka, an open-source sovereign AI orchestration engine. Run multimodal AI (chat, image, video, voice) entirely on your own infrastructure — Law 25, GDPR and PIPEDA compliant by architecture.",
-};
-
 const SOFTWARE_DESCRIPTION: Record<Locale, string> = {
   fr: "Moteur d'orchestration d'IA open source et souverain. Pipeline d'intercepteurs cognitifs, inférence multimodale et protocole MCP, sur architecture hexagonale (Java 21, Spring AI). Exécution locale, sans dépendance cloud.",
   en: "Open-source, sovereign AI orchestration engine. Cognitive interceptor pipeline, multimodal inference and MCP, on a hexagonal architecture (Java 21, Spring AI). Runs locally with zero cloud dependency.",
@@ -45,7 +43,7 @@ export function buildSiteGraph(locale: Locale) {
         "@id": ORG_ID,
         name: "Krizaka",
         url: SITE_URL,
-        description: ORG_DESCRIPTION[locale],
+        description: getDictionary(locale).site.structuredData.organization,
         foundingDate: "2024",
         knowsAbout: [
           "AI orchestration engine",

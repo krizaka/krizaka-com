@@ -7,7 +7,7 @@
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
-export const CONTACT_TOPICS = ["orazaka", "orochia", "blocks", "partnership", "other"] as const;
+export const CONTACT_TOPICS = ["orazaka", "orochia", "yazakia", "blocks", "partnership", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
 /* Where a visitor came from (`/contact?source=<slug>`): pre-selects the topic and travels with the message, so the
@@ -20,6 +20,7 @@ export function contactSourceFromPath(pathname: string): string {
   const path = pathname.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
   if (/^\/(products|docs)\/orochia(\/|$)/.test(path)) return "orochia";
   if (/^\/(products|docs)\/orazaka(\/|$)/.test(path)) return "orazaka";
+  if (/^\/(products|docs)\/yazakia(\/|$)/.test(path)) return "yazakia";
   if (/^\/open-source(\/|$)/.test(path)) return "open-source";
   if (/^\/docs\/(ui|java)(\/|$)/.test(path)) return `docs-${path.split("/")[2]}`;
   return cleanSource(path.split("/")[1]) ?? "home";
@@ -27,7 +28,7 @@ export function contactSourceFromPath(pathname: string): string {
 
 /** The topic a source implies — none when the page is about Krizaka as a whole (home, story…). */
 export function topicForSource(source: string | null): ContactTopic | null {
-  if (source === "orochia" || source === "orazaka") return source;
+  if (source === "orochia" || source === "orazaka" || source === "yazakia") return source;
   if (source === "open-source" || source === "docs-ui" || source === "docs-java") return "blocks";
   return null;
 }
@@ -84,6 +85,7 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
 const TOPIC_LABEL: Record<ContactTopic, string> = {
   orazaka: "Orazaka",
   orochia: "Orochia",
+  yazakia: "Yazakia",
   blocks: "Building blocks",
   partnership: "Partnership",
   other: "Other",
