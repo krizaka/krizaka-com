@@ -11,6 +11,7 @@ import { KitOverview, overviewToc } from "@/app/components/docs/KitOverview";
 import { InlineCode } from "@/app/components/docs/InlineCode";
 import { IconsDoc, iconsToc } from "@/app/components/docs/IconsDoc";
 import { TypographyDoc, typographyToc } from "@/app/components/docs/TypographyDoc";
+import { ScreensDoc, screensToc } from "@/app/components/docs/ScreensDoc";
 import { getRegistryItem } from "@/lib/ui-registry";
 import {
   type ComponentPageData,
@@ -141,10 +142,12 @@ export default async function DocsSectionPage({ params }: Props) {
   const foundation = (page.data as ComponentPageData).foundation;
   if (foundation) {
     return (
-      <DocsPage toc={foundation === "icons" ? iconsToc(t) : typographyToc(t)}>
+      <DocsPage toc={foundation === "icons" ? iconsToc(t) : foundation === "screens" ? screensToc() : typographyToc(t)} full={foundation === "screens"}>
         <DocsTitle>{title}</DocsTitle>
         <DocsDescription>{description}</DocsDescription>
-        <DocsBody>{foundation === "icons" ? <IconsDoc locale={locale} /> : <TypographyDoc locale={locale} />}</DocsBody>
+        <DocsBody>
+          {foundation === "icons" ? <IconsDoc locale={locale} /> : foundation === "screens" ? <ScreensDoc locale={locale} /> : <TypographyDoc locale={locale} />}
+        </DocsBody>
       </DocsPage>
     );
   }

@@ -36,7 +36,7 @@ export default function TopNavBar() {
   return (
     <>
       <div className="kz-site-bar-wrap pointer-events-none fixed inset-x-0 top-3 z-50">
-        <NavBar.Root label={t.site.menu.mainAria} className="kz-site-bar pointer-events-auto" data-frame={docs ? "docs" : undefined}>
+        <NavBar.Root label={t.site.menu.mainAria} className="kz-site-bar pointer-events-auto" data-frame={path.startsWith("/docs/") ? "docs" : undefined}>
           <NavBar.Brand asChild>
             <Link href="/">
               <KrizakaLogo size={26} />

@@ -218,6 +218,12 @@
   never of a copy here.** There is no `app/components/sections` any more: a missing block or variant is added to
   krizaka-ui (meta, examples, stories, tests), released, then used here. The rule of the language: **read in five
   seconds, then go deeper on demand.**
+- **Every page declares its template** — one of the page templates of `@krizaka/ui` (category *Templates* of /docs/ui:
+  landing, product, how-it-works, gallery, docs-hub, docs-article, component, catalogue, longform, changelog, contact,
+  legal, status, error, pricing) or `redirect` — in `lib/page-templates.ts`. `npm run lint` fails on a page missing
+  from the map (`scripts/check-page-templates.mjs`). A page is rebuilt on its template's component (the /docs hub on
+  `DocsHubPage`, the legal pages on `LegalPage`, the 404 on `ErrorPage`); a composition the catalogue lacks is added
+  to krizaka-ui first.
 - **One shell.** `Page` (`@krizaka/ui/page`) is the frame of everything: the content is at most `--kz-page-max` (72rem)
   wide between the gutters `--kz-page-gutter` (16 → 32 px); the documentation uses `--kz-page-max-docs` (88rem). The
   bar (`TopNavBar`, `.kz-site-bar`), every hero, section, the footer and Fumadocs' grid (`.kz-docs`) share those edges —
