@@ -131,7 +131,7 @@ export default async function CognitiveEngineeringPage({ params }: Props) {
       </Section>
 
       <Section id="pipeline" eyebrow={c.controlArchitecture} title={p.pipelineTitle} lead={p.pipelineDesc} reveal divider>
-        <CardGrid as="ol" min={260}>
+        <CardGrid as="ol" min={260} fit="fit">
           {stages.map(({ title, text, Icon }, i) => (
             <ArgumentCard
               key={title}
@@ -180,7 +180,7 @@ export default async function CognitiveEngineeringPage({ params }: Props) {
           </CardGrid>
           <h3 className="kz-heading-title rd-h2">{p.effortTitle}</h3>
           <p className="rd-prose">{p.effortDesc}</p>
-          <CardGrid as="ol" min={220}>
+          <CardGrid as="ol" min={220} fit="fit">
             {effort.map((lv, i) => (
               <ArgumentCard key={lv.level} id={`effort-${i}`} title={lv.level} level={4} meta={lv.sub} hook={{ label: lv.level, text: lv.interceptors }} facts={[{ label: lv.tokens }]} />
             ))}
