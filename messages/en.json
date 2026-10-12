@@ -3577,6 +3577,10 @@
           "title": "Intl",
           "description": "Money, numbers, dates and plurals formatted the same way in every Krizaka product."
         },
+        "query": {
+          "title": "Query",
+          "description": "Server state for every Krizaka app: TanStack Query behind one package — typed fetch, Problem Details errors, live invalidation, App Router hydration, an offline cache on Expo."
+        },
         "screens": {
           "title": "Screens",
           "description": "Whole screens of the products composed from Krizaka UI — a creator studio, a console, sign-in, settings, messages — each with its phone version, ready to copy."
