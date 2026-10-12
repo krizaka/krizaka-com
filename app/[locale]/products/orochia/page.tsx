@@ -9,6 +9,7 @@ import {
   ForwardIcon,
   HeartIcon,
   KnowledgeIcon,
+  LocalIcon,
   LockIcon,
   PlayIcon,
   ShieldIcon,
@@ -307,6 +308,11 @@ export default async function OrochiaPage({ params }: Props) {
         <p style={{ marginTop: 20 }}>
           <Link href="/docs/orochia" className="kz-link-strong">
             <KnowledgeIcon size={16} /> {t.docs}
+          </Link>
+        </p>
+        <p style={{ marginTop: 8 }}>
+          <Link href="/docs/orochia/mobile" className="kz-link-strong">
+            <LocalIcon size={16} /> {t.mobileDocs}
           </Link>
         </p>
       </section>

@@ -947,6 +947,7 @@
       "lead": "Diffusion 4K, paywalls, pourboires et versements créateurs — avec la rigueur d'une infrastructure financière : accès décidé sur le serveur, paiements confirmés par la passerelle, grand livre en partie double. Conçue pour les contenus adultes (18+), sous licence Apache-2.0.",
       "watchDemo": "Voir la démo",
       "docs": "Documentation",
+      "mobileDocs": "L'app iOS et Android — ce qui tourne aujourd'hui",
       "audience": "Logiciel destiné aux exploitants de plateformes ; les contenus adultes sont réservés aux personnes majeures.",
       "pillarsEyebrow": "Ce qui la rend prête pour la production",
       "pillarsTitle": "Neuf garanties, appliquées dans le code.",
@@ -2096,6 +2097,10 @@
           "docs": {
             "title": "Documentation",
             "body": "Prise en main, API, CLI, déploiement — générée depuis le code source."
+          },
+          "mobile": {
+            "title": "L'app mobile",
+            "body": "Orazaka sur iOS, connecté à votre propre stack — ce qui tourne aujourd'hui, comment la lancer, ce qui manque encore."
           },
           "usecases": {
             "title": "Cas d'usage",

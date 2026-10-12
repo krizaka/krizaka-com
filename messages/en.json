@@ -947,6 +947,7 @@
       "lead": "4K streaming, paywalls, tips and creator payouts — with the rigour of financial infrastructure: access decided on the server, payments confirmed by the gateway, a double-entry ledger. Designed for adult (18+) content, Apache-2.0 licensed.",
       "watchDemo": "Watch the demo",
       "docs": "Documentation",
+      "mobileDocs": "The iOS and Android app — what runs today",
       "audience": "Software for platform operators; adult content is restricted to adults.",
       "pillarsEyebrow": "What makes it production-ready",
       "pillarsTitle": "Nine guarantees, enforced in code.",
@@ -2096,6 +2097,10 @@
           "docs": {
             "title": "Documentation",
             "body": "Onboarding, API, CLI, deployment — generated from the source."
+          },
+          "mobile": {
+            "title": "The mobile app",
+            "body": "Orazaka on iOS, signed in to your own stack — what runs today, how to run it, what is still missing."
           },
           "usecases": {
             "title": "Use cases",

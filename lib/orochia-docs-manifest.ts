@@ -106,4 +106,12 @@ export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     intro:
       "Required configuration, gateway webhooks, DigitalOcean App Platform (with its migration job), self-hosting and the quality gates.",
   },
+  mobile: {
+    title: "Mobile App",
+    category: "getting-started",
+    order: 3,
+    audience: "developer",
+    intro:
+      "The Orochia app for iOS and Android as it runs today, on the iOS simulator and the Android emulator against dev.orochia.com and a local Orochia: every screen, how it signs in, how to run it, its tests — and what is not done yet (a phone, TestFlight, push).",
+  },
 };

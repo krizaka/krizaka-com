@@ -107,6 +107,7 @@ const EXPLORE = [
   { id: "demos", href: "/products/orazaka/demos", Icon: PlayIcon },
   { id: "signature", href: "/products/orazaka/ingenierie-cognitive", Icon: AiIcon },
   { id: "docs", href: "/docs/orazaka", Icon: KnowledgeIcon },
+  { id: "mobile", href: "/docs/orazaka/mobile", Icon: LocalIcon },
   { id: "usecases", href: "/products/orazaka/usecases", Icon: PackIcon },
 ] as const;
 

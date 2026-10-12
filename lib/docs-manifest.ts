@@ -37,6 +37,14 @@ export const DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     intro:
       "Stand up Orazaka locally and run your first request in minutes. This onboarding guide is for developers evaluating the engine or wiring it into an application.",
   },
+  mobile: {
+    title: "Mobile App",
+    category: "getting-started",
+    order: 3,
+    audience: "developer",
+    intro:
+      "The Orazaka app for iOS and Android as it runs today, on the iOS simulator and the Android emulator against the local stack: sign-in, Studios, streamed chat, jobs — how to run it, its tests, and which screens do not read the server yet.",
+  },
   architecture: {
     title: "Architecture Overview",
     category: "architecture",
