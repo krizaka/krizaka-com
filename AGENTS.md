@@ -189,7 +189,8 @@
   checked against the model — then `a -> b: …` / `a --> b: …`, `## phase`, `if … / else … / end`) and ` ```states `
   (`enum: <pg enum>` checks every state against the Orochia schema). In MDX: `<ArchitectureView product="orazaka"
   focus="krizaka-billing-service" mode="runtime" />`. Blocks are written in the source repository and synced.
-- **Mermaid is retired**, with no fallback: a ` ```mermaid ` fence in a published doc fails the build. (Unpublished
+- **Mermaid is retired**, with no fallback: never rendered in the browser, never shipped (`mermaid` is not a dependency),
+  and a ` ```mermaid ` fence in a published doc fails the build. (Unpublished
   internal design notes of the product repositories may still hold some; they never reach the site — converting one is
   part of publishing it.)
 - Every schema reads correctly at phone width (one column, top to bottom), works with the keyboard,
@@ -270,6 +271,12 @@
 - Prefer static generation; keep client bundles lean: schemas receive the slice of generated data
   they draw as props from a server component, never the whole JSON.
 - i18n via `app/components/I18nProvider` where text is user-facing.
+- **The stack rules** ([krizaka-ui ADR-001](https://github.com/krizaka/krizaka-ui/blob/main/docs/adr/ADR-001-tanstack-under-krizaka-facades.md)):
+  no `fetch` in a client `useEffect` (a Server Component renders the data), no `@tanstack/*` import (only through a
+  `@krizaka/*` facade), no hand-written `<table>` or multi-field `<form>` outside the documented exceptions. ESLint warns
+  (`krizakaStack()` of `@krizaka/config`), `krizaka-ratchet` holds the counts of `lint-ratchet.json` (they only go
+  down; `retire` lists the dependencies on their way out — `framer-motion`, #98), and `depcruise` (`.dependency-cruiser.cjs`,
+  extending `@krizaka/config/dependency-cruiser`) fails the lint on a forbidden import or a cycle.
 
 - Links to the running Orochia go through `OROCHIA_APP_URL` (`lib/site.ts`), set by
   `NEXT_PUBLIC_OROCHIA_APP_URL` (dev today, production later; read at build time). `llms.txt` and

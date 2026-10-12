@@ -4,10 +4,25 @@
     "components/**/*.tsx",
     "src/**/*.tsx"
   ],
+  "stackGlobs": [
+    "app/**/*.{js,jsx,mjs,ts,tsx,mts}",
+    "components/**/*.{js,jsx,mjs,ts,tsx,mts}",
+    "src/**/*.{js,jsx,mjs,ts,tsx,mts}",
+    "lib/**/*.{js,jsx,mjs,ts,tsx,mts}",
+    "hooks/**/*.{js,jsx,mjs,ts,tsx,mts}",
+    "features/**/*.{js,jsx,mjs,ts,tsx,mts}"
+  ],
+  "retire": [
+    "framer-motion"
+  ],
   "counters": {
     "palette": 0,
     "light": 0,
     "arbitraryVar": 0,
-    "classNameTemplate": 0
+    "classNameTemplate": 0,
+    "fetchInClientEffect": 0,
+    "directTanstackImport": 0,
+    "localTableOrForm": 20,
+    "retiredImport": 2
   }
 }
