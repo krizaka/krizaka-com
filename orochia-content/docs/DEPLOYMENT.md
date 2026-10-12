@@ -15,17 +15,20 @@
 | `DRAFT_RETENTION_DAYS` (30), `DRAFTS_MAX_PER_USER` (20) | — | How long an editor draft is kept, and how many an account may keep. |
 | `QUOTA_PLATFORM_GB`, `QUOTA_CREATOR_DEFAULT_GB`, `QUOTA_PLANS`… | recommended | Storage quotas — see *Storage quotas*. `STORAGE_LIMITS=off` is refused in production without `STORAGE_LIMITS_OFF_CONFIRMED=true`. |
 | `BUNNY_ACCOUNT_API_KEY` | — | Bunny account key: the reconciliation also records the library's and storage zone's billed totals. |
+| `REALTIME_BUS` (`postgres`), `REDIS_URL`, `REALTIME_STREAM_MAX_SECONDS` (300) | `redis` past ~3 instances | The realtime bus — see *Realtime*. `REALTIME_BUS=redis` without `REDIS_URL` is refused. |
 | `RATE_LIMIT_STORE=postgres` | ✓ with 2+ instances | Rate-limit counters shared by every instance — see *Abuse defences*. |
 | `CLIENT_IP_HEADER=do-connecting-ip` | App Platform | The visitor's address as App Platform sets it (else the right-most `X-Forwarded-For` entry). |
 | `BOT_CHALLENGE=required`, `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | production | Cloudflare Turnstile on sign-up and password reset — see *Abuse defences*. |
 | `STORAGE_DRIVER=bunny`, `BUNNY_STORAGE_API_KEY`, `BUNNY_STORAGE_ZONE`, `BUNNY_PULL_ZONE_HOSTNAME` | ✓ | Avatars, thumbnails, 2257 documents (container disks are ephemeral). |
 | `METRICS_AUTH_TOKEN` | ✓ | Bearer token for `/api/metrics`. |
 | `DATABASE_CA_CERT` | managed DB | CA of a managed PostgreSQL (`${<db>.CA_CERT}` on App Platform): TLS verified against it. |
+| `DATABASE_MAX_CONNECTIONS` | — | Connections one instance's pool may hold (default 5, capped at 50) — see *Database connections*. |
 | `RESEND_API_KEY` or `MAILGUN_API_KEY` + `MAILGUN_DOMAIN` (+ `MAILGUN_API_URL`), `MAIL_FROM` | — | Transactional e-mail from `mg.orochia.com`: Resend when its key is set, Mailgun otherwise. Without either nothing is sent. |
 | `MAIL_TEMPLATES_SOURCE` (`bunny` in production), `MAIL_TEMPLATES_CACHE_TTL` (300) | — | E-mail templates from `mail-templates/` in the Bunny Storage zone (same `BUNNY_STORAGE_*` credentials), bundled ones as fallback — see *E-mail*. |
 | `COMPLIANCE_ALERT_EMAIL` | — | Receives every content report (`[URGENT]` for underage / non-consensual). |
 | `GOOGLE_CLIENT_ID` + `GOOGLE_CLIENT_SECRET`, `FACEBOOK_APP_ID` + `FACEBOOK_APP_SECRET` | — | Sign in with Google / Facebook — see *Sign-in providers*. A provider without both values is not offered. |
 | `SEARCH_INDEXING=off` | dev / preview | Every page noindex, robots.txt disallows all: only production is indexed (build time). |
+| `NEXT_PUBLIC_APP_ENV` (`local` · `dev` · `staging` · `production`), `COMMIT_SHA` | dev / staging (build time) | The build badge next to the brand, `v<version> · <env> · <commit>`, linking the commit — never shown with `production`, `local` when unset. App Platform passes `COMMIT_SHA=${_self.COMMIT_HASH}` (its Docker build has no `.git`); elsewhere `git rev-parse` gives it. |
 | `OROCHIA_OWNER_EMAIL`, `_USERNAME`, `_NAME`, `_PASSWORD` | recommended | The default user (owner, ADMIN), applied by the release job — see *Owner account*. |
 | Gateway credentials | at least one | See `.env.example`. A gateway is offered only when **all** its variables are set. |
 
@@ -63,8 +66,51 @@ them (`deploy_on_push`). A spec file is only for creating the app or changing it
 database, the list of variables): `doctl apps update <APP_ID> --spec …` replaces the whole spec, and the
 `SECRET` entries have no value in the file — check them in the app afterwards.
 
-The spec has no Redis: rate limits are kept in memory per instance (`apps/web/lib/rate-limit.ts`), which holds for
-a single instance. A shared store comes back before scaling out.
+The spec has no Redis: rate limits are shared through PostgreSQL (`RATE_LIMIT_STORE=postgres`) and the realtime bus
+is PostgreSQL LISTEN/NOTIFY (`REALTIME_BUS=postgres`). Both hold for a few instances; see *Realtime* for when to add
+a Valkey cache.
+
+### Realtime (chat, presence, notifications, auctions)
+
+- **Streams are plain HTTP** (Server-Sent Events, `/api/conversations/stream`, `/api/auctions/:id/stream`,
+  `/api/challenges/:id/stream`): App Platform passes them unbuffered. Its edge closes a request **idle for 100 s** and
+  has **no session affinity**: the streams send a heartbeat every 15 s, end themselves after
+  `REALTIME_STREAM_MAX_SECONDS` (default 300 — the browser reconnects at once with `Last-Event-ID` and the missed
+  messages are replayed from the database), and any instance serves any stream.
+- `DATABASE_URL` must be a **direct** connection (LISTEN needs a session; not a transaction pooler). Each instance
+  holds one extra connection for LISTEN.
+
+### Database connections
+
+Every process opens **one** pool (`packages/db/src/client.ts`, kept on `globalThis`: Next.js loads the module in several
+module graphs — pages, route handlers, instrumentation — and a module-level pool was created once per graph, three
+pools of 20 on a production build; that exhausted the dev database on 2026-10-12, PostgreSQL 53300 on every page).
+The admin console's platform status, backups and factory reset use the same pool; the realtime bus (a process-wide
+singleton too) holds exactly one LISTEN connection. Idle connections are closed after 10 s.
+
+Budget — it must stay under the database's limit:
+
+```
+instances × (DATABASE_MAX_CONNECTIONS + 1 LISTEN) × 2 (rolling deploy: old and new run together)
+  + 1 (migrate job) + the admin's psql / consoles
+```
+
+| Database | `max_connections` (superuser-reserved) | Usable | Setting |
+| :--- | :--- | :--- | :--- |
+| App Platform dev database (orochia-dev, measured) | 25 (3) | 22 | `DATABASE_MAX_CONNECTIONS=5`, 1 instance → ≤ 13 |
+| Managed PostgreSQL `db-s-1vcpu-1gb` | 25 (3) | 22 | 5 per instance, ≤ 2 instances |
+
+When the database refuses connections (53300, restarting, unreachable), the server logs **one line** every 30 s
+(`[db] database unavailable: 53300 … (N more since the last report)`) rather than a stack per query, and the pages
+that can do without the data degrade instead of failing whole. A connection pooler (DigitalOcean connection pools /
+PgBouncer) is being studied separately; it would carry the queries, never the LISTEN connection or the migrations.
+- **Scaling out**: up to ~3 instances, keep `REALTIME_BUS=postgres` (every instance receives every event; presence is
+  replicated between instances over the same channel). Beyond, or past ~10 k concurrent streams, create a
+  DigitalOcean **Managed Caching (Valkey)** cluster in the same region, add it to the app's trusted sources, and set
+  `REALTIME_BUS=redis` + `REDIS_URL=rediss://default:<password>@<host>:25061` (SECRET). Nothing else changes; the switch
+  takes a redeploy and drops nothing durable (messages live in PostgreSQL).
+- Measured locally: 2 000 streams on one instance, p95 under 70 ms, ≈ 90–105 KB of memory per stream
+  ([ADR 0001](adr/0001-realtime-transport.md)). Repeat with `node scripts/realtime-load.mjs` before a launch.
 
 ### Domain (orochia.com, DNS at Porkbun)
 

@@ -66,6 +66,14 @@ export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     intro:
       "Goals, dares and open calls: fans fund custom videos and stories with credits held in escrow, paid to the creator only on delivery and released otherwise — with what the industry does and why Orochia does it this way.",
   },
+  creator_onboarding: {
+    title: "Creator Onboarding",
+    category: "architecture",
+    order: 7,
+    audience: "developer",
+    intro:
+      "One account for everyone: how a fan opens a creator space on the account they already have, the 18+ and 18 U.S.C. § 2257 checks before the first upload, what is stored, who sees what — and the next step every viewer is offered.",
+  },
   notifications: {
     title: "Notifications & Realtime",
     category: "architecture",
