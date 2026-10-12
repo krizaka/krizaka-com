@@ -474,7 +474,7 @@
       }
     },
     "productsPage": {
-      "title": "Produits — Orazaka, Orochia, Yazakia | Krizaka",
+      "title": "Produits — Orazaka, Orochia, Yazakia",
       "description": "Les produits open source de Krizaka : Orazaka (orchestration IA souveraine), Orochia (la plateforme vidéo des créateurs) et Yazakia (l'app de rencontre où l'on se parle d'abord, bientôt)."
     },
     "expertise": {
@@ -957,7 +957,7 @@
     },
     "yazakia": {
       "meta": {
-        "title": "Yazakia — L'app de rencontre où l'on se parle d'abord | Krizaka",
+        "title": "Yazakia — L'app de rencontre où l'on se parle d'abord",
         "description": "Yazakia arrive sur iOS et Android : un agent IA apprend à vous connaître, puis vous ouvre de petits lots de personnes compatibles dans les deux sens — des raisons, jamais des notes. Open source, par Krizaka."
       },
       "hero": {
