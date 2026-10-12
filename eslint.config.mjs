@@ -1,3 +1,4 @@
+import { krizakaStack } from "@krizaka/config/eslint/stack";
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
@@ -52,5 +53,9 @@ eslintConfig.push(
     },
   },
 );
+
+// The stack rules of krizaka-ui's ADR-001 (warnings, counted by krizaka-ratchet): no fetch in a client effect, no direct
+// @tanstack/* import, no hand-written table or multi-field form. The counts in lint-ratchet.json only go down.
+eslintConfig.push(...krizakaStack());
 
 export default eslintConfig;
