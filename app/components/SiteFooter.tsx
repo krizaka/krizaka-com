@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ExternalIcon } from "@krizaka/icons";
 import { GitHubMark } from "./brand/GitHubMark";
 import { useI18n } from "./I18nProvider";
+import { ProductStatus } from "./ProductStatus";
 import { useContactHref } from "./useContactHref";
 import { NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, docsLinkText } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
@@ -19,6 +20,8 @@ export default function SiteFooter() {
     title: (
       <>
         <ProductLogo id={p.id} size={18} animated={false} /> {p.name}
+        {/* The narrow column keeps one line: the dot, its words for screen readers and on hover. */}
+        {p.status && <ProductStatus status={p.status} t={t} variant="dot" className={"brand-" + p.id + " ml-0.5"} />}
       </>
     ),
     links: p.links.map((l) => ({ label: t.site.nav[p.id].links[l.icon].label, href: l.href })),

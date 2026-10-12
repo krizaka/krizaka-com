@@ -16,6 +16,7 @@ import { NavBar } from "@krizaka/ui/nav-bar";
 import { ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
 import { useI18n } from "./I18nProvider";
+import { ProductStatus } from "./ProductStatus";
 import {
   NAV_COMPANY,
   NAV_DOCS_HUB,
@@ -85,8 +86,14 @@ export function ProductsPanel({ pathname }: { pathname: string }) {
             data-product={p.id}
             data-selected={p.id === selected ? "" : undefined}
             title={p.name}
-            description={p.soon ? t.site.nav[p.id].badge : undefined}
-            icon={<ProductLogo id={p.id} size={22} />}
+            icon={
+              /* The status rides the mark as a dot — the row stays one line, every row the same height; the panel's
+                 header (right) says it in words. */
+              <span className="relative inline-flex">
+                <ProductLogo id={p.id} size={22} />
+                {p.status && <ProductStatus status={p.status} t={t} variant="dot" ring className="absolute -right-0.5 -top-0.5" />}
+              </span>
+            }
             active={pathname === p.href}
             onMouseEnter={() => setSelected(p.id)}
             onFocus={() => setSelected(p.id)}
@@ -113,7 +120,10 @@ export function ProductsPanel({ pathname }: { pathname: string }) {
 
       <div key={product.id} data-col="entries" className={cn("brand-" + product.id, "flex flex-col gap-0.5")}>
         <p className="mx-3 mb-1 mt-1.5">
-          <span className="block font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-fg-accent">{product.name}</span>
+          <span className="flex items-center gap-2 whitespace-nowrap">
+            <span className="font-mono text-[10.5px] font-bold uppercase tracking-[0.12em] text-fg-accent">{product.name}</span>
+            {product.status && <ProductStatus status={product.status} t={t} />}
+          </span>
           <span className="mt-0.5 block text-xs text-fg-secondary">{t.site.nav[product.id].tagline}</span>
         </p>
         {product.links.map((l) => {
