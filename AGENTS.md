@@ -331,10 +331,20 @@
   `public/ui-examples/` is generated at build, git-ignored. Nothing else goes in `public/`; a file nothing references is
   deleted, not kept "just in case" — git and Bunny keep the history.
 
+## 5.3 Tests — no test, not done
+
+- Every feature and every fix ships with its tests in the same pull request: a unit test (`tests/*.test.mjs`,
+  `node:test`, run by `npm test`) for logic — a data module, a generator, a script, an API route's validation —, and a
+  build-time check for what the site renders from data (`lib/architecture-model.ts`, `scripts/gen-ui-docs.mjs --check`
+  are the pattern: a page that cannot be right does not build). A component's own tests live in krizaka-ui.
+- **A fix starts with a failing test** that reproduces the bug; the fix turns it green and the test stays as the guard.
+- CI (`.github/workflows/ci.yml`: lint, `npm test`, build) runs them on every pull request and must be green. A test is
+  never skipped, weakened or deleted to get there.
+
 ## 6. Definition of done
 
 1. `npm run build` is green and the route is statically generated.
-2. `npm run lint` is clean.
+2. `npm run lint` is clean, and `npm test` is green with the change's own tests (§5.3).
 3. The change reads correctly in **dark and light** mode.
 4. No hand-edited generated content; no hard-coded colors.
 
