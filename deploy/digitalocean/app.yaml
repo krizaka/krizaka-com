@@ -63,6 +63,10 @@ services:
       - key: NEXT_PUBLIC_OROCHIA_APP_URL
         scope: RUN_AND_BUILD_TIME
         value: https://dev.orochia.com
+      # Where the media (tours, gallery, home backdrop) are served from — Bunny, under site/ (lib/cdn.ts).
+      - key: NEXT_PUBLIC_CDN_URL
+        scope: RUN_AND_BUILD_TIME
+        value: https://krizaka-assets.b-cdn.net
       # Optional: a read-only (public repositories) GitHub token, so the org figures are not rate-limited at build.
       - key: GITHUB_TOKEN
         scope: BUILD_TIME

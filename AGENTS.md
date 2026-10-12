@@ -76,8 +76,8 @@
   soon") and lists only the entries that exist — no demo or docs link before there is a demo or a doc (no dead link). The
   home shows its animated mark where the recording will be (`PRODUCTS[].media` absent), never an invented screenshot,
   profile or figure; no store button before the store listing exists.
-- Product recordings live in `public/assets/<product>/tour/<clip>.{webm,mp4,jpg}`, recorded on the
-  real application; endpoints named by the Orochia journeys are verified against the generated
+- Product recordings are recorded on the real application (`npm run record:tour` in the product's repository) and live
+  on Bunny like every other media (§5.2), never in `public/`; endpoints named by the Orochia journeys are verified against the generated
   architecture data at build time (`lib/journeys.ts`).
 - English is the default language; French is served when chosen (cookie `NEXT_LOCALE`) or opened.
 
@@ -280,6 +280,32 @@
   `docs/screenshots/<key>/…` folder into the CDN URLs of the same key (migration of old PR bodies).
 - `docs/screenshots/`, `.github/pr-assets/` and `.github/screenshots/` are git-ignored (the old committed captures
   were moved to Bunny with their PR bodies rewritten); keep captures in a scratch folder.
+
+## 5.2 Site media — on Bunny, never committed
+
+- The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — live on Bunny
+  Storage (zone `krizaka-assets`) under `site/`, apart from the PR captures (`pr-assets/`):
+
+  ```
+  site/home/backdrop/<product>.<hash>.{webm,mp4,jpg}
+  site/products/<product>/tour/<clip>.<hash>.{webm,mp4,jpg}
+  site/products/<product>/gallery/<id>.<hash>.webp
+  ```
+
+  `node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> --env-file <path/to/.env>` (`--dry-run` to preview)
+  sends each file as `<name>.<hash>.<ext>` (first 10 hex of its SHA-256 — a URL never changes content, so it is cached
+  for good) and records its hash in `lib/cdn-manifest.json` — commit that file, never the media. A file already
+  recorded with the same hash is skipped. `check` asks the pull zone for every recorded file; `prune` previews (and
+  with `--yes` deletes) the old versions the manifest no longer names. Same credentials as §5.1, never printed.
+- Code never writes a media URL: `lib/cdn.ts` turns a logical path into the CDN URL (`cdn("products/orazaka/gallery/
+  tea-pour.webp")`, `video("products/orochia/tour/alex-bid")` → `{ webm, mp4, poster }`) and fails the build on a
+  path the manifest does not know. The host is `NEXT_PUBLIC_CDN_URL` (read at build; default
+  `https://krizaka-assets.b-cdn.net`); `next.config` allows it for `next/image` and redirects the old `/assets/…` URLs
+  (still used by published `@krizaka/ui` examples) to their file on the CDN.
+- Same-origin on purpose: the favicon (`public/favicon.svg`, the manifest and the tab), what Next.js generates (robots,
+  sitemap, `llms.txt`, Open Graph metadata, `/_next/static`) and the fonts (`next/font/local`, preloaded with the page).
+  `public/ui-examples/` is generated at build, git-ignored. Nothing else goes in `public/`; a file nothing references is
+  deleted, not kept "just in case" — git and Bunny keep the history.
 
 ## 6. Definition of done
 

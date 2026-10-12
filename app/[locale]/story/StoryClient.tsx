@@ -67,7 +67,7 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
   const birds = flock((id) => Boolean(flockWords[id]));
   const stage = (n: number) => `${st.arcade.stage} ${pad(n)}`;
   const navWords = t.site.nav as unknown as Record<string, { tagline: string; badge?: string } | undefined>;
-  const statusOf = (p: StoryProduct) => (p.soon ? navWords[p.id]?.badge : undefined);
+  const statusOf = (p: StoryProduct) => (p.status ? t.site.nav.status[p.status].long : undefined);
   const percent = (value: number) => <NumberTicker value={value} locale={locale} format={{ style: "percent" }} />;
   const kitName = (id: KitId) => st.kits[id].name;
   const birdName = (bird: string) => flockWords[bird] && `${flockWords[bird]!.name} · ${flockWords[bird]!.role}`;

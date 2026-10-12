@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "eslint && krizaka-i18n check messages && node scripts/gen-ui-docs.mjs --check && krizaka-ratchet",
     "ratchet": "krizaka-ratchet",
+    "cdn": "node scripts/cdn-assets.mjs",
     "i18n:check": "krizaka-i18n check messages",
     "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.mjs",
     "docs:ui": "node scripts/gen-ui-docs.mjs",

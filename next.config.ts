@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { createMDX } from "fumadocs-mdx/next";
 import { DOCS_MANIFEST } from "./lib/docs-manifest";
+import { CDN_URL, legacyRedirects } from "./lib/cdn";
 
 /**
  * Security headers applied to every route. Kept deliberately CSP-free for now —
@@ -38,9 +39,12 @@ const nextConfig: NextConfig = {
 
   // Serve next-gen formats first; AVIF → WebP → original. Cache optimized images
   // for a year (LCP wins; bytes only re-fetched when the source URL changes).
+  // The media live on Bunny (lib/cdn.ts): next/image fetches them from there and serves their responsive sizes — the
+  // gallery (site/…) and the screenshots the synced docs embed (pr-assets/…).
   images: {
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 31536000,
+    remotePatterns: [{ protocol: "https", hostname: new URL(CDN_URL).hostname, port: "", pathname: "/**", search: "" }],
   },
 
   // The product docs moved to the documentation (/docs/<product>/<slug>, Fumadocs): the old article URLs answer 301.
@@ -55,6 +59,9 @@ const nextConfig: NextConfig = {
       { source: "/:locale(fr|en)/products/orochia/docs/:slug", destination: "/:locale/docs/orochia/:slug", statusCode: 301 },
       // The automation page described the pre-split topology; jobs, schedules and automation are one generated page now.
       { source: "/:locale(fr|en)/docs/orazaka/automation", destination: "/:locale/docs/orazaka/jobs", statusCode: 301 },
+      // The media left /public for Bunny: an old /assets/… URL (published @krizaka/ui examples) answers with its file on
+      // the CDN. Temporary, because the destination is versioned — a new recording gets a new URL.
+      ...legacyRedirects().map((r) => ({ ...r, permanent: false })),
     ];
   },
 

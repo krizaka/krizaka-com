@@ -1,7 +1,7 @@
 "use client";
 
 /* The two products, glimpsed behind the home hero: a short, very blurred loop of each real application (a re-encoded
-   cut of the product tours, public/assets/home/backdrop/) on its side of the page — Orazaka on the left, Orochia on
+   cut of the product tours, site/home/backdrop/ on the CDN) on its side of the page — Orazaka on the left, Orochia on
    the right, each in its brand. A teaser, not a player: you see that something lives there, never what.
 
    Nothing of it belongs to the first paint (LCP): the panes start as a still brand tint, the poster arrives once the
@@ -12,9 +12,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { cn } from "@krizaka/ui/cn";
+import { video } from "@/lib/cdn";
 
 const PRODUCTS = ["orazaka", "orochia"] as const;
-const SRC = "/assets/home/backdrop/";
+const MEDIA = Object.fromEntries(PRODUCTS.map((id) => [id, video(`home/backdrop/${id}`)]));
 
 type Stage = "tint" | "poster" | "loop";
 
@@ -53,13 +54,13 @@ export default function HeroProductMedia() {
         <div key={id} className={cn("org-hero-pane-depth", "brand-" + id)} data-product={id} data-parallax="">
           <div className="org-hero-pane" data-product={id} data-stage={stage}>
             {stage === "loop" ? (
-              <video poster={`${SRC}${id}.jpg`} autoPlay muted loop playsInline preload="auto" disablePictureInPicture tabIndex={-1}>
-                <source src={`${SRC}${id}.webm`} type="video/webm" />
-                <source src={`${SRC}${id}.mp4`} type="video/mp4" />
+              <video poster={MEDIA[id].poster} autoPlay muted loop playsInline preload="auto" disablePictureInPicture tabIndex={-1}>
+                <source src={MEDIA[id].webm} type="video/webm" />
+                <source src={MEDIA[id].mp4} type="video/mp4" />
               </video>
             ) : stage === "poster" ? (
               // eslint-disable-next-line @next/next/no-img-element -- a 7–10 kB decorative poster, blurred: no image pipeline needed
-              <img src={`${SRC}${id}.jpg`} alt="" decoding="async" loading="lazy" />
+              <img src={MEDIA[id].poster} alt="" decoding="async" loading="lazy" />
             ) : null}
           </div>
         </div>

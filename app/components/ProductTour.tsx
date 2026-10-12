@@ -7,13 +7,14 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Tabs } from "@krizaka/ui/tabs";
 import { useI18n } from "./I18nProvider";
+import type { Video } from "@/lib/cdn";
 
 export interface TourClip {
   id: string;
   label: string;
   caption: string;
-  /** Path without extension: `${src}.webm`, `${src}.mp4`, `${src}.jpg` must exist under /public. */
-  src: string;
+  /** The recording on the CDN (lib/cdn.ts `video`). */
+  media: Video;
 }
 
 /* prefers-reduced-motion without an animation library; the server and the first client render say "still". */
@@ -74,7 +75,7 @@ export default function ProductTour({ clips, accent = "var(--kz-accent)", frameL
           key={`${clip.id}-${near}`}
           ref={video}
           className="pt-video"
-          poster={`${clip.src}.jpg`}
+          poster={clip.media.poster}
           muted
           playsInline
           autoPlay={!reduce && near}
@@ -87,8 +88,8 @@ export default function ProductTour({ clips, accent = "var(--kz-accent)", frameL
           }}
           aria-label={clip.caption}
         >
-          {(near || reduce) && <source src={`${clip.src}.webm`} type="video/webm" />}
-          {(near || reduce) && <source src={`${clip.src}.mp4`} type="video/mp4" />}
+          {(near || reduce) && <source src={clip.media.webm} type="video/webm" />}
+          {(near || reduce) && <source src={clip.media.mp4} type="video/mp4" />}
         </video>
         {!reduce && <div className="pt-progress" style={{ transform: `scaleX(${progress})` }} />}
         <figcaption className="pt-caption">{clip.caption}</figcaption>

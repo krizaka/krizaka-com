@@ -27,7 +27,7 @@ export default function OrochiaTour({ initial = "fan" }: { initial?: Side }) {
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  const clips = (side === "fan" ? FAN_TOUR : CREATOR_TOUR).map((id) => ({ id, src: tourSrc(id), ...d.tour[id] }));
+  const clips = (side === "fan" ? FAN_TOUR : CREATOR_TOUR).map((id) => ({ id, media: tourSrc(id), ...d.tour[id] }));
 
   return (
     <Tabs.Root variant="segmented" value={side} onValueChange={(v) => setSide(v as Side)} className="ot gap-5">

@@ -76,7 +76,7 @@ export interface Product {
   appUrl?: string;
   /* Tagline, summary and points: messages → site.products.<id>. */
   stack: string;
-  /** Screen recording of the product: `${src}.webm|.mp4|.jpg` under /public. None until the real application can be
+  /** Screen recording of the product: `<src>.webm|.mp4|.jpg` on the CDN (lib/cdn.ts). None until the real application can be
       recorded: the home shows its animated mark instead — never an invented screenshot. */
   media?: { src: string; aspect: string; frame: string };
 }
@@ -89,7 +89,7 @@ export const PRODUCTS: Product[] = [
     docsHref: "/docs/orazaka/101",
     repoUrl: "https://github.com/krizaka/orazaka",
     stack: "Java 21 · Spring Boot 4 · Spring AI 2 · Next.js · Ollama",
-    media: { src: "/assets/orazaka/tour/showcase", aspect: "16 / 10", frame: "orazaka · web client" },
+    media: { src: "products/orazaka/tour/showcase", aspect: "16 / 10", frame: "orazaka · web client" },
   },
   {
     id: "orochia",
@@ -99,7 +99,7 @@ export const PRODUCTS: Product[] = [
     repoUrl: "https://github.com/krizaka/orochia",
     appUrl: OROCHIA_APP_URL,
     stack: "Next.js 16 · PostgreSQL · Drizzle · Bunny Stream",
-    media: { src: "/assets/orochia/tour/showcase", aspect: "16 / 10", frame: "orochia · web" },
+    media: { src: "products/orochia/tour/showcase", aspect: "16 / 10", frame: "orochia · web" },
   },
   {
     id: "yazakia",

@@ -15,6 +15,7 @@ import { NAV_PRODUCTS } from "@/lib/nav";
 import { ProductStatus } from "../ProductStatus";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
+import { video } from "@/lib/cdn";
 import { cn } from "@krizaka/ui/cn";
 import { Page } from "@krizaka/ui/page";
 import ButtonLink from "../ButtonLink";
@@ -132,12 +133,12 @@ export default function ProductsShowcase({ heading = "h2" }: { heading?: "h2" | 
                     playsInline
                     controls={still}
                     preload="none"
-                    data-poster={`${p.media.src}.jpg`}
+                    data-poster={video(p.media.src).poster}
                     style={{ aspectRatio: p.media.aspect }}
                     aria-label={`${p.name} — ${h.demo}`}
                   >
-                    <source src={`${p.media.src}.webm`} type="video/webm" />
-                    <source src={`${p.media.src}.mp4`} type="video/mp4" />
+                    <source src={video(p.media.src).webm} type="video/webm" />
+                    <source src={video(p.media.src).mp4} type="video/mp4" />
                   </video>
                 </figure>
               ) : (

@@ -49,8 +49,8 @@ export default async function OrochiaDemoPage({ params }: Props) {
         grid
         media={
           <div className="bp-media">
-            <div style={{ backgroundImage: `url(${tourSrc("alex-story")}.jpg)` }} />
-            <div style={{ backgroundImage: `url(${tourSrc("elena-earnings")}.jpg)` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("alex-story").poster})` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("elena-earnings").poster})` }} />
           </div>
         }
       >
@@ -117,7 +117,7 @@ export default async function OrochiaDemoPage({ params }: Props) {
                   </ul>
                 </div>
                 <div {...reveal(2)}>
-                  <DemoClip src={tourSrc(clip)} label={t.tour[clip].caption} frameLabel={t.frameLabel} />
+                  <DemoClip media={tourSrc(clip)} label={t.tour[clip].caption} frameLabel={t.frameLabel} />
                 </div>
               </article>
             );

@@ -1,0 +1,48 @@
+/* The site's media — product tours, the gallery, the home backdrop — live on Bunny (the krizaka-assets storage zone,
+   under site/), never in the repository. scripts/cdn-assets.mjs uploads a file as `<name>.<hash>.<ext>` and records
+   its hash in lib/cdn-manifest.json; this module turns a logical path (`products/orochia/tour/alex-bid.mp4`) into that
+   URL. A URL never changes content, so the CDN and browsers may keep it as long as they like.
+
+   NEXT_PUBLIC_CDN_URL switches the host (a custom hostname later) without touching the code; it is read at build time.
+   Same-origin on purpose: the favicon (app/manifest, the tab) and what Next.js generates (robots, sitemap, llms.txt,
+   /_next/static, the fonts of @krizaka/fonts). */
+
+import manifest from "./cdn-manifest.json";
+
+export const CDN_URL = (process.env.NEXT_PUBLIC_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(/\/+$/, "");
+
+const FILES: Record<string, string> = manifest.files;
+
+/** `products/orochia/tour/alex-bid.mp4` → `https://…/site/products/orochia/tour/alex-bid.<hash>.mp4`. */
+export function cdn(path: string): string {
+  const hash = FILES[path];
+  if (!hash) throw new Error(`${path} is not on the CDN — upload it: node scripts/cdn-assets.mjs upload <file> --to ${path.replace(/\/[^/]+$/, "")}`);
+  const dot = path.lastIndexOf(".");
+  return `${CDN_URL}/${manifest.root}/${path.slice(0, dot)}.${hash}${path.slice(dot)}`;
+}
+
+/** A recording: the two encodings and its poster, recorded together (`<base>.webm|.mp4|.jpg`). */
+export interface Video {
+  webm: string;
+  mp4: string;
+  poster: string;
+}
+
+export const video = (base: string): Video => ({ webm: cdn(`${base}.webm`), mp4: cdn(`${base}.mp4`), poster: cdn(`${base}.jpg`) });
+
+/** Where the media were served before they moved to Bunny (`/assets/…` on krizaka.com) — published examples of
+    @krizaka/ui still point there: next.config answers each old URL with a redirect to its file on the CDN. */
+const LEGACY: [from: string, to: string][] = [
+  ["/assets/home/backdrop/", "home/backdrop/"],
+  ["/assets/orazaka/tour/", "products/orazaka/tour/"],
+  ["/assets/orazaka/gallery/", "products/orazaka/gallery/"],
+  ["/assets/orochia/tour/", "products/orochia/tour/"],
+];
+
+export function legacyRedirects(): { source: string; destination: string }[] {
+  return LEGACY.flatMap(([from, to]) =>
+    Object.keys(FILES)
+      .filter((path) => path.startsWith(to))
+      .map((path) => ({ source: from + path.slice(to.length), destination: cdn(path) })),
+  );
+}

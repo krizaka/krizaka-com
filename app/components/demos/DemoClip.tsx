@@ -6,6 +6,7 @@
    its own — the poster shows and the native controls play on demand. */
 
 import { useEffect, useRef, useSyncExternalStore } from "react";
+import type { Video } from "@/lib/cdn";
 
 const REDUCE = "(prefers-reduced-motion: reduce)";
 const subscribe = (cb: () => void) => {
@@ -14,7 +15,7 @@ const subscribe = (cb: () => void) => {
   return () => mq.removeEventListener("change", cb);
 };
 
-export default function DemoClip({ src, label, frameLabel }: { src: string; label: string; frameLabel: string }) {
+export default function DemoClip({ media, label, frameLabel }: { media: Video; label: string; frameLabel: string }) {
   const reduce = useSyncExternalStore(subscribe, () => window.matchMedia(REDUCE).matches, () => true);
   const video = useRef<HTMLVideoElement>(null);
 
@@ -24,14 +25,14 @@ export default function DemoClip({ src, label, frameLabel }: { src: string; labe
     const near = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        el.poster = `${src}.jpg`;
+        el.poster = media.poster;
         near.disconnect();
       },
       { rootMargin: "400px 0px" },
     );
     near.observe(el);
     return () => near.disconnect();
-  }, [src]);
+  }, [media.poster]);
 
   useEffect(() => {
     const el = video.current;
@@ -63,8 +64,8 @@ export default function DemoClip({ src, label, frameLabel }: { src: string; labe
         preload="none"
         aria-label={label}
       >
-        <source src={`${src}.webm`} type="video/webm" />
-        <source src={`${src}.mp4`} type="video/mp4" />
+        <source src={media.webm} type="video/webm" />
+        <source src={media.mp4} type="video/mp4" />
       </video>
       <style>{`
         .dc-frame { margin: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--kz-border-default);

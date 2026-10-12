@@ -1,7 +1,9 @@
 /* The Orazaka demo page (/products/orazaka/demos): structure only — the words are in messages
    (site.orazakaDemo). Clips are recordings of the real web client signed in as Eric, the demo persona
    (`orazaka demo seed --runs --with-video`, orazaka-cli; `npm run record:tour`, orazaka-web-client), stored as
-   public/assets/orazaka/tour/<id>.{webm,mp4,jpg}. The "Made on this Mac" gallery is lib/orazaka-gallery.ts. */
+   site/products/orazaka/tour/<id>.<hash>.{webm,mp4,jpg} on the CDN (scripts/cdn-assets.mjs, lib/cdn.ts). The "Made on this Mac" gallery is lib/orazaka-gallery.ts. */
+
+import { video, type Video } from "./cdn";
 
 /**
  * The whole tour, the wow first: what a generation looks like the moment it lands, then the Studios, the document
@@ -21,4 +23,4 @@ export const DEMO_USE_CASES = [
   { id: "costs", clip: "packs", icon: "credits", bird: "falcon" },
 ] as const satisfies readonly { id: string; clip: DemoClipId; icon: string; bird: string }[];
 
-export const tourSrc = (id: DemoClipId) => `/assets/orazaka/tour/${id}`;
+export const tourSrc = (id: DemoClipId | "showcase"): Video => video(`products/orazaka/tour/${id}`);
