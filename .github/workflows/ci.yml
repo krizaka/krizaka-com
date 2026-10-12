@@ -42,3 +42,30 @@ jobs:
         env:
           # scripts/gen-org-stats.mjs reads the organisation's public repository count without the anonymous rate limit
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  container:
+    name: Container image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build the production image (Dockerfile, Next.js standalone)
+        run: docker build --build-arg NEXT_PUBLIC_OROCHIA_APP_URL=https://dev.orochia.com -t krizaka-com:ci .
+
+      - name: Smoke-test the container
+        run: |
+          docker run -d --name site -p 3000:3000 krizaka-com:ci
+          for i in $(seq 1 30); do curl -fsS http://localhost:3000/api/health && break; sleep 1; done
+          check() { code=$(curl -s -o /dev/null -w '%{http_code}' "$@"); echo "$code $*"; [ "$code" = "$EXPECT" ]; }
+          EXPECT=200 check http://localhost:3000/en
+          EXPECT=200 check http://localhost:3000/fr/docs/ui
+          EXPECT=200 check http://localhost:3000/en/products/orochia
+          EXPECT=200 check http://localhost:3000/sitemap.xml
+          EXPECT=200 check http://localhost:3000/llms.txt
+          EXPECT=307 check http://localhost:3000/
+          EXPECT=404 check http://localhost:3000/en/this-page-does-not-exist
+          # No delivery channel configured: the contact API fails closed.
+          EXPECT=503 check -X POST http://localhost:3000/api/contact -H 'content-type: application/json' \
+            -d '{"name":"CI","email":"ci@example.com","company":"","topic":"other","message":"Container smoke test.","locale":"en"}'
+          docker logs site | tail -20

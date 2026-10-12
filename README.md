@@ -157,7 +157,7 @@ views (docs) use classes.
 `/contact`, the home page and every product page end with a contact form that posts to
 `app/api/contact`. Configure at least one delivery channel through environment variables — `.env.local` in
 development (copy `.env.example`), the hosting environment in production (Vercel → Settings →
-Environment Variables). Without one the endpoint answers `503` instead of pretending:
+Environment Variables; on DigitalOcean App Platform, the app's secrets — `deploy/digitalocean/app.yaml`). Without one the endpoint answers `503` instead of pretending:
 
 | Variable | Purpose |
 | :--- | :--- |
@@ -171,6 +171,16 @@ Environment Variables). Without one the endpoint answers `503` instead of preten
 The e-mail goes out via `POST {MAILGUN_API_URL}/v3/{MAILGUN_DOMAIN}/messages` (`lib/contact.ts`)
 with `Reply-To` set to the visitor, so answering the e-mail answers them. A Mailgun refusal is
 logged (`contact: mailgun refused (…)`) and the visitor gets a `502`.
+
+## Container image (DigitalOcean App Platform)
+
+The site also builds as a container: `Dockerfile` (Next.js `output: "standalone"`, Node 24 Alpine, sharp for
+`next/image`, health check `GET /api/health`) and `deploy/digitalocean/app.yaml` (App Platform spec: `www` primary,
+apex redirected, auto-deploy on `main`). CI builds the image and smoke-tests it on every pull request.
+
+```bash
+docker build -t krizaka-com . && docker run --rm -p 3000:3000 krizaka-com   # add --env-file .env.local for the contact form
+```
 
 ## Develop
 

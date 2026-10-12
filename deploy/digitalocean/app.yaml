@@ -1,0 +1,85 @@
+# krizaka.com — PRODUCTION on DigitalOcean App Platform (the Dockerfile at the root, Next.js standalone).
+# Used to CREATE the app or change its structure only:
+#   doctl apps spec validate deploy/digitalocean/app.yaml
+#   doctl apps create --spec deploy/digitalocean/app.yaml
+#   doctl apps update <APP_ID> --spec deploy/digitalocean/app.yaml   # ⚠ can blank the SECRETs (no value here): check them afterwards
+# Secret values live in the app (Settings → Environment Variables), entered once. Every merge on main redeploys.
+# DNS stays at the registrar (Porkbun): www = CNAME to the app's ondigitalocean.app host, apex = ALIAS to the same host.
+# App Platform issues and renews the Let's Encrypt certificates of both names once the records point to it.
+name: krizaka-com
+region: tor
+domains:
+  - domain: www.krizaka.com
+    type: PRIMARY
+  # The apex only redirects to www (ingress below), as Vercel does today.
+  - domain: krizaka.com
+    type: ALIAS
+ingress:
+  rules:
+    - match:
+        authority:
+          exact: krizaka.com
+      redirect:
+        authority: www.krizaka.com
+        redirect_code: 308
+    - match:
+        path:
+          prefix: /
+      component:
+        name: web
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+services:
+  - name: web
+    github:
+      repo: krizaka/krizaka-com
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    source_dir: /
+    http_port: 3000
+    instance_count: 1
+    # 512 MiB, shared vCPU: the pages are prerendered; the server answers the proxy (locale), the contact API and
+    # next/image. Measured locally: see the PR. Move to apps-s-1vcpu-1gb-fixed if memory alerts fire.
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    health_check:
+      http_path: /api/health
+      initial_delay_seconds: 10
+      period_seconds: 10
+      timeout_seconds: 5
+      failure_threshold: 3
+    alerts:
+      - rule: MEM_UTILIZATION
+        operator: GREATER_THAN
+        value: 85
+        window: FIVE_MINUTES
+      - rule: RESTART_COUNT
+        operator: GREATER_THAN
+        value: 2
+        window: FIVE_MINUTES
+    envs:
+      # Where every "open Orochia" link points — inlined at build time (lib/site.ts).
+      - key: NEXT_PUBLIC_OROCHIA_APP_URL
+        scope: RUN_AND_BUILD_TIME
+        value: https://dev.orochia.com
+      # Optional: a read-only (public repositories) GitHub token, so the org figures are not rate-limited at build.
+      - key: GITHUB_TOKEN
+        scope: BUILD_TIME
+        type: SECRET
+      # Contact form delivery (lib/contact.ts) — without them /api/contact answers 503 (fail-closed).
+      - key: MAILGUN_API_KEY
+        scope: RUN_TIME
+        type: SECRET
+      - key: MAILGUN_DOMAIN
+        scope: RUN_TIME
+        type: GENERAL
+      - key: MAILGUN_API_URL
+        scope: RUN_TIME
+        type: GENERAL
+      - key: CONTACT_TO_EMAIL
+        scope: RUN_TIME
+        type: SECRET
+      - key: CONTACT_FROM_EMAIL
+        scope: RUN_TIME
+        type: GENERAL
