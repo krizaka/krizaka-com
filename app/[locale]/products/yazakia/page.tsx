@@ -1,12 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BatchIcon, ChatIcon, DebriefIcon, ExternalIcon, IntroIcon, NotificationIcon } from "@krizaka/icons";
+import { BatchIcon, ChatIcon, DebriefIcon, IntroIcon, NotificationIcon } from "@krizaka/icons";
 import { ProductLogo, YazakiaLogo } from "@krizaka/ui";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
-import { ArgumentCard, Badges, CardGrid, ContentSection, DecisionList, DiscussionCta, Inline, MascotRule, PageHero, SectionHeading } from "@/app/components/sections";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import { ActionBar } from "@krizaka/ui/action-bar";
+import { ArgumentCard } from "@krizaka/ui/argument-card";
+import { CardGrid } from "@krizaka/ui/card-grid";
+import { CtaPanel } from "@krizaka/ui/cta-panel";
+import { DecisionList } from "@krizaka/ui/decision-list";
+import { LinkCard } from "@krizaka/ui/link-card";
+import { MascotQuote } from "@krizaka/ui/mascot-quote";
+import { Mascot } from "@krizaka/ui/mascots";
+import { Facts, Section, Ticks } from "@krizaka/ui/page";
+import { PageHero } from "@krizaka/ui/page-hero";
+import ButtonLink from "@/app/components/ButtonLink";
 import { contactHref } from "@/lib/contact";
 import { format, getDictionary } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
@@ -15,7 +24,7 @@ import { YAZAKIA_MOBILE_REPO_URL, YAZAKIA_REPO_URL } from "@/lib/site";
 
 /* /products/yazakia — the third Krizaka product, announced before it ships: the promise, the trap it refuses, the
    loop in four steps, its signature (mutual batches) told as decisions, privacy by design, what it is built with, and
-   how to hear about the first build. Built from the page language (AGENTS.md §4.1), under `.brand-yazakia` (layout).
+   how to hear about the first build. Built from the page blocks of @krizaka/ui (AGENTS.md §4.1), under `.brand-yazakia` (layout).
    Nothing here is invented: no screenshot, no profile, no figure, no store button — the demo, the documentation and
    the state-machine schema join this structure once the app and its generated data exist (the ids `architecture` and
    `matching` are the navigation's anchors, lib/nav.ts). */
@@ -59,6 +68,7 @@ export default async function YazakiaPage({ params }: Props) {
 
       <PageHero
         back={{ href: "/products", label: y.hero.back }}
+        linkAs={Link}
         eyebrow={
           <>
             <YazakiaLogo size={18} animated={false} /> {y.hero.eyebrow}
@@ -66,18 +76,14 @@ export default async function YazakiaPage({ params }: Props) {
         }
         title={y.hero.title}
         lead={y.hero.lead}
-        mascot={{ bird: "lovebird", mood: "welcome" }}
+        aside={<Mascot bird="lovebird" mood="welcome" size={112} />}
       >
-        <div className="ps-stack">
-          <Badges
-            label={y.hero.badgesLabel}
-            items={[
-              { label: y.hero.badges.soon, tone: "wip" },
-              { label: y.hero.badges.platforms },
-              { label: y.hero.badges.license },
-            ]}
+        <div className="rd-stack">
+          <Facts
+            aria-label={y.hero.badgesLabel}
+            items={[{ label: y.hero.badges.soon, tone: "wip" }, { label: y.hero.badges.platforms }, { label: y.hero.badges.license }]}
           />
-          <div className="ps-links">
+          <div className="rd-links">
             <ButtonLink href={notify} variant="primary" size="lg" shimmer magnetic>
               <NotificationIcon size={16} aria-hidden /> {y.hero.notify}
             </ButtonLink>
@@ -88,122 +94,101 @@ export default async function YazakiaPage({ params }: Props) {
         </div>
       </PageHero>
 
-      <div className="ps-page">
-        {/* The first section is on the first screen of a phone: painted at once, no reveal (LCP). */}
-        <ContentSection id="trap" title={y.trap.title}>
-          <p className="ps-hook">{y.trap.hook}</p>
-          <div className="ps-two">
-            <p className="ps-prose">{y.trap.body}</p>
-            <ul className="ps-list is-no">
-              {y.trap.items.map((line) => (
-                <li key={line}>{line}</li>
+      {/* The first section is on the first screen of a phone: painted at once, no reveal (LCP). */}
+      <Section id="trap" title={y.trap.title} headingSize="sm" spacing="sm">
+        <p className="rd-hook">{y.trap.hook}</p>
+        <div className="rd-two">
+          <p className="rd-prose">{y.trap.body}</p>
+          <ul className="kz-list rd-no">
+            {y.trap.items.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </div>
+      </Section>
+
+      <Section id="architecture" eyebrow={y.loop.eyebrow} title={y.loop.title} lead={y.loop.lead} reveal divider>
+        <CardGrid columns={4} min={250}>
+          {STEPS.map(({ id, Icon }) => {
+            const step = y.loop.steps[id];
+            return (
+              <ArgumentCard
+                key={id}
+                id={`step-${id}`}
+                icon={<Icon size={22} aria-hidden />}
+                title={step.title}
+                meta={step.meta}
+                mark={id === "intro" ? <Mascot bird="lovebird" size={40} animated={false} /> : undefined}
+                hook={{ label: y.loop.promise, text: step.hook }}
+                points={{ label: y.loop.what, items: step.items }}
+                rule={
+                  id === "intro" ? (
+                    <MascotQuote bird="lovebird" mood="welcome" label={format(w.birdSays, { bird: w.birds.lovebird })}>
+                      {y.loop.rule}
+                    </MascotQuote>
+                  ) : undefined
+                }
+                panelLabel={y.loop.expand}
+              />
+            );
+          })}
+        </CardGrid>
+      </Section>
+
+      <Section id="matching" title={y.matching.title} headingSize="sm" divider>
+        <div className="rd-stack">
+          <p className="rd-prose" {...reveal()}>
+            {y.matching.lead}
+          </p>
+          <DecisionList
+            decisions={y.matching.decisions.map((d) => ({ id: d.chose, chose: <Ticks>{d.chose}</Ticks>, refused: <Ticks>{d.refused}</Ticks>, because: <Ticks>{d.because}</Ticks>, cost: <Ticks>{d.cost}</Ticks> }))}
+            labels={w.page}
+          />
+        </div>
+      </Section>
+
+      <Section id="privacy" title={y.privacy.title} headingSize="sm" divider>
+        <div className="rd-two">
+          <div className="rd-stack" {...reveal()}>
+            <p className="rd-prose">{y.privacy.lead}</p>
+            <ul className="kz-list rd-large">
+              {y.privacy.items.map((line) => (
+                <li key={line}>
+                  <Ticks>{line}</Ticks>
+                </li>
               ))}
             </ul>
           </div>
-        </ContentSection>
-
-        <section className="ps-section" aria-labelledby="architecture">
-          <SectionHeading id="architecture" eyebrow={y.loop.eyebrow} title={y.loop.title} lead={y.loop.lead} />
-          <CardGrid columns={4} min={250}>
-            {STEPS.map(({ id, Icon }) => {
-              const step = y.loop.steps[id];
-              return (
-                <ArgumentCard
-                  key={id}
-                  id={`step-${id}`}
-                  icon={<Icon size={22} aria-hidden />}
-                  title={step.title}
-                  meta={step.meta}
-                  hook={{ label: y.loop.promise, text: step.hook }}
-                  points={{ label: y.loop.what, items: step.items }}
-                  rule={id === "intro" ? { bird: "lovebird", mood: "welcome", label: format(w.birdSays, { bird: w.birds.lovebird }), text: y.loop.rule } : undefined}
-                  expand={y.loop.expand}
-                />
-              );
-            })}
-          </CardGrid>
-        </section>
-
-        <ContentSection id="matching" title={y.matching.title}>
-          <div className="ps-stack">
-            <p className="ps-prose" {...reveal()}>
-              {y.matching.lead}
-            </p>
-            <DecisionList decisions={y.matching.decisions} labels={w.page} />
+          <div {...reveal(1)}>
+            <MascotQuote variant="callout" bird="falcon" mood="thinking" label={format(w.birdSays, { bird: w.birds.falcon })}>
+              {y.privacy.rule}
+            </MascotQuote>
           </div>
-        </ContentSection>
+        </div>
+      </Section>
 
-        <ContentSection id="privacy" title={y.privacy.title}>
-          <div className="ps-two">
-            <div className="ps-stack" {...reveal()}>
-              <p className="ps-prose">{y.privacy.lead}</p>
-              <ul className="ps-list is-yes">
-                {y.privacy.items.map((line) => (
-                  <li key={line}>
-                    <Inline text={line} />
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div {...reveal(1)}>
-              <MascotRule variant="callout" bird="falcon" mood="thinking" label={format(w.birdSays, { bird: w.birds.falcon })} text={y.privacy.rule} />
-            </div>
-          </div>
-        </ContentSection>
+      <Section id="built-with" title={y.built.title} lead={y.built.lead} headingSize="sm" divider>
+        <CardGrid as="ul" min={240} columns={3}>
+          {BUILT_WITH.map(({ id, href, icon }) => (
+            <LinkCard key={id} href={href} linkAs={Link} icon={icon} title={y.built.items[id].name} titleAs="span" description={y.built.items[id].line} />
+          ))}
+        </CardGrid>
+      </Section>
 
-        <ContentSection id="built-with" title={y.built.title}>
-          <div className="ps-stack">
-            <p className="ps-prose">{y.built.lead}</p>
-            <ul className="ps-tiles" {...reveal(0, "soft")}>
-              {BUILT_WITH.map(({ id, href, icon }) => {
-                const item = y.built.items[id];
-                const body = (
-                  <>
-                    {icon}
-                    <span>
-                      <strong>{item.name}</strong>
-                      <span>{item.line}</span>
-                    </span>
-                  </>
-                );
-                return (
-                  <li key={id}>
-                    {href.startsWith("/") ? (
-                      <Link href={href} prefetch={false}>
-                        {body}
-                      </Link>
-                    ) : (
-                      <a href={href} target="_blank" rel="noopener noreferrer">
-                        {body}
-                      </a>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </ContentSection>
-
-        <ContentSection id="follow" className="is-last">
-          <DiscussionCta id="follow-title" title={y.follow.title} body={y.follow.body}>
-            <ButtonLink href={notify} variant="primary" size="lg">
-              <NotificationIcon size={16} aria-hidden /> {y.hero.notify}
-            </ButtonLink>
-            <ul className="ps-actions" aria-label={y.follow.reposLabel}>
-              <li>
-                <ButtonLink href={YAZAKIA_REPO_URL}>
-                  <GitHubMark size={14} /> {y.follow.api} <ExternalIcon size={12} aria-hidden />
-                </ButtonLink>
-              </li>
-              <li>
-                <ButtonLink href={YAZAKIA_MOBILE_REPO_URL}>
-                  <GitHubMark size={14} /> {y.follow.mobile} <ExternalIcon size={12} aria-hidden />
-                </ButtonLink>
-              </li>
-            </ul>
-          </DiscussionCta>
-        </ContentSection>
-      </div>
+      <Section spacing="sm" aria-labelledby="follow-title">
+        <CtaPanel id="follow-title" title={y.follow.title} body={y.follow.body} reveal>
+          <ButtonLink href={notify} variant="primary" size="lg">
+            <NotificationIcon size={16} aria-hidden /> {y.hero.notify}
+          </ButtonLink>
+          <ActionBar
+            label={y.follow.reposLabel}
+            actions={[
+              { href: YAZAKIA_REPO_URL, label: y.follow.api, icon: <GitHubMark size={14} /> },
+              { href: YAZAKIA_MOBILE_REPO_URL, label: y.follow.mobile, icon: <GitHubMark size={14} /> },
+            ]}
+          />
+        </CtaPanel>
+      </Section>
 
       <SiteFooter />
     </main>

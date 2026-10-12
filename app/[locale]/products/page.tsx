@@ -5,7 +5,6 @@ import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import { PageHero } from "@krizaka/ui/page-hero";
 import ProductsShowcase from "@/app/components/home/ProductsShowcase";
-import { getDictionary } from "@/lib/i18n";
 
 interface Props {
   params: Promise<{ locale: string }>;
