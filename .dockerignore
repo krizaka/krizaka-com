@@ -1,0 +1,30 @@
+# Everything the image rebuilds or must never carry.
+.git
+.github
+node_modules
+.next
+out
+.source
+.vercel
+.codegraph
+.claude
+.agent
+.data
+products
+company
+docs/screenshots
+*.tsbuildinfo
+next-env.d.ts
+# Secrets and local notes — never in an image
+.env*
+!.env.example
+CREDENTIALS*
+PLAN_DEPLOIEMENT.md
+# Generated at build (scripts/gen-*.mjs)
+lib/ui-examples.ts
+lib/org-stats.json
+lib/registry-versions.json
+public/ui-examples
+app/components/docs/kit-themes.css
+Dockerfile
+.dockerignore

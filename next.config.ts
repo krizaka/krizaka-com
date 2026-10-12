@@ -23,9 +23,13 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // A self-contained server (.next/standalone/server.js + the traced node_modules) for the container image
+  // (Dockerfile, DigitalOcean App Platform). Vercel ignores it and keeps building its own output.
+  output: "standalone",
+
   // Crawl/CWV hygiene.
   poweredByHeader: false,
-  compress: true, // Vercel adds Brotli at the edge; this covers other runtimes.
+  compress: true, // gzip from the Node server; the edge in front (Vercel, App Platform's CDN) may add Brotli.
   reactStrictMode: true,
 
   // The product kits ship their registry examples as TypeScript sources (and Orazaka's kit its whole source):
