@@ -407,6 +407,28 @@
           }
         }
       },
+      "yororis": {
+        "tagline": "Un espace d'écoute qui s'arrête",
+        "badge": "Écoute",
+        "links": {
+          "overview": {
+            "label": "Vue d'ensemble",
+            "desc": "Ce que c'est, et ce que ce n'est pas"
+          },
+          "architecture": {
+            "label": "Comment ça marche",
+            "desc": "Un moment, en six temps"
+          },
+          "demo": {
+            "label": "Statut",
+            "desc": "En construction : pas de démo, et on le dit"
+          },
+          "signature": {
+            "label": "Une présence qui s'arrête",
+            "desc": "25 minutes, un par jour, trois par semaine"
+          }
+        }
+      },
       "status": {
         "upcoming": {
           "label": "Bientôt",
@@ -448,6 +470,10 @@
           "label": "Orochia",
           "desc": "Architecture, API, déploiement"
         },
+        "yororis": {
+          "label": "Yororis",
+          "desc": "En construction : ce que c'est, ce que ce n'est pas, le cadre"
+        },
         "cli": {
           "label": "CLI",
           "desc": "npx orazaka — installer, démarrer, développer : chaque commande"
@@ -481,11 +507,20 @@
           "3 à 5 personnes à la fois, compatibles dans les deux sens",
           "Des raisons en mots — jamais une note"
         ]
+      },
+      "yororis": {
+        "tagline": "Un espace d'écoute avec un visage et une voix.",
+        "summary": "Une présence IA qui le dit : elle écoute, reformule, pose une question — et s'arrête. Entre deux moments, elle garde trois lignes qui sont à vous, jamais la transcription. Propulsé par le pack bien-être d'Orazaka. Rien n'est en ligne, rien n'est offert.",
+        "points": [
+          "Une présence qui s'arrête : 25 minutes, un moment par jour, trois par semaine",
+          "Ce que je garde : trois lignes que vous lisez, modifiez ou supprimez",
+          "Chaque mot reste sur Orazaka — aucune IA tierce"
+        ]
       }
     },
     "productsPage": {
-      "title": "Produits — Orazaka, Orochia, Yazakia",
-      "description": "Les produits open source de Krizaka : Orazaka (orchestration IA souveraine), Orochia (la plateforme vidéo des créateurs) et Yazakia (l'app de rencontre où l'on se parle d'abord, bientôt)."
+      "title": "Produits — Orazaka, Orochia, Yazakia, Yororis",
+      "description": "Les produits open source de Krizaka : Orazaka (orchestration IA souveraine), Orochia (la plateforme vidéo des créateurs), Yazakia (l'app de rencontre où l'on se parle d'abord, bientôt) et Yororis (un espace d'écoute avec un visage et une voix, en construction)."
     },
     "expertise": {
       "eyebrow": "Savoir-faire",
@@ -535,8 +570,8 @@
       "products": {
         "title": "Produits",
         "pageEyebrow": "Les produits Krizaka",
-        "pageTitle": "Deux produits, une même façon de construire",
-        "pageLead": "Deux produits open source, présentés de la même façon : ce que chacun fait, un enregistrement de la vraie application et où aller ensuite.",
+        "pageTitle": "Quatre produits, une même façon de construire",
+        "pageLead": "Quatre produits open source, présentés de la même façon : ce que chacun fait, un enregistrement de la vraie application quand il y en a une, et où aller ensuite.",
         "discover": "Découvrir",
         "demo": "démonstration",
         "openApp": "Ouvrir l'application",
@@ -564,7 +599,7 @@
       }
     },
     "footer": {
-      "tagline": "Studio logiciel open source à Montréal. Créateurs d'Orazaka, d'Orochia et de Yazakia.",
+      "tagline": "Studio logiciel open source à Montréal. Créateurs d'Orazaka, d'Orochia, de Yazakia et de Yororis.",
       "products": "Produits",
       "story": "Notre histoire",
       "openSource": "Open source",
@@ -587,6 +622,7 @@
         "orazaka": "Orazaka",
         "orochia": "Orochia",
         "yazakia": "Yazakia",
+        "yororis": "Yororis",
         "blocks": "Briques Krizaka",
         "partnership": "Partenariat",
         "other": "Autre chose"
@@ -595,6 +631,7 @@
         "orazaka": "Déployer ou auditer la passerelle d'IA souveraine",
         "orochia": "Lancer ou intégrer la plateforme vidéo pour créateurs",
         "yazakia": "Savoir quand l'app de rencontre ouvre, ou aider à la construire",
+        "yororis": "Discuter de Yororis — en construction, rien n'est encore offert",
         "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
         "partnership": "Intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe"
@@ -610,6 +647,7 @@
         "orazaka": "Votre infrastructure (infonuagique, sur site, isolée), les modèles utilisés, vos contraintes de conformité…",
         "orochia": "Vos créateurs et votre public, les moyens de paiement voulus, votre date de lancement…",
         "yazakia": "Quand vous aimeriez l'essayer, sur quel téléphone, ce que vous attendez d'une app de rencontre…",
+        "yororis": "Qui vous êtes, le programme de mieux-être de votre organisation, ce qui compte pour vous dans le cadre de Yororis…",
         "blocks": "Le composant (sécurité, messagerie, utilisateurs, notifications, facturation, UI…), votre stack et ce que vous voulez construire…",
         "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
         "other": "Comment pouvons-nous vous aider ?"
@@ -1180,6 +1218,179 @@
         "reposLabel": "Les dépôts de Yazakia"
       }
     },
+    "yororis": {
+      "meta": {
+        "title": "Yororis — Un espace d'écoute avec un visage et une voix",
+        "description": "Yororis est un espace d'écoute avec un visage et une voix, propulsé par le pack bien-être d'Orazaka. En construction : construit en public, son cadre étudié avant toute mise à disposition. Rien n'est en ligne, et il n'y a pas de date."
+      },
+      "hero": {
+        "back": "Tous les produits",
+        "eyebrow": "Yororis · le quatrième produit Krizaka",
+        "title": "Un espace d'écoute avec un visage et une voix.",
+        "lead": "Certains soirs, on a besoin de mettre des mots sur ce qu'on porte. Yororis vous donne une présence — une IA qui le dit — qui écoute, reformule, pose une question, et s'arrête. Ce que vous gardez est à vous : trois lignes à apporter aux personnes qui vous accompagnent. Nous le construisons en public, et nous étudions son cadre avant que quiconque l'utilise.",
+        "badges": {
+          "platforms": "Web · iOS · Android",
+          "license": "Apache-2.0"
+        },
+        "badgesLabel": "Où en est Yororis"
+      },
+      "talk": "Discuter de Yororis",
+      "trap": {
+        "title": "Le piège",
+        "lead": "Pour les soirs où l'on a besoin de parler, deux choses existent déjà. Aucune n'écoute comme il faudrait.",
+        "label": "Le piège",
+        "instead": "Ce que fait Yororis à la place",
+        "expand": "En détail",
+        "cards": {
+          "endless": {
+            "title": "L'app qui ne s'arrête jamais",
+            "meta": "toujours là, toujours d'accord",
+            "hook": "Toujours là, toujours flatteuse — et plus rentable à mesure que vous restez.",
+            "items": [
+              "Un moment qui finit, et qui dit quand",
+              "Jamais d'incitation à revenir, aucun compteur de jours",
+              "Elle vous renvoie à votre vie et à vos proches"
+            ]
+          },
+          "journal": {
+            "title": "Le journal qui n'écoute pas",
+            "meta": "une page blanche, chaque soir",
+            "hook": "Écrire aide — jusqu'à ce que la page n'ait plus de question à vous poser.",
+            "items": [
+              "Une question à la fois, avec vos mots",
+              "Trois lignes que vous gardez, pas une transcription",
+              "Une page à apporter aux personnes qui vous accompagnent"
+            ]
+          }
+        }
+      },
+      "moment": {
+        "eyebrow": "Comment ça marche",
+        "title": "Un moment, en six temps",
+        "lead": "Un soir, environ vingt-cinq minutes, toujours dans cet ordre. Rien de tout ça ne tourne encore : c'est ce que nous construisons.",
+        "steps": [
+          {
+            "title": "Votre présence vous attend",
+            "text": "Vous ouvrez Yororis et retrouvez la présence que vous préférez. Sous son portrait : 1 moment disponible aujourd'hui, 2 cette semaine, jusqu'à 25 minutes. Un bouton : Commencer."
+          },
+          {
+            "title": "La première fois, vous acceptez ce que c'est",
+            "text": "L'énoncé exact du pack bien-être d'Orazaka — jamais une reformulation —, puis une attestation 18+ et votre langue. Les fois suivantes, rien, sauf si l'énoncé change."
+          },
+          {
+            "title": "Elle dit ce qu'elle est",
+            "text": "« Je suis Léa, une présence IA — pas un service d'urgence. » Puis elle reprend le fil : ce que vous vouliez essayer la dernière fois, et ce que ça a donné."
+          },
+          {
+            "title": "Vous parlez, elle écoute",
+            "text": "Maintenez pour parler, ou écrivez. Elle répond de sa voix, phrase par phrase, avec des sous-titres exacts — une question à la fois. Si une détresse grave apparaît, l'écran change et des personnes formées prennent le relais, tout de suite."
+          },
+          {
+            "title": "Il reste deux minutes",
+            "text": "À 23 minutes : « Il nous reste deux minutes — qu'est-ce que tu gardes de ce soir ? » À 25, le moment se ferme."
+          },
+          {
+            "title": "Ce que je garde",
+            "text": "Trois lignes — ce qui est venu, ce qui a aidé, un petit pas — et l'humeur que vous avez vous-même indiquée, avant et après. Vous les modifiez, les gardez ou les supprimez ; la transcription a disparu. Elles deviennent le fil du moment suivant."
+          }
+        ]
+      },
+      "stops": {
+        "eyebrow": "Signature",
+        "title": "Une présence qui s'arrête",
+        "lead": "Les limites ne sont pas une contrainte technique : ce sont le produit. Fixées par l'organisation qui offre Yororis, appliquées par le serveur, affichées à l'écran.",
+        "decisions": [
+          {
+            "chose": "Jusqu'à 25 minutes, un moment par jour, trois par semaine — des valeurs par défaut qu'une organisation peut abaisser",
+            "refused": "Une présence disponible jour et nuit",
+            "because": "La disponibilité sans fin est ce qui rend ces apps difficiles à lâcher, et la soirée finit quand même. Un moment qui a une fin vous renvoie à votre vie et à vos proches.",
+            "cost": "Certains soirs, vous en voudrez plus et ne l'aurez pas. « C'est tout pour aujourd'hui. On se retrouve demain à partir de 9 h. »"
+          },
+          {
+            "chose": "Une présence qui dit qu'elle est une IA, à chaque moment, avec une marque « IA » permanente sur un portrait clairement synthétique",
+            "refused": "Un visage qui pourrait passer pour une personne",
+            "because": "La présence vient du rythme, de la voix et de l'attention — pas d'une illusion. Le règlement européen sur l'IA l'exige ; l'honnêteté l'exige partout.",
+            "cost": "Moins d'illusion. C'est voulu."
+          },
+          {
+            "chose": "Une humeur que vous indiquez vous-même, de 1 à 5, avant et après",
+            "refused": "Lire vos sentiments dans votre voix ou vos mots",
+            "because": "Aucun modèle ne décide de ce que vous ressentez, et rien n'est calculé sur vous. C'est plus honnête, et Yororis ne lit pas les émotions.",
+            "cost": "Aucun graphique automatique de vos soirées — seulement ce que vous avez dit."
+          },
+          {
+            "chose": "Aucune incitation à revenir, aucun compteur de jours, aucun moment de plus à vendre",
+            "refused": "Les mécaniques d'engagement",
+            "because": "Un espace d'écoute qui veut vous voir revenir n'écoute pas.",
+            "cost": "Une croissance à gagner autrement : par les organisations, pas par l'attention."
+          }
+        ]
+      },
+      "pack": {
+        "title": "Propulsé par le pack bien-être d'Orazaka",
+        "lead": "Yororis n'a qu'un fournisseur d'IA : Orazaka, par son pack bien-être. Ses gardes vivent dans le moteur, pas dans une consigne — et ce que vous dites reste sur nos machines.",
+        "items": [
+          "Un consentement à un énoncé versionné, bloquant : pas de consentement, pas de moment (`451`)",
+          "Une garde de crise qui passe en premier et ne se désactive pas : une réponse fixe, relue, et une ressource régionale sourcée — jamais générée",
+          "Une garde de périmètre : ce qui sort d'un espace d'écoute est décliné, mot pour mot",
+          "Une rétention courte (30 jours, moins sur demande), le chiffrement et un audit en ajout seul"
+        ],
+        "links": {
+          "pack": {
+            "name": "Documentation d'Orazaka",
+            "line": "Le moteur, ses packs et les contrôles qu'ils déclarent"
+          },
+          "adr": {
+            "name": "ADR-055 — le pack bien-être",
+            "line": "Pourquoi le nom est le premier contrôle, et comment les gardes ont été testées"
+          },
+          "ui": {
+            "name": "Krizaka UI",
+            "line": "Les mêmes composants sur le web et sur le téléphone"
+          }
+        }
+      },
+      "isNot": {
+        "title": "Ce que Yororis n'est pas",
+        "lead": "Dit une fois, clairement, pour que personne n'ait à deviner."
+      },
+      "construction": {
+        "title": "Où en est Yororis",
+        "studyTitle": "Ce que nous étudions",
+        "studyLead": "Des questions, pas des conclusions — avec un avocat, avant que quoi que ce soit soit offert à qui que ce soit.",
+        "study": [
+          "Québec : le titre et l'acte réservés, et la Loi 25 — étude d'impact sur la vie privée, consentement, conservation, hébergement",
+          "Canada : les règles de Santé Canada pour les logiciels, la loi fédérale sur la vie privée, et ce qui peut être dit aux organisations",
+          "France et Union européenne : le règlement sur l'IA (dire qu'on parle à une IA, la lecture des émotions), l'article 9 du RGPD",
+          "Belgique : les mêmes questions européennes, et les lignes d'écoute de crise des deux communautés linguistiques",
+          "Partout : les conditions d'un pilote avec des personnes extérieures, et l'assurance"
+        ],
+        "buildTitle": "Ce que nous construisons en attendant",
+        "build": [
+          "Deux dépôts publics qui s'ouvrent sur ce statut — leur CI refuse tout déploiement et toute publication",
+          "Le tour vocal dans Orazaka : la parole en entrée, une voix en sortie phrase par phrase, avec l'horodatage des mots",
+          "Le produit lui-même — web et téléphone — en public, pour être étudié avant d'être offert"
+        ],
+        "rule": "La grue écoute avant de bouger. Nous étudions avant d'offrir."
+      },
+      "follow": {
+        "title": "Discuter de Yororis",
+        "body": "Une organisation qui a un programme de mieux-être, une professionnelle qui veut lire le cadre, un développeur qui veut le construire avec nous : écrivez-nous. Tant que Yororis est en construction, c'est la seule porte ouverte.",
+        "reposLabel": "Suivre la construction",
+        "repo": "krizaka/yororis",
+        "mobile": "krizaka/yororis-mobile",
+        "framework": "Le cadre"
+      },
+      "reviewed": {
+        "construction": "Nous construisons Yororis en public et nous étudions son cadre — juridique, éthique, clinique — avant toute mise à disposition. Rien n'est en ligne, rien n'est offert, et il n'y a pas de date.",
+        "isNot": [
+          "Pas un soin : Yororis ne prétend à aucun effet sur la santé et ne remplace personne qui vous accompagne.",
+          "Pas un service d'urgence : en cas de crise, des personnes formées à l'écoute répondent tout de suite.",
+          "Pas une personne : une présence IA qui le dit, chaque fois."
+        ],
+        "isNotRule": "Pas un soin, pas un service d'urgence, pas une personne. En cas de crise au Canada, appelez ou textez le 9-8-8 — au Québec, le 811 (Info-Social)."
+      }
+    },
     "openSource": {
       "steps": {
         "pick": {
@@ -1534,7 +1745,12 @@
     },
     "structuredData": {
       "orochia": "Plateforme vidéo open source pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle, conformité 18+.",
-      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; et Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt)."
+      "yororis": {
+        "description": "Un espace d'écoute avec un visage et une voix, propulsé par le pack bien-être d'Orazaka. En construction : ni déployé, ni offert.",
+        "status": "En construction",
+        "keywords": "écoute, mieux-être, présence, souverain"
+      },
+      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction)."
     },
     "packages": {
       "eyebrow": "Sur npm",
@@ -2191,7 +2407,8 @@
         "duck": "du canard",
         "flamingo": "du flamant",
         "pigeon": "du pigeon",
-        "lovebird": "de l'inséparable"
+        "lovebird": "de l'inséparable",
+        "crane": "La grue"
       },
       "forums": {
         "title": "Les questions vont dans deux forums, pas six.",
@@ -3156,6 +3373,10 @@
       "orochia": {
         "title": "Orochia",
         "description": "La plateforme de créateurs : architecture, enchères, pipeline média, API et déploiement — synchronisés depuis son code."
+      },
+      "yororis": {
+        "title": "Yororis",
+        "description": "En construction : ce que c'est, ce que ce n'est pas, les contrôles hérités et ce qui est à l'étude."
       }
     },
     "separators": {
@@ -3385,6 +3606,12 @@
         "notifications": {
           "title": "Notifications",
           "description": "krizaka-notifications : e-mail, SMS et webhooks derrière un seul port, pilotés par les événements, gabarits par langue."
+        }
+      },
+      "yororis": {
+        "index": {
+          "title": "Yororis — en construction",
+          "description": "Un espace d'écoute avec un visage et une voix, propulsé par le pack bien-être d'Orazaka — ce que c'est, ce que ce n'est pas, et ce qui est étudié avant toute mise à disposition."
         }
       }
     },

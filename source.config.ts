@@ -1,5 +1,7 @@
-/* Fumadocs collections — four documentation sets, one engine.
+/* Fumadocs collections — five documentation sets, one engine.
    - ui, java: written here (content/docs/**), MDX with the live-preview components.
+   - yororis: written here while Yororis is under construction (content/docs/yororis) — replaced by the docs synced
+     from krizaka/yororis (docs:generate) once its code exists (PYO5).
    - orazaka, orochia: synced from the product repositories (never edited here). Only the files the publication
      manifests list are compiled: an internal doc never reaches the build, let alone the site. */
 
@@ -22,6 +24,7 @@ const syncedSchema = pageSchema.extend({ title: pageSchema.shape.title.optional(
 
 export const ui = defineDocs({ dir: "content/docs/ui" });
 export const java = defineDocs({ dir: "content/docs/java" });
+export const yororis = defineDocs({ dir: "content/docs/yororis" });
 export const orazaka = defineDocs({
   dir: "orazaka-content/docs",
   docs: { schema: syncedSchema, files: published("orazaka-content/docs", DOCS_MANIFEST) },

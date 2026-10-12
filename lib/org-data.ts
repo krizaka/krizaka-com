@@ -1,4 +1,4 @@
-import { OROCHIA_APP_URL, YAZAKIA_REPO_URL } from "./site";
+import { OROCHIA_APP_URL, YAZAKIA_REPO_URL, YORORIS_REPO_URL } from "./site";
 /* ═══════════════════════════════════════════════════════════════════
    KRIZAKA — organisation-level data for the home page and /open-source.
    Repository lists are NOT written here: they come from the generated
@@ -66,7 +66,7 @@ export function orgRepositories(): OrgRepository[] {
 }
 
 export interface Product {
-  id: "orazaka" | "orochia" | "yazakia";
+  id: "orazaka" | "orochia" | "yazakia" | "yororis";
   name: string;
   href: string;
   /** Its documentation — none until it is published. */
@@ -107,5 +107,15 @@ export const PRODUCTS: Product[] = [
     href: "/products/yazakia",
     repoUrl: YAZAKIA_REPO_URL,
     stack: "Expo · Next.js 16 API · PostgreSQL + pgvector · Orazaka",
+  },
+  /* Under construction (lib/nav.ts status): nothing recorded, nothing to open — the home and /products show its
+     animated mark and say so. */
+  {
+    id: "yororis",
+    name: "Yororis",
+    href: "/products/yororis",
+    docsHref: "/docs/yororis",
+    repoUrl: YORORIS_REPO_URL,
+    stack: "Next.js 16 · Expo · PostgreSQL · Orazaka wellbeing pack",
   },
 ];

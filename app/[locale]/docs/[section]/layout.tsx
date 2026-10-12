@@ -16,9 +16,11 @@ export function generateStaticParams() {
 }
 
 const isSection = (value: string): value is DocsSection => (DOCS_SECTIONS as readonly string[]).includes(value);
+/** A product's documentation wears its mark and its brand; the platform's (ui, java) wear Krizaka's. */
+const isProductMark = (section: DocsSection): section is "orazaka" | "orochia" | "yororis" => section === "orazaka" || section === "orochia" || section === "yororis";
 
 /* One documentation set: the site's navigation on top, Fumadocs' sidebar (this set's tree, a switcher between the
-   four sets, the search) and the page with its table of contents, then the site's footer. */
+   five sets, the search) and the page with its table of contents, then the site's footer. */
 export default async function DocsSectionLayout({ children, params }: { children: ReactNode; params: Promise<{ locale: string; section: string }> }) {
   const { locale: raw, section } = await params;
   if (!isSection(section)) notFound();
@@ -29,7 +31,7 @@ export default async function DocsSectionLayout({ children, params }: { children
     title: t.sections[s].title,
     description: t.sections[s].description,
     url: `/${locale}/docs/${s}`,
-    icon: <ProductLogo id={s === "orazaka" || s === "orochia" ? s : "krizaka"} size={18} animated={false} />,
+    icon: <ProductLogo id={isProductMark(s) ? s : "krizaka"} size={18} animated={false} />,
   }));
 
   return (
@@ -43,7 +45,7 @@ export default async function DocsSectionLayout({ children, params }: { children
         nav={{ title: t.hub.kicker, url: `/${locale}/docs` }}
         themeSwitch={{ enabled: false }}
         // A product's documentation wears its brand (@krizaka/tokens/brands/scoped.css), like its product pages.
-        containerProps={{ className: section === "orazaka" || section === "orochia" ? "kz-docs brand-" + section : "kz-docs", style: { "--fd-banner-height": "var(--kz-docs-top)" } as CSSProperties }}
+        containerProps={{ className: isProductMark(section) ? "kz-docs brand-" + section : "kz-docs", style: { "--fd-banner-height": "var(--kz-docs-top)" } as CSSProperties }}
       >
         {children}
       </DocsLayout>

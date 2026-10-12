@@ -1,0 +1,66 @@
+---
+title: Yororis — under construction
+description: A listening space with a face and a voice, powered by Orazaka's wellbeing pack — what it is, what it is not, and what is studied before anything is offered.
+---
+
+{/* Written here while Yororis is under construction (AGENTS.md §2.3). It is replaced by the documentation synced from
+    krizaka/yororis (docs:generate) once its code exists. Its words pass the lexicon test (scripts/lexicon.mjs). */}
+
+> **Under construction.** We're building Yororis in the open and studying its framework — legal, ethical, clinical — before making it available. Nothing is live, nothing is offered, and there is no date.
+
+## What Yororis is
+
+**A listening space with a face and a voice.** A person opens a *moment* with a *presence*: an AI presence with a first
+name, an animated portrait that carries a permanent "AI" mark, a voice and exact subtitles. The presence listens,
+reflects back, asks one question at a time and helps put words on what is being lived.
+
+- **A presence that stops.** A moment lasts up to 25 minutes; there is one a day and three a week by default. The
+  organisation that offers Yororis sets these limits for its members, the server applies them, the screen shows them.
+- **What I keep.** When the moment closes, the transcript is gone. What remains is three lines the person reads, edits
+  or deletes, and the mood they gave themselves before and after — that becomes **the thread** of the next moment.
+- **One page to bring along.** The person can export what they kept as one page, for the people who support them.
+
+## What Yororis is not
+
+- Not care: Yororis makes no health claim and replaces no one who supports you.
+- Not an emergency service: in a crisis, people trained to listen answer right away.
+- Not a person: an AI presence that says so, every time.
+
+Not care, not an emergency service, not a person. In a crisis in Canada, call or text 9-8-8 — in Québec, 811 (Info-Social).
+
+## The controls it inherits from Orazaka
+
+Every AI call goes through **Orazaka's wellbeing pack** — Yororis has no other AI provider, and the guards live in the
+engine, not in a prompt ([ADR-055](https://github.com/krizaka/orazaka/blob/main/docs/adr/ADR-055-regulated-controls-and-the-wellbeing-pack.md)).
+
+| Control | What it does |
+| :--- | :--- |
+| Versioned consent | No consent to the current statement, no moment: the engine answers `451` with the statement itself. |
+| Crisis guard | Runs first, cannot be switched off; the answer is fixed and reviewed, with a sourced and dated regional line — never generated. |
+| Scope guard | What is outside a listening space is declined, word for word. |
+| Age attestation | 18+, recorded with the consent. |
+| Retention and audit | 30 days (shorter on request), encryption, an append-only audit. |
+
+Yororis adds its own: the limits applied by the server, the transcript destroyed at the summary, a mood that is only
+ever self-reported (nothing is inferred), export and deletion by the person, aggregate statistics only.
+
+## What is being studied
+
+Questions, not conclusions — answered with a lawyer before anything is offered to anyone:
+
+- **Québec** — the reserved title and act; Law 25: privacy impact, consent, retention, hosting.
+- **Canada** — Health Canada's rules for software; federal privacy law; what may be said to organisations.
+- **France and the European Union** — the AI Act (telling people they talk to an AI, reading emotions); GDPR article 9.
+- **Belgium** — the same European questions, and the crisis lines of both language communities.
+- **Everywhere** — the conditions of a pilot with outside people, and insurance.
+
+## Construction mode, in the code
+
+- Both repositories — [krizaka/yororis](https://github.com/krizaka/yororis) and
+  [krizaka/yororis-mobile](https://github.com/krizaka/yororis-mobile) — open with the status above; their CI fails
+  without it, and fails on any workflow that deploys or publishes.
+- The application will refuse to start in production without the reference of a written, signed decision.
+- No open accounts: an invitation is required, and only the maintainers and a fictional demo cast have one.
+- On krizaka.com, one call to action: [talk to us about Yororis](/contact?topic=yororis).
+
+The full framework lives in the repository: [docs/FRAMEWORK.md](https://github.com/krizaka/yororis/blob/main/docs/FRAMEWORK.md).

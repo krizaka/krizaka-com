@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, { path: "/products", en: copy, fr: copy });
 }
 
-/* /products — the page hero (@krizaka/ui), then both products presented the same way (ProductsShowcase). */
+/* /products — the page hero (@krizaka/ui), then every product presented the same way (ProductsShowcase). */
 export default async function ProductsPage({ params }: Props) {
   const h = getDictionary((await params).locale).site.home.products;
   return (

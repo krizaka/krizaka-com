@@ -141,3 +141,29 @@ both in progress.
   links, block and report, account deletion and data export in the app, nothing
   used to train a model.
 - Page: https://krizaka.com/en/products/yazakia
+
+# Yororis (under construction)
+
+Yororis is Krizaka's fourth product, under construction: built in the open,
+not deployed, not offered to anyone, and with no date. Its legal, ethical and
+clinical framework is studied (with a lawyer) before anything is offered.
+Repositories: `krizaka/yororis` and `krizaka/yororis-mobile` (Apache-2.0), both
+opening with the construction banner and checked by a CI that refuses any
+deployment or publishing workflow.
+
+- What it is: a listening space with a face and a voice. An AI presence with a
+  first name, an animated portrait with a permanent "AI" mark, a voice and
+  exact subtitles listens, reflects back and asks one question at a time.
+- A presence that stops: up to 25 minutes, one moment a day, three a week by
+  default — set by the organisation that offers it, applied by the server.
+- What I keep: when a moment closes, the transcript is gone; three lines the
+  person reads, edits or deletes, and a mood they report themselves (never
+  inferred), become the thread of the next moment.
+- Powered by Orazaka's wellbeing pack: versioned blocking consent, a crisis
+  guard that cannot be switched off (a fixed reviewed answer and a sourced
+  regional line, never generated), a scope guard, 30-day retention, an
+  append-only audit; no third-party AI provider.
+- What it is not: not care, not an emergency service, not a person. In a crisis
+  in Canada, call or text 9-8-8; in Québec, 811 (Info-Social).
+- Page: https://krizaka.com/en/products/yororis
+- Docs: https://krizaka.com/en/docs/yororis
