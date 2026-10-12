@@ -3577,6 +3577,10 @@
           "title": "Intl",
           "description": "Montants, nombres, dates et pluriels formatés de la même façon dans tous les produits Krizaka."
         },
+        "query": {
+          "title": "Query",
+          "description": "L’état serveur de toutes les apps Krizaka : TanStack Query derrière un seul paquet — fetch typé, erreurs Problem Details, invalidation en direct, hydratation App Router, cache hors ligne sur Expo."
+        },
         "screens": {
           "title": "Écrans",
           "description": "Des écrans entiers des produits composés avec Krizaka UI — un studio de créatrice, une console, la connexion, les réglages, la messagerie — chacun avec sa version mobile, prêts à copier."

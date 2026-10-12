@@ -1,0 +1,116 @@
+---
+title: Query
+description: Server state for every Krizaka app — TanStack Query behind one package.
+---
+
+`@krizaka/query` is TanStack Query v5 with the Krizaka layer on top: the defaults, a typed fetch, one error shape, typed
+keys, the bridge from realtime events to the cache, App Router hydration and an offline cache on a device.
+
+```bash
+npm install @krizaka/query zod
+```
+
+> **A product never imports `@tanstack/*`.** TanStack Query is re-exported whole by `@krizaka/query`: its version is
+> the contract, and a TanStack upgrade is a release of this package. `@krizaka/config` enforces it
+> (`krizaka/no-direct-tanstack-import`, the shared dependency-cruiser rule).
+
+| Entry | What |
+| :-- | :-- |
+| `@krizaka/query` | `useQuery`, `useMutation`, `queryOptions`… · `createQueryClient` · `KrizakaQueryProvider` · `krizakaFetch` · `KrizakaApiError` · `defineKeys` · `useLiveInvalidation`, `eventSourceLive` |
+| `@krizaka/query/server` | `KrizakaHydration`, `prefetch` — the first screen of an App Router page |
+| `@krizaka/query/persist` | `createPersister`, `mmkvStorage`, `persistOptions`, `PersistQueryClientProvider` |
+| `@krizaka/query/native` | `bindNativeLifecycle` (AppState, NetInfo), `nativeQueryDefaults` |
+| `@krizaka/query/devtools` | `KrizakaDevtools` (nothing rendered in production) |
+
+## The first screen is a Server Component
+
+A page renders its first screen on the server, with its data: the LCP never waits for a client request. Query takes
+over for the interaction. **Never a `fetch` in a client `useEffect`** — `krizaka/no-fetch-in-client-effect` refuses it.
+
+```ts title="lib/videos.ts"
+import { defineKeys, krizakaFetch, queryOptions } from "@krizaka/query";
+import { z } from "zod";
+
+export const Video = z.object({ id: z.string(), title: z.string(), liked: z.boolean() });
+export const videoKeys = defineKeys("videos", { list: (f: { q?: string }) => [f], detail: (id: string) => [id] });
+
+export const videosQuery = (f: { q?: string } = {}) =>
+  queryOptions({
+    queryKey: videoKeys.list(f), // ["videos", "list", { q }]
+    queryFn: ({ signal }) => krizakaFetch("/api/videos", { schema: z.array(Video), query: f, signal }),
+    meta: { list: true }, // an error renders in the list, not in the error boundary
+  });
+```
+
+```tsx title="app/videos/page.tsx"
+import { KrizakaHydration } from "@krizaka/query/server";
+
+export default function Page() {
+  return (
+    <KrizakaHydration queries={[videosQuery()]}>
+      <VideoList />
+    </KrizakaHydration>
+  );
+}
+```
+
+```tsx title="app/videos/video-list.tsx"
+"use client";
+import { eventSourceLive, useLiveInvalidation, useQuery } from "@krizaka/query";
+
+const live = typeof window === "undefined" ? null : eventSourceLive("/api/videos/stream");
+
+export function VideoList() {
+  const videos = useQuery(videosQuery()); // hydrated: no request on the first render
+  useLiveInvalidation(live, {
+    "video.created": [videoKeys.all], // invalidate: the server stays the truth
+    "video.updated": (e: { video: Video }, qc) => qc.setQueryData(videoKeys.detail(e.video.id), e.video),
+  });
+  // …
+}
+```
+
+The provider goes once in the root layout: `<KrizakaQueryProvider onUnauthorized={…}>` and `<KrizakaDevtools />`.
+
+## The defaults
+
+| | Default | Why |
+| :-- | :-- | :-- |
+| Fresh for | 30 s | A screen revisited within 30 s does not refetch. |
+| Retries | network error or 5xx: 3 times (1 s, 2 s, 4 s) · 429: after its `retryAt` (≤ 30 s) · another 4xx: never | Insisting on a refusal only adds load. |
+| Mutations | retried only on a 429 | A mutation is not idempotent; a 429 was not applied. |
+| 401 | `onUnauthorized(error)` | Refresh the session or go to sign-in, from one place. |
+| Errors | a first load reaches the error boundary; a list or a refetch keeps its data | A list shows its error in place, with a retry. |
+
+## One error: `KrizakaApiError`
+
+`krizakaFetch(url, { schema, json, query, ...init })` validates the body with its schema (any Standard Schema: zod,
+valibot…) and types the result. A failure is a `KrizakaApiError`, read from RFC 9457 Problem Details (what the JVM
+services answer) or from a route handler's `{ error, code }`:
+
+| Field | Meaning |
+| :-- | :-- |
+| `status` | the HTTP status, `0` when no response arrived |
+| `code` | what to branch on: the server's `code` (`auction-closed`), else `network`, `invalid-response`, `unauthorized`, `forbidden`, `not-found`, `conflict`, `validation-failed`, `rate-limited`, `server`… |
+| `retryAt` | when a 429 may be tried again (epoch ms) |
+| `fields` | the refused fields, by name — what a form shows under each |
+| `requestId` | the server's correlation id, for support |
+
+The words stay in the app: `t(error.messageKey())` reads `apiErrors.<code>` from its catalogue. Set the app's defaults
+once with `configureKrizakaFetch({ baseUrl, credentials, getToken })`: `getToken` adds the bearer token on a device,
+`credentials: "include"` sends the cookie of a cross-origin API.
+
+## On a device
+
+```ts title="App.tsx"
+import { bindNativeLifecycle, nativeQueryDefaults } from "@krizaka/query/native";
+import { createPersister, mmkvStorage, PERSIST_MAX_AGE, persistOptions } from "@krizaka/query/persist";
+
+bindNativeLifecycle({ appState: AppState, netInfo: NetInfo }); // refetch on focus, pause offline
+const client = createQueryClient({ gcTime: PERSIST_MAX_AGE, defaultOptions: nativeQueryDefaults });
+const persister = createPersister({ storage: mmkvStorage(new MMKV()) });
+// <PersistQueryClientProvider client={client} persistOptions={persistOptions({ persister, buster: appVersion })}>
+```
+
+The screens open on what they showed last time, then refresh. A query with `meta: { persist: false }` is never written
+to the device. Live events on a device go through `eventSourceLive(url, { EventSource })` with react-native-sse's.
