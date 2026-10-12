@@ -1,11 +1,11 @@
-/* Home hero — Krizaka as an organisation: what we build (two products) and how. A server component: the title, the
-   promise and the two product cards are the first paint (LCP); everything behind them is decoration that arrives later.
+/* Home hero — Krizaka as an organisation: what we build (three products) and how. A server component: the title,
+   the promise and the product cards are the first paint (LCP); everything behind them is decoration that arrives later.
 
    Depth, back to front (BRAND.md §4), every layer decorative and still under prefers-reduced-motion:
    - the section gradient and its drifting light (SectionBackdrop), a light dome and a perspective floor;
    - an aurora in the three brand colours — Orazaka orange on the left, Krizaka blue in the middle, Orochia violet on
      the right — that breathes very slowly (org-hero.css);
-   - the two products glimpsed through depth of field on their side (HeroProductMedia): hovering a card brightens its
+   - the two released products glimpsed through depth of field on their side (HeroProductMedia): hovering a card brightens its
      product and lights its mark;
    - the signature landscape as the horizon: it rises as the page scrolls and fades into the next section — no hard
      edge, never behind the title;
@@ -24,6 +24,7 @@ import RotatingWord from "./RotatingWord";
 import HeroProductMedia from "./HeroProductMedia";
 import { getDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/org-data";
+import { NAV_PRODUCTS } from "@/lib/nav";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import "./org-hero.css";
 import ButtonLink from "@/app/components/sections/ButtonLink";
@@ -63,7 +64,10 @@ export default function OrgHero({ locale, repositoryCount }: { locale: string; r
                 <ProductLogo id={p.id} size={34} />
               </span>
               <span className="org-hero-product-text">
-                <strong>{p.name}</strong>
+                <strong>
+                  {p.name}{" "}
+                  {NAV_PRODUCTS.find((n) => n.id === p.id)?.soon && <span className="org-hero-soon">{t.site.nav[p.id].badge}</span>}
+                </strong>
                 <span className="org-hero-product-tag">{t.site.products[p.id].tagline}</span>
               </span>
               <ForwardIcon size={16} />

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
+import { getDictionary } from "@/lib/i18n";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ProductsShowcase from "@/app/components/home/ProductsShowcase";
@@ -10,11 +11,8 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
-  return localizedMetadata(locale, {
-    path: "/products",
-    en: { title: "Products — Orazaka & Orochia | Krizaka", description: "Krizaka's open-source products: Orazaka (sovereign AI orchestration) and Orochia (creator video platform)." },
-    fr: { title: "Produits — Orazaka & Orochia | Krizaka", description: "Les produits open source de Krizaka : Orazaka (orchestration IA souveraine) et Orochia (plateforme vidéo pour créateurs)." },
-  });
+  const copy = getDictionary(locale).site.productsPage;
+  return localizedMetadata(locale, { path: "/products", en: copy, fr: copy });
 }
 
 export default function ProductsPage() {

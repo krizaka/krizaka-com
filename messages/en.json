@@ -385,10 +385,32 @@
           }
         }
       },
+      "yazakia": {
+        "tagline": "The dating app where you talk first",
+        "badge": "Coming soon",
+        "links": {
+          "overview": {
+            "label": "Overview",
+            "desc": "The promise, before the app"
+          },
+          "architecture": {
+            "label": "How it works",
+            "desc": "Talk, a batch, a debrief, the intro"
+          },
+          "demo": {
+            "label": "Demo",
+            "desc": "With the first build"
+          },
+          "signature": {
+            "label": "Mutual batches",
+            "desc": "Both ways, or not at all"
+          }
+        }
+      },
       "company": {
         "products": {
           "label": "All products",
-          "desc": "Compare Orazaka and Orochia"
+          "desc": "Every product, side by side"
         },
         "story": {
           "label": "Our story",
@@ -440,7 +462,20 @@
           "Payments confirmed by signed webhook, settled exactly once",
           "Built-in 18+ compliance and 2257 records"
         ]
+      },
+      "yazakia": {
+        "tagline": "The dating app where you talk first.",
+        "summary": "No swipe, no catalogue, no score. An AI agent gets to know you, then opens a small batch of people who match you in both directions — and the next batch waits for your debrief. Coming to iOS and Android.",
+        "points": [
+          "A conversation instead of a form",
+          "3 to 5 people at a time, compatible both ways",
+          "Reasons in words — never a score"
+        ]
       }
+    },
+    "productsPage": {
+      "title": "Products — Orazaka, Orochia, Yazakia | Krizaka",
+      "description": "Krizaka's open-source products: Orazaka (sovereign AI orchestration), Orochia (the video platform for creators) and Yazakia (the dating app where you talk first, coming soon)."
     },
     "expertise": {
       "eyebrow": "Know-how",
@@ -491,7 +526,8 @@
         "title": "Products",
         "discover": "Discover",
         "demo": "demo",
-        "openApp": "Open the app"
+        "openApp": "Open the app",
+        "soon": "Coming to iOS and Android"
       },
       "openSource": {
         "title": "Read every line.",
@@ -515,7 +551,7 @@
       }
     },
     "footer": {
-      "tagline": "Open-source software studio in Montréal. Makers of Orazaka and Orochia.",
+      "tagline": "Open-source software studio in Montréal. Makers of Orazaka, Orochia and Yazakia.",
       "products": "Products",
       "story": "Our story",
       "openSource": "Open source",
@@ -537,6 +573,7 @@
       "topics": {
         "orazaka": "Orazaka",
         "orochia": "Orochia",
+        "yazakia": "Yazakia",
         "blocks": "Building blocks",
         "partnership": "Partnership",
         "other": "Something else"
@@ -544,6 +581,7 @@
       "topicHints": {
         "orazaka": "Deploy or audit the sovereign-AI gateway",
         "orochia": "Launch or integrate the creator video platform",
+        "yazakia": "Hear when the dating app opens, or help build it",
         "blocks": "Use or integrate a Krizaka component from Maven Central or npm",
         "partnership": "Integration, reseller or research partnership",
         "other": "Press, careers, a question for the team"
@@ -558,6 +596,7 @@
       "placeholders": {
         "orazaka": "Your infrastructure (cloud, on-prem, air-gapped), the models you run, your compliance constraints…",
         "orochia": "Your creators and audience, the payment methods you need, your launch date…",
+        "yazakia": "When you would like to try it, on which phone, what you expect from a dating app…",
         "blocks": "The component (security, messaging, users, notifications, billing, UI…), your stack and what you want to build with it…",
         "partnership": "Who you are, what you would build together, the markets you serve…",
         "other": "How can we help?"
@@ -916,6 +955,149 @@
         ]
       }
     },
+    "yazakia": {
+      "meta": {
+        "title": "Yazakia — The dating app where you talk first | Krizaka",
+        "description": "Yazakia is coming to iOS and Android: an AI agent gets to know you, then opens small batches of people compatible in both directions — reasons, never scores. Open source, by Krizaka."
+      },
+      "hero": {
+        "back": "All products",
+        "eyebrow": "Yazakia · the third Krizaka product",
+        "title": "The dating app where you talk first.",
+        "lead": "Yazakia starts with a conversation, not a catalogue. An AI agent learns who you are and who you are looking for, then opens a small batch of people who could choose you too — with the reasons, never a score. Coming to iOS and Android, built in the open.",
+        "notify": "Get notified",
+        "github": "Follow on GitHub",
+        "badges": {
+          "soon": "Coming soon",
+          "platforms": "iOS · Android",
+          "license": "Apache-2.0"
+        },
+        "badgesLabel": "Where Yazakia stands"
+      },
+      "trap": {
+        "title": "The trap",
+        "hook": "Swipe apps turn people into thumbnails — and sell an endless deck as a chance.",
+        "body": "The more you swipe, the less you see. A like costs nothing, so it means nothing: matches that lead nowhere, profiles that never answer, and an app that earns more the longer you stay single.",
+        "items": [
+          "Swipe fatigue: an endless deck, judged in half a second",
+          "False matches: two thumbs up, no reason to talk",
+          "A hidden ranking that decides who gets to see you",
+          "Paying to be seen, paying to jump the queue"
+        ]
+      },
+      "loop": {
+        "eyebrow": "How it works",
+        "title": "Four steps, always in this order",
+        "lead": "Yazakia turns the mechanics around: understanding comes before showing, and every batch learns from the one before.",
+        "expand": "In detail",
+        "what": "What happens",
+        "steps": {
+          "talk": {
+            "title": "Talk first",
+            "meta": "01 · ten minutes",
+            "hook": "An agent, not a form: one question at a time, quick choices, room for humour.",
+            "items": [
+              "It learns your values, your pace of life, your non-negotiables",
+              "It hands you a portrait — who you are, who you are looking for — that you can correct",
+              "The portrait is worth having even before anyone is in your batch"
+            ]
+          },
+          "batch": {
+            "title": "A batch, not a catalogue",
+            "meta": "02 · 3 to 5 people · 72 h",
+            "hook": "Only people compatible in both directions, each with “why you two”, in words.",
+            "items": [
+              "It opens when the agent knows enough — and only if someone could want you back",
+              "For each person: interested · pass · tell me more",
+              "The batch expires after 72 hours: no backlog piling up"
+            ]
+          },
+          "debrief": {
+            "title": "Debrief before the next",
+            "meta": "03 · two minutes",
+            "hook": "Three questions unlock the next batch — and change what the agent looks for.",
+            "items": [
+              "Quick chips, free text if you feel like it",
+              "Your answers reshape the portrait: “distance matters less than you said”",
+              "Each batch is fairer than the one before"
+            ]
+          },
+          "intro": {
+            "title": "The intro",
+            "meta": "04 · seven days",
+            "hook": "Mutual interest opens a seven-day intro: two people talk, the agent steps back.",
+            "items": [
+              "Each agent whispers a private first line to its own person",
+              "Then it is just the two of you — the agent never reads the intro",
+              "After seven days: carry on together, or let it fade"
+            ]
+          }
+        },
+        "rule": "I introduce you, then I leave the room. What you say to each other belongs to you.",
+        "promise": "The promise"
+      },
+      "matching": {
+        "title": "Mutual batches, our signature",
+        "lead": "Most apps rank people. Yazakia asks another question: would these two choose each other?",
+        "decisions": [
+          {
+            "chose": "A pair is worth its weaker direction: what A looks for in B and what B looks for in A — the lower of the two, `min(A→B, B→A)`.",
+            "refused": "A one-way ranking that shows you whoever fits you, whether or not you fit them.",
+            "because": "That is how ghost profiles and dead-end matches are made. With the minimum, B only appears to A if A stands a chance with B.",
+            "cost": "Smaller batches, sometimes none: when the pool is thin, the agent says so plainly and tells you when a batch is ready."
+          },
+          {
+            "chose": "Reasons, written in words, in both directions: “why you two”.",
+            "refused": "A compatibility percentage.",
+            "because": "A number invites comparing people like products; a reason invites a conversation.",
+            "cost": "Every reason is written from both portraits — more work for the agent, nothing to show off."
+          },
+          {
+            "chose": "The next batch waits for your debrief.",
+            "refused": "Paying to skip the debrief or to get a bigger batch — in no plan, ever.",
+            "because": "The debrief is what makes the next batch better; selling a way around it would break the loop.",
+            "cost": "Two minutes of your time before each batch."
+          }
+        ]
+      },
+      "privacy": {
+        "title": "Privacy by design",
+        "lead": "A dating app learns intimate things. Yazakia is built so that what it knows stays small, protected and yours.",
+        "items": [
+          "18+: your date of birth is checked by the server at sign-up",
+          "Your location is rounded to about 1 km before it is stored — the exact point exists nowhere on our side",
+          "Sensitive answers are encrypted at rest; photos stay private, shown only to your batch and your intros, through links that expire after five minutes",
+          "Block and report in one gesture; delete your account from the app, export your data as JSON",
+          "Nothing you say is used to train a model"
+        ],
+        "rule": "I keep watch over what you share. The less we keep, the less there is to lose."
+      },
+      "built": {
+        "title": "Built with Krizaka",
+        "lead": "Yazakia is open source, and assembled from bricks the other products have already proven.",
+        "items": {
+          "orazaka": {
+            "name": "Orazaka, for the agent",
+            "line": "Conversation and extraction through Orazaka's API — Yazakia is its first real client."
+          },
+          "ui": {
+            "name": "@krizaka/ui, native",
+            "line": "The marks, themes and components of krizaka.com and Orochia, on iOS and Android."
+          },
+          "realtime": {
+            "name": "Realtime & push",
+            "line": "Streaming chat and notifications proven in Orochia, extracted as shared bricks now that a second product needs them."
+          }
+        }
+      },
+      "follow": {
+        "title": "Be there on day one",
+        "body": "Yazakia is not in the stores yet. Leave us a word and we will write when the first build opens — or watch it being built, commit by commit.",
+        "api": "yazakia · the API",
+        "mobile": "yazakia-mobile · the app",
+        "reposLabel": "The Yazakia repositories"
+      }
+    },
     "openSource": {
       "steps": {
         "pick": {
@@ -1269,7 +1451,8 @@
       "products": "Products"
     },
     "structuredData": {
-      "orochia": "Open-source video platform for independent creators: direct-to-CDN streaming, server-side access control, gateway-confirmed payments, 18+ compliance."
+      "orochia": "Open-source video platform for independent creators: direct-to-CDN streaming, server-side access control, gateway-confirmed payments, 18+ compliance.",
+      "organization": "Krizaka is a Montréal software studio building open-source products: Orazaka, sovereign AI orchestration on your own infrastructure (Law 25, GDPR, PIPEDA); Orochia, the video platform for independent creators; and Yazakia, the dating app where you talk first (coming soon)."
     },
     "packages": {
       "eyebrow": "On npm",
@@ -1281,7 +1464,7 @@
       "items": {
         "tokens": {
           "role": "The vocabulary",
-          "line": "The semantic --kz-* tokens — surfaces, text, accent, statuses — in dark and light, with the brand themes of Krizaka, Orazaka and Orochia: CSS, TypeScript and React Native from one source."
+          "line": "The semantic --kz-* tokens — surfaces, text, accent, statuses — in dark and light, with the brand themes of Krizaka, Orazaka, Orochia and Yazakia: CSS, TypeScript and React Native from one source."
         },
         "tailwind": {
           "role": "The preset",
@@ -1925,7 +2108,8 @@
         "owl": "The owl",
         "duck": "The duck",
         "flamingo": "The flamingo",
-        "pigeon": "The pigeon"
+        "pigeon": "The pigeon",
+        "lovebird": "The lovebird"
       },
       "forums": {
         "title": "Questions go to two forums, not six.",

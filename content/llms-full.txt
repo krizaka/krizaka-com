@@ -118,3 +118,26 @@ and API, PostgreSQL, db/media/payments packages), `krizaka/orochia-admin`
   migrator, DigitalOcean App Platform specs (dev and production), owner account
   configured by environment, Mailgun transactional e-mail.
 - Docs: https://krizaka.com/en/products/orochia/docs
+
+# Yazakia (coming soon)
+
+Yazakia is Krizaka's third product, announced and not released yet: an
+open-source (Apache-2.0) dating app for iOS and Android (Expo), with its API on
+Next.js 16, PostgreSQL + pgvector, and Orazaka for the AI. Repositories:
+`krizaka/yazakia` (API, packages, docs) and `krizaka/yazakia-mobile` (the app),
+both in progress.
+
+- Talk first: an AI agent (not a form) learns values, pace of life and
+  non-negotiables, one question at a time, and returns a portrait the person can
+  correct.
+- A batch, not a catalogue: 3 to 5 people, opened only when they are compatible
+  in both directions (a pair scores as its weaker direction), each with written
+  reasons — never a score shown. A batch expires after 72 hours.
+- Debrief before the next: three short questions unlock the next batch and
+  reshape the portrait. Paying to skip the debrief is refused, in every plan.
+- The intro: mutual interest opens a seven-day intro; the agent never reads it.
+- Privacy: 18+ checked by the server, location rounded to ~1 km before storage,
+  sensitive answers encrypted at rest, private photos behind 5-minute signed
+  links, block and report, account deletion and data export in the app, nothing
+  used to train a model.
+- Page: https://krizaka.com/en/products/yazakia

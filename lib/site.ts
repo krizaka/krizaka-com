@@ -36,6 +36,10 @@ export const MASTER_FEATURES_URL = `${SITE_REPO_URL}/blob/main/orazaka-content/d
 /** Orazaka is one repository per component; the workspace (GITHUB_REPO_URL) assembles them. */
 export const GITHUB_REPOSITORIES_URL = `${GITHUB_ORG_URL}?q=orazaka&type=all`;
 
+/** Yazakia, the dating app (coming soon): its API and its mobile app. */
+export const YAZAKIA_REPO_URL = `${GITHUB_ORG_URL}/yazakia`;
+export const YAZAKIA_MOBILE_REPO_URL = `${GITHUB_ORG_URL}/yazakia-mobile`;
+
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;
 export const PLATFORM_KIT_REPO_URL = `${GITHUB_ORG_URL}/krizaka-platform-kit`;

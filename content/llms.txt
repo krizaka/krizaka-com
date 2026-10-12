@@ -2,8 +2,8 @@
 
 > Krizaka is a Montréal (Québec) software studio building open-source,
 > production-ready platforms where compliance, security and modularity are
-> enforced in code. Two products, every repository public under Apache-2.0
-> at https://github.com/krizaka.
+> enforced in code. Three products — two running today, one coming soon — every
+> repository public under Apache-2.0 at https://github.com/krizaka.
 
 ## Products
 
@@ -18,6 +18,12 @@
   invited people and reusable private lists); collections with permissions;
   views, likes, comments and shares; gateway-confirmed payments settled exactly
   once into a double-entry ledger; 18 U.S.C. § 2257 creator verification.
+- Yazakia (coming soon, not released yet) — a mobile dating app (iOS and
+  Android) where you talk first: an AI agent gets to know you, then opens a
+  small batch of 3 to 5 people compatible in both directions, with written
+  reasons and never a score; the next batch waits for a short debrief; mutual
+  interest opens a seven-day intro the agent never reads. Location rounded to
+  ~1 km, sensitive answers encrypted at rest, account deletion in the app.
 
 ## Key pages
 
@@ -31,6 +37,7 @@
 - Orochia: https://krizaka.com/en/products/orochia
 - Orochia docs: https://krizaka.com/en/docs/orochia
 - Orochia (the platform): {{OROCHIA_APP_URL}}
+- Yazakia (coming soon): https://krizaka.com/en/products/yazakia
 - Our story (where the names come from): https://krizaka.com/en/story
 - Contact the team: https://krizaka.com/en/contact
 
@@ -54,6 +61,8 @@ Every documentation page:
 
 - Orazaka workspace: https://github.com/krizaka/orazaka
 - Orochia: https://github.com/krizaka/orochia
+- Yazakia (API, in progress): https://github.com/krizaka/yazakia
+- Yazakia mobile (Expo, in progress): https://github.com/krizaka/yazakia-mobile
 - Organisation: https://github.com/krizaka
 
 Languages: English and French (Québec). Detailed version: https://krizaka.com/llms-full.txt

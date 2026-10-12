@@ -23,17 +23,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Krizaka — Open source. Closed to compromise.",
       description:
-        "Krizaka is a Montréal software studio building open-source platforms: Orazaka, sovereign on-premise AI (Law 25, GDPR), and Orochia, the video platform for independent creators.",
+        "Krizaka is a Montréal software studio building open-source platforms: Orazaka, sovereign on-premise AI (Law 25, GDPR), Orochia, the video platform for independent creators, and Yazakia, the dating app where you talk first (coming soon).",
     },
     fr: {
       title: "Krizaka — Open source. Fermé aux compromis.",
       description:
-        "Krizaka est un studio logiciel montréalais qui conçoit des plateformes open source : Orazaka, l'IA souveraine sur site (Loi 25, RGPD), et Orochia, la plateforme vidéo des créateurs indépendants.",
+        "Krizaka est un studio logiciel montréalais qui conçoit des plateformes open source : Orazaka, l'IA souveraine sur site (Loi 25, RGPD), Orochia, la plateforme vidéo des créateurs indépendants, et Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt).",
     },
   });
 }
 
-/* HOME — the organisation first: who we are, our two products, our know-how, our open source. */
+/* HOME — the organisation first: who we are, our products, our know-how, our open source. */
 export default async function Home({ params }: Props) {
   const { locale } = await params;
   const repositories = orgRepositories();

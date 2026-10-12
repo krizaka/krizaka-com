@@ -26,9 +26,11 @@ export interface NavLink<I extends NavIcon = NavIcon> {
 }
 
 export interface NavProduct {
-  id: "orazaka" | "orochia";
+  id: "orazaka" | "orochia" | "yazakia";
   name: string;
   href: string;
+  /** Not released yet: the menus and the home say so (site.nav.<id>.badge, "Coming soon"). */
+  soon?: boolean;
   /** Tagline and badge: messages → site.nav.<id>. */
   links: NavLink<ProductLinkId>[];
 }
@@ -54,6 +56,19 @@ export const NAV_PRODUCTS: NavProduct[] = [
       { href: "/products/orochia#architecture", icon: "architecture" },
       { href: "/products/orochia/demos", icon: "demo" },
       { href: "/products/orochia#guarantees", icon: "signature" },
+    ],
+  },
+  /* Coming soon: only what exists today — the teaser page and its sections. The demo and the documentation join the
+     four entries when the app and its docs exist (no dead link). */
+  {
+    id: "yazakia",
+    name: "Yazakia",
+    href: "/products/yazakia",
+    soon: true,
+    links: [
+      { href: "/products/yazakia", icon: "overview" },
+      { href: "/products/yazakia#architecture", icon: "architecture" },
+      { href: "/products/yazakia#matching", icon: "signature" },
     ],
   },
 ];

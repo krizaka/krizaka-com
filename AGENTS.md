@@ -64,12 +64,17 @@
   product whose entries read clearly: icon, label, short line, ≥ 44 px targets) and All products, Docs (NAV_DOCS + the
   hub), Open source, Our story, then Contact us, theme and language. It scrolls inside the viewport.
 - Each product wears its brand (`@krizaka/tokens/brands/scoped.css`): `/products/orazaka*` under `.brand-orazaka`
-  (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), the rest of the site Krizaka (ink + blue).
+  (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), `/products/yazakia*` under `.brand-yazakia`
+  (emerald → turquoise), the rest of the site Krizaka (ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); sections use `SectionBackdrop`
   (`@krizaka/ui/section-backdrop`) and the `bp-*` classes of `app/globals.css` (BRAND.md §4).
 - Brand marks come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui) on npm (`KrizakaLogo`,
-  `OrazakaLogo`, `OrochiaLogo`, `ProductLogo`) — the same package the products use, never a copy in this repo.
+  `OrazakaLogo`, `OrochiaLogo`, `YazakiaLogo`, `ProductLogo`) — the same package the products use, never a copy in this repo.
   Never a placeholder icon. A change to a mark is made in `krizaka-ui`, released, then adopted here.
+- **A product not released yet** (`soon: true` in `NAV_PRODUCTS`, today Yazakia) says so (`site.nav.<id>.badge`, "Coming
+  soon") and lists only the entries that exist — no demo or docs link before there is a demo or a doc (no dead link). The
+  home shows its animated mark where the recording will be (`PRODUCTS[].media` absent), never an invented screenshot,
+  profile or figure; no store button before the store listing exists.
 - Product recordings live in `public/assets/<product>/tour/<clip>.{webm,mp4,jpg}`, recorded on the
   real application; endpoints named by the Orochia journeys are verified against the generated
   architecture data at build time (`lib/journeys.ts`).
