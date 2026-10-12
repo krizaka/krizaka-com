@@ -49,8 +49,8 @@ export default async function OrazakaDemoPage({ params }: Props) {
         grid
         media={
           <div className="bp-media">
-            <div style={{ backgroundImage: `url(${tourSrc("creations")}.jpg)` }} />
-            <div style={{ backgroundImage: `url(${tourSrc("documents")}.jpg)` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("creations").poster})` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("documents").poster})` }} />
           </div>
         }
       >
@@ -93,7 +93,7 @@ export default async function OrazakaDemoPage({ params }: Props) {
       <section id="tour" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
         <SectionHeading eyebrow={t.tourEyebrow} title={t.tourTitle} align="center" reveal />
         <div {...reveal(1)}>
-          <ProductTour clips={DEMO_TOUR.map((id) => ({ id, src: tourSrc(id), ...t.tour[id] }))} frameLabel={t.frameLabel} />
+          <ProductTour clips={DEMO_TOUR.map((id) => ({ id, media: tourSrc(id), ...t.tour[id] }))} frameLabel={t.frameLabel} />
         </div>
       </section>
 
@@ -120,7 +120,7 @@ export default async function OrazakaDemoPage({ params }: Props) {
                   </ul>
                 </div>
                 <div {...reveal(2)}>
-                  <DemoClip src={tourSrc(clip)} label={t.tour[clip].caption} frameLabel={t.frameLabel} />
+                  <DemoClip media={tourSrc(clip)} label={t.tour[clip].caption} frameLabel={t.frameLabel} />
                 </div>
               </article>
             );

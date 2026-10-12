@@ -127,8 +127,8 @@ export default async function OrochiaPage({ params }: Props) {
         grid
         media={
           <div className="bp-media">
-            <div style={{ backgroundImage: `url(${tourSrc("alex-discover")}.jpg)` }} />
-            <div style={{ backgroundImage: `url(${tourSrc("elena-earnings")}.jpg)` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("alex-discover").poster})` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("elena-earnings").poster})` }} />
           </div>
         }
       >

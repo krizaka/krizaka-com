@@ -145,8 +145,8 @@ export default async function OrazakaPage({ params }: Props) {
         grid
         media={
           <div className="bp-media">
-            <div style={{ backgroundImage: `url(${tourSrc("creations")}.jpg)` }} />
-            <div style={{ backgroundImage: `url(${tourSrc("documents")}.jpg)` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("creations").poster})` }} />
+            <div style={{ backgroundImage: `url(${tourSrc("documents").poster})` }} />
           </div>
         }
       >
@@ -196,7 +196,7 @@ export default async function OrazakaPage({ params }: Props) {
         <SectionHeading eyebrow={t.tourEyebrow} title={t.tourTitle} align="center" reveal />
         <div {...reveal(1)}>
           <ProductTour
-            clips={TOUR.map((id) => ({ id, src: tourSrc(id), ...t.tour[id] }))}
+            clips={TOUR.map((id) => ({ id, media: tourSrc(id), ...t.tour[id] }))}
             frameLabel="orazaka · localhost"
           />
         </div>

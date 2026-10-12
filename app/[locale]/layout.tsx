@@ -6,6 +6,7 @@ import { I18nProvider } from "../components/I18nProvider";
 import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
+import { CDN_URL } from "@/lib/cdn";
 import "../globals.css";
 /* The page blocks of @krizaka/ui (AGENTS.md §4.1): their stylesheet, imported by package path from the layout — never by
    a relative @import inside globals.css, which the production build dropped (#74). */
@@ -159,6 +160,8 @@ export default async function RootLayout({
         {/* Applies the persisted theme (`kz-theme`), else the site's default — dark — before the first paint: no flash.
             The same defaultMode as the provider below. */}
         <ThemeScript defaultMode="dark" />
+        {/* The recordings, posters and gallery come from Bunny (lib/cdn.ts): open the connection early. */}
+        <link rel="preconnect" href={CDN_URL} />
         {/* Sitewide linked @graph: Organization · WebSite · SoftwareApplication.
             Page-scoped schema (BreadcrumbList, FAQPage) is emitted per page. */}
         <JsonLd data={buildSiteGraph(validatedLocale)} />
