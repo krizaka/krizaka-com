@@ -1,62 +1,98 @@
 "use client";
 
-/* /story — why Krizaka, Orazaka and Orochia exist, told like the poster of a 1990s arcade fighting game.
-   Hero: an arena in depth (the three clan lights crossing over a perspective floor, a few motes of light) under a
-   display title, then the select screen — three fighter cards, the mark in relief, a gauge that fills; choosing one
-   jumps to its stage. Stages 01–03: each bathes in its brand (SectionBackdrop `brand-<id>`), built and played
-   identically — fighter card, stage call, the why, then the special move as a combo card called by the bird in the
-   clan's corner. The boss: eight heads sealed one by one while its gauge drains. The flock. Bonus stage: everything
-   is open. Continue? — a real CRT that carries the closing call.
-   One strong entrance per section, then calm to read; reduced motion = a still, composed page. The motion and
-   visual contract lives in app/components/story/ArcadeNods.tsx and story.css. */
+/* /story — the story of a studio, told like the poster of a 1990s arcade fighting game. Krizaka is the house that tells
+   it (never a fighter beside its products): it forges the platform — the open building blocks — and the engine,
+   Orazaka; the products run on both. The page is the storytelling kit of @krizaka/ui (`variant="arcade"`, its styles in
+   @krizaka/ui/story.css); this file only lays it out.
+   Hero: the studio presents its products on a select screen (from lib/nav.ts: a product added there gets its stage
+   here as soon as its words exist). Stage 00: the house and its platform, with figures read at build. Then one stage per
+   product, played identically — fighter card, stage call, the why, the special move carried by the bird in its corner,
+   what it runs on. Bonus round: we use our own products (the table). The boss, the flock, everything open, Continue?
+   One strong entrance per section, then calm to read; reduced motion = a still, composed page. */
 
 import React from "react";
 import { ForwardIcon } from "@krizaka/icons";
-import { ProductLogo } from "@krizaka/ui";
+import { type BrandId, KrizakaLogo, ProductLogo } from "@krizaka/ui";
+import { Achievement, AchievementList, Emblem } from "@krizaka/ui/achievement";
+import { ChoiceGrid } from "@krizaka/ui/choice-grid";
+import { ContinuePrompt } from "@krizaka/ui/continue-prompt";
+import { GoalGauge } from "@krizaka/ui/goal-gauge";
+import { Landscape } from "@krizaka/ui/landscape";
+import { Mascot, Phoenix } from "@krizaka/ui/mascots";
+import { NumberTicker } from "@krizaka/ui/number-ticker";
+import { ProfileCard, StatGauge } from "@krizaka/ui/profile-card";
+import { PromiseCard } from "@krizaka/ui/promise-card";
+import { Scene, ScrollStage } from "@krizaka/ui/scroll-stage";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
+import { StageBanner } from "@krizaka/ui/stage-banner";
 import { cn } from "@krizaka/ui/cn";
+import Link from "next/link";
 import { contactHref } from "@/lib/contact";
+import { format } from "@/lib/i18n";
 import { useI18n } from "@/app/components/I18nProvider";
 import Rich from "@/app/components/Rich";
-import KrizakaLandscape from "@/app/components/illustrations/KrizakaLandscape";
-import { BirdPortrait } from "@/app/components/story/Flock";
-import { CHAPTERS, DUST, FLOCK, type ChapterId } from "@/lib/story";
-import {
-  ArcadeDirector,
-  BossGauge,
-  ClanSelect,
-  ComboCard,
-  ContinueScreen,
-  FighterCard,
-  StageCall,
-} from "@/app/components/story/ArcadeNods";
 import ButtonLink from "@/app/components/ButtonLink";
+import { DUST, ENGINE, flock, isFlockBird, KITS, STUDIO, storyProducts, type KitId, type StoryProduct } from "@/lib/story";
+import "./story.css";
 
-/* One mark per size, the same for the three clans: the stages must read alike. */
-const mark = (id: ChapterId, size: number) => <ProductLogo id={id} size={size} animated={false} />;
+export interface StoryFigures {
+  repos: number;
+  components: number;
+  packages: number;
+}
+export interface StoryKit {
+  id: Exclude<KitId, "engine">;
+  packages: { name: string; version?: string }[];
+}
 
-export default function StoryClient() {
+/* The emblems of the clans: the sword for the house that forges, the mirror for the engine that answers, the jewel for
+   the products it powers. */
+const emblemOf = (id: string) => (id === STUDIO.id ? "sword" : id === ENGINE ? "mirror" : "jewel");
+const mark = (id: string, size: number) => <ProductLogo id={id as BrandId} size={size} animated={false} />;
+const pad = (n: number) => String(n).padStart(2, "0");
+
+type Chapters = Record<string, { caption: string; title: string; body: string[]; move: string; stat: string } | undefined>;
+
+function Bird({ bird, size }: { bird: string; size: number }) {
+  if (bird === "phoenix") return <Phoenix size={size} animated={false} />;
+  return isFlockBird(bird) ? <Mascot bird={bird} mood="success" size={size} animated={false} /> : null;
+}
+
+export default function StoryClient({ figures, kits }: { figures: StoryFigures; kits: StoryKit[] }) {
   const { t, locale } = useI18n();
   const st = t.site.story;
-  const stageLabel = (i: number) => `${st.arcade.stage} 0${i + 1}`;
+  const chapters = st.chapters as Chapters;
+  const flockWords = st.flock as Record<string, { name: string; role: string; line: string } | undefined>;
+  const products = storyProducts((id) => Boolean(chapters[id]));
+  const birds = flock((id) => Boolean(flockWords[id]));
+  const stage = (n: number) => `${st.arcade.stage} ${pad(n)}`;
+  const navWords = t.site.nav as unknown as Record<string, { tagline: string; badge?: string } | undefined>;
+  const statusOf = (p: StoryProduct) => (p.soon ? navWords[p.id]?.badge : undefined);
+  const percent = (value: number) => <NumberTicker value={value} locale={locale} format={{ style: "percent" }} />;
+  const kitName = (id: KitId) => st.kits[id].name;
+  const birdName = (bird: string) => flockWords[bird] && `${flockWords[bird]!.name} · ${flockWords[bird]!.role}`;
 
   return (
-    <ArcadeDirector>
-      <SectionBackdrop as="header" className="st-hero brand-krizaka" grid data-arena>
+    <ScrollStage variant="arcade" className="st">
+      {/* ── Hero: the house presents its products ── */}
+      <SectionBackdrop as="header" className="st-hero brand-krizaka" grid data-kzs-scene="">
         <div data-backdrop-layer aria-hidden className="st-halos">
-          <span className="st-halo brand-krizaka" />
-          <span className="st-halo brand-orazaka" />
-          <span className="st-halo brand-orochia" />
+          {products.slice(0, 4).map((p, i) => (
+            <span key={p.id} className={cn("st-halo", "brand-" + p.id)} data-at={i} />
+          ))}
         </div>
         <div data-backdrop-layer aria-hidden className="st-dust">
           {DUST.map(([x, y, s], i) => (
-            <span key={i} className="st-mote an-loop" style={{ left: `${x}%`, top: `${y}%`, width: s, height: s, "--d": i } as React.CSSProperties} />
+            <span key={i} className="st-mote kzs-loop" style={{ left: `${x}%`, top: `${y}%`, width: s, height: s, "--d": i } as React.CSSProperties} />
           ))}
         </div>
-
         <div data-backdrop-layer aria-hidden className="st-hero-fade" />
 
         <div className="st-hero-inner">
+          <p className="st-presents">
+            <KrizakaLogo size={28} animated={false} />
+            <span>{st.intro.presents}</span>
+          </p>
           <p className="st-eyebrow">
             <span className="st-eyebrow-rule" aria-hidden />
             {st.intro.eyebrow}
@@ -67,118 +103,248 @@ export default function StoryClient() {
           </h1>
           <p className="st-lead">{st.intro.lead}</p>
 
-          <ClanSelect
-            aria={st.arcade.selectAria}
-            locale={locale}
+          <ChoiceGrid
+            className="st-select"
+            label={st.arcade.selectAria}
+            tag={format(st.arcade.teamTag, { count: products.length })}
+            caption={st.arcade.teamSynergy}
             prompt={st.arcade.selectPrompt}
-            head={{ tag: st.arcade.teamTag, synergy: st.arcade.teamSynergy }}
-            clans={CHAPTERS.map((ch, i) => ({
-              id: ch.id,
-              mark: mark(ch.id, 84),
-              clanName: st.arcade.clanNames[ch.id],
-              product: ch.name,
-              tagline: st.arcade.clans[ch.id],
-              stage: stageLabel(i),
-              stat: { label: st.arcade.stats[ch.id], value: ch.stat },
-            }))}
+            linkAs={Link}
+            items={products.map((p, i) => {
+              const words = chapters[p.id]!;
+              const status = statusOf(p);
+              return {
+                id: p.id,
+                brand: p.id,
+                badge: `P${i + 1}`,
+                eyebrow: p.id === ENGINE ? st.roles.engine : (status ?? st.roles.product),
+                icon: <Emblem kind={emblemOf(p.id)} size={13} />,
+                visual: mark(p.id, 84),
+                name: p.name,
+                title: navWords[p.id]?.tagline,
+                extra: p.stat !== undefined ? <StatGauge label={words.stat} value={p.stat * 100} figure={percent(p.stat)} /> : undefined,
+                meta: (
+                  <>
+                    {stage(i + 1)} <span aria-hidden>↓</span>
+                  </>
+                ),
+                href: `#st-${p.id}`,
+              };
+            })}
           />
         </div>
       </SectionBackdrop>
 
-      {CHAPTERS.map((ch, i) => (
-        <SectionBackdrop
-          key={ch.id}
-          className={cn("st-stage", "brand-" + ch.id)}
-          dome={false}
-          aria-labelledby={`st-${ch.id}`}
-          data-arena
-        >
-          <span className="st-ghost" aria-hidden>
-            0{i + 1}
-          </span>
-          <div className="st-chapter">
-            <div className="st-mark">
-              <FighterCard
-                id={ch.id}
-                mark={mark(ch.id, 120)}
-                clanName={st.arcade.clanNames[ch.id]}
-                roots={st.chapters[ch.id].roots}
-                stat={{ label: st.arcade.stats[ch.id], value: ch.stat }}
-                locale={locale}
-              />
-            </div>
-            <div className="st-text">
-              <StageCall stage={stageLabel(i)} name={ch.name} />
-              <div className="an-reveal">
-                <h2 id={`st-${ch.id}`} tabIndex={-1}>
-                  {st.chapters[ch.id].title}
-                </h2>
-                {st.chapters[ch.id].body.map((p) => (
-                  <p key={p}>{p}</p>
-                ))}
-              </div>
-              <ComboCard
-                label={st.arcade.specialMove}
-                move={st.chapters[ch.id].move}
-                combo={ch.combo}
-                bird={ch.bird}
-                corner={st.arcade.corner}
-                birdName={st.flock[ch.bird].name}
-                birdRole={st.flock[ch.bird].role}
-              />
-            </div>
+      {/* ── Stage 00: the house and its platform ── */}
+      <SectionBackdrop as="section" className="st-stage st-house brand-krizaka" dome={false} aria-labelledby="st-krizaka" data-kzs-scene="">
+        <span className="st-ghost" aria-hidden>
+          00
+        </span>
+        <div className="st-chapter">
+          <div className="st-mark">
+            <ProfileCard
+              nameAs="p"
+              visual={mark(STUDIO.id, 120)}
+              icon={<Emblem kind="sword" size={16} />}
+              name={st.studio.role}
+              statLabel={st.studio.stat}
+              figure={percent(1)}
+              caption={st.studio.caption}
+            />
           </div>
-        </SectionBackdrop>
-      ))}
-
-      <SectionBackdrop className="st-heads brand-orochia" direction="up" grid aria-label={st.headsAria} data-arena>
-        <div className="st-boss-banner">
-          <span className="st-boss-round an-boss-call" aria-hidden>
-            {st.arcade.finalRound}
-          </span>
-          <h2 className="st-boss-title">{st.arcade.orochiBossTitle}</h2>
-          <p className="st-boss-sub">{st.arcade.orochiBossSub}</p>
+          <div className="st-text">
+            <StageBanner stage={stage(0)} name={st.studio.label} />
+            <div data-kzs-reveal>
+              <h2 id="st-krizaka" tabIndex={-1}>
+                {st.studio.title}
+              </h2>
+              {st.studio.body.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+            <PromiseCard
+              label={st.arcade.specialMove}
+              promise={st.studio.move}
+              keys={STUDIO.combo}
+              bearer={<Bird bird={STUDIO.bird} size={48} />}
+              bearerLabel={st.arcade.corner}
+              bearerName={birdName(STUDIO.bird)}
+            />
+          </div>
         </div>
-        <BossGauge label={st.arcade.bossGauge} count={st.heads.length} />
 
-        <ol className="st-heads-grid">
-          {st.heads.map((h, i) => (
-            <li key={h.head} className="st-head-card" style={{ "--i": i } as React.CSSProperties}>
-              <div className="st-vat-header">
-                <span className="st-vat text-fg-accent">
-                  {st.arcade.vatLabel} 0{i + 1}
-                </span>
-                <span className="st-vat-tag an-vat-stamp">{st.arcade.sealedBadge}</span>
+        <div className="st-platform" data-kzs-reveal style={{ "--kzs-delay": ".9s" } as React.CSSProperties}>
+          <h3 className="st-platform-title">{st.studio.platformTitle}</h3>
+          <p className="st-platform-lead">{st.studio.platformLead}</p>
+          <dl className="st-figures" aria-label={st.studio.figuresAria}>
+            {(["repos", "components", "packages"] as const).map((k) => (
+              <div key={k}>
+                <dt>{st.studio.figures[k]}</dt>
+                <dd>
+                  <NumberTicker value={figures[k]} locale={locale} />
+                </dd>
               </div>
-              <span className="st-head">{h.head}</span>
-              <span className="st-answer">{h.answer}</span>
-            </li>
-          ))}
-        </ol>
+            ))}
+          </dl>
+          <ul className="st-kits" aria-label={st.studio.kitsAria}>
+            {kits.map((k) => (
+              <li key={k.id} className="st-kit">
+                <span className="st-kit-name">{st.kits[k.id].name}</span>
+                <span className="st-kit-line">{st.kits[k.id].line}</span>
+                <span className="st-kit-pkgs">
+                  {k.packages.map((p) => (
+                    <code key={p.name}>
+                      {p.name}
+                      {p.version && <span> {p.version}</span>}
+                    </code>
+                  ))}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </SectionBackdrop>
 
-      <section className="st-flock" aria-labelledby="st-flock" data-arena>
-        <p className="st-num">04 · {st.flockLabel}</p>
+      {/* ── One stage per product: the engine first, then the products it powers ── */}
+      {products.map((p, i) => {
+        const words = chapters[p.id]!;
+        const status = statusOf(p);
+        return (
+          <SectionBackdrop key={p.id} as="section" className={cn("st-stage", "brand-" + p.id)} dome={false} aria-labelledby={`st-${p.id}`} data-kzs-scene="">
+            <span className="st-ghost" aria-hidden>
+              {pad(i + 1)}
+            </span>
+            <div className="st-chapter">
+              <div className="st-mark">
+                <ProfileCard
+                  nameAs="p"
+                  visual={mark(p.id, 120)}
+                  icon={<Emblem kind={emblemOf(p.id)} size={16} />}
+                  name={p.id === ENGINE ? st.roles.engine : (status ?? st.roles.product)}
+                  statLabel={p.stat !== undefined ? words.stat : undefined}
+                  value={(p.stat ?? 1) * 100}
+                  figure={p.stat !== undefined ? percent(p.stat) : undefined}
+                  caption={words.caption}
+                />
+              </div>
+              <div className="st-text">
+                <StageBanner stage={stage(i + 1)} name={p.name} />
+                <div data-kzs-reveal>
+                  <h2 id={`st-${p.id}`} tabIndex={-1}>
+                    {words.title}
+                  </h2>
+                  {words.body.map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                  <p className="st-runs">
+                    <span className="st-runs-label">{st.runsOn}</span>
+                    {p.runsOn.map((k) => (
+                      <span key={k} className="st-chip">
+                        {kitName(k)}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+                <PromiseCard
+                  label={st.arcade.specialMove}
+                  promise={words.move}
+                  keys={p.combo}
+                  bearer={<Bird bird={p.bird} size={48} />}
+                  bearerLabel={st.arcade.corner}
+                  bearerName={birdName(p.bird)}
+                />
+              </div>
+            </div>
+          </SectionBackdrop>
+        );
+      })}
+
+      {/* ── Bonus round: we use our own products ── */}
+      <Scene className="st-ours" aria-labelledby="st-ours">
+        <StageBanner stage={st.ours.label} name="Krizaka" />
+        <div data-kzs-reveal>
+          <h2 id="st-ours">{st.ours.title}</h2>
+          <p className="st-ours-lead">{st.ours.lead}</p>
+        </div>
+        <div className="st-table-wrap" data-kzs-reveal style={{ "--kzs-delay": ".8s" } as React.CSSProperties}>
+          <table className="st-table">
+            <caption>{st.ours.caption}</caption>
+            <thead>
+              <tr>
+                <th scope="col">{st.ours.product}</th>
+                {KITS.map((k) => (
+                  <th key={k} scope="col">
+                    {kitName(k)}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {products.map((p) => (
+                <tr key={p.id} className={"brand-" + p.id}>
+                  <th scope="row">
+                    <span className="st-table-product">
+                      {mark(p.id, 22)}
+                      {p.name}
+                    </span>
+                  </th>
+                  {KITS.map((k) => {
+                    const engine = k === "engine" && p.id === ENGINE;
+                    const yes = engine || p.runsOn.includes(k);
+                    return (
+                      <td key={k} data-yes={yes ? "" : undefined}>
+                        {yes ? (
+                          <>
+                            <span aria-hidden className="st-dot" />
+                            <span className="st-cell">{engine ? st.ours.isEngine : st.ours.yes}</span>
+                          </>
+                        ) : (
+                          <span className="st-cell st-no">{st.ours.no}</span>
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Scene>
+
+      {/* ── The boss: eight heads sealed one by one while its gauge drains ── */}
+      <SectionBackdrop as="section" className="st-heads brand-orochia" direction="up" grid aria-label={st.headsAria} data-kzs-scene="">
+        <StageBanner size="lg" titleAs="h2" stage={st.arcade.finalRound} title={st.arcade.orochiBossTitle} subtitle={st.arcade.orochiBossSub} />
+        <GoalGauge className="st-boss-gauge" label={st.arcade.bossGauge} segments={st.heads.length} value={0} mode="drain" valueText={`0 / ${st.heads.length}`} />
+        <AchievementList>
+          {st.heads.map((h, i) => (
+            <Achievement key={h.head} eyebrow={`${st.arcade.vatLabel} ${pad(i + 1)}`} badge={st.arcade.sealedBadge} replaced={h.head} title={h.answer} />
+          ))}
+        </AchievementList>
+      </SectionBackdrop>
+
+      {/* ── The flock: one promise per bird ── */}
+      <Scene className="st-flock" aria-labelledby="st-flock">
+        <p className="st-num">{st.flockLabel}</p>
         <h2 id="st-flock">{st.flockTitle}</h2>
         <p className="st-flock-lead">{st.flockLead}</p>
         <div className="st-birds">
-          {FLOCK.map((id, i) => (
-            <article key={id} className="st-bird an-bird-in" style={{ "--i": i } as React.CSSProperties}>
-              <span className="st-bird-portrait">
-                <BirdPortrait id={id} />
+          {birds.map((id, i) => (
+            <article key={id} className="st-bird" data-kzs-reveal style={{ "--kzs-delay": `${i * 0.08}s` } as React.CSSProperties}>
+              <span className="st-bird-portrait" aria-hidden>
+                {id === "phoenix" ? <Phoenix size={92} animated={false} /> : isFlockBird(id) && <Mascot bird={id} mood="welcome" tone="own" size={92} />}
               </span>
-              <h3>{st.flock[id].name}</h3>
-              <p className="st-role">{st.flock[id].role}</p>
-              <p>{st.flock[id].line}</p>
+              <h3>{flockWords[id]!.name}</h3>
+              <p className="st-role">{flockWords[id]!.role}</p>
+              <p>{flockWords[id]!.line}</p>
             </article>
           ))}
         </div>
-      </section>
+      </Scene>
 
-      {/* Bonus stage: the proof. The packages and repositories themselves are listed on /open-source. */}
-      <SectionBackdrop className="st-open brand-krizaka" dome={false} aria-labelledby="st-open" data-arena>
-        <StageCall stage={`05 · ${st.open.label}`} name="Open source" />
-        <div className="an-reveal">
+      {/* ── Bonus stage: everything is open (the list itself lives on /open-source) ── */}
+      <SectionBackdrop as="section" className="st-open brand-krizaka" dome={false} aria-labelledby="st-open" data-kzs-scene="">
+        <StageBanner stage={st.open.label} name="Open source" />
+        <div data-kzs-reveal>
           <h2 id="st-open">{st.open.title}</h2>
           {st.open.body.map((p) => (
             <p key={p}>{p}</p>
@@ -189,21 +355,26 @@ export default function StoryClient() {
         </div>
       </SectionBackdrop>
 
+      {/* ── Continue? — the cabinet carries the closing call ── */}
       <section className="st-closing" aria-labelledby="st-closing">
-        <ContinueScreen
-          label={st.arcade.continue}
-          insertCoin={st.arcade.insertCoin}
-          coinEntry={st.arcade.coinEntry}
-          creditLabel={st.arcade.creditLabel}
-          cabinetLabel={st.arcade.cabinetLabel}
-          playerStart={st.arcade.playerStart}
-          restartBtn={st.arcade.restartBtn}
+        <ContinuePrompt
+          variant="arcade"
+          brand="krizaka"
+          caption={st.arcade.cabinetLabel}
+          highlight={st.arcade.insertCoin}
+          hint={st.arcade.coinEntry}
+          status={st.arcade.creditLabel}
+          title={st.arcade.continue}
+          countdown={{ from: 9, to: 7 }}
+          actionKey={st.arcade.playerStart}
+          actionLabel={st.arcade.restartBtn}
+          onAction={() => window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" })}
         >
-          <h2 id="st-closing" className="an-crt-heading">
+          <h2 id="st-closing" className="st-crt-heading">
             {st.closing.title}
           </h2>
-          <p className="an-crt-body">{st.closing.body}</p>
-          <div className="an-crt-ctas">
+          <p className="st-crt-body">{st.closing.body}</p>
+          <div className="st-crt-ctas">
             <ButtonLink href="/products" variant="primary" size="lg">
               {st.ctaProducts} <ForwardIcon size={15} />
             </ButtonLink>
@@ -211,11 +382,11 @@ export default function StoryClient() {
               {st.ctaContact}
             </ButtonLink>
           </div>
-        </ContinueScreen>
+        </ContinuePrompt>
         <div className="st-landscape" aria-hidden>
-          <KrizakaLandscape relative={false} />
+          <Landscape animated={false} />
         </div>
       </section>
-    </ArcadeDirector>
+    </ScrollStage>
   );
 }

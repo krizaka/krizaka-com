@@ -24,3 +24,7 @@ export function publishedVersion(coordinate: string): string | undefined {
 export function withVersions(code: string): string {
   return code.replace(/\{\{v:([^}]+)\}\}/g, (_, coordinate: string) => publishedVersion(coordinate.trim()) ?? "LATEST");
 }
+
+/** How many packages and artifacts Krizaka publishes (npm @krizaka scope + com.krizaka on Maven Central); 0 when the
+    registries could not be reached at build. */
+export const publishedCount = (): number => Object.keys(versions.npm ?? {}).length + Object.keys(versions.maven ?? {}).length;
