@@ -1456,9 +1456,18 @@
       "ask": "Demander dans les Discussions",
       "write": "Nous écrire"
     },
+    "notFound": {
+      "title": "Cette page a pris une autre route",
+      "text": "L'adresse a peut-être changé, ou la page a rejoint la documentation. Repartez de l'une de celles-ci.",
+      "label": "Pour revenir",
+      "home": "Accueil",
+      "docs": "Documentation",
+      "contact": "Contact"
+    },
     "legal": {
       "back": "Retour à l'accueil",
       "updated": "Dernière mise à jour : octobre 2026",
+      "toc": "Sur cette page",
       "privacy": {
         "metaTitle": "Politique de confidentialité — Krizaka",
         "metaDescription": "Ce que krizaka.com collecte (très peu), pourquoi, et vos droits selon la Loi 25 du Québec et le RGPD.",
@@ -3335,6 +3344,20 @@
       "open": "Ouvrir",
       "platform": "Plateforme",
       "products": "Produits",
+      "search": "Chercher dans la documentation",
+      "try": "Essayez :",
+      "collections": "Collections",
+      "quickstarts": "Démarrer en une ligne",
+      "popular": "Les plus lues",
+      "whatsNew": "Nouveau dans les registres",
+      "promiseLabel": "La promesse du hibou",
+      "promise": "Chaque page est générée depuis le code qu'elle documente, ou synchronisée depuis son dépôt — quand le code change, la page change.",
+      "new": {
+        "ui": "Krizaka UI — composants, blocs, mises en page",
+        "charts": "Krizaka charts — des graphiques prêts pour les applications",
+        "cli": "La CLI d'Orazaka",
+        "bom": "Le BOM de Krizaka Java"
+      },
       "shortcuts": {
         "title": "Pour commencer",
         "items": {

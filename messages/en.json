@@ -1456,9 +1456,18 @@
       "ask": "Ask in Discussions",
       "write": "Write to us"
     },
+    "notFound": {
+      "title": "This page took another road",
+      "text": "The address may have changed, or the page moved into the documentation. Start again from one of these.",
+      "label": "Ways back",
+      "home": "Home",
+      "docs": "Documentation",
+      "contact": "Contact"
+    },
     "legal": {
       "back": "Back to home",
       "updated": "Last updated: October 2026",
+      "toc": "On this page",
       "privacy": {
         "metaTitle": "Privacy Policy — Krizaka",
         "metaDescription": "What krizaka.com collects (very little), why, and your rights under Quebec's Law 25 and the GDPR.",
@@ -3335,6 +3344,20 @@
       "open": "Open",
       "platform": "Platform",
       "products": "Products",
+      "search": "Search the documentation",
+      "try": "Try:",
+      "collections": "Collections",
+      "quickstarts": "Start in one line",
+      "popular": "Most read",
+      "whatsNew": "What's new in the registries",
+      "promiseLabel": "The owl's promise",
+      "promise": "Every page here is generated from the code it documents, or synced from its repository — when the code changes, the page does.",
+      "new": {
+        "ui": "Krizaka UI — components, blocks, layouts",
+        "charts": "Krizaka charts — ready-made charts for the apps",
+        "cli": "The Orazaka CLI",
+        "bom": "The Krizaka Java BOM"
+      },
       "shortcuts": {
         "title": "Start here",
         "items": {

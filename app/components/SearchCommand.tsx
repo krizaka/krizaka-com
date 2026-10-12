@@ -46,8 +46,14 @@ export function SearchCommand({
         setOpen((prev) => !prev);
       }
     };
+    // Any button of a page can open it (the docs hub's search): `window.dispatchEvent(new Event("kz:search"))`.
+    const onOpen = () => setOpen(true);
     window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
+    window.addEventListener("kz:search", onOpen);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("kz:search", onOpen);
+    };
   }, [setOpen]);
 
   const targets = [
