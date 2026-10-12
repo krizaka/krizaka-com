@@ -19,7 +19,7 @@ import { ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
 import { format } from "@krizaka/i18n";
 import { GitHubMark } from "../brand/GitHubMark";
-import KrizakaLandscape from "../illustrations/KrizakaLandscape";
+import { Landscape } from "@krizaka/ui/landscape";
 import RotatingWord from "./RotatingWord";
 import HeroProductMedia from "./HeroProductMedia";
 import { getDictionary } from "@/lib/i18n";
@@ -43,7 +43,7 @@ export default function OrgHero({ locale, repositoryCount }: { locale: string; r
       <HeroProductMedia />
       <div data-backdrop-layer aria-hidden className="org-hero-fade" />
       <div data-backdrop-layer aria-hidden className="org-hero-horizon" data-parallax="">
-        <KrizakaLandscape relative={false} />
+        <Landscape />
       </div>
 
       <div className="org-hero-inner">

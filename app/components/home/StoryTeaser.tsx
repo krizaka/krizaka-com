@@ -5,8 +5,9 @@
 import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
 import { useI18n } from "../I18nProvider";
-import { BirdPortrait, FlockStyles } from "../story/Flock";
-import { FLOCK } from "@/lib/story";
+import { Mascot, Phoenix } from "@krizaka/ui/mascots";
+import Rich from "../Rich";
+import { flock, isFlockBird } from "@/lib/story";
 import { reveal } from "@/lib/motion";
 import { Section, SectionHeading } from "@krizaka/ui/page";
 
@@ -16,14 +17,13 @@ export default function StoryTeaser() {
   const teaser = t.site.home.storyTeaser;
   return (
     <Section className="kz-teaser" aria-labelledby="teaser-title">
-      <FlockStyles />
       <div className="kz-teaser-flock" aria-hidden {...reveal()}>
-        {FLOCK.map((id) => (
-          <BirdPortrait key={id} id={id} size={64} />
-        ))}
+        {flock((id) => id in st.flock).map((id) =>
+          id === "phoenix" ? <Phoenix key={id} size={64} animated={false} /> : isFlockBird(id) && <Mascot key={id} bird={id} mood="welcome" tone="own" size={64} />,
+        )}
       </div>
       <div {...reveal(1)}>
-        <SectionHeading id="teaser-title" eyebrow={st.intro.eyebrow} title={st.intro.title} lead={teaser.sub} align="center" />
+        <SectionHeading id="teaser-title" eyebrow={st.intro.eyebrow} title={<Rich text={st.intro.title} />} lead={teaser.sub} align="center" />
         <Link href="/story" prefetch={false} className="kz-link-strong">
           {teaser.cta} <ForwardIcon size={15} />
         </Link>

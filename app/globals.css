@@ -637,12 +637,6 @@ body {
 
 
 
-/* Story page — the phoenix floats, its core breathes. */
-@keyframes phx-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-.phx-float { animation: phx-float 5s ease-in-out infinite; }
-@keyframes phx-core { 0%, 100% { opacity: .8; } 50% { opacity: 1; } }
-.phx-core { animation: phx-core 2.8s ease-in-out infinite; }
-@media (prefers-reduced-motion: reduce) { .phx-float, .phx-core { animation: none !important; } }
 
 /* ═══════════════════════════════════════════════════════════════════
    DOCUMENTATION (/docs — Fumadocs + live previews)

@@ -627,39 +627,114 @@
     "story": {
       "intro": {
         "eyebrow": "Notre histoire",
-        "title": "Trois clans. Un seul combat : <b>ce qui est à vous reste à vous.</b>",
-        "lead": "Krizaka est né d'un refus. Vos données ne devraient pas avoir à quitter la maison pour être utiles. Un créateur ne devrait pas laisser une fortune à une plateforme pour être payé. Et personne ne devrait avoir à croire un logiciel sur parole. Alors nous forgeons les nôtres — au grand jour, ligne par ligne — et nous leur avons donné le nom des légendes qui nous ont appris ce que coûte la confiance."
+        "presents": "Krizaka présente",
+        "title": "Un studio. Un moteur. <b>Tous les produits sur les mêmes briques.</b>",
+        "lead": "Krizaka est un studio né d'un refus. Vos données ne devraient pas avoir à quitter la maison pour être utiles, un créateur ne devrait pas laisser une fortune à une plateforme pour être payé, et personne ne devrait croire un logiciel sur parole. Alors nous forgeons les briques au grand jour, nous construisons dessus un moteur d'IA — Orazaka — et nous livrons nos produits sur les deux. Nous utilisons ce que nous fabriquons, tous les jours."
+      },
+      "studio": {
+        "label": "La maison",
+        "role": "Le studio",
+        "caption": "kris + zaka (坂)",
+        "title": "La lame pliée au grand jour",
+        "body": [
+          "Le kris est une lame forgée par couches : le fer replié sur le fer, encore et encore, jusqu'à ce qu'un motif monte dans l'acier. Zaka, c'est la pente que l'on gravit, un pas après l'autre. Krizaka, c'est la forge à mi-pente.",
+          "Pourquoi une forge ? Parce que les logiciels qu'on nous demandait de croire étaient devenus des boîtes noires — des données expédiées dans le nuage d'un autre, des revenus soumis aux règles d'un autre, un code que personne ne pouvait lire. Nous avons décidé de construire l'inverse, et de le prouver plutôt que de le promettre.",
+          "Rien ne sort de la forge sans avoir été replié, éprouvé et documenté, et tout ce qui en sort est open source, sous Apache-2.0. Inutile de nous croire : lisez le motif dans l'acier."
+        ],
+        "move": "Le prouver, pas le promettre.",
+        "stat": "Code au grand jour",
+        "platformTitle": "La plateforme : les briques sur lesquelles tiennent tous les produits",
+        "platformLead": "Open source, publiées, versionnées — et utilisées d'abord par nos propres produits. Si une brique n'est pas assez bonne pour Orochia, elle ne l'est pas pour vous.",
+        "figures": {
+          "repos": "dépôts publics",
+          "components": "composants dans Krizaka UI",
+          "packages": "paquets publiés"
+        },
+        "figuresAria": "Le studio en chiffres",
+        "kitsAria": "Les briques de la plateforme"
+      },
+      "kits": {
+        "ui": {
+          "name": "Krizaka UI",
+          "line": "Composants web et natifs, un seul langage visuel"
+        },
+        "foundations": {
+          "name": "Tokens, icônes, intl",
+          "line": "Couleurs, pictogrammes, montants et dates"
+        },
+        "realtime": {
+          "name": "Temps réel & push",
+          "line": "Mises à jour en direct et notifications mobiles"
+        },
+        "java": {
+          "name": "Kit plateforme Java",
+          "line": "Utilisateurs, facturation et notifications sur Spring"
+        },
+        "engine": {
+          "name": "Orazaka",
+          "line": "Le moteur d'IA souverain"
+        }
+      },
+      "roles": {
+        "engine": "Le moteur",
+        "product": "Produit"
+      },
+      "runsOn": "Tourne sur",
+      "ours": {
+        "label": "Manche bonus",
+        "title": "Nous utilisons nos propres produits.",
+        "lead": "Chaque produit tourne sur les mêmes briques et, quand il a besoin d'intelligence, sur Orazaka. Le tableau en est la preuve — lu dans les manifestes des produits eux-mêmes.",
+        "caption": "Ce sur quoi tourne chaque produit",
+        "product": "Produit",
+        "yes": "Oui",
+        "no": "Non",
+        "isEngine": "C'est le moteur"
       },
       "chapters": {
-        "krizaka": {
-          "roots": "kris + zaka (坂)",
-          "title": "La lame pliée au grand jour",
-          "body": [
-            "Le kris est une lame forgée par couches : le fer replié sur le fer, encore et encore, jusqu'à ce qu'un motif monte dans l'acier. Zaka, c'est la pente que l'on gravit, un pas après l'autre. Krizaka, c'est la forge à mi-pente.",
-            "Pourquoi une forge ? Parce que les logiciels qu'on nous demandait de croire étaient devenus des boîtes noires — des données expédiées dans le nuage d'un autre, des revenus soumis aux règles d'un autre, un code que personne ne pouvait lire. Nous avons décidé de construire l'inverse, et de le prouver plutôt que de le promettre.",
-            "Rien ne sort de la forge sans avoir été replié, éprouvé et documenté, et tout ce qui en sort est open source, sous Apache-2.0. Inutile de nous croire : lisez le motif dans l'acier."
-          ],
-          "move": "Le prouver, pas le promettre."
-        },
         "orazaka": {
-          "roots": "ōrāre (parler) + zaka",
+          "caption": "ōrāre (parler) + zaka",
           "title": "L'oracle qui ne quitte jamais la maison",
           "body": [
             "Ōrāre : parler, demander — la racine latine d'oracle. Dans les vieilles histoires, on montait jusqu'à l'oracle avec sa question, et on lui confiait quelque chose d'intime.",
             "Aujourd'hui, interroger une IA revient souvent à descendre ses contrats, ses fichiers et ses idées dans la vallée d'un autre. Pour beaucoup d'équipes, c'est rédhibitoire : alors elles s'en passent. Nous pensons que c'est le mauvais marché.",
-            "Orazaka installe l'oracle sur votre colline : des réponses tirées de vos propres documents, des visuels générés sur vos machines, des Studios qui prennent le travail répétitif — sur votre infrastructure, selon vos règles. Vos questions et vos réponses restent à la maison, et chaque ligne qui les touche est publique : votre équipe sécurité vérifie au lieu de croire."
+            "Orazaka installe l'oracle sur votre colline : des réponses tirées de vos propres documents, des visuels générés sur vos machines, des Studios qui prennent le travail répétitif — sur votre infrastructure, selon vos règles. Vos questions et vos réponses restent à la maison, et chaque ligne qui les touche est publique : votre équipe sécurité vérifie au lieu de croire.",
+            "C'est aussi le moteur qu'appellent les produits : les conversations de Yazakia tournent dessus, comme tous les produits qui ont besoin d'intelligence sans rien envoyer ailleurs."
           ],
-          "move": "Vos données ne quittent jamais la maison."
+          "move": "Vos données ne quittent jamais la maison.",
+          "stat": "Données gardées chez vous"
         },
         "orochia": {
-          "roots": "Yamata no Orochi",
+          "caption": "Yamata no Orochi",
           "title": "Huit têtes, un seul pacte : le créateur garde 90 %",
           "body": [
             "Yamata no Orochi est le serpent à huit têtes des plus anciennes chroniques du Japon. Les joueurs d'une certaine génération l'ont croisé ailleurs : au bout d'un tournoi d'arcade des années 1990, scellé par trois clans et leurs trésors sacrés.",
             "L'économie des créateurs a son propre serpent : des commissions lourdes, des versements que personne ne peut vérifier, des liens qui fuient, des comptes fermés du jour au lendemain. Les créateurs font le travail et portent le risque — et trop souvent, ils sont payés les derniers.",
             "Orochia est notre réponse : une plateforme vidéo où le créateur garde 90 % de chaque vente, où chaque mouvement est écrit une seule fois dans un grand livre en partie double, et qui tourne entière sur les serveurs de votre choix. Dans le mythe, Susanoo ne gagne pas par la force : il dispose huit cuves, une pour chaque tête. Orochia pose une réponse devant chacune."
           ],
-          "move": "90 % au créateur. Sur chaque vente."
+          "move": "90 % au créateur. Sur chaque vente.",
+          "stat": "Part du créateur"
+        },
+        "yazakia": {
+          "caption": "L'app de rencontre où l'on parle d'abord",
+          "title": "Parler d'abord. Se choisir dans les deux sens.",
+          "body": [
+            "Les applis de rencontre ont fait des gens un catalogue : on glisse, on note, on recommence. On finit par juger des photos à minuit, et par être jugé de la même façon.",
+            "Yazakia commence par une conversation plutôt qu'un formulaire. Un agent propulsé par Orazaka apprend à vous connaître avec vos mots, puis ouvre un petit lot de trois à cinq personnes compatibles dans les deux sens — avec les raisons en mots, jamais un score.",
+            "Le lot suivant attend votre retour. Pas de swipe, pas de catalogue, pas de fil sans fin : moins de personnes, mieux choisies, et personne que vous n'ayez voulu rencontrer tous les deux."
+          ],
+          "move": "Dans les deux sens, ou pas du tout.",
+          "stat": "Mises en relation réciproques"
+        },
+        "yororis": {
+          "caption": "Un espace d'écoute avec un visage et une voix",
+          "title": "Une présence qui s'arrête.",
+          "body": [
+            "Certains soirs, on a besoin de mettre des mots sur ce qu'on porte, d'entendre une question qu'on ne s'était pas posée, et de repartir avec une phrase claire.",
+            "Yororis est un espace d'écoute avec un visage et une voix : une présence IA qui le dit, écoute, reformule, pose une question — et s'arrête. Un moment a une fin, la journée aussi : les limites sont le produit.",
+            "Il est propulsé par le pack bien-être d'Orazaka : les gardes vivent dans le moteur et ce que vous dites reste sur nos machines. Nous construisons Yororis en public et nous étudions son cadre — juridique, éthique, clinique — avant toute mise à disposition. Rien n'est en ligne, rien n'est offert, et il n'y a pas de date."
+          ],
+          "move": "Une présence qui s'arrête.",
+          "stat": "En construction"
         }
       },
       "heads": [
@@ -704,8 +779,8 @@
         },
         "owl": {
           "name": "Le hibou",
-          "role": "Celui qui écoute",
-          "line": "Entend chaque question et la garde à la maison."
+          "role": "La lectrice",
+          "line": "Lit vos documents et garde chaque question à la maison."
         },
         "pigeon": {
           "name": "Le pigeon voyageur",
@@ -726,11 +801,21 @@
           "name": "Le phénix",
           "role": "Les deux flammes",
           "line": "Violette et dorée — deux flammes rivales de la légende d'arcade, qui volent ensemble. Du code qui renaît à chaque commit."
+        },
+        "lovebird": {
+          "name": "L'inséparable",
+          "role": "L'entremetteur",
+          "line": "N'ouvre une porte que si les deux côtés le veulent."
+        },
+        "crane": {
+          "name": "La grue",
+          "role": "L'écoute",
+          "line": "Se tient immobile, vous écoute jusqu'au bout, puis vous rend à votre vie."
         }
       },
       "closing": {
         "title": "Premier round terminé. Continuer ?",
-        "body": "Nous n'avons pas encore de vitrine à trophées à vous montrer. Nous avons mieux pour commencer : deux produits que vous pouvez faire tourner aujourd'hui, chaque ligne au grand jour, et des promesses écrites là où vous pouvez nous les rappeler. Les prochains rounds se jouent avec ceux qui les utilisent — essayez-les, lisez-les, ou écrivez-nous."
+        "body": "Nous n'avons pas encore de vitrine à trophées. Nous avons mieux pour commencer : un moteur et des produits que vous pouvez faire tourner aujourd'hui, d'autres en route, chaque ligne au grand jour, et des promesses écrites là où vous pouvez nous les rappeler. Les prochaines manches se jouent avec celles et ceux qui les utilisent — essayez-les, lisez-les, ou écrivez-nous."
       },
       "headsAria": "Les huit têtes",
       "flockLabel": "La volée",
@@ -741,8 +826,6 @@
       "arcade": {
         "continue": "Continuer ?",
         "insertCoin": "Insérer une pièce",
-        "teamTag": "Combat d'équipe · 3 vs 3",
-        "teamSynergy": "Les Trois Trésors Sacrés",
         "stage": "Étape",
         "orochiBossTitle": "Yamata no Orochi",
         "orochiBossSub": "Les huit têtes de l'économie des créateurs — huit réponses, scellées dans le code",
@@ -750,31 +833,17 @@
         "vatLabel": "Cuve",
         "creditLabel": "Crédit 01",
         "restartBtn": "Retour à l'écran de sélection",
-        "clans": {
-          "krizaka": "la forge",
-          "orazaka": "l'IA souveraine",
-          "orochia": "la vidéo des créateurs"
-        },
-        "clanNames": {
-          "krizaka": "Clan du sabre",
-          "orazaka": "Clan du miroir",
-          "orochia": "Clan du joyau"
-        },
-        "selectAria": "Les trois clans : Krizaka, Orazaka et Orochia",
-        "power": "Énergie",
         "finalRound": "Dernier round",
         "bossGauge": "Têtes restantes",
         "cabinetLabel": "Krizaka · borne d'arcade",
         "coinEntry": "1 crédit = 1 histoire",
         "playerStart": "Start 1J",
         "specialMove": "Coup spécial",
-        "selectPrompt": "Choisissez votre clan",
         "corner": "Dans son coin",
-        "stats": {
-          "krizaka": "Code au grand jour",
-          "orazaka": "Données gardées chez vous",
-          "orochia": "Part du créateur"
-        }
+        "teamTag": "Combat d'équipe · {count} produits",
+        "teamSynergy": "Un studio · un moteur · les mêmes briques",
+        "selectPrompt": "Choisissez un produit",
+        "selectAria": "Les produits du studio"
       },
       "open": {
         "label": "Étape bonus",

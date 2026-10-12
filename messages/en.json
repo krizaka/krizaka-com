@@ -627,39 +627,114 @@
     "story": {
       "intro": {
         "eyebrow": "Our story",
-        "title": "Three clans. One fight: <b>what's yours stays yours.</b>",
-        "lead": "Krizaka began with a refusal. Your data shouldn't have to leave home to be useful. A creator shouldn't have to hand a fortune to a platform to get paid. And nobody should have to take software on faith. So we forge our own — in the open, line by line — and we named it after the legends that taught us what trust costs."
+        "presents": "Krizaka presents",
+        "title": "One studio. One engine. <b>Every product on the same blocks.</b>",
+        "lead": "Krizaka is a studio built on one refusal. Your data shouldn't have to leave home to be useful, a creator shouldn't hand a fortune to a platform to get paid, and nobody should have to take software on faith. So we forge the building blocks in the open, build an AI engine on them — Orazaka — and ship our products on both. We use what we make, every day."
+      },
+      "studio": {
+        "label": "The house",
+        "role": "The studio",
+        "caption": "kris + zaka (坂)",
+        "title": "The blade folded in the open",
+        "body": [
+          "A kris is a blade forged in layers: iron folded onto iron, again and again, until a pattern rises in the steel. Zaka is the slope you climb, one step at a time. Krizaka is the forge halfway up that hill.",
+          "Why a forge? Because the software we were asked to trust had turned into a black box — data shipped to someone else's cloud, income routed through someone else's rules, code nobody outside could read. We set out to build the opposite, and to prove it rather than promise it.",
+          "Nothing leaves the forge unfolded, untested or undocumented, and everything that leaves it is open source under Apache-2.0. You don't have to believe us: read the pattern in the steel."
+        ],
+        "move": "Prove it, don't promise it.",
+        "stat": "Code in the open",
+        "platformTitle": "The platform: the blocks every product stands on",
+        "platformLead": "Open source, published, versioned — and used by our own products first. If a block isn't good enough for Orochia, it isn't good enough for you.",
+        "figures": {
+          "repos": "public repositories",
+          "components": "components in Krizaka UI",
+          "packages": "published packages"
+        },
+        "figuresAria": "The studio in figures",
+        "kitsAria": "The platform's blocks"
+      },
+      "kits": {
+        "ui": {
+          "name": "Krizaka UI",
+          "line": "Web and native components, one design language"
+        },
+        "foundations": {
+          "name": "Tokens, icons, intl",
+          "line": "Colours, glyphs, money and dates"
+        },
+        "realtime": {
+          "name": "Realtime & push",
+          "line": "Live updates and mobile notifications"
+        },
+        "java": {
+          "name": "Java platform kit",
+          "line": "Users, billing and notifications on Spring"
+        },
+        "engine": {
+          "name": "Orazaka",
+          "line": "The sovereign AI engine"
+        }
+      },
+      "roles": {
+        "engine": "The engine",
+        "product": "Product"
+      },
+      "runsOn": "Runs on",
+      "ours": {
+        "label": "Bonus round",
+        "title": "We use our own products.",
+        "lead": "Every product runs on the same blocks and, when it needs intelligence, on Orazaka. The table is the proof — read from the products' own manifests.",
+        "caption": "What each product runs on",
+        "product": "Product",
+        "yes": "Yes",
+        "no": "No",
+        "isEngine": "Is the engine"
       },
       "chapters": {
-        "krizaka": {
-          "roots": "kris + zaka (坂)",
-          "title": "The blade folded in the open",
-          "body": [
-            "A kris is a blade forged in layers: iron folded onto iron, again and again, until a pattern rises in the steel. Zaka is the slope you climb, one step at a time. Krizaka is the forge halfway up that hill.",
-            "Why a forge? Because the software we were asked to trust had turned into a black box — data shipped to someone else's cloud, income routed through someone else's rules, code nobody outside could read. We set out to build the opposite, and to prove it rather than promise it.",
-            "Nothing leaves the forge unfolded, untested or undocumented, and everything that leaves it is open source under Apache-2.0. You don't have to believe us: read the pattern in the steel."
-          ],
-          "move": "Prove it, don't promise it."
-        },
         "orazaka": {
-          "roots": "ōrāre (to speak) + zaka",
+          "caption": "ōrāre (to speak) + zaka",
           "title": "The oracle that never leaves home",
           "body": [
             "Ōrāre: to speak, to ask — the Latin root of oracle. In the old stories you climbed to the oracle with your question, and you trusted it with something private.",
             "Today, asking an AI usually means carrying your contracts, your files and your ideas down to someone else's valley. For a lot of teams that's a deal-breaker, so they do without. We think that's the wrong trade.",
-            "Orazaka brings the oracle to your hill: answers drawn from your own documents, visuals generated on your machines, Studios that take the repeat work — on your infrastructure, under your rules. Your questions and your answers stay in the house, and every line that touches them is public, so your security team can check instead of trust."
+            "Orazaka brings the oracle to your hill: answers drawn from your own documents, visuals generated on your machines, Studios that take the repeat work — on your infrastructure, under your rules. Your questions and your answers stay in the house, and every line that touches them is public, so your security team can check instead of trust.",
+            "It is also the engine the products call: Yazakia's conversations run on it, and so will every product that needs intelligence without sending anything away."
           ],
-          "move": "Your data never leaves home."
+          "move": "Your data never leaves home.",
+          "stat": "Data kept at home"
         },
         "orochia": {
-          "roots": "Yamata no Orochi",
+          "caption": "Yamata no Orochi",
           "title": "Eight heads, one deal: the creator keeps 90%",
           "body": [
             "Yamata no Orochi is the eight-headed serpent of Japan's oldest chronicles. Players of a certain age met it somewhere else too: waiting at the end of a 1990s arcade tournament, sealed by three clans and their sacred treasures.",
             "The creator economy has a serpent of its own: heavy cuts, payouts nobody can audit, links that leak, accounts closed overnight. Creators do the work and carry the risk — and too often they're the last to be paid.",
             "Orochia is our answer: a video platform where the creator keeps 90% of every sale, every movement is written once in a double-entry ledger, and the whole thing runs on servers you choose. In the myth, Susanoo doesn't win by force — he sets out eight vats, one for each head. Orochia sets out one answer for each."
           ],
-          "move": "90% to the creator. On every sale."
+          "move": "90% to the creator. On every sale.",
+          "stat": "Creator share"
+        },
+        "yazakia": {
+          "caption": "The dating app where you talk first",
+          "title": "Talk first. Meet both ways.",
+          "body": [
+            "Dating apps turned people into a catalogue: swipe, score, repeat. You end up judging photos at midnight and being judged the same way.",
+            "Yazakia starts with a conversation instead of a form. An agent powered by Orazaka gets to know you in your own words, then opens a small batch of three to five people who match you in both directions — with the reasons in words, never a score.",
+            "The next batch waits for your debrief. No swipe, no catalogue, no endless feed: fewer people, better chosen, and nobody you didn't both want to meet."
+          ],
+          "move": "Both ways, or not at all.",
+          "stat": "Matches that go both ways"
+        },
+        "yororis": {
+          "caption": "A listening space with a face and a voice",
+          "title": "A presence that stops.",
+          "body": [
+            "Some evenings you need to put words on what you carry, hear one question you hadn't asked yourself, and leave with one clear line.",
+            "Yororis is a listening space with a face and a voice: an AI presence that says it is one, listens, reflects back, asks one question — and stops. A moment has an end, and so does the day: the limits are the product.",
+            "It is powered by Orazaka's wellbeing pack, so its guards live in the engine and what you say stays on our machines. We're building Yororis in the open and studying its framework — legal, ethical, clinical — before making it available. Nothing is live, nothing is offered, and there is no date."
+          ],
+          "move": "A presence that stops.",
+          "stat": "Under construction"
         }
       },
       "heads": [
@@ -704,8 +779,8 @@
         },
         "owl": {
           "name": "The owl",
-          "role": "The listener",
-          "line": "Hears every question and keeps it in the house."
+          "role": "The reader",
+          "line": "Reads your documents and keeps every question in the house."
         },
         "pigeon": {
           "name": "The carrier pigeon",
@@ -726,11 +801,21 @@
           "name": "The phoenix",
           "role": "The two flames",
           "line": "Purple and gold — two rival flames from the arcade legend, flying together. Code reborn with every commit."
+        },
+        "lovebird": {
+          "name": "The lovebird",
+          "role": "The introducer",
+          "line": "Opens a door only when both sides want it open."
+        },
+        "crane": {
+          "name": "The crane",
+          "role": "The listener",
+          "line": "Stands still, hears you out, then lets you get back to your life."
         }
       },
       "closing": {
         "title": "Round one is over. Continue?",
-        "body": "We don't have a trophy case to show you yet. We have something better to start from: two products you can run today, every line in the open, and promises written down where you can hold us to them. The next rounds are played with the people who use them — try them, read them, or write to us."
+        "body": "We don't have a trophy case to show you yet. We have something better to start from: an engine and products you can run today, more on the way, every line in the open, and promises written down where you can hold us to them. The next rounds are played with the people who use them — try them, read them, or write to us."
       },
       "headsAria": "The eight heads",
       "flockLabel": "The flock",
@@ -741,8 +826,6 @@
       "arcade": {
         "continue": "Continue?",
         "insertCoin": "Insert Coin",
-        "teamTag": "Team Battle · 3 vs 3",
-        "teamSynergy": "The Three Sacred Treasures",
         "stage": "Stage",
         "orochiBossTitle": "Yamata no Orochi",
         "orochiBossSub": "The eight heads of the creator economy — eight answers, sealed in code",
@@ -750,31 +833,17 @@
         "vatLabel": "Vat",
         "creditLabel": "Credit 01",
         "restartBtn": "Back to the select screen",
-        "clans": {
-          "krizaka": "the forge",
-          "orazaka": "sovereign AI",
-          "orochia": "creator video"
-        },
-        "clanNames": {
-          "krizaka": "Sword clan",
-          "orazaka": "Mirror clan",
-          "orochia": "Jewel clan"
-        },
-        "selectAria": "The three clans: Krizaka, Orazaka and Orochia",
-        "power": "Power",
         "finalRound": "Final round",
         "bossGauge": "Heads left",
         "cabinetLabel": "Krizaka · arcade cabinet",
         "coinEntry": "1 credit = 1 story",
         "playerStart": "1P Start",
         "specialMove": "Special move",
-        "selectPrompt": "Choose your clan",
         "corner": "In the corner",
-        "stats": {
-          "krizaka": "Code in the open",
-          "orazaka": "Data kept at home",
-          "orochia": "Creator share"
-        }
+        "teamTag": "Team battle · {count} products",
+        "teamSynergy": "One studio · one engine · the same blocks",
+        "selectPrompt": "Choose a product",
+        "selectAria": "The products of the studio"
       },
       "open": {
         "label": "Bonus stage",

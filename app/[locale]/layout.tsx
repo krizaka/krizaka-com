@@ -10,6 +10,8 @@ import "../globals.css";
 /* The page blocks of @krizaka/ui (AGENTS.md §4.1): their stylesheet, imported by package path from the layout — never by
    a relative @import inside globals.css, which the production build dropped (#74). */
 import "@krizaka/ui/blocks.css";
+/* The storytelling kit of @krizaka/ui (/story, and its live examples on /docs/ui): its stylesheet, the same way. */
+import "@krizaka/ui/story.css";
 import { MotionObserver } from "@krizaka/ui/motion";
 import { cn } from "@krizaka/ui/cn";
 
