@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { CtaPanel } from "@krizaka/ui/cta-panel";
+import { SectionHeading } from "@krizaka/ui/page";
 import Link from "next/link";
 import {
   CheckIcon,
@@ -28,7 +30,7 @@ import { packText, packTitle, showcasePacks, type Pack } from "@/lib/orazaka-pac
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import Rich from "@/app/components/Rich";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -89,7 +91,7 @@ export default async function OrazakaPacksPage({ params }: Props) {
       <TopNavBar />
 
       <SectionBackdrop as="header" grid>
-        <div className="bp-wrap bp-hero bp-center">
+        <div className="kz-frame bp-wrap bp-hero bp-center">
           <p className="bp-eyebrow">
             <PackIcon size={18} nodeColor={node} /> {t.eyebrow}
           </p>
@@ -122,7 +124,7 @@ export default async function OrazakaPacksPage({ params }: Props) {
         </div>
       </SectionBackdrop>
 
-      <section id="packs" className="bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
+      <section id="packs" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
         <div className="opk-grid">
           {packs.map((p, i) => {
             const text = packText(p.text, locale);
@@ -178,12 +180,8 @@ export default async function OrazakaPacksPage({ params }: Props) {
       </section>
 
       <SectionBackdrop className="bp-glide" dome={false} id="how">
-        <div className="bp-wrap">
-          <div className="bp-center" {...reveal()}>
-            <p className="bp-eyebrow">{t.how.eyebrow}</p>
-            <h2 className="bp-h2"><Rich text={t.how.title} /></h2>
-            <p className="bp-lead">{t.how.lead}</p>
-          </div>
+        <div className="kz-frame bp-wrap">
+          <SectionHeading eyebrow={t.how.eyebrow} title={<Rich text={t.how.title} />} lead={t.how.lead} align="center" reveal />
           <ol className="opk-steps">
             {t.how.steps.map((step, i) => (
               <li key={step.title} {...reveal(i + 1)}>
@@ -205,16 +203,14 @@ export default async function OrazakaPacksPage({ params }: Props) {
       </SectionBackdrop>
 
       <SectionBackdrop className="bp-glide" dome={false}>
-        <div className="bp-wrap bp-center" {...reveal()}>
-          <h2 className="bp-h2"><Rich text={t.closing.title} /></h2>
-          <p className="bp-lead">{t.closing.body}</p>
-          <div className="bp-actions">
+        <section className="kz-frame bp-wrap" aria-labelledby="closing-title">
+          <CtaPanel id="closing-title" title={<Rich text={t.closing.title} />} body={t.closing.body} reveal>
             <ButtonLink href={`${DOCS}#writing-a-pack`} variant="primary" size="lg">
               {t.closing.write} <ForwardIcon size={16} />
             </ButtonLink>
             <ButtonLink href={contactHref("orazaka", "orazaka")} size="lg">{t.closing.contact}</ButtonLink>
-          </div>
-        </div>
+          </CtaPanel>
+        </section>
       </SectionBackdrop>
       <SiteFooter />
 

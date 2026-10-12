@@ -15,7 +15,8 @@ import { NAV_PRODUCTS } from "@/lib/nav";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
 import { cn } from "@krizaka/ui/cn";
-import ButtonLink from "../sections/ButtonLink";
+import { Page } from "@krizaka/ui/page";
+import ButtonLink from "../ButtonLink";
 
 /* prefers-reduced-motion, read without an animation library; the server and the first client render say "still". */
 const REDUCE = "(prefers-reduced-motion: reduce)";
@@ -51,27 +52,29 @@ function playWhenVisible(video: HTMLVideoElement | null) {
 /* Links below the first screen are not prefetched on sight (prefetch={false}): every linked route would load its
    chunks while the page paints (Lighthouse LCP); they still prefetch on hover. */
 
-/** `heading="h1"` where the showcase is the page itself (/products); a section of the home page otherwise. */
-export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?: "h1" | "h2" }) {
+/** A section of the home page (`h2`), or the body of /products under its PageHero (`heading="none"`). */
+export default function ProductsShowcase({ heading = "h2" }: { heading?: "h2" | "none" }) {
   const { t } = useI18n();
   const h = t.site.home.products;
   const still = useSyncExternalStore(subscribe, () => window.matchMedia(REDUCE).matches, () => true);
 
   return (
     <section id="products">
-      <div className="kz-section" style={{ paddingBottom: 0 }}>
-        <Heading className="kz-h2" style={{ marginBottom: 0 }} {...(Heading === "h2" ? reveal() : {})}>{h.title}</Heading>
-      </div>
+      {heading === "h2" && (
+        <Page className="kz-spots-head">
+          <h2 className="kz-heading-title" {...reveal()}>{h.title}</h2>
+        </Page>
+      )}
 
       {/* Each product in its own brand (BRAND.md): the section rises from the page into its colour and settles back. */}
       <div className="kz-spots">
         {PRODUCTS.map((p, i) => {
           const nav = NAV_PRODUCTS.find((n) => n.id === p.id)!;
-          // Where the showcase is the page (/products), its first product is the first screen: painted at once.
-          const firstScreen = Heading === "h1" && i === 0;
+          // On /products the first product is right under the hero, on a phone's first screen: painted at once.
+          const firstScreen = heading === "none" && i === 0;
           return (
             <SectionBackdrop key={p.id} as="div" className={cn("brand-" + p.id, "bp-glide")} dome={false}>
-            <article className={cn("kz-spot kz-section", i % 2 === 1 && "is-flipped")}>
+            <Page as="article" className={cn("kz-spot", i % 2 === 1 && "is-flipped")}>
               <div className="kz-spot-copy" {...(firstScreen ? {} : reveal())}>
                 <div className="kz-spot-head">
                   <ProductLogo id={p.id} size={56} />
@@ -140,7 +143,7 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
                   <figcaption>{h.soon}</figcaption>
                 </figure>
               )}
-            </article>
+            </Page>
             </SectionBackdrop>
           );
         })}
@@ -148,7 +151,8 @@ export default function ProductsShowcase({ heading: Heading = "h2" }: { heading?
 
       <style>{`
         .kz-spots { display: grid; }
-        .kz-spot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
+        .kz-spots-head { padding-top: clamp(48px, 7vw, 88px); }
+        .kz-spot { padding-block: clamp(48px, 7vw, 88px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: clamp(24px, 4vw, 48px); align-items: center; }
         .kz-spot.is-flipped .kz-spot-copy { order: 2; }
         @media (max-width: 900px) { .kz-spot { grid-template-columns: 1fr; } .kz-spot.is-flipped .kz-spot-copy { order: 0; } }
         .kz-spot-copy { display: flex; flex-direction: column; gap: 12px; min-width: 0; }

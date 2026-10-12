@@ -44,7 +44,7 @@ export default function SiteFooter() {
 
   return (
     <footer className="kz-footer">
-      <div className="kz-footer-inner">
+      <div className="kz-frame kz-footer-inner">
         <div className="kz-footer-brand">
           <Link href="/" className="kz-footer-logo">
             <KrizakaLogo size={28} /> Krizaka
@@ -73,14 +73,14 @@ export default function SiteFooter() {
         </nav>
       </div>
 
-      <div className="kz-footer-bottom">
+      <div className="kz-frame kz-footer-bottom">
         <span>© {new Date().getFullYear()} Krizaka</span>
         <span>{f.madeIn}</span>
       </div>
 
       <style>{`
-        .kz-footer { padding: 64px 20px 28px; background: var(--kz-surface-0); border-top: 1px solid var(--kz-border-subtle); text-align: left; }
-        .kz-footer-inner { max-width: 72rem; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr); gap: 48px; }
+        .kz-footer { padding: 64px 0 28px; background: var(--kz-surface-0); border-top: 1px solid var(--kz-border-subtle); text-align: left; }
+        .kz-footer-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr); gap: 48px; }
         .kz-footer-logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display), system-ui, sans-serif; font-size: 16px;
           font-weight: 700; color: var(--kz-text-primary); text-decoration: none; }
         .kz-footer-brand p { margin: 14px 0 16px; max-width: 300px; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
@@ -92,7 +92,7 @@ export default function SiteFooter() {
         .kz-footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
         .kz-footer-col a { font-size: 13.5px; color: var(--kz-text-secondary); text-decoration: none; transition: color 150ms ease; }
         .kz-footer-col a:hover { color: var(--kz-text-primary); }
-        .kz-footer-bottom { max-width: 72rem; margin: 48px auto 0; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+        .kz-footer-bottom { margin-top: 48px; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
           border-top: 1px solid var(--kz-border-subtle); font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
         @media (max-width: 1120px) {
           .kz-footer-inner { grid-template-columns: 1fr; gap: 36px; }

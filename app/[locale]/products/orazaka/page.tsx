@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SectionHeading } from "@krizaka/ui/page";
 import Link from "next/link";
 import {
   AgentIcon,
@@ -25,7 +26,11 @@ import MadeHereGallery from "@/app/components/demos/MadeHereGallery";
 import type { GalleryItem } from "@/lib/orazaka-gallery";
 import { localizedMetadata } from "@/lib/seo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
-import { ArgumentCard, CardGrid, DecisionList, MascotRule } from "@/app/components/sections";
+import { ArgumentCard } from "@krizaka/ui/argument-card";
+import { CardGrid } from "@krizaka/ui/card-grid";
+import { DecisionList } from "@krizaka/ui/decision-list";
+import { MascotQuote } from "@krizaka/ui/mascot-quote";
+import { Ticks } from "@krizaka/ui/page";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ProductTour from "@/app/components/ProductTour";
@@ -36,7 +41,7 @@ import Rich from "@/app/components/Rich";
 import { OrazakaIso } from "@/app/components/products/ProductIso";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
 import { reveal } from "@/lib/motion";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -145,7 +150,7 @@ export default async function OrazakaPage({ params }: Props) {
           </div>
         }
       >
-        <div className="bp-wrap bp-hero">
+        <div className="kz-frame bp-wrap bp-hero">
           <div className="bp-hero-grid">
             <div>
               {/* The product's name first — the mark and the word together, as in the menu, on the home and on Orochia. */}
@@ -187,11 +192,8 @@ export default async function OrazakaPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── Product tour (recordings of the real application) ─── */}
-      <section id="tour" className="bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
-        <div className="bp-center" style={{ marginBottom: 28 }} {...reveal()}>
-          <p className="bp-eyebrow">{t.tourEyebrow}</p>
-          <h2 className="bp-h2">{t.tourTitle}</h2>
-        </div>
+      <section id="tour" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
+        <SectionHeading eyebrow={t.tourEyebrow} title={t.tourTitle} align="center" reveal />
         <div {...reveal(1)}>
           <ProductTour
             clips={TOUR.map((id) => ({ id, src: tourSrc(id), ...t.tour[id] }))}
@@ -201,12 +203,8 @@ export default async function OrazakaPage({ params }: Props) {
       </section>
 
       {/* ─── What it does, shown: six capabilities, each watched over by a bird of the flock ─── */}
-      <section className="bp-wrap" id="shown" style={{ scrollMarginTop: 72 }}>
-        <div {...reveal()}>
-          <p className="bp-eyebrow">{t.shown.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.shown.title} /></h2>
-          <p className="bp-lead">{t.shown.lead}</p>
-        </div>
+      <section className="kz-frame bp-wrap" id="shown" style={{ scrollMarginTop: 72 }}>
+        <SectionHeading eyebrow={t.shown.eyebrow} title={<Rich text={t.shown.title} />} lead={t.shown.lead} reveal />
         <div className="bp-cards">
           {SHOWN.map(({ id, bird, demo }, i) => (
             <Link key={id} href={`/products/orazaka/demos#${demo}`} className="bp-card oz-shown" {...reveal(i + 1)}>
@@ -238,12 +236,8 @@ export default async function OrazakaPage({ params }: Props) {
 
       {/* ─── Why: sovereignty, cost, control ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="why">
-        <div className="bp-wrap">
-          <div {...reveal()}>
-            <p className="bp-eyebrow">{t.why.eyebrow}</p>
-            <h2 className="bp-h2"><Rich text={t.why.title} /></h2>
-            <p className="bp-lead">{t.why.lead}</p>
-          </div>
+        <div className="kz-frame bp-wrap">
+          <SectionHeading eyebrow={t.why.eyebrow} title={<Rich text={t.why.title} />} lead={t.why.lead} reveal />
           <div className="bp-argue">
             <CardGrid columns={3} min={300}>
               {PILLARS.map(({ id, Icon, bird }) => (
@@ -252,10 +246,11 @@ export default async function OrazakaPage({ params }: Props) {
                   id={`why-${id}`}
                   icon={<Icon size={20} nodeColor={node} />}
                   title={t.why.pillars[id].title}
-                  expand={b.details}
-                  hook={{ label: b.trap, text: t.why.pillars[id].trap }}
-                  points={{ label: b.answer, items: t.why.pillars[id].points }}
-                  rule={{ bird, label: format(b.birdSays, { bird: b.birds[bird] }), text: t.why.pillars[id].rule }}
+                  panelLabel={b.details}
+                  mark={<Mascot bird={bird} size={40} animated={false} />}
+                  hook={{ label: b.trap, text: <Ticks>{t.why.pillars[id].trap}</Ticks> }}
+                  points={{ label: b.answer, items: (t.why.pillars[id].points).map((x) => <Ticks key={x}>{x}</Ticks>) }}
+                  rule={<MascotQuote bird={bird} label={format(b.birdSays, { bird: b.birds[bird] })}><Ticks>{t.why.pillars[id].rule}</Ticks></MascotQuote>}
                 />
               ))}
             </CardGrid>
@@ -264,12 +259,8 @@ export default async function OrazakaPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── Platform: six capabilities ─── */}
-      <section className="bp-wrap">
-        <div {...reveal()}>
-          <p className="bp-eyebrow">{t.platform.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.platform.title} /></h2>
-          <p className="bp-lead">{t.platform.lead}</p>
-        </div>
+      <section className="kz-frame bp-wrap">
+        <SectionHeading eyebrow={t.platform.eyebrow} title={<Rich text={t.platform.title} />} lead={t.platform.lead} reveal />
         <div className="bp-cards">
           {PLATFORM.map(({ id, Icon }, i) => (
             <div key={id} className="bp-card" {...reveal(i + 1)}>
@@ -283,12 +274,8 @@ export default async function OrazakaPage({ params }: Props) {
 
       {/* ─── Cost & control: the same questions, two answers ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="compare">
-        <div className="bp-wrap">
-          <div {...reveal()}>
-            <p className="bp-eyebrow">{t.compare.eyebrow}</p>
-            <h2 className="bp-h2"><Rich text={t.compare.title} /></h2>
-            <p className="bp-lead">{t.compare.lead}</p>
-          </div>
+        <div className="kz-frame bp-wrap">
+          <SectionHeading eyebrow={t.compare.eyebrow} title={<Rich text={t.compare.title} />} lead={t.compare.lead} reveal />
           <table className="bp-compare" {...reveal(1, "soft")}>
             <thead>
               <tr>
@@ -311,26 +298,20 @@ export default async function OrazakaPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── Decisions: what we chose, refused, why, and what it costs ─── */}
-      <section className="bp-wrap" id="decisions" style={{ scrollMarginTop: 72 }}>
-        <div {...reveal()}>
-          <p className="bp-eyebrow">{t.decisions.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.decisions.title} /></h2>
-          <p className="bp-lead">{t.decisions.lead}</p>
-        </div>
+      <section className="kz-frame bp-wrap" id="decisions" style={{ scrollMarginTop: 72 }}>
+        <SectionHeading eyebrow={t.decisions.eyebrow} title={<Rich text={t.decisions.title} />} lead={t.decisions.lead} reveal />
         <div className="bp-argue">
-          <DecisionList decisions={t.decisions.items} labels={dl} />
+          <DecisionList decisions={t.decisions.items.map((d) => ({ id: d.chose, chose: <Ticks>{d.chose}</Ticks>, refused: <Ticks>{d.refused}</Ticks>, because: <Ticks>{d.because}</Ticks>, cost: <Ticks>{d.cost}</Ticks> }))} labels={dl} />
         </div>
       </section>
 
       {/* ─── Law 25 · GDPR ─── */}
-      <section className="bp-wrap">
+      <section className="kz-frame bp-wrap">
         <div className="bp-split">
           <div {...reveal()}>
-            <p className="bp-eyebrow">{t.law25.eyebrow}</p>
-            <h2 className="bp-h2"><Rich text={t.law25.title} /></h2>
-            <p className="bp-lead">{t.law25.lead}</p>
+            <SectionHeading eyebrow={t.law25.eyebrow} title={<Rich text={t.law25.title} />} lead={t.law25.lead} />
             <div className="bp-argue" style={{ marginTop: 24 }}>
-              <MascotRule variant="callout" bird="owl" mood="welcome" label={format(b.birdSays, { bird: b.birds.owl })} text={t.law25.rule} />
+              <MascotQuote variant="callout" bird="owl" mood="welcome" label={format(b.birdSays, { bird: b.birds.owl })}><Ticks>{t.law25.rule}</Ticks></MascotQuote>
             </div>
           </div>
           <ul className="bp-ledger">
@@ -346,12 +327,10 @@ export default async function OrazakaPage({ params }: Props) {
 
       {/* ─── How it works: three commands ─── */}
       <SectionBackdrop className="bp-glide" dome={false} grid id="how" style={{ scrollMarginTop: 72 }}>
-        <div className="bp-wrap">
+        <div className="kz-frame bp-wrap">
           <div className="bp-split">
             <div {...reveal()}>
-              <p className="bp-eyebrow">{t.how.eyebrow}</p>
-              <h2 className="bp-h2"><Rich text={t.how.title} /></h2>
-              <p className="bp-lead">{t.how.lead}</p>
+              <SectionHeading eyebrow={t.how.eyebrow} title={<Rich text={t.how.title} />} lead={t.how.lead} />
               <ol className="bp-steps">
                 {STEPS.map(({ id }) => (
                   <li key={id}>
@@ -383,11 +362,8 @@ export default async function OrazakaPage({ params }: Props) {
       <AdminCallout product="orazaka" locale={asLocale(locale)} />
 
       {/* ─── Go deeper ─── */}
-      <section className="bp-wrap">
-        <div {...reveal()}>
-          <p className="bp-eyebrow">{t.explore.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.explore.title} /></h2>
-        </div>
+      <section className="kz-frame bp-wrap">
+        <SectionHeading eyebrow={t.explore.eyebrow} title={<Rich text={t.explore.title} />} reveal />
         <div className="bp-cards">
           {EXPLORE.map(({ id, href, Icon }, i) => (
             <Link key={id} href={href} className="bp-card" {...reveal(i + 1)}>

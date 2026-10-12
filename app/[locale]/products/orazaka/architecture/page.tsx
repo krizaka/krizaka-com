@@ -9,7 +9,9 @@ import DiagramSection from "@/app/components/diagrams/DiagramSection";
 import { architectureCounts, messagingData, moduleMapData, pipelineSteps } from "@/lib/architecture-model";
 import { verifiedJourneyModules } from "@/lib/orazaka-journey";
 import { journeysFor } from "@/lib/journeys";
-import { PageHero } from "@/app/components/sections";
+import { PageHero } from "@krizaka/ui/page-hero";
+import { Mascot } from "@krizaka/ui/mascots";
+import Link from "next/link";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
 import RepositoryMap, { type RepositoryEntry } from "../../../../components/RepositoryMap";
@@ -52,7 +54,8 @@ export default async function ArchitecturePage({ params }: Props) {
         eyebrow={text.howItWorks}
         title={text.theJourneyOfARequest}
         lead={text.orazakaOrchestratesAModularSecure}
-        mascot={{ bird: "duck", mood: "thinking" }}
+        aside={<Mascot bird="duck" mood="thinking" size={112} />}
+        linkAs={Link}
       >
           {/* six-stage hint chips */}
           <div

@@ -4,17 +4,18 @@
    compliance), then one card per sector — lit by the brand under the pointer (GlowCard), rising once as it arrives. */
 
 import Link from "next/link";
-import { Megaphone, TrendingUp, Scale, Headphones, Building2, Heart } from "lucide-react";
+import { ChatIcon, CreditsIcon, HeartIcon, KnowledgeIcon, ShieldIcon, UsersIcon } from "@krizaka/icons";
 import { ForwardIcon } from "@krizaka/icons";
 import { GlowCard } from "@krizaka/ui/glow-card";
 import { useI18n } from "../../../../components/I18nProvider";
 import TopNavBar from "../../../../components/TopNavBar";
 import SiteFooter from "../../../../components/SiteFooter";
-import { PageHero } from "../../../../components/sections";
+import { PageHero } from "@krizaka/ui/page-hero";
+import { Mascot } from "@krizaka/ui/mascots";
 import { USE_CASES, getLocalizedField } from "@/lib/use-cases-data";
 import { reveal } from "@/lib/motion";
 
-const ICONS = [Megaphone, TrendingUp, Scale, Headphones, Building2, Heart];
+const ICONS = [ChatIcon, CreditsIcon, ShieldIcon, UsersIcon, KnowledgeIcon, HeartIcon];
 
 export default function UseCasesIndexClient() {
   const { t, locale } = useI18n();
@@ -28,10 +29,11 @@ export default function UseCasesIndexClient() {
         eyebrow={t.useCases.sectionLabel}
         title={t.useCases.sectionTitle}
         lead={t.useCases.sectionDesc}
-        mascot={{ bird: "falcon", mood: "welcome" }}
+        aside={<Mascot bird="falcon" mood="welcome" size={112} />}
+        linkAs={Link}
       />
 
-      <section className="ucidx">
+      <section className="kz-frame ucidx">
         <ul className="ucidx-grid">
           {USE_CASES.map((uc, idx) => {
             const Icon = ICONS[idx % ICONS.length];
@@ -41,7 +43,7 @@ export default function UseCasesIndexClient() {
                   <Link href={`/products/orazaka/usecases/${uc.slug}`}>
                     <span className="ucidx-head">
                       <span className="ucidx-icon">
-                        <Icon size={18} strokeWidth={1.6} aria-hidden />
+                        <Icon size={18} aria-hidden />
                       </span>
                       <span className="ucidx-industry">{getLocalizedField(uc.industry, locale)}</span>
                     </span>
@@ -61,7 +63,7 @@ export default function UseCasesIndexClient() {
       <SiteFooter />
 
       <style>{`
-        .ucidx { max-width: 72rem; margin: 0 auto; padding: 56px 20px 96px; }
+        .ucidx { padding-block: 56px 96px; }
         .ucidx-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 16px; }
         .ucidx-grid > li { display: flex; }
         .ucidx-card { display: flex; flex-direction: column; gap: 10px; width: 100%; padding: 26px 24px 22px; border-radius: 20px; text-decoration: none;

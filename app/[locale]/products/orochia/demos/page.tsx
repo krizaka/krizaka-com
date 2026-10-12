@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { CtaPanel } from "@krizaka/ui/cta-panel";
+import { SectionHeading } from "@krizaka/ui/page";
 import { AuctionIcon, ChallengeIcon, CheckIcon, ExternalIcon, ForwardIcon, HeartIcon, PlayIcon, TipIcon, UnlockIcon, VideoIcon, WalletIcon } from "@krizaka/icons";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { OrochiaLogo } from "@krizaka/ui";
@@ -14,7 +16,7 @@ import SiteFooter from "@/app/components/SiteFooter";
 import OrochiaTour from "@/app/components/OrochiaTour";
 import DemoClip from "@/app/components/demos/DemoClip";
 import Rich from "@/app/components/Rich";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -52,7 +54,7 @@ export default async function OrochiaDemoPage({ params }: Props) {
           </div>
         }
       >
-        <div className="bp-wrap bp-hero bp-center">
+        <div className="kz-frame bp-wrap bp-hero bp-center">
           <p className="oc-lockup">
             <OrochiaLogo size={56} />
             <span>Orochia</span>
@@ -85,11 +87,8 @@ export default async function OrochiaDemoPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── The tour: a fan's day or a creator's ─── */}
-      <section id="tour" className="bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
-        <div className="bp-center" style={{ marginBottom: 24 }} {...reveal()}>
-          <p className="bp-eyebrow">{t.tourEyebrow}</p>
-          <h2 className="bp-h2">{t.tourTitle}</h2>
-        </div>
+      <section id="tour" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
+        <SectionHeading eyebrow={t.tourEyebrow} title={t.tourTitle} align="center" reveal />
         <div {...reveal(1)}>
           <OrochiaTour />
         </div>
@@ -97,11 +96,8 @@ export default async function OrochiaDemoPage({ params }: Props) {
 
       {/* ─── One section per moment that pays ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="use-cases" style={{ scrollMarginTop: 72 }}>
-        <div className="bp-wrap">
-          <div className="bp-center" {...reveal()}>
-            <p className="bp-eyebrow">{t.useCasesEyebrow}</p>
-            <h2 className="bp-h2"><Rich text={t.useCasesTitle} /></h2>
-          </div>
+        <div className="kz-frame bp-wrap">
+          <SectionHeading eyebrow={t.useCasesEyebrow} title={<Rich text={t.useCasesTitle} />} align="center" reveal />
           {DEMO_USE_CASES.map(({ id, clip, side, icon }, k) => {
             const Icon = ICONS[icon];
             const uc = t.useCases[id];
@@ -133,18 +129,16 @@ export default async function OrochiaDemoPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── Closing ─── */}
-      <section className="bp-wrap bp-center" {...reveal()}>
-        <h2 className="bp-h2"><Rich text={t.closing.title} /></h2>
-        <p className="bp-lead">{t.closing.body}</p>
-        <div className="bp-actions">
+      <section className="kz-frame bp-wrap" aria-labelledby="closing-title">
+          <CtaPanel id="closing-title" title={<Rich text={t.closing.title} />} body={t.closing.body} reveal>
           <ButtonLink href={OROCHIA_APP_URL} variant="primary" size="lg" rel="noopener">
             <ExternalIcon size={16} /> {t.closing.app}
           </ButtonLink>
           <ButtonLink href={contactHref("orochia", "orochia")} size="lg">
             {t.closing.contact} <ForwardIcon size={16} />
           </ButtonLink>
-        </div>
-      </section>
+        </CtaPanel>
+        </section>
       <SiteFooter />
 
       <style>{`

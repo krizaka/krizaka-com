@@ -6,7 +6,7 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { AlertTriangle, ArrowRight, Check, Handshake, MessageCircle, RotateCcw } from "lucide-react";
+import { CheckIcon, ChatIcon, ForwardIcon, UsersIcon, WarningIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
 import { format } from "@krizaka/i18n";
 import { CONTACT_TIMELINES, CONTACT_TOPICS, cleanSource, topicForSource, type ContactTimeline, type ContactTopic } from "@/lib/contact";
@@ -28,8 +28,8 @@ function TopicIcon({ topic }: { topic: ContactTopic }) {
   if (topic === "orazaka" || topic === "orochia" || topic === "yazakia" || topic === "blocks") {
     return <ProductLogo id={topic === "blocks" ? "krizaka" : topic} size={26} animated={false} />;
   }
-  const Icon = topic === "partnership" ? Handshake : MessageCircle;
-  return <Icon size={22} strokeWidth={1.75} aria-hidden />;
+  const Icon = topic === "partnership" ? UsersIcon : ChatIcon;
+  return <Icon size={22} aria-hidden />;
 }
 
 /** Every link to this page carries ?source=<page> (and ?topic= when the page knows it): the topic is pre-selected from
@@ -125,12 +125,12 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
     return (
       <div className="kz-cf kz-cf-done" role="status" tabIndex={-1} ref={doneRef}>
         <span className="kz-cf-done-mark" aria-hidden>
-          <Check size={26} strokeWidth={2.5} />
+          <CheckIcon size={26} aria-hidden />
         </span>
         <h2>{c.sentTitle}</h2>
         <p>{format(c.sentBody, { name: sentTo.name, email: sentTo.email })}</p>
         <button type="button" className="kz-cf-ghost" onClick={reset}>
-          <RotateCcw size={14} aria-hidden /> {c.another}
+          <ForwardIcon size={14} aria-hidden /> {c.another}
         </button>
         <style>{STYLES}</style>
       </div>
@@ -165,7 +165,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
                 <small>{c.topicHints[id]}</small>
               </span>
               <span className="kz-cf-topic-check" aria-hidden>
-                <Check size={12} strokeWidth={3} />
+                <CheckIcon size={12} aria-hidden />
               </span>
             </label>
           ))}
@@ -270,7 +270,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
 
       {serverError && (
         <p className="kz-cf-error" role="alert">
-          <AlertTriangle size={15} aria-hidden /> {serverError.text}
+          <WarningIcon size={15} aria-hidden /> {serverError.text}
         </p>
       )}
 
@@ -286,7 +286,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
           status={serverError ? "error" : null}
         >
           {status === "sending" ? c.sending : c.send}
-          {status !== "sending" && <ArrowRight size={16} aria-hidden />}
+          {status !== "sending" && <ForwardIcon size={16} aria-hidden />}
         </Button>
         <span>{c.privacy}</span>
       </div>

@@ -3,7 +3,7 @@ import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { getDictionary, type Locale } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import Rich from "@/app/components/Rich";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 /* "What you control": a product's administration console, on its product page, linking to its documentation
    (the generated /docs/orazaka/admin, the synced /docs/orochia/admin_console). Words: site.adminCallout.<product>. */
@@ -13,7 +13,7 @@ export default function AdminCallout({ product, locale }: { product: keyof typeo
   const t = getDictionary(locale).site.adminCallout[product];
   return (
     <SectionBackdrop className="bp-glide" dome={false} id="control">
-      <div className="bp-wrap bp-split" style={{ alignItems: "start" }}>
+      <div className="kz-frame bp-wrap bp-split" style={{ alignItems: "start" }}>
         <div {...reveal()}>
           <p className="bp-eyebrow">
             <SettingsIcon size={18} nodeColor="var(--kz-accent)" /> {t.eyebrow}

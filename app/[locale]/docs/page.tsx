@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ForwardIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
+import { CardGrid } from "@krizaka/ui/card-grid";
+import { LinkCard } from "@krizaka/ui/link-card";
+import { Section } from "@krizaka/ui/page";
+import { PageHero } from "@krizaka/ui/page-hero";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import { asLocale, getDictionary } from "@/lib/i18n";
@@ -30,50 +33,52 @@ const SHORTCUTS = [
   { id: "orochiaAdmin", href: "/docs/orochia/admin_console", logo: "orochia" },
 ] as const;
 
-/* The documentation hub: shortcuts, the platform's building blocks, then each product's docs. */
+const logoOf = (section: string): "orazaka" | "orochia" | "krizaka" => (section === "orazaka" || section === "orochia" ? section : "krizaka");
+
+/* The documentation hub, on the blocks of @krizaka/ui: the hero, then one section per group — shortcuts, the platform's
+   building blocks, each product's docs — each a grid of LinkCards (the whole card one link, the product's mark). */
 export default async function DocsHub({ params }: Props) {
   const locale = asLocale((await params).locale);
   const t = getDictionary(locale).docs;
+  const groups = [
+    {
+      id: "shortcuts",
+      title: t.hub.shortcuts.title,
+      cards: SHORTCUTS.map(({ id, href, logo }) => ({ key: id, href: `/${locale}${href}`, logo, ...t.hub.shortcuts.items[id] })),
+    },
+    ...GROUPS.map((group) => ({
+      id: group.id,
+      title: t.hub[group.id],
+      cards: group.sections.map((section) => ({
+        key: section,
+        href: `/${locale}/docs/${section}`,
+        logo: logoOf(section),
+        title: t.sections[section].title,
+        text: t.sections[section].description,
+      })),
+    })),
+  ];
   return (
     <>
       <TopNavBar />
-      <main className="kz-docs-hub">
-        <header className="kz-docs-hub-header">
-          <p className="kz-docs-hub-kicker">{t.hub.kicker}</p>
-          <h1>{t.hub.title}</h1>
-          <p>{t.hub.lead}</p>
-        </header>
-        <section aria-labelledby="docs-shortcuts" className="kz-docs-hub-group">
-          <h2 id="docs-shortcuts">{t.hub.shortcuts.title}</h2>
-          <div className="kz-docs-hub-grid">
-            {SHORTCUTS.map(({ id, href, logo }) => (
-              <Link key={id} href={`/${locale}${href}`} className="kz-docs-hub-card">
-                <ProductLogo id={logo} size={28} animated={false} />
-                <span className="kz-docs-hub-card-title">{t.hub.shortcuts.items[id].title}</span>
-                <span className="kz-docs-hub-card-text">{t.hub.shortcuts.items[id].text}</span>
-                <span className="kz-docs-hub-card-cta">
-                  {t.hub.open} <ForwardIcon size={14} />
-                </span>
-              </Link>
-            ))}
-          </div>
-        </section>
-        {GROUPS.map((group) => (
-          <section key={group.id} aria-labelledby={`docs-${group.id}`} className="kz-docs-hub-group">
-            <h2 id={`docs-${group.id}`}>{t.hub[group.id]}</h2>
-            <div className="kz-docs-hub-grid">
-              {group.sections.map((section) => (
-                <Link key={section} href={`/${locale}/docs/${section}`} className="kz-docs-hub-card">
-                  <ProductLogo id={section === "orazaka" || section === "orochia" ? section : "krizaka"} size={28} animated={false} />
-                  <span className="kz-docs-hub-card-title">{t.sections[section].title}</span>
-                  <span className="kz-docs-hub-card-text">{t.sections[section].description}</span>
-                  <span className="kz-docs-hub-card-cta">
-                    {t.hub.open} <ForwardIcon size={14} />
-                  </span>
-                </Link>
+      <main>
+        <PageHero eyebrow={t.hub.kicker} title={t.hub.title} lead={t.hub.lead} backdrop="plain" />
+        {groups.map((group) => (
+          <Section key={group.id} id={`docs-${group.id}`} title={group.title} headingSize="sm" spacing="sm">
+            <CardGrid min={280} reveal={false}>
+              {group.cards.map((card) => (
+                <LinkCard
+                  key={card.key}
+                  href={card.href}
+                  linkAs={Link}
+                  icon={<ProductLogo id={card.logo} size={24} animated={false} />}
+                  title={card.title}
+                  description={card.text}
+                  cta={t.hub.open}
+                />
               ))}
-            </div>
-          </section>
+            </CardGrid>
+          </Section>
         ))}
       </main>
       <SiteFooter />

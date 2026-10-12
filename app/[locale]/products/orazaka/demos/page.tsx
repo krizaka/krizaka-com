@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { CtaPanel } from "@krizaka/ui/cta-panel";
+import { SectionHeading } from "@krizaka/ui/page";
 import { contactHref } from "@/lib/contact";
 import { CheckIcon, CreditsIcon, ForwardIcon, ImageIcon, KnowledgeIcon, LocalIcon, NotificationIcon, PlayIcon, ShieldIcon, SoundIcon, StudioIcon } from "@krizaka/icons";
 import { Mascot } from "@krizaka/ui/mascots";
@@ -15,7 +17,7 @@ import DemoClip from "@/app/components/demos/DemoClip";
 import Rich from "@/app/components/Rich";
 import { reveal } from "@/lib/motion";
 import { cn } from "@krizaka/ui/cn";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import ButtonLink from "@/app/components/ButtonLink";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -52,7 +54,7 @@ export default async function OrazakaDemoPage({ params }: Props) {
           </div>
         }
       >
-        <div className="bp-wrap bp-hero bp-center">
+        <div className="kz-frame bp-wrap bp-hero bp-center">
           {/* The product's name first — the mark and the word together, as in the menu, on the home and on Orochia. */}
           <p className="oz-lockup">
             <OrazakaLogo size={72} />
@@ -88,11 +90,8 @@ export default async function OrazakaDemoPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── The whole day, chained ─── */}
-      <section id="tour" className="bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
-        <div className="bp-center" style={{ marginBottom: 28 }} {...reveal()}>
-          <p className="bp-eyebrow">{t.tourEyebrow}</p>
-          <h2 className="bp-h2">{t.tourTitle}</h2>
-        </div>
+      <section id="tour" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
+        <SectionHeading eyebrow={t.tourEyebrow} title={t.tourTitle} align="center" reveal />
         <div {...reveal(1)}>
           <ProductTour clips={DEMO_TOUR.map((id) => ({ id, src: tourSrc(id), ...t.tour[id] }))} frameLabel={t.frameLabel} />
         </div>
@@ -100,11 +99,8 @@ export default async function OrazakaDemoPage({ params }: Props) {
 
       {/* ─── One section per job a client wants done ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="use-cases">
-        <div className="bp-wrap">
-          <div className="bp-center" {...reveal()}>
-            <p className="bp-eyebrow">{t.useCasesEyebrow}</p>
-            <h2 className="bp-h2"><Rich text={t.useCasesTitle} /></h2>
-          </div>
+        <div className="kz-frame bp-wrap">
+          <SectionHeading eyebrow={t.useCasesEyebrow} title={<Rich text={t.useCasesTitle} />} align="center" reveal />
           {DEMO_USE_CASES.map(({ id, clip, icon, bird }, k) => {
             const Icon = ICONS[icon];
             const uc = t.useCases[id];
@@ -133,7 +129,7 @@ export default async function OrazakaDemoPage({ params }: Props) {
       </SectionBackdrop>
 
       {/* ─── What the image Studio made on the Mac, with the prompts ─── */}
-      <section id="made-here" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
+      <section id="made-here" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }}>
         <div {...reveal()}>
           <p className="bp-eyebrow"><LocalIcon size={18} nodeColor={node} /> {t.gallery.eyebrow}</p>
           <h2 className="bp-h2"><Rich text={t.gallery.title} /></h2>
@@ -148,14 +144,12 @@ export default async function OrazakaDemoPage({ params }: Props) {
 
       {/* ─── Closing ─── */}
       <SectionBackdrop className="bp-glide" dome={false}>
-        <div className="bp-wrap bp-center" {...reveal()}>
-          <h2 className="bp-h2"><Rich text={t.closing.title} /></h2>
-          <p className="bp-lead">{t.closing.body}</p>
-          <div className="bp-actions">
+        <section className="kz-frame bp-wrap" aria-labelledby="closing-title">
+          <CtaPanel id="closing-title" title={<Rich text={t.closing.title} />} body={t.closing.body} reveal>
             <ButtonLink href="/products/orazaka#how" variant="primary" size="lg">{t.closing.install}</ButtonLink>
             <ButtonLink href={contactHref("orazaka", "orazaka")} size="lg">{t.closing.contact} <ForwardIcon size={16} /></ButtonLink>
-          </div>
-        </div>
+          </CtaPanel>
+        </section>
       </SectionBackdrop>
       <SiteFooter />
 

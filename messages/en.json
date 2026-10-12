@@ -524,6 +524,9 @@
       },
       "products": {
         "title": "Products",
+        "pageEyebrow": "Krizaka products",
+        "pageTitle": "Two products, one way of building",
+        "pageLead": "Two open-source products, presented the same way: what each one does, a recording of the real application, and where to go next.",
         "discover": "Discover",
         "demo": "demo",
         "openApp": "Open the app",
@@ -1164,7 +1167,7 @@
       "write": "Write to us"
     },
     "legal": {
-      "back": "← Back to home",
+      "back": "Back to home",
       "updated": "Last updated: October 2026",
       "privacy": {
         "metaTitle": "Privacy Policy — Krizaka",
@@ -3088,6 +3091,7 @@
       "data-display": "Data display",
       "media": "Media",
       "charts": "Charts",
+      "blocks": "Blocks",
       "layout": "Layout",
       "foundations": "Foundations",
       "domain services": "Domain services",
@@ -3170,6 +3174,7 @@
         "data-display": "Data display",
         "media": "Media",
         "charts": "Charts",
+        "blocks": "Blocks",
         "layout": "Layout",
         "foundations": "Foundations"
       },
