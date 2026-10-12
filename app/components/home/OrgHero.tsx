@@ -1,4 +1,4 @@
-/* Home hero — Krizaka as an organisation: what we build (three products) and how. A server component: the title,
+/* Home hero — Krizaka as an organisation: what we build (its products, lib/org-data.ts) and how. A server component: the title,
    the promise and the product cards are the first paint (LCP); everything behind them is decoration that arrives later.
 
    Depth, back to front (BRAND.md §4), every layer decorative and still under prefers-reduced-motion:

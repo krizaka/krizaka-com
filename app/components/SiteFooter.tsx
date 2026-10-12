@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { ExternalIcon } from "@krizaka/icons";
 import { GitHubMark } from "./brand/GitHubMark";
@@ -14,7 +15,7 @@ export default function SiteFooter() {
   const f = t.site.footer;
   const contactHref = useContactHref();
 
-  // Same entries per product as the menus (lib/nav.ts), one column each.
+  // Same entries per product as the menus (lib/nav.ts), one column each — as many columns as there are products.
   const productColumns = NAV_PRODUCTS.map((p) => ({
     key: p.id,
     title: (
@@ -60,7 +61,7 @@ export default function SiteFooter() {
           </a>
         </div>
 
-        <nav className="kz-footer-cols" aria-label={t.site.menu.footerAria}>
+        <nav className="kz-footer-cols" aria-label={t.site.menu.footerAria} style={{ "--kz-footer-count": columns.length } as CSSProperties}>
           {columns.map((col) => (
             <div key={col.key} className="kz-footer-col">
               <p className="kz-footer-title">{col.title}</p>
@@ -89,7 +90,7 @@ export default function SiteFooter() {
         .kz-footer-brand p { margin: 14px 0 16px; max-width: 300px; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
         .kz-footer-gh { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--kz-text-secondary); text-decoration: none; }
         .kz-footer-gh:hover { color: var(--kz-text-primary); }
-        .kz-footer-cols { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; }
+        .kz-footer-cols { display: grid; grid-template-columns: repeat(var(--kz-footer-count, 6), minmax(0, 1fr)); gap: 24px; }
         .kz-footer-title { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
           letter-spacing: .12em; text-transform: uppercase; color: var(--kz-text-primary); }
         .kz-footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
@@ -99,6 +100,9 @@ export default function SiteFooter() {
           border-top: 1px solid var(--kz-border-subtle); font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
         @media (max-width: 1120px) {
           .kz-footer-inner { grid-template-columns: 1fr; gap: 36px; }
+        }
+        @media (max-width: 860px) {
+          .kz-footer-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 20px; }
         }
         @media (max-width: 560px) {
           .kz-footer-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }

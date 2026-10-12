@@ -2,8 +2,9 @@
 
 > Krizaka is a Montréal (Québec) software studio building open-source,
 > production-ready platforms where compliance, security and modularity are
-> enforced in code. Three products — two running today, one coming soon — every
-> repository public under Apache-2.0 at https://github.com/krizaka.
+> enforced in code. Four products — two running today, one coming soon, one
+> under construction — every repository public under Apache-2.0 at
+> https://github.com/krizaka.
 
 ## Products
 
@@ -24,6 +25,13 @@
   reasons and never a score; the next batch waits for a short debrief; mutual
   interest opens a seven-day intro the agent never reads. Location rounded to
   ~1 km, sensitive answers encrypted at rest, account deletion in the app.
+- Yororis (under construction: not deployed, not offered, no date) — a listening
+  space with a face and a voice, powered by Orazaka's wellbeing pack: an AI
+  presence that says it is one listens, reflects back, asks one question and
+  stops (up to 25 minutes, one moment a day, three a week by default). Between
+  moments it keeps three lines the person owns, never the transcript. Its legal,
+  ethical and clinical framework is studied before anything is offered; the only
+  way in today is to talk to the team.
 
 ## Key pages
 
@@ -38,6 +46,7 @@
 - Orochia docs: https://krizaka.com/en/docs/orochia
 - Orochia (the platform): {{OROCHIA_APP_URL}}
 - Yazakia (coming soon): https://krizaka.com/en/products/yazakia
+- Yororis (under construction): https://krizaka.com/en/products/yororis
 - Our story (where the names come from): https://krizaka.com/en/story
 - Contact the team: https://krizaka.com/en/contact
 
@@ -52,6 +61,7 @@
 - Orazaka administration (what an administrator controls): https://krizaka.com/en/docs/orazaka/admin
 - Orochia docs: https://krizaka.com/en/docs/orochia
 - Orochia admin console (moderation, 2257, payouts, its four gates): https://krizaka.com/en/docs/orochia/admin_console
+- Yororis (under construction: what it is, what it is not, what is studied): https://krizaka.com/en/docs/yororis
 
 Every documentation page:
 
@@ -63,6 +73,8 @@ Every documentation page:
 - Orochia: https://github.com/krizaka/orochia
 - Yazakia (API, in progress): https://github.com/krizaka/yazakia
 - Yazakia mobile (Expo, in progress): https://github.com/krizaka/yazakia-mobile
+- Yororis (under construction): https://github.com/krizaka/yororis
+- Yororis mobile (under construction): https://github.com/krizaka/yororis-mobile
 - Organisation: https://github.com/krizaka
 
 Languages: English and French (Québec). Detailed version: https://krizaka.com/llms-full.txt

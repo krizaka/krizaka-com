@@ -67,7 +67,8 @@ html.light .org-hero:has(.org-hero-product[data-product="orochia"]:is(:hover, :f
 .org-hero-line { display:block; }
 .org-hero-accent { background:var(--kz-sheen); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .org-hero-sub { font-size:clamp(15px,1.8vw,17px); line-height:1.7; color:var(--kz-text-secondary); max-width:660px; margin:20px auto 0; }
-.org-hero-products { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:12px; margin:32px auto 0; max-width:900px; text-align:left; }
+/* Four products: two by two from 760 px (never three and an orphan), one column on a phone. */
+.org-hero-products { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr)); gap:12px; margin:32px auto 0; max-width:900px; text-align:left; }
 .org-hero-product { position:relative; display:flex; align-items:center; gap:12px; padding:14px 16px; border-radius:14px; text-decoration:none;
   color:var(--kz-text-primary); background:color-mix(in srgb, var(--kz-surface-1) 88%, transparent); border:1px solid var(--kz-border-subtle);
   transition:border-color var(--kz-transition-smooth), transform var(--kz-transition-fast), box-shadow var(--kz-transition-smooth); }

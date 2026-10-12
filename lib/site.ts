@@ -40,6 +40,13 @@ export const GITHUB_REPOSITORIES_URL = `${GITHUB_ORG_URL}?q=orazaka&type=all`;
 export const YAZAKIA_REPO_URL = `${GITHUB_ORG_URL}/yazakia`;
 export const YAZAKIA_MOBILE_REPO_URL = `${GITHUB_ORG_URL}/yazakia-mobile`;
 
+/** Yororis, the listening space (under construction): its repositories — and nothing else. In construction mode there
+    is no application address and no download link anywhere on the site (krizaka/yororis docs/FRAMEWORK.md §5). */
+export const YORORIS_REPO_URL = `${GITHUB_ORG_URL}/yororis`;
+export const YORORIS_MOBILE_REPO_URL = `${GITHUB_ORG_URL}/yororis-mobile`;
+/** What Yororis is, what it is not, what is being studied — the framework, in its repository. */
+export const YORORIS_FRAMEWORK_URL = `${YORORIS_REPO_URL}/blob/main/docs/FRAMEWORK.md`;
+
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;
 export const PLATFORM_KIT_REPO_URL = `${GITHUB_ORG_URL}/krizaka-platform-kit`;

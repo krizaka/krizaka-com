@@ -32,7 +32,7 @@ export interface NavLink<I extends NavIcon = NavIcon> {
 export type ProductStatus = "upcoming" | "construction";
 
 export interface NavProduct {
-  id: "orazaka" | "orochia" | "yazakia";
+  id: "orazaka" | "orochia" | "yazakia" | "yororis";
   name: string;
   href: string;
   /** Not released yet: the menus, the footer and the home show it as a compact chip (ProductStatus). */
@@ -77,6 +77,20 @@ export const NAV_PRODUCTS: NavProduct[] = [
       { href: "/products/yazakia#matching", icon: "signature" },
     ],
   },
+  /* In construction: the same four entries as every product — there is no demo, and the Demo entry says so by opening
+     the page's status section (#construction); the signature is "a presence that stops" (#stops). */
+  {
+    id: "yororis",
+    name: "Yororis",
+    href: "/products/yororis",
+    status: "construction",
+    links: [
+      { href: "/products/yororis", icon: "overview" },
+      { href: "/products/yororis#how-it-works", icon: "architecture" },
+      { href: "/products/yororis#construction", icon: "demo" },
+      { href: "/products/yororis#stops", icon: "signature" },
+    ],
+  },
 ];
 
 export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
@@ -99,7 +113,7 @@ export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["repos", "story"] as co
    The CLI has its own entry — the tool a developer reaches for first (one command per intent) — pointing at its
    generated reference in the Orazaka docs.
    Texts: products and the CLI → site.nav.docs.<id>; ui/java → docs.sections.<id>; the hub → site.nav.docs.all. */
-export type DocsLinkId = "orazaka" | "cli" | "orochia" | "ui" | "java";
+export type DocsLinkId = "orazaka" | "cli" | "orochia" | "yororis" | "ui" | "java";
 export interface DocsNavLink {
   id: DocsLinkId;
   href: string;
@@ -111,6 +125,7 @@ export const NAV_DOCS: DocsNavLink[] = [
   { id: "orazaka", href: "/docs/orazaka" },
   { id: "cli", href: "/docs/orazaka/cli" },
   { id: "orochia", href: "/docs/orochia", match: ["/products/orochia/docs"] },
+  { id: "yororis", href: "/docs/yororis" },
   { id: "ui", href: "/docs/ui" },
   { id: "java", href: "/docs/java" },
 ];
@@ -119,8 +134,8 @@ export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) =>
     ? { label: t.docs.sections[link.id].title, desc: t.docs.sections[link.id].description }
     : t.site.nav.docs[link.id];
 /** The mark beside a docs entry: the product's, the CLI wears Orazaka's (it is the Orazaka CLI), Krizaka's otherwise. */
-export const docsLinkLogo = (link: DocsNavLink): "orazaka" | "orochia" | "krizaka" =>
-  link.id === "orazaka" || link.id === "cli" ? "orazaka" : link.id === "orochia" ? "orochia" : "krizaka";
+export const docsLinkLogo = (link: DocsNavLink): "orazaka" | "orochia" | "yororis" | "krizaka" =>
+  link.id === "orazaka" || link.id === "cli" ? "orazaka" : link.id === "orochia" || link.id === "yororis" ? link.id : "krizaka";
 const docsLinkMatches = (link: DocsNavLink, pathname: string) =>
   pathname.startsWith(link.href) || (link.match ?? []).some((p) => pathname.startsWith(p));
 /** Active on its pages — but not where a more specific entry (the CLI inside the Orazaka docs) is. */

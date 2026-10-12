@@ -1,8 +1,11 @@
-/* The four documentation sets, on one engine (Fumadocs).
+/* The five documentation sets, on one engine (Fumadocs).
 
    - ui, java     content/docs/** — MDX written here. Their titles and descriptions on the site come from
                   messages (docs.pages.<section>.<page>), so the sidebar, the page heading and the SEO metadata
                   are translated; the body is English (developer documentation), like the synced product docs.
+   - yororis      content/docs/yororis — written here while Yororis is under construction (one page: what it is, what
+                  it is not, the controls it inherits, what is studied); titles from messages like ui/java. It becomes
+                  a synced product section when krizaka/yororis has code and docs:generate (PYO5).
    - ui/<name>    one page per component of the @krizaka/ui registry, generated at every build (virtual pages, see
                   componentFiles): the code of the component drives it. An optional content/docs/ui/components/
                   <name>.mdx enriches the generated page (its body is rendered under "Notes").
@@ -16,16 +19,16 @@
 
 import { loader, update, type VirtualFile } from "fumadocs-core/source";
 import type * as PageTree from "fumadocs-core/page-tree";
-import { java, orazaka, orochia, ui } from "@/.source/server";
+import { java, orazaka, orochia, ui, yororis } from "@/.source/server";
 import { DOCS_MANIFEST, type DocManifestEntry } from "@/lib/docs-manifest";
 import { OROCHIA_DOCS_MANIFEST } from "@/lib/orochia-docs-manifest";
 import { format, getDictionary, type Locale, type TranslationDictionary } from "@/lib/i18n";
 import { CATEGORIES, getKitFoundations, getRegistryItems, type ProductKit, type RegistryItem } from "@/lib/ui-registry";
 import { type Foundation, FOUNDATIONS, foundationStructuredData } from "@/lib/ui-foundations";
 
-export const DOCS_SECTIONS = ["ui", "java", "orazaka", "orochia"] as const;
+export const DOCS_SECTIONS = ["ui", "java", "orazaka", "orochia", "yororis"] as const;
 export type DocsSection = (typeof DOCS_SECTIONS)[number];
-export type WrittenSection = "ui" | "java";
+export type WrittenSection = "ui" | "java" | "yororis";
 export type ProductSection = "orazaka" | "orochia";
 
 export const isProductSection = (section: DocsSection): section is ProductSection => section === "orazaka" || section === "orochia";
@@ -38,7 +41,7 @@ export const PRODUCT_MANIFESTS: Record<ProductSection, Record<string, DocManifes
 /** Reading order of the product categories in the sidebar. */
 const CATEGORY_ORDER = ["getting-started", "architecture", "api", "core-features", "operations", "guidelines"];
 
-const COLLECTIONS = { ui, java, orazaka, orochia };
+const COLLECTIONS = { ui, java, orazaka, orochia, yororis };
 
 /** A synced file `API_REFERENCE.md` is the page `api_reference` — the manifest's key and the old URL's slug. */
 const productSlug = (path: string) => [path.replace(/\.md$/, "").split("/").pop()!.toLowerCase()];

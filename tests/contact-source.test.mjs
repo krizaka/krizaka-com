@@ -9,6 +9,8 @@ test("names the page a visitor comes from", () => {
     "/en/docs/orochia/api": "orochia",
     "/en/products/orazaka/demos": "orazaka",
     "/fr/products/yazakia": "yazakia",
+    "/en/products/yororis": "yororis",
+    "/fr/docs/yororis": "yororis",
     "/en/open-source": "open-source",
     "/en/docs/ui/button": "docs-ui",
     "/en/docs/java": "docs-java",
@@ -23,6 +25,7 @@ test("pre-selects the topic the page is about, and nothing for Krizaka as a whol
   assert.equal(topicForSource("orochia"), "orochia");
   assert.equal(topicForSource("orazaka"), "orazaka");
   assert.equal(topicForSource("yazakia"), "yazakia");
+  assert.equal(topicForSource("yororis"), "yororis");
   assert.equal(topicForSource("docs-ui"), "blocks");
   assert.equal(topicForSource("open-source"), "blocks");
   assert.equal(topicForSource("story"), null);

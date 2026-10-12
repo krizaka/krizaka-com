@@ -6,13 +6,18 @@ import { getDictionary } from "@/lib/i18n";
    stable @id, so Google's Knowledge Graph reads Krizaka (Organization),
    krizaka.com (WebSite) and its released products (SoftwareApplication:
    Orazaka, Orochia) as one connected knowledge unit. The Organization names
-   all three products in its description; Yazakia gets no application node
+   every product in its description; Yazakia gets no application node
    until it is released — schema.org has no "upcoming" state for software,
    and an application node without a store or a download would misinform.
+   Yororis, under construction, gets a page-scoped node on /products/yororis
+   (buildYororisJsonLd): a LifestyleApplication — never Medical or Health —
+   whose creativeWorkStatus says it is under construction, with no offer,
+   no download and no application address.
    ═══════════════════════════════════════════════════════════════════ */
 
 import {
   SITE_URL,
+  YORORIS_REPO_URL,
   GITHUB_ORG_URL,
   GITHUB_REPO_URL,
   ORAZAKA_VERSION,
@@ -162,5 +167,28 @@ export function buildFaqJsonLd(
       name: question,
       acceptedAnswer: { "@type": "Answer", text: answer },
     })),
+  };
+}
+
+/** /products/yororis — the product as it stands: under construction, a lifestyle application (its category is a
+    declaration of purpose: never MedicalApplication or HealthApplication), no offer, no download, no application. */
+export function buildYororisJsonLd(locale: Locale) {
+  const y = getDictionary(locale).site.structuredData.yororis;
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${SITE_URL}/#yororis`,
+    name: "Yororis",
+    applicationCategory: "LifestyleApplication",
+    operatingSystem: "Web, iOS, Android",
+    description: y.description,
+    creativeWorkStatus: y.status,
+    keywords: y.keywords,
+    inLanguage: hreflangOf(locale),
+    url: `${SITE_URL}/${locale}/products/yororis`,
+    codeRepository: YORORIS_REPO_URL,
+    license: "https://www.apache.org/licenses/LICENSE-2.0",
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
   };
 }

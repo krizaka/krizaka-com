@@ -16,7 +16,7 @@ import { pipelineSteps, type Product } from "@/lib/architecture-model";
 import { getDictionary } from "@/lib/i18n";
 
 /** The product whose model a section's schema blocks read: its own, Krizaka Java for /docs/java, none for /docs/ui. */
-const SECTION_PRODUCT: Record<DocsSection, Product | null> = { orazaka: "orazaka", orochia: "orochia", java: "java", ui: null };
+const SECTION_PRODUCT: Record<DocsSection, Product | null> = { orazaka: "orazaka", orochia: "orochia", java: "java", ui: null, yororis: null };
 
 export function getMdxComponents(locale: Locale, section: DocsSection): MDXComponents {
   const Anchor = defaultMdxComponents.a;

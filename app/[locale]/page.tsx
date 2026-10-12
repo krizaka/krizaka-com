@@ -23,12 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Krizaka — Open source. Closed to compromise.",
       description:
-        "Krizaka is a Montréal software studio building open-source platforms: Orazaka, sovereign on-premise AI (Law 25, GDPR), Orochia, the video platform for independent creators, and Yazakia, the dating app where you talk first (coming soon).",
+        "Krizaka is a Montréal software studio building open-source platforms: Orazaka, sovereign on-premise AI (Law 25, GDPR), Orochia, the video platform for independent creators, Yazakia, the dating app where you talk first (coming soon), and Yororis, a listening space with a face and a voice (under construction).",
     },
     fr: {
       title: "Krizaka — Open source. Fermé aux compromis.",
       description:
-        "Krizaka est un studio logiciel montréalais qui conçoit des plateformes open source : Orazaka, l'IA souveraine sur site (Loi 25, RGPD), Orochia, la plateforme vidéo des créateurs indépendants, et Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt).",
+        "Krizaka est un studio logiciel montréalais qui conçoit des plateformes open source : Orazaka, l'IA souveraine sur site (Loi 25, RGPD), Orochia, la plateforme vidéo des créateurs indépendants, Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt), et Yororis, un espace d'écoute avec un visage et une voix (en construction).",
     },
   });
 }

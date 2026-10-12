@@ -7,7 +7,7 @@
 
 <h1 align="center">krizaka-com</h1>
 
-<p align="center"><strong>Public Next.js site for Krizaka &amp; its three products: Orazaka, Orochia and Yazakia (coming soon).</strong></p>
+<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Orazaka, Orochia, Yazakia (coming soon) and Yororis (under construction).</strong></p>
 
 <p align="center">
   <a href="https://scorecard.dev/viewer/?uri=github.com/krizaka/krizaka-com"><img src="https://api.scorecard.dev/projects/github.com/krizaka/krizaka-com/badge?style=flat-square" alt="OpenSSF Scorecard" /></a>
@@ -15,6 +15,7 @@
   <a href="https://github.com/krizaka/orazaka"><img src="https://img.shields.io/badge/AI_Engine-Orazaka-f67e23?style=flat-square" alt="Orazaka" /></a>
   <a href="https://github.com/krizaka/orochia"><img src="https://img.shields.io/badge/Streaming-Orochia-7c3aed?style=flat-square" alt="Orochia" /></a>
   <a href="https://github.com/krizaka/yazakia"><img src="https://img.shields.io/badge/Dating_(soon)-Yazakia-10b981?style=flat-square" alt="Yazakia (coming soon)" /></a>
+  <a href="https://github.com/krizaka/yororis"><img src="https://img.shields.io/badge/Listening_(under_construction)-Yororis-5d894d?style=flat-square" alt="Yororis (under construction)" /></a>
   <a href="https://github.com/krizaka"><img src="https://img.shields.io/badge/GitHub_Org-krizaka-196df5?style=flat-square" alt="Krizaka Organization" /></a>
   <img src="https://img.shields.io/badge/Loi%2025%20%2F%20GDPR%20%2F%202257-success?style=flat-square" alt="Compliance" />
 </p>
@@ -34,7 +35,14 @@
 </tr>
 </table>
 
-<p align="center"><sub>The two released products, recorded on the real applications — the same clips play on krizaka.com. The third, <a href="https://www.krizaka.com/en/products/yazakia">Yazakia</a> (the dating app where you talk first), is announced on the site and gets its clip when the app ships.</sub></p>
+<p align="center"><sub>The two released products, recorded on the real applications — the same clips play on krizaka.com. The third, <a href="https://www.krizaka.com/en/products/yazakia">Yazakia</a> (the dating app where you talk first), is announced on the site and gets its clip when the app ships; the fourth, <a href="https://www.krizaka.com/en/products/yororis">Yororis</a> (a listening space with a face and a voice), is under construction — not deployed, not offered, no date.</sub></p>
+
+| Product | What it is | Status | Page |
+|---|---|---|---|
+| [Orazaka](https://github.com/krizaka/orazaka) | Sovereign, on-premise AI orchestration engine | Released | [/products/orazaka](https://www.krizaka.com/en/products/orazaka) |
+| [Orochia](https://github.com/krizaka/orochia) | The video platform for independent creators | Released | [/products/orochia](https://www.krizaka.com/en/products/orochia) |
+| [Yazakia](https://github.com/krizaka/yazakia) | The dating app where you talk first | Coming soon | [/products/yazakia](https://www.krizaka.com/en/products/yazakia) |
+| [Yororis](https://github.com/krizaka/yororis) | A listening space with a face and a voice, powered by Orazaka's wellbeing pack | Under construction (not offered; its words checked by `npm run lexicon`) | [/products/yororis](https://www.krizaka.com/en/products/yororis) |
 
 ---
 
@@ -63,9 +71,9 @@ one schema component for every product (`app/components/diagrams/`, no diagram l
 | `lib/structured-data.ts` | JSON-LD `@graph` builders (Organization · WebSite · SoftwareApplication, Breadcrumb, FAQ). |
 | `lib/site.ts` | External identity (SITE_URL, GitHub, version) — single source. |
 | `lib/i18n.ts` | Binds [`@krizaka/i18n`](https://www.npmjs.com/package/@krizaka/i18n) to `messages/en.json` + `messages/fr.json` (`getDictionary`, `asLocale`, `format`). |
-| `app/[locale]/docs/` | The documentation (Fumadocs): hub, then `[section]` = `ui`, `java`, `orazaka`, `orochia`. |
-| `source.config.ts` · `lib/docs-source.ts` | The four Fumadocs collections and their loaders, sidebars, titles (messages or manifest). |
-| `content/docs/ui/` · `content/docs/java/` | Written docs (MDX). `content/docs/ui/components/<name>.mdx` are scaffolded by `npm run docs:ui`. |
+| `app/[locale]/docs/` | The documentation (Fumadocs): hub, then `[section]` = `ui`, `java`, `orazaka`, `orochia`, `yororis`. |
+| `source.config.ts` · `lib/docs-source.ts` | The five Fumadocs collections and their loaders, sidebars, titles (messages or manifest). |
+| `content/docs/ui/` · `content/docs/java/` · `content/docs/yororis/` | Written docs (MDX; Yororis' until its docs are synced). `content/docs/ui/components/<name>.mdx` are scaffolded by `npm run docs:ui`. |
 | `app/components/docs/` | MDX components: `ComponentPreview`, `PropsTable`, `StoryFrame`, `EventSchema`, `ComingSoon`. |
 | `lib/docs-manifest.ts` · `lib/orochia-docs-manifest.ts` | Publication allow-lists of the synced product docs (only listed files are even compiled). |
 | `lib/{use-cases,packages,architecture-mesh,pipeline-mesh}-data.ts` | Page/visualization data. |

@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const GROUPS = [
   { id: "platform", sections: ["ui", "java"] },
-  { id: "products", sections: ["orazaka", "orochia"] },
+  { id: "products", sections: ["orazaka", "orochia", "yororis"] },
 ] as const;
 
 /* Straight to what developers and operators ask for first: the CLI, the packs, what an administrator controls. */
@@ -33,7 +33,8 @@ const SHORTCUTS = [
   { id: "orochiaAdmin", href: "/docs/orochia/admin_console", logo: "orochia" },
 ] as const;
 
-const logoOf = (section: string): "orazaka" | "orochia" | "krizaka" => (section === "orazaka" || section === "orochia" ? section : "krizaka");
+const logoOf = (section: string): "orazaka" | "orochia" | "yororis" | "krizaka" =>
+  section === "orazaka" || section === "orochia" || section === "yororis" ? section : "krizaka";
 
 /* The documentation hub, on the blocks of @krizaka/ui: the hero, then one section per group — shortcuts, the platform's
    building blocks, each product's docs — each a grid of LinkCards (the whole card one link, the product's mark). */

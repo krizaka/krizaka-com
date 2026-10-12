@@ -42,7 +42,7 @@
 - `lib/nav.ts` is the single source of the navigation: the desktop bar (`TopNavBar` · `ProductsMenu`), the mobile
   panel, the footer, the ⌘K search and the home spotlights all render it. Every product exposes the same four
   entries in the same order (overview · how it works · demo · signature), each with a label and a short line
-  (`site.nav.<product>.links.<id>.{label,desc}`); documentation lives under **Docs** (`NAV_DOCS`: Orazaka, CLI, Orochia,
+  (`site.nav.<product>.links.<id>.{label,desc}`); documentation lives under **Docs** (`NAV_DOCS`: Orazaka, CLI, Orochia, Yororis,
   Krizaka UI, Krizaka Java — the one entry point of every documentation, also listed by the ⌘K search and the footer's
   Documentation column; the CLI entry is a direct link to the generated `/docs/orazaka/cli`). A product page may still link its documentation in context.
 - **The bar** is `@krizaka/ui/nav-bar` (`NavBar.Root/Brand/Items/Menu/MenuLink/Link/Actions/Mobile`), composed in
@@ -65,14 +65,24 @@
   hub), Open source, Our story, then Contact us, theme and language. It scrolls inside the viewport.
 - Each product wears its brand (`@krizaka/tokens/brands/scoped.css`): `/products/orazaka*` under `.brand-orazaka`
   (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), `/products/yazakia*` under `.brand-yazakia`
-  (emerald → turquoise), the rest of the site Krizaka (ink + blue).
+  (emerald → turquoise), `/products/yororis*` and `/docs/yororis` under `.brand-yororis` (sand → sage), the rest of the
+  site Krizaka (ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons) (never lucide for new work); sections
   are the page blocks of `@krizaka/ui` (§4.1) on `SectionBackdrop` (BRAND.md §4); the remaining `bp-*` classes of
   `app/globals.css` only style what is the brand page's own (ledger, comparison table, terminal), inside the frame.
 - Brand marks come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui) on npm (`KrizakaLogo`,
-  `OrazakaLogo`, `OrochiaLogo`, `YazakiaLogo`, `ProductLogo`) — the same package the products use, never a copy in this repo.
+  `OrazakaLogo`, `OrochiaLogo`, `YazakiaLogo`, `YororisLogo`, `ProductLogo`) — the same package the products use, never a copy in this repo.
   Never a placeholder icon. A change to a mark is made in `krizaka-ui`, released, then adopted here.
-- **A product not released yet** (`soon: true` in `NAV_PRODUCTS`, today Yazakia) says so (`site.nav.<id>.badge`, "Coming
+- **A product in construction** (`status: "construction"`, today Yororis) exposes the same four entries as every product;
+  there is no demo, so its **Demo entry opens its status section** (`#construction`) — it says so instead of hiding the
+  entry. Its words say "under construction" and never "coming soon", beta, early access, waiting list or sign-up; its
+  pages carry **one** call to action, "Talk to us about Yororis" (the contact form, topic pre-selected) — no trial,
+  download, sign-up or waiting-list button, no app or download URL in `lib/site.ts`.
+- **Yororis' lexicon** is law for every message whose key contains `yororis` and for `content/docs/yororis`:
+  `npm run lexicon` (in `npm run lint`) fails on the "never" column of `company/prompts-yororis.md` §2.1. The reviewed
+  texts (`site.yororis.reviewed.*`: the "under construction" statement, "What Yororis is not") are fingerprinted in
+  `scripts/lexicon-reviewed.json`: change one only with `npm run lexicon -- --accept-review YYYY-MM-DD` and say so in the PR.
+- **A product not released yet** (`status: "upcoming"` in `NAV_PRODUCTS`, today Yazakia) says so (`site.nav.<id>.badge`, "Coming
   soon") and lists only the entries that exist — no demo or docs link before there is a demo or a doc (no dead link). The
   home shows its animated mark where the recording will be (`PRODUCTS[].media` absent), never an invented screenshot,
   profile or figure; no store button before the store listing exists.
@@ -101,8 +111,9 @@
 
 ## 2.3 Documentation — one engine (Fumadocs)
 
-- `/docs/{ui,java,orazaka,orochia}` render four Fumadocs collections (`source.config.ts`, `lib/docs-source.ts`).
-  Product docs stay synced and manifest-gated (§2); `content/docs/ui` and `content/docs/java` are written here; the
+- `/docs/{ui,java,orazaka,orochia,yororis}` render five Fumadocs collections (`source.config.ts`, `lib/docs-source.ts`).
+  Product docs stay synced and manifest-gated (§2); `content/docs/ui` and `content/docs/java` are written here, and so is
+  `content/docs/yororis` while Yororis is under construction (one page, replaced by its synced docs in PYO5); the
   `ui/` pages of a product are generated from its kit (below).
 - **The code drives `/docs/ui`.** One page per component of the **published `@krizaka/ui` registry**, generated at
   every build (virtual pages in `lib/docs-source.ts`, rendered by `ComponentDoc`): summary, platforms (Web · Mobile ·
