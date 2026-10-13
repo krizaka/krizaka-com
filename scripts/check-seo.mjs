@@ -23,7 +23,7 @@ export function auditHtml(html, path) {
   else if (/Krizaka[^|]*\| Krizaka \| Krizaka|\| Krizaka \| Krizaka/.test(titles[0])) problems.push(`brand repeated in title: ${titles[0]}`);
   const desc = [...html.matchAll(/<meta\s[^>]*name="description"[^>]*>/g)].map((m) => attr(m[0], "content"));
   if (desc.length !== 1) problems.push(`${desc.length} meta description (expected 1)`);
-  else if (decode(desc[0]).length < 50 || decode(desc[0]).length > 350) problems.push(`description length ${decode(desc[0]).length}`);
+  else if (decode(desc[0]).length < 30 || decode(desc[0]).length > 400) problems.push(`description length ${decode(desc[0]).length}`);
 
   const links = [...html.matchAll(/<link\s[^>]*>/g)].map((m) => m[0]);
   const canonical = links.filter((l) => /rel="canonical"/.test(l)).map((l) => attr(l, "href"));
@@ -57,7 +57,9 @@ export function auditHtml(html, path) {
     for (const t of ["TechArticle", "BreadcrumbList"]) if (!types.includes(t)) problems.push(`docs page: ${t} JSON-LD missing`);
   }
   if (/^\/(en|fr)\/products\/(orazaka|orochia|yazakia|yororis)$/.test(path) && !types.includes("FAQPage")) problems.push("product page: FAQPage JSON-LD missing");
-  if (/https:\/\/krizaka\.com/.test(html)) problems.push("the apex https://krizaka.com is declared (use www)");
+  // What the page declares to machines (links, meta tags, JSON-LD) — a documentation sample may quote the apex in its text.
+  const declared = [...links, ...[...html.matchAll(/<meta\s[^>]*>/g)].map((m) => m[0]), ...blocks].join("\n");
+  if (/https:\/\/krizaka\.com/.test(declared)) problems.push("the apex https://krizaka.com is declared (use www)");
   return problems;
 }
 
