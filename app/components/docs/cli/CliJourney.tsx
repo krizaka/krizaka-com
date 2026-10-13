@@ -13,7 +13,7 @@ import {
 } from "@krizaka/icons";
 import { cliModel } from "@/lib/cli-model";
 import { format, getDictionary, type Locale } from "@/lib/i18n";
-import CopyButton from "@/app/components/sections/CopyButton";
+import { CodeBlock } from "@krizaka/ui/code-block";
 
 /* What the quick start does (```cli-journey in the synced CLI.md): the three commands in order, each with the phases it
    announces — read from the CLI's code by the generator (architecture.json · cli.journey) — and, for `dev`, the
@@ -54,10 +54,7 @@ export function CliJourney({ locale }: { locale: Locale }) {
               </span>
               <span className="kz-cli-step-n">{format(t.step, { n: i + 1 })}</span>
             </div>
-            <div className="kz-cli-step-run">
-              <code className="kz-cli-step-command">{command}</code>
-              <CopyButton code={command} label={t.copyCommand} done={t.copied} />
-            </div>
+            <CodeBlock className="kz-cli-step-run" code={command} language="bash" copyLabel={t.copyCommand} copiedLabel={t.copied} />
             <p className="kz-cli-step-text" lang="en">
               {step.description}
             </p>

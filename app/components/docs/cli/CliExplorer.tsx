@@ -3,7 +3,7 @@
 import { useId, useState } from "react";
 import { format } from "@krizaka/i18n";
 import { SearchIcon } from "@krizaka/icons";
-import CopyButton from "@/app/components/sections/CopyButton";
+import { CodeBlock } from "@krizaka/ui/code-block";
 import type { CliCommand } from "@/lib/cli-model";
 import { useI18n } from "../../I18nProvider";
 
@@ -20,10 +20,7 @@ function CommandDetail({ bin, command, nested }: { bin: string; command: CliComm
   const args = command.args.filter((a) => a.desc);
   return (
     <div className="kz-cli-cmd" data-nested={nested ? "" : undefined}>
-      <div className="kz-cli-cmd-usage">
-        <code>{usage}</code>
-        <CopyButton code={usage} label={c.copyCommand} done={c.copied} />
-      </div>
+      <CodeBlock className="kz-cli-cmd-usage" code={usage} language="bash" copyLabel={c.copyCommand} copiedLabel={c.copied} />
       {command.description && (
         <p className="kz-cli-cmd-text" lang="en">
           {command.description}

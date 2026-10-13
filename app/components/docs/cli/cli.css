@@ -67,21 +67,7 @@
   text-transform: uppercase;
 }
 .kz-cli-step-run {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 8px 8px 8px 12px;
-  border: 1px solid var(--kz-border-subtle);
-  border-radius: 10px;
-  background: var(--kz-surface-0);
-}
-.kz-cli-step-command {
-  font-family: var(--kz-font-mono);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--kz-text-primary);
-  overflow-wrap: anywhere;
+  margin: 0;
 }
 .kz-cli-step-text {
   margin: 0;
@@ -257,18 +243,7 @@
   border-left: 2px solid var(--kz-accent-soft);
 }
 .kz-cli-cmd-usage {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px;
-  justify-content: space-between;
-}
-.kz-cli-cmd-usage code {
-  font-family: var(--kz-font-mono);
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--kz-text-primary);
-  overflow-wrap: anywhere;
+  margin: 0;
 }
 .kz-cli-cmd-text {
   margin: 0;
