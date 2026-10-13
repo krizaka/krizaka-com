@@ -1184,6 +1184,13 @@
             "cost": "L'arrivée d'un créateur prend plus de temps qu'une inscription."
           }
         ]
+      },
+      "phone": {
+        "eyebrow": "Sur votre téléphone",
+        "title": "L'application, telle qu'elle tourne",
+        "lead": "Enregistrée sur l'application iOS avec les personnages de la démo : le fil, une story, une vidéo qui joue, un déblocage, un objectif soutenu.",
+        "label": "L'application iOS d'Orochia : le fil, une story, une vidéo qui joue, un déblocage, un objectif soutenu",
+        "docs": "Chaque écran de l'application mobile"
       }
     },
     "yazakia": {
@@ -2286,6 +2293,13 @@
             "cost": "Un clic de plus par action — volontairement."
           }
         ]
+      },
+      "phone": {
+        "eyebrow": "Sur votre téléphone",
+        "title": "Demander, et lancer un Studio, depuis votre téléphone",
+        "lead": "Enregistrée sur l'application iOS avec Eric, sur une pile locale : une question à laquelle répond un modèle sur sa propre machine, puis un Studio lancé, de son formulaire à ses résultats.",
+        "label": "L'application iOS d'Orazaka : une question qui reçoit sa réponse, puis un Studio lancé",
+        "docs": "Chaque écran de l'application mobile"
       }
     },
     "orazakaDemo": {

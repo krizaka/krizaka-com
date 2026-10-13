@@ -33,6 +33,7 @@ import { tourSrc } from "@/lib/orochia-demo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
 import ContactCta from "@/app/components/home/ContactCta";
 import AdminCallout from "@/app/components/products/AdminCallout";
+import OnYourPhone from "@/app/components/products/OnYourPhone";
 import { moduleMapData } from "@/lib/architecture-model";
 import { journeysFor } from "@/lib/journeys";
 import { OrochiaLogo } from "@krizaka/ui";
@@ -257,6 +258,9 @@ export default async function OrochiaPage({ params }: Props) {
           </Link>
         </p>
       </section>
+
+      {/* ─── On your phone: the iOS app in one clip, then the mobile docs ─── */}
+      <OnYourPhone product="orochia" text={t.phone} />
 
       {/* ─── Guarantees ─── */}
       <SectionBackdrop className="bp-glide" dome={false} id="guarantees" style={{ scrollMarginTop: 72 }}>

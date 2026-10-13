@@ -1184,6 +1184,13 @@
             "cost": "A creator's onboarding takes longer than a sign-up."
           }
         ]
+      },
+      "phone": {
+        "eyebrow": "On your phone",
+        "title": "The app, as it runs",
+        "lead": "Recorded on the iOS app with the demo cast: the feed, a story, a video playing, an unlock, a goal backed.",
+        "label": "The Orochia iOS app: the feed, a story, a video playing, an unlock, a goal backed",
+        "docs": "Every screen of the mobile app"
       }
     },
     "yazakia": {
@@ -2286,6 +2293,13 @@
             "cost": "One more click per action — on purpose."
           }
         ]
+      },
+      "phone": {
+        "eyebrow": "On your phone",
+        "title": "Ask, and run a Studio, from your phone",
+        "lead": "Recorded on the iOS app as Eric, on a local stack: a question answered by a model on his own machine, then a Studio run from its form to its results.",
+        "label": "The Orazaka iOS app: a question answered, then a Studio run",
+        "docs": "Every screen of the mobile app"
       }
     },
     "orazakaDemo": {
