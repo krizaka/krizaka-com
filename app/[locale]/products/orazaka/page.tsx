@@ -38,6 +38,7 @@ import OnYourPhone from "@/app/components/products/OnYourPhone";
 import ContactCta from "@/app/components/home/ContactCta";
 import PacksCallout from "@/app/components/products/PacksCallout";
 import AdminCallout from "@/app/components/products/AdminCallout";
+import UnfilteredModels from "@/app/components/orazaka/UnfilteredModels";
 import Rich from "@/app/components/Rich";
 import { OrazakaIso } from "@/app/components/products/ProductIso";
 import { GitHubMark } from "@/app/components/brand/GitHubMark";
@@ -262,6 +263,9 @@ export default async function OrazakaPage({ params }: Props) {
           </div>
         </div>
       </SectionBackdrop>
+
+      {/* ─── Unfiltered models, your rules ─── */}
+      <UnfilteredModels locale={asLocale(locale)} variant="pitch" />
 
       {/* ─── Platform: six capabilities ─── */}
       <section className="kz-frame bp-wrap">

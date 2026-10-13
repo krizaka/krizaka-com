@@ -2508,6 +2508,81 @@
         "contact": "Nous écrire"
       }
     },
+    "orazakaUnfiltered": {
+      "badge": "Modèles non filtrés — vos règles",
+      "eyebrow": "Modèles non filtrés · vos règles",
+      "title": "Aucun filtre de fournisseur entre votre équipe et <b>son travail</b>.",
+      "lead": "Les assistants hébergés appliquent la politique de refus de leur fournisseur à chaque réponse : l'analyste sécurité, l'infirmière, le journaliste et la romancière reçoivent un refus ou une page d'avertissements. Orazaka sert des modèles à poids ouverts sans cette couche, sur vos machines — et les seules règles sont celles que vous écrivez.",
+      "pillars": {
+        "freedom": {
+          "title": "Liberté",
+          "body": "Des modèles à poids ouverts non filtrés au catalogue — Qwen 2.5, Dolphin Llama 3, Gemma 3, « abliterés » ou affinés sans refus. Des réponses franches aux questions professionnelles légitimes, aucun refus silencieux."
+        },
+        "sovereignty": {
+          "title": "Souveraineté",
+          "body": "Aucune requête ne part chez un fournisseur à l'étranger : le modèle tourne là où vivent vos données, et la politique de personne d'autre ne s'applique à vos questions."
+        },
+        "responsibility": {
+          "title": "Responsabilité",
+          "body": "La politique est la vôtre : un pack déclare ce qu'il refuse, le moteur l'applique avant qu'un modèle ne tourne, et chaque échange est consigné dans la piste d'audit (Loi 25)."
+        }
+      },
+      "rule": "Libre de répondre, jamais libre de règles : l'opérateur les écrit, le moteur les tient.",
+      "limits": {
+        "title": "Ce que « non censuré » ne veut pas dire",
+        "body": "Non censuré veut dire ne pas refuser à tort un travail légitime. Nous ne montrons jamais — et ne construisons aucune démo pour — du contenu sexualisant des mineurs, du contenu sexuel explicite, des personnes réelles, des procédés d'armes, d'explosifs ou d'agents biologiques ou chimiques, du code malveillant ou d'exploitation fonctionnel, ni rien qui permette de nuire gravement. Votre politique peut, et devrait, refuser davantage."
+      },
+      "cta": "Le voir répondre",
+      "demo": {
+        "eyebrow": "Non filtré, montré",
+        "title": "Cinq questions que les filtres bloquent souvent. <b>Orazaka a répondu.</b>",
+        "lead": "L'espace d'Eric sur un seul Mac, le vrai Orazaka — passerelle, pipeline, comptabilité — avec {model} comme modèle de conversation. Chaque réponse est reproduite telle quelle ; […] marque une coupe.",
+        "asked": "Question",
+        "filtered": "Ce que fait souvent un assistant filtré",
+        "answered": "Réponse d'Orazaka",
+        "filteredNote": "Un comportement type, pas une transcription : les assistants hébergés diffèrent et changent ; c'est l'excès de refus qu'on leur connaît.",
+        "recorded": "Enregistré en anglais, le 2026-10-11 · conversation {id}",
+        "accuracy": "Non filtré ne veut pas dire infaillible. Sur les mêmes questions, des modèles non filtrés plus petits se sont trompés de doses et de listes : ils ne sont pas montrés ici. Pour un travail clinique, juridique ou de sécurité, servez le plus grand modèle que votre machine accepte et gardez un professionnel dans la boucle.",
+        "cases": {
+          "security": {
+            "who": "Équipe sécurité",
+            "task": "Lire la commande qu'une pièce jointe d'hameçonnage a lancée",
+            "filtered": "S'arrête à « je ne peux pas aider avec du code malveillant », ou donne des conseils génériques sans lire la commande."
+          },
+          "clinician": {
+            "who": "Infirmière d'urgence",
+            "task": "Des doses maximales franches et une interaction médicamenteuse",
+            "filtered": "Répond « consultez un professionnel de la santé » au lieu des chiffres."
+          },
+          "journalist": {
+            "who": "Journaliste d'enquête",
+            "task": "Comment fonctionne la collusion, et comment formuler l'allégation",
+            "filtered": "Hésite à décrire un stratagème de fraude, ou refuse de parler d'une entreprise soupçonnée."
+          },
+          "novelist": {
+            "who": "Romancière",
+            "task": "Une scène sombre pour un polar",
+            "filtered": "Adoucit la violence ou la refuse, même en fiction."
+          },
+          "health": {
+            "who": "Questions de santé sexuelle",
+            "task": "Des réponses simples, sans morale",
+            "filtered": "Enrobe la réponse d'avertissements et de morale, ou décline le sujet."
+          }
+        }
+      },
+      "policy": {
+        "eyebrow": "L'interrupteur de l'opérateur",
+        "title": "Votre règle, <b>appliquée avant qu'un modèle ne tourne</b>.",
+        "lead": "Un pack déclare le domaine qu'il refuse et la phrase qu'il répond à la place. Chaque échange des espaces qui l'installent est vérifié contre cette déclaration — en tête du pipeline, sans appeler de modèle, toujours actif quand l'IA est coupée — et le refus est écrit dans la piste d'audit.",
+        "points": [
+          "Ce pack de contrôle de documents refuse le conseil juridique : demandez-lui s'il faut poursuivre, il répond sa propre phrase, pas celle d'un modèle.",
+          "La même question, dans un espace sans ce pack, va au modèle que vous servez.",
+          "Une règle de crise fonctionne de la même façon : une réponse relue avec une ligne d'aide vérifiée, jamais générée.",
+          "Les packs standards ne déclarent rien ; les packs sensibles et réglementés le doivent, sinon ils ne s'installent pas."
+        ]
+      }
+    },
     "tour": {
       "label": "Visite du produit"
     },
