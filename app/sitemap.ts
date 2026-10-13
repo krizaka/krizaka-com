@@ -3,12 +3,12 @@ import { getAllUseCaseSlugs } from "@/lib/use-cases-data";
 import { allDocsPaths } from "@/lib/docs-source";
 import { SITE_URL } from "@/lib/site";
 import { BUILDING_BLOCKS } from "@/lib/building-blocks";
+import { lastModified } from "@/lib/lastmod";
 
 // A single sitemap is correct here: the protocol limit is 50k URLs / 50 MB, and
 // this site has ~50. A sitemap index buys nothing until we blow past that.
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = SITE_URL;
-  const now = new Date();
   const locales = ["fr", "en"] as const;
 
   // Base list of static paths
@@ -47,7 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
     return locales.map((loc) => ({
       url: `${baseUrl}/${loc}${path}`,
-      lastModified: now,
+      lastModified: lastModified(path),
       changeFrequency,
       priority,
       alternates: { languages },

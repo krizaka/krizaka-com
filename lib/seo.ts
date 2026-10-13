@@ -29,6 +29,8 @@ export function buildAlternates(
       en: `${SITE_URL}/en${p}`,
       "x-default": `${SITE_URL}/en${p}`,
     },
+    // For AI engines: the machine-readable summary of the site, advertised in every page's <head>.
+    types: { "text/plain": `${SITE_URL}/llms.txt` },
   };
 }
 

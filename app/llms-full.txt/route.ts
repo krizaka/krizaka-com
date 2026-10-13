@@ -1,13 +1,8 @@
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import { OROCHIA_APP_URL } from "@/lib/site";
+import { LLMS_HEADERS, renderLlms } from "@/lib/llms";
 
-// Built once per deployment: content/llms-full.txt with the Orochia URL of this environment.
+// Built once per deployment: content/llms-full.txt with this environment's URLs, every docs page and the published packages.
 export const dynamic = "force-static";
 
 export async function GET() {
-  const text = await readFile(path.join(process.cwd(), "content", "llms-full.txt"), "utf8");
-  return new Response(text.replaceAll("{{OROCHIA_APP_URL}}", OROCHIA_APP_URL), {
-    headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" },
-  });
+  return new Response(await renderLlms("llms-full.txt"), { headers: LLMS_HEADERS });
 }
