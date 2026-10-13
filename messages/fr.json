@@ -1058,6 +1058,8 @@
       "watchDemo": "Voir la démo",
       "docs": "Documentation",
       "mobileDocs": "L'app iOS et Android — ce qui tourne aujourd'hui",
+      "uxDocs": "Pourquoi c'est construit ainsi — les décisions d'expérience",
+      "a11yDocs": "Accessibilité — WCAG 2.2 AA, ce qui est testé, ce qui manque",
       "audience": "Logiciel destiné aux exploitants de plateformes ; les contenus adultes sont réservés aux personnes majeures.",
       "pillarsEyebrow": "Ce qui la rend prête pour la production",
       "pillarsTitle": "Neuf garanties, appliquées dans le code.",

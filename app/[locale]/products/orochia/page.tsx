@@ -319,6 +319,16 @@ export default async function OrochiaPage({ params }: Props) {
             <LocalIcon size={16} /> {t.mobileDocs}
           </Link>
         </p>
+        <p style={{ marginTop: 8 }}>
+          <Link href="/docs/orochia/ux_decisions" className="kz-link-strong">
+            <HeartIcon size={16} /> {t.uxDocs}
+          </Link>
+        </p>
+        <p style={{ marginTop: 8 }}>
+          <Link href="/docs/orochia/accessibility" className="kz-link-strong">
+            <UsersIcon size={16} /> {t.a11yDocs}
+          </Link>
+        </p>
       </section>
 
       <AdminCallout product="orochia" locale={asLocale(locale)} />
