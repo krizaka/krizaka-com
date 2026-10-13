@@ -3,8 +3,10 @@ import { format, getDictionary, type Locale } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import { POLICY_SAMPLE, UNFILTERED_CASES, UNFILTERED_MODEL } from "@/lib/orazaka-unfiltered";
 import Rich from "@/app/components/Rich";
-import { CodeSample, Inline, MascotRule } from "@/app/components/sections";
-import ButtonLink from "@/app/components/sections/ButtonLink";
+import { CodeBlock } from "@krizaka/ui/code-block";
+import { MascotQuote } from "@krizaka/ui/mascot-quote";
+import { Ticks } from "@krizaka/ui/page";
+import ButtonLink from "@/app/components/ButtonLink";
 import s from "./unfiltered.module.css";
 
 /* "Unfiltered models — your rules" (Orazaka). `pitch` on the product page: the promise, its three sides, the hard
@@ -45,7 +47,7 @@ export default function UnfilteredModels({ locale, variant }: { locale: Locale; 
 
   if (variant === "pitch") {
     return (
-      <section id="unfiltered" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
+      <section id="unfiltered" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }}>
         {head}
         <ul className={s.pillars}>
           {PILLARS.map(({ id, Icon }, i) => (
@@ -57,7 +59,7 @@ export default function UnfilteredModels({ locale, variant }: { locale: Locale; 
           ))}
         </ul>
         <div className={s.after}>
-          <MascotRule bird="falcon" label={format(b.birdSays, { bird: b.birds.falcon })} text={t.rule} />
+          <MascotQuote bird="falcon" label={format(b.birdSays, { bird: b.birds.falcon })}>{t.rule}</MascotQuote>
           {limits}
         </div>
         <div className="bp-actions" {...reveal()}>
@@ -70,7 +72,7 @@ export default function UnfilteredModels({ locale, variant }: { locale: Locale; 
   }
 
   return (
-    <section id="unfiltered" className="bp-wrap" style={{ scrollMarginTop: 72 }}>
+    <section id="unfiltered" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }}>
       {head}
       <ol className={s.cases}>
         {UNFILTERED_CASES.map(({ id, icon, conversation, prompt, answer }) => {
@@ -100,7 +102,7 @@ export default function UnfilteredModels({ locale, variant }: { locale: Locale; 
                   </span>
                   <div lang="en">
                     {answer.map((line) => (
-                      <p key={line}><Inline text={line} /></p>
+                      <p key={line}><Ticks>{line}</Ticks></p>
                     ))}
                   </div>
                   <span className={s.trail}>{format(t.demo.recorded, { id: conversation.slice(0, 8) })}</span>
@@ -127,7 +129,7 @@ export default function UnfilteredModels({ locale, variant }: { locale: Locale; 
           </ul>
         </div>
         <div {...reveal(2)}>
-          <CodeSample sample={POLICY_SAMPLE} copy={b.copy} copied={b.copied} />
+          <CodeBlock code={POLICY_SAMPLE.code} language={POLICY_SAMPLE.lang} file={POLICY_SAMPLE.file} copyLabel={b.copy} copiedLabel={b.copied} />
         </div>
       </div>
     </section>
