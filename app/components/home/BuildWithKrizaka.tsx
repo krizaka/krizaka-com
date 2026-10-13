@@ -8,6 +8,7 @@ import path from "node:path";
 import { Section, SectionHeading } from "@krizaka/ui/page";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { TerminalReplay } from "@krizaka/ui/terminal-replay";
+import { cliSession as recordedSession } from "@/lib/cli-model";
 import { ForwardIcon } from "@krizaka/icons";
 import ButtonLink from "../ButtonLink";
 import KitShowcase from "./KitShowcase";
@@ -113,7 +114,7 @@ export default function BuildWithKrizaka({ locale }: { locale: string }) {
         </div>
         <TerminalReplay
           className="bk-terminal"
-          steps={cliSession(Boolean(npmVersion(CREATE_PACKAGE)))}
+          steps={cliSession(recordedSession(), Boolean(npmVersion(CREATE_PACKAGE)))}
           label={b.cli.label}
           title="~/projects — zsh"
           playLabel={b.cli.play}

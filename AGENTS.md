@@ -33,6 +33,12 @@
   (`products/orazaka/scripts/generate-docs.mjs`), never to the site.
 - The Orazaka repository map (`RepositoryMap`, architecture page `#repositories`) renders
   `repositories` from the same generated file — never hard-code a repository list in a component.
+- The CLI reference (`/docs/orazaka/cli`) is drawn from the same file: the generator writes `cli` (commands, options,
+  the quick-start journey) and the fenced blocks `cli-replay`, `cli-journey`, `cli-commands` of
+  `CLI.md` (`lib/remark-diagrams.ts` → `app/components/docs/cli/`, read through `lib/cli-model.ts`). The replay plays
+  `public/assets/orazaka/cli/session.json`, a recording of the **published** CLI made by `scripts/record-cli.mjs` on a
+  fresh runner (`.github/workflows/record-cli.yml`) — never by hand, never on a workstation whose Orazaka
+  infrastructure is in use (`start` would recreate the shared `orazaka` compose project).
 - The Orazaka packs (`/products/orazaka/packages`, the packs section of `/products/orazaka`) render `packs` from the
   same generated file (`lib/orazaka-packs.ts`, read from krizaka/orazaka-packs by the generator) — never a hand-written
   list; a bundle with `catalog.status: DRAFT` (the test pack) is never shown. A pack's words are its own translations.
@@ -151,6 +157,10 @@
   CLS 0) and mapped to the token roles in `app/globals.css`. Never `next/font/google`, never a font file committed here.
 - The documentation of the components is **only** here: there is no public Storybook (krizaka-ui's is an internal test
   tool) — never link one.
+- Each product's **UI section** (`/docs/<product>/ui`) is laid out like `/docs/ui` and generated from its kit's
+  registry (`kitFiles`/`kitTree` in `lib/docs-source.ts`): an overview with the same catalogue (category, platform
+  filter), foundations, one page per component (live example, code, props) in the product's brand. In the sidebar it
+  is open, right after *Getting started*.
 - Titles and descriptions of written pages: `messages/*.json` → `docs.pages.<section>.<page>`; a component page's come
   from its code (English, like its content); its chrome (headings, badges, tabs) from `docs.component.*`.
 

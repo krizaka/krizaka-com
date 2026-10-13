@@ -3,11 +3,11 @@
    registries at build (lib/ui-registry.ts, lib/registry-versions.ts); the native screenshots are the stories of the
    published registries (public/ui-examples, written by scripts/gen-ui-docs.mjs) — nothing drawn or typed here.
 
-   The CLI session is the one the Orazaka CLI really prints (krizaka/orazaka-cli, src/commands/install · start · dev):
-   install's first phase as `npx orazaka install` printed it on 2026-10-12, start's health checks and dev's banner
-   (ports from src/utils/config.ts). `npx @krizaka/create` joins the session as soon as the package is on npm. */
+   The CLI session is the recording /docs/orazaka/cli replays (lib/cli-model.ts: the published CLI on a fresh machine,
+   scripts/record-cli.mjs), cut short. `npx @krizaka/create` joins the session as soon as the package is on npm. */
 
 import type { TerminalStep } from "@krizaka/ui/terminal-replay";
+import type { CliSession } from "./cli-model";
 
 /** The native examples shown in the phone, by registry name and example name — the same pieces as the web stage. */
 export const NATIVE_SHOTS = [
@@ -22,45 +22,21 @@ export const NATIVE_COLUMN = 352;
 /** The package that scaffolds a Krizaka app — shown in the session once it is published. */
 export const CREATE_PACKAGE = "@krizaka/create";
 
-/** The session the terminal plays: install, start, dev — and create once it exists. */
-export function cliSession(createPublished: boolean): TerminalStep[] {
-  const steps: TerminalStep[] = [
-    {
-      command: "npx orazaka install",
-      output: [
-        { text: "┌  🥷 Orazaka Setup Wizard", tone: "accent" },
-        "◇  Phase 1 — Tool Verification",
-        { text: "   ✔ Docker · Java 21 · Node.js · Python 3 · Ollama · FFmpeg · Git", tone: "success" },
-        { text: "◆  All critical tools are available ✔", tone: "success" },
-        "◇  Phase 4 — Deployment Topology Configuration",
-        { text: "└  Orazaka ready. Happy building! 🚀", tone: "success" },
-      ],
-    },
-    {
-      command: "orazaka start",
-      output: [
-        { text: "┌  🥷 Orazaka Dev Infrastructure", tone: "accent" },
-        "◇  Docker containers launched.",
-        { text: "│  ✔ PostgreSQL healthy (port 5432)", tone: "success" },
-        { text: "│  ✔ Redis healthy (port 6379)", tone: "success" },
-        { text: "│  ✔ RabbitMQ healthy (port 5672)", tone: "success" },
-        { text: "└  Dev infrastructure ready! Run `npx orazaka dev` 🚀", tone: "success" },
-      ],
-    },
-    {
-      command: "orazaka dev",
-      output: [
-        { text: "  🥷  Orazaka Dev Stack", tone: "accent" },
-        "  ● EDGE           :8088  http://localhost:8088",
-        "  ● ROUTER         :8080  http://localhost:8080",
-        "  ● KNOWLEDGE      :8084  http://localhost:8084",
-        "  ● WEB-CLIENT     :3000  http://localhost:3000",
-        "  ● WEB-ADMIN      :3001  http://localhost:3001",
-        "  ● MOBILE         :8081  http://localhost:8081",
-        { text: "  Press Ctrl+C to stop all processes", tone: "muted" },
-      ],
-    },
-  ];
+/** The lines of the recorded session the home keeps: the phases, the health checks, the services' banner. */
+const HOME_LINES = /Setup Wizard|Phase \d|Workspace ready|Orazaka ready|Dev Infrastructure|healthy \(port|Orazaka Dev Stack|● (EDGE|ROUTER|KNOWLEDGE|WEB-CLIENT|WEB-ADMIN|MOBILE) |Press Ctrl\+C/;
+
+/**
+ * The session the terminal plays: install, start, dev — and create once it exists. The lines are the real recording of
+ * /docs/orazaka/cli (lib/cli-model.ts, recorded from the published CLI), cut to what a home page has room for: the
+ * box borders the CLI draws are dropped, nothing is written here.
+ */
+export function cliSession(recorded: CliSession, createPublished: boolean): TerminalStep[] {
+  const steps: TerminalStep[] = recorded.steps.map((step) => ({
+    command: step.command,
+    output: step.output
+      .filter((line) => !line.elided && HOME_LINES.test(line.text))
+      .map((line) => ({ text: line.text.replace(/\s*│\s*$/, "").replace(/^(\s*)│\s{2}/, "$1"), tone: line.tone })),
+  }));
   if (createPublished) steps.push({ command: `npx ${CREATE_PACKAGE} my-app`, output: [] });
   return steps;
 }

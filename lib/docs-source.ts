@@ -239,33 +239,50 @@ export function isPublished(section: DocsSection, page: DocsPage): boolean {
   return !isProductSection(section) || isKitPage(page) || pageKey(page.slugs) in PRODUCT_MANIFESTS[section];
 }
 
-/** The UI section of a product: its overview, its foundations, then its components (deprecated ones flagged, last). */
+/**
+ * The UI section of a product, laid out like /docs/ui: its overview (the catalogue), its foundations, then its components
+ * by category — deprecated ones flagged, last. Open in the sidebar, right after Getting started: the product's design
+ * system is read early, not found at the bottom.
+ */
 function kitTree(section: ProductSection, source: DocsSource, t: TranslationDictionary): PageTree.Folder {
   const k = t.docs.kit;
+  const categories: Record<string, string> = t.docs.component.categories;
   const pages = source.getPages().filter(isKitPage);
   const item = (page: DocsPage, name: string): PageTree.Item => ({ type: "page", name, url: page.url, $id: `${section}:${page.url}` });
   const find = (kitPage: string) => pages.find((p) => (p.data as ComponentPageData).kitPage === kitPage);
   const overview = find("overview");
   const foundations = find("foundations");
-  const components = getRegistryItems(section).flatMap((entry) => {
-    const page = pages.find((p) => (p.data as ComponentPageData).component === entry.name);
-    return page ? [item(page, entry.status === "deprecated" ? format(k.deprecatedName, { name: entry.title }) : entry.title)] : [];
+  const entries = getRegistryItems(section);
+  const pageOf = (name: string) => pages.find((p) => (p.data as ComponentPageData).component === name);
+  const current = CATEGORIES.flatMap((category) => {
+    const items = entries.filter((entry) => entry.category === category && entry.status !== "deprecated");
+    const nodes = items.flatMap((entry) => {
+      const page = pageOf(entry.name);
+      return page ? [item(page, entry.title)] : [];
+    });
+    return nodes.length ? [{ type: "separator" as const, $id: `${section}:ui:${category}`, name: categories[category] ?? category }, ...nodes] : [];
   });
+  const deprecated = entries
+    .filter((entry) => entry.status === "deprecated")
+    .flatMap((entry) => {
+      const page = pageOf(entry.name);
+      return page ? [item(page, format(k.deprecatedName, { name: entry.title }))] : [];
+    });
   return {
     type: "folder",
     $id: `${section}:ui`,
     name: k.sidebar,
-    defaultOpen: false,
+    defaultOpen: true,
     index: overview ? item(overview, k.overview) : undefined,
     children: [
       ...(foundations ? [item(foundations, k.foundations)] : []),
-      { type: "separator", $id: `${section}:ui:components`, name: k.components },
-      ...components,
+      ...current,
+      ...(deprecated.length ? [{ type: "separator" as const, $id: `${section}:ui:deprecated`, name: k.deprecatedTitle }, ...deprecated] : []),
     ],
   };
 }
 
-/** Product docs: one folder per manifest category, in reading order, pages by manifest order; then the UI section. */
+/** Product docs: one folder per manifest category, in reading order, pages by manifest order; the UI section after the first. */
 function productTree(section: ProductSection, source: DocsSource, t: TranslationDictionary, name: string): PageTree.Root {
   const manifest = PRODUCT_MANIFESTS[section];
   const categories: Record<string, string> = t.docs.categories;
@@ -290,7 +307,7 @@ function productTree(section: ProductSection, source: DocsSource, t: Translation
       defaultOpen: true,
       children: items.sort((a, b) => a.order - b.order).map(({ item }) => item),
     }));
-  return { name, children: [...children, kitTree(section, source, t)] };
+  return { name, children: [...children.slice(0, 1), kitTree(section, source, t), ...children.slice(1)] };
 }
 
 /** Locale-less paths of every docs page (sitemap, llms.txt). */

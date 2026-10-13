@@ -4,6 +4,7 @@ import { ForwardIcon } from "@krizaka/icons";
 import Rich from "@/app/components/Rich";
 import { format, getDictionary, type Locale, type TranslationDictionary } from "@/lib/i18n";
 import {
+  CATEGORIES,
   componentHref,
   getKitFoundations,
   getRegistryIndex,
@@ -13,6 +14,7 @@ import {
   type RegistryItem,
   resolveReference,
 } from "@/lib/ui-registry";
+import { CatalogFilter, type CatalogEntry } from "./CatalogFilter";
 import { CodeBlock } from "./ExamplePreview";
 import { InlineCode } from "./InlineCode";
 
@@ -115,11 +117,22 @@ export function KitOverview({ kit, locale }: { kit: ProductKit; locale: Locale }
 
       <h2 id="components">{k.componentsTitle}</h2>
       <p>{k.componentsLead}</p>
-      <ul className="kz-related not-prose">
-        {current.map((item) => (
-          <ComponentCard key={item.name} item={item} kit={kit} locale={locale} t={t} />
-        ))}
-      </ul>
+      {/* The same catalogue as /docs/ui — by category, filtered by platform — each card saying what it is built on. */}
+      <CatalogFilter
+        entries={current.map(
+          (item): CatalogEntry => ({
+            name: item.name,
+            title: item.title,
+            summary: item.summary,
+            platforms: item.platforms,
+            status: item.status,
+            category: item.category,
+            href: componentHref(locale, kit, item.name),
+            note: item.builtOn?.length ? `${k.builtOn} ${item.builtOn.map((ref) => resolveReference(ref, kit).name).join(" · ")}` : undefined,
+          }),
+        )}
+        groups={CATEGORIES.map((category) => ({ category, label: t.docs.component.categories[category] }))}
+      />
 
       {deprecated.length > 0 && (
         <>
