@@ -12,6 +12,7 @@ import { cliSession as recordedSession } from "@/lib/cli-model";
 import { ForwardIcon } from "@krizaka/icons";
 import ButtonLink from "../ButtonLink";
 import KitShowcase from "./KitShowcase";
+import { kitPortraits } from "@/lib/kit-live";
 import { format, getDictionary } from "@/lib/i18n";
 import { isLocale } from "@/lib/locales";
 import { getRegistryItem, getRegistryItems } from "@/lib/ui-registry";
@@ -73,7 +74,7 @@ export default function BuildWithKrizaka({ locale }: { locale: string }) {
 
       <div className="bk-grid">
         <div {...reveal(2, "soft")}>
-          <KitShowcase />
+          <KitShowcase portraits={kitPortraits()} />
         </div>
         {shots.length > 0 && (
           <figure className="bk-phone-wrap" {...reveal(3, "soft")}>

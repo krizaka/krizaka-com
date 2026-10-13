@@ -610,43 +610,181 @@
         "kit": {
           "title": "Krizaka UI, en direct",
           "brandLabel": "Identité",
-          "stageLabel": "Des composants Krizaka UI aux couleurs de {brand}",
+          "stageLabel": "La composition {brand}, faite de composants Krizaka UI",
           "primary": "Commencer à construire",
           "secondary": "Nous parler",
-          "profile": {
-            "name": "Elena Marchetti",
-            "statLabel": "Profil complété",
-            "challenges": "Défis relevés",
-            "challengesValue": "12 sur 15",
-            "replies": "Réponses en moins d'un jour",
-            "caption": "Danse et mode urbaine · Montréal",
-            "follow": "Suivre",
-            "message": "Écrire"
-          },
-          "choice": {
-            "label": "Choisissez votre formule",
-            "tag": "Étape 1 sur 3",
-            "caption": "Modifiable à tout moment.",
-            "starter": {
-              "name": "Débutant",
-              "title": "Publier et être payé"
+          "orazaka": {
+            "chatLabel": "Demander à Orazaka",
+            "user": "Résume les tickets de support de la semaine dernière et choisis les trois qui demandent une réponse.",
+            "answer": {
+              "intro": "14 tickets sont arrivés. Trois demandent une réponse aujourd'hui :",
+              "one": "Un remboursement pour une commande annulée",
+              "two": "Un lien de connexion expiré",
+              "three": "Une facture qui devrait être en CAD",
+              "outro": "La même réponse depuis votre code :"
             },
-            "creator": {
-              "name": "Créateur",
-              "title": "Défis et enchères"
+            "streaming": "Réponse en cours…",
+            "done": "Terminé",
+            "composer": "Poser une autre question",
+            "codeFile": "ask.sh",
+            "copy": "Copier",
+            "copied": "Copié",
+            "job": {
+              "label": "Lot de portraits",
+              "name": "{total} portraits, Studio image",
+              "progress": "{done} sur {total} faits",
+              "eta": "Encore environ {seconds} s"
             },
             "studio": {
-              "name": "Studio",
-              "title": "Une équipe, des revenus partagés"
+              "label": "Studio",
+              "tag": "Tourne sur ce Mac",
+              "caption": "Vous choisissez le Studio, Orazaka choisit le modèle.",
+              "chat": {
+                "name": "Chat",
+                "title": "Des réponses dans vos mots"
+              },
+              "image": {
+                "name": "Image",
+                "title": "Portraits et couvertures"
+              },
+              "audio": {
+                "name": "Transcrire",
+                "title": "De la voix au texte"
+              }
+            },
+            "receipt": {
+              "title": "Généré sur cette machine",
+              "model": "Modèle",
+              "where": "Exécuté sur",
+              "whereValue": "Ce Mac",
+              "time": "Durée",
+              "out": "Envoyé à l'extérieur",
+              "outValue": "{bytes} octet"
             }
           },
-          "chart": {
-            "title": "Vues, 30 derniers jours"
+          "orochia": {
+            "profile": {
+              "name": "Elena Vox",
+              "statLabel": "Profil complété",
+              "challenges": "Défis relevés",
+              "challengesValue": "{met} sur {of}",
+              "replies": "Réponses en moins d'un jour",
+              "caption": "Auteure-compositrice-interprète · Montréal"
+            },
+            "earnings": {
+              "title": "Revenus, 30 derniers jours",
+              "total": "{amount} ce mois-ci"
+            },
+            "auction": {
+              "label": "Enchère en direct",
+              "item": "Paroles manuscrites, signées",
+              "bid": "Mise actuelle",
+              "bidder": "Meilleure mise de {name}",
+              "endsIn": "Se termine dans",
+              "countdown": "Temps restant de l'enchère",
+              "units": {
+                "d": "j",
+                "h": "h",
+                "m": "min",
+                "s": "s"
+              },
+              "bidderName": "Alex Vance"
+            },
+            "tip": "Envoyer un pourboire de {amount}",
+            "unlock": "Débloquer pour {amount}",
+            "challenge": {
+              "label": "Défi : l'EP en direct",
+              "gauge": "Récolté pour l'EP",
+              "gaugeText": "{raised} sur {target}"
+            },
+            "stories": {
+              "label": "Stories",
+              "open": "Ouvrir la story de {name}",
+              "theo": "Theo",
+              "sam": "Sam",
+              "lina": "Lina",
+              "mia": "Mia"
+            }
           },
-          "calendar": {
-            "title": "Choisissez un jour",
-            "previousMonth": "Mois précédent",
-            "nextMonth": "Mois suivant"
+          "yazakia": {
+            "heading": "Vos trois pour aujourd'hui",
+            "why": "Pourquoi vous deux",
+            "matches": {
+              "ines": {
+                "name": "Inès",
+                "caption": "Lyon · Cuisine le dimanche",
+                "reasons": {
+                  "a": "Vous cuisinez toutes les deux pour vos amis le dimanche",
+                  "b": "Vous avez dit, chacune, qu'un vendredi parfait finit dehors"
+                }
+              },
+              "kofi": {
+                "name": "Kofi",
+                "caption": "Accra · Photographe de rue",
+                "reasons": {
+                  "a": "Vous rentrez tous les deux par le long chemin pour regarder les gens",
+                  "b": "Chacun garde un appareil argentique qu'il ne vendra jamais"
+                }
+              },
+              "hana": {
+                "name": "Hana",
+                "caption": "Osaka · Céramiste",
+                "reasons": {
+                  "a": "Vous finissez ce que vous commencez, lentement",
+                  "b": "Chacune a écrit sur une ville calme dans ses réponses"
+                }
+              }
+            },
+            "intro": {
+              "label": "Votre premier échange avec Inès",
+              "countdown": "Temps avant l'échange",
+              "units": {
+                "d": "j",
+                "h": "h",
+                "m": "min",
+                "s": "s"
+              }
+            },
+            "debrief": {
+              "label": "Après l'échange, dites comment ça s'est passé",
+              "again": "Je reparlerais",
+              "talk": "Belle discussion, pas un match",
+              "pass": "Pas pour moi"
+            }
+          },
+          "yororis": {
+            "moment": {
+              "label": "Un moment avec Léa, une présence IA",
+              "presence": "Léa",
+              "ai": "IA",
+              "left": "Temps restant dans ce moment",
+              "subtitle": "Quelle partie de ta journée portes-tu encore ?",
+              "stops": "Ce moment s'arrête de lui-même. Tu gardes le reste de ta journée.",
+              "markTitle": "Léa, une présence IA, dessinée en grue",
+              "units": {
+                "d": "j",
+                "h": "h",
+                "m": "min",
+                "s": "s"
+              }
+            },
+            "mood": {
+              "title": "Comment tu te sens, là, de 1 à 5 ? C'est toi qui le dis.",
+              "before": "Avant",
+              "after": "Après",
+              "marks": {
+                "low": "1",
+                "high": "5"
+              },
+              "caption": "Écrit par toi, gardé comme tu l'as écrit."
+            },
+            "keep": {
+              "title": "Ce que je garde",
+              "lead": "Trois lignes, à emporter.",
+              "one": "Ce qui pesait le plus : la semaine qui vient.",
+              "two": "Une chose à faire : dix minutes dehors avant le souper.",
+              "three": "Une question à garder : qu'est-ce qui rendrait jeudi plus léger ?"
+            }
           }
         },
         "native": {

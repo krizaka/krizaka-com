@@ -1,0 +1,64 @@
+/* "Krizaka UI, live" — what the four compositions add to the stage (.bk-* lives in BuildWithKrizaka). Colours are
+   tokens only, so the brand scope (.brand-<id>) and the theme (dark / light) recolour everything. */
+
+.kl-stage { align-items: start; }
+.kl-wide { grid-column: 1 / -1; }
+.kl-foot { padding: 14px 20px; border-top: 1px solid var(--kz-border-subtle); }
+@media (max-width: 720px) { .kl-foot { padding: 12px 14px; } }
+
+.kl-muted { margin: 0; font-size: 13px; color: var(--kz-text-secondary); }
+.kl-line { margin: 0 0 8px; font-size: 14px; color: var(--kz-text-primary); }
+.kl-title { margin: 0 0 8px; font-size: 16px; font-weight: 700; color: var(--kz-text-primary); }
+.kl-heading { margin: 0; font-size: 15px; font-weight: 700; }
+.kl-time { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 10px 0; }
+.kl-time-rest { display: inline-block; min-width: 150px; min-height: 36px; }
+.kl-buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+/* Orazaka */
+.kl-chat { display: grid; gap: 10px; }
+.kl-bubble { margin: 0; padding: 10px 12px; border-radius: 14px; font-size: 14px; line-height: 1.55; max-width: 100%; min-width: 0; }
+.kl-bubble p { margin: 0 0 4px; }
+.kl-bubble-user { justify-self: end; background: color-mix(in srgb, var(--kz-accent) 16%, var(--kz-surface-2)); color: var(--kz-text-primary); border-bottom-right-radius: 4px; max-width: 92%; }
+.kl-bubble-answer { background: var(--kz-surface-2); color: var(--kz-text-primary); border-bottom-left-radius: 4px; display: grid; gap: 4px; min-height: 120px; align-content: start; }
+.kl-bubble-answer pre { max-width: 100%; overflow-x: auto; }
+.kl-caret { display: inline-block; width: 7px; height: 14px; background: var(--kz-accent); animation: kl-blink 1s steps(2) infinite; }
+@keyframes kl-blink { 50% { opacity: 0; } }
+.kl-status { margin: 0; font-size: 12px; color: var(--kz-text-secondary); }
+.kl-receipt-title { display: flex; align-items: center; gap: 6px; margin: 0 0 8px; font-size: 14px; font-weight: 700; color: var(--kz-text-primary); }
+.kl-receipt-title svg { color: var(--kz-accent); }
+.kl-receipt dl { margin: 0; display: grid; gap: 6px; }
+.kl-receipt dl > div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; }
+.kl-receipt dt { color: var(--kz-text-secondary); }
+.kl-receipt dd { margin: 0; display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-mono); color: var(--kz-text-primary); text-align: right; }
+
+/* Orochia */
+.kl-bid { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.kl-bid .bk-figure { margin-bottom: 0; }
+.kl-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--kz-accent); margin-right: 4px; animation: kl-pulse 1.6s ease-in-out infinite; }
+@keyframes kl-pulse { 50% { opacity: .35; } }
+.kl-stories ul { display: flex; gap: 12px; margin: 0; padding: 0; list-style: none; overflow-x: auto; }
+.kl-stories li { display: grid; justify-items: center; gap: 4px; font-size: 12px; color: var(--kz-text-secondary); }
+.kl-ring { display: inline-grid; padding: 3px; border-radius: 50%; background: conic-gradient(var(--kz-accent), var(--kz-accent-2, var(--kz-accent)), var(--kz-accent)); }
+.kl-ring > * { border: 2px solid var(--kz-surface-1); border-radius: 50%; }
+
+/* Yazakia */
+.kl-matches { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+@media (max-width: 860px) { .kl-matches { grid-template-columns: minmax(0, 1fr); } }
+.kl-match { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.kl-why { padding: 12px; border-radius: 14px; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1); }
+.kl-why-title { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--kz-text-secondary); }
+.kl-why-title svg { color: var(--kz-accent); }
+.kl-why ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 13.5px; line-height: 1.5; color: var(--kz-text-primary); }
+.kl-after { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 720px) { .kl-after { grid-template-columns: minmax(0, 1fr); } }
+.kl-chips { flex-wrap: wrap; }
+
+/* Yororis */
+.kl-moment { display: grid; justify-items: center; text-align: center; gap: 4px; }
+.kl-presence { position: relative; display: inline-grid; }
+.kl-ai { position: absolute; top: 0; right: -18px; }
+.kl-subtitle { margin: 6px 0; padding: 8px 14px; border-radius: 10px; background: color-mix(in srgb, var(--kz-surface-0) 70%, transparent); border: 1px solid var(--kz-border-subtle); font-size: 15px; font-weight: 600; color: var(--kz-text-primary); }
+.kl-mood { display: grid; gap: 14px; }
+.kl-keep ol { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; line-height: 1.5; color: var(--kz-text-primary); }
+
+@media (prefers-reduced-motion: reduce) { .kl-caret, .kl-dot { animation: none; } }
