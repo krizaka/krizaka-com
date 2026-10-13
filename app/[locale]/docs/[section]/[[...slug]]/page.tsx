@@ -26,6 +26,9 @@ import {
 } from "@/lib/docs-source";
 import { asLocale, getDictionary } from "@/lib/i18n";
 import { localizedMetadata } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
+import { JsonLd } from "@/app/components/JsonLd";
+import { buildBreadcrumbJsonLd, buildTechArticleJsonLd } from "@/lib/structured-data";
 
 export const dynamicParams = false;
 
@@ -67,7 +70,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, { path, en: copy("en"), fr: copy("fr") });
 }
 
-export default async function DocsSectionPage({ params }: Props) {
+/* Every docs page: the page itself plus its JSON-LD — a BreadcrumbList (Docs › section › page) and a TechArticle. */
+export default async function DocsSectionPage(props: Props) {
+  const { locale, section, slug, t, page } = await resolve(props.params);
+  const sectionTitle = t.docs.sections[section].title;
+  const base = `${SITE_URL}/${locale}/docs`;
+  const own = page ? pageText(section, page, t) : null;
+  const url = `${base}/${section}${slug.length ? `/${slug.join("/")}` : ""}`;
+  const trail = [
+    { name: t.docs.hub.kicker, url: base },
+    { name: sectionTitle, url: `${base}/${section}` },
+    ...(own ? [{ name: own.title, url }] : []),
+  ];
+  return (
+    <>
+      <JsonLd data={buildBreadcrumbJsonLd(trail)} />
+      {own ? <JsonLd data={buildTechArticleJsonLd({ locale, title: own.title, description: own.description, url })} /> : null}
+      <DocsSectionBody {...props} />
+    </>
+  );
+}
+
+async function DocsSectionBody({ params }: Props) {
   const { locale, section, t, page } = await resolve(params);
 
   if (!page) {
