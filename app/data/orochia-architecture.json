@@ -85,7 +85,7 @@
       "id": "data",
       "name": "Data persistence",
       "path": "packages/db",
-      "tablesCount": 46,
+      "tablesCount": 47,
       "tables": [
         "auctions",
         "auction_bids",
@@ -96,6 +96,7 @@
         "playlist_audience_lists",
         "auth_identities",
         "auth_tokens",
+        "revoked_sessions",
         "challenges",
         "challenge_pledges",
         "challenge_applications",
@@ -349,7 +350,7 @@
       "method": "POST",
       "path": "/api/auth/logout",
       "access": "public",
-      "summary": ""
+      "summary": "Signs out: the request's session token — a native app's bearer or the browser's cookie — is revoked on the server (krizaka/orochia#127), so no surviving copy of it opens the account again; the browser's cookie is cleared too."
     },
     {
       "method": "GET",
@@ -421,7 +422,7 @@
       "method": "POST",
       "path": "/api/auth/verify-email",
       "access": "public",
-      "summary": "Verifies an e-mail address with the link's one-time token (48 h); refreshes the session of that account."
+      "summary": "Verifies an e-mail address with the link's one-time token (48 h); refreshes the session of that account — the cookie of a browser, or, for a native app's bearer session, a new `token` in the answer."
     },
     {
       "method": "GET",
@@ -1730,28 +1731,23 @@
     "dependencies": [
       {
         "from": "orochia-admin",
-        "to": "krizaka-charts",
-        "version": "0.1.0"
-      },
-      {
-        "from": "orochia-admin",
         "to": "krizaka-tailwind",
-        "version": "2.3.0"
+        "version": "2.0.0-beta.1"
       },
       {
         "from": "orochia-admin",
         "to": "krizaka-tokens",
-        "version": "2.3.0"
+        "version": "2.0.0-beta.1"
       },
       {
         "from": "orochia-admin",
         "to": "krizaka-ui",
-        "version": "2.3.0"
+        "version": "2.0.0-beta.1"
       },
       {
         "from": "orochia-admin",
         "to": "orochia-design-system",
-        "version": "4.1.1"
+        "version": "3.0.0"
       },
       {
         "from": "orochia-api",
@@ -1782,23 +1778,18 @@
       },
       {
         "from": "orochia-mobile",
-        "to": "krizaka-charts",
-        "version": "0.1.0"
-      },
-      {
-        "from": "orochia-mobile",
         "to": "krizaka-tokens",
-        "version": "2.4.0"
+        "version": "2.0.0-beta.4"
       },
       {
         "from": "orochia-mobile",
         "to": "krizaka-ui",
-        "version": "2.4.0"
+        "version": "2.0.0-beta.4"
       },
       {
         "from": "orochia-mobile",
         "to": "orochia-design-system",
-        "version": "4.1.1"
+        "version": "4.0.0"
       },
       {
         "from": "orochia-payments",

@@ -98,6 +98,14 @@ export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
     intro:
       "Why the experience is built like this: each notable choice with the problem, the principle of cognitive science behind it (and its source), what was refused, what it costs, and the signal that would prove it wrong.",
   },
+  accessibility: {
+    title: "Accessibility",
+    category: "architecture",
+    order: 9.5,
+    audience: "decision-maker",
+    intro:
+      "WCAG 2.2 AA on the web and in the app: what axe, the keyboard checks and the mobile render tests verify on every change, the manual pass and what it fixed, the known gaps — and where to tell us what blocks you.",
+  },
   media_pipeline: {
     title: "Media Pipeline",
     category: "architecture",
