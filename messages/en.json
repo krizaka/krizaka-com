@@ -610,43 +610,181 @@
         "kit": {
           "title": "Krizaka UI, live",
           "brandLabel": "Identity",
-          "stageLabel": "Krizaka UI components wearing the {brand} identity",
+          "stageLabel": "The {brand} composition, built from Krizaka UI components",
           "primary": "Start building",
           "secondary": "Talk to us",
-          "profile": {
-            "name": "Elena Marchetti",
-            "statLabel": "Profile complete",
-            "challenges": "Challenges met",
-            "challengesValue": "12 of 15",
-            "replies": "Replies within a day",
-            "caption": "Dance and street fashion · Montréal",
-            "follow": "Follow",
-            "message": "Message"
-          },
-          "choice": {
-            "label": "Choose your plan",
-            "tag": "Step 1 of 3",
-            "caption": "You can change it at any time.",
-            "starter": {
-              "name": "Starter",
-              "title": "Publish and get paid"
+          "orazaka": {
+            "chatLabel": "Ask Orazaka",
+            "user": "Summarise last week's support tickets and pick the three that need a reply.",
+            "answer": {
+              "intro": "14 tickets came in. Three need a reply today:",
+              "one": "A refund for a cancelled order",
+              "two": "A sign-in link that expired",
+              "three": "An invoice that should read CAD",
+              "outro": "The same answer from your code:"
             },
-            "creator": {
-              "name": "Creator",
-              "title": "Challenges and auctions"
+            "streaming": "Answering…",
+            "done": "Done",
+            "composer": "Ask a follow-up",
+            "codeFile": "ask.sh",
+            "copy": "Copy",
+            "copied": "Copied",
+            "job": {
+              "label": "Portrait batch",
+              "name": "{total} portraits, image Studio",
+              "progress": "{done} of {total} done",
+              "eta": "About {seconds} s left"
             },
             "studio": {
-              "name": "Studio",
-              "title": "A team, shared earnings"
+              "label": "Studio",
+              "tag": "Runs on this Mac",
+              "caption": "Pick the Studio, Orazaka picks the model.",
+              "chat": {
+                "name": "Chat",
+                "title": "Answers in your words"
+              },
+              "image": {
+                "name": "Image",
+                "title": "Portraits and covers"
+              },
+              "audio": {
+                "name": "Transcribe",
+                "title": "Speech to text"
+              }
+            },
+            "receipt": {
+              "title": "Generated on this machine",
+              "model": "Model",
+              "where": "Ran on",
+              "whereValue": "This Mac",
+              "time": "Time",
+              "out": "Sent outside",
+              "outValue": "{bytes} bytes"
             }
           },
-          "chart": {
-            "title": "Views, last 30 days"
+          "orochia": {
+            "profile": {
+              "name": "Elena Vox",
+              "statLabel": "Profile complete",
+              "challenges": "Challenges met",
+              "challengesValue": "{met} of {of}",
+              "replies": "Replies within a day",
+              "caption": "Singer-songwriter · Montréal"
+            },
+            "earnings": {
+              "title": "Earnings, last 30 days",
+              "total": "{amount} this month"
+            },
+            "auction": {
+              "label": "Live auction",
+              "item": "Handwritten lyrics, signed",
+              "bid": "Current bid",
+              "bidder": "Highest bid by {name}",
+              "endsIn": "Ends in",
+              "countdown": "Time left in the auction",
+              "units": {
+                "d": "d",
+                "h": "h",
+                "m": "m",
+                "s": "s"
+              },
+              "bidderName": "Alex Vance"
+            },
+            "tip": "Send a {amount} tip",
+            "unlock": "Unlock for {amount}",
+            "challenge": {
+              "label": "Challenge: the live EP",
+              "gauge": "Raised for the EP",
+              "gaugeText": "{raised} of {target}"
+            },
+            "stories": {
+              "label": "Stories",
+              "open": "Open the story of {name}",
+              "theo": "Theo",
+              "sam": "Sam",
+              "lina": "Lina",
+              "mia": "Mia"
+            }
           },
-          "calendar": {
-            "title": "Pick a day",
-            "previousMonth": "Previous month",
-            "nextMonth": "Next month"
+          "yazakia": {
+            "heading": "Your three for today",
+            "why": "Why you two",
+            "matches": {
+              "ines": {
+                "name": "Inès",
+                "caption": "Lyon · Sunday cook",
+                "reasons": {
+                  "a": "You both cook for friends on Sundays",
+                  "b": "You each said a perfect Friday ends outdoors"
+                }
+              },
+              "kofi": {
+                "name": "Kofi",
+                "caption": "Accra · Street photographer",
+                "reasons": {
+                  "a": "You both take the long way home to look at people",
+                  "b": "You each have a film camera you never sell"
+                }
+              },
+              "hana": {
+                "name": "Hana",
+                "caption": "Osaka · Ceramicist",
+                "reasons": {
+                  "a": "You both finish what you start, slowly",
+                  "b": "You each wrote about a quiet city in your answers"
+                }
+              }
+            },
+            "intro": {
+              "label": "Your intro with Inès",
+              "countdown": "Time before the intro",
+              "units": {
+                "d": "d",
+                "h": "h",
+                "m": "m",
+                "s": "s"
+              }
+            },
+            "debrief": {
+              "label": "After the intro, say how it went",
+              "again": "I'd talk again",
+              "talk": "Good talk, not a match",
+              "pass": "Not for me"
+            }
+          },
+          "yororis": {
+            "moment": {
+              "label": "A moment with Léa, an AI presence",
+              "presence": "Léa",
+              "ai": "AI",
+              "left": "Time left in this moment",
+              "subtitle": "What part of today are you still carrying?",
+              "stops": "This moment stops by itself. You keep the rest of your day.",
+              "markTitle": "Léa, an AI presence, drawn as a crane",
+              "units": {
+                "d": "d",
+                "h": "h",
+                "m": "m",
+                "s": "s"
+              }
+            },
+            "mood": {
+              "title": "How do you feel right now, 1 to 5? You say.",
+              "before": "Before",
+              "after": "After",
+              "marks": {
+                "low": "1",
+                "high": "5"
+              },
+              "caption": "Written by you, kept as you wrote it."
+            },
+            "keep": {
+              "title": "What I keep",
+              "lead": "Three lines, yours to take away.",
+              "one": "What weighed most: the week ahead.",
+              "two": "One thing to do: ten minutes outside before dinner.",
+              "three": "A question to keep: what would make Thursday lighter?"
+            }
           }
         },
         "native": {
