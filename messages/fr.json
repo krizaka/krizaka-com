@@ -971,6 +971,46 @@
           "C'est notre preuve. Aucun benchmark à croire sur parole, aucun mur de logos empruntés : clonez, lancez, lisez, forkez. Si quelque chose sur cette page n'est pas dans le code, c'est le code qui a raison."
         ],
         "cta": "Voir tout ce que nous avons ouvert"
+      },
+      "live": {
+        "label": "Stage bonus",
+        "title": "Comment Orochia reste en direct",
+        "body": [
+          "Un pourboire arrive, une enchère fait monter le prix, un message tombe : l'écran concerné l'apprend en bien moins d'une seconde — sans interrogation répétée, sans broker de messages, sans service de plus à payer.",
+          "Chaque action est d'abord écrite dans PostgreSQL. Puis <b>un seul NOTIFY</b> traverse jusqu'à chaque instance de l'application ; chacune transmet l'événement aux flux <b>Server-Sent Events</b> qu'elle tient. Du HTTP ordinaire, la même session que le reste de l'API, et n'importe quelle instance sert n'importe quel flux.",
+          "Une connexion coupée revient d'elle-même et dit où elle s'était arrêtée (<b>Last-Event-ID</b>) : ce qu'elle a manqué est rejoué depuis la base, chaque message une seule fois. La présence est un battement de cœur, jamais une écriture en base à chaque battement.",
+          "L'application fermée ? La même notification part en <b>push</b> — Expo, puis Firebase sur Android (APNs d'Apple sur iOS dès que notre compte développeur sera actif) — et un toucher ouvre l'écran exact dont elle parle."
+        ],
+        "pathTitle": "Le trajet d'un événement",
+        "path": {
+          "action": {
+            "title": "Écrit d'abord.",
+            "body": "Envoyer, enchérir, s'engager, donner un pourboire : une requête HTTP ordinaire, validée dans PostgreSQL — la base fait foi."
+          },
+          "notify": {
+            "title": "Un seul NOTIFY.",
+            "body": "<b>NOTIFY orochia_events</b> : chaque instance l'entend sur sa connexion LISTEN. Au-delà de trois instances, le même code passe à Valkey par configuration."
+          },
+          "stream": {
+            "title": "Dans les flux ouverts.",
+            "body": "Chaque instance le pousse aux flux Server-Sent Events concernés — un battement toutes les 15 s, une reprise après chaque coupure."
+          },
+          "push": {
+            "title": "Ou vers le téléphone.",
+            "body": "En arrière-plan, un push : Expo Push → Firebase Cloud Messaging ou APNs → le téléphone ; le toucher ouvre son écran."
+          }
+        },
+        "figuresAria": "Chiffres mesurés",
+        "figures": {
+          "p50": "Livraison médiane, 500 flux ouverts",
+          "p95": "95ᵉ centile, 2 000 flux",
+          "memory": "Mémoire par flux ouvert",
+          "push": "Médiane, d'un message envoyé au push affiché sur Android"
+        },
+        "source": "Mesuré, pas estimé : scripts/realtime-load.mjs sur un build de production, une instance sur un MacBook (2026-10-11), et un vrai push chronométré sur l'émulateur Android (2026-10-13).",
+        "move": "Ce qui arrive vous parvient une fois, dans l'ordre, où que vous soyez.",
+        "docsRealtime": "Le temps réel, dans la doc",
+        "docsPush": "Notifications et push, dans la doc"
       }
     },
     "orochia": {
@@ -2983,6 +3023,19 @@
         "body": "Faites tourner Orochia pour vos créateurs, ou dites-nous ce dont votre plateforme a besoin.",
         "app": "Ouvrir Orochia",
         "contact": "Nous écrire"
+      },
+      "mobileLive": {
+        "eyebrow": "Sur le téléphone",
+        "title": "En direct dans l'app, un push quand elle est fermée",
+        "body": "Enregistré sur un émulateur Android, connectée en tant qu'Elena : les messages d'Alex arrivent dans sa liste et dans la conversation au moment où il les envoie ; puis l'app passe en arrière-plan, Alex commente sa vidéo, le push arrive en une demi-seconde environ — et le toucher ouvre cette vidéo.",
+        "points": [
+          "Messages, accusés de lecture et présence en direct sur un seul flux",
+          "Un push par Firebase quand l'app est fermée",
+          "Le toucher ouvre le bon écran, même au démarrage",
+          "Les notifications par type, dans les réglages de l'app"
+        ],
+        "caption": "L'app Orochia sur Android : un message arrive en direct, puis un push ouvre la vidéo",
+        "frame": "Android · app Orochia"
       }
     },
     "adminCallout": {

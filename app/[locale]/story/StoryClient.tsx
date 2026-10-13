@@ -33,6 +33,7 @@ import { useI18n } from "@/app/components/I18nProvider";
 import Rich from "@/app/components/Rich";
 import ButtonLink from "@/app/components/ButtonLink";
 import { DUST, ENGINE, flock, isFlockBird, KITS, STUDIO, storyProducts, type KitId, type StoryProduct } from "@/lib/story";
+import LiveChapter from "./LiveChapter";
 import "./story.css";
 
 export interface StoryFigures {
@@ -258,6 +259,9 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
           </SectionBackdrop>
         );
       })}
+
+      {/* ── Bonus stage: how Orochia stays live (LiveChapter.tsx) ── */}
+      <LiveChapter birdName={birdName("pigeon")} />
 
       {/* ── Bonus round: we use our own products ── */}
       <Scene className="st-ours" aria-labelledby="st-ours">

@@ -75,12 +75,28 @@ export const OROCHIA_DOCS_MANIFEST: Record<string, DocManifestEntry> = {
       "One account for everyone: how a fan opens a creator space on the account they already have, the 18+ and 18 U.S.C. § 2257 checks before the first upload, what is stored, who sees what — and the next step every viewer is offered.",
   },
   notifications: {
-    title: "Notifications & Realtime",
+    title: "Notifications & Push",
+    category: "architecture",
+    order: 6.5,
+    audience: "developer",
+    intro:
+      "One event, three channels: a live toast on open pages and apps, a push to closed phones through Expo, FCM and APNs, e-mail at the pace each person chose — preferences by kind on the phone, a tap that opens its screen, and how to test a real push.",
+  },
+  realtime: {
+    title: "Realtime",
     category: "architecture",
     order: 6,
     audience: "developer",
     intro:
-      "One event, three channels: live toasts over Server-Sent Events, push to phones through FCM and APNs, e-mail at the pace each person chose — and why SSE rather than WebSocket, and why no separate realtime service yet.",
+      "How Orochia stays live without a broker: PostgreSQL LISTEN/NOTIFY (or Valkey) between instances, Server-Sent Events to the screens, resume with Last-Event-ID, presence by heartbeat — every event, the measured latencies, and how each part is tested.",
+  },
+  ux_decisions: {
+    title: "UX Decisions",
+    category: "architecture",
+    order: 9,
+    audience: "decision-maker",
+    intro:
+      "Why the experience is built like this: each notable choice with the problem, the principle of cognitive science behind it (and its source), what was refused, what it costs, and the signal that would prove it wrong.",
   },
   media_pipeline: {
     title: "Media Pipeline",
