@@ -29,6 +29,8 @@ export function buildAlternates(
       en: `${SITE_URL}/en${p}`,
       "x-default": `${SITE_URL}/en${p}`,
     },
+    // For AI engines: the machine-readable summary of the site, advertised in every page's <head>.
+    types: { "text/plain": `${SITE_URL}/llms.txt` },
   };
 }
 
@@ -51,7 +53,8 @@ export function localizedMetadata(
 ): Metadata {
   const copy = normalize(locale) === "en" ? opts.en : opts.fr;
   const meta: Metadata = {
-    title: copy.title,
+    // The layout appends " | Krizaka"; a title that already names the brand is left as is.
+    title: /krizaka/i.test(copy.title) ? { absolute: copy.title } : copy.title,
     description: copy.description,
     alternates: buildAlternates(locale, opts.path),
   };

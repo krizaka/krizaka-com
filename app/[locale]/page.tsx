@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ProductFaq } from "@/app/components/ProductFaq";
 import { localizedMetadata } from "@/lib/seo";
 import { orgRepositories } from "@/lib/org-data";
 import { publicRepositoryCount } from "@/lib/org-stats";
@@ -22,12 +23,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/",
     en: {
-      title: "Krizaka — Open source. Closed to compromise.",
+      title: "Krizaka — sovereign AI and apps from Montréal: Orazaka, Orochia, Yazakia, Yororis",
       description:
         "Krizaka is a Montréal software studio building open-source platforms: Orazaka, sovereign on-premise AI (Law 25, GDPR), Orochia, the video platform for independent creators, Yazakia, the dating app where you talk first (coming soon), and Yororis, a listening space with a face and a voice (under construction).",
     },
     fr: {
-      title: "Krizaka — Open source. Fermé aux compromis.",
+      title: "Krizaka — IA souveraine et apps depuis Montréal : Orazaka, Orochia, Yazakia, Yororis",
       description:
         "Krizaka est un studio logiciel montréalais qui conçoit des plateformes open source : Orazaka, l'IA souveraine sur site (Loi 25, RGPD), Orochia, la plateforme vidéo des créateurs indépendants, Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt), et Yororis, un espace d'écoute avec un visage et une voix (en construction).",
     },
@@ -58,6 +59,7 @@ export default async function Home({ params }: Props) {
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta />
       </SectionBackdrop>
+      <ProductFaq product="krizaka" locale={locale} />
       <SiteFooter />
     </main>
   );

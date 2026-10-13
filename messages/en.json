@@ -192,7 +192,7 @@
     "tagline": "The sovereign AI orchestration engine, open source. Built in Québec."
   },
   "cognitiveEngineeringPage": {
-    "pageTitle": "Cognitive Engineering & Sovereign AI — Orazaka | Krizaka",
+    "pageTitle": "Cognitive Engineering & Sovereign AI — Orazaka",
     "pageDesc": "Discover how cognitive engineering structures artificial intelligence to make it reliable, secure, and sovereign.",
     "introTitle": "What is cognitive engineering?",
     "introText": "Applied cognitive engineering in AI means structuring and organizing the flow of thought of artificial intelligence.\n\nInstead of treating a large language model as a black box where you send queries and hope for a good answer, Orazaka divides each interaction into clear, specialized stages. This guarantees data security, factual grounding, and AI predictability.",
@@ -1884,7 +1884,11 @@
         "status": "Under construction",
         "keywords": "listening, wellbeing, presence, sovereign"
       },
-      "organization": "Krizaka is a Montréal software studio building open-source products: Orazaka, sovereign AI orchestration on your own infrastructure (Law 25, GDPR, PIPEDA); Orochia, the video platform for independent creators; Yazakia, the dating app where you talk first (coming soon); and Yororis, a listening space with a face and a voice (under construction)."
+      "organization": "Krizaka is a Montréal software studio building open-source products: Orazaka, sovereign AI orchestration on your own infrastructure (Law 25, GDPR, PIPEDA); Orochia, the video platform for independent creators; Yazakia, the dating app where you talk first (coming soon); and Yororis, a listening space with a face and a voice (under construction).",
+      "yazakia": {
+        "description": "An AI agent gets to know you, then opens small batches of people compatible in both directions: reasons, never scores. Coming soon to iOS and Android; not released yet.",
+        "status": "Upcoming"
+      }
     },
     "packages": {
       "eyebrow": "On npm",
@@ -2306,7 +2310,7 @@
     },
     "orazakaDemo": {
       "meta": {
-        "title": "Orazaka demo — a day of work on one Mac | Krizaka",
+        "title": "Orazaka demo — a day of work on one Mac",
         "description": "Watch Orazaka at work: product photos and voice-overs generated on one Mac, a lease checked against the law with every finding cited, Studios for each trade, jobs and notifications, answers from your own documents. Recorded on the real application, on one machine."
       },
       "eyebrow": "Demo · recorded on the real application",
@@ -2959,7 +2963,7 @@
     },
     "orochiaDemo": {
       "meta": {
-        "title": "Orochia demo — a day as a creator and as a fan | Krizaka",
+        "title": "Orochia demo — a day as a creator and as a fan",
         "description": "Watch Orochia at work: Elena publishes a paid video, gets tipped and outbid live, reads who paid and withdraws 90 % of it; Alex discovers her, tips her story, unlocks a session, bids and backs her next video. Recorded on the real application."
       },
       "eyebrow": "Orochia demo · recorded on the real application",
@@ -3181,7 +3185,7 @@
     },
     "orazakaPacks": {
       "meta": {
-        "title": "Orazaka Packs — Studios for your profession, installed without code | Krizaka",
+        "title": "Orazaka Packs — Studios for your profession, installed without code",
         "description": "Prospecting, document verification, real-estate reels, media, wellbeing, trade showcases: the Orazaka packs and their Studios, installed without code."
       },
       "eyebrow": "Packs & Studios",
@@ -3242,6 +3246,100 @@
         "studiosOne": "1 Studio"
       },
       "studiosTitleOne": "1 Studio"
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Frequently asked questions",
+      "krizaka": [
+        {
+          "q": "What is Krizaka?",
+          "a": "Krizaka is a Montréal (Québec) software studio that builds open-source products: Orazaka, sovereign AI on your own machines; Orochia, a video platform for independent creators; Yazakia, a dating app where you talk first (coming soon); and Yororis, a listening space with a face and a voice (under construction). Every repository is public under Apache-2.0."
+        },
+        {
+          "q": "Which Krizaka products can I use today?",
+          "a": "Orazaka (run it on your own machines) and Orochia (running in development at dev.orochia.com). Yazakia is coming soon and Yororis is under construction: neither is released or offered."
+        },
+        {
+          "q": "Is Krizaka open source?",
+          "a": "Yes. Every Krizaka repository is public under the Apache-2.0 license at github.com/krizaka, and the reusable building blocks (users, notifications, billing, the UI kit) are published as packages."
+        },
+        {
+          "q": "Where is Krizaka based?",
+          "a": "Montréal, Québec, Canada. Orazaka is designed around Québec's Law 25 and the GDPR: the data stays on your network."
+        }
+      ],
+      "orazaka": [
+        {
+          "q": "What is Orazaka?",
+          "a": "Orazaka is Krizaka's open-source, sovereign AI orchestration engine. Chat, documents, images, video, voice and agents run on your own machines: every request flows through a deterministic interceptor pipeline to the best local model, and nothing leaves your network."
+        },
+        {
+          "q": "Does my data leave my network?",
+          "a": "No. Orazaka runs on your infrastructure with local models, with no telemetry. It is built around Law 25 (Québec) and the GDPR, so compliance comes from the architecture, not from a promise."
+        },
+        {
+          "q": "What is Orazaka built with?",
+          "a": "Java 21, Spring Boot 4 and Spring AI 2 on a hexagonal architecture enforced at build time with ArchUnit. It speaks the Model Context Protocol (MCP) and works with Ollama and other open-source models."
+        },
+        {
+          "q": "Is Orazaka free and open source?",
+          "a": "Yes. Orazaka is open source under Apache-2.0, split into one public repository per component so other applications can reuse its users, notifications, billing, edge and UI kit."
+        }
+      ],
+      "orochia": [
+        {
+          "q": "What is Orochia?",
+          "a": "Orochia is Krizaka's open-source video platform for independent creators: direct-to-CDN streaming, per-video audiences, collections with permissions, paid unlocks and payouts handled with the rigour of financial infrastructure."
+        },
+        {
+          "q": "Who is Orochia for?",
+          "a": "Independent creators and their audiences. It is designed for adult content: viewers are 18+, and creators go through 18 U.S.C. § 2257 verification."
+        },
+        {
+          "q": "How are payments handled?",
+          "a": "A payment counts only once the gateway confirms it by signed webhook, and it is settled exactly once into a double-entry ledger. Streams use signed URLs that expire after five minutes."
+        },
+        {
+          "q": "Is Orochia open source?",
+          "a": "Yes. The platform is public under Apache-2.0 at github.com/krizaka/orochia, and the app runs in development at dev.orochia.com."
+        }
+      ],
+      "yazakia": [
+        {
+          "q": "What is Yazakia?",
+          "a": "Yazakia is a dating app where you talk first. An AI agent gets to know you, then opens a small batch of three to five people who are compatible in both directions, with written reasons and never a score."
+        },
+        {
+          "q": "Can I download Yazakia?",
+          "a": "Not yet. Yazakia is coming to iOS and Android and has not been released. You can follow the build in the open at github.com/krizaka/yazakia."
+        },
+        {
+          "q": "How does matching work?",
+          "a": "There is no swipe and no catalogue. The next batch waits for a short debrief on the previous one, and a mutual interest opens a seven-day introduction that the agent never reads."
+        },
+        {
+          "q": "What happens to my data?",
+          "a": "Your location is rounded to about one kilometre, sensitive answers are encrypted at rest, and you can delete your account in the app."
+        }
+      ],
+      "yororis": [
+        {
+          "q": "What is Yororis?",
+          "a": "Yororis is a listening space with a face and a voice. Its presence is an AI that says it is one: it listens, reflects back, asks one question and stops."
+        },
+        {
+          "q": "Can I use Yororis today?",
+          "a": "No. Yororis is under construction: it is not deployed, not offered and has no date. The only way in today is to talk to the team."
+        },
+        {
+          "q": "What powers Yororis?",
+          "a": "Orazaka, through its wellbeing pack. Every word stays on Orazaka machines, with no third-party AI."
+        },
+        {
+          "q": "What does Yororis keep?",
+          "a": "Three lines that belong to the person, to read, edit or delete. It never keeps the transcript."
+        }
+      ]
     }
   },
   "pages": {

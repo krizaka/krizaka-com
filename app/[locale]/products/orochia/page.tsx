@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ProductFaq } from "@/app/components/ProductFaq";
 import { SectionHeading } from "@krizaka/ui/page";
 import Link from "next/link";
 import {
@@ -63,12 +64,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/products/orochia",
     en: {
-      title: "Orochia — Fans pay, creators keep 90% | Krizaka",
+      title: "Orochia — Fans pay, creators keep 90%",
       description:
         "Orochia is Krizaka's open-source video platform for independent creators: signed 4K streaming, audiences the creator chooses (followers, contacts, paid unlock, invited lists), video auctions, challenges (goals, dares and open calls funded in escrow), collections, gateway-confirmed payments and 18+ compliance.",
     },
     fr: {
-      title: "Orochia — Les fans paient, les créateurs gardent 90 % | Krizaka",
+      title: "Orochia — Les fans paient, les créateurs gardent 90 %",
       description:
         "Orochia est la plateforme vidéo open source de Krizaka pour créateurs indépendants : diffusion 4K signée, publics choisis par le créateur (abonnés, contacts, déblocage payant, listes d'invités), enchères vidéo, défis (objectifs, défis lancés aux créateurs et appels ouverts financés sous séquestre), collections, paiements confirmés par la passerelle et conformité 18+.",
     },
@@ -336,6 +337,7 @@ export default async function OrochiaPage({ params }: Props) {
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta topic="orochia" />
       </SectionBackdrop>
+      <ProductFaq product="orochia" locale={locale} />
       <SiteFooter />
       <style>{`
         .oc-lockup { display: flex; width: fit-content; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-display), system-ui, sans-serif;

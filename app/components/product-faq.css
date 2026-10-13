@@ -1,0 +1,11 @@
+/* Question / answer list of ProductFaq — tokens only, so it reads in dark and light. */
+.kz-faq { display: grid; gap: 0.5rem; max-width: 52rem; }
+.kz-faq__item { border: 1px solid var(--kz-border-subtle); border-radius: var(--kz-radius-lg); background: var(--kz-surface-1); }
+.kz-faq__item[open] { border-color: var(--kz-border-default); }
+.kz-faq__q { cursor: pointer; list-style: none; padding: 0.9rem 1.1rem; font-weight: 600; color: var(--kz-text-primary); border-radius: var(--kz-radius-lg); display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+.kz-faq__q::-webkit-details-marker { display: none; }
+.kz-faq__q::after { content: "+"; color: var(--kz-accent-text); font-family: var(--kz-font-mono); flex: none; transition: transform var(--kz-transition-fast); }
+.kz-faq__item[open] > .kz-faq__q::after { transform: rotate(45deg); }
+.kz-faq__q:focus-visible { outline: 2px solid var(--kz-ring); outline-offset: 2px; }
+.kz-faq__a { margin: 0; padding: 0 1.1rem 1rem; color: var(--kz-text-secondary); line-height: 1.65; }
+@media (prefers-reduced-motion: reduce) { .kz-faq__q::after { transition: none; } }

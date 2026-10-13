@@ -41,11 +41,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/open-source",
     en: {
-      title: "Open source — build with Krizaka's building blocks | Krizaka",
+      title: "Open source — build with Krizaka's building blocks",
       description: "Reuse Krizaka's components in your own application — users, notifications, billing, the AI engine — or run a whole product. Every repository, Apache-2.0.",
     },
     fr: {
-      title: "Open source — construisez avec les briques de Krizaka | Krizaka",
+      title: "Open source — construisez avec les briques de Krizaka",
       description: "Réutilisez les composants de Krizaka dans votre application — utilisateurs, notifications, facturation, moteur IA — ou déployez un produit entier. Tous les dépôts, Apache-2.0.",
     },
   });
