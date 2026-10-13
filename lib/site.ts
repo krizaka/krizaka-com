@@ -6,7 +6,8 @@
 export const GITHUB_ORG = "krizaka";
 export const GITHUB_REPO = "orazaka";
 
-export const SITE_URL = "https://krizaka.com";
+/** The canonical host: www (the apex answers 308 to www, see deploy/digitalocean/app.yaml). */
+export const SITE_URL = "https://www.krizaka.com";
 
 /**
  * Where Orochia runs — every "open the app" link, the structured data and llms.txt point here.
