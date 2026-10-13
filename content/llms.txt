@@ -35,37 +35,41 @@
 
 ## Key pages
 
-- Home: https://krizaka.com/en
-- Products: https://krizaka.com/en/products
-- Open source (every repository): https://krizaka.com/en/open-source
-- Orazaka: https://krizaka.com/en/products/orazaka
-- Orazaka docs: https://krizaka.com/en/docs/orazaka/101
-- Orazaka repositories map: https://krizaka.com/en/docs/orazaka/repositories
-- Orazaka packs and Studios: https://krizaka.com/en/products/orazaka/packages
-- Orochia: https://krizaka.com/en/products/orochia
-- Orochia docs: https://krizaka.com/en/docs/orochia
+- Home: {{SITE_URL}}/en
+- Products: {{SITE_URL}}/en/products
+- Open source (every repository): {{SITE_URL}}/en/open-source
+- Orazaka: {{SITE_URL}}/en/products/orazaka
+- Orazaka docs: {{SITE_URL}}/en/docs/orazaka/101
+- Orazaka repositories map: {{SITE_URL}}/en/docs/orazaka/repositories
+- Orazaka packs and Studios: {{SITE_URL}}/en/products/orazaka/packages
+- Orochia: {{SITE_URL}}/en/products/orochia
+- Orochia docs: {{SITE_URL}}/en/docs/orochia
 - Orochia (the platform): {{OROCHIA_APP_URL}}
-- Yazakia (coming soon): https://krizaka.com/en/products/yazakia
-- Yororis (under construction): https://krizaka.com/en/products/yororis
-- Our story (where the names come from): https://krizaka.com/en/story
-- Contact the team: https://krizaka.com/en/contact
+- Yazakia (coming soon): {{SITE_URL}}/en/products/yazakia
+- Yororis (under construction): {{SITE_URL}}/en/products/yororis
+- Our story (where the names come from): {{SITE_URL}}/en/story
+- Contact the team: {{SITE_URL}}/en/contact
 
 ## Documentation
 
-- Documentation hub: https://krizaka.com/en/docs
-- Krizaka UI (design system, live components): https://krizaka.com/en/docs/ui
-- Krizaka Java (Spring Boot kit, starters, messaging): https://krizaka.com/en/docs/java
-- Orazaka docs: https://krizaka.com/en/docs/orazaka
-- Orazaka CLI (npx orazaka install / start / dev, every command): https://krizaka.com/en/docs/orazaka/cli
-- Orazaka packs and Studios (what each pack does, how to write one): https://krizaka.com/en/docs/orazaka/packs
-- Orazaka administration (what an administrator controls): https://krizaka.com/en/docs/orazaka/admin
-- Orochia docs: https://krizaka.com/en/docs/orochia
-- Orochia admin console (moderation, 2257, payouts, its four gates): https://krizaka.com/en/docs/orochia/admin_console
-- Yororis (under construction: what it is, what it is not, what is studied): https://krizaka.com/en/docs/yororis
+- Documentation hub: {{SITE_URL}}/en/docs
+- Krizaka UI (design system, live components): {{SITE_URL}}/en/docs/ui
+- Krizaka Java (Spring Boot kit, starters, messaging): {{SITE_URL}}/en/docs/java
+- Orazaka docs: {{SITE_URL}}/en/docs/orazaka
+- Orazaka CLI (npx orazaka install / start / dev, every command): {{SITE_URL}}/en/docs/orazaka/cli
+- Orazaka packs and Studios (what each pack does, how to write one): {{SITE_URL}}/en/docs/orazaka/packs
+- Orazaka administration (what an administrator controls): {{SITE_URL}}/en/docs/orazaka/admin
+- Orochia docs: {{SITE_URL}}/en/docs/orochia
+- Orochia admin console (moderation, 2257, payouts, its four gates): {{SITE_URL}}/en/docs/orochia/admin_console
+- Yororis (under construction: what it is, what it is not, what is studied): {{SITE_URL}}/en/docs/yororis
 
 Every documentation page:
 
 {{DOCS_PAGES}}
+
+## Packages (npm, scope @krizaka)
+
+{{NPM_PACKAGES}}
 
 ## Source
 
@@ -77,4 +81,4 @@ Every documentation page:
 - Yororis mobile (under construction): https://github.com/krizaka/yororis-mobile
 - Organisation: https://github.com/krizaka
 
-Languages: English and French (Québec). Detailed version: https://krizaka.com/llms-full.txt
+Languages: English and French (Québec). Detailed version: {{SITE_URL}}/llms-full.txt · Sitemap: {{SITE_URL}}/sitemap.xml

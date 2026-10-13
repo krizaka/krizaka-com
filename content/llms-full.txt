@@ -48,20 +48,20 @@ short-circuitable pipeline of interceptors to the optimal local model.
   (ready-made workflows): outbound prospecting, document verification (rulesets,
   PDF authenticity), real-estate reels, media generation and analysis, wellbeing
   journaling, trade showcases. Catalogue generated from krizaka/orazaka-packs:
-  https://krizaka.com/en/products/orazaka/packages
+  {{SITE_URL}}/en/products/orazaka/packages
 
 ## Getting started
 
 Local loop via the orazaka CLI (npm: `orazaka`, alias of `@krizaka/orazaka-cli`):
 `npx orazaka install` (clones and configures the workspace) → `npx orazaka start`
 (Docker infra) → `npx orazaka dev` (every service, web, admin, mobile). Reference:
-https://krizaka.com/en/docs/orazaka/cli Stateful infra (PostgreSQL+pgvector, Redis, RabbitMQ) runs in
+{{SITE_URL}}/en/docs/orazaka/cli Stateful infra (PostgreSQL+pgvector, Redis, RabbitMQ) runs in
 Docker; AI inference runs natively on the host (Metal on macOS).
 
 ## Identity & links
 
 - Publisher: Krizaka (Montréal, Québec, Canada).
-- Product site: https://krizaka.com
+- Product site: {{SITE_URL}}
 - Source code: https://github.com/krizaka/orazaka
 - Contact: bonjour@krizaka.com
 
@@ -117,7 +117,7 @@ and API, PostgreSQL, db/media/payments packages), `krizaka/orochia-admin`
 - Operations: fail-closed configuration, one Docker image with a bundled
   migrator, DigitalOcean App Platform specs (dev and production), owner account
   configured by environment, Mailgun transactional e-mail.
-- Docs: https://krizaka.com/en/products/orochia/docs
+- Docs: {{SITE_URL}}/en/products/orochia/docs
 
 # Yazakia (coming soon)
 
@@ -140,7 +140,7 @@ both in progress.
   sensitive answers encrypted at rest, private photos behind 5-minute signed
   links, block and report, account deletion and data export in the app, nothing
   used to train a model.
-- Page: https://krizaka.com/en/products/yazakia
+- Page: {{SITE_URL}}/en/products/yazakia
 
 # Yororis (under construction)
 
@@ -165,5 +165,17 @@ deployment or publishing workflow.
   append-only audit; no third-party AI provider.
 - What it is not: not care, not an emergency service, not a person. In a crisis
   in Canada, call or text 9-8-8; in Québec, 811 (Info-Social).
-- Page: https://krizaka.com/en/products/yororis
-- Docs: https://krizaka.com/en/docs/yororis
+- Page: {{SITE_URL}}/en/products/yororis
+- Docs: {{SITE_URL}}/en/docs/yororis
+
+# Documentation index
+
+Every documentation page (Krizaka UI, Krizaka Java, Orazaka, Orochia):
+
+{{DOCS_PAGES}}
+
+# Packages (npm, scope @krizaka)
+
+{{NPM_PACKAGES}}
+
+Maven coordinates (com.krizaka) and every repository: {{SITE_URL}}/en/open-source
