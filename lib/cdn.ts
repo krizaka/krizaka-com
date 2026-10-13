@@ -3,13 +3,13 @@
    its hash in lib/cdn-manifest.json; this module turns a logical path (`products/orochia/tour/alex-bid.mp4`) into that
    URL. A URL never changes content, so the CDN and browsers may keep it as long as they like.
 
-   NEXT_PUBLIC_CDN_URL switches the host (a custom hostname later) without touching the code; it is read at build time.
+   NEXT_PUBLIC_MEDIA_CDN_URL switches the host (a custom hostname later) without touching the code; it is read at build time.
    Same-origin on purpose: the favicon (app/manifest, the tab) and what Next.js generates (robots, sitemap, llms.txt,
    /_next/static, the fonts of @krizaka/fonts). */
 
 import manifest from "./cdn-manifest.json";
 
-export const CDN_URL = (process.env.NEXT_PUBLIC_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(/\/+$/, "");
+export const CDN_URL = (process.env.NEXT_PUBLIC_MEDIA_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(/\/+$/, "");
 
 const FILES: Record<string, string> = manifest.files;
 

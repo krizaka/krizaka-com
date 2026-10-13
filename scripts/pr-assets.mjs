@@ -11,10 +11,10 @@
 // URLs `upload` produced for the same <key> — used to migrate old PR bodies and docs.
 //
 // Credentials come from the environment, or from a `.env` file given with --env-file:
-//   BUNNY_STORAGE_API_KEY   storage zone password (never printed)
-//   BUNNY_STORAGE_ZONE      storage zone name
-//   BUNNY_STORAGE_ENDPOINT  regional endpoint (default storage.bunnycdn.com)
-//   BUNNY_PULL_ZONE_HOSTNAME  pull zone hostname serving the storage zone (e.g. krizaka-assets.b-cdn.net)
+//   MEDIA_STORAGE_API_KEY   storage zone password (never printed)
+//   MEDIA_STORAGE_ZONE      storage zone name
+//   MEDIA_STORAGE_ENDPOINT  regional endpoint (default storage.bunnycdn.com)
+//   MEDIA_CDN_HOSTNAME  pull zone hostname serving the storage zone (e.g. krizaka-assets.b-cdn.net)
 // No dependency: Node ≥ 20 (global fetch).
 
 import { createHash } from "node:crypto";
@@ -92,15 +92,15 @@ const host = (v) => String(v ?? "").trim().replace(/^https?:\/\//, "").replace(/
 
 export function loadConfig(env, { requireKey = true } = {}) {
   const cfg = {
-    apiKey: env.BUNNY_STORAGE_API_KEY ?? "",
-    zone: (env.BUNNY_STORAGE_ZONE ?? "").trim(),
-    endpoint: host(env.BUNNY_STORAGE_ENDPOINT) || "storage.bunnycdn.com",
-    pullZone: host(env.BUNNY_PULL_ZONE_HOSTNAME),
+    apiKey: env.MEDIA_STORAGE_API_KEY ?? "",
+    zone: (env.MEDIA_STORAGE_ZONE ?? "").trim(),
+    endpoint: host(env.MEDIA_STORAGE_ENDPOINT) || "storage.bunnycdn.com",
+    pullZone: host(env.MEDIA_CDN_HOSTNAME),
   };
   const missing = [];
-  if (requireKey && !cfg.apiKey) missing.push("BUNNY_STORAGE_API_KEY");
-  if (requireKey && !cfg.zone) missing.push("BUNNY_STORAGE_ZONE");
-  if (!cfg.pullZone) missing.push("BUNNY_PULL_ZONE_HOSTNAME");
+  if (requireKey && !cfg.apiKey) missing.push("MEDIA_STORAGE_API_KEY");
+  if (requireKey && !cfg.zone) missing.push("MEDIA_STORAGE_ZONE");
+  if (!cfg.pullZone) missing.push("MEDIA_CDN_HOSTNAME");
   if (missing.length) throw new Error(`missing ${missing.join(", ")} (environment or --env-file)`);
   return cfg;
 }

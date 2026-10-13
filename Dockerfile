@@ -29,13 +29,13 @@ COPY . .
 # - where the media are served from (lib/cdn.ts; empty = https://krizaka-assets.b-cdn.net);
 # - an optional read-only GitHub token so scripts/gen-org-stats.mjs is not rate-limited (the build never fails without it).
 #   It stays in this stage: the runner image does not inherit it.
-ARG NEXT_PUBLIC_OROCHIA_APP_URL
-ARG NEXT_PUBLIC_CDN_URL
-ARG GITHUB_TOKEN
-ENV NEXT_PUBLIC_OROCHIA_APP_URL=$NEXT_PUBLIC_OROCHIA_APP_URL
-ENV NEXT_PUBLIC_CDN_URL=$NEXT_PUBLIC_CDN_URL
+ARG NEXT_PUBLIC_APP_DEMO_URL
+ARG NEXT_PUBLIC_MEDIA_CDN_URL
+ARG APP_GITHUB_TOKEN
+ENV NEXT_PUBLIC_APP_DEMO_URL=$NEXT_PUBLIC_APP_DEMO_URL
+ENV NEXT_PUBLIC_MEDIA_CDN_URL=$NEXT_PUBLIC_MEDIA_CDN_URL
 ENV NODE_ENV=production
-RUN npm run postinstall && GITHUB_TOKEN=$GITHUB_TOKEN npm run build
+RUN npm run postinstall && APP_GITHUB_TOKEN=$APP_GITHUB_TOKEN npm run build
 
 # 3. Runner — standalone server, unprivileged user.
 FROM node:24-alpine AS runner

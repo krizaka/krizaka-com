@@ -1,8 +1,9 @@
 /* Contact messages — validation and delivery, shared by app/api/contact/route.ts.
    Delivery is configured by environment (fail-closed: nothing configured → 503, never a fake success):
-     MAILGUN_API_KEY + MAILGUN_DOMAIN + CONTACT_TO_EMAIL         e-mail through the Mailgun HTTP API
-       (+ MAILGUN_API_URL for the EU region, + CONTACT_FROM_EMAIL)
-     CONTACT_WEBHOOK_URL                                        JSON POST (Slack / Discord / Teams / any relay)
+     MAIL_PROVIDER=mailgun + MAIL_API_KEY + MAIL_DOMAIN + MAIL_CONTACT_TO   e-mail through the Mailgun HTTP API
+       (+ MAIL_API_URL for the EU region, + MAIL_FROM)
+     MAIL_CONTACT_WEBHOOK_URL                                               JSON POST (Slack / Discord / Teams / any relay)
+   Every variable is declared in lib/env.ts (krizaka/.github#46).
    Both may be set; the message is accepted when at least one channel delivers it. */
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
@@ -102,10 +103,15 @@ const TIMELINE_LABEL: Record<ContactTimeline, string> = {
 const escapeHtml = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
+/** The e-mail channel: the provider named (only `mailgun` exists), its key, the domain and a recipient. */
+function mailConfigured(env: NodeJS.ProcessEnv): boolean {
+  return env.MAIL_PROVIDER?.trim().toLowerCase() === "mailgun" && Boolean(env.MAIL_API_KEY && env.MAIL_DOMAIN && env.MAIL_CONTACT_TO);
+}
+
 export function contactChannels(env: NodeJS.ProcessEnv = process.env) {
   return {
-    email: Boolean(env.MAILGUN_API_KEY && env.MAILGUN_DOMAIN && env.CONTACT_TO_EMAIL),
-    webhook: Boolean(env.CONTACT_WEBHOOK_URL),
+    email: mailConfigured(env),
+    webhook: Boolean(env.MAIL_CONTACT_WEBHOOK_URL),
   };
 }
 
@@ -115,11 +121,11 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
   const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${TOPIC_LABEL[m.topic]}${m.timeline ? ` · ${TIMELINE_LABEL[m.timeline]}` : ""} · ${m.locale}${m.source ? ` · from ${m.source}` : ""}`;
   const jobs: Promise<boolean>[] = [];
 
-  if (env.MAILGUN_API_KEY && env.MAILGUN_DOMAIN && env.CONTACT_TO_EMAIL) {
+  if (mailConfigured(env) && env.MAIL_CONTACT_TO && env.MAIL_DOMAIN) {
     // https://documentation.mailgun.com — POST /v3/{domain}/messages, Basic auth `api:<key>`, form fields.
     const form = new FormData();
-    form.append("from", env.CONTACT_FROM_EMAIL || `Krizaka <contact@${env.MAILGUN_DOMAIN}>`);
-    for (const to of env.CONTACT_TO_EMAIL.split(",").map((s) => s.trim()).filter(Boolean)) form.append("to", to);
+    form.append("from", env.MAIL_FROM || `Krizaka <contact@${env.MAIL_DOMAIN}>`);
+    for (const to of env.MAIL_CONTACT_TO.split(",").map((s) => s.trim()).filter(Boolean)) form.append("to", to);
     form.append("h:Reply-To", m.email);
     form.append("subject", subject);
     // Every field of the form, as filled in.
@@ -143,11 +149,11 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
         )
         .join("")}</table>`,
     );
-    const base = (env.MAILGUN_API_URL || "https://api.mailgun.net").replace(/\/+$/, "");
+    const base = (env.MAIL_API_URL || "https://api.mailgun.net").replace(/\/+$/, "");
     jobs.push(
-      fetch(`${base}/v3/${encodeURIComponent(env.MAILGUN_DOMAIN)}/messages`, {
+      fetch(`${base}/v3/${encodeURIComponent(env.MAIL_DOMAIN)}/messages`, {
         method: "POST",
-        headers: { Authorization: `Basic ${Buffer.from(`api:${env.MAILGUN_API_KEY}`).toString("base64")}` },
+        headers: { Authorization: `Basic ${Buffer.from(`api:${env.MAIL_API_KEY}`).toString("base64")}` },
         body: form,
         signal: AbortSignal.timeout(8000),
       }).then(
@@ -163,9 +169,9 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
     );
   }
 
-  if (env.CONTACT_WEBHOOK_URL) {
+  if (env.MAIL_CONTACT_WEBHOOK_URL) {
     jobs.push(
-      fetch(env.CONTACT_WEBHOOK_URL, {
+      fetch(env.MAIL_CONTACT_WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // `text` for Slack, `content` for Discord; the structured fields for any other relay.
