@@ -106,7 +106,10 @@ function componentFiles(files: VirtualFile[]): VirtualFile[] {
   }
   const pages = CATEGORIES.flatMap((category) => {
     const names = items.filter((item) => item.category === category).map((item) => item.name);
-    return names.length ? [`---${category}---`, ...names] : [];
+    // The registry's "foundations" category (cn, Slot, Theme, Txt, the mascots) is not the Foundations section of the
+    // sidebar (tokens, typography, icons): its separator gets its own name so the menu never shows "Foundations" twice.
+    const separator = category === "foundations" ? "utilities" : category;
+    return names.length ? [`---${separator}---`, ...names] : [];
   });
   out.push({ type: "meta", path: "components/meta.json", data: { title: "Components", pages } });
   return out;

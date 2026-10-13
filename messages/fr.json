@@ -3408,6 +3408,7 @@
       "templates": "Modèles",
       "layout": "Mise en page",
       "foundations": "Fondations",
+      "utilities": "Utilitaires et marque",
       "domain services": "Services métier",
       "tooling": "Outillage"
     },
@@ -3497,7 +3498,7 @@
         "layouts": "Mises en page",
         "templates": "Modèles",
         "layout": "Mise en page",
-        "foundations": "Fondations"
+        "foundations": "Utilitaires et marque"
       },
       "whenToUse": "Quand l’utiliser",
       "whenNotToUse": "Quand ne pas l’utiliser",
