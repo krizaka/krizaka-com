@@ -37,12 +37,13 @@ const nextConfig: NextConfig = {
   // /docs/<product>/ui renders them live.
   transpilePackages: ["@krizaka/orazaka-design-system", "@krizaka/orazaka-shared", "@krizaka/orochia-design-system"],
 
-  // Serve next-gen formats first; AVIF → WebP → original. Cache optimized images
+  // Serve WebP (or the original). Cache optimized images
   // for a year (LCP wins; bytes only re-fetched when the source URL changes).
   // The media live on Bunny (lib/cdn.ts): next/image fetches them from there and serves their responsive sizes — the
   // gallery (site/…) and the screenshots the synced docs embed (pr-assets/…).
   images: {
-    formats: ["image/avif", "image/webp"],
+    // WebP only: AVIF encoding is several times slower and the app runs on one shared vCPU (DigitalOcean).
+    formats: ["image/webp"],
     minimumCacheTTL: 31536000,
     remotePatterns: [{ protocol: "https", hostname: new URL(CDN_URL).hostname, port: "", pathname: "/**", search: "" }],
   },
