@@ -34,6 +34,7 @@ import { Ticks } from "@krizaka/ui/page";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import ProductTour from "@/app/components/ProductTour";
+import OnYourPhone from "@/app/components/products/OnYourPhone";
 import ContactCta from "@/app/components/home/ContactCta";
 import PacksCallout from "@/app/components/products/PacksCallout";
 import AdminCallout from "@/app/components/products/AdminCallout";
@@ -204,6 +205,9 @@ export default async function OrazakaPage({ params }: Props) {
       </section>
 
       {/* ─── What it does, shown: six capabilities, each watched over by a bird of the flock ─── */}
+      {/* ─── On your phone: the iOS app in one clip, then the mobile docs ─── */}
+      <OnYourPhone product="orazaka" text={t.phone} />
+
       <section className="kz-frame bp-wrap" id="shown" style={{ scrollMarginTop: 72 }}>
         <SectionHeading eyebrow={t.shown.eyebrow} title={<Rich text={t.shown.title} />} lead={t.shown.lead} reveal />
         <div className="bp-cards">

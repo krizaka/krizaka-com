@@ -15,8 +15,9 @@ const subscribe = (cb: () => void) => {
   return () => mq.removeEventListener("change", cb);
 };
 
-/** `portrait`: a phone recording (9:20), framed at a phone's width instead of a 16:10 window. */
-export default function DemoClip({ media, label, frameLabel, portrait = false }: { media: Video; label: string; frameLabel: string; portrait?: boolean }) {
+/** `portrait`: a phone recording (9:20), framed at a phone's width instead of a 16:10 window.
+ *  `bare`: a 9:16 clip that carries its own phone and captions (the mobile promo) — no window chrome around it. */
+export default function DemoClip({ media, label, frameLabel = "", portrait = false, bare = false }: { media: Video; label: string; frameLabel?: string; portrait?: boolean; bare?: boolean }) {
   const reduce = useSyncExternalStore(subscribe, () => window.matchMedia(REDUCE).matches, () => true);
   const video = useRef<HTMLVideoElement>(null);
 
@@ -50,11 +51,13 @@ export default function DemoClip({ media, label, frameLabel, portrait = false }:
   }, [reduce]);
 
   return (
-    <figure className={portrait ? "dc-frame dc-portrait" : "dc-frame"}>
-      <div className="dc-chrome" aria-hidden>
-        <span /><span /><span />
-        <em>{frameLabel}</em>
-      </div>
+    <figure className={bare ? "dc-frame dc-bare" : portrait ? "dc-frame dc-portrait" : "dc-frame"}>
+      {!bare && (
+        <div className="dc-chrome" aria-hidden>
+          <span /><span /><span />
+          <em>{frameLabel}</em>
+        </div>
+      )}
       <video
         ref={video}
         className="dc-video"
@@ -77,6 +80,8 @@ export default function DemoClip({ media, label, frameLabel, portrait = false }:
         .dc-video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--kz-media); }
         .dc-portrait { width: min(100%, 300px); margin-inline: auto; border-radius: 28px; }
         .dc-portrait .dc-video { aspect-ratio: 9 / 20; object-fit: contain; }
+        .dc-bare { width: min(100%, 340px); margin-inline: auto; border-radius: 24px; }
+        .dc-bare .dc-video { aspect-ratio: 9 / 16; }
       `}</style>
     </figure>
   );
