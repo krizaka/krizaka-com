@@ -5,11 +5,17 @@ import path from "node:path";
 import { CREATE_PACKAGE, NATIVE_SHOTS, cliSession } from "../lib/build-with.ts";
 
 const ROOT = path.join(import.meta.dirname, "..");
+const RECORDED = JSON.parse(readFileSync(path.join(ROOT, "public/assets/orazaka/cli/session.json"), "utf8"));
 
-test("the terminal plays install, start, dev — and create only once it is published", () => {
-  assert.deepEqual(cliSession(false).map((s) => s.command), ["npx orazaka install", "orazaka start", "orazaka dev"]);
-  assert.equal(cliSession(true).at(-1).command, `npx ${CREATE_PACKAGE} my-app`);
-  for (const step of cliSession(false)) assert.ok((step.output ?? []).length > 0, `${step.command} prints something`);
+test("the terminal plays the recorded install, start, dev — and create only once it is published", () => {
+  assert.deepEqual(cliSession(RECORDED, false).map((s) => s.command), RECORDED.steps.map((s) => s.command));
+  assert.equal(cliSession(RECORDED, true).at(-1).command, `npx ${CREATE_PACKAGE} my-app`);
+  for (const step of cliSession(RECORDED, false)) {
+    assert.ok((step.output ?? []).length > 0, `${step.command} prints something`);
+    // Only lines the CLI printed: each one is in the recording.
+    const printed = RECORDED.steps.find((s) => s.command === step.command).output.map((l) => l.text);
+    for (const line of step.output) assert.ok(printed.some((p) => p.includes(line.text.trim())), `${line.text} was printed`);
+  }
 });
 
 test("every native shot of the phone is a published story with both themes", () => {

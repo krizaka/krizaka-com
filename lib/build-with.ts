@@ -7,7 +7,7 @@
    scripts/record-cli.mjs), cut short. `npx @krizaka/create` joins the session as soon as the package is on npm. */
 
 import type { TerminalStep } from "@krizaka/ui/terminal-replay";
-import { cliSession as recordedSession } from "@/lib/cli-model";
+import type { CliSession } from "./cli-model";
 
 /** The native examples shown in the phone, by registry name and example name — the same pieces as the web stage. */
 export const NATIVE_SHOTS = [
@@ -30,8 +30,8 @@ const HOME_LINES = /Setup Wizard|Phase \d|Workspace ready|Orazaka ready|Dev Infr
  * /docs/orazaka/cli (lib/cli-model.ts, recorded from the published CLI), cut to what a home page has room for: the
  * box borders the CLI draws are dropped, nothing is written here.
  */
-export function cliSession(createPublished: boolean): TerminalStep[] {
-  const steps: TerminalStep[] = recordedSession().steps.map((step) => ({
+export function cliSession(recorded: CliSession, createPublished: boolean): TerminalStep[] {
+  const steps: TerminalStep[] = recorded.steps.map((step) => ({
     command: step.command,
     output: step.output
       .filter((line) => !line.elided && HOME_LINES.test(line.text))
