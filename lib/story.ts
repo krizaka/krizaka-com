@@ -57,6 +57,10 @@ const STAGES: Record<string, StageStructure> = {
   yororis: { bird: "crane", combo: ["←", "→", "↓", "K"], runsOn: ["ui", "foundations", "engine"] },
 };
 
+/** What a product runs on (its stage's kits, from its manifests) — the "we use our own products" table of /story, also
+    read by /open-source. Empty for a product without a stage. */
+export const productKits = (id: string): readonly KitId[] => STAGES[id]?.runsOn ?? [];
+
 /** The staged products, in the site's order: the engine first, then the products it powers. */
 export function storyProducts(hasWords: (id: string) => boolean) {
   const products = NAV_PRODUCTS.filter((p) => STAGES[p.id] && hasWords(p.id)).map((p) => ({ ...p, ...STAGES[p.id]! }));

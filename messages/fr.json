@@ -1407,28 +1407,6 @@
           "body": "Parlez-lui via son contrat versionné — les modules *-api et clients typés, publiés en com.krizaka:* sur Maven Central."
         }
       },
-      "groups": {
-        "workspace": {
-          "title": "Espace de travail",
-          "intro": "Le point d'entrée : clone et construit tous les dépôts d'Orazaka."
-        },
-        "foundation": {
-          "title": "Fondations",
-          "intro": "Build, contrats, edge et kit UI — pour toute application."
-        },
-        "ai": {
-          "title": "Moteur IA",
-          "intro": "Le moteur cognitif, ses services et son worker natif."
-        },
-        "apps": {
-          "title": "Applications & packs",
-          "intro": "Web, administration, mobile, CLI, packs du Studio."
-        },
-        "orochia": {
-          "title": "Plateforme vidéo",
-          "intro": "L'application, sa console d'administration et son design system."
-        }
-      },
       "promises": {
         "license": {
           "title": "Apache-2.0, partout",
@@ -1455,7 +1433,34 @@
       "contributeBody": "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue.",
       "contributeGuide": "Guide de contribution",
       "ask": "Demander dans les Discussions",
-      "write": "Nous écrire"
+      "write": "Nous écrire",
+      "jump": "Sur cette page",
+      "catalogueCount": "{repositories} dépôts · {packages} packages npm · lus sur GitHub et npm à la construction",
+      "productsEyebrow": "Chaque produit, chaque dépôt",
+      "repoCount": "{count} dépôts",
+      "live": "En ligne",
+      "stack": "Pile technique",
+      "uses": "Les packages Krizaka qu'il utilise",
+      "engine": "Propulsé par Orazaka",
+      "kinds": {
+        "main": "Principal",
+        "web": "Web",
+        "mobile": "Mobile",
+        "service": "Service",
+        "library": "Bibliothèque",
+        "tooling": "Outillage",
+        "other": "Autre"
+      },
+      "platform": {
+        "name": "Plateforme Krizaka",
+        "tagline": "Les briques que partagent tous les produits : Krizaka UI, les kits Java, le site et les règles de l'organisation."
+      },
+      "nav": {
+        "products": "Produits",
+        "packages": "Packages npm",
+        "maven": "Maven Central",
+        "blocks": "Briques"
+      }
     },
     "notFound": {
       "title": "Cette page a pris une autre route",
@@ -1769,46 +1774,25 @@
       "notProductBanner": "Des briques de fondation, pas des applications isolées : ces {count} packages constituent l'infrastructure open source qui anime nos produits. Chacun peut les installer et les réutiliser librement.",
       "npm": "npm",
       "source": "Source",
-      "items": {
-        "tokens": {
-          "role": "Le vocabulaire",
-          "line": "Les jetons sémantiques --kz-* — surfaces, texte, accent, statuts — en sombre et en clair, avec les thèmes de marque de Krizaka, Orazaka, Orochia et Yazakia : CSS, TypeScript et React Native depuis une seule source."
-        },
-        "tailwind": {
-          "role": "Le preset",
-          "line": "Les jetons en utilitaires Tailwind CSS v4 (bg-surface-1, text-fg-danger, rounded-xl), la courbe Krizaka et les variantes réservées aux illustrations."
-        },
-        "config": {
-          "role": "Les garde-fous",
-          "line": "ESLint, tsconfig et Prettier pour chaque application, les quatre règles d'interface, et krizaka-ratchet — le compteur qui ne laisse la dette d'interface que baisser."
-        },
+      "docsUi": "Parcourir les composants",
+      "cliDocs": "Documentation du CLI",
+      "latest": "dernière {version}",
+      "groups": {
         "ui": {
-          "role": "Les primitives",
-          "line": "Bouton, carte, dialogue, toast, onglets, palette de commandes, compte à rebours… pour le web, une entrée chacun, et pour React Native — avec les logos Krizaka, la signature de mouvement et le registre derrière krizaka.com/docs/ui."
+          "title": "UI",
+          "intro": "Composants, jetons, icônes, polices, graphiques et l'identité de chaque produit."
         },
-        "icons": {
-          "role": "Les icônes signature",
-          "line": "Soixante-dix icônes dessinées en code dans une même grammaire — angles coupés, un nœud — pour React et React Native, importables une à une."
+        "data": {
+          "title": "Données",
+          "intro": "État serveur, contrats typés, messages, montants et dates."
         },
-        "intl": {
-          "role": "Nombres et dates",
-          "line": "L'argent en unités mineures entières, les nombres, les dates, les durées relatives et les pluriels sur Intl, sans aucune dépendance."
+        "realtime": {
+          "title": "Temps réel",
+          "intro": "Mises à jour en direct et notifications mobiles."
         },
-        "i18n": {
-          "role": "Les mots",
-          "line": "Clés de messages et paramètres typés, pluriels, texte enrichi, un provider React qui ne livre qu'une langue, et la vérification krizaka-i18n."
-        },
-        "orochiaDs": {
-          "role": "Le kit d'Orochia",
-          "line": "Le thème d'Orochia sur les primitives, et les composants qui parlent sa langue — badges en direct, enchères, stories — dans les deux thèmes."
-        },
-        "orazakaDs": {
-          "role": "Le kit d'Orazaka",
-          "line": "Le thème d'Orazaka sur les primitives, et les composants et le registre d'icônes de ses clients web."
-        },
-        "orazakaShared": {
-          "role": "Les contrats d'Orazaka",
-          "line": "Types TypeScript, schémas Zod et jetons de design partagés par les clients web, mobile et en ligne de commande d'Orazaka."
+        "tooling": {
+          "title": "Outillage",
+          "intro": "Configuration partagée et outils en ligne de commande."
         }
       }
     },
