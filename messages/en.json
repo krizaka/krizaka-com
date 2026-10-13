@@ -596,6 +596,76 @@
       "contact": {
         "title": "Tell us what you're building.",
         "cta": "Contact us"
+      },
+      "build": {
+        "eyebrow": "Build with Krizaka",
+        "title": "The same blocks build all four.",
+        "lead": "Orazaka, Orochia, Yazakia and Yororis are made of one open kit. Switch the identity: the components stay, the brand changes. Then start a whole platform from your terminal.",
+        "facts": {
+          "components": "components",
+          "native": "also on iOS and Android",
+          "packages": "packages on npm",
+          "version": "@krizaka/ui"
+        },
+        "kit": {
+          "title": "Krizaka UI, live",
+          "brandLabel": "Identity",
+          "stageLabel": "Krizaka UI components wearing the {brand} identity",
+          "primary": "Start building",
+          "secondary": "Talk to us",
+          "profile": {
+            "name": "Elena Marchetti",
+            "statLabel": "Profile complete",
+            "challenges": "Challenges met",
+            "challengesValue": "12 of 15",
+            "replies": "Replies within a day",
+            "caption": "Dance and street fashion · Montréal",
+            "follow": "Follow",
+            "message": "Message"
+          },
+          "choice": {
+            "label": "Choose your plan",
+            "tag": "Step 1 of 3",
+            "caption": "You can change it at any time.",
+            "starter": {
+              "name": "Starter",
+              "title": "Publish and get paid"
+            },
+            "creator": {
+              "name": "Creator",
+              "title": "Challenges and auctions"
+            },
+            "studio": {
+              "name": "Studio",
+              "title": "A team, shared earnings"
+            }
+          },
+          "chart": {
+            "title": "Views, last 30 days"
+          },
+          "calendar": {
+            "title": "Pick a day",
+            "previousMonth": "Previous month",
+            "nextMonth": "Next month"
+          }
+        },
+        "native": {
+          "title": "The same kit, native",
+          "caption": "React Native screenshots from the registry's stories.",
+          "alt": "{name} on React Native"
+        },
+        "cli": {
+          "title": "From zero to a running platform",
+          "lead": "The Orazaka CLI installs, starts and runs the whole stack — the commands below are the real ones, with what they print.",
+          "label": "Terminal session: install, start and run Orazaka",
+          "play": "Play",
+          "pause": "Pause",
+          "replay": "Replay",
+          "copy": "Copy commands",
+          "copied": "Copied"
+        },
+        "docsUi": "Browse Krizaka UI",
+        "docsCli": "Read the CLI docs"
       }
     },
     "footer": {

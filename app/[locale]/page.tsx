@@ -9,6 +9,7 @@ import ExpertiseSection from "../components/home/ExpertiseSection";
 import OpenSourceSection from "../components/home/OpenSourceSection";
 import ContactCta from "../components/home/ContactCta";
 import StoryTeaser from "../components/home/StoryTeaser";
+import BuildWithKrizaka from "../components/home/BuildWithKrizaka";
 import SiteFooter from "../components/SiteFooter";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 
@@ -45,6 +46,7 @@ export default async function Home({ params }: Props) {
       <TopNavBar />
       <OrgHero locale={locale} repositoryCount={publicRepositories} />
       <ProductsShowcase />
+      <BuildWithKrizaka locale={locale} />
       <StoryTeaser />
       <ExpertiseSection />
       <OpenSourceSection
