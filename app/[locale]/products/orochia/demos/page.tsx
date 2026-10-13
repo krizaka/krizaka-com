@@ -9,7 +9,7 @@ import { localizedMetadata } from "@/lib/seo";
 import { getDictionary } from "@/lib/i18n";
 import { contactHref } from "@/lib/contact";
 import { OROCHIA_APP_URL } from "@/lib/site";
-import { DEMO_USE_CASES, tourSrc } from "@/lib/orochia-demo";
+import { DEMO_USE_CASES, mobileLiveSrc, tourSrc } from "@/lib/orochia-demo";
 import { reveal } from "@/lib/motion";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
@@ -127,6 +127,28 @@ export default async function OrochiaDemoPage({ params }: Props) {
           </aside>
         </div>
       </SectionBackdrop>
+
+      {/* ─── On the phone: live in front, a push behind (recorded on the Android emulator) ─── */}
+      <section id="mobile-live" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72 }} aria-labelledby="mobile-live-title">
+        <article className="bp-split ocd-case">
+          <div {...reveal()}>
+            <span className="ocd-head">
+              <span className="bp-icon"><VideoIcon size={22} nodeColor={node} /></span>
+              <span className="ocd-side">{t.mobileLive.eyebrow}</span>
+            </span>
+            <h2 id="mobile-live-title" className="ocd-case-title">{t.mobileLive.title}</h2>
+            <p className="bp-lead">{t.mobileLive.body}</p>
+            <ul className="ocd-points">
+              {t.mobileLive.points.map((point) => (
+                <li key={point}><CheckIcon size={16} /> {point}</li>
+              ))}
+            </ul>
+          </div>
+          <div {...reveal(2)}>
+            <DemoClip media={mobileLiveSrc()} label={t.mobileLive.caption} frameLabel={t.mobileLive.frame} portrait />
+          </div>
+        </article>
+      </section>
 
       {/* ─── Closing ─── */}
       <section className="kz-frame bp-wrap" aria-labelledby="closing-title">

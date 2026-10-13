@@ -25,3 +25,8 @@ export const DEMO_USE_CASES = [
 ] as const satisfies readonly { id: string; clip: OrochiaClipId; side: "creator" | "fan"; icon: string }[];
 
 export const tourSrc = (id: OrochiaClipId): Video => video(`products/orochia/tour/${id}`);
+
+/** The app on a phone, recorded on the Android emulator against a local Orochia (krizaka/orochia docs/NOTIFICATIONS.md
+    §4): a message arrives live in the list and the conversation, then — the app in the background — a comment arrives
+    as a push, and the tap opens the video. Stored as site/products/orochia/mobile/live-push.<hash>.{webm,mp4,jpg}. */
+export const mobileLiveSrc = (): Video => video("products/orochia/mobile/live-push");

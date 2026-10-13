@@ -15,7 +15,8 @@ const subscribe = (cb: () => void) => {
   return () => mq.removeEventListener("change", cb);
 };
 
-export default function DemoClip({ media, label, frameLabel }: { media: Video; label: string; frameLabel: string }) {
+/** `portrait`: a phone recording (9:20), framed at a phone's width instead of a 16:10 window. */
+export default function DemoClip({ media, label, frameLabel, portrait = false }: { media: Video; label: string; frameLabel: string; portrait?: boolean }) {
   const reduce = useSyncExternalStore(subscribe, () => window.matchMedia(REDUCE).matches, () => true);
   const video = useRef<HTMLVideoElement>(null);
 
@@ -49,7 +50,7 @@ export default function DemoClip({ media, label, frameLabel }: { media: Video; l
   }, [reduce]);
 
   return (
-    <figure className="dc-frame">
+    <figure className={portrait ? "dc-frame dc-portrait" : "dc-frame"}>
       <div className="dc-chrome" aria-hidden>
         <span /><span /><span />
         <em>{frameLabel}</em>
@@ -74,6 +75,8 @@ export default function DemoClip({ media, label, frameLabel }: { media: Video; l
         .dc-chrome span { width: 9px; height: 9px; border-radius: 50%; background: var(--kz-border-strong); }
         .dc-chrome em { margin-left: 8px; font-style: normal; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
         .dc-video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: var(--kz-media); }
+        .dc-portrait { width: min(100%, 300px); margin-inline: auto; border-radius: 28px; }
+        .dc-portrait .dc-video { aspect-ratio: 9 / 20; object-fit: contain; }
       `}</style>
     </figure>
   );

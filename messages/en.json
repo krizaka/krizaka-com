@@ -971,6 +971,46 @@
           "That's our proof. No benchmark to take on faith, no borrowed logo wall: clone it, run it, read it, fork it. If something on this page isn't in the code, the code wins."
         ],
         "cta": "See everything we've opened"
+      },
+      "live": {
+        "label": "Bonus stage",
+        "title": "How Orochia stays live",
+        "body": [
+          "A tip lands, a bid moves the price, a message arrives: the screen that cares hears of it in well under a second — no polling, no message broker, no extra service to pay for.",
+          "Every action is written to PostgreSQL first. Then <b>one NOTIFY</b> crosses to every instance of the app; each hands the event down the <b>Server-Sent Events</b> streams it holds. Plain HTTP, the same session as the rest of the API, and any instance serves any stream.",
+          "A cut connection comes back by itself and says where it stopped (<b>Last-Event-ID</b>): what it missed is replayed from the database, each message once. Presence is a heartbeat, never a database write per beat.",
+          "The app closed? The same notification leaves as a <b>push</b> — Expo, then Firebase on Android (Apple's APNs on iOS once our developer account is active) — and a tap opens the very screen it is about."
+        ],
+        "pathTitle": "The path of one event",
+        "path": {
+          "action": {
+            "title": "Written first.",
+            "body": "Send, bid, pledge, tip: an ordinary HTTP request, committed to PostgreSQL — the database is the truth."
+          },
+          "notify": {
+            "title": "One NOTIFY.",
+            "body": "<b>NOTIFY orochia_events</b>: every instance hears it on its LISTEN connection. Past three instances, the same code switches to Valkey by configuration."
+          },
+          "stream": {
+            "title": "Down the open streams.",
+            "body": "Each instance pushes it to the Server-Sent Events streams that care — a heartbeat every 15 s, a resume after any cut."
+          },
+          "push": {
+            "title": "Or to the phone.",
+            "body": "In the background, a push: Expo Push → Firebase Cloud Messaging or APNs → the phone; the tap opens its screen."
+          }
+        },
+        "figuresAria": "Measured figures",
+        "figures": {
+          "p50": "Median delivery, 500 open streams",
+          "p95": "95th percentile, 2,000 streams",
+          "memory": "Memory per open stream",
+          "push": "Median, from a message sent to the push shown on Android"
+        },
+        "source": "Measured, not estimated: scripts/realtime-load.mjs on a production build, one instance on a MacBook (2026-10-11), and a real push timed on the Android emulator (2026-10-13).",
+        "move": "What happens reaches you once, in order, wherever you are.",
+        "docsRealtime": "Realtime, in the docs",
+        "docsPush": "Notifications and push, in the docs"
       }
     },
     "orochia": {
@@ -2983,6 +3023,19 @@
         "body": "Run Orochia for your creators, or tell us what your platform needs.",
         "app": "Open Orochia",
         "contact": "Talk to us"
+      },
+      "mobileLive": {
+        "eyebrow": "On the phone",
+        "title": "Live in the app, a push when it is closed",
+        "body": "Recorded on an Android emulator, signed in as Elena: Alex's messages land in her list and her conversation as he sends them; then the app goes to the background, Alex comments on her video, the push arrives in about half a second — and the tap opens that video.",
+        "points": [
+          "Messages, receipts and presence live over one stream",
+          "A push through Firebase when the app is closed",
+          "The tap opens the right screen, even from a cold start",
+          "Notifications by kind, in the app's settings"
+        ],
+        "caption": "The Orochia app on Android: a message arrives live, then a push opens the video",
+        "frame": "Android · Orochia app"
       }
     },
     "adminCallout": {
