@@ -53,6 +53,10 @@ jobs:
       - name: Build the production image (Dockerfile, Next.js standalone)
         run: docker build --build-arg NEXT_PUBLIC_APP_DEMO_URL=https://dev.orochia.com -t krizaka-com:ci .
 
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
       - name: Smoke-test the container
         run: |
           docker run -d --name site -p 3000:3000 krizaka-com:ci
@@ -68,4 +72,6 @@ jobs:
           # No delivery channel configured: the contact API fails closed.
           EXPECT=503 check -X POST http://localhost:3000/api/contact -H 'content-type: application/json' \
             -d '{"name":"CI","email":"ci@example.com","company":"","topic":"other","message":"Container smoke test.","locale":"en"}'
+          # The SEO contract on the HTML the server really sends (canonical www, hreflang, JSON-LD, robots, llms.txt).
+          node scripts/check-seo.mjs --base http://localhost:3000
           docker logs site | tail -20
