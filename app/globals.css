@@ -874,6 +874,11 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
 /* Notes, intro, coming soon, product index */
 .kz-docs-note { color: var(--kz-text-secondary); font-size: 0.9375rem; }
 .kz-docs-note a { color: var(--kz-accent-text); font-weight: 600; }
+/* A recording in a doc (app/components/docs/DocVideo.tsx): a phone-height clip, centred, its caption under it. */
+.kz-doc-video { display: grid; justify-items: center; gap: 10px; margin: 24px 0 32px; }
+.kz-doc-video video { display: block; width: auto; max-width: 100%; max-height: min(640px, 80vh); border-radius: 18px;
+  border: 1px solid var(--kz-border-subtle); background: var(--kz-media); }
+.kz-doc-video figcaption { max-width: 34rem; text-align: center; font-size: 0.875rem; line-height: 1.5; color: var(--kz-text-secondary); }
 .kz-doc-intro {
   display: flex;
   gap: 14px;
