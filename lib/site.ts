@@ -10,10 +10,10 @@ export const SITE_URL = "https://krizaka.com";
 
 /**
  * Where Orochia runs — every "open the app" link, the structured data and llms.txt point here.
- * NEXT_PUBLIC_OROCHIA_APP_URL switches it (dev today, production later) without touching the code;
+ * NEXT_PUBLIC_APP_DEMO_URL switches it (dev today, production later) without touching the code;
  * it is read at build time, so a change takes effect on the next deployment.
  */
-export const OROCHIA_APP_URL = (process.env.NEXT_PUBLIC_OROCHIA_APP_URL || "https://dev.orochia.com").replace(/\/$/, "");
+export const OROCHIA_APP_URL = (process.env.NEXT_PUBLIC_APP_DEMO_URL || "https://dev.orochia.com").replace(/\/$/, "");
 
 export const CONTACT_EMAIL = "bonjour@krizaka.com";
 

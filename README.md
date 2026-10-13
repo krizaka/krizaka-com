@@ -167,16 +167,41 @@ views (docs) use classes.
 development (copy `.env.example`), the hosting environment in production (Vercel → Settings →
 Environment Variables; on DigitalOcean App Platform, the app's secrets — `deploy/digitalocean/app.yaml`). Without one the endpoint answers `503` instead of pretending:
 
-| Variable | Purpose |
-| :--- | :--- |
-| `MAILGUN_API_KEY` | private API key ([Mailgun](https://documentation.mailgun.com) → API Security); sent as Basic auth `api:<key>` |
-| `MAILGUN_DOMAIN` | sending domain verified in Mailgun (`mg.krizaka.com`) |
-| `MAILGUN_API_URL` | optional, `https://api.mailgun.net` by default; `https://api.eu.mailgun.net` for an EU-region domain |
-| `CONTACT_TO_EMAIL` | where the messages land (comma-separated recipients) |
-| `CONTACT_FROM_EMAIL` | optional sender, on `MAILGUN_DOMAIN` (default `Krizaka <contact@<MAILGUN_DOMAIN>>`) |
-| `CONTACT_WEBHOOK_URL` | optional JSON POST to Slack, Discord or any relay (`text`, `content` and structured `contact` fields) |
+Every variable of the site is named by its bounded context (krizaka/.github#46) and declared once in
+[`lib/env.ts`](lib/env.ts) (zod); this table is generated from it (`npm run docs:env`, checked by `npm test`):
 
-The e-mail goes out via `POST {MAILGUN_API_URL}/v3/{MAILGUN_DOMAIN}/messages` (`lib/contact.ts`)
+<!-- env -->
+#### Application — `APP_`
+
+| Variable | Production | Secret | Default | What it does |
+| :--- | :---: | :---: | :--- | :--- |
+| `NEXT_PUBLIC_APP_DEMO_URL` *(build)* | recommended |  | `https://dev.orochia.com` | Where the running product demo is: every "open the app" link, the structured data and llms.txt (`lib/site.ts`). |
+| `APP_GITHUB_TOKEN` *(build)* | — | ✓ |  | A read-only token so the organisation figures (`scripts/gen-org-stats.mjs`) are not rate-limited at build; the build never fails without it. |
+
+#### Media — `MEDIA_`
+
+| Variable | Production | Secret | Default | What it does |
+| :--- | :---: | :---: | :--- | :--- |
+| `NEXT_PUBLIC_MEDIA_CDN_URL` *(build)* | — |  | `https://krizaka-assets.b-cdn.net` | Where the media (tours, gallery, home backdrop) are served from (`lib/cdn.ts`). |
+| `MEDIA_STORAGE_API_KEY` *(scripts)* | — | ✓ |  | Storage zone password — PR captures and site media (`scripts/pr-assets.mjs`, `scripts/cdn-assets.mjs`). |
+| `MEDIA_STORAGE_ZONE` *(scripts)* | — |  |  | Storage zone name of the asset scripts. |
+| `MEDIA_STORAGE_ENDPOINT` *(scripts)* | — |  | `storage.bunnycdn.com` | Storage API host of the zone's region. |
+| `MEDIA_CDN_HOSTNAME` *(scripts)* | — |  |  | Pull zone hostname serving the zone (the scripts check the first file answers publicly). |
+
+#### E-mail — `MAIL_`
+
+| Variable | Production | Secret | Default | What it does |
+| :--- | :---: | :---: | :--- | :--- |
+| `MAIL_PROVIDER` | recommended |  |  | The contact form's e-mail service: `mailgun`. Unset, the e-mail channel is off. |
+| `MAIL_API_KEY` | recommended | ✓ |  | The provider's private API key (Basic auth `api:<key>`). |
+| `MAIL_DOMAIN` | recommended |  | `mg.krizaka.com` | Sending domain verified at the provider. |
+| `MAIL_API_URL` | — |  | `https://api.mailgun.net` | API base (`https://api.eu.mailgun.net` for an EU-region domain). |
+| `MAIL_FROM` | — |  | `Krizaka <contact@<MAIL_DOMAIN>>` | Sender, on `MAIL_DOMAIN`. |
+| `MAIL_CONTACT_TO` | recommended | ✓ |  | Where the contact messages land (comma-separated recipients). |
+| `MAIL_CONTACT_WEBHOOK_URL` | — | ✓ |  | A second channel: JSON POST to Slack, Discord or any relay (`text`, `content` and structured `contact` fields). |
+<!-- /env -->
+
+The e-mail goes out via `POST {MAIL_API_URL}/v3/{MAIL_DOMAIN}/messages` (`lib/contact.ts`)
 with `Reply-To` set to the visitor, so answering the e-mail answers them. A Mailgun refusal is
 logged (`contact: mailgun refused (…)`) and the visitor gets a `502`.
 

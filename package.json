@@ -13,6 +13,7 @@
     "cdn": "node scripts/cdn-assets.mjs",
     "i18n:check": "krizaka-i18n check messages",
     "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.mjs",
+    "docs:env": "UPDATE_DOCS=1 node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/env.test.mjs",
     "docs:ui": "node scripts/gen-ui-docs.mjs",
     "postinstall": "fumadocs-mdx && node scripts/gen-ui-docs.mjs && node scripts/gen-registry-versions.mjs"
   },
@@ -36,7 +37,8 @@
     "lucide-react": "^1.17.0",
     "next": "^16.3.8",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@krizaka/config": "^0.2.0",

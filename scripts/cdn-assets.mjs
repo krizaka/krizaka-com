@@ -16,8 +16,8 @@
 //   site/products/<product>/tour/<clip>.<hash>.{webm,mp4,jpg} recordings of the real applications
 //   site/products/<product>/gallery/<id>.<hash>.webp          images a product made
 //
-// Credentials: the same as scripts/pr-assets.mjs (BUNNY_STORAGE_API_KEY, BUNNY_STORAGE_ZONE, BUNNY_STORAGE_ENDPOINT,
-// BUNNY_PULL_ZONE_HOSTNAME), from the environment or --env-file — never printed. `check` only needs the pull zone,
+// Credentials: the same as scripts/pr-assets.mjs (MEDIA_STORAGE_API_KEY, MEDIA_STORAGE_ZONE, MEDIA_STORAGE_ENDPOINT,
+// MEDIA_CDN_HOSTNAME), from the environment or --env-file — never printed. `check` only needs the pull zone,
 // which defaults to the one the site reads (lib/cdn.ts). No dependency: Node ≥ 20.
 
 import { createHash } from "node:crypto";
@@ -165,7 +165,7 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     return args.help ? 0 : 1;
   }
   const fileEnv = args.envFile ? parseEnvFile(readFileSync(args.envFile, "utf8")) : {};
-  const merged = { BUNNY_PULL_ZONE_HOSTNAME: DEFAULT_PULL_ZONE, ...fileEnv, ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)) };
+  const merged = { MEDIA_CDN_HOSTNAME: DEFAULT_PULL_ZONE, ...fileEnv, ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)) };
   const manifest = readManifest(manifestFile);
   if (command === "upload") {
     if (!target) throw new Error("upload needs a file or a directory");

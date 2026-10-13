@@ -45,8 +45,8 @@ test("arguments, env files and slugs", () => {
 });
 
 test("configuration names what is missing, never the key", () => {
-  assert.throws(() => loadConfig({ BUNNY_STORAGE_API_KEY: "s" }), /BUNNY_STORAGE_ZONE, BUNNY_PULL_ZONE_HOSTNAME/);
-  assert.deepEqual(loadConfig({ BUNNY_PULL_ZONE_HOSTNAME: "https://cdn.example.net/" }, { requireKey: false }), {
+  assert.throws(() => loadConfig({ MEDIA_STORAGE_API_KEY: "s" }), /MEDIA_STORAGE_ZONE, MEDIA_CDN_HOSTNAME/);
+  assert.deepEqual(loadConfig({ MEDIA_CDN_HOSTNAME: "https://cdn.example.net/" }, { requireKey: false }), {
     apiKey: "", zone: "", endpoint: "storage.bunnycdn.com", pullZone: "cdn.example.net",
   });
 });
@@ -106,7 +106,7 @@ test("dry-run needs no key and sends nothing; output never contains the key", as
   let sent = 0;
   try {
     const code = await main(["upload", dir, "--repo", "orochia", "--key", "feat/x", "--dry-run"], {
-      env: { BUNNY_PULL_ZONE_HOSTNAME: "cdn.example.net", BUNNY_STORAGE_API_KEY: "secret-key" },
+      env: { MEDIA_CDN_HOSTNAME: "cdn.example.net", MEDIA_STORAGE_API_KEY: "secret-key" },
       fetchImpl: async () => (sent++, { ok: true }),
       log: (l) => out.push(l),
     });
@@ -141,7 +141,7 @@ test("rewrite turns committed capture links into CDN URLs", async () => {
   const file = join(dir, "body.md");
   writeFileSync(file, body);
   try {
-    await main(["rewrite", file, "--repo", "krizaka-com", "--write"], { env: { BUNNY_PULL_ZONE_HOSTNAME: "cdn.example.net" }, log: () => {} });
+    await main(["rewrite", file, "--repo", "krizaka-com", "--write"], { env: { MEDIA_CDN_HOSTNAME: "cdn.example.net" }, log: () => {} });
     assert.equal(readFileSync(file, "utf8"), text);
   } finally {
     rmSync(dir, { recursive: true });

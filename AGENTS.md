@@ -279,12 +279,18 @@
   extending `@krizaka/config/dependency-cruiser`) fails the lint on a forbidden import or a cycle.
 
 - Links to the running Orochia go through `OROCHIA_APP_URL` (`lib/site.ts`), set by
-  `NEXT_PUBLIC_OROCHIA_APP_URL` (dev today, production later; read at build time). `llms.txt` and
+  `NEXT_PUBLIC_APP_DEMO_URL` (dev today, production later; read at build time). `llms.txt` and
   `llms-full.txt` are rendered from `content/` with that URL — never hard-code the app's address.
 - The contact form posts to `app/api/contact` (validation in `lib/contact.ts`). Delivery is
   configured by environment and fails closed (503) when nothing is set:
-  `MAILGUN_API_KEY` + `MAILGUN_DOMAIN` + `CONTACT_TO_EMAIL` (+ `MAILGUN_API_URL`, `CONTACT_FROM_EMAIL`)
-  and/or `CONTACT_WEBHOOK_URL`. Template: `.env.example`.
+  `MAIL_PROVIDER=mailgun` + `MAIL_API_KEY` + `MAIL_DOMAIN` + `MAIL_CONTACT_TO` (+ `MAIL_API_URL`, `MAIL_FROM`)
+  and/or `MAIL_CONTACT_WEBHOOK_URL`. Template: `.env.example`.
+- **Environment variables are named by bounded context** (krizaka/.github#46): `<CONTEXT>_<THING>` with CONTEXT one of
+  `APP_` `DATABASE_` `AUTH_` `MEDIA_` `MAIL_` `PUSH_` `PAYMENTS_` `REALTIME_` `ABUSE_` `OBSERVABILITY_` `AI_` `OPERATOR_` —
+  never a product (`OROCHIA_…`) nor a vendor (`BUNNY_…`, `MAILGUN_…`): a vendor is a value (`MAIL_PROVIDER=mailgun`);
+  `NEXT_PUBLIC_` only where the browser needs it, then the context. Every variable is declared once in `lib/env.ts`
+  (zod); `tests/env.test.mjs` refuses an undeclared or misnamed one and keeps README's table (generated,
+  `npm run docs:env`) in sync.
 
 ## 5.1 PR captures — never committed
 
@@ -297,8 +303,8 @@
   ```
 
   It prints each CDN URL and a Markdown block to paste in the PR. Credentials come from the
-  environment or `--env-file`: `BUNNY_STORAGE_API_KEY`, `BUNNY_STORAGE_ZONE`,
-  `BUNNY_STORAGE_ENDPOINT` (default `storage.bunnycdn.com`), `BUNNY_PULL_ZONE_HOSTNAME` — never
+  environment or `--env-file`: `MEDIA_STORAGE_API_KEY`, `MEDIA_STORAGE_ZONE`,
+  `MEDIA_STORAGE_ENDPOINT` (default `storage.bunnycdn.com`), `MEDIA_CDN_HOSTNAME` — never
   printed, never committed. The upload fails if the pull zone does not serve the first file publicly.
 - `node scripts/pr-assets.mjs rewrite <file> --repo <repo> [--write]` turns links to a committed
   `docs/screenshots/<key>/…` folder into the CDN URLs of the same key (migration of old PR bodies).
@@ -323,7 +329,7 @@
   with `--yes` deletes) the old versions the manifest no longer names. Same credentials as §5.1, never printed.
 - Code never writes a media URL: `lib/cdn.ts` turns a logical path into the CDN URL (`cdn("products/orazaka/gallery/
   tea-pour.webp")`, `video("products/orochia/tour/alex-bid")` → `{ webm, mp4, poster }`) and fails the build on a
-  path the manifest does not know. The host is `NEXT_PUBLIC_CDN_URL` (read at build; default
+  path the manifest does not know. The host is `NEXT_PUBLIC_MEDIA_CDN_URL` (read at build; default
   `https://krizaka-assets.b-cdn.net`); `next.config` allows it for `next/image` and redirects the old `/assets/…` URLs
   (still used by published `@krizaka/ui` examples) to their file on the CDN.
 - Same-origin on purpose: the favicon (`public/favicon.svg`, the manifest and the tab), what Next.js generates (robots,

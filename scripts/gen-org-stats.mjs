@@ -4,7 +4,7 @@
 
    Writes the git-ignored lib/org-stats.json: { org, publicRepositories, repositories: [{ name, description, url,
    topics, language, archived }], fetchedAt }. The organisation endpoint gives `public_repos`; the repositories come
-   from /orgs/<org>/repos (paginated, public only). GITHUB_TOKEN, when set, lifts the anonymous rate limit — CI and the
+   from /orgs/<org>/repos (paginated, public only). APP_GITHUB_TOKEN, when set, lifts the anonymous rate limit — CI and the
    DigitalOcean build pass it. When GitHub cannot be reached (offline, rate limit), the previous file is kept; without
    one, nothing is written and lib/org-repositories.ts falls back to the repositories the generated product data knows
    (lib/org-data.ts). The build never fails for it.
@@ -19,7 +19,7 @@ const ORG = "krizaka";
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "org-stats.json");
 
 const headers = { accept: "application/vnd.github+json", "user-agent": "krizaka-com-build" };
-const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+const token = process.env.APP_GITHUB_TOKEN;
 if (token) headers.authorization = `Bearer ${token}`;
 
 async function get(url) {

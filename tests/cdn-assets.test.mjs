@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { check, hashOf, logicalPath, main, plan, prune, readManifest, versioned } from "../scripts/cdn-assets.mjs";
 
 const cfg = { apiKey: "secret-key", zone: "kz-zone", endpoint: "storage.bunnycdn.com", pullZone: "cdn.example.net" };
-const env = { BUNNY_STORAGE_API_KEY: "secret-key", BUNNY_STORAGE_ZONE: "kz-zone", BUNNY_PULL_ZONE_HOSTNAME: "cdn.example.net" };
+const env = { MEDIA_STORAGE_API_KEY: "secret-key", MEDIA_STORAGE_ZONE: "kz-zone", MEDIA_CDN_HOSTNAME: "cdn.example.net" };
 
 function fixture() {
   const dir = mkdtempSync(join(tmpdir(), "cdn-assets-"));
