@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ...localizedMetadata(locale, {
       path: "/products/orazaka/ingenierie-cognitive",
       en: {
-        title: "Cognitive Engineering in AI — Sovereign Reasoning | Krizaka",
+        title: "Cognitive Engineering in AI — Sovereign Reasoning",
         description:
           "Beyond the prompt: Orazaka's 9-step deterministic pipeline enriches, refines, routes, and validates every AI interaction locally.",
         og: {
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
       },
       fr: {
-        title: "Ingénierie Cognitive & IA Souveraine — Raisonnement Localisé | Krizaka",
+        title: "Ingénierie Cognitive & IA Souveraine — Raisonnement Localisé",
         description:
           "Au-delà du prompt : découvrez l'ingénierie cognitive d'Orazaka. Un pipeline déterministe d'intercepteurs qui enrichit et valide chaque requête en local.",
         og: {

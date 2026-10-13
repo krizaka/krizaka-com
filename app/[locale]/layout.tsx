@@ -7,6 +7,7 @@ import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
 import { CDN_URL } from "@/lib/cdn";
+import { SITE_URL } from "@/lib/site";
 import "../globals.css";
 /* The page blocks of @krizaka/ui (AGENTS.md §4.1): their stylesheet, imported by package path from the layout — never by
    a relative @import inside globals.css, which the production build dropped (#74). */
@@ -91,7 +92,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     icons: {
       icon: "/favicon.svg",
     },
-    metadataBase: new URL("https://krizaka.com"),
+    metadataBase: new URL(SITE_URL),
     // Canonical + hreflang are set per page (see lib/seo buildAlternates), so a
     // subpage never inherits the homepage's canonical.
     robots: {
@@ -113,7 +114,7 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
         ? "Deploy sovereign AI on your own infrastructure. Chat, Image, Video, Voice — zero cloud dependencies. Law 25 and GDPR compliant."
         : "Déployez une IA souveraine sur votre infrastructure à Montréal. Chat, Image, Vidéo, Voix — zéro dépendance cloud. Conforme Loi 25 et RGPD.",
       type: "website",
-      url: "https://krizaka.com",
+      url: SITE_URL,
       siteName: "Krizaka",
       locale: isEn ? "en_US" : "fr_CA",
       alternateLocale: isEn ? "fr_CA" : "en_US",

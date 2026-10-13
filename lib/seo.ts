@@ -53,7 +53,8 @@ export function localizedMetadata(
 ): Metadata {
   const copy = normalize(locale) === "en" ? opts.en : opts.fr;
   const meta: Metadata = {
-    title: copy.title,
+    // The layout appends " | Krizaka"; a title that already names the brand is left as is.
+    title: /krizaka/i.test(copy.title) ? { absolute: copy.title } : copy.title,
     description: copy.description,
     alternates: buildAlternates(locale, opts.path),
   };
