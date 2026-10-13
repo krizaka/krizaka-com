@@ -55,12 +55,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/products/orazaka",
     en: {
-      title: "Orazaka — The AI that never leaves home | Krizaka",
+      title: "Orazaka — The AI that never leaves home",
       description:
         "Orazaka is Krizaka's open-source sovereign AI platform: chat, documents, images, video and agents on your own machines — no telemetry, a cost you decide, agents that ask first. Law 25 and GDPR by architecture.",
     },
     fr: {
-      title: "Orazaka — L'IA qui ne quitte jamais la maison | Krizaka",
+      title: "Orazaka — L'IA qui ne quitte jamais la maison",
       description:
         "Orazaka est la plateforme d'IA souveraine open source de Krizaka : conversation, documents, images, vidéo et agents sur vos propres machines — aucune télémétrie, un coût que vous décidez, des agents qui demandent d'abord. Loi 25 et RGPD par l'architecture.",
     },

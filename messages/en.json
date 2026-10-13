@@ -192,7 +192,7 @@
     "tagline": "The sovereign AI orchestration engine, open source. Built in Québec."
   },
   "cognitiveEngineeringPage": {
-    "pageTitle": "Cognitive Engineering & Sovereign AI — Orazaka | Krizaka",
+    "pageTitle": "Cognitive Engineering & Sovereign AI — Orazaka",
     "pageDesc": "Discover how cognitive engineering structures artificial intelligence to make it reliable, secure, and sovereign.",
     "introTitle": "What is cognitive engineering?",
     "introText": "Applied cognitive engineering in AI means structuring and organizing the flow of thought of artificial intelligence.\n\nInstead of treating a large language model as a black box where you send queries and hope for a good answer, Orazaka divides each interaction into clear, specialized stages. This guarantees data security, factual grounding, and AI predictability.",
@@ -2306,7 +2306,7 @@
     },
     "orazakaDemo": {
       "meta": {
-        "title": "Orazaka demo — a day of work on one Mac | Krizaka",
+        "title": "Orazaka demo — a day of work on one Mac",
         "description": "Watch Orazaka at work: product photos and voice-overs generated on one Mac, a lease checked against the law with every finding cited, Studios for each trade, jobs and notifications, answers from your own documents. Recorded on the real application, on one machine."
       },
       "eyebrow": "Demo · recorded on the real application",
@@ -2959,7 +2959,7 @@
     },
     "orochiaDemo": {
       "meta": {
-        "title": "Orochia demo — a day as a creator and as a fan | Krizaka",
+        "title": "Orochia demo — a day as a creator and as a fan",
         "description": "Watch Orochia at work: Elena publishes a paid video, gets tipped and outbid live, reads who paid and withdraws 90 % of it; Alex discovers her, tips her story, unlocks a session, bids and backs her next video. Recorded on the real application."
       },
       "eyebrow": "Orochia demo · recorded on the real application",
@@ -3181,7 +3181,7 @@
     },
     "orazakaPacks": {
       "meta": {
-        "title": "Orazaka Packs — Studios for your profession, installed without code | Krizaka",
+        "title": "Orazaka Packs — Studios for your profession, installed without code",
         "description": "Prospecting, document verification, real-estate reels, media, wellbeing, trade showcases: the Orazaka packs and their Studios, installed without code."
       },
       "eyebrow": "Packs & Studios",

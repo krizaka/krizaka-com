@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/products/orazaka/usecases",
     en: {
-      title: "Sovereign AI Use Cases — Orazaka on-premise | Krizaka",
+      title: "Sovereign AI Use Cases — Orazaka on-premise",
       description:
         "Discover concrete on-premise AI use cases for businesses, law firms, clinics, and realtors. Conforms to Quebec's Law 25 and GDPR.",
       og: {
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     fr: {
-      title: "Cas d'usage IA Souveraine — Secteurs & Métiers Québec | Krizaka",
+      title: "Cas d'usage IA Souveraine — Secteurs & Métiers Québec",
       description:
         "Découvrez nos cas d'usage réels d'IA souveraine pour entreprises, cabinets d'avocats, cliniques et immobilier à Montréal. Conforme Loi 25.",
       og: {
