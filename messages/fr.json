@@ -3246,6 +3246,100 @@
         "studiosOne": "1 Studio"
       },
       "studiosTitleOne": "1 Studio"
+    },
+    "faq": {
+      "eyebrow": "Questions",
+      "title": "Questions fréquentes",
+      "krizaka": [
+        {
+          "q": "Qu'est-ce que Krizaka ?",
+          "a": "Krizaka est un studio logiciel montréalais (Québec) qui conçoit des produits open source : Orazaka, l'IA souveraine sur vos propres machines ; Orochia, une plateforme vidéo pour les créateurs indépendants ; Yazakia, une app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction). Chaque dépôt est public sous licence Apache-2.0."
+        },
+        {
+          "q": "Quels produits Krizaka puis-je utiliser aujourd'hui ?",
+          "a": "Orazaka (à installer sur vos propres machines) et Orochia (en fonctionnement en développement sur dev.orochia.com). Yazakia arrive bientôt et Yororis est en construction : aucun des deux n'est publié ni offert."
+        },
+        {
+          "q": "Krizaka est-il open source ?",
+          "a": "Oui. Chaque dépôt Krizaka est public sous licence Apache-2.0 sur github.com/krizaka, et les briques réutilisables (utilisateurs, notifications, facturation, kit d'interface) sont publiées en paquets."
+        },
+        {
+          "q": "Où est basé Krizaka ?",
+          "a": "À Montréal, au Québec, au Canada. Orazaka est conçu autour de la Loi 25 du Québec et du RGPD : les données restent sur votre réseau."
+        }
+      ],
+      "orazaka": [
+        {
+          "q": "Qu'est-ce qu'Orazaka ?",
+          "a": "Orazaka est le moteur d'orchestration d'IA souverain et open source de Krizaka. Conversation, documents, images, vidéo, voix et agents tournent sur vos propres machines : chaque requête traverse un pipeline d'intercepteurs déterministe jusqu'au meilleur modèle local, et rien ne quitte votre réseau."
+        },
+        {
+          "q": "Mes données quittent-elles mon réseau ?",
+          "a": "Non. Orazaka tourne sur votre infrastructure avec des modèles locaux, sans télémétrie. Il est construit autour de la Loi 25 (Québec) et du RGPD : la conformité vient de l'architecture, pas d'une promesse."
+        },
+        {
+          "q": "Avec quoi Orazaka est-il construit ?",
+          "a": "Java 21, Spring Boot 4 et Spring AI 2 sur une architecture hexagonale vérifiée à la compilation avec ArchUnit. Il parle le Model Context Protocol (MCP) et fonctionne avec Ollama et d'autres modèles open source."
+        },
+        {
+          "q": "Orazaka est-il gratuit et open source ?",
+          "a": "Oui. Orazaka est open source sous licence Apache-2.0, découpé en un dépôt public par composant pour que d'autres applications réutilisent ses utilisateurs, notifications, facturation, passerelle et kit d'interface."
+        }
+      ],
+      "orochia": [
+        {
+          "q": "Qu'est-ce qu'Orochia ?",
+          "a": "Orochia est la plateforme vidéo open source de Krizaka pour les créateurs indépendants : diffusion directe depuis le CDN, audiences par vidéo, collections avec permissions, déblocages payants et versements traités avec la rigueur d'une infrastructure financière."
+        },
+        {
+          "q": "À qui s'adresse Orochia ?",
+          "a": "Aux créateurs indépendants et à leurs publics. Elle est conçue pour du contenu pour adultes : les spectateurs ont 18 ans ou plus, et les créateurs passent la vérification 18 U.S.C. § 2257."
+        },
+        {
+          "q": "Comment les paiements sont-ils traités ?",
+          "a": "Un paiement ne compte qu'une fois confirmé par la passerelle via un webhook signé, puis il est réglé exactement une fois dans un grand livre en partie double. Les flux utilisent des URL signées qui expirent après cinq minutes."
+        },
+        {
+          "q": "Orochia est-elle open source ?",
+          "a": "Oui. La plateforme est publique sous licence Apache-2.0 sur github.com/krizaka/orochia, et l'application tourne en développement sur dev.orochia.com."
+        }
+      ],
+      "yazakia": [
+        {
+          "q": "Qu'est-ce que Yazakia ?",
+          "a": "Yazakia est une app de rencontre où l'on se parle d'abord. Un agent IA apprend à vous connaître, puis ouvre un petit lot de trois à cinq personnes compatibles dans les deux sens, avec des raisons écrites et jamais de score."
+        },
+        {
+          "q": "Puis-je télécharger Yazakia ?",
+          "a": "Pas encore. Yazakia arrive sur iOS et Android et n'est pas publiée. Vous pouvez suivre sa construction à découvert sur github.com/krizaka/yazakia."
+        },
+        {
+          "q": "Comment fonctionne la mise en relation ?",
+          "a": "Pas de swipe, pas de catalogue. Le lot suivant attend un court bilan du précédent, et un intérêt mutuel ouvre une introduction de sept jours que l'agent ne lit jamais."
+        },
+        {
+          "q": "Que deviennent mes données ?",
+          "a": "Votre position est arrondie à environ un kilomètre, les réponses sensibles sont chiffrées au repos, et vous pouvez supprimer votre compte dans l'app."
+        }
+      ],
+      "yororis": [
+        {
+          "q": "Qu'est-ce que Yororis ?",
+          "a": "Yororis est un espace d'écoute avec un visage et une voix. Sa présence est une IA qui dit qu'elle en est une : elle écoute, reformule, pose une question et s'arrête."
+        },
+        {
+          "q": "Puis-je utiliser Yororis aujourd'hui ?",
+          "a": "Non. Yororis est en construction : il n'est ni déployé, ni offert, et il n'a pas de date. La seule porte d'entrée aujourd'hui est de parler à l'équipe."
+        },
+        {
+          "q": "Qu'est-ce qui fait fonctionner Yororis ?",
+          "a": "Orazaka, grâce à son pack de mieux-être. Chaque mot reste sur les machines d'Orazaka, sans IA tierce."
+        },
+        {
+          "q": "Que garde Yororis ?",
+          "a": "Trois lignes qui appartiennent à la personne, qu'elle peut relire, modifier ou supprimer. Il ne garde jamais la transcription."
+        }
+      ]
     }
   },
   "pages": {

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ProductFaq } from "@/app/components/ProductFaq";
 import Link from "next/link";
 import { ChatIcon, MessageIcon, ShieldIcon, ThreadIcon } from "@krizaka/icons";
 import { ProductLogo, YororisLogo } from "@krizaka/ui";
@@ -218,6 +219,7 @@ export default async function YororisPage({ params }: Props) {
         </CtaPanel>
       </Section>
 
+      <ProductFaq product="yororis" locale={locale} />
       <SiteFooter />
     </main>
   );
