@@ -3,6 +3,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { resolveDocHref } from "../lib/doc-links.ts";
+import { videoLink } from "../lib/doc-video.ts";
+import { createElement } from "react";
 
 const root = new URL("..", import.meta.url);
 const require = createRequire(import.meta.url);
@@ -22,6 +24,14 @@ test("synced product links resolve through the manifest, internal docs keep thei
   // From docs/_generated/ to a sibling or to a curated doc one level up.
   assert.equal(resolveDocHref("_generated/ARCHITECTURE.md", "en", product), "/en/docs/orazaka/architecture");
   assert.equal(resolveDocHref("../AUTH.md", "fr", product), "/fr/docs/orazaka/auth");
+});
+
+test("a poster linking to a recording is the recording; any other link stays a link", () => {
+  const poster = createElement("img", { src: "https://cdn/x/clip-poster.1a.webp", alt: "Alex backs a challenge" });
+  assert.deepEqual(videoLink("https://cdn/x/clip.2b.mp4", [" ", poster]), { src: "https://cdn/x/clip.2b.mp4", poster: "https://cdn/x/clip-poster.1a.webp", caption: "Alex backs a challenge" });
+  assert.equal(videoLink("https://cdn/x/clip.2b.mp4", "clip.mp4"), null, "a text link to a clip stays a download link");
+  assert.equal(videoLink("https://cdn/x/page.md", poster), null);
+  assert.equal(videoLink(undefined, poster), null);
 });
 
 test("every @krizaka/ui component is documented by its code: meta, examples, a live preview for each web example", () => {
