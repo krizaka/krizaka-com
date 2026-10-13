@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ProductFaq } from "@/app/components/ProductFaq";
 import { localizedMetadata } from "@/lib/seo";
 import { orgRepositories } from "@/lib/org-data";
 import { publicRepositoryCount } from "@/lib/org-stats";
@@ -58,6 +59,7 @@ export default async function Home({ params }: Props) {
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta />
       </SectionBackdrop>
+      <ProductFaq product="krizaka" locale={locale} />
       <SiteFooter />
     </main>
   );

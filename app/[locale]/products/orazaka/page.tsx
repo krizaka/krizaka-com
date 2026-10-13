@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ProductFaq } from "@/app/components/ProductFaq";
 import { SectionHeading } from "@krizaka/ui/page";
 import Link from "next/link";
 import {
@@ -390,6 +391,7 @@ export default async function OrazakaPage({ params }: Props) {
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta topic="orazaka" />
       </SectionBackdrop>
+      <ProductFaq product="orazaka" locale={locale} />
       <SiteFooter />
       <style>{`
         .oz-lockup { display: flex; width: fit-content; align-items: center; gap: 14px; margin: 0 0 18px; font-family: var(--font-display), system-ui, sans-serif;

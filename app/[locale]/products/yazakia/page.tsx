@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ProductFaq } from "@/app/components/ProductFaq";
 import Link from "next/link";
 import { BatchIcon, ChatIcon, DebriefIcon, IntroIcon, NotificationIcon } from "@krizaka/icons";
 import { ProductLogo, YazakiaLogo } from "@krizaka/ui";
@@ -190,6 +191,7 @@ export default async function YazakiaPage({ params }: Props) {
         </CtaPanel>
       </Section>
 
+      <ProductFaq product="yazakia" locale={locale} />
       <SiteFooter />
     </main>
   );
