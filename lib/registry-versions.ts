@@ -5,8 +5,13 @@
    here). A static JSON import: safe in server and client modules alike. */
 
 import snapshot from "./registry-versions.json";
+import type { NpmPackageInfo } from "./npm-catalogue";
 
-const versions = snapshot as { npm?: Record<string, string>; maven?: Record<string, string> };
+const versions = snapshot as {
+  npm?: Record<string, string>;
+  npmMeta?: Record<string, { description?: string; keywords?: string[] }>;
+  maven?: Record<string, string>;
+};
 
 /** The `latest` version of an npm package (`@krizaka/ui`). */
 export const npmVersion = (name: string): string | undefined => versions.npm?.[name];
@@ -28,3 +33,13 @@ export function withVersions(code: string): string {
 /** How many packages and artifacts Krizaka publishes (npm @krizaka scope + com.krizaka on Maven Central); 0 when the
     registries could not be reached at build. */
 export const publishedCount = (): number => Object.keys(versions.npm ?? {}).length + Object.keys(versions.maven ?? {}).length;
+
+/** Every @krizaka package on npm with its `latest` version, description and keywords, as the registry gave them at
+    build; empty when it could not be reached. */
+export const npmPackages = (): NpmPackageInfo[] =>
+  Object.entries(versions.npm ?? {}).map(([name, version]) => ({
+    name,
+    version,
+    description: versions.npmMeta?.[name]?.description ?? "",
+    keywords: versions.npmMeta?.[name]?.keywords ?? [],
+  }));
