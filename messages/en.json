@@ -3424,6 +3424,7 @@
       "templates": "Templates",
       "layout": "Layout",
       "foundations": "Foundations",
+      "utilities": "Utilities & brand",
       "domain services": "Domain services",
       "tooling": "Tooling"
     },
@@ -3513,7 +3514,7 @@
         "layouts": "Layouts",
         "templates": "Templates",
         "layout": "Layout",
-        "foundations": "Foundations"
+        "foundations": "Utilities & brand"
       },
       "whenToUse": "When to use",
       "whenNotToUse": "When not to use",
