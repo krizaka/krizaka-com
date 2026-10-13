@@ -1884,7 +1884,11 @@
         "status": "En construction",
         "keywords": "écoute, mieux-être, présence, souverain"
       },
-      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction)."
+      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction).",
+      "yazakia": {
+        "description": "Un agent IA apprend à vous connaître, puis ouvre de petits lots de personnes compatibles dans les deux sens : des raisons, jamais de scores. Bientôt sur iOS et Android ; pas encore publiée.",
+        "status": "À venir"
+      }
     },
     "packages": {
       "eyebrow": "Sur npm",

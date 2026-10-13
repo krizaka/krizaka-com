@@ -19,6 +19,9 @@ import {
   SITE_URL,
   YORORIS_REPO_URL,
   GITHUB_ORG_URL,
+  CONTACT_EMAIL,
+  NPM_ORG_URL,
+  YAZAKIA_REPO_URL,
   GITHUB_REPO_URL,
   ORAZAKA_VERSION,
   OROCHIA_APP_URL,
@@ -62,7 +65,9 @@ export function buildSiteGraph(locale: Locale) {
           "Law 25 (Quebec)",
           "GDPR compliance",
         ],
-        sameAs: [GITHUB_ORG_URL],
+        logo: `${SITE_URL}/favicon.svg`,
+        email: CONTACT_EMAIL,
+        sameAs: [GITHUB_ORG_URL, NPM_ORG_URL],
         address: {
           "@type": "PostalAddress",
           addressLocality: "Montréal",
@@ -167,6 +172,42 @@ export function buildFaqJsonLd(
       name: question,
       acceptedAnswer: { "@type": "Answer", text: answer },
     })),
+  };
+}
+
+/** /products/yazakia — upcoming: a software application with its repository, no offer, no download, no store link. */
+export function buildYazakiaJsonLd(locale: Locale) {
+  const y = getDictionary(locale).site.structuredData.yazakia;
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": `${SITE_URL}/#yazakia`,
+    name: "Yazakia",
+    applicationCategory: "SocialNetworkingApplication",
+    operatingSystem: "iOS, Android",
+    description: y.description,
+    creativeWorkStatus: y.status,
+    inLanguage: hreflangOf(locale),
+    url: `${SITE_URL}/${locale}/products/yazakia`,
+    codeRepository: YAZAKIA_REPO_URL,
+    license: "https://www.apache.org/licenses/LICENSE-2.0",
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+  };
+}
+
+/** A documentation page: TechArticle in the product's docs, with its breadcrumb. */
+export function buildTechArticleJsonLd(a: { locale: Locale; title: string; description: string; url: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: a.title,
+    description: a.description,
+    url: a.url,
+    inLanguage: hreflangOf(a.locale),
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": WEBSITE_ID },
   };
 }
 
