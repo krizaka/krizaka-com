@@ -195,6 +195,21 @@ export default async function OrazakaPage({ params }: Props) {
         </div>
       </SectionBackdrop>
 
+      {/* ─── Made on this Mac: art-direction Studios, one Mac, nothing sent anywhere ─── */}
+      <section className="kz-frame bp-wrap" id="made" style={{ scrollMarginTop: 72 }}>
+        <div {...reveal()}>
+          <p className="bp-eyebrow">{t.made.eyebrow}</p>
+          <h2 className="bp-h2"><Rich text={t.made.title} /></h2>
+          <p className="bp-lead">{t.made.lead}</p>
+        </div>
+        <MadeHereGallery t={dict.site.orazakaDemo.gallery} only={MADE_PICKS} compact />
+        <div className="bp-actions" style={{ marginTop: 24 }} {...reveal()}>
+          <ButtonLink href="/products/orazaka/demos#made-here" size="lg">
+            {t.made.cta} <ForwardIcon size={16} />
+          </ButtonLink>
+        </div>
+      </section>
+
       {/* ─── Product tour (recordings of the real application) ─── */}
       <section id="tour" className="kz-frame bp-wrap" style={{ scrollMarginTop: 72, paddingTop: 24 }}>
         <SectionHeading eyebrow={t.tourEyebrow} title={t.tourTitle} align="center" reveal />
@@ -223,21 +238,6 @@ export default async function OrazakaPage({ params }: Props) {
               </span>
             </Link>
           ))}
-        </div>
-      </section>
-
-      {/* ─── Made on this Mac: art-direction Studios, one Mac, nothing sent anywhere ─── */}
-      <section className="bp-wrap" id="made" style={{ scrollMarginTop: 72 }}>
-        <div {...reveal()}>
-          <p className="bp-eyebrow">{t.made.eyebrow}</p>
-          <h2 className="bp-h2"><Rich text={t.made.title} /></h2>
-          <p className="bp-lead">{t.made.lead}</p>
-        </div>
-        <MadeHereGallery t={dict.site.orazakaDemo.gallery} only={MADE_PICKS} compact />
-        <div className="bp-actions" style={{ marginTop: 24 }} {...reveal()}>
-          <ButtonLink href="/products/orazaka/demos#made-here" size="lg">
-            {t.made.cta} <ForwardIcon size={16} />
-          </ButtonLink>
         </div>
       </section>
 
