@@ -1,42 +1,52 @@
-# Keeps the Krizaka packages current — above all @krizaka/ui, whose registry generates /docs/ui at every build.
-# A new @krizaka/ui on npm → a pull request bumping it (package.json + lock) → CI: `npm ci` (postinstall regenerates
-# lib/ui-examples.ts), `npm run lint` (scripts/gen-ui-docs.mjs --check: the registry is complete) and `npm run build`
-# (every component page regenerated from the new registry). Nothing generated is committed, so the bump is the whole
-# change: merge it when it is green. Pre-releases (2.0.0-beta.x) are followed because the site is on one.
-# Other npm packages get security updates only (the org's Dependabot security updates, grouped below); GitHub Actions
-# follow the Krizaka common model: weekly, one grouped pull request (krizaka/.github#28).
+# Dependabot — the Krizaka model (monthly, quiet; DEPS 2026-10-13, krizaka/.github).
+# Once a month (the 1st, 06:00 Paris), ONE grouped pull request per ecosystem — every update, majors included — and at
+# most one open per ecosystem. Security fixes stay on and arrive grouped apart, as soon as an advisory is published.
+# The ignore rules below are decisions, not oversights: Node LTS only (22/24), PostgreSQL 16 (parity with the
+# DigitalOcean databases), TypeScript 7 / ESLint 10 only once @krizaka/config supports them (krizaka/krizaka-ui#141),
+# the Expo SDK pins its own toolchain, and each deferred major names its tracking issue.
+# A grouped pull request is merged when CI is green; a major that breaks it gets an ignore rule here and an issue.
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: /
+    directory: "/"
     schedule:
-      interval: daily
+      interval: monthly
       time: "06:00"
       timezone: Europe/Paris
     allow:
       - dependency-name: "@krizaka/*"
     groups:
-      krizaka:
-        patterns: ["@krizaka/*"]
+      all:
+        patterns: ["*"]
       security:
         applies-to: security-updates
         patterns: ["*"]
+    ignore:
+      # @krizaka/config peers typescript ^5 (krizaka-ui#141)
+      - dependency-name: "typescript"
+        versions: [">=7"]
+      # types of the Node LTS we run, never a non-LTS line
+      - dependency-name: "@types/node"
+        versions: [">=26"]
+      # @krizaka/config peers eslint ^9 (krizaka-ui#141)
+      - dependency-name: "eslint"
+        versions: [">=10"]
     versioning-strategy: increase
     commit-message:
       prefix: "chore(deps)"
-    labels: ["type:chore", "area:deps", "dependencies"]
-    open-pull-requests-limit: 5
+    labels: ["area:deps"]
+    open-pull-requests-limit: 1
 
   - package-ecosystem: github-actions
-    directory: /
+    directory: "/"
     schedule:
-      interval: weekly
-      day: monday
+      interval: monthly
       time: "06:00"
       timezone: Europe/Paris
     groups:
-      actions:
+      all:
         patterns: ["*"]
     commit-message:
       prefix: "ci(deps)"
-    labels: ["type:chore", "area:deps", "dependencies"]
+    labels: ["area:deps"]
+    open-pull-requests-limit: 1
