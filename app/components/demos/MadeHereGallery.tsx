@@ -40,6 +40,9 @@ export default function MadeHereGallery({
                 width={item.width}
                 height={item.height}
                 sizes={compact ? "(max-width: 640px) 100vw, 33vw" : "(max-width: 640px) 100vw, (max-width: 1100px) 50vw, 380px"}
+                // Already a 1024 px WebP on Bunny: served as is, straight from the CDN — re-encoding it on the app's
+                // shared vCPU took 4–9 s per image on a cold cache (empty tiles).
+                unoptimized
               />
               <figcaption>
                 <span className="mh-style">{t.styles[item.style]}</span>
