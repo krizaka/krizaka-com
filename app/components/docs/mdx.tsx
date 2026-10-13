@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes, ComponentProps } from "react";
+import type { AnchorHTMLAttributes, ComponentProps, HTMLAttributes } from "react";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import { ComponentCatalog } from "./ComponentCatalog";
@@ -6,7 +6,7 @@ import { ProductKits } from "./ProductKits";
 import { EventSchema } from "./EventSchema";
 import { ComingSoon } from "./ComingSoon";
 import { DocVideo } from "./DocVideo";
-import { videoLink } from "@/lib/doc-video";
+import { paragraphVideo } from "@/lib/doc-video";
 import { PRODUCT_MANIFESTS, isProductSection, type DocsSection } from "@/lib/docs-source";
 import type { Locale } from "@/lib/i18n";
 import { resolveDocHref } from "@/lib/doc-links";
@@ -25,11 +25,12 @@ export function getMdxComponents(locale: Locale, section: DocsSection): MDXCompo
   const product = isProductSection(section) ? { id: section, manifest: PRODUCT_MANIFESTS[section] } : undefined;
   return {
     ...defaultMdxComponents,
-    // A poster that links to a recording is the recording (DocVideo); every other link resolves as a doc link.
-    a: ({ href, children, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => {
-      const video = videoLink(href, children);
-      if (video) return <DocVideo {...video} />;
-      return <Anchor href={resolveDocHref(href, locale, product)} {...props}>{children}</Anchor>;
+    a: ({ href, ...props }: AnchorHTMLAttributes<HTMLAnchorElement>) => <Anchor href={resolveDocHref(href, locale, product)} {...props} />,
+    // A paragraph that is only a poster linking to a recording is the recording (DocVideo) — decided here, not in `a`,
+    // because a <figure> inside a <p> is invalid HTML (and a hydration mismatch). Inside running text it stays a link.
+    p: ({ children, ...props }: HTMLAttributes<HTMLParagraphElement>) => {
+      const video = paragraphVideo(children);
+      return video ? <DocVideo {...video} /> : <p {...props}>{children}</p>;
     },
     // The schema blocks of a doc (lib/remark-diagrams.ts) and their MDX form.
     ArchitectureView: (props: ArchitectureViewProps) => <ArchitectureView {...props} locale={locale} fallback={SECTION_PRODUCT[section]} />,

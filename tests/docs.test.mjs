@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { resolveDocHref } from "../lib/doc-links.ts";
-import { videoLink } from "../lib/doc-video.ts";
+import { paragraphVideo, videoLink } from "../lib/doc-video.ts";
 import { createElement } from "react";
 
 const root = new URL("..", import.meta.url);
@@ -32,6 +32,10 @@ test("a poster linking to a recording is the recording; any other link stays a l
   assert.equal(videoLink("https://cdn/x/clip.2b.mp4", "clip.mp4"), null, "a text link to a clip stays a download link");
   assert.equal(videoLink("https://cdn/x/page.md", poster), null);
   assert.equal(videoLink(undefined, poster), null);
+  // Decided per paragraph: a <figure> cannot sit in a <p>, so only a paragraph that is the link alone becomes the clip.
+  const link = createElement("a", { href: "https://cdn/x/clip.2b.mp4" }, poster);
+  assert.equal(paragraphVideo(["\n", link, "\n"])?.src, "https://cdn/x/clip.2b.mp4");
+  assert.equal(paragraphVideo(["Watch ", link, " first."]), null, "in running text it stays a link");
 });
 
 test("every @krizaka/ui component is documented by its code: meta, examples, a live preview for each web example", () => {
