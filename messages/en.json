@@ -1884,7 +1884,11 @@
         "status": "Under construction",
         "keywords": "listening, wellbeing, presence, sovereign"
       },
-      "organization": "Krizaka is a Montréal software studio building open-source products: Orazaka, sovereign AI orchestration on your own infrastructure (Law 25, GDPR, PIPEDA); Orochia, the video platform for independent creators; Yazakia, the dating app where you talk first (coming soon); and Yororis, a listening space with a face and a voice (under construction)."
+      "organization": "Krizaka is a Montréal software studio building open-source products: Orazaka, sovereign AI orchestration on your own infrastructure (Law 25, GDPR, PIPEDA); Orochia, the video platform for independent creators; Yazakia, the dating app where you talk first (coming soon); and Yororis, a listening space with a face and a voice (under construction).",
+      "yazakia": {
+        "description": "An AI agent gets to know you, then opens small batches of people compatible in both directions: reasons, never scores. Coming soon to iOS and Android; not released yet.",
+        "status": "Upcoming"
+      }
     },
     "packages": {
       "eyebrow": "On npm",

@@ -22,6 +22,7 @@ export const CONTACT_EMAIL = "bonjour@krizaka.com";
 export const ORAZAKA_VERSION = "1.0.0-SNAPSHOT";
 
 export const GITHUB_ORG_URL = `https://github.com/${GITHUB_ORG}`;
+export const NPM_ORG_URL = `https://www.npmjs.com/org/${GITHUB_ORG}`;
 export const GITHUB_REPO_URL = `https://github.com/${GITHUB_ORG}/${GITHUB_REPO}`;
 export const GITHUB_ISSUES_URL = `${GITHUB_REPO_URL}/issues`;
 export const GITHUB_DISCUSSIONS_URL = `${GITHUB_REPO_URL}/discussions`;
