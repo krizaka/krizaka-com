@@ -1877,7 +1877,7 @@
         [
           "Installer",
           "npm install",
-          "Node 20 ou plus, Docker démarré."
+          "Node 22 ou plus, Docker démarré."
         ],
         [
           "Tout configurer",
