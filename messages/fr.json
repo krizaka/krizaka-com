@@ -638,7 +638,8 @@
             "progress": "barre · anneau",
             "profile-card": "portrait · jauges",
             "avatar": "groupe · débordement",
-            "toast": "retour bref"
+            "toast": "retour bref",
+            "map": "MapLibre · Protomaps"
           },
           "slider": {
             "range": "Plage",
@@ -701,6 +702,14 @@
             "title": "Le même kit, en natif",
             "caption": "Des composants natifs de @krizaka/ui, enregistrés sur un simulateur d'iPhone et aux couleurs de l'identité choisie.",
             "alt": "Composants natifs Krizaka UI aux couleurs de {brand}"
+          },
+          "map": {
+            "label": "Points de retrait",
+            "places": {
+              "a": "Premier lieu",
+              "b": "Deuxième lieu",
+              "c": "Troisième lieu"
+            }
           }
         },
         "cli": {

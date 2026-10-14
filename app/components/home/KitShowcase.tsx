@@ -31,6 +31,7 @@ import { useI18n } from "../I18nProvider";
 import { useContactHref } from "../useContactHref";
 import { NAV_PRODUCTS } from "@/lib/nav";
 import { KIT_COUNTDOWN_MS, KIT_CURRENCY, KIT_GOAL, KIT_PEOPLE, KIT_SERIES_CENTS, KIT_TILES, type KitTileId } from "@/lib/kit-live";
+import MapTile from "./kit/MapTile";
 import NativePhone from "./kit/NativePhone";
 import { money, useHydrated, useTargetIn } from "./kit/shared";
 import "./kit/kit.css";
@@ -139,6 +140,8 @@ export default function KitShowcase({ portraits, phones }: { portraits: Record<s
         );
       case "profile-card":
         return <ProfileCard visual={<Avatar src={face("camille")} alt="" fallback="C" size="xl" />} visualSize={88} name={s.name} nameAs="p" statLabel={s.statLabel} value={80} caption={s.caption} />;
+      case "map":
+        return <MapTile brand={brand} />;
       case "avatar":
         return (
           <Avatar.Group max={3} size="lg">

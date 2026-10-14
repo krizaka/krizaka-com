@@ -17,6 +17,7 @@ export const KIT_TILES = [
   { id: "countdown", name: "Countdown" },
   { id: "progress", name: "Progress" },
   { id: "profile-card", name: "ProfileCard" },
+  { id: "map", name: "Map" },
   { id: "avatar", name: "Avatar" },
   { id: "toast", name: "Toast" },
 ] as const;
