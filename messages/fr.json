@@ -744,7 +744,7 @@
             }
           },
           "video": {
-            "title": "Vidéo : une enchère",
+            "title": "Vidéo : un court reel",
             "labels": {
               "play": "Lecture",
               "pause": "Pause",
@@ -794,6 +794,18 @@
               "photoMode": "Photo",
               "videoMode": "Vidéo"
             }
+          },
+          "media": {
+            "credit": "Généré par IA, propriété de Krizaka"
+          },
+          "short": {
+            "creator": "nova.frames",
+            "caption": "Néon après la nuit",
+            "tag": "Généré par IA",
+            "like": "Aimer",
+            "comment": "Commentaires",
+            "share": "Partager",
+            "tip": "Envoyer un pourboire"
           },
           "auction": {
             "label": "Temps restant de l'enchère"

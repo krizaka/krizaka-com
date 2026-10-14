@@ -54,10 +54,15 @@ export const KIT_MOMENT_MS = 7 * 60_000 + 30_000;
 /** Self-reported, 1 to 5. */
 export const KIT_MOOD = { min: 1, max: 5, before: 2, after: 4 };
 
-/** Orochia's recordings (products/orochia/tour/<clip>.{mp4,jpg} on the CDN): the one that plays, the filmstrip. */
-export const KIT_VIDEO = "alex-bid";
-export const KIT_FILMSTRIP = ["alex-discover", "alex-story", "alex-bid", "elena-earnings", "elena-publish", "alex-unlock", "elena-live", "alex-back"] as const;
-export const KIT_CROP_IMAGE = "elena-live";
+/** Orochia's media (site/home/kit on the CDN; the clip is vertical, 9:16, like a short): Krizaka's own AI-generated clips (fictional, owned by Krizaka — never
+ *  presented as real creators). The clip that plays, its filmstrip (frames of the same clip, `KIT_CLIP_SECONDS` long),
+ *  the still to crop and the still behind the camera. */
+export const KIT_VIDEO = "reel-v";
+export const KIT_FILMSTRIP = "reel";
+export const KIT_FILMSTRIP_FRAMES = 8;
+export const KIT_CLIP_SECONDS = 6;
+export const KIT_CROP_IMAGE = "reel-crop";
+export const KIT_CAPTURE_IMAGE = "reel-capture";
 
 /** Yazakia's people (lib/people.json, product "yazakia") and the places of the map (Montréal). */
 export const KIT_YAZAKIA_PEOPLE = [{ id: "ines", age: 29, km: 3.2 }, { id: "kofi", age: 31, km: 12 }, { id: "hana", age: 28, km: 5.4 }] as const;
@@ -68,3 +73,6 @@ export const KIT_MAP = {
   meeting: [-73.5673, 45.5017] as const,
   radius: 1000,
 };
+
+/** The overlay of the vertical clip (an action rail and a caption): the figures. Words are messages: site.home.build.kit.short. */
+export const KIT_SHORT = { likes: 12_400, comments: 318 };

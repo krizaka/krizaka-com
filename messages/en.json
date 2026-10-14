@@ -744,7 +744,7 @@
             }
           },
           "video": {
-            "title": "Video: an auction",
+            "title": "Video: a short reel",
             "labels": {
               "play": "Play",
               "pause": "Pause",
@@ -794,6 +794,18 @@
               "photoMode": "Photo",
               "videoMode": "Video"
             }
+          },
+          "media": {
+            "credit": "AI-generated, owned by Krizaka"
+          },
+          "short": {
+            "creator": "nova.frames",
+            "caption": "Neon after dark",
+            "tag": "AI-generated",
+            "like": "Like",
+            "comment": "Comments",
+            "share": "Share",
+            "tip": "Send a tip"
           },
           "auction": {
             "label": "Time left in the auction"
