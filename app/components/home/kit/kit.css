@@ -32,3 +32,15 @@
 .kl-tile video, .kl-tile img { max-width: 100%; }
 .kl-narrow { max-width: 220px; margin-inline: auto; width: 100%; }
 .kl-capture > * { max-height: 220px; min-height: 0; }
+.kl-credit { font-size: 11.5px; }
+/* The camera's viewfinder: a still of the clip behind the real component (its own prompt and button stay on top, under a scrim). */
+.kl-capture section > div { background: var(--kl-viewfinder) center 18% / cover no-repeat; }
+.kl-capture section > div::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / .55), rgb(0 0 0 / .15) 60%, rgb(0 0 0 / .3)); pointer-events: none; }
+
+/* The vertical clip: the rail and the caption sit over the picture, above the player's own controls. */
+.kl-short { position: relative; max-width: 250px; margin-inline: auto; width: 100%; }
+.kl-short-rail { position: absolute; right: 8px; bottom: 84px; display: grid; justify-items: center; gap: 4px; z-index: 2; }
+.kl-short-btn { color: var(--kz-text-on-media); background: var(--kz-scrim); border-radius: 999px; }
+.kl-short-btn[aria-pressed="true"] { color: var(--kz-accent); }
+.kl-short-n { font-size: 11px; font-weight: 600; color: var(--kz-text-on-media); text-shadow: 0 1px 2px var(--kz-scrim-strong); }
+.kl-short-caption { position: absolute; left: 10px; right: 64px; bottom: 84px; display: grid; justify-items: start; gap: 4px; z-index: 2; font-size: 12px; line-height: 1.35; color: var(--kz-text-on-media); text-shadow: 0 1px 2px var(--kz-scrim-strong); pointer-events: none; }
