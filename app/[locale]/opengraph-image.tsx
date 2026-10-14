@@ -8,7 +8,7 @@ export const contentType = "image/png";
 /** The social preview of every page of krizaka.com: the brand on ink and blue, one line, the family's names. */
 export default async function OpengraphImage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
-  const t = getDictionary(locale === "fr" ? "fr" : "en").site.structuredData.socialImage;
+  const t = getDictionary(locale as "en" | "fr").site.structuredData.socialImage;
   return new ImageResponse(
     (
       <div
