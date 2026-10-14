@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { allDocsPaths } from "@/lib/docs-source";
 import { SITE_URL } from "@/lib/site";
 import { BUILDING_BLOCKS } from "@/lib/building-blocks";
 import { lastModified } from "@/lib/lastmod";
@@ -58,10 +57,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return buildEntries(path, priority, freq);
   });
 
-  /* Documentation: the hub, each set's home and every page (Krizaka UI, Krizaka Java) */
-  const docPages = ["/docs", ...allDocsPaths()].flatMap((path) =>
-    buildEntries(path, path.split("/").length <= 3 ? 0.8 : 0.7, "weekly")
-  );
-
-  return [...staticPages, ...docPages];
+  // The documentation lives on its own sites (ui.krizaka.com, java.krizaka.com), each with its sitemap.
+  return staticPages;
 }

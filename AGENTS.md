@@ -91,53 +91,23 @@
   structured content collections (`lib/use-cases-data.ts`) may hold
   `{ fr, en }` fields read with the locale key — never with a ternary.
 
-## 2.3 Documentation — one engine (Fumadocs)
+## 2.3 Documentation — on its own sites, never here
 
-- `/docs/ui` renders one Fumadocs collection (`source.config.ts`, `lib/docs-source.ts`), written here (`content/docs/ui`).
-  The products and Krizaka Java (java.krizaka.com) document themselves on their sites; Fumadocs leaves with `/docs/ui`
-  when it moves to ui.krizaka.com; the **product kit** docs
-  (`/docs/<product>/ui`, generated from `@krizaka/orazaka-design-system` / `@krizaka/orochia-design-system`) went with
-  them — those kits are documented where the products live, and the two packages are no longer dependencies here
-  (`scripts/gen-ui-docs.mjs` `PACKAGES` lists only Krizaka UI's; `lib/ui-registry.ts`, `ComponentDoc` and
-  `ExamplePreview` know no kit — no `kit` parameter, no `kit-themes.css`: a kit that returns is documented where it lives).
-- **The code drives `/docs/ui`.** One page per component of the **published `@krizaka/ui` registry**, generated at
-  every build (virtual pages in `lib/docs-source.ts`, rendered by `ComponentDoc`): summary, platforms (Web · Mobile ·
-  both), status, when to use / not, installation, every named example (web: live + code; React Native: its story's
-  screenshots + code), props (web and native), accessibility, related. That content is written **in krizaka-ui**
-  (`meta.ts`, `registry/examples`, the props' JSDoc) — never here: no page, demo, prop table or component is copied
-  into this repository. An optional `content/docs/ui/components/<name>.mdx` adds notes to a generated page.
-  `scripts/gen-ui-docs.mjs` (on `postinstall`, `dev`, `build --strict`; `lint` runs `--check`) writes the git-ignored
-  `lib/ui-examples.ts` and `public/ui-examples/`. `/docs/ui` lists every component (`<ComponentCatalog />`, filtered
-  by platform). A new `@krizaka/ui` arrives as a Dependabot pull request (`.github/dependabot.yml`): merge it when CI
-  is green — nothing else to regenerate.
-- **Krizaka UI is several packages, one catalogue.** `/docs/ui` reads the registries of `@krizaka/ui` **and
-  `@krizaka/charts`** (`UI_PACKAGES` in `lib/ui-registry.ts`, `PACKAGES` in `scripts/gen-ui-docs.mjs`):
-  the charts are the `charts` category, their install line and source link come from each item (`install`, `source`).
-  An ECharts chart loads its engine on its own page only (dynamic import in the package).
-- **The foundations are generated too.** `/docs/ui/typography` and `/docs/ui/icons` are virtual pages
-  (`lib/ui-foundations.ts`, `TypographyDoc`, `IconsDoc`/`IconGallery`) laid out from the packages' data:
-  `@krizaka/fonts` (`fonts`, `rules`), `@krizaka/tokens` (`typeScale`), `@krizaka/icons/glyphs` (`glyphIndex`,
-  `iconGroups`, `iconGuidelines`). Their words are written in krizaka-ui; the chrome and sample sentences are messages
-  (`docs.foundations.*`).
+- krizaka.com renders **no documentation** and carries no docs engine (no Fumadocs, no MDX collection, no generated
+  pages). Each open-source project documents itself on its site, built from its own repository at every change:
+  **Krizaka UI → https://ui.krizaka.com** (krizaka-ui `apps/site`: one page per component generated from the registries,
+  the foundations, the templates, EN/FR) and **Krizaka Java → https://java.krizaka.com** (krizaka-build `site/`). The
+  products document themselves on their sites (dev.<product>.com).
+- Every old address answers **308** with its page there: `/docs/ui/*` and `/{en,fr}/docs/ui/*` through
+  `lib/ui-redirects.ts` (the same map as krizaka-ui `apps/site/lib/urls.ts`; tested by `tests/ui-redirects.test.mjs`),
+  `/docs/java/*` through `lib/java-redirects.ts`, the products' docs through `lib/product-redirects.ts`; `/docs` itself
+  goes to `/open-source`, the hub towards ui. and java.
+- A link to the documentation is an absolute URL on its site (`https://ui.krizaka.com/components/button`), never a
+  relative `/docs/…`. The only figures read from Krizaka UI here are `lib/ui-facts.ts` (the installed registries' counts).
+- The documentation of the components is **only** on ui.krizaka.com: there is no public Storybook (krizaka-ui's is an
+  internal test tool) — never link one.
 - **The site's faces are `@krizaka/fonts`**, loaded by `next/font/local` in the locale layout (preloaded, fingerprinted,
   CLS 0) and mapped to the token roles in `app/globals.css`. Never `next/font/google`, never a font file committed here.
-- **The sidebar of `/docs/ui` is an information architecture, not a list** (`lib/ui-ia.ts`): Get started → Foundations →
-  Components (by the job they do) → Patterns (page blocks, screen layouts) → Templates (by intent: Convince, Explain, Show,
-  Act, Operate, Converse, Recover — the `purpose` and `why` of each template come from krizaka-ui's `meta.ts`) → Tooling →
-  Mobile. Each group says "you come here when…" (`docs.ia` in the messages), a heading is said once, and every component
-  has a reason to be there (`lib/ui-inventory.ts`): a product imports it (`lib/ui-usage.json`, a dated scan of the products'
-  repositories — `npm run ui:usage`), a planned work needs it, or it is deprecated for the next major.
-  `tests/docs-ia.test.mjs` fails on a component without group or reason, a repeated heading, a group without its sentence.
-  The catalogue on `/docs/ui` mirrors the same structure with four filters (platform, group, status, used by) and a live,
-  lazy preview on every card.
-- The documentation of the components is **only** here: there is no public Storybook (krizaka-ui's is an internal test
-  tool) — never link one.
-- Each product's **UI section** (`/docs/<product>/ui`) is laid out like `/docs/ui` and generated from its kit's
-  registry (`kitFiles`/`kitTree` in `lib/docs-source.ts`): an overview with the same catalogue (category, platform
-  filter), foundations, one page per component (live example, code, props) in the product's brand. In the sidebar it
-  is open, right after *Getting started*.
-- Titles and descriptions of written pages: `messages/*.json` → `docs.pages.<section>.<page>`; a component page's come
-  from its code (English, like its content); its chrome (headings, badges, tabs) from `docs.component.*`.
 
 ## 2.4 Search engines & AI assistants — one contract for the whole family
 
@@ -159,7 +129,7 @@
 
 - One token system: `@krizaka/tokens` through the `@krizaka/tailwind` preset (imported by `app/globals.css`) —
   dark on `:root`, light on `html.light`, toggled by `app/components/ThemeProvider.tsx` (persisted as `kz-theme`).
-  `app/globals.css` only adds the site's own tokens (font, grid, sheen, transitions) and maps Fumadocs' colours to them.
+  `app/globals.css` only adds the site's own tokens (font, grid, sheen, transitions).
 - **Components use `var(--kz-*)` only.** No hard-coded hex/rgb/zinc colors, no
   Tailwind literal color utilities (`bg-zinc-900`, `text-blue-400`, …) for
   surfaces/text/borders. Semantic accents (e.g. per-phase/per-layer identity)
@@ -195,19 +165,18 @@
   (with `magnetic` on a hero). No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
 ## 4.1 The Krizaka page language — from `@krizaka/ui` blocks
 
-- **Every page is made of the page blocks of [`@krizaka/ui`](https://www.krizaka.com/docs/ui) (category *Blocks*),
+- **Every page is made of the page blocks of [`@krizaka/ui`](https://ui.krizaka.com) (category *Blocks*),
   never of a copy here.** There is no `app/components/sections` any more: a missing block or variant is added to
   krizaka-ui (meta, examples, stories, tests), released, then used here. The rule of the language: **read in five
   seconds, then go deeper on demand.**
-- **Every page declares its template** — one of the page templates of `@krizaka/ui` (category *Templates* of /docs/ui:
+- **Every page declares its template** — one of the page templates of `@krizaka/ui` (category *Templates* of ui.krizaka.com:
   landing, product, how-it-works, gallery, docs-hub, docs-article, component, catalogue, longform, changelog, contact,
   legal, status, error, pricing) or `redirect` — in `lib/page-templates.ts`. `npm run lint` fails on a page missing
-  from the map (`scripts/check-page-templates.mjs`). A page is rebuilt on its template's component (the /docs hub on
-  `DocsHubPage`, the legal pages on `LegalPage`, the 404 on `ErrorPage`); a composition the catalogue lacks is added
+  from the map (`scripts/check-page-templates.mjs`). A page is rebuilt on its template's component (the legal pages on `LegalPage`, the 404 on `ErrorPage`); a composition the catalogue lacks is added
   to krizaka-ui first.
 - **One shell.** `Page` (`@krizaka/ui/page`) is the frame of everything: the content is at most `--kz-page-max` (72rem)
   wide between the gutters `--kz-page-gutter` (16 → 32 px); the documentation uses `--kz-page-max-docs` (88rem). The
-  bar (`TopNavBar`, `.kz-site-bar`), every hero, section, the footer and Fumadocs' grid (`.kz-docs`) share those edges —
+  bar (`TopNavBar`, `.kz-site-bar`), every hero, section, the footer share those edges —
   no page centres its own container (`maxWidth: 1100px`, `.os-section`…). Settings live in `app/globals.css` (« One
   frame for every page »): `--kz-hero-top` clears the bar, `--kz-anchor-offset` places anchors.
 - **Styles.** The blocks' stylesheet is `@krizaka/ui/blocks.css`, imported once by package path in

@@ -4,7 +4,6 @@
 node_modules
 .next
 out
-.source
 .vercel
 .codegraph
 .claude
@@ -21,10 +20,7 @@ next-env.d.ts
 CREDENTIALS*
 PLAN_DEPLOIEMENT.md
 # Generated at build (scripts/gen-*.mjs)
-lib/ui-examples.ts
 lib/org-stats.json
 lib/registry-versions.json
-public/ui-examples
-app/components/docs/kit-themes.css
 Dockerfile
 .dockerignore

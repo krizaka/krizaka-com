@@ -3,7 +3,6 @@ import path from "node:path";
 import snapshot from "./registry-versions.json";
 import { summary } from "./npm-catalogue";
 import { OROCHIA_APP_URL, SITE_URL } from "./site";
-import { allDocsPaths } from "./docs-source";
 
 /** The @krizaka packages as the registry says at build (version + first clause of the description), one per line. */
 function npmPackages(): string {
@@ -23,7 +22,6 @@ export async function renderLlms(file: "llms.txt" | "llms-full.txt"): Promise<st
   return text
     .replaceAll("{{SITE_URL}}", SITE_URL)
     .replaceAll("{{OROCHIA_APP_URL}}", OROCHIA_APP_URL)
-    .replace("{{DOCS_PAGES}}", () => allDocsPaths().map((p) => `- ${SITE_URL}/en${p}`).join("\n"))
     .replace("{{NPM_PACKAGES}}", () => npmPackages());
 }
 

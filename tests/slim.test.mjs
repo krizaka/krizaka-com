@@ -14,18 +14,17 @@ test("the product-only schemas and their journeys are gone", () => {
   assert.ok(!existsSync(new URL("../lib/architecture-model.ts", import.meta.url)), "lib/architecture-model.ts came back");
 });
 
-test("the product kits' generated docs are gone from the generator and the registry reader", () => {
-  assert.ok(!/kit-themes|foundations\.json|namedThemes/.test(read("scripts/gen-ui-docs.mjs")));
-  assert.ok(!/getKitFoundations|PRODUCT_KITS|KIT_PACKAGES|resolveReference/.test(read("lib/ui-registry.ts")));
+test("the generated UI docs are gone with their generator and registry reader (ui.krizaka.com renders them)", () => {
+  for (const file of ["scripts/gen-ui-docs.mjs", "lib/ui-registry.ts"]) assert.ok(!existsSync(new URL(`../${file}`, import.meta.url)), `${file} came back`);
 });
 
 test("no message is left for a removed page (en and fr)", () => {
   for (const lang of ["en", "fr"]) {
     const m = messages(lang);
     assert.equal(m.pages, undefined, `${lang}: pages`);
-    assert.equal(m.docs.kit, undefined, `${lang}: docs.kit`);
+    assert.equal(m.docs?.kit, undefined, `${lang}: docs.kit`);
     assert.equal(m.diagrams, undefined, `${lang}: diagrams`);
-    assert.equal(m.docs.pages.java, undefined, `${lang}: docs.pages.java`);
-    assert.equal(m.docs.sections.java, undefined, `${lang}: docs.sections.java`);
+    assert.equal(m.docs?.pages, undefined, `${lang}: docs.pages`);
+    assert.equal(m.docs?.sections?.java, undefined, `${lang}: docs.sections.java`);
   }
 });

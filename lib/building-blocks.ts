@@ -413,7 +413,7 @@ class NotificationRequestContractTest extends EventContractTest {
     registry: "npm",
     forum: "ui",
     thread: "https://github.com/krizaka/krizaka-ui/discussions/55",
-    docs: "/docs/ui",
+    docs: "https://ui.krizaka.com",
     releases: [
       { coordinate: "@krizaka/ui · @krizaka/tokens · @krizaka/tailwind", version: ver("@krizaka/ui"), url: npm("@krizaka/ui") },
       { coordinate: "@krizaka/icons · i18n · intl · config", version: ver("@krizaka/icons"), url: npm("@krizaka/icons") },

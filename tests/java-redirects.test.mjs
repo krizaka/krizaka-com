@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { createRequire } from "node:module";
-import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { JAVA_BLOCK_PAGES, JAVA_PAGES, JAVA_SITE, javaRedirects } from "../lib/java-redirects.ts";
 
 // Krizaka Java's documentation lives on java.krizaka.com: every old /docs/java address answers 308 with the same page there.
@@ -71,5 +71,5 @@ test("next.config.ts serves them, and nothing of the Java documentation is left 
   assert.match(readFileSync(new URL("../next.config.ts", import.meta.url), "utf8"), /\.\.\.javaRedirects\(\)/);
   assert.ok(!existsSync(new URL("../content/docs/java", import.meta.url)), "content/docs/java came back");
   assert.ok(!existsSync(new URL("../app/components/diagrams", import.meta.url)), "the module map came back");
-  assert.deepEqual(readdirSync(new URL("../content/docs", import.meta.url)), ["ui"]);
+  assert.ok(!existsSync(new URL("../content/docs", import.meta.url)), "content/docs came back (ui.krizaka.com, java.krizaka.com)");
 });

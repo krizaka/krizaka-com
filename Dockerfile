@@ -14,12 +14,12 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # 1. Dependencies — the lockfile only, so this layer is cached until package-lock.json changes. Scripts are skipped:
-#    `postinstall` generates from the sources (Fumadocs, the /docs/ui examples), which are not copied yet.
+#    `postinstall` generates from the sources (the registry versions), which are not copied yet.
 FROM base AS deps
 COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts
 
-# 2. Build — the same `npm run build` as CI and Vercel (it regenerates the /docs/ui examples, the org figures and the
+# 2. Build — the same `npm run build` as CI and Vercel (it regenerates the org figures and the
 #    registry versions, then `next build`).
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
