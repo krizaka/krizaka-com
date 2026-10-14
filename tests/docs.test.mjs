@@ -65,10 +65,11 @@ test("an enrichment page belongs to a component, and the component pages need no
   }
 });
 
+// ui.krizaka.com was once the Storybook's address; it is Krizaka UI's documentation site now (2026-10-14).
 test("the documentation is one place: no link to a public Storybook", () => {
   for (const file of ["lib/nav.ts", "lib/site.ts", ".env.example", "messages/en.json", "messages/fr.json"]) {
     const text = readFileSync(new URL(file, root), "utf8");
-    assert.ok(!/storybook|krizaka\.github\.io\/krizaka-ui|ui\.krizaka\.com/i.test(text), file);
+    assert.ok(!/storybook|krizaka\.github\.io\/krizaka-ui/i.test(text), file);
   }
 });
 

@@ -5,15 +5,13 @@ import { localizedMetadata } from "@/lib/seo";
 import { NAV_PRODUCTS } from "@/lib/nav";
 import { githubRepositories, publicRepositoryCount } from "@/lib/org-stats";
 import { repositoriesOf, type GithubRepository, type RepositoryKind } from "@/lib/repository-catalogue";
-import { groupPackages, summary } from "@/lib/npm-catalogue";
-import { npmPackages, publishedVersion } from "@/lib/registry-versions";
+import { mavenArtifactCount, publishedVersion } from "@/lib/registry-versions";
 import { KIT_PACKAGES, productKits } from "@/lib/story";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import { ProductLogo } from "@krizaka/ui";
-import { BOM_VERSION, CENTRAL_NAMESPACE_URL, KIT_PREVIOUS_VERSION, MAVEN_ARTIFACTS, centralUrl, mavenRepoUrl } from "@/lib/maven-packages";
 import { reveal } from "@/lib/motion";
 import { BUILDING_BLOCKS, FORUMS } from "@/lib/building-blocks";
 import BlockCard from "@/app/components/blocks/BlockCard";
@@ -22,14 +20,15 @@ import { CataloguePage } from "@krizaka/ui/catalogue-page";
 import { ChipLink } from "@krizaka/ui/chip-link";
 import { CtaPanel } from "@krizaka/ui/cta-panel";
 import { Facts, Section, SectionHeading, type Fact } from "@krizaka/ui/page";
-import { AutomationIcon, BookmarkIcon, ExternalIcon, ForwardIcon, KnowledgeIcon, LinkIcon, PackIcon, ServerIcon, ShieldIcon } from "@krizaka/icons";
+import { StackCards } from "@/app/components/home/OpenStack";
+import { ExternalIcon, ForwardIcon, KnowledgeIcon } from "@krizaka/icons";
 import ButtonLink from "@/app/components/ButtonLink";
 
-/* /open-source — for developers who want to build with Krizaka's pieces, on the Catalogue template (CataloguePage):
-   the products in the sticky column, then one section per product — brand, mark, status (lib/products.ts), the
-   Krizaka packages it uses (lib/story.ts, the table of /story) and **every** repository of the org, read from GitHub at
-   build (scripts/gen-org-stats.mjs) — then the platform's repositories and the npm packages, grouped from what the
-   registry says at build (scripts/gen-registry-versions.mjs). Nothing here is a list typed by hand. */
+/* /open-source — the hub of what Krizaka publishes, on the Catalogue template (CataloguePage): first the stack, each
+   part on its own site (Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com, lib/stack.ts); then **every**
+   repository of the org, read from GitHub at build (scripts/gen-org-stats.mjs), by product — with the Krizaka packages
+   each one uses (lib/story.ts) — and the platform's; then why each building block exists (/open-source/<block>). The
+   package lists and the guides live on the stack's own sites. Nothing here is a list typed by hand. */
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -40,28 +39,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/open-source",
     en: {
-      title: "Open source — build with Krizaka's building blocks",
-      description: "Reuse Krizaka's components in your own application — users, notifications, billing, the AI engine — or run a whole product. Every repository, Apache-2.0.",
+      title: "Open source — Krizaka UI, Krizaka Java and every Krizaka repository",
+      description: "Everything Krizaka builds is public under Apache-2.0: Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com) and every repository of its products.",
     },
     fr: {
-      title: "Open source — construisez avec les briques de Krizaka",
-      description: "Réutilisez les composants de Krizaka dans votre application — utilisateurs, notifications, facturation, moteur IA — ou déployez un produit entier. Tous les dépôts, Apache-2.0.",
+      title: "Open source — Krizaka UI, Krizaka Java et tous les dépôts Krizaka",
+      description: "Tout ce que Krizaka construit est public sous Apache-2.0 : Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com) et chaque dépôt de ses produits.",
     },
   });
 }
-
-const STEPS = [
-  { id: "pick", icon: PackIcon },
-  { id: "run", icon: ServerIcon },
-  { id: "plug", icon: LinkIcon },
-] as const;
-
-const PROMISES = [
-  { id: "license", icon: KnowledgeIcon },
-  { id: "ci", icon: AutomationIcon },
-  { id: "docs", icon: BookmarkIcon },
-  { id: "security", icon: ShieldIcon },
-] as const;
 
 const PRODUCT_IDS = NAV_PRODUCTS.map((p) => p.id);
 const npmUrl = (name: string) => `https://www.npmjs.com/package/${name}`;
@@ -87,12 +73,8 @@ export default async function OpenSourcePage({ params }: Props) {
   const { locale } = await params;
   const site = getDictionary(locale).site;
   const t = site.openSource;
-  const pk = site.packages;
-  const mv = site.maven;
   const w = site.blocks;
   const repositories = githubRepositories();
-  const packages = npmPackages();
-  const groups = groupPackages(packages);
   const kindLabel = (k: RepositoryKind) => t.kinds[k];
 
   const products = NAV_PRODUCTS.map((nav) => {
@@ -128,19 +110,11 @@ export default async function OpenSourcePage({ params }: Props) {
           </ChipLink>
         </li>
       </ul>
-      <p className="os-filters-title">{t.nav.packages}</p>
+      <p className="os-filters-title">{t.nav.more}</p>
       <ul>
-        {groups.map(({ group, packages: list }) => (
-          <li key={group}>
-            <ChipLink href={`#npm-${group}`} className="os-chip">
-              {pk.groups[group].title}
-              <span className="os-chip-n">{list.length}</span>
-            </ChipLink>
-          </li>
-        ))}
         <li>
-          <ChipLink href="#maven" className="os-chip">
-            {t.nav.maven}
+          <ChipLink href="#stack" className="os-chip">
+            {t.nav.stack}
           </ChipLink>
         </li>
         <li>
@@ -157,7 +131,7 @@ export default async function OpenSourcePage({ params }: Props) {
       <TopNavBar />
 
       <CataloguePage
-        eyebrow="Open source · Apache-2.0"
+        eyebrow={t.eyebrow}
         title={t.title}
         lead={t.lead}
         search={
@@ -168,9 +142,14 @@ export default async function OpenSourcePage({ params }: Props) {
         }
         filters={filters}
         filtersLabel={t.jump}
-        count={format(t.catalogueCount, { repositories: listed, packages: packages.length })}
+        count={format(t.catalogueCount, { repositories: listed })}
         linkAs={Link}
       >
+        <section id="stack" aria-labelledby="os-stack" className="os-product">
+          <SectionHeading id="os-stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead} />
+          <StackCards locale={locale} mavenArtifacts={mavenArtifactCount()} />
+        </section>
+
         {products.map(({ nav, repos, uses, status, engine }, i) => (
           <section key={nav.id} id={nav.id} aria-labelledby={`os-${nav.id}`} className={"os-product brand-" + nav.id} {...(i > 0 ? reveal(0, "soft") : {})}>
             <div className="os-product-head">
@@ -234,66 +213,7 @@ export default async function OpenSourcePage({ params }: Props) {
           </ul>
         </section>
 
-        <section id="packages" aria-labelledby="os-packages" className="os-product os-npm">
-          <SectionHeading
-            id="os-packages"
-            eyebrow={pk.eyebrow}
-            title={pk.title}
-            lead={pk.lead}
-            reveal
-            actions={
-              <ButtonLink href="/docs/ui" size="md">
-                {pk.docsUi} <ForwardIcon size={13} aria-hidden />
-              </ButtonLink>
-            }
-          />
-          <div className="os-pk-banner">
-            <PackIcon size={18} aria-hidden />
-            <p>{format(pk.notProductBanner, { count: packages.length })}</p>
-          </div>
-          {groups.map(({ group, packages: list }) => (
-            <div key={group} id={`npm-${group}`} className="os-npm-group" {...reveal(0, "soft")}>
-              <div className="os-npm-group-head">
-                <h3>
-                  {pk.groups[group].title} <span>{list.length}</span>
-                </h3>
-                <p>{pk.groups[group].intro}</p>
-              </div>
-              <ul className="os-npm-list">
-                {list.map((p) => (
-                  <li key={p.name}>
-                    <a href={npmUrl(p.name)} target="_blank" rel="noopener noreferrer" className="os-npm-item">
-                      <span className="os-npm-name">
-                        <code>{p.name}</code>
-                        <span className="os-npm-version">{p.version}</span>
-                      </span>
-                      {p.description && <span className="os-npm-desc">{summary(p.description)}</span>}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          <p className="os-npm-more">
-            <Link href="/docs/ui">
-              {pk.docsUi} <ForwardIcon size={12} aria-hidden />
-            </Link>
-          </p>
-        </section>
       </CataloguePage>
-
-      <Section spacing="sm" divider aria-label={t.title}>
-        <ol className="os-steps" {...reveal()}>
-          {STEPS.map(({ id, icon: Icon }, i) => (
-            <li key={id}>
-              <span className="os-step-n">{String(i + 1).padStart(2, "0")}</span>
-              <Icon size={20} aria-hidden />
-              <h2>{t.steps[id].title}</h2>
-              <p>{t.steps[id].body}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
 
       {/* The building blocks stand on the brand's backdrop (BRAND.md §4). */}
       <Section id="blocks-title" eyebrow={w.eyebrow} title={w.title} lead={w.lead} reveal backdrop={{ dome: true }} className="os-blocks">
@@ -312,59 +232,7 @@ export default async function OpenSourcePage({ params }: Props) {
         </CtaPanel>
       </Section>
 
-      <Section id="maven" eyebrow={mv.eyebrow} title={mv.title} lead={mv.lead} reveal divider>
-        <div className="os-pk-banner">
-          <PackIcon size={18} aria-hidden />
-          <p>{mv.bomNote}</p>
-        </div>
-        <pre className="os-bom">{`<dependency>
-  <groupId>com.krizaka</groupId>
-  <artifactId>krizaka-bom</artifactId>
-  <version>${BOM_VERSION}</version>
-  <type>pom</type>
-  <scope>import</scope>
-</dependency>`}</pre>
-        {/* Only while the BOM names kit modules that are not published yet (both versions read from Maven Central). */}
-        {KIT_PREVIOUS_VERSION !== BOM_VERSION && (
-          <p className="os-pk-note">{format(mv.pinnedNote, { previous: KIT_PREVIOUS_VERSION, current: BOM_VERSION })}</p>
-        )}
-        <div className="os-packages">
-          {MAVEN_ARTIFACTS.map((a, i) => (
-            <article key={a.id} className="os-package" {...reveal(i % 3)}>
-              <div className="os-package-body">
-                <p className="os-package-role">{mv.items[a.id].role}</p>
-                <h3>{a.artifactId}</h3>
-                <p>{mv.items[a.id].line}</p>
-                <code>{`${a.groupId}:${a.artifactId}:${a.version}`}</code>
-                <div className="os-package-links">
-                  <a href={centralUrl(a)} target="_blank" rel="noopener noreferrer">
-                    {mv.central} <ExternalIcon size={12} aria-hidden />
-                  </a>
-                  <a href={mavenRepoUrl(a)} target="_blank" rel="noopener noreferrer">
-                    {mv.source} <ExternalIcon size={12} aria-hidden />
-                  </a>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-        <p className="os-maven-all">
-          <a href={CENTRAL_NAMESPACE_URL} target="_blank" rel="noopener noreferrer">
-            {mv.all} <ExternalIcon size={12} aria-hidden />
-          </a>
-        </p>
-      </Section>
-
       <Section divider aria-labelledby="os-contribute">
-        <div className="os-promises" {...reveal()}>
-          {PROMISES.map(({ id, icon: Icon }) => (
-            <div key={id}>
-              <Icon size={18} aria-hidden />
-              <h3>{t.promises[id].title}</h3>
-              <p>{t.promises[id].body}</p>
-            </div>
-          ))}
-        </div>
         <CtaPanel id="os-contribute" title={t.contributeTitle} body={t.contributeBody} reveal className="os-contribute">
             <ButtonLink href="https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md" variant="primary" size="lg">
               <KnowledgeIcon size={15} /> {t.contributeGuide}
@@ -420,60 +288,11 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-repo-desc { font-size: 12.5px; line-height: 1.55; color: var(--kz-text-secondary); overflow-wrap: anywhere; }
         @media (prefers-reduced-motion: reduce) { .os-repo { transition: none; } }
 
-        .os-npm { padding-bottom: 0; }
-        .os-pk-banner { display: flex; align-items: center; gap: 14px; margin: 20px 0 8px; padding: 14px 18px; border-radius: 14px;
-          background: color-mix(in srgb, var(--kz-accent-soft) 80%, transparent); border: 1px solid var(--kz-border-strong); }
-        .os-pk-banner svg { color: var(--kz-accent); flex-shrink: 0; }
-        .os-pk-banner p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
-        .os-npm-group { display: grid; grid-template-columns: minmax(0, 180px) minmax(0, 1fr); gap: 12px 24px; padding: 18px 0; border-bottom: 1px solid var(--kz-border-subtle);
-          scroll-margin-top: var(--kz-anchor-offset, 96px); }
-        @media (max-width: 760px) { .os-npm-group { grid-template-columns: minmax(0, 1fr); } }
-        .os-npm-group-head h3 { margin: 0; font-size: 15px; font-weight: 700; }
-        .os-npm-group-head h3 span { font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--kz-text-muted); }
-        .os-npm-group-head p { margin: 4px 0 0; font-size: 13px; line-height: 1.55; color: var(--kz-text-muted); }
-        .os-npm-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 4px 20px; }
-        .os-npm-item { display: flex; flex-direction: column; gap: 2px; padding: 8px 0; text-decoration: none; min-width: 0; }
-        .os-npm-name { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
-        .os-npm-name code { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--kz-text-primary); overflow-wrap: anywhere; }
-        .os-npm-item:hover code { color: var(--kz-accent); }
-        .os-npm-version { font-family: var(--font-mono); font-size: 11px; padding: 1px 6px; border-radius: 6px; background: var(--kz-surface-2); color: var(--kz-text-secondary); }
-        .os-npm-desc { font-size: 12.5px; line-height: 1.5; color: var(--kz-text-secondary); overflow-wrap: anywhere; }
-        .os-npm-more { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 18px 0 0; }
-        .os-npm-more a { display: inline-flex; align-items: center; gap: 4px; font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
-        .os-npm-more a:hover { color: var(--kz-accent); }
 
-        .os-bom { margin: 0 0 20px; padding: 14px 16px; border-radius: 14px; font-family: var(--font-mono); font-size: 12.5px; line-height: 1.6; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); color: var(--kz-text-primary); overflow-x: auto; }
-        .os-maven-all { margin: 18px 0 0; }
-        .os-pk-note { max-width: 640px; margin: -8px 0 24px; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
-        .os-maven-all a { display: inline-flex; align-items: center; gap: 4px; font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
-        .os-maven-all a:hover { color: var(--kz-accent); }
-        .os-packages { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: 14px; }
-        .os-package { display: flex; gap: 16px; padding: 20px; border-radius: 20px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: border-color .25s, transform .25s; }
-        .os-package:hover { border-color: var(--kz-border-strong); transform: translateY(-2px); }
-        @media (prefers-reduced-motion: reduce) { .os-package, .os-package:hover { transition: none; transform: none; } }
-        .os-package-body { min-width: 0; }
-        .os-package-role { margin: 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--kz-accent); }
-        .os-package h3 { margin: 6px 0 0; font-family: var(--font-mono); font-size: 14.5px; font-weight: 700; overflow-wrap: anywhere; }
-        .os-package p:not(.os-package-role) { margin: 6px 0 0; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary); }
-        .os-package code { display: block; margin-top: 12px; padding: 8px 10px; border-radius: 10px; font-family: var(--font-mono); font-size: 12px; background: var(--kz-surface-2); border: 1px solid var(--kz-border-subtle); color: var(--kz-text-primary); overflow-x: auto; white-space: nowrap; }
-        .os-package-links { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; }
-        .os-package-links a { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--kz-text-primary); text-decoration: none; }
-        .os-package-links a:hover { color: var(--kz-accent); }
         .os-forums, .os-contribute { margin-top: 24px; }
         .os-blocks { scroll-margin-top: 64px; }
 
-        .os-steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 1px;
-          background: var(--kz-border-subtle); border: 1px solid var(--kz-border-subtle); border-radius: 20px; overflow: hidden; }
-        .os-steps li { padding: 26px; background: var(--kz-surface-0); }
-        .os-steps svg { color: var(--kz-accent); }
-        .os-step-n { display: block; margin-bottom: 14px; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
-        .os-steps h2 { margin: 12px 0 6px; font-size: 16px; font-weight: 700; }
-        .os-steps p { margin: 0; font-size: 14px; line-height: 1.65; color: var(--kz-text-secondary); }
 
-        .os-promises { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 24px; }
-        .os-promises svg { color: var(--kz-accent); }
-        .os-promises h3 { margin: 10px 0 4px; font-size: 15px; font-weight: 700; }
-        .os-promises p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
       `}</style>
     </main>
   );

@@ -6,37 +6,42 @@ import { ExternalIcon } from "@krizaka/icons";
 import { GitHubMark } from "./brand/GitHubMark";
 import { useI18n } from "./I18nProvider";
 import { useContactHref } from "./useContactHref";
-import { NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, docsLinkText } from "@/lib/nav";
+import { NAV_FAMILY } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 
+/* The footer — the Krizaka family in columns (NAV-SYS): the products on their own sites, the open-source stack on its
+   own sites, then this site's pages. It becomes @krizaka/ui's SiteFooter once published; the columns are lib/nav.ts. */
 export default function SiteFooter() {
   const { t } = useI18n();
   const f = t.site.footer;
   const contactHref = useContactHref();
 
-  // One column for the products: each one's own site (lib/products.ts), never a page of this site.
-  const productColumn = {
-    key: "products",
-    title: <><ProductLogo id="krizaka" size={18} animated={false} /> {f.products}</>,
-    links: NAV_PRODUCTS.map((p) => ({ label: p.name, href: p.href })),
-  };
-
-  const krizakaLinks = [
-    { label: f.allProducts, href: "/products" },
-    { label: f.story, href: "/story" },
-    { label: f.openSource, href: "/open-source" },
-    { label: f.contact, href: contactHref },
-    { label: f.privacy, href: "/privacy" },
-    { label: f.terms, href: "/terms" },
-  ];
-
-  // Every documentation (NAV_DOCS), then the hub.
-  const docsLinks = [...NAV_DOCS.map((d) => ({ label: docsLinkText(t, d).label, href: d.href })), { label: t.site.nav.docs.all.label, href: NAV_DOCS_HUB }];
-
   const columns = [
-    productColumn,
-    { key: "docs", title: <>{f.docs}</>, links: docsLinks },
-    { key: "krizaka", title: <><ProductLogo id="krizaka" size={18} animated={false} /> Krizaka</>, links: krizakaLinks },
+    {
+      key: "products",
+      title: <>{f.products}</>,
+      links: NAV_FAMILY.products.map((p) => ({ label: p.name, href: p.href })),
+    },
+    {
+      key: "open-source",
+      title: <>{f.openSource}</>,
+      links: [
+        ...NAV_FAMILY.stack.map((s) => ({ label: s.name, href: s.href })),
+        { label: f.repositories, href: "/open-source" },
+        { label: NAV_FAMILY.github.name, href: NAV_FAMILY.github.href },
+      ],
+    },
+    {
+      key: "krizaka",
+      title: <><ProductLogo id="krizaka" size={18} animated={false} /> Krizaka</>,
+      links: [
+        { label: f.allProducts, href: "/products" },
+        { label: f.story, href: "/story" },
+        { label: f.contact, href: contactHref },
+        { label: f.privacy, href: "/privacy" },
+        { label: f.terms, href: "/terms" },
+      ],
+    },
   ];
 
   return (
