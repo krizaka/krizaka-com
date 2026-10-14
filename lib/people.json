@@ -3,7 +3,7 @@
   "products": [
     "orochia",
     "ui",
-    "yazakia"
+    "yasakia"
   ],
   "people": [
     {
@@ -183,10 +183,10 @@
       ]
     },
     {
-      "product": "yazakia",
+      "product": "yasakia",
       "id": "ines",
       "name": "Inès",
-      "use": "Yazakia demo cast (reserved, PY6)",
+      "use": "Yasakia demo cast (reserved, PY6)",
       "seed": "8101",
       "model": "flux-2-klein-4b",
       "size": "1024x1024",
@@ -194,15 +194,15 @@
       "runId": "e767da4e-90fe-4f54-acce-53b43ed13a7d",
       "prompt": "A 28-year-old French-Algerian woman, long dark curly hair, light brown skin, hazel eyes, wearing a plain white linen shirt. Candid editorial head-and-shoulders portrait photograph outdoors, looking into the camera with a warm, open smile. Soft late-afternoon daylight, the background a gentle blur of emerald and teal foliage, 85mm lens at f/2.2, sharp eyes, natural skin texture with pores and small imperfections, no retouching, plain clothing without any print. Square composition, face centred in the upper half, shoulders visible. An ordinary fictional person, not a celebrity and not a fashion model. No text, no lettering, no logos.",
       "files": [
-        "people/yazakia/ines-512.webp",
-        "people/yazakia/ines-256.webp"
+        "people/yasakia/ines-512.webp",
+        "people/yasakia/ines-256.webp"
       ]
     },
     {
-      "product": "yazakia",
+      "product": "yasakia",
       "id": "kofi",
       "name": "Kofi",
-      "use": "Yazakia demo cast (reserved, PY6)",
+      "use": "Yasakia demo cast (reserved, PY6)",
       "seed": "8213",
       "model": "flux-2-klein-4b",
       "size": "1024x1024",
@@ -210,15 +210,15 @@
       "runId": "8f2f0ee9-87b7-46b0-9c85-3fc25a29c494",
       "prompt": "A 35-year-old Ghanaian man, a short fade haircut, a neat moustache, dark skin, wearing a plain sage-green t-shirt. Candid editorial head-and-shoulders portrait photograph outdoors, looking into the camera with a warm, open smile. Soft late-afternoon daylight, the background a gentle blur of emerald and teal foliage, 85mm lens at f/2.2, sharp eyes, natural skin texture with pores and small imperfections, no retouching, plain clothing without any print. Square composition, face centred in the upper half, shoulders visible. An ordinary fictional person, not a celebrity and not a fashion model. No text, no lettering, no logos.",
       "files": [
-        "people/yazakia/kofi-512.webp",
-        "people/yazakia/kofi-256.webp"
+        "people/yasakia/kofi-512.webp",
+        "people/yasakia/kofi-256.webp"
       ]
     },
     {
-      "product": "yazakia",
+      "product": "yasakia",
       "id": "hana",
       "name": "Hana",
-      "use": "Yazakia demo cast (reserved, PY6)",
+      "use": "Yasakia demo cast (reserved, PY6)",
       "seed": "8327",
       "model": "flux-2-klein-4b",
       "size": "1024x1024",
@@ -226,15 +226,15 @@
       "runId": "fe1e9f68-5fb4-48b3-803a-d5c3059fd4e7",
       "prompt": "A 31-year-old Japanese woman, straight black hair in a low ponytail, light skin, wearing a plain oatmeal knit sweater. Candid editorial head-and-shoulders portrait photograph outdoors, looking into the camera with a warm, open smile. Soft late-afternoon daylight, the background a gentle blur of emerald and teal foliage, 85mm lens at f/2.2, sharp eyes, natural skin texture with pores and small imperfections, no retouching, plain clothing without any print. Square composition, face centred in the upper half, shoulders visible. An ordinary fictional person, not a celebrity and not a fashion model. No text, no lettering, no logos.",
       "files": [
-        "people/yazakia/hana-512.webp",
-        "people/yazakia/hana-256.webp"
+        "people/yasakia/hana-512.webp",
+        "people/yasakia/hana-256.webp"
       ]
     },
     {
-      "product": "yazakia",
+      "product": "yasakia",
       "id": "mateo",
       "name": "Mateo",
-      "use": "Yazakia demo cast (reserved, PY6)",
+      "use": "Yasakia demo cast (reserved, PY6)",
       "seed": "8431",
       "model": "flux-2-klein-4b",
       "size": "1024x1024",
@@ -242,15 +242,15 @@
       "runId": "bc70f59e-4a9d-4b1f-9820-e63ef9e317ec",
       "prompt": "A 39-year-old Argentine man, wavy chestnut hair, light stubble, tanned skin, wearing a plain light-blue chambray shirt. Candid editorial head-and-shoulders portrait photograph outdoors, looking into the camera with a warm, open smile. Soft late-afternoon daylight, the background a gentle blur of emerald and teal foliage, 85mm lens at f/2.2, sharp eyes, natural skin texture with pores and small imperfections, no retouching, plain clothing without any print. Square composition, face centred in the upper half, shoulders visible. An ordinary fictional person, not a celebrity and not a fashion model. No text, no lettering, no logos.",
       "files": [
-        "people/yazakia/mateo-512.webp",
-        "people/yazakia/mateo-256.webp"
+        "people/yasakia/mateo-512.webp",
+        "people/yasakia/mateo-256.webp"
       ]
     },
     {
-      "product": "yazakia",
+      "product": "yasakia",
       "id": "priya",
       "name": "Priya",
-      "use": "Yazakia demo cast (reserved, PY6)",
+      "use": "Yasakia demo cast (reserved, PY6)",
       "seed": "8543",
       "model": "flux-2-klein-4b",
       "size": "1024x1024",
@@ -258,15 +258,15 @@
       "runId": "b7f36a05-79e3-46c9-bcda-0756dc1d1d87",
       "prompt": "A 42-year-old Indian woman, long black hair with a side parting, warm brown skin, small silver nose stud, wearing a plain terracotta kurta top. Candid editorial head-and-shoulders portrait photograph outdoors, looking into the camera with a warm, open smile. Soft late-afternoon daylight, the background a gentle blur of emerald and teal foliage, 85mm lens at f/2.2, sharp eyes, natural skin texture with pores and small imperfections, no retouching, plain clothing without any print. Square composition, face centred in the upper half, shoulders visible. An ordinary fictional person, not a celebrity and not a fashion model. No text, no lettering, no logos.",
       "files": [
-        "people/yazakia/priya-512.webp",
-        "people/yazakia/priya-256.webp"
+        "people/yasakia/priya-512.webp",
+        "people/yasakia/priya-256.webp"
       ]
     },
     {
-      "product": "yazakia",
+      "product": "yasakia",
       "id": "lukas",
       "name": "Lukas",
-      "use": "Yazakia demo cast (reserved, PY6)",
+      "use": "Yasakia demo cast (reserved, PY6)",
       "seed": "8659",
       "model": "flux-2-klein-4b",
       "size": "1024x1024",
@@ -274,8 +274,8 @@
       "runId": "30bb60f6-5cfa-4ed3-831a-f9b4a2b7bba1",
       "prompt": "A 52-year-old German man, short blond-grey hair, light blue eyes, fair skin with laugh lines, wearing a plain navy quarter-zip sweater. Candid editorial head-and-shoulders portrait photograph outdoors, looking into the camera with a warm, open smile. Soft late-afternoon daylight, the background a gentle blur of emerald and teal foliage, 85mm lens at f/2.2, sharp eyes, natural skin texture with pores and small imperfections, no retouching, plain clothing without any print. Square composition, face centred in the upper half, shoulders visible. An ordinary fictional person, not a celebrity and not a fashion model. No text, no lettering, no logos.",
       "files": [
-        "people/yazakia/lukas-512.webp",
-        "people/yazakia/lukas-256.webp"
+        "people/yasakia/lukas-512.webp",
+        "people/yasakia/lukas-256.webp"
       ]
     }
   ]

@@ -1,7 +1,7 @@
 "use client";
 
-/* Yazakia's tiles: the people and the places. The deck to swipe (a decision per card, never a score), the match, the
-   tags that say who you are, the map and the picker of a meeting point (distance, radius). Portraits are Yazakia's. */
+/* Yasakia's tiles: the people and the places. The deck to swipe (a decision per card, never a score), the match, the
+   tags that say who you are, the map and the picker of a meeting point (distance, radius). Portraits are Yasakia's. */
 
 import { useState } from "react";
 import { Badge } from "@krizaka/ui/badge";
@@ -15,34 +15,34 @@ import { format } from "@krizaka/i18n";
 // The basemap through this origin (/maps/v1, the CDN proxied): no cross-origin request.
 import "../../docs/MapAssets";
 import { useI18n } from "../../I18nProvider";
-import { KIT_MAP, KIT_YAZAKIA_PEOPLE } from "@/lib/kit-live";
+import { KIT_MAP, KIT_YASAKIA_PEOPLE } from "@/lib/kit-live";
 import type { KitTileProps } from "./types";
 
 const LOCALES = { en: "en-CA", fr: "fr-CA" } as const;
 const OPTIONS = ["0", "1", "2", "3", "4", "5"] as const;
 
-export default function YazakiaTile({ id, media, brand }: KitTileProps) {
+export default function YasakiaTile({ id, media, brand }: KitTileProps) {
   const { t, locale } = useI18n();
   const k = t.site.home.build.kit;
-  const [deck, setDeck] = useState<readonly string[]>(KIT_YAZAKIA_PEOPLE.map((p) => p.id));
+  const [deck, setDeck] = useState<readonly string[]>(KIT_YASAKIA_PEOPLE.map((p) => p.id));
   const [open, setOpen] = useState(false);
   const [tags, setTags] = useState<string[]>(["0", "2"]);
   const [point, setPoint] = useState<LngLat>(KIT_MAP.meeting);
   const [chosen, setChosen] = useState("a");
-  const mapBrand = brand as "orazaka" | "orochia" | "yazakia" | "yororis";
+  const mapBrand = brand as "orazaka" | "orochia" | "yasakia" | "yororis";
   const places = KIT_MAP.spots.map((s) => ({ id: s.id, label: k.map.places[s.id as "a" | "b" | "c"], position: s.position }));
   const mapLabels = k.map.labels;
   const pl = k.picker.labels;
 
   switch (id) {
     case "swipe-deck": {
-      const items = KIT_YAZAKIA_PEOPLE.filter((p) => deck.includes(p.id));
+      const items = KIT_YASAKIA_PEOPLE.filter((p) => deck.includes(p.id));
       return (
         <SwipeDeck
           items={items}
           getId={(p) => p.id}
           getName={(p) => k.swipe.people[p.id].name}
-          onSwipe={(p) => setDeck((all) => (all.length > 1 ? all.filter((x) => x !== p.id) : KIT_YAZAKIA_PEOPLE.map((q) => q.id)))}
+          onSwipe={(p) => setDeck((all) => (all.length > 1 ? all.filter((x) => x !== p.id) : KIT_YASAKIA_PEOPLE.map((q) => q.id)))}
           labels={k.swipe.labels}
           renderCard={(p) => {
             const person = k.swipe.people[p.id];

@@ -38,7 +38,7 @@ export type KitTileId = keyof typeof KIT_TILES;
 export const KIT_SETS = {
   orazaka: ["chat", "code-block", "stepper", "choice-grid", "terminal-replay", "button", "switch", "progress"],
   orochia: ["video-player", "video-trimmer", "image-cropper", "media-capture", "countdown", "goal-gauge", "sparkline", "button", "switch"],
-  yazakia: ["swipe-deck", "match-dialog", "tag-selector", "location-picker", "map", "chip", "button", "switch"],
+  yasakia: ["swipe-deck", "match-dialog", "tag-selector", "location-picker", "map", "chip", "button", "switch"],
   yororis: ["countdown", "slider", "switch", "toast", "card", "button", "progress"],
 } as const satisfies Record<string, readonly KitTileId[]>;
 export type KitBrand = keyof typeof KIT_SETS;
@@ -64,8 +64,8 @@ export const KIT_CLIP_SECONDS = 6;
 export const KIT_CROP_IMAGE = "reel-crop";
 export const KIT_CAPTURE_IMAGE = "reel-capture";
 
-/** Yazakia's people (lib/people.json, product "yazakia") and the places of the map (Montréal). */
-export const KIT_YAZAKIA_PEOPLE = [{ id: "ines", age: 29, km: 3.2 }, { id: "kofi", age: 31, km: 12 }, { id: "hana", age: 28, km: 5.4 }] as const;
+/** Yasakia's people (lib/people.json, product "yasakia") and the places of the map (Montréal). */
+export const KIT_YASAKIA_PEOPLE = [{ id: "ines", age: 29, km: 3.2 }, { id: "kofi", age: 31, km: 12 }, { id: "hana", age: 28, km: 5.4 }] as const;
 export const KIT_MAP = {
   center: [-73.592, 45.528] as const,
   spots: [{ id: "a", position: [-73.6005, 45.5229] as const }, { id: "b", position: [-73.6147, 45.5363] as const }, { id: "c", position: [-73.5695, 45.5268] as const }],

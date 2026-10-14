@@ -53,8 +53,8 @@ const STAGES: Record<string, StageStructure> = {
      layer "krizaka"). */
   orazaka: { bird: "owl", combo: ["←", "↙", "↓", "↘", "→", "K"], stat: 1, runsOn: ["ui", "foundations", "java"], live: "sse" },
   /* The lovebird introduces: a batch opens only when the interest goes both ways (100 % mutual, by design).
-     yazakia/apps/web: @krizaka/ui, tokens, icons, intl, realtime, push; its agent runs on Orazaka (lib/org-data.ts). */
-  yazakia: { bird: "lovebird", combo: ["↓", "↓", "→", "P"], stat: 1, runsOn: ["ui", "foundations", "realtime", "engine"], live: "ssePush" },
+     yasakia/apps/web: @krizaka/ui, tokens, icons, intl, realtime, push; its agent runs on Orazaka (lib/org-data.ts). */
+  yasakia: { bird: "lovebird", combo: ["↓", "↓", "→", "P"], stat: 1, runsOn: ["ui", "foundations", "realtime", "engine"], live: "ssePush" },
   /* The crane: a listening space with a face and a voice, powered by Orazaka's wellbeing pack (under construction).
      Under construction: realtime and the engine are its design (prompts-yororis §2), not shipped yet — planned. */
   yororis: { bird: "crane", combo: ["←", "→", "↓", "K"], runsOn: ["ui", "foundations"], live: "ssePush", planned: ["realtime", "engine"] },

@@ -8,7 +8,7 @@ test("names the page a visitor comes from", () => {
     "/fr/products/orochia/demo": "orochia",
     "/en/docs/orochia/api": "orochia",
     "/en/products/orazaka/demos": "orazaka",
-    "/fr/products/yazakia": "yazakia",
+    "/fr/products/yasakia": "yasakia",
     "/en/products/yororis": "yororis",
     "/fr/docs/yororis": "yororis",
     "/en/open-source": "open-source",
@@ -24,7 +24,7 @@ test("names the page a visitor comes from", () => {
 test("pre-selects the topic the page is about, and nothing for Krizaka as a whole", () => {
   assert.equal(topicForSource("orochia"), "orochia");
   assert.equal(topicForSource("orazaka"), "orazaka");
-  assert.equal(topicForSource("yazakia"), "yazakia");
+  assert.equal(topicForSource("yasakia"), "yasakia");
   assert.equal(topicForSource("yororis"), "yororis");
   assert.equal(topicForSource("docs-ui"), "blocks");
   assert.equal(topicForSource("open-source"), "blocks");

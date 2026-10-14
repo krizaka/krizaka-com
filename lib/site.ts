@@ -29,8 +29,8 @@ export const GITHUB_GOOD_FIRST_ISSUES_URL = `${GITHUB_REPO_URL}/issues?q=is%3Ais
 /** The site's own repository. */
 export const SITE_REPO_URL = `${GITHUB_ORG_URL}/krizaka-com`;
 
-/** Yazakia, the dating app (coming soon; being renamed Yasakia): its repository. */
-export const YAZAKIA_REPO_URL = `${GITHUB_ORG_URL}/yazakia`;
+/** Yasakia, the dating app (coming soon; formerly Yazakia): its repository. */
+export const YASAKIA_REPO_URL = `${GITHUB_ORG_URL}/yasakia`;
 
 /** Yororis, the listening space (under construction): its repository. The products card links its static site
     (dev.yororis.com) and its source — no application address, no download link (krizaka/yororis docs/FRAMEWORK.md §5). */

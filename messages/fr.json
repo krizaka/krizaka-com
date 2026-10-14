@@ -131,7 +131,7 @@
         "orochia": {
           "line": "Une plateforme vidéo open source pour les créateurs indépendants, avec des paiements réglés exactement une fois."
         },
-        "yazakia": {
+        "yasakia": {
           "line": "L'app de rencontre où l'on se parle d'abord : un agent IA présente des personnes compatibles dans les deux sens."
         },
         "yororis": {
@@ -140,8 +140,8 @@
       }
     },
     "productsPage": {
-      "title": "Produits — Orazaka, Orochia, Yazakia, Yororis",
-      "description": "Les produits open source de Krizaka — Orazaka, Orochia, Yazakia et Yororis — chacun sur son propre site, avec son code source sur GitHub."
+      "title": "Produits — Orazaka, Orochia, Yasakia, Yororis",
+      "description": "Les produits open source de Krizaka — Orazaka, Orochia, Yasakia et Yororis — chacun sur son propre site, avec son code source sur GitHub."
     },
     "expertise": {
       "eyebrow": "Savoir-faire",
@@ -211,7 +211,7 @@
       "build": {
         "eyebrow": "Construire avec Krizaka",
         "title": "Les mêmes briques construisent les quatre.",
-        "lead": "Orazaka, Orochia, Yazakia et Yororis sont faits d'un seul kit ouvert. Changez d'identité : les composants restent, la marque change. Puis lancez toute une plateforme depuis votre terminal.",
+        "lead": "Orazaka, Orochia, Yasakia et Yororis sont faits d'un seul kit ouvert. Changez d'identité : les composants restent, la marque change. Puis lancez toute une plateforme depuis votre terminal.",
         "facts": {
           "components": "composants",
           "native": "aussi sur iOS et Android",
@@ -524,7 +524,7 @@
       }
     },
     "footer": {
-      "tagline": "Studio logiciel open source à Montréal. Créateurs d'Orazaka, d'Orochia, de Yazakia et de Yororis.",
+      "tagline": "Studio logiciel open source à Montréal. Créateurs d'Orazaka, d'Orochia, de Yasakia et de Yororis.",
       "products": "Produits",
       "story": "Notre histoire",
       "openSource": "Open source",
@@ -546,7 +546,7 @@
       "topics": {
         "orazaka": "Orazaka",
         "orochia": "Orochia",
-        "yazakia": "Yazakia",
+        "yasakia": "Yasakia",
         "yororis": "Yororis",
         "blocks": "Briques Krizaka",
         "partnership": "Partenariat",
@@ -555,7 +555,7 @@
       "topicHints": {
         "orazaka": "Déployer ou auditer la passerelle d'IA souveraine",
         "orochia": "Lancer ou intégrer la plateforme vidéo pour créateurs",
-        "yazakia": "Savoir quand l'app de rencontre ouvre, ou aider à la construire",
+        "yasakia": "Savoir quand l'app de rencontre ouvre, ou aider à la construire",
         "yororis": "Discuter de Yororis — en construction, rien n'est encore offert",
         "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
         "partnership": "Intégration, revente ou partenariat de recherche",
@@ -571,7 +571,7 @@
       "placeholders": {
         "orazaka": "Votre infrastructure (infonuagique, sur site, isolée), les modèles utilisés, vos contraintes de conformité…",
         "orochia": "Vos créateurs et votre public, les moyens de paiement voulus, votre date de lancement…",
-        "yazakia": "Quand vous aimeriez l'essayer, sur quel téléphone, ce que vous attendez d'une app de rencontre…",
+        "yasakia": "Quand vous aimeriez l'essayer, sur quel téléphone, ce que vous attendez d'une app de rencontre…",
         "yororis": "Qui vous êtes, le programme de mieux-être de votre organisation, ce qui compte pour vous dans le cadre de Yororis…",
         "blocks": "Le composant (sécurité, messagerie, utilisateurs, notifications, facturation, UI…), votre stack et ce que vous voulez construire…",
         "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
@@ -676,17 +676,17 @@
             "Ōrāre : parler, demander — la racine latine d'oracle. Dans les vieilles histoires, on montait jusqu'à l'oracle avec sa question, et on lui confiait quelque chose d'intime.",
             "Aujourd'hui, interroger une IA revient souvent à descendre ses contrats, ses fichiers et ses idées dans la vallée d'un autre. Pour beaucoup d'équipes, c'est rédhibitoire : alors elles s'en passent. Nous pensons que c'est le mauvais marché.",
             "Orazaka installe l'oracle sur votre colline : des réponses tirées de vos propres documents, des visuels générés sur vos machines, des Studios qui prennent le travail répétitif — sur votre infrastructure, selon vos règles. Vos questions et vos réponses restent à la maison, et chaque ligne qui les touche est publique : votre équipe sécurité vérifie au lieu de croire.",
-            "C'est aussi le moteur qu'appellent les produits : les conversations de Yazakia tournent dessus, comme tous les produits qui ont besoin d'intelligence sans rien envoyer ailleurs."
+            "C'est aussi le moteur qu'appellent les produits : les conversations de Yasakia tournent dessus, comme tous les produits qui ont besoin d'intelligence sans rien envoyer ailleurs."
           ],
           "move": "Vos données ne quittent jamais la maison.",
           "stat": "Données gardées chez vous"
         },
-        "yazakia": {
+        "yasakia": {
           "caption": "L'app de rencontre où l'on parle d'abord",
           "title": "Parler d'abord. Se choisir dans les deux sens.",
           "body": [
             "Les applis de rencontre ont fait des gens un catalogue : on glisse, on note, on recommence. On finit par juger des photos à minuit, et par être jugé de la même façon.",
-            "Yazakia commence par une conversation plutôt qu'un formulaire. Un agent propulsé par Orazaka apprend à vous connaître avec vos mots, puis ouvre un petit lot de trois à cinq personnes compatibles dans les deux sens — avec les raisons en mots, jamais un score.",
+            "Yasakia commence par une conversation plutôt qu'un formulaire. Un agent propulsé par Orazaka apprend à vous connaître avec vos mots, puis ouvre un petit lot de trois à cinq personnes compatibles dans les deux sens — avec les raisons en mots, jamais un score.",
             "Le lot suivant attend votre retour. Pas de swipe, pas de catalogue, pas de fil sans fin : moins de personnes, mieux choisies, et personne que vous n'ayez voulu rencontrer tous les deux."
           ],
           "move": "Dans les deux sens, ou pas du tout.",
@@ -924,7 +924,7 @@
           {
             "title": "Nos logiciels",
             "paragraphs": [
-              "Orazaka, Orochia et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yazakia et Yororis ne sont pas déployés et ne collectent rien.",
+              "Orazaka, Orochia et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yasakia et Yororis ne sont pas déployés et ne collectent rien.",
               "Si vous y branchez des services externes (fournisseurs d'IA, passerelles de paiement, CDN vidéo), les données que vous envoyez vont directement à ces fournisseurs, selon leurs propres politiques."
             ]
           },
@@ -973,7 +973,7 @@
           {
             "title": "Licence des logiciels",
             "paragraphs": [
-              "Les logiciels que nous publions sont ouverts, distribués sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les dépôts Orazaka, Orochia, Yazakia et Yororis sur github.com/krizaka, les paquets @krizaka/* sur npm et les artefacts com.krizaka sur Maven. Chaque dépôt porte sa licence.",
+              "Les logiciels que nous publions sont ouverts, distribués sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les dépôts Orazaka, Orochia, Yasakia et Yororis sur github.com/krizaka, les paquets @krizaka/* sur npm et les artefacts com.krizaka sur Maven. Chaque dépôt porte sa licence.",
               "La licence couvre le code. Elle ne donne pas le droit d'utiliser comme les vôtres les noms, logos et marques de produits de Krizaka."
             ]
           },
@@ -992,7 +992,7 @@
           {
             "title": "Produits pas encore disponibles",
             "paragraphs": [
-              "Yazakia est un produit à venir : rien n'est encore offert, et ce que le site en dit décrit des intentions, pas un service.",
+              "Yasakia est un produit à venir : rien n'est encore offert, et ce que le site en dit décrit des intentions, pas un service.",
               "Yororis est en construction. Il n'est pas déployé, pas offert, et personne ne peut s'y inscrire. C'est un espace d'écoute avec une présence IA, pas un service de santé, pas un service de soin, et rien de ce que le site en dit n'est un conseil, de quelque nature que ce soit. Ses pages montrent comment il se construit et permettent d'en discuter avec nous par le formulaire de contact."
             ]
           },
@@ -1092,7 +1092,7 @@
         "products": {
           "title": "Produits",
           "category": "Krizaka",
-          "desc": "Orazaka, Orochia, Yazakia et Yororis — chacun sur son propre site."
+          "desc": "Orazaka, Orochia, Yasakia et Yororis — chacun sur son propre site."
         }
       },
       "label": "Rechercher sur le site",
@@ -1100,7 +1100,7 @@
       "docsCategory": "Documentation"
     },
     "structuredData": {
-      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction)."
+      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; Yasakia, l'app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction)."
     },
     "packages": {
       "eyebrow": "Sur npm",
@@ -1581,7 +1581,7 @@
       "krizaka": [
         {
           "q": "Qu'est-ce que Krizaka ?",
-          "a": "Krizaka est un studio logiciel open source de Montréal (Québec). Il construit Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yazakia et Yororis — qui ont chacun leur propre site. Chaque dépôt est public sous Apache-2.0."
+          "a": "Krizaka est un studio logiciel open source de Montréal (Québec). Il construit Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yasakia et Yororis — qui ont chacun leur propre site. Chaque dépôt est public sous Apache-2.0."
         },
         {
           "q": "Où sont les produits ?",
@@ -2164,7 +2164,7 @@
         "krizaka": "le studio",
         "orazaka": "le moteur d'IA souverain",
         "orochia": "la plateforme de créateurs",
-        "yazakia": "l'application de rencontres",
+        "yasakia": "l'application de rencontres",
         "yororis": "le quatrième produit, en construction"
       }
     }

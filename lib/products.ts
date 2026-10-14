@@ -3,16 +3,16 @@
    own sites (dev.<product>.com); this site never carries a product page, demo, recording or documentation of them
    (next.config.ts redirects the old addresses). Structure only: the words are messages → site.products.<id>. */
 
-import { OROCHIA_APP_URL, YAZAKIA_REPO_URL, YORORIS_REPO_URL } from "./site";
+import { OROCHIA_APP_URL, YASAKIA_REPO_URL, YORORIS_REPO_URL } from "./site";
 
-export type ProductId = "orazaka" | "orochia" | "yazakia" | "yororis";
+export type ProductId = "orazaka" | "orochia" | "yasakia" | "yororis";
 
 /** Where a product not released yet stands. `upcoming`: announced, coming soon. `construction`: being built, nothing
  *  offered yet. No status: released. Words: site.nav.status.<status>. */
 export type ProductStatus = "upcoming" | "construction";
 
 export interface Product {
-  /** Keeps the id the mark, the brand and the messages use (Yazakia's rename to Yasakia is a separate change). */
+  /** The id the mark, the brand and the messages use (Yazakia was renamed Yasakia, 2026-10). */
   id: ProductId;
   name: string;
   status?: ProductStatus;
@@ -25,6 +25,6 @@ export interface Product {
 export const PRODUCTS: Product[] = [
   { id: "orazaka", name: "Orazaka", devUrl: "https://dev.orazaka.com", repoUrl: "https://github.com/krizaka/orazaka" },
   { id: "orochia", name: "Orochia", devUrl: OROCHIA_APP_URL, repoUrl: "https://github.com/krizaka/orochia" },
-  { id: "yazakia", name: "Yazakia", status: "upcoming", devUrl: "https://dev.yasakia.com", repoUrl: YAZAKIA_REPO_URL },
+  { id: "yasakia", name: "Yasakia", status: "upcoming", devUrl: "https://dev.yasakia.com", repoUrl: YASAKIA_REPO_URL },
   { id: "yororis", name: "Yororis", status: "construction", devUrl: "https://dev.yororis.com", repoUrl: YORORIS_REPO_URL },
 ];
