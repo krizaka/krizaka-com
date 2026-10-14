@@ -21,3 +21,16 @@ test("the Organization is in Montréal and points to GitHub", () => {
   assert.match(graph, /addressLocality: "Montréal"/);
   assert.match(graph, /sameAs: \[GITHUB_ORG_URL/);
 });
+
+test("the Organization owns the products and the open-source sites, each published by it", () => {
+  const sd = read("lib/structured-data.ts");
+  assert.match(sd, /owns: owned\.map/);
+  for (const url of ["https://dev.orazaka.com", "https://dev.orochia.com", "https://dev.yasakia.com", "https://dev.yororis.com", "https://java.krizaka.com"]) {
+    assert.ok(sd.includes(url), `${url} is owned by the Organization`);
+  }
+  assert.ok((sd.match(/publisher: \{ "@id": ORG_ID \}/g) ?? []).length >= 3);
+});
+
+test("every page has an Open Graph image", () => {
+  assert.match(read("app/[locale]/opengraph-image.tsx"), /ImageResponse/);
+});

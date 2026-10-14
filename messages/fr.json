@@ -797,7 +797,19 @@
       "docsCategory": "Documentation"
     },
     "structuredData": {
-      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Orazaka, Orochia, Yasakia et Yororis, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com)."
+      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Orazaka, Orochia, Yasakia et Yororis, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com).",
+      "family": {
+        "orazaka": "Moteur d'orchestration d'IA souverain et sur site : conversation, connaissances, tâches et automatisation chez vous.",
+        "orochia": "Une plateforme vidéo open source pour les créateurs indépendants : téléverser, encoder et diffuser.",
+        "yasakia": "Une application de rencontre mobile où l'on se parle d'abord. Bientôt.",
+        "yororis": "Un espace d'écoute avec un visage et une voix. En construction.",
+        "krizaka-ui": "Le design system de Krizaka : composants React et React Native, tokens, icônes, polices et graphiques.",
+        "krizaka-java": "Les briques Spring Boot de chaque service Krizaka, publiées sur Maven Central sous com.krizaka."
+      },
+      "socialImage": {
+        "tagline": "Des logiciels open source, faits à Montréal.",
+        "line": "Krizaka UI · Krizaka Java · Orazaka · Orochia · Yasakia · Yororis"
+      }
     },
     "blocks": {
       "eyebrow": "Briques",

@@ -77,4 +77,6 @@ jobs:
             -d '{"name":"CI","email":"ci@example.com","company":"","topic":"other","message":"Container smoke test.","locale":"en"}'
           # The SEO contract on the HTML the server really sends (canonical www, hreflang, JSON-LD, robots, llms.txt).
           node scripts/check-seo.mjs --base http://localhost:3000
+          # The family contract shared by every Krizaka site (robots, AI crawlers, sitemap, llms.txt, JSON-LD back to the Organization).
+          node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization --types Organization,WebSite
           docker logs site | tail -20
