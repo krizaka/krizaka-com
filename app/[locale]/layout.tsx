@@ -65,8 +65,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       template: "%s | Krizaka",
     },
     description: isEn
-      ? "Krizaka is an open-source software studio in Montréal, Québec. Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka, Orochia, Yazakia, Yororis — each on its own site."
-      : "Krizaka est un studio logiciel open source à Montréal, au Québec. Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yazakia, Yororis — chacun sur son propre site.",
+      ? "Krizaka is an open-source software studio in Montréal, Québec. Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka, Orochia, Yasakia, Yororis — each on its own site."
+      : "Krizaka est un studio logiciel open source à Montréal, au Québec. Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yasakia, Yororis — chacun sur son propre site.",
     keywords: [
       "studio logiciel open source Montréal",
       "design system React",

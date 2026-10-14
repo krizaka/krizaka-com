@@ -23,14 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/",
     en: {
-      title: "Krizaka — open-source software studio in Montréal: Krizaka UI, Orazaka, Orochia, Yazakia, Yororis",
+      title: "Krizaka — open-source software studio in Montréal: Krizaka UI, Orazaka, Orochia, Yasakia, Yororis",
       description:
-        "Krizaka is a Montréal open-source software studio: Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka (sovereign on-premise AI), Orochia (a video platform for independent creators), Yazakia and Yororis — each on its own site.",
+        "Krizaka is a Montréal open-source software studio: Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka (sovereign on-premise AI), Orochia (a video platform for independent creators), Yasakia and Yororis — each on its own site.",
     },
     fr: {
-      title: "Krizaka — studio logiciel open source à Montréal : Krizaka UI, Orazaka, Orochia, Yazakia, Yororis",
+      title: "Krizaka — studio logiciel open source à Montréal : Krizaka UI, Orazaka, Orochia, Yasakia, Yororis",
       description:
-        "Krizaka est un studio logiciel open source montréalais : Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka (IA souveraine sur site), Orochia (une plateforme vidéo pour créateurs indépendants), Yazakia et Yororis — chacun sur son propre site.",
+        "Krizaka est un studio logiciel open source montréalais : Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka (IA souveraine sur site), Orochia (une plateforme vidéo pour créateurs indépendants), Yasakia et Yororis — chacun sur son propre site.",
     },
   });
 }

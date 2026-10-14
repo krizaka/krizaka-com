@@ -38,7 +38,7 @@ export const PRODUCTS = {
     { repo: "products/orazaka/orazaka-apps/ui/orazaka-mobile-client" },
     { repo: "products/orazaka/orazaka-apps/ui/orazaka-ui-kit" },
   ],
-  yazakia: [{ repo: "products/yazakia" }],
+  yasakia: [{ repo: "products/yazakia" }],
   krizaka: [{ repo: ".", skip: /^(products|company|orazaka-content|content|public)\// }],
 };
 

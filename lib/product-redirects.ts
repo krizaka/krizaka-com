@@ -3,11 +3,11 @@
    locale prefix or without it (a config redirect runs before the locale proxy). Read by next.config.ts, tested by
    tests/product-redirects.test.mjs. */
 
-/** The product's own site. Yazakia is renamed Yasakia: its domain is yasakia.com. */
+/** The product's own site. Yasakia is renamed Yasakia: its domain is yasakia.com. */
 export const PRODUCT_SITES = {
   orazaka: "https://dev.orazaka.com",
   orochia: "https://dev.orochia.com",
-  yazakia: "https://dev.yasakia.com",
+  yasakia: "https://dev.yasakia.com",
   yororis: "https://dev.yororis.com",
 } as const;
 
@@ -26,10 +26,12 @@ const to = (source: string, destination: string): Redirect => ({ source: `${L}${
 const ORAZAKA_LEGACY = ["/orazaka", "/architecture", "/demos", "/editions", "/get-started", "/ingenierie-cognitive", "/packages", "/roadmap", "/solutions", "/use-cases"];
 
 export function productRedirects(): Redirect[] {
-  const { orazaka, orochia, yororis } = PRODUCT_SITES;
+  const { orazaka, orochia, yasakia, yororis } = PRODUCT_SITES;
   return [
     // The product pages, their demos, galleries, journeys and use cases.
     ...(Object.entries(PRODUCT_SITES) as [string, string][]).map(([id, site]) => to(`/products/${id}/:path*`, site)),
+    // Yazakia's old address (renamed Yasakia, 2026-10-14).
+    to("/products/yazakia/:path*", yasakia),
     // The products' documentation (Krizaka UI and Krizaka Java stay here).
     to("/docs/orazaka/:path*", `${orazaka}/docs`),
     to("/docs/orochia/:path*", `${orochia}/docs`),

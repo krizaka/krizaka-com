@@ -33,11 +33,11 @@ type ShowcaseBrand = (typeof SHOWCASE_BRANDS)[number]["id"];
 
 // What only one product uses is loaded when its identity is chosen: the media and the map engines are the heavy parts.
 const OrochiaTile = dynamic(() => import("./kit/tiles-orochia"), { ssr: false });
-const YazakiaTile = dynamic(() => import("./kit/tiles-yazakia"), { ssr: false });
-const GROUP: Partial<Record<KitTileId, "orazaka" | "orochia" | "yazakia">> = {
+const YasakiaTile = dynamic(() => import("./kit/tiles-yasakia"), { ssr: false });
+const GROUP: Partial<Record<KitTileId, "orazaka" | "orochia" | "yasakia">> = {
   chat: "orazaka", "code-block": "orazaka", stepper: "orazaka", "choice-grid": "orazaka", "terminal-replay": "orazaka",
   "video-player": "orochia", "video-trimmer": "orochia", "image-cropper": "orochia", "media-capture": "orochia", countdown: "orochia", "goal-gauge": "orochia", sparkline: "orochia",
-  "swipe-deck": "yazakia", "match-dialog": "yazakia", "tag-selector": "yazakia", "location-picker": "yazakia", map: "yazakia",
+  "swipe-deck": "yasakia", "match-dialog": "yasakia", "tag-selector": "yasakia", "location-picker": "yasakia", map: "yasakia",
 };
 
 export default function KitShowcase({ media, phones, terminal }: { media: KitMedia; phones: Record<string, Video>; terminal: readonly TerminalStep[] }) {
@@ -52,7 +52,7 @@ export default function KitShowcase({ media, phones, terminal }: { media: KitMed
     switch (GROUP[id]) {
       case "orazaka": return <OrazakaTile {...props} />;
       case "orochia": return <OrochiaTile {...props} />;
-      case "yazakia": return <YazakiaTile {...props} />;
+      case "yasakia": return <YasakiaTile {...props} />;
       default: return <CoreTile {...props} />;
     }
   };

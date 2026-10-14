@@ -10,8 +10,8 @@
 
 import usage from "./ui-usage.json" with { type: "json" };
 
-export type Product = "orochia" | "orazaka" | "yazakia" | "krizaka";
-export const PRODUCTS: readonly Product[] = ["orochia", "orazaka", "yazakia", "krizaka"];
+export type Product = "orochia" | "orazaka" | "yasakia" | "krizaka";
+export const PRODUCTS: readonly Product[] = ["orochia", "orazaka", "yasakia", "krizaka"];
 
 export interface UsageSnapshot {
   scannedAt: string;
@@ -23,10 +23,10 @@ export const USAGE = usage as UsageSnapshot;
 /** Who imports a component today, products in a fixed order. */
 export const usedBy = (name: string): Product[] => PRODUCTS.filter((product) => (USAGE.components[name]?.[product] ?? 0) > 0);
 
-const MOBILE = "the native apps: Yazakia (PY4), Yororis (PYO2), Orochia mobile (PS6), Orazaka mobile";
+const MOBILE = "the native apps: Yasakia (PY4), Yororis (PYO2), Orochia mobile (PS6), Orazaka mobile";
 const WEB_APPS = "the web apps' adoption: Orochia (PS5), Orazaka (PS6)";
 const SITE = "krizaka.com migrating its pages to the specialised template (TPL)";
-const COMMUNITY = "Yazakia's people screens (PY3/PY4) and Orochia's creator pages";
+const COMMUNITY = "Yasakia's people screens (PY3/PY4) and Orochia's creator pages";
 
 /** Why an unused component stays: the planned work that needs it. */
 export const PLANNED: Record<string, string> = {
@@ -41,7 +41,7 @@ export const PLANNED: Record<string, string> = {
   "component-page": `${SITE}: the component pages of /docs.`,
   "contact-page": `${SITE}: /contact.`,
   "dashboard-layout": `${WEB_APPS}: the creator and operator dashboards.`,
-  "date-picker": "Orochia's scheduling and Yazakia's availability (DS5 dates), through the form.",
+  "date-picker": "Orochia's scheduling and Yasakia's availability (DS5 dates), through the form.",
   "description-list": "Facts of an object: Orazaka's job details and Orochia's order pages.",
   "detail-layout": `${WEB_APPS}: the page of one video, job or account.`,
   "docs-article-page": `${SITE}: the product documentation pages.`,
@@ -74,7 +74,7 @@ export const PLANNED: Record<string, string> = {
   segmented: `${MOBILE}: switching a view inside a screen.`,
   separator: "A primitive of the platform: dividers inside menus, lists and cards.",
   "settings-layout": `${WEB_APPS}: account and product settings.`,
-  "skip-link": "Every app shell that keeps its own layout — Orochia, Orazaka, Yazakia, Yororis (the accessibility pass, krizaka-ui#134); MarketingLayout and AppShell already use it.",
+  "skip-link": "Every app shell that keeps its own layout — Orochia, Orazaka, Yasakia, Yororis (the accessibility pass, krizaka-ui#134); MarketingLayout and AppShell already use it.",
   slot: "The `asChild` mechanism: every primitive that renders your own link or element is built on it.",
   "splash-handoff": `${MOBILE}: the launch screen that dissolves into the product mark (krizaka-ui#137).`,
   "split-view": `${WEB_APPS}: messages and any list-and-detail screen.`,
@@ -129,4 +129,4 @@ export function inventoryOf(name: string, status: string, deprecated?: { reason?
   return plan ? { state: "planned", why: plan, usedBy: [] } : null;
 }
 
-export const PRODUCT_NAMES: Record<Product, string> = { orochia: "Orochia", orazaka: "Orazaka", yazakia: "Yazakia", krizaka: "krizaka.com" };
+export const PRODUCT_NAMES: Record<Product, string> = { orochia: "Orochia", orazaka: "Orazaka", yasakia: "Yasakia", krizaka: "krizaka.com" };

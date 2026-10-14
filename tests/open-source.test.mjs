@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { kindOfRepository, productOfRepository, repositoriesOf } from "../lib/repository-catalogue.ts";
 import { groupOfPackage, groupPackages, summary } from "../lib/npm-catalogue.ts";
 
-const PRODUCTS = ["orazaka", "orochia", "yazakia", "yororis"];
+const PRODUCTS = ["orazaka", "orochia", "yasakia", "yororis"];
 const repo = (name, topics = [], archived = false) => ({ name, description: "", url: `https://github.com/krizaka/${name}`, topics, language: null, archived });
 
 test("a repository belongs to the product it is named after, anything else to the platform", () => {

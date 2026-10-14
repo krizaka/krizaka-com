@@ -19,7 +19,7 @@
 ## 2. What is generated, what is written
 
 - **krizaka.com is the company's lightweight showcase.** The products have their own sites — dev.orazaka.com,
-  dev.orochia.com, dev.yasakia.com (Yazakia is being renamed Yasakia; identifiers here keep "yazakia" until that rename
+  dev.orochia.com, dev.yasakia.com (Yasakia is being renamed Yasakia; identifiers here keep "yasakia" until that rename
   lands) and dev.yororis.com. This repo carries **no product page, demo, gallery, journey, recording or documentation**
   of them: one page, `/products`, has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
   « Visit the dev site » and « Source »). Orochia's card is neutral — no adult-adjacent wording, no media.
@@ -46,9 +46,9 @@
   product's own site. The ⌘K search lists these destinations and `NAV_DOCS` (Krizaka UI, Krizaka Java).
 - `ProductCards` (`app/components/home/`) renders the cards on `/products` and as a section of the home; each card wears
   its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
-  `.brand-yazakia` emerald → turquoise, `.brand-yororis` sand → sage; the rest of the site is Krizaka ink + blue).
+  `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage; the rest of the site is Krizaka ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); marks from `@krizaka/ui`
-  (`KrizakaLogo`, `OrazakaLogo`, `OrochiaLogo`, `YazakiaLogo`, `YororisLogo`, `ProductLogo`) — never a copy here.
+  (`KrizakaLogo`, `OrazakaLogo`, `OrochiaLogo`, `YasakiaLogo`, `YororisLogo`, `ProductLogo`) — never a copy here.
 - A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
   construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
 - **Yororis' lexicon** is law for every message whose key contains `yororis`: `npm run lexicon` (in `npm run lint`) fails

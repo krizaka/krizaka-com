@@ -13,7 +13,7 @@ test("the audit accepts the layout and flags the rest", () => {
   for (const ok of [
     "README.txt",
     "site/products/orochia/tour/alex-bid.3f2a9c1b7e.mp4",
-    "site/people/yazakia/hana-512.b0be072833.webp",
+    "site/people/yasakia/hana-512.b0be072833.webp",
     "site/docs/orochia/mobile/clip-watch-poster.9fc5d19c39.webp",
     "maps/v1/tiles/quebec-20261012.pmtiles",
     "maps/v1/fonts/Noto Sans Regular/0-255.pbf",

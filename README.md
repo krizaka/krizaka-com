@@ -7,14 +7,14 @@
 
 <h1 align="center">krizaka-com</h1>
 
-<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Orazaka, Orochia, Yazakia (coming soon) and Yororis (under construction).</strong></p>
+<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Orazaka, Orochia, Yasakia (coming soon) and Yororis (under construction).</strong></p>
 
 <p align="center">
   <a href="https://scorecard.dev/viewer/?uri=github.com/krizaka/krizaka-com"><img src="https://api.scorecard.dev/projects/github.com/krizaka/krizaka-com/badge?style=flat-square" alt="OpenSSF Scorecard" /></a>
   <img src="https://img.shields.io/badge/Next.js-16-blueviolet?style=flat-square" alt="Next.js 16" />
   <a href="https://github.com/krizaka/orazaka"><img src="https://img.shields.io/badge/AI_Engine-Orazaka-f67e23?style=flat-square" alt="Orazaka" /></a>
   <a href="https://github.com/krizaka/orochia"><img src="https://img.shields.io/badge/Streaming-Orochia-7c3aed?style=flat-square" alt="Orochia" /></a>
-  <a href="https://github.com/krizaka/yazakia"><img src="https://img.shields.io/badge/Dating_(soon)-Yazakia-10b981?style=flat-square" alt="Yazakia (coming soon)" /></a>
+  <a href="https://github.com/krizaka/yasakia"><img src="https://img.shields.io/badge/Dating_(soon)-Yasakia-10b981?style=flat-square" alt="Yasakia (coming soon)" /></a>
   <a href="https://github.com/krizaka/yororis"><img src="https://img.shields.io/badge/Listening_(under_construction)-Yororis-5d894d?style=flat-square" alt="Yororis (under construction)" /></a>
   <a href="https://github.com/krizaka"><img src="https://img.shields.io/badge/GitHub_Org-krizaka-196df5?style=flat-square" alt="Krizaka Organization" /></a>
   <img src="https://img.shields.io/badge/Loi%2025%20%2F%20GDPR%20%2F%202257-success?style=flat-square" alt="Compliance" />
@@ -35,13 +35,13 @@
 </tr>
 </table>
 
-<p align="center"><sub>The two released products, recorded on the real applications — the same clips play on krizaka.com. The third, <a href="https://www.krizaka.com/en/products/yazakia">Yazakia</a> (the dating app where you talk first), is announced on the site and gets its clip when the app ships; the fourth, <a href="https://www.krizaka.com/en/products/yororis">Yororis</a> (a listening space with a face and a voice), is under construction — not deployed, not offered, no date.</sub></p>
+<p align="center"><sub>The two released products, recorded on the real applications — the same clips play on krizaka.com. The third, <a href="https://dev.yasakia.com">Yasakia</a> (the dating app where you talk first), is announced on the site and gets its clip when the app ships; the fourth, <a href="https://www.krizaka.com/en/products/yororis">Yororis</a> (a listening space with a face and a voice), is under construction — not deployed, not offered, no date.</sub></p>
 
 | Product | What it is | Status | Page |
 |---|---|---|---|
 | [Orazaka](https://github.com/krizaka/orazaka) | Sovereign, on-premise AI orchestration engine | Released | [/products/orazaka](https://www.krizaka.com/en/products/orazaka) |
 | [Orochia](https://github.com/krizaka/orochia) | The video platform for independent creators | Released | [/products/orochia](https://www.krizaka.com/en/products/orochia) |
-| [Yazakia](https://github.com/krizaka/yazakia) | The dating app where you talk first | Coming soon | [/products/yazakia](https://www.krizaka.com/en/products/yazakia) |
+| [Yasakia](https://github.com/krizaka/yasakia) | The dating app where you talk first | Coming soon | [dev.yasakia.com](https://dev.yasakia.com) |
 | [Yororis](https://github.com/krizaka/yororis) | A listening space with a face and a voice, powered by Orazaka's wellbeing pack | Under construction (not offered; its words checked by `npm run lexicon`) | [/products/yororis](https://www.krizaka.com/en/products/yororis) |
 
 ---
@@ -80,7 +80,7 @@ one schema component for every product (`app/components/diagrams/`, no diagram l
 ## Products
 
 krizaka.com is the company's showcase. Each product has its own site — [dev.orazaka.com](https://dev.orazaka.com),
-[dev.orochia.com](https://dev.orochia.com), [dev.yasakia.com](https://dev.yasakia.com) (Yazakia, being renamed),
+[dev.orochia.com](https://dev.orochia.com), [dev.yasakia.com](https://dev.yasakia.com) (Yasakia, being renamed),
 [dev.yororis.com](https://dev.yororis.com) — and `/products` is the one page here that leads to them, with each
 product's source. The old `/products/<product>/…` and `/docs/<product>/…` addresses answer **308** with the product's
 site (`lib/product-redirects.ts`). The generated `app/data/*.json` are never hand-edited.

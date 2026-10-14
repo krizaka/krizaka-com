@@ -10,7 +10,7 @@
 
 - Orazaka — sovereign, on-premise AI orchestration engine. Site: https://dev.orazaka.com · source: https://github.com/krizaka/orazaka
 - Orochia — an open-source video platform for independent creators. Site: {{OROCHIA_APP_URL}} · source: https://github.com/krizaka/orochia
-- Yazakia (to be renamed Yasakia; coming soon) — a mobile dating app where you talk first. Site: https://dev.yasakia.com · source: https://github.com/krizaka/yazakia
+- Yasakia (to be renamed Yasakia; coming soon) — a mobile dating app where you talk first. Site: https://dev.yasakia.com · source: https://github.com/krizaka/yasakia
 - Yororis (under construction) — a listening space with a face and a voice. Site: https://dev.yororis.com · source: https://github.com/krizaka/yororis
 
 ## Key pages

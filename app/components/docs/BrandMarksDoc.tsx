@@ -1,9 +1,9 @@
 import { ProductLogo, type BrandId } from "@krizaka/ui";
 import { format, getDictionary, type Locale } from "@/lib/i18n";
 
-const MARKS: BrandId[] = ["krizaka", "orazaka", "orochia", "yazakia", "yororis"];
+const MARKS: BrandId[] = ["krizaka", "orazaka", "orochia", "yasakia", "yororis"];
 /** The scope each mark wears (the brand's colours), spelled out so the class is a literal. */
-const SCOPE: Record<BrandId, string> = { krizaka: "brand-krizaka", orazaka: "brand-orazaka", orochia: "brand-orochia", yazakia: "brand-yazakia", yororis: "brand-yororis" };
+const SCOPE: Record<BrandId, string> = { krizaka: "brand-krizaka", orazaka: "brand-orazaka", orochia: "brand-orochia", yasakia: "brand-yasakia", yororis: "brand-yororis" };
 
 /* /docs/ui/brand-marks — the five marks of the Krizaka family, drawn by @krizaka/ui (the same component the products and
    this site's navigation use). Nothing is copied here: the marks are rendered, never re-drawn. */

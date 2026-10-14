@@ -105,13 +105,13 @@ test("the committed manifest names every media the site draws", () => {
   assert.equal(root, "site");
   const need = [
     // "Krizaka UI, live" (home): the native loop of each identity, dark and light.
-    ...["orazaka", "orochia", "yazakia", "yororis"].flatMap((b) => ["dark", "light"].flatMap((m) => ["webm", "mp4", "jpg"].map((e) => `home/kit-native/${b}-${m}.${e}`))),
+    ...["orazaka", "orochia", "yasakia", "yororis"].flatMap((b) => ["dark", "light"].flatMap((m) => ["webm", "mp4", "jpg"].map((e) => `home/kit-native/${b}-${m}.${e}`))),
     // The clips the published @krizaka/ui examples still reach through /assets/orochia/tour/ (lib/cdn.ts, next.config).
     ...["alex-discover", "alex-bid", "elena-live"].flatMap((c) => ["webm", "mp4", "jpg"].map((e) => `products/orochia/tour/${c}.${e}`)),
   ];
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
   // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left.
-  const gone = Object.keys(files).filter((path) => /^(docs\/(orazaka|orochia)\/|home\/backdrop\/|products\/(orazaka|yazakia)\/|products\/orochia\/mobile\/)/.test(path));
+  const gone = Object.keys(files).filter((path) => /^(docs\/(orazaka|orochia)\/|home\/backdrop\/|products\/(orazaka|yasakia)\/|products\/orochia\/mobile\/)/.test(path));
   assert.deepEqual(gone, []);
   assert.deepEqual(
     Object.keys(files).filter((path) => path.startsWith("products/orochia/tour/") && !/\/(alex-discover|alex-bid|elena-live)\./.test(path)),
@@ -138,5 +138,5 @@ test("prune keeps what another branch's manifest still names", async () => {
 test("uploads are refused outside the areas of site/", () => {
   assert.throws(() => logicalPath("pr-assets/x/y.png"), /not an area/);
   assert.throws(() => logicalPath("krizaka-assets/home"), /not an area/);
-  for (const area of ["home", "products/orochia/tour", "docs/orochia/mobile", "people/yazakia"]) assert.equal(logicalPath(area), area);
+  for (const area of ["home", "products/orochia/tour", "docs/orochia/mobile", "people/yasakia"]) assert.equal(logicalPath(area), area);
 });

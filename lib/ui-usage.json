@@ -45,7 +45,7 @@
         "files": 41
       }
     ],
-    "yazakia": [
+    "yasakia": [
       {
         "repo": "products/yazakia",
         "commit": "be2d850",
@@ -89,7 +89,7 @@
       "krizaka": 10,
       "orazaka": 63,
       "orochia": 19,
-      "yazakia": 3
+      "yasakia": 3
     },
     "card": {
       "krizaka": 1,
@@ -223,7 +223,7 @@
       "krizaka": 7,
       "orazaka": 10,
       "orochia": 3,
-      "yazakia": 3
+      "yasakia": 3
     },
     "match-dialog": {
       "krizaka": 1
@@ -246,14 +246,14 @@
     },
     "page": {
       "krizaka": 10,
-      "yazakia": 3
+      "yasakia": 3
     },
     "page-header": {
       "orochia": 1
     },
     "page-hero": {
       "krizaka": 3,
-      "yazakia": 2
+      "yasakia": 2
     },
     "pagination": {
       "orazaka": 1,
@@ -289,7 +289,7 @@
     "section-backdrop": {
       "krizaka": 3,
       "orazaka": 11,
-      "yazakia": 1
+      "yasakia": 1
     },
     "skeleton": {
       "orazaka": 3,
@@ -342,7 +342,7 @@
       "krizaka": 2,
       "orazaka": 11,
       "orochia": 28,
-      "yazakia": 3
+      "yasakia": 3
     },
     "toast": {
       "krizaka": 2,
