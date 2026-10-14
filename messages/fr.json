@@ -830,8 +830,8 @@
           "line": "Couleurs, pictogrammes, montants et dates"
         },
         "realtime": {
-          "name": "Temps réel & push",
-          "line": "Mises à jour en direct et notifications mobiles"
+          "name": "Temps réel",
+          "line": "SSE pour chaque produit, push sur mobile"
         },
         "java": {
           "name": "Kit plateforme Java",
@@ -850,12 +850,17 @@
       "ours": {
         "label": "Manche bonus",
         "title": "Nous utilisons nos propres produits.",
-        "lead": "Chaque produit tourne sur les mêmes briques et, quand il a besoin d'intelligence, sur Orazaka. Le tableau en est la preuve — lu dans les manifestes des produits eux-mêmes.",
+        "lead": "Chaque produit tourne sur les mêmes briques, reste en direct par SSE (push sur mobile) et tire son intelligence d'Orazaka. Le tableau lit les manifestes des produits ; « Prévu » marque ce qui est décidé et suivi, pas encore livré.",
         "caption": "Ce sur quoi tourne chaque produit",
         "product": "Produit",
         "yes": "Oui",
         "no": "Non",
-        "isEngine": "C'est le moteur"
+        "isEngine": "C'est le moteur",
+        "planned": "Prévu",
+        "transport": {
+          "sse": "SSE",
+          "ssePush": "SSE + push"
+        }
       },
       "chapters": {
         "orazaka": {

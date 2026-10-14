@@ -294,13 +294,21 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
                   </th>
                   {KITS.map((k) => {
                     const engine = k === "engine" && p.id === ENGINE;
-                    const yes = engine || p.runsOn.includes(k);
+                    const planned = !engine && (p.planned ?? []).includes(k);
+                    const live = k === "realtime";
+                    const yes = engine || live || p.runsOn.includes(k);
+                    const word = engine ? st.ours.isEngine : live ? st.ours.transport[p.live] : st.ours.yes;
                     return (
-                      <td key={k} data-yes={yes ? "" : undefined}>
-                        {yes ? (
+                      <td key={k} data-yes={yes && !planned ? "" : undefined} data-planned={planned ? "" : undefined}>
+                        {planned ? (
+                          <>
+                            <span aria-hidden className="st-dot st-dot-planned" />
+                            <span className="st-cell">{live ? `${word} · ${st.ours.planned}` : st.ours.planned}</span>
+                          </>
+                        ) : yes ? (
                           <>
                             <span aria-hidden className="st-dot" />
-                            <span className="st-cell">{engine ? st.ours.isEngine : st.ours.yes}</span>
+                            <span className="st-cell">{word}</span>
                           </>
                         ) : (
                           <span className="st-cell st-no">{st.ours.no}</span>
