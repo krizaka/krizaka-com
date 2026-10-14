@@ -3,15 +3,12 @@
    krizaka.com is the company; everything else Krizaka makes has its own site (NAV-SYS, 2026-10-14): the products on
    dev.<product>.com (lib/products.ts), the open-source stack on ui.krizaka.com and java.krizaka.com (lib/stack.ts).
    The bar, in three zones:
-   - left, who we are: the Krizaka mark, then the family switcher (NAV_FAMILY: Krizaka · the products · the open-source
-     stack · GitHub) — it becomes @krizaka/ui's NavBar.Family (fed by @krizaka/ui/sites) once that is published;
+   - left, who we are: the Krizaka mark, then NavBar.Family — every site of the family, from @krizaka/ui/sites;
    - centre, this site: Products · Open source · Our story (NAV_BAR_LINKS) — never a link to another site;
-   - right, tools: GitHub · theme · language · Contact us. No "Docs": the documentation lives on its own sites. */
+   - right, tools: Repo · theme · language · Contact us. No "Docs": the documentation lives on its own sites. */
 
 import type { TranslationDictionary } from "./i18n";
 import { PRODUCTS, type ProductId, type ProductStatus } from "./products";
-import { GITHUB_ORG_URL, SITE_URL } from "./site";
-import { STACK, type StackId } from "./stack";
 
 export type { ProductStatus } from "./products";
 export type CompanyLinkId = "products" | "story" | "repos" | "contact";
@@ -44,26 +41,6 @@ export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
 
 /** The centre of the bar: this site's sections, in this order. */
 export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["products", "repos", "story"] as const).map((icon) => NAV_COMPANY.find((l) => l.icon === icon)!);
-
-/* The Krizaka family — every site Krizaka runs, as the family switcher (left of the bar), the mobile panel and the
-   footer list them. Words: site.nav.family (FamilySwitcher). */
-export type FamilyEntry =
-  | { kind: "company"; id: "krizaka"; name: string; href: string }
-  | { kind: "product"; id: ProductId; name: string; href: string; status?: ProductStatus }
-  | { kind: "stack"; id: StackId; name: string; href: string }
-  | { kind: "github"; id: "github"; name: string; href: string };
-
-export const NAV_FAMILY: {
-  company: FamilyEntry & { kind: "company" };
-  products: (FamilyEntry & { kind: "product" })[];
-  stack: (FamilyEntry & { kind: "stack" })[];
-  github: FamilyEntry & { kind: "github" };
-} = {
-  company: { kind: "company", id: "krizaka", name: "Krizaka", href: SITE_URL },
-  products: NAV_PRODUCTS.map((p) => ({ kind: "product" as const, ...p })),
-  stack: STACK.map((s) => ({ kind: "stack" as const, id: s.id, name: s.name, href: s.url })),
-  github: { kind: "github", id: "github", name: "GitHub", href: GITHUB_ORG_URL },
-};
 
 /* While the documentation still renders here (/docs, until it has moved to ui.krizaka.com and java.krizaka.com), the
    bar under /docs names where the reader is (Docs / <section>, DocsCrumb) and keeps the search over it. Nothing outside

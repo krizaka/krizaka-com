@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { siteById } from "@krizaka/ui/sites";
+import { existsSync, readFileSync } from "node:fs";
 
 // The bar of every Krizaka site (NAV-SYS, 2026-10-14): on www, the centre holds this site's sections only, and every
 // other Krizaka site is reached from the family switcher.
@@ -22,9 +23,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
     { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com" },
     { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com" },
   ]);
-  assert.match(nav, /products: NAV_PRODUCTS\.map/);
-  assert.match(nav, /stack: STACK\.map/);
-  assert.match(nav, /github: \{ kind: "github", id: "github", name: "GitHub", href: GITHUB_ORG_URL \}/);
+  // the family's own list is @krizaka/ui's: the site's stack must agree with it
+  for (const s of stack) assert.equal(siteById(s.id).url, s.url, `@krizaka/ui/sites: ${s.id}`);
+  assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
 test("the products' statuses: Yasakia is coming soon, Yororis under construction, the others released", () => {
@@ -40,13 +41,12 @@ test("the bar has no Docs entry and no search outside /docs; the footer has no D
   assert.doesNotMatch(read("app/components/MobilePanel.tsx"), /NAV_DOCS/);
 });
 
-test("every family entry has its words in both languages", () => {
-  for (const lang of ["en", "fr"]) {
-    const m = messages(lang).site;
-    for (const p of products) assert.ok(m.nav.family.products[p.id], `${lang}: site.nav.family.products.${p.id}`);
-    for (const s of stack) {
-      assert.ok(m.nav.family.stack[s.id], `${lang}: site.nav.family.stack.${s.id}`);
-      assert.ok(m.stack[s.id].line, `${lang}: site.stack.${s.id}.line`);
-    }
-  }
+test("the family is @krizaka/ui's: NavBar.Family in the bar and the panel, SiteFooter in the footer, no copy here", () => {
+  const bar = read("app/components/TopNavBar.tsx");
+  assert.match(bar, /<NavBar\.Family current="krizaka"/);
+  assert.match(bar, /<NavBar\.Repo /);
+  assert.match(read("app/components/MobilePanel.tsx"), /<NavBar\.Family current="krizaka"/);
+  assert.match(read("app/components/SiteFooter.tsx"), /@krizaka\/ui\/site-footer/);
+  assert.ok(!existsSync(new URL("../app/components/FamilySwitcher.tsx", import.meta.url)), "FamilySwitcher came back");
+  for (const lang of ["en", "fr"]) assert.equal(messages(lang).site.nav.family, undefined, `${lang}: site.nav.family`);
 });

@@ -108,24 +108,6 @@
           "label": "Contact",
           "desc": "Write to the team"
         }
-      },
-      "family": {
-        "label": "Krizaka sites",
-        "productsTitle": "Products",
-        "stackTitle": "Open source",
-        "companyTitle": "Krizaka",
-        "krizaka": "The company",
-        "github": "Every repository",
-        "products": {
-          "orazaka": "Sovereign AI",
-          "orochia": "Video platform",
-          "yasakia": "Dating app",
-          "yororis": "Listening space"
-        },
-        "stack": {
-          "ui": "Interface kit · ui.krizaka.com",
-          "java": "Building blocks · java.krizaka.com"
-        }
       }
     },
     "products": {

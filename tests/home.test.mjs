@@ -52,7 +52,6 @@ test("Orochia is described neutrally: no creator, payout or payment pitch on kri
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;
     assert.doesNotMatch(m.products.cards.orochia.line, pitch, `${lang}: products.cards.orochia`);
-    assert.doesNotMatch(m.nav.family.products.orochia, pitch, `${lang}: nav.family.products.orochia`);
     assert.doesNotMatch(JSON.stringify(m.home), pitch, `${lang}: site.home`);
     assert.doesNotMatch(m.structuredData.organization, pitch, `${lang}: structuredData.organization`);
     assert.doesNotMatch(JSON.stringify(m.faq.krizaka), pitch, `${lang}: faq.krizaka`);
