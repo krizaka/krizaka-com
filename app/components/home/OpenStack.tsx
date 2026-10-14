@@ -42,18 +42,17 @@ export function StackCards({ locale, mavenArtifacts, titleAs = "h3" }: { locale:
       {STACK.map((part) => {
         const Icon = part.id === "ui" ? PackIcon : ServerIcon;
         return (
-          <li key={part.id}>
-            <LinkCard
-              href={part.url}
-              title={part.name}
-              titleAs={titleAs}
-              description={site.stack[part.id].line}
-              icon={<Icon size={22} />}
-              meta={hostOf(part.url)}
-              cta={format(s.visit, { host: hostOf(part.url) })}
-              extra={<Facts items={facts(part.id, part.coordinate)} />}
-            />
-          </li>
+          <LinkCard
+            key={part.id}
+            href={part.url}
+            title={part.name}
+            titleAs={titleAs}
+            description={site.stack[part.id].line}
+            icon={<Icon size={22} />}
+            meta={hostOf(part.url)}
+            cta={format(s.visit, { host: hostOf(part.url) })}
+            extra={<Facts items={facts(part.id, part.coordinate)} />}
+          />
         );
       })}
     </CardGrid>
