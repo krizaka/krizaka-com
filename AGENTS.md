@@ -283,7 +283,7 @@
   file of `site/` to its human name. Pages and apps keep loading `site/` (its URLs never change content, and published
   packages use them); the mirror is for browsing and downloading.
 - **Orochia has its own storage zone (`orochia-dev`) and Stream library**: new Orochia media go there, not in this zone.
-  `site/products/orochia` and `people/orochia` move there later (krizaka/orochia issue); until then they stay listed here.
+  `site/products/orochia` and `site/people/orochia` move there later (krizaka/orochia#153); until then they stay under `site/` and are never mirrored in `products/` or `people/personas/`.
 - **Yazakia is retired (renamed Yasakia)**: its folders are in `RETIRED` (`bunny-layout.mjs`); `cdn-assets prune
   --retired --yes` removes them. Never write a `yazakia` path again.
 - The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — are sent under
