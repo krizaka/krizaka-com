@@ -53,9 +53,11 @@ export const RETIRED = [/^site\/(?:people|products)\/yazakia\//];
 
 /**
  * Where a hashed file of site/ is mirrored in the browsable library, or null when it has no place there.
- * `home/backdrop/orochia.mp4` → `products/orochia/home/backdrop.mp4`; `people/ui/ada-256.webp` → `people/personas/ui/ada-256.webp`.
+ * `home/backdrop/orazaka.mp4` → `products/orazaka/home/backdrop.mp4`; `people/ui/ada-256.webp` → `people/personas/ui/ada-256.webp`.
  */
 export function libraryPath(logical) {
+  // Orochia has its own storage zone and Stream library: its media are never mirrored in this zone (krizaka/orochia#153).
+  if (logical.split("/").includes("orochia") || /(^|\/)orochia[-.]/.test(logical)) return null;
   const parts = logical.split("/");
   const [area, a, b] = parts;
   const product = (id) => (id === "yazakia" ? "yasakia" : id);
@@ -99,7 +101,7 @@ ${Object.entries(SITE_AREAS)
 
 Orochia has its own storage zone (orochia-dev) and Stream library: its new media do not go in this zone. Plan: move
 site/products/orochia and the Orochia personas there (steps: krizaka/orochia issue "Move Orochia's media to its own zone").
-Until then they stay here, listed under products/orochia/ and people/personas/orochia/.
+Until then they stay where they are under site/ (not mirrored in products/ or people/personas/).
 
 Rules
   - brand/ and people/defaults/ are generated from the code of @krizaka/ui: change the component, run the export, never upload by hand.

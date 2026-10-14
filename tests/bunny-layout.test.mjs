@@ -45,11 +45,14 @@ test("the README names every prefix", () => {
 });
 
 test("the library maps what site/ serves to human names, and retires the old Yazakia names", () => {
-  assert.equal(libraryPath("home/backdrop/orochia.mp4"), "products/orochia/home/backdrop.mp4");
+  assert.equal(libraryPath("home/backdrop/orochia.mp4"), null, "Orochia has its own zone");
+  assert.equal(libraryPath("people/orochia/alex-256.webp"), null);
+  assert.equal(libraryPath("home/kit-native/orochia-dark.webm"), null);
+  assert.equal(libraryPath("home/backdrop/orazaka.mp4"), "products/orazaka/home/backdrop.mp4");
   assert.equal(libraryPath("home/kit-native/yororis-dark.webm"), "products/yororis/home/kit-native-dark.webm");
   assert.equal(libraryPath("products/orazaka/tour/a.mp4"), "products/orazaka/tour/a.mp4");
   assert.equal(libraryPath("products/yazakia/mobile/loop-dark.mp4"), "products/yasakia/mobile/loop-dark.mp4");
-  assert.equal(libraryPath("docs/orochia/mobile/x.webp"), "products/orochia/docs/mobile/x.webp");
+  assert.equal(libraryPath("docs/orazaka/mobile/x.webp"), "products/orazaka/docs/mobile/x.webp");
   assert.equal(libraryPath("people/ui/ada-256.webp"), "people/personas/ui/ada-256.webp");
   assert.equal(libraryPath("people/yazakia/hana-256.webp"), null);
   assert.equal(libraryPath("home/kit/frames/a.png"), null);
