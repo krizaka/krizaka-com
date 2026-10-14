@@ -18,8 +18,48 @@ const WEBSITE_ID = `${SITE_URL}/#website`;
 const HREFLANG: Record<Locale, string> = { fr: "fr-CA", en: "en" };
 const hreflangOf = (locale: Locale) => HREFLANG[locale];
 
-/** Sitewide @graph: Organization. */
+/** What the family owns, as schema.org nodes: the products (each on its own site) and the open-source projects.
+    Words are messages (`site.structuredData.family.<id>`); here only structure — ids, urls, categories. */
+const FAMILY = [
+  { id: "orazaka", name: "Orazaka", url: "https://dev.orazaka.com", repo: "orazaka", category: "BusinessApplication", kind: "app" },
+  { id: "orochia", name: "Orochia", url: "https://dev.orochia.com", repo: "orochia", category: "MultimediaApplication", kind: "app" },
+  { id: "yasakia", name: "Yasakia", url: "https://dev.yasakia.com", repo: "yasakia", category: "LifestyleApplication", kind: "app" },
+  { id: "yororis", name: "Yororis", url: "https://dev.yororis.com", repo: "yororis", category: "LifestyleApplication", kind: "app" },
+  { id: "krizaka-ui", name: "Krizaka UI", url: `${SITE_URL}/en/docs/ui`, repo: "krizaka-ui", language: "TypeScript", kind: "code" },
+  { id: "krizaka-java", name: "Krizaka Java", url: "https://java.krizaka.com", repo: "krizaka-platform-kit", language: "Java", kind: "code" },
+] as const;
+
+const familyNode = (f: (typeof FAMILY)[number], description: string) =>
+  f.kind === "app"
+    ? {
+        "@type": "SoftwareApplication",
+        "@id": `${f.url}/#software`,
+        name: f.name,
+        url: f.url,
+        description,
+        applicationCategory: f.category,
+        operatingSystem: "Web, iOS, Android",
+        isAccessibleForFree: true,
+        license: "https://www.apache.org/licenses/LICENSE-2.0",
+        codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
+        publisher: { "@id": ORG_ID },
+      }
+    : {
+        "@type": "SoftwareSourceCode",
+        "@id": `${f.url}/#source`,
+        name: f.name,
+        url: f.url,
+        description,
+        programmingLanguage: f.language,
+        license: "https://www.apache.org/licenses/LICENSE-2.0",
+        codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
+        publisher: { "@id": ORG_ID },
+      };
+
+/** Sitewide @graph: Organization · WebSite · what the organization owns. */
 export function buildSiteGraph(locale: Locale) {
+  const family = getDictionary(locale).site.structuredData.family;
+  const owned = FAMILY.map((f) => familyNode(f, family[f.id]));
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -54,6 +94,7 @@ export function buildSiteGraph(locale: Locale) {
         ],
         isAccessibleForFree: true,
         codeRepository: GITHUB_ORG_URL,
+        owns: owned.map((n) => ({ "@id": n["@id"] })),
       },
       {
         "@type": "WebSite",
@@ -63,6 +104,7 @@ export function buildSiteGraph(locale: Locale) {
         inLanguage: hreflangOf(locale),
         publisher: { "@id": ORG_ID },
       },
+      ...owned,
     ],
   };
 }

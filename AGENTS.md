@@ -139,6 +139,22 @@
 - Titles and descriptions of written pages: `messages/*.json` → `docs.pages.<section>.<page>`; a component page's come
   from its code (English, like its content); its chrome (headings, badges, tabs) from `docs.component.*`.
 
+## 2.4 Search engines & AI assistants — one contract for the whole family
+
+- Every Krizaka site (www · ui. · java. · dev.orazaka · dev.orochia · dev.yasakia · dev.yororis · the admin consoles) owes
+  the same files, checked by **`scripts/check-seo-family.mjs`** — one dependency-free file, copied unchanged into each
+  site's repository (keep the copies identical; its unit test is `tests/check-seo-family.test.mjs`). CI runs it against the
+  container: `node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization`.
+- `robots.txt` with a `Sitemap:` line on the site's host and the **same AI-crawler list everywhere, allowed** on public
+  sites (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, Claude-User, anthropic-ai, PerplexityBot,
+  Perplexity-User, Google-Extended, Applebot(-Extended), Bingbot, CCBot); `sitemap.xml` with hreflang alternates en/fr and
+  `lastmod`; `llms.txt` (llmstxt.org) that links back to the family; a canonical that is the page itself on the site's
+  host; Open Graph + Twitter card **with an image**; JSON-LD whose every node leads back to the Organization
+  `https://www.krizaka.com/#organization` (this site defines it, and says it `owns` the products and open-source sites).
+- Indexing policy: www, ui., java., dev.orazaka, dev.yasakia, dev.yororis are indexed; both `admin.*` consoles and
+  `dev.orochia.com` are `noindex` (robots `Disallow: /` + `X-Robots-Tag` + meta) — but still serve correct files for the day
+  they open. Search Console / Bing verification is by DNS TXT record, never a file or a token in the repository.
+
 ## 3. Theming — dark **and** light are first-class
 
 - One token system: `@krizaka/tokens` through the `@krizaka/tailwind` preset (imported by `app/globals.css`) —
