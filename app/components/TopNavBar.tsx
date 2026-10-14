@@ -2,9 +2,9 @@
 
 /* The site bar (NAV-SYS), built on @krizaka/ui's NavBar (floating, tightening on scroll, one light gliding between the
    items and resting on the current page) and fed by lib/nav.ts. Three zones:
-   - left, who we are: the Krizaka mark (home), then the family switcher (FamilySwitcher → NavBar.Family later);
+   - left, who we are: the Krizaka mark (home), then NavBar.Family (@krizaka/ui/sites: every site of the family);
    - centre, this site: Products · Open source · Our story;
-   - right, tools: GitHub · theme · language · Contact us.
+   - right, tools: Repo · theme · language · Contact us.
    No search and no "Docs": the site has five pages, and the documentation lives on ui.krizaka.com and java.krizaka.com.
    While /docs still renders here, its pages keep their breadcrumb and the search over them (DocsCrumb, SearchCommand).
    Below md: the mark, the family switcher and the mobile panel's toggle. */
@@ -14,22 +14,21 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MoonIcon, SearchIcon, SunIcon } from "@krizaka/icons";
 import { NavBar } from "@krizaka/ui/nav-bar";
+import { familyLabels } from "@krizaka/ui/sites";
 import { Button } from "@krizaka/ui/button";
 import { Kbd } from "@krizaka/ui/kbd";
 import { KrizakaLogo } from "@krizaka/ui";
 import { useI18n } from "./I18nProvider";
 import { useSiteTheme } from "./SiteTheme";
-import { GITHUB_ORG_URL } from "@/lib/site";
+import { SITE_REPO_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
 import { DocsCrumb } from "./DocsCrumb";
-import { FamilySwitcher } from "./FamilySwitcher";
 import { useContactHref } from "./useContactHref";
-import { GitHubMark } from "./brand/GitHubMark";
 
 export default function TopNavBar() {
-  const { t, toggleLocale } = useI18n();
+  const { t, locale, toggleLocale } = useI18n();
   const m = t.site.menu;
   const contactHref = useContactHref();
   const { theme, toggleTheme } = useSiteTheme();
@@ -46,9 +45,9 @@ export default function TopNavBar() {
               <KrizakaLogo size={26} />
             </Link>
           </NavBar.Brand>
+          <NavBar.Family current="krizaka" labels={familyLabels[locale]} />
 
           <NavBar.Items>
-            <FamilySwitcher />
             {!docs &&
               NAV_BAR_LINKS.map((l) => (
                 <NavBar.Link key={l.href} asChild active={isNavActive(l, path)}>
@@ -76,11 +75,7 @@ export default function TopNavBar() {
               </Button>
             )}
 
-            <Button asChild variant="ghost" size="icon" shape="pill" className="hidden h-9 w-9 lg:inline-flex">
-              <a href={GITHUB_ORG_URL} target="_blank" rel="noopener noreferrer" aria-label={m.githubAria}>
-                <GitHubMark size={15} />
-              </a>
-            </Button>
+            <NavBar.Repo href={SITE_REPO_URL} label={m.githubAria} className="hidden lg:inline-flex" />
 
             <Button
               type="button"

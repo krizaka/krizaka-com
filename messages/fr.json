@@ -108,24 +108,6 @@
           "label": "Contact",
           "desc": "Écrire à l'équipe"
         }
-      },
-      "family": {
-        "label": "Sites Krizaka",
-        "productsTitle": "Produits",
-        "stackTitle": "Open source",
-        "companyTitle": "Krizaka",
-        "krizaka": "La compagnie",
-        "github": "Tous les dépôts",
-        "products": {
-          "orazaka": "IA souveraine",
-          "orochia": "Plateforme vidéo",
-          "yasakia": "App de rencontre",
-          "yororis": "Espace d'écoute"
-        },
-        "stack": {
-          "ui": "Kit d'interface · ui.krizaka.com",
-          "java": "Briques · java.krizaka.com"
-        }
       }
     },
     "products": {
