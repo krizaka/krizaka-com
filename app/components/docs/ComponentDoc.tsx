@@ -18,6 +18,7 @@ import {
   type RegistryItem,
   resolveReference,
 } from "@/lib/ui-registry";
+import { inventoryOf } from "@/lib/ui-inventory";
 import { CodeBlock, ExamplePreview, NativeExamplePreview } from "./ExamplePreview";
 import { InlineCode } from "./InlineCode";
 import { PropsTable } from "./PropsTable";
@@ -108,6 +109,7 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
   const ref = (other: string) => (kit === "ui" ? { kit, name: other } : resolveReference(other, kit));
   const href = (other: string) => componentHref(locale, ref(other).kit, ref(other).name);
   const titleOf = (other: string) => getRegistryItem(ref(other).name, ref(other).kit).title;
+  const inventory = kit === "ui" ? inventoryOf(item.name, item.status, item.deprecated) : null;
   const kitWords = kit === "ui" ? undefined : { product: t.docs.sections[kit].title, package: KIT_PACKAGES[kit] };
 
   return (
@@ -120,13 +122,25 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
         {kitWords ? format(k.platformLong, kitWords) : format(c.platformsLong[item.platforms], { entry: (item.platforms === "native" ? item.native?.entry : item.web?.entry) ?? `@krizaka/ui/${item.name}` })} {c.statusLong[item.status]}
       </p>
 
+      {kit === "ui" && inventory?.why && (
+        <p className="kz-docs-note">
+          <strong>{t.docs.ia.catalog.why}.</strong> {inventory.why}
+        </p>
+      )}
+
       {item.deprecated && (
         <div className="kz-deprecated not-prose" role="note">
           <strong>{c.status.deprecated}</strong>
           <span>
-            {format(k.deprecatedSince, { since: item.deprecated.since, removedIn: item.deprecated.removedIn })}{" "}
-            {k.useInstead} <Link href={href(item.deprecated.use)}>{titleOf(item.deprecated.use)}</Link>
-            {ref(item.deprecated.use).kit === "ui" && <> ({k.fromKrizakaUi})</>}.
+            {format(k.deprecatedSince, { since: item.deprecated.since, removedIn: item.deprecated.removedIn })}
+            {item.deprecated.reason && <> {item.deprecated.reason}</>}
+            {item.deprecated.use && (
+              <>
+                {" "}
+                {k.useInstead} <Link href={href(item.deprecated.use)}>{titleOf(item.deprecated.use)}</Link>
+                {ref(item.deprecated.use).kit === "ui" && <> ({k.fromKrizakaUi})</>}.
+              </>
+            )}
           </span>
         </div>
       )}

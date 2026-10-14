@@ -10,6 +10,7 @@
     "lint": "eslint && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-page-templates.mjs && krizaka-i18n check messages && node scripts/gen-ui-docs.mjs --check && krizaka-ratchet && node scripts/lexicon.mjs && depcruise app lib --config .dependency-cruiser.cjs",
     "lexicon": "node scripts/lexicon.mjs",
     "ratchet": "krizaka-ratchet",
+    "ui:usage": "node scripts/scan-ui-usage.mjs",
     "cdn": "node scripts/cdn-assets.mjs",
     "i18n:check": "krizaka-i18n check messages",
     "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.mjs",

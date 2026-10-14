@@ -1342,3 +1342,64 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
   font-size: 12.5px; font-weight: 700; color: var(--kz-accent-text); }
 .rd-steps strong { font-size: 15.5px; color: var(--kz-text-primary); }
 .rd-steps span { font-size: 14.5px; line-height: 1.65; color: var(--kz-text-secondary); }
+
+/* /docs/ui/brand-marks. */
+.kz-brand-marks { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); list-style: none; margin: 1.5rem 0; padding: 0; }
+.kz-brand-marks li { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 20px 12px; border: 1px solid var(--kz-border-subtle); border-radius: 14px; background: var(--kz-surface-1); text-align: center; }
+.kz-brand-marks li > span:first-of-type { font-weight: 700; }
+
+/* The catalogue of /docs/ui, v2: a picture on every card, four filters, the product that uses it. */
+.kz-catalog-bar { align-items: flex-start; }
+.kz-catalog-select { display: inline-flex; align-items: center; gap: 8px; font-size: 0.8125rem; color: var(--kz-text-secondary); }
+.kz-catalog-select select { height: 36px; padding: 0 10px; border: 1px solid var(--kz-border-default); border-radius: 999px; background: var(--kz-surface-1); color: var(--kz-text-primary); font: inherit; }
+.kz-catalog-select select:focus-visible { outline: 2px solid var(--kz-ring); outline-offset: 2px; }
+.kz-catalog-clear { border: 0; background: none; color: var(--kz-accent-text); font: inherit; font-weight: 600; cursor: pointer; text-decoration: underline; }
+.kz-catalog-clear:focus-visible { outline: 2px solid var(--kz-ring); outline-offset: 2px; border-radius: 4px; }
+.kz-catalog-parent { margin: 2rem 0 0; font-size: 1.125rem; font-weight: 800; color: var(--kz-text-primary); }
+.kz-catalog-group > h4 { margin: 1rem 0 0.25rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--kz-text-secondary); }
+.kz-catalog-group > p.kz-docs-note { margin: 0 0 0.5rem; font-size: 0.8125rem; }
+.kz-catalog .kz-catalog-grid { grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr)); }
+.kz-catalog li.kz-catalog-card {
+  position: relative;
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+.kz-catalog-preview {
+  height: 9.5rem;
+  overflow: hidden;
+  border-bottom: 1px solid var(--kz-border-subtle);
+  background: var(--kz-surface-0);
+  pointer-events: none;
+}
+/* The example is laid out at a real width, then scaled down into the card: a thumbnail made of the component itself. */
+.kz-catalog-stage { width: 200%; transform: scale(0.5); transform-origin: top left; padding: 20px; }
+.kz-catalog-live { min-height: 3rem; }
+.kz-catalog-placeholder { display: grid; place-items: center; height: 9.5rem; color: var(--kz-text-muted); }
+.kz-catalog-stage .kz-catalog-placeholder { height: 16rem; }
+.kz-catalog-placeholder svg { width: 28px; height: 28px; }
+.kz-catalog-shot { display: flex; justify-content: center; height: 100%; }
+.kz-catalog-shot img { height: 100%; width: auto; max-width: none; }
+.kz-catalog-shot .kz-shot-light { display: none; }
+html.light .kz-catalog-shot .kz-shot-dark { display: none; }
+html.light .kz-catalog-shot .kz-shot-light { display: block; }
+.kz-catalog-body { display: flex; flex-direction: column; gap: 6px; padding: 12px 16px 14px; flex: 1; }
+.kz-catalog-body .kz-catalog-card-title { color: var(--kz-text-primary); text-decoration: none; }
+/* The whole card is the link: the title's box stretches over it. */
+.kz-catalog-body .kz-catalog-card-title::after { content: ""; position: absolute; inset: 0; }
+.kz-catalog-card:hover { border-color: var(--kz-border-strong); background: var(--kz-surface-2); }
+.kz-catalog-card:has(.kz-catalog-card-title:focus-visible) { outline: 2px solid var(--kz-ring); outline-offset: 2px; }
+.kz-catalog-why { color: var(--kz-text-secondary); font-size: 0.75rem; line-height: 1.45; }
+.kz-catalog-card[data-state="removal"] { border-style: dashed; }
+
+/* The strip of real components under the intro of /docs/ui. */
+.kz-hero-strip { display: grid; gap: 12px; grid-auto-flow: column; grid-auto-columns: minmax(15rem, 1fr); overflow-x: auto; padding: 4px 2px 12px; margin: 1.25rem 0 0.5rem; scroll-snap-type: x proximity; list-style: none; }
+.kz-hero-strip > li { scroll-snap-align: start; display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid var(--kz-border-subtle); border-radius: var(--kz-radius-lg); background: var(--kz-surface-1); min-height: 11rem; }
+.kz-hero-strip-stage { flex: 1; display: grid; place-items: center; align-content: center; min-height: 6rem; overflow: hidden; }
+.kz-hero-strip-stage .kz-shot { max-height: 11rem; width: auto; border-radius: 12px; }
+.kz-hero-strip-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--kz-text-secondary); text-decoration: none; }
+.kz-hero-strip-label:hover { color: var(--kz-text-primary); }
+.kz-hero-strip .kz-shot-light { display: none; }
+html.light .kz-hero-strip .kz-shot-dark { display: none; }
+html.light .kz-hero-strip .kz-shot-light { display: block; }
+.kz-catalog-bar .kz-catalog-filter { flex-wrap: wrap; max-width: 100%; border-radius: 20px; }

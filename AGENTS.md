@@ -155,6 +155,15 @@
   (`docs.foundations.*`).
 - **The site's faces are `@krizaka/fonts`**, loaded by `next/font/local` in the locale layout (preloaded, fingerprinted,
   CLS 0) and mapped to the token roles in `app/globals.css`. Never `next/font/google`, never a font file committed here.
+- **The sidebar of `/docs/ui` is an information architecture, not a list** (`lib/ui-ia.ts`): Get started → Foundations →
+  Components (by the job they do) → Patterns (page blocks, screen layouts) → Templates (by intent: Convince, Explain, Show,
+  Act, Operate, Converse, Recover — the `purpose` and `why` of each template come from krizaka-ui's `meta.ts`) → Tooling →
+  Mobile. Each group says "you come here when…" (`docs.ia` in the messages), a heading is said once, and every component
+  has a reason to be there (`lib/ui-inventory.ts`): a product imports it (`lib/ui-usage.json`, a dated scan of the products'
+  repositories — `npm run ui:usage`), a planned work needs it, or it is deprecated for the next major.
+  `tests/docs-ia.test.mjs` fails on a component without group or reason, a repeated heading, a group without its sentence.
+  The catalogue on `/docs/ui` mirrors the same structure with four filters (platform, group, status, used by) and a live,
+  lazy preview on every card.
 - The documentation of the components is **only** here: there is no public Storybook (krizaka-ui's is an internal test
   tool) — never link one.
 - Each product's **UI section** (`/docs/<product>/ui`) is laid out like `/docs/ui` and generated from its kit's

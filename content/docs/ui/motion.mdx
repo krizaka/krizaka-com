@@ -1,0 +1,36 @@
+---
+title: Motion
+description: One motion system — easing, durations, the arrival of blocks — and the rule that stills it all under reduced motion.
+---
+
+Krizaka moves little, and always the same way. Motion is a system of tokens, not a library: no component brings its own
+curve.
+
+## The tokens
+
+| Token | Use |
+| :-- | :-- |
+| `--kz-ease` (`ease-kz`) | The default curve of every transition (200 ms). |
+| `ease-spring` | A springier curve, for the few things that should land rather than glide. |
+| `--kz-duration-fast` | Micro-interactions: a press, a focus ring. `0` under reduced motion. |
+
+`@krizaka/tailwind` makes every `transition*` utility default to 200 ms on `--kz-ease`.
+
+## Arrival
+
+A block arrives once, as it scrolls into view: put `data-reveal` on it and stagger the siblings (70 ms apart). Never on
+the first screen of a page — that is what the visitor waits for, and what the performance budget measures. Figures climb
+with `NumberTicker`; loops (a mark's orbit, a marquee) pause off screen.
+
+## Reduced motion
+
+Under `prefers-reduced-motion` entrances stop, loops rest on a still frame, and durations go to zero — the layout, the
+words and the announcements stay. Every animated component of the platform is tested for it.
+
+```tsx
+import { NumberTicker } from "@krizaka/ui/number-ticker";
+
+<NumberTicker value={1284} locale="en" />
+```
+
+See also the [brand marks](/docs/ui/brand-marks), which are animated by the same rules.

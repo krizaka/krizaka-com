@@ -4420,10 +4420,6 @@
           "title": "Query",
           "description": "L’état serveur de toutes les apps Krizaka : TanStack Query derrière un seul paquet — fetch typé, erreurs Problem Details, invalidation en direct, hydratation App Router, cache hors ligne sur Expo."
         },
-        "screens": {
-          "title": "Écrans",
-          "description": "Des écrans entiers des produits composés avec Krizaka UI — un studio de créatrice, une console, la connexion, les réglages, la messagerie — chacun avec sa version mobile, prêts à copier."
-        },
         "typography": {
           "title": "Typographie",
           "description": "Plus Jakarta Sans parle, Inter se lit, JetBrains Mono étiquette : les polices Krizaka, leur échelle et leurs règles — auto-hébergées, web et mobile."
@@ -4431,6 +4427,46 @@
         "icons": {
           "title": "Icônes",
           "description": "Les icônes signature Krizaka : coins coupés, un nœud au cœur — chercher, copier, et les règles d'usage."
+        },
+        "installation": {
+          "title": "Installation",
+          "description": "Installer Krizaka UI dans une application Next.js ou Expo : les paquets, la feuille de style, le premier composant."
+        },
+        "theming": {
+          "title": "Habiller un produit",
+          "description": "Comment un produit porte Krizaka UI : portées de marque, sombre et clair, et les valeurs qu'un thème peut changer."
+        },
+        "motion": {
+          "title": "Mouvement",
+          "description": "Un seul système de mouvement : courbes, durées, l'arrivée des blocs, et la règle qui fige tout quand le mouvement est réduit."
+        },
+        "brand-marks": {
+          "title": "Marques",
+          "description": "Les cinq marques de la famille Krizaka — dessinées en code, animées, immobiles si le mouvement est réduit."
+        },
+        "i18n": {
+          "title": "i18n",
+          "description": "Messages typés, formatage et texte enrichi pour chaque application Krizaka, avec la CLI qui vérifie les deux langues."
+        },
+        "realtime": {
+          "title": "Temps réel",
+          "description": "Le bus serveur et la présence derrière les écrans en direct : mémoire, PostgreSQL ou Redis, livrés en SSE."
+        },
+        "push": {
+          "title": "Push",
+          "description": "Notifications mobiles par le service Expo Push : lots, reçus et jetons morts, sans dépendance."
+        },
+        "config": {
+          "title": "Config",
+          "description": "Les presets ESLint, TypeScript et Prettier, et le cliquet qui compte la dette d'interface d'une application."
+        },
+        "mobile": {
+          "title": "Parité avec le web",
+          "description": "Ce qui existe en React Native, et en quoi chaque composant diffère de son jumeau web."
+        },
+        "templates": {
+          "title": "Tous les modèles",
+          "description": "Des pages et des écrans entiers, rangés par ce que la personne doit faire — chacun avec la raison de sa mise en page, en direct, avec sa version téléphone."
         }
       },
       "java": {
@@ -4669,6 +4705,182 @@
         "request": "Demander une icône",
         "requestCta": "Ouvrir une issue sur krizaka-ui",
         "installIntro": "Un export nommé par icône, les mêmes noms sur le web et en React Native."
+      }
+    },
+    "ia": {
+      "groups": {
+        "get-started": {
+          "title": "Démarrer",
+          "when": "Vous venez ici pour installer Krizaka UI, habiller un produit de son thème et voir un premier écran fonctionner."
+        },
+        "foundations": {
+          "title": "Fondations",
+          "when": "Vous venez ici pour la matière première : couleurs et tokens, typographie, icônes, mouvement et marques."
+        },
+        "components": {
+          "title": "Composants",
+          "when": "Vous venez ici pour trouver la pièce qui fait un travail — un bouton, un champ, une boîte de dialogue, un graphique — rangée par ce qu'elle fait."
+        },
+        "patterns": {
+          "title": "Patrons",
+          "when": "Vous venez ici quand un composant ne suffit pas : les blocs dont une page est faite et les gabarits d'écrans entiers."
+        },
+        "templates": {
+          "title": "Modèles",
+          "when": "Vous venez ici pour démarrer une page entière, rangée par ce que la personne doit faire : être convaincue, comprendre, voir, agir, travailler, échanger, rebondir."
+        },
+        "tooling": {
+          "title": "Outillage",
+          "when": "Vous venez ici pour les paquets sans pixels : le preset Tailwind, le formatage, les messages, l'état serveur, le temps réel, les notifications push et les règles de lint."
+        },
+        "mobile": {
+          "title": "Mobile",
+          "when": "Vous venez ici pour savoir ce qui tourne en React Native, et ce qui diffère du web."
+        }
+      },
+      "jobs": {
+        "actions": {
+          "title": "Actions",
+          "when": "Vous venez ici pour laisser quelqu'un faire quelque chose : un bouton, une confirmation, une action flottante."
+        },
+        "inputs": {
+          "title": "Saisie et formulaires",
+          "when": "Vous venez ici pour recueillir quelque chose : un champ, un choix, une date, un formulaire entier."
+        },
+        "navigation": {
+          "title": "Navigation",
+          "when": "Vous venez ici pour circuler : barres, onglets, étapes, palette de commandes."
+        },
+        "overlays": {
+          "title": "Superpositions",
+          "when": "Vous venez ici pour poser quelque chose au-dessus de la page : dialogues, menus, bulles, infobulles, feuilles."
+        },
+        "feedback": {
+          "title": "Retours",
+          "when": "Vous venez ici pour dire ce qui se passe : alertes, chargements, toasts, états vides, progression."
+        },
+        "data": {
+          "title": "Données",
+          "when": "Vous venez ici pour montrer de l'information : tableaux, listes, cartes, chiffres, profils, conversation."
+        },
+        "media": {
+          "title": "Médias",
+          "when": "Vous venez ici pour lire, capturer ou retoucher images, vidéo et son."
+        },
+        "maps": {
+          "title": "Cartes",
+          "when": "Vous venez ici pour montrer où sont les choses, avec des cartes open source qui ne coûtent rien par vue."
+        },
+        "charts": {
+          "title": "Graphiques",
+          "when": "Vous venez ici pour dessiner des chiffres : courbes, barres, jauges, entonnoirs — accessibles, avec leur tableau."
+        },
+        "brand": {
+          "title": "Marque et mascottes",
+          "when": "Vous venez ici pour qu'une page sente Krizaka : les oiseaux, les visuels et les effets signature."
+        },
+        "utilities": {
+          "title": "Utilitaires",
+          "when": "Vous venez ici pour les petits outils sur lesquels tout composant repose : fusion de classes, slots, thème, texte, séparateurs."
+        }
+      },
+      "patterns": {
+        "blocks": {
+          "title": "Blocs de page",
+          "when": "Les pièces dont une page est faite : héros, sections, cartes qui argumentent, appels à l'action."
+        },
+        "layouts": {
+          "title": "Gabarits d'écran",
+          "when": "Les coques d'écrans entiers : une application, un tableau de bord, des réglages, une connexion, un objet et sa liste."
+        }
+      },
+      "purposes": {
+        "convince": {
+          "title": "Convaincre",
+          "when": "Vous venez ici quand un visiteur doit décider : une page d'accueil, un produit, un prix, une comparaison, une preuve."
+        },
+        "explain": {
+          "title": "Expliquer",
+          "when": "Vous venez ici quand un lecteur doit comprendre : comment ça marche, un portail ou un article de documentation, un journal des changements, une FAQ, une politique."
+        },
+        "show": {
+          "title": "Montrer",
+          "when": "Vous venez ici quand le travail lui-même est l'argument : une galerie, une histoire, une étude de cas, un objet et ses détails."
+        },
+        "act": {
+          "title": "Agir",
+          "when": "Vous venez ici quand une personne doit faire quelque chose une fois : joindre l'équipe, se connecter ou s'inscrire, démarrer, payer."
+        },
+        "operate": {
+          "title": "Piloter",
+          "when": "Vous venez ici quand une personne travaille tous les jours : un tableau de bord, une console avec un tableau, des réglages, une coque d'application."
+        },
+        "converse": {
+          "title": "Échanger",
+          "when": "Vous venez ici quand des gens se parlent : une messagerie, un chat, des commentaires, un centre de notifications."
+        },
+        "recover": {
+          "title": "Rebondir",
+          "when": "Vous venez ici quand le chemin est coupé : une liste vide, une erreur, une page introuvable, une maintenance, un produit encore en construction."
+        }
+      },
+      "catalog": {
+        "heading": "Tous les composants",
+        "lead": "Chaque composant de Krizaka UI, rangé par le travail qu'il fait. Filtrez par plateforme, groupe, statut ou produit qui l'utilise.",
+        "filters": "Filtres",
+        "platform": "Plateforme",
+        "group": "Groupe",
+        "status": "Statut",
+        "usedBy": "Utilisé par",
+        "any": "Tous",
+        "unused": "Pas encore utilisé",
+        "clear": "Effacer les filtres",
+        "count": "{count} composants sur {total}",
+        "empty": "Aucun composant ne correspond à ces filtres.",
+        "preview": "Aperçu de {name}",
+        "why": "Pourquoi il est là",
+        "states": {
+          "used": "Utilisé",
+          "planned": "Prévu",
+          "removal": "En partance"
+        },
+        "heroLabel": "De vrais composants, en direct",
+        "heroLead": "Ce sont les composants eux-mêmes, rendus par cette page — le code même que vous copiez.",
+        "scan": "Qui utilise quoi vient d'un relevé daté des dépôts des produits ({date})."
+      },
+      "templates": {
+        "whyLayout": "Pourquoi cette mise en page",
+        "all": "Tous les modèles",
+        "overviewLead": "Des pages et des écrans entiers, rangés par ce que la personne doit faire. Choisissez l'intention, puis copiez le modèle qui convient.",
+        "count": "{count} modèles",
+        "open": "Ouvrir les modèles « {intent} »",
+        "native": "Mobile",
+        "web": "Web",
+        "builtOn": "Construit sur",
+        "nativeNote": "Un modèle mobile : les captures de son histoire dans les deux thèmes, et le code."
+      },
+      "mobile": {
+        "intro": "Ce qui tourne en React Native, depuis @krizaka/ui/native. La plupart des composants existent sur les deux plateformes, avec le même nom et les mêmes propriétés ; quelques-uns n'existent que sur mobile, parce que la plateforme les demande (une barre d'onglets, une feuille, un tirer pour actualiser).",
+        "caption": "Parité des composants entre le web et React Native",
+        "component": "Composant",
+        "web": "Web",
+        "mobile": "Mobile",
+        "differences": "Ce qui diffère sur mobile",
+        "yes": "Oui",
+        "no": "—",
+        "onlyMobile": "Mobile seulement",
+        "same": "Même API",
+        "count": "{both} composants sur les deux plateformes, {native} sur mobile seulement, {web} sur le web seulement."
+      },
+      "brand": {
+        "intro": "Les cinq marques de la famille Krizaka, depuis @krizaka/ui. Chacune est dessinée en code (aucune image à livrer), animée quand la page le permet, et immobile si le mouvement est réduit. Un changement de marque se fait dans krizaka-ui, est publié, puis adopté.",
+        "mark": "{name} : la marque de {role}",
+        "use": "Utilisez la marque là où le produit est nommé : l'en-tête, la connexion, le chargement et l'écran de lancement — jamais une copie, jamais un substitut.",
+        "krizaka": "le studio",
+        "orazaka": "le moteur d'IA souverain",
+        "orochia": "la plateforme de créateurs",
+        "yazakia": "l'application de rencontres",
+        "yororis": "le quatrième produit, en construction"
       }
     }
   },

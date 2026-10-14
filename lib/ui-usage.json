@@ -1,0 +1,371 @@
+{
+  "scannedAt": "2026-10-14",
+  "repos": {
+    "orochia": [
+      {
+        "repo": "products/orochia",
+        "commit": "41d487c",
+        "files": 368
+      },
+      {
+        "repo": "products/orochia-admin",
+        "commit": "97bb414",
+        "files": 29
+      },
+      {
+        "repo": "products/orochia-mobile",
+        "commit": "e1f3143",
+        "files": 50
+      },
+      {
+        "repo": "products/orochia-design-system",
+        "commit": "4450784",
+        "files": 27
+      }
+    ],
+    "orazaka": [
+      {
+        "repo": "products/orazaka/orazaka-apps/ui/orazaka-web-client",
+        "commit": "53629b1",
+        "files": 250
+      },
+      {
+        "repo": "products/orazaka/orazaka-apps/ui/orazaka-web-admin",
+        "commit": "b08bfb5",
+        "files": 40
+      },
+      {
+        "repo": "products/orazaka/orazaka-apps/ui/orazaka-mobile-client",
+        "commit": "02f1715",
+        "files": 32
+      },
+      {
+        "repo": "products/orazaka/orazaka-apps/ui/orazaka-ui-kit",
+        "commit": "4a48b6f",
+        "files": 41
+      }
+    ],
+    "yazakia": [
+      {
+        "repo": "products/yazakia",
+        "commit": "be2d850",
+        "files": 92
+      }
+    ],
+    "krizaka": [
+      {
+        "repo": ".",
+        "commit": "b111393",
+        "files": 197
+      }
+    ]
+  },
+  "components": {
+    "achievement": {
+      "krizaka": 1
+    },
+    "action-bar": {
+      "krizaka": 4
+    },
+    "alert": {
+      "orazaka": 3
+    },
+    "argument-card": {
+      "krizaka": 6
+    },
+    "avatar": {
+      "orochia": 7
+    },
+    "badge": {
+      "krizaka": 2,
+      "orazaka": 15,
+      "orochia": 6
+    },
+    "bar-chart": {
+      "orazaka": 4,
+      "orochia": 2
+    },
+    "button": {
+      "krizaka": 9,
+      "orazaka": 61,
+      "orochia": 19,
+      "yazakia": 3
+    },
+    "card": {
+      "krizaka": 3,
+      "orazaka": 43,
+      "orochia": 8
+    },
+    "card-grid": {
+      "krizaka": 8
+    },
+    "catalogue-page": {
+      "krizaka": 1
+    },
+    "charts-provider": {
+      "orazaka": 2,
+      "orochia": 2
+    },
+    "chat": {
+      "krizaka": 1
+    },
+    "chip": {
+      "krizaka": 2,
+      "orazaka": 2,
+      "orochia": 3
+    },
+    "chip-link": {
+      "krizaka": 1
+    },
+    "choice-grid": {
+      "krizaka": 2
+    },
+    "cn": {
+      "krizaka": 19,
+      "orazaka": 44,
+      "orochia": 4
+    },
+    "code-block": {
+      "krizaka": 6
+    },
+    "command": {
+      "krizaka": 1,
+      "orazaka": 1
+    },
+    "confirm-button": {
+      "orochia": 1
+    },
+    "continue-prompt": {
+      "krizaka": 1
+    },
+    "countdown": {
+      "krizaka": 1,
+      "orochia": 5
+    },
+    "cta-panel": {
+      "krizaka": 10
+    },
+    "data-table": {
+      "orazaka": 1,
+      "orochia": 1
+    },
+    "decision-list": {
+      "krizaka": 5
+    },
+    "dialog": {
+      "orazaka": 7,
+      "orochia": 3
+    },
+    "docs-hub-page": {
+      "krizaka": 1
+    },
+    "dropdown-menu": {
+      "orazaka": 1
+    },
+    "empty-state": {
+      "orazaka": 2,
+      "orochia": 8
+    },
+    "error-page": {
+      "krizaka": 1
+    },
+    "field": {
+      "orazaka": 7,
+      "orochia": 2
+    },
+    "gauge": {
+      "orochia": 2
+    },
+    "glow-card": {
+      "krizaka": 3,
+      "orazaka": 2
+    },
+    "goal-gauge": {
+      "krizaka": 2
+    },
+    "image-cropper": {
+      "krizaka": 1
+    },
+    "iso": {
+      "krizaka": 1
+    },
+    "kbd": {
+      "krizaka": 3,
+      "orazaka": 1
+    },
+    "landscape": {
+      "krizaka": 2
+    },
+    "legal-page": {
+      "krizaka": 1
+    },
+    "line-chart": {
+      "orochia": 2
+    },
+    "link-card": {
+      "krizaka": 4
+    },
+    "loader": {
+      "orazaka": 4,
+      "orochia": 1
+    },
+    "map": {
+      "krizaka": 2
+    },
+    "marquee": {
+      "krizaka": 1,
+      "orochia": 1
+    },
+    "mascot-quote": {
+      "krizaka": 7
+    },
+    "mascots": {
+      "krizaka": 18,
+      "orazaka": 10,
+      "orochia": 3,
+      "yazakia": 3
+    },
+    "match-dialog": {
+      "krizaka": 1
+    },
+    "media-capture": {
+      "krizaka": 1
+    },
+    "meter": {
+      "krizaka": 1,
+      "orazaka": 1,
+      "orochia": 1
+    },
+    "nav-bar": {
+      "krizaka": 3,
+      "orazaka": 1
+    },
+    "number-ticker": {
+      "krizaka": 5,
+      "orazaka": 4,
+      "orochia": 1
+    },
+    "page": {
+      "krizaka": 23,
+      "yazakia": 3
+    },
+    "page-header": {
+      "orochia": 1
+    },
+    "page-hero": {
+      "krizaka": 8,
+      "yazakia": 2
+    },
+    "pagination": {
+      "orazaka": 1,
+      "orochia": 1
+    },
+    "pie-chart": {
+      "orazaka": 2,
+      "orochia": 1
+    },
+    "popover": {
+      "orazaka": 1
+    },
+    "profile-card": {
+      "krizaka": 1
+    },
+    "progress": {
+      "krizaka": 2,
+      "orazaka": 4,
+      "orochia": 2
+    },
+    "promise-card": {
+      "krizaka": 2
+    },
+    "radio-group": {
+      "orazaka": 2
+    },
+    "scroll-stage": {
+      "krizaka": 1
+    },
+    "section-backdrop": {
+      "krizaka": 11,
+      "orazaka": 9,
+      "yazakia": 1
+    },
+    "skeleton": {
+      "orazaka": 3,
+      "orochia": 11
+    },
+    "slider": {
+      "krizaka": 1,
+      "orochia": 1
+    },
+    "sparkline": {
+      "krizaka": 1,
+      "orazaka": 2,
+      "orochia": 3
+    },
+    "spinner": {
+      "orazaka": 2,
+      "orochia": 1
+    },
+    "stage-banner": {
+      "krizaka": 2
+    },
+    "stat": {
+      "orochia": 1
+    },
+    "stepper": {
+      "krizaka": 2,
+      "orazaka": 1,
+      "orochia": 1
+    },
+    "swipe-deck": {
+      "krizaka": 1
+    },
+    "switch": {
+      "krizaka": 1,
+      "orazaka": 3,
+      "orochia": 1
+    },
+    "tabs": {
+      "krizaka": 5,
+      "orazaka": 4,
+      "orochia": 1
+    },
+    "tag-selector": {
+      "krizaka": 1
+    },
+    "terminal-replay": {
+      "krizaka": 3
+    },
+    "theme": {
+      "krizaka": 2,
+      "orazaka": 11,
+      "orochia": 28,
+      "yazakia": 3
+    },
+    "toast": {
+      "krizaka": 2,
+      "orazaka": 4,
+      "orochia": 3
+    },
+    "toc": {
+      "krizaka": 1
+    },
+    "tooltip": {
+      "orazaka": 1,
+      "orochia": 1
+    },
+    "txt": {
+      "orazaka": 1,
+      "orochia": 18
+    },
+    "verified-badge": {
+      "krizaka": 1
+    },
+    "video-player": {
+      "krizaka": 1
+    },
+    "video-trimmer": {
+      "krizaka": 1
+    }
+  }
+}

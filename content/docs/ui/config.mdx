@@ -1,0 +1,31 @@
+---
+title: Config
+description: The ESLint, TypeScript and Prettier presets, and the ratchet that counts the UI debt of an app.
+---
+
+`@krizaka/config` is the shared configuration of every Krizaka JavaScript repository: ESLint flat configs (base, Next.js,
+the four UI rules, the three stack rules, no locale ternary), the dependency-cruiser boundary, tsconfig bases, Prettier,
+EditorConfig — and `krizaka-ratchet`, the counter that keeps the UI and stack debts from coming back.
+
+```bash
+npm install -D @krizaka/config eslint typescript
+```
+
+```js title="eslint.config.mjs"
+import { krizakaNext } from "@krizaka/config/eslint/next";
+import { krizakaUi } from "@krizaka/config/eslint/krizaka-ui";
+import { noLocaleTernary } from "@krizaka/config/eslint/no-locale-ternary";
+import { krizakaStack } from "@krizaka/config/eslint/stack";
+
+export default [...krizakaNext, ...krizakaUi(), ...krizakaStack(), ...noLocaleTernary()];
+```
+
+## What the rules protect
+
+- **The UI rules** — no literal colour, no raw palette utility, no `light:` variant: every colour is a `--kz-*` token, so
+  a theme can change them. See [Theming a product](/docs/ui/theming).
+- **The stack rules** — no data fetching in a client effect (use [`@krizaka/query`](/docs/ui/query)), no local table or
+  form (use the data table and form of Krizaka UI), no direct `@tanstack/*` import: the engines enter through a
+  `@krizaka/*` package.
+- **The ratchet** — `krizaka-ratchet` counts the remaining debts in a `lint-ratchet.json` and fails when a count goes up:
+  an app ends its adoption of the platform with every counter at zero.

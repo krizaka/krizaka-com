@@ -11,7 +11,11 @@ import { KitOverview, overviewToc } from "@/app/components/docs/KitOverview";
 import { InlineCode } from "@/app/components/docs/InlineCode";
 import { IconsDoc, iconsToc } from "@/app/components/docs/IconsDoc";
 import { TypographyDoc, typographyToc } from "@/app/components/docs/TypographyDoc";
-import { ScreensDoc, screensToc } from "@/app/components/docs/ScreensDoc";
+import { BrandMarksDoc } from "@/app/components/docs/BrandMarksDoc";
+import { MobileDoc } from "@/app/components/docs/MobileDoc";
+import { TemplatesDoc, templatesToc } from "@/app/components/docs/TemplatesDoc";
+import { purposeOf } from "@/lib/ui-foundations";
+import { BRAND_PAGE, MOBILE_PAGE } from "@/lib/ui-ia";
 import { getRegistryItem } from "@/lib/ui-registry";
 import {
   type ComponentPageData,
@@ -165,12 +169,25 @@ async function DocsSectionBody({ params }: Props) {
   // A foundation of Krizaka UI (Typography, Icons): laid out from the data of the packages that ship it.
   const foundation = (page.data as ComponentPageData).foundation;
   if (foundation) {
+    const purpose = purposeOf(foundation);
+    const templates = foundation === "templates" || purpose !== null;
+    const toc = foundation === "icons" ? iconsToc(t) : templates ? templatesToc(t, purpose ?? undefined) : foundation === "typography" ? typographyToc(t) : [];
     return (
-      <DocsPage toc={foundation === "icons" ? iconsToc(t) : foundation === "screens" ? screensToc() : typographyToc(t)} full={foundation === "screens"}>
+      <DocsPage toc={toc} full={purpose !== null}>
         <DocsTitle>{title}</DocsTitle>
         <DocsDescription>{description}</DocsDescription>
         <DocsBody>
-          {foundation === "icons" ? <IconsDoc locale={locale} /> : foundation === "screens" ? <ScreensDoc locale={locale} /> : <TypographyDoc locale={locale} />}
+          {foundation === "icons" ? (
+            <IconsDoc locale={locale} />
+          ) : templates ? (
+            <TemplatesDoc locale={locale} purpose={purpose ?? undefined} />
+          ) : foundation === MOBILE_PAGE ? (
+            <MobileDoc locale={locale} />
+          ) : foundation === BRAND_PAGE ? (
+            <BrandMarksDoc locale={locale} />
+          ) : (
+            <TypographyDoc locale={locale} />
+          )}
         </DocsBody>
       </DocsPage>
     );

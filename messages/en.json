@@ -4420,10 +4420,6 @@
           "title": "Query",
           "description": "Server state for every Krizaka app: TanStack Query behind one package — typed fetch, Problem Details errors, live invalidation, App Router hydration, an offline cache on Expo."
         },
-        "screens": {
-          "title": "Screens",
-          "description": "Whole screens of the products composed from Krizaka UI — a creator studio, a console, sign-in, settings, messages — each with its phone version, ready to copy."
-        },
         "typography": {
           "title": "Typography",
           "description": "Plus Jakarta Sans speaks, Inter reads, JetBrains Mono labels: the Krizaka faces, their scale and their rules — self-hosted, web and mobile."
@@ -4431,6 +4427,46 @@
         "icons": {
           "title": "Icons",
           "description": "The Krizaka signature icons: cut corners, a node at the core — search, copy, and the rules of use."
+        },
+        "installation": {
+          "title": "Installation",
+          "description": "Install Krizaka UI in a Next.js or Expo app: the packages, the stylesheet, the first component."
+        },
+        "theming": {
+          "title": "Theming a product",
+          "description": "How a product wears Krizaka UI: brand scopes, dark and light, and the values a theme may change."
+        },
+        "motion": {
+          "title": "Motion",
+          "description": "One motion system: easing, durations, the arrival of blocks and the rule that stills it all under reduced motion."
+        },
+        "brand-marks": {
+          "title": "Brand marks",
+          "description": "The five marks of the Krizaka family — drawn in code, animated, still under reduced motion."
+        },
+        "i18n": {
+          "title": "i18n",
+          "description": "Typed messages, formatting and rich text for every Krizaka app, with the CLI that checks both languages."
+        },
+        "realtime": {
+          "title": "Realtime",
+          "description": "The server bus and presence behind live screens: memory, PostgreSQL or Redis, delivered over SSE."
+        },
+        "push": {
+          "title": "Push",
+          "description": "Mobile notifications through the Expo Push Service: batching, receipts and dead tokens, with no dependency."
+        },
+        "config": {
+          "title": "Config",
+          "description": "The ESLint, TypeScript and Prettier presets, and the ratchet that counts the UI debt of an app."
+        },
+        "mobile": {
+          "title": "Parity with the web",
+          "description": "What exists in React Native, and how each component differs from its web twin."
+        },
+        "templates": {
+          "title": "All templates",
+          "description": "Whole pages and screens, grouped by what the person must do — each with the reason for its layout, live, with its phone version."
         }
       },
       "java": {
@@ -4669,6 +4705,182 @@
         "request": "Ask for an icon",
         "requestCta": "Open an issue on krizaka-ui",
         "installIntro": "One named export per icon, the same names on the web and in React Native."
+      }
+    },
+    "ia": {
+      "groups": {
+        "get-started": {
+          "title": "Get started",
+          "when": "You come here to install Krizaka UI, wear a product's theme and see a first screen working."
+        },
+        "foundations": {
+          "title": "Foundations",
+          "when": "You come here for the raw material: colours and tokens, type, icons, motion and the brand marks."
+        },
+        "components": {
+          "title": "Components",
+          "when": "You come here to find the piece that does a job — a button, a field, a dialog, a chart — grouped by what it does."
+        },
+        "patterns": {
+          "title": "Patterns",
+          "when": "You come here when one component is not enough: the blocks a page is made of and the layouts of whole screens."
+        },
+        "templates": {
+          "title": "Templates",
+          "when": "You come here to start a whole page, grouped by what the person must do: be convinced, understand, see, act, work, talk, recover."
+        },
+        "tooling": {
+          "title": "Tooling",
+          "when": "You come here for the packages without pixels: the Tailwind preset, formatting, messages, server state, realtime, push and lint rules."
+        },
+        "mobile": {
+          "title": "Mobile",
+          "when": "You come here to know what runs in React Native, and what differs from the web."
+        }
+      },
+      "jobs": {
+        "actions": {
+          "title": "Actions",
+          "when": "You come here to let someone do something: a button, a confirmation, a floating action."
+        },
+        "inputs": {
+          "title": "Inputs & forms",
+          "when": "You come here to collect something: a field, a choice, a date, a whole form."
+        },
+        "navigation": {
+          "title": "Navigation",
+          "when": "You come here to move around: bars, tabs, steps, a command palette."
+        },
+        "overlays": {
+          "title": "Overlays",
+          "when": "You come here to put something over the page: dialogs, menus, popovers, tooltips, sheets."
+        },
+        "feedback": {
+          "title": "Feedback",
+          "when": "You come here to say what is happening: alerts, loaders, toasts, empty states, progress."
+        },
+        "data": {
+          "title": "Data",
+          "when": "You come here to show information: tables, lists, cards, figures, profiles, chat."
+        },
+        "media": {
+          "title": "Media",
+          "when": "You come here to play, capture or edit images, video and sound."
+        },
+        "maps": {
+          "title": "Maps",
+          "when": "You come here to show where things are, with open-source maps that cost nothing per view."
+        },
+        "charts": {
+          "title": "Charts",
+          "when": "You come here to draw numbers: lines, bars, gauges, funnels — accessible, with their table."
+        },
+        "brand": {
+          "title": "Brand & mascots",
+          "when": "You come here to make a page feel like Krizaka: the birds, the signature visuals and effects."
+        },
+        "utilities": {
+          "title": "Utilities",
+          "when": "You come here for the small tools every component is built on: class merging, slots, theming, text, dividers."
+        }
+      },
+      "patterns": {
+        "blocks": {
+          "title": "Page blocks",
+          "when": "The pieces a page is made of: hero, sections, cards that argue, calls to act."
+        },
+        "layouts": {
+          "title": "Screen layouts",
+          "when": "The shells of whole screens: an app, a dashboard, settings, sign-in, an object and its list."
+        }
+      },
+      "purposes": {
+        "convince": {
+          "title": "Convince",
+          "when": "You come here when a visitor must decide: a landing, a product, a price, a comparison, a proof."
+        },
+        "explain": {
+          "title": "Explain",
+          "when": "You come here when a reader must understand: how it works, a documentation hub or article, a changelog, a FAQ, a policy."
+        },
+        "show": {
+          "title": "Show",
+          "when": "You come here when the work itself is the argument: a gallery, a story, a case study, an object and its details."
+        },
+        "act": {
+          "title": "Act",
+          "when": "You come here when a person must do something once: reach the team, sign in or up, set up, pay."
+        },
+        "operate": {
+          "title": "Operate",
+          "when": "You come here when a person works every day: a dashboard, a console with a table, settings, an app shell."
+        },
+        "converse": {
+          "title": "Converse",
+          "when": "You come here when people talk: an inbox, a chat, comments, a notifications centre."
+        },
+        "recover": {
+          "title": "Recover",
+          "when": "You come here when the way is blocked: an empty list, an error, a missing page, maintenance, a product still being built."
+        }
+      },
+      "catalog": {
+        "heading": "All components",
+        "lead": "Every component of Krizaka UI, by the job it does. Filter by platform, group, status or the product that uses it.",
+        "filters": "Filters",
+        "platform": "Platform",
+        "group": "Group",
+        "status": "Status",
+        "usedBy": "Used by",
+        "any": "Any",
+        "unused": "Not used yet",
+        "clear": "Clear the filters",
+        "count": "{count} of {total} components",
+        "empty": "No component matches these filters.",
+        "preview": "Preview of {name}",
+        "why": "Why it is here",
+        "states": {
+          "used": "In use",
+          "planned": "Planned",
+          "removal": "Leaving"
+        },
+        "heroLabel": "Real components, live",
+        "heroLead": "These are the components themselves, rendered by this page — the same code you copy.",
+        "scan": "Who uses what comes from a dated scan of the products' repositories ({date})."
+      },
+      "templates": {
+        "whyLayout": "Why this layout",
+        "all": "All templates",
+        "overviewLead": "Whole pages and screens, grouped by what the person must do. Pick the intent, then copy the template that fits.",
+        "count": "{count} templates",
+        "open": "Open the {intent} templates",
+        "native": "Mobile",
+        "web": "Web",
+        "builtOn": "Built on",
+        "nativeNote": "A mobile template: its story's screenshots in both themes, and the code."
+      },
+      "mobile": {
+        "intro": "What runs in React Native, from @krizaka/ui/native. Most components exist on both platforms with the same name and the same props; a few exist only on mobile, because the platform asks for them (a tab bar, a sheet, a pull to refresh).",
+        "caption": "Parity of the components between the web and React Native",
+        "component": "Component",
+        "web": "Web",
+        "mobile": "Mobile",
+        "differences": "What differs on mobile",
+        "yes": "Yes",
+        "no": "—",
+        "onlyMobile": "Mobile only",
+        "same": "Same API",
+        "count": "{both} components on both platforms, {native} on mobile only, {web} on the web only."
+      },
+      "brand": {
+        "intro": "The five marks of the Krizaka family, from @krizaka/ui. Each is drawn in code (no image to ship), animated when the page allows it, and still under reduced motion. A change to a mark is made in krizaka-ui, released, then adopted.",
+        "mark": "{name}: the mark of {role}",
+        "use": "Use the mark where the product is named: the header, the sign-in, the loader and the splash — never a copy, never a placeholder.",
+        "krizaka": "the studio",
+        "orazaka": "the sovereign AI engine",
+        "orochia": "the creator platform",
+        "yazakia": "the dating app",
+        "yororis": "the fourth product, in construction"
       }
     }
   },

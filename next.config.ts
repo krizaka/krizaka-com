@@ -60,6 +60,8 @@ const nextConfig: NextConfig = {
       },
       { source: "/:locale(fr|en)/products/orochia/docs/:slug", destination: "/:locale/docs/orochia/:slug", statusCode: 301 },
       // The automation page described the pre-split topology; jobs, schedules and automation are one generated page now.
+      // /docs/ui/screens became the templates, grouped by intent (krizaka-com#115).
+      { source: "/:locale(fr|en)/docs/ui/screens", destination: "/:locale/docs/ui/templates", statusCode: 301 },
       { source: "/:locale(fr|en)/docs/orazaka/automation", destination: "/:locale/docs/orazaka/jobs", statusCode: 301 },
       // The media left /public for Bunny: an old /assets/… URL (published @krizaka/ui examples) answers with its file on
       // the CDN. Temporary, because the destination is versioned — a new recording gets a new URL.
