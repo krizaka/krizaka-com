@@ -190,9 +190,15 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
 /** Objects younger than this are left alone: another session may have uploaded them and not yet committed its manifest. */
 export const MIN_AGE_MS = 24 * 3600 * 1000;
 
+/**
+ * Media that the products' own sites carry (dev.orazaka.com, dev.orochia.com name their files by hash in their own
+ * repositories): `prune` never deletes under these, krizaka.com's manifest does not list them.
+ */
+export const PRODUCT_OWNED = ["site/products/orazaka/", "site/products/orochia/"];
+
 export async function prune({ cfg, manifest, yes = false, extraKeep = new Set(), minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log }) {
   const keep = new Set([...Object.entries(manifest.files).map(([l, h]) => objectPath(manifest.root, l, h)), ...extraKeep]);
-  const unnamed = (await listObjects(cfg, manifest.root, fetchImpl)).filter((o) => !keep.has(o.path));
+  const unnamed = (await listObjects(cfg, manifest.root, fetchImpl)).filter((o) => !keep.has(o.path) && !PRODUCT_OWNED.some((prefix) => o.path.startsWith(prefix)));
   const stale = unnamed.filter((o) => !o.changed || now - o.changed >= minAgeMs).map((o) => o.path);
   const recent = unnamed.length - stale.length;
   if (recent) log(`kept ${recent} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be committing its manifest)`);

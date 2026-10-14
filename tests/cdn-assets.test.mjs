@@ -135,6 +135,18 @@ test("prune keeps what another branch's manifest still names", async () => {
   assert.deepEqual(await prune({ cfg, manifest, extraKeep, fetchImpl, log: () => {} }), ["site/home/backdrop/orazaka.oldoldold1.jpg"]);
 });
 
+test("prune never deletes what the product sites carry themselves", async () => {
+  const manifest = { root: "site", files: { "home/backdrop/orazaka.jpg": "newnewnew1" } };
+  const listing = {
+    "https://storage.bunnycdn.com/kz-zone/site/": [{ ObjectName: "products", IsDirectory: true }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/": [{ ObjectName: "orazaka", IsDirectory: true }, { ObjectName: "orochia", IsDirectory: true }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/": [{ ObjectName: "clip.abcdef1234.mp4", IsDirectory: false }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orochia/": [{ ObjectName: "clip.abcdef1234.mp4", IsDirectory: false }],
+  };
+  const fetchImpl = async (url) => ({ ok: true, status: 200, json: async () => listing[url] ?? [] });
+  assert.deepEqual(await prune({ cfg, manifest, fetchImpl, log: () => {} }), []);
+});
+
 test("uploads are refused outside the areas of site/", () => {
   assert.throws(() => logicalPath("pr-assets/x/y.png"), /not an area/);
   assert.throws(() => logicalPath("krizaka-assets/home"), /not an area/);
