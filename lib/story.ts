@@ -32,7 +32,14 @@ export interface StageStructure {
   stat?: number;
   /** What it runs on, from its manifests (package.json, pom.xml) — see the source on each line. */
   runsOn: readonly KitId[];
+  /** How it stays live — every product streams at least over SSE; push on mobile. */
+  live: Transport;
+  /** What is decided and on the roadmap but not shipped yet (an issue tracks it) — shown as "Planned", never as "Yes". */
+  planned?: readonly KitId[];
 }
+
+/** The realtime transport a product ships with. Texts: site.story.ours.transport.<id>. */
+export type Transport = "sse" | "ssePush";
 
 /** The studio: the narrator, and the forge of the platform. The duck builds: the code, the tests, the docs. */
 export const STUDIO = { id: "krizaka", bird: "duck", combo: ["↓", "↘", "→", "P"] } as const;
@@ -45,16 +52,17 @@ const STAGES: Record<string, StageStructure> = {
   /* The owl reads your documents and keeps every question in the house: 100 % of the data stays home.
      orazaka-apps/ui/*: @krizaka/ui, tokens, icons, intl; the services build on krizaka-platform-kit (architecture.json,
      layer "krizaka"). */
-  orazaka: { bird: "owl", combo: ["←", "↙", "↓", "↘", "→", "K"], stat: 1, runsOn: ["ui", "foundations", "java"] },
+  orazaka: { bird: "owl", combo: ["←", "↙", "↓", "↘", "→", "K"], stat: 1, runsOn: ["ui", "foundations", "java"], live: "sse" },
   /* The flamingo gets paid: the creator keeps what the platform does not take (PLATFORM_FEE_PERCENTAGE).
-     orochia/package.json: @krizaka/ui, tokens, icons, intl, realtime, push. */
-  orochia: { bird: "flamingo", combo: ["→", "↓", "↘", "P+K"], stat: 1 - PLATFORM_FEE_PERCENTAGE / 100, runsOn: ["ui", "foundations", "realtime"] },
+     orochia/package.json: @krizaka/ui, tokens, icons, intl, realtime, push. Orazaka powers Explore and recommendations
+     next (krizaka/orochia#120): planned. */
+  orochia: { bird: "flamingo", combo: ["→", "↓", "↘", "P+K"], stat: 1 - PLATFORM_FEE_PERCENTAGE / 100, runsOn: ["ui", "foundations", "realtime"], live: "ssePush", planned: ["engine"] },
   /* The lovebird introduces: a batch opens only when the interest goes both ways (100 % mutual, by design).
-     The Yazakia brand ships in @krizaka/ui; its matching runs on Orazaka (lib/org-data.ts, its stack). */
-  yazakia: { bird: "lovebird", combo: ["↓", "↓", "→", "P"], stat: 1, runsOn: ["ui", "foundations", "engine"] },
+     yazakia/apps/web: @krizaka/ui, tokens, icons, intl, realtime, push; its agent runs on Orazaka (lib/org-data.ts). */
+  yazakia: { bird: "lovebird", combo: ["↓", "↓", "→", "P"], stat: 1, runsOn: ["ui", "foundations", "realtime", "engine"], live: "ssePush" },
   /* The crane: a listening space with a face and a voice, powered by Orazaka's wellbeing pack (under construction).
-     Staged once it is in NAV_PRODUCTS and its words exist. */
-  yororis: { bird: "crane", combo: ["←", "→", "↓", "K"], runsOn: ["ui", "foundations", "engine"] },
+     Under construction: realtime and the engine are its design (prompts-yororis §2), not shipped yet — planned. */
+  yororis: { bird: "crane", combo: ["←", "→", "↓", "K"], runsOn: ["ui", "foundations"], live: "ssePush", planned: ["realtime", "engine"] },
 };
 
 /** What a product runs on (its stage's kits, from its manifests) — the "we use our own products" table of /story, also

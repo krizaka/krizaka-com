@@ -89,6 +89,7 @@ html.light .st-mote { opacity: .16; }
 .st-table-product { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
 .st-table td[data-yes] { color: var(--kz-text-primary); }
 .st-dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--kz-accent); box-shadow: 0 0 10px var(--kz-accent); }
+.st-dot-planned { background: transparent; box-shadow: none; border: 1.5px dashed var(--kz-accent); }
 .st-no { color: var(--kz-text-muted, var(--kz-text-secondary)); }
 
 /* ═══ BOSS ═══ */

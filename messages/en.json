@@ -839,8 +839,8 @@
           "line": "Colours, glyphs, money and dates"
         },
         "realtime": {
-          "name": "Realtime & push",
-          "line": "Live updates and mobile notifications"
+          "name": "Realtime",
+          "line": "SSE for every product, push on mobile"
         },
         "java": {
           "name": "Java platform kit",
@@ -859,12 +859,17 @@
       "ours": {
         "label": "Bonus round",
         "title": "We use our own products.",
-        "lead": "Every product runs on the same blocks and, when it needs intelligence, on Orazaka. The table is the proof — read from the products' own manifests.",
+        "lead": "Every product runs on the same blocks, stays live over SSE (push on mobile) and gets its intelligence from Orazaka. The table reads the products' own manifests; \"Planned\" marks what is decided and tracked, not shipped yet.",
         "caption": "What each product runs on",
         "product": "Product",
         "yes": "Yes",
         "no": "No",
-        "isEngine": "Is the engine"
+        "isEngine": "Is the engine",
+        "planned": "Planned",
+        "transport": {
+          "sse": "SSE",
+          "ssePush": "SSE + push"
+        }
       },
       "chapters": {
         "orazaka": {
