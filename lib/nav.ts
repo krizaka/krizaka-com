@@ -64,8 +64,8 @@ export const NAV_PRODUCTS: NavProduct[] = [
       { href: "/products/orochia#guarantees", icon: "signature" },
     ],
   },
-  /* Upcoming: only what exists today — the teaser page and its sections. The demo and the documentation join the
-     four entries when the app and its docs exist (no dead link). */
+  /* Upcoming: only what exists today — the teaser page, its sections and the demo that plays the loop on a phone (made of
+     Krizaka UI components). The documentation joins the entries when the app and its docs exist (no dead link). */
   {
     id: "yazakia",
     name: "Yazakia",
@@ -74,6 +74,7 @@ export const NAV_PRODUCTS: NavProduct[] = [
     links: [
       { href: "/products/yazakia", icon: "overview" },
       { href: "/products/yazakia#architecture", icon: "architecture" },
+      { href: "/products/yazakia#demo", icon: "demo" },
       { href: "/products/yazakia#matching", icon: "signature" },
     ],
   },

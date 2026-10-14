@@ -19,16 +19,19 @@ import { PageHero } from "@krizaka/ui/page-hero";
 import ButtonLink from "@/app/components/ButtonLink";
 import { contactHref } from "@/lib/contact";
 import { format, getDictionary } from "@/lib/i18n";
+import YazakiaDemo from "@/app/components/yazakia/YazakiaDemo";
 import { reveal } from "@/lib/motion";
 import { localizedMetadata } from "@/lib/seo";
 import { YAZAKIA_MOBILE_REPO_URL, YAZAKIA_REPO_URL } from "@/lib/site";
+import { yazakiaDemoPortraits } from "@/lib/yazakia-demo";
 
 /* /products/yazakia — the third Krizaka product, announced before it ships: the promise, the trap it refuses, the
    loop in four steps, its signature (mutual batches) told as decisions, privacy by design, what it is built with, and
    how to hear about the first build. Built from the page blocks of @krizaka/ui (AGENTS.md §4.1), under `.brand-yazakia` (layout).
-   Nothing here is invented: no screenshot, no profile, no figure, no store button — the demo, the documentation and
-   the state-machine schema join this structure once the app and its generated data exist (the ids `architecture` and
-   `matching` are the navigation's anchors, lib/nav.ts). */
+   Nothing is presented as shipped: no screenshot of the app, no real profile, no figure, no store button. The one
+   interactive piece, the demo (#demo), is labelled as scripted — replies written in advance, invented people (lib/people.json),
+   components of Krizaka UI only. The documentation and the state-machine schema join this structure once the app and its
+   generated data exist (the ids `architecture`, `demo` and `matching` are the navigation's anchors, lib/nav.ts). */
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -134,6 +137,10 @@ export default async function YazakiaPage({ params }: Props) {
             );
           })}
         </CardGrid>
+      </Section>
+
+      <Section id="demo" eyebrow={y.demo.eyebrow} title={y.demo.title} lead={y.demo.lead} reveal divider>
+        <YazakiaDemo portraits={yazakiaDemoPortraits()} />
       </Section>
 
       <Section id="matching" title={y.matching.title} headingSize="sm" divider>

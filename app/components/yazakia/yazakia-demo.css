@@ -1,0 +1,39 @@
+/* The Yazakia demo: a phone (the same bezel as the home gallery's) and, beside it, the steps in words. Tokens only. */
+.yd { display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 40px; align-items: start; }
+.yd-phone-wrap { margin: 0; display: grid; justify-items: center; gap: 12px; }
+.yd-phone-wrap figcaption { max-width: 340px; font-size: 12.5px; line-height: 1.5; text-align: center; color: var(--kz-text-secondary); }
+.yd-phone { position: relative; width: 100%; max-width: 340px; padding: 12px; border-radius: 40px; background: var(--kz-surface-2); border: 1px solid var(--kz-border-strong); box-shadow: 0 24px 60px -30px rgb(0 0 0 / 0.5); }
+.yd-notch { position: absolute; top: 18px; left: 50%; width: 76px; height: 20px; margin-left: -38px; border-radius: 999px; background: var(--kz-surface-0); z-index: 1; }
+.yd-screen { height: 660px; display: flex; flex-direction: column; border-radius: 30px; overflow: hidden; background: var(--kz-surface-0); padding-top: 34px; }
+.yd-steps { padding: 6px 16px 8px; }
+.yd-body { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-y: auto; }
+.yd-pane { display: flex; flex-direction: column; gap: 12px; padding: 8px 16px 16px; min-height: 100%; }
+.yd-deckpane { padding-bottom: 12px; }
+.yd-title { margin: 0; font-size: 20px; line-height: 1.25; font-weight: 700; color: var(--kz-text-primary); outline: none; }
+.yd-title:focus-visible { outline: 2px solid var(--kz-accent, currentColor); outline-offset: 3px; border-radius: 6px; }
+.yd-title-sm { font-size: 16px; }
+.yd-lead-inline { display: block; font-size: 12.5px; font-weight: 400; color: var(--kz-text-secondary); margin-top: 2px; }
+.yd-lead, .yd-note { margin: 0; font-size: 13px; line-height: 1.5; color: var(--kz-text-secondary); }
+.yd-note { font-size: 12px; }
+.yd-log { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 8px 12px; }
+.yd-intro .yd-log { flex: 1 1 120px; padding: 0; }
+.yd-composer { display: grid; gap: 8px; padding: 8px 12px 12px; }
+.yd-quick { display: flex; flex-wrap: wrap; gap: 6px; min-height: 32px; }
+.yd-actions { display: flex; justify-content: center; padding: 8px 12px 14px; margin-top: auto; }
+.yd-traits, .yd-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.yd-q { display: grid; gap: 6px; }
+.yd-qlabel { margin: 0; font-size: 13px; font-weight: 600; color: var(--kz-text-primary); }
+.yd-skeleton { display: grid; gap: 10px; }
+.yd-skeleton-card { display: block; width: 100%; height: 190px; }
+.yd-why { margin: 0; font-size: 12px; line-height: 1.4; }
+.yd-empty { display: grid; gap: 10px; justify-items: start; padding: 8px 0; }
+.yd-text { display: grid; gap: 14px; justify-items: start; }
+.yd-h { margin: 0; font-size: 20px; font-weight: 700; color: var(--kz-text-primary); }
+.yd-list { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; width: 100%; counter-reset: yd; }
+.yd-list li { counter-increment: yd; display: grid; gap: 4px; padding: 14px 16px 14px 52px; position: relative; border: 1px solid var(--kz-border-default); border-radius: 14px; background: var(--kz-surface-1); font-size: 14px; line-height: 1.5; color: var(--kz-text-secondary); }
+.yd-list li::before { content: counter(yd); position: absolute; left: 16px; top: 14px; width: 24px; height: 24px; border-radius: 999px; display: grid; place-items: center; font-size: 12px; font-weight: 700; border: 1px solid var(--kz-border-strong); color: var(--kz-text-primary); }
+.yd-list li[data-state="now"] { border-color: var(--kz-accent); }
+.yd-list li[data-state="now"]::before { background: var(--kz-accent); border-color: var(--kz-accent); color: var(--kz-on-accent); }
+.yd-list-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--kz-text-primary); }
+@media (max-width: 860px) { .yd { grid-template-columns: minmax(0, 1fr); gap: 28px; } .yd-phone-wrap { justify-items: center; } }
+@media (max-width: 380px) { .yd-screen { height: 620px; } }
