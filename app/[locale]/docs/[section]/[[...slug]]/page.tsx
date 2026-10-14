@@ -99,7 +99,7 @@ async function DocsSectionBody({ params }: Props) {
           <InlineCode text={getRegistryItem(component).summary} />
         </DocsDescription>
         <DocsBody>
-          <ComponentDoc name={component} locale={locale} notes={Notes && <Notes components={getMdxComponents(locale, section)} />} />
+          <ComponentDoc name={component} locale={locale} notes={Notes && <Notes components={getMdxComponents(locale)} />} />
         </DocsBody>
       </DocsPage>
     );
@@ -139,7 +139,7 @@ async function DocsSectionBody({ params }: Props) {
       <DocsTitle>{title}</DocsTitle>
       <DocsDescription>{description}</DocsDescription>
       <DocsBody>
-        <MDX components={getMdxComponents(locale, section)} />
+        <MDX components={getMdxComponents(locale)} />
       </DocsBody>
     </DocsPage>
   );

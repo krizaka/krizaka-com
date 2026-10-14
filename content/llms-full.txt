@@ -9,7 +9,7 @@
 - Krizaka UI: the design system shared by every product — web components, native components, charts, tokens, icons,
   brand marks, page blocks and templates. Documented, generated from its code, at {{SITE_URL}}/en/docs/ui
 - Krizaka Java: the Spring Boot building blocks (BOM, parent, starters, messaging, users, notifications, billing, edge)
-  published on Maven Central under `com.krizaka`. Documented at {{SITE_URL}}/en/docs/java
+  published on Maven Central under `com.krizaka`. Documented at https://java.krizaka.com
 - Contact: bonjour@krizaka.com
 
 ## Products

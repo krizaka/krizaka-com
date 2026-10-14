@@ -72,10 +72,10 @@ one schema component for every product (`app/components/diagrams/`, no diagram l
 | `lib/products.ts` | The products (name, status, dev site, source) — `/products`, the nav, the footer. |
 | `lib/site.ts` | External identity (SITE_URL, GitHub, version) — single source. |
 | `lib/i18n.ts` | Binds [`@krizaka/i18n`](https://www.npmjs.com/package/@krizaka/i18n) to `messages/en.json` + `messages/fr.json` (`getDictionary`, `asLocale`, `format`). |
-| `app/[locale]/docs/` | The documentation (Fumadocs): hub, then `[section]` = `ui`, `java`. |
-| `source.config.ts` · `lib/docs-source.ts` | The two Fumadocs collections and their loaders, sidebars, titles (messages or code). |
-| `content/docs/ui/` · `content/docs/java/` | Written docs (MDX). `content/docs/ui/components/<name>.mdx` are scaffolded by `npm run docs:ui`. |
-| `app/components/docs/` | MDX components: `ComponentPreview`, `PropsTable`, `StoryFrame`, `EventSchema`, `ComingSoon`. |
+| `app/[locale]/docs/` | The documentation (Fumadocs): hub, then `[section]` = `ui`. |
+| `source.config.ts` · `lib/docs-source.ts` | The Fumadocs collection and its loader, sidebars, titles (messages or code). |
+| `content/docs/ui/` | Written docs (MDX). `content/docs/ui/components/<name>.mdx` are scaffolded by `npm run docs:ui`. |
+| `app/components/docs/` | MDX components: `ComponentPreview`, `PropsTable`, `StoryFrame`. |
 
 ## Products
 
@@ -94,8 +94,9 @@ site (`lib/product-redirects.ts`). The generated `app/data/*.json` are never han
 
 ## Documentation (`/docs`)
 
-One engine, [Fumadocs](https://fumadocs.dev), for two sets: **Krizaka UI** (`content/docs/ui`) and **Krizaka Java**
-(`content/docs/java`). The products document themselves on their own sites.
+One engine, [Fumadocs](https://fumadocs.dev), for **Krizaka UI** (`content/docs/ui`). Krizaka Java is documented on
+[java.krizaka.com](https://java.krizaka.com) (built from `krizaka/krizaka-build`, `/docs/java` redirects there); the products
+document themselves on their own sites.
 
 - **Components, driven by their code** — every component of the installed `@krizaka/ui` has a page, generated at
   each build from its registry (`lib/docs-source.ts` adds one virtual page per component; `ComponentDoc` renders it):

@@ -1,5 +1,5 @@
 /* The com.krizaka artifacts published on Maven Central — structure only (ids, coordinates, repositories),
-   checked against the POMs by the module map (lib/architecture-model.ts). */
+   their existence in the POMs is checked where they live: krizaka-build/site (java.krizaka.com). */
 
 import { mavenVersion } from "./registry-versions";
 

@@ -548,7 +548,14 @@
       "eyebrow": "Open source · Apache-2.0",
       "stackEyebrow": "La pile",
       "stackTitle": "Deux sites, un pour chaque moitié de la pile.",
-      "stackLead": "Les guides, les références et chaque paquet y vivent, construits depuis leurs propres dépôts à chaque version."
+      "stackLead": "Les guides, les références et chaque paquet y vivent, construits depuis leurs propres dépôts à chaque version.",
+      "orochiaRepos": {
+        "orochia": "La plateforme Orochia : API, application web et paquets partagés.",
+        "orochia-admin": "La console opérateur d'Orochia.",
+        "orochia-mobile": "L'application mobile Orochia (iOS et Android).",
+        "orochia-design-system": "Les jetons de design et composants partagés par les applications Orochia.",
+        "default": "Un dépôt de la plateforme Orochia."
+      }
     },
     "notFound": {
       "title": "Cette page a pris une autre route",
@@ -1213,8 +1220,7 @@
       "promise": "Chaque page est générée depuis le code qu'elle documente, ou synchronisée depuis son dépôt — quand le code change, la page change.",
       "new": {
         "ui": "Krizaka UI — composants, blocs, mises en page",
-        "charts": "Krizaka charts — des graphiques prêts pour les applications",
-        "bom": "Le BOM de Krizaka Java"
+        "charts": "Krizaka charts — des graphiques prêts pour les applications"
       },
       "shortcuts": {
         "title": "Pour commencer",
@@ -1226,14 +1232,6 @@
           "uiTokens": {
             "title": "Les tokens de design",
             "text": "Le vocabulaire --kz-* que lit chaque composant : surfaces, texte, bordures, rayons — sombre et clair."
-          },
-          "javaBuild": {
-            "title": "Construire avec Krizaka Java",
-            "text": "Le POM parent et le BOM : une seule ligne de version pour chaque brique."
-          },
-          "javaMessaging": {
-            "title": "Messagerie",
-            "text": "Les événements entre services : l'enveloppe, l'outbox et la topologie."
           }
         }
       }
@@ -1242,10 +1240,6 @@
       "ui": {
         "title": "Krizaka UI",
         "description": "Tokens, preset Tailwind et primitives React — aperçus en direct, code copiable, props."
-      },
-      "java": {
-        "title": "Krizaka Java",
-        "description": "Parent, BOM, starters, messagerie, Problem Details et les contrats des services."
       }
     },
     "separators": {
@@ -1380,20 +1374,6 @@
       "count": "{count} composants",
       "examples": "{count} exemples"
     },
-    "schema": {
-      "field": "Champ",
-      "type": "Type",
-      "required": "Requis",
-      "description": "Description",
-      "constraints": "Contraintes",
-      "yes": "oui",
-      "no": "non"
-    },
-    "comingSoon": {
-      "title": "À venir",
-      "body": "Les services ne publient pas encore ces contrats : cette page se remplira dès qu'ils le feront, depuis la source.",
-      "issue": "Suivre l'issue"
-    },
     "pages": {
       "ui": {
         "index": {
@@ -1463,60 +1443,6 @@
         "templates": {
           "title": "Tous les modèles",
           "description": "Des pages et des écrans entiers, rangés par ce que la personne doit faire — chacun avec la raison de sa mise en page, en direct, avec sa version téléphone."
-        }
-      },
-      "java": {
-        "index": {
-          "title": "Krizaka Java",
-          "description": "Les briques Spring Boot de tous les services Krizaka — un build, quatre modules, quatre starters."
-        },
-        "build": {
-          "title": "Build, parent et BOM",
-          "description": "krizaka-parent, krizaka-bom et krizaka-test-support : un seul build pour tous les artefacts JVM Krizaka."
-        },
-        "map": {
-          "title": "Carte des briques",
-          "description": "Chaque artefact Krizaka Java — build, kit plateforme, starters, users, notifications, billing — avec sa version et ses vraies dépendances, lues dans les POM."
-        },
-        "web": {
-          "title": "Web et Problem Details",
-          "description": "krizaka-web : un format d'erreur (RFC 9457), corrélation des requêtes, Jackson, pagination par curseur, CORS."
-        },
-        "security": {
-          "title": "Sécurité",
-          "description": "krizaka-security : vérification locale des jetons de session, un socle pour chaque chaîne de filtres, jetons de service."
-        },
-        "messaging": {
-          "title": "Messagerie",
-          "description": "krizaka-messaging : publier par l'outbox, consommer avec retry puis DLQ, traiter chaque message une fois."
-        },
-        "observability": {
-          "title": "Observabilité",
-          "description": "krizaka-observability : noms de service obligatoires, logs ECS, Prometheus et OpenTelemetry par défaut."
-        },
-        "events": {
-          "title": "Contrats d'événements",
-          "description": "Les événements publiés par les services de domaine Krizaka, chacun avec son JSON Schema."
-        },
-        "openapi": {
-          "title": "API HTTP (OpenAPI)",
-          "description": "Les contrats OpenAPI de krizaka-users, krizaka-billing et krizaka-notifications."
-        },
-        "architecture": {
-          "title": "Ports et adaptateurs",
-          "description": "Comment est découpé un service métier Krizaka — contrat, client, cœur, persistance, hôte — et ce que contient chaque paquet."
-        },
-        "users": {
-          "title": "Utilisateurs",
-          "description": "krizaka-users : inscription, connexion (mot de passe, Google, GitHub), récupération de mot de passe, profils, clés d'API, RBAC, jetons de session."
-        },
-        "billing": {
-          "title": "Facturation",
-          "description": "krizaka-billing : crédits, portefeuilles, offres, abonnements, barème versionné et mesure — réserver, régler, libérer."
-        },
-        "notifications": {
-          "title": "Notifications",
-          "description": "krizaka-notifications : e-mail, SMS et webhooks derrière un seul port, pilotés par les événements, gabarits par langue."
         }
       }
     },
@@ -1760,116 +1686,6 @@
         "orochia": "la plateforme de créateurs",
         "yasakia": "l'application de rencontres",
         "yororis": "le quatrième produit, en construction"
-      }
-    }
-  },
-  "diagrams": {
-    "textVersion": "Version texte",
-    "roles": {
-      "java": {
-        "service": {
-          "title": "Services",
-          "summary": "Les services Krizaka déployables : users, notifications, billing."
-        },
-        "adapter": {
-          "title": "Adaptateurs",
-          "summary": "Les clients HTTP typés et la persistance JPA d'un domaine."
-        },
-        "domain": {
-          "title": "Cœur du domaine",
-          "summary": "Le centre d'un dépôt de domaine : krizaka-users-core."
-        },
-        "contract": {
-          "title": "Contrats",
-          "summary": "Les modules *-api : interfaces, records et événements — ce dont un autre service dépend."
-        },
-        "starter": {
-          "title": "Starters",
-          "summary": "Une dépendance active un module, avec son auto-configuration."
-        },
-        "platform": {
-          "title": "Kit plateforme",
-          "summary": "Le code transverse à un seul auteur : web, sécurité, messagerie, observabilité."
-        },
-        "build": {
-          "title": "Build",
-          "summary": "Le POM parent, le BOM d'où se résolvent toutes les versions, et le kit de test."
-        }
-      }
-    },
-    "owners": {
-      "all": "Tous",
-      "krizaka": "Krizaka"
-    },
-    "moduleMap": {
-      "label": {
-        "java": "Les briques Krizaka Java"
-      },
-      "search": "Trouver un module…",
-      "searchLabel": "Trouver un module par nom ou description",
-      "clear": "Effacer la recherche",
-      "modeLabel": "Ce que montrent les liens",
-      "ownerLabel": "Modules de",
-      "modes": {
-        "build": "Dépendances",
-        "runtime": "Appels à l'exécution"
-      },
-      "hint": {
-        "build": "Sélectionne un artefact : ce dont il dépend (compile, test, son POM parent, le BOM qu'il importe) et ce qui dépend de lui restent allumés. Lecture de haut en bas — les services en haut, le build en dessous.",
-        "runtime": "Sélectionne un module : qui il appelle et qui l'appelle restent allumés — requêtes (HTTP, SQL) en trait plein, événements (messages, webhooks, SSE, NOTIFY, push) en pointillés."
-      },
-      "legend": {
-        "dependency": "dépend de",
-        "indirect": "POM parent · import du BOM · portée test",
-        "sync": "{kinds} — requête",
-        "async": "{kinds} — événement"
-      },
-      "rel": {
-        "uses": "utilise",
-        "usedBy": "utilisé par",
-        "both": "dans les deux sens",
-        "calls": "appelle",
-        "calledBy": "appelé par"
-      },
-      "announce": {
-        "build": "{module} : utilise {uses}, utilisé par {usedBy}.",
-        "runtime": "{module} : appelle {calls}, appelé par {calledBy}."
-      },
-      "detail": {
-        "repository": "Dépôt",
-        "version": "version {version}",
-        "uses": "Dépend de",
-        "usedBy": "Utilisé par",
-        "calls": "Appelle",
-        "calledBy": "Appelé par",
-        "none": "Rien",
-        "close": "Effacer la sélection",
-        "central": "Maven Central {version}"
-      },
-      "count": "{count} modules",
-      "empty": "Aucun module ne correspond ici.",
-      "table": {
-        "modulesCaption": "Les modules et leurs dépendances de build",
-        "flowsCaption": "Appels à l'exécution",
-        "module": "Module",
-        "role": "Rôle",
-        "repository": "Dépôt",
-        "version": "Version",
-        "dependsOn": "Dépend de",
-        "usedBy": "Utilisé par",
-        "from": "De",
-        "to": "Vers",
-        "kind": "Type",
-        "via": "Via"
-      },
-      "kinds": {
-        "http": "HTTP",
-        "sql": "SQL",
-        "amqp": "message",
-        "webhook": "webhook",
-        "sse": "SSE",
-        "notify": "LISTEN/NOTIFY",
-        "push": "push"
       }
     }
   }

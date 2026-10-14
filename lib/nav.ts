@@ -68,7 +68,7 @@ export const NAV_FAMILY: {
 /* While the documentation still renders here (/docs, until it has moved to ui.krizaka.com and java.krizaka.com), the
    bar under /docs names where the reader is (Docs / <section>, DocsCrumb) and keeps the search over it. Nothing outside
    /docs links here any more. Texts: docs.sections.<id>. */
-export type DocsLinkId = "ui" | "java";
+export type DocsLinkId = "ui";
 export interface DocsNavLink {
   id: DocsLinkId;
   href: string;
@@ -78,7 +78,6 @@ export interface DocsNavLink {
 export const NAV_DOCS_HUB = "/docs";
 export const NAV_DOCS: DocsNavLink[] = [
   { id: "ui", href: "/docs/ui" },
-  { id: "java", href: "/docs/java" },
 ];
 export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) => ({
   label: t.docs.sections[link.id].title,
