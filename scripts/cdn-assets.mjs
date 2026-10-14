@@ -4,17 +4,23 @@
 //   node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> [--env-file <path>] [--dry-run]
 //   node scripts/cdn-assets.mjs check [--env-file <path>]
 //   node scripts/cdn-assets.mjs prune [--env-file <path>] [--yes]
+//   node scripts/cdn-assets.mjs tree [--env-file <path>]
+//   node scripts/cdn-assets.mjs readme [--env-file <path>]
 //
 // `upload` sends each file to `site/<to>/<name>.<hash>.<ext>` — the hash is the first 10 hex of the file's SHA-256, so
 // a URL never changes content and the CDN may cache it for good — then records `<to>/<name>.<ext>` → hash in
 // lib/cdn-manifest.json, which lib/cdn.ts resolves at build. A file whose hash is already recorded is not sent again.
 // `check` asks the pull zone for every recorded file (HEAD) and fails on anything but 200. `prune` lists `site/` on
-// the storage zone and deletes the objects the manifest no longer names (old versions) — a preview without --yes.
+// the storage zone and deletes the objects no manifest names any more (old versions) — a preview without --yes. "No
+// manifest" means this one AND the one of every other branch (main, unmerged work): a file another branch still uses is kept.
+// `tree` counts and weighs the zone by folder and lists what does not belong (docs: scripts/bunny-layout.mjs, AGENTS.md §5.2);
+// `readme` publishes the layout as README.txt at the zone root. This script writes only under site/.
 //
-// Layout of the storage zone (PR captures are apart, under pr-assets/ — scripts/pr-assets.mjs):
-//   site/home/backdrop/<product>.<hash>.{webm,mp4,jpg}       the blurred loops behind the home hero
-//   site/products/<product>/tour/<clip>.<hash>.{webm,mp4,jpg} recordings of the real applications
-//   site/products/<product>/gallery/<id>.<hash>.webp          images a product made
+// Areas under site/ (PR captures are apart, under pr-assets/ — scripts/pr-assets.mjs; the basemap under maps/):
+//   site/home/…      the home page (backdrop loops, the kit in a phone)
+//   site/products/<product>/{tour,gallery,mobile}/…   recordings and images of a product's pages
+//   site/docs/<product>/…                              media of the documentation pages
+//   site/people/<product>/<person>-{256,512}.webp      the demo personas' portraits
 //
 // Credentials: the same as scripts/pr-assets.mjs (MEDIA_STORAGE_API_KEY, MEDIA_STORAGE_ZONE, MEDIA_STORAGE_ENDPOINT,
 // MEDIA_CDN_HOSTNAME), from the environment or --env-file — never printed. `check` only needs the pull zone,
@@ -24,6 +30,8 @@ import { createHash } from "node:crypto";
 import { readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { execFileSync } from "node:child_process";
+import { LAYOUT_README, README_NAME, SITE_AREA_NAMES, assertUnder, layoutHelp, misplaced } from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 
 export const ROOT = "site";
@@ -44,6 +52,8 @@ export function versioned(path, hash) {
 export function logicalPath(value, name = "to") {
   const p = String(value ?? "").trim().replace(/^\/+|\/+$/g, "");
   if (!/^[a-z0-9_-]+(\/[a-z0-9_-]+)*(\.[a-z0-9]+)?$/.test(p)) throw new Error(`--${name} "${value}" is not a path like products/orochia/tour`);
+  const area = p.split("/")[0];
+  if (!SITE_AREA_NAMES.includes(area)) throw new Error(`--${name} "${value}": "${area}" is not an area of site/ (${SITE_AREA_NAMES.join(", ")})`);
   return p;
 }
 
@@ -62,7 +72,7 @@ export function writeManifest(manifest, file = MANIFEST) {
   writeFileSync(file, `${JSON.stringify({ root: manifest.root, files }, null, 2)}\n`);
 }
 
-const objectPath = (root, path, hash) => `${root}/${versioned(path, hash)}`;
+const objectPath = (root, path, hash) => assertUnder(ROOT, `${root}/${versioned(path, hash)}`);
 const enc = (p) => p.split("/").map(encodeURIComponent).join("/");
 const storageUrl = (cfg, p) => `https://${cfg.endpoint}/${encodeURIComponent(cfg.zone)}/${enc(p)}`;
 const cdnUrl = (cfg, p) => `https://${cfg.pullZone}/${enc(p)}`;
@@ -132,15 +142,62 @@ async function listObjects(cfg, dir, fetchImpl) {
   for (const item of await res.json()) {
     const p = `${dir}/${item.ObjectName}`;
     if (item.IsDirectory) out.push(...(await listObjects(cfg, p, fetchImpl)));
-    else out.push(p);
+    else out.push({ path: p, changed: item.LastChanged ? Date.parse(`${item.LastChanged}Z`) : 0 });
   }
   return out;
 }
 
-export async function prune({ cfg, manifest, yes = false, fetchImpl = globalThis.fetch, log = console.log }) {
-  const keep = new Set(Object.entries(manifest.files).map(([l, h]) => objectPath(manifest.root, l, h)));
-  const stale = (await listObjects(cfg, manifest.root, fetchImpl)).filter((p) => !keep.has(p));
+/** The hashed object paths still named by work outside this checkout's manifest, so a file used by unmerged work is never
+    pruned: the manifest of every branch not yet merged into origin/main (plus origin/main itself) and the working copy of
+    every git worktree (uncommitted uploads). Merged branches are history, not a reason to keep. Outside git: nothing. */
+export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
+  const keep = new Set();
+  const add = (m) => {
+    for (const [l, h] of Object.entries(m.files ?? {})) keep.add(objectPath(m.root ?? ROOT, l, h));
+  };
+  try {
+    const cwd = dirname(manifestFile);
+    const git = (...args) => run("git", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
+    const rel = git("ls-files", "--full-name", manifestFile).trim() || "lib/cdn-manifest.json";
+    const base = "origin/main";
+    const unmerged = git("for-each-ref", `--no-merged=${base}`, "--format=%(refname)", "refs/heads", "refs/remotes").split("\n").filter(Boolean);
+    for (const ref of [base, ...unmerged]) {
+      try {
+        add(JSON.parse(git("show", `${ref}:${rel}`)));
+      } catch {
+        /* a branch without a manifest */
+      }
+    }
+    // The working copy of a worktree counts when its branch is unmerged or its manifest has uncommitted changes
+    // (an upload not yet committed); a worktree left on a merged branch is history.
+    for (const block of git("worktree", "list", "--porcelain").split("\n\n")) {
+      const dir = /^worktree (.+)$/m.exec(block)?.[1];
+      const branch = /^branch (.+)$/m.exec(block)?.[1];
+      if (!dir) continue;
+      try {
+        const dirty = run("git", ["status", "--porcelain", "--", rel], { cwd: dir, encoding: "utf8" }).trim() !== "";
+        if (dirty || !branch || unmerged.includes(branch)) add(JSON.parse(readFileSync(join(dir, rel), "utf8")));
+      } catch {
+        /* a worktree without a manifest */
+      }
+    }
+  } catch {
+    /* not a git checkout */
+  }
+  return keep;
+}
+
+/** Objects younger than this are left alone: another session may have uploaded them and not yet committed its manifest. */
+export const MIN_AGE_MS = 24 * 3600 * 1000;
+
+export async function prune({ cfg, manifest, yes = false, extraKeep = new Set(), minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log }) {
+  const keep = new Set([...Object.entries(manifest.files).map(([l, h]) => objectPath(manifest.root, l, h)), ...extraKeep]);
+  const unnamed = (await listObjects(cfg, manifest.root, fetchImpl)).filter((o) => !keep.has(o.path));
+  const stale = unnamed.filter((o) => !o.changed || now - o.changed >= minAgeMs).map((o) => o.path);
+  const recent = unnamed.length - stale.length;
+  if (recent) log(`kept ${recent} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be committing its manifest)`);
   for (const p of stale) {
+    assertUnder(ROOT, p);
     if (yes) {
       const res = await fetchImpl(storageUrl(cfg, p), { method: "DELETE", headers: { AccessKey: cfg.apiKey } });
       if (!res.ok) throw new Error(`deletion of ${p} failed: HTTP ${res.status}`);
@@ -151,10 +208,57 @@ export async function prune({ cfg, manifest, yes = false, fetchImpl = globalThis
   return stale;
 }
 
+/** The whole zone, listed from its root: [{ path, size }]. */
+async function listZone(cfg, fetchImpl) {
+  const out = [];
+  const walk = async (dir) => {
+    const res = await fetchImpl(`${storageUrl(cfg, dir).replace(/\/$/, "")}/`, { headers: { AccessKey: cfg.apiKey, Accept: "application/json" } });
+    if (!res.ok) throw new Error(`listing of ${dir || "/"} failed: HTTP ${res.status}`);
+    for (const item of await res.json()) {
+      const p = `${dir}${item.ObjectName}`;
+      if (item.IsDirectory) await walk(`${p}/`);
+      else out.push({ path: p, size: item.Length ?? 0 });
+    }
+  };
+  await walk("");
+  return out;
+}
+
+/** Counts and weight per folder (two levels under site/ and maps/, the repository and topic under pr-assets/), then what does not belong. */
+export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.log }) {
+  const objects = await listZone(cfg, fetchImpl);
+  const depth = (p) => (p.startsWith("pr-assets/") ? 3 : p.startsWith("maps/") ? 3 : p.startsWith("site/") ? 3 : 1);
+  const rows = new Map();
+  for (const o of objects) {
+    const key = o.path.split("/").slice(0, Math.min(depth(o.path), o.path.split("/").length - 1) || 1).join("/");
+    const r = rows.get(key) ?? { n: 0, bytes: 0 };
+    r.n++;
+    r.bytes += o.size;
+    rows.set(key, r);
+  }
+  for (const [key, r] of [...rows].sort(([a], [b]) => a.localeCompare(b))) log(`${key.padEnd(64)} ${String(r.n).padStart(5)}  ${(r.bytes / 1048576).toFixed(1).padStart(8)} MB`);
+  const total = objects.reduce((a, o) => a + o.size, 0);
+  log(`\n${objects.length} object(s), ${(total / 1048576).toFixed(0)} MB`);
+  const bad = objects.map((o) => ({ ...o, why: misplaced(o.path) })).filter((o) => o.why);
+  for (const b of bad) log(`  MISPLACED  ${b.path} — ${b.why}`);
+  log(bad.length ? `${bad.length} object(s) outside the layout` : "every object follows the layout");
+  return { objects, misplaced: bad };
+}
+
+/** Publishes the layout as README.txt at the root of the zone — the only file allowed there. */
+export async function publishReadme({ cfg, fetchImpl = globalThis.fetch, log = console.log }) {
+  const res = await fetchImpl(storageUrl(cfg, README_NAME), { method: "PUT", headers: { AccessKey: cfg.apiKey, "Content-Type": "text/plain; charset=utf-8" }, body: LAYOUT_README });
+  if (!res.ok) throw new Error(`upload of ${README_NAME} failed: HTTP ${res.status}`);
+  log(`${cdnUrl(cfg, README_NAME)} published`);
+}
+
 const USAGE = `usage:
   node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> [--env-file <path>] [--dry-run]
   node scripts/cdn-assets.mjs check [--env-file <path>]
-  node scripts/cdn-assets.mjs prune [--env-file <path>] [--yes]`;
+  node scripts/cdn-assets.mjs prune [--env-file <path>] [--min-age <hours, default 24>] [--yes]
+  node scripts/cdn-assets.mjs tree [--env-file <path>]      count/size per folder, and what is outside the layout
+  node scripts/cdn-assets.mjs readme [--env-file <path>]    publish the layout as README.txt at the zone root
+${layoutHelp()}`;
 
 export async function main(argv, { env = process.env, fetchImpl, log = console.log, manifestFile = MANIFEST } = {}) {
   const args = parseArgs(argv.filter((a) => a !== "--yes"));
@@ -188,7 +292,15 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     return failed.length ? 1 : 0;
   }
   if (command === "prune") {
-    await prune({ cfg: loadConfig(merged), manifest, yes, fetchImpl, log });
+    await prune({ cfg: loadConfig(merged), manifest, yes, minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000, extraKeep: otherBranchPaths(manifestFile), fetchImpl, log });
+    return 0;
+  }
+  if (command === "tree") {
+    const { misplaced: bad } = await tree({ cfg: loadConfig(merged), fetchImpl, log });
+    return bad.length ? 1 : 0;
+  }
+  if (command === "readme") {
+    await publishReadme({ cfg: loadConfig(merged), fetchImpl, log });
     return 0;
   }
   log(USAGE);

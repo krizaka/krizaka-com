@@ -112,3 +112,25 @@ test("the committed manifest names every media the site draws", () => {
   ];
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
 });
+
+test("prune keeps what another branch's manifest still names", async () => {
+  const manifest = { root: "site", files: { "home/backdrop/orazaka.jpg": "newnewnew1" } };
+  const listing = {
+    "https://storage.bunnycdn.com/kz-zone/site/": [{ ObjectName: "home", IsDirectory: true }],
+    "https://storage.bunnycdn.com/kz-zone/site/home/": [{ ObjectName: "backdrop", IsDirectory: true }],
+    "https://storage.bunnycdn.com/kz-zone/site/home/backdrop/": [
+      { ObjectName: "orazaka.newnewnew1.jpg", IsDirectory: false },
+      { ObjectName: "orazaka.otherbranch.jpg", IsDirectory: false },
+      { ObjectName: "orazaka.oldoldold1.jpg", IsDirectory: false },
+    ],
+  };
+  const fetchImpl = async (url) => ({ ok: true, status: 200, json: async () => listing[url] ?? [] });
+  const extraKeep = new Set(["site/home/backdrop/orazaka.otherbranch.jpg"]);
+  assert.deepEqual(await prune({ cfg, manifest, extraKeep, fetchImpl, log: () => {} }), ["site/home/backdrop/orazaka.oldoldold1.jpg"]);
+});
+
+test("uploads are refused outside the areas of site/", () => {
+  assert.throws(() => logicalPath("pr-assets/x/y.png"), /not an area/);
+  assert.throws(() => logicalPath("krizaka-assets/home"), /not an area/);
+  for (const area of ["home", "products/orochia/tour", "docs/orochia/mobile", "people/yazakia"]) assert.equal(logicalPath(area), area);
+});

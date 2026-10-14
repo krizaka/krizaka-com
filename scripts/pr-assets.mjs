@@ -10,6 +10,8 @@
 // (`docs/screenshots/<key>/…`, relative or github.com / raw.githubusercontent.com) into the CDN
 // URLs `upload` produced for the same <key> — used to migrate old PR bodies and docs.
 //
+// This script writes only under pr-assets/ (the layout of the zone: scripts/bunny-layout.mjs, AGENTS.md §5.2).
+//
 // Credentials come from the environment, or from a `.env` file given with --env-file:
 //   MEDIA_STORAGE_API_KEY   storage zone password (never printed)
 //   MEDIA_STORAGE_ZONE      storage zone name
@@ -21,6 +23,7 @@ import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
+import { assertUnder, layoutHelp } from "./bunny-layout.mjs";
 
 export const PREFIX = "pr-assets";
 
@@ -123,7 +126,7 @@ export function listFiles(dir) {
 
 const encodePath = (p) => p.split("/").map(encodeURIComponent).join("/");
 
-export const objectPath = (repo, key, rel) => `${PREFIX}/${slug(repo, "repo")}/${slug(key, "key")}/${rel}`;
+export const objectPath = (repo, key, rel) => assertUnder(PREFIX, `${PREFIX}/${slug(repo, "repo")}/${slug(key, "key")}/${rel}`);
 export const cdnUrl = (cfg, path) => `https://${cfg.pullZone}/${encodePath(path)}`;
 export const storageUrl = (cfg, path) => `https://${cfg.endpoint}/${encodeURIComponent(cfg.zone)}/${encodePath(path)}`;
 
@@ -184,7 +187,8 @@ export function rewriteLinks(text, { repo, from = "docs/screenshots", cfg, owner
 
 const USAGE = `usage:
   node scripts/pr-assets.mjs upload <dir> --repo <repo> --key <pr-or-topic> [--env-file <path>] [--dry-run]
-  node scripts/pr-assets.mjs rewrite <file> --repo <repo> [--from docs/screenshots] [--env-file <path>] [--write]`;
+  node scripts/pr-assets.mjs rewrite <file> --repo <repo> [--from docs/screenshots] [--env-file <path>] [--write]
+${layoutHelp()}`;
 
 export async function main(argv, { env = process.env, fetchImpl, log = console.log } = {}) {
   const args = parseArgs(argv);
