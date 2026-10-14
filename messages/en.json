@@ -614,63 +614,49 @@
           "primary": "Start building",
           "secondary": "Talk to us",
           "open": "Documentation of {name}",
+          "native": {
+            "title": "The same kit, native",
+            "caption": "Native components of @krizaka/ui, recorded on an iPhone simulator and re-themed to the identity you pick.",
+            "alt": "Native Krizaka UI components in the {brand} identity"
+          },
+          "tiles": {
+            "button": "solid · outline · cut",
+            "switch": "settings row",
+            "chip": "single choice",
+            "progress": "bar · ring",
+            "slider": "range · steps",
+            "chat": "bubbles · typing · composer",
+            "code-block": "highlight · copy",
+            "stepper": "job steps",
+            "choice-grid": "tactile choice",
+            "terminal-replay": "session replay",
+            "video-player": "poster · speed · captions",
+            "video-trimmer": "filmstrip · range",
+            "image-cropper": "round mask · zoom",
+            "media-capture": "camera · photo",
+            "countdown": "live time left",
+            "goal-gauge": "segments",
+            "sparkline": "area · trend",
+            "map": "MapLibre · Protomaps",
+            "location-picker": "pin · distance · radius",
+            "swipe-deck": "drag · like · pass",
+            "match-dialog": "two people meet",
+            "tag-selector": "limit · count",
+            "toast": "short feedback",
+            "card": "calm surface",
+            "tabs": "underline · segmented · pills"
+          },
           "sample": {
             "label": "Label",
             "value": "Value",
             "tag": "Tag",
             "description": "A short description",
             "caption": "Short caption",
-            "name": "Camille Roy",
-            "statLabel": "Profile complete",
             "other": "Other"
-          },
-          "tiles": {
-            "button": "solid · outline · cut",
-            "slider": "range · steps",
-            "switch": "settings row",
-            "chip": "single choice",
-            "tabs": "underline · segmented · pills",
-            "date-picker": "inline calendar",
-            "choice-grid": "tactile choice",
-            "sparkline": "area · trend",
-            "goal-gauge": "segments",
-            "countdown": "live time left",
-            "progress": "bar · ring",
-            "profile-card": "portrait · gauges",
-            "avatar": "group · overflow",
-            "toast": "short feedback",
-            "map": "MapLibre · Protomaps"
           },
           "slider": {
             "range": "Range",
             "steps": "Steps"
-          },
-          "tabs": {
-            "one": "Label",
-            "two": "Value",
-            "three": "Tag",
-            "panel": "The panel of the chosen tab."
-          },
-          "choice": {
-            "label": "Choose one",
-            "tag": "Step 1 of 3",
-            "caption": "You can change it at any time.",
-            "a": {
-              "name": "First",
-              "title": "A short title"
-            },
-            "b": {
-              "name": "Second",
-              "title": "A short title"
-            },
-            "c": {
-              "name": "Third",
-              "title": "A short title"
-            }
-          },
-          "calendar": {
-            "previousMonth": "Previous month",
-            "nextMonth": "Next month"
           },
           "chart": {
             "title": "Amount, last 30 days"
@@ -698,18 +684,207 @@
             "label": "Notifications",
             "close": "Close"
           },
-          "native": {
-            "title": "The same kit, native",
-            "caption": "Native components of @krizaka/ui, recorded on an iPhone simulator and re-themed to the identity you pick.",
-            "alt": "Native Krizaka UI components in the {brand} identity"
-          },
           "map": {
             "label": "Pick-up points",
             "places": {
               "a": "First place",
               "b": "Second place",
               "c": "Third place"
+            },
+            "labels": {
+              "zoomIn": "Zoom in",
+              "zoomOut": "Zoom out",
+              "places": "Places on the map"
             }
+          },
+          "code": {
+            "file": "ask.sh",
+            "copy": "Copy",
+            "copied": "Copied"
+          },
+          "chat": {
+            "user": "Summarise last week's support tickets.",
+            "answer": "14 tickets came in. Three need a reply today: a refund, an expired link, an invoice in CAD.",
+            "composer": "Ask a follow-up",
+            "send": "Send",
+            "typing": "Orazaka is answering",
+            "read": "Read"
+          },
+          "stepper": {
+            "label": "A job in steps",
+            "labels": {
+              "done": "Done",
+              "current": "In progress",
+              "upcoming": "Upcoming",
+              "error": "Failed"
+            },
+            "queued": "Queued",
+            "queuedHint": "Waiting for a free model",
+            "running": "Generating",
+            "runningHint": "4 images",
+            "saved": "Saved",
+            "savedHint": "On this machine",
+            "eta": "About 40 s left"
+          },
+          "studio": {
+            "label": "Studio",
+            "tag": "Runs on this Mac",
+            "caption": "Pick the Studio, the model follows.",
+            "chat": {
+              "name": "Chat",
+              "title": "Answers"
+            },
+            "image": {
+              "name": "Image",
+              "title": "Portraits"
+            },
+            "audio": {
+              "name": "Audio",
+              "title": "Speech to text"
+            }
+          },
+          "video": {
+            "title": "Video: an auction",
+            "labels": {
+              "play": "Play",
+              "pause": "Pause",
+              "mute": "Mute",
+              "unmute": "Unmute",
+              "volume": "Volume",
+              "seek": "Seek",
+              "fullscreen": "Fullscreen",
+              "exitFullscreen": "Exit fullscreen",
+              "pictureInPicture": "Picture in picture",
+              "loading": "Loading",
+              "error": "The video cannot play",
+              "retry": "Retry",
+              "speed": "Speed {rate}×",
+              "captions": "Subtitles: {track}",
+              "captionsOff": "off",
+              "time": "{time} of {duration}"
+            }
+          },
+          "trimmer": {
+            "labels": {
+              "start": "Start",
+              "end": "End",
+              "playhead": "Playhead",
+              "kept": "{length} kept"
+            }
+          },
+          "cropper": {
+            "labels": {
+              "frame": "Crop area",
+              "instructions": "Use the arrow keys to move the picture, + and − to zoom.",
+              "zoom": "Zoom"
+            }
+          },
+          "capture": {
+            "labels": {
+              "region": "Camera",
+              "prompt": "Take a photo with your camera.",
+              "start": "Turn on the camera",
+              "denied": "Camera access is blocked.",
+              "unavailable": "No camera is available.",
+              "fallback": "Choose a file",
+              "takePhoto": "Take a photo",
+              "startRecording": "Start recording",
+              "stopRecording": "Stop recording",
+              "switchCamera": "Switch camera",
+              "photoMode": "Photo",
+              "videoMode": "Video"
+            }
+          },
+          "auction": {
+            "label": "Time left in the auction"
+          },
+          "swipe": {
+            "labels": {
+              "like": "Like",
+              "pass": "Pass",
+              "deck": "Profiles. Right arrow to like, left arrow to pass.",
+              "likeStamp": "Like",
+              "passStamp": "Pass"
+            },
+            "verified": "Verified",
+            "away": "{km} km away",
+            "people": {
+              "ines": {
+                "name": "Inès",
+                "bio": "Sunday cook, long walks.",
+                "tags": [
+                  "Cooking",
+                  "Hiking"
+                ]
+              },
+              "kofi": {
+                "name": "Kofi",
+                "bio": "Street photographer, bad puns.",
+                "tags": [
+                  "Photo",
+                  "Jazz"
+                ]
+              },
+              "hana": {
+                "name": "Hana",
+                "bio": "Ceramics and quiet cities.",
+                "tags": [
+                  "Ceramics",
+                  "Travel"
+                ]
+              }
+            }
+          },
+          "match": {
+            "button": "Show the match",
+            "title": "It's a match",
+            "description": "You both chose each other.",
+            "primary": "Send a message",
+            "secondary": "Keep browsing",
+            "me": "You"
+          },
+          "tags": {
+            "label": "Interests",
+            "count": "{count} of {max}",
+            "options": {
+              "0": "Music",
+              "1": "Cooking",
+              "2": "Hiking",
+              "3": "Photo",
+              "4": "Cinema",
+              "5": "Travel"
+            }
+          },
+          "picker": {
+            "label": "Meeting point",
+            "labels": {
+              "nearMe": "Near me",
+              "locating": "Finding you…",
+              "denied": "Location is off for this site. Move the map instead.",
+              "unavailable": "We could not find you. Move the map instead.",
+              "you": "You are here",
+              "distance": "{distance} from you"
+            }
+          },
+          "yororis": {
+            "moment": "Time left in this moment",
+            "mood": "How do you feel right now, 1 to 5? You say.",
+            "before": "Before",
+            "after": "After",
+            "subtitles": "Subtitles",
+            "subtitlesHint": "Words on screen as they are said",
+            "saved": "Kept",
+            "savedHint": "Three lines, yours to take away.",
+            "keep": "What I keep",
+            "one": "What weighed most: the week ahead.",
+            "two": "One thing to do: ten minutes outside.",
+            "three": "A question to keep: what would make Thursday lighter?"
+          },
+          "tabs": {
+            "one": "Label",
+            "two": "Value",
+            "three": "Tag",
+            "panel": "The panel of the chosen tab."
           }
         },
         "cli": {

@@ -3,7 +3,7 @@
 /* Small helpers of the gallery: "now" only exists in the reader's browser, and the phone's loop must rest for those
    who asked for less motion. */
 
-import { useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 const noop = () => () => {};
 
@@ -19,7 +19,8 @@ export function useTargetIn(ms: number): number | null {
   return hydrated ? target : null;
 }
 
-const MONEY_LOCALE = { en: "en-CA", fr: "fr-CA" } as const;
+/** The locales that write Canadian dollars with their country: "CA$252" (en), "252 $CA" (fr). */
+const MONEY_LOCALE = { en: "en-US", fr: "fr-FR" } as const;
 
 /** Money in integer cents, in the reader's language and Canadian dollars. */
 export function money(cents: number, locale: string, currency: string, fractionDigits = 0): string {
@@ -50,4 +51,30 @@ export function useLightTheme(): boolean {
     () => document.documentElement.classList.contains("light"),
     () => false,
   );
+}
+
+/** The part of `text` revealed so far: a few characters at a time once the block is on screen, all of it for
+ *  those who prefer reduced motion. `done` flips when the whole text is shown. */
+export function useStream(text: string, speedMs = 28): { shown: string; done: boolean; ref: React.RefObject<HTMLDivElement | null> } {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [count, setCount] = useState(0);
+  const [visible, setVisible] = useState(false);
+  const still = usePrefersReducedMotion();
+
+  useEffect(() => {
+    const node = ref.current;
+    if (still || !node) return;
+    const io = new IntersectionObserver(([entry]) => setVisible(Boolean(entry?.isIntersecting)));
+    io.observe(node);
+    return () => io.disconnect();
+  }, [still]);
+
+  useEffect(() => {
+    if (still || !visible || count >= text.length) return;
+    const id = window.setTimeout(() => setCount((c) => Math.min(text.length, c + 2)), speedMs);
+    return () => window.clearTimeout(id);
+  }, [still, visible, count, text, speedMs]);
+
+  const shownCount = still ? text.length : count;
+  return { shown: text.slice(0, shownCount), done: shownCount >= text.length, ref };
 }

@@ -614,63 +614,49 @@
           "primary": "Commencer à construire",
           "secondary": "Nous parler",
           "open": "Documentation de {name}",
+          "native": {
+            "title": "Le même kit, en natif",
+            "caption": "Des composants natifs de @krizaka/ui, enregistrés sur un simulateur d'iPhone et aux couleurs de l'identité choisie.",
+            "alt": "Composants natifs Krizaka UI aux couleurs de {brand}"
+          },
+          "tiles": {
+            "button": "plein · contour · biseauté",
+            "switch": "ligne de réglage",
+            "chip": "choix unique",
+            "progress": "barre · anneau",
+            "slider": "plage · pas",
+            "chat": "bulles · saisie · zone de message",
+            "code-block": "coloration · copie",
+            "stepper": "étapes d'une tâche",
+            "choice-grid": "choix tactile",
+            "terminal-replay": "rejeu de session",
+            "video-player": "affiche · vitesse · sous-titres",
+            "video-trimmer": "pellicule · plage",
+            "image-cropper": "masque rond · zoom",
+            "media-capture": "caméra · photo",
+            "countdown": "temps restant en direct",
+            "goal-gauge": "segments",
+            "sparkline": "aire · tendance",
+            "map": "MapLibre · Protomaps",
+            "location-picker": "épingle · distance · rayon",
+            "swipe-deck": "glisser · aimer · passer",
+            "match-dialog": "deux personnes se rencontrent",
+            "tag-selector": "limite · compte",
+            "toast": "retour bref",
+            "card": "surface calme",
+            "tabs": "soulignés · segmentés · pilules"
+          },
           "sample": {
             "label": "Libellé",
             "value": "Valeur",
             "tag": "Étiquette",
             "description": "Une courte description",
             "caption": "Courte légende",
-            "name": "Camille Roy",
-            "statLabel": "Profil complété",
             "other": "Autre"
-          },
-          "tiles": {
-            "button": "plein · contour · biseauté",
-            "slider": "plage · pas",
-            "switch": "ligne de réglage",
-            "chip": "choix unique",
-            "tabs": "soulignés · segmentés · pilules",
-            "date-picker": "calendrier intégré",
-            "choice-grid": "choix tactile",
-            "sparkline": "aire · tendance",
-            "goal-gauge": "segments",
-            "countdown": "temps restant en direct",
-            "progress": "barre · anneau",
-            "profile-card": "portrait · jauges",
-            "avatar": "groupe · débordement",
-            "toast": "retour bref",
-            "map": "MapLibre · Protomaps"
           },
           "slider": {
             "range": "Plage",
             "steps": "Pas"
-          },
-          "tabs": {
-            "one": "Libellé",
-            "two": "Valeur",
-            "three": "Étiquette",
-            "panel": "Le panneau de l'onglet choisi."
-          },
-          "choice": {
-            "label": "Choisissez",
-            "tag": "Étape 1 sur 3",
-            "caption": "Vous pouvez changer à tout moment.",
-            "a": {
-              "name": "Premier",
-              "title": "Un titre court"
-            },
-            "b": {
-              "name": "Deuxième",
-              "title": "Un titre court"
-            },
-            "c": {
-              "name": "Troisième",
-              "title": "Un titre court"
-            }
-          },
-          "calendar": {
-            "previousMonth": "Mois précédent",
-            "nextMonth": "Mois suivant"
           },
           "chart": {
             "title": "Montant, 30 derniers jours"
@@ -698,18 +684,207 @@
             "label": "Notifications",
             "close": "Fermer"
           },
-          "native": {
-            "title": "Le même kit, en natif",
-            "caption": "Des composants natifs de @krizaka/ui, enregistrés sur un simulateur d'iPhone et aux couleurs de l'identité choisie.",
-            "alt": "Composants natifs Krizaka UI aux couleurs de {brand}"
-          },
           "map": {
             "label": "Points de retrait",
             "places": {
               "a": "Premier lieu",
               "b": "Deuxième lieu",
               "c": "Troisième lieu"
+            },
+            "labels": {
+              "zoomIn": "Zoom avant",
+              "zoomOut": "Zoom arrière",
+              "places": "Lieux sur la carte"
             }
+          },
+          "code": {
+            "file": "ask.sh",
+            "copy": "Copier",
+            "copied": "Copié"
+          },
+          "chat": {
+            "user": "Résume les tickets de support de la semaine dernière.",
+            "answer": "14 tickets sont arrivés. Trois demandent une réponse aujourd'hui : un remboursement, un lien expiré, une facture en CAD.",
+            "composer": "Poser une autre question",
+            "send": "Envoyer",
+            "typing": "Orazaka répond",
+            "read": "Lu"
+          },
+          "stepper": {
+            "label": "Une tâche par étapes",
+            "labels": {
+              "done": "Terminé",
+              "current": "En cours",
+              "upcoming": "À venir",
+              "error": "Échec"
+            },
+            "queued": "En file",
+            "queuedHint": "En attente d'un modèle libre",
+            "running": "Génération",
+            "runningHint": "4 images",
+            "saved": "Enregistré",
+            "savedHint": "Sur cette machine",
+            "eta": "Encore environ 40 s"
+          },
+          "studio": {
+            "label": "Studio",
+            "tag": "Tourne sur ce Mac",
+            "caption": "Choisissez le Studio, le modèle suit.",
+            "chat": {
+              "name": "Chat",
+              "title": "Réponses"
+            },
+            "image": {
+              "name": "Image",
+              "title": "Portraits"
+            },
+            "audio": {
+              "name": "Audio",
+              "title": "Voix en texte"
+            }
+          },
+          "video": {
+            "title": "Vidéo : une enchère",
+            "labels": {
+              "play": "Lecture",
+              "pause": "Pause",
+              "mute": "Couper le son",
+              "unmute": "Remettre le son",
+              "volume": "Volume",
+              "seek": "Position",
+              "fullscreen": "Plein écran",
+              "exitFullscreen": "Quitter le plein écran",
+              "pictureInPicture": "Image dans l'image",
+              "loading": "Chargement",
+              "error": "La vidéo ne peut pas être lue",
+              "retry": "Réessayer",
+              "speed": "Vitesse {rate}×",
+              "captions": "Sous-titres : {track}",
+              "captionsOff": "désactivés",
+              "time": "{time} sur {duration}"
+            }
+          },
+          "trimmer": {
+            "labels": {
+              "start": "Début",
+              "end": "Fin",
+              "playhead": "Tête de lecture",
+              "kept": "{length} gardées"
+            }
+          },
+          "cropper": {
+            "labels": {
+              "frame": "Zone de recadrage",
+              "instructions": "Utilisez les flèches pour déplacer l'image, + et − pour zoomer.",
+              "zoom": "Zoom"
+            }
+          },
+          "capture": {
+            "labels": {
+              "region": "Caméra",
+              "prompt": "Prenez une photo avec votre caméra.",
+              "start": "Activer la caméra",
+              "denied": "L'accès à la caméra est bloqué.",
+              "unavailable": "Aucune caméra disponible.",
+              "fallback": "Choisir un fichier",
+              "takePhoto": "Prendre une photo",
+              "startRecording": "Démarrer l'enregistrement",
+              "stopRecording": "Arrêter l'enregistrement",
+              "switchCamera": "Changer de caméra",
+              "photoMode": "Photo",
+              "videoMode": "Vidéo"
+            }
+          },
+          "auction": {
+            "label": "Temps restant de l'enchère"
+          },
+          "swipe": {
+            "labels": {
+              "like": "J'aime",
+              "pass": "Passer",
+              "deck": "Profils. Flèche droite pour aimer, flèche gauche pour passer.",
+              "likeStamp": "J'aime",
+              "passStamp": "Passer"
+            },
+            "verified": "Vérifié",
+            "away": "à {km} km",
+            "people": {
+              "ines": {
+                "name": "Inès",
+                "bio": "Cuisine le dimanche, longues marches.",
+                "tags": [
+                  "Cuisine",
+                  "Randonnée"
+                ]
+              },
+              "kofi": {
+                "name": "Kofi",
+                "bio": "Photographe de rue, mauvais jeux de mots.",
+                "tags": [
+                  "Photo",
+                  "Jazz"
+                ]
+              },
+              "hana": {
+                "name": "Hana",
+                "bio": "Céramique et villes calmes.",
+                "tags": [
+                  "Céramique",
+                  "Voyage"
+                ]
+              }
+            }
+          },
+          "match": {
+            "button": "Voir le match",
+            "title": "C'est un match",
+            "description": "Vous vous êtes choisis.",
+            "primary": "Envoyer un message",
+            "secondary": "Continuer",
+            "me": "Vous"
+          },
+          "tags": {
+            "label": "Centres d'intérêt",
+            "count": "{count} sur {max}",
+            "options": {
+              "0": "Musique",
+              "1": "Cuisine",
+              "2": "Randonnée",
+              "3": "Photo",
+              "4": "Cinéma",
+              "5": "Voyage"
+            }
+          },
+          "picker": {
+            "label": "Point de rencontre",
+            "labels": {
+              "nearMe": "Près de moi",
+              "locating": "Recherche de votre position…",
+              "denied": "La position est désactivée pour ce site. Déplacez la carte.",
+              "unavailable": "Position introuvable. Déplacez la carte.",
+              "you": "Vous êtes ici",
+              "distance": "à {distance} de vous"
+            }
+          },
+          "yororis": {
+            "moment": "Temps restant dans ce moment",
+            "mood": "Comment tu te sens, là, de 1 à 5 ? C'est toi qui le dis.",
+            "before": "Avant",
+            "after": "Après",
+            "subtitles": "Sous-titres",
+            "subtitlesHint": "Les mots à l'écran au fil de la parole",
+            "saved": "Gardé",
+            "savedHint": "Trois lignes, à emporter.",
+            "keep": "Ce que je garde",
+            "one": "Ce qui pesait le plus : la semaine qui vient.",
+            "two": "Une chose à faire : dix minutes dehors.",
+            "three": "Une question à garder : qu'est-ce qui rendrait jeudi plus léger ?"
+          },
+          "tabs": {
+            "one": "Libellé",
+            "two": "Valeur",
+            "three": "Étiquette",
+            "panel": "Le panneau de l'onglet choisi."
           }
         },
         "cli": {

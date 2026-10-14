@@ -10,7 +10,7 @@ import { cliSession as recordedSession } from "@/lib/cli-model";
 import { ForwardIcon } from "@krizaka/icons";
 import ButtonLink from "../ButtonLink";
 import KitShowcase from "./KitShowcase";
-import { kitPhones, kitPortraits } from "@/lib/kit-media";
+import { kitMedia, kitPhones } from "@/lib/kit-media";
 import { getDictionary } from "@/lib/i18n";
 import { isLocale } from "@/lib/locales";
 import { getRegistryItems } from "@/lib/ui-registry";
@@ -51,7 +51,7 @@ export default function BuildWithKrizaka({ locale }: { locale: string }) {
       </dl>
 
       <div {...reveal(2, "soft")}>
-        <KitShowcase portraits={kitPortraits()} phones={kitPhones()} />
+        <KitShowcase media={kitMedia()} phones={kitPhones()} terminal={cliSession(recordedSession(), Boolean(npmVersion(CREATE_PACKAGE))).slice(0, 2)} />
       </div>
 
       <div className="bk-cli" {...reveal(0, "soft")}>

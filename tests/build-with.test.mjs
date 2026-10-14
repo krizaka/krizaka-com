@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { CREATE_PACKAGE, cliSession } from "../lib/build-with.ts";
-import { KIT_BRANDS, KIT_TILES } from "../lib/kit-live.ts";
+import { KIT_BRANDS, KIT_SETS, KIT_TILES } from "../lib/kit-live.ts";
 
 const ROOT = path.join(import.meta.dirname, "..");
 const RECORDED = JSON.parse(readFileSync(path.join(ROOT, "public/assets/orazaka/cli/session.json"), "utf8"));
@@ -19,13 +19,14 @@ test("the terminal plays the recorded install, start, dev — and create only on
   }
 });
 
-test("every tile of the gallery is a published component, and every brand has its native loop in both themes", () => {
-  for (const { id } of KIT_TILES) {
+test("every tile of the gallery is a published component, every identity's set is made of tiles, and every brand has its native loop", () => {
+  for (const [id, { doc }] of Object.entries(KIT_TILES)) {
     const file = ["@krizaka/ui", "@krizaka/charts"]
-      .map((pkg) => path.join(ROOT, "node_modules", ...pkg.split("/"), "registry", `${id}.json`))
+      .map((pkg) => path.join(ROOT, "node_modules", ...pkg.split("/"), "registry", `${doc}.json`))
       .find(existsSync);
-    assert.ok(file, `${id} is in a registry`);
+    assert.ok(file, `${id} (${doc}) is in a registry`);
   }
+  for (const [brand, ids] of Object.entries(KIT_SETS)) for (const id of ids) assert.ok(KIT_TILES[id], `${brand}: ${id} is a tile`);
   const manifest = JSON.parse(readFileSync(path.join(ROOT, "lib/cdn-manifest.json"), "utf8")).files;
   for (const brand of KIT_BRANDS) for (const mode of ["dark", "light"]) for (const ext of ["webm", "mp4", "jpg"]) assert.ok(manifest[`home/kit-native/${brand}-${mode}.${ext}`], `${brand} ${mode} ${ext}`);
 });
