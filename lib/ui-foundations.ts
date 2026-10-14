@@ -6,14 +6,28 @@
 import { fonts, rules } from "@krizaka/fonts";
 import { glyphIndex, iconGroups, iconGuidelines } from "@krizaka/icons/glyphs";
 import { typeScale } from "@krizaka/tokens";
-import { getRegistryItems, type RegistryExample, type RegistryItem } from "@/lib/ui-registry";
+import { BRAND_PAGE, MOBILE_PAGE, TEMPLATE_PAGE, templatePurposeSlug } from "@/lib/ui-ia";
+import { getRegistryIndex, getRegistryItems, type RegistryExample, type RegistryIndex, type RegistryItem, type TemplatePurpose } from "@/lib/ui-registry";
 
 export { fonts, glyphIndex, iconGroups, iconGuidelines, rules, typeScale };
 
-/** The generated foundation pages of /docs/ui, by slug. */
-export const FOUNDATIONS = ["typography", "icons", "screens"] as const;
-export type Foundation = (typeof FOUNDATIONS)[number];
-export const isFoundation = (slug: string): slug is Foundation => (FOUNDATIONS as readonly string[]).includes(slug);
+/** The generated pages of /docs/ui that no MDX file writes: two foundations, the templates (all, then one page per
+    intent: `templates-<purpose>`), the mobile parity and the brand marks — by slug. */
+export const FOUNDATIONS = ["typography", "icons", TEMPLATE_PAGE, MOBILE_PAGE, BRAND_PAGE] as const;
+export type Foundation = (typeof FOUNDATIONS)[number] | `${typeof TEMPLATE_PAGE}-${TemplatePurpose}`;
+
+/** The intents the templates are grouped by, from the registry: the id, its title and its "you come here when…". */
+export function templatePurposes(): { id: TemplatePurpose; title: string; useWhen: string }[] {
+  const groups = getRegistryIndex().templatePurposes ?? ({} as NonNullable<RegistryIndex["templatePurposes"]>);
+  return (Object.keys(groups) as TemplatePurpose[]).map((id) => ({ id, ...groups[id] }));
+}
+
+/** Every generated page slug, the pages of the intents included. */
+export const foundationSlugs = (): Foundation[] => [...FOUNDATIONS, ...templatePurposes().map(({ id }) => templatePurposeSlug(id) as Foundation)];
+export const isFoundation = (slug: string): slug is Foundation => (foundationSlugs() as string[]).includes(slug);
+
+/** The intent a `templates-<purpose>` page is about. */
+export const purposeOf = (foundation: Foundation): TemplatePurpose | null => (foundation.startsWith(`${TEMPLATE_PAGE}-`) ? (foundation.slice(TEMPLATE_PAGE.length + 1) as TemplatePurpose) : null);
 
 /** One icon of the gallery: what a client component needs to draw, find and copy it. */
 export interface IconEntry {
@@ -29,16 +43,36 @@ export function iconEntries(): IconEntry[] {
 
 const plain = (text: string) => text.replace(/`/g, "");
 
-/** The screens of @krizaka/ui: the examples of its layouts flagged `template` — whole screens, in registry order. */
-export function templateEntries(): { item: RegistryItem; example: RegistryExample }[] {
-  return getRegistryItems().flatMap((item) => (item.web?.examples ?? []).filter((example) => example.template).map((example) => ({ item, example })));
+/** A template, with the component it is an example of: the page it is shown on and the code it is copied from. */
+export interface TemplateEntry {
+  item: RegistryItem;
+  example: RegistryExample;
+  platform: "web" | "native";
+  purpose: TemplatePurpose;
+  why: string;
+}
+
+/** The templates of @krizaka/ui — the examples of a component flagged `template`, web and native — in the registry's order
+    (by intent, then component); `purpose` keeps one intent. */
+export function templateEntries(purpose?: TemplatePurpose): TemplateEntry[] {
+  const order = templatePurposes().map(({ id }) => id);
+  return getRegistryItems()
+    .flatMap((item) =>
+      (["web", "native"] as const).flatMap((platform) =>
+        (item[platform]?.examples ?? []).filter((example) => example.template && example.purpose && example.why).map((example) => ({ item, example, platform, purpose: example.purpose!, why: example.why! })),
+      ),
+    )
+    .filter((entry) => !purpose || entry.purpose === purpose)
+    .sort((a, b) => order.indexOf(a.purpose) - order.indexOf(b.purpose) || a.item.name.localeCompare(b.item.name) || a.example.name.localeCompare(b.example.name));
 }
 
 /** The words of a foundation page for the search index (Fumadocs structured data). */
 export function foundationStructuredData(page: Foundation) {
   const contents =
-    page === "screens"
-      ? templateEntries().map(({ item, example }) => `${example.title} (${item.title}): ${example.description}`)
+    page === TEMPLATE_PAGE || page.startsWith(`${TEMPLATE_PAGE}-`)
+      ? templateEntries(purposeOf(page) ?? undefined).map(({ item, example, why }) => `${example.title} (${item.title}): ${example.description} ${why}`)
+      : page === MOBILE_PAGE || page === BRAND_PAGE
+      ? []
       : page === "typography"
       ? [
           ...fonts.flatMap((f) => [`${f.family} — ${f.role}. ${f.description}`, f.why, ...f.use, ...f.avoid]),

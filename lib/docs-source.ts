@@ -24,7 +24,8 @@ import { DOCS_MANIFEST, type DocManifestEntry } from "@/lib/docs-manifest";
 import { OROCHIA_DOCS_MANIFEST } from "@/lib/orochia-docs-manifest";
 import { format, getDictionary, type Locale, type TranslationDictionary } from "@/lib/i18n";
 import { CATEGORIES, getKitFoundations, getRegistryItems, type ProductKit, type RegistryItem } from "@/lib/ui-registry";
-import { type Foundation, FOUNDATIONS, foundationStructuredData } from "@/lib/ui-foundations";
+import { type Foundation, foundationSlugs, foundationStructuredData, purposeOf } from "@/lib/ui-foundations";
+import { GROUP_PAGES, JOBS, PATTERNS, placementOf, templatePurposeSlug } from "@/lib/ui-ia";
 
 export const DOCS_SECTIONS = ["ui", "java", "orazaka", "orochia", "yororis"] as const;
 export type DocsSection = (typeof DOCS_SECTIONS)[number];
@@ -94,9 +95,10 @@ function componentFiles(files: VirtualFile[]): VirtualFile[] {
       data: { title: item.title, description: plain(item.summary), component: item.name, structuredData: structuredData(item) } as never,
     });
   }
-  // The foundations generated from the packages' data (@krizaka/fonts, @krizaka/tokens, @krizaka/icons): virtual pages
-  // at /docs/ui/typography and /docs/ui/icons, placed by content/docs/ui/meta.json.
-  for (const foundation of FOUNDATIONS) {
+  // The pages generated from the packages' data and the registry (@krizaka/fonts, @krizaka/tokens, @krizaka/icons, the
+  // templates by intent, the mobile parity, the brand marks): virtual pages at /docs/ui/<slug>. The sidebar is
+  // lib/docs-source.ts `uiTree` (lib/ui-ia.ts), not a meta.json: every component is placed by what it does.
+  for (const foundation of foundationSlugs()) {
     if (written.has(`${foundation}.mdx`)) continue;
     out.push({
       type: "page",
@@ -104,14 +106,6 @@ function componentFiles(files: VirtualFile[]): VirtualFile[] {
       data: { title: foundation, foundation, structuredData: foundationStructuredData(foundation) } as never,
     });
   }
-  const pages = CATEGORIES.flatMap((category) => {
-    const names = items.filter((item) => item.category === category).map((item) => item.name);
-    // The registry's "foundations" category (cn, Slot, Theme, Txt, the mascots) is not the Foundations section of the
-    // sidebar (tokens, typography, icons): its separator gets its own name so the menu never shows "Foundations" twice.
-    const separator = category === "foundations" ? "utilities" : category;
-    return names.length ? [`---${separator}---`, ...names] : [];
-  });
-  out.push({ type: "meta", path: "components/meta.json", data: { title: "Components", pages } });
   return out;
 }
 
@@ -196,6 +190,13 @@ export function pageText(section: DocsSection, page: DocsPage, t: TranslationDic
     const entry = PRODUCT_MANIFESTS[section][pageKey(page.slugs)];
     return { title: entry?.title ?? pageKey(page.slugs), description: entry?.intro ?? page.data.description ?? "" };
   }
+  // A page of templates by intent: the intent's title and its "you come here when…".
+  const foundation = (page.data as ComponentPageData).foundation;
+  const purpose = foundation ? purposeOf(foundation) : null;
+  if (purpose) {
+    const words = t.docs.ia.purposes[purpose];
+    return { title: words.title, description: words.when };
+  }
   // A component page: its title and summary come from its code (the registry), in English.
   const component = (page.data as ComponentPageData).component;
   if (component) return { title: page.data.title ?? component, description: page.data.description ?? "" };
@@ -204,12 +205,71 @@ export function pageText(section: DocsSection, page: DocsPage, t: TranslationDic
   return { title: text?.title ?? page.data.title ?? "", description: text?.description ?? page.data.description ?? "" };
 }
 
+/**
+ * The sidebar of /docs/ui: seven groups, each with its "you come here when…" (lib/ui-ia.ts) — Get started, Foundations,
+ * Components (by the job they do), Patterns (blocks, then screen layouts), Templates (by intent), Tooling, Mobile. A
+ * heading appears once; a component is in one place; the deprecated ones close their job, flagged.
+ */
+function uiTree(source: DocsSource, t: TranslationDictionary, name: string): PageTree.Root {
+  const ia = t.docs.ia;
+  const pages = new Map(source.getPages().map((page) => [page.slugs.join("/"), page]));
+  const item = (page: DocsPage, label?: string): PageTree.Item => ({
+    type: "page",
+    name: label ?? pageText("ui", page, t).title,
+    url: page.url,
+    $id: `ui:${page.url}`,
+  });
+  const separator = (id: string, label: string): PageTree.Separator => ({ type: "separator", $id: `ui:${id}`, name: label });
+  const written = (slugs: readonly string[]) => slugs.flatMap((slug) => pages.get(slug === "index" ? "" : slug)).filter((page): page is DocsPage => Boolean(page)).map((page) => item(page));
+  // The first two groups open at once; the long ones (components, patterns…) open on the group of the page being read.
+  const folder = (group: keyof typeof ia.groups, children: PageTree.Node[]): PageTree.Folder => ({
+    type: "folder",
+    $id: `ui:${group}`,
+    name: ia.groups[group].title,
+    description: ia.groups[group].when,
+    defaultOpen: group === "get-started" || group === "foundations",
+    children,
+  });
+  const items = getRegistryItems();
+  const itemsOf = (match: (placement: ReturnType<typeof placementOf>) => boolean) => items.filter((entry) => match(placementOf(entry)));
+  const components = (entries: RegistryItem[]) =>
+    entries.flatMap((entry) => {
+      const page = pages.get(entry.name);
+      if (!page) return [];
+      return [item(page, entry.status === "deprecated" ? format(t.docs.kit.deprecatedName, { name: entry.title }) : undefined)];
+    });
+  const jobs = JOBS.flatMap((job) => {
+    const nodes = components(itemsOf((p) => p.group === "components" && p.job === job));
+    return nodes.length ? [separator(`job:${job}`, ia.jobs[job].title), ...nodes] : [];
+  });
+  const patterns = PATTERNS.flatMap((pattern) => {
+    const nodes = components(itemsOf((p) => p.group === "patterns" && p.pattern === pattern));
+    return nodes.length ? [separator(`pattern:${pattern}`, ia.patterns[pattern].title), ...nodes] : [];
+  });
+  const templates = [pages.get("templates"), ...Object.keys(ia.purposes).map((purpose) => pages.get(templatePurposeSlug(purpose)))]
+    .filter((page): page is DocsPage => Boolean(page))
+    .map((page) => item(page));
+  return {
+    name,
+    children: [
+      folder("get-started", written(GROUP_PAGES["get-started"])),
+      folder("foundations", written(GROUP_PAGES.foundations)),
+      folder("components", jobs),
+      folder("patterns", patterns),
+      folder("templates", templates),
+      folder("tooling", written(GROUP_PAGES.tooling)),
+      folder("mobile", written(GROUP_PAGES.mobile)),
+    ],
+  };
+}
+
 /** The sidebar of a section in the reader's language. */
 export function getPageTree(section: DocsSection, locale: Locale): PageTree.Root {
   const t = getDictionary(locale);
   const source = getSource(section, locale);
   const name = t.docs.sections[section].title;
   if (isProductSection(section)) return productTree(section, source, t, name);
+  if (section === "ui") return uiTree(source, t, name);
 
   const separators: Record<string, string> = t.docs.separators;
   const localize = (node: PageTree.Node): PageTree.Node => {

@@ -27,6 +27,20 @@ export type Status = "stable" | "beta" | "deprecated";
 export type Category = "actions" | "forms" | "navigation" | "overlays" | "feedback" | "data-display" | "media" | "charts" | "blocks" | "layouts" | "templates" | "layout" | "foundations";
 export const CATEGORIES: Category[] = ["actions", "forms", "navigation", "overlays", "feedback", "data-display", "media", "charts", "blocks", "layouts", "templates", "layout", "foundations"];
 
+/** Why a reader needs a template: the seven intents the templates are grouped by (krizaka-ui `templatePurposes`). */
+export type TemplatePurpose = "convince" | "explain" | "show" | "act" | "operate" | "converse" | "recover";
+
+/** A template of the registry, flat: the index lists them all, in the order of the intents. */
+export interface RegistryTemplate {
+  component: string;
+  platform: "web" | "native";
+  name: string;
+  title: string;
+  description: string;
+  purpose: TemplatePurpose;
+  why: string;
+}
+
 export interface RegistryExample {
   name: string;
   title: string;
@@ -38,8 +52,12 @@ export interface RegistryExample {
   code: string;
   /** React Native: the screenshots of its story, `examples/button/native/primary.dark.png` (and `.light.png`). */
   screenshots?: { dark: string; light: string };
-  /** A template: a whole screen composed from the platform (a layout's example), listed on /docs/ui/screens. */
+  /** A template: a whole screen composed from the platform (a layout's example), listed on /docs/ui/templates. */
   template?: boolean;
+  /** A template: the intent that groups it (convince, explain, show, act, operate, converse, recover). */
+  purpose?: TemplatePurpose;
+  /** A template: the user goal its layout serves. */
+  why?: string;
 }
 
 export interface RegistryPlatform {
@@ -92,8 +110,8 @@ export interface RegistryItem {
   why?: string;
   /** A kit's component: the @krizaka/ui components it is built on (`ui/badge`). */
   builtOn?: string[];
-  /** A kit's deprecated component: since when, what replaces it (`ui/card` or a kit component), when it goes. */
-  deprecated?: { since: string; use: string; removedIn: string } | null;
+  /** A deprecated component: since when, what replaces it (`ui/card` or a kit component; absent when nothing does), when it goes, why. */
+  deprecated?: { since: string; use?: string; removedIn: string; reason?: string } | null;
   web: RegistryPlatform | null;
   native: (RegistryPlatform & { differences: string[] }) | null;
   dependencies: string[];
@@ -115,6 +133,9 @@ export interface RegistryIndex {
   name: string;
   version: string;
   items: RegistryIndexItem[];
+  /** @krizaka/ui: the groups of templates (title, "you come here when…") and the templates in their order. */
+  templatePurposes?: Record<TemplatePurpose, { title: string; useWhen: string }>;
+  templates?: RegistryTemplate[];
   /** A kit: the product, the platform it extends, how to install it, what it re-exports from @krizaka/ui. */
   product?: ProductKit;
   extends?: { name: string; range: string };

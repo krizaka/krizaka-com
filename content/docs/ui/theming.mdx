@@ -1,0 +1,45 @@
+---
+title: Theming a product
+description: How a product wears Krizaka UI — brand scopes, dark and light, and the values a theme may change.
+---
+
+A product never forks a component: it changes **values**. Every component reads `var(--kz-*)` tokens, so the identity of
+a product is a small set of overrides, applied under a class.
+
+## One scope per brand
+
+`@krizaka/tokens/brands/scoped.css` defines a class for each brand of the family. Put it on the root of the product — or
+on a section, to show two brands on one page:
+
+| Class | Product | Identity |
+| :-- | :-- | :-- |
+| `.brand-krizaka` (default) | The studio and its site | Ink and blue. |
+| `.brand-orazaka` | Orazaka | Orange. |
+| `.brand-orochia` | Orochia | Violet to magenta. |
+| `.brand-yazakia` | Yazakia | Emerald to turquoise. |
+| `.brand-yororis` | Yororis | Sand to sage. |
+
+```css title="app/globals.css"
+@import "tailwindcss";
+@import "@krizaka/tailwind";
+@import "@krizaka/tokens/brands/scoped.css";
+```
+
+```tsx
+<html lang="en" className="brand-orochia">…</html>
+```
+
+## Dark and light
+
+Dark is the default (`:root`); light is `html.light`. The toggle is `ThemeProvider` / `ThemeToggle` of
+`@krizaka/ui/theme`, persisted by the app. A component never has a `light:` variant or a literal colour: both modes are
+the same component with other values.
+
+## What a product may change
+
+A product theme overrides the accent roles (`--kz-accent`, `--kz-accent-text`, `--kz-brand-gradient-*`), and nothing
+else: surfaces, text, borders and radii are the platform's, so contrast stays proven. Components that carry a product's
+vocabulary live in its own design system (`@krizaka/<product>-design-system`) and are built on the primitives here —
+see [Orazaka UI](/docs/orazaka/ui) and [Orochia UI](/docs/orochia/ui).
+
+The roles themselves, their values in both modes and their contrasts are on the [tokens](/docs/ui/tokens) page.

@@ -1,1 +1,1 @@
-{"title": "Krizaka UI", "pages": ["index", "screens", "---Foundations---", "tokens", "typography", "icons", "---Tooling---", "tailwind", "intl", "query", "...components"]}
+{"title": "Krizaka UI", "pages": ["index", "installation", "theming", "tokens", "typography", "icons", "motion", "brand-marks", "tailwind", "intl", "i18n", "query", "realtime", "push", "config", "mobile", "templates"]}

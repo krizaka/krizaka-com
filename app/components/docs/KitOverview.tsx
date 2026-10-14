@@ -40,7 +40,7 @@ export function overviewToc(kit: ProductKit, t: TranslationDictionary): TOCItemT
 /** A component of the kit as a card: its title, summary and the primitives it is built on. */
 function ComponentCard({ item, kit, locale, t }: { item: RegistryItem; kit: ProductKit; locale: Locale; t: TranslationDictionary }) {
   const builtOn = (item.builtOn ?? []).map((ref) => resolveReference(ref, kit).name);
-  const replacement = item.deprecated && resolveReference(item.deprecated.use, kit);
+  const replacement = item.deprecated?.use ? resolveReference(item.deprecated.use, kit) : null;
   return (
     <li>
       <Link href={componentHref(locale, kit, item.name)}>

@@ -2,6 +2,7 @@ import type { AnchorHTMLAttributes, ComponentProps, HTMLAttributes } from "react
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import type { MDXComponents } from "mdx/types";
 import { ComponentCatalog } from "./ComponentCatalog";
+import { ComponentHero } from "./ComponentHero";
 import { ProductKits } from "./ProductKits";
 import { EventSchema } from "./EventSchema";
 import { ComingSoon } from "./ComingSoon";
@@ -49,6 +50,7 @@ export function getMdxComponents(locale: Locale, section: DocsSection): MDXCompo
     CliJourney: () => <CliJourney locale={locale} />,
     CliCommands: () => <CliCommands locale={locale} />,
     ComponentCatalog: () => <ComponentCatalog locale={locale} />,
+    ComponentHero: () => <ComponentHero locale={locale} />,
     ProductKits: () => <ProductKits locale={locale} />,
     EventSchema: (props: Omit<ComponentProps<typeof EventSchema>, "locale">) => <EventSchema {...props} locale={locale} />,
     ComingSoon: (props: Omit<ComponentProps<typeof ComingSoon>, "locale">) => <ComingSoon {...props} locale={locale} />,

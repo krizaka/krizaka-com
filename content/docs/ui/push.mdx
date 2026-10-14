@@ -1,0 +1,31 @@
+---
+title: Push
+description: Mobile notifications through the Expo Push Service — batches, receipts and dead tokens, with no dependency.
+---
+
+`@krizaka/push` sends mobile push **without an SDK**: the Expo Push Service relays to Firebase Cloud Messaging on Android
+and to the Apple Push Notification service on iOS, from one HTTP call and one kind of token (`ExponentPushToken[…]`).
+The FCM and APNs credentials live in the app's EAS project — never on your server. Zero dependency: you pass `fetch`.
+
+```ts
+import { isExpoPushToken, sendExpoPush } from "@krizaka/push";
+
+if (!isExpoPushToken(token)) return badRequest(); // when the phone registers
+
+const outcome = await sendExpoPush(
+  devices.map((d) => ({ to: d.token, title, body, data: { path: "/inbox/42" } })),
+  { fetch },
+);
+await forgetTokens(outcome.deadTokens); // uninstalled app, revoked permission
+```
+
+## The rules it carries
+
+- **Best-effort.** A push repeats what the app already shows; it never decides anything. Write the fact first, push
+  second.
+- **Dead tokens are forgotten.** `DeviceNotRegistered` tickets come back in `deadTokens`: delete them.
+- **Data, not secrets.** `data` reaches the device as is — a path to open, an id; never content you would not show on a
+  lock screen.
+- **Send from production only.** Local runs and CI never call the service.
+
+On the phone, the permission is asked in words first by [Permission prompt](/docs/ui/permission-prompt).
