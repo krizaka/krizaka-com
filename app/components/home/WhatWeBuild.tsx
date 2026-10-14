@@ -30,22 +30,21 @@ export default function WhatWeBuild({ locale }: { locale: string }) {
     >
       <CardGrid as="ul" min={260} columns={4}>
         {PRODUCTS.map((p) => (
-          <li key={p.id}>
-            <LinkCard
-              href={p.devUrl}
-              layout="stack"
-              title={p.name}
-              description={site.products.cards[p.id].line}
-              icon={<ProductLogo id={p.id} size={40} animated={false} />}
-              meta={hostOf(p.devUrl)}
-              cta={format(h.visit, { host: hostOf(p.devUrl) })}
-              extra={
-                <Facts
-                  items={[p.status ? { label: site.nav.status[p.status].long, tone: "wip" } : { label: h.preview, tone: "ok" }]}
-                />
-              }
-            />
-          </li>
+          <LinkCard
+            key={p.id}
+            href={p.devUrl}
+            layout="stack"
+            title={p.name}
+            description={site.products.cards[p.id].line}
+            icon={<ProductLogo id={p.id} size={40} animated={false} />}
+            meta={hostOf(p.devUrl)}
+            cta={format(h.visit, { host: hostOf(p.devUrl) })}
+            extra={
+              <Facts
+                items={[p.status ? { label: site.nav.status[p.status].long, tone: "wip" } : { label: h.preview, tone: "ok" }]}
+              />
+            }
+          />
         ))}
       </CardGrid>
     </Section>
