@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { getDictionary, type Locale } from "@/lib/i18n";
 import { UI_EXAMPLES, type UiExampleKey } from "@/lib/ui-examples";
+import { examplePropsOf } from "@/lib/ui-example-props";
 import { getRegistryItem } from "@/lib/ui-registry";
 import { MapAssets } from "./MapAssets";
 
@@ -17,6 +18,7 @@ const LIVE: { key: UiExampleKey; component: string }[] = [
   { key: "profile-card/creator", component: "profile-card" },
   { key: "charts/line-chart/creator-earnings", component: "line-chart" },
   { key: "map/static", component: "map" },
+  { key: "vertical-video/rail", component: "vertical-video" },
 ];
 const PHONE = { component: "loader", example: "job-wait" };
 
@@ -50,7 +52,7 @@ export async function ComponentHero({ locale }: { locale: Locale }) {
             </Link>
             <div className="kz-hero-strip-stage">
               {key.startsWith("map/") ? <MapAssets /> : null}
-              <Example />
+              <Example {...examplePropsOf(key)} />
             </div>
           </li>
         ))}

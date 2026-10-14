@@ -8,12 +8,14 @@ import { Countdown } from "@krizaka/ui/countdown";
 import { GoalGauge } from "@krizaka/ui/goal-gauge";
 import { ImageCropper, type CropValue } from "@krizaka/ui/image-cropper";
 import { MediaCapture } from "@krizaka/ui/media-capture";
-import ShortClip from "./ShortClip";
+import { VerticalVideo } from "@krizaka/ui/vertical-video";
+import { IconButton } from "@krizaka/ui/button";
+import { TipIcon } from "@krizaka/icons";
 import { VideoTrimmer } from "@krizaka/ui/video-trimmer";
 import { Sparkline } from "@krizaka/charts/sparkline";
 import { format } from "@krizaka/i18n";
 import { useI18n } from "../../I18nProvider";
-import { KIT_CLIP_SECONDS, KIT_COUNTDOWN_MS, KIT_MOMENT_MS, KIT_CURRENCY, KIT_GOAL, KIT_SERIES_CENTS } from "@/lib/kit-live";
+import { KIT_CLIP_SECONDS, KIT_COUNTDOWN_MS, KIT_MOMENT_MS, KIT_CURRENCY, KIT_GOAL, KIT_SERIES_CENTS, KIT_SHORT } from "@/lib/kit-live";
 import { money, useTargetIn } from "./shared";
 import type { KitTileProps } from "./types";
 
@@ -21,29 +23,39 @@ export default function OrochiaTile({ id, media, brand }: KitTileProps) {
   const { t, locale } = useI18n();
   const k = t.site.home.build.kit;
   const [kept, setKept] = useState<[number, number]>([1.2, 4.4]);
+  const [liked, setLiked] = useState(false);
   const [crop, setCrop] = useState<CropValue>({ x: 0.5, y: 0.28, zoom: 1 });
   const moment = brand === "yororis";
   const end = useTargetIn(moment ? KIT_MOMENT_MS : KIT_COUNTDOWN_MS);
-  const v = k.video.labels;
   const trim = k.trimmer.labels;
 
   switch (id) {
     case "video-player":
       return (
         <>
-        <ShortClip
-          avatar={media.avatar}
-          title={k.video.title}
-          src={media.clip.src}
-          poster={media.clip.poster}
-          labels={{
-            play: v.play, pause: v.pause, mute: v.mute, unmute: v.unmute, volume: v.volume, seek: v.seek, fullscreen: v.fullscreen,
-            exitFullscreen: v.exitFullscreen, pictureInPicture: v.pictureInPicture, loading: v.loading, error: v.error, retry: v.retry,
-            speed: (rate) => format(v.speed, { rate }),
-            captions: (track) => format(v.captions, { track: track ?? v.captionsOff }),
-            time: (time, duration) => format(v.time, { time, duration }),
-          }}
-        />
+        <div className="kl-short">
+          <VerticalVideo
+            title={k.video.title}
+            src={media.clip.src}
+            poster={media.clip.poster}
+            creator={{ name: k.short.creator, avatarSrc: media.avatar }}
+            disclosure={k.short.tag}
+            caption={k.short.caption}
+            likes={KIT_SHORT.likes}
+            comments={KIT_SHORT.comments}
+            liked={liked}
+            onLike={setLiked}
+            locale={locale}
+            labels={{ like: k.short.like, comment: k.short.comment, share: k.short.share }}
+            onComment={() => undefined}
+            onShare={() => undefined}
+            tipSlot={
+              <IconButton label={k.short.tip} variant="ghost" shape="pill" className="h-11 min-h-11 w-11 min-w-11 bg-scrim text-fg-on-media">
+                <TipIcon aria-hidden />
+              </IconButton>
+            }
+          />
+        </div>
         <p className="kl-muted kl-credit">{k.media.credit}</p>
         </>
       );

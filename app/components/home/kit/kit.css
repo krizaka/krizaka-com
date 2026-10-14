@@ -39,8 +39,3 @@
 
 /* The vertical clip: the rail and the caption sit over the picture, above the player's own controls. */
 .kl-short { position: relative; max-width: 250px; margin-inline: auto; width: 100%; }
-.kl-short-rail { position: absolute; right: 8px; bottom: 84px; display: grid; justify-items: center; gap: 4px; z-index: 2; }
-.kl-short-btn { color: var(--kz-text-on-media); background: var(--kz-scrim); border-radius: 999px; }
-.kl-short-btn[aria-pressed="true"] { color: var(--kz-accent); }
-.kl-short-n { font-size: 11px; font-weight: 600; color: var(--kz-text-on-media); text-shadow: 0 1px 2px var(--kz-scrim-strong); }
-.kl-short-caption { position: absolute; left: 10px; right: 64px; bottom: 84px; display: grid; justify-items: start; gap: 4px; z-index: 2; font-size: 12px; line-height: 1.35; color: var(--kz-text-on-media); text-shadow: 0 1px 2px var(--kz-scrim-strong); pointer-events: none; }
