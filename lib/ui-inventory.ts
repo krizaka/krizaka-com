@@ -79,7 +79,6 @@ export const PLANNED: Record<string, string> = {
   "splash-handoff": `${MOBILE}: the launch screen that dissolves into the product mark (krizaka-ui#137).`,
   "split-view": `${WEB_APPS}: messages and any list-and-detail screen.`,
   "status-page": `${SITE}: /status and the "under construction" pages.`,
-  "step-progress": `${MOBILE}: the steps of an onboarding or a booking.`,
   "swipeable-row": `${MOBILE}: archive / delete on a row of a list.`,
   "tab-bar": `${MOBILE}: the main navigation of every app.`,
   "tag-input": "Free tags in the form: Orazaka's pack metadata, Orochia's video tags.",
@@ -89,6 +88,12 @@ export const PLANNED: Record<string, string> = {
   "calendar-heatmap": "A creator's activity by day (PS-C).",
   funnel: "Orochia's sign-up and purchase funnel (PS-C).",
   "geo-map": "Audience by region, on MapLibre (PS-C).",
+  "credit-usage": "Orazaka's credits left and Orochia's allowance (PS-C ready-made charts).",
+  "earnings-chart": "A creator's earnings per period in Orochia's studio (PS-C).",
+  "goal-progress": "Orochia's challenge pots: raised of the goal (PS-C).",
+  "job-throughput": "Orazaka's jobs per period by status (PS-C).",
+  "latency-chart": "Orazaka's median and p95 latency per studio (PS-C).",
+  "price-ticker": "Orochia's live auction price (PS-C).",
   chart: "The base the other charts are built on.",
 };
 

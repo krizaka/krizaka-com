@@ -1,5 +1,5 @@
 {
-  "scannedAt": "2026-10-14",
+  "scannedAt": "2026-10-13",
   "repos": {
     "orochia": [
       {
@@ -55,8 +55,8 @@
     "krizaka": [
       {
         "repo": ".",
-        "commit": "b111393",
-        "files": 197
+        "commit": "8775843",
+        "files": 201
       }
     ]
   },
@@ -77,7 +77,7 @@
       "orochia": 7
     },
     "badge": {
-      "krizaka": 2,
+      "krizaka": 3,
       "orazaka": 15,
       "orochia": 6
     },
@@ -86,7 +86,7 @@
       "orochia": 2
     },
     "button": {
-      "krizaka": 9,
+      "krizaka": 10,
       "orazaka": 61,
       "orochia": 19,
       "yazakia": 3
@@ -107,10 +107,10 @@
       "orochia": 2
     },
     "chat": {
-      "krizaka": 1
+      "krizaka": 2
     },
     "chip": {
-      "krizaka": 2,
+      "krizaka": 3,
       "orazaka": 2,
       "orochia": 3
     },
@@ -139,7 +139,7 @@
       "krizaka": 1
     },
     "countdown": {
-      "krizaka": 1,
+      "krizaka": 2,
       "orochia": 5
     },
     "cta-panel": {
@@ -206,6 +206,7 @@
       "krizaka": 4
     },
     "loader": {
+      "krizaka": 1,
       "orazaka": 4,
       "orochia": 1
     },
@@ -226,7 +227,7 @@
       "yazakia": 3
     },
     "match-dialog": {
-      "krizaka": 1
+      "krizaka": 2
     },
     "media-capture": {
       "krizaka": 1
@@ -271,7 +272,7 @@
       "krizaka": 1
     },
     "progress": {
-      "krizaka": 2,
+      "krizaka": 3,
       "orazaka": 4,
       "orochia": 2
     },
@@ -290,6 +291,7 @@
       "yazakia": 1
     },
     "skeleton": {
+      "krizaka": 1,
       "orazaka": 3,
       "orochia": 11
     },
@@ -312,13 +314,16 @@
     "stat": {
       "orochia": 1
     },
+    "step-progress": {
+      "krizaka": 1
+    },
     "stepper": {
       "krizaka": 2,
       "orazaka": 1,
       "orochia": 1
     },
     "swipe-deck": {
-      "krizaka": 1
+      "krizaka": 2
     },
     "switch": {
       "krizaka": 1,
@@ -359,7 +364,7 @@
       "orochia": 18
     },
     "verified-badge": {
-      "krizaka": 1
+      "krizaka": 2
     },
     "video-player": {
       "krizaka": 1
