@@ -50,7 +50,7 @@ const emblemOf = (id: string) => (id === STUDIO.id ? "sword" : id === ENGINE ? "
 const mark = (id: string, size: number) => <ProductLogo id={id as BrandId} size={size} animated={false} />;
 const pad = (n: number) => String(n).padStart(2, "0");
 
-type Chapters = Record<string, { caption: string; title: string; body: string[]; move: string; stat: string } | undefined>;
+type Chapters = Record<string, { knowhow: string; caption: string; title: string; body: string[]; move: string; stat: string } | undefined>;
 
 function Bird({ bird, size }: { bird: string; size: number }) {
   if (bird === "phoenix") return <Phoenix size={size} animated={false} />;
@@ -67,6 +67,11 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
   const stage = (n: number) => `${st.arcade.stage} ${pad(n)}`;
   const lines = t.site.products.cards as Record<string, { line: string } | undefined>;
   const statusOf = (p: StoryProduct) => (p.status ? t.site.nav.status[p.status].long : undefined);
+  /** The know-how the product proves — with its release state when it is not released yet. */
+  const knowhowOf = (p: StoryProduct, words: { knowhow: string }) => {
+    const status = statusOf(p);
+    return status ? `${words.knowhow} · ${status}` : words.knowhow;
+  };
   const percent = (value: number) => <NumberTicker value={value} locale={locale} format={{ style: "percent" }} />;
   const kitName = (id: KitId) => st.kits[id].name;
   const birdName = (bird: string) => flockWords[bird] && `${flockWords[bird]!.name} · ${flockWords[bird]!.role}`;
@@ -111,12 +116,11 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
             linkAs={Link}
             items={products.map((p, i) => {
               const words = chapters[p.id]!;
-              const status = statusOf(p);
               return {
                 id: p.id,
                 brand: p.id,
                 badge: `P${i + 1}`,
-                eyebrow: p.id === ENGINE ? st.roles.engine : (status ?? st.roles.product),
+                eyebrow: knowhowOf(p, words),
                 icon: <Emblem kind={emblemOf(p.id)} size={13} />,
                 visual: mark(p.id, 84),
                 name: p.name,
@@ -207,7 +211,6 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
       {/* ── One stage per product: the engine first, then the products it powers ── */}
       {products.map((p, i) => {
         const words = chapters[p.id]!;
-        const status = statusOf(p);
         return (
           <SectionBackdrop key={p.id} as="section" className={cn("st-stage", "brand-" + p.id)} dome={false} aria-labelledby={`st-${p.id}`} data-kzs-scene="">
             <span className="st-ghost" aria-hidden>
@@ -219,7 +222,7 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
                   nameAs="p"
                   visual={mark(p.id, 120)}
                   icon={<Emblem kind={emblemOf(p.id)} size={16} />}
-                  name={p.id === ENGINE ? st.roles.engine : (status ?? st.roles.product)}
+                  name={knowhowOf(p, words)}
                   statLabel={p.stat !== undefined ? words.stat : undefined}
                   value={(p.stat ?? 1) * 100}
                   figure={p.stat !== undefined ? percent(p.stat) : undefined}

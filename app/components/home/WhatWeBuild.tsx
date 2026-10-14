@@ -1,6 +1,7 @@
-/* "What we build" — the four products as equals (lib/products.ts): the mark, the name, one neutral line, the status,
-   and the way to the product's own site. Same card, same weight, same Krizaka accent for each: none is featured. The
-   cards are @krizaka/ui LinkCards (the whole card one link). */
+/* "What we know how to do" — one block per know-how, each proved by a product (lib/products.ts): the know-how, the
+   product that proves it (mark, name, status), one provable sentence (site.products.knowhow.<id>) and the way to the
+   product's own site. Same card, same weight for each: none is featured. The cards are @krizaka/ui LinkCards (the
+   whole card one link). */
 
 import Link from "next/link";
 import { ForwardIcon } from "@krizaka/icons";
@@ -34,10 +35,11 @@ export default function WhatWeBuild({ locale }: { locale: string }) {
             key={p.id}
             href={p.devUrl}
             layout="stack"
-            title={p.name}
-            description={site.products.cards[p.id].line}
+            className={"brand-" + p.id}
+            title={site.products.knowhow[p.id].name}
+            description={site.products.knowhow[p.id].proof}
             icon={<ProductLogo id={p.id} size={40} animated={false} />}
-            meta={hostOf(p.devUrl)}
+            meta={format(site.products.proofBy, { name: p.name })}
             cta={format(h.visit, { host: hostOf(p.devUrl) })}
             extra={
               <Facts

@@ -111,10 +111,10 @@
       }
     },
     "products": {
-      "eyebrow": "Les produits Krizaka",
+      "eyebrow": "Savoir-faire, prouvé par des produits",
       "title": "Nos produits",
-      "pageTitle": "Quatre produits, chacun sur son site",
-      "lead": "Krizaka construit des produits open source. Chacun a son propre site, où il est présenté, démontré et documenté — et son code source sur GitHub.",
+      "pageTitle": "Quatre savoir-faire, chacun prouvé par un produit",
+      "lead": "Les produits de Krizaka sont la preuve de ce qu'elle sait faire. Chacun a son propre site, où il est présenté, démontré et documenté — et son code source sur GitHub.",
       "visit": "Voir le site de dev",
       "visitAria": "{name} — voir le site de dev",
       "source": "Code source",
@@ -131,6 +131,25 @@
         },
         "yororis": {
           "line": "Un espace d'écoute avec un visage et une voix."
+        }
+      },
+      "proofBy": "Prouvé par {name}",
+      "knowhow": {
+        "orazaka": {
+          "name": "Le moteur",
+          "proof": "Chaque requête traverse un pipeline déterministe jusqu'au meilleur modèle local : vos documents, vos modèles, votre réseau — rien ne sort."
+        },
+        "orochia": {
+          "name": "La maîtrise des médias",
+          "proof": "Les envois partent directement vers le CDN en Tus, un transcodeur adaptatif encode, la lecture passe par des liens HLS signés qui expirent après cinq minutes, et chaque transaction se règle par séquestre."
+        },
+        "yasakia": {
+          "name": "La géolocalisation",
+          "proof": "La position est arrondie à environ 1 km avant d'être stockée, et la base répond au rayon et rapproche qui vous êtes de qui vous cherchez — à proximité, jamais exacte."
+        },
+        "yororis": {
+          "name": "La voix et l'image",
+          "proof": "Un espace d'écoute avec un visage et une voix — en construction : rien n'est déployé, rien n'est proposé."
         }
       }
     },
@@ -154,17 +173,17 @@
         }
       },
       "products": {
-        "eyebrow": "Ce que nous construisons",
-        "title": "Quatre produits, chacun sur son site.",
-        "lead": "Chaque produit est présenté, démontré et documenté sur son propre site, avec son code source sur GitHub.",
+        "eyebrow": "Savoir-faire",
+        "title": "Ce que nous savons faire.",
+        "lead": "Chaque savoir-faire est prouvé par un produit, sur son propre site, avec son code source sur GitHub.",
         "visit": "Ouvrir {host}",
         "preview": "Préversion dev",
         "all": "Tous les produits"
       },
       "stack": {
         "eyebrow": "La pile que nous ouvrons",
-        "title": "Une seule pile ouverte construit les quatre produits.",
-        "lead": "Orazaka, Orochia, Yasakia et Yororis sont faits des mêmes briques ouvertes : Krizaka UI pour chaque écran, Krizaka Java pour chaque service. Chaque produit n'apporte que son identité.",
+        "title": "Une même pile ouverte sous chaque savoir-faire.",
+        "lead": "Orazaka, Orochia, Yasakia et Yororis sont faits des mêmes pièces ouvertes : Krizaka UI pour chaque écran, Krizaka Java pour chaque service. Chaque produit n'apporte que son identité et son savoir-faire.",
         "visit": "Ouvrir {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
@@ -302,7 +321,7 @@
         "eyebrow": "Notre histoire",
         "presents": "Krizaka présente",
         "title": "Un studio. Un moteur. <b>Tous les produits sur les mêmes briques.</b>",
-        "lead": "Krizaka est un studio né d'un refus. Vos données ne devraient pas avoir à quitter la maison pour être utiles, un créateur ne devrait pas laisser une fortune à une plateforme pour être payé, et personne ne devrait croire un logiciel sur parole. Alors nous forgeons les briques au grand jour, nous construisons dessus un moteur d'IA — Orazaka — et nous livrons nos produits sur les deux. Nous utilisons ce que nous fabriquons, tous les jours."
+        "lead": "Krizaka est un studio né d'un refus. Vos données ne devraient pas avoir à quitter la maison pour être utiles, un créateur ne devrait pas laisser une fortune à une plateforme pour être payé, et personne ne devrait croire un logiciel sur parole. Alors nous forgeons les briques au grand jour, nous construisons dessus un moteur d'IA — Orazaka — et nous livrons nos produits sur les deux. Nous utilisons ce que nous fabriquons, tous les jours. Chaque produit prouve une chose que nous savons faire — le moteur, la géolocalisation, la voix et l'image — à côté de la maîtrise des médias derrière Orochia."
       },
       "studio": {
         "label": "La maison",
@@ -348,10 +367,6 @@
           "line": "Le moteur d'IA souverain"
         }
       },
-      "roles": {
-        "engine": "Le moteur",
-        "product": "Produit"
-      },
       "runsOn": "Tourne sur",
       "ours": {
         "label": "Manche bonus",
@@ -370,7 +385,8 @@
             "C'est aussi le moteur que les produits sont destinés à appeler : les conversations de Yasakia sont prévues sur lui, comme celles de tout produit qui a besoin d'intelligence sans rien envoyer ailleurs."
           ],
           "move": "Vos données ne quittent jamais la maison.",
-          "stat": "Données gardées chez vous"
+          "stat": "Données gardées chez vous",
+          "knowhow": "Le moteur"
         },
         "yasakia": {
           "caption": "L'app de rencontre où l'on parle d'abord",
@@ -381,7 +397,8 @@
             "Le lot suivant attend votre retour. Pas de swipe, pas de catalogue, pas de fil sans fin : moins de personnes, mieux choisies, et personne que vous n'ayez voulu rencontrer tous les deux."
           ],
           "move": "Dans les deux sens, ou pas du tout.",
-          "stat": "Mises en relation réciproques"
+          "stat": "Mises en relation réciproques",
+          "knowhow": "La géolocalisation"
         },
         "yororis": {
           "caption": "Un espace d'écoute avec un visage et une voix",
@@ -392,7 +409,8 @@
             "Il est prévu sur le pack bien-être d'Orazaka : les gardes vivront dans le moteur et ce que vous direz restera sur nos machines. Nous construisons Yororis en public et nous étudions son cadre — juridique, éthique, clinique — avant toute mise à disposition. Rien n'est en ligne, rien n'est offert, et il n'y a pas de date."
           ],
           "move": "Une présence qui s'arrête.",
-          "stat": "En construction"
+          "stat": "En construction",
+          "knowhow": "La voix et l'image"
         }
       },
       "flock": {
@@ -517,7 +535,8 @@
         "blocks": "Briques",
         "more": "Plus",
         "stack": "La pile",
-        "runs": "Ce qui tourne sur quoi"
+        "runs": "Ce qui tourne sur quoi",
+        "knowhow": "Savoir-faire"
       },
       "eyebrow": "Open source · Apache-2.0",
       "stackEyebrow": "La pile",
@@ -532,7 +551,7 @@
       },
       "runs": {
         "eyebrow": "La preuve",
-        "title": "Une seule pile ouverte construit les quatre produits.",
+        "title": "Une même fondation ouverte sous chaque savoir-faire.",
         "lead": "Chaque case est lue dans les manifestes des produits (package.json et pom.xml) — jamais saisie. « Prévu » marque ce qui est décidé et suivi, pas encore livré.",
         "caption": "Ce sur quoi tourne chaque produit",
         "product": "Produit",
@@ -551,6 +570,13 @@
           "icons": "icônes",
           "intl": "intl"
         }
+      },
+      "foundation": {
+        "eyebrow": "La fondation",
+        "title": "Les mêmes pièces ouvertes sous chaque savoir-faire.",
+        "lead": "Un savoir-faire n'est pas une fonction d'un produit : il repose sur la pile partagée. Chaque carte nomme le savoir-faire, le produit qui le prouve et les pièces ouvertes dessous, et mène aux dépôts de ce produit plus bas.",
+        "stands": "{name} repose sur {kits}.",
+        "standsAlone": "{name} est le moteur que les autres produits sont censés appeler."
       }
     },
     "notFound": {
