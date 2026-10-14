@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ExternalIcon } from "@krizaka/icons";
 import { GitHubMark } from "./brand/GitHubMark";
 import { useI18n } from "./I18nProvider";
-import { ProductStatus } from "./ProductStatus";
 import { useContactHref } from "./useContactHref";
 import { NAV_DOCS, NAV_DOCS_HUB, NAV_PRODUCTS, docsLinkText } from "@/lib/nav";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
@@ -15,21 +14,15 @@ export default function SiteFooter() {
   const f = t.site.footer;
   const contactHref = useContactHref();
 
-  // Same entries per product as the menus (lib/nav.ts), one column each — as many columns as there are products.
-  const productColumns = NAV_PRODUCTS.map((p) => ({
-    key: p.id,
-    title: (
-      <>
-        <ProductLogo id={p.id} size={18} animated={false} /> {p.name}
-        {/* The narrow column keeps one line: the dot, its words for screen readers and on hover. */}
-        {p.status && <ProductStatus status={p.status} t={t} variant="dot" className={"brand-" + p.id + " ml-0.5"} />}
-      </>
-    ),
-    links: p.links.map((l) => ({ label: t.site.nav[p.id].links[l.icon].label, href: l.href })),
-  }));
+  // One column for the products: each one's own site (lib/products.ts), never a page of this site.
+  const productColumn = {
+    key: "products",
+    title: <><ProductLogo id="krizaka" size={18} animated={false} /> {f.products}</>,
+    links: NAV_PRODUCTS.map((p) => ({ label: p.name, href: p.href })),
+  };
 
   const krizakaLinks = [
-    { label: f.products, href: "/products" },
+    { label: f.allProducts, href: "/products" },
     { label: f.story, href: "/story" },
     { label: f.openSource, href: "/open-source" },
     { label: f.contact, href: contactHref },
@@ -41,7 +34,7 @@ export default function SiteFooter() {
   const docsLinks = [...NAV_DOCS.map((d) => ({ label: docsLinkText(t, d).label, href: d.href })), { label: t.site.nav.docs.all.label, href: NAV_DOCS_HUB }];
 
   const columns = [
-    ...productColumns,
+    productColumn,
     { key: "docs", title: <>{f.docs}</>, links: docsLinks },
     { key: "krizaka", title: <><ProductLogo id="krizaka" size={18} animated={false} /> Krizaka</>, links: krizakaLinks },
   ];
@@ -68,7 +61,11 @@ export default function SiteFooter() {
               <ul>
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} prefetch={false}>{link.label}</Link>
+                    {link.href.startsWith("/") ? (
+                      <Link href={link.href} prefetch={false}>{link.label}</Link>
+                    ) : (
+                      <a href={link.href} target="_blank" rel="noopener noreferrer">{link.label}</a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -90,7 +87,7 @@ export default function SiteFooter() {
         .kz-footer-brand p { margin: 14px 0 16px; max-width: 300px; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
         .kz-footer-gh { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--kz-text-secondary); text-decoration: none; }
         .kz-footer-gh:hover { color: var(--kz-text-primary); }
-        .kz-footer-cols { display: grid; grid-template-columns: repeat(var(--kz-footer-count, 6), minmax(0, 1fr)); gap: 24px; }
+        .kz-footer-cols { display: grid; grid-template-columns: repeat(var(--kz-footer-count, 3), minmax(0, 1fr)); gap: 24px; }
         .kz-footer-title { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700;
           letter-spacing: .12em; text-transform: uppercase; color: var(--kz-text-primary); }
         .kz-footer-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }

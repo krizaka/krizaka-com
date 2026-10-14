@@ -1,6 +1,5 @@
-import { OROCHIA_APP_URL, YAZAKIA_REPO_URL, YORORIS_REPO_URL } from "./site";
 /* ═══════════════════════════════════════════════════════════════════
-   KRIZAKA — organisation-level data for the home page and /open-source.
+   KRIZAKA — organisation-level data for the home page and /open-source (the products themselves: lib/products.ts).
    Repository lists are NOT written here: they come from the generated
    architecture files of each product (app/data/*.json).
    ═══════════════════════════════════════════════════════════════════ */
@@ -64,58 +63,3 @@ export function orgRepositories(): OrgRepository[] {
   ];
   return [workspace, ...oz, ...oc, ...shared];
 }
-
-export interface Product {
-  id: "orazaka" | "orochia" | "yazakia" | "yororis";
-  name: string;
-  href: string;
-  /** Its documentation — none until it is published. */
-  docsHref?: string;
-  repoUrl: string;
-  /** The running application, when there is one to open (OROCHIA_APP_URL). */
-  appUrl?: string;
-  /* Tagline, summary and points: messages → site.products.<id>. */
-  stack: string;
-  /** Screen recording of the product: `<src>.webm|.mp4|.jpg` on the CDN (lib/cdn.ts). None until the real application can be
-      recorded: the home shows its animated mark instead — never an invented screenshot. */
-  media?: { src: string; aspect: string; frame: string };
-}
-
-export const PRODUCTS: Product[] = [
-  {
-    id: "orazaka",
-    name: "Orazaka",
-    href: "/products/orazaka",
-    docsHref: "/docs/orazaka/101",
-    repoUrl: "https://github.com/krizaka/orazaka",
-    stack: "Java 21 · Spring Boot 4 · Spring AI 2 · Next.js · Ollama",
-    media: { src: "products/orazaka/tour/showcase", aspect: "16 / 10", frame: "orazaka · web client" },
-  },
-  {
-    id: "orochia",
-    name: "Orochia",
-    href: "/products/orochia",
-    docsHref: "/docs/orochia",
-    repoUrl: "https://github.com/krizaka/orochia",
-    appUrl: OROCHIA_APP_URL,
-    stack: "Next.js 16 · PostgreSQL · Drizzle · Bunny Stream",
-    media: { src: "products/orochia/tour/showcase", aspect: "16 / 10", frame: "orochia · web" },
-  },
-  {
-    id: "yazakia",
-    name: "Yazakia",
-    href: "/products/yazakia",
-    repoUrl: YAZAKIA_REPO_URL,
-    stack: "Expo · Next.js 16 API · PostgreSQL + pgvector · Orazaka",
-  },
-  /* Under construction (lib/nav.ts status): nothing recorded, nothing to open — the home and /products show its
-     animated mark and say so. */
-  {
-    id: "yororis",
-    name: "Yororis",
-    href: "/products/yororis",
-    docsHref: "/docs/yororis",
-    repoUrl: YORORIS_REPO_URL,
-    stack: "Next.js 16 · Expo · PostgreSQL · Orazaka wellbeing pack",
-  },
-];

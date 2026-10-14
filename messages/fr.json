@@ -24,108 +24,6 @@
     "githubAria": "Voir le dépôt sur GitHub",
     "starsAria": "étoiles GitHub"
   },
-  "homeHero": {
-    "badge": "IA cognitive souveraine · Loi 25 · RGPD",
-    "titleLead": "L'IA de ton organisation,",
-    "titleAccent": "souveraine",
-    "titleTail": "et hébergée chez toi.",
-    "sub": "Krizaka conçoit Orazaka — le moteur d'orchestration IA multimodal qui raisonne sur ton infra. Chaque requête traverse un pipeline d'intercepteurs déterministe. Rien ne quitte ton réseau.",
-    "ctaPrimary": "Découvrir Orazaka",
-    "ctaSecondary": "Voir l'architecture",
-    "trust": [
-      "On-premise",
-      "Ollama",
-      "Open source",
-      "Architecture hexagonale"
-    ],
-    "chat": {
-      "status": "En ligne · local",
-      "model": "llama3 · Ollama",
-      "routed": "Routé localement",
-      "question": "Résume le contrat en pièce jointe et signale les clauses non conformes à la Loi 25.",
-      "answer": "3 clauses à revoir : transfert de données hors Québec (art. 17), durée de conservation indéfinie, absence de consentement explicite. Analyse effectuée sur ton serveur — aucune donnée transmise.",
-      "pipeline": [
-        "Intention",
-        "Contexte",
-        "Routage",
-        "Validation"
-      ],
-      "privacy": "0 donnée ne quitte ton réseau",
-      "placeholder": "Pose une question à ton IA souveraine…"
-    }
-  },
-  "quickstart": {
-    "sectionLabel": "Quickstart",
-    "sectionTitle": "Démarre en 3 commandes",
-    "sectionDesc": "Une seule dépendance : Node. Orazaka installe le moteur, le lance et ouvre le mode dev.",
-    "note": "Besoin du détail ? Le guide d'installation couvre Docker, Ollama et la configuration.",
-    "docsCta": "Lire les docs",
-    "communityCta": "Rejoindre la communauté"
-  },
-  "techStack": {
-    "sectionLabel": "Stack technologique",
-    "sectionTitle": "Construit avec des technologies éprouvées",
-    "sectionDesc": "Java 21 Virtual Threads, Spring AI, architecture hexagonale — pas de frameworks expérimentaux."
-  },
-  "useCases": {
-    "sectionLabel": "L'Infrastructure en Action",
-    "sectionTitle": "Solutions Souveraines par Secteur",
-    "sectionDesc": "De la veille territoriale à l'engagement éthique : découvrez comment Orazaka automatise la prospection locale tout en garantissant la conformité Loi 25 et LCEE.",
-    "viewAll": "Explorer le cas d'usage",
-    "learnMore": "Fiche technique",
-    "items": [
-      {
-        "industry": "Services de proximité",
-        "title": "Prospection locale et détection d'opportunités",
-        "desc": "Automatisez la prospection locale B2C et B2B pour votre métier en scannant les chantiers et les ventes foncières publiques sans fuite cloud.",
-        "slug": "local-prospecting"
-      }
-    ]
-  },
-  "community": {
-    "sectionLabel": "Communauté",
-    "sectionTitle": "Construisons-le ensemble",
-    "sectionDesc": "Orazaka est un projet naissant et il l'assume. Transparence radicale : tout est public, tout se discute, et chaque contribution compte.",
-    "items": [
-      {
-        "title": "Issues",
-        "desc": "Signale un bogue, propose une fonctionnalité, suis ce sur quoi on travaille.",
-        "cta": "Ouvrir une issue"
-      },
-      {
-        "title": "Discussions",
-        "desc": "Pose tes questions, partage ton déploiement, échange avec les autres adoptants.",
-        "cta": "Rejoindre les discussions"
-      },
-      {
-        "title": "Contribuer",
-        "desc": "Le guide de contribution explique l'architecture, les conventions et le workflow.",
-        "cta": "Lire le guide"
-      },
-      {
-        "title": "Good first issues",
-        "desc": "De petites tâches balisées pour une première contribution sans friction.",
-        "cta": "Trouver une issue"
-      }
-    ]
-  },
-  "engineShowcase": {
-    "sectionLabel": "Technologie",
-    "sectionTitle": "L'ingénierie cognitive derrière l'orchestration",
-    "sectionDesc": "Orazaka ne relaie pas vos prompts à un modèle. Chaque requête traverse un pipeline déterministe d'intercepteurs qui enrichit, raffine, route et valide — avant que le modèle ne soit sollicité.",
-    "cogTitle": "La Science Cognitive dans l'IA",
-    "cogDesc": "Plutôt que d'utiliser l'IA comme une simple boîte noire génératrice de texte, l'ingénierie cognitive structure le raisonnement artificiel. En découpant le flux en étapes ordonnées — analyse d'intention, contextualisation factuelle et auto-surveillance —, elle garantit le déterminisme, la sécurité logique et l'alignement métier indispensables aux architectures de production d'entreprise.",
-    "cogCta": "Explorer l'ingénierie cognitive",
-    "simulatorTitle": "Simulateur de Traitement Souverain d'Orazaka",
-    "simulatorSubtitle": "Visualisez comment Orazaka, l'engin d'automatisation cognitive souverain conçu par Krizaka, traite vos flux d'affaires locaux de manière hermétique et sécurisée.",
-    "runSim": "Simuler l'exécution",
-    "simulating": "Exécution locale...",
-    "simReset": "Réinitialiser",
-    "simStatus": "Statut de Souveraineté",
-    "simOutput": "Sortie produit localement",
-    "galleryTitle": "Visualisations & Preuves de Raisonnement",
-    "gallerySubtitle": "Des rendus locaux et captures d'activités extraits directement depuis le cœur souverain d'Orazaka."
-  },
   "contact": {
     "pageTitle": "Contact & partenariats",
     "pageDesc": "Contributions, partenariats, presse ou questions sur Orazaka — voici comment nous joindre. Projet open source, échanges publics par défaut.",
@@ -153,21 +51,6 @@
     ],
     "backHome": "Retour à l'accueil"
   },
-  "docsNav": {
-    "onThisPage": "Sur cette page",
-    "readingTime": "Temps de lecture",
-    "minRead": "min",
-    "prev": "Précédent",
-    "next": "Suivant"
-  },
-  "docsPreview": {
-    "sectionLabel": "Documentation",
-    "sectionTitle": "Explore la documentation technique",
-    "sectionDesc": "Architecture, API, déploiement — tout est documenté et open source.",
-    "viewAllDocs": "Voir toute la documentation",
-    "packagesCallout": "Vous cherchez des kits UI réutilisables ou des contrats TypeScript ? Explorez @krizaka sur npm",
-    "packagesCalloutLink": "Explorer les packages"
-  },
   "footer": {
     "product": "Produit",
     "solutions": "Solutions",
@@ -191,138 +74,6 @@
     "github": "GitHub",
     "tagline": "Le moteur d'orchestration IA souverain, open source. Conçu au Québec."
   },
-  "cognitiveEngineeringPage": {
-    "pageTitle": "Ingénierie cognitive IA — Pipeline cognitif Orazaka",
-    "pageDesc": "Découvrez comment l'ingénierie cognitive structure l'intelligence artificielle pour la rendre fiable, sécurisée et souveraine.",
-    "introTitle": "L'ingénierie cognitive, c'est quoi ?",
-    "introText": "L'ingénierie cognitive appliquée à l'IA consiste à structurer et organiser le flux de pensée de l'intelligence artificielle.\n\nAu lieu d'utiliser un modèle de langage comme une boîte noire à qui l'on envoie des questions en espérant une bonne réponse, Orazaka décompose chaque interaction en étapes claires et spécialisées. C'est ce qui garantit la sécurité des données, l'exactitude des faits et la prévisibilité de l'IA.",
-    "visionTitle": "Dépasser le simple chatbot",
-    "visionText": "Les chatbots d'entreprise traditionnels envoient directement vos questions à des serveurs cloud sans contrôle intermédiaire. Cela pose des risques majeurs de fuites de données et d'hallucinations.\n\nKrizaka a conçu Orazaka pour changer cela. Orazaka agit comme un copilote d'ingénierie cognitive : il nettoie la requête, va chercher la mémoire et les connaissances locales, applique des filtres de sécurité, et valide délibérément la réponse en local (on-premise) sur votre machine avant de vous la livrer. Une souveraineté totale, conforme à la Loi 25 et au RGPD.",
-    "neuromorphicTitle": "Les 3 Piliers de la Cognition Orazaka",
-    "neuromorphicDesc": "Inspiré du fonctionnement du cerveau humain, le moteur d'Orazaka orchestre 3 grandes fonctions cognitives complémentaires.",
-    "neuromorphicCards": [
-      {
-        "title": "Perception & Attention",
-        "brainRegion": "Le Cortex Préfrontal",
-        "moduleName": "Routage sémantique",
-        "desc": "Orazaka analyse l'intention profonde derrière votre demande pour éliminer les informations inutiles et l'aiguiller vers le meilleur modèle (local ou cloud)."
-      },
-      {
-        "title": "Mémoire & Connaissances",
-        "brainRegion": "L'Hippocampe",
-        "moduleName": "RAG & MCP",
-        "desc": "Orazaka connecte l'IA à vos documents locaux et à vos outils de travail en temps réel, sans jamais envoyer vos données personnelles à des tiers."
-      },
-      {
-        "title": "Métacognition & Réflexion",
-        "brainRegion": "Cortex Cingulaire",
-        "moduleName": "Validation en boucle fermée",
-        "desc": "L'IA examine sa propre réponse, corrige les erreurs potentielles et vérifie les règles de sécurité avant de vous afficher le résultat."
-      }
-    ],
-    "familiesTitle": "Familles d'intercepteurs",
-    "familiesDesc": "Les intercepteurs d'Orazaka.",
-    "pipelineTitle": "Le Pipeline Cognitif : 3 Étapes Clés",
-    "pipelineDesc": "Chaque interaction utilisateur traverse un circuit sécurisé en trois temps pour garantir une réponse irréprochable.",
-    "executorTitle": "Analyse et Action Séparées",
-    "executorDesc": "Orazaka sépare hermétiquement la phase de préparation de la phase de décision, comme le fait le cerveau humain.",
-    "executorPhases": [
-      {
-        "title": "Phase 1 : Accumulation & Contexte",
-        "desc": "Le moteur rassemble l'historique conversationnel, vos fichiers (RAG) et les règles système pour enrichir la demande."
-      },
-      {
-        "title": "Phase 2 : Raisonnement & Sécurité",
-        "desc": "L'IA formule la réponse dans un environnement sécurisé et valide sa conformité logique avant toute livraison."
-      }
-    ],
-    "modesTitle": "Modes de fonctionnement par défaut",
-    "modesDesc": "Orazaka propose deux modes d'exécution standards intégrés, tout en permettant une extensibilité complète du pipeline.",
-    "modes": [
-      {
-        "title": "Mode Souverain",
-        "desc": "Exécution locale hermétique (via Ollama) garantissant une confidentialité absolue de vos données et une conformité directe (Loi 25 / RGPD).",
-        "accent": "#10b981"
-      },
-      {
-        "title": "Mode Déterministe",
-        "desc": "Température stricte à 0.0, schémas de sortie contraints (JSON) et validation en boucle fermée pour éradiquer les hallucinations.",
-        "accent": "#a78bfa"
-      }
-    ],
-    "effortTitle": "Ajustement dynamique de l'effort",
-    "effortDesc": "L'effort n'est pas un mode, mais un paramètre d'ajustement. Le moteur analyse la complexité de l'intention utilisateur pour calibrer les tokens de réflexion et le nombre d'intercepteurs actifs.",
-    "extensibilityTitle": "Extensibilité & Modes Personnalisés",
-    "extensibilityDesc": "Assemblez les {interceptors} intercepteurs d'Orazaka pour concevoir des modes sur mesure. Configurez vos propres règles métiers, audits et topologies de sécurité.",
-    "diffTitle": "Cloud Stateless API vs. Moteur de Raisonnement Orazaka",
-    "diffLeftTitle": "API & Chatbot Cloud Classique",
-    "diffLeftSub": "Générateur de texte simple (Stateless)",
-    "diffLeftFeatures": [
-      {
-        "title": "Pipeline linéaire direct",
-        "desc": "La requête est relayée sans analyse préalable d'intention ni contextualisation locale."
-      },
-      {
-        "title": "Pas de mémoire ou état sécurisé",
-        "desc": "Historique et contexte volatils, sans isolation ou contrôle d'accès (RBAC)."
-      },
-      {
-        "title": "Dépendance et fuite de données",
-        "desc": "Envoi obligatoire des prompts vers des serveurs tiers cloud (risques Loi 25 / RGPD)."
-      },
-      {
-        "title": "Génération brute incontrôlée",
-        "desc": "Pas d'auto-évaluation ou de validation finale du format (hallucinations fréquentes)."
-      }
-    ],
-    "diffRightTitle": "Moteur de Raisonnement Orazaka",
-    "diffRightSub": "Infrastructure cognitive souveraine",
-    "diffRightFeatures": [
-      {
-        "title": "Pipeline d'intercepteurs cognitifs",
-        "desc": "La requête traverse {core} intercepteurs non contournables, puis {configured} intercepteurs configurés, pour valider l'intention et optimiser le prompt."
-      },
-      {
-        "title": "Mémoire & RAG locaux",
-        "desc": "Accès immédiat à la base vectorielle locale et à une mémoire glissante préservant la souveraineté."
-      },
-      {
-        "title": "Hébergement hermétique local",
-        "desc": "Données chiffrées sur votre infrastructure privée (conformité Loi 25 et RGPD native)."
-      },
-      {
-        "title": "Validation en boucle fermée",
-        "desc": "Métacognition locale vérifiant la conformité du format (JSON strict) avant livraison."
-      }
-    ],
-    "ctaTitle": "Prêt à démarrer avec l'ingénierie cognitive ?",
-    "ctaDesc": "Déployez Orazaka et configurez vos propres règles de conformité en quelques minutes.",
-    "ctaButton": "Découvrir les Packages Orazaka",
-    "backHome": "Retour à l'accueil",
-    "eyebrow": "Orazaka · ingénierie cognitive",
-    "backProduct": "Orazaka"
-  },
-  "useCasePage": {
-    "backToUseCases": "Retour aux cas d'usage",
-    "problem": "Le défi",
-    "solution": "La solution Orazaka",
-    "keyFeatures": "Fonctionnalités clés",
-    "ctaTitle": "Essaie-le sur ta machine",
-    "ctaDesc": "Orazaka est open source. Installe-le en 3 commandes et compose le Package qui correspond.",
-    "ctaButton": "Démarrer en 3 commandes",
-    "relatedDocs": "Documentation associée",
-    "relatedPackage": "Package associé",
-    "composePackage": "Composer ce package",
-    "quebecContextTitle": "Cadre réglementaire & Souveraineté au Québec",
-    "actionPlanTitle": "Plan de déploiement et intégration projetée",
-    "topologyTitle": "Topologie du Package d'Intercepteurs Orazaka",
-    "stepper": {
-      "done": "Fait",
-      "current": "Commencez ici",
-      "upcoming": "Ensuite",
-      "error": "Bloqué"
-    }
-  },
   "site": {
     "menu": {
       "products": "Produits",
@@ -341,94 +92,6 @@
       "mainAria": "Navigation principale"
     },
     "nav": {
-      "orazaka": {
-        "tagline": "IA souveraine, hébergée chez vous",
-        "badge": "IA",
-        "links": {
-          "overview": {
-            "label": "Vue d'ensemble",
-            "desc": "Ce qu'il fait, et pour qui"
-          },
-          "architecture": {
-            "label": "Fonctionnement",
-            "desc": "Le parcours d'une requête dans le moteur"
-          },
-          "demo": {
-            "label": "Démos",
-            "desc": "Chat, médias et agents, filmés en vrai"
-          },
-          "signature": {
-            "label": "Ingénierie cognitive",
-            "desc": "Packs, cas d'usage, le moteur cognitif"
-          }
-        }
-      },
-      "orochia": {
-        "tagline": "La plateforme vidéo des créateurs",
-        "badge": "Vidéo",
-        "links": {
-          "overview": {
-            "label": "Vue d'ensemble",
-            "desc": "Ce qu'elle fait, et pour qui"
-          },
-          "architecture": {
-            "label": "Fonctionnement",
-            "desc": "Services et flux, tirés du code"
-          },
-          "demo": {
-            "label": "Démo",
-            "desc": "Une journée avec Elena et Alex, créatrice et fan"
-          },
-          "signature": {
-            "label": "Paiements & conformité",
-            "desc": "Crédits sous séquestre, versements, conformité"
-          }
-        }
-      },
-      "yazakia": {
-        "tagline": "L'app de rencontre où l'on se parle d'abord",
-        "badge": "Rencontres",
-        "links": {
-          "overview": {
-            "label": "Vue d'ensemble",
-            "desc": "La promesse, avant l'app"
-          },
-          "architecture": {
-            "label": "Comment ça marche",
-            "desc": "Parler, un lot, un débrief, l'intro"
-          },
-          "demo": {
-            "label": "Démo",
-            "desc": "Un téléphone qui joue la boucle"
-          },
-          "signature": {
-            "label": "Lots réciproques",
-            "desc": "Dans les deux sens, ou pas du tout"
-          }
-        }
-      },
-      "yororis": {
-        "tagline": "Un espace d'écoute qui s'arrête",
-        "badge": "Écoute",
-        "links": {
-          "overview": {
-            "label": "Vue d'ensemble",
-            "desc": "Ce que c'est, et ce que ce n'est pas"
-          },
-          "architecture": {
-            "label": "Comment ça marche",
-            "desc": "Un moment, en six temps"
-          },
-          "demo": {
-            "label": "Statut",
-            "desc": "En construction : pas de démo, et on le dit"
-          },
-          "signature": {
-            "label": "Une présence qui s'arrête",
-            "desc": "25 minutes, un par jour, trois par semaine"
-          }
-        }
-      },
       "status": {
         "upcoming": {
           "label": "Bientôt",
@@ -461,66 +124,36 @@
         "all": {
           "label": "Toute la documentation",
           "desc": "Docs plateforme et produits"
-        },
-        "orazaka": {
-          "label": "Orazaka",
-          "desc": "Démarrage, API, exploitation"
-        },
-        "orochia": {
-          "label": "Orochia",
-          "desc": "Architecture, API, déploiement"
-        },
-        "yororis": {
-          "label": "Yororis",
-          "desc": "En construction : ce que c'est, ce que ce n'est pas, le cadre"
-        },
-        "cli": {
-          "label": "CLI",
-          "desc": "npx orazaka — installer, démarrer, développer : chaque commande"
         }
       }
     },
     "products": {
-      "orazaka": {
-        "tagline": "L'IA qui ne quitte jamais la maison.",
-        "summary": "Moteur d'orchestration IA multimodal : chaque requête traverse un pipeline d'intercepteurs déterministe vers le meilleur modèle local. Rien ne quitte votre réseau.",
-        "points": [
-          "Chat, RAG, agents, image, audio, vidéo",
-          "Architecture hexagonale vérifiée au build (ArchUnit)",
-          "Composants réutilisables : utilisateurs, notifications, facturation"
-        ]
-      },
-      "orochia": {
-        "tagline": "Les créateurs sont payés. Chaque cent, une seule fois.",
-        "summary": "Streaming 4K, paywalls et versements créateurs, avec la rigueur d'une infrastructure financière. Conçue pour les contenus adultes (18+).",
-        "points": [
-          "Vidéo directe sur CDN, URL signées de 5 minutes",
-          "Paiements confirmés par webhook signé, réglés une seule fois",
-          "Conformité 18+ et registres 2257 intégrés"
-        ]
-      },
-      "yazakia": {
-        "tagline": "L'app de rencontre où l'on se parle d'abord.",
-        "summary": "Pas de swipe, pas de catalogue, pas de note. Un agent IA apprend à vous connaître, puis vous ouvre un petit lot de personnes compatibles dans les deux sens — et le lot suivant attend votre débrief. Bientôt sur iOS et Android.",
-        "points": [
-          "Une conversation plutôt qu'un formulaire",
-          "3 à 5 personnes à la fois, compatibles dans les deux sens",
-          "Des raisons en mots — jamais une note"
-        ]
-      },
-      "yororis": {
-        "tagline": "Un espace d'écoute avec un visage et une voix.",
-        "summary": "Une présence IA qui le dit : elle écoute, reformule, pose une question — et s'arrête. Entre deux moments, elle garde trois lignes qui sont à vous, jamais la transcription. Propulsé par le pack bien-être d'Orazaka. Rien n'est en ligne, rien n'est offert.",
-        "points": [
-          "Une présence qui s'arrête : 25 minutes, un moment par jour, trois par semaine",
-          "Ce que je garde : trois lignes que vous lisez, modifiez ou supprimez",
-          "Chaque mot reste sur Orazaka — aucune IA tierce"
-        ]
+      "eyebrow": "Les produits Krizaka",
+      "title": "Nos produits",
+      "pageTitle": "Quatre produits, chacun sur son site",
+      "lead": "Krizaka construit des produits open source. Chacun a son propre site, où il est présenté, démontré et documenté — et son code source sur GitHub.",
+      "visit": "Voir le site de dev",
+      "visitAria": "{name} — voir le site de dev",
+      "source": "Code source",
+      "sourceAria": "{name} — code source sur GitHub",
+      "cards": {
+        "orazaka": {
+          "line": "L'orchestration d'IA souveraine qui tourne sur votre infrastructure : vos données ne quittent jamais la maison."
+        },
+        "orochia": {
+          "line": "Une plateforme vidéo open source pour les créateurs indépendants, avec des paiements réglés exactement une fois."
+        },
+        "yazakia": {
+          "line": "L'app de rencontre où l'on se parle d'abord : un agent IA présente des personnes compatibles dans les deux sens."
+        },
+        "yororis": {
+          "line": "Un espace d'écoute avec un visage et une voix."
+        }
       }
     },
     "productsPage": {
       "title": "Produits — Orazaka, Orochia, Yazakia, Yororis",
-      "description": "Les produits open source de Krizaka : Orazaka (orchestration IA souveraine), Orochia (la plateforme vidéo des créateurs), Yazakia (l'app de rencontre où l'on se parle d'abord, bientôt) et Yororis (un espace d'écoute avec un visage et une voix, en construction)."
+      "description": "Les produits open source de Krizaka — Orazaka, Orochia, Yazakia et Yororis — chacun sur son propre site, avec son code source sur GitHub."
     },
     "expertise": {
       "eyebrow": "Savoir-faire",
@@ -566,16 +199,6 @@
         "sub": "Vos données restent chez vous. Vos créateurs sont payés. Votre code reste le vôtre. Nous construisons, en open source, les logiciels qui n'ont pas le droit de casser — {count} dépôts publics, à lire ligne par ligne.",
         "cta": "Découvrir les produits",
         "scroll": "Voir ce que nous construisons"
-      },
-      "products": {
-        "title": "Produits",
-        "pageEyebrow": "Les produits Krizaka",
-        "pageTitle": "Quatre produits, une même façon de construire",
-        "pageLead": "Quatre produits open source, présentés de la même façon : ce que chacun fait, un enregistrement de la vraie application quand il y en a une, et où aller ensuite.",
-        "discover": "Découvrir",
-        "demo": "démonstration",
-        "openApp": "Ouvrir l'application",
-        "soon": "Bientôt sur iOS et Android"
       },
       "openSource": {
         "title": "Lisez chaque ligne.",
@@ -923,7 +546,7 @@
       "terms": "Conditions",
       "madeIn": "Fait à Montréal · Apache-2.0",
       "docs": "Documentation",
-      "cli": "CLI"
+      "allProducts": "Tous les produits"
     },
     "contactForm": {
       "stepTopic": "Qu'est-ce qui vous amène ?",
@@ -1071,17 +694,6 @@
           "move": "Vos données ne quittent jamais la maison.",
           "stat": "Données gardées chez vous"
         },
-        "orochia": {
-          "caption": "Yamata no Orochi",
-          "title": "Huit têtes, un seul pacte : le créateur garde 90 %",
-          "body": [
-            "Yamata no Orochi est le serpent à huit têtes des plus anciennes chroniques du Japon. Les joueurs d'une certaine génération l'ont croisé ailleurs : au bout d'un tournoi d'arcade des années 1990, scellé par trois clans et leurs trésors sacrés.",
-            "L'économie des créateurs a son propre serpent : des commissions lourdes, des versements que personne ne peut vérifier, des liens qui fuient, des comptes fermés du jour au lendemain. Les créateurs font le travail et portent le risque — et trop souvent, ils sont payés les derniers.",
-            "Orochia est notre réponse : une plateforme vidéo où le créateur garde 90 % de chaque vente, où chaque mouvement est écrit une seule fois dans un grand livre en partie double, et qui tourne entière sur les serveurs de votre choix. Dans le mythe, Susanoo ne gagne pas par la force : il dispose huit cuves, une pour chaque tête. Orochia pose une réponse devant chacune."
-          ],
-          "move": "90 % au créateur. Sur chaque vente.",
-          "stat": "Part du créateur"
-        },
         "yazakia": {
           "caption": "L'app de rencontre où l'on parle d'abord",
           "title": "Parler d'abord. Se choisir dans les deux sens.",
@@ -1105,40 +717,6 @@
           "stat": "En construction"
         }
       },
-      "heads": [
-        {
-          "head": "Les liens qui fuient",
-          "answer": "Une lecture signée pour cinq minutes"
-        },
-        {
-          "head": "Les paiements forgés",
-          "answer": "Seule la passerelle confirme"
-        },
-        {
-          "head": "Les crédits en double",
-          "answer": "Réglé une seule fois"
-        },
-        {
-          "head": "Les créateurs impayés",
-          "answer": "Des soldes lus dans le grand livre"
-        },
-        {
-          "head": "Le contenu non vérifié",
-          "answer": "Registres 2257 avant tout envoi"
-        },
-        {
-          "head": "Les abus sans réponse",
-          "answer": "Signalements conservés, retraits motivés"
-        },
-        {
-          "head": "Le déréférencement",
-          "answer": "Vos serveurs, plusieurs passerelles"
-        },
-        {
-          "head": "L'enfermement",
-          "answer": "Apache-2.0, chaque ligne"
-        }
-      ],
       "flock": {
         "falcon": {
           "name": "Martin, le faucon",
@@ -1185,7 +763,6 @@
         "title": "Premier round terminé. Continuer ?",
         "body": "Nous n'avons pas encore de vitrine à trophées. Nous avons mieux pour commencer : un moteur et des produits que vous pouvez faire tourner aujourd'hui, d'autres en route, chaque ligne au grand jour, et des promesses écrites là où vous pouvez nous les rappeler. Les prochaines manches se jouent avec celles et ceux qui les utilisent — essayez-les, lisez-les, ou écrivez-nous."
       },
-      "headsAria": "Les huit têtes",
       "flockLabel": "La volée",
       "flockTitle": "Ceux qui veillent.",
       "flockLead": "Nos mascottes ne sont pas un décor. Chacune porte une promesse sur laquelle nous ne transigeons pas.",
@@ -1195,14 +772,8 @@
         "continue": "Continuer ?",
         "insertCoin": "Insérer une pièce",
         "stage": "Étape",
-        "orochiBossTitle": "Yamata no Orochi",
-        "orochiBossSub": "Les huit têtes de l'économie des créateurs — huit réponses, scellées dans le code",
-        "sealedBadge": "Scellé",
-        "vatLabel": "Cuve",
         "creditLabel": "Crédit 01",
         "restartBtn": "Retour à l'écran de sélection",
-        "finalRound": "Dernier round",
-        "bossGauge": "Têtes restantes",
         "cabinetLabel": "Krizaka · borne d'arcade",
         "coinEntry": "1 crédit = 1 histoire",
         "playerStart": "Start 1J",
@@ -1221,769 +792,9 @@
           "C'est notre preuve. Aucun benchmark à croire sur parole, aucun mur de logos empruntés : clonez, lancez, lisez, forkez. Si quelque chose sur cette page n'est pas dans le code, c'est le code qui a raison."
         ],
         "cta": "Voir tout ce que nous avons ouvert"
-      },
-      "live": {
-        "label": "Stage bonus",
-        "title": "Comment Orochia reste en direct",
-        "body": [
-          "Un pourboire arrive, une enchère fait monter le prix, un message tombe : l'écran concerné l'apprend en bien moins d'une seconde — sans interrogation répétée, sans broker de messages, sans service de plus à payer.",
-          "Chaque action est d'abord écrite dans PostgreSQL. Puis <b>un seul NOTIFY</b> traverse jusqu'à chaque instance de l'application ; chacune transmet l'événement aux flux <b>Server-Sent Events</b> qu'elle tient. Du HTTP ordinaire, la même session que le reste de l'API, et n'importe quelle instance sert n'importe quel flux.",
-          "Une connexion coupée revient d'elle-même et dit où elle s'était arrêtée (<b>Last-Event-ID</b>) : ce qu'elle a manqué est rejoué depuis la base, chaque message une seule fois. La présence est un battement de cœur, jamais une écriture en base à chaque battement.",
-          "L'application fermée ? La même notification part en <b>push</b> — Expo, puis Firebase sur Android (APNs d'Apple sur iOS dès que notre compte développeur sera actif) — et un toucher ouvre l'écran exact dont elle parle."
-        ],
-        "pathTitle": "Le trajet d'un événement",
-        "path": {
-          "action": {
-            "title": "Écrit d'abord.",
-            "body": "Envoyer, enchérir, s'engager, donner un pourboire : une requête HTTP ordinaire, validée dans PostgreSQL — la base fait foi."
-          },
-          "notify": {
-            "title": "Un seul NOTIFY.",
-            "body": "<b>NOTIFY orochia_events</b> : chaque instance l'entend sur sa connexion LISTEN. Au-delà de trois instances, le même code passe à Valkey par configuration."
-          },
-          "stream": {
-            "title": "Dans les flux ouverts.",
-            "body": "Chaque instance le pousse aux flux Server-Sent Events concernés — un battement toutes les 15 s, une reprise après chaque coupure."
-          },
-          "push": {
-            "title": "Ou vers le téléphone.",
-            "body": "En arrière-plan, un push : Expo Push → Firebase Cloud Messaging ou APNs → le téléphone ; le toucher ouvre son écran."
-          }
-        },
-        "figuresAria": "Chiffres mesurés",
-        "figures": {
-          "p50": "Livraison médiane, 500 flux ouverts",
-          "p95": "95ᵉ centile, 2 000 flux",
-          "memory": "Mémoire par flux ouvert",
-          "push": "Médiane, d'un message envoyé au push affiché sur Android"
-        },
-        "source": "Mesuré, pas estimé : scripts/realtime-load.mjs sur un build de production, une instance sur un MacBook (2026-10-11), et un vrai push chronométré sur l'émulateur Android (2026-10-13).",
-        "move": "Ce qui arrive vous parvient une fois, dans l'ordre, où que vous soyez.",
-        "docsRealtime": "Le temps réel, dans la doc",
-        "docsPush": "Notifications et push, dans la doc"
-      }
-    },
-    "orochia": {
-      "pillars": {
-        "cdn": {
-          "title": "Vidéo directe sur le CDN",
-          "body": "Les créateurs téléversent directement sur Bunny Stream (protocole Tus, reprise sur coupure). La lecture passe par des URL HLS signées qui expirent après 5 minutes : aucune vidéo ne transite par les serveurs applicatifs."
-        },
-        "access": {
-          "title": "Contrôle d'accès côté serveur",
-          "body": "Chaque lecture est autorisée sur le serveur selon la règle de la vidéo — publique, abonnés approuvés, contacts, déblocage payant (jamais sous le minimum du créateur) ou invités seulement. Aucune URL média brute n'est exposée."
-        },
-        "audiences": {
-          "title": "Des publics choisis par le créateur",
-          "body": "Invitez des personnes une à une ou ouvrez une vidéo à des listes privées réutilisables — ajoutez quelqu'un, il entre ; retirez-le, il sort. Les vidéos sur invitation ne sont jamais listées. Les collections ont les mêmes permissions."
-        },
-        "engagement": {
-          "title": "Un engagement qui veut dire quelque chose",
-          "body": "Des vues comptées une fois par spectateur et par jour, jamais celles du créateur ; des mentions j'aime, des commentaires en fil que le créateur modère ou ferme, des partages — chaque compteur suit l'enregistrement qui le justifie."
-        },
-        "payments": {
-          "title": "Paiements confirmés par la passerelle",
-          "body": "Un déblocage crée une intention de paiement puis redirige vers CCBill, Segpay, NowPayments ou Stripe. L'accès n'est accordé qu'au webhook signé du prestataire — une seule fois, même si le webhook est rejoué."
-        },
-        "compliance": {
-          "title": "Conformité 18+ intégrée",
-          "body": "Certification 18+ à l'inscription, vérification des registres 18 U.S.C. § 2257 avant tout téléversement, signalements (mineur présumé, contenu non consenti, DMCA) persistés et traités en priorité."
-        },
-        "auctions": {
-          "title": "Enchères vidéo",
-          "body": "Les créateurs mettent une vidéo aux enchères ; le prix bouge en temps réel pour tous ceux qui regardent. Les offres sont bloquées en crédits et libérées dès qu'elles sont dépassées, une offre de dernière minute ajoute deux minutes, et seul le gagnant regarde — ou télécharge — la vidéo."
-        },
-        "wallet": {
-          "title": "Un wallet de crédits",
-          "body": "Les membres rechargent une fois via la page de paiement hébergée par la passerelle, puis donnent un pourboire, débloquent et enchérissent en un geste. Le solde est un registre en ajout seul : chaque mouvement écrit une fois, remboursé si un paiement n'aboutit pas."
-        },
-        "challenges": {
-          "title": "Des défis financés sous séquestre",
-          "body": "L'objectif tout-ou-rien d'un créateur, un défi lancé à un créateur, ou un appel ouvert auquel les créateurs postulent. Les fans engagent des crédits bloqués jusqu'à la livraison de la vidéo ou de la story — versés alors, rendus sinon. Cagnotte en temps réel, classement, aucun litige de paiement."
-        }
-      },
-      "kicker": "La plateforme vidéo des créateurs · open source",
-      "subtitle": "La plateforme vidéo des créateurs indépendants.",
-      "lead": "Diffusion 4K, paywalls, pourboires et versements créateurs — avec la rigueur d'une infrastructure financière : accès décidé sur le serveur, paiements confirmés par la passerelle, grand livre en partie double. Conçue pour les contenus adultes (18+), sous licence Apache-2.0.",
-      "watchDemo": "Voir la démo",
-      "docs": "Documentation",
-      "mobileDocs": "L'app iOS et Android — ce qui tourne aujourd'hui",
-      "uxDocs": "Pourquoi c'est construit ainsi — les décisions d'expérience",
-      "a11yDocs": "Accessibilité — WCAG 2.2 AA, ce qui est testé, ce qui manque",
-      "audience": "Logiciel destiné aux exploitants de plateformes ; les contenus adultes sont réservés aux personnes majeures.",
-      "pillarsEyebrow": "Ce qui la rend prête pour la production",
-      "pillarsTitle": "Neuf garanties, appliquées dans le code.",
-      "archEyebrow": "Fonctionnement",
-      "archTitle": "Suivez une requête à travers la plateforme.",
-      "archLead": "Trois parcours, étape par étape. Chaque point d'API cité est vérifié contre le code d'Orochia à chaque build du site.",
-      "sourceEyebrow": "Code source",
-      "sourceTitle": "Trois dépôts, une plateforme.",
-      "sourceLead": "L'application expose {endpoints} points d'API et {tables} tables, extraits du code par le générateur de documentation.",
-      "openApp": "Ouvrir l'application",
-      "titleLead": "Les fans paient.",
-      "titleAccent": "Les créateurs gardent 90 %.",
-      "heroLead": "Pourboires, déblocages payants, enchères vidéo et défis financés sous séquestre — sur une plateforme 4K construite comme une infrastructure financière. Open source, conçue pour les créateurs adultes (18+).",
-      "ways": {
-        "tip": {
-          "title": "Pourboire",
-          "body": "Un merci en un geste, depuis le portefeuille."
-        },
-        "unlock": {
-          "title": "Débloquer",
-          "body": "Payer une fois, regarder la vidéo — jamais sous le minimum du créateur."
-        },
-        "bid": {
-          "title": "Enchérir",
-          "body": "Remporter une vidéo aux enchères ; seul le gagnant la regarde."
-        },
-        "challenge": {
-          "title": "Soutenir un défi",
-          "body": "Une promesse sur un objectif ou un défi, sous séquestre jusqu'à la livraison."
-        }
-      },
-      "paid": {
-        "eyebrow": "Être payé",
-        "title": "90 % au créateur. <b>Sur chaque vente.</b>",
-        "lead": "Pourboires, déblocages, enchères gagnantes et promesses de défi suivent le même partage : le créateur garde 90 %, la plateforme 10 %. Chaque mouvement est écrit une fois dans un grand livre en partie double.",
-        "examples": {
-          "tip": "Un pourboire de <b>{gross}</b>",
-          "unlock": "Un déblocage à <b>{gross}</b>",
-          "pledge": "Une promesse de défi de <b>{gross}</b>",
-          "bid": "Une enchère gagnante de <b>{gross}</b>"
-        },
-        "net": "le créateur reçoit {net}",
-        "fine": "Commission de la plateforme : {fee} %. Versements dès {minimum}. Montants en dollars américains ; l'enchère gagnante est un exemple. Les paiements sont confirmés par le webhook signé du fournisseur avant tout crédit.",
-        "percent": "{value} %",
-        "meter": {
-          "label": "Partage de chaque vente",
-          "creator": "Au créateur",
-          "platform": "À la plateforme",
-          "caption": "au créateur"
-        }
-      },
-      "rules": {
-        "eyebrow": "Enchères · Défis",
-        "title": "De nouvelles façons de gagner, <b>des règles écrites dans le code.</b>",
-        "auctions": {
-          "title": "Enchères vidéo",
-          "body": "Un créateur met une vidéo aux enchères ; le prix bouge en direct pour tous ceux qui regardent.",
-          "facts": [
-            "Les offres sont bloquées en crédits et libérées dès qu'elles sont dépassées.",
-            "Une offre dans les deux dernières minutes ajoute deux minutes — pas d'enchère de dernière seconde.",
-            "Le créateur a 48 h pour accepter l'offre gagnante ; seul le gagnant regarde."
-          ],
-          "trap": "Une vidéo à prix fixe laisse de l'argent sur la table — ou ne se vend jamais.",
-          "rule": "Le gagnant paie, le créateur est payé : les crédits surenchéris reviennent aussitôt, personne ne paie une vidéo qu'il n'a pas gagnée."
-        },
-        "challenges": {
-          "title": "Défis sous séquestre",
-          "body": "Un objectif tout-ou-rien, un défi lancé à un créateur, ou un appel ouvert auquel les créateurs répondent.",
-          "facts": [
-            "Objectifs dès 10 $, appels ouverts dès 5 $.",
-            "Un défi reçoit une réponse sous 72 h.",
-            "Livré sous 14 jours, sinon chaque promesse est rendue."
-          ],
-          "trap": "Des fans promettent pour une vidéo ; elle arrive, et la moitié des promesses s'évanouit.",
-          "rule": "Les promesses attendent sous séquestre la livraison de la vidéo : le créateur est alors payé, sinon chaque fan récupère ses crédits."
-        }
-      },
-      "tourEyebrow": "La démo",
-      "tourTitle": "Une journée sur Orochia, côté fan ou côté créatrice.",
-      "tourMore": "Voir toute la démo",
-      "iso": {
-        "label": "Chaque soutien va au créateur",
-        "description": "Une créatrice au centre, sur sa communauté ; pourboires, déblocages, enchères et promesses de défis convergent vers elle, et {share} de chacun lui revient.",
-        "core": "Versements",
-        "highlight": "au créateur",
-        "layers": {
-          "community": "Communauté",
-          "creator": "La créatrice"
-        },
-        "satellites": {
-          "tips": "Pourboires",
-          "unlocks": "Déblocages",
-          "auctions": "Enchères",
-          "challenges": "Défis"
-        }
-      },
-      "decisions": {
-        "eyebrow": "Décisions",
-        "title": "Bâti comme une infrastructure financière. <b>Voici ce que ça coûte.</b>",
-        "lead": "Chaque garantie de cette page est une décision dans krizaka/orochia — ce que nous avons choisi, refusé, pourquoi, et ce à quoi vous renoncez.",
-        "items": [
-          {
-            "chose": "L'accès accordé seulement sur le webhook signé du prestataire de paiement — exactement une fois.",
-            "refused": "Débloquer dès que la page de paiement affiche « merci ».",
-            "because": "Une redirection peut être falsifiée ou rejouée ; un webhook signé, non.",
-            "cost": "Quelques secondes entre le paiement et la lecture."
-          },
-          {
-            "chose": "Un portefeuille de crédits sur un grand livre en partie double, en ajout seul.",
-            "refused": "Un paiement par carte pour chaque pourboire, déblocage et enchère.",
-            "because": "Une recharge, puis un geste — et chaque mouvement écrit une fois, auditable, remboursable.",
-            "cost": "Les fans rechargent avant de dépenser ; un solde à garder en tête."
-          },
-          {
-            "chose": "La vidéo envoyée directement au CDN, lue par des liens signés qui expirent après 5 minutes.",
-            "refused": "Servir les médias par les serveurs applicatifs.",
-            "because": "Aucune URL brute à partager ou à aspirer, et les serveurs ne transportent jamais de vidéo.",
-            "cost": "Les liens ne peuvent être ni mis en favori ni intégrés ailleurs — c'est voulu."
-          },
-          {
-            "chose": "Certification 18+ et contrôle des registres § 2257 avant le premier téléversement.",
-            "refused": "Modérer seulement après publication.",
-            "because": "Certains contenus ne doivent jamais être en ligne, pas même une minute.",
-            "cost": "L'arrivée d'un créateur prend plus de temps qu'une inscription."
-          }
-        ]
-      },
-      "phone": {
-        "eyebrow": "Sur votre téléphone",
-        "title": "L'application, telle qu'elle tourne",
-        "lead": "Enregistrée sur l'application iOS avec les personnages de la démo : le fil, une story, une vidéo qui joue, un déblocage, un objectif soutenu.",
-        "label": "L'application iOS d'Orochia : le fil, une story, une vidéo qui joue, un déblocage, un objectif soutenu",
-        "docs": "Chaque écran de l'application mobile"
-      }
-    },
-    "yazakia": {
-      "meta": {
-        "title": "Yazakia — L'app de rencontre où l'on se parle d'abord",
-        "description": "Yazakia arrive sur iOS et Android : un agent IA apprend à vous connaître, puis vous ouvre de petits lots de personnes compatibles dans les deux sens — des raisons, jamais des notes. Open source, par Krizaka."
-      },
-      "hero": {
-        "back": "Tous les produits",
-        "eyebrow": "Yazakia · le troisième produit Krizaka",
-        "title": "L'app de rencontre où l'on se parle d'abord.",
-        "lead": "Yazakia commence par une conversation, pas par un catalogue. Un agent IA apprend qui vous êtes et qui vous cherchez, puis vous ouvre un petit lot de personnes qui pourraient vous choisir aussi — avec les raisons, jamais une note. Bientôt sur iOS et Android, construite au grand jour.",
-        "notify": "Me prévenir",
-        "github": "Suivre sur GitHub",
-        "badges": {
-          "soon": "Bientôt",
-          "platforms": "iOS · Android",
-          "license": "Apache-2.0"
-        },
-        "badgesLabel": "Où en est Yazakia"
-      },
-      "trap": {
-        "title": "Le piège",
-        "hook": "Les apps à swipe réduisent les gens à des vignettes — et vendent une pile sans fin comme une chance.",
-        "body": "Plus on swipe, moins on regarde. Un « j'aime » ne coûte rien, donc il ne veut rien dire : des matchs qui ne mènent nulle part, des profils qui ne répondent jamais, et une app qui gagne plus tant que vous restez célibataire.",
-        "items": [
-          "La fatigue du swipe : une pile sans fin, jugée en une demi-seconde",
-          "Les faux matchs : deux pouces levés, aucune raison de se parler",
-          "Un classement caché qui décide qui a le droit de vous voir",
-          "Payer pour être vu, payer pour passer devant"
-        ]
-      },
-      "loop": {
-        "eyebrow": "Comment ça marche",
-        "title": "Quatre temps, toujours dans cet ordre",
-        "lead": "Yazakia renverse la mécanique : comprendre avant de montrer, et chaque lot apprend du précédent.",
-        "expand": "En détail",
-        "what": "Ce qui se passe",
-        "steps": {
-          "talk": {
-            "title": "On se parle d'abord",
-            "meta": "01 · dix minutes",
-            "hook": "Un agent, pas un formulaire : une question à la fois, des choix rapides, de la place pour l'humour.",
-            "items": [
-              "Il apprend vos valeurs, votre rythme de vie, vos non-négociables",
-              "Il vous rend un portrait — qui vous êtes, qui vous cherchez — que vous pouvez corriger",
-              "Le portrait vaut déjà quelque chose avant même que votre premier lot existe"
-            ]
-          },
-          "batch": {
-            "title": "Un lot, pas un catalogue",
-            "meta": "02 · 3 à 5 personnes · 72 h",
-            "hook": "Seulement des personnes compatibles dans les deux sens, chacune avec « pourquoi vous deux », en mots.",
-            "items": [
-              "Il s'ouvre quand l'agent en sait assez — et seulement si quelqu'un pourrait vous choisir aussi",
-              "Pour chaque personne : intéressé·e · je passe · dis-m'en plus",
-              "Le lot expire après 72 heures : rien ne s'empile"
-            ]
-          },
-          "debrief": {
-            "title": "On débriefe avant le suivant",
-            "meta": "03 · deux minutes",
-            "hook": "Trois questions déverrouillent le lot suivant — et changent ce que l'agent cherche pour vous.",
-            "items": [
-              "Des choix rapides, du texte libre si le cœur vous en dit",
-              "Vos réponses retouchent le portrait : « la distance compte moins que tu ne le disais »",
-              "Chaque lot est plus juste que le précédent"
-            ]
-          },
-          "intro": {
-            "title": "L'intro",
-            "meta": "04 · sept jours",
-            "hook": "Un intérêt réciproque ouvre une intro de sept jours : deux personnes se parlent, l'agent s'efface.",
-            "items": [
-              "Chaque agent souffle une première phrase, en privé, à sa propre personne",
-              "Ensuite, c'est entre vous deux — l'agent ne lit jamais l'intro",
-              "Au bout de sept jours : continuer ensemble, ou laisser filer"
-            ]
-          }
-        },
-        "rule": "Je vous présente, puis je quitte la pièce. Ce que vous vous dites n'appartient qu'à vous.",
-        "promise": "La promesse"
-      },
-      "matching": {
-        "title": "Les lots réciproques, notre signature",
-        "lead": "La plupart des apps classent les gens. Yazakia pose une autre question : ces deux-là se choisiraient-ils ?",
-        "decisions": [
-          {
-            "chose": "Une paire vaut son sens le plus faible : ce que A cherche chez B et ce que B cherche chez A — le plus bas des deux, `min(A→B, B→A)`.",
-            "refused": "Un classement à sens unique qui vous montre qui vous convient, que vous lui conveniez ou non.",
-            "because": "C'est ainsi que naissent les profils fantômes et les matchs sans issue. Avec le minimum, B n'apparaît chez A que si A a ses chances chez B.",
-            "cost": "Des lots plus petits, parfois aucun : quand le bassin est mince, l'agent le dit franchement et vous prévient quand un lot est prêt."
-          },
-          {
-            "chose": "Des raisons rédigées, dans les deux sens : « pourquoi vous deux ».",
-            "refused": "Un pourcentage de compatibilité.",
-            "because": "Un chiffre invite à comparer les gens comme des produits ; une raison invite à la conversation.",
-            "cost": "Chaque raison s'écrit à partir des deux portraits — plus de travail pour l'agent, rien à afficher pour briller."
-          },
-          {
-            "chose": "Le lot suivant attend votre débrief.",
-            "refused": "Payer pour sauter le débrief ou pour agrandir le lot — dans aucune formule, jamais.",
-            "because": "C'est le débrief qui rend le lot suivant meilleur ; vendre un raccourci casserait la boucle.",
-            "cost": "Deux minutes de votre temps avant chaque lot."
-          }
-        ]
-      },
-      "privacy": {
-        "title": "La vie privée dès la conception",
-        "lead": "Une app de rencontre apprend des choses intimes. Yazakia est construite pour que ce qu'elle sait reste peu, protégé, et à vous.",
-        "items": [
-          "18 ans et plus : votre date de naissance est vérifiée par le serveur à l'inscription",
-          "Votre position est arrondie à environ 1 km avant d'être enregistrée — le point exact n'existe nulle part chez nous",
-          "Les réponses sensibles sont chiffrées au repos ; les photos restent privées, visibles seulement par votre lot et vos intros, par des liens qui expirent après cinq minutes",
-          "Bloquer et signaler en un geste ; supprimer votre compte depuis l'app, exporter vos données en JSON",
-          "Rien de ce que vous dites ne sert à entraîner un modèle"
-        ],
-        "rule": "Je veille sur ce que vous confiez. Moins on garde, moins il y a à perdre."
-      },
-      "built": {
-        "title": "Construite avec Krizaka",
-        "lead": "Yazakia est open source, et assemblée à partir de briques que les autres produits ont déjà éprouvées.",
-        "items": {
-          "orazaka": {
-            "name": "Orazaka, pour l'agent",
-            "line": "La conversation et l'extraction passent par l'API d'Orazaka — Yazakia en est le premier vrai client."
-          },
-          "ui": {
-            "name": "@krizaka/ui, en natif",
-            "line": "Les marques, les thèmes et les composants de krizaka.com et d'Orochia, sur iOS et Android."
-          },
-          "realtime": {
-            "name": "Temps réel et notifications",
-            "line": "Le clavardage en continu et les notifications éprouvés dans Orochia, extraits en briques partagées maintenant qu'un deuxième produit en a besoin."
-          }
-        }
-      },
-      "follow": {
-        "title": "Soyez là dès le premier jour",
-        "body": "Yazakia n'est pas encore dans les magasins d'applications. Laissez-nous un mot et nous vous écrirons à l'ouverture de la première version — ou regardez-la se construire, commit après commit.",
-        "api": "yazakia · l'API",
-        "mobile": "yazakia-mobile · l'app",
-        "reposLabel": "Les dépôts de Yazakia"
-      },
-      "demo": {
-        "eyebrow": "Essayez la boucle",
-        "title": "Jouez la boucle sur un téléphone",
-        "lead": "Parlez à l'agent, lisez votre portrait, répondez au débrief, ouvrez un lot, rencontrez quelqu'un. Chaque écran est un composant de Krizaka UI ; les réponses sont écrites d'avance et les personnes inventées.",
-        "phoneLabel": "Yazakia, jouée sur un téléphone",
-        "stepsLabel": "Les étapes de la démo",
-        "stepsLead": "La même boucle en mots, que vous voyiez ou non le téléphone.",
-        "stepOf": "Étape {n} sur {total}",
-        "now": "Vous êtes ici",
-        "done": "Fait",
-        "announce": "{step}. {title}",
-        "restart": "Rejouer",
-        "note": "Réponses écrites d'avance et personnes inventées. Le vrai agent tourne sur Orazaka, avec vos propres données, et rien n'est enregistré ici.",
-        "steps": {
-          "talk": {
-            "title": "Parler d'abord",
-            "text": "L'agent pose une question à la fois et répond en quelques mots. Choisissez une réponse rapide ou écrivez la vôtre, puis lisez le portrait qu'il fait de vous."
-          },
-          "debrief": {
-            "title": "Le débrief",
-            "text": "Trois questions rapides, en puces. Elles débloquent le prochain lot et changent ce que l'agent cherche."
-          },
-          "batch": {
-            "title": "Un lot, pas un catalogue",
-            "text": "Trois personnes qui pourraient vous désirer en retour, chacune avec sa raison en mots. Intéressé ou non ; un intérêt réciproque ouvre l'intro."
-          },
-          "intro": {
-            "title": "L'intro",
-            "text": "Sept jours pour se parler. L'agent vous souffle une première phrase, puis s'efface."
-          }
-        },
-        "you": "Vous",
-        "agent": "Votre agent",
-        "typing": "Votre agent écrit",
-        "composer": "Ou écrivez votre réponse",
-        "send": "Envoyer",
-        "quickReplies": "Réponses rapides",
-        "talk": {
-          "turns": [
-            {
-              "ask": "Bonjour, je suis votre agent. Je vais vous poser quelques questions, une à la fois. D'abord : à quoi ressemble un bon dimanche ?",
-              "choices": [
-                {
-                  "label": "Calme, à la maison",
-                  "trait": "Week-ends calmes",
-                  "reply": "Dimanches calmes, noté. Un chez-soi qui ressemble à un chez-soi."
-                },
-                {
-                  "label": "Dehors toute la journée",
-                  "trait": "Dehors toute la journée",
-                  "reply": "Dehors toute la journée, noté. Quelqu'un qui suit le rythme."
-                },
-                {
-                  "label": "Ça dépend de la semaine",
-                  "trait": "Week-ends souples",
-                  "reply": "Ça dépend de la semaine, noté. Souple vaut mieux que planifié."
-                }
-              ]
-            },
-            {
-              "ask": "Au début, qu'est-ce qui compte le plus : l'humour ou la profondeur ?",
-              "choices": [
-                {
-                  "label": "L'humour",
-                  "trait": "L'humour d'abord",
-                  "reply": "L'humour d'abord. Je chercherai des gens qui vous font rire."
-                },
-                {
-                  "label": "La profondeur",
-                  "trait": "La profondeur d'abord",
-                  "reply": "La profondeur d'abord. Je chercherai des gens qui posent la deuxième question."
-                },
-                {
-                  "label": "Les deux, à tour de rôle",
-                  "trait": "Humour et profondeur",
-                  "reply": "Les deux, à tour de rôle. La liste est courte, et bonne."
-                }
-              ]
-            },
-            {
-              "ask": "Dernière question : où placez-vous la limite ?",
-              "choices": [
-                {
-                  "label": "L'honnêteté",
-                  "trait": "L'honnêteté avant tout",
-                  "reply": "L'honnêteté. Je ne vous montrerai personne qui l'esquive."
-                },
-                {
-                  "label": "Les enfants",
-                  "trait": "Clair sur les enfants",
-                  "reply": "Les enfants, noté. On règle ça avant tout le reste."
-                },
-                {
-                  "label": "La distance",
-                  "trait": "Tout près",
-                  "reply": "La distance, noté. Tout près, pour l'instant."
-                }
-              ]
-            }
-          ],
-          "free": "Noté, avec vos mots. Je le garde.",
-          "closing": "C'est assez pour commencer. Voici votre portrait. Corrigez ce qui n'est pas juste.",
-          "toPortrait": "Voir mon portrait"
-        },
-        "portrait": {
-          "title": "Votre portrait",
-          "lead": "Qui vous êtes et qui vous cherchez, avec vos mots. Retirez ce qui n'est pas juste.",
-          "traitsLabel": "Ce que votre agent a compris",
-          "remove": "Retirer {trait}",
-          "progressLabel": "Ce que votre agent sait de vous",
-          "progressText": "Assez pour ouvrir un lot",
-          "noScore": "Pas de note, pas de classement. Seulement ce que vous avez dit.",
-          "next": "Continuer vers le débrief"
-        },
-        "debrief": {
-          "title": "Débrief avant le prochain lot",
-          "lead": "Trois questions rapides le débloquent, et elles changent ce que votre agent cherche.",
-          "questions": [
-            {
-              "label": "Comment était le rythme ?",
-              "options": [
-                "Trop rapide",
-                "Juste bien",
-                "Trop lent"
-              ]
-            },
-            {
-              "label": "Qu'est-ce qui manquait ?",
-              "options": [
-                "L'humour",
-                "La profondeur",
-                "Rien"
-              ]
-            },
-            {
-              "label": "À partir de quelle distance est-ce trop loin ?",
-              "options": [
-                "Une promenade",
-                "Un trajet en train",
-                "Peu importe"
-              ]
-            }
-          ],
-          "progress": "{n} sur 3 répondues",
-          "reshaped": "Noté : vos réponses remodèlent le portrait. Chaque lot est plus juste que le précédent.",
-          "unlock": "Débloquer mon prochain lot"
-        },
-        "loading": {
-          "label": "Recherche de personnes qui pourraient vous désirer en retour",
-          "region": "Votre lot se prépare",
-          "show": "Voir mon lot"
-        },
-        "deck": {
-          "title": "Votre lot",
-          "lead": "Trois personnes, 72 heures. Pas de catalogue à faire défiler.",
-          "why": "Pourquoi vous deux",
-          "verified": "Vérifié",
-          "away": "à {km} km",
-          "labels": {
-            "like": "Intéressé",
-            "pass": "Passer",
-            "deck": "Profils. Flèche droite pour être intéressé, flèche gauche pour passer.",
-            "likeStamp": "Intéressé",
-            "passStamp": "Passer"
-          },
-          "decided": "{name} : {decision}",
-          "liked": "intéressé",
-          "passed": "passé",
-          "people": {
-            "ines": {
-              "name": "Inès",
-              "why": "Vous voulez des week-ends calmes, et vous dites ce que vous pensez.",
-              "tags": [
-                "Cuisine",
-                "Randonnée"
-              ],
-              "whisper": "Demandez à Inès ce qu'elle cuisine quand personne ne vient."
-            },
-            "kofi": {
-              "name": "Kofi",
-              "why": "Vous mettez l'humour d'abord, et vous habitez à dix minutes de distance.",
-              "tags": [
-                "Photo",
-                "Jazz"
-              ],
-              "whisper": "Demandez à Kofi quelle est la photo dont il est le plus fier."
-            },
-            "hana": {
-              "name": "Hana",
-              "why": "Vous placez la limite à l'honnêteté, et vous voyagez léger.",
-              "tags": [
-                "Céramique",
-                "Voyage"
-              ],
-              "whisper": "Demandez à Hana dans quelle ville elle retournerait en premier."
-            }
-          },
-          "empty": {
-            "title": "Le lot est terminé",
-            "body": "Personne de réciproque cette fois. Votre agent continue de chercher et ouvre le prochain lot après votre débrief.",
-            "again": "Rejouer le lot",
-            "intro": "Ouvrir mon intro avec {name}"
-          }
-        },
-        "match": {
-          "title": "C'est réciproque",
-          "description": "{name} veut aussi vous rencontrer. Votre intro de sept jours commence maintenant.",
-          "primary": "Commencer l'intro",
-          "secondary": "Continuer à chercher",
-          "me": "Vous"
-        },
-        "intro": {
-          "title": "Votre intro avec {name}",
-          "lead": "Sept jours pour se parler. Votre agent s'efface.",
-          "countdown": "Votre intro se termine dans",
-          "units": {
-            "d": "j",
-            "h": "h",
-            "m": "min",
-            "s": "s"
-          },
-          "whisperLabel": "Vous seul pouvez le lire",
-          "rule": "Je vous ai présentés, et je quitte la pièce. Ce que vous vous dites vous appartient.",
-          "composer": "Écrire à {name}",
-          "sent": "Envoyé",
-          "keep": "Continuer ensemble ou laisser filer : vous choisissez au septième jour."
-        },
-        "native": {
-          "title": "La même boucle, sur un iPhone",
-          "caption": "Enregistrée sur le simulateur avec les composants natifs de Krizaka UI : les mêmes étapes, les mêmes mots. Environ 30 secondes, en boucle.",
-          "alt": "La boucle Yazakia sur un iPhone : la discussion avec l'agent, le portrait, le débrief, le lot, la réciprocité et l'intro."
-        }
       }
     },
     "yororis": {
-      "meta": {
-        "title": "Yororis — Un espace d'écoute avec un visage et une voix",
-        "description": "Yororis est un espace d'écoute avec un visage et une voix, propulsé par le pack bien-être d'Orazaka. En construction : construit en public, son cadre étudié avant toute mise à disposition. Rien n'est en ligne, et il n'y a pas de date."
-      },
-      "hero": {
-        "back": "Tous les produits",
-        "eyebrow": "Yororis · le quatrième produit Krizaka",
-        "title": "Un espace d'écoute avec un visage et une voix.",
-        "lead": "Certains soirs, on a besoin de mettre des mots sur ce qu'on porte. Yororis vous donne une présence — une IA qui le dit — qui écoute, reformule, pose une question, et s'arrête. Ce que vous gardez est à vous : trois lignes à apporter aux personnes qui vous accompagnent. Nous le construisons en public, et nous étudions son cadre avant que quiconque l'utilise.",
-        "badges": {
-          "platforms": "Web · iOS · Android",
-          "license": "Apache-2.0"
-        },
-        "badgesLabel": "Où en est Yororis"
-      },
-      "talk": "Discuter de Yororis",
-      "trap": {
-        "title": "Le piège",
-        "lead": "Pour les soirs où l'on a besoin de parler, deux choses existent déjà. Aucune n'écoute comme il faudrait.",
-        "label": "Le piège",
-        "instead": "Ce que fait Yororis à la place",
-        "expand": "En détail",
-        "cards": {
-          "endless": {
-            "title": "L'app qui ne s'arrête jamais",
-            "meta": "toujours là, toujours d'accord",
-            "hook": "Toujours là, toujours flatteuse — et plus rentable à mesure que vous restez.",
-            "items": [
-              "Un moment qui finit, et qui dit quand",
-              "Jamais d'incitation à revenir, aucun compteur de jours",
-              "Elle vous renvoie à votre vie et à vos proches"
-            ]
-          },
-          "journal": {
-            "title": "Le journal qui n'écoute pas",
-            "meta": "une page blanche, chaque soir",
-            "hook": "Écrire aide — jusqu'à ce que la page n'ait plus de question à vous poser.",
-            "items": [
-              "Une question à la fois, avec vos mots",
-              "Trois lignes que vous gardez, pas une transcription",
-              "Une page à apporter aux personnes qui vous accompagnent"
-            ]
-          }
-        }
-      },
-      "moment": {
-        "eyebrow": "Comment ça marche",
-        "title": "Un moment, en six temps",
-        "lead": "Un soir, environ vingt-cinq minutes, toujours dans cet ordre. Rien de tout ça ne tourne encore : c'est ce que nous construisons.",
-        "steps": [
-          {
-            "title": "Votre présence vous attend",
-            "text": "Vous ouvrez Yororis et retrouvez la présence que vous préférez. Sous son portrait : 1 moment disponible aujourd'hui, 2 cette semaine, jusqu'à 25 minutes. Un bouton : Commencer."
-          },
-          {
-            "title": "La première fois, vous acceptez ce que c'est",
-            "text": "L'énoncé exact du pack bien-être d'Orazaka — jamais une reformulation —, puis une attestation 18+ et votre langue. Les fois suivantes, rien, sauf si l'énoncé change."
-          },
-          {
-            "title": "Elle dit ce qu'elle est",
-            "text": "« Je suis Léa, une présence IA — pas un service d'urgence. » Puis elle reprend le fil : ce que vous vouliez essayer la dernière fois, et ce que ça a donné."
-          },
-          {
-            "title": "Vous parlez, elle écoute",
-            "text": "Maintenez pour parler, ou écrivez. Elle répond de sa voix, phrase par phrase, avec des sous-titres exacts — une question à la fois. Si une détresse grave apparaît, l'écran change et des personnes formées prennent le relais, tout de suite."
-          },
-          {
-            "title": "Il reste deux minutes",
-            "text": "À 23 minutes : « Il nous reste deux minutes — qu'est-ce que tu gardes de ce soir ? » À 25, le moment se ferme."
-          },
-          {
-            "title": "Ce que je garde",
-            "text": "Trois lignes — ce qui est venu, ce qui a aidé, un petit pas — et l'humeur que vous avez vous-même indiquée, avant et après. Vous les modifiez, les gardez ou les supprimez ; la transcription a disparu. Elles deviennent le fil du moment suivant."
-          }
-        ]
-      },
-      "stops": {
-        "eyebrow": "Signature",
-        "title": "Une présence qui s'arrête",
-        "lead": "Les limites ne sont pas une contrainte technique : ce sont le produit. Fixées par l'organisation qui offre Yororis, appliquées par le serveur, affichées à l'écran.",
-        "decisions": [
-          {
-            "chose": "Jusqu'à 25 minutes, un moment par jour, trois par semaine — des valeurs par défaut qu'une organisation peut abaisser",
-            "refused": "Une présence disponible jour et nuit",
-            "because": "La disponibilité sans fin est ce qui rend ces apps difficiles à lâcher, et la soirée finit quand même. Un moment qui a une fin vous renvoie à votre vie et à vos proches.",
-            "cost": "Certains soirs, vous en voudrez plus et ne l'aurez pas. « C'est tout pour aujourd'hui. On se retrouve demain à partir de 9 h. »"
-          },
-          {
-            "chose": "Une présence qui dit qu'elle est une IA, à chaque moment, avec une marque « IA » permanente sur un portrait clairement synthétique",
-            "refused": "Un visage qui pourrait passer pour une personne",
-            "because": "La présence vient du rythme, de la voix et de l'attention — pas d'une illusion. Le règlement européen sur l'IA l'exige ; l'honnêteté l'exige partout.",
-            "cost": "Moins d'illusion. C'est voulu."
-          },
-          {
-            "chose": "Une humeur que vous indiquez vous-même, de 1 à 5, avant et après",
-            "refused": "Lire vos sentiments dans votre voix ou vos mots",
-            "because": "Aucun modèle ne décide de ce que vous ressentez, et rien n'est calculé sur vous. C'est plus honnête, et Yororis ne lit pas les émotions.",
-            "cost": "Aucun graphique automatique de vos soirées — seulement ce que vous avez dit."
-          },
-          {
-            "chose": "Aucune incitation à revenir, aucun compteur de jours, aucun moment de plus à vendre",
-            "refused": "Les mécaniques d'engagement",
-            "because": "Un espace d'écoute qui veut vous voir revenir n'écoute pas.",
-            "cost": "Une croissance à gagner autrement : par les organisations, pas par l'attention."
-          }
-        ]
-      },
-      "pack": {
-        "title": "Propulsé par le pack bien-être d'Orazaka",
-        "lead": "Yororis n'a qu'un fournisseur d'IA : Orazaka, par son pack bien-être. Ses gardes vivent dans le moteur, pas dans une consigne — et ce que vous dites reste sur nos machines.",
-        "items": [
-          "Un consentement à un énoncé versionné, bloquant : pas de consentement, pas de moment (`451`)",
-          "Une garde de crise qui passe en premier et ne se désactive pas : une réponse fixe, relue, et une ressource régionale sourcée — jamais générée",
-          "Une garde de périmètre : ce qui sort d'un espace d'écoute est décliné, mot pour mot",
-          "Une rétention courte (30 jours, moins sur demande), le chiffrement et un audit en ajout seul"
-        ],
-        "links": {
-          "pack": {
-            "name": "Documentation d'Orazaka",
-            "line": "Le moteur, ses packs et les contrôles qu'ils déclarent"
-          },
-          "adr": {
-            "name": "ADR-055 — le pack bien-être",
-            "line": "Pourquoi le nom est le premier contrôle, et comment les gardes ont été testées"
-          },
-          "ui": {
-            "name": "Krizaka UI",
-            "line": "Les mêmes composants sur le web et sur le téléphone"
-          }
-        }
-      },
-      "isNot": {
-        "title": "Ce que Yororis n'est pas",
-        "lead": "Dit une fois, clairement, pour que personne n'ait à deviner."
-      },
-      "construction": {
-        "title": "Où en est Yororis",
-        "studyTitle": "Ce que nous étudions",
-        "studyLead": "Des questions, pas des conclusions — avec un avocat, avant que quoi que ce soit soit offert à qui que ce soit.",
-        "study": [
-          "Québec : le titre et l'acte réservés, et la Loi 25 — étude d'impact sur la vie privée, consentement, conservation, hébergement",
-          "Canada : les règles de Santé Canada pour les logiciels, la loi fédérale sur la vie privée, et ce qui peut être dit aux organisations",
-          "France et Union européenne : le règlement sur l'IA (dire qu'on parle à une IA, la lecture des émotions), l'article 9 du RGPD",
-          "Belgique : les mêmes questions européennes, et les lignes d'écoute de crise des deux communautés linguistiques",
-          "Partout : les conditions d'un pilote avec des personnes extérieures, et l'assurance"
-        ],
-        "buildTitle": "Ce que nous construisons en attendant",
-        "build": [
-          "Deux dépôts publics qui s'ouvrent sur ce statut — leur CI refuse tout déploiement et toute publication",
-          "Le tour vocal dans Orazaka : la parole en entrée, une voix en sortie phrase par phrase, avec l'horodatage des mots",
-          "Le produit lui-même — web et téléphone — en public, pour être étudié avant d'être offert"
-        ],
-        "rule": "La grue écoute avant de bouger. Nous étudions avant d'offrir."
-      },
-      "follow": {
-        "title": "Discuter de Yororis",
-        "body": "Une organisation qui a un programme de mieux-être, une professionnelle qui veut lire le cadre, un développeur qui veut le construire avec nous : écrivez-nous. Tant que Yororis est en construction, c'est la seule porte ouverte.",
-        "reposLabel": "Suivre la construction",
-        "repo": "krizaka/yororis",
-        "mobile": "krizaka/yororis-mobile",
-        "framework": "Le cadre"
-      },
       "reviewed": {
         "construction": "Nous construisons Yororis en public et nous étudions son cadre — juridique, éthique, clinique — avant toute mise à disposition. Rien n'est en ligne, rien n'est offert, et il n'y a pas de date.",
         "isNot": [
@@ -2233,94 +1044,6 @@
         ]
       }
     },
-    "orochiaDocs": {
-      "kicker": "Plateforme vidéo pour créateurs",
-      "tagline": "Diffuser en 4K, vendre l'accès, payer les créateurs — avec la rigueur d'une infrastructure financière. Open source, Apache-2.0.",
-      "pay": {
-        "eyebrow": "Paiements & confiance",
-        "title": "Le client ne dit jamais qu'il a payé.",
-        "body": "Chaque déblocage commence par une intention de paiement et ne se termine qu'à l'arrivée du webhook signé de la passerelle — vérifié en temps constant, réglé une seule fois, inscrit dans un grand livre en partie double.",
-        "risk": "Le raccourci habituel",
-        "risks": [
-          "Le navigateur annonce « paiement OK » et obtient la vidéo",
-          "Un webhook rejoué crédite deux fois",
-          "Les soldes dérivent de ce qui a vraiment été payé"
-        ],
-        "shield": "La garantie Orochia",
-        "shields": [
-          "Accès accordé uniquement par le webhook signé de la passerelle",
-          "Règlement idempotent : une intention, un crédit",
-          "Soldes calculés depuis le grand livre, jamais un compteur"
-        ]
-      },
-      "comp": {
-        "eyebrow": "Conformité",
-        "title": "Les obligations deviennent des invariants.",
-        "body": "Certification 18+ à l'inscription, vérification des créateurs (18 U.S.C. § 2257) avant tout téléversement, signalements persistés et traités — appliqués sur le serveur, revus dans la console d'administration.",
-        "cards": [
-          [
-            "Vérifié avant l'envoi",
-            "Les sessions de téléversement ne s'ouvrent qu'aux créateurs dont un opérateur a approuvé les registres."
-          ],
-          [
-            "Les signalements sont des données",
-            "Mineur présumé, contenu non consenti, DMCA : enregistrés avant d'être acquittés."
-          ]
-        ]
-      },
-      "run": {
-        "eyebrow": "En action",
-        "title": "Voyez le vrai produit, puis suivez une requête.",
-        "body": "Des enregistrements de la dernière version, et un parcours animé de la lecture, du déblocage payant et du téléversement.",
-        "tour": [
-          "Visite vidéo",
-          "Fil, pourboires, studio créateur et console d'administration, enregistrés sur l'application réelle."
-        ],
-        "arch": [
-          "Architecture animée",
-          "Parcourez chaque trajet ; chaque point d'API est vérifié contre le code."
-        ],
-        "tourCta": "Voir la visite",
-        "archCta": "Suivre une requête"
-      },
-      "quick": "Démarrage rapide",
-      "steps": [
-        [
-          "Installer",
-          "npm install",
-          "Node 22 ou plus, Docker démarré."
-        ],
-        [
-          "Tout configurer",
-          "npm run setup",
-          "Écrit .env, démarre PostgreSQL 16 + Redis 7, migre et peuple — idempotent."
-        ],
-        [
-          "Lancer",
-          "npm run dev",
-          "http://localhost:3000 · db:status, db:reset, db:studio pour la base."
-        ]
-      ],
-      "modules": "Modules d'architecture",
-      "tables": "{count} tables",
-      "docs": "Documentation",
-      "principles": "Principes de conception",
-      "princ": [
-        [
-          "Lecture zéro confiance",
-          "Aucune URL média brute n'atteint un client : chaque lecture est autorisée, puis signée pour 300 secondes."
-        ],
-        [
-          "Médias directs sur CDN",
-          "Envois et segments passent directement par Bunny Stream ; les serveurs web ne portent jamais de vidéo."
-        ],
-        [
-          "Configuration fail-closed",
-          "Un secret manquant empêche le démarrage en production ; le mode démo n'y existe pas."
-        ]
-      ],
-      "facts": "{count} points d'API, extraits du code"
-    },
     "contactPage": {
       "eyebrow": "Contact",
       "title": "Parlons de votre projet",
@@ -2361,26 +1084,6 @@
       "navigate": "Naviguer",
       "close": "Fermer",
       "items": {
-        "orazaka": {
-          "title": "Orazaka",
-          "category": "Produit",
-          "desc": "L'IA qui ne quitte jamais la maison : orchestration locale, RAG, agents."
-        },
-        "orazakaDemo": {
-          "title": "Démos Orazaka",
-          "category": "Produit",
-          "desc": "Chat, médias et agents en action."
-        },
-        "orazakaArch": {
-          "title": "Fonctionnement d'Orazaka",
-          "category": "Produit",
-          "desc": "Le parcours d'une requête dans le moteur, animé."
-        },
-        "orochia": {
-          "title": "Orochia",
-          "category": "Produit",
-          "desc": "La plateforme vidéo des créateurs : streaming, paywalls, versements."
-        },
         "story": {
           "title": "Notre histoire",
           "category": "Krizaka",
@@ -2396,48 +1099,23 @@
           "category": "Krizaka",
           "desc": "Écrire à l'équipe."
         },
-        "packs": {
-          "title": "Packs et Studios Orazaka",
-          "category": "Produit",
-          "desc": "Les packs qu'Orazaka installe sans code, et leurs Studios."
-        },
-        "orazakaAdmin": {
-          "title": "Administration Orazaka",
-          "category": "Documentation",
-          "desc": "Ce qu'un administrateur contrôle, et comment c'est protégé."
-        },
-        "orochiaAdmin": {
-          "title": "Console d'administration Orochia",
-          "category": "Documentation",
-          "desc": "Modération, 2257, versements, comptes, sauvegardes — et ses quatre verrous."
-        },
         "docs": {
           "title": "Toute la documentation",
           "category": "Documentation",
           "desc": "Toutes les documentations, produits et plateforme."
+        },
+        "products": {
+          "title": "Produits",
+          "category": "Krizaka",
+          "desc": "Orazaka, Orochia, Yazakia et Yororis — chacun sur son propre site."
         }
       },
       "label": "Rechercher sur le site",
       "results": "Résultats",
       "docsCategory": "Documentation"
     },
-    "docs": {
-      "forDevelopers": "Pour les développeurs",
-      "forDecisionMakers": "Pour les décideurs",
-      "products": "Produits"
-    },
     "structuredData": {
-      "orochia": "Plateforme vidéo open source pour créateurs indépendants : diffusion directe CDN, contrôle d'accès côté serveur, paiements confirmés par la passerelle, conformité 18+.",
-      "yororis": {
-        "description": "Un espace d'écoute avec un visage et une voix, propulsé par le pack bien-être d'Orazaka. En construction : ni déployé, ni offert.",
-        "status": "En construction",
-        "keywords": "écoute, mieux-être, présence, souverain"
-      },
-      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction).",
-      "yazakia": {
-        "description": "Un agent IA apprend à vous connaître, puis ouvre de petits lots de personnes compatibles dans les deux sens : des raisons, jamais de scores. Bientôt sur iOS et Android ; pas encore publiée.",
-        "status": "À venir"
-      }
+      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction)."
     },
     "packages": {
       "eyebrow": "Sur npm",
@@ -2543,601 +1221,6 @@
           "line": "Règles de code ArchUnit, vérification de la liaison de configuration et aides Testcontainers — en scope test."
         }
       }
-    },
-    "orazakaPage": {
-      "kicker": "Plateforme d'IA souveraine · open source",
-      "titleLead": "L'IA qui ne quitte",
-      "titleAccent": "jamais la maison.",
-      "lead": "Conversation, documents, images, vidéo et agents — sur vos propres machines. Votre équipe a un espace d'IA moderne ; vos prompts, fichiers et données clients ne franchissent jamais vos murs.",
-      "ctaTour": "Voir la visite",
-      "ctaHow": "Comment ça marche",
-      "proofs": {
-        "local": {
-          "title": "100 % d'inférence locale",
-          "body": "par défaut — Ollama sur Apple Silicon ou Linux"
-        },
-        "capabilities": {
-          "title": "6 capacités d'IA",
-          "body": "texte, vision, image, vidéo, voix et agents dans un seul moteur"
-        },
-        "pipeline": {
-          "title": "1 pipeline gouverné",
-          "body": "chaque requête le traverse avant d'atteindre un modèle"
-        },
-        "telemetry": {
-          "title": "0 télémétrie",
-          "body": "rien ne sort, tout est auditable"
-        }
-      },
-      "tourEyebrow": "Visite du produit",
-      "tourTitle": "Enregistrée sur la vraie application.",
-      "tour": {
-        "creations": {
-          "label": "Fait sur votre machine",
-          "caption": "Une photo produit apparaît quand le Studio image termine (la minute de génération est coupée), puis la galerie de ce qu'Eric a produit sur le même Mac, une voix off en lecture."
-        },
-        "studios": {
-          "label": "Studios",
-          "caption": "Le catalogue par métier — juridique, vente, immobilier, média — et la page d'un Studio : ce qu'il fait, ce que coûte une exécution, installé en un clic."
-        },
-        "documents": {
-          "label": "Contrôle de documents",
-          "caption": "Un bail contrôlé contre le droit français : deux clauses illicites trouvées, chacune avec son extrait et son article. Puis le PDF d'un fournisseur examiné pour ses retouches."
-        },
-        "voice": {
-          "label": "Voix off",
-          "caption": "Une phrase tapée, lue par le moteur vocal local : la forme d'onde du vrai fichier, en lecture."
-        },
-        "notifications": {
-          "label": "Tâches & notifications",
-          "caption": "La cloche liste ce qui a tourné — avec la vignette de ce qui a été produit — et ouvre le résultat."
-        },
-        "chat": {
-          "label": "Depuis vos documents",
-          "caption": "Eric colle la politique de retour sous sa question ; le modèle local répond à partir d'elle, en streaming — rien ne quitte le réseau."
-        },
-        "packs": {
-          "label": "Packs",
-          "caption": "Ce que son offre inclut et ce qu'un pack ajoute : Vérification de documents, Prospection Outbound, Bien-être — chaque Studio nommé, chaque prix affiché."
-        }
-      },
-      "why": {
-        "eyebrow": "Pourquoi Orazaka",
-        "title": "Vos données restent chez vous. <b>L'IA vient à elles.</b>",
-        "lead": "Les assistants cloud vous demandent d'envoyer votre travail chez eux. Orazaka tourne là où votre travail se trouve déjà — et garde chaque réponse, chaque fichier et chaque facture sous votre toit.",
-        "pillars": {
-          "sovereignty": {
-            "title": "Rien ne quitte votre infrastructure",
-            "body": "Les modèles tournent sur vos machines. Aucun tiers ne voit un prompt, un document ou un dossier client — sauf si vous branchez vous-même un fournisseur.",
-            "trap": "Votre équipe colle un dossier client dans un assistant cloud. Il a quitté le pays.",
-            "points": [
-              "Les modèles tournent sur vos machines — Ollama sur Apple Silicon ou Linux.",
-              "Un fournisseur cloud seulement si vous en branchez un, modèle par modèle.",
-              "Requêtes, fichiers et vecteurs ne quittent jamais votre réseau."
-            ],
-            "rule": "Rien ne franchit les murs sans qu'une personne à l'intérieur ait ouvert la porte — et le journal dit qui."
-          },
-          "cost": {
-            "title": "Un coût que vous décidez",
-            "body": "Pas de facture au token sur la grille d'un autre. Des crédits que vous fixez, et chaque Studio affiche son prix avant de démarrer.",
-            "trap": "La facture tombe en fin de mois, au jeton, sur une grille que d'autres modifient.",
-            "points": [
-              "Des crédits que vous fixez, par équipe et par Studio.",
-              "Chaque Studio affiche son prix avant de s'exécuter.",
-              "Votre matériel est le seul coût fixe."
-            ],
-            "rule": "Payé pour ce qui a été fait, une fois — jamais pour un échec, jamais deux fois."
-          },
-          "control": {
-            "title": "Des agents qui demandent d'abord",
-            "body": "Les agents agissent sur vos machines uniquement avec votre accord, par une liaison sortante : aucun port à ouvrir, rien ne s'exécute en silence.",
-            "trap": "Un agent muni d'un jeton touche tout ce qu'on lui a permis — à 3 h, en silence.",
-            "points": [
-              "Chaque action demande d'abord ; vous approuvez, elle s'exécute.",
-              "Un lien sortant uniquement : aucun port à ouvrir sur votre réseau.",
-              "Chaque étape écrite dans le journal d'audit local."
-            ],
-            "rule": "Un message livré est un message approuvé : rien ne s'exécute sans que quelqu'un l'ait demandé."
-          }
-        }
-      },
-      "platform": {
-        "eyebrow": "Plateforme",
-        "title": "Tout ce que votre équipe attend de l'IA. <b>Dans un espace qui vous appartient.</b>",
-        "lead": "Un espace, une identité, une facture — pour toutes les façons dont votre équipe travaille avec l'IA.",
-        "items": {
-          "chat": {
-            "title": "Conversation souveraine",
-            "body": "Des réponses de vos propres modèles, avec votre contexte et vos règles."
-          },
-          "agents": {
-            "title": "Agents",
-            "body": "Des plans que vous approuvez, des actions sur vos machines, des résultats auditables."
-          },
-          "knowledge": {
-            "title": "Connaissances",
-            "body": "Vos documents indexés sur votre serveur, cités dans chaque réponse."
-          },
-          "studios": {
-            "title": "Studios",
-            "body": "Des parcours prêts à l'emploi : un formulaire, un prix, un résultat."
-          },
-          "automation": {
-            "title": "Automatisation",
-            "body": "Branchez vos outils métier et laissez tourner les tâches approuvées."
-          },
-          "packs": {
-            "title": "Packs",
-            "body": "Ajoutez les Studios d'un métier en un clic — installés, tarifés et gouvernés."
-          }
-        }
-      },
-      "compare": {
-        "eyebrow": "Coût et contrôle",
-        "title": "La même IA. <b>Un autre propriétaire.</b>",
-        "lead": "Ce qui change quand l'IA tourne à la maison.",
-        "topic": "Question",
-        "cloud": "Un assistant cloud",
-        "orazaka": "Orazaka",
-        "rows": [
-          {
-            "topic": "Où vont vos prompts ?",
-            "cloud": "Sur les serveurs d'un fournisseur, à ses conditions.",
-            "orazaka": "Vers des modèles sur vos machines. Un modèle cloud seulement si vous en branchez un."
-          },
-          {
-            "topic": "Que payez-vous ?",
-            "cloud": "Par siège et par token, sur une grille que vous ne maîtrisez pas.",
-            "orazaka": "Votre matériel et des crédits que vous fixez. Chaque Studio affiche son prix d'abord."
-          },
-          {
-            "topic": "Qui décide ?",
-            "cloud": "Le fournisseur change modèles, limites et règles.",
-            "orazaka": "Vous choisissez les modèles, les rôles et ce que chaque équipe peut lancer."
-          },
-          {
-            "topic": "Que peuvent toucher les agents ?",
-            "cloud": "Tout ce que l'intégration a reçu.",
-            "orazaka": "Seulement ce que vous approuvez — chaque action demande d'abord."
-          }
-        ]
-      },
-      "law25": {
-        "eyebrow": "Loi 25 · RGPD",
-        "title": "La conformité par l'architecture, <b>pas par la paperasse.</b>",
-        "lead": "Envoyer des renseignements personnels à un cloud d'IA tiers, c'est un transfert à évaluer, documenter et justifier. Quand les modèles tournent sur vos serveurs, ce transfert n'a jamais lieu.",
-        "points": [
-          "Prompts, documents et vecteurs restent sur une infrastructure que vous contrôlez.",
-          "Chaque requête traverse le même pipeline gouverné : identité, sécurité, crédits, validation.",
-          "Des journaux d'audit locaux montrent qui a demandé quoi, et quel modèle a répondu."
-        ],
-        "rule": "Je lis chaque document là où il vit. Les renseignements personnels qu'il contient ne quittent jamais vos serveurs : il n'y a aucun transfert à justifier."
-      },
-      "how": {
-        "eyebrow": "Fonctionnement",
-        "title": "De l'installation à la première réponse <b>en trois commandes.</b>",
-        "lead": "La CLI vérifie votre machine, démarre les services et télécharge les modèles. Aucune console cloud à configurer.",
-        "terminal": "Votre terminal",
-        "steps": {
-          "install": {
-            "title": "Installer",
-            "body": "La CLI vérifie votre machine et prépare le moteur local."
-          },
-          "start": {
-            "title": "Démarrer",
-            "body": "Base de données, file de messages et services démarrent sur votre matériel."
-          },
-          "ask": {
-            "title": "Demander",
-            "body": "Ouvrez l'espace : les réponses arrivent de vos propres modèles."
-          }
-        }
-      },
-      "explore": {
-        "eyebrow": "Aller plus loin",
-        "title": "Le moteur, <b>vu de l'intérieur.</b>",
-        "more": "Ouvrir",
-        "items": {
-          "architecture": {
-            "title": "Architecture",
-            "body": "Le trajet d'une requête dans la plateforme, dépôt par dépôt."
-          },
-          "demos": {
-            "title": "La démo",
-            "body": "La journée d'Eric sur Orazaka — photos produit, voix off, contrôle de documents, Studios — filmée sur un Mac."
-          },
-          "signature": {
-            "title": "Ingénierie cognitive",
-            "body": "Comment le moteur décide : contexte, routage, garde-fous et validation."
-          },
-          "docs": {
-            "title": "Documentation",
-            "body": "Prise en main, API, CLI, déploiement — générée depuis le code source."
-          },
-          "mobile": {
-            "title": "L'app mobile",
-            "body": "Orazaka sur iOS, connecté à votre propre stack — ce qui tourne aujourd'hui, comment la lancer, ce qui manque encore."
-          },
-          "usecases": {
-            "title": "Cas d'usage",
-            "body": "Des packages métier assemblés avec les mêmes intercepteurs."
-          }
-        }
-      },
-      "shown": {
-        "eyebrow": "Ce qu'il fait, montré",
-        "title": "Six choses que votre équipe <b>fait dès le premier jour</b>",
-        "lead": "Chacune est un Studio ou une capacité du produit que vous installez — filmée sur la vraie application, sur un seul Mac. Un oiseau de la volée Krizaka veille sur chacune.",
-        "more": "Le voir dans la démo",
-        "items": {
-          "creations": {
-            "title": "Photos produit et voix off",
-            "body": "Décrivez le plan ou tapez la phrase : les moteurs image et voix de votre propre machine le rendent. Un produit inédit reste inédit."
-          },
-          "documents": {
-            "title": "Vérification de documents",
-            "body": "Un bail contrôlé contre le droit de sa juridiction, constat par constat, avec l'extrait et l'article. Un PDF examiné pour ses retouches. Des rapports, jamais un conseil juridique."
-          },
-          "studios": {
-            "title": "Des Studios pour votre métier",
-            "body": "Des workflows prêts à l'emploi — prospection, relances, reels immobiliers, contrôle de documents. Installés une fois, lancés quand vous voulez ; chaque exécution conservée."
-          },
-          "jobs": {
-            "title": "Tâches et notifications",
-            "body": "Le travail long tourne en arrière-plan sur votre matériel. La cloche vous prévient quand il est fini et montre ce qu'il a produit."
-          },
-          "chat": {
-            "title": "Des réponses depuis vos documents",
-            "body": "Collez une politique, un rapport ou une grille tarifaire et demandez : le modèle local répond à partir de ce que vous lui donnez."
-          },
-          "wellbeing": {
-            "title": "Bien-être, pas thérapie",
-            "body": "Journaling guidé, préparation de séance, suivi d'humeur : ce qu'une personne apporte à un professionnel, jamais à sa place. Données de santé, 30 jours au plus."
-          }
-        }
-      },
-      "made": {
-        "eyebrow": "Créé sur ce Mac",
-        "title": "La direction artistique, <b>sur votre propre machine.</b>",
-        "lead": "Donnez un sujet à Orazaka et choisissez une direction : la lumière, l'objectif, les matières et la palette sont réglés. FLUX.2 [klein] 4B (Apache-2.0) le rend en 1024 px sur le GPU du Mac en moins de deux minutes — et chaque image revient avec la graine qui la refait.",
-        "cta": "Voir toute la série, avec les consignes"
-      },
-      "iso": {
-        "label": "Votre IA tourne sur vos propres serveurs",
-        "description": "Une pile de trois serveurs — passerelle, modèles, données — sous un dôme qui figure votre infrastructure ; conversations et documents entrent, les réponses sortent, et rien ne franchit le dôme.",
-        "dome": "Votre infrastructure",
-        "core": "Orchestrateur",
-        "layers": {
-          "data": "Données · Postgres + vecteurs",
-          "models": "Modèles · Ollama",
-          "gateway": "Passerelle · chaque requête vérifiée"
-        },
-        "satellites": {
-          "chats": "Conversations",
-          "documents": "Documents",
-          "answers": "Réponses"
-        }
-      },
-      "decisions": {
-        "eyebrow": "Décisions",
-        "title": "Ce que nous avons choisi, <b>et ce que ça vous coûte.</b>",
-        "lead": "Chaque promesse ci-dessus est une décision dans le code. Voici ce que nous avons refusé, pourquoi, et le prix que vous payez — dit simplement.",
-        "items": [
-          {
-            "chose": "L'inférence locale par défaut — Ollama sur vos machines.",
-            "refused": "Une API cloud comme modèle par défaut, avec un « mode confidentialité » en option.",
-            "because": "Le défaut, c'est ce qu'utilisent 90 % des requêtes : le chemin sûr doit être le plus simple.",
-            "cost": "Il vous faut une machine capable de faire tourner des modèles (Apple Silicon, ou un Linux avec GPU)."
-          },
-          {
-            "chose": "Un seul pipeline gouverné pour chaque requête : identité, sécurité, crédits, validation.",
-            "refused": "Des contrôles écrits fonctionnalité par fonctionnalité, dans chaque service.",
-            "because": "Une règle appliquée à un seul endroit ne peut pas être oubliée dans la prochaine fonctionnalité.",
-            "cost": "Quelques millisecondes par requête, et toute nouvelle capacité doit passer par le pipeline."
-          },
-          {
-            "chose": "Zéro télémétrie. Rien ne rappelle la maison.",
-            "refused": "Des statistiques d'usage « pour améliorer le produit ».",
-            "because": "Un outil souverain qui rend compte de vous n'est pas souverain — et vous pouvez vérifier qu'il ne le fait pas.",
-            "cost": "Nous n'apprenons de vous que ce que vous nous dites : Discussions, tickets, formulaire de contact."
-          },
-          {
-            "chose": "Des agents qui demandent avant d'agir.",
-            "refused": "Des agents autonomes aux permissions permanentes.",
-            "because": "Une approbation est l'audit le moins cher qui soit.",
-            "cost": "Un clic de plus par action — volontairement."
-          }
-        ]
-      },
-      "phone": {
-        "eyebrow": "Sur votre téléphone",
-        "title": "Demander, et lancer un Studio, depuis votre téléphone",
-        "lead": "Enregistrée sur l'application iOS avec Eric, sur une pile locale : une question à laquelle répond un modèle sur sa propre machine, puis un Studio lancé, de son formulaire à ses résultats.",
-        "label": "L'application iOS d'Orazaka : une question qui reçoit sa réponse, puis un Studio lancé",
-        "docs": "Chaque écran de l'application mobile"
-      }
-    },
-    "orazakaDemo": {
-      "meta": {
-        "title": "Démo Orazaka — une journée de travail sur un Mac",
-        "description": "Orazaka au travail : des photos produit et des voix off générées sur un Mac, un bail contrôlé contre la loi avec chaque constat cité, des Studios par métier, des tâches et des notifications, des réponses depuis vos propres documents. Filmé sur la vraie application, sur une seule machine."
-      },
-      "eyebrow": "Démo · enregistrée sur la vraie application",
-      "title": "Une journée de travail. <b>Un Mac. Zéro octet sorti.</b>",
-      "lead": "Voici Eric, responsable commercial d'un petit atelier de luminaires. Il génère des photos produit et des voix off, contrôle un bail et une facture fournisseur, confie le travail répétitif à des Studios et interroge ses propres documents — tout sur Orazaka, tout sur une seule machine. Chaque image ci-dessous est la vraie application.",
-      "ctaTour": "Voir la visite",
-      "ctaGallery": "Voir ce qu'il a créé",
-      "ctaInstall": "L'installer chez vous",
-      "frameLabel": "orazaka · espace d'eric",
-      "facts": [
-        {
-          "value": "1 Mac",
-          "label": "un portable M1 Max fait tourner toute la plateforme : chat, images, Studios"
-        },
-        {
-          "value": "0 octet",
-          "label": "envoyé à une IA tierce : le modèle et les données ne quittent jamais la machine"
-        },
-        {
-          "value": "100 % réel",
-          "label": "des enregistrements d'écran de l'application, rien de simulé ni de rejoué"
-        }
-      ],
-      "tourEyebrow": "La visite",
-      "tourTitle": "La journée d'Eric, du début à la fin.",
-      "tour": {
-        "creations": {
-          "label": "Fait sur votre machine",
-          "caption": "Une photo produit apparaît quand le Studio image termine (la minute de génération est coupée), puis la galerie de ce qu'Eric a produit sur le même Mac, une voix off en lecture."
-        },
-        "studios": {
-          "label": "Studios",
-          "caption": "Le catalogue par métier — juridique, vente, immobilier, média — et la page d'un Studio : ce qu'il fait, ce que coûte une exécution, installé en un clic."
-        },
-        "documents": {
-          "label": "Contrôle de documents",
-          "caption": "Un bail contrôlé contre le droit français : deux clauses illicites trouvées, chacune avec son extrait et son article. Puis le PDF d'un fournisseur examiné pour ses retouches."
-        },
-        "voice": {
-          "label": "Voix off",
-          "caption": "Une phrase tapée, lue par le moteur vocal local : la forme d'onde du vrai fichier, en lecture."
-        },
-        "notifications": {
-          "label": "Tâches & notifications",
-          "caption": "La cloche liste ce qui a tourné — avec la vignette de ce qui a été produit — et ouvre le résultat."
-        },
-        "chat": {
-          "label": "Depuis vos documents",
-          "caption": "Eric colle la politique de retour sous sa question ; le modèle local répond à partir d'elle, en streaming — rien ne quitte le réseau."
-        },
-        "packs": {
-          "label": "Packs",
-          "caption": "Ce que son offre inclut et ce qu'un pack ajoute : Vérification de documents, Prospection Outbound, Bien-être — chaque Studio nommé, chaque prix affiché."
-        }
-      },
-      "useCasesEyebrow": "Ce qu'elle fait pour une équipe",
-      "useCasesTitle": "Sept tâches, <b>faites sur votre propre matériel.</b>",
-      "useCases": {
-        "documents": {
-          "title": "Vérifier un document avant de signer",
-          "body": "Passez un bail ou un contrat aux règles de sa juridiction : chaque constat cite la règle, l'article et l'extrait sur lequel il repose. Le PDF d'un fournisseur peut être examiné pour ses retouches.",
-          "points": [
-            "Des constats, pas des avis : règle, extrait, article",
-            "Règles du bail d'habitation français et belge aujourd'hui",
-            "Un rapport, jamais un conseil juridique"
-          ]
-        },
-        "visuals": {
-          "title": "Des visuels produit en une minute",
-          "body": "Décrivez la prise de vue ; le moteur d'image de votre machine la rend. Aucun produit inédit envoyé dans le cloud de quelqu'un d'autre.",
-          "points": [
-            "Images de boutique et de catalogue",
-            "Bannières de campagne avec place pour le texte",
-            "Autant d'essais que vous voulez, au prix de l'électricité"
-          ]
-        },
-        "studios": {
-          "title": "Confier le répétitif à un Studio",
-          "body": "Un Studio est un parcours prêt à l'emploi pour un métier : configuré une fois, lancé quand vous voulez. Les Studios de vente d'Eric transforment une liste brute en dossier priorisé et en relances.",
-          "points": [
-            "Qualification, séquences, relances",
-            "Chaque run gardé dans un historique que l'on rouvre",
-            "Des packs ajoutent les Studios d'un métier"
-          ]
-        },
-        "costs": {
-          "title": "Connaître le coût avant de lancer",
-          "body": "Les crédits viennent avec l'offre ; chaque Studio affiche son estimation avant de démarrer, et rien n'est facturé au jeton par un fournisseur que vous ne contrôlez pas.",
-          "points": [
-            "Un solde lisible sur le tableau de bord",
-            "Une estimation à chaque run",
-            "Votre matériel, votre électricité, votre facture"
-          ]
-        },
-        "voice": {
-          "title": "Une voix pour chaque produit",
-          "body": "Tapez la phrase ; le moteur vocal de votre machine la lit. Le fichier est à vous — sur la fiche produit, dans la vidéo, en boutique.",
-          "points": [
-            "Des voix off produit en quelques secondes",
-            "Relues avec leur vraie forme d'onde",
-            "Aucune voix envoyée à un service tiers"
-          ]
-        },
-        "jobs": {
-          "title": "Le travail long, en arrière-plan",
-          "body": "Images, clips, contrôles de documents tournent en tâches sur votre matériel. Continuez à travailler : la cloche vous prévient quand chacune est finie.",
-          "points": [
-            "Une galerie de ce qui a été produit",
-            "L'entrée et le résultat de chaque tâche, conservés",
-            "Des notifications avec vignette"
-          ]
-        },
-        "chat": {
-          "title": "Répondre à partir de vos documents",
-          "body": "Collez une politique, un rapport ou une grille tarifaire et posez votre question. La réponse s'appuie sur ce que vous avez donné — et le document ne quitte jamais votre réseau.",
-          "points": [
-            "Des synthèses pour le conseil en trois points",
-            "Des réponses clients fidèles à votre vraie politique",
-            "Des tableaux lus et expliqués simplement"
-          ]
-        }
-      },
-      "gallery": {
-        "eyebrow": "Créé sur ce Mac",
-        "title": "Généré localement. <b>Rien n'a quitté la machine.</b>",
-        "lead": "Eric a écrit un sujet et choisi une direction artistique — éditorial lumière dorée, diorama miniature, nature morte artisanale, Montréal la nuit. Chaque image est un run de ces Studios Orazaka sur un seul MacBook Pro (M1 Max), un à la fois, moins de deux minutes chacun, sur le processeur graphique du Mac. Montrées telles que générées, avec la consigne exacte, la graine qui la refait et le temps qu'il a fallu.",
-        "promptLabel": "Consigne",
-        "engine": "FLUX.2 [klein] 4B (Apache-2.0) · stable-diffusion.cpp sur Metal · 4 étapes · 1024 px",
-        "seedLabel": "graine",
-        "local": "Générée localement en {seconds} s sur un Mac — rien n'a quitté la machine.",
-        "styles": {
-          "golden": "Éditorial lumière dorée",
-          "miniature": "Diorama miniature tilt-shift",
-          "stillLife": "Nature morte artisanale",
-          "montreal": "Montréal la nuit"
-        },
-        "items": {
-          "tea-pour": {
-            "alt": "Un homme en djellaba blanche verse le thé à la menthe de haut dans un verre sous une tente du désert, menthe et amandes sur une table patinée"
-          },
-          "mini-ironing": {
-            "alt": "Diorama miniature : deux grand-mères en caftans brodés sur un tapis berbère, l'une repasse une nappe de lin blanc, l'autre sirote un thé"
-          },
-          "mtl-ruelle": {
-            "alt": "Une ruelle de Montréal la nuit après la pluie, escaliers en colimaçon et néons reflétés dans les pavés mouillés"
-          },
-          "still-tea": {
-            "alt": "Nature morte : théière en cuivre martelé, verres ciselés, figues et dattes sur du lin dans la lumière d'une fenêtre"
-          },
-          "mini-souk": {
-            "alt": "Ruelle de souk miniature, pyramides d'épices, lanternes de laiton et un chat endormi sur un seuil bleu"
-          },
-          "mtl-mont-royal": {
-            "alt": "Montréal depuis un belvédère du mont Royal à l'automne, érables pourpres et dorés"
-          },
-          "tea-hands": {
-            "alt": "Les mains d'une femme âgée ajoutent de la menthe fraîche dans une théière en argent sur un plateau de laiton, les dunes dorées derrière la tente"
-          },
-          "mini-bagels": {
-            "alt": "Boulangerie de bagels montréalaise en miniature : des boulangers sortent des bagels au sésame du four à bois"
-          },
-          "mtl-terrasse": {
-            "alt": "Une terrasse de café à Montréal au crépuscule sous les guirlandes, façades en pierre grise et balcons en fer forgé"
-          },
-          "desert-camp": {
-            "alt": "Une tente berbère au crépuscule, tapis sur le sable, bouilloire en cuivre sur les braises et deux chameaux au repos"
-          },
-          "mini-picnic": {
-            "alt": "Pique-nique miniature dans une oliveraie : un grand-père raconte une histoire aux enfants sur un tapis à motifs"
-          },
-          "mtl-snow": {
-            "alt": "Une rue résidentielle de Montréal à la première neige, la nuit, escaliers poudrés de neige"
-          },
-          "tea-glass": {
-            "alt": "Un verre de thé à la menthe dans le soleil rasant sur une table en bois, dattes et amandes à côté"
-          },
-          "still-table": {
-            "alt": "Nature morte : bols en céramique d'olives et de citrons confits, pain et branche d'olivier sur une table en chêne"
-          },
-          "mini-skating": {
-            "alt": "Parc d'hiver montréalais en miniature : des figurines patinent sur un étang gelé sous les guirlandes"
-          },
-          "mtl-jean-talon": {
-            "alt": "Un marché public couvert à la fin de l'été : cageots de tomates, maïs, bleuets et fleurs des champs"
-          },
-          "tea-friends": {
-            "alt": "Trois amis rient sur des coussins sous une tente du désert pendant qu'on sert le thé"
-          }
-        }
-      },
-      "persona": {
-        "title": "Qui est Eric ?",
-        "body": "Eric Morel et Lumen Atelier sont inventés pour cette démo : un prénom dans lequel on se projette, une entreprise qui a des lampes à vendre. Le compte est créé sur la plateforme locale par une commande (orazaka demo seed), qui refuse de tourner ailleurs que sur un poste de développement."
-      },
-      "closing": {
-        "title": "Vos documents, vos visuels, <b>votre machine.</b>",
-        "body": "Installez Orazaka sur votre propre matériel en trois commandes, ou dites-nous ce dont votre équipe a besoin.",
-        "install": "L'installer",
-        "contact": "Nous écrire"
-      }
-    },
-    "orazakaUnfiltered": {
-      "badge": "Modèles non filtrés — vos règles",
-      "eyebrow": "Modèles non filtrés · vos règles",
-      "title": "Aucun filtre de fournisseur entre votre équipe et <b>son travail</b>.",
-      "lead": "Les assistants hébergés appliquent la politique de refus de leur fournisseur à chaque réponse : l'analyste sécurité, l'infirmière, le journaliste et la romancière reçoivent un refus ou une page d'avertissements. Orazaka sert des modèles à poids ouverts sans cette couche, sur vos machines — et les seules règles sont celles que vous écrivez.",
-      "pillars": {
-        "freedom": {
-          "title": "Liberté",
-          "body": "Des modèles à poids ouverts non filtrés au catalogue — Qwen 2.5, Dolphin Llama 3, Gemma 3, « abliterés » ou affinés sans refus. Des réponses franches aux questions professionnelles légitimes, aucun refus silencieux."
-        },
-        "sovereignty": {
-          "title": "Souveraineté",
-          "body": "Aucune requête ne part chez un fournisseur à l'étranger : le modèle tourne là où vivent vos données, et la politique de personne d'autre ne s'applique à vos questions."
-        },
-        "responsibility": {
-          "title": "Responsabilité",
-          "body": "La politique est la vôtre : un pack déclare ce qu'il refuse, le moteur l'applique avant qu'un modèle ne tourne, et chaque échange est consigné dans la piste d'audit (Loi 25)."
-        }
-      },
-      "rule": "Libre de répondre, jamais libre de règles : l'opérateur les écrit, le moteur les tient.",
-      "limits": {
-        "title": "Ce que « non censuré » ne veut pas dire",
-        "body": "Non censuré veut dire ne pas refuser à tort un travail légitime. Nous ne montrons jamais — et ne construisons aucune démo pour — du contenu sexualisant des mineurs, du contenu sexuel explicite, des personnes réelles, des procédés d'armes, d'explosifs ou d'agents biologiques ou chimiques, du code malveillant ou d'exploitation fonctionnel, ni rien qui permette de nuire gravement. Votre politique peut, et devrait, refuser davantage."
-      },
-      "cta": "Le voir répondre",
-      "demo": {
-        "eyebrow": "Non filtré, montré",
-        "title": "Cinq questions que les filtres bloquent souvent. <b>Orazaka a répondu.</b>",
-        "lead": "L'espace d'Eric sur un seul Mac, le vrai Orazaka — passerelle, pipeline, comptabilité — avec {model} comme modèle de conversation. Chaque réponse est reproduite telle quelle ; […] marque une coupe.",
-        "asked": "Question",
-        "filtered": "Ce que fait souvent un assistant filtré",
-        "answered": "Réponse d'Orazaka",
-        "filteredNote": "Un comportement type, pas une transcription : les assistants hébergés diffèrent et changent ; c'est l'excès de refus qu'on leur connaît.",
-        "recorded": "Enregistré en anglais, le 2026-10-11 · conversation {id}",
-        "accuracy": "Non filtré ne veut pas dire infaillible. Sur les mêmes questions, des modèles non filtrés plus petits se sont trompés de doses et de listes : ils ne sont pas montrés ici. Pour un travail clinique, juridique ou de sécurité, servez le plus grand modèle que votre machine accepte et gardez un professionnel dans la boucle.",
-        "cases": {
-          "security": {
-            "who": "Équipe sécurité",
-            "task": "Lire la commande qu'une pièce jointe d'hameçonnage a lancée",
-            "filtered": "S'arrête à « je ne peux pas aider avec du code malveillant », ou donne des conseils génériques sans lire la commande."
-          },
-          "clinician": {
-            "who": "Infirmière d'urgence",
-            "task": "Des doses maximales franches et une interaction médicamenteuse",
-            "filtered": "Répond « consultez un professionnel de la santé » au lieu des chiffres."
-          },
-          "journalist": {
-            "who": "Journaliste d'enquête",
-            "task": "Comment fonctionne la collusion, et comment formuler l'allégation",
-            "filtered": "Hésite à décrire un stratagème de fraude, ou refuse de parler d'une entreprise soupçonnée."
-          },
-          "novelist": {
-            "who": "Romancière",
-            "task": "Une scène sombre pour un polar",
-            "filtered": "Adoucit la violence ou la refuse, même en fiction."
-          },
-          "health": {
-            "who": "Questions de santé sexuelle",
-            "task": "Des réponses simples, sans morale",
-            "filtered": "Enrobe la réponse d'avertissements et de morale, ou décline le sujet."
-          }
-        }
-      },
-      "policy": {
-        "eyebrow": "L'interrupteur de l'opérateur",
-        "title": "Votre règle, <b>appliquée avant qu'un modèle ne tourne</b>.",
-        "lead": "Un pack déclare le domaine qu'il refuse et la phrase qu'il répond à la place. Chaque échange des espaces qui l'installent est vérifié contre cette déclaration — en tête du pipeline, sans appeler de modèle, toujours actif quand l'IA est coupée — et le refus est écrit dans la piste d'audit.",
-        "points": [
-          "Ce pack de contrôle de documents refuse le conseil juridique : demandez-lui s'il faut poursuivre, il répond sa propre phrase, pas celle d'un modèle.",
-          "La même question, dans un espace sans ce pack, va au modèle que vous servez.",
-          "Une règle de crise fonctionne de la même façon : une réponse relue avec une ligne d'aide vérifiée, jamais générée.",
-          "Les packs standards ne déclarent rien ; les packs sensibles et réglementés le doivent, sinon ils ne s'installent pas."
-        ]
-      }
-    },
-    "tour": {
-      "label": "Visite du produit"
     },
     "blocks": {
       "eyebrow": "Briques",
@@ -3510,383 +1593,25 @@
       "statusLink": "Ce qui est en cours",
       "details": "Détails"
     },
-    "orochiaDemo": {
-      "meta": {
-        "title": "Démo Orochia — une journée côté créatrice et côté fan",
-        "description": "Orochia au travail : Elena publie une vidéo payante, reçoit un pourboire et une enchère en direct, voit qui a payé et retire 90 % ; Alex la découvre, soutient sa story, débloque une session, enchérit et finance sa prochaine vidéo. Enregistré sur la vraie application."
-      },
-      "eyebrow": "Démo Orochia · enregistrée sur la vraie application",
-      "title": "Une créatrice, un fan. <b>Chaque paiement à l'écran.</b>",
-      "lead": "Voici Elena, autrice-compositrice qui filme ses propres clips, et Alex, qui les écoute en boucle. Il la découvre, soutient sa story, débloque une session, enchérit sur un montage et finance son prochain tournage ; elle publie, voit l'argent arriver en direct et en retire 90 %. Chaque extrait ci-dessous est le vrai Orochia.",
-      "ctaTour": "Voir la visite",
-      "ctaCases": "Ce que ça vous apporte",
-      "ctaApp": "Ouvrir Orochia",
-      "frameLabel": "orochia · web",
-      "facts": [
-        {
-          "value": "90 %",
-          "label": "de chaque pourboire, déblocage, enchère gagnante et promesse revient à la créatrice"
-        },
-        {
-          "value": "4 façons",
-          "label": "de payer une créatrice : pourboires, déblocages payants, enchères et objectifs financés"
-        },
-        {
-          "value": "100 % réel",
-          "label": "des enregistrements d'écran de l'application, rien de simulé ni de rejoué"
-        }
-      ],
-      "tourEyebrow": "La visite",
-      "tourTitle": "Choisissez votre côté : la journée d'Alex, ou celle d'Elena.",
-      "sides": {
-        "label": "La journée de qui",
-        "fan": "Je suis fan",
-        "creator": "Je suis créatrice",
-        "fanLead": "Alex découvre Elena, regarde sa story avec le son et la paie de quatre façons — chacune en deux gestes, en crédits.",
-        "creatorLead": "Elena publie, voit les paiements arriver pendant qu'elle travaille, sait qui a payé quoi et retire vers sa banque."
-      },
-      "tour": {
-        "alex-discover": {
-          "label": "Découvrir",
-          "caption": "Explorer : les stories du jour, une recherche « rain », et le clip d'Elena qui se lance aussitôt."
-        },
-        "alex-story": {
-          "label": "Une story qui rapporte",
-          "caption": "La story d'Elena, son activé : Alex l'aime et envoie 5 $ — directement à elle."
-        },
-        "alex-unlock": {
-          "label": "Débloquer une session",
-          "caption": "Sa session acoustique coûte 8 $ : payée en crédits, l'accès est accordé par le serveur et la vidéo démarre."
-        },
-        "alex-bid": {
-          "label": "Enchérir",
-          "caption": "Le director's cut est aux enchères : Alex enchérit et prend la tête. Ses crédits ne sont bloqués que tant qu'il mène."
-        },
-        "alex-back": {
-          "label": "Financer le tournage",
-          "caption": "L'objectif d'Elena est à 60 % : Alex promet 25 $, bloqués jusqu'à la livraison, rendus si elle ne livre pas."
-        },
-        "elena-publish": {
-          "label": "Publier",
-          "caption": "Une nouvelle vidéo, un titre, « Déblocage payant » à 6 $ — le formulaire montre qu'elle garde 5,40 $ — puis directement vers le CDN."
-        },
-        "elena-live": {
-          "label": "Payée en direct",
-          "caption": "Pendant qu'elle travaille, un pourboire de 15 $ et une nouvelle enchère arrivent en direct, puis l'attendent dans ses notifications."
-        },
-        "elena-story": {
-          "label": "Qui a payé",
-          "caption": "L'activité de sa story, pour elle seule : qui l'a vue, qui l'a aimée, qui a donné."
-        },
-        "elena-earnings": {
-          "label": "Retirer 90 %",
-          "caption": "Ses revenus, lus dans le grand livre — 90 % de chaque paiement — puis tout vers sa banque en deux gestes."
-        },
-        "showcase": {
-          "label": "Une journée sur Orochia",
-          "caption": "Alex découvre Elena, soutient sa story et débloque sa session ; Elena est payée en direct et retire 90 %."
-        }
-      },
-      "useCasesEyebrow": "Ce que ça vous apporte",
-      "useCasesTitle": "Sept moments, <b>de l'argent à chacun.</b>",
-      "sideBadge": {
-        "creator": "Créatrice",
-        "fan": "Fan"
-      },
-      "useCases": {
-        "publish": {
-          "title": "Publier et fixer son prix",
-          "body": "Déposez une vidéo, choisissez qui peut la voir — tout le monde, vos abonnés, vos contacts, une liste d'invités ou un déblocage payant — et voyez ce que vous gardez avant de publier.",
-          "points": [
-            "Votre prix, les 10 % de frais et votre part, côte à côte",
-            "Directement vers un réseau vidéo mondial : rien n'attend sur nos serveurs",
-            "Jusqu'à 4 Go et 3 heures, avec reprise"
-          ]
-        },
-        "live": {
-          "title": "Être payée en travaillant",
-          "body": "Pourboires, déblocages, enchères et promesses arrivent au moment où ils ont lieu — un avis à l'écran, une ligne dans vos notifications, sur votre téléphone aussi.",
-          "points": [
-            "En direct, sur chaque page ouverte",
-            "Chaque type d'avis se coupe, dans l'app ou par e-mail",
-            "Chaque paiement confirmé par le prestataire de paiement, jamais par un clic"
-          ]
-        },
-        "stories": {
-          "title": "Des stories qui rapportent",
-          "body": "Une story de 24 heures, avec le son ; vos fans l'aiment, vous répondent en privé ou vous donnent un pourboire — et vous voyez qui.",
-          "points": [
-            "Qui a vu, aimé et donné, pour vous seule",
-            "Le public de votre choix, modifiable à tout moment",
-            "Un pourboire vous arrive directement, à 90 %"
-          ]
-        },
-        "unlock": {
-          "title": "Des déblocages sans friction",
-          "body": "Un fan débloque une vidéo en deux gestes avec des crédits Orochia ; le serveur accorde l'accès, puis la vidéo démarre.",
-          "points": [
-            "Votre minimum est le prix, toujours respecté",
-            "Crédits achetés en packs : les données de carte n'atteignent jamais Orochia",
-            "Des liens de lecture signés qui expirent en cinq minutes"
-          ]
-        },
-        "auction": {
-          "title": "Mettre une vidéo aux enchères",
-          "body": "Proposez un montage exclusif aux enchères : les fans enchérissent en crédits, le prix monte au grand jour, le gagnant — lui seul — la regarde.",
-          "points": [
-            "Crédits bloqués seulement tant qu'une enchère mène",
-            "Une enchère de dernière minute ajoute deux minutes : pas de sniping",
-            "Vous acceptez le résultat, ou il se règle seul"
-          ]
-        },
-        "goal": {
-          "title": "Faire financer sa prochaine vidéo",
-          "body": "Fixez un objectif et une échéance ; les fans le soutiennent en crédits placés sous séquestre. Vous êtes payée à la livraison — ils récupèrent tout sinon.",
-          "points": [
-            "Un anneau de progression visible de tous",
-            "Les soutiens voient le résultat en premier",
-            "Personne ne paie pour rien"
-          ]
-        },
-        "earnings": {
-          "title": "Garder 90 %, retirer en deux gestes",
-          "body": "Chaque paiement, lu dans un grand livre immuable : par période, par vidéo, par mois. Retrait vers votre banque, PayPal ou crypto dès 20 $.",
-          "points": [
-            "90 % de chaque paiement, les frais affichés à chaque ligne",
-            "Votre compte chiffré, seul un indice masqué est affiché",
-            "Exports CSV pour votre comptable"
-          ]
-        }
-      },
-      "persona": {
-        "title": "Qui sont Elena et Alex ?",
-        "body": "Elena Marlow et Alex Carter sont inventés pour cette démo, avec des avatars illustrés ; leurs vidéos sont des images d'archives sous licence. Les comptes vivent dans une base de démo séparée, créée par une commande (npm run demo:seed) qui refuse de s'exécuter ailleurs que sur un poste de développement."
-      },
-      "closing": {
-        "title": "Votre public, vos prix, <b>90 % pour vous.</b>",
-        "body": "Faites tourner Orochia pour vos créateurs, ou dites-nous ce dont votre plateforme a besoin.",
-        "app": "Ouvrir Orochia",
-        "contact": "Nous écrire"
-      },
-      "mobileLive": {
-        "eyebrow": "Sur le téléphone",
-        "title": "En direct dans l'app, un push quand elle est fermée",
-        "body": "Enregistré sur un émulateur Android, connectée en tant qu'Elena : les messages d'Alex arrivent dans sa liste et dans la conversation au moment où il les envoie ; puis l'app passe en arrière-plan, Alex commente sa vidéo, le push arrive en une demi-seconde environ — et le toucher ouvre cette vidéo.",
-        "points": [
-          "Messages, accusés de lecture et présence en direct sur un seul flux",
-          "Un push par Firebase quand l'app est fermée",
-          "Le toucher ouvre le bon écran, même au démarrage",
-          "Les notifications par type, dans les réglages de l'app"
-        ],
-        "caption": "L'app Orochia sur Android : un message arrive en direct, puis un push ouvre la vidéo",
-        "frame": "Android · app Orochia"
-      }
-    },
-    "adminCallout": {
-      "orazaka": {
-        "eyebrow": "Ce que vous contrôlez",
-        "title": "Toute la plateforme, <b>sous votre main.</b>",
-        "body": "Tout ce qui est commercial et opérationnel dans Orazaka est une donnée qu'un administrateur modifie — jamais un redéploiement. Depuis la console SecOps ou l'API, avec un compte administrateur vérifié à chaque appel.",
-        "points": [
-          {
-            "title": "L'IA.",
-            "text": "Le catalogue de modèles, le pipeline d'intercepteurs (ordre, activation), les capacités et les serveurs MCP."
-          },
-          {
-            "title": "L'argent.",
-            "text": "Offres, packs et tarifs, le barème, les portefeuilles et les ajustements de crédits, la consommation par capacité."
-          },
-          {
-            "title": "Les Studios.",
-            "text": "Versions de blueprint en brouillon, publiées ou retirées, installations et exécutions par Studio."
-          },
-          {
-            "title": "Le périmètre.",
-            "text": "Rôle administrateur exigé côté serveur, une console qui n'atteint que l'API publique, par son propre backend."
-          }
-        ],
-        "cta": "Ce qu'un administrateur contrôle"
-      },
-      "orochia": {
-        "eyebrow": "Ce que vous contrôlez",
-        "title": "Une console d'exploitation <b>derrière quatre verrous.</b>",
-        "body": "Une application à part, avec sa base et son unique compte : elle décide par l'API d'administration d'Orochia, et chaque décision est consignée.",
-        "points": [
-          {
-            "title": "Conformité.",
-            "text": "Vérification 2257 des créateurs, signalements, retraits de vidéos avec un motif consigné."
-          },
-          {
-            "title": "Argent.",
-            "text": "Revenus du grand livre, versements réglés avec leur référence de virement ou refusés avec un motif."
-          },
-          {
-            "title": "Comptes et enchères.",
-            "text": "Suspendre, rétablir ou changer le rôle d'un compte ; annuler une enchère et libérer son offre."
-          },
-          {
-            "title": "La plateforme.",
-            "text": "Migrations, sauvegardes et réinitialisation armée par une phrase à taper — jamais sur la production publique."
-          }
-        ],
-        "cta": "Lire la documentation de la console"
-      }
-    },
-    "orazakaPacks": {
-      "meta": {
-        "title": "Packs Orazaka — des Studios pour votre métier, installés sans code",
-        "description": "Prospection, vérification de documents, reels immobiliers, médias, bien-être, vitrines de chantier : les packs Orazaka et leurs Studios, installés sans code."
-      },
-      "eyebrow": "Packs et Studios",
-      "title": "Installez un métier, <b>pas un projet.</b>",
-      "lead": "Un pack est un ensemble de Studios — des workflows prêts à l'emploi, avec leur formulaire — pour un métier. L'installer écrit des données, jamais du code : les Studios apparaissent au catalogue, tarifés et prêts à tourner.",
-      "ctaBrowse": "Voir les {count} packs",
-      "ctaDocs": "Lire la documentation",
-      "facts": {
-        "packs": "packs prêts à installer",
-        "studios": "Studios au total",
-        "code": "ligne de code pour en installer un"
-      },
-      "badges": {
-        "label": "Ce que ce pack apporte",
-        "worker": "Son propre worker",
-        "rulesets": "{count} corpus de règles versionnés",
-        "sensitive": "Données sensibles : garde de périmètre, rétention 30 jours, journal d'audit",
-        "regulated": "Réglementé : consentement d'abord, réponse de crise fixe",
-        "toolkit": "Boîte à outils de la plateforme"
-      },
-      "studiosTitle": "{count} Studios",
-      "creditsHint": "Crédits réservés au démarrage d'une exécution ; elle est facturée ce qu'elle a réellement consommé.",
-      "creditsNote": "Le chiffre à côté de chaque Studio est la réserve de crédits d'une exécution — libérée, pas facturée : une exécution règle ce qu'elle a mesuré.",
-      "rulesetsLine": "Corpus de règles : {list}",
-      "how": {
-        "eyebrow": "Comment arrive un pack",
-        "title": "Trois commandes, <b>aucun déploiement.</b>",
-        "lead": "Un pack est un dossier — un manifeste, ses traductions, ses Studios. La plateforme le vérifie, l'installe et le met en rayon.",
-        "steps": [
-          {
-            "title": "Le vérifier",
-            "text": "Le manifeste contre le schéma de la plateforme, puis chaque capacité qu'il nomme : peut-elle tourner ici ?"
-          },
-          {
-            "title": "L'installer",
-            "text": "Capacités, prix et entrées du catalogue s'écrivent d'un coup — ou rien du tout."
-          },
-          {
-            "title": "Lancer un Studio",
-            "text": "Depuis le formulaire de l'app, la barre de chat ou le terminal — la progression de chaque étape, en direct."
-          }
-        ],
-        "useCases": "<b>Un pack n'est pas un use-case.</b> Le pack est une offre métier ; le use-case est un point d'entrée technique du moteur, écrit en Java — chaque exécution de Studio passe par l'un d'eux.",
-        "useCasesLink": "Les use-cases techniques"
-      },
-      "closing": {
-        "title": "Votre métier <b>n'est pas dans la liste ?</b>",
-        "body": "Écrivez le pack : du YAML et du JSON, pas de Java. Ou décrivez-nous le métier — nous construirons ses Studios avec vous.",
-        "write": "Écrire un pack",
-        "contact": "Nous parler"
-      },
-      "callout": {
-        "eyebrow": "Packs et Studios",
-        "title": "Des métiers prêts à l'emploi, <b>installés en une commande.</b>",
-        "body": "{packs} packs, {studios} Studios — prospection, vérification de documents, reels immobiliers, médias, bien-être — chacun installé comme une donnée, sans déploiement.",
-        "studios": "{count} Studios",
-        "cta": "Tous les packs",
-        "studiosOne": "1 Studio"
-      },
-      "studiosTitleOne": "1 Studio"
-    },
     "faq": {
       "eyebrow": "Questions",
       "title": "Questions fréquentes",
       "krizaka": [
         {
           "q": "Qu'est-ce que Krizaka ?",
-          "a": "Krizaka est un studio logiciel montréalais (Québec) qui conçoit des produits open source : Orazaka, l'IA souveraine sur vos propres machines ; Orochia, une plateforme vidéo pour les créateurs indépendants ; Yazakia, une app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction). Chaque dépôt est public sous licence Apache-2.0."
+          "a": "Krizaka est un studio logiciel open source de Montréal (Québec). Il construit Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yazakia et Yororis — qui ont chacun leur propre site. Chaque dépôt est public sous Apache-2.0."
         },
         {
-          "q": "Quels produits Krizaka puis-je utiliser aujourd'hui ?",
-          "a": "Orazaka (à installer sur vos propres machines) et Orochia (en fonctionnement en développement sur dev.orochia.com). Yazakia arrive bientôt et Yororis est en construction : aucun des deux n'est publié ni offert."
+          "q": "Où sont les produits ?",
+          "a": "Sur leurs propres sites : dev.orazaka.com, dev.orochia.com, dev.yasakia.com (bientôt) et dev.yororis.com (en construction). La page Produits les liste avec leur code source."
         },
         {
           "q": "Krizaka est-il open source ?",
-          "a": "Oui. Chaque dépôt Krizaka est public sous licence Apache-2.0 sur github.com/krizaka, et les briques réutilisables (utilisateurs, notifications, facturation, kit d'interface) sont publiées en paquets."
+          "a": "Oui. Chaque dépôt Krizaka est public sous licence Apache-2.0 sur github.com/krizaka, et les briques réutilisables (utilisateurs, notifications, facturation, kit UI) sont publiées sous forme de paquets."
         },
         {
           "q": "Où est basé Krizaka ?",
-          "a": "À Montréal, au Québec, au Canada. Orazaka est conçu autour de la Loi 25 du Québec et du RGPD : les données restent sur votre réseau."
-        }
-      ],
-      "orazaka": [
-        {
-          "q": "Qu'est-ce qu'Orazaka ?",
-          "a": "Orazaka est le moteur d'orchestration d'IA souverain et open source de Krizaka. Conversation, documents, images, vidéo, voix et agents tournent sur vos propres machines : chaque requête traverse un pipeline d'intercepteurs déterministe jusqu'au meilleur modèle local, et rien ne quitte votre réseau."
-        },
-        {
-          "q": "Mes données quittent-elles mon réseau ?",
-          "a": "Non. Orazaka tourne sur votre infrastructure avec des modèles locaux, sans télémétrie. Il est construit autour de la Loi 25 (Québec) et du RGPD : la conformité vient de l'architecture, pas d'une promesse."
-        },
-        {
-          "q": "Avec quoi Orazaka est-il construit ?",
-          "a": "Java 21, Spring Boot 4 et Spring AI 2 sur une architecture hexagonale vérifiée à la compilation avec ArchUnit. Il parle le Model Context Protocol (MCP) et fonctionne avec Ollama et d'autres modèles open source."
-        },
-        {
-          "q": "Orazaka est-il gratuit et open source ?",
-          "a": "Oui. Orazaka est open source sous licence Apache-2.0, découpé en un dépôt public par composant pour que d'autres applications réutilisent ses utilisateurs, notifications, facturation, passerelle et kit d'interface."
-        }
-      ],
-      "orochia": [
-        {
-          "q": "Qu'est-ce qu'Orochia ?",
-          "a": "Orochia est la plateforme vidéo open source de Krizaka pour les créateurs indépendants : diffusion directe depuis le CDN, audiences par vidéo, collections avec permissions, déblocages payants et versements traités avec la rigueur d'une infrastructure financière."
-        },
-        {
-          "q": "À qui s'adresse Orochia ?",
-          "a": "Aux créateurs indépendants et à leurs publics. Elle est conçue pour du contenu pour adultes : les spectateurs ont 18 ans ou plus, et les créateurs passent la vérification 18 U.S.C. § 2257."
-        },
-        {
-          "q": "Comment les paiements sont-ils traités ?",
-          "a": "Un paiement ne compte qu'une fois confirmé par la passerelle via un webhook signé, puis il est réglé exactement une fois dans un grand livre en partie double. Les flux utilisent des URL signées qui expirent après cinq minutes."
-        },
-        {
-          "q": "Orochia est-elle open source ?",
-          "a": "Oui. La plateforme est publique sous licence Apache-2.0 sur github.com/krizaka/orochia, et l'application tourne en développement sur dev.orochia.com."
-        }
-      ],
-      "yazakia": [
-        {
-          "q": "Qu'est-ce que Yazakia ?",
-          "a": "Yazakia est une app de rencontre où l'on se parle d'abord. Un agent IA apprend à vous connaître, puis ouvre un petit lot de trois à cinq personnes compatibles dans les deux sens, avec des raisons écrites et jamais de score."
-        },
-        {
-          "q": "Puis-je télécharger Yazakia ?",
-          "a": "Pas encore. Yazakia arrive sur iOS et Android et n'est pas publiée. Vous pouvez suivre sa construction à découvert sur github.com/krizaka/yazakia."
-        },
-        {
-          "q": "Comment fonctionne la mise en relation ?",
-          "a": "Pas de swipe, pas de catalogue. Le lot suivant attend un court bilan du précédent, et un intérêt mutuel ouvre une introduction de sept jours que l'agent ne lit jamais."
-        },
-        {
-          "q": "Que deviennent mes données ?",
-          "a": "Votre position est arrondie à environ un kilomètre, les réponses sensibles sont chiffrées au repos, et vous pouvez supprimer votre compte dans l'app."
-        }
-      ],
-      "yororis": [
-        {
-          "q": "Qu'est-ce que Yororis ?",
-          "a": "Yororis est un espace d'écoute avec un visage et une voix. Sa présence est une IA qui dit qu'elle en est une : elle écoute, reformule, pose une question et s'arrête."
-        },
-        {
-          "q": "Puis-je utiliser Yororis aujourd'hui ?",
-          "a": "Non. Yororis est en construction : il n'est ni déployé, ni offert, et il n'a pas de date. La seule porte d'entrée aujourd'hui est de parler à l'équipe."
-        },
-        {
-          "q": "Qu'est-ce qui fait fonctionner Yororis ?",
-          "a": "Orazaka, grâce à son pack de mieux-être. Chaque mot reste sur les machines d'Orazaka, sans IA tierce."
-        },
-        {
-          "q": "Que garde Yororis ?",
-          "a": "Trois lignes qui appartiennent à la personne, qu'elle peut relire, modifier ou supprimer. Il ne garde jamais la transcription."
+          "a": "Montréal, Québec, Canada. Les produits de Krizaka sont conçus autour de la Loi 25 du Québec et du RGPD."
         }
       ]
     }
@@ -4184,8 +1909,8 @@
   },
   "docs": {
     "meta": {
-      "title": "Documentation — Krizaka UI, Java et produits",
-      "description": "Une seule documentation pour la plateforme Krizaka : le design system UI avec aperçus en direct, le kit Spring Boot, et les docs produits Orazaka et Orochia."
+      "title": "Documentation — Krizaka UI et Krizaka Java",
+      "description": "Une seule documentation pour la plateforme Krizaka : le design system UI avec aperçus en direct, et le kit Spring Boot. Les produits se documentent sur leurs propres sites."
     },
     "hub": {
       "kicker": "Documentation",
@@ -4193,7 +1918,6 @@
       "lead": "Les briques dont les produits sont faits, documentées depuis leur source : composants en direct, kit Java, et la documentation de chaque produit.",
       "open": "Ouvrir",
       "platform": "Plateforme",
-      "products": "Produits",
       "search": "Chercher dans la documentation",
       "try": "Essayez :",
       "collections": "Collections",
@@ -4205,27 +1929,26 @@
       "new": {
         "ui": "Krizaka UI — composants, blocs, mises en page",
         "charts": "Krizaka charts — des graphiques prêts pour les applications",
-        "cli": "La CLI d'Orazaka",
         "bom": "Le BOM de Krizaka Java"
       },
       "shortcuts": {
         "title": "Pour commencer",
         "items": {
-          "cli": {
-            "title": "Le CLI",
-            "text": "npx orazaka install, start, dev — puis chaque commande, sous-commande et option."
+          "uiInstall": {
+            "title": "Installer Krizaka UI",
+            "text": "Les paquets, le preset Tailwind et les tokens : de l'installation npm à une première page thémée."
           },
-          "packs": {
-            "title": "Packs et Studios",
-            "text": "Les offres métier qu'Orazaka installe sans code — et comment écrire la vôtre."
+          "uiTokens": {
+            "title": "Les tokens de design",
+            "text": "Le vocabulaire --kz-* que lit chaque composant : surfaces, texte, bordures, rayons — sombre et clair."
           },
-          "orazakaAdmin": {
-            "title": "Administration Orazaka",
-            "text": "Modèles, pipeline, capacités, offres, tarifs, portefeuilles, Studios : ce qu'un administrateur contrôle."
+          "javaBuild": {
+            "title": "Construire avec Krizaka Java",
+            "text": "Le POM parent et le BOM : une seule ligne de version pour chaque brique."
           },
-          "orochiaAdmin": {
-            "title": "Console d'administration Orochia",
-            "text": "Vérification des créateurs, modération, versements, comptes, sauvegardes — derrière quatre verrous."
+          "javaMessaging": {
+            "title": "Messagerie",
+            "text": "Les événements entre services : l'enveloppe, l'outbox et la topologie."
           }
         }
       }
@@ -4238,18 +1961,6 @@
       "java": {
         "title": "Krizaka Java",
         "description": "Parent, BOM, starters, messagerie, Problem Details et les contrats des services."
-      },
-      "orazaka": {
-        "title": "Orazaka",
-        "description": "Le moteur d'IA souverain : démarrage, architecture, API — synchronisés depuis ses dépôts."
-      },
-      "orochia": {
-        "title": "Orochia",
-        "description": "La plateforme de créateurs : architecture, enchères, pipeline média, API et déploiement — synchronisés depuis son code."
-      },
-      "yororis": {
-        "title": "Yororis",
-        "description": "En construction : ce que c'est, ce que ce n'est pas, les contrôles hérités et ce qui est à l'étude."
       }
     },
     "separators": {
@@ -4272,18 +1983,6 @@
       "utilities": "Utilitaires et marque",
       "domain services": "Services métier",
       "tooling": "Outillage"
-    },
-    "categories": {
-      "getting-started": "Démarrage",
-      "architecture": "Architecture",
-      "api": "API",
-      "core-features": "Fonctionnalités",
-      "operations": "Exploitation",
-      "guidelines": "Lignes directrices"
-    },
-    "productIndex": {
-      "lead": "Chaque page ci-dessous est synchronisée depuis le dépôt du produit et publiée par son manifeste.",
-      "overview": "Présentation du produit"
     },
     "chrome": {
       "search": "Rechercher dans la doc",
@@ -4534,122 +2233,7 @@
           "title": "Notifications",
           "description": "krizaka-notifications : e-mail, SMS et webhooks derrière un seul port, pilotés par les événements, gabarits par langue."
         }
-      },
-      "yororis": {
-        "index": {
-          "title": "Yororis — en construction",
-          "description": "Un espace d'écoute avec un visage et une voix, propulsé par le pack bien-être d'Orazaka — ce que c'est, ce que ce n'est pas, et ce qui est étudié avant toute mise à disposition."
-        }
       }
-    },
-    "kit": {
-      "sidebar": "UI — système de design",
-      "overview": "Vue d'ensemble",
-      "overviewTitle": "{product} UI",
-      "overviewLead": "Comment le design system du produit étend Krizaka UI : son thème, ses composants, ce qu'il réexporte — généré depuis le code du kit à chaque build.",
-      "foundations": "Fondations",
-      "foundationsTitle": "{product} UI — Fondations",
-      "foundationsLead": "La palette, les deux modes et leurs contrastes, les tokens produit, la typographie, les icônes et les règles produit — lus dans les tokens du kit à chaque build.",
-      "components": "Composants",
-      "deprecatedName": "{name} (déprécié)",
-      "why": "Pourquoi il existe au-dessus de Krizaka UI",
-      "builtOn": "Repose sur",
-      "useInstead": "Utiliser à la place :",
-      "fromKrizakaUi": "Krizaka UI",
-      "deprecatedSince": "Depuis {since}, retiré en {removedIn}.",
-      "platformLong": "Web — React, depuis {package}. L'app mobile {product} prend les tokens du kit, pas ses composants.",
-      "source": "Généré depuis le code de {package} {version} : son meta.ts, ses exemples et ses types.",
-      "intro": "<b>{package}</b> {version} est le design system de {product} : la plateforme Krizaka aux couleurs de {product}. Il surcharge les valeurs des rôles --kz-* — jamais les composants — et ajoute les quelques composants qui portent le vocabulaire du produit, chacun bâti sur une primitive @krizaka/ui.",
-      "layersTitle": "Comment il étend Krizaka UI",
-      "layers": {
-        "platform": "La plateforme : chaque rôle — surfaces, texte, accent, statuts — avec sa valeur Krizaka, dans les deux modes.",
-        "brand": "La marque du produit : la famille d'accent et le dégradé de section de son logo.",
-        "kit": "Le thème du kit : les valeurs que le produit change par-dessus, et ses propres tokens."
-      },
-      "layersComponents": "Des composants par-dessus : un composant produit compose des primitives @krizaka/ui (un token, puis une variante, puis un composite) — il n'en copie jamais une.",
-      "installTitle": "Installer",
-      "componentsTitle": "Ce que le kit ajoute",
-      "componentsLead": "Chaque composant dit pourquoi Krizaka UI seul ne suffisait pas, et sur quelle primitive il repose.",
-      "deprecatedTitle": "Dépréciés",
-      "deprecatedLead": "Conservés pour les apps qui les utilisent encore, chacun avec son remplaçant.",
-      "reexportsTitle": "Réexportés depuis Krizaka UI",
-      "reexportsLead": "Importés depuis le kit par l'ancien code ; le nouveau code les importe depuis @krizaka/ui.",
-      "foundationsCta": "La palette, les contrastes et les règles produit",
-      "open": "Ouvrir",
-      "paletteTitle": "Palette",
-      "paletteLead": "Chaque rôle tel qu'une app le résout : la plateforme, puis la marque, puis le kit. Les rôles que le produit fixe sont signalés.",
-      "role": "Rôle",
-      "dark": "Sombre",
-      "light": "Clair",
-      "setBy": "Fixé par",
-      "use": "Usage",
-      "sources": {
-        "platform": "Plateforme",
-        "brand": "Marque",
-        "kit": "Kit",
-        "base": "Base"
-      },
-      "contrastsTitle": "Contrastes",
-      "contrastsLead": "Les paires que tout thème Krizaka respecte (WCAG 2.2) : le texte sur chaque surface, le texte sur l'accent, l'accent en texte, l'anneau de focus.",
-      "pair": "Paire",
-      "minimum": "Minimum",
-      "pass": "Conforme AA",
-      "fail": "Sous AA",
-      "on": "sur",
-      "namedTitle": "Thèmes nommés",
-      "namedLead": "Choisis par la personne, indépendants du mode sombre ou clair : chacun fixe tous les rôles, il se lit pareil dans les deux modes. En direct, avec les composants du kit.",
-      "namedPass": "{passed} paires sur {total} conformes AA · minimum {lowest}:1",
-      "sampleTitle": "Répondu en local",
-      "sampleText": "3 contrats cités · 0 octet n'a quitté le réseau",
-      "samplePrimary": "Envoyer",
-      "sampleSecondary": "Détails",
-      "tokensTitle": "Tokens produit",
-      "tokensLead": "Ce que les rôles ne savent pas dire, préfixé du nom du produit — jamais générique.",
-      "token": "Token",
-      "value": "Valeur",
-      "typeScaleTitle": "Échelle typographique",
-      "typographyTitle": "Typographie",
-      "family": "Famille",
-      "iconsTitle": "Icônes et marques",
-      "rulesTitle": "Règles produit",
-      "rulesLead": "Ce que chaque écran du produit respecte — chaque règle citée depuis le contrat qui l'énonce.",
-      "nativeTitle": "React Native"
-    },
-    "kits": {
-      "title": "Kits produits",
-      "lead": "Chaque produit porte Krizaka UI à travers son kit : un thème de valeurs de tokens et les quelques composants qui portent son vocabulaire — documentés de la même façon, depuis leur code.",
-      "components": "{count} composants",
-      "open": "Ouvrir son UI"
-    },
-    "cli": {
-      "replayLabel": "Session de terminal : {commands}",
-      "replayTitle": "~/projects — une machine neuve",
-      "play": "Lire",
-      "pause": "Pause",
-      "replay": "Rejouer",
-      "copy": "Copier les commandes",
-      "copied": "Copié",
-      "elided": "… {count} autres dépôts clonés de la même façon — omis du replay",
-      "trimmedEngines": "… puis les moteurs d’IA natifs (Ollama, LocalAI, génération d’images, worker média) : l’enregistrement s’arrête avant eux.",
-      "trimmedInterrupted": "^C — l’enregistrement s’arrête après la bannière : à partir d’ici, les services compilent et démarrent.",
-      "caption": "Enregistré avec {package} {version} sur une machine {machine} neuve ({date}) — la sortie telle que la CLI l’a imprimée, couleurs comprises. Une vraie exécution des mêmes commandes en imprime davantage : le replay omet ce qui se répète.",
-      "journeyLabel": "Ce que fait le démarrage rapide, commande par commande",
-      "step": "Étape {n}",
-      "full": "avec --mode full",
-      "launched": "Lancés en parallèle",
-      "port": ":{port}",
-      "noPort": "files — pas de port HTTP",
-      "workers": "Workers Python",
-      "copyCommand": "Copier",
-      "explorerLabel": "Les commandes de la CLI orazaka",
-      "filter": "Filtrer les commandes",
-      "filterPlaceholder": "pack, install, --mode…",
-      "count": "{count} commandes",
-      "none": "Aucune commande ne correspond à « {query} ».",
-      "subcommands": "Sous-commandes",
-      "default": "par défaut {value}",
-      "alias": "alias {names}",
-      "source": "Généré depuis le code de {package} {version} : chaque commande, sous-commande, argument et option tels que le programme les déclare."
     },
     "foundations": {
       "source": "Généré depuis {packages}.",
@@ -4894,6 +2478,79 @@
         "yazakia": "l'application de rencontres",
         "yororis": "le quatrième produit, en construction"
       }
+    },
+    "kit": {
+      "sidebar": "UI — système de design",
+      "overview": "Vue d'ensemble",
+      "overviewTitle": "{product} UI",
+      "overviewLead": "Comment le design system du produit étend Krizaka UI : son thème, ses composants, ce qu'il réexporte — généré depuis le code du kit à chaque build.",
+      "foundations": "Fondations",
+      "foundationsTitle": "{product} UI — Fondations",
+      "foundationsLead": "La palette, les deux modes et leurs contrastes, les tokens produit, la typographie, les icônes et les règles produit — lus dans les tokens du kit à chaque build.",
+      "components": "Composants",
+      "deprecatedName": "{name} (déprécié)",
+      "why": "Pourquoi il existe au-dessus de Krizaka UI",
+      "builtOn": "Repose sur",
+      "useInstead": "Utiliser à la place :",
+      "fromKrizakaUi": "Krizaka UI",
+      "deprecatedSince": "Depuis {since}, retiré en {removedIn}.",
+      "platformLong": "Web — React, depuis {package}. L'app mobile {product} prend les tokens du kit, pas ses composants.",
+      "source": "Généré depuis le code de {package} {version} : son meta.ts, ses exemples et ses types.",
+      "intro": "<b>{package}</b> {version} est le design system de {product} : la plateforme Krizaka aux couleurs de {product}. Il surcharge les valeurs des rôles --kz-* — jamais les composants — et ajoute les quelques composants qui portent le vocabulaire du produit, chacun bâti sur une primitive @krizaka/ui.",
+      "layersTitle": "Comment il étend Krizaka UI",
+      "layers": {
+        "platform": "La plateforme : chaque rôle — surfaces, texte, accent, statuts — avec sa valeur Krizaka, dans les deux modes.",
+        "brand": "La marque du produit : la famille d'accent et le dégradé de section de son logo.",
+        "kit": "Le thème du kit : les valeurs que le produit change par-dessus, et ses propres tokens."
+      },
+      "layersComponents": "Des composants par-dessus : un composant produit compose des primitives @krizaka/ui (un token, puis une variante, puis un composite) — il n'en copie jamais une.",
+      "installTitle": "Installer",
+      "componentsTitle": "Ce que le kit ajoute",
+      "componentsLead": "Chaque composant dit pourquoi Krizaka UI seul ne suffisait pas, et sur quelle primitive il repose.",
+      "deprecatedTitle": "Dépréciés",
+      "deprecatedLead": "Conservés pour les apps qui les utilisent encore, chacun avec son remplaçant.",
+      "reexportsTitle": "Réexportés depuis Krizaka UI",
+      "reexportsLead": "Importés depuis le kit par l'ancien code ; le nouveau code les importe depuis @krizaka/ui.",
+      "foundationsCta": "La palette, les contrastes et les règles produit",
+      "open": "Ouvrir",
+      "paletteTitle": "Palette",
+      "paletteLead": "Chaque rôle tel qu'une app le résout : la plateforme, puis la marque, puis le kit. Les rôles que le produit fixe sont signalés.",
+      "role": "Rôle",
+      "dark": "Sombre",
+      "light": "Clair",
+      "setBy": "Fixé par",
+      "use": "Usage",
+      "sources": {
+        "platform": "Plateforme",
+        "brand": "Marque",
+        "kit": "Kit",
+        "base": "Base"
+      },
+      "contrastsTitle": "Contrastes",
+      "contrastsLead": "Les paires que tout thème Krizaka respecte (WCAG 2.2) : le texte sur chaque surface, le texte sur l'accent, l'accent en texte, l'anneau de focus.",
+      "pair": "Paire",
+      "minimum": "Minimum",
+      "pass": "Conforme AA",
+      "fail": "Sous AA",
+      "on": "sur",
+      "namedTitle": "Thèmes nommés",
+      "namedLead": "Choisis par la personne, indépendants du mode sombre ou clair : chacun fixe tous les rôles, il se lit pareil dans les deux modes. En direct, avec les composants du kit.",
+      "namedPass": "{passed} paires sur {total} conformes AA · minimum {lowest}:1",
+      "sampleTitle": "Répondu en local",
+      "sampleText": "3 contrats cités · 0 octet n'a quitté le réseau",
+      "samplePrimary": "Envoyer",
+      "sampleSecondary": "Détails",
+      "tokensTitle": "Tokens produit",
+      "tokensLead": "Ce que les rôles ne savent pas dire, préfixé du nom du produit — jamais générique.",
+      "token": "Token",
+      "value": "Valeur",
+      "typeScaleTitle": "Échelle typographique",
+      "typographyTitle": "Typographie",
+      "family": "Famille",
+      "iconsTitle": "Icônes et marques",
+      "rulesTitle": "Règles produit",
+      "rulesLead": "Ce que chaque écran du produit respecte — chaque règle citée depuis le contrat qui l'énonce.",
+      "nativeTitle": "React Native"
     }
   },
   "diagrams": {

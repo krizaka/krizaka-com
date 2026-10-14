@@ -3,45 +3,22 @@ import { getDictionary } from "@/lib/i18n";
    Structured data (schema.org / JSON-LD) builders.
 
    Entities are emitted as a single linked @graph and cross-referenced by
-   stable @id, so Google's Knowledge Graph reads Krizaka (Organization),
-   krizaka.com (WebSite) and its released products (SoftwareApplication:
-   Orazaka, Orochia) as one connected knowledge unit. The Organization names
-   every product in its description; Yazakia gets no application node
-   until it is released — schema.org has no "upcoming" state for software,
-   and an application node without a store or a download would misinform.
-   Yororis, under construction, gets a page-scoped node on /products/yororis
-   (buildYororisJsonLd): a LifestyleApplication — never Medical or Health —
-   whose creativeWorkStatus says it is under construction, with no offer,
-   no download and no application address.
+   stable @id, so Google's Knowledge Graph reads Krizaka (Organization) and
+   krizaka.com (WebSite) as one connected knowledge unit. The Organization names
+   the products in its description; each product's own site describes its
+   application (krizaka.com carries no product page, so no application node).
    ═══════════════════════════════════════════════════════════════════ */
 
-import {
-  SITE_URL,
-  YORORIS_REPO_URL,
-  GITHUB_ORG_URL,
-  CONTACT_EMAIL,
-  NPM_ORG_URL,
-  YAZAKIA_REPO_URL,
-  GITHUB_REPO_URL,
-  ORAZAKA_VERSION,
-  OROCHIA_APP_URL,
-} from "@/lib/site";
+import { SITE_URL, GITHUB_ORG_URL, CONTACT_EMAIL, NPM_ORG_URL } from "@/lib/site";
 
 export type Locale = "fr" | "en";
 
 const ORG_ID = `${SITE_URL}/#organization`;
 const WEBSITE_ID = `${SITE_URL}/#website`;
-const SOFTWARE_ID = `${SITE_URL}/#orazaka`;
-
 const HREFLANG: Record<Locale, string> = { fr: "fr-CA", en: "en" };
 const hreflangOf = (locale: Locale) => HREFLANG[locale];
 
-const SOFTWARE_DESCRIPTION: Record<Locale, string> = {
-  fr: "Moteur d'orchestration d'IA open source et souverain. Pipeline d'intercepteurs cognitifs, inférence multimodale et protocole MCP, sur architecture hexagonale (Java 21, Spring AI). Exécution locale, sans dépendance cloud.",
-  en: "Open-source, sovereign AI orchestration engine. Cognitive interceptor pipeline, multimodal inference and MCP, on a hexagonal architecture (Java 21, Spring AI). Runs locally with zero cloud dependency.",
-};
-
-/** Sitewide @graph: Organization · WebSite · SoftwareApplication (Orazaka). */
+/** Sitewide @graph: Organization. */
 export function buildSiteGraph(locale: Locale) {
   return {
     "@context": "https://schema.org",
@@ -54,14 +31,11 @@ export function buildSiteGraph(locale: Locale) {
         description: getDictionary(locale).site.structuredData.organization,
         foundingDate: "2024",
         knowsAbout: [
-          "AI orchestration engine",
+          "Open-source software",
+          "Design systems",
+          "React and React Native components",
+          "Spring Boot building blocks",
           "Sovereign AI",
-          "On-premise AI",
-          "Multi-modal inference",
-          "Model Context Protocol (MCP)",
-          "Retrieval-augmented generation (RAG)",
-          "Hexagonal architecture",
-          "Spring AI",
           "Law 25 (Quebec)",
           "GDPR compliance",
         ],
@@ -78,6 +52,8 @@ export function buildSiteGraph(locale: Locale) {
           { "@type": "Country", name: "Canada" },
           { "@type": "AdministrativeArea", name: "Québec" },
         ],
+        isAccessibleForFree: true,
+        codeRepository: GITHUB_ORG_URL,
       },
       {
         "@type": "WebSite",
@@ -86,56 +62,6 @@ export function buildSiteGraph(locale: Locale) {
         name: "Krizaka",
         inLanguage: hreflangOf(locale),
         publisher: { "@id": ORG_ID },
-        about: { "@id": SOFTWARE_ID },
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": SOFTWARE_ID,
-        name: "Orazaka",
-        applicationCategory: "DeveloperApplication",
-        operatingSystem: "macOS, Linux",
-        softwareVersion: ORAZAKA_VERSION,
-        description: SOFTWARE_DESCRIPTION[locale],
-        url: `${SITE_URL}/${locale}/products/orazaka`,
-        isAccessibleForFree: true,
-        codeRepository: GITHUB_REPO_URL,
-        author: { "@id": ORG_ID },
-        publisher: { "@id": ORG_ID },
-        offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
-        featureList: [
-          "Cognitive interceptor pipeline",
-          "Multi-modal AI (chat, image, video, voice)",
-          "Model Context Protocol (MCP) integration",
-          "Hexagonal architecture enforced by ArchUnit",
-          "Java 21 virtual threads",
-          "Law 25 / GDPR compliant by architecture",
-          "Ollama and open-source model support",
-        ],
-      },
-      {
-        "@type": "SoftwareApplication",
-        "@id": `${SITE_URL}/#orochia`,
-        name: "Orochia",
-        applicationCategory: "MultimediaApplication",
-        operatingSystem: "Linux (Docker), DigitalOcean App Platform",
-        description: getDictionary(locale).site.structuredData.orochia,
-        url: `${SITE_URL}/${locale}/products/orochia`,
-        isAccessibleForFree: true,
-        codeRepository: "https://github.com/krizaka/orochia",
-        sameAs: [OROCHIA_APP_URL, "https://github.com/krizaka/orochia"],
-        license: "https://www.apache.org/licenses/LICENSE-2.0",
-        contentRating: "adult",
-        featureList: [
-          "HLS playback signed for 300 seconds",
-          "Per-video audiences: followers, contacts, paid unlock, invited people and lists",
-          "Collections with permissions",
-          "Views, likes, comments and shares",
-          "Gateway-confirmed payments and double-entry ledger",
-          "18 U.S.C. § 2257 creator verification",
-        ],
-        author: { "@id": ORG_ID },
-        publisher: { "@id": ORG_ID },
-        offers: { "@type": "Offer", price: "0", priceCurrency: "CAD" },
       },
     ],
   };
@@ -175,27 +101,6 @@ export function buildFaqJsonLd(
   };
 }
 
-/** /products/yazakia — upcoming: a software application with its repository, no offer, no download, no store link. */
-export function buildYazakiaJsonLd(locale: Locale) {
-  const y = getDictionary(locale).site.structuredData.yazakia;
-  return {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "@id": `${SITE_URL}/#yazakia`,
-    name: "Yazakia",
-    applicationCategory: "SocialNetworkingApplication",
-    operatingSystem: "iOS, Android",
-    description: y.description,
-    creativeWorkStatus: y.status,
-    inLanguage: hreflangOf(locale),
-    url: `${SITE_URL}/${locale}/products/yazakia`,
-    codeRepository: YAZAKIA_REPO_URL,
-    license: "https://www.apache.org/licenses/LICENSE-2.0",
-    author: { "@id": ORG_ID },
-    publisher: { "@id": ORG_ID },
-  };
-}
-
 /** A documentation page: TechArticle in the product's docs, with its breadcrumb. */
 export function buildTechArticleJsonLd(a: { locale: Locale; title: string; description: string; url: string }) {
   return {
@@ -208,28 +113,5 @@ export function buildTechArticleJsonLd(a: { locale: Locale; title: string; descr
     author: { "@id": ORG_ID },
     publisher: { "@id": ORG_ID },
     isPartOf: { "@id": WEBSITE_ID },
-  };
-}
-
-/** /products/yororis — the product as it stands: under construction, a lifestyle application (its category is a
-    declaration of purpose: never MedicalApplication or HealthApplication), no offer, no download, no application. */
-export function buildYororisJsonLd(locale: Locale) {
-  const y = getDictionary(locale).site.structuredData.yororis;
-  return {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "@id": `${SITE_URL}/#yororis`,
-    name: "Yororis",
-    applicationCategory: "LifestyleApplication",
-    operatingSystem: "Web, iOS, Android",
-    description: y.description,
-    creativeWorkStatus: y.status,
-    keywords: y.keywords,
-    inLanguage: hreflangOf(locale),
-    url: `${SITE_URL}/${locale}/products/yororis`,
-    codeRepository: YORORIS_REPO_URL,
-    license: "https://www.apache.org/licenses/LICENSE-2.0",
-    author: { "@id": ORG_ID },
-    publisher: { "@id": ORG_ID },
   };
 }

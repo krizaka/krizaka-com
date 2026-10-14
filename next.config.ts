@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 import { createMDX } from "fumadocs-mdx/next";
-import { DOCS_MANIFEST } from "./lib/docs-manifest";
+import { productRedirects } from "./lib/product-redirects";
 import { CDN_URL, legacyRedirects } from "./lib/cdn";
 
 /**
@@ -34,10 +34,6 @@ const nextConfig: NextConfig = {
   compress: true, // gzip from the Node server; the edge in front (Vercel, App Platform's CDN) may add Brotli.
   reactStrictMode: true,
 
-  // The product kits ship their registry examples as TypeScript sources (and Orazaka's kit its whole source):
-  // /docs/<product>/ui renders them live.
-  transpilePackages: ["@krizaka/orazaka-design-system", "@krizaka/orazaka-shared", "@krizaka/orochia-design-system"],
-
   // Serve WebP (or the original). Cache optimized images
   // for a year (LCP wins; bytes only re-fetched when the source URL changes).
   // The media live on Bunny (lib/cdn.ts): next/image fetches them from there and serves their responsive sizes — the
@@ -49,20 +45,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: "https", hostname: new URL(CDN_URL).hostname, port: "", pathname: "/**", search: "" }],
   },
 
-  // The product docs moved to the documentation (/docs/<product>/<slug>, Fumadocs): the old article URLs answer 301.
+  // The products moved to their own sites (lib/product-redirects.ts): every old page, demo and documentation address
+  // answers 308 with the product's site.
   async redirects() {
-    const categories = [...new Set(Object.values(DOCS_MANIFEST).map((doc) => doc.category))].join("|");
     return [
-      {
-        source: `/:locale(fr|en)/products/orazaka/:category(${categories})/:slug`,
-        destination: "/:locale/docs/orazaka/:slug",
-        statusCode: 301,
-      },
-      { source: "/:locale(fr|en)/products/orochia/docs/:slug", destination: "/:locale/docs/orochia/:slug", statusCode: 301 },
-      // The automation page described the pre-split topology; jobs, schedules and automation are one generated page now.
+      ...productRedirects(),
       // /docs/ui/screens became the templates, grouped by intent (krizaka-com#115).
       { source: "/:locale(fr|en)/docs/ui/screens", destination: "/:locale/docs/ui/templates", statusCode: 301 },
-      { source: "/:locale(fr|en)/docs/orazaka/automation", destination: "/:locale/docs/orazaka/jobs", statusCode: 301 },
       // The media left /public for Bunny: an old /assets/… URL (published @krizaka/ui examples) answers with its file on
       // the CDN. Temporary, because the destination is versioned — a new recording gets a new URL.
       ...legacyRedirects().map((r) => ({ ...r, permanent: false })),

@@ -5,7 +5,7 @@ import { orgRepositories } from "@/lib/org-data";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import TopNavBar from "../components/TopNavBar";
 import OrgHero from "../components/home/OrgHero";
-import ProductsShowcase from "../components/home/ProductsShowcase";
+import ProductCards from "../components/home/ProductCards";
 import ExpertiseSection from "../components/home/ExpertiseSection";
 import OpenSourceSection from "../components/home/OpenSourceSection";
 import ContactCta from "../components/home/ContactCta";
@@ -23,14 +23,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/",
     en: {
-      title: "Krizaka — sovereign AI and apps from Montréal: Orazaka, Orochia, Yazakia, Yororis",
+      title: "Krizaka — open-source software studio in Montréal: Krizaka UI, Orazaka, Orochia, Yazakia, Yororis",
       description:
-        "Krizaka is a Montréal software studio building open-source platforms: Orazaka, sovereign on-premise AI (Law 25, GDPR), Orochia, the video platform for independent creators, Yazakia, the dating app where you talk first (coming soon), and Yororis, a listening space with a face and a voice (under construction).",
+        "Krizaka is a Montréal open-source software studio: Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka (sovereign on-premise AI), Orochia (a video platform for independent creators), Yazakia and Yororis — each on its own site.",
     },
     fr: {
-      title: "Krizaka — IA souveraine et apps depuis Montréal : Orazaka, Orochia, Yazakia, Yororis",
+      title: "Krizaka — studio logiciel open source à Montréal : Krizaka UI, Orazaka, Orochia, Yazakia, Yororis",
       description:
-        "Krizaka est un studio logiciel montréalais qui conçoit des plateformes open source : Orazaka, l'IA souveraine sur site (Loi 25, RGPD), Orochia, la plateforme vidéo des créateurs indépendants, Yazakia, l'app de rencontre où l'on se parle d'abord (bientôt), et Yororis, un espace d'écoute avec un visage et une voix (en construction).",
+        "Krizaka est un studio logiciel open source montréalais : Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka (IA souveraine sur site), Orochia (une plateforme vidéo pour créateurs indépendants), Yazakia et Yororis — chacun sur son propre site.",
     },
   });
 }
@@ -46,7 +46,7 @@ export default async function Home({ params }: Props) {
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
       <TopNavBar />
       <OrgHero locale={locale} repositoryCount={publicRepositories} />
-      <ProductsShowcase />
+      <ProductCards locale={locale} />
       <BuildWithKrizaka locale={locale} />
       <StoryTeaser />
       <ExpertiseSection />

@@ -1,5 +1,4 @@
 import type { MetadataRoute } from "next";
-import { getAllUseCaseSlugs } from "@/lib/use-cases-data";
 import { allDocsPaths } from "@/lib/docs-source";
 import { SITE_URL } from "@/lib/site";
 import { BUILDING_BLOCKS } from "@/lib/building-blocks";
@@ -18,16 +17,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/open-source",
     ...BUILDING_BLOCKS.map((b) => `/open-source/${b.id}`),
     "/story",
-    "/products/orazaka",
-    "/products/orochia",
-    "/products/orochia/demos",
-    "/products/yazakia",
-    "/products/yororis",
-    "/products/orazaka/packages",
-    "/products/orazaka/usecases",
-    "/products/orazaka/ingenierie-cognitive",
-    "/products/orazaka/demos",
-    "/products/orazaka/architecture",
     "/contact",
     "/privacy",
     "/terms",
@@ -60,27 +49,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     let freq: "weekly" | "monthly" | "yearly" = "weekly";
     if (path === "") {
       priority = 1.0;
-    } else if (path === "/products/orazaka" || path === "/products/orochia" || path === "/products/yazakia" || path === "/products/yororis" || path === "/products" || path === "/products/orazaka/packages") {
+    } else if (path === "/products") {
       priority = 0.9;
     } else if (path === "/contact" || path === "/privacy" || path === "/terms") {
       priority = 0.5;
       freq = "yearly";
-    } else if (path === "/products/orazaka/demos" || path === "/products/orochia/demos" || path === "/products/orazaka/architecture" || path === "/products/orazaka/ingenierie-cognitive") {
-      priority = 0.7;
-      freq = "monthly";
     }
     return buildEntries(path, priority, freq);
   });
 
-  /* Dynamic use case pages */
-  const useCasePages = getAllUseCaseSlugs().flatMap((slug) =>
-    buildEntries(`/products/orazaka/usecases/${slug}`, 0.7, "monthly")
-  );
-
-  /* Documentation: the hub, each set's home and every page (Krizaka UI, Java, Orazaka, Orochia) */
+  /* Documentation: the hub, each set's home and every page (Krizaka UI, Krizaka Java) */
   const docPages = ["/docs", ...allDocsPaths()].flatMap((path) =>
     buildEntries(path, path.split("/").length <= 3 ? 0.8 : 0.7, "weekly")
   );
 
-  return [...staticPages, ...useCasePages, ...docPages];
+  return [...staticPages, ...docPages];
 }

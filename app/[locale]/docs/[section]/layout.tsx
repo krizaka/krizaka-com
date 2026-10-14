@@ -6,10 +6,8 @@ import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import { DOCS_SECTIONS, getPageTree, type DocsSection } from "@/lib/docs-source";
 import { asLocale, getDictionary } from "@/lib/i18n";
-// The product kits' themes as scopes (generated from their registries): the live examples of /docs/<product>/ui.
+// The scope of a kit's live examples (generated; the product kits are documented on the products' sites).
 import "@/app/components/docs/kit-themes.css";
-// The CLI reference's replay, journey and command explorer (/docs/orazaka/cli).
-import "@/app/components/docs/cli/cli.css";
 
 export const dynamicParams = false;
 
@@ -18,11 +16,9 @@ export function generateStaticParams() {
 }
 
 const isSection = (value: string): value is DocsSection => (DOCS_SECTIONS as readonly string[]).includes(value);
-/** A product's documentation wears its mark and its brand; the platform's (ui, java) wear Krizaka's. */
-const isProductMark = (section: DocsSection): section is "orazaka" | "orochia" | "yororis" => section === "orazaka" || section === "orochia" || section === "yororis";
 
 /* One documentation set: the site's navigation on top, Fumadocs' sidebar (this set's tree, a switcher between the
-   five sets, the search) and the page with its table of contents, then the site's footer. */
+   two sets, the search) and the page with its table of contents, then the site's footer. */
 export default async function DocsSectionLayout({ children, params }: { children: ReactNode; params: Promise<{ locale: string; section: string }> }) {
   const { locale: raw, section } = await params;
   if (!isSection(section)) notFound();
@@ -33,7 +29,7 @@ export default async function DocsSectionLayout({ children, params }: { children
     title: t.sections[s].title,
     description: t.sections[s].description,
     url: `/${locale}/docs/${s}`,
-    icon: <ProductLogo id={isProductMark(s) ? s : "krizaka"} size={18} animated={false} />,
+    icon: <ProductLogo id="krizaka" size={18} animated={false} />,
   }));
 
   return (
@@ -46,8 +42,7 @@ export default async function DocsSectionLayout({ children, params }: { children
         tabs={tabs}
         nav={{ title: t.hub.kicker, url: `/${locale}/docs` }}
         themeSwitch={{ enabled: false }}
-        // A product's documentation wears its brand (@krizaka/tokens/brands/scoped.css), like its product pages.
-        containerProps={{ className: isProductMark(section) ? "kz-docs brand-" + section : "kz-docs", style: { "--fd-banner-height": "var(--kz-docs-top)" } as CSSProperties }}
+        containerProps={{ className: "kz-docs", style: { "--fd-banner-height": "var(--kz-docs-top)" } as CSSProperties }}
       >
         {children}
       </DocsLayout>

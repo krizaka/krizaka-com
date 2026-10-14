@@ -1,38 +1,12 @@
-/* Fumadocs collections — five documentation sets, one engine.
-   - ui, java: written here (content/docs/**), MDX with the live-preview components.
-   - yororis: written here while Yororis is under construction (content/docs/yororis) — replaced by the docs synced
-     from krizaka/yororis (docs:generate) once its code exists (PYO5).
-   - orazaka, orochia: synced from the product repositories (never edited here). Only the files the publication
-     manifests list are compiled: an internal doc never reaches the build, let alone the site. */
+/* Fumadocs collections — two documentation sets, one engine: ui and java, written here (content/docs/**), MDX with the
+   live-preview components. The products' documentation is on their sites. */
 
-import { readdirSync } from "node:fs";
-import path from "node:path";
-import { pageSchema } from "fumadocs-core/source/schema";
 import { defineConfig, defineDocs } from "fumadocs-mdx/config";
 import type { Root } from "mdast";
-import { DOCS_MANIFEST } from "./lib/docs-manifest";
-import { OROCHIA_DOCS_MANIFEST } from "./lib/orochia-docs-manifest";
 import { remarkStructuredDiagrams } from "./lib/remark-diagrams";
-
-/** The synced markdown files a manifest publishes (the manifest is keyed by the lower-cased file name). */
-function published(dir: string, manifest: Record<string, unknown>): string[] {
-  return readdirSync(path.join(process.cwd(), dir)).filter((file) => file.endsWith(".md") && file.replace(/\.md$/, "").toLowerCase() in manifest);
-}
-
-/** Synced docs carry no front matter: the manifest gives their title. */
-const syncedSchema = pageSchema.extend({ title: pageSchema.shape.title.optional() });
 
 export const ui = defineDocs({ dir: "content/docs/ui" });
 export const java = defineDocs({ dir: "content/docs/java" });
-export const yororis = defineDocs({ dir: "content/docs/yororis" });
-export const orazaka = defineDocs({
-  dir: "orazaka-content/docs",
-  docs: { schema: syncedSchema, files: published("orazaka-content/docs", DOCS_MANIFEST) },
-});
-export const orochia = defineDocs({
-  dir: "orochia-content/docs",
-  docs: { schema: syncedSchema, files: published("orochia-content/docs", OROCHIA_DOCS_MANIFEST) },
-});
 
 /** The page renders the title (manifest or messages): a document's own leading `# Title` would repeat it. */
 const PREAMBLE = new Set(["yaml", "mdxjsEsm", "html"]);

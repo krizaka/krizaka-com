@@ -104,13 +104,19 @@ test("the committed manifest names every media the site draws", () => {
   const { root, files } = readManifest();
   assert.equal(root, "site");
   const need = [
-    ...["orazaka", "orochia"].flatMap((p) => ["webm", "mp4", "jpg"].map((e) => `home/backdrop/${p}.${e}`)),
-    ...["showcase", "creations", "studios", "documents", "voice", "notifications", "chat", "packs"].map((c) => `products/orazaka/tour/${c}.mp4`),
-    ...["showcase", "alex-discover", "alex-story", "alex-unlock", "alex-bid", "alex-back", "elena-publish", "elena-live", "elena-story", "elena-earnings"].map(
-      (c) => `products/orochia/tour/${c}.webm`,
-    ),
+    // "Krizaka UI, live" (home): the native loop of each identity, dark and light.
+    ...["orazaka", "orochia", "yazakia", "yororis"].flatMap((b) => ["dark", "light"].flatMap((m) => ["webm", "mp4", "jpg"].map((e) => `home/kit-native/${b}-${m}.${e}`))),
+    // The clips the published @krizaka/ui examples still reach through /assets/orochia/tour/ (lib/cdn.ts, next.config).
+    ...["alex-discover", "alex-bid", "elena-live"].flatMap((c) => ["webm", "mp4", "jpg"].map((e) => `products/orochia/tour/${c}.${e}`)),
   ];
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
+  // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left.
+  const gone = Object.keys(files).filter((path) => /^(docs\/(orazaka|orochia)\/|home\/backdrop\/|products\/(orazaka|yazakia)\/|products\/orochia\/mobile\/)/.test(path));
+  assert.deepEqual(gone, []);
+  assert.deepEqual(
+    Object.keys(files).filter((path) => path.startsWith("products/orochia/tour/") && !/\/(alex-discover|alex-bid|elena-live)\./.test(path)),
+    [],
+  );
 });
 
 test("prune keeps what another branch's manifest still names", async () => {

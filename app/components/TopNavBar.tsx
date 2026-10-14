@@ -1,9 +1,8 @@
 "use client";
 
 /* The site bar, built on @krizaka/ui's NavBar (floating, tightening on scroll, one light gliding between the items and
-   resting on the current page, Radix menus) and fed by lib/nav.ts. Left: the mark · Products (the one menu, two
-   columns) · Open source · Our story. Right: Search ⌘K · Docs (a plain link to the hub — never a second menu, so no
-   panel covers another) · GitHub · theme · language · Contact us. Under /docs the left group becomes the documentation
+   resting on the current page) and fed by lib/nav.ts. Left: the mark · Products (a plain link to /products) · Open
+   source · Our story. Right: Search ⌘K · Docs (a plain link to the hub) · GitHub · theme · language · Contact us. Under /docs the left group becomes the documentation
    breadcrumb. Below md: the mark, the search and the mobile panel's toggle. */
 
 import Link from "next/link";
@@ -20,7 +19,7 @@ import { GITHUB_ORG_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, NAV_DOCS_HUB, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
-import { DocsCrumb, ProductsPanel } from "./ProductsMenu";
+import { DocsCrumb } from "./DocsCrumb";
 import { useContactHref } from "./useContactHref";
 import { GitHubMark } from "./brand/GitHubMark";
 
@@ -48,9 +47,6 @@ export default function TopNavBar() {
             <DocsCrumb pathname={path} />
           ) : (
             <NavBar.Items>
-              <NavBar.Menu value="products" label={m.products} active={path.startsWith("/products")}>
-                <ProductsPanel pathname={path} />
-              </NavBar.Menu>
               {NAV_BAR_LINKS.map((l) => (
                 <NavBar.Link key={l.href} asChild active={isNavActive(l, path)}>
                   <Link href={l.href}>{companyLinkText(t, l).label}</Link>

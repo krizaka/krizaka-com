@@ -1,12 +1,10 @@
-/* Home hero — Krizaka as an organisation: what we build (its products, lib/org-data.ts) and how. A server component: the title,
+/* Home hero — Krizaka as an organisation: what we build (its products, lib/products.ts) and how. A server component: the title,
    the promise and the product cards are the first paint (LCP); everything behind them is decoration that arrives later.
 
    Depth, back to front (BRAND.md §4), every layer decorative and still under prefers-reduced-motion:
    - the section gradient and its drifting light (SectionBackdrop), a light dome and a perspective floor;
    - an aurora in the three brand colours — Orazaka orange on the left, Krizaka blue in the middle, Orochia violet on
      the right — that breathes very slowly (org-hero.css);
-   - the two released products glimpsed through depth of field on their side (HeroProductMedia): hovering a card brightens its
-     product and lights its mark;
    - the signature landscape as the horizon: it rises as the page scrolls and fades into the next section — no hard
      edge, never behind the title;
    - an invitation to scroll that is a real link to the products.
@@ -21,11 +19,9 @@ import { format } from "@krizaka/i18n";
 import { GitHubMark } from "../brand/GitHubMark";
 import { Landscape } from "@krizaka/ui/landscape";
 import RotatingWord from "./RotatingWord";
-import HeroProductMedia from "./HeroProductMedia";
 import { getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { PRODUCTS } from "@/lib/org-data";
-import { NAV_PRODUCTS } from "@/lib/nav";
-import { ProductStatus } from "../ProductStatus";
+import { PRODUCTS, type ProductStatus } from "@/lib/products";
+import { ProductStatus as StatusChip } from "../ProductStatus";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import "./org-hero.css";
 import ButtonLink from "@/app/components/ButtonLink";
@@ -41,7 +37,6 @@ export default function OrgHero({ locale, repositoryCount }: { locale: string; r
         <span className="org-aurora org-aurora-core" />
         <span className="org-aurora brand-orochia" />
       </div>
-      <HeroProductMedia />
       <div data-backdrop-layer aria-hidden className="org-hero-fade" />
       <div data-backdrop-layer aria-hidden className="org-hero-horizon" data-parallax="">
         <Landscape />
@@ -60,16 +55,16 @@ export default function OrgHero({ locale, repositoryCount }: { locale: string; r
 
         <div className="org-hero-products">
           {PRODUCTS.map((p) => (
-            <Link key={p.id} href={p.href} prefetch={false} className={cn("org-hero-product", "brand-" + p.id)} data-product={p.id}>
+            <Link key={p.id} href={`/products#${p.id}`} prefetch={false} className={cn("org-hero-product", "brand-" + p.id)} data-product={p.id}>
               <span className="org-hero-mark">
                 <ProductLogo id={p.id} size={34} />
               </span>
               <span className="org-hero-product-text">
                 <strong>
                   {p.name}{" "}
-                  <HeroStatus id={p.id} t={t} />
+                  <HeroStatus status={p.status} t={t} />
                 </strong>
-                <span className="org-hero-product-tag">{t.site.products[p.id].tagline}</span>
+                <span className="org-hero-product-tag">{t.site.products.cards[p.id].line}</span>
               </span>
               <ForwardIcon size={16} />
             </Link>
@@ -95,8 +90,7 @@ export default function OrgHero({ locale, repositoryCount }: { locale: string; r
   );
 }
 
-/** The product's status chip (lib/nav.ts) beside its name, when it is not released yet. */
-function HeroStatus({ id, t }: { id: string; t: TranslationDictionary }) {
-  const status = NAV_PRODUCTS.find((n) => n.id === id)?.status;
-  return status ? <ProductStatus status={status} t={t} className="org-hero-status" /> : null;
+/** The product's status chip (lib/products.ts) beside its name, when it is not released yet. */
+function HeroStatus({ status, t }: { status?: ProductStatus; t: TranslationDictionary }) {
+  return status ? <StatusChip status={status} t={t} className="org-hero-status" /> : null;
 }

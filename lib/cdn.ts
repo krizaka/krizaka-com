@@ -31,13 +31,9 @@ export interface Video {
 export const video = (base: string): Video => ({ webm: cdn(`${base}.webm`), mp4: cdn(`${base}.mp4`), poster: cdn(`${base}.jpg`) });
 
 /** Where the media were served before they moved to Bunny (`/assets/…` on krizaka.com) — published examples of
-    @krizaka/ui still point there: next.config answers each old URL with a redirect to its file on the CDN. */
-const LEGACY: [from: string, to: string][] = [
-  ["/assets/home/backdrop/", "home/backdrop/"],
-  ["/assets/orazaka/tour/", "products/orazaka/tour/"],
-  ["/assets/orazaka/gallery/", "products/orazaka/gallery/"],
-  ["/assets/orochia/tour/", "products/orochia/tour/"],
-];
+    @krizaka/ui still point there (the three Orochia clips of its video examples): next.config answers each old URL with a
+    redirect to its file on the CDN. The manifest keeps exactly those files under products/orochia/tour/. */
+const LEGACY: [from: string, to: string][] = [["/assets/orochia/tour/", "products/orochia/tour/"]];
 
 export function legacyRedirects(): { source: string; destination: string }[] {
   return LEGACY.flatMap(([from, to]) =>

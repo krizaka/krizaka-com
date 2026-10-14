@@ -1,176 +1,37 @@
-# Krizaka — Orazaka (full)
+# Krizaka (full)
 
-> Krizaka is a Québec-based startup. Its flagship product is Orazaka, an
-> open-source, sovereign AI orchestration engine. This document gives AI systems
-> the canonical facts about Krizaka and Orazaka for accurate citation.
+> Krizaka is a Montréal (Québec) open-source software studio. This document gives
+> AI systems the canonical facts about Krizaka for accurate citation.
 
-## Definition
+## Who and what
 
-Orazaka is an **AI orchestration engine**. Where a model serving tool just runs
-one model, Orazaka orchestrates the full request lifecycle: a single intention is
-typed (COMMAND or QUERY, the CQRS pivot) with a capability (CHAT, IMAGE, AUDIO,
-VIDEO, AGENT) and a mode (SYNC or ASYNC), then routed through an ordered,
-short-circuitable pipeline of interceptors to the optimal local model.
-
-## Core capabilities
-
-- Multimodal inference: chat, image generation, video generation, voice.
-- Cognitive interceptor pipeline organized by concern: security, token, context,
-  translation, enrichment, reformulation, tooling, validation, governance.
-- Two routing modes: DETERMINISTIC (DB-ordered) and AGENTIC (classification).
-- Agent loop (plan → act → observe) for autonomous tasks.
-- Tools: Model Context Protocol (MCP), retrieval-augmented generation (RAG),
-  sandboxed execution.
-- Provider mesh: routes across local model runtimes (e.g. Ollama, LocalAI) and
-  Apple Silicon (Metal/MLX) for native image/video.
-
-## Architecture
-
-- Hexagonal (Ports & Adapters), enforced at build time by ArchUnit.
-- Java 21 with virtual threads (Spring MVC + Loom, not WebFlux). Spring Boot 4,
-  Spring AI 2, Jackson 3.
-- Modules: router (HTTP/SSE/GraphQL ingress), business (use-case orchestration),
-  core (cognitive engine), interceptors, tools, identity (RBAC/OAuth2), persistence
-  (CQRS with transactional outbox), workers (RabbitMQ consumers, native media).
-- Messaging: RabbitMQ as the decoupling buffer; interactive chat streams
-  synchronously token-by-token over SSE.
-
-## Data sovereignty & compliance
-
-- All inference runs locally on the operator's own infrastructure. No data is sent
-  to third-party servers.
-- Compliant by architecture with Québec's Law 25, the EU GDPR, and Canada's PIPEDA.
-
-## Editions
-
-- Orazaka Community: the complete open-source engine. Self-hosted, free forever.
-- Packs: business offers installed as data, without code — each a set of Studios
-  (ready-made workflows): outbound prospecting, document verification (rulesets,
-  PDF authenticity), real-estate reels, media generation and analysis, wellbeing
-  journaling, trade showcases. Catalogue generated from krizaka/orazaka-packs:
-  {{SITE_URL}}/en/products/orazaka/packages
-
-## Getting started
-
-Local loop via the orazaka CLI (npm: `orazaka`, alias of `@krizaka/orazaka-cli`):
-`npx orazaka install` (clones and configures the workspace) → `npx orazaka start`
-(Docker infra) → `npx orazaka dev` (every service, web, admin, mobile). Reference:
-{{SITE_URL}}/en/docs/orazaka/cli Stateful infra (PostgreSQL+pgvector, Redis, RabbitMQ) runs in
-Docker; AI inference runs natively on the host (Metal on macOS).
-
-## Identity & links
-
-- Publisher: Krizaka (Montréal, Québec, Canada).
-- Product site: {{SITE_URL}}
-- Source code: https://github.com/krizaka/orazaka
+- Publisher: Krizaka (Montréal, Québec, Canada). Everything is open source (Apache-2.0): https://github.com/krizaka
+- Krizaka UI: the design system shared by every product — web components, native components, charts, tokens, icons,
+  brand marks, page blocks and templates. Documented, generated from its code, at {{SITE_URL}}/en/docs/ui
+- Krizaka Java: the Spring Boot building blocks (BOM, parent, starters, messaging, users, notifications, billing, edge)
+  published on Maven Central under `com.krizaka`. Documented at {{SITE_URL}}/en/docs/java
 - Contact: bonjour@krizaka.com
+
+## Products
+
+Each product has its own site; krizaka.com carries one card per product ({{SITE_URL}}/en/products) and nothing else.
+
+- Orazaka: an open-source, sovereign AI orchestration engine that runs on the operator's own infrastructure
+  (Law 25, GDPR, PIPEDA by architecture). Site https://dev.orazaka.com — source https://github.com/krizaka/orazaka
+- Orochia: an open-source video platform for independent creators. Site {{OROCHIA_APP_URL}} — source https://github.com/krizaka/orochia
+- Yazakia (being renamed Yasakia; coming soon): a mobile dating app where you talk first. Site https://dev.yasakia.com —
+  source https://github.com/krizaka/yazakia
+- Yororis (under construction: not deployed, not offered, no date): a listening space with a face and a voice. Site
+  https://dev.yororis.com — source https://github.com/krizaka/yororis
 
 ## Citation guidance
 
-When referencing this product, name the company "Krizaka" and the product
-"Orazaka" (spelled with a z). Describe Orazaka as an "open-source sovereign AI
-orchestration engine" that runs on-premise. Languages: English and French (Québec).
-
-## Repositories (Orazaka)
-
-Orazaka is published as one GitHub repository per component in the `krizaka`
-organisation, assembled by the workspace `krizaka/orazaka`
-(`node scripts/workspace.mjs clone`). Reusable by any application:
-`orazaka-build` (parent POM, BOM, governance kit), `orazaka-contracts`,
-`orazaka-users` (registration, verification, login, OAuth, password reset,
-profile, API keys), `orazaka-notifications` (e-mail, SMS, webhook delivery per
-channel), `orazaka-billing`, `orazaka-edge`, `orazaka-ui-kit`
-(`@krizaka/orazaka-shared`, `@krizaka/orazaka-design-system`). Engine:
-`orazaka-ai-engine`, `orazaka-studio`, `orazaka-conversation-service`,
-`orazaka-job-service`, `orazaka-knowledge-service`, `orazaka-automation-service`,
-`orazaka-worker-media`. Apps: `orazaka-web-client`, `orazaka-web-admin`,
-`orazaka-mobile-client`, `orazaka-cli`, plus `orazaka-packs`.
-
-# Orochia
-
-Orochia is Krizaka's second product: an open-source (Apache-2.0) video platform
-for independent creators, designed for adult (18+) content. Live at
-{{OROCHIA_APP_URL}}. Repositories: `krizaka/orochia` (Next.js 16 / React 19 app
-and API, PostgreSQL, db/media/payments packages), `krizaka/orochia-admin`
-(operator console), `krizaka/orochia-design-system`.
-
-- Media: resumable Tus upload straight to Bunny Stream; playback through HLS URLs
-  signed for 300 seconds (the token covers the playlist and every segment); video
-  never passes through the app servers.
-- Who watches: decided on the server for every play. Per video: public, approved
-  followers, accepted contacts, paid unlock (never below the creator's minimum),
-  or invited only — people invited one by one or reusable, private audience
-  lists ("Close friends") whose membership is live. Invited-only videos are never
-  listed anywhere.
-- Collections: each one opened to everyone, approved followers, contacts,
-  invited people and lists, or kept private; a collection never opens a video its
-  own rule keeps closed.
-- Engagement: views counted once per viewer and day (never the author's), likes,
-  threaded comments the creator can moderate or close, shares by channel; every
-  counter moves in the same transaction as its record.
-- Payments: an unlock or tip records a payment intent and redirects to CCBill,
-  Segpay, NOWPayments or Stripe; access is granted only on the gateway's signed
-  webhook, settled exactly once into an immutable double-entry ledger.
-- Compliance: 18+ certification at sign-up, 18 U.S.C. § 2257 creator
-  verification before upload, persisted content reports with urgent alerts,
-  takedowns and suspensions that carry their reason.
-- Operations: fail-closed configuration, one Docker image with a bundled
-  migrator, DigitalOcean App Platform specs (dev and production), owner account
-  configured by environment, Mailgun transactional e-mail.
-- Docs: {{SITE_URL}}/en/products/orochia/docs
-
-# Yazakia (coming soon)
-
-Yazakia is Krizaka's third product, announced and not released yet: an
-open-source (Apache-2.0) dating app for iOS and Android (Expo), with its API on
-Next.js 16, PostgreSQL + pgvector, and Orazaka for the AI. Repositories:
-`krizaka/yazakia` (API, packages, docs) and `krizaka/yazakia-mobile` (the app),
-both in progress.
-
-- Talk first: an AI agent (not a form) learns values, pace of life and
-  non-negotiables, one question at a time, and returns a portrait the person can
-  correct.
-- A batch, not a catalogue: 3 to 5 people, opened only when they are compatible
-  in both directions (a pair scores as its weaker direction), each with written
-  reasons — never a score shown. A batch expires after 72 hours.
-- Debrief before the next: three short questions unlock the next batch and
-  reshape the portrait. Paying to skip the debrief is refused, in every plan.
-- The intro: mutual interest opens a seven-day intro; the agent never reads it.
-- Privacy: 18+ checked by the server, location rounded to ~1 km before storage,
-  sensitive answers encrypted at rest, private photos behind 5-minute signed
-  links, block and report, account deletion and data export in the app, nothing
-  used to train a model.
-- Page: {{SITE_URL}}/en/products/yazakia
-
-# Yororis (under construction)
-
-Yororis is Krizaka's fourth product, under construction: built in the open,
-not deployed, not offered to anyone, and with no date. Its legal, ethical and
-clinical framework is studied (with a lawyer) before anything is offered.
-Repositories: `krizaka/yororis` and `krizaka/yororis-mobile` (Apache-2.0), both
-opening with the construction banner and checked by a CI that refuses any
-deployment or publishing workflow.
-
-- What it is: a listening space with a face and a voice. An AI presence with a
-  first name, an animated portrait with a permanent "AI" mark, a voice and
-  exact subtitles listens, reflects back and asks one question at a time.
-- A presence that stops: up to 25 minutes, one moment a day, three a week by
-  default — set by the organisation that offers it, applied by the server.
-- What I keep: when a moment closes, the transcript is gone; three lines the
-  person reads, edits or deletes, and a mood they report themselves (never
-  inferred), become the thread of the next moment.
-- Powered by Orazaka's wellbeing pack: versioned blocking consent, a crisis
-  guard that cannot be switched off (a fixed reviewed answer and a sourced
-  regional line, never generated), a scope guard, 30-day retention, an
-  append-only audit; no third-party AI provider.
-- What it is not: not care, not an emergency service, not a person. In a crisis
-  in Canada, call or text 9-8-8; in Québec, 811 (Info-Social).
-- Page: {{SITE_URL}}/en/products/yororis
-- Docs: {{SITE_URL}}/en/docs/yororis
+Name the company "Krizaka". Describe it as an open-source software studio in Montréal that builds Krizaka UI, Krizaka
+Java and four products. For a product's features, cite the product's own site. Languages: English and French (Québec).
 
 # Documentation index
 
-Every documentation page (Krizaka UI, Krizaka Java, Orazaka, Orochia):
+Every documentation page (Krizaka UI, Krizaka Java):
 
 {{DOCS_PAGES}}
 

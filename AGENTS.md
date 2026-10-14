@@ -1,8 +1,8 @@
 # 🥷 KRIZAKA — Site Governance (agent-neutral)
 
-> Governance contract for **`krizaka-com`**, the public Next.js site for Krizaka
-> and its flagship product Orazaka. This file is the single source of truth for
-> how the site is built, themed, and kept in sync with the Orazaka engine.
+> Governance contract for **`krizaka-com`**, the public Next.js site of the company Krizaka: a lightweight
+> showcase — Krizaka UI, Krizaka Java, the story, open source, and one page that points to each product's own site.
+> This file is the single source of truth for how the site is built and themed.
 > The product engine has its **own** contract at `products/orazaka/AGENTS.md` (the Orazaka
 > workspace, [`krizaka/orazaka`](https://github.com/krizaka/orazaka), one repository per component) —
 > do not mix the two.
@@ -11,90 +11,53 @@
 
 ## 1. What this repo is
 
-- A **Next.js (App Router)** static-first site: marketing, documentation, and
-  **code-driven interactive visualizations** of the Orazaka architecture.
-- It is the **read side**. Architecture/doc facts come from the Orazaka source —
-  the site never hand-authors them.
+- A **Next.js (App Router)** static-first site: the company home, `/products`, Krizaka UI and Krizaka Java
+  documentation (with their code-driven visualizations), `/story`, `/open-source`, contact and legal.
+- It is the **read side**. Component, version and architecture facts come from the published packages and the
+  generated data — the site never hand-authors them.
 
-## 2. Content & data are generated, not hand-written
+## 2. What is generated, what is written
 
-- `orazaka-content/docs/` and `app/data/architecture.json` are **synced from
-  Orazaka** via `orazaka docs sync` (run from `products/orazaka`). **Never
-  hand-edit** files under `orazaka-content/` or `app/data/` — change the Orazaka
-  source and re-sync.
-- What is **published** is gated by `lib/docs-manifest.ts` (an allow-list with
-  curated title/category/order/audience/intro). Docs not in the manifest stay
-  internal. Add a manifest entry to publish a synced doc — do not copy markdown
-  into the repo by hand.
-- The architecture schemas (module map, interceptor pipeline, messaging topology, the Orazaka
-  request journey) render `app/data/architecture.json` through `lib/architecture-model.ts`, which
-  checks at build time the shape they rely on; treat the JSON as read-only generated data. A fact
-  the schemas need and the model lacks (a role, a flow, a binding) is added to the **generator**
-  (`products/orazaka/scripts/generate-docs.mjs`), never to the site.
-- The Orazaka repository map (`RepositoryMap`, architecture page `#repositories`) renders
-  `repositories` from the same generated file — never hard-code a repository list in a component.
-- The CLI reference (`/docs/orazaka/cli`) is drawn from the same file: the generator writes `cli` (commands, options,
-  the quick-start journey) and the fenced blocks `cli-replay`, `cli-journey`, `cli-commands` of
-  `CLI.md` (`lib/remark-diagrams.ts` → `app/components/docs/cli/`, read through `lib/cli-model.ts`). The replay plays
-  `public/assets/orazaka/cli/session.json`, a recording of the **published** CLI made by `scripts/record-cli.mjs` on a
-  fresh runner (`.github/workflows/record-cli.yml`) — never by hand, never on a workstation whose Orazaka
-  infrastructure is in use (`start` would recreate the shared `orazaka` compose project).
-- The Orazaka packs (`/products/orazaka/packages`, the packs section of `/products/orazaka`) render `packs` from the
-  same generated file (`lib/orazaka-packs.ts`, read from krizaka/orazaka-packs by the generator) — never a hand-written
-  list; a bundle with `catalog.status: DRAFT` (the test pack) is never shown. A pack's words are its own translations.
+- **krizaka.com is the company's lightweight showcase.** The products have their own sites — dev.orazaka.com,
+  dev.orochia.com, dev.yasakia.com (Yazakia is being renamed Yasakia; identifiers here keep "yazakia" until that rename
+  lands) and dev.yororis.com. This repo carries **no product page, demo, gallery, journey, recording or documentation**
+  of them: one page, `/products`, has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
+  « Visit the dev site » and « Source »). Orochia's card is neutral — no adult-adjacent wording, no media.
+- **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
+  `tests/product-redirects.test.mjs`): `/products/<p>(/…)` → the product's site, `/docs/orazaka/*` →
+  dev.orazaka.com/docs, `/docs/orochia/*` → dev.orochia.com/docs, `/docs/yororis/*` → dev.yororis.com, the old Orazaka
+  pages (`/architecture`, `/demos`, `/use-cases`…) → dev.orazaka.com — all 308, with or without the locale prefix.
+  Never add a product page back: change the product's site.
+- `app/data/architecture.json` and `app/data/orochia-architecture.json` are **generated** by the product repositories
+  (`orazaka docs sync`, `npm run docs:generate`). **Never hand-edit** `app/data/`. They stay because Krizaka Java's
+  `ModuleMap` (`buildingBlocks`) and the open-source repository lists (`lib/org-data.ts`) read them; a fact the schemas need
+  and the model lacks is added to the **generator**, never to the site. `lib/architecture-model.ts` checks the shape at
+  build time.
+- Orazaka's packs, use cases, gallery and the synced `orazaka-content/` / `orochia-content/` docs (and their publication
+  manifests) are gone from this repository.
 
 ## 2.1 Products are presented the same way
 
-- `lib/nav.ts` is the single source of the navigation: the desktop bar (`TopNavBar` · `ProductsMenu`), the mobile
-  panel, the footer, the ⌘K search and the home spotlights all render it. Every product exposes the same four
-  entries in the same order (overview · how it works · demo · signature), each with a label and a short line
-  (`site.nav.<product>.links.<id>.{label,desc}`); documentation lives under **Docs** (`NAV_DOCS`: Orazaka, CLI, Orochia, Yororis,
-  Krizaka UI, Krizaka Java — the one entry point of every documentation, also listed by the ⌘K search and the footer's
-  Documentation column; the CLI entry is a direct link to the generated `/docs/orazaka/cli`). A product page may still link its documentation in context.
-- **The bar** is `@krizaka/ui/nav-bar` (`NavBar.Root/Brand/Items/Menu/MenuLink/Link/Actions/Mobile`), composed in
-  `TopNavBar` and fed by `lib/nav.ts` — never a hand-made bar, no inline styles; buttons are `@krizaka/ui/button`
-  (`asChild` with Next's `Link`, Contact us `primary` + `shimmer`). Left: the mark · **Products** (the bar's only menu) ·
-  Open source · Our story (`NAV_BAR_LINKS`), under NavBar's light that glides to the hovered/focused item and rests on
-  the current page's (`active`). Right (`NavBar.Actions`): Search ⌘K · **Docs** (a plain link to the hub `/docs`, never
-  a menu — it never covers Products) · GitHub · theme · language · Contact us. Under `/docs` the left group becomes a
-  breadcrumb (Docs / <entry>, `docsSectionOf`, the most specific entry): the sets are switched from the documentation's
-  own sidebar, never from a second menu. The bar tightens on scroll (NavBar `compactAfter`).
-- **The Products panel** is composed inside `NavBar.Menu` (`ProductsPanel`), in two columns: on the left the products
-  (mark · name, the selected one on a surface with a rail in its brand colour; the current page's product is selected
-  when it opens) and "All products"; on the right the selected product's name and tagline, then its four entries as
-  `NavBar.MenuLink` — `@krizaka/icons` icon, label, one short line, never truncated. Hover or focus selects a product.
-  Keyboard: Radix opens it (Enter, Space, ↓), Tab/↓ enter it, Escape closes and returns the focus, Tab out closes; in the
-  panel ↑/↓ (Home/End) change product, → enters its entries, ↑/↓ walk them, ← returns. NavBar's panel is capped at
-  30 rem: a wider mega-panel waits for krizaka-ui ([krizaka/krizaka-ui#69](https://github.com/krizaka/krizaka-ui/issues/69)), never a CSS override here.
-- **Mobile** (`MobilePanel`, inside `NavBar.Mobile`): one panel, every destination once — Products (an accordion per
-  product whose entries read clearly: icon, label, short line, ≥ 44 px targets) and All products, Docs (NAV_DOCS + the
-  hub), Open source, Our story, then Contact us, theme and language. It scrolls inside the viewport.
-- Each product wears its brand (`@krizaka/tokens/brands/scoped.css`): `/products/orazaka*` under `.brand-orazaka`
-  (orange), `/products/orochia*` under `.brand-orochia` (violet → magenta), `/products/yazakia*` under `.brand-yazakia`
-  (emerald → turquoise), `/products/yororis*` and `/docs/yororis` under `.brand-yororis` (sand → sage), the rest of the
-  site Krizaka (ink + blue).
-  Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons) (never lucide for new work); sections
-  are the page blocks of `@krizaka/ui` (§4.1) on `SectionBackdrop` (BRAND.md §4); the remaining `bp-*` classes of
-  `app/globals.css` only style what is the brand page's own (ledger, comparison table, terminal), inside the frame.
-- Brand marks come from [`@krizaka/ui`](https://github.com/krizaka/krizaka-ui) on npm (`KrizakaLogo`,
-  `OrazakaLogo`, `OrochiaLogo`, `YazakiaLogo`, `YororisLogo`, `ProductLogo`) — the same package the products use, never a copy in this repo.
-  Never a placeholder icon. A change to a mark is made in `krizaka-ui`, released, then adopted here.
-- **A product in construction** (`status: "construction"`, today Yororis) exposes the same four entries as every product;
-  there is no demo, so its **Demo entry opens its status section** (`#construction`) — it says so instead of hiding the
-  entry. Its words say "under construction" and never "coming soon", beta, early access, waiting list or sign-up; its
-  pages carry **one** call to action, "Talk to us about Yororis" (the contact form, topic pre-selected) — no trial,
-  download, sign-up or waiting-list button, no app or download URL in `lib/site.ts`.
-- **Yororis' lexicon** is law for every message whose key contains `yororis` and for `content/docs/yororis`:
-  `npm run lexicon` (in `npm run lint`) fails on the "never" column of `company/prompts-yororis.md` §2.1. The reviewed
-  texts (`site.yororis.reviewed.*`: the "under construction" statement, "What Yororis is not") are fingerprinted in
-  `scripts/lexicon-reviewed.json`: change one only with `npm run lexicon -- --accept-review YYYY-MM-DD` and say so in the PR.
-- **A product not released yet** (`status: "upcoming"` in `NAV_PRODUCTS`, today Yazakia) says so (`site.nav.<id>.badge`, "Coming
-  soon") and lists only the entries that exist — no demo or docs link before there is a demo or a doc (no dead link). The
-  home shows its animated mark where the recording will be (`PRODUCTS[].media` absent), never an invented screenshot,
-  profile or figure; no store button before the store listing exists.
-- Product recordings are recorded on the real application (`npm run record:tour` in the product's repository) and live
-  on Bunny like every other media (§5.2), never in `public/`; endpoints named by the Orochia journeys are verified against the generated
-  architecture data at build time (`lib/journeys.ts`).
+- `lib/products.ts` is the single list of the products (id, name, status, `devUrl`, `repoUrl`); `lib/nav.ts` derives the
+  navigation from it. The bar (`@krizaka/ui/nav-bar`, composed in `TopNavBar`, never hand-made, no inline styles):
+  the mark · **Products** (a plain link to `/products`) · Open source · Our story; right: Search ⌘K · **Docs** (the hub) ·
+  GitHub · theme · language · Contact us (`primary` + `shimmer`). Under `/docs` the left group becomes a breadcrumb
+  (`DocsCrumb`). Mobile: one panel (`MobilePanel`), every destination once. The footer's Products column links each
+  product's own site. The ⌘K search lists these destinations and `NAV_DOCS` (Krizaka UI, Krizaka Java).
+- `ProductCards` (`app/components/home/`) renders the cards on `/products` and as a section of the home; each card wears
+  its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
+  `.brand-yazakia` emerald → turquoise, `.brand-yororis` sand → sage; the rest of the site is Krizaka ink + blue).
+  Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); marks from `@krizaka/ui`
+  (`KrizakaLogo`, `OrazakaLogo`, `OrochiaLogo`, `YazakiaLogo`, `YororisLogo`, `ProductLogo`) — never a copy here.
+- A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
+  construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
+- **Yororis' lexicon** is law for every message whose key contains `yororis`: `npm run lexicon` (in `npm run lint`) fails
+  on the "never" column of `company/prompts-yororis.md` §2.1. The reviewed texts (`site.yororis.reviewed.*`, quoted by
+  /story's Yororis chapter) are fingerprinted in `scripts/lexicon-reviewed.json`: change one only with
+  `npm run lexicon -- --accept-review YYYY-MM-DD` and say so in the PR.
+- The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
+  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, and the three Orochia clips that published
+  `@krizaka/ui` examples reach through `/assets/orochia/tour/` (a redirect in `lib/cdn.ts`).
 - English is the default language; French is served when chosen (cookie `NEXT_LOCALE`) or opened.
 
 ## 2.2 Text & languages — nothing hard-coded
@@ -117,10 +80,11 @@
 
 ## 2.3 Documentation — one engine (Fumadocs)
 
-- `/docs/{ui,java,orazaka,orochia,yororis}` render five Fumadocs collections (`source.config.ts`, `lib/docs-source.ts`).
-  Product docs stay synced and manifest-gated (§2); `content/docs/ui` and `content/docs/java` are written here, and so is
-  `content/docs/yororis` while Yororis is under construction (one page, replaced by its synced docs in PYO5); the
-  `ui/` pages of a product are generated from its kit (below).
+- `/docs/{ui,java}` render two Fumadocs collections (`source.config.ts`, `lib/docs-source.ts`), both written here
+  (`content/docs/ui`, `content/docs/java`). The products document themselves on their sites; the **product kit** docs
+  (`/docs/<product>/ui`, generated from `@krizaka/orazaka-design-system` / `@krizaka/orochia-design-system`) went with
+  them — those kits are documented where the products live, and the two packages are no longer dependencies here
+  (`scripts/gen-ui-docs.mjs` `KITS` lists only Krizaka UI; the kit-reading code stays for a kit that returns).
 - **The code drives `/docs/ui`.** One page per component of the **published `@krizaka/ui` registry**, generated at
   every build (virtual pages in `lib/docs-source.ts`, rendered by `ComponentDoc`): summary, platforms (Web · Mobile ·
   both), status, when to use / not, installation, every named example (web: live + code; React Native: its story's
@@ -131,19 +95,6 @@
   `lib/ui-examples.ts` and `public/ui-examples/`. `/docs/ui` lists every component (`<ComponentCatalog />`, filtered
   by platform). A new `@krizaka/ui` arrives as a Dependabot pull request (`.github/dependabot.yml`): merge it when CI
   is green — nothing else to regenerate.
-- **The code of each product kit drives `/docs/<product>/ui`** (the "UI" section of `/docs/orazaka` and `/docs/orochia`):
-  an overview (how the kit extends Krizaka UI — its theme's layers, install, what it adds, what is deprecated, what it
-  re-exports), **Foundations** (the palette resolved in both modes with the layer that sets each role, WCAG contrasts,
-  Orazaka's named themes drawn live, product tokens, typography, icons, the product rules quoted from the contracts,
-  React Native) and one page per component (why it exists above Krizaka UI, the primitives it is built on, deprecated →
-  its replacement), generated at every build from the **published registries** of `@krizaka/orazaka-design-system` and
-  `@krizaka/orochia-design-system` — the format of `@krizaka/ui`'s, plus `why`, `builtOn`, `deprecated` and
-  `registry/foundations.json`. That content is written **in the kit** (`<name>.meta.ts`, `registry/examples`, JSDoc,
-  `foundations.meta.ts`), never here. `scripts/gen-ui-docs.mjs` reads the three registries: the import map of the live
-  examples, and `app/components/docs/kit-themes.css` (git-ignored) — each kit's theme as a scope (`.kz-kit-<product>`,
-  `.kz-kit-<product>-<named theme>`) so a kit's example wears its product, in both modes, without the kit's theme ever
-  reaching the rest of the site. The kits are in `transpilePackages` (they ship their examples as `.tsx`); product docs
-  wear their brand (`.brand-<product>` on the docs container). `/docs/ui` links them (`<ProductKits />`).
 - **Krizaka UI is several packages, one catalogue.** `/docs/ui` reads the registries of `@krizaka/ui` **and
   `@krizaka/charts`** (`UI_PACKAGES` in `lib/ui-registry.ts`, `KITS` with `part: "ui"` in `scripts/gen-ui-docs.mjs`):
   the charts are the `charts` category, their install line and source link come from each item (`install`, `source`).
@@ -188,26 +139,23 @@
 
 ## 4. Visualizations
 
-- **One way to see an architecture, for every product.** `ModuleMap` (`app/components/diagrams/`) draws the generated
-  model of Orazaka (`architecture.json`), Krizaka Java (`architecture.json` · `buildingBlocks`, from the POMs) and
-  Orochia (`orochia-architecture.json` · `map`): one band per role, chips with their owner and version, a
-  Dependencies / Runtime calls toggle (requests solid, events — messages, webhooks, SSE, NOTIFY, push — dashed), the
-  owner filter, search, selection that lights *uses / used by* or *calls / called by*, and **Journeys**: a real request
-  played step by step on the same map (the modules and links of the step lit, the rest dimmed, the numbered steps
-  beside it — `lib/journeys.ts`, every module, link and endpoint checked against the model at build time). A product's
-  page, its docs and `/docs/java` show the same component; there is no other architecture drawing (no floating nodes,
-  no graph library).
+- **One way to see an architecture.** `ModuleMap` (`app/components/diagrams/`) draws the generated model of Krizaka Java
+  (`architecture.json` · `buildingBlocks`, from the POMs) on `/docs/java` (the component still reads the Orazaka and
+  Orochia models, which no page draws any more): one band per role, chips with their owner and version, a
+  Dependencies / Runtime calls toggle (requests solid, events dashed), the owner filter, search, selection that lights
+  *uses / used by* or *calls / called by*, and journeys (`lib/journeys.ts`, checked against the model at build time).
+  There is no other architecture drawing (no floating nodes, no graph library).
 - `lib/architecture-model.ts` checks the shape of each model at build time (roles, modules, relations, flow kinds, the
   words of every role); a fact the map lacks is added to the product's **generator**, never to the site.
 - With it, the same visual language (chip, 11px radius, a rail in the group colour, `--dg-<group>` with an AA `-ink`
-  variant, the domain core in the page's brand accent): `InterceptorPipeline`, `MessagingTopology`, `SequenceDiagram`
+  variant, the domain core in the page's brand accent): `InterceptorPipeline`, `SequenceDiagram`
   (numbered steps by phase, participants as chips) and `StateDiagram` (one card per state, in reading order).
   2D, labels in full — a schema whose labels need zooming is not done.
 - **Docs ask for a schema with a fenced block** (`lib/remark-diagrams.ts`): ` ```architecture ` (`product`, `focus`,
   `mode` build|runtime|journey, `journey`, `owner`), ` ```pipeline `, ` ```sequence ` (participants — `@module` ids are
   checked against the model — then `a -> b: …` / `a --> b: …`, `## phase`, `if … / else … / end`) and ` ```states `
   (`enum: <pg enum>` checks every state against the Orochia schema). In MDX: `<ArchitectureView product="orazaka"
-  focus="krizaka-billing-service" mode="runtime" />`. Blocks are written in the source repository and synced.
+  focus="krizaka-billing-service" mode="runtime" />`. Blocks are written in the docs themselves (`content/docs/**`).
 - **Mermaid is retired**, with no fallback: never rendered in the browser, never shipped (`mermaid` is not a dependency),
   and a ` ```mermaid ` fence in a published doc fails the build. (Unpublished
   internal design notes of the product repositories may still hold some; they never reach the site — converting one is
@@ -228,10 +176,6 @@
   the Krizaka chamfer (`shape="cut"`) on every call to action — heroes, closing calls, contact, featured cards, the bar's
   « Contact us »; `lg` on a hero or a closing call, `md` in a section. `shimmer` only on **the** main action of a page
   (with `magnetic` on a hero). No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
-- **Product heroes are `IsoHub`** (`@krizaka/ui/iso`), driven by data — Orazaka's stack under its dome, Orochia's
-  creator with the four ways fans pay converging on her; names and labels in `messages/*.json`, the light from the
-  brand (`.brand-orazaka` / `.brand-orochia`). Never an isometric drawing of the site's own.
-
 ## 4.1 The Krizaka page language — from `@krizaka/ui` blocks
 
 - **Every page is made of the page blocks of [`@krizaka/ui`](https://www.krizaka.com/docs/ui) (category *Blocks*),
@@ -294,7 +238,7 @@
   no `fetch` in a client `useEffect` (a Server Component renders the data), no `@tanstack/*` import (only through a
   `@krizaka/*` facade), no hand-written `<table>` or multi-field `<form>` outside the documented exceptions. ESLint warns
   (`krizakaStack()` of `@krizaka/config`), `krizaka-ratchet` holds the counts of `lint-ratchet.json` (they only go
-  down; `retire` lists the dependencies on their way out — `framer-motion`, #98), and `depcruise` (`.dependency-cruiser.cjs`,
+  down; `retire` lists the dependencies on their way out — none left), and `depcruise` (`.dependency-cruiser.cjs`,
   extending `@krizaka/config/dependency-cruiser`) fails the lint on a forbidden import or a cycle.
 
 - Links to the running Orochia go through `OROCHIA_APP_URL` (`lib/site.ts`), set by

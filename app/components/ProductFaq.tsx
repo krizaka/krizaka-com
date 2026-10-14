@@ -4,10 +4,10 @@ import { getDictionary } from "@/lib/i18n";
 import { buildFaqJsonLd } from "@/lib/structured-data";
 import "./product-faq.css";
 
-type FaqProduct = "krizaka" | "orazaka" | "orochia" | "yazakia" | "yororis";
+type FaqProduct = "krizaka";
 
 /**
- * The questions people ask about one product (or about Krizaka), answered in the open: native disclosure elements
+ * The questions people ask about Krizaka, answered in the open: native disclosure elements
  * (keyboard operable, no script) and the matching FAQPage JSON-LD — the markup always describes what is on the page.
  * Words: messages → site.faq.<product> (en and fr).
  */
