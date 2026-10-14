@@ -1,0 +1,97 @@
+{
+  "readAt": "2026-10-14",
+  "products": {
+    "orazaka": {
+      "sources": [
+        "orazaka-web-client:package.json",
+        "orazaka-web-admin:package.json",
+        "orazaka-mobile-client:package.json",
+        "orazaka-edge:pom.xml",
+        "orazaka-ai-engine:pom.xml",
+        "orazaka-automation-service:pom.xml",
+        "orazaka-conversation-service:pom.xml",
+        "orazaka-job-service:pom.xml",
+        "orazaka-knowledge-service:pom.xml"
+      ],
+      "npm": [
+        "@krizaka/charts",
+        "@krizaka/config",
+        "@krizaka/icons",
+        "@krizaka/intl",
+        "@krizaka/orazaka-design-system",
+        "@krizaka/orazaka-shared",
+        "@krizaka/tailwind",
+        "@krizaka/tokens",
+        "@krizaka/ui"
+      ],
+      "maven": [
+        "krizaka-billing-client",
+        "krizaka-messaging",
+        "krizaka-security",
+        "krizaka-spring-boot-starter-observability",
+        "krizaka-spring-boot-starter-rabbitmq",
+        "krizaka-spring-boot-starter-security",
+        "krizaka-spring-boot-starter-web",
+        "krizaka-test-support",
+        "krizaka-users-api",
+        "krizaka-users-client"
+      ],
+      "evidence": [
+        "orazaka-web-client:src/core/hooks/useJobSSE.ts"
+      ]
+    },
+    "orochia": {
+      "sources": [
+        "orochia:apps/web/package.json",
+        "orochia-admin:package.json",
+        "orochia-mobile:package.json"
+      ],
+      "npm": [
+        "@krizaka/charts",
+        "@krizaka/config",
+        "@krizaka/i18n",
+        "@krizaka/icons",
+        "@krizaka/intl",
+        "@krizaka/orochia-design-system",
+        "@krizaka/push",
+        "@krizaka/realtime",
+        "@krizaka/tailwind",
+        "@krizaka/tokens",
+        "@krizaka/ui"
+      ],
+      "maven": [],
+      "evidence": []
+    },
+    "yasakia": {
+      "sources": [
+        "yasakia:apps/web/package.json"
+      ],
+      "npm": [
+        "@krizaka/config",
+        "@krizaka/i18n",
+        "@krizaka/icons",
+        "@krizaka/push",
+        "@krizaka/realtime",
+        "@krizaka/tailwind",
+        "@krizaka/tokens",
+        "@krizaka/ui"
+      ],
+      "maven": [],
+      "evidence": []
+    },
+    "yororis": {
+      "sources": [
+        "yororis:site/package.json"
+      ],
+      "npm": [
+        "@krizaka/fonts",
+        "@krizaka/icons",
+        "@krizaka/tailwind",
+        "@krizaka/tokens",
+        "@krizaka/ui"
+      ],
+      "maven": [],
+      "evidence": []
+    }
+  }
+}

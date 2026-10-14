@@ -78,19 +78,9 @@ html.light .st-mote { opacity: .16; }
 
 /* ═══ BONUS ROUND — we use our own products ═══ */
 .st-ours { max-width: 70rem; margin: 0 auto; padding: clamp(80px, 10vw, 112px) 20px; text-align: center; }
+.st-ours-link { font-weight: 700; color: var(--kz-accent-text, var(--kz-accent)); text-decoration: none; }
+.st-ours-link:hover { text-decoration: underline; }
 .st-ours-lead { max-width: 620px; margin: 0 auto 32px; font-size: 16px; line-height: 1.75; color: var(--kz-text-secondary); }
-.st-table-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
-.st-table { width: 100%; min-width: 640px; border-collapse: collapse; text-align: left; font-size: 14px; }
-.st-table caption { padding: 14px 18px 0; text-align: left; font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
-  color: var(--kz-text-secondary); caption-side: top; }
-.st-table th, .st-table td { padding: 14px 18px; border-bottom: 1px solid var(--kz-border-subtle); }
-.st-table thead th { font-size: 12.5px; font-weight: 600; color: var(--kz-text-secondary); }
-.st-table tbody tr:last-child > * { border-bottom: 0; }
-.st-table-product { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
-.st-table td[data-yes] { color: var(--kz-text-primary); }
-.st-dot { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--kz-accent); box-shadow: 0 0 10px var(--kz-accent); }
-.st-dot-planned { background: transparent; box-shadow: none; border: 1.5px dashed var(--kz-accent); }
-.st-no { color: var(--kz-text-muted, var(--kz-text-secondary)); }
 
 /* ═══ FLOCK ═══ */
 .st-flock { max-width: 70rem; margin: 0 auto; padding: clamp(80px, 10vw, 112px) 20px; text-align: center; }

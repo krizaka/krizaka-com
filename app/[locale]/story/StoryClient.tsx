@@ -31,7 +31,7 @@ import { format } from "@/lib/i18n";
 import { useI18n } from "@/app/components/I18nProvider";
 import Rich from "@/app/components/Rich";
 import ButtonLink from "@/app/components/ButtonLink";
-import { DUST, ENGINE, flock, isFlockBird, KITS, STUDIO, storyProducts, type KitId, type StoryProduct } from "@/lib/story";
+import { DUST, ENGINE, flock, isFlockBird, STUDIO, storyProducts, type KitId, type StoryProduct } from "@/lib/story";
 import "./story.css";
 
 export interface StoryFigures {
@@ -265,57 +265,11 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
           <h2 id="st-ours">{st.ours.title}</h2>
           <p className="st-ours-lead">{st.ours.lead}</p>
         </div>
-        <div className="st-table-wrap" data-kzs-reveal style={{ "--kzs-delay": ".8s" } as React.CSSProperties}>
-          <table className="st-table">
-            <caption>{st.ours.caption}</caption>
-            <thead>
-              <tr>
-                <th scope="col">{st.ours.product}</th>
-                {KITS.map((k) => (
-                  <th key={k} scope="col">
-                    {kitName(k)}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {products.map((p) => (
-                <tr key={p.id} className={"brand-" + p.id}>
-                  <th scope="row">
-                    <span className="st-table-product">
-                      {mark(p.id, 22)}
-                      {p.name}
-                    </span>
-                  </th>
-                  {KITS.map((k) => {
-                    const engine = k === "engine" && p.id === ENGINE;
-                    const planned = !engine && (p.planned ?? []).includes(k);
-                    const live = k === "realtime";
-                    const yes = engine || live || p.runsOn.includes(k);
-                    const word = engine ? st.ours.isEngine : live ? st.ours.transport[p.live] : st.ours.yes;
-                    return (
-                      <td key={k} data-yes={yes && !planned ? "" : undefined} data-planned={planned ? "" : undefined}>
-                        {planned ? (
-                          <>
-                            <span aria-hidden className="st-dot st-dot-planned" />
-                            <span className="st-cell">{live ? `${word} · ${st.ours.planned}` : st.ours.planned}</span>
-                          </>
-                        ) : yes ? (
-                          <>
-                            <span aria-hidden className="st-dot" />
-                            <span className="st-cell">{word}</span>
-                          </>
-                        ) : (
-                          <span className="st-cell st-no">{st.ours.no}</span>
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <p data-kzs-reveal style={{ "--kzs-delay": ".8s" } as React.CSSProperties}>
+          <Link className="st-ours-link" href="/open-source#runs-on">
+            {st.ours.cta} →
+          </Link>
+        </p>
       </Scene>
 
       {/* ── The flock: one promise per bird ── */}

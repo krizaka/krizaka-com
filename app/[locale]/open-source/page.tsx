@@ -6,7 +6,10 @@ import { NAV_PRODUCTS } from "@/lib/nav";
 import { githubRepositories, publicRepositoryCount } from "@/lib/org-stats";
 import { repositoriesOf, type GithubRepository, type RepositoryKind } from "@/lib/repository-catalogue";
 import { mavenArtifactCount, publishedVersion } from "@/lib/registry-versions";
-import { KIT_PACKAGES, productKits } from "@/lib/story";
+import { KIT_PACKAGES } from "@/lib/product-stack";
+import { MANIFESTS_READ_AT, productKits, productStackRows } from "@/lib/product-stack-data";
+import { KITS } from "@/lib/product-stack";
+import ProductStackTable from "@/app/components/ProductStackTable";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
@@ -121,6 +124,11 @@ export default async function OpenSourcePage({ params }: Props) {
           </ChipLink>
         </li>
         <li>
+          <ChipLink href="#runs-on" className="os-chip">
+            {t.nav.runs}
+          </ChipLink>
+        </li>
+        <li>
           <ChipLink href="#blocks-title" className="os-chip">
             {t.nav.blocks}
           </ChipLink>
@@ -151,6 +159,27 @@ export default async function OpenSourcePage({ params }: Props) {
         <section id="stack" aria-labelledby="os-stack" className="os-product">
           <SectionHeading id="os-stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead} />
           <StackCards locale={locale} mavenArtifacts={mavenArtifactCount()} />
+        </section>
+
+        <section id="runs-on" aria-labelledby="os-runs" className="os-product">
+          <SectionHeading id="os-runs" eyebrow={t.runs.eyebrow} title={t.runs.title} lead={t.runs.lead} />
+          <ProductStackTable
+            rows={productStackRows(PRODUCT_IDS).map((r) => ({ ...r, name: NAV_PRODUCTS.find((p) => p.id === r.id)!.name }))}
+            kits={KITS}
+            labels={{
+              caption: t.runs.caption,
+              product: t.runs.product,
+              yes: t.runs.yes,
+              no: t.runs.no,
+              partial: t.runs.partial,
+              isEngine: t.runs.isEngine,
+              planned: t.runs.planned,
+              transport: t.runs.transport,
+              parts: t.runs.parts,
+              kits: Object.fromEntries(KITS.map((k) => [k, site.story.kits[k].name])) as Record<(typeof KITS)[number], string>,
+            }}
+          />
+          <p className="os-stack-read">{format(t.runs.read, { date: MANIFESTS_READ_AT })}</p>
         </section>
 
         {products.map(({ nav, repos, uses, status, engine }, i) => (
@@ -273,6 +302,14 @@ export default async function OpenSourcePage({ params }: Props) {
         .os-product-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 24px; margin: 16px 0 0; }
         .os-product-meta dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--kz-text-muted); }
         .os-product-meta dd { margin: 6px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--kz-text-secondary); }
+        .os-stack-product { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
+        .os-stack-cell { display: inline-flex; align-items: center; gap: 8px; color: var(--kz-text-primary); }
+        .os-stack-cell[data-state="no"] { color: var(--kz-text-muted, var(--kz-text-secondary)); }
+        .os-stack-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--kz-accent); }
+        .os-stack-cell[data-state="no"] .os-stack-dot { background: transparent; border: 1.5px solid var(--kz-border-default); }
+        .os-stack-cell[data-state="planned"] .os-stack-dot { background: transparent; border: 1.5px dashed var(--kz-accent); }
+        .os-stack-cell[data-state="partial"] .os-stack-dot { background: linear-gradient(90deg, var(--kz-accent) 50%, transparent 50%); border: 1.5px solid var(--kz-accent); }
+        .os-stack-read { margin: 12px 0 0; font-size: 12.5px; color: var(--kz-text-muted); }
         .os-uses { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
         .os-uses a { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1);
           font-size: 12px; color: var(--kz-text-primary); text-decoration: none; }
