@@ -34,6 +34,9 @@ export function withVersions(code: string): string {
     registries could not be reached at build. */
 export const publishedCount = (): number => Object.keys(versions.npm ?? {}).length + Object.keys(versions.maven ?? {}).length;
 
+/** How many com.krizaka artifacts are on Maven Central; 0 when it could not be reached at build. */
+export const mavenArtifactCount = (): number => Object.keys(versions.maven ?? {}).length;
+
 /** Every @krizaka package on npm with its `latest` version, description and keywords, as the registry gave them at
     build; empty when it could not be reached. */
 export const npmPackages = (): NpmPackageInfo[] =>

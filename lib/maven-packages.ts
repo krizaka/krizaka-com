@@ -1,5 +1,5 @@
-/* The com.krizaka artifacts published on Maven Central — structure only (ids, coordinates, repositories); their words
-   live in messages/<locale>.json under site.maven.items.<id>. Shown on /open-source (#maven). */
+/* The com.krizaka artifacts published on Maven Central — structure only (ids, coordinates, repositories),
+   checked against the POMs by the module map (lib/architecture-model.ts). */
 
 import { mavenVersion } from "./registry-versions";
 

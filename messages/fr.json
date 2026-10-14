@@ -77,7 +77,8 @@
       "searchAria": "Rechercher sur le site",
       "githubAria": "Krizaka sur GitHub",
       "preferences": "Préférences",
-      "mainAria": "Navigation principale"
+      "mainAria": "Navigation principale",
+      "homeAria": "Krizaka — accueil"
     },
     "nav": {
       "status": {
@@ -92,7 +93,7 @@
       },
       "company": {
         "products": {
-          "label": "Tous les produits",
+          "label": "Produits",
           "desc": "Tous les produits, côte à côte"
         },
         "story": {
@@ -108,10 +109,22 @@
           "desc": "Écrire à l'équipe"
         }
       },
-      "docs": {
-        "all": {
-          "label": "Toute la documentation",
-          "desc": "Docs plateforme et produits"
+      "family": {
+        "label": "Sites Krizaka",
+        "productsTitle": "Produits",
+        "stackTitle": "Open source",
+        "companyTitle": "Krizaka",
+        "krizaka": "La compagnie",
+        "github": "Tous les dépôts",
+        "products": {
+          "orazaka": "IA souveraine",
+          "orochia": "Plateforme vidéo",
+          "yasakia": "App de rencontre",
+          "yororis": "Espace d'écoute"
+        },
+        "stack": {
+          "ui": "Kit d'interface · ui.krizaka.com",
+          "java": "Briques · java.krizaka.com"
         }
       }
     },
@@ -129,7 +142,7 @@
           "line": "L'orchestration d'IA souveraine qui tourne sur votre infrastructure : vos données ne quittent jamais la maison."
         },
         "orochia": {
-          "line": "Une plateforme vidéo open source pour les créateurs indépendants, avec des paiements réglés exactement une fois."
+          "line": "Une plateforme vidéo open source : téléverser, encoder et diffuser."
         },
         "yasakia": {
           "line": "L'app de rencontre où l'on se parle d'abord : un agent IA présente des personnes compatibles dans les deux sens."
@@ -143,388 +156,93 @@
       "title": "Produits — Orazaka, Orochia, Yasakia, Yororis",
       "description": "Les produits open source de Krizaka — Orazaka, Orochia, Yasakia et Yororis — chacun sur son propre site, avec son code source sur GitHub."
     },
-    "expertise": {
-      "eyebrow": "Savoir-faire",
-      "title": "Ce dont on s'occupe, pour que vous n'ayez pas à y penser.",
-      "items": [
-        {
-          "title": "IA souveraine",
-          "body": "Orchestration de modèles locaux, RAG, agents et MCP sur votre infrastructure — conforme à la Loi 25 et au RGPD par conception."
-        },
-        {
-          "title": "Architecture modulaire",
-          "body": "Hexagonal, contrats versionnés, un dépôt par composant : des briques que chaque nouvelle application reprend telles quelles."
-        },
-        {
-          "title": "Conformité intégrée",
-          "body": "Loi 25, RGPD, 18 U.S.C. § 2257 : les obligations deviennent des invariants du code, vérifiés à chaque build."
-        },
-        {
-          "title": "Médias & diffusion",
-          "body": "Ingestion reprenable, encodage adaptatif, URL signées et génération image/vidéo native sur GPU Apple."
-        },
-        {
-          "title": "Paiements & grands livres",
-          "body": "Crédits, abonnements, intentions de paiement, webhooks signés et règlement idempotent en partie double."
-        },
-        {
-          "title": "Gouvernance par le code",
-          "body": "Règles d'architecture testées, documentation générée depuis le code, CI qui refuse ce que le contrat interdit."
-        }
-      ]
-    },
     "home": {
       "hero": {
-        "badge": "Montréal · open source",
-        "titleAria": "Open source. Fermé aux compromis.",
-        "closedTo": "Fermé ",
-        "words": [
-          "aux compromis.",
-          "aux fuites.",
-          "à l'enfermement.",
-          "aux raccourcis."
-        ],
-        "sub": "Vos données restent chez vous. Vos créateurs sont payés. Votre code reste le vôtre. Nous construisons, en open source, les logiciels qui n'ont pas le droit de casser — {count} dépôts publics, à lire ligne par ligne.",
-        "cta": "Découvrir les produits",
-        "scroll": "Voir ce que nous construisons"
+        "eyebrow": "Montréal · Studio logiciel",
+        "title": "Nous construisons du logiciel open source — et tout ce qui le porte.",
+        "lead": "Krizaka est un studio logiciel à Montréal. Nous faisons quatre produits et publions tout ce sur quoi ils reposent : Krizaka UI pour les interfaces, Krizaka Java pour les services. Chaque ligne est publique ; chaque changement est testé.",
+        "primary": "Voir ce que nous construisons",
+        "contact": "Nous contacter",
+        "proofsLabel": "Krizaka en chiffres, lus au build",
+        "proofs": {
+          "repositories": "dépôts publics",
+          "npm": "paquets sur npm",
+          "maven": "artefacts sur Maven Central",
+          "license": "sur chaque dépôt"
+        }
       },
-      "openSource": {
-        "title": "Lisez chaque ligne.",
-        "body": "Orazaka est découpé en {orazaka} dépôts — prenez seulement les briques dont votre application a besoin. Orochia en compte {orochia}.",
-        "browse": "Parcourir les dépôts",
-        "repos": "dépôts publics",
-        "license": "licence de tous les dépôts",
-        "ci": "build, tests et règles d'architecture à chaque commit",
-        "eyebrow": "Open source",
-        "band": "Tous les dépôts Krizaka",
-        "bandPause": "Mettre la bande en pause",
-        "bandPlay": "Relancer la bande"
+      "products": {
+        "eyebrow": "Ce que nous construisons",
+        "title": "Quatre produits, chacun sur son site.",
+        "lead": "Chaque produit est présenté, démontré et documenté sur son propre site, avec son code source sur GitHub.",
+        "visit": "Ouvrir {host}",
+        "preview": "Préversion dev",
+        "all": "Tous les produits"
       },
-      "storyTeaser": {
-        "sub": "Une lame pliée au grand jour, une IA qui ne quitte jamais la maison, une plateforme vidéo où les créateurs gardent 90 % — et la volée qui veille.",
-        "cta": "Lire l'histoire"
+      "stack": {
+        "eyebrow": "La pile que nous ouvrons",
+        "title": "Une seule pile ouverte construit les quatre produits.",
+        "lead": "Orazaka, Orochia, Yasakia et Yororis sont faits des mêmes briques ouvertes : Krizaka UI pour chaque écran, Krizaka Java pour chaque service. Chaque produit n'apporte que son identité.",
+        "visit": "Ouvrir {host}",
+        "facts": {
+          "platforms": "Web · iOS · Android",
+          "npm": "{count} paquets sur npm",
+          "maven": "{count} artefacts sur Maven Central"
+        },
+        "repositories": "Tous les dépôts",
+        "figures": {
+          "label": "Krizaka UI en chiffres, lus dans ses registres publiés",
+          "components": "composants",
+          "native": "aussi sur iOS et Android",
+          "packages": "paquets sur npm",
+          "version": "@krizaka/ui"
+        },
+        "visual": {
+          "caption": "Un composant, quatre identités : la même barre de progression Krizaka UI dans le thème de chaque produit.",
+          "progress": "Identité {name}"
+        },
+        "live": "Le voir en direct sur ui.krizaka.com"
+      },
+      "principles": {
+        "eyebrow": "Notre façon de travailler",
+        "title": "Cinq règles, vérifiées plutôt que promises.",
+        "items": {
+          "sovereign": {
+            "title": "Vos données restent où vous décidez",
+            "body": "Orazaka tourne sur vos propres serveurs. Ce site n'a ni mesure d'audience ni traceur."
+          },
+          "accessible": {
+            "title": "Accessible, dans les deux thèmes",
+            "body": "Nous visons WCAG 2.2 AA en sombre et en clair : clavier, lecteurs d'écran, mouvement réduit."
+          },
+          "bilingual": {
+            "title": "Français et anglais",
+            "body": "Chaque mot de ce site existe dans les deux langues ; la CI échoue s'il en manque un."
+          },
+          "tested": {
+            "title": "Testé, ou pas fini",
+            "body": "Chaque changement arrive avec ses tests, et rien n'est fusionné tant que la CI n'est pas verte."
+          },
+          "open": {
+            "title": "Ouvert par défaut",
+            "body": "{count} dépôts publics sous Apache-2.0, à lire ligne par ligne."
+          }
+        }
+      },
+      "company": {
+        "eyebrow": "Montréal",
+        "title": "Un studio montréalais, ici pour durer.",
+        "body": "Technologies Krizaka Inc. est établie à Montréal, au Québec. Nous préférons devenir une référence dans la façon de construire du logiciel — ouvert, accessible, bilingue, testé — plutôt que le nom le plus bruyant.",
+        "story": "Lire notre histoire",
+        "openSource": "Notre open source"
       },
       "contact": {
         "title": "Parlez-nous de ce que vous construisez.",
         "cta": "Nous contacter"
-      },
-      "build": {
-        "eyebrow": "Construire avec Krizaka",
-        "title": "Les mêmes briques construisent les quatre.",
-        "lead": "Orazaka, Orochia, Yasakia et Yororis sont faits d'un seul kit ouvert. Changez d'identité : les composants restent, la marque change. Puis lancez toute une plateforme depuis votre terminal.",
-        "facts": {
-          "components": "composants",
-          "native": "aussi sur iOS et Android",
-          "packages": "packages sur npm",
-          "version": "@krizaka/ui"
-        },
-        "kit": {
-          "title": "Krizaka UI, en direct",
-          "brandLabel": "Identité",
-          "stageLabel": "Des composants Krizaka UI aux couleurs de {brand}",
-          "primary": "Commencer à construire",
-          "secondary": "Nous parler",
-          "open": "Documentation de {name}",
-          "native": {
-            "title": "Le même kit, en natif",
-            "caption": "Des composants natifs de @krizaka/ui, enregistrés sur un simulateur d'iPhone et aux couleurs de l'identité choisie.",
-            "alt": "Composants natifs Krizaka UI aux couleurs de {brand}"
-          },
-          "tiles": {
-            "button": "plein · contour · biseauté",
-            "switch": "ligne de réglage",
-            "chip": "choix unique",
-            "progress": "barre · anneau",
-            "slider": "plage · pas",
-            "chat": "bulles · saisie · zone de message",
-            "code-block": "coloration · copie",
-            "stepper": "étapes d'une tâche",
-            "choice-grid": "choix tactile",
-            "terminal-replay": "rejeu de session",
-            "video-player": "affiche · vitesse · sous-titres",
-            "video-trimmer": "pellicule · plage",
-            "image-cropper": "masque rond · zoom",
-            "media-capture": "caméra · photo",
-            "countdown": "temps restant en direct",
-            "goal-gauge": "segments",
-            "sparkline": "aire · tendance",
-            "map": "MapLibre · Protomaps",
-            "location-picker": "épingle · distance · rayon",
-            "swipe-deck": "glisser · aimer · passer",
-            "match-dialog": "deux personnes se rencontrent",
-            "tag-selector": "limite · compte",
-            "toast": "retour bref",
-            "card": "surface calme",
-            "tabs": "soulignés · segmentés · pilules"
-          },
-          "sample": {
-            "label": "Libellé",
-            "value": "Valeur",
-            "tag": "Étiquette",
-            "description": "Une courte description",
-            "caption": "Courte légende",
-            "other": "Autre"
-          },
-          "slider": {
-            "range": "Plage",
-            "steps": "Pas"
-          },
-          "chart": {
-            "title": "Montant, 30 derniers jours"
-          },
-          "gauge": {
-            "label": "Objectif",
-            "text": "{raised} sur {target}"
-          },
-          "countdown": {
-            "label": "Temps restant",
-            "units": {
-              "d": "j",
-              "h": "h",
-              "m": "min",
-              "s": "s"
-            }
-          },
-          "progress": {
-            "label": "Progression"
-          },
-          "toast": {
-            "button": "Afficher un toast",
-            "title": "Enregistré",
-            "description": "Un message court et poli.",
-            "label": "Notifications",
-            "close": "Fermer"
-          },
-          "map": {
-            "label": "Points de retrait",
-            "places": {
-              "a": "Premier lieu",
-              "b": "Deuxième lieu",
-              "c": "Troisième lieu"
-            },
-            "labels": {
-              "zoomIn": "Zoom avant",
-              "zoomOut": "Zoom arrière",
-              "places": "Lieux sur la carte"
-            }
-          },
-          "code": {
-            "file": "ask.sh",
-            "copy": "Copier",
-            "copied": "Copié"
-          },
-          "chat": {
-            "user": "Résume les tickets de support de la semaine dernière.",
-            "answer": "14 tickets sont arrivés. Trois demandent une réponse aujourd'hui : un remboursement, un lien expiré, une facture en CAD.",
-            "composer": "Poser une autre question",
-            "send": "Envoyer",
-            "typing": "Orazaka répond",
-            "read": "Lu"
-          },
-          "stepper": {
-            "label": "Une tâche par étapes",
-            "labels": {
-              "done": "Terminé",
-              "current": "En cours",
-              "upcoming": "À venir",
-              "error": "Échec"
-            },
-            "queued": "En file",
-            "queuedHint": "En attente d'un modèle libre",
-            "running": "Génération",
-            "runningHint": "4 images",
-            "saved": "Enregistré",
-            "savedHint": "Sur cette machine",
-            "eta": "Encore environ 40 s"
-          },
-          "studio": {
-            "label": "Studio",
-            "tag": "Tourne sur ce Mac",
-            "caption": "Choisissez le Studio, le modèle suit.",
-            "chat": {
-              "name": "Chat",
-              "title": "Réponses"
-            },
-            "image": {
-              "name": "Image",
-              "title": "Portraits"
-            },
-            "audio": {
-              "name": "Audio",
-              "title": "Voix en texte"
-            }
-          },
-          "video": {
-            "title": "Vidéo : un court reel",
-            "labels": {
-              "play": "Lecture",
-              "pause": "Pause",
-              "mute": "Couper le son",
-              "unmute": "Remettre le son",
-              "volume": "Volume",
-              "seek": "Position",
-              "fullscreen": "Plein écran",
-              "exitFullscreen": "Quitter le plein écran",
-              "pictureInPicture": "Image dans l'image",
-              "loading": "Chargement",
-              "error": "La vidéo ne peut pas être lue",
-              "retry": "Réessayer",
-              "speed": "Vitesse {rate}×",
-              "captions": "Sous-titres : {track}",
-              "captionsOff": "désactivés",
-              "time": "{time} sur {duration}"
-            }
-          },
-          "trimmer": {
-            "labels": {
-              "start": "Début",
-              "end": "Fin",
-              "playhead": "Tête de lecture",
-              "kept": "{length} gardées"
-            }
-          },
-          "cropper": {
-            "labels": {
-              "frame": "Zone de recadrage",
-              "instructions": "Utilisez les flèches pour déplacer l'image, + et − pour zoomer.",
-              "zoom": "Zoom"
-            }
-          },
-          "capture": {
-            "labels": {
-              "region": "Caméra",
-              "prompt": "Prenez une photo avec votre caméra.",
-              "start": "Activer la caméra",
-              "denied": "L'accès à la caméra est bloqué.",
-              "unavailable": "Aucune caméra disponible.",
-              "fallback": "Choisir un fichier",
-              "takePhoto": "Prendre une photo",
-              "startRecording": "Démarrer l'enregistrement",
-              "stopRecording": "Arrêter l'enregistrement",
-              "switchCamera": "Changer de caméra",
-              "photoMode": "Photo",
-              "videoMode": "Vidéo"
-            }
-          },
-          "media": {
-            "credit": "Généré par IA, propriété de Krizaka"
-          },
-          "short": {
-            "creator": "nova.frames",
-            "caption": "Néon après la nuit",
-            "tag": "Généré par IA",
-            "like": "Aimer",
-            "comment": "Commentaires",
-            "share": "Partager",
-            "tip": "Envoyer un pourboire"
-          },
-          "auction": {
-            "label": "Temps restant de l'enchère"
-          },
-          "swipe": {
-            "labels": {
-              "like": "J'aime",
-              "pass": "Passer",
-              "deck": "Profils. Flèche droite pour aimer, flèche gauche pour passer.",
-              "likeStamp": "J'aime",
-              "passStamp": "Passer"
-            },
-            "verified": "Vérifié",
-            "away": "à {km} km",
-            "people": {
-              "ines": {
-                "name": "Inès",
-                "bio": "Cuisine le dimanche, longues marches.",
-                "tags": [
-                  "Cuisine",
-                  "Randonnée"
-                ]
-              },
-              "kofi": {
-                "name": "Kofi",
-                "bio": "Photographe de rue, mauvais jeux de mots.",
-                "tags": [
-                  "Photo",
-                  "Jazz"
-                ]
-              },
-              "hana": {
-                "name": "Hana",
-                "bio": "Céramique et villes calmes.",
-                "tags": [
-                  "Céramique",
-                  "Voyage"
-                ]
-              }
-            }
-          },
-          "match": {
-            "button": "Voir le match",
-            "title": "C'est un match",
-            "description": "Vous vous êtes choisis.",
-            "primary": "Envoyer un message",
-            "secondary": "Continuer",
-            "me": "Vous"
-          },
-          "tags": {
-            "label": "Centres d'intérêt",
-            "count": "{count} sur {max}",
-            "options": {
-              "0": "Musique",
-              "1": "Cuisine",
-              "2": "Randonnée",
-              "3": "Photo",
-              "4": "Cinéma",
-              "5": "Voyage"
-            }
-          },
-          "picker": {
-            "label": "Point de rencontre",
-            "labels": {
-              "nearMe": "Près de moi",
-              "locating": "Recherche de votre position…",
-              "denied": "La position est désactivée pour ce site. Déplacez la carte.",
-              "unavailable": "Position introuvable. Déplacez la carte.",
-              "you": "Vous êtes ici",
-              "distance": "à {distance} de vous"
-            }
-          },
-          "yororis": {
-            "moment": "Temps restant dans ce moment",
-            "mood": "Comment tu te sens, là, de 1 à 5 ? C'est toi qui le dis.",
-            "before": "Avant",
-            "after": "Après",
-            "subtitles": "Sous-titres",
-            "subtitlesHint": "Les mots à l'écran au fil de la parole",
-            "saved": "Gardé",
-            "savedHint": "Trois lignes, à emporter.",
-            "keep": "Ce que je garde",
-            "one": "Ce qui pesait le plus : la semaine qui vient.",
-            "two": "Une chose à faire : dix minutes dehors.",
-            "three": "Une question à garder : qu'est-ce qui rendrait jeudi plus léger ?"
-          },
-          "tabs": {
-            "one": "Libellé",
-            "two": "Valeur",
-            "three": "Étiquette",
-            "panel": "Le panneau de l'onglet choisi."
-          }
-        },
-        "cli": {
-          "title": "De zéro à une plateforme qui tourne",
-          "lead": "Le CLI d'Orazaka installe, démarre et lance toute la pile — les commandes ci-dessous sont les vraies, avec ce qu'elles affichent.",
-          "label": "Session de terminal : installer, démarrer et lancer Orazaka",
-          "play": "Lire",
-          "pause": "Pause",
-          "replay": "Rejouer",
-          "copy": "Copier les commandes",
-          "copied": "Copié"
-        },
-        "docsUi": "Parcourir Krizaka UI"
       }
     },
     "footer": {
-      "tagline": "Studio logiciel open source à Montréal. Créateurs d'Orazaka, d'Orochia, de Yasakia et de Yororis.",
+      "tagline": "Un studio logiciel à Montréal, qui construit des produits open source et tout ce qui les porte.",
       "products": "Produits",
       "story": "Notre histoire",
       "openSource": "Open source",
@@ -532,8 +250,8 @@
       "privacy": "Confidentialité",
       "terms": "Conditions",
       "madeIn": "Fait à Montréal · Apache-2.0",
-      "docs": "Documentation",
-      "allProducts": "Tous les produits"
+      "allProducts": "Tous les produits",
+      "repositories": "Tous les dépôts"
     },
     "contactForm": {
       "stepTopic": "Qu'est-ce qui vous amène ?",
@@ -793,40 +511,8 @@
       }
     },
     "openSource": {
-      "steps": {
-        "pick": {
-          "title": "Choisissez une brique",
-          "body": "Chaque composant est un dépôt à part, avec sa CI, sa doc et son contrat. Prenez-en un, ou plusieurs."
-        },
-        "run": {
-          "title": "Faites-le tourner",
-          "body": "Clonez-le seul, ou toute la plateforme d'un coup avec l'espace de travail krizaka/orazaka."
-        },
-        "plug": {
-          "title": "Branchez-le",
-          "body": "Parlez-lui via son contrat versionné — les modules *-api et clients typés, publiés en com.krizaka:* sur Maven Central."
-        }
-      },
-      "promises": {
-        "license": {
-          "title": "Apache-2.0, partout",
-          "body": "Utilisez, modifiez, livrez — commercialement aussi."
-        },
-        "ci": {
-          "title": "Vert à chaque commit",
-          "body": "Build, tests et règles d'architecture tournent en CI."
-        },
-        "docs": {
-          "title": "Docs issues du code",
-          "body": "Références API et données générées, jamais périmées."
-        },
-        "security": {
-          "title": "Failles signalées en privé",
-          "body": "Chaque dépôt accepte les signalements privés."
-        }
-      },
-      "title": "Construisez avec nos briques.",
-      "lead": "Tout ce que nous construisons est public. Cette page est pour les développeurs : prenez la gestion des utilisateurs, les notifications ou la facturation pour votre propre application — ou déployez un produit entier.",
+      "title": "Tout ce que nous construisons est public.",
+      "lead": "La pile qui porte nos produits a ses propres sites — Krizaka UI et Krizaka Java. En dessous, chaque dépôt Krizaka, lu depuis GitHub au build, et la raison d'être de chaque brique.",
       "count": "{count} dépôts publics · ",
       "contributeTitle": "Envie de contribuer ?",
       "contributeBody": "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue.",
@@ -834,7 +520,7 @@
       "ask": "Demander dans les Discussions",
       "write": "Nous écrire",
       "jump": "Sur cette page",
-      "catalogueCount": "{repositories} dépôts · {packages} packages npm · lus sur GitHub et npm à la construction",
+      "catalogueCount": "{repositories} dépôts · lus depuis GitHub au build",
       "repoCount": "{count} dépôts",
       "live": "En ligne",
       "stack": "Pile technique",
@@ -855,10 +541,14 @@
       },
       "nav": {
         "products": "Produits",
-        "packages": "Packages npm",
-        "maven": "Maven Central",
-        "blocks": "Briques"
-      }
+        "blocks": "Briques",
+        "more": "Plus",
+        "stack": "La pile"
+      },
+      "eyebrow": "Open source · Apache-2.0",
+      "stackEyebrow": "La pile",
+      "stackTitle": "Deux sites, un pour chaque moitié de la pile.",
+      "stackLead": "Les guides, les références et chaque paquet y vivent, construits depuis leurs propres dépôts à chaque version."
     },
     "notFound": {
       "title": "Cette page a pris une autre route",
@@ -1100,111 +790,7 @@
       "docsCategory": "Documentation"
     },
     "structuredData": {
-      "organization": "Krizaka est un studio logiciel montréalais qui conçoit des produits open source : Orazaka, l'orchestration d'IA souveraine sur votre propre infrastructure (Loi 25, RGPD, LPRPDE) ; Orochia, la plateforme vidéo des créateurs indépendants ; Yasakia, l'app de rencontre où l'on se parle d'abord (bientôt) ; et Yororis, un espace d'écoute avec un visage et une voix (en construction)."
-    },
-    "packages": {
-      "eyebrow": "Sur npm",
-      "title": "Les pièces, publiées.",
-      "lead": "Ce dont est faite l'interface de chaque produit, sur le registre public npm : installable sans compte ni jeton, chaque version construite en CI avec sa provenance.",
-      "notProductBanner": "Des briques de fondation, pas des applications isolées : ces {count} packages constituent l'infrastructure open source qui anime nos produits. Chacun peut les installer et les réutiliser librement.",
-      "npm": "npm",
-      "source": "Source",
-      "docsUi": "Parcourir les composants",
-      "latest": "dernière {version}",
-      "groups": {
-        "ui": {
-          "title": "UI",
-          "intro": "Composants, jetons, icônes, polices, graphiques et l'identité de chaque produit."
-        },
-        "data": {
-          "title": "Données",
-          "intro": "État serveur, contrats typés, messages, montants et dates."
-        },
-        "realtime": {
-          "title": "Temps réel",
-          "intro": "Mises à jour en direct et notifications mobiles."
-        },
-        "tooling": {
-          "title": "Outillage",
-          "intro": "Configuration partagée et outils en ligne de commande."
-        }
-      }
-    },
-    "maven": {
-      "eyebrow": "Sur Maven Central",
-      "title": "Les briques Java, publiées.",
-      "lead": "Les briques sur lesquelles reposent les services de chaque produit, sur Maven Central sous com.krizaka : importez le BOM une fois, ajoutez un starter, et chaque artefact se résout en une même version, signée.",
-      "bomNote": "Importez le BOM, puis déclarez les artefacts sans version :",
-      "central": "Maven Central",
-      "source": "Source",
-      "all": "Tous les artefacts",
-      "pinnedNote": "Users, notifications et billing sont publiés en {previous} : déclarez-les avec la version {previous} jusqu'à leur {current} (novembre).",
-      "items": {
-        "bom": {
-          "role": "Une version pour tout",
-          "line": "Chaque artefact com.krizaka à une même version. Il ne change jamais la version d'une bibliothèque tierce."
-        },
-        "starterWeb": {
-          "role": "Starter — web",
-          "line": "Une seule dépendance pour un service web : krizaka-web et son auto-configuration."
-        },
-        "starterSecurity": {
-          "role": "Starter — sécurité",
-          "line": "Une seule dépendance pour un service sécurisé : krizaka-security, JWT de session et jetons SERVICE configurés."
-        },
-        "starterRabbitmq": {
-          "role": "Starter — RabbitMQ",
-          "line": "Une seule dépendance pour les événements : krizaka-messaging avec l'outbox, la déduplication et la topologie retry/DLQ."
-        },
-        "starterObservability": {
-          "role": "Starter — observabilité",
-          "line": "Une seule dépendance pour les traces, métriques et journaux : krizaka-observability, câblé."
-        },
-        "web": {
-          "role": "Web",
-          "line": "La réponse d'erreur (problem details RFC 9457), l'identifiant de corrélation et la sérialisation JSON de chaque service, écrits une seule fois."
-        },
-        "security": {
-          "role": "Sécurité",
-          "line": "Vérification locale du JWT de session, la base de sécurité de chaque chaîne de filtres et les jetons SERVICE des appels internes."
-        },
-        "messaging": {
-          "role": "Messagerie",
-          "line": "Des événements à l'enveloppe en en-têtes AMQP, publiés par une outbox transactionnelle, dédupliqués atomiquement, avec une topologie de retry et de lettres mortes."
-        },
-        "observability": {
-          "role": "Observabilité",
-          "line": "Traces, métriques et journaux structurés sur OpenTelemetry et Micrometer, avec le standard de configuration commun à tous les services."
-        },
-        "usersClient": {
-          "role": "Utilisateurs — client",
-          "line": "Le service utilisateurs, typé : qui est un utilisateur, son profil, ses clés et son palier — authentifié et mis en cache."
-        },
-        "usersApi": {
-          "role": "Utilisateurs — contrat",
-          "line": "Les modèles utilisateur, profil et palier, et le port UserDirectoryClient."
-        },
-        "usersCore": {
-          "role": "Utilisateurs — bibliothèque",
-          "line": "Inscription, connexion, OAuth, récupération de mot de passe et émission de JWT, à intégrer dans votre application."
-        },
-        "notificationsApi": {
-          "role": "Notifications — contrat",
-          "line": "Demander un e-mail, un SMS ou un webhook via AMQP."
-        },
-        "billingClient": {
-          "role": "Facturation — client",
-          "line": "Réserver, régler et libérer des crédits, vérifier les droits — inactif quand la facturation est coupée."
-        },
-        "billingApi": {
-          "role": "Facturation — contrat",
-          "line": "Les modèles et ports des crédits, des droits et du comptage."
-        },
-        "testSupport": {
-          "role": "Kit de test",
-          "line": "Règles de code ArchUnit, vérification de la liaison de configuration et aides Testcontainers — en scope test."
-        }
-      }
+      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Orazaka, Orochia, Yasakia et Yororis, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com)."
     },
     "blocks": {
       "eyebrow": "Briques",
@@ -1581,21 +1167,29 @@
       "krizaka": [
         {
           "q": "Qu'est-ce que Krizaka ?",
-          "a": "Krizaka est un studio logiciel open source de Montréal (Québec). Il construit Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yasakia et Yororis — qui ont chacun leur propre site. Chaque dépôt est public sous Apache-2.0."
+          "a": "Krizaka est un studio logiciel à Montréal, au Québec. Il construit des produits open source — Orazaka, Orochia, Yasakia et Yororis — et la pile qui les porte, Krizaka UI et Krizaka Java. Chaque dépôt est public sous Apache-2.0."
         },
         {
           "q": "Où sont les produits ?",
-          "a": "Sur leurs propres sites : dev.orazaka.com, dev.orochia.com, dev.yasakia.com (bientôt) et dev.yororis.com (en construction). La page Produits les liste avec leur code source."
+          "a": "Sur leurs propres sites : dev.orazaka.com, dev.orochia.com, dev.yasakia.com (bientôt disponible) et dev.yororis.com (en construction). La page Produits les liste avec leur code source."
         },
         {
-          "q": "Krizaka est-il open source ?",
-          "a": "Oui. Chaque dépôt Krizaka est public sous licence Apache-2.0 sur github.com/krizaka, et les briques réutilisables (utilisateurs, notifications, facturation, kit UI) sont publiées sous forme de paquets."
+          "q": "Où est la documentation ?",
+          "a": "Krizaka UI est documenté sur ui.krizaka.com et Krizaka Java sur java.krizaka.com ; chaque produit se documente sur son propre site."
         },
         {
           "q": "Où est basé Krizaka ?",
-          "a": "Montréal, Québec, Canada. Les produits de Krizaka sont conçus autour de la Loi 25 du Québec et du RGPD."
+          "a": "Montréal, Québec, Canada."
         }
       ]
+    },
+    "stack": {
+      "ui": {
+        "line": "Composants, jetons, icônes et polices pour React et React Native — l'interface de chaque produit Krizaka."
+      },
+      "java": {
+        "line": "Des briques Spring Boot sur Maven Central — web, sécurité, messagerie, observabilité, utilisateurs et facturation."
+      }
     }
   },
   "docs": {

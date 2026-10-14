@@ -18,8 +18,8 @@ Each product has its own site; krizaka.com carries one card per product ({{SITE_
 
 - Orazaka: an open-source, sovereign AI orchestration engine that runs on the operator's own infrastructure
   (Law 25, GDPR, PIPEDA by architecture). Site https://dev.orazaka.com — source https://github.com/krizaka/orazaka
-- Orochia: an open-source video platform for independent creators. Site {{OROCHIA_APP_URL}} — source https://github.com/krizaka/orochia
-- Yasakia (being renamed Yasakia; coming soon): a mobile dating app where you talk first. Site https://dev.yasakia.com —
+- Orochia: an open-source video platform: upload, encode and stream. Site {{OROCHIA_APP_URL}} — source https://github.com/krizaka/orochia
+- Yasakia (coming soon): a mobile dating app where you talk first. Site https://dev.yasakia.com —
   source https://github.com/krizaka/yasakia
 - Yororis (under construction: not deployed, not offered, no date): a listening space with a face and a voice. Site
   https://dev.yororis.com — source https://github.com/krizaka/yororis

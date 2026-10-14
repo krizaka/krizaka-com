@@ -1,9 +1,13 @@
 "use client";
 
-/* The site bar, built on @krizaka/ui's NavBar (floating, tightening on scroll, one light gliding between the items and
-   resting on the current page) and fed by lib/nav.ts. Left: the mark · Products (a plain link to /products) · Open
-   source · Our story. Right: Search ⌘K · Docs (a plain link to the hub) · GitHub · theme · language · Contact us. Under /docs the left group becomes the documentation
-   breadcrumb. Below md: the mark, the search and the mobile panel's toggle. */
+/* The site bar (NAV-SYS), built on @krizaka/ui's NavBar (floating, tightening on scroll, one light gliding between the
+   items and resting on the current page) and fed by lib/nav.ts. Three zones:
+   - left, who we are: the Krizaka mark (home), then the family switcher (FamilySwitcher → NavBar.Family later);
+   - centre, this site: Products · Open source · Our story;
+   - right, tools: GitHub · theme · language · Contact us.
+   No search and no "Docs": the site has five pages, and the documentation lives on ui.krizaka.com and java.krizaka.com.
+   While /docs still renders here, its pages keep their breadcrumb and the search over them (DocsCrumb, SearchCommand).
+   Below md: the mark, the family switcher and the mobile panel's toggle. */
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -16,10 +20,11 @@ import { KrizakaLogo } from "@krizaka/ui";
 import { useI18n } from "./I18nProvider";
 import { useSiteTheme } from "./SiteTheme";
 import { GITHUB_ORG_URL } from "@/lib/site";
-import { NAV_BAR_LINKS, NAV_DOCS_HUB, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
+import { NAV_BAR_LINKS, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
 import { DocsCrumb } from "./DocsCrumb";
+import { FamilySwitcher } from "./FamilySwitcher";
 import { useContactHref } from "./useContactHref";
 import { GitHubMark } from "./brand/GitHubMark";
 
@@ -35,49 +40,41 @@ export default function TopNavBar() {
   return (
     <>
       <div className="kz-site-bar-wrap pointer-events-none fixed inset-x-0 top-3 z-50">
-        <NavBar.Root label={t.site.menu.mainAria} className="kz-site-bar pointer-events-auto" data-frame={path.startsWith("/docs/") ? "docs" : undefined}>
+        <NavBar.Root label={m.mainAria} className="kz-site-bar pointer-events-auto" data-frame={path.startsWith("/docs/") ? "docs" : undefined}>
           <NavBar.Brand asChild>
-            <Link href="/">
+            <Link href="/" aria-label={m.homeAria}>
               <KrizakaLogo size={26} />
-              Krizaka
             </Link>
           </NavBar.Brand>
 
-          {docs ? (
-            <DocsCrumb pathname={path} />
-          ) : (
-            <NavBar.Items>
-              {NAV_BAR_LINKS.map((l) => (
+          <NavBar.Items>
+            <FamilySwitcher />
+            {!docs &&
+              NAV_BAR_LINKS.map((l) => (
                 <NavBar.Link key={l.href} asChild active={isNavActive(l, path)}>
                   <Link href={l.href}>{companyLinkText(t, l).label}</Link>
                 </NavBar.Link>
               ))}
-            </NavBar.Items>
-          )}
+          </NavBar.Items>
+          {docs && <DocsCrumb pathname={path} />}
 
           <NavBar.Actions className="gap-1">
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              shape="pill"
-              onClick={() => setSearchOpen(true)}
-              aria-label={m.searchAria}
-              aria-keyshortcuts="Meta+K Control+K"
-              className="w-9 px-0 font-normal text-fg-secondary lg:w-auto lg:pl-3 lg:pr-1.5"
-            >
-              <SearchIcon size={14} />
-              <span className="hidden lg:inline">{m.search}</span>
-              <Kbd className="hidden lg:inline-flex">⌘K</Kbd>
-            </Button>
-
-            {!docs && (
-              <Button asChild variant="ghost" size="sm" shape="pill" className="hidden text-sm font-medium md:inline-flex">
-                <Link href={NAV_DOCS_HUB}>{m.docs}</Link>
+            {docs && (
+              <Button
+                type="button"
+                variant="secondary"
+                size="sm"
+                shape="pill"
+                onClick={() => setSearchOpen(true)}
+                aria-label={m.searchAria}
+                aria-keyshortcuts="Meta+K Control+K"
+                className="w-9 px-0 font-normal text-fg-secondary lg:w-auto lg:pl-3 lg:pr-1.5"
+              >
+                <SearchIcon size={14} />
+                <span className="hidden lg:inline">{m.search}</span>
+                <Kbd className="hidden lg:inline-flex">⌘K</Kbd>
               </Button>
             )}
-
-            <span aria-hidden className="mx-1 hidden h-4 w-px bg-border-subtle lg:block" />
 
             <Button asChild variant="ghost" size="icon" shape="pill" className="hidden h-9 w-9 lg:inline-flex">
               <a href={GITHUB_ORG_URL} target="_blank" rel="noopener noreferrer" aria-label={m.githubAria}>
@@ -117,7 +114,7 @@ export default function TopNavBar() {
         </NavBar.Root>
       </div>
 
-      <SearchCommand open={searchOpen} setOpen={setSearchOpen} />
+      {docs && <SearchCommand open={searchOpen} setOpen={setSearchOpen} />}
     </>
   );
 }

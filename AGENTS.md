@@ -38,13 +38,22 @@
 
 ## 2.1 Products are presented the same way
 
-- `lib/products.ts` is the single list of the products (id, name, status, `devUrl`, `repoUrl`); `lib/nav.ts` derives the
-  navigation from it. The bar (`@krizaka/ui/nav-bar`, composed in `TopNavBar`, never hand-made, no inline styles):
-  the mark · **Products** (a plain link to `/products`) · Open source · Our story; right: Search ⌘K · **Docs** (the hub) ·
-  GitHub · theme · language · Contact us (`primary` + `shimmer`). Under `/docs` the left group becomes a breadcrumb
-  (`DocsCrumb`). Mobile: one panel (`MobilePanel`), every destination once. The footer's Products column links each
-  product's own site. The ⌘K search lists these destinations and `NAV_DOCS` (Krizaka UI, Krizaka Java).
-- `ProductCards` (`app/components/home/`) renders the cards on `/products` and as a section of the home; each card wears
+- `lib/products.ts` is the single list of the products (id, name, status, `devUrl`, `repoUrl`), `lib/stack.ts` the
+  open-source stack (Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com); `lib/nav.ts` derives the navigation
+  from them. The bar is the one of every Krizaka site (NAV-SYS; `@krizaka/ui/nav-bar`, composed in `TopNavBar`, never
+  hand-made, no inline styles), in three zones: **left** the Krizaka mark (home) and the **family switcher**
+  (`FamilySwitcher`, fed by `NAV_FAMILY`: the products with their status · the stack · Krizaka · GitHub — replaced by
+  `NavBar.Family` once @krizaka/ui ships it); **centre** this site's sections only — Products · Open source · Our story;
+  **right** GitHub · theme · language · Contact us (`primary`). No « Docs » and no search: the documentation lives on its
+  own sites (while `/docs` still renders here, it keeps its breadcrumb `DocsCrumb` and the ⌘K search over it). Mobile:
+  one panel (`MobilePanel`), this site's sections, then Contact us and the preferences, the family at the bottom. The
+  footer lists the family in columns (Products · Open source · Krizaka).
+- **The home is the company's** (landing): who Krizaka is and its promise (`HomeHero`, figures read at build), the four
+  products **as equals** (`WhatWeBuild`: one `LinkCard` each, same weight, no product's brand, none featured), the stack
+  (`OpenStack` / `StackCards`, versions and counts from `lib/registry-versions`), five provable working rules
+  (`Principles`), Montréal (`Company`), the contact. Orochia is named neutrally on krizaka.com (name and one line, never
+  a creator or payout pitch — `tests/home.test.mjs`).
+- `ProductCards` (`app/components/home/`) renders the cards on `/products`; each card wears
   its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
   `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage; the rest of the site is Krizaka ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); marks from `@krizaka/ui`
