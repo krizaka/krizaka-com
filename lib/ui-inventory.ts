@@ -82,6 +82,7 @@ export const PLANNED: Record<string, string> = {
   "swipeable-row": `${MOBILE}: archive / delete on a row of a list.`,
   "tab-bar": `${MOBILE}: the main navigation of every app.`,
   "tag-input": "Free tags in the form: Orazaka's pack metadata, Orochia's video tags.",
+  "vertical-video": `Orochia's feed, stories and explore (PS5/PS7), ${MOBILE}; krizaka.com's home phone already shows it.`,
   virtual: "The data table and the long lists are built on it.",
   // @krizaka/charts — what the products will draw (PS-C: creator revenue, credits, latency, funnel, goal gauge, KPI sparkline, activity heat map, geo map).
   "area-chart": "Revenue and latency over time (PS-C).",

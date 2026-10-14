@@ -2,6 +2,7 @@
 
 import { Component, type ComponentType, type ReactNode, useEffect, useRef, useState } from "react";
 import { UI_EXAMPLES, type UiExampleKey } from "@/lib/ui-examples";
+import { examplePropsOf } from "@/lib/ui-example-props";
 import { MapAssets } from "./MapAssets";
 
 /* A named example of the registry, loaded when it scrolls into view: the catalogue shows 150 of them and ships none of
@@ -20,7 +21,7 @@ class Guard extends Component<{ fallback: ReactNode; children: ReactNode }, { fa
 export function LazyExample({ exampleKey, heavy, placeholder }: { exampleKey: string; heavy: boolean; placeholder: ReactNode }) {
   const host = useRef<HTMLDivElement>(null);
   const [wanted, setWanted] = useState(false);
-  const [Example, setExample] = useState<ComponentType | null>(null);
+  const [Example, setExample] = useState<ComponentType<Record<string, unknown>> | null>(null);
 
   useEffect(() => {
     const el = host.current;
@@ -46,7 +47,7 @@ export function LazyExample({ exampleKey, heavy, placeholder }: { exampleKey: st
     if (!wanted) return;
     let alive = true;
     const load = UI_EXAMPLES[exampleKey as UiExampleKey];
-    void load?.().then((module) => alive && setExample(() => module.default as ComponentType));
+    void load?.().then((module) => alive && setExample(() => module.default as ComponentType<Record<string, unknown>>));
     return () => {
       alive = false;
     };
@@ -57,7 +58,7 @@ export function LazyExample({ exampleKey, heavy, placeholder }: { exampleKey: st
       {Example ? (
         <Guard fallback={placeholder}>
           {exampleKey.startsWith("map/") ? <MapAssets /> : null}
-          <Example />
+          <Example {...examplePropsOf(exampleKey)} />
         </Guard>
       ) : (
         placeholder
