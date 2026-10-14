@@ -613,46 +613,95 @@
           "stageLabel": "Des composants Krizaka UI aux couleurs de {brand}",
           "primary": "Commencer à construire",
           "secondary": "Nous parler",
-          "profile": {
-            "name": "Elena Marchetti",
+          "open": "Documentation de {name}",
+          "sample": {
+            "label": "Libellé",
+            "value": "Valeur",
+            "tag": "Étiquette",
+            "description": "Une courte description",
+            "caption": "Courte légende",
+            "name": "Camille Roy",
             "statLabel": "Profil complété",
-            "challenges": "Défis relevés",
-            "challengesValue": "12 sur 15",
-            "replies": "Réponses en moins d'un jour",
-            "caption": "Danse et mode urbaine · Montréal",
-            "follow": "Suivre",
-            "message": "Écrire"
+            "other": "Autre"
+          },
+          "tiles": {
+            "button": "plein · contour · biseauté",
+            "slider": "plage · pas",
+            "switch": "ligne de réglage",
+            "chip": "choix unique",
+            "tabs": "soulignés · segmentés · pilules",
+            "date-picker": "calendrier intégré",
+            "choice-grid": "choix tactile",
+            "sparkline": "aire · tendance",
+            "goal-gauge": "segments",
+            "countdown": "temps restant en direct",
+            "progress": "barre · anneau",
+            "profile-card": "portrait · jauges",
+            "avatar": "groupe · débordement",
+            "toast": "retour bref"
+          },
+          "slider": {
+            "range": "Plage",
+            "steps": "Pas"
+          },
+          "tabs": {
+            "one": "Libellé",
+            "two": "Valeur",
+            "three": "Étiquette",
+            "panel": "Le panneau de l'onglet choisi."
           },
           "choice": {
-            "label": "Choisissez votre formule",
+            "label": "Choisissez",
             "tag": "Étape 1 sur 3",
-            "caption": "Modifiable à tout moment.",
-            "starter": {
-              "name": "Débutant",
-              "title": "Publier et être payé"
+            "caption": "Vous pouvez changer à tout moment.",
+            "a": {
+              "name": "Premier",
+              "title": "Un titre court"
             },
-            "creator": {
-              "name": "Créateur",
-              "title": "Défis et enchères"
+            "b": {
+              "name": "Deuxième",
+              "title": "Un titre court"
             },
-            "studio": {
-              "name": "Studio",
-              "title": "Une équipe, des revenus partagés"
+            "c": {
+              "name": "Troisième",
+              "title": "Un titre court"
             }
           },
-          "chart": {
-            "title": "Vues, 30 derniers jours"
-          },
           "calendar": {
-            "title": "Choisissez un jour",
             "previousMonth": "Mois précédent",
             "nextMonth": "Mois suivant"
+          },
+          "chart": {
+            "title": "Montant, 30 derniers jours"
+          },
+          "gauge": {
+            "label": "Objectif",
+            "text": "{raised} sur {target}"
+          },
+          "countdown": {
+            "label": "Temps restant",
+            "units": {
+              "d": "j",
+              "h": "h",
+              "m": "min",
+              "s": "s"
+            }
+          },
+          "progress": {
+            "label": "Progression"
+          },
+          "toast": {
+            "button": "Afficher un toast",
+            "title": "Enregistré",
+            "description": "Un message court et poli.",
+            "label": "Notifications",
+            "close": "Fermer"
+          },
+          "native": {
+            "title": "Le même kit, en natif",
+            "caption": "Des composants natifs de @krizaka/ui, enregistrés sur un simulateur d'iPhone et aux couleurs de l'identité choisie.",
+            "alt": "Composants natifs Krizaka UI aux couleurs de {brand}"
           }
-        },
-        "native": {
-          "title": "Le même kit, en natif",
-          "caption": "Captures React Native tirées des stories du registre.",
-          "alt": "{name} sur React Native"
         },
         "cli": {
           "title": "De zéro à une plateforme qui tourne",
@@ -1739,7 +1788,7 @@
         [
           "Installer",
           "npm install",
-          "Node 20 ou plus, Docker démarré."
+          "Node 22 ou plus, Docker démarré."
         ],
         [
           "Tout configurer",

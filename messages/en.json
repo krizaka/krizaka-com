@@ -613,46 +613,95 @@
           "stageLabel": "Krizaka UI components wearing the {brand} identity",
           "primary": "Start building",
           "secondary": "Talk to us",
-          "profile": {
-            "name": "Elena Marchetti",
+          "open": "Documentation of {name}",
+          "sample": {
+            "label": "Label",
+            "value": "Value",
+            "tag": "Tag",
+            "description": "A short description",
+            "caption": "Short caption",
+            "name": "Camille Roy",
             "statLabel": "Profile complete",
-            "challenges": "Challenges met",
-            "challengesValue": "12 of 15",
-            "replies": "Replies within a day",
-            "caption": "Dance and street fashion · Montréal",
-            "follow": "Follow",
-            "message": "Message"
+            "other": "Other"
+          },
+          "tiles": {
+            "button": "solid · outline · cut",
+            "slider": "range · steps",
+            "switch": "settings row",
+            "chip": "single choice",
+            "tabs": "underline · segmented · pills",
+            "date-picker": "inline calendar",
+            "choice-grid": "tactile choice",
+            "sparkline": "area · trend",
+            "goal-gauge": "segments",
+            "countdown": "live time left",
+            "progress": "bar · ring",
+            "profile-card": "portrait · gauges",
+            "avatar": "group · overflow",
+            "toast": "short feedback"
+          },
+          "slider": {
+            "range": "Range",
+            "steps": "Steps"
+          },
+          "tabs": {
+            "one": "Label",
+            "two": "Value",
+            "three": "Tag",
+            "panel": "The panel of the chosen tab."
           },
           "choice": {
-            "label": "Choose your plan",
+            "label": "Choose one",
             "tag": "Step 1 of 3",
             "caption": "You can change it at any time.",
-            "starter": {
-              "name": "Starter",
-              "title": "Publish and get paid"
+            "a": {
+              "name": "First",
+              "title": "A short title"
             },
-            "creator": {
-              "name": "Creator",
-              "title": "Challenges and auctions"
+            "b": {
+              "name": "Second",
+              "title": "A short title"
             },
-            "studio": {
-              "name": "Studio",
-              "title": "A team, shared earnings"
+            "c": {
+              "name": "Third",
+              "title": "A short title"
             }
           },
-          "chart": {
-            "title": "Views, last 30 days"
-          },
           "calendar": {
-            "title": "Pick a day",
             "previousMonth": "Previous month",
             "nextMonth": "Next month"
+          },
+          "chart": {
+            "title": "Amount, last 30 days"
+          },
+          "gauge": {
+            "label": "Goal",
+            "text": "{raised} of {target}"
+          },
+          "countdown": {
+            "label": "Time left",
+            "units": {
+              "d": "d",
+              "h": "h",
+              "m": "m",
+              "s": "s"
+            }
+          },
+          "progress": {
+            "label": "Progress"
+          },
+          "toast": {
+            "button": "Show a toast",
+            "title": "Saved",
+            "description": "A short, polite message.",
+            "label": "Notifications",
+            "close": "Close"
+          },
+          "native": {
+            "title": "The same kit, native",
+            "caption": "Native components of @krizaka/ui, recorded on an iPhone simulator and re-themed to the identity you pick.",
+            "alt": "Native Krizaka UI components in the {brand} identity"
           }
-        },
-        "native": {
-          "title": "The same kit, native",
-          "caption": "React Native screenshots from the registry's stories.",
-          "alt": "{name} on React Native"
         },
         "cli": {
           "title": "From zero to a running platform",
@@ -1739,7 +1788,7 @@
         [
           "Install",
           "npm install",
-          "Node 20 or later, Docker running."
+          "Node 22 or later, Docker running."
         ],
         [
           "Set everything up",

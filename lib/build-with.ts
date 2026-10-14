@@ -1,23 +1,12 @@
 /* "Build with Krizaka" — the home section under the products (#109): one kit, four identities, and the CLI.
    Structure only: the words live in messages/<locale>.json under site.home.build; the figures are read from the
-   registries at build (lib/ui-registry.ts, lib/registry-versions.ts); the native screenshots are the stories of the
-   published registries (public/ui-examples, written by scripts/gen-ui-docs.mjs) — nothing drawn or typed here.
+   registries at build (lib/ui-registry.ts, lib/registry-versions.ts); the gallery and its phone are lib/kit-live.ts.
 
    The CLI session is the recording /docs/orazaka/cli replays (lib/cli-model.ts: the published CLI on a fresh machine,
    scripts/record-cli.mjs), cut short. `npx @krizaka/create` joins the session as soon as the package is on npm. */
 
 import type { TerminalStep } from "@krizaka/ui/terminal-replay";
 import type { CliSession } from "./cli-model";
-
-/** The native examples shown in the phone, by registry name and example name — the same pieces as the web stage. */
-export const NATIVE_SHOTS = [
-  { component: "profile-card", example: "default" },
-  { component: "line-chart", example: "creator-earnings" },
-  { component: "chip", example: "single" },
-] as const;
-
-/** The width, in points, of a native story's column inside its 992-point canvas: the phone shows that column. */
-export const NATIVE_COLUMN = 352;
 
 /** The package that scaffolds a Krizaka app — shown in the session once it is published. */
 export const CREATE_PACKAGE = "@krizaka/create";

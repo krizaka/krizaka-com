@@ -1,123 +1,193 @@
 "use client";
 
-/* One kit, four identities: real @krizaka/ui components (the cut button, ProfileCard, ChoiceGrid, a Sparkline of
-   @krizaka/charts, the Calendar of the date picker) on a stage that wears the chosen product's brand
-   (`.brand-<id>`, @krizaka/tokens/brands/scoped.css). Nothing here is drawn by the site: change a component in
-   krizaka-ui, release it, and this stage shows it. Words: site.home.build.kit. */
+/* One kit, four identities: a gallery of Krizaka UI's own components — each with its name, a hint of its variants and
+   a link to its page — and the phone that shows their native versions. The product switch only re-themes the stage
+   (`.brand-<id>`, @krizaka/tokens/brands/scoped.css) and picks the phone's loop. Nothing here is drawn by the site:
+   change a component in krizaka-ui, release it, and this stage shows it. Words: site.home.build.kit. */
 
-import { useState, useSyncExternalStore } from "react";
+import { useState } from "react";
+import Link from "next/link";
 import { Avatar } from "@krizaka/ui/avatar";
-import { Emblem } from "@krizaka/ui/achievement";
+import { Button } from "@krizaka/ui/button";
 import { Chip } from "@krizaka/ui/chip";
 import { ChoiceGrid } from "@krizaka/ui/choice-grid";
+import { Countdown } from "@krizaka/ui/countdown";
 import { Calendar } from "@krizaka/ui/date-picker";
+import { Emblem } from "@krizaka/ui/achievement";
+import { GoalGauge } from "@krizaka/ui/goal-gauge";
 import { ProductLogo } from "@krizaka/ui";
 import { ProfileCard } from "@krizaka/ui/profile-card";
+import { Progress } from "@krizaka/ui/progress";
+import { Slider } from "@krizaka/ui/slider";
+import { Switch } from "@krizaka/ui/switch";
+import { TabsContent, TabsList, TabsRoot, TabsTrigger } from "@krizaka/ui/tabs";
+import { Toaster, toast } from "@krizaka/ui/toast";
 import { Sparkline } from "@krizaka/charts/sparkline";
 import { ForwardIcon } from "@krizaka/icons";
 import { format } from "@krizaka/i18n";
+import type { Video } from "@/lib/cdn";
 import ButtonLink from "../ButtonLink";
 import { useI18n } from "../I18nProvider";
 import { useContactHref } from "../useContactHref";
 import { NAV_PRODUCTS } from "@/lib/nav";
+import { KIT_COUNTDOWN_MS, KIT_CURRENCY, KIT_GOAL, KIT_PEOPLE, KIT_SERIES_CENTS, KIT_TILES, type KitTileId } from "@/lib/kit-live";
+import NativePhone from "./kit/NativePhone";
+import { money, useHydrated, useTargetIn } from "./kit/shared";
+import "./kit/kit.css";
 
 /** The identities the showcase switches between: the products, in the site's order (lib/nav.ts). */
 const SHOWCASE_BRANDS = NAV_PRODUCTS.map((p) => ({ id: p.id, name: p.name }));
 type ShowcaseBrand = (typeof SHOWCASE_BRANDS)[number]["id"];
 
-/** Views of a creator's videos, 30 days — the demo series of the chart. */
-const VIEWS = [820, 760, 910, 880, 1020, 990, 1130, 1210, 1090, 1340, 1280, 1420, 1390, 1510, 1620, 1580, 1700, 1640, 1810, 1760, 1930, 2040, 1980, 2150, 2090, 2260, 2340, 2280, 2410, 2520];
 const CALENDAR_LOCALE = { en: "en-CA", fr: "fr-CA" } as const;
-
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 const weekend = (day: string) => [0, 6].includes(new Date(`${day}T12:00:00`).getDay());
-const noop = () => () => {};
 
-export default function KitShowcase() {
+export default function KitShowcase({ portraits, phones }: { portraits: Record<string, string>; phones: Record<string, Video> }) {
   const { t, locale } = useI18n();
   const k = t.site.home.build.kit;
   const contact = useContactHref("blocks");
   const [brand, setBrand] = useState<ShowcaseBrand>(SHOWCASE_BRANDS[0].id);
-  const [plan, setPlan] = useState("creator");
+  const [choice, setChoice] = useState("b");
+  const [chip, setChip] = useState("label");
+  const [range, setRange] = useState<[number, number]>([25, 70]);
+  const [step, setStep] = useState(3);
+  const [on, setOn] = useState(true);
   const [day, setDay] = useState<string | null>(null);
-  // The calendar marks today: it is drawn once the page runs in the reader's browser (a static page has no "today").
-  const hydrated = useSyncExternalStore(noop, () => true, () => false);
+  const hydrated = useHydrated();
   const today = hydrated ? iso(new Date()) : undefined;
+  const countdownTarget = useTargetIn(KIT_COUNTDOWN_MS);
   const brandName = SHOWCASE_BRANDS.find((b) => b.id === brand)?.name ?? brand;
+  const s = k.sample;
+  const face = (id: string) => portraits[id];
 
-  return (
-    <div className="bk-kit">
-      <div className="bk-kit-bar">
-        <h3>{k.title}</h3>
-        <Chip.Group type="single" required label={k.brandLabel} value={brand} onValueChange={(v) => v && setBrand(v as ShowcaseBrand)} size="sm" className="bk-brands">
-          {SHOWCASE_BRANDS.map((b) => (
-            <Chip key={b.id} value={b.id}>
-              <ProductLogo id={b.id} size={14} animated={false} />
-              {b.name}
-            </Chip>
-          ))}
-        </Chip.Group>
-      </div>
-
-      <div className={"bk-stage brand-" + brand} role="group" aria-label={format(k.stageLabel, { brand: brandName })}>
-        <div className="bk-col">
-          <div className="bk-actions">
-            <ButtonLink href="/docs/ui" variant="primary" shimmer>
-              {k.primary} <ForwardIcon size={14} aria-hidden />
-            </ButtonLink>
-            <ButtonLink href={contact}>{k.secondary}</ButtonLink>
+  const tile = (id: KitTileId): React.ReactNode => {
+    switch (id) {
+      case "button":
+        return (
+          <div className="kl-row">
+            <Button variant="primary" shape="cut">{s.label}</Button>
+            <Button variant="secondary">{s.label}</Button>
+            <Button variant="outline">{s.label}</Button>
           </div>
-          <ProfileCard
-            visual={<Avatar fallback="EM" size="xl" />}
-            visualSize={88}
-            name={k.profile.name}
-            nameAs="p"
-            statLabel={k.profile.statLabel}
-            value={80}
-            stats={[
-              { label: k.profile.challenges, value: 12, max: 15, valueText: k.profile.challengesValue },
-              { label: k.profile.replies, value: 94 },
-            ]}
-            caption={k.profile.caption}
-          />
-          <div className="bk-card bk-chart">
-            <p className="bk-card-label">{k.chart.title}</p>
-            <p className="bk-figure">{new Intl.NumberFormat(locale).format(VIEWS[VIEWS.length - 1]!)}</p>
-            <Sparkline title={k.chart.title} data={VIEWS} variant="area" trendTone width={260} height={48} format="integer" />
-          </div>
-        </div>
-        <div className="bk-col">
+        );
+      case "slider":
+        return (
+          <>
+            <Slider<[number, number]> label={k.slider.range} showLabel min={0} max={100} value={range} onValueChange={setRange} thumbLabels={[s.label, s.other]} />
+            <Slider label={k.slider.steps} showLabel min={1} max={5} step={1} ticks value={step} onValueChange={setStep} />
+          </>
+        );
+      case "switch":
+        return <Switch label={s.label} checked={on} onCheckedChange={setOn} />;
+      case "chip":
+        return (
+          <Chip.Group type="single" required label={k.tiles.chip} value={chip} onValueChange={(v) => v && setChip(v)} size="sm" className="kl-row">
+            <Chip value="label">{s.label}</Chip>
+            <Chip value="value">{s.value}</Chip>
+            <Chip value="tag">{s.tag}</Chip>
+          </Chip.Group>
+        );
+      case "tabs":
+        return (
+          <TabsRoot defaultValue="one" variant="segmented">
+            <TabsList>
+              <TabsTrigger value="one">{k.tabs.one}</TabsTrigger>
+              <TabsTrigger value="two">{k.tabs.two}</TabsTrigger>
+              <TabsTrigger value="three">{k.tabs.three}</TabsTrigger>
+            </TabsList>
+            {(["one", "two", "three"] as const).map((v) => (
+              <TabsContent key={v} value={v} className="kl-muted">{k.tabs.panel}</TabsContent>
+            ))}
+          </TabsRoot>
+        );
+      case "date-picker":
+        return hydrated ? (
+          <Calendar locale={CALENDAR_LOCALE[locale]} value={day} onSelect={setDay} min={today} today={today} isDateDisabled={weekend} labels={{ previousMonth: k.calendar.previousMonth, nextMonth: k.calendar.nextMonth }} />
+        ) : (
+          <div className="kl-calendar-rest" aria-hidden />
+        );
+      case "choice-grid":
+        return (
           <ChoiceGrid
             label={k.choice.label}
             tag={k.choice.tag}
             caption={k.choice.caption}
-            value={plan}
-            onValueChange={setPlan}
+            value={choice}
+            onValueChange={setChoice}
             columns={3}
-            items={(["starter", "creator", "studio"] as const).map((id, i) => ({
-              id,
-              visual: <Emblem kind={(["sword", "jewel", "mirror"] as const)[i]} size={30} />,
-              name: k.choice[id].name,
-              title: k.choice[id].title,
-            }))}
+            items={(["a", "b", "c"] as const).map((id, i) => ({ id, visual: <Emblem kind={(["sword", "jewel", "mirror"] as const)[i]} size={30} />, name: k.choice[id].name, title: k.choice[id].title }))}
           />
-          <div className="bk-card bk-calendar">
-            <p className="bk-card-label">{k.calendar.title}</p>
-            {hydrated ? (
-              <Calendar
-                locale={CALENDAR_LOCALE[locale]}
-                value={day}
-                onSelect={setDay}
-                min={today}
-                today={today}
-                isDateDisabled={weekend}
-                labels={{ previousMonth: k.calendar.previousMonth, nextMonth: k.calendar.nextMonth }}
-              />
-            ) : (
-              <div className="bk-calendar-rest" aria-hidden />
-            )}
-          </div>
+        );
+      case "sparkline":
+        return (
+          <>
+            <p className="kl-figure">{money(KIT_SERIES_CENTS[KIT_SERIES_CENTS.length - 1]!, locale, KIT_CURRENCY)}</p>
+            <Sparkline title={k.chart.title} data={KIT_SERIES_CENTS} variant="area" trendTone width={240} height={48} format={{ style: "money", currency: KIT_CURRENCY }} />
+          </>
+        );
+      case "goal-gauge":
+        return <GoalGauge label={k.gauge.label} segments={KIT_GOAL.segments} value={KIT_GOAL.reached} valueText={format(k.gauge.text, { raised: money(KIT_GOAL.raisedCents, locale, KIT_CURRENCY), target: money(KIT_GOAL.targetCents, locale, KIT_CURRENCY) })} />;
+      case "countdown":
+        return countdownTarget !== null ? <Countdown target={countdownTarget} units={k.countdown.units} label={k.countdown.label} size="md" /> : <span className="kl-countdown-rest" aria-hidden />;
+      case "progress":
+        return (
+          <>
+            <Progress label={k.progress.label} value={64} showLabel />
+            <Progress variant="ring" label={k.progress.label} value={64} size="md" />
+          </>
+        );
+      case "profile-card":
+        return <ProfileCard visual={<Avatar src={face("camille")} alt="" fallback="C" size="xl" />} visualSize={88} name={s.name} nameAs="p" statLabel={s.statLabel} value={80} caption={s.caption} />;
+      case "avatar":
+        return (
+          <Avatar.Group max={3} size="lg">
+            {KIT_PEOPLE.map((id) => (
+              <Avatar key={id} src={face(id)} alt="" fallback={id[0]!.toUpperCase()} size="lg" />
+            ))}
+          </Avatar.Group>
+        );
+      case "toast":
+        return <Button variant="secondary" onClick={() => toast.success(k.toast.title, { description: k.toast.description })}>{k.toast.button}</Button>;
+    }
+  };
+
+  return (
+    <div className="bk-grid">
+      <div className="bk-kit">
+        <div className="bk-kit-bar">
+          <h3>{k.title}</h3>
+          <Chip.Group type="single" required label={k.brandLabel} value={brand} onValueChange={(v) => v && setBrand(v as ShowcaseBrand)} size="sm" className="bk-brands">
+            {SHOWCASE_BRANDS.map((b) => (
+              <Chip key={b.id} value={b.id}>
+                <ProductLogo id={b.id} size={14} animated={false} />
+                {b.name}
+              </Chip>
+            ))}
+          </Chip.Group>
         </div>
+
+        <div className={"kl-stage brand-" + brand} role="group" aria-label={format(k.stageLabel, { brand: brandName })}>
+          {KIT_TILES.map((c) => (
+            <section key={c.id} className="bk-card kl-tile" data-tile={c.id}>
+              <header className="kl-tile-head">
+                <Link href={`/docs/ui/${c.id}`} className="kl-tile-name" aria-label={format(k.open, { name: c.name })}>{c.name}</Link>
+                <span className="kl-muted">{k.tiles[c.id]}</span>
+              </header>
+              {tile(c.id)}
+            </section>
+          ))}
+          <Toaster label={k.toast.label} closeLabel={k.toast.close} />
+        </div>
+        <div className="bk-actions kl-foot">
+          <ButtonLink href="/docs/ui" variant="primary" shimmer>
+            {k.primary} <ForwardIcon size={14} aria-hidden />
+          </ButtonLink>
+          <ButtonLink href={contact}>{k.secondary}</ButtonLink>
+        </div>
+      </div>
+      <div className={"brand-" + brand}>
+        <NativePhone phones={phones} brand={brand} brandName={brandName} />
       </div>
     </div>
   );
