@@ -1,16 +1,40 @@
 // The layout of the Bunny storage zone (`krizaka-assets`, served by the pull zone krizaka-assets.b-cdn.net) — one place.
-// scripts/cdn-assets.mjs, scripts/pr-assets.mjs and krizaka-ui's tools/map-assets.mjs each write under ONE prefix and
-// refuse the others; `node scripts/cdn-assets.mjs tree` audits the zone against this file; `... readme` publishes
+// The zone is the media library of Krizaka: browse it by brand, by person, by product. Each script writes under ONE
+// prefix and refuses the others (cdn-assets, pr-assets, and krizaka-ui's tools/export-brand.mjs and tools/map-assets.mjs); `node scripts/cdn-assets.mjs tree` audits the zone against this file; `... readme` publishes
 // LAYOUT_README at the root of the zone (the only file allowed there).
 
 export const README_NAME = "README.txt";
 
-/** The three prefixes of the zone root, who writes them, and what is allowed under them. */
+export const BRANDS = ["krizaka", "orazaka", "orochia", "yasakia", "yororis"];
+/** The kinds of media under products/<product>/. */
+export const PRODUCT_KINDS = ["home", "tour", "mobile", "gallery", "studios", "docs"];
+
+/** The prefixes of the zone root, who writes them, and what is allowed under them. */
 export const ZONE = {
+  brand: {
+    writer: "tools/export-brand.mjs (krizaka-ui) — generated from @krizaka/ui, never hand-made",
+    path: "brand/<krizaka|orazaka|orochia|yasakia|yororis>/{logo,mark}-{dark,light}[-256|512|1024].{svg,png} · avatar-{500,1024}.png · social-preview-1280x640.png · brand/manifest.json",
+    what: "the logos and marks of the family: SVG, PNG on transparent (dark and light variants), account avatar, social preview — stable names, always the latest",
+  },
+  people: {
+    writer: "tools/export-brand.mjs (krizaka-ui) for defaults/ · scripts/cdn-assets.mjs library (krizaka-com) for personas/",
+    path: "people/defaults/v1/<brand>/{person,plain}-<1-6>{.svg,-256.webp,-512.webp} · people/personas/<product>/<name>-{256,512}.webp",
+    what: "profile pictures: the default avatars a product shows when a person has no photo (generated, versioned by folder), and the demo personas' portraits",
+  },
+  products: {
+    writer: "scripts/cdn-assets.mjs library (krizaka-com) — a readable mirror of what the products serve",
+    path: "products/<product>/{home,tour,mobile,gallery,studios,docs}/<name>.<ext>",
+    what: "the media of each product — loops, tours, screenshots, posters — under human names, to browse and download. The pages load the hashed copies of site/, not these",
+  },
   site: {
     writer: "scripts/cdn-assets.mjs (krizaka-com)",
     path: "site/<area>/<product?>/<kind>/<name>.<hash>.<ext>",
-    what: "media shown by krizaka.com — hashed names, recorded in lib/cdn-manifest.json, never overwritten",
+    what: "media loaded by the pages — hashed names, recorded in lib/cdn-manifest.json, never overwritten; URLs published packages still use stay valid",
+  },
+  ui: {
+    writer: "krizaka-ui (docs site and Storybook media)",
+    path: "ui/<area>/<name>.<hash>.<ext>",
+    what: "media of ui.krizaka.com: the map previews, the landing kit",
   },
   maps: {
     writer: "tools/map-assets.mjs (krizaka-ui)",
@@ -24,12 +48,37 @@ export const ZONE = {
   },
 };
 
+/** Folders of the zone that are retired (a renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
+export const RETIRED = [/^site\/(?:people|products)\/yazakia\//];
+
+/**
+ * Where a hashed file of site/ is mirrored in the browsable library, or null when it has no place there.
+ * `home/backdrop/orochia.mp4` → `products/orochia/home/backdrop.mp4`; `people/ui/ada-256.webp` → `people/personas/ui/ada-256.webp`.
+ */
+export function libraryPath(logical) {
+  const parts = logical.split("/");
+  const [area, a, b] = parts;
+  const product = (id) => (id === "yazakia" ? "yasakia" : id);
+  if (area === "people" && parts.length === 3) return a === "yazakia" ? null : `people/personas/${a}/${b}`;
+  if (area === "products" && parts.length >= 4 && PRODUCT_KINDS.includes(b)) return a === "yazakia" ? `products/yasakia/${parts.slice(2).join("/")}` : logical;
+  if (area === "docs" && parts.length >= 3) return `products/${product(a)}/docs/${parts.slice(2).join("/")}`;
+  if (area === "home" && a === "backdrop" && parts.length === 3) {
+    const [name, ...ext] = b.split(".");
+    return `products/${product(name)}/home/backdrop.${ext.join(".")}`;
+  }
+  if (area === "home" && a === "kit-native" && parts.length === 3) {
+    const m = /^([a-z]+)-(dark|light)\.(.+)$/.exec(b);
+    return m ? `products/${product(m[1])}/home/kit-native-${m[2]}.${m[3]}` : null;
+  }
+  return null;
+}
+
 /** What `site/` is made of: the first segment of a logical path given to `cdn-assets upload --to`. */
 export const SITE_AREAS = {
   home: "home/backdrop/<product>, home/kit-native/<product>-<theme> — the home page",
   products: "products/<product>/{tour,gallery,mobile}/<clip> — recordings and images of a product's own pages",
   docs: "docs/<product>/{mobile,…}/<name> — media of the documentation pages (screenshots, clips, posters)",
-  people: "people/<product>/<person>-{256,512}.webp — the demo personas' portraits, shared by the products",
+  people: "people/<product>/<person>-{256,512}.webp — the demo personas' portraits, shared by the products (mirrored in people/personas/)",
 };
 
 export const SITE_AREA_NAMES = Object.keys(SITE_AREAS);
@@ -41,13 +90,20 @@ ${Object.entries(ZONE)
   .map(([prefix, z]) => `${prefix}/\n  ${z.what}\n  ${z.path}\n  written by ${z.writer}`)
   .join("\n\n")}
 
+Brands: ${BRANDS.join(" · ")}. (Yasakia was called Yazakia: the old names are retired.)
+
 site/ areas
 ${Object.entries(SITE_AREAS)
   .map(([area, text]) => `  ${area.padEnd(9)} ${text}`)
   .join("\n")}
 
+Orochia has its own storage zone (orochia-dev) and Stream library: its new media do not go in this zone. Plan: move
+site/products/orochia and the Orochia personas there (steps: krizaka/orochia issue "Move Orochia's media to its own zone").
+Until then they stay here, listed under products/orochia/ and people/personas/orochia/.
+
 Rules
-  - site/ files are immutable: <name>.<10 hex of SHA-256>.<ext>. A change is a new file; the superseded one is removed
+  - brand/ and people/defaults/ are generated from the code of @krizaka/ui: change the component, run the export, never upload by hand.
+  - products/ and people/personas/ are a mirror of site/ (node scripts/cdn-assets.mjs library): browse here, load from site/.  - site/ files are immutable: <name>.<10 hex of SHA-256>.<ext>. A change is a new file; the superseded one is removed
     by \`node scripts/cdn-assets.mjs prune\`, which keeps anything named by a manifest of main or of an unmerged branch.
   - pr-assets/ is evidence: kept as long as a PR or an issue links it. Delete a whole <repo>/<topic>/ only when nothing
     links it any more.
@@ -70,6 +126,8 @@ export function assertUnder(prefix, path) {
 }
 
 const SITE_FILE = /^site\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a-f]{10}\.[a-z0-9]+$/;
+const FILE = "[A-Za-z0-9._-]+";
+const brandAlt = BRANDS.join("|");
 
 /** Why <path> does not belong in the zone, or null. */
 export function misplaced(path) {
@@ -80,6 +138,14 @@ export function misplaced(path) {
     if (!SITE_AREA_NAMES.includes(second)) return `site/${second}/ is not an area (${SITE_AREA_NAMES.join(", ")})`;
     if (!SITE_FILE.test(path)) return "not <name>.<hash>.<ext> under site/<area>/…";
   }
+  if (root === "brand" && !new RegExp(`^brand/(manifest\\.json|(${brandAlt})/${FILE})$`).test(path)) return `not brand/<${brandAlt}>/<file> or brand/manifest.json`;
+  if (root === "people" && !new RegExp(`^people/(defaults/v1/(manifest\\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`).test(path)) {
+    return "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>";
+  }
+  if (root === "products" && !new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path)) {
+    return `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`;
+  }
+  if (root === "ui" && path.split("/").length < 3) return "not ui/<area>/<file>";
   if (root === "maps" && !/^maps\/v1\/(tiles\/[a-z0-9-]+-\d{8}\.pmtiles|fonts\/[A-Za-z0-9 ]+\/\d+-\d+\.pbf)$/.test(path)) {
     return "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf";
   }

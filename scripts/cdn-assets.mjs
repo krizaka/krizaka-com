@@ -14,6 +14,8 @@
 // the storage zone and deletes the objects no manifest names any more (old versions) — a preview without --yes. "No
 // manifest" means this one AND the one of every other branch (main, unmerged work): a file another branch still uses is kept.
 // `tree` counts and weighs the zone by folder and lists what does not belong (docs: scripts/bunny-layout.mjs, AGENTS.md §5.2);
+// `library` mirrors what site/ serves into the browsable folders (products/<product>/…, people/personas/…) under human names;
+// `prune --retired` also removes the folders of a renamed product (RETIRED in bunny-layout.mjs) that no manifest of main names.
 // `readme` publishes the layout as README.txt at the zone root. This script writes only under site/.
 //
 // Areas under site/ (PR captures are apart, under pr-assets/ — scripts/pr-assets.mjs; the basemap under maps/):
@@ -31,7 +33,7 @@ import { readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { execFileSync } from "node:child_process";
-import { LAYOUT_README, README_NAME, SITE_AREA_NAMES, assertUnder, layoutHelp, misplaced } from "./bunny-layout.mjs";
+import { LAYOUT_README, README_NAME, RETIRED, SITE_AREA_NAMES, assertUnder, layoutHelp, libraryPath, misplaced } from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 
 export const ROOT = "site";
@@ -142,7 +144,7 @@ async function listObjects(cfg, dir, fetchImpl) {
   for (const item of await res.json()) {
     const p = `${dir}/${item.ObjectName}`;
     if (item.IsDirectory) out.push(...(await listObjects(cfg, p, fetchImpl)));
-    else out.push({ path: p, changed: item.LastChanged ? Date.parse(`${item.LastChanged}Z`) : 0 });
+    else out.push({ path: p, changed: item.LastChanged ? Date.parse(`${item.LastChanged}Z`) : 0, size: item.Length ?? 0 });
   }
   return out;
 }
@@ -196,9 +198,13 @@ export const MIN_AGE_MS = 24 * 3600 * 1000;
  */
 export const PRODUCT_OWNED = ["site/products/orazaka/", "site/products/orochia/"];
 
-export async function prune({ cfg, manifest, yes = false, extraKeep = new Set(), minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log }) {
+export async function prune({ cfg, manifest, yes = false, retired = false, extraKeep = new Set(), minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log }) {
   const keep = new Set([...Object.entries(manifest.files).map(([l, h]) => objectPath(manifest.root, l, h)), ...extraKeep]);
-  const unnamed = (await listObjects(cfg, manifest.root, fetchImpl)).filter((o) => !keep.has(o.path) && !PRODUCT_OWNED.some((prefix) => o.path.startsWith(prefix)));
+  // --retired: only the folders of a renamed product (RETIRED), named by no manifest of main — work on old branches that predates the rename does not keep them.
+  const all = await listObjects(cfg, manifest.root, fetchImpl);
+  const unnamed = retired
+    ? all.filter((o) => RETIRED.some((re) => re.test(o.path)) && !Object.entries(manifest.files).some(([l, h]) => objectPath(manifest.root, l, h) === o.path))
+    : all.filter((o) => !keep.has(o.path) && !PRODUCT_OWNED.some((prefix) => o.path.startsWith(prefix)));
   const stale = unnamed.filter((o) => !o.changed || now - o.changed >= minAgeMs).map((o) => o.path);
   const recent = unnamed.length - stale.length;
   if (recent) log(`kept ${recent} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be committing its manifest)`);
@@ -212,6 +218,39 @@ export async function prune({ cfg, manifest, yes = false, extraKeep = new Set(),
   }
   log(`${stale.length} stale object(s) under ${manifest.root}/${yes ? "" : " — run again with --yes to delete them"}`);
   return stale;
+}
+
+/**
+ * Mirrors what site/ serves into the browsable library (products/<product>/…, people/personas/…) under human names:
+ * the newest hashed file of each logical name is copied (downloaded from the pull zone, sent to its library path) unless
+ * the library already holds a file of the same size. Nothing under site/ is touched.
+ */
+export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetch, log = console.log }) {
+  const site = await listObjects(cfg, ROOT, fetchImpl);
+  const newest = new Map();
+  for (const o of site) {
+    const logical = o.path.slice(ROOT.length + 1).replace(/\.[0-9a-f]{10}(\.[a-z0-9]+)$/, "$1");
+    const target = libraryPath(logical);
+    if (!target) continue;
+    const prev = newest.get(target);
+    if (!prev || o.changed > prev.changed) newest.set(target, o);
+  }
+  const existing = new Map();
+  for (const top of ["products", "people/personas"]) for (const o of await listObjects(cfg, top, fetchImpl)) existing.set(o.path, o.size);
+  let sent = 0;
+  for (const [target, o] of [...newest].sort(([a], [b]) => a.localeCompare(b))) {
+    if (existing.get(target) === o.size) continue;
+    log(`${dryRun ? "would copy" : "copy"}  ${o.path}  →  ${target}`);
+    if (dryRun) continue;
+    const src = await fetchImpl(cdnUrl(cfg, o.path));
+    if (!src.ok) throw new Error(`download of ${o.path} failed: HTTP ${src.status}`);
+    const body = Buffer.from(await src.arrayBuffer());
+    const res = await fetchImpl(storageUrl(cfg, target), { method: "PUT", headers: { AccessKey: cfg.apiKey, "Content-Type": contentTypeFor(target) }, body });
+    if (!res.ok) throw new Error(`upload of ${target} failed: HTTP ${res.status}`);
+    sent++;
+  }
+  log(`${newest.size} library file(s), ${dryRun ? "to copy" : "copied"}: ${dryRun ? [...newest].filter(([t, o]) => existing.get(t) !== o.size).length : sent}`);
+  return newest;
 }
 
 /** The whole zone, listed from its root: [{ path, size }]. */
@@ -233,7 +272,7 @@ async function listZone(cfg, fetchImpl) {
 /** Counts and weight per folder (two levels under site/ and maps/, the repository and topic under pr-assets/), then what does not belong. */
 export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.log }) {
   const objects = await listZone(cfg, fetchImpl);
-  const depth = (p) => (p.startsWith("pr-assets/") ? 3 : p.startsWith("maps/") ? 3 : p.startsWith("site/") ? 3 : 1);
+  const depth = (p) => (p === README_NAME ? 1 : p.startsWith("people/") || p.startsWith("products/") || p.startsWith("brand/") ? 2 : 3);
   const rows = new Map();
   for (const o of objects) {
     const key = o.path.split("/").slice(0, Math.min(depth(o.path), o.path.split("/").length - 1) || 1).join("/");
@@ -261,13 +300,14 @@ export async function publishReadme({ cfg, fetchImpl = globalThis.fetch, log = c
 const USAGE = `usage:
   node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> [--env-file <path>] [--dry-run]
   node scripts/cdn-assets.mjs check [--env-file <path>]
-  node scripts/cdn-assets.mjs prune [--env-file <path>] [--min-age <hours, default 24>] [--yes]
+  node scripts/cdn-assets.mjs prune [--env-file <path>] [--min-age <hours, default 24>] [--retired] [--yes]
+  node scripts/cdn-assets.mjs library [--env-file <path>] [--dry-run]   mirror site/ into products/ and people/personas/ (human names)
   node scripts/cdn-assets.mjs tree [--env-file <path>]      count/size per folder, and what is outside the layout
   node scripts/cdn-assets.mjs readme [--env-file <path>]    publish the layout as README.txt at the zone root
 ${layoutHelp()}`;
 
 export async function main(argv, { env = process.env, fetchImpl, log = console.log, manifestFile = MANIFEST } = {}) {
-  const args = parseArgs(argv.filter((a) => a !== "--yes"));
+  const args = parseArgs(argv.filter((a) => a !== "--yes" && a !== "--retired"));
   const yes = argv.includes("--yes");
   const [command, target] = args._;
   if (args.help || !command) {
@@ -298,7 +338,11 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     return failed.length ? 1 : 0;
   }
   if (command === "prune") {
-    await prune({ cfg: loadConfig(merged), manifest, yes, minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000, extraKeep: otherBranchPaths(manifestFile), fetchImpl, log });
+    await prune({ cfg: loadConfig(merged), manifest, yes, retired: argv.includes("--retired"), minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000, extraKeep: otherBranchPaths(manifestFile), fetchImpl, log });
+    return 0;
+  }
+  if (command === "library") {
+    await library({ cfg: loadConfig(merged), dryRun: args.dryRun, fetchImpl, log });
     return 0;
   }
   if (command === "tree") {

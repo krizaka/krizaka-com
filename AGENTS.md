@@ -262,17 +262,45 @@
 
 ## 5.2 Site media — on Bunny, never committed
 
-- The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — live on Bunny
-  Storage (zone `krizaka-assets`) under `site/`, apart from the PR captures (`pr-assets/`):
+- Bunny Storage (zone `krizaka-assets`) is **the media library of Krizaka** — browse it by brand, person, product. The
+  layout is `scripts/bunny-layout.mjs` (the README.txt at the zone root is generated from it; `node scripts/cdn-assets.mjs
+  tree` audits the zone against it), one writer per prefix:
 
-  (the full layout of the zone is the table under « Bunny layout » below)
+  ```
+  brand/<krizaka|orazaka|orochia|yasakia|yororis>/   logo + mark, SVG and PNG 256/512/1024 on transparent, dark & light,
+                                                     avatar 500/1024, social-preview 1280x640 · brand/manifest.json
+  people/defaults/v1/<brand>/                        default profile pictures: person|plain-<1-6> .svg / -256.webp / -512.webp
+  people/personas/<product>/                         the demo personas' portraits
+  products/<product>/{home,tour,mobile,gallery,studios,docs}/<name>.<ext>   a readable mirror of what the products serve
+  site/<area>/…/<name>.<hash>.<ext>                  what the pages load (hashed, immutable)
+  ui/  maps/  pr-assets/                             ui.krizaka.com media · the basemap · PR evidence (§5.1)
+  ```
+- **`brand/` and `people/defaults/` are generated from the code**, never drawn or uploaded by hand: krizaka-ui's
+  `tools/export-brand.mjs` renders `@krizaka/ui`'s marks and `defaultAvatarSvg` (the source of `Avatar`'s
+  `defaultAvatar`) to SVG/PNG/WebP and uploads them with a `manifest.json`. A mark changes in krizaka-ui, then the export
+  is re-run. Default avatars are versioned by folder (`v1`): a changed picture is a new folder.
+- **`products/` and `people/personas/` are a mirror**: `node scripts/cdn-assets.mjs library` copies the newest hashed
+  file of `site/` to its human name. Pages and apps keep loading `site/` (its URLs never change content, and published
+  packages use them); the mirror is for browsing and downloading.
+- **Orochia has its own storage zone (`orochia-dev`) and Stream library**: new Orochia media go there, not in this zone.
+  `site/products/orochia` and `people/orochia` move there later (krizaka/orochia issue); until then they stay listed here.
+- **Yazakia is retired (renamed Yasakia)**: its folders are in `RETIRED` (`bunny-layout.mjs`); `cdn-assets prune
+  --retired --yes` removes them. Never write a `yazakia` path again.
+- The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — are sent under
+  `site/` with `cdn-assets upload`:
+
+  ```
+  site/home/backdrop/<product>.<hash>.{webm,mp4,jpg}
+  site/products/<product>/tour/<clip>.<hash>.{webm,mp4,jpg}
+  site/products/<product>/gallery/<id>.<hash>.webp
+  ```
 
   `node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> --env-file <path/to/.env>` (`--dry-run` to preview)
   sends each file as `<name>.<hash>.<ext>` (first 10 hex of its SHA-256 — a URL never changes content, so it is cached
   for good) and records its hash in `lib/cdn-manifest.json` — commit that file, never the media. A file already
   recorded with the same hash is skipped. `check` asks the pull zone for every recorded file; `prune` previews (and
   with `--yes` deletes) the old versions the manifest no longer names. Same credentials as §5.1, never printed.
-- Code never writes a media URL: `lib/cdn.ts` turns a logical path into the CDN URL (`cdn("products/orazaka/gallery/
+- Code never writes a media URL: `lib/cdn.ts` turns a logical path (`cdn("products/orazaka/gallery/
   tea-pour.webp")`, `video("products/orochia/tour/alex-bid")` → `{ webm, mp4, poster }`) and fails the build on a
   path the manifest does not know. The host is `NEXT_PUBLIC_MEDIA_CDN_URL` (read at build; default
   `https://krizaka-assets.b-cdn.net`); `next.config` allows it for `next/image` and redirects the old `/assets/…` URLs
@@ -281,29 +309,6 @@
   sitemap, `llms.txt`, Open Graph metadata, `/_next/static`) and the fonts (`next/font/local`, preloaded with the page).
   `public/ui-examples/` is generated at build, git-ignored. Nothing else goes in `public/`; a file nothing references is
   deleted, not kept "just in case" — git and Bunny keep the history.
-
-### Bunny layout — one zone, three prefixes
-
-The storage zone `krizaka-assets` (pull zone `krizaka-assets.b-cdn.net`) holds **every media of every Krizaka repository**.
-Nothing lives at its root except three folders and a `README.txt` (published by `node scripts/cdn-assets.mjs readme`).
-The layout is written once, in `scripts/bunny-layout.mjs`; each script writes under **one** prefix and refuses the others.
-
-| Prefix | Written by | Shape | Lifetime |
-| --- | --- | --- | --- |
-| `site/` | `scripts/cdn-assets.mjs` | `site/<area>/<product?>/<kind>/<name>.<hash>.<ext>` | immutable, named by `lib/cdn-manifest.json` |
-| `maps/` | `tools/map-assets.mjs` (krizaka-ui) | `maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles`, `maps/v1/fonts/<stack>/<a>-<b>.pbf` | a new extract is a new dated file |
-| `pr-assets/` | `scripts/pr-assets.mjs` | `pr-assets/<repo>/<pr-or-topic>/<file>` | review evidence, kept while a PR or issue links it |
-
-- `site/` areas: `home/` (backdrop, `kit-native/`), `products/<product>/{tour,gallery,mobile}/`, `docs/<product>/…` (media of the
-  documentation pages), `people/<product>/<person>-{256,512}.webp` (the demo personas). A new area is added in `bunny-layout.mjs`
-  first. Add a file with `cdn-assets upload <file|dir> --to <area/…>` — the hash is in the name, the manifest records it,
-  `cdn()` / `video()` (`lib/cdn.ts`) resolve it. Never put a media in the repository, never upload by hand.
-- `node scripts/cdn-assets.mjs tree` weighs the zone by folder and lists what is outside the layout (exit 1);
-  `prune` (preview, then `--yes`) removes the superseded versions of `site/` — it keeps anything named by the manifest of **any**
-  branch, so unmerged work is safe; `check` HEADs every recorded file on the pull zone.
-- `pr-assets/` is never pruned by script: delete a whole `<repo>/<topic>/` by hand only when no PR or issue links it any more.
-- The CDN caches immutable names for good; a moved or deleted path is purged from the account's dashboard (the storage key
-  cannot purge).
 
 ## 5.3 Tests — no test, not done
 
