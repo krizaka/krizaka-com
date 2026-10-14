@@ -58,5 +58,5 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Matcher ignoring API, static files, next internals, etc.
-  matcher: ["/((?!api|_next/static|_next/image|assets|favicon.ico|sitemap.xml|robots.txt).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|assets|maps/v1|favicon.ico|sitemap.xml|robots.txt).*)"],
 };

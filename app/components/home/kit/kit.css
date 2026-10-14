@@ -20,11 +20,15 @@
 .kl-tile svg { max-width: 100%; }
 .kl-calendar-rest { min-height: 260px; }
 .kl-countdown-rest { display: inline-block; min-width: 150px; min-height: 36px; }
-[data-tile="date-picker"] { overflow-x: auto; }
 
 .kl-phone-video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; background: var(--kz-surface-0); }
 
 @media (prefers-reduced-motion: reduce) { .kl-stage { transition: none; } }
 
-.kl-map-frame { min-height: 180px; border-radius: 10px; overflow: hidden; background: var(--kz-surface-2); }
-.kl-map { height: 180px; width: 100%; }
+.kl-map { height: 200px; width: 100%; border-radius: 10px; overflow: hidden; }
+.kl-chat { display: grid; gap: 6px; min-width: 0; }
+.kl-list { margin: 8px 0 0; padding-left: 20px; display: grid; gap: 6px; font-size: 14px; line-height: 1.5; color: var(--kz-text-primary); }
+.kl-title { margin: 0 0 4px; font-size: 15px; font-weight: 700; color: var(--kz-text-primary); }
+.kl-tile video, .kl-tile img { max-width: 100%; }
+.kl-narrow { max-width: 220px; margin-inline: auto; width: 100%; }
+.kl-capture > * { max-height: 220px; min-height: 0; }
