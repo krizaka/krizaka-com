@@ -2,8 +2,8 @@
 /* The Krizaka preset: @krizaka/tokens (every --kz-* colour, radius, shadow, font of both themes) mapped to the
    Tailwind theme (bg-surface-1, text-fg, border-border-default…) + the motion signature. The site dogfoods it. */
 @import "@krizaka/tailwind";
-/* One class per brand (BRAND.md): `.brand-orazaka` (orange) on the Orazaka pages, `.brand-orochia` (violet to magenta)
-   on the Orochia pages, any section that shows a product; the rest of the site is Krizaka (ink + blue, the defaults). */
+/* One class per brand (BRAND.md): `.brand-<product>` on any section that shows a product (the home, /products, /story,
+   /open-source); the rest of the site is Krizaka (ink + blue, the defaults). */
 @import "@krizaka/tokens/brands/scoped.css";
 /* The classes the @krizaka/ui primitives use, read from the built package — and those of the registry examples that
    /docs/ui renders live. */
@@ -120,14 +120,6 @@ html.light {
   --color-fd-ring: var(--kz-ring);
   --color-fd-overlay: var(--kz-overlay);
 }
-/* A product's documentation wears its brand (.brand-<product> on the docs container): the accent roles of Fumadocs
-   are resolved again inside it — declared on :root, they would keep the Krizaka blue. */
-.kz-docs[class*="brand-"] {
-  --color-fd-primary: var(--kz-accent-text);
-  --color-fd-primary-foreground: var(--kz-on-accent);
-  --color-fd-accent: var(--kz-accent-soft);
-  --color-fd-ring: var(--kz-ring);
-}
 /* Light theme: the active page of the Fumadocs sidebar and TOC is accent TEXT, so it takes the accent text role
    (AA on the tinted row), not the raw accent (4.4:1). */
 html.light #nd-sidebar,
@@ -210,77 +202,6 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   GLASS CARDS — Frosted depth containers
-   ═══════════════════════════════════════════════════════════════════ */
-
-.glass-card {
-  position: relative;
-  background: color-mix(in srgb, var(--kz-surface-1) 80%, transparent);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid var(--kz-border-subtle);
-  border-radius: var(--kz-radius-lg);
-  box-shadow: var(--kz-shadow-sm);
-  transition: border-color 200ms ease, box-shadow 300ms ease, transform 200ms ease;
-}
-
-.glass-card:hover {
-  border-color: var(--kz-border-default);
-  box-shadow: var(--kz-shadow-md);
-  transform: translateY(-2px);
-}
-
-/* Gradient edge shimmer */
-.glass-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 0.5px;
-  background: linear-gradient(
-    135deg,
-    hsla(0, 0%, 100%, 0.08) 0%,
-    transparent 40%,
-    transparent 60%,
-    hsla(0, 0%, 100%, 0.04) 100%
-  );
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  -webkit-mask-composite: xor;
-  pointer-events: none;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   BACKGROUNDS & TEXTURES
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* Ambient dot-grid */
-.ambient-grid {
-  background-image:
-    linear-gradient(var(--kz-grid-color) 1px, transparent 1px),
-    linear-gradient(90deg, var(--kz-grid-color) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   EFFECTS & UTILITIES
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* Accent glow on hover */
-.accent-glow:hover {
-  box-shadow: 0 0 20px hsla(217, 92%, 60%, 0.15), 0 0 40px hsla(217, 92%, 60%, 0.06);
-}
-
-/* Hover lift */
-.hover-lift {
-  transition: transform 200ms ease, box-shadow 200ms ease;
-}
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--kz-shadow-md);
-}
-
-/* ═══════════════════════════════════════════════════════════════════
    ANIMATIONS
    ═══════════════════════════════════════════════════════════════════ */
 
@@ -290,31 +211,10 @@ body {
   50%      { opacity: 1; }
 }
 
-.status-dot {
-  position: relative;
-  width: 8px;
-  height: 8px;
-  border-radius: 9999px;
-  background: currentColor;
-}
-.status-dot::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: inherit;
-  background: currentColor;
-  opacity: 0.3;
-  animation: status-pulse 2s ease-in-out infinite;
-  pointer-events: none;
-}
-
 /* Cursor blink */
 @keyframes cursor-blink {
   0%, 100% { opacity: 1; }
   50%      { opacity: 0; }
-}
-.cursor-blink {
-  animation: cursor-blink 1s step-end infinite;
 }
 
 /* Breathing glow — for active cards */
@@ -329,87 +229,10 @@ body {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.stagger-children > * {
-  animation: fade-up 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-.stagger-children > *:nth-child(1) { animation-delay: 0ms; }
-.stagger-children > *:nth-child(2) { animation-delay: 60ms; }
-.stagger-children > *:nth-child(3) { animation-delay: 120ms; }
-.stagger-children > *:nth-child(4) { animation-delay: 180ms; }
-.stagger-children > *:nth-child(5) { animation-delay: 240ms; }
-.stagger-children > *:nth-child(6) { animation-delay: 300ms; }
-
 /* Shimmer — data flow particle */
 @keyframes shimmer {
   0%   { transform: translateX(-100%); }
   100% { transform: translateX(400%); }
-}
-
-/* The brand marks (Krizaka, Orazaka, Orochia) carry their own motion: @krizaka/ui. */
-
-/* ═══════════════════════════════════════════════════════════════════
-   ORAZAKA ORBIT SYSTEM — CSS offset-path Particle
-   ═══════════════════════════════════════════════════════════════════ */
-
-.orbit-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 460px;
-  height: 460px;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.orbit-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-/* Orbit particle — CIRCULAR CSS offset-path (r=155, matching SVG ring) */
-.orbit-particle-wrapper {
-  position: absolute;
-  width: 0;
-  height: 0;
-  top: 0;
-  left: 0;
-  offset-path: circle(155px at 230px 230px);
-  offset-rotate: 0deg;
-  animation: orbit-path 8s linear infinite;
-  will-change: offset-distance;
-}
-
-/* Core particle — luminous energy dot */
-.orbit-particle {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  top: -4px;
-  left: -4px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #93B8F7, #4B8BF5 50%, transparent 100%);
-  box-shadow:
-    0 0 6px 2px hsla(217, 92%, 60%, 0.8),
-    0 0 16px 4px hsla(217, 92%, 60%, 0.4),
-    0 0 32px 8px hsla(217, 92%, 60%, 0.15),
-    0 0 48px 16px hsla(217, 92%, 60%, 0.05);
-  will-change: transform, opacity;
-}
-
-/* Trailing glow — ethereal wake */
-.orbit-trail {
-  position: absolute;
-  width: 28px;
-  height: 28px;
-  top: -14px;
-  left: -14px;
-  border-radius: 50%;
-  background: radial-gradient(circle, hsla(217, 92%, 60%, 0.25) 0%, hsla(217, 92%, 60%, 0.08) 40%, transparent 70%);
-  filter: blur(6px);
-  will-change: transform, opacity;
 }
 
 /* Orbit keyframe */
@@ -417,75 +240,13 @@ body {
   from { offset-distance: 0%; }
   to   { offset-distance: 100%; }
 }
-
-/* Hover acceleration */
-.orbit-container[data-scanning] .orbit-particle-wrapper {
-  animation-duration: 2s;
-}
-.orbit-container[data-scanning] .orbit-particle {
-  box-shadow:
-    0 0 8px 3px hsla(217, 92%, 60%, 0.9),
-    0 0 24px 8px hsla(217, 92%, 60%, 0.5),
-    0 0 48px 16px hsla(217, 92%, 60%, 0.2);
-}
-.orbit-container[data-scanning] .orbit-trail {
-  width: 36px;
-  height: 36px;
-  top: -18px;
-  left: -18px;
-  filter: blur(8px);
-}
-
-/* Radar rings — always slightly visible, brighter on hover */
-.radar-ring {
-  opacity: 0.3;
-  transform-origin: 230px 230px;
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-.orbit-container[data-scanning] .radar-ring-0 { opacity: 0.6; transition-delay: 0s; }
-.orbit-container[data-scanning] .radar-ring-1 { opacity: 0.5; transition-delay: 0.15s; }
-.orbit-container[data-scanning] .radar-ring-2 { opacity: 0.4; transition-delay: 0.3s; }
-
-/* Radar sweep */
-.radar-sweep {
-  transform-origin: 230px 230px;
-  opacity: 0;
-  transition: opacity 0.6s ease-out;
-}
-.orbit-container[data-scanning] .radar-sweep {
-  opacity: 0.12;
-  animation: radar-rotate 6s linear infinite;
-}
 @keyframes radar-rotate {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
 }
-
-/* Radar breathing */
-.orbit-container[data-scanning] .radar-circle {
-  animation: radar-pulse 3s ease-in-out infinite;
-}
 @keyframes radar-pulse {
   0%, 100% { opacity: 0.04; }
   50%      { opacity: 0.08; }
-}
-
-/* Track visibility */
-.orbit-track {
-  opacity: 0.4;
-  transition: opacity 0.6s ease-out;
-}
-.orbit-container[data-scanning] .orbit-track {
-  opacity: 0.15;
-}
-
-/* Responsive orbit */
-@media (max-width: 768px) {
-  .orbit-container {
-    width: 340px;
-    height: 340px;
-    transform: translate(-50%, -50%) scale(0.72);
-  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -507,34 +268,6 @@ body {
   background: var(--kz-text-secondary);
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   RESPONSIVE — Mobile-first breakpoints
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* --- Grid layouts --- */
-.grid-2col {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-
-.grid-3col {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-/* --- Navbar --- */
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-
-.nav-cta-text {
-  display: inline;
-}
-
 /* --- Footer --- */
 .footer-inner {
   display: flex;
@@ -544,59 +277,14 @@ body {
   margin: 0 auto;
 }
 
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
 /* ─── Tablet (≤ 768px) ─── */
 @media (max-width: 768px) {
-  .grid-2col {
-    grid-template-columns: 1fr;
-  }
-
-  .grid-3col {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .nav-links {
-    display: none;
-  }
 
   .footer-inner {
     flex-direction: column;
     gap: 16px;
     text-align: center;
   }
-}
-
-/* ─── Mobile (≤ 480px) ─── */
-@media (max-width: 480px) {
-  .grid-3col {
-    grid-template-columns: 1fr;
-  }
-
-  .nav-cta-text {
-    display: none;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   PREMIUM MICRO-INTERACTIONS — metal headline · CTA glare · spotlight
-   ─────────────────────────────────────────────────────────────────
-   Token-only, theme-aware, and reduced-motion safe (the global animation
-   reset near the top zeroes every animation/transition duration).
-   ═══════════════════════════════════════════════════════════════════ */
-
-/* Brushed-metal headline. Apply to plain-text headings; child accent spans
-   keep their own gradient. (Not `.kz-sheen`: that is the light sweep of @krizaka/ui's motion signature, which the
-   live examples of /docs/<product>/ui wear on their buttons.) */
-.kz-text-sheen {
-  background: var(--kz-sheen);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
 }
 
 /* Cursor-tracked spotlight — a soft accent bloom follows the pointer across
@@ -858,7 +546,6 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
   transition: border-color var(--kz-transition-fast), background-color var(--kz-transition-fast);
 }
 .kz-catalog-card:hover { border-color: var(--kz-border-strong); background: var(--kz-surface-2); }
-.kz-catalog-card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .kz-catalog-card-title { font-weight: 700; }
 .kz-catalog-card-text { color: var(--kz-text-secondary); font-size: 0.8125rem; line-height: 1.5; flex: 1; }
 .kz-catalog-card-text code,
@@ -873,30 +560,6 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
 .kz-doc-video video { display: block; width: auto; max-width: 100%; max-height: min(640px, 80vh); border-radius: 18px;
   border: 1px solid var(--kz-border-subtle); background: var(--kz-media); }
 .kz-doc-video figcaption { max-width: 34rem; text-align: center; font-size: 0.875rem; line-height: 1.5; color: var(--kz-text-secondary); }
-.kz-doc-intro {
-  display: flex;
-  gap: 14px;
-  align-items: flex-start;
-  margin: 0.5rem 0 1.5rem;
-  padding: 16px 18px;
-  border-radius: var(--kz-radius-lg);
-  border: 1px solid var(--kz-border-subtle);
-  background: var(--kz-surface-1);
-}
-.kz-doc-intro p { margin: 0; font-size: 0.9375rem; line-height: 1.6; color: var(--kz-text-secondary); }
-.kz-doc-audience {
-  flex-shrink: 0;
-  margin-top: 2px;
-  padding: 3px 9px;
-  border-radius: var(--kz-radius-full);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--kz-accent-text);
-  background: var(--kz-accent-soft);
-}
 .kz-coming-soon {
   display: flex;
   gap: 12px;
@@ -912,8 +575,6 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
 .kz-coming-soon-icon { flex-shrink: 0; margin-top: 3px; color: var(--kz-accent-text); }
 .kz-coming-soon-title { font-weight: 700; color: var(--kz-text-primary); }
 .kz-coming-soon a { color: var(--kz-accent-text); font-weight: 600; text-decoration: none; }
-.kz-doc-index { display: flex; flex-direction: column; gap: 1.75rem; }
-.kz-doc-index-group h2 { margin-bottom: 0.75rem; font-family: var(--kz-font-display); font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; }
 
 /* ═══════════════════════════════════════════════════════════════════
    Brand pages — the Krizaka visual language (BRAND.md §4) on the site
@@ -930,116 +591,12 @@ html.light .kz-docs .kz-required { color: color-mix(in srgb, var(--kz-danger) 70
 html .kz-backdrop.bp-glide { background: linear-gradient(180deg, var(--kz-surface-0), var(--kz-brand-gradient-from) 24%, var(--kz-brand-gradient-via) 62%, var(--kz-surface-0)); }
 html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
 
-/* A brand section's content: the page frame (`kz-frame`, @krizaka/ui) and the rhythm of a brand page. */
-.bp-wrap { position: relative; padding-block: clamp(64px, 9vw, 112px); }
-.bp-hero { padding-top: var(--kz-hero-top); }
-.bp-eyebrow { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px; font-family: var(--font-mono); font-size: 11px; font-weight: 700;
-  letter-spacing: .16em; text-transform: uppercase; color: var(--kz-accent-text); }
-.bp-h1 { margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.4rem, 6.4vw, 4.2rem); font-weight: 800;
-  letter-spacing: -.035em; line-height: 1.04; color: var(--kz-text-primary); }
-.bp-h2 { margin: 0 0 14px; font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.7rem, 4vw, 2.6rem); font-weight: 800;
-  letter-spacing: -.028em; line-height: 1.1; color: var(--kz-text-primary); max-width: 760px; }
-.bp-accent { color: var(--kz-accent-text); }
-.bp-lead { margin: 0; font-size: clamp(15.5px, 1.6vw, 17.5px); line-height: 1.7; color: var(--kz-text-secondary); max-width: 640px; }
-.bp-center { text-align: center; }
-.bp-center .bp-h2, .bp-center .bp-lead { margin-left: auto; margin-right: auto; }
-
-.bp-hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
-@media (max-width: 960px) { .bp-hero-grid { grid-template-columns: 1fr; } }
-.bp-hero-art { width: 100%; height: auto; max-width: 560px; justify-self: center; }
-
-.bp-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.bp-center .bp-actions { justify-content: center; }
-/* The page blocks of @krizaka/ui inside a brand page: its cards, decisions and rules under a bp heading. */
-.bp-argue { margin-top: 32px; }
-/* On a phone the actions of a block stack at full width, the main one first: one even column of buttons. */
-@media (max-width: 560px) { .bp-actions > * { flex: 1 1 100%; } }
-
-.bp-proofs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 12px; margin-top: 40px; list-style: none; padding: 0; }
-.bp-proof { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--kz-border-subtle);
-  background: color-mix(in srgb, var(--kz-surface-1) 70%, transparent); backdrop-filter: blur(6px); font-size: 13.5px; line-height: 1.5; color: var(--kz-text-secondary); }
-.bp-proof strong { display: block; color: var(--kz-text-primary); font-size: 14px; }
-.bp-proof svg { flex-shrink: 0; color: var(--kz-text-primary); }
-
-.bp-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 14px; margin-top: 36px; }
-.bp-card { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 18px; border: 1px solid var(--kz-border-subtle);
-  background: color-mix(in srgb, var(--kz-surface-1) 82%, transparent); color: var(--kz-text-primary); text-decoration: none;
-  transition: border-color var(--kz-transition-fast), transform var(--kz-transition-fast); }
-a.bp-card:hover { border-color: color-mix(in srgb, var(--kz-accent) 55%, var(--kz-border-default)); transform: translateY(-2px); }
-.bp-card h3 { margin: 6px 0 0; font-size: 16.5px; font-weight: 700; letter-spacing: -.01em; }
-.bp-card p { margin: 0; font-size: 13.5px; line-height: 1.65; color: var(--kz-text-secondary); }
-.bp-card .bp-card-more { margin-top: auto; padding-top: 6px; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 700; color: var(--kz-accent-text); }
-.bp-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 12px;
-  color: var(--kz-text-primary); background: var(--kz-accent-soft); border: 1px solid color-mix(in srgb, var(--kz-accent) 22%, transparent); }
-
-.bp-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 5vw, 64px); align-items: center; }
-@media (max-width: 900px) { .bp-split { grid-template-columns: 1fr; } }
-
-/* Comparison: a table on wide screens, labelled cards on phones. */
-.bp-compare { width: 100%; margin-top: 32px; border-collapse: separate; border-spacing: 0; border: 1px solid var(--kz-border-subtle); border-radius: 18px; overflow: hidden;
-  background: color-mix(in srgb, var(--kz-surface-1) 80%, transparent); font-size: 14px; }
-.bp-compare th, .bp-compare td { padding: 16px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--kz-border-subtle); line-height: 1.55; }
-.bp-compare tr:last-child > * { border-bottom: 0; }
-.bp-compare thead th { font-family: var(--font-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--kz-text-secondary); }
-.bp-compare tbody th { font-weight: 700; color: var(--kz-text-primary); width: 26%; }
-.bp-compare td { color: var(--kz-text-secondary); }
-.bp-compare td.bp-ours { color: var(--kz-text-primary); background: var(--kz-accent-soft); }
-.bp-compare thead th.bp-ours { color: var(--kz-accent-text); background: var(--kz-accent-soft); }
-@media (max-width: 720px) {
-  .bp-compare thead { display: none; }
-  .bp-compare, .bp-compare tbody, .bp-compare tr, .bp-compare th, .bp-compare td { display: block; width: auto; }
-  .bp-compare tr { border-bottom: 1px solid var(--kz-border-subtle); }
-  .bp-compare tbody th { width: auto; border: 0; padding-bottom: 6px; }
-  .bp-compare td { border: 0; padding-top: 6px; }
-  .bp-compare td::before { content: attr(data-label); display: block; margin-bottom: 2px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em;
-    text-transform: uppercase; color: var(--kz-text-secondary); }
-  .bp-compare td.bp-ours::before { color: var(--kz-accent-text); }
-}
-
-/* Worked examples (Orochia split) */
-.bp-ledger { margin: 24px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-.bp-ledger li { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 14px;
-  border: 1px solid var(--kz-border-subtle); background: color-mix(in srgb, var(--kz-surface-1) 80%, transparent); }
-.bp-ledger-what { font-size: 14px; color: var(--kz-text-secondary); }
-.bp-ledger-what strong { color: var(--kz-text-primary); }
-.bp-ledger-net { font-family: var(--font-mono); font-size: 15px; font-weight: 700; color: var(--kz-accent-text); white-space: nowrap; }
-.bp-share { display: flex; align-items: baseline; gap: 10px; margin-top: 8px; }
-.bp-share b { font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(3.4rem, 9vw, 5.4rem); font-weight: 800; letter-spacing: -.04em; line-height: 1;
-  background: linear-gradient(120deg, var(--kz-accent-text), var(--kz-accent-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.bp-share > span { font-size: 15px; color: var(--kz-text-secondary); }
-.bp-fine { margin: 16px 0 0; font-size: 12.5px; line-height: 1.6; color: var(--kz-text-secondary); }
-
 /* Terminal (Orazaka three commands) */
 .bp-term { border-radius: 16px; overflow: hidden; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1); box-shadow: var(--kz-shadow-lg); }
-.bp-term-bar { display: flex; gap: 6px; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--kz-border-subtle); background: var(--kz-surface-2);
-  font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary); }
-.bp-term-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--kz-border-strong); }
-.bp-term-bar i:last-of-type { margin-right: 8px; }
 .bp-term pre { margin: 0; padding: 18px; font-family: var(--font-mono); font-size: 13.5px; line-height: 2; color: var(--kz-text-primary); overflow-x: auto; }
 .bp-term pre span { color: var(--kz-accent-text); }
-.bp-steps { margin: 28px 0 0; padding: 0; list-style: none; display: grid; gap: 18px; counter-reset: step; }
-.bp-steps li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; }
-.bp-steps li::before { counter-increment: step; content: counter(step); display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px;
-  border-radius: 50%; font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--kz-accent-text); background: var(--kz-accent-soft);
-  border: 1px solid color-mix(in srgb, var(--kz-accent) 30%, transparent); }
-.bp-steps strong { display: block; font-size: 15.5px; color: var(--kz-text-primary); }
-.bp-steps p { margin: 2px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--kz-text-secondary); }
-
-/* Blurred footage behind a hero (depth of field, SectionBackdrop `media`). */
-.bp-media { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6%; padding: 6% 4%; }
-
-.bp-h1 b, .bp-h2 b { font-weight: inherit; color: var(--kz-accent-text); }
-.bp-ledger-what b { color: var(--kz-text-primary); }
-@media (max-width: 720px) { .bp-media { display: none; } }
-.bp-media > div { border-radius: 28px; background-size: cover; background-position: center top; opacity: .55; }
-.bp-media > div:nth-child(2) { transform: translateY(18%) scale(.9); opacity: .4; }
-html.light .bp-media > div { opacity: .3; }
 /* Light theme: the footage is screened onto the tint (its shadows vanish), never a grey panel. */
 html.light .kz-backdrop-media { mix-blend-mode: screen; }
-@media (max-width: 560px) {
-  .bp-ledger li { grid-template-columns: auto minmax(0, 1fr); row-gap: 4px; }
-  .bp-ledger-net { grid-column: 2; font-size: 13.5px; }
-}
 
 /* ── Product kits (/docs/<product>/ui): generated from the kits' registries ── */
 .kz-deprecated {
@@ -1056,64 +613,6 @@ html.light .kz-backdrop-media { mix-blend-mode: screen; }
 }
 .kz-deprecated strong { color: var(--kz-danger-text); }
 .kz-deprecated a { color: var(--kz-accent-text); text-decoration: underline; }
-.kz-built-on { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0.5rem 0 1.5rem; font-size: 0.875rem; color: var(--kz-text-secondary); }
-.kz-related-kit { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 0.8125rem; color: var(--kz-text-secondary); }
-.kz-product-kits .kz-related-title { display: inline-flex; align-items: center; gap: 8px; }
-.kz-kit-layers { list-style: none; counter-reset: layer; padding: 0; margin: 1rem 0; display: grid; gap: 8px; }
-.kz-kit-layers li {
-  counter-increment: layer;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 2px 12px;
-  padding: 0.75rem 1rem;
-  border: 1px solid var(--kz-border-default);
-  border-radius: var(--kz-radius-md);
-  background: var(--kz-surface-1);
-}
-.kz-kit-layers li::before { content: counter(layer); grid-row: span 2; font-weight: 700; color: var(--kz-accent-text); }
-.kz-kit-layers code { font-family: var(--font-mono); font-size: 0.8125rem; color: var(--kz-text-primary); }
-.kz-kit-layers span { color: var(--kz-text-secondary); font-size: 0.9375rem; }
-.kz-kit-reexports { list-style: none; padding: 0; margin: 1rem 0 1.5rem; display: grid; gap: 6px 16px; grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr)); }
-.kz-kit-reexports li { display: flex; flex-direction: column; font-size: 0.875rem; }
-.kz-kit-reexports code { font-family: var(--font-mono); color: var(--kz-text-primary); }
-.kz-kit-reexports a code { color: var(--kz-accent-text); }
-.kz-kit-reexports span { color: var(--kz-text-muted); font-size: 0.8125rem; }
-.kz-palette th[scope="row"] { width: 42%; min-width: 13rem; white-space: normal; font-weight: 400; }
-.kz-palette td { white-space: nowrap; }
-.kz-palette-note { display: block; margin-top: 4px; font-size: 0.8125rem; color: var(--kz-text-secondary); }
-.kz-swatch { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-.kz-swatch-chip {
-  width: 22px;
-  height: 22px;
-  flex: none;
-  border-radius: 6px;
-  border: 1px solid var(--kz-border-default);
-  background: var(--kz-swatch);
-}
-.kz-swatch code { font-family: var(--font-mono); font-size: 0.8125rem; }
-.kz-contrast { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 0.8125rem; }
-.kz-contrast[data-ok="true"] svg { color: var(--kz-success-text); }
-.kz-contrast[data-ok="false"] svg { color: var(--kz-danger-text); }
-.kz-named-themes { list-style: none; padding: 0; margin: 1rem 0 1.5rem; display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
-.kz-named-themes > li > p { margin: 0.5rem 0 0; font-size: 0.875rem; }
-.kz-named-themes .kz-kit-scope { border: 1px solid var(--kz-border-default); border-radius: var(--kz-radius-lg); overflow: hidden; }
-.kz-named-sample { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px; background: var(--kz-surface-1); }
-.kz-named-title { font-family: var(--kz-font-display); font-weight: 700; color: var(--kz-text-primary); }
-.kz-named-text { font-size: 0.8125rem; color: var(--kz-text-secondary); }
-.kz-named-actions { display: flex; gap: 8px; }
-.kz-kit-rules { list-style: none; padding: 0; margin: 1rem 0 1.5rem; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr)); }
-.kz-kit-rules li {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 1rem;
-  border: 1px solid var(--kz-border-default);
-  border-radius: var(--kz-radius-md);
-  background: var(--kz-surface-1);
-}
-.kz-kit-rule-title { font-weight: 700; color: var(--kz-text-primary); }
-.kz-kit-rule-text { font-size: 0.9375rem; color: var(--kz-text-secondary); }
-.kz-kit-rule-source { margin-top: auto; font-size: 0.8125rem; color: var(--kz-accent-text); }
 
 /* ═══════════════════════════════════════════════════════════════════
    SITE MOTION — what krizaka.com adds to the Krizaka motion signature
@@ -1142,53 +641,6 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
 }
 @keyframes kz-parallax {
   to { transform: translate3d(0, 14%, 0); }
-}
-
-/* The node of a signature icon also lights when the card that holds it is hovered (the package lights it in links and
-   buttons). */
-:is(.bp-card, .bp-proof, .bp-ledger li, .od-case, .ps-card):is(:hover, :focus-within) svg[data-kz-icon] [data-node] {
-  transform: scale(1.5);
-  filter: drop-shadow(0 0 3px var(--kz-accent));
-}
-
-/* Cards answer: every card tints its border toward the accent; cards that are links also rise. */
-.bp-card,
-.bp-proof,
-.bp-ledger li {
-  transition: border-color var(--kz-transition-smooth), transform var(--kz-transition-smooth), box-shadow var(--kz-transition-smooth),
-    background-color var(--kz-transition-smooth);
-}
-@media (hover: hover) {
-  .bp-card:hover,
-  .bp-proof:hover,
-  .bp-ledger li:hover {
-    border-color: color-mix(in srgb, var(--kz-accent) 45%, var(--kz-border-default));
-  }
-  a.bp-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 18px 40px -22px color-mix(in srgb, var(--kz-accent) 55%, transparent);
-  }
-}
-.bp-icon {
-  transition: transform var(--kz-transition-smooth), border-color var(--kz-transition-smooth), box-shadow var(--kz-transition-smooth);
-}
-.bp-card:is(:hover, :focus-visible) .bp-icon,
-.bp-ledger li:hover .bp-icon,
-.od-case:hover .bp-icon {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--kz-accent) 50%, transparent);
-  box-shadow: 0 10px 22px -12px var(--kz-accent);
-}
-
-/* The recordings of the products: the frame comes forward a little under the pointer. */
-@media (hover: hover) {
-  .kz-spot-media {
-    transition: transform 500ms var(--kz-ease), box-shadow 500ms var(--kz-ease);
-  }
-  .kz-spot-media:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 40px 70px -32px color-mix(in srgb, var(--kz-accent) 55%, transparent);
-  }
 }
 
 /* Long reads: a hairline that fills with the page (docs; scroll-driven, no JS, absent where unsupported). */
@@ -1236,14 +688,6 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
     transform: none;
     filter: none;
     transition: none;
-  }
-  .bp-card,
-  .bp-proof,
-  .bp-ledger li,
-  .bp-icon,
-  .kz-spot-media {
-    transition: none !important;
-    transform: none !important;
   }
 }
 /* ─── /docs/ui foundations: Typography and Icons (generated from @krizaka/fonts, @krizaka/tokens, @krizaka/icons) ─── */
@@ -1327,15 +771,6 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
   color: var(--kz-accent-text); text-decoration: none; white-space: nowrap; }
 .rd-next a:hover { text-decoration: underline; }
 .rd-last { padding-bottom: 40px; }
-.rd-h3 { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--kz-text-primary); }
-/* An ordered sequence told in full (a product's moment, step by step): one column, the number in the accent. */
-.rd-steps { margin: 0; padding: 0; list-style: none; counter-reset: rd-step; display: grid; gap: 12px; max-width: 52rem; }
-.rd-steps li { counter-increment: rd-step; position: relative; display: grid; gap: 4px; padding: 14px 16px 14px 56px; border-radius: 14px;
-  border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
-.rd-steps li::before { content: counter(rd-step, decimal-leading-zero); position: absolute; left: 16px; top: 14px; font-family: var(--kz-font-mono);
-  font-size: 12.5px; font-weight: 700; color: var(--kz-accent-text); }
-.rd-steps strong { font-size: 15.5px; color: var(--kz-text-primary); }
-.rd-steps span { font-size: 14.5px; line-height: 1.65; color: var(--kz-text-secondary); }
 
 /* /docs/ui/brand-marks. */
 .kz-brand-marks { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); list-style: none; margin: 1.5rem 0; padding: 0; }

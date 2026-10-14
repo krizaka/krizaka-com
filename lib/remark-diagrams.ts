@@ -1,6 +1,5 @@
-/* The schemas a doc asks for, as fenced blocks (AGENTS.md §4): ```architecture, ```pipeline, ```sequence and
-   ```states become the site's structured components, drawn from the generated model (and ```cli-replay, ```cli-journey,
-   ```cli-commands the CLI's: lib/cli-model.ts) — the same blocks read as plain text on GitHub. Mermaid is retired: a
+/* The schema a doc asks for, as a fenced block (AGENTS.md §4): ```architecture becomes the module map, drawn from
+   the generated model — the same block reads as plain text on GitHub. Mermaid is retired: a
    ```mermaid fence in a published doc fails the build, with what to write instead. The blocks' own
    grammar is parsed and checked where they render (lib/structured-diagrams.ts). */
 
@@ -8,13 +7,6 @@ import type { Code, Root } from "mdast";
 
 const COMPONENT: Record<string, string> = {
   architecture: "ArchitectureView",
-  pipeline: "PipelineView",
-  sequence: "SequenceDiagram",
-  states: "StateDiagram",
-  // The CLI reference of a product (CLI.md): a replay of its quick start, its journey, its command explorer.
-  "cli-replay": "CliReplay",
-  "cli-journey": "CliJourney",
-  "cli-commands": "CliCommands",
 };
 
 type Parent = { children: unknown[] };
@@ -26,7 +18,7 @@ export function remarkStructuredDiagrams() {
         const c = child as Code & Partial<Parent>;
         if (c.type === "code" && c.lang === "mermaid") {
           throw new Error(
-            `${file.path ?? "a doc"}: a Mermaid diagram — Mermaid is retired (krizaka-com AGENTS.md §4). Write a \`\`\`architecture, \`\`\`sequence, \`\`\`states or \`\`\`pipeline block instead, in the source repository.`,
+            `${file.path ?? "a doc"}: a Mermaid diagram — Mermaid is retired (krizaka-com AGENTS.md §4). Write an \`\`\`architecture block instead.`,
           );
         }
         if (c.type === "code" && c.lang && c.lang in COMPONENT) {

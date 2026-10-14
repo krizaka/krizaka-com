@@ -4,29 +4,22 @@
     "solutions": "Solutions",
     "docs": "Docs",
     "compliance": "Compliance",
-    "useCases": "Use Cases",
-    "getStarted": "Get started with Orazaka",
     "menu": "Menu",
     "close": "Close",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "language": "Language",
-    "orazakaDesc": "Sovereign AI orchestration engine",
     "architecture": "How it works",
     "editions": "Editions",
-    "viewDocs": "Documentation",
-    "byEdition": "By edition",
     "recommended": "Recommended",
     "demos": "Demos",
     "community": "Community",
     "packages": "Packages",
     "start": "Get started",
-    "githubAria": "View the repository on GitHub",
-    "starsAria": "GitHub stars"
+    "githubAria": "View the repository on GitHub"
   },
   "contact": {
     "pageTitle": "Contact & partnerships",
-    "pageDesc": "Contributions, partnerships, press or questions about Orazaka — here's how to reach us. Open-source project, public conversations by default.",
     "heading": "Contact & partnerships",
     "intro": "Orazaka is an open-source project: most conversations happen in public. Pick the channel that fits your need.",
     "channels": [
@@ -48,24 +41,19 @@
         "cta": "Email us",
         "kind": "email"
       }
-    ],
-    "backHome": "Back to home"
+    ]
   },
   "footer": {
     "product": "Product",
     "solutions": "Solutions",
     "legal": "Legal",
-    "social": "Social",
     "documentation": "Documentation",
     "architecture": "How it works",
     "privacy": "Privacy",
     "terms": "Terms",
-    "loi25": "Law 25",
-    "allRights": "All rights reserved",
     "openSource": "Open Source",
     "explore": "Explore",
     "community": "Community",
-    "useCases": "Use Cases",
     "compliance": "Compliance",
     "contact": "Contact",
     "demos": "Demos",
@@ -532,8 +520,7 @@
           "copy": "Copy commands",
           "copied": "Copied"
         },
-        "docsUi": "Browse Krizaka UI",
-        "docsCli": "Read the CLI docs"
+        "docsUi": "Browse Krizaka UI"
       }
     },
     "footer": {
@@ -841,7 +828,6 @@
       "title": "Build with our pieces.",
       "lead": "Everything we build is public. This page is for developers: take user management, notifications or billing for your own application — or run a whole product.",
       "count": "{count} public repositories · ",
-      "discoverProduct": "Discover the product",
       "contributeTitle": "Want to contribute?",
       "contributeBody": "Every repository has its contract (AGENTS.md) and the same contribution rules. A question, a bug, an idea: open a discussion or an issue.",
       "contributeGuide": "Contribution guide",
@@ -849,7 +835,6 @@
       "write": "Write to us",
       "jump": "On this page",
       "catalogueCount": "{repositories} repositories · {packages} npm packages · read from GitHub and npm at build",
-      "productsEyebrow": "Every product, every repository",
       "repoCount": "{count} repositories",
       "live": "Live",
       "stack": "Stack",
@@ -1125,7 +1110,6 @@
       "npm": "npm",
       "source": "Source",
       "docsUi": "Browse the components",
-      "cliDocs": "CLI documentation",
       "latest": "latest {version}",
       "groups": {
         "ui": {
@@ -1229,7 +1213,6 @@
       "trap": "The trap",
       "answer": "What it does",
       "rule": "The rule",
-      "whyHow": "Why, decisions, code",
       "discuss": "Discuss",
       "propose": "Propose",
       "report": "Report a bug",
@@ -1590,7 +1573,6 @@
       "more": "The trap in detail",
       "inProgress": "{count} in progress",
       "feedback": "Talk back",
-      "statusLink": "What is in progress",
       "details": "Details"
     },
     "faq": {
@@ -1612,297 +1594,6 @@
         {
           "q": "Where is Krizaka based?",
           "a": "Montréal, Québec, Canada. Krizaka's products are designed around Québec's Law 25 and the GDPR."
-        }
-      ]
-    }
-  },
-  "pages": {
-    "cognitive": {
-      "fullCognition": "FULL COGNITION",
-      "controlArchitecture": "CONTROL ARCHITECTURE",
-      "perceptionIngestion": "Perception & Ingestion",
-      "theQueryIsCleanedSystem": "The query is cleaned, system context variables are injected, and user identity (RBAC) is verified locally.",
-      "reasoningContext": "Reasoning & Context",
-      "orazakaQueriesLongTermContext": "Orazaka queries long-term context (RAG) and short-term sliding memory, then routes the prompt to the optimal local or cloud model.",
-      "validationMetacognition": "Validation & Metacognition",
-      "theFinalOutputIsAudited": "The final output is audited in a closed loop (JSON schema validation, safety rules, execution sandbox) before delivery.",
-      "inferenceProcessor": "INFERENCE PROCESSOR",
-      "memory": "Memory",
-      "knowledge": "Knowledge",
-      "rules": "Rules",
-      "enrichedContext": "Enriched Context",
-      "transfer": "TRANSFER",
-      "secureSandbox": "Secure Sandbox",
-      "isolatedReasoning": "Isolated reasoning",
-      "complianceChecks": "Compliance Checks",
-      "jsonSchemaValidation": "JSON schema validation",
-      "secureDelivery": "Secure Delivery",
-      "hermeticAndCertified": "Hermetic and certified",
-      "operatingModes": "OPERATING MODES",
-      "defaultMode": "DEFAULT MODE",
-      "adaptiveParameter": "ADAPTIVE PARAMETER",
-      "low": "Low",
-      "directResponse": "Direct response",
-      "t35Interceptors": "3–5 interceptors",
-      "minimalTokens": "Minimal tokens",
-      "medium": "Medium",
-      "standardAnalysis": "Standard analysis",
-      "t710Interceptors": "7–10 interceptors",
-      "balancedBudget": "Balanced budget",
-      "high": "High",
-      "deepDeliberation": "Deep deliberation",
-      "t1215Interceptors": "11–{interceptors} interceptors",
-      "maximumBudget": "Maximum budget",
-      "activeExtensibility": "ACTIVE EXTENSIBILITY",
-      "chooseYourInterceptors": "Choose your interceptors",
-      "audit": "Audit",
-      "security": "Security",
-      "metrics": "Metrics",
-      "routing": "Routing",
-      "cache": "Cache",
-      "yourCustomMode": "Your custom mode",
-      "active": "Active",
-      "context": "Context",
-      "memoryRag": "Memory & RAG",
-      "reasoning": "Reasoning",
-      "localLlm": "Local LLM",
-      "compliance": "Compliance",
-      "jsonAudit": "JSON Audit"
-    },
-    "useCase": {
-      "previous": "Previous",
-      "next": "Next",
-      "allCases": "All cases",
-      "sovereignAi": "Sovereign AI",
-      "whoIsMartin": "Who is Martin?",
-      "theUserExperienceReimagined": "The User Experience Reimagined",
-      "discoverHowOrazakaSentinelSimplifies": "Discover how Orazaka Sentinel simplifies Martin's day-to-day operations.",
-      "doYouRecognizeYourself": "Do you recognize yourself?",
-      "ifYouSpendHoursChasing": "If you spend hours chasing leads or worry about heavy Law 25 compliance fines, you share Martin's struggles. Orazaka allows you to transition from overload to peace of mind:",
-      "overloadRisk": "Overload & Risk",
-      "sovereigntySerenity": "Sovereignty & Serenity",
-      "beforeOrazaka10hWeek": "Before Orazaka: 10h / week",
-      "tiresomeManualSearch": "Tiresome manual search",
-      "martinSpendsEveryEveningScanning": "Martin spends every evening scanning social networks and local bulletin boards (5h/week).",
-      "tediousLandRegistryChecks": "Tedious Land Registry checks",
-      "manuallyCheckingTheQuebecLand": "Manually checking the Quebec Land Registry to target new property owners (2h/week).",
-      "spamRiskCloudPrivacyLeaks": "Spam risk & Cloud privacy leaks",
-      "fearOfViolatingCaslAnti": "Fear of violating CASL (anti-spam law) writing B2C, or violating Law 25 by putting private prospect data in the cloud.",
-      "resultMartinIsOverloadedLoses": "Result: Martin is overloaded, loses free time, and risks heavy regulatory fines.",
-      "withOrazaka10MinWeek": "With Orazaka: 10 min / week",
-      "automatedLocalTerritorialWatch": "Automated local territorial watch",
-      "orazakaSentinelSilentlyScansMunicipal": "Orazaka Sentinel silently scans municipal permits and public sales feeds locally in the background.",
-      "intelligentSovereignFiltering": "Intelligent, sovereign filtering",
-      "aLocalLlmQualifiesTarget": "A local LLM qualifies target intent (e.g. EV charger permit detection) without sending any data to the cloud.",
-      "compliantActionsReadyToMail": "Compliant actions ready to mail/send",
-      "instantPrintReadyPostcardDrafts": "Instant print-ready postcard drafts for B2C (fully CASL-compliant) and business emails for B2B.",
-      "resultMartinDevotesHisTime": "Result: Martin devotes his time to his trade with complete peace of mind and full compliance.",
-      "automatedMonitoring": "Automated monitoring",
-      "silentlyScansPublicRegionalRegistries": "Silently scans public regional registries without manual outreach.",
-      "ethicalB2cMailers": "Ethical B2C Mailers",
-      "draftsPhysicalDirectMailCampaigns": "Drafts physical direct mail campaigns exempt from electronic anti-spam laws.",
-      "targetedB2bEmails": "Targeted B2B emails",
-      "writesContextualCorporateMessagesAdhering": "Writes contextual corporate messages adhering to business exemptions.",
-      "t100SovereignOffline": "100% Sovereign & Offline",
-      "prospectDetailsNeverLeaveYour": "Prospect details never leave your hardware. Fully Law 25 compliant.",
-      "whatOrazakaSentinelDoes": "What Orazaka Sentinel Does",
-      "timeRoiCalculator": "Time & ROI Calculator",
-      "timeSpentManually": "Time spent manually",
-      "week": "week",
-      "timeWithOrazaka": "Time with Orazaka",
-      "timeSaved": "Time saved",
-      "martinStory": "<b>Martin</b> is an electrician in Montreal. Like many local pros, he wants to grow his business without spending his evenings scanning public registries, and above all, <b>without breaking the law</b>. Quebec has strict rules: <b>CASL</b> bans cold B2C emails, and <b>Law 25</b> bans sending prospect PII to cloud servers. Orazaka Sentinel solves this headache by running everything locally on his computer."
-    },
-    "howOrazakaWorks": {
-      "readingGuide": "Reading guide",
-      "orazakaExplainedSimply": "Orazaka, explained simply.",
-      "beforeYouDiveIntoThe": "Before you dive into the map, here's the mental model. Orazaka is an AI orchestration engine you host yourself: every request flows through a deterministic pipeline, step by step, and never leaves your network.",
-      "letSFollowOneReal": "Let's follow one real request.",
-      "summarizeThisContractAndFlag": "“Summarize this contract and flag the clauses that don't comply with Law 25.”",
-      "hereSWhatHappensTo": "Here's what happens to it, from your question to the answer:",
-      "why": "Why",
-      "theLocallyValidatedAnswerComes": "→ The locally-validated answer comes back to you. Zero data left your network.",
-      "nowExploreTheLiveMap": "Now explore the live map.",
-      "principles": [
-        {
-          "title": "Sovereign",
-          "desc": "Everything runs on your infrastructure. No data is sent to a third-party cloud — Law 25 & GDPR compliant."
-        },
-        {
-          "title": "Deterministic",
-          "desc": "No black box: each request follows an explicit, reproducible, auditable order of interceptors."
-        },
-        {
-          "title": "Modular",
-          "desc": "A hexagonal architecture: every responsibility — security, memory, media — is a swappable module."
-        }
-      ],
-      "steps": [
-        {
-          "title": "Presentation",
-          "what": "You ask from the web client, the mobile app, the CLI or the admin console.",
-          "why": "Four front doors, a single engine behind them."
-        },
-        {
-          "title": "Entry Gate",
-          "what": "The edge receives every request, exchanges an API key for a session token, and routes by path: identity, billing and studio to their services, everything else to the conversation service.",
-          "why": "One controlled entry point: nothing reaches a model directly."
-        },
-        {
-          "title": "Security & Logic",
-          "what": "Before any compute, the session token is checked (stateless JWT, krizaka-security) and the entitlement interceptor verifies what you may do and can afford.",
-          "why": "Security and governance happen before inference — not after."
-        },
-        {
-          "title": "Cognitive Engine",
-          "what": "The stateless hexagonal core orchestrates the request and coordinates the data flow.",
-          "why": "The conductor: reproducible on every single call."
-        },
-        {
-          "title": "Workers & Pipeline",
-          "what": "The turn goes through {core} non-bypassable interceptors, then {configured} configured ones (memory, MCP, tools…); long jobs travel over RabbitMQ to the job service and the media worker.",
-          "why": "This is where “cognition” is assembled, one ordered step after another."
-        },
-        {
-          "title": "Persistence",
-          "what": "Sessions, vector memory (pgvector) and identities are stored in your own databases.",
-          "why": "Your data stays home, from the first byte to the last."
-        }
-      ],
-      "hints": [
-        "Hover a card to light it up",
-        "Click to pin its detail",
-        "Search a component by name"
-      ],
-      "inTheCode": "In the code"
-    },
-    "sovereignSimulator": {
-      "selectAScenarioAndClick": "Select a scenario and click Run Simulation...",
-      "scenarios": [
-        {
-          "label": "Electrician Outreach (B2C)",
-          "prompt": "Scan Montreal for electrical contracts and prepare CASL-exempt direct mail.",
-          "output": "📄 1 Local physical mailer drafted (CASL-compliant)\n📦 0 bytes uploaded to external cloud servers\n🔒 Status: 100% Sovereign",
-          "steps": [
-            {
-              "desc": "Enforces electrician specialty and geographic postal constraints."
-            },
-            {
-              "desc": "Scans building permit logs and public transfers for EV chargers."
-            },
-            {
-              "desc": "Filters deals, flagging panels requiring amp upgrades."
-            },
-            {
-              "desc": "Blocks cold B2C email outreach (CASL) and drafts direct mailers."
-            }
-          ]
-        },
-        {
-          "label": "Anonymous Support Claim",
-          "prompt": "Analyze a private car insurance claim containing citizen PII.",
-          "output": "✉️ Support draft written in Sandbox (PII redacted/encrypted)\n📦 Law 25 compliant (Zero cloud transfer without PIA)\n🔒 Status: Sealed & Sovereign",
-          "steps": [
-            {
-              "desc": "Detects presence of personal identifiable information (PII)."
-            },
-            {
-              "desc": "Anonymizes VIN, address, and phone numbers inside local Sandbox."
-            },
-            {
-              "desc": "Queries policy terms from the secure local pgvector store."
-            },
-            {
-              "desc": "Invokes offline local LLM (Mistral) to draft the reply safely."
-            }
-          ]
-        },
-        {
-          "label": "Supplier Audit (B2B)",
-          "prompt": "Audit a new aerospace supplier registry and validate NDAs.",
-          "output": "⚠️ Internal alert: Supplier missing NDA (Bill 101 compliant)\n📦 Processed 100% on the local host machine\n🔒 Status: Local only",
-          "steps": [
-            {
-              "desc": "Enforces procurement criteria and audit guidelines."
-            },
-            {
-              "desc": "Queries local ERP database for active supplier certificates."
-            },
-            {
-              "desc": "Flags lack of active Non-Disclosure Agreement (NDA)."
-            },
-            {
-              "desc": "Drafts French internal warning alert (Bill 101 compliant)."
-            }
-          ]
-        }
-      ]
-    },
-    "orazakaArchitecture": {
-      "howOrazakaWorksKrizaka": "How Orazaka Works — Krizaka",
-      "interactiveSchemaOfTheOperational": "Interactive schema of the operational inner workings of the Orazaka sovereign AI orchestration platform.",
-      "howItWorks": "How it works",
-      "theJourneyOfARequest": "The journey of a request.",
-      "orazakaOrchestratesAModularSecure": "Orazaka orchestrates a modular, secure, and fully sovereign cognitive flow. Follow a request through six stages — from the interface all the way to storage.",
-      "stageHints": [
-        "Presentation",
-        "Gateway",
-        "Security",
-        "Engine",
-        "Workers",
-        "Persistence"
-      ]
-    },
-    "repositoryMap": {
-      "sourceCode": "Source code",
-      "oneRepositoryPerComponent": "One repository per component.",
-      "openSourceRepositoriesApache2": "{p0} open-source repositories (Apache-2.0) in the krizaka organisation. Take only what your application needs, or clone the whole workspace with ",
-      "layers": {
-        "foundation": {
-          "title": "Foundation",
-          "intro": "Reusable by any Krizaka application: build, contracts, edge, UI kit."
-        },
-        "domain": {
-          "title": "Domain services",
-          "intro": "Users, notifications, billing — plug them into a new application as they are."
-        },
-        "ai": {
-          "title": "Orazaka AI engine",
-          "intro": "The cognitive engine and the services that host it."
-        },
-        "worker": {
-          "title": "Native workers",
-          "intro": "Native media inference, outside Docker."
-        },
-        "app": {
-          "title": "Applications",
-          "intro": "Web, administration, mobile and CLI."
-        },
-        "content": {
-          "title": "Content",
-          "intro": "The Studio's reference packs."
-        }
-      }
-    },
-    "docsPreview": {
-      "docCards": [
-        {
-          "title": "Getting Started"
-        },
-        {
-          "title": "Hexagonal Architecture"
-        },
-        {
-          "title": "API Reference"
-        },
-        {
-          "title": "Auth & Security"
-        },
-        {
-          "title": "Orazaka CLI"
-        },
-        {
-          "title": "Deployment (IaC)"
         }
       ]
     }
@@ -1998,8 +1689,7 @@
       "collapseSidebar": "Collapse the sidebar",
       "openSearch": "Open the search",
       "closeSearch": "Close the search",
-      "lastUpdated": "Last updated on",
-      "chooseSection": "Choose a documentation"
+      "lastUpdated": "Last updated on"
     },
     "screens": {
       "intro": "A screen is a layout's example that is a whole screen of a product: real words, the blocks it is made of, its phone version thought out. Copy it into the product, keep its structure, change the words.",
@@ -2023,8 +1713,6 @@
     },
     "component": {
       "platformsLabel": "Platforms",
-      "statusLabel": "Status",
-      "categoryLabel": "Category",
       "platforms": {
         "web": "Web",
         "native": "Mobile",
@@ -2083,7 +1771,10 @@
       "notes": "Notes",
       "source": "Generated from the code of @krizaka/ui {version}: its meta.ts, its examples and its types.",
       "edit": "Edit this documentation on GitHub",
-      "nativeShot": "{name}, as React Native renders it"
+      "nativeShot": "{name}, as React Native renders it",
+      "deprecatedName": "{name} (deprecated)",
+      "useInstead": "Use instead:",
+      "deprecatedSince": "Since {since}, removed in {removedIn}."
     },
     "catalog": {
       "heading": "All components",
@@ -2451,9 +2142,7 @@
         "count": "{count} templates",
         "open": "Open the {intent} templates",
         "native": "Mobile",
-        "web": "Web",
-        "builtOn": "Built on",
-        "nativeNote": "A mobile template: its story's screenshots in both themes, and the code."
+        "web": "Web"
       },
       "mobile": {
         "intro": "What runs in React Native, from @krizaka/ui/native. Most components exist on both platforms with the same name and the same props; a few exist only on mobile, because the platform asks for them (a tab bar, a sheet, a pull to refresh).",
@@ -2478,140 +2167,11 @@
         "yazakia": "the dating app",
         "yororis": "the fourth product, in construction"
       }
-    },
-    "kit": {
-      "sidebar": "UI — design system",
-      "overview": "Overview",
-      "overviewTitle": "{product} UI",
-      "overviewLead": "How the product's design system extends Krizaka UI: its theme, its components, what it re-exports — generated from the kit's code at every build.",
-      "foundations": "Foundations",
-      "foundationsTitle": "{product} UI — Foundations",
-      "foundationsLead": "The palette, both modes and their contrasts, the product tokens, the typography, the icons and the product rules — read from the kit's tokens at every build.",
-      "components": "Components",
-      "deprecatedName": "{name} (deprecated)",
-      "why": "Why it exists above Krizaka UI",
-      "builtOn": "Built on",
-      "useInstead": "Use instead:",
-      "fromKrizakaUi": "Krizaka UI",
-      "deprecatedSince": "Since {since}, removed in {removedIn}.",
-      "platformLong": "Web — React, from {package}. The {product} mobile app takes the kit's tokens, not its components.",
-      "source": "Generated from the code of {package} {version}: its meta.ts, its examples and its types.",
-      "intro": "<b>{package}</b> {version} is {product}'s design system: the Krizaka platform worn by {product}. It overrides the values of the --kz-* roles — never the components — and adds the few components that carry the product's vocabulary, each built on a @krizaka/ui primitive.",
-      "layersTitle": "How it extends Krizaka UI",
-      "layers": {
-        "platform": "The platform: every role — surfaces, text, accent, status — with its Krizaka value, in both modes.",
-        "brand": "The product's brand: the accent family and the section gradient of its mark.",
-        "kit": "The kit's theme: the values the product changes on top, and its own tokens."
-      },
-      "layersComponents": "Components on top: a product component composes @krizaka/ui primitives (a token, then a variant, then a composite) — it never copies one.",
-      "installTitle": "Install",
-      "componentsTitle": "What the kit adds",
-      "componentsLead": "Each component says why Krizaka UI alone was not enough, and which primitive it is built on.",
-      "deprecatedTitle": "Deprecated",
-      "deprecatedLead": "Kept for the apps that still use them, each with its replacement.",
-      "reexportsTitle": "Re-exported from Krizaka UI",
-      "reexportsLead": "Imported from the kit by older code; new code imports them from @krizaka/ui.",
-      "foundationsCta": "The palette, the contrasts and the product rules",
-      "open": "Open",
-      "paletteTitle": "Palette",
-      "paletteLead": "Every role as an app resolves it: the platform, then the brand, then the kit. The roles the product sets are marked.",
-      "role": "Role",
-      "dark": "Dark",
-      "light": "Light",
-      "setBy": "Set by",
-      "use": "Use",
-      "sources": {
-        "platform": "Platform",
-        "brand": "Brand",
-        "kit": "Kit",
-        "base": "Base"
-      },
-      "contrastsTitle": "Contrasts",
-      "contrastsLead": "The pairs every Krizaka theme is held to (WCAG 2.2): text on every surface, text on the accent, the accent as text, the focus ring.",
-      "pair": "Pair",
-      "minimum": "Minimum",
-      "pass": "Passes AA",
-      "fail": "Below AA",
-      "on": "on",
-      "namedTitle": "Named themes",
-      "namedLead": "Chosen by the person, orthogonal to dark and light: each one sets every role, so it reads the same in either mode. Live, with the kit's components.",
-      "namedPass": "{passed} of {total} pairs at AA · lowest {lowest}:1",
-      "sampleTitle": "Answered locally",
-      "sampleText": "3 contracts cited · 0 bytes left the network",
-      "samplePrimary": "Send",
-      "sampleSecondary": "Details",
-      "tokensTitle": "Product tokens",
-      "tokensLead": "What the roles cannot say, prefixed with the product's name — never generic.",
-      "token": "Token",
-      "value": "Value",
-      "typeScaleTitle": "Type scale",
-      "typographyTitle": "Typography",
-      "family": "Family",
-      "iconsTitle": "Icons and marks",
-      "rulesTitle": "Product rules",
-      "rulesLead": "What every screen of the product respects — each rule quoted from the contract that states it.",
-      "nativeTitle": "React Native"
     }
   },
   "diagrams": {
     "textVersion": "Text version",
     "roles": {
-      "orazaka": {
-        "client": {
-          "title": "Clients",
-          "summary": "Where a person asks: the web client, the admin console, the mobile app, the CLI."
-        },
-        "service": {
-          "title": "Services & workers",
-          "summary": "What runs and is deployed: the edge, the Orazaka services, the Krizaka services, the media worker."
-        },
-        "adapter": {
-          "title": "Adapters",
-          "summary": "How the inside reaches the outside: persistence, typed HTTP clients, the encrypted asset store."
-        },
-        "application": {
-          "title": "Application",
-          "summary": "Around the core: use-case orchestration, the interceptor pipeline, tools (MCP, RAG)."
-        },
-        "domain": {
-          "title": "Domain core",
-          "summary": "The centre of each hexagon: the cognitive engine and identity. Dependencies point here."
-        },
-        "contract": {
-          "title": "Contracts",
-          "summary": "Tier-1 interfaces and records: the only way one context calls another."
-        },
-        "platform": {
-          "title": "Krizaka platform kit",
-          "summary": "Published on Maven Central: security, messaging (outbox, retry, dead letters), web, observability, and their four starters."
-        }
-      },
-      "orochia": {
-        "client": {
-          "title": "Clients",
-          "summary": "What a person uses: the web app in the browser, the operator console, the iOS and Android app."
-        },
-        "service": {
-          "title": "Application",
-          "summary": "The API of apps/web: every route handler — access, signed media, payments, realtime. One process serves every client."
-        },
-        "library": {
-          "title": "Packages",
-          "summary": "The workspace packages the API is built on: database, media, payments, push, shared config."
-        },
-        "design": {
-          "title": "Design system",
-          "summary": "The Orochia identity and the Krizaka packages under it (@krizaka/ui, tokens, Tailwind preset, i18n…), installed from npm."
-        },
-        "data": {
-          "title": "Data stores",
-          "summary": "PostgreSQL: the Orochia database, which is also the realtime bus, and the console's own small database."
-        },
-        "external": {
-          "title": "External services",
-          "summary": "What the code calls outside: Bunny Stream for media, the payment gateways, e-mail, push, sign-in providers."
-        }
-      },
       "java": {
         "service": {
           "title": "Services",
@@ -2645,15 +2205,10 @@
     },
     "owners": {
       "all": "All",
-      "orazaka": "Orazaka",
-      "krizaka": "Krizaka",
-      "orochia": "Orochia",
-      "external": "Third party"
+      "krizaka": "Krizaka"
     },
     "moduleMap": {
       "label": {
-        "orazaka": "Orazaka module map",
-        "orochia": "Orochia module map",
         "java": "Krizaka Java building blocks"
       },
       "search": "Find a module…",
@@ -2663,19 +2218,14 @@
       "ownerLabel": "Whose modules",
       "modes": {
         "build": "Dependencies",
-        "runtime": "Runtime calls",
-        "journey": "Journeys"
+        "runtime": "Runtime calls"
       },
       "hint": {
-        "build": "Select a module to isolate it: what it depends on and what depends on it stay lit, linked by lines on wide screens. Read top to bottom — dependencies point toward the core.",
-        "runtime": "Select a module: who it calls and who calls it stay lit — requests (HTTP, SQL) solid, events (messages, webhooks, SSE, NOTIFY, push) dashed.",
-        "journey": "Pick a journey: the modules it goes through light up step by step, the rest of the map stays in place. Step with the arrows or the list.",
-        "buildJava": "Select an artifact: what it depends on (compile, test, its parent POM, the BOM it imports) and what depends on it stay lit. Read top to bottom — services on top, the build underneath.",
-        "buildOrochia": "Select a module: what it is built on and what is built on it stay lit — the apps on top, the packages and the design system they install underneath."
+        "build": "Select an artifact: what it depends on (compile, test, its parent POM, the BOM it imports) and what depends on it stay lit. Read top to bottom — services on top, the build underneath.",
+        "runtime": "Select a module: who it calls and who calls it stay lit — requests (HTTP, SQL) solid, events (messages, webhooks, SSE, NOTIFY, push) dashed."
       },
       "legend": {
         "dependency": "depends on",
-        "outward": "points away from the core",
         "indirect": "parent POM · BOM import · test scope",
         "sync": "{kinds} — request",
         "async": "{kinds} — event"
@@ -2694,16 +2244,13 @@
       "detail": {
         "repository": "Repository",
         "version": "version {version}",
-        "ports": "{inbound} inbound · {outbound} outbound ports",
         "uses": "Depends on",
         "usedBy": "Used by",
         "calls": "Calls",
         "calledBy": "Called by",
         "none": "Nothing",
-        "outward": "{from} → {to} points away from the core. The hexagonal rule says dependencies point inward: the map shows the code as it is.",
         "close": "Clear the selection",
-        "central": "Maven Central {version}",
-        "package": "package {name}"
+        "central": "Maven Central {version}"
       },
       "count": "{count} modules",
       "empty": "No module here matches.",
@@ -2729,216 +2276,7 @@
         "sse": "SSE",
         "notify": "LISTEN/NOTIFY",
         "push": "push"
-      },
-      "journey": {
-        "label": "Journey",
-        "steps": "Steps of the journey",
-        "step": "Step {n} of {total}",
-        "prev": "Previous step",
-        "next": "Next step",
-        "play": "Play the journey",
-        "pause": "Pause",
-        "endpoint": "Endpoint",
-        "announce": "Step {n}: {title}."
       }
-    },
-    "pipeline": {
-      "label": "Interceptor pipeline",
-      "core": {
-        "title": "Phase 1 · core chain",
-        "sub": "Fixed in code. Runs first, on every turn, and cannot be switched off."
-      },
-      "dynamic": {
-        "title": "Phase 2 · configured chain",
-        "sub": "Order and switch read from the database (pipeline_interceptor_config), reloaded without a restart."
-      },
-      "locked": "non-bypassable",
-      "off": "disabled",
-      "noClass": "row without an implementation",
-      "sameOrder": "same order",
-      "concerns": {
-        "validation": "validation",
-        "governance": "governance",
-        "context": "context",
-        "enrichment": "enrichment",
-        "reformulation": "reformulation",
-        "tooling": "tooling",
-        "translation": "translation"
-      }
-    },
-    "messaging": {
-      "label": "Messaging topology",
-      "hint": "Select a publisher: the queues its messages reach light up, with the services that drain them.",
-      "exchanges": {
-        "jobs": "Work to do. A job is published once and drained by the lane that binds its key.",
-        "events": "What happened. Domain events and job outcomes, fanned out to every queue that binds them.",
-        "dlx": "Dead letters. Every queue parks what it could not process in ‹queue›.dlq."
-      },
-      "types": {
-        "topic": "topic exchange",
-        "direct": "direct exchange"
-      },
-      "cols": {
-        "producers": "Published by",
-        "queues": "Queue · bindings",
-        "consumers": "Consumed by"
-      },
-      "capabilityRoute": "the capability's route",
-      "dynamicKey": "key chosen at runtime",
-      "dlq": "dead letters → {dlq}",
-      "ownRetry": "own retry",
-      "retry": {
-        "title": "Retry, then dead letter",
-        "attempts": "{count} attempts",
-        "wait": "{initial} ms ×{multiplier}, up to {max} s",
-        "parked": "‹queue›.dlq",
-        "note": "Every consumer built on {module} ({property}) retries before it gives up; the message is then parked, not lost."
-      },
-      "table": {
-        "caption": "Queues, their bindings and consumers",
-        "queue": "Queue",
-        "exchange": "Exchange",
-        "bindings": "Bindings",
-        "consumers": "Consumed by",
-        "dlq": "Dead-letter queue",
-        "producersCaption": "Publishers",
-        "module": "Module",
-        "routingKey": "Routing key"
-      },
-      "capabilities": {
-        "caption": "Capability routes (orazaka_capabilities)",
-        "capability": "Capability",
-        "handler": "Handler",
-        "routingKey": "Routing key"
-      }
-    },
-    "sections": {
-      "map": {
-        "kicker": "The real map",
-        "title": "Every module, in its ring.",
-        "sub": "{modules} modules read from the Maven reactor and the workspace manifest, grouped the way the hexagon is: clients outside, the domain core in the middle, contracts and the Krizaka kit underneath."
-      },
-      "pipeline": {
-        "kicker": "The pipeline",
-        "title": "What a turn goes through, in order.",
-        "sub": "{core} interceptors the code never lets you skip, then {configured} that the database orders and switches."
-      },
-      "messaging": {
-        "kicker": "Messaging",
-        "title": "Who talks to whom over RabbitMQ.",
-        "sub": "{queues} queues, each with its dead-letter queue. Bindings, publishers and consumers read from the code."
-      }
-    },
-    "journeys": {
-      "orazaka": {
-        "request": {
-          "name": "A request",
-          "summary": "From your question to the answer, through the modules that carry it."
-        }
-      },
-      "orochia": {
-        "playback": {
-          "name": "Playback",
-          "summary": "No raw video URL ever reaches the client.",
-          "steps": [
-            {
-              "title": "Asks to play",
-              "detail": "The player holds no media URL: it asks Orochia for one."
-            },
-            {
-              "title": "Access check",
-              "detail": "Public, contacts, followers or paid unlock: visibility is checked against contacts, follows and access grants."
-            },
-            {
-              "title": "Decision",
-              "detail": "No grant, no URL: the answer is a refusal or the paywall."
-            },
-            {
-              "title": "Signed URL · 300 s",
-              "detail": "An HMAC-SHA256 token bound to the video and its expiry: a shared link dies in five minutes."
-            },
-            {
-              "title": "4K HLS streaming",
-              "detail": "Segments come straight from Bunny's edge, never through the application servers."
-            }
-          ]
-        },
-        "unlock": {
-          "name": "Paid unlock",
-          "summary": "The client never says it paid: the gateway proves it.",
-          "steps": [
-            {
-              "title": "Asks to unlock",
-              "detail": "The buyer picks an amount and a configured gateway."
-            },
-            {
-              "title": "Payment intent",
-              "detail": "Buyer, creator, video and amount are recorded before any money moves."
-            },
-            {
-              "title": "Checkout page",
-              "detail": "The buyer goes to the provider's hosted page: Orochia never sees a card."
-            },
-            {
-              "title": "Payment",
-              "detail": "Only gateways whose credentials are all configured are offered."
-            },
-            {
-              "title": "Signed webhook",
-              "detail": "Signature verified in constant time over the raw body — no lenient mode."
-            },
-            {
-              "title": "Settled exactly once",
-              "detail": "Ledger credit and access grant in one transaction; a replayed webhook changes nothing."
-            }
-          ]
-        },
-        "upload": {
-          "name": "Upload",
-          "summary": "Heavy files never cross the web servers.",
-          "steps": [
-            {
-              "title": "Opens an upload",
-              "detail": "Only verified creators (18 U.S.C. § 2257 records) can open a session."
-            },
-            {
-              "title": "Creates the video",
-              "detail": "Orochia registers the video with Bunny Stream and signs a Tus session."
-            },
-            {
-              "title": "Signed Tus session",
-              "detail": "The studio receives the upload address and its signature, valid for this video only."
-            },
-            {
-              "title": "Resumable upload",
-              "detail": "The file goes straight to Bunny and resumes after a cut."
-            },
-            {
-              "title": "Encoding done",
-              "detail": "Bunny signals the end of transcoding with a signed webhook."
-            },
-            {
-              "title": "Ready to stream",
-              "detail": "The video becomes playable, under the visibility its creator chose."
-            }
-          ]
-        }
-      }
-    },
-    "sequence": {
-      "label": "Sequence",
-      "participants": "Participants",
-      "reply": "answers",
-      "internal": "inside {name}",
-      "if": "if {condition}",
-      "else": "otherwise: {condition}"
-    },
-    "states": {
-      "label": "State machine",
-      "start": "Start",
-      "end": "End",
-      "final": "final",
-      "initial": "starts here"
     }
   }
 }

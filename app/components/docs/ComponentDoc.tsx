@@ -11,12 +11,8 @@ import {
   componentHref,
   getRegistryIndex,
   getRegistryItem,
-  KIT_PACKAGES,
-  KIT_SOURCES,
-  type Kit,
   type Platform,
   type RegistryItem,
-  resolveReference,
 } from "@/lib/ui-registry";
 import { inventoryOf } from "@/lib/ui-inventory";
 import { CodeBlock, ExamplePreview, NativeExamplePreview } from "./ExamplePreview";
@@ -26,10 +22,7 @@ import { PropsTable } from "./PropsTable";
 /* A /docs/ui/<name> page, generated from the @krizaka/ui registry — the component's code drives every word of it:
    its meta.ts (summary, when to use and not, best practices, accessibility, platforms, status, related), its named
    examples (rendered live, code to copy, web and React Native) and the props of its types. The page chrome is in
-   messages; the documentation itself is English, as written in the code. Server Component.
-   The same page renders a component of a product kit (/docs/<product>/ui/<name>, `kit`): it adds why the component
-   exists above Krizaka UI, the @krizaka/ui primitives it is built on, its deprecation, and its examples wear the
-   kit's theme. */
+   messages; the documentation itself is English, as written in the code. Server Component. */
 
 const PLATFORM_ICON = { web: Monitor, native: Smartphone, both: MonitorSmartphone } satisfies Record<Platform, unknown>;
 
@@ -39,9 +32,8 @@ const WEB_CSS = `@import "tailwindcss";
 @import "@krizaka/ui/tailwind.css";`;
 const NATIVE_INSTALL = "npx expo install react-native-svg\nnpm install @krizaka/ui";
 
-/** Where the documentation of a component is written: its meta.ts in krizaka-ui, or in the product kit. */
-export function metaSourceUrl(item: RegistryItem, kit: Kit = "ui"): string {
-  if (kit !== "ui") return `${KIT_SOURCES[kit]}/${item.name}.meta.ts`;
+/** Where the documentation of a component is written: its meta.ts in krizaka-ui. */
+export function metaSourceUrl(item: RegistryItem): string {
   // Another package of Krizaka UI (@krizaka/charts) says where its meta is, from the repository root.
   if (item.source) return `${KRIZAKA_UI_REPO_URL}/blob/main/${item.source}`;
   const file = item.type === "native" ? `src/native/meta/${item.name}.ts` : item.name === "cn" ? "src/cn.meta.ts" : `src/${item.name}/meta.ts`;
@@ -49,11 +41,10 @@ export function metaSourceUrl(item: RegistryItem, kit: Kit = "ui"): string {
 }
 
 /** The table of contents of a component page, in the reader's language. */
-export function componentToc(name: string, t: TranslationDictionary, hasNotes: boolean, kit: Kit = "ui"): TOCItemType[] {
-  const item = getRegistryItem(name, kit);
+export function componentToc(name: string, t: TranslationDictionary, hasNotes: boolean): TOCItemType[] {
+  const item = getRegistryItem(name);
   const c = t.docs.component;
   const entries: [string, string | false][] = [
-    ["why", Boolean(item.why) && t.docs.kit.why],
     ["when-to-use", c.whenToUse],
     ["installation", c.installation],
     ["examples", item.web?.examples.length !== 0 && c.examples],
@@ -100,17 +91,14 @@ function PlatformTabs({ item, t, web, native }: { item: RegistryItem; t: Transla
   return <>{item.web ? web : native}</>;
 }
 
-export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: string; locale: Locale; notes?: ReactNode; kit?: Kit }) {
-  const item = getRegistryItem(name, kit);
+export async function ComponentDoc({ name, locale, notes }: { name: string; locale: Locale; notes?: ReactNode }) {
+  const item = getRegistryItem(name);
   const t = getDictionary(locale);
   const c = t.docs.component;
-  const k = t.docs.kit;
-  const index = getRegistryIndex(kit);
-  const ref = (other: string) => (kit === "ui" ? { kit, name: other } : resolveReference(other, kit));
-  const href = (other: string) => componentHref(locale, ref(other).kit, ref(other).name);
-  const titleOf = (other: string) => getRegistryItem(ref(other).name, ref(other).kit).title;
-  const inventory = kit === "ui" ? inventoryOf(item.name, item.status, item.deprecated) : null;
-  const kitWords = kit === "ui" ? undefined : { product: kit, package: KIT_PACKAGES[kit] };
+  const index = getRegistryIndex();
+  const href = (other: string) => componentHref(locale, other);
+  const titleOf = (other: string) => getRegistryItem(other).title;
+  const inventory = inventoryOf(item.name, item.status, item.deprecated);
 
   return (
     <>
@@ -119,10 +107,10 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
         <span className="kz-chip-meta">{c.categories[item.category]}</span>
       </div>
       <p className="kz-docs-note">
-        {kitWords ? format(k.platformLong, kitWords) : format(c.platformsLong[item.platforms], { entry: (item.platforms === "native" ? item.native?.entry : item.web?.entry) ?? `@krizaka/ui/${item.name}` })} {c.statusLong[item.status]}
+        {format(c.platformsLong[item.platforms], { entry: (item.platforms === "native" ? item.native?.entry : item.web?.entry) ?? `@krizaka/ui/${item.name}` })} {c.statusLong[item.status]}
       </p>
 
-      {kit === "ui" && inventory?.why && (
+      {inventory?.why && (
         <p className="kz-docs-note">
           <strong>{t.docs.ia.catalog.why}.</strong> {inventory.why}
         </p>
@@ -132,36 +120,17 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
         <div className="kz-deprecated not-prose" role="note">
           <strong>{c.status.deprecated}</strong>
           <span>
-            {format(k.deprecatedSince, { since: item.deprecated.since, removedIn: item.deprecated.removedIn })}
+            {format(c.deprecatedSince, { since: item.deprecated.since, removedIn: item.deprecated.removedIn })}
             {item.deprecated.reason && <> {item.deprecated.reason}</>}
             {item.deprecated.use && (
               <>
                 {" "}
-                {k.useInstead} <Link href={href(item.deprecated.use)}>{titleOf(item.deprecated.use)}</Link>
-                {ref(item.deprecated.use).kit === "ui" && <> ({k.fromKrizakaUi})</>}.
+                {c.useInstead} <Link href={href(item.deprecated.use)}>{titleOf(item.deprecated.use)}</Link>
+                .
               </>
             )}
           </span>
         </div>
-      )}
-
-      {item.why && (
-        <>
-          <h2 id="why">{k.why}</h2>
-          <p>
-            <InlineCode text={item.why} />
-          </p>
-          {item.builtOn && item.builtOn.length > 0 && (
-            <p className="kz-built-on not-prose">
-              <span>{k.builtOn}</span>
-              {item.builtOn.map((other) => (
-                <Link key={other} href={href(other)} className="kz-chip-meta" data-tone="accent">
-                  {titleOf(other)}
-                </Link>
-              ))}
-            </p>
-          )}
-        </>
       )}
 
       <div className="kz-when not-prose" id="when-to-use">
@@ -206,18 +175,13 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
           item.web && (
             <>
               <p>{c.install}</p>
-              <CodeBlock code={item.install?.web ?? index.install?.command ?? WEB_INSTALL} lang="bash" />
+              <CodeBlock code={item.install?.web ?? WEB_INSTALL} lang="bash" />
               {/* A package that carries its own styles (@krizaka/charts: an embedded stylesheet) needs no CSS line. */}
               {!item.install?.web && (
                 <>
                   <p>{c.styles}</p>
-                  <CodeBlock code={index.install?.css ?? WEB_CSS} lang="css" />
+                  <CodeBlock code={WEB_CSS} lang="css" />
                 </>
-              )}
-              {index.install?.note && (
-                <p className="kz-docs-note">
-                  <InlineCode text={index.install.note} />
-                </p>
               )}
               <p>{c.import}</p>
               <CodeBlock code={item.web.import} lang="tsx" />
@@ -249,7 +213,7 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
             <p>
               <InlineCode text={example.description} />
             </p>
-            <ExamplePreview title={item.title} example={example} locale={locale} kit={kit} />
+            <ExamplePreview title={item.title} example={example} locale={locale} />
           </section>
         ))}
         native={
@@ -349,14 +313,11 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
           <h2 id="related">{c.related}</h2>
           <ul className="kz-related not-prose">
             {item.related.map((other) => {
-              const related = getRegistryItem(ref(other).name, ref(other).kit);
+              const related = getRegistryItem(other);
               return (
                 <li key={other}>
                   <Link href={href(other)}>
-                    <span className="kz-related-title">
-                      {related.title}
-                      {kit !== "ui" && ref(other).kit === "ui" && <span className="kz-related-kit"> · {k.fromKrizakaUi}</span>}
-                    </span>
+                    <span className="kz-related-title">{related.title}</span>
                     <span className="kz-related-text">
                       <InlineCode text={related.summary} />
                     </span>
@@ -369,8 +330,8 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
       )}
 
       <p className="kz-component-source not-prose">
-        <span>{kitWords ? format(k.source, { package: kitWords.package, version: index.version }) : format(c.source, { version: index.version })}</span>
-        <a href={metaSourceUrl(item, kit)}>{c.edit}</a>
+        <span>{format(c.source, { version: index.version })}</span>
+        <a href={metaSourceUrl(item)}>{c.edit}</a>
       </p>
     </>
   );

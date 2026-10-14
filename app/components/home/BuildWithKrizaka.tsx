@@ -18,7 +18,7 @@ import { reveal } from "@/lib/motion";
 export default function BuildWithKrizaka({ locale }: { locale: string }) {
   const b = getDictionary(locale).site.home.build;
   const lang = isLocale(locale) ? locale : "en";
-  const items = getRegistryItems("ui");
+  const items = getRegistryItems();
   const figures = [
     { id: "components", value: items.length, label: b.facts.components },
     { id: "native", value: items.filter((i) => i.platforms !== "web").length, label: b.facts.native },
