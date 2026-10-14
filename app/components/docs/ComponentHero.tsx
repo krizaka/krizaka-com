@@ -67,7 +67,7 @@ export async function ComponentHero({ locale }: { locale: Locale }) {
                   alt={theme === "dark" ? `${phone.title}, ${getDictionary(locale).docs.component.platforms.native}` : ""}
                   aria-hidden={theme === "light" ? true : undefined}
                   {...pngSize(path.join(process.cwd(), "public", "ui-examples", file(theme)))}
-                  className={`kz-shot kz-shot-${theme}`}
+                  className={theme === "dark" ? "kz-shot kz-shot-dark" : "kz-shot kz-shot-light"}
                   priority={theme === "dark"}
                 />
               ))}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useMemo, useSyncExternalStore, type ReactNode } from "react";
 import { Monitor, MonitorSmartphone, Smartphone } from "lucide-react";
 import { format } from "@krizaka/i18n";
 import { FILTER_KEYS, JOBS, PATTERNS } from "@/lib/ui-ia";
@@ -37,28 +37,35 @@ function readFilters(search: string) {
   };
 }
 
+/** The address is the state: a store over `location.search` (server snapshot: no filter), so a filtered catalogue is a link
+    and hydration never differs. `replaceState` notifies the subscribers, because the browser does not. */
+const listeners = new Set<() => void>();
+const subscribe = (listener: () => void) => {
+  listeners.add(listener);
+  window.addEventListener("popstate", listener);
+  return () => {
+    listeners.delete(listener);
+    window.removeEventListener("popstate", listener);
+  };
+};
+const readSearch = () => window.location.search;
+const writeFilters = (filters: ReturnType<typeof readFilters>) => {
+  const params = new URLSearchParams();
+  if (filters.platform !== "all") params.set("platform", filters.platform);
+  if (filters.group !== "all") params.set("group", filters.group);
+  if (filters.status !== "all") params.set("status", filters.status);
+  if (filters.used !== "all") params.set("by", filters.used);
+  const query = params.toString();
+  window.history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
+  listeners.forEach((listener) => listener());
+};
+
 export function UiCatalog({ entries, usageDate }: { entries: CatalogEntry[]; usageDate: string }) {
   const { t } = useI18n();
   const c = t.docs.ia.catalog;
   const labels = t.docs.component;
-  const [filters, setFilters] = useState(() => readFilters(""));
-  const [ready, setReady] = useState(false);
-
-  // The address holds the filters: read once on arrival (after hydration), written on every change.
-  useEffect(() => {
-    setFilters(readFilters(window.location.search));
-    setReady(true);
-  }, []);
-  useEffect(() => {
-    if (!ready) return;
-    const params = new URLSearchParams();
-    if (filters.platform !== "all") params.set("platform", filters.platform);
-    if (filters.group !== "all") params.set("group", filters.group);
-    if (filters.status !== "all") params.set("status", filters.status);
-    if (filters.used !== "all") params.set("by", filters.used);
-    const query = params.toString();
-    window.history.replaceState(null, "", `${window.location.pathname}${query ? `?${query}` : ""}${window.location.hash}`);
-  }, [filters, ready]);
+  const search = useSyncExternalStore(subscribe, readSearch, () => "");
+  const filters = useMemo(() => readFilters(search), [search]);
 
   const shown = useMemo(
     () =>
@@ -71,7 +78,7 @@ export function UiCatalog({ entries, usageDate }: { entries: CatalogEntry[]; usa
       ),
     [entries, filters],
   );
-  const set = <K extends keyof typeof filters>(key: K, value: (typeof filters)[K]) => setFilters((all) => ({ ...all, [key]: value }));
+  const set = <K extends keyof typeof filters>(key: K, value: (typeof filters)[K]) => writeFilters({ ...filters, [key]: value });
   const filtered = Object.values(filters).some((value) => value !== "all");
 
   const sectionTitle = (key: string) => (JOBS as readonly string[]).includes(key) ? t.docs.ia.jobs[key as (typeof JOBS)[number]] : (PATTERNS as readonly string[]).includes(key) ? t.docs.ia.patterns[key as (typeof PATTERNS)[number]] : t.docs.ia.groups.templates;
@@ -87,7 +94,18 @@ export function UiCatalog({ entries, usageDate }: { entries: CatalogEntry[]; usa
     </div>
   );
 
-  let lastParent = "";
+  const firstOfParent = new Set<string>();
+  {
+    const seen = new Set<string>();
+    for (const key of FILTER_KEYS) {
+      if (!shown.some((entry) => entry.group === key)) continue;
+      const group = parent(key);
+      if (!seen.has(group)) {
+        seen.add(group);
+        firstOfParent.add(key);
+      }
+    }
+  }
   return (
     <section className="kz-catalog not-prose" aria-labelledby="catalog-title">
       <h2 id="catalog-title" className="sr-only">
@@ -117,7 +135,7 @@ export function UiCatalog({ entries, usageDate }: { entries: CatalogEntry[]; usa
         <p className="kz-catalog-count" aria-live="polite">
           {format(c.count, { count: shown.length, total: entries.length })}{" "}
           {filtered && (
-            <button type="button" className="kz-catalog-clear" onClick={() => setFilters(readFilters(""))}>
+            <button type="button" className="kz-catalog-clear" onClick={() => writeFilters(readFilters(""))}>
               {c.clear}
             </button>
           )}
@@ -129,7 +147,7 @@ export function UiCatalog({ entries, usageDate }: { entries: CatalogEntry[]; usa
         if (items.length === 0) return null;
         const words = sectionTitle(key);
         const group = parent(key);
-        const heading = group !== lastParent ? (lastParent = group) : null;
+        const heading = firstOfParent.has(key) ? group : null;
         return (
           <div key={key} className="kz-catalog-group">
             {heading && <h3 className="kz-catalog-parent">{t.docs.ia.groups[group].title}</h3>}
