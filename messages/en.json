@@ -399,7 +399,7 @@
           },
           "demo": {
             "label": "Demo",
-            "desc": "With the first build"
+            "desc": "A phone that plays the loop"
           },
           "signature": {
             "label": "Mutual batches",
@@ -1574,6 +1574,239 @@
         "api": "yazakia · the API",
         "mobile": "yazakia-mobile · the app",
         "reposLabel": "The Yazakia repositories"
+      },
+      "demo": {
+        "eyebrow": "Try the loop",
+        "title": "Play the loop on a phone",
+        "lead": "Talk to the agent, read your portrait, answer the debrief, open a batch, meet someone. Every screen is a component of Krizaka UI; the replies are scripted and the people invented.",
+        "phoneLabel": "Yazakia, played on a phone",
+        "stepsLabel": "The steps of the demo",
+        "stepsLead": "The same loop in words, whatever you can or cannot see on the phone.",
+        "stepOf": "Step {n} of {total}",
+        "now": "You are here",
+        "done": "Done",
+        "announce": "{step}. {title}",
+        "restart": "Play again",
+        "note": "Scripted replies and invented people. The real agent runs on Orazaka, on your own data, and nothing here is saved.",
+        "steps": {
+          "talk": {
+            "title": "Talk first",
+            "text": "The agent asks one question at a time and answers in a few words. Pick a quick reply or write your own, then read the portrait it draws of you."
+          },
+          "debrief": {
+            "title": "Debrief",
+            "text": "Three quick questions, in chips. They unlock the next batch and change what the agent looks for."
+          },
+          "batch": {
+            "title": "A batch, not a catalogue",
+            "text": "Three people who could want you back, each with the reason in words. Like or pass; a like that is mutual opens the intro."
+          },
+          "intro": {
+            "title": "The intro",
+            "text": "Seven days to talk. The agent whispers a first line to you, then steps back."
+          }
+        },
+        "you": "You",
+        "agent": "Your agent",
+        "typing": "Your agent is typing",
+        "composer": "Or write your own answer",
+        "send": "Send",
+        "quickReplies": "Quick replies",
+        "talk": {
+          "turns": [
+            {
+              "ask": "Hi, I am your agent. I will ask a few questions, one at a time. First: what does a good Sunday look like?",
+              "choices": [
+                {
+                  "label": "Slow, at home",
+                  "trait": "Slow weekends",
+                  "reply": "Slow Sundays, noted. A home that feels like a home."
+                },
+                {
+                  "label": "Out all day",
+                  "trait": "Out all day",
+                  "reply": "Out all day, noted. Someone who keeps up."
+                },
+                {
+                  "label": "Depends on the week",
+                  "trait": "Easygoing weekends",
+                  "reply": "Depends on the week, noted. Flexible beats planned."
+                }
+              ]
+            },
+            {
+              "ask": "At the start, what matters more: humour or depth?",
+              "choices": [
+                {
+                  "label": "Humour",
+                  "trait": "Humour first",
+                  "reply": "Humour first. I will look for people who make you laugh."
+                },
+                {
+                  "label": "Depth",
+                  "trait": "Depth first",
+                  "reply": "Depth first. I will look for people who ask the second question."
+                },
+                {
+                  "label": "Both, in turns",
+                  "trait": "Humour and depth",
+                  "reply": "Both, in turns. That is a short list, and a good one."
+                }
+              ]
+            },
+            {
+              "ask": "Last one: where do you draw the line?",
+              "choices": [
+                {
+                  "label": "Honesty",
+                  "trait": "Honest above all",
+                  "reply": "Honesty. I will not show you anyone who dodges it."
+                },
+                {
+                  "label": "Kids",
+                  "trait": "Clear about kids",
+                  "reply": "Kids, noted. We settle that before anything else."
+                },
+                {
+                  "label": "Distance",
+                  "trait": "Close by",
+                  "reply": "Distance, noted. Close by it is, for now."
+                }
+              ]
+            }
+          ],
+          "free": "Noted, in your words. I will keep it.",
+          "closing": "That is enough to start. Here is your portrait. Correct anything that is off.",
+          "toPortrait": "See my portrait"
+        },
+        "portrait": {
+          "title": "Your portrait",
+          "lead": "Who you are and who you are looking for, in your own words. Remove what is not right.",
+          "traitsLabel": "What your agent understood",
+          "remove": "Remove {trait}",
+          "progressLabel": "What your agent knows about you",
+          "progressText": "Enough to open a batch",
+          "noScore": "No score, no rank. Only what you said.",
+          "next": "Continue to the debrief"
+        },
+        "debrief": {
+          "title": "Debrief before the next batch",
+          "lead": "Three quick questions unlock it, and they change what your agent looks for.",
+          "questions": [
+            {
+              "label": "How was the pace?",
+              "options": [
+                "Too fast",
+                "Just right",
+                "Too slow"
+              ]
+            },
+            {
+              "label": "What was missing?",
+              "options": [
+                "Humour",
+                "Depth",
+                "Nothing"
+              ]
+            },
+            {
+              "label": "How far is too far?",
+              "options": [
+                "A walk",
+                "A train ride",
+                "I do not mind"
+              ]
+            }
+          ],
+          "progress": "{n} of 3 answered",
+          "reshaped": "Noted: your answers reshape the portrait. Each batch is fairer than the one before.",
+          "unlock": "Unlock my next batch"
+        },
+        "loading": {
+          "label": "Looking for people who could want you back",
+          "region": "Your batch is being prepared",
+          "show": "Show my batch"
+        },
+        "deck": {
+          "title": "Your batch",
+          "lead": "Three people, 72 hours. No catalogue to scroll.",
+          "why": "Why you two",
+          "verified": "Verified",
+          "away": "{km} km away",
+          "labels": {
+            "like": "Like",
+            "pass": "Pass",
+            "deck": "Profiles. Right arrow to like, left arrow to pass.",
+            "likeStamp": "Like",
+            "passStamp": "Pass"
+          },
+          "decided": "{name}: {decision}",
+          "liked": "liked",
+          "passed": "passed",
+          "people": {
+            "ines": {
+              "name": "Inès",
+              "why": "You both want slow weekends, and you both say what you mean.",
+              "tags": [
+                "Cooking",
+                "Hiking"
+              ],
+              "whisper": "Ask Inès what she cooks when nobody is coming."
+            },
+            "kofi": {
+              "name": "Kofi",
+              "why": "You both put humour first, and you live ten minutes apart.",
+              "tags": [
+                "Photo",
+                "Jazz"
+              ],
+              "whisper": "Ask Kofi about the photo he is proudest of."
+            },
+            "hana": {
+              "name": "Hana",
+              "why": "You both draw the line at honesty, and you both travel light.",
+              "tags": [
+                "Ceramics",
+                "Travel"
+              ],
+              "whisper": "Ask Hana which city she would go back to first."
+            }
+          },
+          "empty": {
+            "title": "That was the batch",
+            "body": "Nobody mutual this time. Your agent keeps looking and opens the next batch after your debrief.",
+            "again": "Play the batch again",
+            "intro": "Open my intro with {name}"
+          }
+        },
+        "match": {
+          "title": "It is mutual",
+          "description": "{name} wants to meet you too. Your seven-day intro starts now.",
+          "primary": "Start the intro",
+          "secondary": "Keep looking",
+          "me": "You"
+        },
+        "intro": {
+          "title": "Your intro with {name}",
+          "lead": "Seven days to talk. Your agent steps back.",
+          "countdown": "Your intro ends in",
+          "units": {
+            "d": "d",
+            "h": "h",
+            "m": "m",
+            "s": "s"
+          },
+          "whisperLabel": "Only you can read this",
+          "rule": "I introduced you, and I leave the room. What you say to each other belongs to you.",
+          "composer": "Write to {name}",
+          "sent": "Sent",
+          "keep": "Carry on together, or let it fade: you choose on day seven."
+        },
+        "native": {
+          "title": "The same loop, on an iPhone",
+          "caption": "Recorded on the simulator with the native components of Krizaka UI: the same steps, the same words. About 30 seconds, on a loop.",
+          "alt": "The Yazakia loop on an iPhone: the agent's chat, the portrait, the debrief, the batch, the match and the intro."
+        }
       }
     },
     "yororis": {

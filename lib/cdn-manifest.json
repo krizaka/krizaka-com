@@ -85,12 +85,12 @@
     "home/kit-native/orochia-light.jpg": "e4dfa6dba4",
     "home/kit-native/orochia-light.mp4": "86bbf09ef6",
     "home/kit-native/orochia-light.webm": "39b8ee74f2",
-    "home/kit-native/yazakia-dark.jpg": "f15cdd4403",
-    "home/kit-native/yazakia-dark.mp4": "2f63b6e22c",
-    "home/kit-native/yazakia-dark.webm": "89f14b1287",
-    "home/kit-native/yazakia-light.jpg": "bae21bc61d",
-    "home/kit-native/yazakia-light.mp4": "70e4670e80",
-    "home/kit-native/yazakia-light.webm": "ad99374ce7",
+    "home/kit-native/yazakia-dark.jpg": "bf06685df4",
+    "home/kit-native/yazakia-dark.mp4": "30db3cf7ee",
+    "home/kit-native/yazakia-dark.webm": "fc48629c83",
+    "home/kit-native/yazakia-light.jpg": "69d8eda18b",
+    "home/kit-native/yazakia-light.mp4": "a015605c8d",
+    "home/kit-native/yazakia-light.webm": "589b6a7233",
     "home/kit-native/yororis-dark.jpg": "e27c011897",
     "home/kit-native/yororis-dark.mp4": "0a78595518",
     "home/kit-native/yororis-dark.webm": "352796815a",
@@ -213,6 +213,12 @@
     "products/orochia/tour/elena-story.webm": "1204e33a8f",
     "products/orochia/tour/showcase.jpg": "9e87cf7e04",
     "products/orochia/tour/showcase.mp4": "32ef6c97d8",
-    "products/orochia/tour/showcase.webm": "734760d782"
+    "products/orochia/tour/showcase.webm": "734760d782",
+    "products/yazakia/mobile/loop-dark.jpg": "5d28044384",
+    "products/yazakia/mobile/loop-dark.mp4": "46dbace273",
+    "products/yazakia/mobile/loop-dark.webm": "2363eef75c",
+    "products/yazakia/mobile/loop-light.jpg": "cfa997d782",
+    "products/yazakia/mobile/loop-light.mp4": "e322233382",
+    "products/yazakia/mobile/loop-light.webm": "b36a7ba93c"
   }
 }

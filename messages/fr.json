@@ -399,7 +399,7 @@
           },
           "demo": {
             "label": "Démo",
-            "desc": "Avec la première version"
+            "desc": "Un téléphone qui joue la boucle"
           },
           "signature": {
             "label": "Lots réciproques",
@@ -1574,6 +1574,239 @@
         "api": "yazakia · l'API",
         "mobile": "yazakia-mobile · l'app",
         "reposLabel": "Les dépôts de Yazakia"
+      },
+      "demo": {
+        "eyebrow": "Essayez la boucle",
+        "title": "Jouez la boucle sur un téléphone",
+        "lead": "Parlez à l'agent, lisez votre portrait, répondez au débrief, ouvrez un lot, rencontrez quelqu'un. Chaque écran est un composant de Krizaka UI ; les réponses sont écrites d'avance et les personnes inventées.",
+        "phoneLabel": "Yazakia, jouée sur un téléphone",
+        "stepsLabel": "Les étapes de la démo",
+        "stepsLead": "La même boucle en mots, que vous voyiez ou non le téléphone.",
+        "stepOf": "Étape {n} sur {total}",
+        "now": "Vous êtes ici",
+        "done": "Fait",
+        "announce": "{step}. {title}",
+        "restart": "Rejouer",
+        "note": "Réponses écrites d'avance et personnes inventées. Le vrai agent tourne sur Orazaka, avec vos propres données, et rien n'est enregistré ici.",
+        "steps": {
+          "talk": {
+            "title": "Parler d'abord",
+            "text": "L'agent pose une question à la fois et répond en quelques mots. Choisissez une réponse rapide ou écrivez la vôtre, puis lisez le portrait qu'il fait de vous."
+          },
+          "debrief": {
+            "title": "Le débrief",
+            "text": "Trois questions rapides, en puces. Elles débloquent le prochain lot et changent ce que l'agent cherche."
+          },
+          "batch": {
+            "title": "Un lot, pas un catalogue",
+            "text": "Trois personnes qui pourraient vous désirer en retour, chacune avec sa raison en mots. Intéressé ou non ; un intérêt réciproque ouvre l'intro."
+          },
+          "intro": {
+            "title": "L'intro",
+            "text": "Sept jours pour se parler. L'agent vous souffle une première phrase, puis s'efface."
+          }
+        },
+        "you": "Vous",
+        "agent": "Votre agent",
+        "typing": "Votre agent écrit",
+        "composer": "Ou écrivez votre réponse",
+        "send": "Envoyer",
+        "quickReplies": "Réponses rapides",
+        "talk": {
+          "turns": [
+            {
+              "ask": "Bonjour, je suis votre agent. Je vais vous poser quelques questions, une à la fois. D'abord : à quoi ressemble un bon dimanche ?",
+              "choices": [
+                {
+                  "label": "Calme, à la maison",
+                  "trait": "Week-ends calmes",
+                  "reply": "Dimanches calmes, noté. Un chez-soi qui ressemble à un chez-soi."
+                },
+                {
+                  "label": "Dehors toute la journée",
+                  "trait": "Dehors toute la journée",
+                  "reply": "Dehors toute la journée, noté. Quelqu'un qui suit le rythme."
+                },
+                {
+                  "label": "Ça dépend de la semaine",
+                  "trait": "Week-ends souples",
+                  "reply": "Ça dépend de la semaine, noté. Souple vaut mieux que planifié."
+                }
+              ]
+            },
+            {
+              "ask": "Au début, qu'est-ce qui compte le plus : l'humour ou la profondeur ?",
+              "choices": [
+                {
+                  "label": "L'humour",
+                  "trait": "L'humour d'abord",
+                  "reply": "L'humour d'abord. Je chercherai des gens qui vous font rire."
+                },
+                {
+                  "label": "La profondeur",
+                  "trait": "La profondeur d'abord",
+                  "reply": "La profondeur d'abord. Je chercherai des gens qui posent la deuxième question."
+                },
+                {
+                  "label": "Les deux, à tour de rôle",
+                  "trait": "Humour et profondeur",
+                  "reply": "Les deux, à tour de rôle. La liste est courte, et bonne."
+                }
+              ]
+            },
+            {
+              "ask": "Dernière question : où placez-vous la limite ?",
+              "choices": [
+                {
+                  "label": "L'honnêteté",
+                  "trait": "L'honnêteté avant tout",
+                  "reply": "L'honnêteté. Je ne vous montrerai personne qui l'esquive."
+                },
+                {
+                  "label": "Les enfants",
+                  "trait": "Clair sur les enfants",
+                  "reply": "Les enfants, noté. On règle ça avant tout le reste."
+                },
+                {
+                  "label": "La distance",
+                  "trait": "Tout près",
+                  "reply": "La distance, noté. Tout près, pour l'instant."
+                }
+              ]
+            }
+          ],
+          "free": "Noté, avec vos mots. Je le garde.",
+          "closing": "C'est assez pour commencer. Voici votre portrait. Corrigez ce qui n'est pas juste.",
+          "toPortrait": "Voir mon portrait"
+        },
+        "portrait": {
+          "title": "Votre portrait",
+          "lead": "Qui vous êtes et qui vous cherchez, avec vos mots. Retirez ce qui n'est pas juste.",
+          "traitsLabel": "Ce que votre agent a compris",
+          "remove": "Retirer {trait}",
+          "progressLabel": "Ce que votre agent sait de vous",
+          "progressText": "Assez pour ouvrir un lot",
+          "noScore": "Pas de note, pas de classement. Seulement ce que vous avez dit.",
+          "next": "Continuer vers le débrief"
+        },
+        "debrief": {
+          "title": "Débrief avant le prochain lot",
+          "lead": "Trois questions rapides le débloquent, et elles changent ce que votre agent cherche.",
+          "questions": [
+            {
+              "label": "Comment était le rythme ?",
+              "options": [
+                "Trop rapide",
+                "Juste bien",
+                "Trop lent"
+              ]
+            },
+            {
+              "label": "Qu'est-ce qui manquait ?",
+              "options": [
+                "L'humour",
+                "La profondeur",
+                "Rien"
+              ]
+            },
+            {
+              "label": "À partir de quelle distance est-ce trop loin ?",
+              "options": [
+                "Une promenade",
+                "Un trajet en train",
+                "Peu importe"
+              ]
+            }
+          ],
+          "progress": "{n} sur 3 répondues",
+          "reshaped": "Noté : vos réponses remodèlent le portrait. Chaque lot est plus juste que le précédent.",
+          "unlock": "Débloquer mon prochain lot"
+        },
+        "loading": {
+          "label": "Recherche de personnes qui pourraient vous désirer en retour",
+          "region": "Votre lot se prépare",
+          "show": "Voir mon lot"
+        },
+        "deck": {
+          "title": "Votre lot",
+          "lead": "Trois personnes, 72 heures. Pas de catalogue à faire défiler.",
+          "why": "Pourquoi vous deux",
+          "verified": "Vérifié",
+          "away": "à {km} km",
+          "labels": {
+            "like": "Intéressé",
+            "pass": "Passer",
+            "deck": "Profils. Flèche droite pour être intéressé, flèche gauche pour passer.",
+            "likeStamp": "Intéressé",
+            "passStamp": "Passer"
+          },
+          "decided": "{name} : {decision}",
+          "liked": "intéressé",
+          "passed": "passé",
+          "people": {
+            "ines": {
+              "name": "Inès",
+              "why": "Vous voulez des week-ends calmes, et vous dites ce que vous pensez.",
+              "tags": [
+                "Cuisine",
+                "Randonnée"
+              ],
+              "whisper": "Demandez à Inès ce qu'elle cuisine quand personne ne vient."
+            },
+            "kofi": {
+              "name": "Kofi",
+              "why": "Vous mettez l'humour d'abord, et vous habitez à dix minutes de distance.",
+              "tags": [
+                "Photo",
+                "Jazz"
+              ],
+              "whisper": "Demandez à Kofi quelle est la photo dont il est le plus fier."
+            },
+            "hana": {
+              "name": "Hana",
+              "why": "Vous placez la limite à l'honnêteté, et vous voyagez léger.",
+              "tags": [
+                "Céramique",
+                "Voyage"
+              ],
+              "whisper": "Demandez à Hana dans quelle ville elle retournerait en premier."
+            }
+          },
+          "empty": {
+            "title": "Le lot est terminé",
+            "body": "Personne de réciproque cette fois. Votre agent continue de chercher et ouvre le prochain lot après votre débrief.",
+            "again": "Rejouer le lot",
+            "intro": "Ouvrir mon intro avec {name}"
+          }
+        },
+        "match": {
+          "title": "C'est réciproque",
+          "description": "{name} veut aussi vous rencontrer. Votre intro de sept jours commence maintenant.",
+          "primary": "Commencer l'intro",
+          "secondary": "Continuer à chercher",
+          "me": "Vous"
+        },
+        "intro": {
+          "title": "Votre intro avec {name}",
+          "lead": "Sept jours pour se parler. Votre agent s'efface.",
+          "countdown": "Votre intro se termine dans",
+          "units": {
+            "d": "j",
+            "h": "h",
+            "m": "min",
+            "s": "s"
+          },
+          "whisperLabel": "Vous seul pouvez le lire",
+          "rule": "Je vous ai présentés, et je quitte la pièce. Ce que vous vous dites vous appartient.",
+          "composer": "Écrire à {name}",
+          "sent": "Envoyé",
+          "keep": "Continuer ensemble ou laisser filer : vous choisissez au septième jour."
+        },
+        "native": {
+          "title": "La même boucle, sur un iPhone",
+          "caption": "Enregistrée sur le simulateur avec les composants natifs de Krizaka UI : les mêmes étapes, les mêmes mots. Environ 30 secondes, en boucle.",
+          "alt": "La boucle Yazakia sur un iPhone : la discussion avec l'agent, le portrait, le débrief, le lot, la réciprocité et l'intro."
+        }
       }
     },
     "yororis": {
