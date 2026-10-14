@@ -6,8 +6,6 @@ import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
 import { DOCS_SECTIONS, getPageTree, type DocsSection } from "@/lib/docs-source";
 import { asLocale, getDictionary } from "@/lib/i18n";
-// The scope of a kit's live examples (generated; the product kits are documented on the products' sites).
-import "@/app/components/docs/kit-themes.css";
 
 export const dynamicParams = false;
 

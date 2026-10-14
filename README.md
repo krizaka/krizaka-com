@@ -62,7 +62,7 @@ one schema component for every product (`app/components/diagrams/`, no diagram l
 | Path | Role |
 |---|---|
 | `app/[locale]/` | All routes; `[locale]` is `en` (default) or `fr` (Québec). `layout.tsx` wires fonts, theme, i18n, the sitewide JSON-LD graph and base metadata. |
-| `app/components/` | UI. Big ones: `TopNavBar`, `home/ProductCards` (one card per product), `diagrams/` (module map for Krizaka Java, pipeline, sequences, state machines), `docs/`. |
+| `app/components/` | UI. Big ones: `TopNavBar`, `home/ProductCards` (one card per product), `diagrams/` (the module map of Krizaka Java), `docs/`. |
 | `app/robots.ts` · `app/sitemap.ts` · `app/manifest.ts` | SEO route handlers. |
 | `app/data/architecture.json` · `orochia-architecture.json` | **Generated** module graphs + repository maps (read-only): Krizaka Java's building blocks and the open-source repository lists. |
 | `proxy.ts` | Edge middleware (Next 16 name): no-locale URL → `/en` by default, `/fr` when the `NEXT_LOCALE` cookie says so; a `/fr` or `/en` page sets that cookie. |

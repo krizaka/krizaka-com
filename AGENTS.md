@@ -74,7 +74,7 @@
 - **Never** choose a text with `locale === "fr" ? … : …` (or `isFr ? …`): ESLint refuses it. Only
   routing code (`proxy.ts`, `lib/i18n.ts`, `lib/seo.ts`, the locale layout) compares locales.
 - Data modules keep **structure** (ids, links, colors, endpoints); their words are messages keyed by
-  the same ids (e.g. `site.nav.<product>.links.<id>`, `diagrams.journeys.<product>.<id>`). Long,
+  the same ids (e.g. `site.nav.<product>.links.<id>`). Long,
   structured content collections (`lib/use-cases-data.ts`) may hold
   `{ fr, en }` fields read with the locale key — never with a ternary.
 
@@ -84,7 +84,8 @@
   (`content/docs/ui`, `content/docs/java`). The products document themselves on their sites; the **product kit** docs
   (`/docs/<product>/ui`, generated from `@krizaka/orazaka-design-system` / `@krizaka/orochia-design-system`) went with
   them — those kits are documented where the products live, and the two packages are no longer dependencies here
-  (`scripts/gen-ui-docs.mjs` `KITS` lists only Krizaka UI; the kit-reading code stays for a kit that returns).
+  (`scripts/gen-ui-docs.mjs` `PACKAGES` lists only Krizaka UI's; `lib/ui-registry.ts`, `ComponentDoc` and
+  `ExamplePreview` know no kit — no `kit` parameter, no `kit-themes.css`: a kit that returns is documented where it lives).
 - **The code drives `/docs/ui`.** One page per component of the **published `@krizaka/ui` registry**, generated at
   every build (virtual pages in `lib/docs-source.ts`, rendered by `ComponentDoc`): summary, platforms (Web · Mobile ·
   both), status, when to use / not, installation, every named example (web: live + code; React Native: its story's
@@ -96,7 +97,7 @@
   by platform). A new `@krizaka/ui` arrives as a Dependabot pull request (`.github/dependabot.yml`): merge it when CI
   is green — nothing else to regenerate.
 - **Krizaka UI is several packages, one catalogue.** `/docs/ui` reads the registries of `@krizaka/ui` **and
-  `@krizaka/charts`** (`UI_PACKAGES` in `lib/ui-registry.ts`, `KITS` with `part: "ui"` in `scripts/gen-ui-docs.mjs`):
+  `@krizaka/charts`** (`UI_PACKAGES` in `lib/ui-registry.ts`, `PACKAGES` in `scripts/gen-ui-docs.mjs`):
   the charts are the `charts` category, their install line and source link come from each item (`install`, `source`).
   An ECharts chart loads its engine on its own page only (dynamic import in the package).
 - **The foundations are generated too.** `/docs/ui/typography` and `/docs/ui/icons` are virtual pages
@@ -140,28 +141,25 @@
 ## 4. Visualizations
 
 - **One way to see an architecture.** `ModuleMap` (`app/components/diagrams/`) draws the generated model of Krizaka Java
-  (`architecture.json` · `buildingBlocks`, from the POMs) on `/docs/java` (the component still reads the Orazaka and
-  Orochia models, which no page draws any more): one band per role, chips with their owner and version, a
-  Dependencies / Runtime calls toggle (requests solid, events dashed), the owner filter, search, selection that lights
-  *uses / used by* or *calls / called by*, and journeys (`lib/journeys.ts`, checked against the model at build time).
-  There is no other architecture drawing (no floating nodes, no graph library).
-- `lib/architecture-model.ts` checks the shape of each model at build time (roles, modules, relations, flow kinds, the
-  words of every role); a fact the map lacks is added to the product's **generator**, never to the site.
-- With it, the same visual language (chip, 11px radius, a rail in the group colour, `--dg-<group>` with an AA `-ink`
-  variant, the domain core in the page's brand accent): `InterceptorPipeline`, `SequenceDiagram`
-  (numbered steps by phase, participants as chips) and `StateDiagram` (one card per state, in reading order).
-  2D, labels in full — a schema whose labels need zooming is not done.
-- **Docs ask for a schema with a fenced block** (`lib/remark-diagrams.ts`): ` ```architecture ` (`product`, `focus`,
-  `mode` build|runtime|journey, `journey`, `owner`), ` ```pipeline `, ` ```sequence ` (participants — `@module` ids are
-  checked against the model — then `a -> b: …` / `a --> b: …`, `## phase`, `if … / else … / end`) and ` ```states `
-  (`enum: <pg enum>` checks every state against the Orochia schema). In MDX: `<ArchitectureView product="orazaka"
-  focus="krizaka-billing-service" mode="runtime" />`. Blocks are written in the docs themselves (`content/docs/**`).
+  (`architecture.json` · `buildingBlocks`, from the POMs) on `/docs/java` — and only that: the Orazaka and Orochia
+  models, their journeys, the interceptor pipeline, the messaging topology, sequence and state diagrams went with the
+  product pages (they live on the products' sites). One band per role, chips with their version, a Dependencies /
+  Runtime calls toggle (requests solid, events dashed), search, and selection that lights *uses / used by* or
+  *calls / called by*. There is no other architecture drawing (no floating nodes, no graph library).
+- `lib/architecture-model.ts` checks the shape of the model at build time (roles, modules, relations, the words of
+  every role); a fact the map lacks is added to the **generator**, never to the site.
+- The same visual language (chip, 11px radius, a rail in the group colour, `--dg-<group>` with an AA `-ink` variant) —
+  2D, labels in full: a schema whose labels need zooming is not done.
+- **Docs ask for the map with a fenced block** (`lib/remark-diagrams.ts`): ` ```architecture ` (`product: java`, `focus`,
+  `mode` build|runtime, `owner`); in MDX: `<ArchitectureView product="java" focus="krizaka-security" mode="build" />`.
+  Blocks are written in the docs themselves (`content/docs/**`). A new kind of schema is added to krizaka-ui or the
+  docs engine only when a page here draws it.
 - **Mermaid is retired**, with no fallback: never rendered in the browser, never shipped (`mermaid` is not a dependency),
   and a ` ```mermaid ` fence in a published doc fails the build. (Unpublished
   internal design notes of the product repositories may still hold some; they never reach the site — converting one is
   part of publishing it.)
 - Every schema reads correctly at phone width (one column, top to bottom), works with the keyboard,
-  honours `prefers-reduced-motion` (a journey never plays by itself then), and carries a **text version** (tables or
+  honours `prefers-reduced-motion`, and carries a **text version** (tables or
   ordered lists) of everything it draws.
 - **Motion is one system — @krizaka/ui's.** `MotionObserver` (`@krizaka/ui/motion`) is mounted once in the locale
   layout: blocks arrive once with `reveal(i)` (`lib/motion.ts` → `[data-reveal]`, staggered 70 ms; `reveal(i, "soft")`

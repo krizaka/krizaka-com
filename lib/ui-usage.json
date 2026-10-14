@@ -1,11 +1,11 @@
 {
-  "scannedAt": "2026-10-13",
+  "scannedAt": "2026-10-14",
   "repos": {
     "orochia": [
       {
         "repo": "products/orochia",
-        "commit": "41d487c",
-        "files": 368
+        "commit": "6e73704",
+        "files": 378
       },
       {
         "repo": "products/orochia-admin",
@@ -14,7 +14,7 @@
       },
       {
         "repo": "products/orochia-mobile",
-        "commit": "e1f3143",
+        "commit": "63047bd",
         "files": 50
       },
       {
@@ -26,8 +26,8 @@
     "orazaka": [
       {
         "repo": "products/orazaka/orazaka-apps/ui/orazaka-web-client",
-        "commit": "53629b1",
-        "files": 250
+        "commit": "b1040bd",
+        "files": 266
       },
       {
         "repo": "products/orazaka/orazaka-apps/ui/orazaka-web-admin",
@@ -55,8 +55,8 @@
     "krizaka": [
       {
         "repo": ".",
-        "commit": "8775843",
-        "files": 201
+        "commit": "7edd299",
+        "files": 143
       }
     ]
   },
@@ -65,19 +65,19 @@
       "krizaka": 1
     },
     "action-bar": {
-      "krizaka": 4
+      "krizaka": 2
     },
     "alert": {
       "orazaka": 3
     },
     "argument-card": {
-      "krizaka": 6
+      "krizaka": 1
     },
     "avatar": {
       "orochia": 7
     },
     "badge": {
-      "krizaka": 3,
+      "krizaka": 1,
       "orazaka": 15,
       "orochia": 6
     },
@@ -87,17 +87,17 @@
     },
     "button": {
       "krizaka": 10,
-      "orazaka": 61,
+      "orazaka": 63,
       "orochia": 19,
       "yazakia": 3
     },
     "card": {
-      "krizaka": 3,
+      "krizaka": 1,
       "orazaka": 43,
       "orochia": 8
     },
     "card-grid": {
-      "krizaka": 8
+      "krizaka": 2
     },
     "catalogue-page": {
       "krizaka": 1
@@ -107,10 +107,10 @@
       "orochia": 2
     },
     "chat": {
-      "krizaka": 2
+      "krizaka": 1
     },
     "chip": {
-      "krizaka": 3,
+      "krizaka": 2,
       "orazaka": 2,
       "orochia": 3
     },
@@ -121,12 +121,12 @@
       "krizaka": 2
     },
     "cn": {
-      "krizaka": 19,
+      "krizaka": 13,
       "orazaka": 44,
       "orochia": 4
     },
     "code-block": {
-      "krizaka": 6
+      "krizaka": 3
     },
     "command": {
       "krizaka": 1,
@@ -139,18 +139,19 @@
       "krizaka": 1
     },
     "countdown": {
-      "krizaka": 2,
+      "krizaka": 1,
       "orochia": 5
     },
     "cta-panel": {
-      "krizaka": 10
+      "krizaka": 3
     },
     "data-table": {
+      "krizaka": 1,
       "orazaka": 1,
       "orochia": 1
     },
     "decision-list": {
-      "krizaka": 5
+      "krizaka": 1
     },
     "dialog": {
       "orazaka": 7,
@@ -177,16 +178,13 @@
       "orochia": 2
     },
     "glow-card": {
-      "krizaka": 3,
+      "krizaka": 1,
       "orazaka": 2
     },
     "goal-gauge": {
-      "krizaka": 2
-    },
-    "image-cropper": {
       "krizaka": 1
     },
-    "iso": {
+    "image-cropper": {
       "krizaka": 1
     },
     "kbd": {
@@ -200,10 +198,11 @@
       "krizaka": 1
     },
     "line-chart": {
+      "krizaka": 1,
       "orochia": 2
     },
     "link-card": {
-      "krizaka": 4
+      "krizaka": 1
     },
     "loader": {
       "krizaka": 1,
@@ -218,43 +217,42 @@
       "orochia": 1
     },
     "mascot-quote": {
-      "krizaka": 7
+      "krizaka": 1
     },
     "mascots": {
-      "krizaka": 18,
+      "krizaka": 7,
       "orazaka": 10,
       "orochia": 3,
       "yazakia": 3
     },
     "match-dialog": {
-      "krizaka": 2
+      "krizaka": 1
     },
     "media-capture": {
       "krizaka": 1
     },
     "meter": {
-      "krizaka": 1,
       "orazaka": 1,
       "orochia": 1
     },
     "nav-bar": {
-      "krizaka": 3,
+      "krizaka": 2,
       "orazaka": 1
     },
     "number-ticker": {
-      "krizaka": 5,
+      "krizaka": 3,
       "orazaka": 4,
       "orochia": 1
     },
     "page": {
-      "krizaka": 23,
+      "krizaka": 10,
       "yazakia": 3
     },
     "page-header": {
       "orochia": 1
     },
     "page-hero": {
-      "krizaka": 8,
+      "krizaka": 3,
       "yazakia": 2
     },
     "pagination": {
@@ -272,26 +270,28 @@
       "krizaka": 1
     },
     "progress": {
-      "krizaka": 3,
+      "krizaka": 2,
       "orazaka": 4,
       "orochia": 2
     },
     "promise-card": {
-      "krizaka": 2
+      "krizaka": 1
     },
     "radio-group": {
       "orazaka": 2
+    },
+    "screen": {
+      "krizaka": 1
     },
     "scroll-stage": {
       "krizaka": 1
     },
     "section-backdrop": {
-      "krizaka": 11,
-      "orazaka": 9,
+      "krizaka": 3,
+      "orazaka": 11,
       "yazakia": 1
     },
     "skeleton": {
-      "krizaka": 1,
       "orazaka": 3,
       "orochia": 11
     },
@@ -309,21 +309,18 @@
       "orochia": 1
     },
     "stage-banner": {
-      "krizaka": 2
+      "krizaka": 1
     },
     "stat": {
       "orochia": 1
     },
-    "step-progress": {
-      "krizaka": 1
-    },
     "stepper": {
-      "krizaka": 2,
+      "krizaka": 1,
       "orazaka": 1,
       "orochia": 1
     },
     "swipe-deck": {
-      "krizaka": 2
+      "krizaka": 1
     },
     "switch": {
       "krizaka": 1,
@@ -331,7 +328,7 @@
       "orochia": 1
     },
     "tabs": {
-      "krizaka": 5,
+      "krizaka": 3,
       "orazaka": 4,
       "orochia": 1
     },
@@ -339,7 +336,7 @@
       "krizaka": 1
     },
     "terminal-replay": {
-      "krizaka": 3
+      "krizaka": 1
     },
     "theme": {
       "krizaka": 2,
@@ -364,9 +361,9 @@
       "orochia": 18
     },
     "verified-badge": {
-      "krizaka": 2
+      "krizaka": 1
     },
-    "video-player": {
+    "vertical-video": {
       "krizaka": 1
     },
     "video-trimmer": {

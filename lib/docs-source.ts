@@ -157,7 +157,7 @@ function uiTree(source: DocsSource, t: TranslationDictionary, name: string): Pag
     entries.flatMap((entry) => {
       const page = pages.get(entry.name);
       if (!page) return [];
-      return [item(page, entry.status === "deprecated" ? format(t.docs.kit.deprecatedName, { name: entry.title }) : undefined)];
+      return [item(page, entry.status === "deprecated" ? format(t.docs.component.deprecatedName, { name: entry.title }) : undefined)];
     });
   const jobs = JOBS.flatMap((job) => {
     const nodes = components(itemsOf((p) => p.group === "components" && p.job === job));

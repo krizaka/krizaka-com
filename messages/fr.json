@@ -4,29 +4,22 @@
     "solutions": "Solutions",
     "docs": "Docs",
     "compliance": "Conformité",
-    "useCases": "Cas d'usage",
-    "getStarted": "Découvrir Orazaka",
     "menu": "Menu",
     "close": "Fermer",
     "darkMode": "Mode sombre",
     "lightMode": "Mode clair",
     "language": "Langue",
-    "orazakaDesc": "Moteur d'orchestration IA souverain",
     "architecture": "Fonctionnement",
     "editions": "Éditions",
-    "viewDocs": "Documentation",
-    "byEdition": "Par édition",
     "recommended": "Recommandé",
     "demos": "Démos",
     "community": "Communauté",
     "packages": "Packages",
     "start": "Démarrer",
-    "githubAria": "Voir le dépôt sur GitHub",
-    "starsAria": "étoiles GitHub"
+    "githubAria": "Voir le dépôt sur GitHub"
   },
   "contact": {
     "pageTitle": "Contact & partenariats",
-    "pageDesc": "Contributions, partenariats, presse ou questions sur Orazaka — voici comment nous joindre. Projet open source, échanges publics par défaut.",
     "heading": "Contact & partenariats",
     "intro": "Orazaka est un projet open source : la plupart des échanges se font en public. Choisis le canal qui correspond à ton besoin.",
     "channels": [
@@ -48,24 +41,19 @@
         "cta": "Nous écrire",
         "kind": "email"
       }
-    ],
-    "backHome": "Retour à l'accueil"
+    ]
   },
   "footer": {
     "product": "Produit",
     "solutions": "Solutions",
     "legal": "Légal",
-    "social": "Social",
     "documentation": "Documentation",
     "architecture": "Fonctionnement",
     "privacy": "Confidentialité",
     "terms": "Conditions",
-    "loi25": "Loi 25",
-    "allRights": "Tous droits réservés",
     "openSource": "Open Source",
     "explore": "Explorer",
     "community": "Communauté",
-    "useCases": "Cas d'usage",
     "compliance": "Conformité",
     "contact": "Contact",
     "demos": "Démos",
@@ -532,8 +520,7 @@
           "copy": "Copier les commandes",
           "copied": "Copié"
         },
-        "docsUi": "Parcourir Krizaka UI",
-        "docsCli": "Lire la doc du CLI"
+        "docsUi": "Parcourir Krizaka UI"
       }
     },
     "footer": {
@@ -841,7 +828,6 @@
       "title": "Construisez avec nos briques.",
       "lead": "Tout ce que nous construisons est public. Cette page est pour les développeurs : prenez la gestion des utilisateurs, les notifications ou la facturation pour votre propre application — ou déployez un produit entier.",
       "count": "{count} dépôts publics · ",
-      "discoverProduct": "Découvrir le produit",
       "contributeTitle": "Envie de contribuer ?",
       "contributeBody": "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue.",
       "contributeGuide": "Guide de contribution",
@@ -849,7 +835,6 @@
       "write": "Nous écrire",
       "jump": "Sur cette page",
       "catalogueCount": "{repositories} dépôts · {packages} packages npm · lus sur GitHub et npm à la construction",
-      "productsEyebrow": "Chaque produit, chaque dépôt",
       "repoCount": "{count} dépôts",
       "live": "En ligne",
       "stack": "Pile technique",
@@ -1125,7 +1110,6 @@
       "npm": "npm",
       "source": "Source",
       "docsUi": "Parcourir les composants",
-      "cliDocs": "Documentation du CLI",
       "latest": "dernière {version}",
       "groups": {
         "ui": {
@@ -1229,7 +1213,6 @@
       "trap": "Le piège",
       "answer": "Ce qu'elle fait",
       "rule": "La règle",
-      "whyHow": "Pourquoi, décisions, code",
       "discuss": "Discuter",
       "propose": "Proposer",
       "report": "Signaler un bug",
@@ -1590,7 +1573,6 @@
       "more": "Le piège en détail",
       "inProgress": "{count} en cours",
       "feedback": "Vos retours",
-      "statusLink": "Ce qui est en cours",
       "details": "Détails"
     },
     "faq": {
@@ -1612,297 +1594,6 @@
         {
           "q": "Où est basé Krizaka ?",
           "a": "Montréal, Québec, Canada. Les produits de Krizaka sont conçus autour de la Loi 25 du Québec et du RGPD."
-        }
-      ]
-    }
-  },
-  "pages": {
-    "cognitive": {
-      "fullCognition": "COGNITION COMPLÈTE",
-      "controlArchitecture": "ARCHITECTURE DU CONTRÔLE",
-      "perceptionIngestion": "Perception & Ingestion",
-      "theQueryIsCleanedSystem": "La requête est nettoyée, les variables d'environnement sont injectées et l'identité de l'utilisateur (RBAC) est vérifiée localement.",
-      "reasoningContext": "Raisonnement & Contextualisation",
-      "orazakaQueriesLongTermContext": "Orazaka consulte les connaissances à long terme (RAG), la mémoire récente et route l'instruction vers le modèle idéal (local ou cloud).",
-      "validationMetacognition": "Validation & Métacognition",
-      "theFinalOutputIsAudited": "La réponse est auditée en boucle fermée (validation JSON, règles de sécurité, sandbox d'exécution) avant livraison.",
-      "inferenceProcessor": "PROCESSEUR D'INFÉRENCE",
-      "memory": "Mémoire",
-      "knowledge": "Connaissances",
-      "rules": "Règles",
-      "enrichedContext": "Contexte Enrichi",
-      "transfer": "TRANSFERT",
-      "secureSandbox": "Bac à sable sécurisé",
-      "isolatedReasoning": "Raisonnement isolé",
-      "complianceChecks": "Contrôles de conformité",
-      "jsonSchemaValidation": "Validation de schéma JSON",
-      "secureDelivery": "Réponse finale validée",
-      "hermeticAndCertified": "Hermétique et certifiée",
-      "operatingModes": "MODES DE FONCTIONNEMENT",
-      "defaultMode": "MODE PAR DÉFAUT",
-      "adaptiveParameter": "PARAMÈTRE ADAPTATIF",
-      "low": "Bas",
-      "directResponse": "Réponse directe",
-      "t35Interceptors": "3–5 intercepteurs",
-      "minimalTokens": "Tokens minimaux",
-      "medium": "Moyen",
-      "standardAnalysis": "Analyse standard",
-      "t710Interceptors": "7–10 intercepteurs",
-      "balancedBudget": "Budget équilibré",
-      "high": "Haut",
-      "deepDeliberation": "Délibération profonde",
-      "t1215Interceptors": "11–{interceptors} intercepteurs",
-      "maximumBudget": "Budget maximal",
-      "activeExtensibility": "EXTENSIBILITÉ ACTIVE",
-      "chooseYourInterceptors": "Choisissez vos intercepteurs",
-      "audit": "Audit",
-      "security": "Sécurité",
-      "metrics": "Métriques",
-      "routing": "Routage",
-      "cache": "Cache",
-      "yourCustomMode": "Votre mode personnalisé",
-      "active": "Actif",
-      "context": "Contexte",
-      "memoryRag": "Mémoire & RAG",
-      "reasoning": "Réflexion",
-      "localLlm": "Local LLM",
-      "compliance": "Validation",
-      "jsonAudit": "Audit JSON"
-    },
-    "useCase": {
-      "previous": "Précédent",
-      "next": "Suivant",
-      "allCases": "Tous les cas",
-      "sovereignAi": "IA Souveraine",
-      "whoIsMartin": "Qui est Martin ?",
-      "theUserExperienceReimagined": "L'expérience utilisateur réinventée",
-      "discoverHowOrazakaSentinelSimplifies": "Découvrez comment Orazaka Sentinelle simplifie le quotidien de Martin.",
-      "doYouRecognizeYourself": "Vous vous reconnaissez ?",
-      "ifYouSpendHoursChasing": "Si vous passez des heures à chercher des clients ou si vous craignez les lourdes amendes de la Loi 25, vous partagez le même quotidien difficile que Martin. Orazaka vous permet de passer de la surcharge à la sérénité :",
-      "overloadRisk": "Surcharge & Risque",
-      "sovereigntySerenity": "Souveraineté & Sérénité",
-      "beforeOrazaka10hWeek": "Avant Orazaka : 10h / semaine",
-      "tiresomeManualSearch": "Recherche manuelle harassante",
-      "martinSpendsEveryEveningScanning": "Martin épluche chaque soir les réseaux sociaux et babillards de chantiers (5h/semaine).",
-      "tediousLandRegistryChecks": "Consultation fastidieuse du Registre",
-      "manuallyCheckingTheQuebecLand": "Consultation manuelle du Registre foncier du Québec pour cibler les nouveaux propriétaires (2h/semaine).",
-      "spamRiskCloudPrivacyLeaks": "Risque de non-conformité & Fuites",
-      "fearOfViolatingCaslAnti": "Peur d'enfreindre la LCEE (loi anti-spam) en écrivant en B2C, ou de violer la Loi 25 en mettant des données privées dans le cloud.",
-      "resultMartinIsOverloadedLoses": "Résultat : Martin est débordé, perd son temps libre et s'expose à de lourdes amendes.",
-      "withOrazaka10MinWeek": "Avec Orazaka : 10 min / semaine",
-      "automatedLocalTerritorialWatch": "Veille automatisée locale",
-      "orazakaSentinelSilentlyScansMunicipal": "Orazaka Sentinelle scanne en arrière-plan les chantiers et permis publics depuis son ordinateur.",
-      "intelligentSovereignFiltering": "Tri intelligent et souverain",
-      "aLocalLlmQualifiesTarget": "Un LLM local qualifie l'intention (ex. permis de borne VE) sans jamais envoyer de données dans le cloud.",
-      "compliantActionsReadyToMail": "Actions conformes prêtes à poster",
-      "instantPrintReadyPostcardDrafts": "Impression de publipostages postaux pour le B2C (légal hors LCEE) et e-mails ciblés pour le B2B.",
-      "resultMartinDevotesHisTime": "Résultat : Martin consacre son temps à son métier de manière 100% légale et l'esprit tranquille.",
-      "automatedMonitoring": "Veille automatique",
-      "silentlyScansPublicRegionalRegistries": "Scanne automatiquement les permis fonciers locaux sans recherche manuelle.",
-      "ethicalB2cMailers": "Courriers B2C éthiques",
-      "draftsPhysicalDirectMailCampaigns": "Génère du publipostage physique légal qui contourne la loi anti-spam électronique.",
-      "targetedB2bEmails": "E-mails B2B ciblés",
-      "writesContextualCorporateMessagesAdhering": "Rédige des courriels professionnels conformes aux exemptions d'affaires.",
-      "t100SovereignOffline": "100% Hors-ligne & Souverain",
-      "prospectDetailsNeverLeaveYour": "Aucune donnée de vos prospects ne quitte votre ordinateur. Conforme Loi 25.",
-      "whatOrazakaSentinelDoes": "Ce que fait le package Orazaka Sentinelle",
-      "timeRoiCalculator": "Calculateur de temps & ROI",
-      "timeSpentManually": "Temps passé manuellement",
-      "week": "semaine",
-      "timeWithOrazaka": "Temps avec Orazaka",
-      "timeSaved": "Temps libéré",
-      "martinStory": "<b>Martin</b> est électricien à Montréal. Comme beaucoup d'artisans, il veut développer sa clientèle sans passer ses soirées à éplucher les registres publics, et surtout, <b>sans enfreindre la loi</b>. Le Québec impose des règles strictes : la <b>LCEE</b> interdit les courriels commerciaux froids B2C, et la <b>Loi 25</b> interdit d'envoyer les données personnelles de ses prospects dans des serveurs cloud tiers. Orazaka Sentinelle résout ce casse-tête en exécutant tout le processus localement sur son ordinateur."
-    },
-    "howOrazakaWorks": {
-      "readingGuide": "Guide de lecture",
-      "orazakaExplainedSimply": "Orazaka, expliqué simplement.",
-      "beforeYouDiveIntoThe": "Avant de plonger dans la carte, voici le modèle mental. Orazaka est un moteur d'orchestration d'IA que tu héberges toi-même : chaque requête traverse un pipeline déterministe, étape par étape, sans jamais quitter ton réseau.",
-      "letSFollowOneReal": "Suivons une vraie requête.",
-      "summarizeThisContractAndFlag": "« Résume ce contrat et signale les clauses non conformes à la Loi 25. »",
-      "hereSWhatHappensTo": "Voici ce qui lui arrive, de ta question jusqu'à la réponse :",
-      "why": "Pourquoi",
-      "theLocallyValidatedAnswerComes": "→ La réponse, validée localement, te revient. Zéro donnée n'a quitté ton réseau.",
-      "nowExploreTheLiveMap": "À toi d'explorer la carte vivante.",
-      "principles": [
-        {
-          "title": "Souverain",
-          "desc": "Tout s'exécute sur ton infrastructure. Aucune donnée n'est envoyée à un cloud tiers — conforme Loi 25 & RGPD."
-        },
-        {
-          "title": "Déterministe",
-          "desc": "Pas de boîte noire : chaque requête suit un ordre d'intercepteurs explicite, reproductible et auditable."
-        },
-        {
-          "title": "Modulaire",
-          "desc": "Une architecture hexagonale : chaque responsabilité — sécurité, mémoire, médias — est un module remplaçable."
-        }
-      ],
-      "steps": [
-        {
-          "title": "Présentation",
-          "what": "Tu poses ta question depuis le client web, l'app mobile, le CLI ou la console d'administration.",
-          "why": "Quatre portes d'entrée, un seul moteur derrière."
-        },
-        {
-          "title": "Portail d'entrée",
-          "what": "L'edge reçoit chaque requête, échange une clé d'API contre un jeton de session et route par chemin : identité, facturation et studio vers leurs services, tout le reste vers le service de conversation.",
-          "why": "Un point d'entrée unique et contrôlé : rien n'atteint un modèle directement."
-        },
-        {
-          "title": "Sécurité & Métier",
-          "what": "Avant tout calcul, le jeton de session est vérifié (JWT sans état, krizaka-security) et l'intercepteur de droits contrôle ce que tu peux faire et ce que tu peux payer.",
-          "why": "La sécurité et la gouvernance passent avant l'inférence — pas après."
-        },
-        {
-          "title": "Moteur Cognitif",
-          "what": "Le cœur hexagonal, sans état, orchestre l'exécution de la requête et coordonne le flux de données.",
-          "why": "Le chef d'orchestre : reproductible à chaque appel."
-        },
-        {
-          "title": "Workers & Pipeline",
-          "what": "Le tour traverse {core} intercepteurs non contournables, puis {configured} intercepteurs configurés (mémoire, MCP, outils…) ; les jobs longs passent par RabbitMQ vers le service de jobs et le worker média.",
-          "why": "C'est ici que la « cognition » s'assemble, étape ordonnée après étape ordonnée."
-        },
-        {
-          "title": "Stockage",
-          "what": "Sessions, mémoire vectorielle (pgvector) et identités sont stockées dans tes propres bases de données.",
-          "why": "Ta donnée reste chez toi, du premier au dernier octet."
-        }
-      ],
-      "hints": [
-        "Survole une carte pour l'éclairer",
-        "Clique pour épingler le détail",
-        "Recherche un composant par nom"
-      ],
-      "inTheCode": "Dans le code"
-    },
-    "sovereignSimulator": {
-      "selectAScenarioAndClick": "Sélectionnez un scénario et cliquez sur Simuler...",
-      "scenarios": [
-        {
-          "label": "Prospection Électricien (B2C)",
-          "prompt": "Détecter les opportunités de chantiers à Montréal et préparer le publipostage.",
-          "output": "📄 1 publipostage postal généré en local (Conforme LCEE)\n📦 0 octet partagé sur des serveurs cloud tiers\n🔒 Statut : Périmètre 100% Souverain",
-          "steps": [
-            {
-              "desc": "Injecte le profil d'électricien et la zone d'activité (Montréal)."
-            },
-            {
-              "desc": "Scanne le Registre foncier du Québec et les permis de bornes de recharge VE."
-            },
-            {
-              "desc": "Identifie les chantiers nécessitant une augmentation de panneau électrique."
-            },
-            {
-              "desc": "Exclut le courriel froid B2C (LCEE), génère un courrier papier conforme."
-            }
-          ]
-        },
-        {
-          "label": "Support Client Anonymisé",
-          "prompt": "Analyser une réclamation d'accident de voiture contenant des informations personnelles.",
-          "output": "✉️ Brouillon rédigé en Sandbox (PII chiffrées/anonymisées)\n📦 Conforme Loi 25 (Aucune fuite cloud sans évaluation ÉFVP)\n🔒 Statut : Sécurisé & Étanche",
-          "steps": [
-            {
-              "desc": "Détecte la présence de renseignements personnels de citoyens."
-            },
-            {
-              "desc": "Masque le VIN, le téléphone et l'adresse de la réclamation en Sandbox."
-            },
-            {
-              "desc": "Cherche les articles de police correspondants dans la base vectorielle locale."
-            },
-            {
-              "desc": "Fait appel au LLM local (Mistral) hors-ligne pour rédiger la réponse."
-            }
-          ]
-        },
-        {
-          "label": "Audit Fournisseur (B2B)",
-          "prompt": "Auditer un nouveau fournisseur de pièces aéronautiques et valider le NDA.",
-          "output": "⚠️ Alerte interne : NDA manquant pour le Fournisseur (Conforme Loi 101)\n📦 Exécuté intégralement sur le serveur physique local\n🔒 Statut : Local uniquement",
-          "steps": [
-            {
-              "desc": "Applique la charte d'approvisionnement et les règles de conformité."
-            },
-            {
-              "desc": "Interroge la base ERP locale pour vérifier les certificats actifs."
-            },
-            {
-              "desc": "Détecte l'absence d'entente de confidentialité (NDA)."
-            },
-            {
-              "desc": "Rédige une alerte interne d'interdiction en français (Loi 101)."
-            }
-          ]
-        }
-      ]
-    },
-    "orazakaArchitecture": {
-      "howOrazakaWorksKrizaka": "Fonctionnement d'Orazaka — Krizaka",
-      "interactiveSchemaOfTheOperational": "Schéma interactif du fonctionnement interne de la plateforme d'orchestration d'IA souveraine Orazaka.",
-      "howItWorks": "Fonctionnement",
-      "theJourneyOfARequest": "Le parcours d'une requête.",
-      "orazakaOrchestratesAModularSecure": "Orazaka orchestre un flux cognitif modulaire, sécurisé et entièrement souverain. Suivez une requête à travers six étapes — de l'interface jusqu'au stockage.",
-      "stageHints": [
-        "Présentation",
-        "Portail",
-        "Sécurité",
-        "Moteur",
-        "Workers",
-        "Stockage"
-      ]
-    },
-    "repositoryMap": {
-      "sourceCode": "Code source",
-      "oneRepositoryPerComponent": "Un dépôt par composant.",
-      "openSourceRepositoriesApache2": "{p0} dépôts open source (Apache-2.0) dans l'organisation krizaka. Prenez seulement ce dont votre application a besoin, ou clonez tout l'espace de travail avec ",
-      "layers": {
-        "foundation": {
-          "title": "Fondations",
-          "intro": "Socle réutilisable par toute application Krizaka : build, contrats, edge, UI kit."
-        },
-        "domain": {
-          "title": "Services de domaine",
-          "intro": "Utilisateurs, notifications, facturation — à brancher tels quels dans une nouvelle application."
-        },
-        "ai": {
-          "title": "Moteur IA Orazaka",
-          "intro": "Le moteur cognitif et les services qui l'hébergent."
-        },
-        "worker": {
-          "title": "Workers natifs",
-          "intro": "Inférence média native, hors Docker."
-        },
-        "app": {
-          "title": "Applications",
-          "intro": "Web, administration, mobile et CLI."
-        },
-        "content": {
-          "title": "Contenu",
-          "intro": "Les packs de référence du Studio."
-        }
-      }
-    },
-    "docsPreview": {
-      "docCards": [
-        {
-          "title": "Guide de démarrage"
-        },
-        {
-          "title": "Architecture Hexagonale"
-        },
-        {
-          "title": "Référence API"
-        },
-        {
-          "title": "Auth & Sécurité"
-        },
-        {
-          "title": "CLI Orazaka"
-        },
-        {
-          "title": "Déploiement (IaC)"
         }
       ]
     }
@@ -1998,8 +1689,7 @@
       "collapseSidebar": "Replier le menu latéral",
       "openSearch": "Ouvrir la recherche",
       "closeSearch": "Fermer la recherche",
-      "lastUpdated": "Mis à jour le",
-      "chooseSection": "Choisir une documentation"
+      "lastUpdated": "Mis à jour le"
     },
     "screens": {
       "intro": "Un écran est un exemple de mise en page qui est un écran entier d'un produit : de vrais mots, les blocs qui le composent, sa version mobile pensée. Copiez-le dans le produit, gardez sa structure, changez les mots.",
@@ -2023,8 +1713,6 @@
     },
     "component": {
       "platformsLabel": "Plateformes",
-      "statusLabel": "Statut",
-      "categoryLabel": "Catégorie",
       "platforms": {
         "web": "Web",
         "native": "Mobile",
@@ -2083,7 +1771,10 @@
       "notes": "Notes",
       "source": "Générée depuis le code de @krizaka/ui {version} : son meta.ts, ses exemples et ses types.",
       "edit": "Modifier cette documentation sur GitHub",
-      "nativeShot": "{name}, tel que React Native le rend"
+      "nativeShot": "{name}, tel que React Native le rend",
+      "deprecatedName": "{name} (déprécié)",
+      "useInstead": "Utiliser à la place :",
+      "deprecatedSince": "Depuis {since}, retiré en {removedIn}."
     },
     "catalog": {
       "heading": "Tous les composants",
@@ -2451,9 +2142,7 @@
         "count": "{count} modèles",
         "open": "Ouvrir les modèles « {intent} »",
         "native": "Mobile",
-        "web": "Web",
-        "builtOn": "Construit sur",
-        "nativeNote": "Un modèle mobile : les captures de son histoire dans les deux thèmes, et le code."
+        "web": "Web"
       },
       "mobile": {
         "intro": "Ce qui tourne en React Native, depuis @krizaka/ui/native. La plupart des composants existent sur les deux plateformes, avec le même nom et les mêmes propriétés ; quelques-uns n'existent que sur mobile, parce que la plateforme les demande (une barre d'onglets, une feuille, un tirer pour actualiser).",
@@ -2478,140 +2167,11 @@
         "yazakia": "l'application de rencontres",
         "yororis": "le quatrième produit, en construction"
       }
-    },
-    "kit": {
-      "sidebar": "UI — système de design",
-      "overview": "Vue d'ensemble",
-      "overviewTitle": "{product} UI",
-      "overviewLead": "Comment le design system du produit étend Krizaka UI : son thème, ses composants, ce qu'il réexporte — généré depuis le code du kit à chaque build.",
-      "foundations": "Fondations",
-      "foundationsTitle": "{product} UI — Fondations",
-      "foundationsLead": "La palette, les deux modes et leurs contrastes, les tokens produit, la typographie, les icônes et les règles produit — lus dans les tokens du kit à chaque build.",
-      "components": "Composants",
-      "deprecatedName": "{name} (déprécié)",
-      "why": "Pourquoi il existe au-dessus de Krizaka UI",
-      "builtOn": "Repose sur",
-      "useInstead": "Utiliser à la place :",
-      "fromKrizakaUi": "Krizaka UI",
-      "deprecatedSince": "Depuis {since}, retiré en {removedIn}.",
-      "platformLong": "Web — React, depuis {package}. L'app mobile {product} prend les tokens du kit, pas ses composants.",
-      "source": "Généré depuis le code de {package} {version} : son meta.ts, ses exemples et ses types.",
-      "intro": "<b>{package}</b> {version} est le design system de {product} : la plateforme Krizaka aux couleurs de {product}. Il surcharge les valeurs des rôles --kz-* — jamais les composants — et ajoute les quelques composants qui portent le vocabulaire du produit, chacun bâti sur une primitive @krizaka/ui.",
-      "layersTitle": "Comment il étend Krizaka UI",
-      "layers": {
-        "platform": "La plateforme : chaque rôle — surfaces, texte, accent, statuts — avec sa valeur Krizaka, dans les deux modes.",
-        "brand": "La marque du produit : la famille d'accent et le dégradé de section de son logo.",
-        "kit": "Le thème du kit : les valeurs que le produit change par-dessus, et ses propres tokens."
-      },
-      "layersComponents": "Des composants par-dessus : un composant produit compose des primitives @krizaka/ui (un token, puis une variante, puis un composite) — il n'en copie jamais une.",
-      "installTitle": "Installer",
-      "componentsTitle": "Ce que le kit ajoute",
-      "componentsLead": "Chaque composant dit pourquoi Krizaka UI seul ne suffisait pas, et sur quelle primitive il repose.",
-      "deprecatedTitle": "Dépréciés",
-      "deprecatedLead": "Conservés pour les apps qui les utilisent encore, chacun avec son remplaçant.",
-      "reexportsTitle": "Réexportés depuis Krizaka UI",
-      "reexportsLead": "Importés depuis le kit par l'ancien code ; le nouveau code les importe depuis @krizaka/ui.",
-      "foundationsCta": "La palette, les contrastes et les règles produit",
-      "open": "Ouvrir",
-      "paletteTitle": "Palette",
-      "paletteLead": "Chaque rôle tel qu'une app le résout : la plateforme, puis la marque, puis le kit. Les rôles que le produit fixe sont signalés.",
-      "role": "Rôle",
-      "dark": "Sombre",
-      "light": "Clair",
-      "setBy": "Fixé par",
-      "use": "Usage",
-      "sources": {
-        "platform": "Plateforme",
-        "brand": "Marque",
-        "kit": "Kit",
-        "base": "Base"
-      },
-      "contrastsTitle": "Contrastes",
-      "contrastsLead": "Les paires que tout thème Krizaka respecte (WCAG 2.2) : le texte sur chaque surface, le texte sur l'accent, l'accent en texte, l'anneau de focus.",
-      "pair": "Paire",
-      "minimum": "Minimum",
-      "pass": "Conforme AA",
-      "fail": "Sous AA",
-      "on": "sur",
-      "namedTitle": "Thèmes nommés",
-      "namedLead": "Choisis par la personne, indépendants du mode sombre ou clair : chacun fixe tous les rôles, il se lit pareil dans les deux modes. En direct, avec les composants du kit.",
-      "namedPass": "{passed} paires sur {total} conformes AA · minimum {lowest}:1",
-      "sampleTitle": "Répondu en local",
-      "sampleText": "3 contrats cités · 0 octet n'a quitté le réseau",
-      "samplePrimary": "Envoyer",
-      "sampleSecondary": "Détails",
-      "tokensTitle": "Tokens produit",
-      "tokensLead": "Ce que les rôles ne savent pas dire, préfixé du nom du produit — jamais générique.",
-      "token": "Token",
-      "value": "Valeur",
-      "typeScaleTitle": "Échelle typographique",
-      "typographyTitle": "Typographie",
-      "family": "Famille",
-      "iconsTitle": "Icônes et marques",
-      "rulesTitle": "Règles produit",
-      "rulesLead": "Ce que chaque écran du produit respecte — chaque règle citée depuis le contrat qui l'énonce.",
-      "nativeTitle": "React Native"
     }
   },
   "diagrams": {
     "textVersion": "Version texte",
     "roles": {
-      "orazaka": {
-        "client": {
-          "title": "Clients",
-          "summary": "Là où une personne pose sa question : le client web, la console d'administration, l'app mobile, le CLI."
-        },
-        "service": {
-          "title": "Services & workers",
-          "summary": "Ce qui tourne et se déploie : l'edge, les services Orazaka, les services Krizaka, le worker média."
-        },
-        "adapter": {
-          "title": "Adaptateurs",
-          "summary": "Comment l'intérieur atteint l'extérieur : persistance, clients HTTP typés, stockage chiffré des assets."
-        },
-        "application": {
-          "title": "Application",
-          "summary": "Autour du cœur : l'orchestration des cas d'usage, le pipeline d'intercepteurs, les outils (MCP, RAG)."
-        },
-        "domain": {
-          "title": "Cœur du domaine",
-          "summary": "Le centre de chaque hexagone : le moteur cognitif et l'identité. Les dépendances pointent ici."
-        },
-        "contract": {
-          "title": "Contrats",
-          "summary": "Interfaces et records de niveau 1 : la seule façon pour un contexte d'en appeler un autre."
-        },
-        "platform": {
-          "title": "Kit plateforme Krizaka",
-          "summary": "Publié sur Maven Central : sécurité, messagerie (outbox, relances, lettres mortes), web, observabilité, et leurs quatre starters."
-        }
-      },
-      "orochia": {
-        "client": {
-          "title": "Clients",
-          "summary": "Ce qu'une personne utilise : l'app web dans le navigateur, la console des opérateurs, l'app iOS et Android."
-        },
-        "service": {
-          "title": "Application",
-          "summary": "L'API d'apps/web : chaque route — accès, médias signés, paiements, temps réel. Un seul processus sert tous les clients."
-        },
-        "library": {
-          "title": "Paquets",
-          "summary": "Les paquets du workspace sur lesquels l'API est construite : base de données, médias, paiements, push, configuration partagée."
-        },
-        "design": {
-          "title": "Design system",
-          "summary": "L'identité Orochia et les paquets Krizaka dessous (@krizaka/ui, tokens, preset Tailwind, i18n…), installés depuis npm."
-        },
-        "data": {
-          "title": "Données",
-          "summary": "PostgreSQL : la base d'Orochia, qui sert aussi de bus temps réel, et la petite base propre à la console."
-        },
-        "external": {
-          "title": "Services externes",
-          "summary": "Ce que le code appelle dehors : Bunny Stream pour les médias, les passerelles de paiement, l'e-mail, le push, les fournisseurs de connexion."
-        }
-      },
       "java": {
         "service": {
           "title": "Services",
@@ -2645,15 +2205,10 @@
     },
     "owners": {
       "all": "Tous",
-      "orazaka": "Orazaka",
-      "krizaka": "Krizaka",
-      "orochia": "Orochia",
-      "external": "Tiers"
+      "krizaka": "Krizaka"
     },
     "moduleMap": {
       "label": {
-        "orazaka": "Carte des modules d'Orazaka",
-        "orochia": "Carte des modules d'Orochia",
         "java": "Les briques Krizaka Java"
       },
       "search": "Trouver un module…",
@@ -2663,19 +2218,14 @@
       "ownerLabel": "Modules de",
       "modes": {
         "build": "Dépendances",
-        "runtime": "Appels à l'exécution",
-        "journey": "Parcours"
+        "runtime": "Appels à l'exécution"
       },
       "hint": {
-        "build": "Sélectionne un module pour l'isoler : ce dont il dépend et ce qui dépend de lui restent allumés, reliés par des liens sur grand écran. Lecture de haut en bas — les dépendances pointent vers le cœur.",
-        "runtime": "Sélectionne un module : qui il appelle et qui l'appelle restent allumés — requêtes (HTTP, SQL) en trait plein, événements (messages, webhooks, SSE, NOTIFY, push) en pointillés.",
-        "journey": "Choisis un parcours : les modules qu'il traverse s'allument étape par étape, le reste de la carte reste en place. Avance avec les flèches ou la liste.",
-        "buildJava": "Sélectionne un artefact : ce dont il dépend (compile, test, son POM parent, le BOM qu'il importe) et ce qui dépend de lui restent allumés. Lecture de haut en bas — les services en haut, le build en dessous.",
-        "buildOrochia": "Sélectionne un module : ce sur quoi il est construit et ce qui est construit sur lui restent allumés — les apps en haut, les paquets et le design system qu'elles installent en dessous."
+        "build": "Sélectionne un artefact : ce dont il dépend (compile, test, son POM parent, le BOM qu'il importe) et ce qui dépend de lui restent allumés. Lecture de haut en bas — les services en haut, le build en dessous.",
+        "runtime": "Sélectionne un module : qui il appelle et qui l'appelle restent allumés — requêtes (HTTP, SQL) en trait plein, événements (messages, webhooks, SSE, NOTIFY, push) en pointillés."
       },
       "legend": {
         "dependency": "dépend de",
-        "outward": "s'éloigne du cœur",
         "indirect": "POM parent · import du BOM · portée test",
         "sync": "{kinds} — requête",
         "async": "{kinds} — événement"
@@ -2694,16 +2244,13 @@
       "detail": {
         "repository": "Dépôt",
         "version": "version {version}",
-        "ports": "{inbound} ports entrants · {outbound} sortants",
         "uses": "Dépend de",
         "usedBy": "Utilisé par",
         "calls": "Appelle",
         "calledBy": "Appelé par",
         "none": "Rien",
-        "outward": "{from} → {to} s'éloigne du cœur. La règle hexagonale veut des dépendances tournées vers l'intérieur : la carte montre le code tel qu'il est.",
         "close": "Effacer la sélection",
-        "central": "Maven Central {version}",
-        "package": "paquet {name}"
+        "central": "Maven Central {version}"
       },
       "count": "{count} modules",
       "empty": "Aucun module ne correspond ici.",
@@ -2729,216 +2276,7 @@
         "sse": "SSE",
         "notify": "LISTEN/NOTIFY",
         "push": "push"
-      },
-      "journey": {
-        "label": "Parcours",
-        "steps": "Étapes du parcours",
-        "step": "Étape {n} sur {total}",
-        "prev": "Étape précédente",
-        "next": "Étape suivante",
-        "play": "Lire le parcours",
-        "pause": "Pause",
-        "endpoint": "Endpoint",
-        "announce": "Étape {n} : {title}."
       }
-    },
-    "pipeline": {
-      "label": "Pipeline d'intercepteurs",
-      "core": {
-        "title": "Phase 1 · chaîne cœur",
-        "sub": "Fixée dans le code. Passe en premier, à chaque tour, et ne se désactive pas."
-      },
-      "dynamic": {
-        "title": "Phase 2 · chaîne configurée",
-        "sub": "Ordre et interrupteur lus en base (pipeline_interceptor_config), rechargés sans redémarrage."
-      },
-      "locked": "non contournable",
-      "off": "désactivé",
-      "noClass": "ligne sans implémentation",
-      "sameOrder": "même ordre",
-      "concerns": {
-        "validation": "validation",
-        "governance": "gouvernance",
-        "context": "contexte",
-        "enrichment": "enrichissement",
-        "reformulation": "reformulation",
-        "tooling": "outils",
-        "translation": "traduction"
-      }
-    },
-    "messaging": {
-      "label": "Topologie de messagerie",
-      "hint": "Sélectionne un émetteur : les files que ses messages atteignent s'allument, avec les services qui les consomment.",
-      "exchanges": {
-        "jobs": "Le travail à faire. Un job est publié une fois et consommé par la voie qui lie sa clé.",
-        "events": "Ce qui s'est passé. Événements du domaine et issues des jobs, diffusés à chaque file qui les lie.",
-        "dlx": "Les lettres mortes. Chaque file range ce qu'elle n'a pas pu traiter dans ‹queue›.dlq."
-      },
-      "types": {
-        "topic": "échange topic",
-        "direct": "échange direct"
-      },
-      "cols": {
-        "producers": "Publié par",
-        "queues": "File · liaisons",
-        "consumers": "Consommé par"
-      },
-      "capabilityRoute": "la route de la capacité",
-      "dynamicKey": "clé choisie à l'exécution",
-      "dlq": "lettres mortes → {dlq}",
-      "ownRetry": "relances propres",
-      "retry": {
-        "title": "Relancer, puis lettre morte",
-        "attempts": "{count} tentatives",
-        "wait": "{initial} ms ×{multiplier}, jusqu'à {max} s",
-        "parked": "‹queue›.dlq",
-        "note": "Tout consommateur bâti sur {module} ({property}) relance avant d'abandonner ; le message est alors rangé, pas perdu."
-      },
-      "table": {
-        "caption": "Les files, leurs liaisons et leurs consommateurs",
-        "queue": "File",
-        "exchange": "Échange",
-        "bindings": "Liaisons",
-        "consumers": "Consommé par",
-        "dlq": "File de lettres mortes",
-        "producersCaption": "Émetteurs",
-        "module": "Module",
-        "routingKey": "Clé de routage"
-      },
-      "capabilities": {
-        "caption": "Routes des capacités (orazaka_capabilities)",
-        "capability": "Capacité",
-        "handler": "Handler",
-        "routingKey": "Clé de routage"
-      }
-    },
-    "sections": {
-      "map": {
-        "kicker": "La vraie carte",
-        "title": "Chaque module, dans son anneau.",
-        "sub": "{modules} modules lus dans le réacteur Maven et le manifeste du workspace, rangés comme l'hexagone : les clients dehors, le cœur du domaine au milieu, les contrats et le kit Krizaka en dessous."
-      },
-      "pipeline": {
-        "kicker": "Le pipeline",
-        "title": "Ce que traverse un tour, dans l'ordre.",
-        "sub": "{core} intercepteurs que le code ne laisse jamais sauter, puis {configured} que la base ordonne et active."
-      },
-      "messaging": {
-        "kicker": "Messagerie",
-        "title": "Qui parle à qui sur RabbitMQ.",
-        "sub": "{queues} files, chacune avec sa file de lettres mortes. Liaisons, émetteurs et consommateurs lus dans le code."
-      }
-    },
-    "journeys": {
-      "orazaka": {
-        "request": {
-          "name": "Une requête",
-          "summary": "De ta question à la réponse, à travers les modules qui la portent."
-        }
-      },
-      "orochia": {
-        "playback": {
-          "name": "Lecture",
-          "summary": "Aucune URL vidéo brute n'atteint jamais le client.",
-          "steps": [
-            {
-              "title": "Demande de lecture",
-              "detail": "Le lecteur ne détient aucune URL média : il en demande une à Orochia."
-            },
-            {
-              "title": "Contrôle d'accès",
-              "detail": "Publique, contacts, abonnés ou déblocage payant : la visibilité est vérifiée contre les contacts, abonnements et droits d'accès."
-            },
-            {
-              "title": "Décision",
-              "detail": "Pas de droit, pas d'URL : la réponse est un refus ou le paywall."
-            },
-            {
-              "title": "URL signée · 300 s",
-              "detail": "Un jeton HMAC-SHA256 lié à la vidéo et à son expiration : un lien partagé meurt en cinq minutes."
-            },
-            {
-              "title": "Diffusion 4K HLS",
-              "detail": "Les segments viennent directement du CDN de Bunny, jamais des serveurs applicatifs."
-            }
-          ]
-        },
-        "unlock": {
-          "name": "Déblocage payant",
-          "summary": "Le client ne dit jamais qu'il a payé : la passerelle le prouve.",
-          "steps": [
-            {
-              "title": "Demande de déblocage",
-              "detail": "L'acheteur choisit un montant et une passerelle configurée."
-            },
-            {
-              "title": "Intention de paiement",
-              "detail": "Acheteur, créateur, vidéo et montant sont enregistrés avant tout mouvement d'argent."
-            },
-            {
-              "title": "Page de paiement",
-              "detail": "L'acheteur part sur la page hébergée du prestataire : Orochia ne voit jamais de carte."
-            },
-            {
-              "title": "Paiement",
-              "detail": "Seules les passerelles dont tous les identifiants sont configurés sont proposées."
-            },
-            {
-              "title": "Webhook signé",
-              "detail": "Signature vérifiée en temps constant sur le corps brut — aucun mode permissif."
-            },
-            {
-              "title": "Règlement, une seule fois",
-              "detail": "Crédit au grand livre et droit d'accès dans une même transaction ; un webhook rejoué ne change rien."
-            }
-          ]
-        },
-        "upload": {
-          "name": "Téléversement",
-          "summary": "Les fichiers lourds ne traversent jamais les serveurs web.",
-          "steps": [
-            {
-              "title": "Ouverture d'envoi",
-              "detail": "Seuls les créateurs vérifiés (registres 18 U.S.C. § 2257) peuvent ouvrir une session."
-            },
-            {
-              "title": "Création de la vidéo",
-              "detail": "Orochia enregistre la vidéo chez Bunny Stream et signe une session Tus."
-            },
-            {
-              "title": "Session Tus signée",
-              "detail": "Le studio reçoit l'adresse d'envoi et sa signature, valables pour cette seule vidéo."
-            },
-            {
-              "title": "Envoi reprenable",
-              "detail": "Le fichier part directement vers Bunny et reprend après une coupure."
-            },
-            {
-              "title": "Encodage terminé",
-              "detail": "Bunny signale la fin du transcodage par un webhook signé."
-            },
-            {
-              "title": "Prête à diffuser",
-              "detail": "La vidéo devient lisible, sous la visibilité choisie par son créateur."
-            }
-          ]
-        }
-      }
-    },
-    "sequence": {
-      "label": "Séquence",
-      "participants": "Participants",
-      "reply": "répond",
-      "internal": "dans {name}",
-      "if": "si {condition}",
-      "else": "sinon : {condition}"
-    },
-    "states": {
-      "label": "Machine à états",
-      "start": "Départ",
-      "end": "Fin",
-      "final": "finale",
-      "initial": "point de départ"
     }
   }
 }

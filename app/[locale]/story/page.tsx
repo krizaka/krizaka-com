@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default function StoryPage() {
   // Every figure of the page is read at build: the organisation's repositories, the components of the published
   // @krizaka/ui registry, the packages on npm and Maven Central, the version of each block — never typed by hand.
-  const figures = { repos: publicRepositoryCount(), components: getRegistryIndex("ui").items.length, packages: publishedCount() };
+  const figures = { repos: publicRepositoryCount(), components: getRegistryIndex().items.length, packages: publishedCount() };
   const kits: StoryKit[] = (Object.keys(KIT_PACKAGES) as StoryKit["id"][]).map((id) => ({
     id,
     packages: KIT_PACKAGES[id].map((name) => ({ name: name.replace(/^com\.krizaka:/, ""), version: publishedVersion(name) })),
