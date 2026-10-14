@@ -326,11 +326,7 @@
 - The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — live on Bunny
   Storage (zone `krizaka-assets`) under `site/`, apart from the PR captures (`pr-assets/`):
 
-  ```
-  site/home/backdrop/<product>.<hash>.{webm,mp4,jpg}
-  site/products/<product>/tour/<clip>.<hash>.{webm,mp4,jpg}
-  site/products/<product>/gallery/<id>.<hash>.webp
-  ```
+  (the full layout of the zone is the table under « Bunny layout » below)
 
   `node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> --env-file <path/to/.env>` (`--dry-run` to preview)
   sends each file as `<name>.<hash>.<ext>` (first 10 hex of its SHA-256 — a URL never changes content, so it is cached
@@ -346,6 +342,29 @@
   sitemap, `llms.txt`, Open Graph metadata, `/_next/static`) and the fonts (`next/font/local`, preloaded with the page).
   `public/ui-examples/` is generated at build, git-ignored. Nothing else goes in `public/`; a file nothing references is
   deleted, not kept "just in case" — git and Bunny keep the history.
+
+### Bunny layout — one zone, three prefixes
+
+The storage zone `krizaka-assets` (pull zone `krizaka-assets.b-cdn.net`) holds **every media of every Krizaka repository**.
+Nothing lives at its root except three folders and a `README.txt` (published by `node scripts/cdn-assets.mjs readme`).
+The layout is written once, in `scripts/bunny-layout.mjs`; each script writes under **one** prefix and refuses the others.
+
+| Prefix | Written by | Shape | Lifetime |
+| --- | --- | --- | --- |
+| `site/` | `scripts/cdn-assets.mjs` | `site/<area>/<product?>/<kind>/<name>.<hash>.<ext>` | immutable, named by `lib/cdn-manifest.json` |
+| `maps/` | `tools/map-assets.mjs` (krizaka-ui) | `maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles`, `maps/v1/fonts/<stack>/<a>-<b>.pbf` | a new extract is a new dated file |
+| `pr-assets/` | `scripts/pr-assets.mjs` | `pr-assets/<repo>/<pr-or-topic>/<file>` | review evidence, kept while a PR or issue links it |
+
+- `site/` areas: `home/` (backdrop, `kit-native/`), `products/<product>/{tour,gallery,mobile}/`, `docs/<product>/…` (media of the
+  documentation pages), `people/<product>/<person>-{256,512}.webp` (the demo personas). A new area is added in `bunny-layout.mjs`
+  first. Add a file with `cdn-assets upload <file|dir> --to <area/…>` — the hash is in the name, the manifest records it,
+  `cdn()` / `video()` (`lib/cdn.ts`) resolve it. Never put a media in the repository, never upload by hand.
+- `node scripts/cdn-assets.mjs tree` weighs the zone by folder and lists what is outside the layout (exit 1);
+  `prune` (preview, then `--yes`) removes the superseded versions of `site/` — it keeps anything named by the manifest of **any**
+  branch, so unmerged work is safe; `check` HEADs every recorded file on the pull zone.
+- `pr-assets/` is never pruned by script: delete a whole `<repo>/<topic>/` by hand only when no PR or issue links it any more.
+- The CDN caches immutable names for good; a moved or deleted path is purged from the account's dashboard (the storage key
+  cannot purge).
 
 ## 5.3 Tests — no test, not done
 
