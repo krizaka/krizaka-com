@@ -17,6 +17,6 @@ module.exports = {
   ],
   options: {
     tsConfig: { fileName: "tsconfig.json" },
-    exclude: { path: "(^|/)(node_modules|\\.next|\\.source|products)/" },
+    exclude: { path: "(^|/)(node_modules|\\.next|products)/" },
   },
 };

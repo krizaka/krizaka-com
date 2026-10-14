@@ -54,7 +54,7 @@ hand-authored here. Governance contract: [`AGENTS.md`](AGENTS.md).
 
 Next.js 16 (App Router, SSG) · React 19 · TypeScript · Tailwind v4 with the Krizaka preset
 ([`@krizaka/tailwind`](https://www.npmjs.com/package/@krizaka/tailwind): the `--kz-*` tokens of `@krizaka/tokens`) ·
-[`@krizaka/ui`](https://www.npmjs.com/package/@krizaka/ui) · Fumadocs (docs) ·
+[`@krizaka/ui`](https://www.npmjs.com/package/@krizaka/ui) ·
 one schema component for every product (`app/components/diagrams/`, no diagram library, no Mermaid) · one motion system, @krizaka/ui's (`MotionObserver`, `NumberTicker`, `[data-reveal]`; no animation library for new work).
 
 ## Where things live
@@ -72,10 +72,6 @@ one schema component for every product (`app/components/diagrams/`, no diagram l
 | `lib/products.ts` | The products (name, status, dev site, source) — `/products`, the nav, the footer. |
 | `lib/site.ts` | External identity (SITE_URL, GitHub, version) — single source. |
 | `lib/i18n.ts` | Binds [`@krizaka/i18n`](https://www.npmjs.com/package/@krizaka/i18n) to `messages/en.json` + `messages/fr.json` (`getDictionary`, `asLocale`, `format`). |
-| `app/[locale]/docs/` | The documentation (Fumadocs): hub, then `[section]` = `ui`. |
-| `source.config.ts` · `lib/docs-source.ts` | The Fumadocs collection and its loader, sidebars, titles (messages or code). |
-| `content/docs/ui/` | Written docs (MDX). `content/docs/ui/components/<name>.mdx` are scaffolded by `npm run docs:ui`. |
-| `app/components/docs/` | MDX components: `ComponentPreview`, `PropsTable`, `StoryFrame`. |
 
 ## Products
 
@@ -92,30 +88,13 @@ site (`lib/product-redirects.ts`). The generated `app/data/*.json` are never han
 - **Reduced motion**: honor `prefers-reduced-motion` (no entrance or idle animation).
 - **Schemas**: 2D, labels in full, a text version of what they draw (AGENTS.md §4).
 
-## Documentation (`/docs`)
+## Documentation
 
-One engine, [Fumadocs](https://fumadocs.dev), for **Krizaka UI** (`content/docs/ui`). Krizaka Java is documented on
-[java.krizaka.com](https://java.krizaka.com) (built from `krizaka/krizaka-build`, `/docs/java` redirects there); the products
-document themselves on their own sites.
-
-- **Components, driven by their code** — every component of the installed `@krizaka/ui` has a page, generated at
-  each build from its registry (`lib/docs-source.ts` adds one virtual page per component; `ComponentDoc` renders it):
-  what it is, Web / Mobile / both, stable or beta, when to use it and when not, installation (web and React Native),
-  each named example — live with its code on the web, the screenshot of its story and its code for React Native —
-  the props of its web and native components, its accessibility and the related components. All of it is written in
-  [krizaka-ui](https://github.com/krizaka/krizaka-ui) (`meta.ts`, `registry/examples`, the props' JSDoc), so the code
-  and the documentation cannot drift. `/docs/ui` is the catalogue, filtered by platform. `scripts/gen-ui-docs.mjs`
-  runs on `postinstall`, `dev` and `build` (`--strict`) and writes the git-ignored `lib/ui-examples.ts` (the import
-  map of the live examples) and `public/ui-examples/` (the native screenshots); `npm run lint` checks the registry is
-  complete. An optional `content/docs/ui/components/<name>.mdx` adds notes to a generated page (`card.mdx`).
-- **Upgrading `@krizaka/ui`** — Dependabot (`.github/dependabot.yml`, daily, `@krizaka/*`, pre-releases followed)
-  opens the bump; CI regenerates every page from the new registry. Nothing else to do: merge when green. (Chosen over a
-  `repository_dispatch` from krizaka-ui's release: no cross-repository token to keep, and the bump stays a reviewable
-  pull request.)
-- **Texts** — titles and descriptions of the written pages live in `messages/{en,fr}.json` (`docs.pages.<section>.<page>`);
-  the bodies are English developer documentation, like the synced product docs. A component page's chrome is in
-  `docs.component.*`; its content is the English its code carries.
-- **Search** — a static index (`/api/search`, built at build time), opened with `/` (⌘K stays the site's palette).
+krizaka.com renders no documentation. **Krizaka UI** is documented on [ui.krizaka.com](https://ui.krizaka.com), built
+from [krizaka-ui](https://github.com/krizaka/krizaka-ui) (`apps/site`) at every change; **Krizaka Java** on
+[java.krizaka.com](https://java.krizaka.com), built from `krizaka/krizaka-build`; the products on their own sites. The old
+`/docs/ui/*` and `/docs/java/*` addresses answer 308 with their page there (`lib/ui-redirects.ts`, `lib/java-redirects.ts`),
+and `/docs` goes to `/open-source`.
 
 ## Layout and the CSS reset
 

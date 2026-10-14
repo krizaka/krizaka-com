@@ -23,14 +23,9 @@
 
 ## Documentation
 
-- Documentation hub: {{SITE_URL}}/en/docs
-- Krizaka UI (design system, live components): {{SITE_URL}}/en/docs/ui
+- Krizaka UI (design system, live components): https://ui.krizaka.com (its own index: https://ui.krizaka.com/llms.txt)
 - Krizaka Java (Spring Boot kit, starters, messaging): https://java.krizaka.com
 - The products' own documentation is on their sites (Orazaka: https://dev.orazaka.com/docs, Orochia: https://dev.orochia.com/docs).
-
-Every documentation page:
-
-{{DOCS_PAGES}}
 
 ## Packages (npm, scope @krizaka)
 

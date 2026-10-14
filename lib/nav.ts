@@ -77,7 +77,7 @@ export interface DocsNavLink {
 }
 export const NAV_DOCS_HUB = "/docs";
 export const NAV_DOCS: DocsNavLink[] = [
-  { id: "ui", href: "/docs/ui" },
+  { id: "ui", href: "https://ui.krizaka.com" },
 ];
 export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) => ({
   label: t.docs.sections[link.id].title,

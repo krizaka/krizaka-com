@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
-import { createMDX } from "fumadocs-mdx/next";
 import { javaRedirects } from "./lib/java-redirects";
+import { uiRedirects } from "./lib/ui-redirects";
 import { productRedirects } from "./lib/product-redirects";
 import { CDN_URL, legacyRedirects } from "./lib/cdn";
 
@@ -53,18 +53,12 @@ const nextConfig: NextConfig = {
       ...productRedirects(),
       // Krizaka Java's documentation is java.krizaka.com (lib/java-redirects.ts).
       ...javaRedirects(),
-      // /docs/ui/screens became the templates, grouped by intent (krizaka-com#115).
-      { source: "/:locale(fr|en)/docs/ui/screens", destination: "/:locale/docs/ui/templates", statusCode: 301 },
+      // Krizaka UI's documentation is ui.krizaka.com, built from krizaka-ui (lib/ui-redirects.ts); /docs goes to /open-source.
+      ...uiRedirects(),
       // The media left /public for Bunny: an old /assets/… URL (published @krizaka/ui examples) answers with its file on
       // the CDN. Temporary, because the destination is versioned — a new recording gets a new URL.
       ...legacyRedirects().map((r) => ({ ...r, permanent: false })),
     ];
-  },
-
-  // The maps of /docs/ui read their tiles and glyphs (Protomaps PMTiles, Noto Sans) through this origin: the CDN's
-  // files, proxied with their byte ranges — no cross-origin request (app/components/docs/MapAssets.tsx).
-  async rewrites() {
-    return [{ source: "/maps/v1/:path*", destination: `${CDN_URL}/maps/v1/:path*` }];
   },
 
   async headers() {
@@ -91,7 +85,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-/* Fumadocs: compiles the collections of source.config.ts into .source/ (content/docs, the synced product docs). */
-const withMDX = createMDX();
-
-export default withMDX(nextConfig);
+export default nextConfig;

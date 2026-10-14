@@ -92,7 +92,8 @@ async function main() {
   }
   const sitemap = await get("/sitemap.xml");
   const paths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname).slice(0, limit);
-  if (paths.length < 40) report("/sitemap.xml", [`only ${paths.length} URLs`]);
+  // The company site, in two languages (the docs left for ui.krizaka.com and java.krizaka.com, with their own sitemaps).
+  if (paths.length < 12) report("/sitemap.xml", [`only ${paths.length} URLs`]);
   for (const p of paths) report(p, auditHtml(await get(p), p));
   if (failed) {
     console.error(`SEO check: ${failed} problem(s) on ${paths.length} pages`);

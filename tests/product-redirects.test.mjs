@@ -75,7 +75,6 @@ test("what stays on krizaka.com is never redirected", () => {
 test("next.config.ts serves these redirects, and no product page, product docs set or kit is left", () => {
   assert.match(read("next.config.ts"), /\.\.\.productRedirects\(\)/);
   assert.deepEqual(readdirSync(new URL("../app/[locale]/products", import.meta.url)), ["page.tsx"]);
-  assert.match(read("lib/docs-source.ts"), /export const DOCS_SECTIONS = \["ui"\] as const/);
   const pkg = JSON.parse(read("package.json"));
   assert.equal(pkg.dependencies["@krizaka/orazaka-design-system"], undefined);
   assert.equal(pkg.dependencies["@krizaka/orochia-design-system"], undefined);

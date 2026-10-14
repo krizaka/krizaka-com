@@ -1,5 +1,5 @@
 /* Every page of krizaka.com declares its template — one of the page templates of @krizaka/ui (category « Templates »
-   of /docs/ui), or `redirect` for an address kept for old links. `npm run lint` fails when a page (app/**​/page.tsx)
+   of ui.krizaka.com/templates), or `redirect` for an address kept for old links. `npm run lint` fails when a page (app/**​/page.tsx)
    is missing here (scripts/check-page-templates.mjs), so no page is built outside the catalogue. A page is rebuilt on
    its template's component as the catalogue grows; the composition is the template's either way.
    Keys: the route under app/[locale], as written in the folder names. */
@@ -27,8 +27,6 @@ export const PAGE_TEMPLATES = {
   "/products": "catalogue",
   "/open-source": "catalogue",
   "/open-source/[block]": "longform",
-  "/docs": "docs-hub",
-  "/docs/[section]/[[...slug]]": "docs-article",
   "/contact": "contact",
   "/privacy": "legal",
   "/terms": "legal",
