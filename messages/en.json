@@ -1829,70 +1829,117 @@
     },
     "legal": {
       "back": "Back to home",
-      "updated": "Last updated: October 2026",
+      "updated": "Last updated: October 13, 2026",
       "toc": "On this page",
       "privacy": {
         "metaTitle": "Privacy Policy — Krizaka",
-        "metaDescription": "What krizaka.com collects (very little), why, and your rights under Quebec's Law 25 and the GDPR.",
+        "metaDescription": "What krizaka.com collects (the contact form only), why, where it goes, who processes it, and your rights under Québec's Law 25, PIPEDA and the GDPR.",
         "title": "Privacy Policy",
         "sections": [
           {
+            "title": "Who is responsible",
+            "paragraphs": [
+              "This website is published by Technologies Krizaka Inc., a company incorporated under the laws of Québec, operating as Krizaka (Montréal, Québec, Canada).",
+              "The person in charge of the protection of personal information is the founder and president of the company. You reach them through the contact form on krizaka.com (topic “Other”); there is no other channel to look for."
+            ]
+          },
+          {
             "title": "Our commitment",
             "paragraphs": [
-              "Krizaka builds software that keeps data where it belongs. This page says exactly what this website collects, and nothing is hidden behind it."
+              "Krizaka builds software that keeps data where it belongs. This page says what this website collects, what it does with it and who handles it. If a practice is not written here, it does not happen."
             ]
           },
           {
             "title": "What this website collects",
             "paragraphs": [
-              "When you write to us through the contact form, we receive your name, your e-mail address, your organisation if you give it, the topic and your message. We use them only to reply to you.",
-              "The message is delivered to the team by e-mail (through our e-mail provider, Mailgun) or to our team messaging. We keep it as long as the conversation needs it, then delete it. We never sell it, share it for marketing or use it to profile you.",
-              "Our host (Vercel) keeps technical logs — IP address, time, page — for security and abuse prevention, under its own policy."
+              "The only way you give us personal information is the contact form. We receive your name, your e-mail address, your organisation if you give it, the topic, the timing if you give it, your message, the language of the page and the page you came from (so we know which product you asked about).",
+              "We use them only to reply to you. By sending the form you agree that we use them for that. We do not sell them, share them for marketing, use them to profile you or send you anything you did not ask for.",
+              "The message is delivered to the team by e-mail, through our e-mail provider Mailgun, and may also be posted to a private team messaging channel. We keep it as long as the conversation needs it, then delete it.",
+              "To limit abuse, the server counts messages per IP address in memory (five every ten minutes). That count is not written anywhere and disappears when the server restarts."
+            ]
+          },
+          {
+            "title": "Technical data",
+            "paragraphs": [
+              "Like any web host, the platform that serves this website keeps technical logs — IP address, time, page requested, browser — for security and abuse prevention, under its own policy.",
+              "Images, videos and recordings are served from a content delivery network (Bunny). Your browser contacts it directly when a page loads them, so it sees your IP address and the request, as any server does. Fonts and scripts are served by krizaka.com itself.",
+              "There is no analytics, no advertising, no tracking pixel and no social-network widget on this website."
             ]
           },
           {
             "title": "Cookies and local storage",
             "paragraphs": [
-              "One functional cookie, NEXT_LOCALE, remembers the language you chose (one year). Your theme preference is kept in your browser's local storage.",
-              "No analytics, no advertising, no tracking scripts, no third-party cookies."
+              "One functional cookie, NEXT_LOCALE, remembers the language you chose (one year). Your theme preference (dark or light) is kept in your browser's local storage, under the name kz-theme.",
+              "No analytics cookie, no advertising cookie, no third-party cookie. Because both items only remember a choice you made, no consent banner is shown."
+            ]
+          },
+          {
+            "title": "The hosted development environment",
+            "paragraphs": [
+              "dev.orochia.com is a development environment of Orochia that we run for testing and demonstration. If you create an account there, what you enter (e-mail address, username, password hash, content, activity) is stored in a database attached to the application on DigitalOcean (Toronto) and is readable by the team. E-mails it sends go through Mailgun and videos through Bunny.",
+              "It is not a production service: it can be reset or erased at any time, so use test data only. A Terms section describes it."
             ]
           },
           {
             "title": "Our software",
             "paragraphs": [
-              "Orazaka and Orochia are self-hosted: they run on your infrastructure and process data under your control. They send us no telemetry.",
+              "Orazaka, Orochia and the building blocks are open source and self-hosted: they run on your infrastructure and process data under your control. They send us no telemetry. Yazakia and Yororis are not deployed and collect nothing.",
               "If you connect external services to them (AI providers, payment gateways, video CDN), the data you send goes directly to those providers under their own policies."
+            ]
+          },
+          {
+            "title": "Who handles data for us",
+            "paragraphs": [
+              "DigitalOcean — hosts this website and the development environment (Toronto, Canada).",
+              "Bunny.net — serves media (images, videos, recordings) of this website, and videos of the development environment.",
+              "Mailgun — delivers the contact-form e-mails and those of the development environment.",
+              "GitHub and npm — host our code and packages. They are not involved when you read this site; they receive the data you give them if you follow a link and use them, under their own policies.",
+              "These providers may process data outside Québec and Canada. We chose them for what they do, and the list is complete as of the date above."
             ]
           },
           {
             "title": "Your rights",
             "paragraphs": [
-              "Under Quebec's Law 25 and the GDPR you may ask to access, correct or delete the information you sent us, or withdraw your consent. Write to us through the contact form and we will answer within 30 days."
+              "Under Québec's Law 25, the federal PIPEDA and, if you are in Europe, the GDPR, you may ask to access, correct or delete the information you sent us, withdraw your consent, and obtain a copy of it in a usual format. Write to us through the contact form and we will answer within 30 days.",
+              "If you are not satisfied, you may complain to the Commission d'accès à l'information du Québec, to the Office of the Privacy Commissioner of Canada or, in Europe, to your data protection authority."
             ]
           },
           {
-            "title": "Contact",
+            "title": "Changes and contact",
             "paragraphs": [
-              "For any privacy question, use the contact form (topic “Other”). Krizaka, Montréal, Québec."
+              "We update this page when what the website does changes, and the date at the top follows. For any privacy question, use the contact form (topic “Other”). Technologies Krizaka Inc., Montréal, Québec."
             ]
           }
         ]
       },
       "terms": {
         "metaTitle": "Terms of Service — Krizaka",
-        "metaDescription": "Terms for using krizaka.com and for self-hosting Orazaka and Orochia, the open-source software designed by Krizaka.",
+        "metaDescription": "Terms for using krizaka.com, the open-source software and building blocks published by Krizaka, and the hosted development environment.",
         "title": "Terms of Service",
         "sections": [
           {
+            "title": "Who we are",
+            "paragraphs": [
+              "krizaka.com is published by Technologies Krizaka Inc., a company incorporated under the laws of Québec, operating as Krizaka (Montréal, Québec, Canada). To reach us, use the contact form."
+            ]
+          },
+          {
+            "title": "What these terms cover",
+            "paragraphs": [
+              "These terms cover this website, the open-source software and building blocks we publish, and the hosted development environment dev.orochia.com. They do not describe a paid service: none is offered today."
+            ]
+          },
+          {
             "title": "Software license",
             "paragraphs": [
-              "Orazaka and Orochia are open-source software distributed under the Apache License 2.0. You may use, modify and distribute them, commercially too, under that license — see each repository on github.com/krizaka."
+              "The software we publish is open source, distributed under the Apache License 2.0 — you may use, modify and distribute it, commercially too, under that license: the Orazaka, Orochia, Yazakia and Yororis repositories on github.com/krizaka, the @krizaka/* packages on npm and the com.krizaka artifacts on Maven. Each repository carries its license.",
+              "The license covers the code. It does not grant the right to use the Krizaka names, logos and product marks as your own."
             ]
           },
           {
             "title": "Self-hosted responsibility",
             "paragraphs": [
-              "Both products run on infrastructure you operate. You are responsible for that infrastructure, for the security of the data it holds and for complying with the laws that apply to you."
+              "The products run on infrastructure you operate. You are responsible for that infrastructure, for the security of the data it holds and for complying with the laws that apply to you."
             ]
           },
           {
@@ -1902,21 +1949,40 @@
             ]
           },
           {
+            "title": "Products not yet available",
+            "paragraphs": [
+              "Yazakia is an upcoming product: nothing is offered yet, and what the site says about it describes intentions, not a service.",
+              "Yororis is under construction. It is not deployed, not offered and nobody can sign up for it. It is a listening space with an AI presence, not a health service, not a care service, and nothing the site says about it is advice of any kind. Its pages exist to show how it is being built and to discuss it with us through the contact form."
+            ]
+          },
+          {
+            "title": "The hosted development environment",
+            "paragraphs": [
+              "dev.orochia.com is a test environment of Orochia. It comes with no guarantee: it may be unavailable, changed, reset or erased at any time and without notice, and what you put in it may be lost. Use test data only, and do not rely on it for anything that matters. Nothing there is a commercial offer."
+            ]
+          },
+          {
             "title": "Third-party services",
             "paragraphs": [
-              "If you connect external services — AI providers, payment gateways, Bunny Stream, e-mail or SMS providers — your use of them is governed by their own terms."
+              "If you connect external services — AI providers, payment gateways, Bunny Stream, e-mail or SMS providers — your use of them is governed by their own terms. This website is hosted on DigitalOcean, serves its media from Bunny and sends contact messages through Mailgun; links to GitHub, npm and other sites lead to services governed by their own terms."
             ]
           },
           {
             "title": "No warranty",
             "paragraphs": [
-              "The software is provided “as is”, without warranty of any kind. Krizaka makes no guarantee of availability, accuracy or fitness for a particular purpose, and is not liable for damages arising from its use, as set out in the Apache License 2.0."
+              "The software is provided “as is”, without warranty of any kind. Krizaka makes no guarantee of availability, accuracy or fitness for a particular purpose, and is not liable for damages arising from its use, as set out in the Apache License 2.0, to the extent the law allows."
             ]
           },
           {
             "title": "This website",
             "paragraphs": [
-              "krizaka.com describes our products and documentation. Its content may change without notice. These terms are governed by the laws of Québec, Canada."
+              "krizaka.com describes our products and documentation. Its content may change without notice. Crawlers, including those of AI assistants and search engines, are welcome: robots.txt allows them and llms.txt summarises the site for them. Our privacy practices are in the Privacy Policy."
+            ]
+          },
+          {
+            "title": "Law and changes",
+            "paragraphs": [
+              "These terms are governed by the laws of Québec and the federal laws of Canada that apply there, subject to any mandatory rights you hold as a consumer. We update them when what we publish changes, and the date at the top follows."
             ]
           }
         ]
