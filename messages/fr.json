@@ -385,7 +385,7 @@
             "Ōrāre : parler, demander — la racine latine d'oracle. Dans les vieilles histoires, on montait jusqu'à l'oracle avec sa question, et on lui confiait quelque chose d'intime.",
             "Aujourd'hui, interroger une IA revient souvent à descendre ses contrats, ses fichiers et ses idées dans la vallée d'un autre. Pour beaucoup d'équipes, c'est rédhibitoire : alors elles s'en passent. Nous pensons que c'est le mauvais marché.",
             "Orazaka installe l'oracle sur votre colline : des réponses tirées de vos propres documents, des visuels générés sur vos machines, des Studios qui prennent le travail répétitif — sur votre infrastructure, selon vos règles. Vos questions et vos réponses restent à la maison, et chaque ligne qui les touche est publique : votre équipe sécurité vérifie au lieu de croire.",
-            "C'est aussi le moteur qu'appellent les produits : les conversations de Yasakia tournent dessus, comme tous les produits qui ont besoin d'intelligence sans rien envoyer ailleurs."
+            "C'est aussi le moteur que les produits sont destinés à appeler : les conversations de Yasakia sont prévues sur lui, comme celles de tout produit qui a besoin d'intelligence sans rien envoyer ailleurs."
           ],
           "move": "Vos données ne quittent jamais la maison.",
           "stat": "Données gardées chez vous"
@@ -395,7 +395,7 @@
           "title": "Parler d'abord. Se choisir dans les deux sens.",
           "body": [
             "Les applis de rencontre ont fait des gens un catalogue : on glisse, on note, on recommence. On finit par juger des photos à minuit, et par être jugé de la même façon.",
-            "Yasakia commence par une conversation plutôt qu'un formulaire. Un agent propulsé par Orazaka apprend à vous connaître avec vos mots, puis ouvre un petit lot de trois à cinq personnes compatibles dans les deux sens — avec les raisons en mots, jamais un score.",
+            "Yasakia commence par une conversation plutôt qu'un formulaire. Un agent, prévu sur Orazaka, apprendra à vous connaître avec vos mots, puis ouvrira un petit lot de trois à cinq personnes compatibles dans les deux sens — avec les raisons en mots, jamais un score.",
             "Le lot suivant attend votre retour. Pas de swipe, pas de catalogue, pas de fil sans fin : moins de personnes, mieux choisies, et personne que vous n'ayez voulu rencontrer tous les deux."
           ],
           "move": "Dans les deux sens, ou pas du tout.",
@@ -407,7 +407,7 @@
           "body": [
             "Certains soirs, on a besoin de mettre des mots sur ce qu'on porte, d'entendre une question qu'on ne s'était pas posée, et de repartir avec une phrase claire.",
             "Yororis est un espace d'écoute avec un visage et une voix : une présence IA qui le dit, écoute, reformule, pose une question — et s'arrête. Un moment a une fin, la journée aussi : les limites sont le produit.",
-            "Il est propulsé par le pack bien-être d'Orazaka : les gardes vivent dans le moteur et ce que vous dites reste sur nos machines. Nous construisons Yororis en public et nous étudions son cadre — juridique, éthique, clinique — avant toute mise à disposition. Rien n'est en ligne, rien n'est offert, et il n'y a pas de date."
+            "Il est prévu sur le pack bien-être d'Orazaka : les gardes vivront dans le moteur et ce que vous direz restera sur nos machines. Nous construisons Yororis en public et nous étudions son cadre — juridique, éthique, clinique — avant toute mise à disposition. Rien n'est en ligne, rien n'est offert, et il n'y a pas de date."
           ],
           "move": "Une présence qui s'arrête.",
           "stat": "En construction"
