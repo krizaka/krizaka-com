@@ -37,3 +37,9 @@
 .yd-list-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; color: var(--kz-text-primary); }
 @media (max-width: 860px) { .yd { grid-template-columns: minmax(0, 1fr); gap: 28px; } .yd-phone-wrap { justify-items: center; } }
 @media (max-width: 380px) { .yd-screen { height: 620px; } }
+
+.yd-native { margin: 8px 0 0; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; }
+.yd-native-phone { width: 190px; flex: none; padding: 8px; border-radius: 30px; background: var(--kz-surface-2); border: 1px solid var(--kz-border-strong); }
+.yd-native-video { display: block; width: 100%; aspect-ratio: 390 / 848; border-radius: 22px; object-fit: cover; background: var(--kz-surface-0); }
+.yd-native figcaption { display: grid; gap: 4px; flex: 1 1 200px; font-size: 13px; line-height: 1.5; color: var(--kz-text-secondary); }
+.yd-native figcaption strong { font-size: 15px; color: var(--kz-text-primary); }

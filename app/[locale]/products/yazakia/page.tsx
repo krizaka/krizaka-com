@@ -23,7 +23,7 @@ import YazakiaDemo from "@/app/components/yazakia/YazakiaDemo";
 import { reveal } from "@/lib/motion";
 import { localizedMetadata } from "@/lib/seo";
 import { YAZAKIA_MOBILE_REPO_URL, YAZAKIA_REPO_URL } from "@/lib/site";
-import { yazakiaDemoPortraits } from "@/lib/yazakia-demo";
+import { yazakiaDemoPortraits, yazakiaNativeLoops } from "@/lib/yazakia-demo";
 
 /* /products/yazakia — the third Krizaka product, announced before it ships: the promise, the trap it refuses, the
    loop in four steps, its signature (mutual batches) told as decisions, privacy by design, what it is built with, and
@@ -140,7 +140,7 @@ export default async function YazakiaPage({ params }: Props) {
       </Section>
 
       <Section id="demo" eyebrow={y.demo.eyebrow} title={y.demo.title} lead={y.demo.lead} reveal divider>
-        <YazakiaDemo portraits={yazakiaDemoPortraits()} />
+        <YazakiaDemo portraits={yazakiaDemoPortraits()} loops={yazakiaNativeLoops()} />
       </Section>
 
       <Section id="matching" title={y.matching.title} headingSize="sm" divider>

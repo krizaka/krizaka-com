@@ -55,3 +55,7 @@ test("the demo is made of Krizaka UI components only", () => {
     assert.ok(imports.includes(`@krizaka/ui/${need}`), `@krizaka/ui/${need} is not used`);
   }
 });
+
+test("the native loop is recorded, dark and light, and on the CDN", () => {
+  for (const theme of ["dark", "light"]) for (const ext of ["webm", "mp4", "jpg"]) assert.ok(manifest.files[`products/yazakia/mobile/loop-${theme}.${ext}`], `loop-${theme}.${ext} is not on the CDN`);
+});

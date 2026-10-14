@@ -22,9 +22,10 @@ import { Skeleton, SkeletonText } from "@krizaka/ui/skeleton";
 import { StepProgress } from "@krizaka/ui/step-progress";
 import { PersonCard, SwipeDeck } from "@krizaka/ui/swipe-deck";
 import { VerifiedBadge } from "@krizaka/ui/verified-badge";
-import { YAZAKIA_DEMO_PEOPLE, type YazakiaDemoPersonId } from "@/lib/yazakia-demo";
+import { YAZAKIA_DEMO_PEOPLE, type NativeLoops, type YazakiaDemoPersonId } from "@/lib/yazakia-demo";
 import { useI18n } from "../I18nProvider";
 import { useTargetIn, usePrefersReducedMotion } from "../home/kit/shared";
+import NativeLoop from "./NativeLoop";
 import "./yazakia-demo.css";
 
 type Phase = "talk" | "portrait" | "debrief" | "loading" | "deck" | "intro";
@@ -36,7 +37,7 @@ const WAIT_MS = 2400;
 
 type Msg = { id: number; mine: boolean; text: string; context?: string };
 
-export default function YazakiaDemo({ portraits }: { portraits: Record<YazakiaDemoPersonId, string> }) {
+export default function YazakiaDemo({ portraits, loops }: { portraits: Record<YazakiaDemoPersonId, string>; loops: NativeLoops }) {
   const { t } = useI18n();
   const d = t.site.yazakia.demo;
   const reduced = usePrefersReducedMotion();
@@ -64,6 +65,7 @@ export default function YazakiaDemo({ portraits }: { portraits: Record<YazakiaDe
   const [deck, setDeck] = useState<YazakiaDemoPersonId[]>(YAZAKIA_DEMO_PEOPLE.map((p) => p.id));
   const [matched, setMatched] = useState<YazakiaDemoPersonId | null>(null);
   const [matchOpen, setMatchOpen] = useState(false);
+  const [brandRoot, setBrandRoot] = useState<HTMLElement | null>(null); // the dialog is drawn inside the brand scope
   const [introMsgs, setIntroMsgs] = useState<Msg[]>([]);
   const [introDraft, setIntroDraft] = useState("");
   const target = useTargetIn(SEVEN_DAYS);
@@ -330,6 +332,7 @@ export default function YazakiaDemo({ portraits }: { portraits: Record<YazakiaDe
               setDeck((all) => all.filter((x) => x !== p.id));
               if (direction === "like" && !matched) {
                 setMatched(p.id);
+                setBrandRoot(phoneRef.current?.closest<HTMLElement>(".brand-yazakia") ?? null);
                 setMatchOpen(true);
               }
             }}
@@ -435,6 +438,7 @@ export default function YazakiaDemo({ portraits }: { portraits: Record<YazakiaDe
         <Button variant="secondary" shape="cut" onClick={restart}>
           {d.restart}
         </Button>
+        <NativeLoop loops={loops} />
       </div>
 
       <p className="sr-only" role="status" aria-live="polite">
@@ -454,6 +458,7 @@ export default function YazakiaDemo({ portraits }: { portraits: Record<YazakiaDe
             go("intro");
           }}
           secondaryLabel={d.match.secondary}
+          container={brandRoot}
         />
       ) : null}
     </div>

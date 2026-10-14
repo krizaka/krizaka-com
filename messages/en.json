@@ -1801,6 +1801,11 @@
           "composer": "Write to {name}",
           "sent": "Sent",
           "keep": "Carry on together, or let it fade: you choose on day seven."
+        },
+        "native": {
+          "title": "The same loop, on an iPhone",
+          "caption": "Recorded on the simulator with the native components of Krizaka UI: the same steps, the same words. About 30 seconds, on a loop.",
+          "alt": "The Yazakia loop on an iPhone: the agent's chat, the portrait, the debrief, the batch, the match and the intro."
         }
       }
     },

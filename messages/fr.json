@@ -1801,6 +1801,11 @@
           "composer": "Écrire à {name}",
           "sent": "Envoyé",
           "keep": "Continuer ensemble ou laisser filer : vous choisissez au septième jour."
+        },
+        "native": {
+          "title": "La même boucle, sur un iPhone",
+          "caption": "Enregistrée sur le simulateur avec les composants natifs de Krizaka UI : les mêmes étapes, les mêmes mots. Environ 30 secondes, en boucle.",
+          "alt": "La boucle Yazakia sur un iPhone : la discussion avec l'agent, le portrait, le débrief, le lot, la réciprocité et l'intro."
         }
       }
     },
