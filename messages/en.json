@@ -638,7 +638,8 @@
             "progress": "bar · ring",
             "profile-card": "portrait · gauges",
             "avatar": "group · overflow",
-            "toast": "short feedback"
+            "toast": "short feedback",
+            "map": "MapLibre · Protomaps"
           },
           "slider": {
             "range": "Range",
@@ -701,6 +702,14 @@
             "title": "The same kit, native",
             "caption": "Native components of @krizaka/ui, recorded on an iPhone simulator and re-themed to the identity you pick.",
             "alt": "Native Krizaka UI components in the {brand} identity"
+          },
+          "map": {
+            "label": "Pick-up points",
+            "places": {
+              "a": "First place",
+              "b": "Second place",
+              "c": "Third place"
+            }
           }
         },
         "cli": {
