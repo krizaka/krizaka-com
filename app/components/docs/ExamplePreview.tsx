@@ -5,6 +5,7 @@ import { ServerCodeBlock } from "fumadocs-ui/components/codeblock.rsc";
 import { exampleKey, exampleSource, type Kit, type RegistryExample } from "@/lib/ui-registry";
 import { UI_EXAMPLES, type UiExampleKey } from "@/lib/ui-examples";
 import { format, getDictionary, type Locale } from "@/lib/i18n";
+import { MapAssets } from "./MapAssets";
 import { PreviewFrame } from "./PreviewFrame";
 import { cn } from "@krizaka/ui/cn";
 
@@ -22,6 +23,7 @@ export async function ExamplePreview({ title, example, locale, kit = "ui" }: { t
   const { default: Example } = await load();
   return (
     <PreviewFrame label={format(t.label, { name: `${title} — ${example.title}` })} code={code} stageClassName={kit === "ui" ? "" : cn("kz-kit-scope", "kz-kit-" + kit)}>
+      {exampleKey(example).startsWith("map/") ? <MapAssets /> : null}
       <Example />
     </PreviewFrame>
   );

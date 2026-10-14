@@ -6,6 +6,8 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Map, Marker, StaticMap } from "@krizaka/ui/map";
+// The basemap through this origin (/maps/v1, the CDN proxied): no cross-origin request.
+import "../../docs/MapAssets";
 import { useI18n } from "../../I18nProvider";
 
 const CENTER = [-73.592, 45.528] as const;
