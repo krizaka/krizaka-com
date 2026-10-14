@@ -374,17 +374,8 @@
       "ours": {
         "label": "Bonus round",
         "title": "We use our own products.",
-        "lead": "Every product runs on the same blocks, stays live over SSE (push on mobile) and gets its intelligence from Orazaka. The table reads the products' own manifests; \"Planned\" marks what is decided and tracked, not shipped yet.",
-        "caption": "What each product runs on",
-        "product": "Product",
-        "yes": "Yes",
-        "no": "No",
-        "isEngine": "Is the engine",
-        "planned": "Planned",
-        "transport": {
-          "sse": "SSE",
-          "ssePush": "SSE + push"
-        }
+        "lead": "Every product runs on the same open stack — Krizaka UI, tokens, icons and realtime, with Orazaka as the engine. The table that proves it, cell by cell, is on Open source.",
+        "cta": "What each product runs on"
       },
       "chapters": {
         "orazaka": {
@@ -543,7 +534,8 @@
         "products": "Products",
         "blocks": "Building blocks",
         "more": "More",
-        "stack": "The stack"
+        "stack": "The stack",
+        "runs": "What runs on what"
       },
       "eyebrow": "Open source · Apache-2.0",
       "stackEyebrow": "The stack",
@@ -555,6 +547,28 @@
         "orochia-mobile": "The Orochia mobile app (iOS and Android).",
         "orochia-design-system": "Design tokens and components shared by the Orochia apps.",
         "default": "A repository of the Orochia platform."
+      },
+      "runs": {
+        "eyebrow": "The proof",
+        "title": "One open stack builds all four products.",
+        "lead": "Each cell is read from the products' own manifests (package.json and pom.xml) — not typed. \"Planned\" marks what is decided and tracked, not shipped yet.",
+        "caption": "What each product runs on",
+        "product": "Product",
+        "yes": "Yes",
+        "no": "No",
+        "partial": "Partly",
+        "isEngine": "Is the engine",
+        "planned": "Planned",
+        "read": "Read from the repositories' manifests on {date}.",
+        "transport": {
+          "sse": "SSE",
+          "ssePush": "SSE + push"
+        },
+        "parts": {
+          "tokens": "tokens",
+          "icons": "icons",
+          "intl": "intl"
+        }
       }
     },
     "notFound": {

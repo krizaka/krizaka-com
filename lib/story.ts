@@ -10,17 +10,9 @@
 import { MASCOT_BIRDS } from "@krizaka/ui/mascots";
 import { NAV_PRODUCTS, type NavProduct } from "./nav";
 
-/** The kits a product can run on — the platform's blocks, then the engine. Texts: site.story.kits.<id>. */
-export const KITS = ["ui", "foundations", "realtime", "java", "engine"] as const;
-export type KitId = (typeof KITS)[number];
-
-/** The packages and artifacts each kit stands for: their versions are read from the registries at build. */
-export const KIT_PACKAGES: Record<Exclude<KitId, "engine">, readonly string[]> = {
-  ui: ["@krizaka/ui"],
-  foundations: ["@krizaka/tokens", "@krizaka/icons", "@krizaka/intl"],
-  realtime: ["@krizaka/realtime", "@krizaka/push"],
-  java: ["com.krizaka:krizaka-platform-kit"],
-};
+export { KITS, KIT_PACKAGES, type KitId } from "./product-stack";
+import type { KitId } from "./product-stack";
+import { productKits } from "./product-stack-data";
 
 export interface StageStructure {
   /** The bird in the stage's corner — it carries the promise (one bird per idea). Ignored until @krizaka/ui draws it. */
@@ -29,16 +21,9 @@ export interface StageStructure {
   combo: readonly string[];
   /** The figure on the stage's gauge, 0–1 — computed, or a design rule (100 %: never a share given away). */
   stat?: number;
-  /** What it runs on, from its manifests (package.json, pom.xml) — see the source on each line. */
+  /** What it runs on, read from its manifests (lib/product-stack.ts — the proof table lives on /open-source). */
   runsOn: readonly KitId[];
-  /** How it stays live — every product streams at least over SSE; push on mobile. */
-  live: Transport;
-  /** What is decided and on the roadmap but not shipped yet (an issue tracks it) — shown as "Planned", never as "Yes". */
-  planned?: readonly KitId[];
 }
-
-/** The realtime transport a product ships with. Texts: site.story.ours.transport.<id>. */
-export type Transport = "sse" | "ssePush";
 
 /** The studio: the narrator, and the forge of the platform. The duck builds: the code, the tests, the docs. */
 export const STUDIO = { id: "krizaka", bird: "duck", combo: ["↓", "↘", "→", "P"] } as const;
@@ -47,26 +32,18 @@ export const STUDIO = { id: "krizaka", bird: "duck", combo: ["↓", "↘", "→"
 export const ENGINE: NavProduct["id"] = "orazaka";
 
 /** The stages of the products, by id. A product of NAV_PRODUCTS without an entry here is not staged. */
-const STAGES: Record<string, StageStructure> = {
-  /* The owl reads your documents and keeps every question in the house: 100 % of the data stays home.
-     orazaka-apps/ui/*: @krizaka/ui, tokens, icons, intl; the services build on krizaka-platform-kit (architecture.json,
-     layer "krizaka"). */
-  orazaka: { bird: "owl", combo: ["←", "↙", "↓", "↘", "→", "K"], stat: 1, runsOn: ["ui", "foundations", "java"], live: "sse" },
-  /* The lovebird introduces: a batch opens only when the interest goes both ways (100 % mutual, by design).
-     yasakia/apps/web: @krizaka/ui, tokens, icons, intl, realtime, push; its agent runs on Orazaka (lib/org-data.ts). */
-  yasakia: { bird: "lovebird", combo: ["↓", "↓", "→", "P"], stat: 1, runsOn: ["ui", "foundations", "realtime", "engine"], live: "ssePush" },
-  /* The crane: a listening space with a face and a voice, powered by Orazaka's wellbeing pack (under construction).
-     Under construction: realtime and the engine are its design (prompts-yororis §2), not shipped yet — planned. */
-  yororis: { bird: "crane", combo: ["←", "→", "↓", "K"], runsOn: ["ui", "foundations"], live: "ssePush", planned: ["realtime", "engine"] },
+const STAGES: Record<string, Omit<StageStructure, "runsOn">> = {
+  /* The owl reads your documents and keeps every question in the house: 100 % of the data stays home. */
+  orazaka: { bird: "owl", combo: ["←", "↙", "↓", "↘", "→", "K"], stat: 1 },
+  /* The lovebird introduces: a batch opens only when the interest goes both ways (100 % mutual, by design). */
+  yasakia: { bird: "lovebird", combo: ["↓", "↓", "→", "P"], stat: 1 },
+  /* The crane: a listening space with a face and a voice, powered by Orazaka's wellbeing pack (under construction). */
+  yororis: { bird: "crane", combo: ["←", "→", "↓", "K"] },
 };
-
-/** What a product runs on (its stage's kits, from its manifests) — the "we use our own products" table of /story, also
-    read by /open-source. Empty for a product without a stage. */
-export const productKits = (id: string): readonly KitId[] => STAGES[id]?.runsOn ?? [];
 
 /** The staged products, in the site's order: the engine first, then the products it powers. */
 export function storyProducts(hasWords: (id: string) => boolean) {
-  const products = NAV_PRODUCTS.filter((p) => STAGES[p.id] && hasWords(p.id)).map((p) => ({ ...p, ...STAGES[p.id]! }));
+  const products = NAV_PRODUCTS.filter((p) => STAGES[p.id] && hasWords(p.id)).map((p) => ({ ...p, ...STAGES[p.id]!, runsOn: productKits(p.id) }));
   return [...products.filter((p) => p.id === ENGINE), ...products.filter((p) => p.id !== ENGINE)];
 }
 export type StoryProduct = ReturnType<typeof storyProducts>[number];

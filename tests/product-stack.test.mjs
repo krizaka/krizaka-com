@@ -1,0 +1,63 @@
+import { test } from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { ENGINE, KITS, PLANNED, provenKit, stackCell, stackRows } from "../lib/product-stack.ts";
+
+// The table "What each product runs on" (/open-source): every cell is read from the products' manifests
+// (lib/product-manifests.json, scripts/gen-product-manifests.mjs) — no network here.
+const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+const { products: manifests } = JSON.parse(read("lib/product-manifests.json"));
+const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",/g)].map((m) => m[1]);
+
+test("every product of lib/products.ts has a row — Orochia included", () => {
+  assert.deepEqual(ids, ["orazaka", "orochia", "yasakia", "yororis"]);
+  const rows = stackRows(ids, manifests);
+  assert.deepEqual(rows.map((r) => r.id), ids);
+  for (const r of rows) {
+    assert.ok(manifests[r.id]?.sources.length > 0, `${r.id}: manifests were read`);
+    assert.deepEqual(r.cells.map((c) => c.kit), [...KITS]);
+  }
+});
+
+test("a cell says Yes only when a manifest of the product proves it", () => {
+  for (const id of ids) {
+    for (const cell of stackRows([id], manifests)[0].cells) {
+      if (cell.state === "yes" || cell.state === "partial") assert.ok(provenKit(cell.kit, manifests[id]), `${id}/${cell.kit} is in no manifest`);
+    }
+    // Every @krizaka package claimed is a dependency of the product's repositories.
+    const npm = new Set(manifests[id].npm);
+    const ui = stackCell(id, "ui", manifests[id]);
+    assert.equal(ui.state === "yes", npm.has("@krizaka/ui"), `${id}: Krizaka UI`);
+    const java = stackCell(id, "java", manifests[id]);
+    assert.equal(java.state === "yes", manifests[id].maven.length > 0, `${id}: Java platform kit`);
+  }
+});
+
+test("what is Planned is not in a manifest yet (else it is shipped: say Yes)", () => {
+  for (const [id, kits] of Object.entries(PLANNED)) {
+    assert.ok(ids.includes(id), `${id} is a product`);
+    for (const kit of kits) if (kit !== "engine") assert.equal(provenKit(kit, manifests[id]), false, `${id}/${kit} is shipped: drop it from PLANNED`);
+  }
+});
+
+test("the engine is the only product that is the engine; the others run on it only when it ships", () => {
+  assert.equal(stackCell(ENGINE, "engine", manifests[ENGINE]).state, "engine");
+  for (const id of ids.filter((i) => i !== ENGINE)) assert.notEqual(stackCell(id, "engine", manifests[id]).state, "yes");
+});
+
+test("the table, product by product (Orochia: neutral facts only)", () => {
+  const word = (c) => (c.state === "partial" ? `partial:${c.parts.join("+")}` : c.state === "yes" && c.transport ? c.transport : c.state);
+  const table = Object.fromEntries(stackRows(ids, manifests).map((r) => [r.id, r.cells.map(word)]));
+  assert.deepEqual(table, {
+    orazaka: ["yes", "yes", "sse", "yes", "engine"],
+    orochia: ["yes", "yes", "ssePush", "no", "planned"],
+    yasakia: ["yes", "partial:tokens+icons", "ssePush", "no", "planned"],
+    yororis: ["yes", "partial:tokens+icons", "planned", "no", "planned"],
+  });
+});
+
+test("the table lives on /open-source, /story only points to it", () => {
+  assert.match(read("app/[locale]/open-source/page.tsx"), /ProductStackTable/);
+  assert.doesNotMatch(read("app/[locale]/story/StoryClient.tsx"), /<table/);
+  assert.match(read("app/[locale]/story/StoryClient.tsx"), /href="\/open-source#runs-on"/);
+});

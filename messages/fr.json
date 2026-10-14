@@ -374,17 +374,8 @@
       "ours": {
         "label": "Manche bonus",
         "title": "Nous utilisons nos propres produits.",
-        "lead": "Chaque produit tourne sur les mêmes briques, reste en direct par SSE (push sur mobile) et tire son intelligence d'Orazaka. Le tableau lit les manifestes des produits ; « Prévu » marque ce qui est décidé et suivi, pas encore livré.",
-        "caption": "Ce sur quoi tourne chaque produit",
-        "product": "Produit",
-        "yes": "Oui",
-        "no": "Non",
-        "isEngine": "C'est le moteur",
-        "planned": "Prévu",
-        "transport": {
-          "sse": "SSE",
-          "ssePush": "SSE + push"
-        }
+        "lead": "Chaque produit tourne sur la même pile ouverte — Krizaka UI, tokens, icônes et temps réel, avec Orazaka comme moteur. Le tableau qui le prouve, case par case, est sur Open source.",
+        "cta": "Ce sur quoi tourne chaque produit"
       },
       "chapters": {
         "orazaka": {
@@ -543,7 +534,8 @@
         "products": "Produits",
         "blocks": "Briques",
         "more": "Plus",
-        "stack": "La pile"
+        "stack": "La pile",
+        "runs": "Ce qui tourne sur quoi"
       },
       "eyebrow": "Open source · Apache-2.0",
       "stackEyebrow": "La pile",
@@ -555,6 +547,28 @@
         "orochia-mobile": "L'application mobile Orochia (iOS et Android).",
         "orochia-design-system": "Les jetons de design et composants partagés par les applications Orochia.",
         "default": "Un dépôt de la plateforme Orochia."
+      },
+      "runs": {
+        "eyebrow": "La preuve",
+        "title": "Une seule pile ouverte construit les quatre produits.",
+        "lead": "Chaque case est lue dans les manifestes des produits (package.json et pom.xml) — jamais saisie. « Prévu » marque ce qui est décidé et suivi, pas encore livré.",
+        "caption": "Ce sur quoi tourne chaque produit",
+        "product": "Produit",
+        "yes": "Oui",
+        "no": "Non",
+        "partial": "En partie",
+        "isEngine": "C'est le moteur",
+        "planned": "Prévu",
+        "read": "Lu dans les manifestes des dépôts le {date}.",
+        "transport": {
+          "sse": "SSE",
+          "ssePush": "SSE + push"
+        },
+        "parts": {
+          "tokens": "tokens",
+          "icons": "icônes",
+          "intl": "intl"
+        }
       }
     },
     "notFound": {
