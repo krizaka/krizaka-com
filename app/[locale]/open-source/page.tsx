@@ -19,6 +19,7 @@ import { reveal } from "@/lib/motion";
 import { BUILDING_BLOCKS, FORUMS } from "@/lib/building-blocks";
 import BlockCard from "@/app/components/blocks/BlockCard";
 import { CardGrid } from "@krizaka/ui/card-grid";
+import { LinkCard } from "@krizaka/ui/link-card";
 import { CataloguePage } from "@krizaka/ui/catalogue-page";
 import { ChipLink } from "@krizaka/ui/chip-link";
 import { CtaPanel } from "@krizaka/ui/cta-panel";
@@ -90,7 +91,7 @@ export default async function OpenSourcePage({ params }: Props) {
     const status: Fact = nav.status
       ? { label: site.nav.status[nav.status].long, tone: "wip" }
       : { label: t.live, tone: "ok" };
-    return { nav, repos, uses, status, engine: runsOn.includes("engine") && nav.id !== "orazaka" };
+    return { nav, repos, uses, status, engine: runsOn.includes("engine") && nav.id !== "orazaka", foundation: runsOn.filter((k) => k !== "engine") };
   });
   const platformRepos = repositoriesOf(repositories, "krizaka", PRODUCT_IDS);
   const listed = products.reduce((n, p) => n + p.repos.length, platformRepos.length);
@@ -118,6 +119,11 @@ export default async function OpenSourcePage({ params }: Props) {
       </ul>
       <p className="os-filters-title">{t.nav.more}</p>
       <ul>
+        <li>
+          <ChipLink href="#knowhow" className="os-chip">
+            {t.nav.knowhow}
+          </ChipLink>
+        </li>
         <li>
           <ChipLink href="#stack" className="os-chip">
             {t.nav.stack}
@@ -159,6 +165,29 @@ export default async function OpenSourcePage({ params }: Props) {
         <section id="stack" aria-labelledby="os-stack" className="os-product">
           <SectionHeading id="os-stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead} />
           <StackCards locale={locale} mavenArtifacts={mavenArtifactCount()} />
+        </section>
+
+        <section id="knowhow" aria-labelledby="os-knowhow" className="os-product">
+          <SectionHeading id="os-knowhow" eyebrow={t.foundation.eyebrow} title={t.foundation.title} lead={t.foundation.lead} />
+          <CardGrid as="ul" min={340} columns={2}>
+            {products.map(({ nav, repos, foundation }) => {
+              const kits = foundation.map((k) => site.story.kits[k].name).join(", ");
+              return (
+                <LinkCard
+                  key={nav.id}
+                  href={`#${nav.id}`}
+                  linkAs={Link}
+                  layout="stack"
+                  className={"brand-" + nav.id}
+                  title={site.products.knowhow[nav.id].name}
+                  meta={format(site.products.proofBy, { name: nav.name })}
+                  icon={<ProductLogo id={nav.id} size={40} animated={false} />}
+                  description={kits ? format(t.foundation.stands, { name: nav.name, kits }) : format(t.foundation.standsAlone, { name: nav.name })}
+                  cta={format(t.repoCount, { count: repos.length })}
+                />
+              );
+            })}
+          </CardGrid>
         </section>
 
         <section id="runs-on" aria-labelledby="os-runs" className="os-product">

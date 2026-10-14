@@ -111,10 +111,10 @@
       }
     },
     "products": {
-      "eyebrow": "Krizaka products",
+      "eyebrow": "Know-how, proved by products",
       "title": "Our products",
-      "pageTitle": "Four products, each on its own site",
-      "lead": "Krizaka builds open-source products. Each has its own site, where it is presented, demonstrated and documented — and its source on GitHub.",
+      "pageTitle": "Four know-hows, each proved by a product",
+      "lead": "Krizaka's products are the proof of what it knows how to do. Each has its own site, where it is presented, demonstrated and documented — and its source on GitHub.",
       "visit": "Visit the dev site",
       "visitAria": "{name} — visit the dev site",
       "source": "Source",
@@ -131,6 +131,25 @@
         },
         "yororis": {
           "line": "A listening space with a face and a voice."
+        }
+      },
+      "proofBy": "Proved by {name}",
+      "knowhow": {
+        "orazaka": {
+          "name": "The engine",
+          "proof": "Every request crosses a deterministic pipeline to the best local model: your documents, your models, your network — nothing leaves."
+        },
+        "orochia": {
+          "name": "Mastery of media",
+          "proof": "Uploads go straight to the CDN over Tus, an adaptive transcoder encodes, playback uses signed HLS links that expire after five minutes, and every transaction settles through escrow."
+        },
+        "yasakia": {
+          "name": "Geolocation",
+          "proof": "The position is rounded to about 1 km before it is stored, and the database answers the radius and matches who you are with who you seek — nearby, never exact."
+        },
+        "yororis": {
+          "name": "Voice and image",
+          "proof": "A listening space with a face and a voice — under construction: nothing is deployed, nothing is offered."
         }
       }
     },
@@ -154,17 +173,17 @@
         }
       },
       "products": {
-        "eyebrow": "What we build",
-        "title": "Four products, each on its own site.",
-        "lead": "Each product is presented, demonstrated and documented on its own site, with its source on GitHub.",
+        "eyebrow": "Know-how",
+        "title": "What we know how to do.",
+        "lead": "Each know-how is proved by a product, on its own site, with its source on GitHub.",
         "visit": "Open {host}",
         "preview": "Dev preview",
         "all": "All products"
       },
       "stack": {
         "eyebrow": "The stack we open-source",
-        "title": "One open stack builds all four products.",
-        "lead": "Orazaka, Orochia, Yasakia and Yororis are made of the same open pieces: Krizaka UI for every screen, Krizaka Java for every service. Each product only brings its identity.",
+        "title": "One open stack under every know-how.",
+        "lead": "Orazaka, Orochia, Yasakia and Yororis are made of the same open pieces: Krizaka UI for every screen, Krizaka Java for every service. Each product only brings its identity and its know-how.",
         "visit": "Open {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
@@ -302,7 +321,7 @@
         "eyebrow": "Our story",
         "presents": "Krizaka presents",
         "title": "One studio. One engine. <b>Every product on the same blocks.</b>",
-        "lead": "Krizaka is a studio built on one refusal. Your data shouldn't have to leave home to be useful, a creator shouldn't hand a fortune to a platform to get paid, and nobody should have to take software on faith. So we forge the building blocks in the open, build an AI engine on them — Orazaka — and ship our products on both. We use what we make, every day."
+        "lead": "Krizaka is a studio built on one refusal. Your data shouldn't have to leave home to be useful, a creator shouldn't hand a fortune to a platform to get paid, and nobody should have to take software on faith. So we forge the building blocks in the open, build an AI engine on them — Orazaka — and ship our products on both. We use what we make, every day. Each product proves one thing we know how to do — the engine, geolocation, voice and image — next to the mastery of media behind Orochia."
       },
       "studio": {
         "label": "The house",
@@ -348,10 +367,6 @@
           "line": "The sovereign AI engine"
         }
       },
-      "roles": {
-        "engine": "The engine",
-        "product": "Product"
-      },
       "runsOn": "Runs on",
       "ours": {
         "label": "Bonus round",
@@ -370,7 +385,8 @@
             "It is also the engine the products are meant to call: Yasakia's conversations are planned to run on it, and so will every product that needs intelligence without sending anything away."
           ],
           "move": "Your data never leaves home.",
-          "stat": "Data kept at home"
+          "stat": "Data kept at home",
+          "knowhow": "The engine"
         },
         "yasakia": {
           "caption": "The dating app where you talk first",
@@ -381,7 +397,8 @@
             "The next batch waits for your debrief. No swipe, no catalogue, no endless feed: fewer people, better chosen, and nobody you didn't both want to meet."
           ],
           "move": "Both ways, or not at all.",
-          "stat": "Matches that go both ways"
+          "stat": "Matches that go both ways",
+          "knowhow": "Geolocation"
         },
         "yororis": {
           "caption": "A listening space with a face and a voice",
@@ -392,7 +409,8 @@
             "It is planned to run on Orazaka's wellbeing pack, so its guards will live in the engine and what you say will stay on our machines. We're building Yororis in the open and studying its framework — legal, ethical, clinical — before making it available. Nothing is live, nothing is offered, and there is no date."
           ],
           "move": "A presence that stops.",
-          "stat": "Under construction"
+          "stat": "Under construction",
+          "knowhow": "Voice and image"
         }
       },
       "flock": {
@@ -517,7 +535,8 @@
         "blocks": "Building blocks",
         "more": "More",
         "stack": "The stack",
-        "runs": "What runs on what"
+        "runs": "What runs on what",
+        "knowhow": "Know-how"
       },
       "eyebrow": "Open source · Apache-2.0",
       "stackEyebrow": "The stack",
@@ -532,7 +551,7 @@
       },
       "runs": {
         "eyebrow": "The proof",
-        "title": "One open stack builds all four products.",
+        "title": "One open foundation under every know-how.",
         "lead": "Each cell is read from the products' own manifests (package.json and pom.xml) — not typed. \"Planned\" marks what is decided and tracked, not shipped yet.",
         "caption": "What each product runs on",
         "product": "Product",
@@ -551,6 +570,13 @@
           "icons": "icons",
           "intl": "intl"
         }
+      },
+      "foundation": {
+        "eyebrow": "The foundation",
+        "title": "The same open pieces under every know-how.",
+        "lead": "A know-how is not a feature of one product: it stands on the shared stack. Each card names the know-how, the product that proves it and the open pieces under it, and leads to that product's repositories below.",
+        "stands": "{name} stands on {kits}.",
+        "standsAlone": "{name} is the engine the other products are meant to call."
       }
     },
     "notFound": {
