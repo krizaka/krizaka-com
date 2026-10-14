@@ -75,7 +75,7 @@ test("the documentation is one place: no link to a public Storybook", () => {
 
 test("every written page has its title/description in both languages", async () => {
   const { readdirSync } = await import("node:fs");
-  for (const section of ["ui", "java"]) {
+  for (const section of ["ui"]) {
     const en = read("messages/en.json").docs.pages[section];
     const fr = read("messages/fr.json").docs.pages[section];
     for (const file of readdirSync(new URL(`content/docs/${section}/`, root))) {

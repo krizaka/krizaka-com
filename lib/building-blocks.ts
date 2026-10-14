@@ -114,7 +114,7 @@ export const BUILDING_BLOCKS: readonly BuildingBlock[] = [
     registry: "maven",
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/14",
-    docs: "/docs/java",
+    docs: "https://java.krizaka.com",
     releases: [
       { coordinate: "com.krizaka:krizaka-spring-boot-starter-*", version: ver("com.krizaka:krizaka-spring-boot-starter-web"), url: central("krizaka-spring-boot-starter-web") },
       { coordinate: "com.krizaka:krizaka-web · -security · -messaging · -observability", version: ver("com.krizaka:krizaka-messaging"), url: central("krizaka-messaging") },
@@ -356,7 +356,7 @@ try {
     registry: "maven",
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/13",
-    docs: "/docs/java/build",
+    docs: "https://java.krizaka.com/build/",
     releases: [
       { coordinate: "com.krizaka:krizaka-bom · krizaka-parent", version: ver("com.krizaka:krizaka-bom"), url: central("krizaka-bom") },
       { coordinate: "com.krizaka:krizaka-test-support", version: ver("com.krizaka:krizaka-test-support"), url: central("krizaka-test-support") },

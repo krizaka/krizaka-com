@@ -67,7 +67,7 @@ test("the old Orazaka addresses that redirected to /products/orazaka/… go to i
 });
 
 test("what stays on krizaka.com is never redirected", () => {
-  for (const path of ["/", "/en", "/products", "/en/products", "/fr/products", "/story", "/open-source", "/en/open-source/ui", "/contact", "/privacy", "/terms", "/docs", "/en/docs", "/en/docs/ui", "/en/docs/ui/button", "/fr/docs/java/messaging", "/products/orazakax"]) {
+  for (const path of ["/", "/en", "/products", "/en/products", "/fr/products", "/story", "/open-source", "/en/open-source/ui", "/contact", "/privacy", "/terms", "/docs", "/en/docs", "/en/docs/ui", "/en/docs/ui/button", "/products/orazakax"]) {
     assert.equal(go(path), undefined, path);
   }
 });
@@ -75,7 +75,7 @@ test("what stays on krizaka.com is never redirected", () => {
 test("next.config.ts serves these redirects, and no product page, product docs set or kit is left", () => {
   assert.match(read("next.config.ts"), /\.\.\.productRedirects\(\)/);
   assert.deepEqual(readdirSync(new URL("../app/[locale]/products", import.meta.url)), ["page.tsx"]);
-  assert.match(read("lib/docs-source.ts"), /export const DOCS_SECTIONS = \["ui", "java"\] as const/);
+  assert.match(read("lib/docs-source.ts"), /export const DOCS_SECTIONS = \["ui"\] as const/);
   const pkg = JSON.parse(read("package.json"));
   assert.equal(pkg.dependencies["@krizaka/orazaka-design-system"], undefined);
   assert.equal(pkg.dependencies["@krizaka/orochia-design-system"], undefined);

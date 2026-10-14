@@ -53,8 +53,11 @@ const PRODUCT_IDS = NAV_PRODUCTS.map((p) => p.id);
 const npmUrl = (name: string) => `https://www.npmjs.com/package/${name}`;
 const centralArtifactUrl = (coordinate: string) => `https://central.sonatype.com/artifact/${coordinate.replace(":", "/")}`;
 
-/** A repository, one card: its name, kind and language, and its description in full (GitHub's words). */
-function RepoCard({ repo, kind }: { repo: GithubRepository; kind: string }) {
+/** A repository, one card: its name, kind and language, and its description in full (GitHub's words) — except Orochia's
+    repositories, whose GitHub descriptions are written for its own audience: krizaka.com says one neutral line each
+    (messages, site.openSource.orochiaRepos). */
+function RepoCard({ repo, kind, orochia }: { repo: GithubRepository; kind: string; orochia: Record<string, string> }) {
+  const description = repo.name.startsWith("orochia") ? (orochia[repo.name] ?? orochia.default) : repo.description;
   return (
     <li>
       <a href={repo.url} target="_blank" rel="noopener noreferrer" className="os-repo">
@@ -63,7 +66,7 @@ function RepoCard({ repo, kind }: { repo: GithubRepository; kind: string }) {
           {kind}
           {repo.language ? ` · ${repo.language}` : ""}
         </span>
-        {repo.description && <span className="os-repo-desc">{repo.description}</span>}
+        {description && <span className="os-repo-desc">{description}</span>}
       </a>
     </li>
   );
@@ -191,7 +194,7 @@ export default async function OpenSourcePage({ params }: Props) {
             </dl>
             <ul className="os-repos">
               {repos.map((r) => (
-                <RepoCard key={r.name} repo={r} kind={kindLabel(r.kind)} />
+                <RepoCard key={r.name} repo={r} kind={kindLabel(r.kind)} orochia={t.orochiaRepos} />
               ))}
             </ul>
           </section>
@@ -208,7 +211,7 @@ export default async function OpenSourcePage({ params }: Props) {
           <Facts className="os-product-facts" items={[{ label: format(t.repoCount, { count: platformRepos.length }) }]} />
           <ul className="os-repos">
             {platformRepos.map((r) => (
-              <RepoCard key={r.name} repo={r} kind={kindLabel(r.kind)} />
+              <RepoCard key={r.name} repo={r} kind={kindLabel(r.kind)} orochia={t.orochiaRepos} />
             ))}
           </ul>
         </section>

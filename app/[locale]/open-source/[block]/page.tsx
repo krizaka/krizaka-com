@@ -25,7 +25,7 @@ import ButtonLink from "@/app/components/ButtonLink";
 
 /* /open-source/<block> — why a Krizaka building block exists, for an engineer deciding whether to adopt it: the
    problem it removes, the decisions and what they cost, the code, when not to use it, where it stands, how to adopt
-   it and where to argue. The "how" stays in the documentation it links to (/docs/java, /docs/ui, the README).
+   it and where to argue. The "how" stays in the documentation it links to (java.krizaka.com, /docs/ui, the README).
    Built from the page blocks of @krizaka/ui (AGENTS.md §4.1): the page wears the block's hue (`data-hue` → --kz-hue),
    a sticky table of contents follows the reading. */
 
@@ -34,7 +34,8 @@ interface Props {
 }
 
 export function generateStaticParams() {
-  return LOCALES.flatMap((locale) => BUILDING_BLOCKS.map((b) => ({ locale, block: b.id })));
+  // The Java blocks' pages are on java.krizaka.com (lib/java-redirects.ts answers 308 for their old address).
+  return LOCALES.flatMap((locale) => BUILDING_BLOCKS.filter((b) => b.forum === "ui").map((b) => ({ locale, block: b.id })));
 }
 
 export const dynamicParams = false;

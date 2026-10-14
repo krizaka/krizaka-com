@@ -1,27 +1,28 @@
-/* The two documentation sets, on one engine (Fumadocs).
+/* The documentation set, on one engine (Fumadocs).
 
-   - ui, java     content/docs/** — MDX written here. Their titles and descriptions on the site come from
+   - ui           content/docs/ui — MDX written here. Its titles and descriptions on the site come from
                   messages (docs.pages.<section>.<page>), so the sidebar, the page heading and the SEO metadata
                   are translated; the body is English (developer documentation).
    - ui/<name>    one page per component of the @krizaka/ui (and @krizaka/charts) registry, generated at every build
                   (virtual pages, see componentFiles): the code of the component drives it. An optional
                   content/docs/ui/components/<name>.mdx enriches the generated page (its body is rendered under "Notes").
 
-   The products' own documentation is on their sites: next.config redirects /docs/<product> there.
+   The products' own documentation is on their sites, Krizaka Java's on java.krizaka.com (krizaka-build/site): next.config
+   redirects /docs/<product> and /docs/java there.
    Every URL carries the locale (/en/docs/ui/card), so a docs link never goes through the locale redirect. */
 
 import { loader, update, type VirtualFile } from "fumadocs-core/source";
 import type * as PageTree from "fumadocs-core/page-tree";
-import { java, ui } from "@/.source/server";
+import { ui } from "@/.source/server";
 import { format, getDictionary, type Locale, type TranslationDictionary } from "@/lib/i18n";
 import { getRegistryItems, type RegistryItem } from "@/lib/ui-registry";
 import { type Foundation, foundationSlugs, foundationStructuredData, purposeOf } from "@/lib/ui-foundations";
 import { GROUP_PAGES, JOBS, PATTERNS, placementOf, templatePurposeSlug } from "@/lib/ui-ia";
 
-export const DOCS_SECTIONS = ["ui", "java"] as const;
+export const DOCS_SECTIONS = ["ui"] as const;
 export type DocsSection = (typeof DOCS_SECTIONS)[number];
 
-const COLLECTIONS = { ui, java };
+const COLLECTIONS = { ui };
 
 /** What a generated page carries: the registry item it renders (title and description are its own), or the
     foundation it lays out from the packages' data (Typography, Icons: title and description from messages). */

@@ -22,19 +22,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, { path: "/docs", en: copy("en"), fr: copy("fr") });
 }
 
-/* The pages most asked for: installing and theming Krizaka UI, building and messaging with Krizaka Java. */
+/* The pages most asked for: installing and theming Krizaka UI. (Krizaka Java's documentation is java.krizaka.com.) */
 const POPULAR = [
   { id: "uiInstall", href: "/docs/ui/installation", section: "ui" },
   { id: "uiTokens", href: "/docs/ui/tokens", section: "ui" },
-  { id: "javaBuild", href: "/docs/java/build", section: "java" },
-  { id: "javaMessaging", href: "/docs/java/messaging", section: "java" },
 ] as const;
 
 /* What is new, from the registries (lib/registry-versions.json, read at build): never a version typed here. */
 const NEW = [
   { id: "ui", href: "/docs/ui", version: () => npmVersion("@krizaka/ui"), name: "@krizaka/ui" },
   { id: "charts", href: "/docs/ui", version: () => npmVersion("@krizaka/charts"), name: "@krizaka/charts" },
-  { id: "bom", href: "/docs/java", version: () => mavenVersion("krizaka-bom"), name: "krizaka-bom" },
 ] as const;
 
 /** The first pages of a collection, in the sidebar's order: its quick links. */

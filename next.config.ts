@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import { createMDX } from "fumadocs-mdx/next";
+import { javaRedirects } from "./lib/java-redirects";
 import { productRedirects } from "./lib/product-redirects";
 import { CDN_URL, legacyRedirects } from "./lib/cdn";
 
@@ -50,6 +51,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...productRedirects(),
+      // Krizaka Java's documentation is java.krizaka.com (lib/java-redirects.ts).
+      ...javaRedirects(),
       // /docs/ui/screens became the templates, grouped by intent (krizaka-com#115).
       { source: "/:locale(fr|en)/docs/ui/screens", destination: "/:locale/docs/ui/templates", statusCode: 301 },
       // The media left /public for Bunny: an old /assets/… URL (published @krizaka/ui examples) answers with its file on

@@ -28,11 +28,15 @@
   dev.orazaka.com/docs, `/docs/orochia/*` → dev.orochia.com/docs, `/docs/yororis/*` → dev.yororis.com, the old Orazaka
   pages (`/architecture`, `/demos`, `/use-cases`…) → dev.orazaka.com — all 308, with or without the locale prefix.
   Never add a product page back: change the product's site.
+- **Krizaka Java's documentation is java.krizaka.com** (`lib/java-redirects.ts`, tested by `tests/java-redirects.test.mjs`):
+  `/docs/java(/<guide>)` → the same guide on the site, in each language, 308. Its content, its building blocks map
+  (generated from the POMs by `krizaka-build/site/scripts/gen-building-blocks.mjs`) and its CI live in
+  [`krizaka/krizaka-build`](https://github.com/krizaka/krizaka-build) (`site/`) — never rebuilt here.
 - `app/data/architecture.json` and `app/data/orochia-architecture.json` are **generated** by the product repositories
-  (`orazaka docs sync`, `npm run docs:generate`). **Never hand-edit** `app/data/`. They stay because Krizaka Java's
-  `ModuleMap` (`buildingBlocks`) and the open-source repository lists (`lib/org-data.ts`) read them; a fact the schemas need
-  and the model lacks is added to the **generator**, never to the site. `lib/architecture-model.ts` checks the shape at
-  build time.
+  (`orazaka docs sync`, `npm run docs:generate`). **Never hand-edit** `app/data/`. They stay only because the open-source
+  repository lists (`lib/org-data.ts`) read them; nothing draws them here any more (the `buildingBlocks` key of
+  `architecture.json` is the generator's leftover — the map moved to java.krizaka.com). A fact a list needs and the data
+  lacks is added to the **generator**, never to the site.
 - Orazaka's packs, use cases, gallery and the synced `orazaka-content/` / `orochia-content/` docs (and their publication
   manifests) are gone from this repository.
 
@@ -89,8 +93,9 @@
 
 ## 2.3 Documentation — one engine (Fumadocs)
 
-- `/docs/{ui,java}` render two Fumadocs collections (`source.config.ts`, `lib/docs-source.ts`), both written here
-  (`content/docs/ui`, `content/docs/java`). The products document themselves on their sites; the **product kit** docs
+- `/docs/ui` renders one Fumadocs collection (`source.config.ts`, `lib/docs-source.ts`), written here (`content/docs/ui`).
+  The products and Krizaka Java (java.krizaka.com) document themselves on their sites; Fumadocs leaves with `/docs/ui`
+  when it moves to ui.krizaka.com; the **product kit** docs
   (`/docs/<product>/ui`, generated from `@krizaka/orazaka-design-system` / `@krizaka/orochia-design-system`) went with
   them — those kits are documented where the products live, and the two packages are no longer dependencies here
   (`scripts/gen-ui-docs.mjs` `PACKAGES` lists only Krizaka UI's; `lib/ui-registry.ts`, `ComponentDoc` and
@@ -149,20 +154,9 @@
 
 ## 4. Visualizations
 
-- **One way to see an architecture.** `ModuleMap` (`app/components/diagrams/`) draws the generated model of Krizaka Java
-  (`architecture.json` · `buildingBlocks`, from the POMs) on `/docs/java` — and only that: the Orazaka and Orochia
-  models, their journeys, the interceptor pipeline, the messaging topology, sequence and state diagrams went with the
-  product pages (they live on the products' sites). One band per role, chips with their version, a Dependencies /
-  Runtime calls toggle (requests solid, events dashed), search, and selection that lights *uses / used by* or
-  *calls / called by*. There is no other architecture drawing (no floating nodes, no graph library).
-- `lib/architecture-model.ts` checks the shape of the model at build time (roles, modules, relations, the words of
-  every role); a fact the map lacks is added to the **generator**, never to the site.
-- The same visual language (chip, 11px radius, a rail in the group colour, `--dg-<group>` with an AA `-ink` variant) —
-  2D, labels in full: a schema whose labels need zooming is not done.
-- **Docs ask for the map with a fenced block** (`lib/remark-diagrams.ts`): ` ```architecture ` (`product: java`, `focus`,
-  `mode` build|runtime, `owner`); in MDX: `<ArchitectureView product="java" focus="krizaka-security" mode="build" />`.
-  Blocks are written in the docs themselves (`content/docs/**`). A new kind of schema is added to krizaka-ui or the
-  docs engine only when a page here draws it.
+- **No architecture drawing here.** Krizaka Java's building blocks map (`ModuleMap`, generated from the POMs) lives on
+  java.krizaka.com (`krizaka-build/site`); the Orazaka and Orochia models, journeys, pipeline and topology on the products'
+  sites. A schema is added here only when a page here draws it.
 - **Mermaid is retired**, with no fallback: never rendered in the browser, never shipped (`mermaid` is not a dependency),
   and a ` ```mermaid ` fence in a published doc fails the build. (Unpublished
   internal design notes of the product repositories may still hold some; they never reach the site — converting one is
@@ -330,7 +324,7 @@ The layout is written once, in `scripts/bunny-layout.mjs`; each script writes un
 
 - Every feature and every fix ships with its tests in the same pull request: a unit test (`tests/*.test.mjs`,
   `node:test`, run by `npm test`) for logic — a data module, a generator, a script, an API route's validation —, and a
-  build-time check for what the site renders from data (`lib/architecture-model.ts`, `scripts/gen-ui-docs.mjs --check`
+  build-time check for what the site renders from data (`scripts/gen-ui-docs.mjs --check`
   are the pattern: a page that cannot be right does not build). A component's own tests live in krizaka-ui.
 - **A fix starts with a failing test** that reproduces the bug; the fix turns it green and the test stays as the guard.
 - CI (`.github/workflows/ci.yml`: lint, `npm test`, build) runs them on every pull request and must be green. A test is

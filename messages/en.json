@@ -548,7 +548,14 @@
       "eyebrow": "Open source · Apache-2.0",
       "stackEyebrow": "The stack",
       "stackTitle": "Two sites, one for each half of the stack.",
-      "stackLead": "Guides, references and every package live there, built from their own repositories at every release."
+      "stackLead": "Guides, references and every package live there, built from their own repositories at every release.",
+      "orochiaRepos": {
+        "orochia": "The Orochia platform: API, web app and shared packages.",
+        "orochia-admin": "The Orochia operator console.",
+        "orochia-mobile": "The Orochia mobile app (iOS and Android).",
+        "orochia-design-system": "Design tokens and components shared by the Orochia apps.",
+        "default": "A repository of the Orochia platform."
+      }
     },
     "notFound": {
       "title": "This page took another road",
@@ -1213,8 +1220,7 @@
       "promise": "Every page here is generated from the code it documents, or synced from its repository — when the code changes, the page does.",
       "new": {
         "ui": "Krizaka UI — components, blocks, layouts",
-        "charts": "Krizaka charts — ready-made charts for the apps",
-        "bom": "The Krizaka Java BOM"
+        "charts": "Krizaka charts — ready-made charts for the apps"
       },
       "shortcuts": {
         "title": "Start here",
@@ -1226,14 +1232,6 @@
           "uiTokens": {
             "title": "Design tokens",
             "text": "The --kz-* vocabulary every component reads: surfaces, text, borders, radii — dark and light."
-          },
-          "javaBuild": {
-            "title": "Build with Krizaka Java",
-            "text": "The parent POM and the BOM: one version line for every building block."
-          },
-          "javaMessaging": {
-            "title": "Messaging",
-            "text": "Events between services: the envelope, the outbox and the topology."
           }
         }
       }
@@ -1242,10 +1240,6 @@
       "ui": {
         "title": "Krizaka UI",
         "description": "Tokens, Tailwind preset and React primitives — live previews, copyable code, props."
-      },
-      "java": {
-        "title": "Krizaka Java",
-        "description": "Parent, BOM, starters, messaging, Problem Details and the service contracts."
       }
     },
     "separators": {
@@ -1380,20 +1374,6 @@
       "count": "{count} components",
       "examples": "{count} examples"
     },
-    "schema": {
-      "field": "Field",
-      "type": "Type",
-      "required": "Required",
-      "description": "Description",
-      "constraints": "Constraints",
-      "yes": "yes",
-      "no": "no"
-    },
-    "comingSoon": {
-      "title": "Coming soon",
-      "body": "The contracts are not published by the services yet: this page fills in as soon as they are, from the source.",
-      "issue": "Follow the issue"
-    },
     "pages": {
       "ui": {
         "index": {
@@ -1463,60 +1443,6 @@
         "templates": {
           "title": "All templates",
           "description": "Whole pages and screens, grouped by what the person must do — each with the reason for its layout, live, with its phone version."
-        }
-      },
-      "java": {
-        "index": {
-          "title": "Krizaka Java",
-          "description": "The Spring Boot building blocks of every Krizaka service — one build, four modules, four starters."
-        },
-        "build": {
-          "title": "Build, parent and BOM",
-          "description": "krizaka-parent, krizaka-bom and krizaka-test-support: one build for every Krizaka JVM artifact."
-        },
-        "map": {
-          "title": "Building blocks map",
-          "description": "Every Krizaka Java artifact — build, platform kit, starters, users, notifications, billing — with its version and its real dependencies, read from the POMs."
-        },
-        "web": {
-          "title": "Web and Problem Details",
-          "description": "krizaka-web: one error format (RFC 9457), request correlation, Jackson defaults, cursor pagination, CORS."
-        },
-        "security": {
-          "title": "Security",
-          "description": "krizaka-security: local session-token verification, one baseline for every filter chain, service tokens."
-        },
-        "messaging": {
-          "title": "Messaging",
-          "description": "krizaka-messaging: publish through the outbox, consume with retry then DLQ, process each message once."
-        },
-        "observability": {
-          "title": "Observability",
-          "description": "krizaka-observability: required service names, ECS logs, Prometheus and OpenTelemetry defaults."
-        },
-        "events": {
-          "title": "Event contracts",
-          "description": "The events the Krizaka domain services publish, each with its JSON Schema."
-        },
-        "openapi": {
-          "title": "HTTP APIs (OpenAPI)",
-          "description": "The OpenAPI contracts of krizaka-users, krizaka-billing and krizaka-notifications."
-        },
-        "architecture": {
-          "title": "Ports and adapters",
-          "description": "How a Krizaka domain service is cut — contract, client, core, persistence, host — and what lives in which package."
-        },
-        "users": {
-          "title": "Users",
-          "description": "krizaka-users: registration, login (password, Google, GitHub), password recovery, profiles, API keys, RBAC, session tokens."
-        },
-        "billing": {
-          "title": "Billing",
-          "description": "krizaka-billing: credits, wallets, plans, subscriptions, a versioned price book and metering — hold, settle, release."
-        },
-        "notifications": {
-          "title": "Notifications",
-          "description": "krizaka-notifications: e-mail, SMS and webhooks behind one port, driven by events, templates per locale."
         }
       }
     },
@@ -1760,116 +1686,6 @@
         "orochia": "the creator platform",
         "yasakia": "the dating app",
         "yororis": "the fourth product, in construction"
-      }
-    }
-  },
-  "diagrams": {
-    "textVersion": "Text version",
-    "roles": {
-      "java": {
-        "service": {
-          "title": "Services",
-          "summary": "The deployable Krizaka services: users, notifications, billing."
-        },
-        "adapter": {
-          "title": "Adapters",
-          "summary": "Typed HTTP clients and the JPA persistence of a domain."
-        },
-        "domain": {
-          "title": "Domain core",
-          "summary": "The centre of a domain repository: krizaka-users-core."
-        },
-        "contract": {
-          "title": "Contracts",
-          "summary": "The *-api modules: interfaces, records and events — what another service depends on."
-        },
-        "starter": {
-          "title": "Starters",
-          "summary": "One dependency switches a module on, with its auto-configuration."
-        },
-        "platform": {
-          "title": "Platform kit",
-          "summary": "The cross-cutting code with one author: web, security, messaging, observability."
-        },
-        "build": {
-          "title": "Build",
-          "summary": "The parent POM, the BOM every version resolves from, and the test kit."
-        }
-      }
-    },
-    "owners": {
-      "all": "All",
-      "krizaka": "Krizaka"
-    },
-    "moduleMap": {
-      "label": {
-        "java": "Krizaka Java building blocks"
-      },
-      "search": "Find a module…",
-      "searchLabel": "Find a module by name or description",
-      "clear": "Clear the search",
-      "modeLabel": "What the lines show",
-      "ownerLabel": "Whose modules",
-      "modes": {
-        "build": "Dependencies",
-        "runtime": "Runtime calls"
-      },
-      "hint": {
-        "build": "Select an artifact: what it depends on (compile, test, its parent POM, the BOM it imports) and what depends on it stay lit. Read top to bottom — services on top, the build underneath.",
-        "runtime": "Select a module: who it calls and who calls it stay lit — requests (HTTP, SQL) solid, events (messages, webhooks, SSE, NOTIFY, push) dashed."
-      },
-      "legend": {
-        "dependency": "depends on",
-        "indirect": "parent POM · BOM import · test scope",
-        "sync": "{kinds} — request",
-        "async": "{kinds} — event"
-      },
-      "rel": {
-        "uses": "uses",
-        "usedBy": "used by",
-        "both": "both ways",
-        "calls": "calls",
-        "calledBy": "called by"
-      },
-      "announce": {
-        "build": "{module}: uses {uses}, used by {usedBy}.",
-        "runtime": "{module}: calls {calls}, called by {calledBy}."
-      },
-      "detail": {
-        "repository": "Repository",
-        "version": "version {version}",
-        "uses": "Depends on",
-        "usedBy": "Used by",
-        "calls": "Calls",
-        "calledBy": "Called by",
-        "none": "Nothing",
-        "close": "Clear the selection",
-        "central": "Maven Central {version}"
-      },
-      "count": "{count} modules",
-      "empty": "No module here matches.",
-      "table": {
-        "modulesCaption": "Modules and their build dependencies",
-        "flowsCaption": "Runtime calls",
-        "module": "Module",
-        "role": "Role",
-        "repository": "Repository",
-        "version": "Version",
-        "dependsOn": "Depends on",
-        "usedBy": "Used by",
-        "from": "From",
-        "to": "To",
-        "kind": "Kind",
-        "via": "Via"
-      },
-      "kinds": {
-        "http": "HTTP",
-        "sql": "SQL",
-        "amqp": "message",
-        "webhook": "webhook",
-        "sse": "SSE",
-        "notify": "LISTEN/NOTIFY",
-        "push": "push"
       }
     }
   }

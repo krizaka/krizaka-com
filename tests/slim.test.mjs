@@ -10,7 +10,8 @@ test("the product-only schemas and their journeys are gone", () => {
   for (const file of ["lib/journeys.ts", "app/components/diagrams/InterceptorPipeline.tsx", "app/components/diagrams/SequenceDiagram.tsx", "app/components/diagrams/StateDiagram.tsx", "app/components/docs/kit-themes.css"]) {
     assert.ok(!existsSync(new URL(`../${file}`, import.meta.url)), `${file} came back`);
   }
-  assert.match(read("lib/architecture-model.ts"), /PRODUCTS = \["java"\] as const/, "the module map draws Krizaka Java only");
+  // Krizaka Java's module map lives on java.krizaka.com (krizaka-build/site): no map here.
+  assert.ok(!existsSync(new URL("../lib/architecture-model.ts", import.meta.url)), "lib/architecture-model.ts came back");
 });
 
 test("the product kits' generated docs are gone from the generator and the registry reader", () => {
@@ -23,7 +24,8 @@ test("no message is left for a removed page (en and fr)", () => {
     const m = messages(lang);
     assert.equal(m.pages, undefined, `${lang}: pages`);
     assert.equal(m.docs.kit, undefined, `${lang}: docs.kit`);
-    for (const key of ["pipeline", "messaging", "sequence", "states", "journeys", "sections"]) assert.equal(m.diagrams[key], undefined, `${lang}: diagrams.${key}`);
-    assert.deepEqual(Object.keys(m.diagrams.roles), ["java"], `${lang}: only Krizaka Java's roles`);
+    assert.equal(m.diagrams, undefined, `${lang}: diagrams`);
+    assert.equal(m.docs.pages.java, undefined, `${lang}: docs.pages.java`);
+    assert.equal(m.docs.sections.java, undefined, `${lang}: docs.sections.java`);
   }
 });
