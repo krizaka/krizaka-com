@@ -15,7 +15,8 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   {
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+    // geolocation on this origin only: the map examples' "Near me" (asked on a press, never on load).
+    value: "camera=(), microphone=(), geolocation=(self), browsing-topics=()",
   },
   {
     key: "Strict-Transport-Security",
@@ -64,6 +65,12 @@ const nextConfig: NextConfig = {
       // the CDN. Temporary, because the destination is versioned — a new recording gets a new URL.
       ...legacyRedirects().map((r) => ({ ...r, permanent: false })),
     ];
+  },
+
+  // The maps of /docs/ui read their tiles and glyphs (Protomaps PMTiles, Noto Sans) through this origin: the CDN's
+  // files, proxied with their byte ranges — no cross-origin request (app/components/docs/MapAssets.tsx).
+  async rewrites() {
+    return [{ source: "/maps/v1/:path*", destination: `${CDN_URL}/maps/v1/:path*` }];
   },
 
   async headers() {
