@@ -1829,94 +1829,160 @@
     },
     "legal": {
       "back": "Retour à l'accueil",
-      "updated": "Dernière mise à jour : octobre 2026",
+      "updated": "Dernière mise à jour : 13 octobre 2026",
       "toc": "Sur cette page",
       "privacy": {
         "metaTitle": "Politique de confidentialité — Krizaka",
-        "metaDescription": "Ce que krizaka.com collecte (très peu), pourquoi, et vos droits selon la Loi 25 du Québec et le RGPD.",
+        "metaDescription": "Ce que krizaka.com collecte (le formulaire de contact seulement), pourquoi, où cela va, qui le traite, et vos droits selon la Loi 25 du Québec, la LPRPDE et le RGPD.",
         "title": "Politique de confidentialité",
         "sections": [
           {
+            "title": "Qui est responsable",
+            "paragraphs": [
+              "Ce site est publié par Technologies Krizaka Inc., société constituée selon les lois du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada).",
+              "La personne responsable de la protection des renseignements personnels est le fondateur et président de la société. Vous le joignez par le formulaire de contact de krizaka.com (sujet « Autre ») ; il n'y a pas d'autre canal à chercher."
+            ]
+          },
+          {
             "title": "Notre engagement",
             "paragraphs": [
-              "Krizaka construit des logiciels qui gardent les données là où elles doivent être. Cette page dit exactement ce que ce site collecte, sans rien cacher derrière."
+              "Krizaka conçoit des logiciels qui gardent les données là où elles doivent être. Cette page dit ce que ce site collecte, ce qu'il en fait et qui y touche. Une pratique qui n'est pas écrite ici n'existe pas."
             ]
           },
           {
             "title": "Ce que ce site collecte",
             "paragraphs": [
-              "Quand vous nous écrivez avec le formulaire de contact, nous recevons votre nom, votre courriel, votre organisation si vous l'indiquez, le sujet et votre message. Nous les utilisons uniquement pour vous répondre.",
-              "Le message est transmis à l'équipe par courriel (via notre fournisseur, Mailgun) ou dans notre messagerie d'équipe. Nous le conservons le temps de l'échange, puis nous le supprimons. Nous ne le vendons pas, ne le partageons pas à des fins marketing et ne l'utilisons pas pour vous profiler.",
-              "Notre hébergeur (Vercel) conserve des journaux techniques — adresse IP, heure, page — pour la sécurité et la prévention des abus, selon sa propre politique."
+              "Le formulaire de contact est la seule façon de nous confier des renseignements personnels. Nous recevons votre nom, votre courriel, votre organisation si vous l'indiquez, le sujet, l'échéance si vous l'indiquez, votre message, la langue de la page et la page d'où vous venez (pour savoir de quel produit vous parlez).",
+              "Nous les utilisons seulement pour vous répondre. En envoyant le formulaire, vous acceptez cet usage. Nous ne les vendons pas, ne les partageons pas à des fins de marketing, ne vous profilons pas et ne vous envoyons rien que vous n'ayez demandé.",
+              "Le message est remis à l'équipe par courriel, par notre fournisseur Mailgun, et peut aussi être publié dans un canal de messagerie privé de l'équipe. Nous le gardons le temps que la conversation l'exige, puis nous le supprimons.",
+              "Pour limiter les abus, le serveur compte en mémoire les messages par adresse IP (cinq par dix minutes). Ce compte n'est écrit nulle part et disparaît au redémarrage du serveur."
             ]
           },
           {
-            "title": "Cookies et stockage local",
+            "title": "Données techniques",
             "paragraphs": [
-              "Un seul cookie fonctionnel, NEXT_LOCALE, mémorise la langue que vous avez choisie (un an). Votre préférence de thème est gardée dans le stockage local de votre navigateur.",
-              "Aucune mesure d'audience, aucune publicité, aucun script de traçage, aucun cookie tiers."
+              "Comme tout hébergeur, la plateforme qui sert ce site conserve des journaux techniques — adresse IP, heure, page demandée, navigateur — pour la sécurité et la prévention des abus, selon sa propre politique.",
+              "Les images, vidéos et enregistrements sont servis par un réseau de diffusion (Bunny). Votre navigateur le contacte directement quand une page les charge ; il voit donc votre adresse IP et la requête, comme tout serveur. Les polices et scripts sont servis par krizaka.com lui-même.",
+              "Ce site n'a ni mesure d'audience, ni publicité, ni pixel de suivi, ni gadget de réseau social."
+            ]
+          },
+          {
+            "title": "Témoins et stockage local",
+            "paragraphs": [
+              "Un seul témoin fonctionnel, NEXT_LOCALE, retient la langue que vous avez choisie (un an). Votre préférence de thème (sombre ou clair) est gardée dans le stockage local de votre navigateur, sous le nom kz-theme.",
+              "Aucun témoin de mesure, aucun témoin publicitaire, aucun témoin tiers. Comme ces deux éléments retiennent seulement un choix que vous avez fait, aucune bannière de consentement n'est affichée."
+            ]
+          },
+          {
+            "title": "L'environnement de développement hébergé",
+            "paragraphs": [
+              "dev.orochia.com est un environnement de développement d'Orochia que nous exploitons pour tester et démontrer. Si vous y créez un compte, ce que vous saisissez (courriel, nom d'utilisateur, empreinte du mot de passe, contenu, activité) est stocké dans une base rattachée à l'application chez DigitalOcean (Toronto) et lisible par l'équipe. Les courriels qu'il envoie passent par Mailgun, et les vidéos par Bunny.",
+              "Ce n'est pas un service de production : il peut être réinitialisé ou effacé à tout moment ; n'y mettez que des données d'essai. Une section des Conditions le décrit."
             ]
           },
           {
             "title": "Nos logiciels",
             "paragraphs": [
-              "Orazaka et Orochia sont auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie.",
-              "Si vous y connectez des services externes (fournisseurs d'IA, passerelles de paiement, CDN vidéo), les données envoyées vont directement à ces fournisseurs, selon leurs propres politiques."
+              "Orazaka, Orochia et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yazakia et Yororis ne sont pas déployés et ne collectent rien.",
+              "Si vous y branchez des services externes (fournisseurs d'IA, passerelles de paiement, CDN vidéo), les données que vous envoyez vont directement à ces fournisseurs, selon leurs propres politiques."
+            ]
+          },
+          {
+            "title": "Qui traite des données pour nous",
+            "paragraphs": [
+              "DigitalOcean — héberge ce site et l'environnement de développement (Toronto, Canada).",
+              "Bunny.net — sert les médias (images, vidéos, enregistrements) de ce site, et les vidéos de l'environnement de développement.",
+              "Mailgun — achemine les courriels du formulaire de contact et ceux de l'environnement de développement.",
+              "GitHub et npm — hébergent notre code et nos paquets. Ils n'interviennent pas quand vous lisez ce site ; ils reçoivent ce que vous leur donnez si vous suivez un lien et les utilisez, selon leurs propres politiques.",
+              "Ces fournisseurs peuvent traiter des données hors du Québec et du Canada. Nous les avons choisis pour ce qu'ils font, et la liste est complète à la date ci-dessus."
             ]
           },
           {
             "title": "Vos droits",
             "paragraphs": [
-              "Selon la Loi 25 du Québec et le RGPD, vous pouvez demander l'accès, la rectification ou la suppression des renseignements que vous nous avez envoyés, ou retirer votre consentement. Écrivez-nous avec le formulaire de contact : nous répondons dans les 30 jours."
+              "Selon la Loi 25 du Québec, la LPRPDE fédérale et, si vous êtes en Europe, le RGPD, vous pouvez demander d'accéder aux renseignements que vous nous avez transmis, de les corriger ou de les supprimer, de retirer votre consentement et d'en obtenir une copie dans un format courant. Écrivez-nous par le formulaire de contact : nous répondons dans les 30 jours.",
+              "Si vous n'êtes pas satisfait, vous pouvez porter plainte auprès de la Commission d'accès à l'information du Québec, du Commissariat à la protection de la vie privée du Canada ou, en Europe, de votre autorité de protection des données."
             ]
           },
           {
-            "title": "Contact",
+            "title": "Modifications et contact",
             "paragraphs": [
-              "Pour toute question de confidentialité, utilisez le formulaire de contact (sujet « Autre »). Krizaka, Montréal, Québec."
+              "Nous mettons cette page à jour quand ce que fait le site change, et la date en haut suit. Pour toute question de confidentialité, utilisez le formulaire de contact (sujet « Autre »). Technologies Krizaka Inc., Montréal, Québec."
             ]
           }
         ]
       },
       "terms": {
         "metaTitle": "Conditions d'utilisation — Krizaka",
-        "metaDescription": "Conditions d'utilisation de krizaka.com et de l'auto-hébergement d'Orazaka et d'Orochia, les logiciels open source conçus par Krizaka.",
+        "metaDescription": "Conditions d'utilisation de krizaka.com, des logiciels ouverts et des briques publiés par Krizaka, et de l'environnement de développement hébergé.",
         "title": "Conditions d'utilisation",
         "sections": [
           {
-            "title": "Licence du logiciel",
+            "title": "Qui nous sommes",
             "paragraphs": [
-              "Orazaka et Orochia sont des logiciels open source distribués sous licence Apache 2.0. Vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence — voir chaque dépôt sur github.com/krizaka."
+              "krizaka.com est publié par Technologies Krizaka Inc., société constituée selon les lois du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada). Pour nous joindre, utilisez le formulaire de contact."
+            ]
+          },
+          {
+            "title": "Ce que couvrent ces conditions",
+            "paragraphs": [
+              "Ces conditions couvrent ce site, les logiciels ouverts et les briques que nous publions, et l'environnement de développement hébergé dev.orochia.com. Elles ne décrivent pas un service payant : aucun n'est offert aujourd'hui."
+            ]
+          },
+          {
+            "title": "Licence des logiciels",
+            "paragraphs": [
+              "Les logiciels que nous publions sont ouverts, distribués sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les dépôts Orazaka, Orochia, Yazakia et Yororis sur github.com/krizaka, les paquets @krizaka/* sur npm et les artefacts com.krizaka sur Maven. Chaque dépôt porte sa licence.",
+              "La licence couvre le code. Elle ne donne pas le droit d'utiliser comme les vôtres les noms, logos et marques de produits de Krizaka."
             ]
           },
           {
             "title": "Responsabilité de l'auto-hébergement",
             "paragraphs": [
-              "Les deux produits tournent sur une infrastructure que vous exploitez. Vous êtes responsable de cette infrastructure, de la sécurité des données qu'elle contient et du respect des lois qui s'appliquent à vous."
+              "Les produits tournent sur l'infrastructure que vous exploitez. Vous êtes responsable de cette infrastructure, de la sécurité des données qu'elle contient et du respect des lois qui s'appliquent à vous."
             ]
           },
           {
             "title": "Exploiter Orochia",
             "paragraphs": [
-              "Orochia est conçue pour des plateformes pouvant héberger des contenus adultes. L'exploitant est responsable de sa propre vérification d'âge, de la tenue des registres (dont 18 U.S.C. § 2257 lorsqu'il s'applique), de la modération, du traitement des retraits et du respect des règles des prestataires de paiement. Le logiciel fournit les outils pour ces obligations ; il ne les remplit pas à votre place."
+              "Orochia est conçu pour des plateformes pouvant héberger du contenu pour adultes. L'exploitant est responsable de sa propre vérification de l'âge, de la tenue de ses registres (dont le 18 U.S.C. § 2257 là où il s'applique), de la modération, du traitement des retraits et des règles de ses fournisseurs de paiement. Le logiciel fournit des outils pour ces devoirs ; il ne les remplit pas à votre place."
+            ]
+          },
+          {
+            "title": "Produits pas encore disponibles",
+            "paragraphs": [
+              "Yazakia est un produit à venir : rien n'est encore offert, et ce que le site en dit décrit des intentions, pas un service.",
+              "Yororis est en construction. Il n'est pas déployé, pas offert, et personne ne peut s'y inscrire. C'est un espace d'écoute avec une présence IA, pas un service de santé, pas un service de soin, et rien de ce que le site en dit n'est un conseil, de quelque nature que ce soit. Ses pages montrent comment il se construit et permettent d'en discuter avec nous par le formulaire de contact."
+            ]
+          },
+          {
+            "title": "L'environnement de développement hébergé",
+            "paragraphs": [
+              "dev.orochia.com est un environnement d'essai d'Orochia. Il est fourni sans aucune garantie : il peut être indisponible, modifié, réinitialisé ou effacé à tout moment et sans préavis, et ce que vous y mettez peut être perdu. N'y mettez que des données d'essai et ne vous y fiez pour rien d'important. Rien n'y est une offre commerciale."
             ]
           },
           {
             "title": "Services tiers",
             "paragraphs": [
-              "Si vous connectez des services externes — fournisseurs d'IA, passerelles de paiement, Bunny Stream, fournisseurs de courriel ou de SMS — leur utilisation est régie par leurs propres conditions."
+              "Si vous branchez des services externes — fournisseurs d'IA, passerelles de paiement, Bunny Stream, fournisseurs de courriel ou de SMS — votre usage est régi par leurs propres conditions. Ce site est hébergé chez DigitalOcean, sert ses médias depuis Bunny et envoie les messages de contact par Mailgun ; les liens vers GitHub, npm et d'autres sites mènent à des services régis par leurs propres conditions."
             ]
           },
           {
-            "title": "Absence de garantie",
+            "title": "Aucune garantie",
             "paragraphs": [
-              "Le logiciel est fourni « tel quel », sans garantie d'aucune sorte. Krizaka ne garantit ni disponibilité, ni exactitude, ni adéquation à un usage particulier, et n'est pas responsable des dommages liés à son utilisation, comme le prévoit la licence Apache 2.0."
+              "Le logiciel est fourni « tel quel », sans garantie d'aucune sorte. Krizaka ne garantit ni la disponibilité, ni l'exactitude, ni l'adéquation à un usage particulier, et n'est pas responsable des dommages découlant de son utilisation, comme le prévoit la licence Apache 2.0, dans la mesure permise par la loi."
             ]
           },
           {
             "title": "Ce site",
             "paragraphs": [
-              "krizaka.com présente nos produits et leur documentation. Son contenu peut changer sans préavis. Ces conditions sont régies par les lois du Québec, Canada."
+              "krizaka.com décrit nos produits et leur documentation. Son contenu peut changer sans préavis. Les robots d'exploration, y compris ceux des assistants IA et des moteurs de recherche, sont les bienvenus : robots.txt les autorise et llms.txt leur résume le site. Nos pratiques de confidentialité sont dans la Politique de confidentialité."
+            ]
+          },
+          {
+            "title": "Droit applicable et modifications",
+            "paragraphs": [
+              "Ces conditions sont régies par les lois du Québec et les lois fédérales du Canada qui s'y appliquent, sous réserve des droits impératifs dont vous disposez comme consommateur. Nous les mettons à jour quand ce que nous publions change, et la date en haut suit."
             ]
           }
         ]
