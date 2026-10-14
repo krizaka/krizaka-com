@@ -14,13 +14,21 @@ test("the home is made of its five sections, then the contact and the questions"
   for (const s of [...SECTIONS, "ContactCta", "ProductFaq"]) assert.match(home, new RegExp(`<${s}\\b`), s);
 });
 
+test("the stack section states the idea with figures read from data and sends to the live gallery on ui.krizaka.com", () => {
+  const stack = read("app/components/home/OpenStack.tsx");
+  assert.match(stack, /uiFacts\(\)/);
+  assert.match(stack, /npmVersion\("@krizaka\/ui"\)/);
+  assert.match(stack, /href=\{STACK\[0\]\.url\}/);
+  assert.match(stack, /PRODUCTS\.map/, "the four identities, all of them");
+});
+
 test("the products are equals: one card each from lib/products.ts, no product singled out", () => {
   const cards = read("app/components/home/WhatWeBuild.tsx");
   assert.match(cards, /PRODUCTS\.map/);
   for (const s of SECTIONS) {
     const src = read(`app/components/home/${s}.tsx`);
     assert.doesNotMatch(src, /["'](orazaka|orochia|yasakia|yororis)["']/, `${s} names a product by hand`);
-    assert.doesNotMatch(src, /brand-orochia|brand-\$\{|"brand-" \+/, `${s} paints a product's brand`);
+    assert.doesNotMatch(src, /brand-(orazaka|orochia|yasakia|yororis)/, `${s} paints one product's brand`);
   }
 });
 

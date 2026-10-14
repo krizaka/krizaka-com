@@ -93,7 +93,7 @@
       },
       "company": {
         "products": {
-          "label": "All products",
+          "label": "Products",
           "desc": "Every product, side by side"
         },
         "story": {
@@ -181,15 +181,27 @@
       },
       "stack": {
         "eyebrow": "The stack we open-source",
-        "title": "What our products stand on is yours too.",
-        "lead": "The same pieces build every Krizaka product. Each has its own site, built from its own repository and published at every release.",
+        "title": "One open stack builds all four products.",
+        "lead": "Orazaka, Orochia, Yasakia and Yororis are made of the same open pieces: Krizaka UI for every screen, Krizaka Java for every service. Each product only brings its identity.",
         "visit": "Open {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
           "npm": "{count} packages on npm",
           "maven": "{count} artifacts on Maven Central"
         },
-        "repositories": "Every repository"
+        "repositories": "Every repository",
+        "figures": {
+          "label": "Krizaka UI in figures, read from its published registries",
+          "components": "components",
+          "native": "also on iOS and Android",
+          "packages": "packages on npm",
+          "version": "@krizaka/ui"
+        },
+        "visual": {
+          "caption": "One component, four identities: the same Krizaka UI progress bar in each product's theme.",
+          "progress": "{name} identity"
+        },
+        "live": "See it live on ui.krizaka.com"
       },
       "principles": {
         "eyebrow": "How we work",
