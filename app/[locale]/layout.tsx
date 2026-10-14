@@ -59,35 +59,27 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
 
   return {
     title: {
-      default: isEn 
-        ? "Krizaka — Sovereign On-Premise AI | Law 25 & GDPR Compliance" 
-        : "Krizaka — IA souveraine on-premise | Loi 25 & RGPD Montréal",
+      default: isEn
+        ? "Krizaka — open-source software studio in Montréal"
+        : "Krizaka — studio logiciel open source à Montréal",
       template: "%s | Krizaka",
     },
     description: isEn
-      ? "Krizaka designs Orazaka, an open-source multi-modal AI orchestration engine. Deploy local LLMs in Montreal, Quebec with Ollama, conforming to Law 25 and GDPR."
-      : "Krizaka développe Orazaka, un moteur d'orchestration IA souverain et open source à Montréal. Déployez une IA locale conforme à la Loi 25 du Québec et au RGPD.",
+      ? "Krizaka is an open-source software studio in Montréal, Québec. Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka, Orochia, Yazakia, Yororis — each on its own site."
+      : "Krizaka est un studio logiciel open source à Montréal, au Québec. Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yazakia, Yororis — chacun sur son propre site.",
     keywords: [
-      "IA on-premise Montréal",
-      "IA locale Québec",
+      "studio logiciel open source Montréal",
+      "design system React",
+      "Krizaka UI",
+      "Krizaka Java",
+      "Spring Boot",
       "Loi 25 Québec",
-      "Loi 25 IA Montréal",
       "IA souveraine Canada",
-      "LLM local Montréal",
-      "Ollama Montréal",
-      "IA confidentielle Québec",
-      "RGPD IA Canada",
-      "orchestration IA Montréal",
-      "open source IA Québec",
       "Krizaka Montréal",
-      "Orazaka Montréal",
-      "Spring AI",
-      "Java 21",
-      "local LLM deployment",
-      "on-premise AI Montreal",
+      "open-source software studio Montreal",
+      "React design system",
+      "Spring Boot building blocks",
       "sovereign AI Quebec",
-      "GDPR compliant AI Canada",
-      "privacy AI Montreal",
     ],
     icons: {
       icon: "/favicon.svg",
@@ -107,12 +99,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       },
     },
     openGraph: {
-      title: isEn
-        ? "Krizaka — Sovereign AI you truly control"
-        : "Krizaka — IA souveraine que vous contrôlez vraiment à Montréal",
+      title: isEn ? "Krizaka — open-source software studio" : "Krizaka — studio logiciel open source à Montréal",
       description: isEn
-        ? "Deploy sovereign AI on your own infrastructure. Chat, Image, Video, Voice — zero cloud dependencies. Law 25 and GDPR compliant."
-        : "Déployez une IA souveraine sur votre infrastructure à Montréal. Chat, Image, Vidéo, Voix — zéro dépendance cloud. Conforme Loi 25 et RGPD.",
+        ? "Krizaka UI, Krizaka Java and four products built on them — all open source, made in Montréal."
+        : "Krizaka UI, Krizaka Java et quatre produits construits dessus — tout en open source, fait à Montréal.",
       type: "website",
       url: SITE_URL,
       siteName: "Krizaka",
@@ -121,12 +111,10 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     },
     twitter: {
       card: "summary_large_image",
-      title: isEn
-        ? "Krizaka — Sovereign On-Premise AI"
-        : "Krizaka — IA souveraine on-premise Montréal",
+      title: isEn ? "Krizaka — open-source software studio" : "Krizaka — studio logiciel open source à Montréal",
       description: isEn
-        ? "Multi-modal AI orchestration on your own hardware. Law 25 & GDPR compliant. Open source."
-        : "Orchestration IA multi-modale sur votre propre matériel à Montréal. Conforme Loi 25 du Québec. Open source.",
+        ? "Krizaka UI, Krizaka Java and four products built on them. Open source, made in Montréal."
+        : "Krizaka UI, Krizaka Java et quatre produits construits dessus. Open source, fait à Montréal.",
     },
   };
 }

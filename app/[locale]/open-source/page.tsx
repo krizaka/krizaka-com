@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { contactHref } from "@/lib/contact";
 import { localizedMetadata } from "@/lib/seo";
-import { PRODUCTS } from "@/lib/org-data";
 import { NAV_PRODUCTS } from "@/lib/nav";
 import { githubRepositories, publicRepositoryCount } from "@/lib/org-stats";
 import { repositoriesOf, type GithubRepository, type RepositoryKind } from "@/lib/repository-catalogue";
@@ -27,7 +26,7 @@ import { AutomationIcon, BookmarkIcon, ExternalIcon, ForwardIcon, KnowledgeIcon,
 import ButtonLink from "@/app/components/ButtonLink";
 
 /* /open-source — for developers who want to build with Krizaka's pieces, on the Catalogue template (CataloguePage):
-   the products in the sticky column, then one section per product — brand, mark, status (lib/nav.ts), stack, the
+   the products in the sticky column, then one section per product — brand, mark, status (lib/products.ts), the
    Krizaka packages it uses (lib/story.ts, the table of /story) and **every** repository of the org, read from GitHub at
    build (scripts/gen-org-stats.mjs) — then the platform's repositories and the npm packages, grouped from what the
    registry says at build (scripts/gen-registry-versions.mjs). Nothing here is a list typed by hand. */
@@ -97,14 +96,13 @@ export default async function OpenSourcePage({ params }: Props) {
   const kindLabel = (k: RepositoryKind) => t.kinds[k];
 
   const products = NAV_PRODUCTS.map((nav) => {
-    const product = PRODUCTS.find((p) => p.id === nav.id);
     const repos = repositoriesOf(repositories, nav.id, PRODUCT_IDS);
     const runsOn = productKits(nav.id);
     const uses = runsOn.flatMap((k) => (k === "engine" ? [] : KIT_PACKAGES[k]));
     const status: Fact = nav.status
       ? { label: site.nav.status[nav.status].long, tone: "wip" }
       : { label: t.live, tone: "ok" };
-    return { nav, product, repos, uses, status, engine: runsOn.includes("engine") && nav.id !== "orazaka" };
+    return { nav, repos, uses, status, engine: runsOn.includes("engine") && nav.id !== "orazaka" };
   });
   const platformRepos = repositoriesOf(repositories, "krizaka", PRODUCT_IDS);
   const listed = products.reduce((n, p) => n + p.repos.length, platformRepos.length);
@@ -173,29 +171,23 @@ export default async function OpenSourcePage({ params }: Props) {
         count={format(t.catalogueCount, { repositories: listed, packages: packages.length })}
         linkAs={Link}
       >
-        {products.map(({ nav, product, repos, uses, status, engine }, i) => (
+        {products.map(({ nav, repos, uses, status, engine }, i) => (
           <section key={nav.id} id={nav.id} aria-labelledby={`os-${nav.id}`} className={"os-product brand-" + nav.id} {...(i > 0 ? reveal(0, "soft") : {})}>
             <div className="os-product-head">
               <ProductLogo id={nav.id} size={44} />
               <div className="min-w-0">
                 <h2 id={`os-${nav.id}`}>{nav.name}</h2>
-                <p className="os-product-tagline">{site.nav[nav.id].tagline}</p>
+                <p className="os-product-tagline">{site.products.cards[nav.id].line}</p>
               </div>
-              <Link href={nav.href} className="os-product-link">
-                {t.discoverProduct} <ForwardIcon size={13} aria-hidden />
-              </Link>
+              <a href={nav.href} target="_blank" rel="noopener noreferrer" className="os-product-link">
+                {site.products.visit} <ForwardIcon size={13} aria-hidden />
+              </a>
             </div>
             <Facts
               className="os-product-facts"
               items={[status, { label: format(t.repoCount, { count: repos.length }) }, ...(engine ? [{ label: t.engine }] : [])]}
             />
             <dl className="os-product-meta">
-              {product && (
-                <div>
-                  <dt>{t.stack}</dt>
-                  <dd className="os-stack">{product.stack}</dd>
-                </div>
-              )}
               {uses.length > 0 && (
                 <div>
                   <dt>{t.uses}</dt>
@@ -285,9 +277,6 @@ export default async function OpenSourcePage({ params }: Props) {
           <p className="os-npm-more">
             <Link href="/docs/ui">
               {pk.docsUi} <ForwardIcon size={12} aria-hidden />
-            </Link>
-            <Link href="/docs/orazaka/cli">
-              {pk.cliDocs} <ForwardIcon size={12} aria-hidden />
             </Link>
           </p>
         </section>

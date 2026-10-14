@@ -7,16 +7,15 @@
    Hero: the studio presents its products on a select screen (from lib/nav.ts: a product added there gets its stage
    here as soon as its words exist). Stage 00: the house and its platform, with figures read at build. Then one stage per
    product, played identically — fighter card, stage call, the why, the special move carried by the bird in its corner,
-   what it runs on. Bonus round: we use our own products (the table). The boss, the flock, everything open, Continue?
+   what it runs on. Bonus round: we use our own products (the table). The flock, everything open, Continue?
    One strong entrance per section, then calm to read; reduced motion = a still, composed page. */
 
 import React from "react";
 import { ForwardIcon } from "@krizaka/icons";
 import { type BrandId, KrizakaLogo, ProductLogo } from "@krizaka/ui";
-import { Achievement, AchievementList, Emblem } from "@krizaka/ui/achievement";
+import { Emblem } from "@krizaka/ui/achievement";
 import { ChoiceGrid } from "@krizaka/ui/choice-grid";
 import { ContinuePrompt } from "@krizaka/ui/continue-prompt";
-import { GoalGauge } from "@krizaka/ui/goal-gauge";
 import { Landscape } from "@krizaka/ui/landscape";
 import { Mascot, Phoenix } from "@krizaka/ui/mascots";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
@@ -33,7 +32,6 @@ import { useI18n } from "@/app/components/I18nProvider";
 import Rich from "@/app/components/Rich";
 import ButtonLink from "@/app/components/ButtonLink";
 import { DUST, ENGINE, flock, isFlockBird, KITS, STUDIO, storyProducts, type KitId, type StoryProduct } from "@/lib/story";
-import LiveChapter from "./LiveChapter";
 import "./story.css";
 
 export interface StoryFigures {
@@ -67,7 +65,7 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
   const products = storyProducts((id) => Boolean(chapters[id]));
   const birds = flock((id) => Boolean(flockWords[id]));
   const stage = (n: number) => `${st.arcade.stage} ${pad(n)}`;
-  const navWords = t.site.nav as unknown as Record<string, { tagline: string; badge?: string } | undefined>;
+  const lines = t.site.products.cards as Record<string, { line: string } | undefined>;
   const statusOf = (p: StoryProduct) => (p.status ? t.site.nav.status[p.status].long : undefined);
   const percent = (value: number) => <NumberTicker value={value} locale={locale} format={{ style: "percent" }} />;
   const kitName = (id: KitId) => st.kits[id].name;
@@ -122,7 +120,7 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
                 icon: <Emblem kind={emblemOf(p.id)} size={13} />,
                 visual: mark(p.id, 84),
                 name: p.name,
-                title: navWords[p.id]?.tagline,
+                title: lines[p.id]?.line,
                 extra: p.stat !== undefined ? <StatGauge label={words.stat} value={p.stat * 100} figure={percent(p.stat)} /> : undefined,
                 meta: (
                   <>
@@ -260,9 +258,6 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
         );
       })}
 
-      {/* ── Bonus stage: how Orochia stays live (LiveChapter.tsx) ── */}
-      <LiveChapter birdName={birdName("pigeon")} />
-
       {/* ── Bonus round: we use our own products ── */}
       <Scene className="st-ours" aria-labelledby="st-ours">
         <StageBanner stage={st.ours.label} name="Krizaka" />
@@ -322,17 +317,6 @@ export default function StoryClient({ figures, kits }: { figures: StoryFigures; 
           </table>
         </div>
       </Scene>
-
-      {/* ── The boss: eight heads sealed one by one while its gauge drains ── */}
-      <SectionBackdrop as="section" className="st-heads brand-orochia" direction="up" grid aria-label={st.headsAria} data-kzs-scene="">
-        <StageBanner size="lg" titleAs="h2" stage={st.arcade.finalRound} title={st.arcade.orochiBossTitle} subtitle={st.arcade.orochiBossSub} />
-        <GoalGauge className="st-boss-gauge" label={st.arcade.bossGauge} segments={st.heads.length} value={0} mode="drain" valueText={`0 / ${st.heads.length}`} />
-        <AchievementList>
-          {st.heads.map((h, i) => (
-            <Achievement key={h.head} eyebrow={`${st.arcade.vatLabel} ${pad(i + 1)}`} badge={st.arcade.sealedBadge} replaced={h.head} title={h.answer} />
-          ))}
-        </AchievementList>
-      </SectionBackdrop>
 
       {/* ── The flock: one promise per bird ── */}
       <Scene className="st-flock" aria-labelledby="st-flock">

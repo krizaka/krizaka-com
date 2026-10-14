@@ -2,14 +2,13 @@
    platform (the open building blocks), Orazaka is the engine, and the products run on both. Every text lives in
    messages/<locale>.json under site.story; this module keeps structure only.
 
-   - The products come from lib/nav.ts (NAV_PRODUCTS, the one list of the site, with their release state): a product
+   - The products come from lib/products.ts (via lib/nav.ts, NAV_PRODUCTS, the one list of the site, with their release state): a product
      added there gets its stage here as soon as its words exist (site.story.chapters.<id>) — nothing is listed twice.
    - Each stage carries the bird in its corner, the input of its promise ("special move"), and what it runs on.
-   - Every figure is computed (lib/orochia-economics.ts, the registries, the generated data): none is typed here. */
+   - Every figure is computed (the registries, the generated data): none is typed here. */
 
 import { MASCOT_BIRDS } from "@krizaka/ui/mascots";
 import { NAV_PRODUCTS, type NavProduct } from "./nav";
-import { PLATFORM_FEE_PERCENTAGE } from "./orochia-economics";
 
 /** The kits a product can run on — the platform's blocks, then the engine. Texts: site.story.kits.<id>. */
 export const KITS = ["ui", "foundations", "realtime", "java", "engine"] as const;
@@ -53,10 +52,6 @@ const STAGES: Record<string, StageStructure> = {
      orazaka-apps/ui/*: @krizaka/ui, tokens, icons, intl; the services build on krizaka-platform-kit (architecture.json,
      layer "krizaka"). */
   orazaka: { bird: "owl", combo: ["←", "↙", "↓", "↘", "→", "K"], stat: 1, runsOn: ["ui", "foundations", "java"], live: "sse" },
-  /* The flamingo gets paid: the creator keeps what the platform does not take (PLATFORM_FEE_PERCENTAGE).
-     orochia/package.json: @krizaka/ui, tokens, icons, intl, realtime, push. Orazaka powers Explore and recommendations
-     next (krizaka/orochia#120): planned. */
-  orochia: { bird: "flamingo", combo: ["→", "↓", "↘", "P+K"], stat: 1 - PLATFORM_FEE_PERCENTAGE / 100, runsOn: ["ui", "foundations", "realtime"], live: "ssePush", planned: ["engine"] },
   /* The lovebird introduces: a batch opens only when the interest goes both ways (100 % mutual, by design).
      yazakia/apps/web: @krizaka/ui, tokens, icons, intl, realtime, push; its agent runs on Orazaka (lib/org-data.ts). */
   yazakia: { bird: "lovebird", combo: ["↓", "↓", "→", "P"], stat: 1, runsOn: ["ui", "foundations", "realtime", "engine"], live: "ssePush" },

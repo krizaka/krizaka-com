@@ -15,7 +15,7 @@ const AI_CRAWLERS = ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", 
 const attr = (tag, name) => new RegExp(`${name}="([^"]*)"`, "i").exec(tag)?.[1];
 const decode = (s) => s.replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
 
-/** Everything wrong with one page's HTML; `path` is its route ("/en/products/orazaka"). */
+/** Everything wrong with one page's HTML; `path` is its route ("/en/products"). */
 export function auditHtml(html, path) {
   const problems = [];
   const titles = [...html.matchAll(/<title>([^<]*)<\/title>/g)].map((m) => decode(m[1]));
@@ -51,12 +51,11 @@ export function auditHtml(html, path) {
     }
   }
   if (path.split("/")[2] === undefined || path.split("/").length === 2) {
-    for (const t of ["Organization", "WebSite"]) if (!types.includes(t)) problems.push(`home: ${t} JSON-LD missing`);
+    for (const t of ["Organization", "WebSite", "FAQPage"]) if (!types.includes(t)) problems.push(`home: ${t} JSON-LD missing`);
   }
   if (/^\/(en|fr)\/docs\/[^/]+\/.+/.test(path)) {
     for (const t of ["TechArticle", "BreadcrumbList"]) if (!types.includes(t)) problems.push(`docs page: ${t} JSON-LD missing`);
   }
-  if (/^\/(en|fr)\/products\/(orazaka|orochia|yazakia|yororis)$/.test(path) && !types.includes("FAQPage")) problems.push("product page: FAQPage JSON-LD missing");
   // What the page declares to machines (links, meta tags, JSON-LD) — a documentation sample may quote the apex in its text.
   const declared = [...links, ...[...html.matchAll(/<meta\s[^>]*>/g)].map((m) => m[0]), ...blocks].join("\n");
   if (/https:\/\/krizaka\.com/.test(declared)) problems.push("the apex https://krizaka.com is declared (use www)");

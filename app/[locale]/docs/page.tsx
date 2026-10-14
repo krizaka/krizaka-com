@@ -22,26 +22,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, { path: "/docs", en: copy("en"), fr: copy("fr") });
 }
 
-/* The pages most asked for: the CLI, the packs, what an administrator controls. */
+/* The pages most asked for: installing and theming Krizaka UI, building and messaging with Krizaka Java. */
 const POPULAR = [
-  { id: "cli", href: "/docs/orazaka/cli", section: "orazaka" },
-  { id: "packs", href: "/docs/orazaka/packs", section: "orazaka" },
-  { id: "orazakaAdmin", href: "/docs/orazaka/admin", section: "orazaka" },
-  { id: "orochiaAdmin", href: "/docs/orochia/admin_console", section: "orochia" },
+  { id: "uiInstall", href: "/docs/ui/installation", section: "ui" },
+  { id: "uiTokens", href: "/docs/ui/tokens", section: "ui" },
+  { id: "javaBuild", href: "/docs/java/build", section: "java" },
+  { id: "javaMessaging", href: "/docs/java/messaging", section: "java" },
 ] as const;
 
 /* What is new, from the registries (lib/registry-versions.json, read at build): never a version typed here. */
 const NEW = [
   { id: "ui", href: "/docs/ui", version: () => npmVersion("@krizaka/ui"), name: "@krizaka/ui" },
   { id: "charts", href: "/docs/ui", version: () => npmVersion("@krizaka/charts"), name: "@krizaka/charts" },
-  { id: "cli", href: "/docs/orazaka/cli", version: () => npmVersion("@krizaka/orazaka-cli"), name: "@krizaka/orazaka-cli" },
   { id: "bom", href: "/docs/java", version: () => mavenVersion("krizaka-bom"), name: "krizaka-bom" },
 ] as const;
-
-const PRODUCTS = ["orazaka", "orochia", "yororis"] as const;
-type Product = (typeof PRODUCTS)[number];
-const isProduct = (section: string): section is Product => (PRODUCTS as readonly string[]).includes(section);
-const logoOf = (section: string): Product | "krizaka" => (isProduct(section) ? section : "krizaka");
 
 /** The first pages of a collection, in the sidebar's order: its quick links. */
 function firstPages(section: DocsSection, locale: string, count = 3): { href: string; label: string }[] {
@@ -58,7 +52,7 @@ function firstPages(section: DocsSection, locale: string, count = 3): { href: st
 }
 
 /* The documentation hub — the DocsHub template of @krizaka/ui (lib/page-templates.ts): the search in the middle of the
-   hero (it opens the site's palette, ⌘K), the collections each in its product's brand with their first pages, a quick
+   hero (it opens the site's palette, ⌘K), the collections with their first pages, a quick
    start per collection beside the most read pages, what is new in the registries, and the owl's promise. */
 export default async function DocsHub({ params }: Props) {
   const locale = asLocale((await params).locale);
@@ -89,8 +83,7 @@ export default async function DocsHub({ params }: Props) {
           collectionsTitle={h.collections}
           collections={DOCS_SECTIONS.map((section) => ({
             id: section,
-            brand: isProduct(section) ? section : undefined,
-            mark: <ProductLogo id={logoOf(section)} size={26} animated={false} />,
+            mark: <ProductLogo id="krizaka" size={26} animated={false} />,
             title: t.sections[section].title,
             href: `/${locale}/docs/${section}`,
             description: t.sections[section].description,
@@ -102,7 +95,6 @@ export default async function DocsHub({ params }: Props) {
               <CodeTabs
                 label={h.quickstarts}
                 tabs={[
-                  { id: "orazaka", label: "Orazaka", content: <CodeBlock code="npx @krizaka/orazaka-cli install" language="bash" file="Terminal" {...copy} /> },
                   { id: "ui", label: "Krizaka UI", content: <CodeBlock code="npm install @krizaka/ui @krizaka/tailwind @krizaka/tokens" language="bash" file="Terminal" {...copy} /> },
                   {
                     id: "java",

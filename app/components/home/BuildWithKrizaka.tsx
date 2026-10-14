@@ -1,14 +1,11 @@
 /* HOME — "Build with Krizaka", right under the products (#109): the same blocks build all four products. Krizaka UI
    live and switchable by brand (KitShowcase), the native versions in a phone (a loop per identity), and the
-   CLI played back by @krizaka/ui's TerminalReplay. Every figure is read at build: the components from the published
+   native versions in a phone. Every figure is read at build: the components from the published
    registries (lib/ui-registry.ts), the packages and versions from npm (lib/registry-versions.ts). */
 
 import { Section, SectionHeading } from "@krizaka/ui/page";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
-import { TerminalReplay } from "@krizaka/ui/terminal-replay";
 import { cliSession as recordedSession } from "@/lib/cli-model";
-import { ForwardIcon } from "@krizaka/icons";
-import ButtonLink from "../ButtonLink";
 import KitShowcase from "./KitShowcase";
 import { kitMedia, kitPhones } from "@/lib/kit-media";
 import { getDictionary } from "@/lib/i18n";
@@ -54,31 +51,6 @@ export default function BuildWithKrizaka({ locale }: { locale: string }) {
         <KitShowcase media={kitMedia()} phones={kitPhones()} terminal={cliSession(recordedSession(), Boolean(npmVersion(CREATE_PACKAGE))).slice(0, 2)} />
       </div>
 
-      <div className="bk-cli" {...reveal(0, "soft")}>
-        <div className="bk-cli-copy">
-          <h3>{b.cli.title}</h3>
-          <p>{b.cli.lead}</p>
-          <div className="bk-links">
-            <ButtonLink href="/docs/orazaka/cli" variant="primary">
-              {b.docsCli} <ForwardIcon size={14} aria-hidden />
-            </ButtonLink>
-            <ButtonLink href="/docs/ui">{b.docsUi}</ButtonLink>
-          </div>
-        </div>
-        <TerminalReplay
-          className="bk-terminal"
-          steps={cliSession(recordedSession(), Boolean(npmVersion(CREATE_PACKAGE)))}
-          label={b.cli.label}
-          title="~/projects — zsh"
-          playLabel={b.cli.play}
-          pauseLabel={b.cli.pause}
-          replayLabel={b.cli.replay}
-          copyLabel={b.cli.copy}
-          copiedLabel={b.cli.copied}
-          rows={16}
-        />
-      </div>
-
       <style>{`
         .bk-figures { display: flex; flex-wrap: wrap; gap: 12px 40px; margin: 24px 0 0; }
         .bk-figures > div { display: flex; flex-direction: column-reverse; }
@@ -104,12 +76,6 @@ export default function BuildWithKrizaka({ locale }: { locale: string }) {
         .bk-phone-wrap figcaption strong { font-size: 14px; }
         .bk-phone-wrap figcaption span { font-size: 12.5px; line-height: 1.5; color: var(--kz-text-secondary); }
 
-        .bk-cli { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 28px; align-items: center; margin-top: 40px; }
-        @media (max-width: 860px) { .bk-cli { grid-template-columns: minmax(0, 1fr); } }
-        .bk-cli h3 { margin: 0; font-family: var(--kz-font-display); font-size: clamp(1.3rem, 2.6vw, 1.6rem); font-weight: 800; letter-spacing: -0.02em; }
-        .bk-cli-copy p { margin: 10px 0 0; font-size: 15px; line-height: 1.65; color: var(--kz-text-secondary); }
-        .bk-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-        .bk-terminal { min-width: 0; }
       `}</style>
     </Section>
   );

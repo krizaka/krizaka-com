@@ -1,52 +1,23 @@
 # Krizaka
 
-> Krizaka is a Montréal (Québec) software studio building open-source,
-> production-ready platforms where compliance, security and modularity are
-> enforced in code. Four products — two running today, one coming soon, one
-> under construction — every repository public under Apache-2.0 at
+> Krizaka is a Montréal (Québec) open-source software studio. It forges the
+> building blocks of its products — Krizaka UI (design system, web and native)
+> and Krizaka Java (Spring Boot kit) — and ships four products on them, each on
+> its own site. Every repository is public under Apache-2.0 at
 > https://github.com/krizaka.
 
-## Products
+## Products (each on its own site)
 
-- Orazaka — sovereign, on-premise AI orchestration engine (chat, RAG, agents,
-  image, audio, video) on a hexagonal architecture (Java 21, Spring Boot 4,
-  Spring AI 2) enforced by ArchUnit. Law 25 / GDPR compliant by design: data
-  never leaves your network. Split into one repository per component so other
-  applications reuse users, notifications, billing, the edge and the UI kit.
-- Orochia — open-source video platform for independent creators (adult-friendly,
-  18+), live at {{OROCHIA_APP_URL}}: direct-to-CDN streaming with 5-minute signed
-  URLs; per-video audiences (followers, contacts, paid unlock with a minimum,
-  invited people and reusable private lists); collections with permissions;
-  views, likes, comments and shares; gateway-confirmed payments settled exactly
-  once into a double-entry ledger; 18 U.S.C. § 2257 creator verification.
-- Yazakia (coming soon, not released yet) — a mobile dating app (iOS and
-  Android) where you talk first: an AI agent gets to know you, then opens a
-  small batch of 3 to 5 people compatible in both directions, with written
-  reasons and never a score; the next batch waits for a short debrief; mutual
-  interest opens a seven-day intro the agent never reads. Location rounded to
-  ~1 km, sensitive answers encrypted at rest, account deletion in the app.
-- Yororis (under construction: not deployed, not offered, no date) — a listening
-  space with a face and a voice, powered by Orazaka's wellbeing pack: an AI
-  presence that says it is one listens, reflects back, asks one question and
-  stops (up to 25 minutes, one moment a day, three a week by default). Between
-  moments it keeps three lines the person owns, never the transcript. Its legal,
-  ethical and clinical framework is studied before anything is offered; the only
-  way in today is to talk to the team.
+- Orazaka — sovereign, on-premise AI orchestration engine. Site: https://dev.orazaka.com · source: https://github.com/krizaka/orazaka
+- Orochia — an open-source video platform for independent creators. Site: {{OROCHIA_APP_URL}} · source: https://github.com/krizaka/orochia
+- Yazakia (to be renamed Yasakia; coming soon) — a mobile dating app where you talk first. Site: https://dev.yasakia.com · source: https://github.com/krizaka/yazakia
+- Yororis (under construction) — a listening space with a face and a voice. Site: https://dev.yororis.com · source: https://github.com/krizaka/yororis
 
 ## Key pages
 
 - Home: {{SITE_URL}}/en
-- Products: {{SITE_URL}}/en/products
-- Open source (every repository): {{SITE_URL}}/en/open-source
-- Orazaka: {{SITE_URL}}/en/products/orazaka
-- Orazaka docs: {{SITE_URL}}/en/docs/orazaka/101
-- Orazaka repositories map: {{SITE_URL}}/en/docs/orazaka/repositories
-- Orazaka packs and Studios: {{SITE_URL}}/en/products/orazaka/packages
-- Orochia: {{SITE_URL}}/en/products/orochia
-- Orochia docs: {{SITE_URL}}/en/docs/orochia
-- Orochia (the platform): {{OROCHIA_APP_URL}}
-- Yazakia (coming soon): {{SITE_URL}}/en/products/yazakia
-- Yororis (under construction): {{SITE_URL}}/en/products/yororis
+- Products (one card per product, with its site and source): {{SITE_URL}}/en/products
+- Open source (every repository and package): {{SITE_URL}}/en/open-source
 - Our story (where the names come from): {{SITE_URL}}/en/story
 - Contact the team: {{SITE_URL}}/en/contact
 
@@ -55,13 +26,7 @@
 - Documentation hub: {{SITE_URL}}/en/docs
 - Krizaka UI (design system, live components): {{SITE_URL}}/en/docs/ui
 - Krizaka Java (Spring Boot kit, starters, messaging): {{SITE_URL}}/en/docs/java
-- Orazaka docs: {{SITE_URL}}/en/docs/orazaka
-- Orazaka CLI (npx orazaka install / start / dev, every command): {{SITE_URL}}/en/docs/orazaka/cli
-- Orazaka packs and Studios (what each pack does, how to write one): {{SITE_URL}}/en/docs/orazaka/packs
-- Orazaka administration (what an administrator controls): {{SITE_URL}}/en/docs/orazaka/admin
-- Orochia docs: {{SITE_URL}}/en/docs/orochia
-- Orochia admin console (moderation, 2257, payouts, its four gates): {{SITE_URL}}/en/docs/orochia/admin_console
-- Yororis (under construction: what it is, what it is not, what is studied): {{SITE_URL}}/en/docs/yororis
+- The products' own documentation is on their sites (Orazaka: https://dev.orazaka.com/docs, Orochia: https://dev.orochia.com/docs).
 
 Every documentation page:
 
@@ -73,12 +38,8 @@ Every documentation page:
 
 ## Source
 
-- Orazaka workspace: https://github.com/krizaka/orazaka
-- Orochia: https://github.com/krizaka/orochia
-- Yazakia (API, in progress): https://github.com/krizaka/yazakia
-- Yazakia mobile (Expo, in progress): https://github.com/krizaka/yazakia-mobile
-- Yororis (under construction): https://github.com/krizaka/yororis
-- Yororis mobile (under construction): https://github.com/krizaka/yororis-mobile
 - Organisation: https://github.com/krizaka
+- Krizaka UI: https://github.com/krizaka/krizaka-ui
+- Krizaka Java: https://github.com/krizaka/krizaka-platform-kit
 
 Languages: English and French (Québec). Detailed version: {{SITE_URL}}/llms-full.txt · Sitemap: {{SITE_URL}}/sitemap.xml

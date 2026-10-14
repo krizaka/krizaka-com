@@ -110,7 +110,7 @@ export async function ComponentDoc({ name, locale, notes, kit = "ui" }: { name: 
   const href = (other: string) => componentHref(locale, ref(other).kit, ref(other).name);
   const titleOf = (other: string) => getRegistryItem(ref(other).name, ref(other).kit).title;
   const inventory = kit === "ui" ? inventoryOf(item.name, item.status, item.deprecated) : null;
-  const kitWords = kit === "ui" ? undefined : { product: t.docs.sections[kit].title, package: KIT_PACKAGES[kit] };
+  const kitWords = kit === "ui" ? undefined : { product: kit, package: KIT_PACKAGES[kit] };
 
   return (
     <>

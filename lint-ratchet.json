@@ -12,9 +12,7 @@
     "hooks/**/*.{js,jsx,mjs,ts,tsx,mts}",
     "features/**/*.{js,jsx,mjs,ts,tsx,mts}"
   ],
-  "retire": [
-    "framer-motion"
-  ],
+  "retire": [],
   "counters": {
     "palette": 0,
     "light": 0,
@@ -22,7 +20,7 @@
     "classNameTemplate": 0,
     "fetchInClientEffect": 0,
     "directTanstackImport": 0,
-    "localTableOrForm": 20,
-    "retiredImport": 2
+    "localTableOrForm": 11,
+    "retiredImport": 0
   }
 }

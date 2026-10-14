@@ -6,10 +6,11 @@
    never promise an availability that does not exist (no beta, no waiting list, no "coming soon"). This script reads:
    - every message of messages/{en,fr}.json whose key path contains "yororis" (site.yororis.*, site.nav.yororis.*,
      site.products.yororis, the contact topic, the docs section, the story chapter…);
-   - the written Yororis documentation (content/docs/yororis/**.mdx);
+   - the written Yororis documentation (content/docs/yororis/**.mdx, if any: Yororis' docs live on dev.yororis.com now);
    and fails on any word of the "never" column (NEVER below, English and French), matched as whole words.
 
-   Reviewed texts — the "under construction" statement and "What Yororis is not" (site.yororis.reviewed.*) — deny some
+   Reviewed texts — the "under construction" statement and "What Yororis is not" (site.yororis.reviewed.*; /story's
+   Yororis chapter quotes the statement, the products card follows the lexicon) — deny some
    of these words on purpose ("not care"). They are exempt wherever they appear verbatim, and protected instead: their
    fingerprint lives in scripts/lexicon-reviewed.json, so changing one fails until the change is acknowledged with its
    date (`npm run lexicon -- --accept-review YYYY-MM-DD`) — and that date is what the lawyer's review refers to.

@@ -62,63 +62,28 @@ one schema component for every product (`app/components/diagrams/`, no diagram l
 | Path | Role |
 |---|---|
 | `app/[locale]/` | All routes; `[locale]` is `en` (default) or `fr` (Québec). `layout.tsx` wires fonts, theme, i18n, the sitewide JSON-LD graph and base metadata. |
-| `app/components/` | UI. Big ones: `TopNavBar`, `EngineShowcaseSection`, `diagrams/` (module map with its journeys for Orazaka, Orochia and Krizaka Java, pipeline, messaging, sequences, state machines), `MdxComponents`, `DemosGallery`. |
+| `app/components/` | UI. Big ones: `TopNavBar`, `home/ProductCards` (one card per product), `diagrams/` (module map for Krizaka Java, pipeline, sequences, state machines), `docs/`. |
 | `app/robots.ts` · `app/sitemap.ts` · `app/manifest.ts` | SEO route handlers. |
-| `app/data/architecture.json` | **Generated** module graph + Orazaka repository map (read-only). |
+| `app/data/architecture.json` · `orochia-architecture.json` | **Generated** module graphs + repository maps (read-only): Krizaka Java's building blocks and the open-source repository lists. |
 | `proxy.ts` | Edge middleware (Next 16 name): no-locale URL → `/en` by default, `/fr` when the `NEXT_LOCALE` cookie says so; a `/fr` or `/en` page sets that cookie. |
-| `next.config.ts` | Security headers, AVIF/WebP, cache policy. |
+| `next.config.ts` | Security headers, WebP, cache policy, and the 308 redirects of the old product addresses (`lib/product-redirects.ts`). |
 | `lib/seo.ts` | `localizedMetadata()` + `buildAlternates()` — per-page title/description/canonical/hreflang. |
-| `lib/structured-data.ts` | JSON-LD `@graph` builders (Organization · WebSite · SoftwareApplication, Breadcrumb, FAQ). |
+| `lib/structured-data.ts` | JSON-LD `@graph` builders (Organization · WebSite, Breadcrumb, FAQ, TechArticle). |
+| `lib/products.ts` | The products (name, status, dev site, source) — `/products`, the nav, the footer. |
 | `lib/site.ts` | External identity (SITE_URL, GitHub, version) — single source. |
 | `lib/i18n.ts` | Binds [`@krizaka/i18n`](https://www.npmjs.com/package/@krizaka/i18n) to `messages/en.json` + `messages/fr.json` (`getDictionary`, `asLocale`, `format`). |
-| `app/[locale]/docs/` | The documentation (Fumadocs): hub, then `[section]` = `ui`, `java`, `orazaka`, `orochia`, `yororis`. |
-| `source.config.ts` · `lib/docs-source.ts` | The five Fumadocs collections and their loaders, sidebars, titles (messages or manifest). |
-| `content/docs/ui/` · `content/docs/java/` · `content/docs/yororis/` | Written docs (MDX; Yororis' until its docs are synced). `content/docs/ui/components/<name>.mdx` are scaffolded by `npm run docs:ui`. |
+| `app/[locale]/docs/` | The documentation (Fumadocs): hub, then `[section]` = `ui`, `java`. |
+| `source.config.ts` · `lib/docs-source.ts` | The two Fumadocs collections and their loaders, sidebars, titles (messages or code). |
+| `content/docs/ui/` · `content/docs/java/` | Written docs (MDX). `content/docs/ui/components/<name>.mdx` are scaffolded by `npm run docs:ui`. |
 | `app/components/docs/` | MDX components: `ComponentPreview`, `PropsTable`, `StoryFrame`, `EventSchema`, `ComingSoon`. |
-| `lib/docs-manifest.ts` · `lib/orochia-docs-manifest.ts` | Publication allow-lists of the synced product docs (only listed files are even compiled). |
-| `lib/{use-cases,packages,architecture-mesh,pipeline-mesh}-data.ts` | Page/visualization data. |
-| `orazaka-content/docs/` | **Synced** markdown from Orazaka (read-only). |
 
-## Content sync (read-only data)
+## Products
 
-```
-products/orazaka (workspace)  ──  orazaka docs sync  ──▶  orazaka-content/docs/   (markdown)
-                                                      └▶  app/data/architecture.json (schemas + repository map)
-```
-
-`products/orazaka` is a local clone of the **Orazaka workspace** ([`krizaka/orazaka`](https://github.com/krizaka/orazaka))
-with every component repository cloned inside it (`node scripts/workspace.mjs clone`). It is ignored
-by this repository's git.
-
-## Orazaka repositories
-
-Orazaka is published as **one repository per component** in the [krizaka](https://github.com/krizaka)
-organisation; the site renders the list from the generated `architecture.json`
-(`/products/orazaka/architecture#repositories`).
-
-| Layer | Repositories |
-|---|---|
-| Workspace | [orazaka](https://github.com/krizaka/orazaka) — governance, manifest, infra, e2e, docs |
-| Foundation | [orazaka-build](https://github.com/krizaka/orazaka-build) · [orazaka-contracts](https://github.com/krizaka/orazaka-contracts) · [orazaka-edge](https://github.com/krizaka/orazaka-edge) · [orazaka-ui-kit](https://github.com/krizaka/orazaka-ui-kit) |
-| Krizaka building blocks (Maven Central, `com.krizaka` 0.2.0) | [krizaka-build](https://github.com/krizaka/krizaka-build) · [krizaka-platform-kit](https://github.com/krizaka/krizaka-platform-kit) · [krizaka-users](https://github.com/krizaka/krizaka-users) · [krizaka-notifications](https://github.com/krizaka/krizaka-notifications) · [krizaka-billing](https://github.com/krizaka/krizaka-billing) — documented at [/docs/java](https://www.krizaka.com/docs/java) |
-| AI engine | [orazaka-ai-engine](https://github.com/krizaka/orazaka-ai-engine) · [orazaka-studio](https://github.com/krizaka/orazaka-studio) · [orazaka-conversation-service](https://github.com/krizaka/orazaka-conversation-service) · [orazaka-job-service](https://github.com/krizaka/orazaka-job-service) · [orazaka-knowledge-service](https://github.com/krizaka/orazaka-knowledge-service) · [orazaka-automation-service](https://github.com/krizaka/orazaka-automation-service) · [orazaka-worker-media](https://github.com/krizaka/orazaka-worker-media) |
-| Apps & content | [orazaka-web-client](https://github.com/krizaka/orazaka-web-client) · [orazaka-web-admin](https://github.com/krizaka/orazaka-web-admin) · [orazaka-mobile-client](https://github.com/krizaka/orazaka-mobile-client) · [orazaka-cli](https://github.com/krizaka/orazaka-cli) · [orazaka-packs](https://github.com/krizaka/orazaka-packs) |
-
-## Orochia repositories
-
-Orochia, the creator video platform, lives in four repositories of the [krizaka](https://github.com/krizaka)
-organisation; its architecture is generated in `app/data/orochia-architecture.json` and presented at
-`/products/orochia`, its docs at [/docs/orochia](https://www.krizaka.com/docs/orochia).
-
-| Repository | What it is |
-|---|---|
-| [orochia](https://github.com/krizaka/orochia) | The web app: 4K HLS playback from Bunny Stream, the Explorer, stories, unlocks, auctions and challenges in escrowed credits, 90 % to the creator on a double-entry ledger |
-| [orochia-admin](https://github.com/krizaka/orochia-admin) | The operator console: 18 U.S.C. § 2257 creator verification, content-report triage, catalogue, auctions, treasury and payouts — its own database, one operator account |
-| [orochia-design-system](https://github.com/krizaka/orochia-design-system) | [`@krizaka/orochia-design-system`](https://www.npmjs.com/package/@krizaka/orochia-design-system): the Orochia theme on `@krizaka/ui` and its product composites |
-| [orochia-mobile](https://github.com/krizaka/orochia-mobile) | Orochia for iOS and Android (Expo), on the same API and rules as the web |
-
-Never hand-edit `orazaka-content/` or `app/data/`. To publish a synced doc, add an entry
-to [`lib/docs-manifest.ts`](lib/docs-manifest.ts) (curated title/category/order/audience).
+krizaka.com is the company's showcase. Each product has its own site — [dev.orazaka.com](https://dev.orazaka.com),
+[dev.orochia.com](https://dev.orochia.com), [dev.yasakia.com](https://dev.yasakia.com) (Yazakia, being renamed),
+[dev.yororis.com](https://dev.yororis.com) — and `/products` is the one page here that leads to them, with each
+product's source. The old `/products/<product>/…` and `/docs/<product>/…` addresses answer **308** with the product's
+site (`lib/product-redirects.ts`). The generated `app/data/*.json` are never hand-edited.
 
 ## Conventions
 
@@ -129,11 +94,8 @@ to [`lib/docs-manifest.ts`](lib/docs-manifest.ts) (curated title/category/order/
 
 ## Documentation (`/docs`)
 
-One engine, [Fumadocs](https://fumadocs.dev), for four sets: **Krizaka UI** (`content/docs/ui`), **Krizaka Java**
-(`content/docs/java`), and the synced **Orazaka** / **Orochia** docs (`orazaka-content/docs`, `orochia-content/docs`,
-gated by their manifests). The old article URLs (`/products/orazaka/<category>/<slug>`,
-`/products/orochia/docs/<slug>`) answer **301** to `/docs/<product>/<slug>`; the product overview pages stay where
-they were.
+One engine, [Fumadocs](https://fumadocs.dev), for two sets: **Krizaka UI** (`content/docs/ui`) and **Krizaka Java**
+(`content/docs/java`). The products document themselves on their own sites.
 
 - **Components, driven by their code** — every component of the installed `@krizaka/ui` has a page, generated at
   each build from its registry (`lib/docs-source.ts` adds one virtual page per component; `ComponentDoc` renders it):

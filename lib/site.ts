@@ -10,16 +10,13 @@ export const GITHUB_REPO = "orazaka";
 export const SITE_URL = "https://www.krizaka.com";
 
 /**
- * Where Orochia runs — every "open the app" link, the structured data and llms.txt point here.
+ * Where Orochia runs — its card on /products and llms.txt point here.
  * NEXT_PUBLIC_APP_DEMO_URL switches it (dev today, production later) without touching the code;
  * it is read at build time, so a change takes effect on the next deployment.
  */
 export const OROCHIA_APP_URL = (process.env.NEXT_PUBLIC_APP_DEMO_URL || "https://dev.orochia.com").replace(/\/$/, "");
 
 export const CONTACT_EMAIL = "bonjour@krizaka.com";
-
-/** Real engine version — keep in sync with orazaka-parent (the Orazaka BOM). */
-export const ORAZAKA_VERSION = "1.0.0-SNAPSHOT";
 
 export const GITHUB_ORG_URL = `https://github.com/${GITHUB_ORG}`;
 export const NPM_ORG_URL = `https://www.npmjs.com/org/${GITHUB_ORG}`;
@@ -29,25 +26,15 @@ export const GITHUB_DISCUSSIONS_URL = `${GITHUB_REPO_URL}/discussions`;
 export const GITHUB_CONTRIBUTING_URL = `${GITHUB_REPO_URL}/blob/main/CONTRIBUTING.md`;
 export const GITHUB_GOOD_FIRST_ISSUES_URL = `${GITHUB_REPO_URL}/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22`;
 
-/** The site's own repository — where the synced Orazaka docs are published from. */
+/** The site's own repository. */
 export const SITE_REPO_URL = `${GITHUB_ORG_URL}/krizaka-com`;
 
-/** Raw source of the roadmap's source-of-truth file, for the transparency callout. */
-export const MASTER_FEATURES_URL = `${SITE_REPO_URL}/blob/main/orazaka-content/docs/MASTER_FEATURES.md`;
-
-/** Orazaka is one repository per component; the workspace (GITHUB_REPO_URL) assembles them. */
-export const GITHUB_REPOSITORIES_URL = `${GITHUB_ORG_URL}?q=orazaka&type=all`;
-
-/** Yazakia, the dating app (coming soon): its API and its mobile app. */
+/** Yazakia, the dating app (coming soon; being renamed Yasakia): its repository. */
 export const YAZAKIA_REPO_URL = `${GITHUB_ORG_URL}/yazakia`;
-export const YAZAKIA_MOBILE_REPO_URL = `${GITHUB_ORG_URL}/yazakia-mobile`;
 
-/** Yororis, the listening space (under construction): its repositories — and nothing else. In construction mode there
-    is no application address and no download link anywhere on the site (krizaka/yororis docs/FRAMEWORK.md §5). */
+/** Yororis, the listening space (under construction): its repository. The products card links its static site
+    (dev.yororis.com) and its source — no application address, no download link (krizaka/yororis docs/FRAMEWORK.md §5). */
 export const YORORIS_REPO_URL = `${GITHUB_ORG_URL}/yororis`;
-export const YORORIS_MOBILE_REPO_URL = `${GITHUB_ORG_URL}/yororis-mobile`;
-/** What Yororis is, what it is not, what is being studied — the framework, in its repository. */
-export const YORORIS_FRAMEWORK_URL = `${YORORIS_REPO_URL}/blob/main/docs/FRAMEWORK.md`;
 
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;

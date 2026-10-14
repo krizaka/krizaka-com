@@ -16,14 +16,10 @@ test("written docs links get the reader's locale", () => {
   assert.equal(resolveDocHref("#props", "en"), "#props");
 });
 
-test("synced product links resolve through the manifest, internal docs keep their link", () => {
-  const product = { id: "orazaka", manifest: { architecture: {}, auth: {} } };
-  assert.equal(resolveDocHref("ARCHITECTURE.md", "en", product), "/en/docs/orazaka/architecture");
-  assert.equal(resolveDocHref("./docs/AUTH.md#jwt", "fr", product), "/fr/docs/orazaka/auth#jwt");
-  assert.equal(resolveDocHref("../AGENTS.md", "en", product), "../AGENTS.md");
-  // From docs/_generated/ to a sibling or to a curated doc one level up.
-  assert.equal(resolveDocHref("_generated/ARCHITECTURE.md", "en", product), "/en/docs/orazaka/architecture");
-  assert.equal(resolveDocHref("../AUTH.md", "fr", product), "/fr/docs/orazaka/auth");
+test("the products' own documentation is not linked relatively: /products gets the locale, an external link stays", () => {
+  assert.equal(resolveDocHref("/products", "en"), "/en/products");
+  assert.equal(resolveDocHref("https://dev.orazaka.com/docs", "fr"), "https://dev.orazaka.com/docs");
+  assert.equal(resolveDocHref("ARCHITECTURE.md", "en"), "ARCHITECTURE.md");
 });
 
 test("a poster linking to a recording is the recording; any other link stays a link", () => {

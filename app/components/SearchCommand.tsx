@@ -13,17 +13,11 @@ import { NAV_DOCS, NAV_DOCS_HUB, docsLinkText } from "@/lib/nav";
    documentation entries are every NAV_DOCS set (lib/nav.ts) and the hub — a set added there is searchable here. */
 
 const SEARCH_TARGETS = [
-  { id: "orazaka", url: "/products/orazaka" },
-  { id: "orazakaDemo", url: "/products/orazaka/demos" },
-  { id: "orazakaArch", url: "/products/orazaka/architecture" },
-  { id: "orochia", url: "/products/orochia" },
+  { id: "products", url: "/products" },
   { id: "docs", url: NAV_DOCS_HUB },
   { id: "story", url: "/story" },
   { id: "openSource", url: "/open-source" },
   { id: "contact", url: "/contact" },
-  { id: "packs", url: "/products/orazaka/packages" },
-  { id: "orazakaAdmin", url: "/docs/orazaka/admin" },
-  { id: "orochiaAdmin", url: "/docs/orochia/admin_console" },
 ] as const;
 
 export function SearchCommand({

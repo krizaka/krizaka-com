@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 /* /docs/ui is generated from the @krizaka/ui registry (the installed package) at every build — the code of each
    component drives its page: meta.ts (summary, when to use, accessibility, platforms), its named examples and its
-   props. Nothing about a component is written here. So are /docs/orazaka/ui and /docs/orochia/ui, from the registries
-   of the product kits (@krizaka/orazaka-design-system, @krizaka/orochia-design-system — the same format, plus `why`,
-   `builtOn`, `deprecated` and registry/foundations.json).
+   props. Nothing about a component is written here. (The product kits' own pages, /docs/<product>/ui, moved to the
+   products' sites: a kit entry in KITS below would generate them again — the code that reads a kit is kept for that.)
 
    This script writes what a bundler and a static host need (git-ignored, rewritten by `postinstall`, `dev` and
    `build`; the pages themselves are virtual: lib/docs-source.ts reads the registry):
@@ -36,12 +35,10 @@ const shotsDir = path.join(root, "public", "ui-examples");
 const check = process.argv.includes("--check");
 const strict = check || process.argv.includes("--strict");
 
-/** The documented design systems: Krizaka UI (@krizaka/ui and @krizaka/charts, one catalogue), then the product kits. */
+/** The documented design systems: Krizaka UI (@krizaka/ui and @krizaka/charts, one catalogue). */
 const KITS = [
   { id: "ui", pkg: "@krizaka/ui" },
   { id: "charts", pkg: "@krizaka/charts", part: "ui" },
-  { id: "orazaka", pkg: "@krizaka/orazaka-design-system" },
-  { id: "orochia", pkg: "@krizaka/orochia-design-system" },
 ];
 
 const load = ({ pkg }) => {
