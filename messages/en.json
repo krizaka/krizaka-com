@@ -1877,7 +1877,7 @@
         [
           "Install",
           "npm install",
-          "Node 20 or later, Docker running."
+          "Node 22 or later, Docker running."
         ],
         [
           "Set everything up",
