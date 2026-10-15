@@ -10,7 +10,7 @@ const { products: manifests } = JSON.parse(read("lib/product-manifests.json"));
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",/g)].map((m) => m[1]);
 
 test("every product of lib/products.ts has a row — Orochia included", () => {
-  assert.deepEqual(ids, ["orazaka", "orochia", "yasakia", "yororis"]);
+  assert.deepEqual(ids, ["orazaka", "orochia", "yasakia", "yororis", "yomizaka"]);
   const rows = stackRows(ids, manifests);
   assert.deepEqual(rows.map((r) => r.id), ids);
   for (const r of rows) {
@@ -42,7 +42,7 @@ test("what is Planned is not in a manifest yet (else it is shipped: say Yes)", (
 
 test("the engine is the only product that is the engine; the others run on it only when it ships", () => {
   assert.equal(stackCell(ENGINE, "engine", manifests[ENGINE]).state, "engine");
-  for (const id of ids.filter((i) => i !== ENGINE)) assert.notEqual(stackCell(id, "engine", manifests[id]).state, "yes");
+  for (const id of ids.filter((i) => i !== ENGINE)) if (!manifests[id]?.engineRun) assert.notEqual(stackCell(id, "engine", manifests[id]).state, "yes");
 });
 
 test("the table, product by product (Orochia: neutral facts only)", () => {
@@ -53,6 +53,7 @@ test("the table, product by product (Orochia: neutral facts only)", () => {
     orochia: ["yes", "yes", "ssePush", "no", "planned"],
     yasakia: ["yes", "partial:tokens+icons", "ssePush", "no", "planned"],
     yororis: ["yes", "partial:tokens+icons", "planned", "no", "planned"],
+    yomizaka: ["yes", "partial:tokens+icons", "no", "no", "planned"],
   });
 });
 

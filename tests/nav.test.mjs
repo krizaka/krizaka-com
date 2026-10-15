@@ -17,7 +17,7 @@ test("the centre of the bar is Products · Open source · Our story, all pages o
 });
 
 test("the family: every product on its own site, the stack on its subdomains, and GitHub", () => {
-  assert.deepEqual(products.map((p) => p.id), ["orazaka", "orochia", "yasakia", "yororis"]);
+  assert.deepEqual(products.map((p) => p.id), ["orazaka", "orochia", "yasakia", "yororis", "yomizaka"]);
   for (const p of products) assert.match(p.devUrl, /^("https:\/\/dev\.[a-z]+\.com"|OROCHIA_APP_URL)$/, p.id);
   assert.deepEqual(stack, [
     { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com" },
@@ -28,9 +28,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
-test("the products' statuses: Yasakia is coming soon, Yororis under construction, the others released", () => {
+test("the products' statuses: Yasakia and Yomizaka coming soon, Yororis under construction, the others released", () => {
   const status = Object.fromEntries(products.map((p) => [p.id, p.status ?? "released"]));
-  assert.deepEqual(status, { orazaka: "released", orochia: "released", yasakia: "upcoming", yororis: "construction" });
+  assert.deepEqual(status, { orazaka: "released", orochia: "released", yasakia: "upcoming", yororis: "construction", yomizaka: "upcoming" });
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {

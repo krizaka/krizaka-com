@@ -36,6 +36,9 @@ export const YASAKIA_REPO_URL = `${GITHUB_ORG_URL}/yasakia`;
     (dev.yororis.com) and its source — no application address, no download link (krizaka/yororis docs/FRAMEWORK.md §5). */
 export const YORORIS_REPO_URL = `${GITHUB_ORG_URL}/yororis`;
 
+/** Yomizaka, documents read and checked by Orazaka (coming soon): its repository. */
+export const YOMIZAKA_REPO_URL = `${GITHUB_ORG_URL}/yomizaka`;
+
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;
 export const PLATFORM_KIT_REPO_URL = `${GITHUB_ORG_URL}/krizaka-platform-kit`;

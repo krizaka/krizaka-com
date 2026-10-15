@@ -16,7 +16,8 @@ import { fileURLToPath } from "node:url";
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "product-manifests.json");
 const RAW = "https://raw.githubusercontent.com/krizaka";
 
-/** repo → manifests to read; `evidence` files must exist (a hook a manifest cannot show). */
+/** repo → manifests to read; `evidence` files must exist (a hook a manifest cannot show); `engineRun` is the file that
+    records a real Orazaka run of the product on dev (its run id) — the only proof that it runs on the engine. */
 const PRODUCTS = {
   orazaka: {
     npm: ["orazaka-web-client:package.json", "orazaka-web-admin:package.json", "orazaka-mobile-client:package.json"],
@@ -26,7 +27,11 @@ const PRODUCTS = {
   orochia: { npm: ["orochia:apps/web/package.json", "orochia-admin:package.json", "orochia-mobile:package.json"], maven: ["orochia:pom.xml"] },
   yasakia: { npm: ["yasakia:apps/web/package.json", "yasakia-mobile:package.json"], maven: ["yasakia:pom.xml"] },
   yororis: { npm: ["yororis:site/package.json", "yororis-mobile:package.json"], maven: ["yororis:pom.xml"] },
+  yomizaka: { npm: ["yomizaka:apps/web/package.json"], maven: [], engineRun: "yomizaka:apps/web/lib/demo-run.ts" },
 };
+
+/** The run id a recorded-run file holds (`"runId": "<uuid>"`), or null — never a guess. */
+export const runIdIn = (text) => /"runId":\s*"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"/i.exec(text ?? "")?.[1] ?? null;
 
 const read = async (spec) => {
   const [repo, file] = spec.split(":");
@@ -57,7 +62,8 @@ for (const [id, spec] of Object.entries(PRODUCTS)) {
   }
   const evidence = [];
   for (const e of spec.evidence ?? []) if (await read(e)) evidence.push(e);
-  out[id] = { sources, npm: [...npm].sort(), maven: [...maven].sort(), evidence };
+  const engineRun = spec.engineRun ? runIdIn(await read(spec.engineRun)) : null;
+  out[id] = { sources, npm: [...npm].sort(), maven: [...maven].sort(), evidence, ...(engineRun ? { engineRun } : {}) };
 }
 writeFileSync(OUT, JSON.stringify({ readAt: new Date().toISOString().slice(0, 10), products: out }, null, 2) + "\n");
 console.log(JSON.stringify(out, null, 1));

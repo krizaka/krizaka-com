@@ -43,6 +43,8 @@ export const PLANNED: Record<string, readonly KitId[]> = {
   orochia: ["engine"],
   yasakia: ["engine"],
   yororis: ["realtime", "engine"],
+    // Yomizaka: every analysis is an Orazaka run by design; "Yes" once a run is recorded on dev (lib/demo-run.ts of krizaka/yomizaka).
+  yomizaka: ["engine"],
 };
 
 /** What the manifests of one product say (lib/product-manifests.json). */
@@ -54,6 +56,8 @@ export interface ProductManifest {
   maven: string[];
   /** Files that prove what a manifest cannot show (Orazaka's own SSE hook). */
   evidence: string[];
+  /** A real Orazaka run of this product on dev (its run id, read from the product's recorded run): it runs on the engine. */
+  engineRun?: string;
 }
 export type ProductManifests = Record<string, ProductManifest>;
 
@@ -85,7 +89,7 @@ export function provenKit(kit: KitId, m: ProductManifest | undefined): boolean {
     case "java":
       return (m?.maven.length ?? 0) > 0;
     case "engine":
-      return false;
+      return Boolean(m?.engineRun);
   }
 }
 

@@ -1,5 +1,5 @@
 {
-  "readAt": "2026-10-14",
+  "readAt": "2026-10-15",
   "products": {
     "orazaka": {
       "sources": [
@@ -71,6 +71,7 @@
         "@krizaka/i18n",
         "@krizaka/icons",
         "@krizaka/push",
+        "@krizaka/query",
         "@krizaka/realtime",
         "@krizaka/tailwind",
         "@krizaka/tokens",
@@ -86,6 +87,22 @@
       "npm": [
         "@krizaka/fonts",
         "@krizaka/icons",
+        "@krizaka/tailwind",
+        "@krizaka/tokens",
+        "@krizaka/ui"
+      ],
+      "maven": [],
+      "evidence": []
+    },
+    "yomizaka": {
+      "sources": [
+        "yomizaka:apps/web/package.json"
+      ],
+      "npm": [
+        "@krizaka/config",
+        "@krizaka/i18n",
+        "@krizaka/icons",
+        "@krizaka/query",
         "@krizaka/tailwind",
         "@krizaka/tokens",
         "@krizaka/ui"
