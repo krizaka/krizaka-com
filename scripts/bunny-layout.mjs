@@ -78,7 +78,7 @@ export function libraryPath(logical) {
 /** What `site/` is made of: the first segment of a logical path given to `cdn-assets upload --to`. */
 export const SITE_AREAS = {
   home: "home/backdrop/<product>, home/kit-native/<product>-<theme> — the home page",
-  products: "products/<product>/{tour,gallery,mobile}/<clip> — recordings and images of a product's own pages",
+  products: "products/<product>/{tour,gallery,gallery-video,video,mobile}/<clip> — recordings, images and Orazaka-made videos (.mp4 · .webm · -poster.webp) of a product",
   docs: "docs/<product>/{mobile,…}/<name> — media of the documentation pages (screenshots, clips, posters)",
   people: "people/<product>/<person>-{256,512}.webp — the demo personas' portraits, shared by the products (mirrored in people/personas/)",
 };
