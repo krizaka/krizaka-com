@@ -10,7 +10,7 @@ const { products: manifests } = JSON.parse(read("lib/product-manifests.json"));
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",/g)].map((m) => m[1]);
 
 test("every product of lib/products.ts has a row — Orochia included", () => {
-  assert.deepEqual(ids, ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza"]);
+  assert.deepEqual(ids, ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"]);
   const rows = stackRows(ids, manifests);
   assert.deepEqual(rows.map((r) => r.id), ids);
   for (const r of rows) {

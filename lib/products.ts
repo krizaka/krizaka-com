@@ -28,10 +28,10 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
   { id: "orazaka", name: "Orazaka", devUrl: "https://dev.orazaka.com", repoUrl: "https://github.com/krizaka/orazaka" },
-  { id: "orochia", name: "Orochia", devUrl: OROCHIA_APP_URL, repoUrl: "https://github.com/krizaka/orochia" },
-  { id: "yasakia", name: "Yasakia", status: "upcoming", devUrl: "https://dev.yasakia.com", repoUrl: YASAKIA_REPO_URL },
-  { id: "yororis", name: "Yororis", status: "construction", devUrl: "https://dev.yororis.com", repoUrl: YORORIS_REPO_URL },
   { id: "yomizaka", name: "Yomizaka", status: "development", devUrl: "https://dev.yomizaka.com", repoUrl: YOMIZAKA_REPO_URL },
+  { id: "orochia", name: "Orochia", devUrl: OROCHIA_APP_URL, repoUrl: "https://github.com/krizaka/orochia" },
   { id: "kachizaka", name: "Kachizaka", status: "development", devUrl: KACHIZAKA_REPO_URL, repoUrl: KACHIZAKA_REPO_URL, noSite: true },
   { id: "akinaza", name: "Akinaza", status: "development", devUrl: AKINAZA_REPO_URL, repoUrl: AKINAZA_REPO_URL, noSite: true },
+  { id: "yasakia", name: "Yasakia", status: "development", devUrl: "https://dev.yasakia.com", repoUrl: YASAKIA_REPO_URL },
+  { id: "yororis", name: "Yororis", status: "construction", devUrl: "https://dev.yororis.com", repoUrl: YORORIS_REPO_URL },
 ];

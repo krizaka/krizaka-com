@@ -17,7 +17,7 @@ test("the centre of the bar is Products · Open source · Our story, all pages o
 });
 
 test("the family: every product on its own site, the stack on its subdomains, and GitHub", () => {
-  assert.deepEqual(products.map((p) => p.id), ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza"]);
+  assert.deepEqual(products.map((p) => p.id), ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"]);
   // A product on its own dev site — or, in development with nothing deployed yet, its repository (never a dead address).
   for (const p of products) assert.match(p.devUrl, /^("https:\/\/dev\.[a-z]+\.com"|OROCHIA_APP_URL|[A-Z]+_REPO_URL)$/, p.id);
   for (const p of products.filter((x) => /_REPO_URL$/.test(x.devUrl))) assert.ok(p.noSite && p.status === "development", `${p.id}: a repository address only while in development, said so`);
@@ -32,7 +32,7 @@ test("the family: every product on its own site, the stack on its subdomains, an
 
 test("the products' statuses: Yasakia coming soon, Yororis under construction, Yomizaka, Kachizaka and Akinaza in development, the others released", () => {
   const status = Object.fromEntries(products.map((p) => [p.id, p.status ?? "released"]));
-  assert.deepEqual(status, { orazaka: "released", orochia: "released", yasakia: "upcoming", yororis: "construction", yomizaka: "development", kachizaka: "development", akinaza: "development" });
+  assert.deepEqual(status, { orazaka: "released", orochia: "released", yasakia: "development", yororis: "construction", yomizaka: "development", kachizaka: "development", akinaza: "development" });
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {

@@ -802,7 +802,7 @@
       "family": {
         "orazaka": "Sovereign, on-premise AI orchestration engine: chat, knowledge, jobs and automation under your own roof.",
         "orochia": "An open-source video platform for independent creators: upload, encode and stream.",
-        "yasakia": "A mobile dating app where you talk first. Coming soon.",
+        "yasakia": "A mobile dating app where you talk first. In development.",
         "yororis": "A listening space with a face and a voice. Under construction.",
         "krizaka-ui": "The Krizaka design system: React and React Native components, tokens, icons, fonts and charts.",
         "krizaka-java": "The Spring Boot building blocks of every Krizaka service, published on Maven Central under com.krizaka.",
@@ -1196,7 +1196,7 @@
         },
         {
           "q": "Where are the products?",
-          "a": "On their own sites: dev.orazaka.com, dev.orochia.com, dev.yasakia.com (coming soon) and dev.yororis.com (under construction). The Products page lists them with their source."
+          "a": "On their own sites: dev.orazaka.com, dev.orochia.com, dev.yasakia.com (in development) and dev.yororis.com (under construction). The Products page lists them with their source."
         },
         {
           "q": "Where is the documentation?",
