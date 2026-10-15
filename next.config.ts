@@ -65,6 +65,13 @@ const nextConfig: NextConfig = {
     return [
       { source: "/:path*", headers: securityHeaders },
       {
+        // Pages (HTML, RSC payloads) must revalidate: Next.js marks prerendered pages `s-maxage=1y`, which kept a
+        // deployed change invisible for a year at the edge. Only the hashed bundles under /_next/static are immutable.
+        // Declared before the media rule below, which wins for its own files.
+        source: "/((?!_next/static/|_next/image).*)",
+        headers: [{ key: "Cache-Control", value: "public, max-age=0, must-revalidate" }],
+      },
+      {
         // Static media in /public: cache hard but allow background revalidation.
         source: "/:all*(svg|jpg|jpeg|png|webp|avif|gif|ico|woff2)",
         headers: [
