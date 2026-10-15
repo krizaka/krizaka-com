@@ -117,7 +117,7 @@
     "products": {
       "eyebrow": "Savoir-faire, prouvé par des produits",
       "title": "Nos produits",
-      "pageTitle": "Cinq savoir-faire, chacun prouvé par un produit",
+      "pageTitle": "Sept savoir-faire, chacun prouvé par un produit",
       "lead": "Les produits de Krizaka sont la preuve de ce qu'elle sait faire. Chacun a son propre site, où il est présenté, démontré et documenté — et son code source sur GitHub.",
       "visit": "Voir le site de dev",
       "visitAria": "{name} — voir le site de dev",
@@ -181,14 +181,14 @@
       "seeCodeAria": "Le code de {name} sur GitHub — en développement, pas encore de site"
     },
     "productsPage": {
-      "title": "Produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka",
-      "description": "Les produits open source de Krizaka — Orazaka, Orochia, Yasakia, Yororis et Yomizaka — chacun sur son propre site, avec son code source sur GitHub."
+      "title": "Produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza",
+      "description": "Les produits open source de Krizaka — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — chacun sur son propre site, avec son code source sur GitHub."
     },
     "home": {
       "hero": {
         "eyebrow": "Montréal · Studio logiciel",
         "title": "Nous construisons du logiciel open source — et tout ce qui le porte.",
-        "lead": "Krizaka est un studio logiciel à Montréal. Nous faisons cinq produits et publions tout ce sur quoi ils reposent : Krizaka UI pour les interfaces, Krizaka Java pour les services. Chaque ligne est publique ; chaque changement est testé.",
+        "lead": "Krizaka est un studio logiciel à Montréal. Nous faisons sept produits et publions tout ce sur quoi ils reposent : Krizaka UI pour les interfaces, Krizaka Java pour les services. Chaque ligne est publique ; chaque changement est testé.",
         "primary": "Voir ce que nous construisons",
         "contact": "Nous contacter",
         "proofsLabel": "Krizaka en chiffres, lus au build",
@@ -210,7 +210,7 @@
       "stack": {
         "eyebrow": "La pile que nous ouvrons",
         "title": "Une même pile ouverte sous chaque savoir-faire.",
-        "lead": "Orazaka, Orochia, Yasakia, Yororis et Yomizaka sont faits des mêmes pièces ouvertes : Krizaka UI pour chaque écran, Krizaka Java pour chaque service. Chaque produit n'apporte que son identité et son savoir-faire.",
+        "lead": "Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza sont faits des mêmes pièces ouvertes : Krizaka UI pour chaque écran, Krizaka Java pour chaque service. Chaque produit n'apporte que son identité et son savoir-faire.",
         "visit": "Ouvrir {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
@@ -679,7 +679,7 @@
           {
             "title": "Nos logiciels",
             "paragraphs": [
-              "Orazaka, Orochia et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yasakia et Yororis ne sont pas déployés et ne collectent rien.",
+              "Orazaka, Orochia et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yasakia, Yororis, Kachizaka et Akinaza ne sont pas déployés et ne collectent rien.",
               "Si vous y branchez des services externes (fournisseurs d'IA, passerelles de paiement, CDN vidéo), les données que vous envoyez vont directement à ces fournisseurs, selon leurs propres politiques."
             ]
           },
@@ -728,7 +728,7 @@
           {
             "title": "Licence des logiciels",
             "paragraphs": [
-              "Les logiciels que nous publions sont ouverts, distribués sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les dépôts Orazaka, Orochia, Yasakia, Yororis et Yomizaka sur github.com/krizaka, les paquets @krizaka/* sur npm et les artefacts com.krizaka sur Maven. Chaque dépôt porte sa licence.",
+              "Les logiciels que nous publions sont ouverts, distribués sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les dépôts Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza sur github.com/krizaka, les paquets @krizaka/* sur npm et les artefacts com.krizaka sur Maven. Chaque dépôt porte sa licence.",
               "La licence couvre le code. Elle ne donne pas le droit d'utiliser comme les vôtres les noms, logos et marques de produits de Krizaka."
             ]
           },
@@ -847,7 +847,7 @@
         "products": {
           "title": "Produits",
           "category": "Krizaka",
-          "desc": "Orazaka, Orochia, Yasakia, Yororis et Yomizaka — chacun sur son propre site."
+          "desc": "Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — chacun sur son propre site."
         }
       },
       "label": "Rechercher sur le site",
@@ -855,7 +855,7 @@
       "docsCategory": "Documentation"
     },
     "structuredData": {
-      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Orazaka, Orochia, Yasakia, Yororis et Yomizaka, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com).",
+      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com).",
       "family": {
         "orazaka": "Moteur d'orchestration d'IA souverain et sur site : conversation, connaissances, tâches et automatisation chez vous.",
         "orochia": "Une plateforme vidéo open source pour les créateurs indépendants : téléverser, encoder et diffuser.",
@@ -869,7 +869,7 @@
       },
       "socialImage": {
         "tagline": "Des logiciels open source, faits à Montréal.",
-        "line": "Krizaka UI · Krizaka Java · Orazaka · Orochia · Yasakia · Yororis · Yomizaka"
+        "line": "Krizaka UI · Krizaka Java · Orazaka · Orochia · Yasakia · Yororis · Yomizaka · Kachizaka · Akinaza"
       }
     },
     "blocks": {
@@ -1249,7 +1249,7 @@
       "krizaka": [
         {
           "q": "Qu'est-ce que Krizaka ?",
-          "a": "Krizaka est un studio logiciel à Montréal, au Québec. Il construit des produits open source — Orazaka, Orochia, Yasakia, Yororis et Yomizaka — et la pile qui les porte, Krizaka UI et Krizaka Java. Chaque dépôt est public sous Apache-2.0."
+          "a": "Krizaka est un studio logiciel à Montréal, au Québec. Il construit des produits open source — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — et la pile qui les porte, Krizaka UI et Krizaka Java. Chaque dépôt est public sous Apache-2.0."
         },
         {
           "q": "Où sont les produits ?",

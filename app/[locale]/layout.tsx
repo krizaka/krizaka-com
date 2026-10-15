@@ -65,8 +65,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       template: "%s | Krizaka",
     },
     description: isEn
-      ? "Krizaka is an open-source software studio in Montréal, Québec. Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka — each on its own site."
-      : "Krizaka est un studio logiciel open source à Montréal, au Québec. Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka — chacun sur son propre site.",
+      ? "Krizaka is an open-source software studio in Montréal, Québec. Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza — each on its own site."
+      : "Krizaka est un studio logiciel open source à Montréal, au Québec. Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza — chacun sur son propre site.",
     keywords: [
       "studio logiciel open source Montréal",
       "design system React",
@@ -101,8 +101,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     openGraph: {
       title: isEn ? "Krizaka — open-source software studio" : "Krizaka — studio logiciel open source à Montréal",
       description: isEn
-        ? "Krizaka UI, Krizaka Java and five products built on them — all open source, made in Montréal."
-        : "Krizaka UI, Krizaka Java et cinq produits construits dessus — tout en open source, fait à Montréal.",
+        ? "Krizaka UI, Krizaka Java and seven products built on them — all open source, made in Montréal."
+        : "Krizaka UI, Krizaka Java et sept produits construits dessus — tout en open source, fait à Montréal.",
       type: "website",
       url: SITE_URL,
       siteName: "Krizaka",
@@ -113,8 +113,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       card: "summary_large_image",
       title: isEn ? "Krizaka — open-source software studio" : "Krizaka — studio logiciel open source à Montréal",
       description: isEn
-        ? "Krizaka UI, Krizaka Java and five products built on them. Open source, made in Montréal."
-        : "Krizaka UI, Krizaka Java et cinq produits construits dessus. Open source, fait à Montréal.",
+        ? "Krizaka UI, Krizaka Java and seven products built on them. Open source, made in Montréal."
+        : "Krizaka UI, Krizaka Java et sept produits construits dessus. Open source, fait à Montréal.",
     },
   };
 }

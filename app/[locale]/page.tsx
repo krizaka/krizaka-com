@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Krizaka — open-source software studio in Montréal",
       description:
-        "Krizaka is a Montréal software studio building open-source products — Orazaka, Orochia, Yasakia, Yororis and Yomizaka — and the stack under them: Krizaka UI and Krizaka Java.",
+        "Krizaka is a Montréal software studio building open-source products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka and Akinaza — and the stack under them: Krizaka UI and Krizaka Java.",
     },
     fr: {
       title: "Krizaka — studio logiciel open source à Montréal",
       description:
-        "Krizaka est un studio logiciel montréalais qui construit des produits open source — Orazaka, Orochia, Yasakia, Yororis et Yomizaka — et la pile qui les porte : Krizaka UI et Krizaka Java.",
+        "Krizaka est un studio logiciel montréalais qui construit des produits open source — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — et la pile qui les porte : Krizaka UI et Krizaka Java.",
     },
   });
 }
