@@ -16,6 +16,7 @@
       "npm": [
         "@krizaka/charts",
         "@krizaka/config",
+        "@krizaka/fonts",
         "@krizaka/icons",
         "@krizaka/intl",
         "@krizaka/orazaka-design-system",
@@ -60,7 +61,8 @@
         "@krizaka/ui"
       ],
       "maven": [],
-      "evidence": []
+      "evidence": [],
+      "engineRun": "f9b8f811-d15d-457e-8fbf-25c9be23772e"
     },
     "yasakia": {
       "sources": [

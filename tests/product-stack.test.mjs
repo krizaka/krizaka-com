@@ -50,7 +50,7 @@ test("the table, product by product (Orochia: neutral facts only)", () => {
   const table = Object.fromEntries(stackRows(ids, manifests).map((r) => [r.id, r.cells.map(word)]));
   assert.deepEqual(table, {
     orazaka: ["yes", "yes", "sse", "yes", "engine"],
-    orochia: ["yes", "yes", "ssePush", "no", "planned"],
+    orochia: ["yes", "yes", "ssePush", "no", "yes"],
     yasakia: ["yes", "partial:tokens+icons", "ssePush", "no", "planned"],
     yororis: ["yes", "partial:tokens+icons", "planned", "no", "planned"],
     yomizaka: ["yes", "partial:tokens+icons", "no", "no", "planned"],
