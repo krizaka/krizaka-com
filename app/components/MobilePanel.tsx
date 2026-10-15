@@ -2,14 +2,13 @@
 
 /* The mobile panel (below md), inside @krizaka/ui's NavBar.Mobile (a disclosure under the bar: Escape and a link close
    it, the focus returns to the toggle). One panel, every destination once (lib/nav.ts): this site's sections
-   (Products, Open source, Our story), Contact us, theme and language — then the Krizaka family as the last group
-   (NAV-SYS: NavBar.Family inside NavBar.Mobile, fed by @krizaka/ui/sites). */
+   (Products, Open source, Our story), Contact us, theme and language. No family switcher here: it
+   belongs to ui.krizaka.com and java.krizaka.com. */
 
 import type { ComponentType } from "react";
 import Link from "next/link";
 import { BookmarkIcon, GlobeIcon, MoonIcon, PackIcon, StudioIcon, SunIcon, type IconProps } from "@krizaka/icons";
 import { NavBar } from "@krizaka/ui/nav-bar";
-import { familyLabels } from "@krizaka/ui/sites";
 import { Button } from "@krizaka/ui/button";
 import { useI18n } from "./I18nProvider";
 import { useSiteTheme } from "./SiteTheme";
@@ -57,7 +56,6 @@ export function MobilePanel({ path }: { path: string }) {
         </div>
       </div>
 
-      <NavBar.Family current="krizaka" labels={familyLabels[locale]} />
     </NavBar.Mobile>
   );
 }

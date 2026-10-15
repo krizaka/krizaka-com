@@ -2,19 +2,19 @@
 
 /* The site bar (NAV-SYS), built on @krizaka/ui's NavBar (floating, tightening on scroll, one light gliding between the
    items and resting on the current page) and fed by lib/nav.ts. Three zones:
-   - left, who we are: the Krizaka mark (home), then NavBar.Family (@krizaka/ui/sites: every site of the family);
+   - left, who we are: the Krizaka mark (home) alone — no family switcher on the company's own site (the Products menu is the way to
+     the products; ui.krizaka.com and java.krizaka.com carry the switcher as their way back here);
    - centre, this site: Products · Open source · Our story;
    - right, tools: Repo · theme · language · Contact us.
    No search and no "Docs": the site has five pages, and the documentation lives on ui.krizaka.com and java.krizaka.com.
    While /docs still renders here, its pages keep their breadcrumb and the search over them (DocsCrumb, SearchCommand).
-   Below md: the mark, the family switcher and the mobile panel's toggle. */
+   Below md: the mark and the mobile panel's toggle. */
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { MoonIcon, SearchIcon, SunIcon } from "@krizaka/icons";
 import { NavBar } from "@krizaka/ui/nav-bar";
-import { familyLabels } from "@krizaka/ui/sites";
 import { Button } from "@krizaka/ui/button";
 import { Kbd } from "@krizaka/ui/kbd";
 import { KrizakaLogo } from "@krizaka/ui";
@@ -45,7 +45,6 @@ export default function TopNavBar() {
               <KrizakaLogo size={26} />
             </Link>
           </NavBar.Brand>
-          <NavBar.Family current="krizaka" labels={familyLabels[locale]} />
 
           <NavBar.Items>
             {!docs &&

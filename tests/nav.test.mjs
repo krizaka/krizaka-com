@@ -43,11 +43,11 @@ test("the bar has no Docs entry and no search outside /docs; the footer has no D
   assert.doesNotMatch(read("app/components/MobilePanel.tsx"), /NAV_DOCS/);
 });
 
-test("the family is @krizaka/ui's: NavBar.Family in the bar and the panel, SiteFooter in the footer, no copy here", () => {
+test("no family switcher on www.krizaka.com (it duplicated Products); the footer is @krizaka/ui's SiteFooter, no copy here", () => {
   const bar = read("app/components/TopNavBar.tsx");
-  assert.match(bar, /<NavBar\.Family current="krizaka"/);
+  assert.doesNotMatch(bar, /NavBar\.Family/);
   assert.match(bar, /<NavBar\.Repo /);
-  assert.match(read("app/components/MobilePanel.tsx"), /<NavBar\.Family current="krizaka"/);
+  assert.doesNotMatch(read("app/components/MobilePanel.tsx"), /NavBar\.Family/);
   assert.match(read("app/components/SiteFooter.tsx"), /@krizaka\/ui\/site-footer/);
   assert.ok(!existsSync(new URL("../app/components/FamilySwitcher.tsx", import.meta.url)), "FamilySwitcher came back");
   for (const lang of ["en", "fr"]) assert.equal(messages(lang).site.nav.family, undefined, `${lang}: site.nav.family`);
