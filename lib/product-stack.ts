@@ -43,6 +43,10 @@ export const PLANNED: Record<string, readonly KitId[]> = {
   yororis: ["realtime", "engine"],
     // Yomizaka: every analysis is an Orazaka run by design; "Yes" once a run is recorded on dev (lib/demo-run.ts of krizaka/yomizaka).
   yomizaka: ["engine"],
+  // Kachizaka: match facts through Orazaka's MCP connector (the client is in packages/mcp; "Yes" once a real run on dev).
+  kachizaka: ["engine"],
+  // Akinaza: the tax-assistant Studio on Orazaka (the contract is in packages/mcp; "Yes" once a real run on dev).
+  akinaza: ["engine"],
 };
 
 /** What the manifests of one product say (lib/product-manifests.json). */

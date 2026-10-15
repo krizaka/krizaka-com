@@ -8,7 +8,7 @@
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
-export const CONTACT_TOPICS = ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "blocks", "partnership", "other"] as const;
+export const CONTACT_TOPICS = ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza", "blocks", "partnership", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
 /* Where a visitor came from (`/contact?source=<slug>`): pre-selects the topic and travels with the message, so the
@@ -24,6 +24,8 @@ export function contactSourceFromPath(pathname: string): string {
   if (/^\/(products|docs)\/yasakia(\/|$)/.test(path)) return "yasakia";
   if (/^\/(products|docs)\/yororis(\/|$)/.test(path)) return "yororis";
   if (/^\/(products|docs)\/yomizaka(\/|$)/.test(path)) return "yomizaka";
+  if (/^\/products\/kachizaka(\/|$)/.test(path)) return "kachizaka";
+  if (/^\/products\/akinaza(\/|$)/.test(path)) return "akinaza";
   if (/^\/open-source(\/|$)/.test(path)) return "open-source";
   if (/^\/docs\/(ui|java)(\/|$)/.test(path)) return `docs-${path.split("/")[2]}`;
   return cleanSource(path.split("/")[1]) ?? "home";
@@ -31,7 +33,7 @@ export function contactSourceFromPath(pathname: string): string {
 
 /** The topic a source implies — none when the page is about Krizaka as a whole (home, story…). */
 export function topicForSource(source: string | null): ContactTopic | null {
-  if (source === "orochia" || source === "orazaka" || source === "yasakia" || source === "yororis" || source === "yomizaka") return source;
+  if (source === "orochia" || source === "orazaka" || source === "yasakia" || source === "yororis" || source === "yomizaka" || source === "kachizaka" || source === "akinaza") return source;
   if (source === "open-source" || source === "docs-ui" || source === "docs-java") return "blocks";
   return null;
 }
@@ -91,6 +93,8 @@ const TOPIC_LABEL: Record<ContactTopic, string> = {
   yasakia: "Yasakia",
   yororis: "Yororis",
   yomizaka: "Yomizaka",
+  kachizaka: "Kachizaka",
+  akinaza: "Akinaza",
   blocks: "Building blocks",
   partnership: "Partnership",
   other: "Other",

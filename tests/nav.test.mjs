@@ -8,7 +8,7 @@ import { existsSync, readFileSync } from "node:fs";
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const nav = read("lib/nav.ts");
-const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",(?: status: "(\w+)",)? devUrl: ([^,]+),/g)].map(([, id, status, devUrl]) => ({ id, status, devUrl }));
+const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",(?: status: "(\w+)",)? devUrl: ([^,]+),[^\n]*/g)].map(([line, id, status, devUrl]) => ({ id, status, devUrl, noSite: /noSite: true/.test(line) }));
 const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)", url: "([^"]+)"/g)].map(([, id, name, url]) => ({ id, name, url }));
 
 test("the centre of the bar is Products · Open source · Our story, all pages of this site", () => {
@@ -17,8 +17,10 @@ test("the centre of the bar is Products · Open source · Our story, all pages o
 });
 
 test("the family: every product on its own site, the stack on its subdomains, and GitHub", () => {
-  assert.deepEqual(products.map((p) => p.id), ["orazaka", "orochia", "yasakia", "yororis", "yomizaka"]);
-  for (const p of products) assert.match(p.devUrl, /^("https:\/\/dev\.[a-z]+\.com"|OROCHIA_APP_URL)$/, p.id);
+  assert.deepEqual(products.map((p) => p.id), ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza"]);
+  // A product on its own dev site — or, in development with nothing deployed yet, its repository (never a dead address).
+  for (const p of products) assert.match(p.devUrl, /^("https:\/\/dev\.[a-z]+\.com"|OROCHIA_APP_URL|[A-Z]+_REPO_URL)$/, p.id);
+  for (const p of products.filter((x) => /_REPO_URL$/.test(x.devUrl))) assert.ok(p.noSite && p.status === "development", `${p.id}: a repository address only while in development, said so`);
   assert.deepEqual(stack, [
     { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com" },
     { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com" },
@@ -28,9 +30,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
-test("the products' statuses: Yasakia and Yomizaka coming soon, Yororis under construction, the others released", () => {
+test("the products' statuses: Yasakia coming soon, Yororis under construction, Yomizaka, Kachizaka and Akinaza in development, the others released", () => {
   const status = Object.fromEntries(products.map((p) => [p.id, p.status ?? "released"]));
-  assert.deepEqual(status, { orazaka: "released", orochia: "released", yasakia: "upcoming", yororis: "construction", yomizaka: "upcoming" });
+  assert.deepEqual(status, { orazaka: "released", orochia: "released", yasakia: "upcoming", yororis: "construction", yomizaka: "development", kachizaka: "development", akinaza: "development" });
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {

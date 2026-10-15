@@ -43,12 +43,21 @@ export default function ProductCards({ locale, heading = "h2" }: { locale: strin
               <p className="kz-pc-proof">{h.knowhow[p.id].proof}</p>
               <p className="kz-pc-line">{h.cards[p.id].line}</p>
               <div className="kz-pc-actions">
-                <ButtonLink href={p.devUrl} variant="primary" ariaLabel={format(h.visitAria, { name: p.name })}>
-                  {h.visit} <ForwardIcon size={15} />
-                </ButtonLink>
-                <ButtonLink href={p.repoUrl} variant="ghost" ariaLabel={format(h.sourceAria, { name: p.name })}>
-                  <GitHubMark size={14} /> {h.source} <ExternalIcon size={13} />
-                </ButtonLink>
+                {p.noSite ? (
+                  // In development, no site yet: the one way in is its code.
+                  <ButtonLink href={p.repoUrl} variant="primary" ariaLabel={format(h.seeCodeAria, { name: p.name })}>
+                    <GitHubMark size={14} /> {h.seeCode} <ExternalIcon size={13} />
+                  </ButtonLink>
+                ) : (
+                  <>
+                    <ButtonLink href={p.devUrl} variant="primary" ariaLabel={format(h.visitAria, { name: p.name })}>
+                      {h.visit} <ForwardIcon size={15} />
+                    </ButtonLink>
+                    <ButtonLink href={p.repoUrl} variant="ghost" ariaLabel={format(h.sourceAria, { name: p.name })}>
+                      <GitHubMark size={14} /> {h.source} <ExternalIcon size={13} />
+                    </ButtonLink>
+                  </>
+                )}
               </div>
             </li>
           ))}

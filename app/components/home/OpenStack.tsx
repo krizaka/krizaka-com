@@ -111,7 +111,7 @@ export default function OpenStack({ locale, mavenArtifacts }: { locale: string; 
               <span className="kz-home-identity-name">
                 <ProductLogo id={p.id} size={22} animated={false} /> {p.name}
               </span>
-              <Progress value={40 + i * 15} label={format(s.visual.progress, { name: p.name })} size="sm" />
+              <Progress value={30 + i * 10} label={format(s.visual.progress, { name: p.name })} size="sm" />
             </li>
           ))}
         </ul>

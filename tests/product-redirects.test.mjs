@@ -14,13 +14,22 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf
 /** Where an old address goes: the first rule that matches it. */
 const go = (path) => rules.find((rule) => rule.matches(path));
 
-test("the products' sites: Yazakia is renamed Yasakia", () => {
+test("the products' sites: Yazakia is renamed Yasakia; Yomizaka has its site (#171); Kachizaka and Akinaza, in development, their repository", () => {
   assert.deepEqual(PRODUCT_SITES, {
     orazaka: "https://dev.orazaka.com",
     orochia: "https://dev.orochia.com",
     yasakia: "https://dev.yasakia.com",
     yororis: "https://dev.yororis.com",
+    yomizaka: "https://dev.yomizaka.com",
+    kachizaka: "https://github.com/krizaka/kachizaka",
+    akinaza: "https://github.com/krizaka/akinaza",
   });
+});
+
+test("Yomizaka's documentation goes to its site (#171)", () => {
+  const rule = go("/fr/docs/yomizaka/getting-started");
+  assert.equal(rule?.destination, "https://dev.yomizaka.com/docs");
+  assert.equal(rule?.statusCode, 308);
 });
 
 test("every /products/<product> address — with or without the locale, any depth — goes to the product's site, 308", () => {

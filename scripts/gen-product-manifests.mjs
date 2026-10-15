@@ -28,6 +28,8 @@ const PRODUCTS = {
   yasakia: { npm: ["yasakia:apps/web/package.json", "yasakia-mobile:package.json"], maven: ["yasakia:pom.xml"] },
   yororis: { npm: ["yororis:site/package.json", "yororis-mobile:package.json"], maven: ["yororis:pom.xml"] },
   yomizaka: { npm: ["yomizaka:apps/web/package.json"], maven: [], engineRun: "yomizaka:apps/web/lib/demo-run.ts" },
+  kachizaka: { npm: ["kachizaka:apps/web/package.json", "kachizaka:apps/mobile/package.json"], maven: [] },
+  akinaza: { npm: ["akinaza:apps/web/package.json", "akinaza:apps/mobile/package.json"], maven: [] },
 };
 
 /** The run id a recorded-run file holds (`"runId": "<uuid>"`), or null — never a guess. */

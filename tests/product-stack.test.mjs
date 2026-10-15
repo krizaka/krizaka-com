@@ -10,7 +10,7 @@ const { products: manifests } = JSON.parse(read("lib/product-manifests.json"));
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",/g)].map((m) => m[1]);
 
 test("every product of lib/products.ts has a row — Orochia included", () => {
-  assert.deepEqual(ids, ["orazaka", "orochia", "yasakia", "yororis", "yomizaka"]);
+  assert.deepEqual(ids, ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza"]);
   const rows = stackRows(ids, manifests);
   assert.deepEqual(rows.map((r) => r.id), ids);
   for (const r of rows) {
@@ -54,6 +54,8 @@ test("the table, product by product (Orochia: neutral facts only)", () => {
     yasakia: ["yes", "partial:tokens+icons", "ssePush", "no", "planned"],
     yororis: ["yes", "partial:tokens+icons", "planned", "no", "planned"],
     yomizaka: ["yes", "partial:tokens+icons", "no", "no", "planned"],
+    kachizaka: ["yes", "partial:tokens+icons", "sse", "no", "planned"],
+    akinaza: ["yes", "partial:tokens+icons", "sse", "no", "planned"],
   });
 });
 

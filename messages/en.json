@@ -89,6 +89,10 @@
         "construction": {
           "label": "In construction",
           "long": "Under construction"
+        },
+        "development": {
+          "label": "In development",
+          "long": "In development"
         }
       },
       "company": {
@@ -134,6 +138,12 @@
         },
         "yomizaka": {
           "line": "Your leases, contracts and invoices, read and checked by Orazaka — every finding quotes its passage."
+        },
+        "kachizaka": {
+          "line": "Predictions among friends, points only — every point explained, a league that remembers every season."
+        },
+        "akinaza": {
+          "line": "The all-in-one for independent Québec shops — hair salons, bakeries, cafés, boutiques."
         }
       },
       "proofBy": "Proved by {name}",
@@ -157,8 +167,18 @@
         "yomizaka": {
           "name": "Reading documents",
           "proof": "A lease checked rule by rule against the law in force on a date, a PDF examined for signs of editing: every finding quotes its passage, every check is a traced Orazaka run."
+        },
+        "kachizaka": {
+          "name": "Live data, in real time",
+          "proof": "Match facts read through Orazaka's MCP connectors, stored once and applied in order; the standings are recomputed and pushed live over Server-Sent Events — points only, rules sealed at kick-off."
+        },
+        "akinaza": {
+          "name": "Running a shop, for less",
+          "proof": "Bookings, client files with Loi 25 consent, bilingual invoices with GST and QST to the cent, a ledger the database keeps balanced, and the GST/QST return prepared for the merchant to file."
         }
-      }
+      },
+      "seeCode": "See the code",
+      "seeCodeAria": "The code of {name} on GitHub — in development, no site yet"
     },
     "productsPage": {
       "title": "Products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka",
@@ -277,7 +297,9 @@
         "blocks": "Building blocks",
         "partnership": "Partnership",
         "other": "Something else",
-        "yomizaka": "Yomizaka"
+        "yomizaka": "Yomizaka",
+        "kachizaka": "Kachizaka",
+        "akinaza": "Akinaza"
       },
       "topicHints": {
         "orazaka": "Deploy or audit the sovereign-AI gateway",
@@ -287,7 +309,9 @@
         "blocks": "Use or integrate a Krizaka component from Maven Central or npm",
         "partnership": "Integration, reseller or research partnership",
         "other": "Press, careers, a question for the team",
-        "yomizaka": "Talk to us about Yomizaka — in development, sign-up closed"
+        "yomizaka": "Talk to us about Yomizaka — in development, sign-up closed",
+        "kachizaka": "Talk to us about Kachizaka — in development, sign-up closed",
+        "akinaza": "Talk to us about Akinaza — in development, sign-up closed"
       },
       "timeline": "When do you need it?",
       "timelines": {
@@ -304,7 +328,9 @@
         "blocks": "The component (security, messaging, users, notifications, billing, UI…), your stack and what you want to build with it…",
         "partnership": "Who you are, what you would build together, the markets you serve…",
         "other": "How can we help?",
-        "yomizaka": "What you need to read: leases, supplier invoices, a Law 25 inventory…"
+        "yomizaka": "What you need to read: leases, supplier invoices, a Law 25 inventory…",
+        "kachizaka": "Your league: how many friends, which sport and competition, how you keep score today…",
+        "akinaza": "Your shop: what you sell, how you book and invoice today, what your tools cost you…"
       },
       "counter": "{count} / {max}",
       "shortcut": "⌘ / Ctrl + Enter to send",
@@ -837,7 +863,9 @@
         "yororis": "A listening space with a face and a voice. Under construction.",
         "krizaka-ui": "The Krizaka design system: React and React Native components, tokens, icons, fonts and charts.",
         "krizaka-java": "The Spring Boot building blocks of every Krizaka service, published on Maven Central under com.krizaka.",
-        "yomizaka": "Leases, contracts and invoices read and checked by Orazaka. Coming soon."
+        "yomizaka": "Leases, contracts and invoices read and checked by Orazaka. In development.",
+        "kachizaka": "Predictions among friends, points only, with live data. In development.",
+        "akinaza": "The all-in-one for independent Québec shops: bookings, bilingual invoices with GST/QST, Loi 25. In development."
       },
       "socialImage": {
         "tagline": "Open-source software, made in Montréal.",
@@ -864,7 +892,9 @@
         "flamingo": "The flamingo",
         "pigeon": "The pigeon",
         "lovebird": "The lovebird",
-        "crane": "The crane"
+        "crane": "The crane",
+        "magpie": "The magpie",
+        "beaver": "The beaver"
       },
       "forums": {
         "title": "Questions go to two forums, not six.",
