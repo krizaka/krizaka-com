@@ -89,6 +89,10 @@
         "construction": {
           "label": "En construction",
           "long": "En construction"
+        },
+        "development": {
+          "label": "En développement",
+          "long": "En développement"
         }
       },
       "company": {
@@ -134,6 +138,12 @@
         },
         "yomizaka": {
           "line": "Vos baux, contrats et factures, lus et vérifiés par Orazaka — chaque constat cite son passage."
+        },
+        "kachizaka": {
+          "line": "Les pronostics entre amis, en points seulement — chaque point expliqué, une ligue qui se souvient de chaque saison."
+        },
+        "akinaza": {
+          "line": "Le tout-en-un des boutiques indépendantes du Québec — salons, boulangeries, cafés, boutiques."
         }
       },
       "proofBy": "Prouvé par {name}",
@@ -157,8 +167,18 @@
         "yomizaka": {
           "name": "La lecture des documents",
           "proof": "Un bail vérifié règle par règle au regard de la loi en vigueur à une date, un PDF examiné à la recherche de retouches : chaque constat cite son passage, chaque vérification est un run Orazaka tracé."
+        },
+        "kachizaka": {
+          "name": "Des données en direct",
+          "proof": "Les faits de match lus par les connecteurs MCP d'Orazaka, gardés une fois et appliqués dans l'ordre ; le classement est recalculé et poussé en direct en Server-Sent Events — des points seulement, des règles scellées au coup d'envoi."
+        },
+        "akinaza": {
+          "name": "Tenir une boutique, pour moins cher",
+          "proof": "Rendez-vous, dossiers clients avec consentement Loi 25, factures bilingues avec TPS et TVQ au cent près, un registre que la base garde équilibré, et la déclaration TPS/TVQ préparée pour que le commerçant la produise."
         }
-      }
+      },
+      "seeCode": "Voir le code",
+      "seeCodeAria": "Le code de {name} sur GitHub — en développement, pas encore de site"
     },
     "productsPage": {
       "title": "Produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka",
@@ -277,7 +297,9 @@
         "blocks": "Briques Krizaka",
         "partnership": "Partenariat",
         "other": "Autre chose",
-        "yomizaka": "Yomizaka"
+        "yomizaka": "Yomizaka",
+        "kachizaka": "Kachizaka",
+        "akinaza": "Akinaza"
       },
       "topicHints": {
         "orazaka": "Déployer ou auditer la passerelle d'IA souveraine",
@@ -287,7 +309,9 @@
         "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
         "partnership": "Intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe",
-        "yomizaka": "Parler de Yomizaka — en développement, inscription fermée"
+        "yomizaka": "Parler de Yomizaka — en développement, inscription fermée",
+        "kachizaka": "Parlez-nous de Kachizaka — en développement, inscriptions fermées",
+        "akinaza": "Parlez-nous d'Akinaza — en développement, inscriptions fermées"
       },
       "timeline": "Pour quand ?",
       "timelines": {
@@ -304,7 +328,9 @@
         "blocks": "Le composant (sécurité, messagerie, utilisateurs, notifications, facturation, UI…), votre stack et ce que vous voulez construire…",
         "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
         "other": "Comment pouvons-nous vous aider ?",
-        "yomizaka": "Quels documents vous avez à lire : baux, factures fournisseurs, un inventaire Loi 25…"
+        "yomizaka": "Quels documents vous avez à lire : baux, factures fournisseurs, un inventaire Loi 25…",
+        "kachizaka": "Votre ligue : combien d'amis, quel sport et quelle compétition, comment vous comptez les points aujourd'hui…",
+        "akinaza": "Votre boutique : ce que vous vendez, comment vous réservez et facturez aujourd'hui, ce que vos outils vous coûtent…"
       },
       "counter": "{count} / {max}",
       "shortcut": "⌘ / Ctrl + Entrée pour envoyer",
@@ -837,7 +863,9 @@
         "yororis": "Un espace d'écoute avec un visage et une voix. En construction.",
         "krizaka-ui": "Le design system de Krizaka : composants React et React Native, tokens, icônes, polices et graphiques.",
         "krizaka-java": "Les briques Spring Boot de chaque service Krizaka, publiées sur Maven Central sous com.krizaka.",
-        "yomizaka": "Des baux, contrats et factures lus et vérifiés par Orazaka. Bientôt."
+        "yomizaka": "Des baux, contrats et factures lus et vérifiés par Orazaka. En développement.",
+        "kachizaka": "Les pronostics entre amis, en points seulement, avec des données en direct. En développement.",
+        "akinaza": "Le tout-en-un des boutiques du Québec : rendez-vous, factures bilingues avec TPS/TVQ, Loi 25. En développement."
       },
       "socialImage": {
         "tagline": "Des logiciels open source, faits à Montréal.",
@@ -864,7 +892,9 @@
         "flamingo": "du flamant",
         "pigeon": "du pigeon",
         "lovebird": "de l'inséparable",
-        "crane": "La grue"
+        "crane": "La grue",
+        "magpie": "La pie",
+        "beaver": "Le castor"
       },
       "forums": {
         "title": "Les questions vont dans deux forums, pas six.",

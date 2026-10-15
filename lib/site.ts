@@ -38,6 +38,8 @@ export const YORORIS_REPO_URL = `${GITHUB_ORG_URL}/yororis`;
 
 /** Yomizaka, documents read and checked by Orazaka (coming soon): its repository. */
 export const YOMIZAKA_REPO_URL = `${GITHUB_ORG_URL}/yomizaka`;
+export const KACHIZAKA_REPO_URL = `${GITHUB_ORG_URL}/kachizaka`;
+export const AKINAZA_REPO_URL = `${GITHUB_ORG_URL}/akinaza`;
 
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;

@@ -26,6 +26,8 @@ const FAMILY = [
   { id: "yasakia", name: "Yasakia", url: "https://dev.yasakia.com", repo: "yasakia", category: "LifestyleApplication", kind: "app" },
   { id: "yororis", name: "Yororis", url: "https://dev.yororis.com", repo: "yororis", category: "LifestyleApplication", kind: "app" },
   { id: "yomizaka", name: "Yomizaka", url: "https://dev.yomizaka.com", repo: "yomizaka", category: "BusinessApplication", kind: "app" },
+  { id: "kachizaka", name: "Kachizaka", url: "https://github.com/krizaka/kachizaka", repo: "kachizaka", category: "GameApplication", kind: "app" },
+  { id: "akinaza", name: "Akinaza", url: "https://github.com/krizaka/akinaza", repo: "akinaza", category: "BusinessApplication", kind: "app" },
   { id: "krizaka-ui", name: "Krizaka UI", url: "https://ui.krizaka.com", repo: "krizaka-ui", language: "TypeScript", kind: "code" },
   { id: "krizaka-java", name: "Krizaka Java", url: "https://java.krizaka.com", repo: "krizaka-platform-kit", language: "Java", kind: "code" },
 ] as const;

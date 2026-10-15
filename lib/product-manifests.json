@@ -111,6 +111,42 @@
       ],
       "maven": [],
       "evidence": []
+    },
+    "kachizaka": {
+      "sources": [
+        "kachizaka:apps/web/package.json",
+        "kachizaka:apps/mobile/package.json"
+      ],
+      "npm": [
+        "@krizaka/config",
+        "@krizaka/i18n",
+        "@krizaka/icons",
+        "@krizaka/query",
+        "@krizaka/realtime",
+        "@krizaka/tailwind",
+        "@krizaka/tokens",
+        "@krizaka/ui"
+      ],
+      "maven": [],
+      "evidence": []
+    },
+    "akinaza": {
+      "sources": [
+        "akinaza:apps/web/package.json",
+        "akinaza:apps/mobile/package.json"
+      ],
+      "npm": [
+        "@krizaka/config",
+        "@krizaka/i18n",
+        "@krizaka/icons",
+        "@krizaka/query",
+        "@krizaka/realtime",
+        "@krizaka/tailwind",
+        "@krizaka/tokens",
+        "@krizaka/ui"
+      ],
+      "maven": [],
+      "evidence": []
     }
   }
 }
