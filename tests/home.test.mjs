@@ -23,8 +23,8 @@ test("the stack section states the idea with figures read from data and sends to
 });
 
 test("the products are equals: one card each from lib/products.ts, no product singled out", () => {
-  const cards = read("app/components/home/WhatWeBuild.tsx");
-  assert.match(cards, /PRODUCTS\.map/);
+  assert.match(read("app/components/home/WhatWeBuild.tsx"), /<ProductGrid\b/);
+  assert.match(read("app/components/ProductCard.tsx"), /PRODUCTS\.filter/);
   for (const s of SECTIONS) {
     const src = read(`app/components/home/${s}.tsx`);
     assert.doesNotMatch(src, /["'](orazaka|orochia|yasakia|yororis)["']/, `${s} names a product by hand`);

@@ -70,14 +70,12 @@ test("no message says a product runs on Orazaka while its cell is Planned", () =
   assert.ok(planned.length > 0);
   const words = { en: /planned/i, fr: /prévu/i };
   for (const lang of ["en", "fr"]) {
-    const chapters = JSON.parse(read(`messages/${lang}.json`)).site.story.chapters;
-    const sentences = (key) => (chapters[key]?.body ?? []).flatMap((p) => p.split(/(?<=[.!?])\s+/));
+    const stages = JSON.parse(read(`messages/${lang}.json`)).site.story.stages;
+    // The engine stage and the first proofs: a sentence naming a planned product next to the engine must say "planned".
+    const sentences = [...stages.engine.body, stages.proves.lead].flatMap((p) => p.split(/(?<=[.!?])\s+/));
     for (const id of planned) {
       const name = id[0].toUpperCase() + id.slice(1);
-      // The engine's chapter: a sentence naming the product next to the engine must say "planned".
-      for (const s of sentences(ENGINE).filter((s) => s.includes(name))) assert.match(s, words[lang], `${lang} ${ENGINE} chapter: "${s}"`);
-      // The product's own chapter: a sentence naming Orazaka must say "planned".
-      for (const s of sentences(id).filter((s) => s.includes("Orazaka"))) assert.match(s, words[lang], `${lang} ${id} chapter: "${s}"`);
+      for (const s of sentences.filter((s) => s.includes(name) && s.includes("Orazaka"))) assert.match(s, words[lang], `${lang} story: "${s}"`);
     }
   }
 });
