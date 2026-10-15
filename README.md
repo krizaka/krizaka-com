@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://scorecard.dev/viewer/?uri=github.com/krizaka/krizaka-com"><img src="https://api.scorecard.dev/projects/github.com/krizaka/krizaka-com/badge?style=flat-square" alt="OpenSSF Scorecard" /></a>
-  <img src="https://img.shields.io/badge/Next.js-16-blueviolet?style=flat-square" alt="Next.js 16" />
+  <img src="https://img.shields.io/github/package-json/dependency-version/krizaka/krizaka-com/next?style=flat-square&label=Next.js" alt="Next.js (live from package.json)" />
   <a href="https://github.com/krizaka/orazaka"><img src="https://img.shields.io/badge/AI_Engine-Orazaka-f67e23?style=flat-square" alt="Orazaka" /></a>
   <a href="https://github.com/krizaka/orochia"><img src="https://img.shields.io/badge/Streaming-Orochia-7c3aed?style=flat-square" alt="Orochia" /></a>
   <a href="https://github.com/krizaka/yasakia"><img src="https://img.shields.io/badge/Dating_(soon)-Yasakia-10b981?style=flat-square" alt="Yasakia (coming soon)" /></a>
@@ -164,7 +164,6 @@ npm install
 npm run dev      # http://localhost:3000  (→ redirects to /fr or /en)
 npm run lint     # ESLint + messages + every @krizaka/ui primitive has a docs page
 npm test         # node:test — tests/*.test.mjs
-npm run docs:ui  # after a @krizaka/ui upgrade: demo map + scaffolds of the new primitives
 npm run build    # SSG build — run before pushing
 npm run start
 ```
