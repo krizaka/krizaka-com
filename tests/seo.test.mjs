@@ -13,7 +13,7 @@ test("the home title is the company's; its description names the four products a
   const home = read("app/[locale]/page.tsx");
   assert.match(home, /title: "Krizaka — open-source software studio in Montréal",/);
   assert.match(home, /title: "Krizaka — studio logiciel open source à Montréal",/);
-  for (const p of ["Krizaka UI", "Krizaka Java", "Orazaka", "Orochia", "Yasakia", "Yororis"]) assert.ok(home.includes(p), p);
+  for (const p of ["Krizaka UI", "Krizaka Java", "Orazaka", "Orochia", "Yasakia", "Yororis", "Yomizaka", "Kachizaka", "Akinaza"]) assert.ok(home.includes(p), p);
 });
 
 test("the Organization is in Montréal and points to GitHub", () => {

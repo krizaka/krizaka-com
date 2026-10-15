@@ -2,7 +2,7 @@
 
 > Krizaka is a Montréal (Québec) open-source software studio. It forges the
 > building blocks of its products — Krizaka UI (design system, web and native)
-> and Krizaka Java (Spring Boot kit) — and ships four products on them, each on
+> and Krizaka Java (Spring Boot kit) — and ships seven products on them, each on
 > its own site. Every repository is public under Apache-2.0 at
 > https://github.com/krizaka.
 
@@ -12,6 +12,9 @@
 - Orochia — an open-source video platform: upload, encode and stream. Site: {{OROCHIA_APP_URL}} · source: https://github.com/krizaka/orochia
 - Yasakia (coming soon) — a mobile dating app where you talk first. Site: https://dev.yasakia.com · source: https://github.com/krizaka/yasakia
 - Yororis (under construction) — a listening space with a face and a voice. Site: https://dev.yororis.com · source: https://github.com/krizaka/yororis
+- Yomizaka (in development) — your documents, read and checked by Orazaka. Site: https://dev.yomizaka.com · source: https://github.com/krizaka/yomizaka
+- Kachizaka (in development, no site yet) — predictions among friends, points only, never money. Source: https://github.com/krizaka/kachizaka
+- Akinaza (in development, no site yet) — bookings, invoices and a GST/QST ledger for independent Québec shops; it prepares tax returns, the merchant files them. Source: https://github.com/krizaka/akinaza
 
 ## Key pages
 

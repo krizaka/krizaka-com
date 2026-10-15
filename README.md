@@ -7,7 +7,7 @@
 
 <h1 align="center">krizaka-com</h1>
 
-<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Orazaka, Orochia, Yasakia (coming soon) and Yororis (under construction).</strong></p>
+<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Orazaka, Orochia, Yasakia (coming soon), Yororis (under construction), Yomizaka, Kachizaka and Akinaza (in development).</strong></p>
 
 <p align="center">
   <a href="https://scorecard.dev/viewer/?uri=github.com/krizaka/krizaka-com"><img src="https://api.scorecard.dev/projects/github.com/krizaka/krizaka-com/badge?style=flat-square" alt="OpenSSF Scorecard" /></a>
@@ -16,6 +16,9 @@
   <a href="https://github.com/krizaka/orochia"><img src="https://img.shields.io/badge/Streaming-Orochia-7c3aed?style=flat-square" alt="Orochia" /></a>
   <a href="https://github.com/krizaka/yasakia"><img src="https://img.shields.io/badge/Dating_(soon)-Yasakia-10b981?style=flat-square" alt="Yasakia (coming soon)" /></a>
   <a href="https://github.com/krizaka/yororis"><img src="https://img.shields.io/badge/Listening_(under_construction)-Yororis-5d894d?style=flat-square" alt="Yororis (under construction)" /></a>
+  <a href="https://github.com/krizaka/yomizaka"><img src="https://img.shields.io/badge/Documents_(in_development)-Yomizaka-5362c6?style=flat-square" alt="Yomizaka (in development)" /></a>
+  <a href="https://github.com/krizaka/kachizaka"><img src="https://img.shields.io/badge/Predictions_(in_development)-Kachizaka-d9a21b?style=flat-square" alt="Kachizaka (in development)" /></a>
+  <a href="https://github.com/krizaka/akinaza"><img src="https://img.shields.io/badge/Shops_(in_development)-Akinaza-2f6f4e?style=flat-square" alt="Akinaza (in development)" /></a>
   <a href="https://github.com/krizaka"><img src="https://img.shields.io/badge/GitHub_Org-krizaka-196df5?style=flat-square" alt="Krizaka Organization" /></a>
   <img src="https://img.shields.io/badge/Loi%2025%20%2F%20GDPR%20%2F%202257-success?style=flat-square" alt="Compliance" />
 </p>
@@ -43,6 +46,9 @@
 | [Orochia](https://github.com/krizaka/orochia) | The video platform for independent creators | Released | [/products/orochia](https://www.krizaka.com/en/products/orochia) |
 | [Yasakia](https://github.com/krizaka/yasakia) | The dating app where you talk first | Coming soon | [dev.yasakia.com](https://dev.yasakia.com) |
 | [Yororis](https://github.com/krizaka/yororis) | A listening space with a face and a voice, powered by Orazaka's wellbeing pack | Under construction (not offered; its words checked by `npm run lexicon`) | [/products/yororis](https://www.krizaka.com/en/products/yororis) |
+| [Yomizaka](https://github.com/krizaka/yomizaka) | Your documents, read and checked by Orazaka | In development (sign-up closed) | [dev.yomizaka.com](https://dev.yomizaka.com) |
+| [Kachizaka](https://github.com/krizaka/kachizaka) | Predictions among friends, points only, never money | In development (nothing deployed) | source only |
+| [Akinaza](https://github.com/krizaka/akinaza) | Bookings, invoices and a GST/QST ledger for independent Québec shops; prepares the return, never files it | In development (nothing deployed) | source only |
 
 ---
 

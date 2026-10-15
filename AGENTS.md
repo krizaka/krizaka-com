@@ -20,7 +20,8 @@
 
 - **krizaka.com is the company's lightweight showcase.** The products have their own sites — dev.orazaka.com,
   dev.orochia.com, dev.yasakia.com (Yasakia is being renamed Yasakia; identifiers here keep "yasakia" until that rename
-  lands) and dev.yororis.com. This repo carries **no product page, demo, gallery, journey, recording or documentation**
+  lands), dev.yororis.com and dev.yomizaka.com; Kachizaka and Akinaza (in development, nothing deployed) have no site yet, so
+  their cards link to their repository (`noSite`). This repo carries **no product page, demo, gallery, journey, recording or documentation**
   of them: one page, `/products`, has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
   « Visit the dev site » and « Source »). Orochia's card is neutral — no adult-adjacent wording, no media.
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
@@ -52,16 +53,21 @@
   own sites (while `/docs` still renders here, it keeps its breadcrumb `DocsCrumb` and the ⌘K search over it). Mobile:
   one panel (`MobilePanel`), this site's sections, then Contact us and the preferences, the family at the bottom. The
   footer lists the family in columns (Products · Open source · Krizaka).
-- **The home is the company's** (landing): who Krizaka is and its promise (`HomeHero`, figures read at build), the four
+- **The home is the company's** (landing): who Krizaka is and its promise (`HomeHero`, figures read at build), the
   products **as equals** (`WhatWeBuild`: one `LinkCard` each, same weight, no product's brand, none featured), the stack
   (`OpenStack` / `StackCards`, versions and counts from `lib/registry-versions`), five provable working rules
   (`Principles`), Montréal (`Company`), the contact. Orochia is named neutrally on krizaka.com (name and one line, never
   a creator or payout pitch — `tests/home.test.mjs`).
 - `ProductCards` (`app/components/home/`) renders the cards on `/products`; each card wears
   its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
-  `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage; the rest of the site is Krizaka ink + blue).
+  `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage, `.brand-yomizaka` indigo, `.brand-kachizaka` gold + cobalt
+  (the magpie), `.brand-akinaza` forest green + copper (the beaver); the rest of the site is Krizaka ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); marks from `@krizaka/ui`
-  (`KrizakaLogo`, `OrazakaLogo`, `OrochiaLogo`, `YasakiaLogo`, `YororisLogo`, `ProductLogo`) — never a copy here.
+  (`KrizakaLogo`, `OrazakaLogo`, `OrochiaLogo`, `YasakiaLogo`, `YororisLogo`, `YomizakaLogo`, `KachizakaLogo`, `AkinazaLogo`, `ProductLogo`) — never a copy here.
+- A product **in development** (`status: "development"`: Yomizaka, Kachizaka, Akinaza) is built in the open: its repository is
+  public, sign-up is closed, and it says « In development ». Yomizaka has a dev site; Kachizaka and Akinaza have none yet, so
+  their card says « See the code » and links the repository — never a dead address. Kachizaka is points only, never money;
+  Akinaza prepares tax returns and never files them, and is not for restaurants and bars — the card words say so, no more.
 - A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
   construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
 - **Yororis' lexicon** is law for every message whose key contains `yororis`: `npm run lexicon` (in `npm run lint`) fails
@@ -267,7 +273,7 @@
   tree` audits the zone against it), one writer per prefix:
 
   ```
-  brand/<krizaka|orazaka|orochia|yasakia|yororis>/   logo + mark, SVG and PNG 256/512/1024 on transparent, dark & light,
+  brand/<krizaka|orazaka|orochia|yasakia|yororis|yomizaka|kachizaka|akinaza>/   logo + mark, SVG and PNG 256/512/1024 on transparent, dark & light,
                                                      avatar 500/1024, social-preview 1280x640 · brand/manifest.json
   people/defaults/v1/<brand>/                        default profile pictures: person|plain-<1-6> .svg / -256.webp / -512.webp
   people/personas/<product>/                         the demo personas' portraits

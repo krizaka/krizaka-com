@@ -5,7 +5,7 @@
 
 export const README_NAME = "README.txt";
 
-export const BRANDS = ["krizaka", "orazaka", "orochia", "yasakia", "yororis"];
+export const BRANDS = ["krizaka", "orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza"];
 /** The kinds of media under products/<product>/. */
 export const PRODUCT_KINDS = ["home", "tour", "mobile", "gallery", "studios", "docs"];
 
