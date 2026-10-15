@@ -11,7 +11,7 @@ import { Facts, Section, type Fact } from "@krizaka/ui/page";
 import { format, getDictionary } from "@/lib/i18n";
 import { npmPackages, npmVersion, publishedVersion } from "@/lib/registry-versions";
 import { ProductLogo } from "@krizaka/ui";
-import { NumberTicker } from "@krizaka/ui/number-ticker";
+import FigureTiles, { type FigureTile } from "@/app/components/FigureTiles";
 import { Progress } from "@krizaka/ui/progress";
 import { isLocale } from "@/lib/locales";
 import { PRODUCTS } from "@/lib/products";
@@ -70,6 +70,7 @@ export default function OpenStack({ locale, mavenArtifacts }: { locale: string; 
     { id: "native", value: native, label: s.figures.native },
     { id: "packages", value: npmPackages().length, label: s.figures.packages },
   ].filter((f) => f.value > 0);
+  const tiles: FigureTile[] = [...figures, ...(uiVersion ? [{ id: "version", value: uiVersion, label: s.figures.version }] : [])];
 
   return (
     <Section
@@ -85,22 +86,9 @@ export default function OpenStack({ locale, mavenArtifacts }: { locale: string; 
         </ButtonLink>
       }
     >
-      <dl className="kz-home-figures" aria-label={s.figures.label} {...reveal(1)}>
-        {figures.map((f) => (
-          <div key={f.id}>
-            <dt>{f.label}</dt>
-            <dd>
-              <NumberTicker value={f.value} locale={lang} />
-            </dd>
-          </div>
-        ))}
-        {uiVersion && (
-          <div>
-            <dt>{s.figures.version}</dt>
-            <dd className="kz-home-version">{uiVersion}</dd>
-          </div>
-        )}
-      </dl>
+      <div {...reveal(1)} className="kz-home-figures">
+        <FigureTiles figures={tiles} label={s.figures.label} locale={lang} />
+      </div>
 
       {/* The idea in one glance: the same @krizaka/ui component, worn by each product's identity (.brand-<id>, the same
           treatment for all four). The live gallery is on ui.krizaka.com. */}

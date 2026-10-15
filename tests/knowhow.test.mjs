@@ -28,26 +28,43 @@ test("the known know-hows are the ones Oussama named", () => {
   assert.match(k.yororis.name, /voice/i);
 });
 
-test("the home, /products and /open-source read the know-how of each product — and every card leads somewhere", () => {
-  const home = read("app/components/home/WhatWeBuild.tsx");
-  assert.match(home, /products\.knowhow\[p\.id\]/);
-  assert.match(home, /<LinkCard[\s\S]*href=\{p\.devUrl\}/);
-  const cards = read("app/components/home/ProductCards.tsx");
-  assert.match(cards, /h\.knowhow\[p\.id\]/);
-  assert.match(cards, /href=\{p\.devUrl\}/);
-  assert.match(cards, /href=\{p\.repoUrl\}/);
+test("one product card for the whole site: the home, /products and /story render the same ProductCard from PRODUCTS", () => {
+  const card = read("app/components/ProductCard.tsx");
+  assert.match(card, /h\.knowhow\[p\.id\]/);
+  assert.match(card, /<ArgumentCard/);
+  assert.match(card, /href: p\.devUrl/);
+  assert.match(card, /href: p\.repoUrl/);
+  assert.match(card, /PRODUCTS\.filter/);
+  for (const file of ["app/components/home/WhatWeBuild.tsx", "app/[locale]/products/page.tsx", "app/[locale]/story/page.tsx"]) {
+    assert.match(read(file), /from "(@\/app\/components|\.\.)\/ProductCard"/, `${file} reads the shared card`);
+  }
+  for (const file of ["app/[locale]/story/StoryClient.tsx", "app/[locale]/story/page.tsx"]) {
+    assert.doesNotMatch(read(file), /ProfileCard|StatGauge|ChoiceGrid|<ProductLogo/, `${file} draws its own product tile`);
+  }
   const os = read("app/[locale]/open-source/page.tsx");
   assert.match(os, /id="knowhow"/);
   assert.match(os, /href=\{`#\$\{nav\.id\}`\}/, "a card of the foundation leads to the product's repositories");
   assert.match(os, /id="runs-on"/, "the runs-on table stays");
 });
 
-test("every chapter of /story names the know-how it proves; the planned guard words stay", () => {
+test("a product card's one line is a hook: 90 characters at most, in both languages", () => {
   for (const lang of ["en", "fr"]) {
-    const chapters = messages(lang).story.chapters;
-    for (const [id, c] of Object.entries(chapters)) assert.ok(c.knowhow, `${lang}: story.chapters.${id}.knowhow`);
-    assert.equal(messages(lang).story.roles, undefined);
+    for (const [id, c] of Object.entries(messages(lang).products.cards)) assert.ok(c.line.length <= 90, `${lang}: products.cards.${id}.line (${c.line.length})`);
   }
+});
+
+test("/story keeps its spine: founder, refusal, engine, first proofs, roster, open blocks — and the roster is the rest of PRODUCTS", () => {
+  for (const lang of ["en", "fr"]) {
+    const st = messages(lang).story.stages;
+    assert.deepEqual(Object.keys(st), ["founder", "refusal", "engine", "proves", "roster", "open"], `${lang}: site.story.stages`);
+    assert.deepEqual(st.founder.places, ["Montréal", "Maroc", "Grenoble"]);
+    assert.equal(messages(lang).story.chapters, undefined, `${lang}: the per-product chapters are gone`);
+  }
+  const story = read("lib/story.ts");
+  assert.match(story, /PROVES_FIRST[^=]*= \["yomizaka", "orochia"\]/);
+  assert.match(story, /ROSTER[^=]*= PRODUCTS\.map/);
+  const bars = /StatGauge|NumberTicker value=\{1\}|percent\(1\)/;
+  assert.doesNotMatch(read("app/[locale]/story/StoryClient.tsx"), bars, "no 100 % bar that measures nothing");
 });
 
 test("Orochia's know-how is worded neutrally", () => {

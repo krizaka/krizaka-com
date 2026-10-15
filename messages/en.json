@@ -125,7 +125,7 @@
       "sourceAria": "{name} — source on GitHub",
       "cards": {
         "orazaka": {
-          "line": "Sovereign AI orchestration that runs on your own infrastructure: your data never leaves home."
+          "line": "Sovereign AI that runs on your own infrastructure: your data never leaves home."
         },
         "orochia": {
           "line": "An open-source video platform: upload, encode and stream."
@@ -137,10 +137,10 @@
           "line": "A listening space with a face and a voice."
         },
         "yomizaka": {
-          "line": "Your leases, contracts and invoices, read and checked by Orazaka — every finding quotes its passage."
+          "line": "Leases, contracts and invoices, read and checked — every finding quotes its passage."
         },
         "kachizaka": {
-          "line": "Predictions among friends, points only — every point explained, a league that remembers every season."
+          "line": "Predictions among friends, points only — every point explained, every season kept."
         },
         "akinaza": {
           "line": "The all-in-one for independent Québec shops — hair salons, bakeries, cafés, boutiques."
@@ -178,7 +178,8 @@
         }
       },
       "seeCode": "See the code",
-      "seeCodeAria": "The code of {name} on GitHub — in development, no site yet"
+      "seeCodeAria": "The code of {name} on GitHub — in development, no site yet",
+      "hookLabel": "What it is"
     },
     "productsPage": {
       "title": "Products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza",
@@ -203,7 +204,6 @@
         "eyebrow": "Know-how",
         "title": "What we know how to do.",
         "lead": "Each know-how is proved by a product, on its own site, with its source on GitHub.",
-        "visit": "Open {host}",
         "preview": "Dev preview",
         "all": "All products"
       },
@@ -357,30 +357,83 @@
         "eyebrow": "Our story",
         "presents": "Krizaka presents",
         "title": "One studio. One engine. <b>Every product on the same blocks.</b>",
-        "lead": "Krizaka is a studio built on one refusal. Your data shouldn't have to leave home to be useful, a creator shouldn't hand a fortune to a platform to get paid, and nobody should have to take software on faith. So we forge the building blocks in the open, build an AI engine on them — Orazaka — and ship our products on both. We use what we make, every day. Each product proves one thing we know how to do — the engine, geolocation, voice and image — next to the mastery of media behind Orochia."
+        "lead": "Krizaka is a studio built on one refusal: your data shouldn't have to leave home to be useful, and nobody should have to take software on faith. So we forge the building blocks in the open, build an AI engine on them — Orazaka — and ship our products on both."
       },
-      "studio": {
-        "label": "The house",
-        "role": "The studio",
-        "caption": "kris + zaka (坂)",
-        "title": "The blade folded in the open",
-        "body": [
-          "A kris is a blade forged in layers: iron folded onto iron, again and again, until a pattern rises in the steel. Zaka is the slope you climb, one step at a time. Krizaka is the forge halfway up that hill.",
-          "Why a forge? Because the software we were asked to trust had turned into a black box — data shipped to someone else's cloud, income routed through someone else's rules, code nobody outside could read. We set out to build the opposite, and to prove it rather than promise it.",
-          "Nothing leaves the forge unfolded, untested or undocumented, and everything that leaves it is open source under Apache-2.0. You don't have to believe us: read the pattern in the steel."
-        ],
-        "move": "Prove it, don't promise it.",
-        "stat": "Code in the open",
-        "platformTitle": "The platform: the blocks every product stands on",
-        "platformLead": "Open source, published, versioned — and used by our own products first. If a block isn't good enough for Orochia, it isn't good enough for you.",
-        "figures": {
-          "repos": "public repositories",
-          "components": "components in Krizaka UI",
-          "packages": "published packages"
+      "arcade": {
+        "continue": "Continue?",
+        "insertCoin": "Insert Coin",
+        "stage": "Stage",
+        "creditLabel": "Credit 01",
+        "restartBtn": "Back to the top",
+        "cabinetLabel": "Krizaka · arcade cabinet",
+        "coinEntry": "1 credit = 1 story",
+        "playerStart": "1P Start",
+        "specialMove": "Special move",
+        "corner": "In the corner"
+      },
+      "stages": {
+        "founder": {
+          "name": "The founder",
+          "title": "A forge halfway up the hill",
+          "placesAria": "The places the story runs through",
+          "places": [
+            "Montréal",
+            "Maroc",
+            "Grenoble"
+          ],
+          "body": [
+            "Krizaka is a studio founded by Oussama and based in Montréal. Three places run through it: Montréal, where it works today, Morocco and Grenoble.",
+            "The name keeps the idea. A kris is a blade forged in layers — iron folded onto iron until a pattern rises in the steel. Zaka is the slope you climb, one step at a time. Krizaka is the forge halfway up that hill."
+          ],
+          "move": "Prove it, don't promise it."
         },
-        "figuresAria": "The studio in figures",
-        "kitsAria": "The platform's blocks"
+        "refusal": {
+          "name": "The refusal",
+          "title": "Nobody should take software on faith",
+          "body": [
+            "The software we were asked to trust had turned into a black box: data shipped to someone else's cloud, income routed through someone else's rules, code nobody outside could read.",
+            "We set out to build the opposite. Nothing leaves the forge untested or undocumented, and everything that leaves it is open source under Apache-2.0 — read the pattern in the steel."
+          ]
+        },
+        "engine": {
+          "name": "The engine",
+          "title": "Orazaka, the oracle that never leaves home",
+          "body": [
+            "Ōrāre — to speak, to ask — is the root of oracle. Orazaka brings the oracle to your hill: answers drawn from your own documents, on your infrastructure, under your rules, with every line that touches them public.",
+            "It is the engine our products are built to call, so they can offer intelligence without sending anything away. Where a product's link to it is still planned, we say planned."
+          ],
+          "move": "Your data never leaves home."
+        },
+        "proves": {
+          "name": "First proofs",
+          "title": "What it proves first",
+          "lead": "Two products carry the proof before the others. Yomizaka reads a Québec firm's leases, contracts and invoices — its analyses are designed as Orazaka runs, planned until one is recorded on dev. Orochia shows the media craft behind creator platforms: uploads, encoding and streaming, on its own dev site."
+        },
+        "roster": {
+          "name": "The roster",
+          "title": "The rest of what we're building",
+          "lead": "The same card, the same honest status: each product has its own site, or its code in the open until it does."
+        },
+        "open": {
+          "name": "Open blocks",
+          "title": "The folded blade: everything is open",
+          "body": "Every product stands on the same public blocks — published, versioned, Apache-2.0. The figures are read from the registries at build.",
+          "figuresAria": "The open blocks in figures",
+          "figures": {
+            "repos": "public repositories",
+            "components": "components in Krizaka UI",
+            "packages": "published packages"
+          },
+          "cta": "What each product runs on",
+          "ctaAll": "Everything we've opened"
+        }
       },
+      "closing": {
+        "title": "Round one is over. Continue?",
+        "body": "An engine and products you can run today, more on the way, every line in the open, and promises written down where you can hold us to them. The next rounds are played with the people who use them — try them, read them, or write to us."
+      },
+      "ctaProducts": "Explore the products",
+      "ctaContact": "Write to us",
       "kits": {
         "ui": {
           "name": "Krizaka UI",
@@ -403,127 +456,17 @@
           "line": "The sovereign AI engine"
         }
       },
-      "runsOn": "Runs on",
-      "ours": {
-        "label": "Bonus round",
-        "title": "We use our own products.",
-        "lead": "Every product runs on the same open stack — Krizaka UI, tokens, icons and realtime, with Orazaka as the engine. The table that proves it, cell by cell, is on Open source.",
-        "cta": "What each product runs on"
-      },
-      "chapters": {
-        "orazaka": {
-          "caption": "ōrāre (to speak) + zaka",
-          "title": "The oracle that never leaves home",
-          "body": [
-            "Ōrāre: to speak, to ask — the Latin root of oracle. In the old stories you climbed to the oracle with your question, and you trusted it with something private.",
-            "Today, asking an AI usually means carrying your contracts, your files and your ideas down to someone else's valley. For a lot of teams that's a deal-breaker, so they do without. We think that's the wrong trade.",
-            "Orazaka brings the oracle to your hill: answers drawn from your own documents, visuals generated on your machines, Studios that take the repeat work — on your infrastructure, under your rules. Your questions and your answers stay in the house, and every line that touches them is public, so your security team can check instead of trust.",
-            "It is also the engine the products are meant to call: Yasakia's conversations are planned to run on it, and so will every product that needs intelligence without sending anything away."
-          ],
-          "move": "Your data never leaves home.",
-          "stat": "Data kept at home",
-          "knowhow": "The engine"
-        },
-        "yasakia": {
-          "caption": "The dating app where you talk first",
-          "title": "Talk first. Meet both ways.",
-          "body": [
-            "Dating apps turned people into a catalogue: swipe, score, repeat. You end up judging photos at midnight and being judged the same way.",
-            "Yasakia starts with a conversation instead of a form. An agent, planned to run on Orazaka, will get to know you in your own words, then open a small batch of three to five people who match you in both directions — with the reasons in words, never a score.",
-            "The next batch waits for your debrief. No swipe, no catalogue, no endless feed: fewer people, better chosen, and nobody you didn't both want to meet."
-          ],
-          "move": "Both ways, or not at all.",
-          "stat": "Matches that go both ways",
-          "knowhow": "Geolocation"
-        },
-        "yororis": {
-          "caption": "A listening space with a face and a voice",
-          "title": "A presence that stops.",
-          "body": [
-            "Some evenings you need to put words on what you carry, hear one question you hadn't asked yourself, and leave with one clear line.",
-            "Yororis is a listening space with a face and a voice: an AI presence that says it is one, listens, reflects back, asks one question — and stops. A moment has an end, and so does the day: the limits are the product.",
-            "It is planned to run on Orazaka's wellbeing pack, so its guards will live in the engine and what you say will stay on our machines. We're building Yororis in the open and studying its framework — legal, ethical, clinical — before making it available. Nothing is live, nothing is offered, and there is no date."
-          ],
-          "move": "A presence that stops.",
-          "stat": "Under construction",
-          "knowhow": "Voice and image"
-        }
-      },
       "flock": {
-        "falcon": {
-          "name": "Martin, the falcon",
-          "role": "The sentinel",
-          "line": "Watches the borders: Law 25, GDPR, 2257. Nothing crosses that shouldn't."
-        },
-        "owl": {
-          "name": "The owl",
-          "role": "The reader",
-          "line": "Reads your documents and keeps every question in the house."
-        },
-        "pigeon": {
-          "name": "The carrier pigeon",
-          "role": "The messenger",
-          "line": "Carries signed messages, and delivers each one once."
-        },
-        "flamingo": {
-          "name": "The flamingo",
-          "role": "The creator",
-          "line": "Balances on one leg and still makes it look easy. We make sure she gets paid."
-        },
         "duck": {
           "name": "The duck",
           "role": "The builder",
           "line": "Calm on the surface, paddling hard underneath: the code, the tests, the docs."
         },
-        "phoenix": {
-          "name": "The phoenix",
-          "role": "The two flames",
-          "line": "Purple and gold — two rival flames from the arcade legend, flying together. Code reborn with every commit."
-        },
-        "lovebird": {
-          "name": "The lovebird",
-          "role": "The introducer",
-          "line": "Opens a door only when both sides want it open."
-        },
-        "crane": {
-          "name": "The crane",
-          "role": "The listener",
-          "line": "Stands still, hears you out, then lets you get back to your life."
+        "owl": {
+          "name": "The owl",
+          "role": "The reader",
+          "line": "Reads your documents and keeps every question in the house."
         }
-      },
-      "closing": {
-        "title": "Round one is over. Continue?",
-        "body": "We don't have a trophy case to show you yet. We have something better to start from: an engine and products you can run today, more on the way, every line in the open, and promises written down where you can hold us to them. The next rounds are played with the people who use them — try them, read them, or write to us."
-      },
-      "flockLabel": "The flock",
-      "flockTitle": "The ones keeping watch.",
-      "flockLead": "Our mascots aren't decoration. Each one carries a promise we don't compromise on.",
-      "ctaProducts": "Explore the products",
-      "ctaContact": "Write to us",
-      "arcade": {
-        "continue": "Continue?",
-        "insertCoin": "Insert Coin",
-        "stage": "Stage",
-        "creditLabel": "Credit 01",
-        "restartBtn": "Back to the select screen",
-        "cabinetLabel": "Krizaka · arcade cabinet",
-        "coinEntry": "1 credit = 1 story",
-        "playerStart": "1P Start",
-        "specialMove": "Special move",
-        "corner": "In the corner",
-        "teamTag": "Team battle · {count} products",
-        "teamSynergy": "One studio · one engine · the same blocks",
-        "selectPrompt": "Choose a product",
-        "selectAria": "The products of the studio"
-      },
-      "open": {
-        "label": "Bonus stage",
-        "title": "The folded blade: everything is open.",
-        "body": [
-          "A kris is only as strong as the layers you can't see. Ours are all in plain sight: the AI engine, the video platform, the design system, the icons, the Java building blocks — public repositories and published packages, Apache-2.0.",
-          "That's our proof. No benchmark to take on faith, no borrowed logo wall: clone it, run it, read it, fork it. If something on this page isn't in the code, the code wins."
-        ],
-        "cta": "See everything we've opened"
       }
     },
     "yororis": {
