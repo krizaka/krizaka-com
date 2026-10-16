@@ -418,3 +418,4 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
 .engine-uses { display: grid; gap: 8px; margin-top: 4px; }
 .engine-uses-label { margin: 0; font-family: var(--kz-font-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--kz-text-secondary); }
 .engine-uses .kz-fact { white-space: normal; max-width: 100%; }
+.engine-uses { min-width: 0; }
