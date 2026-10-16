@@ -116,10 +116,10 @@
       }
     },
     "products": {
-      "eyebrow": "Savoir-faire, prouvé par des produits",
-      "title": "Nos produits",
-      "pageTitle": "Sept savoir-faire, chacun prouvé par un produit",
-      "lead": "Les produits de Krizaka sont la preuve de ce qu'elle sait faire. Chacun a son propre site, où il est présenté, démontré et documenté — et son code source sur GitHub.",
+      "eyebrow": "Savoir-faire, prouvé par les produits",
+      "title": "Un moteur, les produits qu'il propulse",
+      "pageTitle": "Un moteur, et les produits qu'il propulse",
+      "lead": "Orazaka est le moteur sur lequel tourne l'IA de chaque produit Krizaka : c'est notre savoir-faire central. Chaque produit le prouve dans son domaine, sur son propre site, avec son code source sur GitHub.",
       "visit": "Voir le site de dev",
       "visitAria": "{name} — voir le site de dev",
       "source": "Code source",
@@ -180,7 +180,23 @@
       },
       "seeCode": "Voir le code",
       "seeCodeAria": "Le code de {name} sur GitHub — en développement, pas encore de site",
-      "hookLabel": "Ce que c'est"
+      "hookLabel": "Ce que c'est",
+      "engine": {
+        "meta": "La fondation",
+        "title": "Le moteur : l'IA de chaque produit tourne sur Orazaka",
+        "line": "Un pipeline, vos modèles, votre réseau. Chaque produit ci-dessous l'appelle pour son IA, jamais un modèle en direct.",
+        "label": "Propulsé par Orazaka",
+        "usesLabel": "Ce que chaque produit lui demande",
+        "planned": "prévu",
+        "uses": {
+          "orochia": "recherche et recommandations",
+          "yomizaka": "vérifications de documents, chacune une exécution tracée",
+          "kachizaka": "flux de matchs en direct",
+          "akinaza": "l'assistant fiscal",
+          "yasakia": "l'agent de mise en relation",
+          "yororis": "le pack bien-être"
+        }
+      }
     },
     "productsPage": {
       "title": "Produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza",
@@ -204,7 +220,7 @@
       "products": {
         "eyebrow": "Savoir-faire",
         "title": "Ce que nous savons faire.",
-        "lead": "Chaque savoir-faire est prouvé par un produit, sur son propre site, avec son code source sur GitHub.",
+        "lead": "Notre savoir-faire central est Orazaka, le moteur sur lequel tourne l'IA de chaque produit. Chaque produit ci-dessous le prouve dans son domaine.",
         "preview": "Préversion dev",
         "all": "Tous les produits"
       },

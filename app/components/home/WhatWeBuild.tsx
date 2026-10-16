@@ -22,7 +22,7 @@ export default function WhatWeBuild({ locale }: { locale: string }) {
         </Link>
       }
     >
-      <ProductGrid locale={locale} />
+      <ProductGrid locale={locale} withEngine />
     </Section>
   );
 }

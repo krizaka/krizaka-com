@@ -3,11 +3,11 @@ import { localizedMetadata } from "@/lib/seo";
 import { asLocale, getDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { mavenArtifactCount, publishedCount } from "@/lib/registry-versions";
-import { ENGINE, PROVES_FIRST, ROSTER } from "@/lib/story";
+import { PROVES_FIRST, ROSTER } from "@/lib/story";
 import { uiFacts } from "@/lib/ui-facts";
 import TopNavBar from "@/app/components/TopNavBar";
 import SiteFooter from "@/app/components/SiteFooter";
-import ProductGrid from "@/app/components/ProductCard";
+import ProductGrid, { EngineCard } from "@/app/components/ProductCard";
 import FigureTiles from "@/app/components/FigureTiles";
 import { StackCards } from "@/app/components/home/OpenStack";
 import StoryClient from "./StoryClient";
@@ -49,7 +49,7 @@ export default async function StoryPage({ params }: Props) {
       <TopNavBar />
       <StoryClient
         parts={{
-          engine: <ProductGrid locale={locale} only={[ENGINE]} />,
+          engine: <EngineCard locale={locale} />,
           proves: <ProductGrid locale={locale} only={PROVES_FIRST} />,
           roster: <ProductGrid locale={locale} only={ROSTER} />,
           figures: <FigureTiles figures={figures} label={s.figuresAria} locale={locale} />,

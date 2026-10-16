@@ -27,7 +27,7 @@ export default async function ProductsPage({ params }: Props) {
       <TopNavBar />
       <PageHero eyebrow={h.eyebrow} title={h.pageTitle} lead={h.lead} backdrop="plain" />
       <Section aria-label={h.title}>
-        <ProductGrid locale={locale} reveal={false} />
+        <ProductGrid locale={locale} reveal={false} withEngine />
       </Section>
       <SiteFooter />
     </main>
