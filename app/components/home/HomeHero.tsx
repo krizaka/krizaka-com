@@ -33,7 +33,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
   return (
     <SectionBackdrop as="section" id="hero" className="kz-home-hero" grid aria-labelledby="hero-title">
       <div data-backdrop-layer aria-hidden className="kz-home-hero-horizon">
-        <Landscape />
+        <Landscape fade={false} />
       </div>
       <div data-backdrop-layer aria-hidden className="kz-home-hero-fade" />
 
