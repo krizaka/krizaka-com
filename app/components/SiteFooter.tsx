@@ -4,6 +4,7 @@ import Link from "next/link";
 import { SiteFooter as FamilyFooter } from "@krizaka/ui/site-footer";
 import { familyLabels } from "@krizaka/ui/sites";
 import { useI18n } from "./I18nProvider";
+import { BLOG_URL } from "@/lib/site";
 import { useContactHref } from "./useContactHref";
 
 /* The footer (NAV-SYS) is @krizaka/ui's SiteFooter: this site's own column (its pages), the Krizaka family in columns
@@ -38,6 +39,9 @@ export default function SiteFooter() {
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
           <Link href="/story" prefetch={false}>{f.story}</Link>
+        </FamilyFooter.Link>
+        <FamilyFooter.Link asChild>
+          <a href={BLOG_URL}>{f.blog}</a>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
           <Link href={contactHref}>{f.contact}</Link>

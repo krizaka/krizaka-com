@@ -78,7 +78,8 @@
       "githubAria": "Krizaka on GitHub",
       "preferences": "Preferences",
       "mainAria": "Main navigation",
-      "homeAria": "Krizaka — home"
+      "homeAria": "Krizaka — home",
+      "blog": "Blog"
     },
     "nav": {
       "status": {
@@ -267,6 +268,13 @@
       "contact": {
         "title": "Tell us what you're building.",
         "cta": "Contact us"
+      },
+      "blog": {
+        "eyebrow": "Blog",
+        "title": "From the blog",
+        "lead": "Notes on sovereign AI, measured costs and real document runs.",
+        "all": "All posts",
+        "readingTime": "{minutes} min read"
       }
     },
     "footer": {
@@ -279,7 +287,8 @@
       "terms": "Terms",
       "madeIn": "Made in Montréal · Apache-2.0",
       "allProducts": "All products",
-      "repositories": "Every repository"
+      "repositories": "Every repository",
+      "blog": "Blog"
     },
     "contactForm": {
       "stepTopic": "What brings you here?",

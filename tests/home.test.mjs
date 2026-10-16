@@ -42,7 +42,7 @@ test("the old home — the product showcase, the kit gallery, the rotating title
   }
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;
-    assert.deepEqual(Object.keys(m.home), ["hero", "products", "stack", "principles", "company", "contact"], `${lang}: site.home`);
+    assert.deepEqual(Object.keys(m.home), ["hero", "products", "stack", "principles", "company", "contact", "blog"], `${lang}: site.home`);
     assert.equal(m.expertise, undefined, `${lang}: site.expertise`);
   }
 });

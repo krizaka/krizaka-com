@@ -81,6 +81,7 @@ export const SITE_AREAS = {
   products: "products/<product>/{tour,gallery,gallery-video,video,mobile}/<clip> — recordings, images and Orazaka-made videos (.mp4 · .webm · -poster.webp) of a product",
   docs: "docs/<product>/{mobile,…}/<name> — media of the documentation pages (screenshots, clips, posters)",
   people: "people/<product>/<person>-{256,512}.webp — the demo personas' portraits, shared by the products (mirrored in people/personas/)",
+  blog: "blog/<post>/<name> — the images of a post of blog.krizaka.com (cover, figures); posts name them by CDN URL, the blog repository never commits media",
 };
 
 export const SITE_AREA_NAMES = Object.keys(SITE_AREAS);
