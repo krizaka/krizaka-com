@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { verifyCaptcha } from "@/lib/captcha";
 import { contactChannels, deliverContact, validateContact } from "@/lib/contact";
 
 export const runtime = "nodejs";
@@ -33,6 +34,10 @@ export async function POST(request: Request) {
   // Bots filling the honeypot get the same answer as people, and nothing is sent.
   if (result.ok === "spam") return NextResponse.json({ ok: true });
   if (!result.ok) return NextResponse.json({ error: "invalid", field: result.field }, { status: 400 });
+
+  // Bot protection: verified before anything is sent (off when no CAPTCHA is configured).
+  const token = (body as { captchaToken?: unknown }).captchaToken;
+  if (!(await verifyCaptcha(token, ip))) return NextResponse.json({ error: "contact.captcha_failed" }, { status: 400 });
 
   const channels = contactChannels();
   if (!channels.email && !channels.webhook) {

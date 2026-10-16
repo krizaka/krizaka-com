@@ -90,3 +90,13 @@ services:
       - key: MAIL_FROM
         scope: RUN_TIME
         type: GENERAL
+      # Bot protection of the contact form (lib/captcha.ts): the widget's site key is public and inlined at build.
+      - key: ABUSE_CAPTCHA_PROVIDER
+        scope: RUN_TIME
+        value: "turnstile"
+      - key: NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY
+        scope: RUN_AND_BUILD_TIME
+        type: GENERAL
+      - key: ABUSE_CAPTCHA_SECRET_KEY
+        scope: RUN_TIME
+        type: SECRET

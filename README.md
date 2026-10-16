@@ -147,6 +147,14 @@ Every variable of the site is named by its bounded context (krizaka/.github#46) 
 | `MAIL_FROM` | — |  | `Krizaka <contact@<MAIL_DOMAIN>>` | Sender, on `MAIL_DOMAIN`. |
 | `MAIL_CONTACT_TO` | recommended | ✓ |  | Where the contact messages land (comma-separated recipients). |
 | `MAIL_CONTACT_WEBHOOK_URL` | — | ✓ |  | A second channel: JSON POST to Slack, Discord or any relay (`text`, `content` and structured `contact` fields). |
+
+#### Abuse — `ABUSE_`
+
+| Variable | Production | Secret | Default | What it does |
+| :--- | :---: | :---: | :--- | :--- |
+| `ABUSE_CAPTCHA_PROVIDER` | recommended |  |  | The CAPTCHA service of the public forms: `turnstile`. Unset, the check is off (local dev, tests). |
+| `NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY` *(build)* | recommended |  |  | The widget's public site key, read by the browser (inlined at build; `app/components/CaptchaWidget.tsx`). |
+| `ABUSE_CAPTCHA_SECRET_KEY` | recommended | ✓ |  | The widget's secret key; `/api/contact` verifies the token with it before any mail is sent (`lib/captcha.ts`). With the provider set, a missing or invalid token answers 400 `contact.captcha_failed`. |
 <!-- /env -->
 
 The e-mail goes out via `POST {MAIL_API_URL}/v3/{MAIL_DOMAIN}/messages` (`lib/contact.ts`)
