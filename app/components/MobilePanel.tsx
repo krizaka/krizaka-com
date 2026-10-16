@@ -2,12 +2,12 @@
 
 /* The mobile panel (below md), inside @krizaka/ui's NavBar.Mobile (a disclosure under the bar: Escape and a link close
    it, the focus returns to the toggle). One panel, every destination once (lib/nav.ts): this site's sections
-   (Products, Open source, Our story), Contact us, theme and language. No family switcher here: it
+   (Products, Open source, then Blog; Our story is in the footer), Contact us, theme and language. No family switcher here: it
    belongs to ui.krizaka.com and java.krizaka.com. */
 
 import type { ComponentType } from "react";
 import Link from "next/link";
-import { BookmarkIcon, GlobeIcon, MessageIcon, MoonIcon, PackIcon, StudioIcon, SunIcon, type IconProps } from "@krizaka/icons";
+import { GlobeIcon, MessageIcon, MoonIcon, PackIcon, StudioIcon, SunIcon, type IconProps } from "@krizaka/icons";
 import { NavBar } from "@krizaka/ui/nav-bar";
 import { Button } from "@krizaka/ui/button";
 import { useI18n } from "./I18nProvider";
@@ -16,11 +16,11 @@ import { useContactHref } from "./useContactHref";
 import { BLOG_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isNavActive } from "@/lib/nav";
 
-const ICONS: Record<string, ComponentType<IconProps>> = { products: StudioIcon, repos: PackIcon, story: BookmarkIcon };
+const ICONS: Record<string, ComponentType<IconProps>> = { products: StudioIcon, repos: PackIcon };
 const row = "gap-3 [&>svg]:shrink-0 [&>svg]:text-fg-secondary aria-[current=page]:bg-surface-2 aria-[current=page]:font-semibold";
 
 export function MobilePanel({ path }: { path: string }) {
-  const { t, locale, toggleLocale } = useI18n();
+  const { t, toggleLocale } = useI18n();
   const { theme, toggleTheme } = useSiteTheme();
   const contact = useContactHref();
 

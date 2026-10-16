@@ -11,9 +11,14 @@ const nav = read("lib/nav.ts");
 const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",(?: status: "(\w+)",)? devUrl: ([^,]+),[^\n]*/g)].map(([line, id, status, devUrl]) => ({ id, status, devUrl, noSite: /noSite: true/.test(line) }));
 const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)", url: "([^"]+)"/g)].map(([, id, name, url]) => ({ id, name, url }));
 
-test("the centre of the bar is Products · Open source · Our story, all pages of this site", () => {
-  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["products", "repos", "story"\] as const\)/);
+test("the centre of the bar is Products · Open source, all pages of this site; Our story is not in the bar", () => {
+  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["products", "repos"\] as const\)/);
+  assert.doesNotMatch(nav, /NAV_BAR_LINKS[^=]*= \(\[[^\]]*"story"/, "no story in the bar's list");
   assert.match(nav, /\{ href: "\/open-source", icon: "repos", match: \["\/open-source\/"\] \}/, "a building block lights Open source");
+  // the bar and the mobile panel both read NAV_BAR_LINKS: neither names the story directly
+  for (const file of ["app/components/TopNavBar.tsx", "app/components/MobilePanel.tsx"]) {
+    assert.doesNotMatch(read(file), /"story"|\/story/, `${file}: no story link`);
+  }
 });
 
 test("the family: every product on its own site, the stack on its subdomains, and GitHub", () => {
