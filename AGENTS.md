@@ -46,13 +46,11 @@
 - `lib/products.ts` is the single list of the products (id, name, status, `devUrl`, `repoUrl`), `lib/stack.ts` the
   open-source stack (Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com); `lib/nav.ts` derives the navigation
   from them. The bar is the one of every Krizaka site (NAV-SYS; `@krizaka/ui/nav-bar`, composed in `TopNavBar`, never
-  hand-made, no inline styles), in three zones: **left** the Krizaka mark (home) and the **family switcher**
-  (`FamilySwitcher`, fed by `NAV_FAMILY`: the products with their status · the stack · Krizaka · GitHub — replaced by
-  `NavBar.Family` once @krizaka/ui ships it); **centre** this site's sections only — Products · Open source · Our story;
+  hand-made, no inline styles), in three zones: **left** the Krizaka mark (home) alone (no family switcher on www — it duplicated Products; ui. and java. carry it back here); **centre** this site's sections only — Products · Open source (`NAV_BAR_LINKS`; Our story is in the footer, never the bar);
   **right** Blog · GitHub · theme · language · Contact us (`primary`); the Blog is blog.krizaka.com (`BLOG_URL`, `krizaka/krizaka-blog`), also in the mobile panel and the footer's Krizaka column, and the home shows its latest three posts (`LatestPosts`, read at build from `/feed.xml`, nothing while the blog has none). No « Docs » and no search: the documentation lives on its
   own sites (while `/docs` still renders here, it keeps its breadcrumb `DocsCrumb` and the ⌘K search over it). Mobile:
-  one panel (`MobilePanel`), this site's sections, then Contact us and the preferences, the family at the bottom. The
-  footer lists the family in columns (Products · Open source · Krizaka).
+  one panel (`MobilePanel`), this site's sections, then Blog, Contact us and the preferences, the family at the bottom. The
+  footer lists the family in columns (Products · Open source · Krizaka: Our story, Blog, Contact us).
 - **The home is the company's** (landing): who Krizaka is and its promise (`HomeHero`, figures read at build), the
   products **as equals** (`WhatWeBuild`: one `LinkCard` each, same weight, no product's brand, none featured), the stack
   (`OpenStack` / `StackCards`, versions and counts from `lib/registry-versions`), five provable working rules

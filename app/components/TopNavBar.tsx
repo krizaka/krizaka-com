@@ -4,7 +4,7 @@
    items and resting on the current page) and fed by lib/nav.ts. Three zones:
    - left, who we are: the Krizaka mark (home) alone — no family switcher on the company's own site (the Products menu is the way to
      the products; ui.krizaka.com and java.krizaka.com carry the switcher as their way back here);
-   - centre, this site: Products · Open source · Our story;
+   - centre, this site: Products · Open source (the story is in the footer);
    - right, tools: Blog · Repo · theme · language · Contact us.
    No search and no "Docs": the site has five pages, and the documentation lives on ui.krizaka.com and java.krizaka.com.
    While /docs still renders here, its pages keep their breadcrumb and the search over them (DocsCrumb, SearchCommand).
@@ -28,7 +28,7 @@ import { DocsCrumb } from "./DocsCrumb";
 import { useContactHref } from "./useContactHref";
 
 export default function TopNavBar() {
-  const { t, locale, toggleLocale } = useI18n();
+  const { t, toggleLocale } = useI18n();
   const m = t.site.menu;
   const contactHref = useContactHref();
   const { theme, toggleTheme } = useSiteTheme();

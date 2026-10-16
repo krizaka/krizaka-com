@@ -4,8 +4,8 @@
    dev.<product>.com (lib/products.ts), the open-source stack on ui.krizaka.com and java.krizaka.com (lib/stack.ts).
    The bar, in three zones:
    - left, who we are: the Krizaka mark, then NavBar.Family — every site of the family, from @krizaka/ui/sites;
-   - centre, this site: Products · Open source · Our story (NAV_BAR_LINKS) — never a link to another site;
-   - right, tools: Repo · theme · language · Contact us. No "Docs": the documentation lives on its own sites. */
+   - centre, this site: Products · Open source (NAV_BAR_LINKS) — never a link to another site; the story lives in the footer;
+   - right, tools: Blog · Repo · theme · language · Contact us. No "Docs": the documentation lives on its own sites. */
 
 import type { TranslationDictionary } from "./i18n";
 import { PRODUCTS, type ProductId, type ProductStatus } from "./products";
@@ -39,8 +39,8 @@ export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
   { href: "/contact", icon: "contact" },
 ];
 
-/** The centre of the bar: this site's sections, in this order. */
-export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["products", "repos", "story"] as const).map((icon) => NAV_COMPANY.find((l) => l.icon === icon)!);
+/** The centre of the bar and the mobile panel's list: this site's sections, in this order. "Our story" is in the footer (Krizaka column). */
+export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["products", "repos"] as const).map((icon) => NAV_COMPANY.find((l) => l.icon === icon)!);
 
 /* While the documentation still renders here (/docs, until it has moved to ui.krizaka.com and java.krizaka.com), the
    bar under /docs names where the reader is (Docs / <section>, DocsCrumb) and keeps the search over it. Nothing outside
