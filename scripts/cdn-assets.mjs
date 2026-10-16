@@ -33,7 +33,7 @@ import { readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { execFileSync } from "node:child_process";
-import { LAYOUT_README, README_NAME, RETIRED, SITE_AREA_NAMES, assertUnder, layoutHelp, libraryPath, misplaced } from "./bunny-layout.mjs";
+import { FOREIGN_WRITERS, LAYOUT_README, README_NAME, RETIRED, SITE_AREA_NAMES, assertUnder, layoutHelp, libraryPath, misplaced } from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 
 export const ROOT = "site";
@@ -192,20 +192,13 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
 /** Objects younger than this are left alone: another session may have uploaded them and not yet committed its manifest. */
 export const MIN_AGE_MS = 24 * 3600 * 1000;
 
-/**
- * Media that other sites carry (dev.orazaka.com, dev.orochia.com name their files by hash in their own repositories;
- * blog.krizaka.com names its images and clips in krizaka-blog's `lib/media.json`, under `site/blog/`): `prune` never
- * deletes under these, krizaka.com's manifest does not list them.
- */
-export const PRODUCT_OWNED = ["site/products/orazaka/", "site/products/orochia/", "site/blog/"];
-
 export async function prune({ cfg, manifest, yes = false, retired = false, extraKeep = new Set(), minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log }) {
   const keep = new Set([...Object.entries(manifest.files).map(([l, h]) => objectPath(manifest.root, l, h)), ...extraKeep]);
   // --retired: only the folders of a renamed product (RETIRED), named by no manifest of main — work on old branches that predates the rename does not keep them.
   const all = await listObjects(cfg, manifest.root, fetchImpl);
   const unnamed = retired
     ? all.filter((o) => RETIRED.some((re) => re.test(o.path)) && !Object.entries(manifest.files).some(([l, h]) => objectPath(manifest.root, l, h) === o.path))
-    : all.filter((o) => !keep.has(o.path) && !PRODUCT_OWNED.some((prefix) => o.path.startsWith(prefix)));
+    : all.filter((o) => !keep.has(o.path) && !FOREIGN_WRITERS.some((prefix) => o.path.startsWith(prefix)));
   const stale = unnamed.filter((o) => !o.changed || now - o.changed >= minAgeMs).map((o) => o.path);
   const recent = unnamed.length - stale.length;
   if (recent) log(`kept ${recent} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be committing its manifest)`);

@@ -304,7 +304,7 @@
   sends each file as `<name>.<hash>.<ext>` (first 10 hex of its SHA-256 — a URL never changes content, so it is cached
   for good) and records its hash in `lib/cdn-manifest.json` — commit that file, never the media. A file already
   recorded with the same hash is skipped. `check` asks the pull zone for every recorded file; `prune` previews (and
-  with `--yes` deletes) the old versions the manifest no longer names. Same credentials as §5.1, never printed.
+  with `--yes` deletes) the old versions the manifest no longer names, never under another writer's prefixes (`FOREIGN_WRITERS` in `bunny-layout.mjs`: the product sites, Orazaka's `gallery-video/` and `video/`, the blog). Same credentials as §5.1, never printed.
 - Code never writes a media URL: `lib/cdn.ts` turns a logical path (`cdn("products/orazaka/gallery/
   tea-pour.webp")`, `video("products/orochia/tour/alex-bid")` → `{ webm, mp4, poster }`) and fails the build on a
   path the manifest does not know. The host is `NEXT_PUBLIC_MEDIA_CDN_URL` (read at build; default
