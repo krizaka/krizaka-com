@@ -52,7 +52,7 @@
   one panel (`MobilePanel`), this site's sections, then Blog, Contact us and the preferences, the family at the bottom. The
   footer lists the family in columns (Products · Open source · Krizaka: Our story, Blog, Contact us).
 - **The home is the company's** (landing): who Krizaka is and its promise (`HomeHero`, figures read at build), the
-  products **as equals** (`WhatWeBuild`: one `LinkCard` each, same weight, no product's brand, none featured), the stack
+  Orazaka as **the foundation** — the engine every product's AI runs on (`WhatWeBuild`: `ProductGrid withEngine` = the wide `EngineCard` with the honest list of what each product uses it for, `lib/engine-uses.ts`, « planned » where not wired — and the other products as the cards it powers, in the frame of `CardGrid foundation`; same on `/products`, the card alone on `/story`'s engine stage; `tests/engine.test.mjs`), the stack
   (`OpenStack` / `StackCards`, versions and counts from `lib/registry-versions`), five provable working rules
   (`Principles`), Montréal (`Company`), the contact. Orochia is named neutrally on krizaka.com (name and one line, never
   a creator or payout pitch — `tests/home.test.mjs`).

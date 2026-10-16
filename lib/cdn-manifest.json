@@ -1,6 +1,14 @@
 {
   "root": "site",
   "files": {
+    "blog/what-image-and-video-generation-costs/cost-per-output.svg": "b1d820ac89",
+    "blog/what-image-and-video-generation-costs/riad-flux2-klein-mac.webp": "3ef96eafe6",
+    "blog/what-image-and-video-generation-costs/riad-sd15-mac.webp": "3f6d038efb",
+    "blog/what-image-and-video-generation-costs/riad-sd35-large-do.webp": "e880488448",
+    "blog/what-image-and-video-generation-costs/souk-i2v-poster.webp": "8917ec3867",
+    "blog/what-image-and-video-generation-costs/souk-i2v.mp4": "92c863c7f1",
+    "blog/what-image-and-video-generation-costs/tea-pour-i2v-poster.webp": "8a1beb7b23",
+    "blog/what-image-and-video-generation-costs/tea-pour-i2v.mp4": "0e841d251e",
     "home/kit/challenge-v.jpg": "7f6f208377",
     "home/kit/challenge-v.mp4": "22cb2a30f8",
     "home/kit/challenge-v.webm": "b2f8674e43",

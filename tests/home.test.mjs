@@ -22,7 +22,7 @@ test("the stack section states the idea with figures read from data and sends to
   assert.match(stack, /PRODUCTS\.map/, "the four identities, all of them");
 });
 
-test("the products are equals: one card each from lib/products.ts, no product singled out", () => {
+test("the products come from lib/products.ts: one card each (Orazaka as the foundation card, tests/engine.test.mjs)", () => {
   assert.match(read("app/components/home/WhatWeBuild.tsx"), /<ProductGrid\b/);
   assert.match(read("app/components/ProductCard.tsx"), /PRODUCTS\.filter/);
   for (const s of SECTIONS) {

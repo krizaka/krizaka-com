@@ -117,9 +117,9 @@
     },
     "products": {
       "eyebrow": "Know-how, proved by products",
-      "title": "Our products",
-      "pageTitle": "Seven know-hows, each proved by a product",
-      "lead": "Krizaka's products are the proof of what it knows how to do. Each has its own site, where it is presented, demonstrated and documented — and its source on GitHub.",
+      "title": "One engine, the products it powers",
+      "pageTitle": "One engine, and the products it powers",
+      "lead": "Orazaka is the engine every Krizaka product's AI runs on: that is our core know-how. Each product proves it in its own field, on its own site, with its source on GitHub.",
       "visit": "Visit the dev site",
       "visitAria": "{name} — visit the dev site",
       "source": "Source",
@@ -180,7 +180,23 @@
       },
       "seeCode": "See the code",
       "seeCodeAria": "The code of {name} on GitHub — in development, no site yet",
-      "hookLabel": "What it is"
+      "hookLabel": "What it is",
+      "engine": {
+        "meta": "The foundation",
+        "title": "The engine: every product's AI runs on Orazaka",
+        "line": "One pipeline, your models, your network. Each product below calls it for its AI and never a model directly.",
+        "label": "Powered by Orazaka",
+        "usesLabel": "What each product uses it for",
+        "planned": "planned",
+        "uses": {
+          "orochia": "search and recommendations",
+          "yomizaka": "document checks, each a traced run",
+          "kachizaka": "live match feeds",
+          "akinaza": "the tax assistant",
+          "yasakia": "the matching agent",
+          "yororis": "the wellbeing pack"
+        }
+      }
     },
     "productsPage": {
       "title": "Products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza",
@@ -204,7 +220,7 @@
       "products": {
         "eyebrow": "Know-how",
         "title": "What we know how to do.",
-        "lead": "Each know-how is proved by a product, on its own site, with its source on GitHub.",
+        "lead": "Our core know-how is Orazaka, the engine every product's AI runs on. Each product below proves it in its own field.",
         "preview": "Dev preview",
         "all": "All products"
       },
