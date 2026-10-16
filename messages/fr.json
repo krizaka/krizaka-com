@@ -78,7 +78,8 @@
       "githubAria": "Krizaka sur GitHub",
       "preferences": "Préférences",
       "mainAria": "Navigation principale",
-      "homeAria": "Krizaka — accueil"
+      "homeAria": "Krizaka — accueil",
+      "blog": "Blogue"
     },
     "nav": {
       "status": {
@@ -267,6 +268,13 @@
       "contact": {
         "title": "Parlez-nous de ce que vous construisez.",
         "cta": "Nous contacter"
+      },
+      "blog": {
+        "eyebrow": "Blogue",
+        "title": "Du blogue",
+        "lead": "Des notes sur l'IA souveraine, les coûts mesurés et de vraies exécutions sur des documents.",
+        "all": "Tous les billets",
+        "readingTime": "{minutes} min de lecture"
       }
     },
     "footer": {
@@ -279,7 +287,8 @@
       "terms": "Conditions",
       "madeIn": "Fait à Montréal · Apache-2.0",
       "allProducts": "Tous les produits",
-      "repositories": "Tous les dépôts"
+      "repositories": "Tous les dépôts",
+      "blog": "Blogue"
     },
     "contactForm": {
       "stepTopic": "Qu'est-ce qui vous amène ?",

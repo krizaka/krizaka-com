@@ -9,6 +9,7 @@ import WhatWeBuild from "../components/home/WhatWeBuild";
 import OpenStack from "../components/home/OpenStack";
 import Principles from "../components/home/Principles";
 import Company from "../components/home/Company";
+import LatestPosts from "../components/home/LatestPosts";
 import ContactCta from "../components/home/ContactCta";
 import SiteFooter from "../components/SiteFooter";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
@@ -48,6 +49,7 @@ export default async function Home({ params }: Props) {
       <OpenStack locale={locale} mavenArtifacts={figures.maven} />
       <Principles locale={locale} repositories={figures.repositories} />
       <Company locale={locale} />
+      <LatestPosts locale={locale} />
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta />
       </SectionBackdrop>

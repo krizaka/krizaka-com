@@ -49,7 +49,7 @@
   hand-made, no inline styles), in three zones: **left** the Krizaka mark (home) and the **family switcher**
   (`FamilySwitcher`, fed by `NAV_FAMILY`: the products with their status · the stack · Krizaka · GitHub — replaced by
   `NavBar.Family` once @krizaka/ui ships it); **centre** this site's sections only — Products · Open source · Our story;
-  **right** GitHub · theme · language · Contact us (`primary`). No « Docs » and no search: the documentation lives on its
+  **right** Blog · GitHub · theme · language · Contact us (`primary`); the Blog is blog.krizaka.com (`BLOG_URL`, `krizaka/krizaka-blog`), also in the mobile panel and the footer's Krizaka column, and the home shows its latest three posts (`LatestPosts`, read at build from `/feed.xml`, nothing while the blog has none). No « Docs » and no search: the documentation lives on its
   own sites (while `/docs` still renders here, it keeps its breadcrumb `DocsCrumb` and the ⌘K search over it). Mobile:
   one panel (`MobilePanel`), this site's sections, then Contact us and the preferences, the family at the bottom. The
   footer lists the family in columns (Products · Open source · Krizaka).
@@ -297,6 +297,7 @@
 
   ```
   site/home/backdrop/<product>.<hash>.{webm,mp4,jpg}
+  site/blog/<post>/<name>.<hash>.<ext>            (the blog's images; the blog repository never commits media)
   site/products/<product>/tour/<clip>.<hash>.{webm,mp4,jpg}
   site/products/<product>/gallery/<id>.<hash>.webp
   ```

@@ -26,6 +26,9 @@ export const GITHUB_DISCUSSIONS_URL = `${GITHUB_REPO_URL}/discussions`;
 export const GITHUB_CONTRIBUTING_URL = `${GITHUB_REPO_URL}/blob/main/CONTRIBUTING.md`;
 export const GITHUB_GOOD_FIRST_ISSUES_URL = `${GITHUB_REPO_URL}/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22`;
 
+/** The company blog (its own site: krizaka/krizaka-blog). */
+export const BLOG_URL = "https://blog.krizaka.com";
+
 /** The site's own repository. */
 export const SITE_REPO_URL = `${GITHUB_ORG_URL}/krizaka-com`;
 

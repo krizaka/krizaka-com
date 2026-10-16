@@ -7,12 +7,13 @@
 
 import type { ComponentType } from "react";
 import Link from "next/link";
-import { BookmarkIcon, GlobeIcon, MoonIcon, PackIcon, StudioIcon, SunIcon, type IconProps } from "@krizaka/icons";
+import { BookmarkIcon, GlobeIcon, MessageIcon, MoonIcon, PackIcon, StudioIcon, SunIcon, type IconProps } from "@krizaka/icons";
 import { NavBar } from "@krizaka/ui/nav-bar";
 import { Button } from "@krizaka/ui/button";
 import { useI18n } from "./I18nProvider";
 import { useSiteTheme } from "./SiteTheme";
 import { useContactHref } from "./useContactHref";
+import { BLOG_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isNavActive } from "@/lib/nav";
 
 const ICONS: Record<string, ComponentType<IconProps>> = { products: StudioIcon, repos: PackIcon, story: BookmarkIcon };
@@ -38,6 +39,13 @@ export function MobilePanel({ path }: { path: string }) {
             </NavBar.MobileLink>
           );
         })}
+        <NavBar.MobileLink asChild className={row}>
+          <a href={BLOG_URL}>
+            <span className="flex items-center gap-3">
+              <MessageIcon size={18} /> {t.site.menu.blog}
+            </span>
+          </a>
+        </NavBar.MobileLink>
       </section>
 
       <div className="flex flex-col gap-2.5 border-t border-border-subtle pt-3">

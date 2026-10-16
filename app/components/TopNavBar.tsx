@@ -5,7 +5,7 @@
    - left, who we are: the Krizaka mark (home) alone — no family switcher on the company's own site (the Products menu is the way to
      the products; ui.krizaka.com and java.krizaka.com carry the switcher as their way back here);
    - centre, this site: Products · Open source · Our story;
-   - right, tools: Repo · theme · language · Contact us.
+   - right, tools: Blog · Repo · theme · language · Contact us.
    No search and no "Docs": the site has five pages, and the documentation lives on ui.krizaka.com and java.krizaka.com.
    While /docs still renders here, its pages keep their breadcrumb and the search over them (DocsCrumb, SearchCommand).
    Below md: the mark and the mobile panel's toggle. */
@@ -20,7 +20,7 @@ import { Kbd } from "@krizaka/ui/kbd";
 import { KrizakaLogo } from "@krizaka/ui";
 import { useI18n } from "./I18nProvider";
 import { useSiteTheme } from "./SiteTheme";
-import { SITE_REPO_URL } from "@/lib/site";
+import { BLOG_URL, SITE_REPO_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
@@ -73,6 +73,10 @@ export default function TopNavBar() {
                 <Kbd className="hidden lg:inline-flex">⌘K</Kbd>
               </Button>
             )}
+
+            <Button asChild variant="ghost" size="sm" shape="pill" className="hidden font-semibold md:inline-flex">
+              <a href={BLOG_URL}>{m.blog}</a>
+            </Button>
 
             <NavBar.Repo href={SITE_REPO_URL} label={m.githubAria} className="hidden lg:inline-flex" />
 
