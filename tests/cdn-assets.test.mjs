@@ -3,7 +3,8 @@ import assert from "node:assert/strict";
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { PRODUCT_OWNED, check, hashOf, logicalPath, main, plan, prune, readManifest, versioned } from "../scripts/cdn-assets.mjs";
+import { FOREIGN_WRITERS } from "../scripts/bunny-layout.mjs";
+import { check, hashOf, logicalPath, main, plan, prune, readManifest, versioned } from "../scripts/cdn-assets.mjs";
 
 const cfg = { apiKey: "secret-key", zone: "kz-zone", endpoint: "storage.bunnycdn.com", pullZone: "cdn.example.net" };
 const env = { MEDIA_STORAGE_API_KEY: "secret-key", MEDIA_STORAGE_ZONE: "kz-zone", MEDIA_CDN_HOSTNAME: "cdn.example.net" };
@@ -154,7 +155,7 @@ test("uploads are refused outside the areas of site/", () => {
 });
 
 test("prune never touches what other sites own: the products' media and the blog's (site/blog/, named by krizaka-blog)", async () => {
-  assert.ok(PRODUCT_OWNED.includes("site/blog/"));
+  assert.ok(FOREIGN_WRITERS.includes("site/blog/"));
   const calls = [];
   const fetchImpl = async (url, init = {}) => {
     calls.push({ url, method: init.method ?? "GET" });
@@ -164,4 +165,17 @@ test("prune never touches what other sites own: the products' media and the blog
   };
   await prune({ cfg, manifest: { root: "site", files: {} }, yes: true, fetchImpl, log: () => {} });
   assert.equal(calls.filter((c) => c.method === "DELETE").length, 0);
+});
+
+test("prune lists nothing under Orazaka's own clips (gallery-video/, video/), which its GPU batch writes", async () => {
+  const manifest = { root: "site", files: { "products/orochia/tour/x.jpg": "abcdef1234" } };
+  const listing = {
+    "https://storage.bunnycdn.com/kz-zone/site/": [{ ObjectName: "products", IsDirectory: true }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/": [{ ObjectName: "orazaka", IsDirectory: true }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/": [{ ObjectName: "gallery-video", IsDirectory: true }, { ObjectName: "video", IsDirectory: true }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/gallery-video/": [{ ObjectName: "scene.0123456789.mp4", IsDirectory: false }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/video/": [{ ObjectName: "clip.0123456789-poster.webp", IsDirectory: false }],
+  };
+  const fetchImpl = async (url) => ({ ok: true, status: 200, json: async () => listing[url] ?? [] });
+  assert.deepEqual(await prune({ cfg, manifest, fetchImpl, log: () => {} }), []);
 });

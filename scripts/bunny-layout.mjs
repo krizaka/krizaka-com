@@ -48,6 +48,14 @@ export const ZONE = {
   },
 };
 
+/**
+ * Prefixes of site/ written by ANOTHER writer than cdn-assets (one writer per prefix): `prune` never lists or deletes
+ * under them, since their objects are not named by this site's manifest. The product sites name their own media
+ * (dev.orazaka.com, dev.orochia.com); Orazaka's generated clips (gallery-video/, video/) come from its GPU batch;
+ * blog.krizaka.com names its images in krizaka-blog's lib/media.json.
+ */
+export const FOREIGN_WRITERS = ["site/products/orazaka/", "site/products/orochia/", "site/blog/"];
+
 /** Folders of the zone that are retired (a renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
 export const RETIRED = [/^site\/(?:people|products)\/yazakia\//];
 

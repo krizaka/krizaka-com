@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { LAYOUT_README, RETIRED, ZONE, assertUnder, libraryPath, misplaced } from "../scripts/bunny-layout.mjs";
+import { FOREIGN_WRITERS, LAYOUT_README, RETIRED, ZONE, assertUnder, libraryPath, misplaced } from "../scripts/bunny-layout.mjs";
 
 test("each writer stays under its prefix", () => {
   assert.equal(assertUnder("site", "site/home/a.1234567890.jpg"), "site/home/a.1234567890.jpg");
@@ -58,4 +58,12 @@ test("the library maps what site/ serves to human names, and retires the old Yaz
   assert.equal(libraryPath("home/kit/frames/a.png"), null);
   for (const p of ["site/people/yazakia/hana-256.5f2982c652.webp", "site/products/yazakia/mobile/loop-dark.46dbace273.mp4"]) assert.ok(RETIRED.some((re) => re.test(p)), p);
   assert.ok(!RETIRED.some((re) => re.test("site/people/yasakia/hana-256.5f2982c652.webp")));
+});
+
+test("the prefixes another writer owns are declared once, in the layout, and prune never lists them", () => {
+  // Orazaka's generated clips (gallery-video, video) are written by the Orazaka GPU batch, not by this site's manifest.
+  for (const prefix of ["site/products/orazaka/gallery-video/", "site/products/orazaka/video/"]) {
+    assert.ok(FOREIGN_WRITERS.some((p) => prefix.startsWith(p)), `${prefix} is owned by another writer`);
+  }
+  assert.ok(FOREIGN_WRITERS.includes("site/blog/"));
 });
