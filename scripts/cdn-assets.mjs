@@ -193,10 +193,11 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
 export const MIN_AGE_MS = 24 * 3600 * 1000;
 
 /**
- * Media that the products' own sites carry (dev.orazaka.com, dev.orochia.com name their files by hash in their own
- * repositories): `prune` never deletes under these, krizaka.com's manifest does not list them.
+ * Media that other sites carry (dev.orazaka.com, dev.orochia.com name their files by hash in their own repositories;
+ * blog.krizaka.com names its images and clips in krizaka-blog's `lib/media.json`, under `site/blog/`): `prune` never
+ * deletes under these, krizaka.com's manifest does not list them.
  */
-export const PRODUCT_OWNED = ["site/products/orazaka/", "site/products/orochia/"];
+export const PRODUCT_OWNED = ["site/products/orazaka/", "site/products/orochia/", "site/blog/"];
 
 export async function prune({ cfg, manifest, yes = false, retired = false, extraKeep = new Set(), minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log }) {
   const keep = new Set([...Object.entries(manifest.files).map(([l, h]) => objectPath(manifest.root, l, h)), ...extraKeep]);
