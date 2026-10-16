@@ -12,6 +12,7 @@ import { format } from "@krizaka/i18n";
 import { CONTACT_TIMELINES, CONTACT_TOPICS, cleanSource, topicForSource, type ContactTimeline, type ContactTopic } from "@/lib/contact";
 import { ProductLogo } from "@krizaka/ui";
 import { Button } from "@krizaka/ui/button";
+import CaptchaWidget, { CAPTCHA_SITE_KEY } from "./CaptchaWidget";
 
 type Status = "idle" | "sending" | "sent" | "error";
 type Field = "name" | "email" | "message";
@@ -62,6 +63,8 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
   const [status, setStatus] = useState<Status>("idle");
   const [serverError, setServerError] = useState<{ text: string; field?: string } | null>(null);
   const [sentTo, setSentTo] = useState({ name: "", email: "" });
+  const [captcha, setCaptcha] = useState<string | null>(null);
+  const [captchaNonce, setCaptchaNonce] = useState(0);
   const formRef = useRef<HTMLFormElement>(null);
   const doneRef = useRef<HTMLDivElement>(null);
 
@@ -88,6 +91,11 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
       formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
       return;
     }
+    if (CAPTCHA_SITE_KEY && !captcha) {
+      setStatus("error");
+      setServerError({ text: c.errors.captcha_failed });
+      return;
+    }
     const website = (new FormData(e.currentTarget).get("website") as string) ?? "";
     setStatus("sending");
     setServerError(null);
@@ -95,7 +103,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, topic, timeline, website, locale, source }),
+        body: JSON.stringify({ ...values, topic, timeline, website, locale, source, captchaToken: captcha }),
       });
       if (res.ok) {
         setSentTo({ name: values.name.trim().split(/\s+/)[0], email: values.email.trim() });
@@ -104,8 +112,19 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
       }
       const body = (await res.json().catch(() => ({}))) as { error?: string; field?: string };
       setStatus("error");
+      if (body.error === "contact.captcha_failed") {
+        setCaptcha(null);
+        setCaptchaNonce((n) => n + 1);
+      }
       setServerError({
-        text: body.error === "invalid" ? c.errors.invalid : body.error === "rate_limited" ? c.errors.rate_limited : c.errors.other,
+        text:
+          body.error === "invalid"
+            ? c.errors.invalid
+            : body.error === "rate_limited"
+              ? c.errors.rate_limited
+              : body.error === "contact.captcha_failed"
+                ? c.errors.captcha_failed
+                : c.errors.other,
         field: body.field,
       });
     } catch {
@@ -268,6 +287,8 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
       {/* Honeypot: hidden from people and assistive tech, filled by bots. */}
       <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="kz-cf-hp" />
 
+      <CaptchaWidget key={captchaNonce} label={c.captchaLabel} language={locale} onToken={setCaptcha} />
+
       {serverError && (
         <p className="kz-cf-error" role="alert">
           <WarningIcon size={15} aria-hidden /> {serverError.text}
@@ -349,6 +370,7 @@ const STYLES = `
     background:color-mix(in srgb, var(--kz-accent) 8%, var(--kz-surface-0)); }
   .kz-cf-chip:focus-visible { outline:2px solid var(--kz-accent); outline-offset:2px; }
 
+  .kz-cf-captcha { min-height:65px; }
   .kz-cf-hp { position:absolute; left:-10000px; width:1px; height:1px; opacity:0; }
   .kz-cf-error { display:flex; gap:8px; align-items:center; margin:0; font-size:13px; color:var(--kz-danger); }
   .kz-cf-foot { display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px; padding-top:4px; }

@@ -12,6 +12,7 @@ export const ENV_CONTEXTS = {
   APP: "Application — links, build",
   MEDIA: "Media — the CDN, the storage zone of the asset scripts",
   MAIL: "E-mail — the contact form",
+  ABUSE: "Abuse — bot protection of the public forms",
 } as const;
 export type EnvContext = keyof typeof ENV_CONTEXTS;
 export type EnvNeed = "required" | "recommended" | "optional";
@@ -47,6 +48,9 @@ export const ENV_VARS: readonly EnvVar[] = [
   { name: "MAIL_FROM", context: "MAIL", need: "optional", default: "Krizaka <contact@<MAIL_DOMAIN>>", schema: text, doc: "Sender, on `MAIL_DOMAIN`." },
   { name: "MAIL_CONTACT_TO", context: "MAIL", need: "recommended", secret: true, schema: text, doc: "Where the contact messages land (comma-separated recipients)." },
   { name: "MAIL_CONTACT_WEBHOOK_URL", context: "MAIL", need: "optional", secret: true, schema: url, doc: "A second channel: JSON POST to Slack, Discord or any relay (`text`, `content` and structured `contact` fields)." },
+  { name: "ABUSE_CAPTCHA_PROVIDER", context: "ABUSE", need: "recommended", schema: z.enum(["turnstile"]), doc: "The CAPTCHA service of the public forms: `turnstile`. Unset, the check is off (local dev, tests)." },
+  { name: "NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY", context: "ABUSE", need: "recommended", build: true, schema: text, doc: "The widget's public site key, read by the browser (inlined at build; `app/components/CaptchaWidget.tsx`)." },
+  { name: "ABUSE_CAPTCHA_SECRET_KEY", context: "ABUSE", need: "recommended", secret: true, schema: text, doc: "The widget's secret key; `/api/contact` verifies the token with it before any mail is sent (`lib/captcha.ts`). With the provider set, a missing or invalid token answers 400 `contact.captcha_failed`." },
 ];
 
 /** Problems of an environment — names only, never a value. */

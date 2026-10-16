@@ -307,6 +307,7 @@
       "blog": "Blog"
     },
     "contactForm": {
+      "captchaLabel": "Human check",
       "stepTopic": "What brings you here?",
       "stepDetails": "How can we reach you?",
       "stepMessage": "Tell us more",
@@ -373,6 +374,7 @@
         "topic": "Choose what your message is about.",
         "invalid": "Please check the highlighted field.",
         "rate_limited": "Too many messages sent. Please try again in a few minutes.",
+        "captcha_failed": "Please confirm you are not a robot, then send again.",
         "other": "Sending failed. Reach us on GitHub Discussions in the meantime."
       },
       "privacy": "Your details are used only to reply to you (Law 25 / GDPR)."

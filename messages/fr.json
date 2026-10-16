@@ -307,6 +307,7 @@
       "blog": "Blogue"
     },
     "contactForm": {
+      "captchaLabel": "Vérification humaine",
       "stepTopic": "Qu'est-ce qui vous amène ?",
       "stepDetails": "Comment vous joindre ?",
       "stepMessage": "Dites-nous en plus",
@@ -373,6 +374,7 @@
         "topic": "Choisissez le sujet de votre message.",
         "invalid": "Vérifiez le champ indiqué.",
         "rate_limited": "Trop de messages envoyés. Réessayez dans quelques minutes.",
+        "captcha_failed": "Confirmez que vous n'êtes pas un robot, puis renvoyez.",
         "other": "L'envoi a échoué. Écrivez-nous sur GitHub Discussions en attendant."
       },
       "privacy": "Vos coordonnées servent uniquement à vous répondre (Loi 25)."
