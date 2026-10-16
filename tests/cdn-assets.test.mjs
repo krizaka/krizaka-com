@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { check, hashOf, logicalPath, main, plan, prune, readManifest, versioned } from "../scripts/cdn-assets.mjs";
+import { PRODUCT_OWNED, check, hashOf, logicalPath, main, plan, prune, readManifest, versioned } from "../scripts/cdn-assets.mjs";
 
 const cfg = { apiKey: "secret-key", zone: "kz-zone", endpoint: "storage.bunnycdn.com", pullZone: "cdn.example.net" };
 const env = { MEDIA_STORAGE_API_KEY: "secret-key", MEDIA_STORAGE_ZONE: "kz-zone", MEDIA_CDN_HOSTNAME: "cdn.example.net" };
@@ -151,4 +151,17 @@ test("uploads are refused outside the areas of site/", () => {
   assert.throws(() => logicalPath("pr-assets/x/y.png"), /not an area/);
   assert.throws(() => logicalPath("krizaka-assets/home"), /not an area/);
   for (const area of ["home", "products/orochia/tour", "docs/orochia/mobile", "people/yasakia"]) assert.equal(logicalPath(area), area);
+});
+
+test("prune never touches what other sites own: the products' media and the blog's (site/blog/, named by krizaka-blog)", async () => {
+  assert.ok(PRODUCT_OWNED.includes("site/blog/"));
+  const calls = [];
+  const fetchImpl = async (url, init = {}) => {
+    calls.push({ url, method: init.method ?? "GET" });
+    const tree = { "/site/": [{ ObjectName: "blog", IsDirectory: true }], "/site/blog/": [{ ObjectName: "shared", IsDirectory: true }], "/site/blog/shared/": [{ ObjectName: "a.abc.webp", IsDirectory: false, LastChanged: "2020-01-01T00:00:00" }] };
+    const key = Object.keys(tree).find((k) => url.endsWith(k));
+    return { ok: true, status: 200, json: async () => (key ? tree[key] : []) };
+  };
+  await prune({ cfg, manifest: { root: "site", files: {} }, yes: true, fetchImpl, log: () => {} });
+  assert.equal(calls.filter((c) => c.method === "DELETE").length, 0);
 });
