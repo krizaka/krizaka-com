@@ -407,12 +407,10 @@
           "title": "A forge halfway up the hill",
           "placesAria": "The places the story runs through",
           "places": [
-            "Oujda",
-            "Grenoble",
             "Montréal"
           ],
           "body": [
-            "Krizaka is a studio founded by Oussama and based in Montréal. Its story follows three cities: Oujda, where he comes from; Grenoble, where he studied mathematics and cognition and, in 2011, in a research lab, met a machine that was learning to read; Montréal, his home since 2019, where the forge was lit.",
+            "Krizaka is a studio founded by Oussama and based in Montréal, where he has lived since 2018 and where the forge was lit. He studied mathematics and computer science, then turned to mathematics and computing applied to cognitive science. In 2011, in a research lab, he met a machine that was learning to read.",
             "The name keeps the idea. A kris is a blade forged in layers — iron folded onto iron until a pattern rises in the steel. Zaka is the slope you climb, one step at a time. Krizaka is the forge halfway up that hill."
           ],
           "move": "Prove it, don't promise it."
