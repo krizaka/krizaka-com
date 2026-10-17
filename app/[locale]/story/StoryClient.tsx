@@ -22,6 +22,7 @@ import { VideoPlayer } from "@krizaka/ui/video-player";
 import type { ReactNode } from "react";
 import { contactHref } from "@/lib/contact";
 import { FILM_CUES } from "@/lib/film-captions";
+import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import { useI18n } from "@/app/components/I18nProvider";
 import Rich from "@/app/components/Rich";
 import ButtonLink from "@/app/components/ButtonLink";
@@ -89,7 +90,7 @@ export default function StoryClient({ parts, film }: { parts: StoryParts; film: 
           <ButtonLink href="#st-founder" variant="primary" size="lg" shimmer>
             {st.arcade.playerStart} <ForwardIcon size={15} />
           </ButtonLink>
-          <ButtonLink href="/products" size="lg">
+          <ButtonLink href={PRODUCTS_ANCHOR} size="lg">
             {st.ctaProducts}
           </ButtonLink>
         </div>
@@ -171,7 +172,7 @@ export default function StoryClient({ parts, film }: { parts: StoryParts; film: 
           </h2>
           <p className="st-crt-body">{st.closing.body}</p>
           <div className="st-crt-ctas">
-            <ButtonLink href="/products" variant="primary" size="lg">
+            <ButtonLink href={PRODUCTS_ANCHOR} variant="primary" size="lg">
               {st.ctaProducts} <ForwardIcon size={15} />
             </ButtonLink>
             <ButtonLink href={contactHref("story")} size="lg">

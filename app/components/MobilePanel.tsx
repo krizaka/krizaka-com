@@ -1,8 +1,8 @@
 "use client";
 
 /* The mobile panel (below md), inside @krizaka/ui's NavBar.Mobile (a disclosure under the bar: Escape and a link close
-   it, the focus returns to the toggle). One panel, every destination once (lib/nav.ts): this site's sections
-   (Products, Open source, then Blog; Our story is in the footer), Contact us, theme and language. No family switcher here: it
+   it, the focus returns to the toggle). One panel, every destination once (lib/nav.ts): this site's other view
+   (Open source — the home is the mark), then Blog (Our story is in the footer), Contact us, theme and language. No family switcher here: it
    belongs to ui.krizaka.com and java.krizaka.com. */
 
 import type { ComponentType } from "react";
@@ -16,7 +16,7 @@ import { useContactHref } from "./useContactHref";
 import { BLOG_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isNavActive } from "@/lib/nav";
 
-const ICONS: Record<string, ComponentType<IconProps>> = { products: StudioIcon, repos: PackIcon };
+const ICONS: Record<string, ComponentType<IconProps>> = { repos: PackIcon };
 const row = "gap-3 [&>svg]:shrink-0 [&>svg]:text-fg-secondary aria-[current=page]:bg-surface-2 aria-[current=page]:font-semibold";
 
 export function MobilePanel({ path }: { path: string }) {

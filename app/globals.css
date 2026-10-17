@@ -32,6 +32,9 @@
 .kz-site-bar-wrap { padding-inline: var(--kz-page-gutter, clamp(16px, 3.2vw, 32px)); }
 .kz-site-bar, .kz-site-bar[data-compact] { max-width: var(--kz-page-max); }
 .kz-site-bar[data-frame="docs"] { max-width: var(--kz-page-max-docs); }
+/* The brand of the bar: the mark and the word, one link home (the products are presented there). */
+.kz-site-brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; }
+.kz-site-brand-word { font-family: var(--font-display), system-ui, sans-serif; font-size: 16px; font-weight: 800; letter-spacing: -.02em; color: var(--kz-text-primary); }
 /* A subject's hue (a building block…): its rail, icon tile, bird, light and numbers — the --kz-hue contract of the
    blocks. Krizaka palette only (blues and ink, never a product colour); --kz-hue is decorative (≥ 3:1 on the surfaces),
    --kz-hue-text is for small text (≥ 4.5:1 on surface-0, -1 and -2, both themes). Without a hue, blocks fall back to

@@ -11,8 +11,8 @@
 
 ## 1. What this repo is
 
-- A **Next.js (App Router)** static-first site: the company home, `/products`, Krizaka UI and Krizaka Java
-  documentation (with their code-driven visualizations), `/story`, `/open-source`, contact and legal.
+- A **Next.js (App Router)** static-first site with **two views** (Oussama, 2026-10-17): the **home** (reached through the
+  mark; it presents the products) and **Open source** — plus `/story` (footer), contact and legal.
 - It is the **read side**. Component, version and architecture facts come from the published packages and the
   generated data — the site never hand-authors them.
 
@@ -22,8 +22,8 @@
   dev.orochia.com, dev.yasakia.com (Yasakia is being renamed Yasakia; identifiers here keep "yasakia" until that rename
   lands), dev.yororis.com and dev.yomizaka.com; Kachizaka and Akinaza (in development, nothing deployed) have no site yet, so
   their cards link to their repository (`noSite`). This repo carries **no product page, demo, gallery, journey, recording or documentation**
-  of them: one page, `/products`, has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
-  « Visit the dev site » and « Source »). Orochia's card is neutral — no adult-adjacent wording, no media.
+  of them: the home's products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
+  « Visit the dev site » and « Source »); `/products` and `/{en,fr}/products` answer 308 to `/#products` / `/<locale>#products`. Orochia's card is neutral — no adult-adjacent wording, no media.
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)` → the product's site, `/docs/orazaka/*` →
   dev.orazaka.com/docs, `/docs/orochia/*` → dev.orochia.com/docs, `/docs/yororis/*` → dev.yororis.com, the old Orazaka
@@ -46,17 +46,32 @@
 - `lib/products.ts` is the single list of the products (id, name, status, `devUrl`, `repoUrl`), `lib/stack.ts` the
   open-source stack (Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com); `lib/nav.ts` derives the navigation
   from them. The bar is the one of every Krizaka site (NAV-SYS; `@krizaka/ui/nav-bar`, composed in `TopNavBar`, never
-  hand-made, no inline styles), in three zones: **left** the Krizaka mark (home) alone (no family switcher on www — it duplicated Products; ui. and java. carry it back here); **centre** this site's sections only — Products · Open source (`NAV_BAR_LINKS`; Our story is in the footer, never the bar);
-  **right** Blog · GitHub · theme · language · Contact us (`primary`); the Blog is blog.krizaka.com (`BLOG_URL`, `krizaka/krizaka-blog`), also in the mobile panel and the footer's Krizaka column, and the home shows its latest three posts (`LatestPosts`, read at build from `/feed.xml`, nothing while the blog has none). No « Docs » and no search: the documentation lives on its
+  hand-made, no inline styles), in three zones: **left** the Krizaka mark **and the word « Krizaka »** (home, where the products are; no family switcher on www — ui. and java. carry it back here); **centre** Open source only (`NAV_BAR_LINKS`; Our story is in the footer, never the bar; links to the products use `PRODUCTS_ANCHOR` = `/#products`);
+  **right** Blog · GitHub · theme · language · Contact us (`primary`); the Blog is blog.krizaka.com (`BLOG_URL`, `krizaka/krizaka-blog`), also in the mobile panel and the footer's Krizaka column (the home has no blog section since 2026-10-17). No « Docs » and no search: the documentation lives on its
   own sites (while `/docs` still renders here, it keeps its breadcrumb `DocsCrumb` and the ⌘K search over it). Mobile:
   one panel (`MobilePanel`), this site's sections, then Blog, Contact us and the preferences, the family at the bottom. The
   footer lists the family in columns (Products · Open source · Krizaka: Our story, Blog, Contact us).
-- **The home is the company's** (landing): who Krizaka is and its promise (`HomeHero`, figures read at build), the
-  Orazaka as **the foundation** — the engine every product's AI runs on (`WhatWeBuild`: `ProductGrid withEngine` = the wide `EngineCard` with the honest list of what each product uses it for, `lib/engine-uses.ts`, « planned » where not wired — and the other products as the cards it powers, in the frame of `CardGrid foundation`; same on `/products`, the card alone on `/story`'s engine stage; `tests/engine.test.mjs`), the stack
-  (`OpenStack` / `StackCards`, versions and counts from `lib/registry-versions`), five provable working rules
-  (`Principles`), Montréal (`Company`), the contact. Orochia is named neutrally on krizaka.com (name and one line, never
-  a creator or payout pitch — `tests/home.test.mjs`).
-- `ProductCards` (`app/components/home/`) renders the cards on `/products`; each card wears
+- **The home is the company's** (landing), simplified (2026-10-17), in this order, **one primary action per section**:
+  the centred hero (`HomeHero`: the mark, who Krizaka is, « See what we build » → `#products`, « Watch the film » — « Le monde
+  de Krizaka » in a `Dialog` lightbox, player loaded on open — and the figures read at build, climbing with `NumberTicker`;
+  the landscape sits **in the flow under the figures**, never over them); the products (`ProductShowcase`: Orazaka as
+  **the foundation**, a wide `GlowCard alive`, and the other products as the cards it powers in the frame of `CardGrid
+  foundation` — each a `GlowCard` in its brand light, mark large, honest status from `lib/products.ts`, one line, and one
+  readable line of what it uses Orazaka for, `lib/engine-uses.ts`, « planned » where not wired; `tests/engine.test.mjs`);
+  the stack in brief (`OpenStack` / `StackCards` → `/open-source`); the principles (`Principles`); Montréal (`Company`
+  → `/story`); the contact; the folded FAQ (FAQPage JSON-LD). Orochia is named neutrally on krizaka.com (name and one
+  line, never a creator or payout pitch — `tests/home.test.mjs`).
+- **The hero's intro** (`HeroIntro`, `home.css`, `tests/hero-intro.test.mjs`): once per session (`sessionStorage`
+  `kz-intro`), it sets `html[data-intro]` = `play` | `skip` | `done`; CSS only, over the ambient loop's poster — the
+  mark's stroke draws, the scene rises in with its birds, a light sweeps — ~1.2 s, then the loop fades in (they never
+  fight). Any input skips it; still under reduced motion and Save-Data; decorations fade in by themselves without
+  JavaScript; the text is never part of it (LCP). No library, no canvas, no animation frame. **The scene** (the flock's
+  ambient loop, `AmbientLoop`, `brand-films/ambient/home-ambient-*`) sits in the flow under the figures, never over them.
+- **`/open-source`** (docs-hub): simple and inviting — the hero with the figures read at build (GitHub, the Krizaka UI
+  registries, npm, Maven Central) and one action (github.com/krizaka); what we publish (`StackCards`, then the building
+  blocks); every repository by product, folded (`<details>`), and what each product runs on, folded; contribute →
+  `/contact#public` (the discussions / issues picker) and the contribution guide. No walls of text.
+- `ProductShowcase` (`app/components/home/`) renders the cards on the home (`ProductCard` stays for `/story`); each card wears
   its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
   `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage, `.brand-yomizaka` indigo, `.brand-kachizaka` gold + cobalt
   (the magpie), `.brand-akinaza` forest green + copper (the beaver); the rest of the site is Krizaka ink + blue).

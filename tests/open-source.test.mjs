@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { kindOfRepository, productOfRepository, repositoriesOf } from "../lib/repository-catalogue.ts";
 import { groupOfPackage, groupPackages, summary } from "../lib/npm-catalogue.ts";
 
@@ -59,4 +60,15 @@ test("groups keep their order and drop when empty", () => {
   ]);
   assert.deepEqual(groups.map((g) => g.group), ["ui", "realtime"]);
   assert.deepEqual(groups[0].packages.map((p) => p.name), ["@krizaka/icons", "@krizaka/ui"]);
+});
+
+test("/open-source is simple (two views, 2026-10-17): figures read at build, the stack, the repositories folded, and the contribution picker", () => {
+  const page = readFileSync(new URL("../app/[locale]/open-source/page.tsx", import.meta.url), "utf8");
+  for (const read of ["publicRepositoryCount()", "uiFacts().components", "npmPackages().length", "mavenArtifactCount()"]) assert.ok(page.includes(read), read);
+  assert.match(page, /<StackCards /);
+  assert.match(page, /<details key=\{g\.id\} id=\{g\.id\}/, "every product's repositories, folded");
+  assert.match(page, /href="\/contact#public" variant="primary"/, "contribute: the contact page's discussions/issues picker");
+  assert.match(readFileSync(new URL("../app/[locale]/contact/ContactClient.tsx", import.meta.url), "utf8"), /id="public"/);
+  assert.doesNotMatch(page, /<style>/, "no inline stylesheet: open-source.css");
+  assert.match(readFileSync(new URL("../lib/page-templates.ts", import.meta.url), "utf8"), /"\/open-source": "docs-hub"/);
 });

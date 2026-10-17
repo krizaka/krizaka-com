@@ -10,7 +10,7 @@
 
 - Orazaka — sovereign, on-premise AI orchestration engine. Site: https://dev.orazaka.com · source: https://github.com/krizaka/orazaka
 - Orochia — an open-source video platform: upload, encode and stream. Site: {{OROCHIA_APP_URL}} · source: https://github.com/krizaka/orochia
-- Yasakia (coming soon) — a mobile dating app where you talk first. Site: https://dev.yasakia.com · source: https://github.com/krizaka/yasakia
+- Yasakia (in development) — a mobile dating app where you talk first. Site: https://dev.yasakia.com · source: https://github.com/krizaka/yasakia
 - Yororis (under construction) — a listening space with a face and a voice. Site: https://dev.yororis.com · source: https://github.com/krizaka/yororis
 - Yomizaka (in development) — your documents, read and checked by Orazaka. Site: https://dev.yomizaka.com · source: https://github.com/krizaka/yomizaka
 - Kachizaka (in development, no site yet) — predictions among friends, points only, never money. Source: https://github.com/krizaka/kachizaka
@@ -18,8 +18,7 @@
 
 ## Key pages
 
-- Home: {{SITE_URL}}/en
-- Products (one card per product, with its site and source): {{SITE_URL}}/en/products
+- Home — who Krizaka is and its products, one card each with its site and source: {{SITE_URL}}/en#products
 - Open source (Krizaka UI, Krizaka Java and every repository): {{SITE_URL}}/en/open-source
 - Our story (where the names come from): {{SITE_URL}}/en/story
 - Contact the team: {{SITE_URL}}/en/contact

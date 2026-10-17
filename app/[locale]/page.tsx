@@ -5,11 +5,10 @@ import { publicRepositoryCount } from "@/lib/org-stats";
 import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
 import TopNavBar from "../components/TopNavBar";
 import HomeHero from "../components/home/HomeHero";
-import WhatWeBuild from "../components/home/WhatWeBuild";
+import ProductShowcase from "../components/home/ProductShowcase";
 import OpenStack from "../components/home/OpenStack";
 import Principles from "../components/home/Principles";
 import Company from "../components/home/Company";
-import LatestPosts from "../components/home/LatestPosts";
 import ContactCta from "../components/home/ContactCta";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 
@@ -34,9 +33,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-/* HOME — the company first (landing template): who Krizaka is and its promise, the four products as equals (each on its
-   own site), the stack it open-sources (ui.krizaka.com, java.krizaka.com), how it works, Montréal, then the contact.
-   Every figure is read at build: GitHub (lib/org-stats.ts), npm and Maven Central (lib/registry-versions.ts). */
+/* HOME — one of the site's two views (the other is Open source; 2026-10-17), on the landing template, in this order:
+   the centred hero (once-per-session intro, the film), the products — Orazaka the foundation, the products it powers —
+   (the only place they are presented: /products answers 308 to #products), the open-source stack in brief, the
+   principles in brief, Montréal, the contact, then the questions (folded; FAQPage JSON-LD). One primary action per
+   section. Every figure is read at build: GitHub (lib/org-stats.ts), npm and Maven Central (lib/registry-versions.ts). */
 export default async function Home({ params }: Props) {
   const { locale } = await params;
   const figures = { repositories: publicRepositoryCount(), npm: npmPackages().length, maven: mavenArtifactCount() };
@@ -44,11 +45,10 @@ export default async function Home({ params }: Props) {
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
       <TopNavBar />
       <HomeHero locale={locale} figures={figures} />
-      <WhatWeBuild locale={locale} />
+      <ProductShowcase locale={locale} />
       <OpenStack locale={locale} mavenArtifacts={figures.maven} />
       <Principles locale={locale} repositories={figures.repositories} />
       <Company locale={locale} />
-      <LatestPosts locale={locale} />
       <SectionBackdrop className="bp-glide" dome={false}>
         <ContactCta />
       </SectionBackdrop>

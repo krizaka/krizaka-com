@@ -1,4 +1,5 @@
-/* The products have their own sites (dev.<product>.com): krizaka.com keeps one page about them (/products). Every old
+/* The products have their own sites (dev.<product>.com): krizaka.com presents them on its home (#products) — /products
+   itself answers 308 there (two views only, 2026-10-17: the home and Open source). Every old
    address of a product page, demo or documentation answers 308 with the product's site — the same address under the
    locale prefix or without it (a config redirect runs before the locale proxy). Read by next.config.ts, tested by
    tests/product-redirects.test.mjs. */
@@ -32,6 +33,9 @@ const ORAZAKA_LEGACY = ["/orazaka", "/architecture", "/demos", "/editions", "/ge
 export function productRedirects(): Redirect[] {
   const { orazaka, orochia, yasakia, yororis, yomizaka } = PRODUCT_SITES;
   return [
+    // The products' page merged into the home: /products → the home's products section (same language).
+    { source: "/products", destination: "/#products", statusCode: 308 },
+    { source: "/:locale(fr|en)/products", destination: "/:locale#products", statusCode: 308 },
     // The product pages, their demos, galleries, journeys and use cases.
     ...(Object.entries(PRODUCT_SITES) as [string, string][]).map(([id, site]) => to(`/products/${id}/:path*`, site)),
     // Yazakia's old address (renamed Yasakia, 2026-10-14).
