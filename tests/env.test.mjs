@@ -11,7 +11,7 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const CONTEXT = /^(NEXT_PUBLIC_)?(APP|DATABASE|AUTH|MEDIA|MAIL|PUSH|PAYMENTS|REALTIME|ABUSE|OBSERVABILITY|AI|OPERATOR)_[A-Z0-9_]+$/;
 const VENDOR_OR_PRODUCT = /^(NEXT_PUBLIC_)?(OROCHIA|ORAZAKA|YASAKIA|YORORIS|KRIZAKA|BUNNY|MAILGUN|RESEND|VERCEL|GITHUB|GH|CONTACT|DO|DIGITALOCEAN)_/;
 // The runtime's and the platforms' own names, read but not ours to name.
-const PLATFORM = new Set(["NODE_ENV", "PORT", "HOSTNAME", "NEXT_PHASE", "NEXT_RUNTIME", "CI", "VERCEL_URL", "VERCEL_ENV"]);
+const PLATFORM = new Set(["NODE_ENV", "PORT", "HOSTNAME", "NEXT_PHASE", "NEXT_RUNTIME", "CI", "GITHUB_TOKEN", "VERCEL_URL", "VERCEL_ENV"]);
 
 test("every variable is <CONTEXT>_<THING>, never a product or a vendor", () => {
   for (const e of ENV_VARS) {
