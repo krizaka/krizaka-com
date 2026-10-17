@@ -33,7 +33,30 @@ const clock = (t: number) => {
   return `${hh}:${mm}:${ss}.${String(ms % 1000).padStart(3, "0")}`;
 };
 
-/** The captions as WebVTT, one cue per line, in the words given (a locale's site.story.world.cues). */
-export function filmVtt(words: Record<FilmCueId, string>): string {
-  return `WEBVTT\n\n${FILM_CUES.map((c) => `${c.id}\n${clock(c.start)} --> ${clock(c.end)}\n${words[c.id]}\n`).join("\n")}`;
+interface Cue {
+  id: FilmCueId;
+  start: number;
+  end: number;
 }
+
+/** The captions as WebVTT, one cue per line, in the words given (a locale's site.story.world.cues). */
+export function filmVtt(words: Record<FilmCueId, string>, cues: readonly Cue[] = FILM_CUES): string {
+  return `WEBVTT\n\n${cues.map((c) => `${c.id}\n${clock(c.start)} --> ${clock(c.end)}\n${words[c.id]}\n`).join("\n")}`;
+}
+
+/* « Le monde de Krizaka : la tournée » — the photoreal sequel (krizaka-ui tools/brand-films/epic): the same birds, rendered
+   from @krizaka/ui, re-lit and animated by models (AI-generated, said on the page and in the film). It says the film's
+   own lines, at its own times (epic/edl.json → the cut's timeline): change both together. */
+export const TOUR_BASE = "brand-films/epic/le-monde-de-krizaka-la-tournee-16x9";
+// @fixed: the length of the rendered file (the cut's timeline), a fact of the media.
+export const TOUR_SECONDS = 78.3;
+
+export const TOUR_CUES: readonly Cue[] = [
+  { id: "falcon", start: 10.73, end: 15.73 },
+  { id: "owl", start: 24.52, end: 29.92 },
+  { id: "flamingo", start: 30.92, end: 35.12 },
+  { id: "duck", start: 35.47, end: 39.77 },
+  { id: "pigeon", start: 59.68, end: 66.18 },
+  { id: "together", start: 70.4, end: 73.0 },
+  { id: "family", start: 74.3, end: 76.3 },
+];

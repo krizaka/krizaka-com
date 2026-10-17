@@ -21,7 +21,7 @@ import { StageBanner } from "@krizaka/ui/stage-banner";
 import { VideoPlayer } from "@krizaka/ui/video-player";
 import type { ReactNode } from "react";
 import { contactHref } from "@/lib/contact";
-import { FILM_CUES } from "@/lib/film-captions";
+import { FILM_CUES, TOUR_CUES } from "@/lib/film-captions";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import { useI18n } from "@/app/components/I18nProvider";
 import Rich from "@/app/components/Rich";
@@ -46,7 +46,7 @@ export interface StoryFilm {
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export default function StoryClient({ parts, film }: { parts: StoryParts; film: StoryFilm }) {
+export default function StoryClient({ parts, film, tour }: { parts: StoryParts; film: StoryFilm; tour: StoryFilm }) {
   const { t, locale } = useI18n();
   const st = t.site.story;
   const s = st.stages;
@@ -116,6 +116,27 @@ export default function StoryClient({ parts, film }: { parts: StoryParts; film: 
           ))}
         </ol>
         <p className="st-film-credit">{w.credit}</p>
+
+        {/* The sequel: the same birds, photoreal and on tour through five eras (AI-generated, said here and in the film). */}
+        <h3 className="st-film-heading">{w.tour.title}</h3>
+        <p className="st-film-lead">{w.tour.lead}</p>
+        <div className="st-film">
+          <VideoPlayer
+            src={tour.mp4}
+            poster={tour.poster}
+            preload="none"
+            title={w.tour.player}
+            tracks={(["en", "fr"] as const).map((lang) => ({ src: tour.captions[lang], srcLang: lang, label: w.captions[lang], default: lang === locale }))}
+            labels={playerLabels}
+          />
+        </div>
+        <h3 className="st-film-heading">{w.textVersion}</h3>
+        <ol className="st-film-lines">
+          {TOUR_CUES.map((c) => (
+            <li key={c.id}>{w.cues[c.id]}</li>
+          ))}
+        </ol>
+        <p className="st-film-credit">{w.tour.credit}</p>
       </Section>
 
       <Section id="st-founder" data-kzs-scene="" divider eyebrow={stage(1, s.founder.name)} title={s.founder.title} reveal>

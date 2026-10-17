@@ -20,6 +20,7 @@
 .st-film { margin-top: 8px; max-width: 64rem; border-radius: 18px; overflow: hidden; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
 .st-film-heading { margin: 28px 0 10px; font-family: var(--kz-font-mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--kz-text-secondary); }
 .st-film-lines { display: grid; gap: 6px; margin: 0; padding-left: 1.25rem; max-width: 62ch; font-size: 15.5px; line-height: 1.7; color: var(--kz-text-primary); }
+.st-film-lead { margin: 0 0 14px; max-width: 62ch; font-size: 15.5px; line-height: 1.7; color: var(--kz-text-secondary); }
 .st-film-credit { margin: 14px 0 0; max-width: 62ch; font-size: 13px; line-height: 1.6; color: var(--kz-text-tertiary, var(--kz-text-secondary)); }
 
 /* ═══ CONTINUE? ═══ */
