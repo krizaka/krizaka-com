@@ -20,7 +20,8 @@ export default function LegalPage({ locale, page }: { locale: string; page: "pri
         updated={legal.updated}
         tocLabel={legal.toc}
         sections={doc.sections.map((section, i) => ({
-          id: `section-${i + 1}`,
+          // A section may name its anchor (`/privacy#accounts`, linked from blog.krizaka.com); the others are numbered.
+          id: "id" in section && typeof section.id === "string" ? section.id : `section-${i + 1}`,
           title: section.title,
           children: section.paragraphs.map((p) => <p key={p}>{p}</p>),
         }))}

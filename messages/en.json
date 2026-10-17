@@ -603,6 +603,7 @@
         "title": "Privacy Policy",
         "sections": [
           {
+            "id": "responsible",
             "title": "Who is responsible",
             "paragraphs": [
               "This website is published by Technologies Krizaka Inc., a company incorporated under the laws of Québec, operating as Krizaka (Montréal, Québec, Canada).",
@@ -610,12 +611,14 @@
             ]
           },
           {
+            "id": "commitment",
             "title": "Our commitment",
             "paragraphs": [
               "Krizaka builds software that keeps data where it belongs. This page says what this website collects, what it does with it and who handles it. If a practice is not written here, it does not happen."
             ]
           },
           {
+            "id": "collected",
             "title": "What this website collects",
             "paragraphs": [
               "The only way you give us personal information is the contact form. We receive your name, your e-mail address, your organisation if you give it, the topic, the timing if you give it, your message, the language of the page and the page you came from (so we know which product you asked about).",
@@ -625,6 +628,7 @@
             ]
           },
           {
+            "id": "technical",
             "title": "Technical data",
             "paragraphs": [
               "Like any web host, the platform that serves this website keeps technical logs — IP address, time, page requested, browser — for security and abuse prevention, under its own policy.",
@@ -633,6 +637,7 @@
             ]
           },
           {
+            "id": "cookies",
             "title": "Cookies and local storage",
             "paragraphs": [
               "One functional cookie, NEXT_LOCALE, remembers the language you chose (one year). Your theme preference (dark or light) is kept in your browser's local storage, under the name kz-theme.",
@@ -640,6 +645,7 @@
             ]
           },
           {
+            "id": "dev-environment",
             "title": "The hosted development environment",
             "paragraphs": [
               "dev.orochia.com is a development environment of Orochia that we run for testing and demonstration. If you create an account there, what you enter (e-mail address, username, password hash, content, activity) is stored in a database attached to the application on DigitalOcean (Toronto) and is readable by the team. E-mails it sends go through Mailgun and videos through Bunny.",
@@ -647,6 +653,18 @@
             ]
           },
           {
+            "id": "accounts",
+            "title": "Krizaka accounts (blog.krizaka.com)",
+            "paragraphs": [
+              "Not open yet: the blog's sign-in is switched on only once this service runs, and until then none of the data below is collected. This section says now what will happen then.",
+              "The blog lets you sign in with GitHub, Google, Apple or Facebook to comment, receive replies and keep your saved posts on every device. Signing in creates a Krizaka account, held by accounts.krizaka.com. It is not an account of any of our products: Orazaka, Yomizaka and the others keep their own users, and a Krizaka account gives no access to them.",
+              "We keep the provider you used and its identifier for you, the e-mail address that provider verified, your display name, your comments, the posts you saved, and whether you want reply e-mails. We use them only to run your account: show your name next to your comments, keep your saved posts, and — only if you turn it on — tell you by e-mail that someone replied. No password, no IP address kept, no profiling, no advertising.",
+              "Your first comment waits for a moderator before it appears; comments can be reported and hidden pending review. Comments are checked by Cloudflare Turnstile against abuse. Reply e-mails go through our e-mail provider, Mailgun, and each one has a one-click unsubscribe link.",
+              "The data is stored in Krizaka's database on DigitalOcean (Toronto). From your account page you can download everything your account holds as a file, remove a sign-in provider, stop reply e-mails, or delete the account: the account, its saved posts and settings are deleted, and its comments too (a deleted comment that has replies keeps its place without text or name). Posts saved without an account stay in your browser only."
+            ]
+          },
+          {
+            "id": "software",
             "title": "Our software",
             "paragraphs": [
               "Orazaka, Orochia and the building blocks are open source and self-hosted: they run on your infrastructure and process data under your control. They send us no telemetry. Yasakia, Yororis, Kachizaka and Akinaza are not deployed and collect nothing.",
@@ -654,6 +672,7 @@
             ]
           },
           {
+            "id": "processors",
             "title": "Who handles data for us",
             "paragraphs": [
               "DigitalOcean — hosts this website and the development environment (Toronto, Canada).",
@@ -664,6 +683,7 @@
             ]
           },
           {
+            "id": "rights",
             "title": "Your rights",
             "paragraphs": [
               "Under Québec's Law 25, the federal PIPEDA and, if you are in Europe, the GDPR, you may ask to access, correct or delete the information you sent us, withdraw your consent, and obtain a copy of it in a usual format. Write to us through the contact form and we will answer within 30 days.",
@@ -671,6 +691,7 @@
             ]
           },
           {
+            "id": "changes",
             "title": "Changes and contact",
             "paragraphs": [
               "We update this page when what the website does changes, and the date at the top follows. For any privacy question, use the contact form (topic “Other”). Technologies Krizaka Inc., Montréal, Québec."
