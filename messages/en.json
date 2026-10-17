@@ -195,6 +195,14 @@
           "akinaza": "the tax assistant",
           "yasakia": "the matching agent",
           "yororis": "the wellbeing pack"
+        },
+        "legendOut": "requests →",
+        "legendBack": "← results",
+        "sends": "Each product sends requests, documents and prompts to the engine",
+        "gets": "gets back: {list}",
+        "back": {
+          "results": "results",
+          "analytics": "usage analytics"
         }
       }
     },
@@ -314,7 +322,9 @@
       "madeIn": "Made in Montréal · Apache-2.0",
       "allProducts": "All products",
       "repositories": "Every repository",
-      "blog": "Blog"
+      "blog": "Blog",
+      "changelog": "Changelog",
+      "version": "v{version} · Krizaka UI {ui}"
     },
     "contactForm": {
       "captchaLabel": "Human check",
@@ -1351,6 +1361,36 @@
       "java": {
         "line": "Spring Boot building blocks on Maven Central — web, security, messaging, observability, users and billing."
       }
+    },
+    "changelog": {
+      "metaTitle": "Changelog — what shipped at Krizaka",
+      "metaDescription": "What changed, version by version: Krizaka UI, Krizaka Java and the products — new, fixed, security and breaking, with the pull request behind each line.",
+      "back": "Home",
+      "eyebrow": "Changelog",
+      "title": "What shipped",
+      "lead": "The highlights of every Krizaka release, newest first — read from the releases themselves, not written for the page.",
+      "runs": "This site runs v{version} on Krizaka UI {ui}.",
+      "feed": "Subscribe (RSS)",
+      "logLabel": "Releases",
+      "empty": "The release data could not be read at build time. See the releases on GitHub.",
+      "emptyLink": "All releases on GitHub",
+      "kinds": {
+        "added": "New",
+        "changed": "Changed",
+        "fixed": "Fixed",
+        "removed": "Removed"
+      },
+      "tags": {
+        "feature": "New",
+        "fix": "Fixed",
+        "security": "Security",
+        "breaking": "Breaking",
+        "change": "Changed"
+      },
+      "pull": "Pull request #{number}",
+      "feedTitle": "Krizaka — changelog",
+      "feedDescription": "What shipped at Krizaka, release by release.",
+      "langTag": "en"
     }
   },
   "docs": {

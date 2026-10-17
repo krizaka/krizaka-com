@@ -195,6 +195,14 @@
           "akinaza": "l'assistant fiscal",
           "yasakia": "l'agent de mise en relation",
           "yororis": "le pack bien-être"
+        },
+        "legendOut": "requêtes →",
+        "legendBack": "← résultats",
+        "sends": "Chaque produit envoie requêtes, documents et prompts au moteur",
+        "gets": "reçoit en retour : {list}",
+        "back": {
+          "results": "résultats",
+          "analytics": "analyses d'usage"
         }
       }
     },
@@ -314,7 +322,9 @@
       "madeIn": "Fait à Montréal · Apache-2.0",
       "allProducts": "Tous les produits",
       "repositories": "Tous les dépôts",
-      "blog": "Blogue"
+      "blog": "Blogue",
+      "changelog": "Journal des changements",
+      "version": "v{version} · Krizaka UI {ui}"
     },
     "contactForm": {
       "captchaLabel": "Vérification humaine",
@@ -1351,6 +1361,36 @@
       "java": {
         "line": "Des briques Spring Boot sur Maven Central — web, sécurité, messagerie, observabilité, utilisateurs et facturation."
       }
+    },
+    "changelog": {
+      "metaTitle": "Journal des changements — ce que Krizaka a livré",
+      "metaDescription": "Ce qui a changé, version par version : Krizaka UI, Krizaka Java et les produits — nouveautés, corrections, sécurité et ruptures, avec la pull request derrière chaque ligne.",
+      "back": "Accueil",
+      "eyebrow": "Journal des changements",
+      "title": "Ce qui a été livré",
+      "lead": "L'essentiel de chaque version de Krizaka, la plus récente d'abord — lu dans les versions elles-mêmes, pas écrit pour la page.",
+      "runs": "Ce site tourne en v{version} sur Krizaka UI {ui}.",
+      "feed": "S'abonner (RSS)",
+      "logLabel": "Versions",
+      "empty": "Les données des versions n'ont pas pu être lues à la construction. Voir les versions sur GitHub.",
+      "emptyLink": "Toutes les versions sur GitHub",
+      "kinds": {
+        "added": "Nouveau",
+        "changed": "Modifié",
+        "fixed": "Corrigé",
+        "removed": "Retiré"
+      },
+      "tags": {
+        "feature": "Nouveau",
+        "fix": "Corrigé",
+        "security": "Sécurité",
+        "breaking": "Rupture",
+        "change": "Modifié"
+      },
+      "pull": "Pull request n° {number}",
+      "feedTitle": "Krizaka — journal des changements",
+      "feedDescription": "Ce que Krizaka a livré, version par version.",
+      "langTag": "fr-CA"
     }
   },
   "docs": {

@@ -15,6 +15,7 @@ import { format, getDictionary } from "@/lib/i18n";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { PRODUCTS, type Product, type ProductId } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
+import { EngineFlow } from "./EngineFlow";
 import { GitHubMark } from "./brand/GitHubMark";
 
 export function ProductCard({ product: p, locale }: { product: Product; locale: string }) {
@@ -55,7 +56,10 @@ export function EngineCard({ locale }: { locale: string }) {
   const uses: Fact[] = ENGINE_USES.map((u) => {
     const name = PRODUCTS.find((p) => p.id === u.id)!.name;
     const text = e.uses[u.id as keyof typeof e.uses];
-    return u.planned ? { label: `${name}: ${text} (${e.planned})`, tone: "wip" } : { label: `${name}: ${text}`, tone: "neutral" };
+    // The text version of the diagram: what goes out, what comes back (only what runs: lib/engine-uses.ts).
+    const back = new Intl.ListFormat(locale, { type: "conjunction" }).format(u.back.map((b) => e.back[b]));
+    const flow = format(e.gets, { list: back });
+    return u.planned ? { label: `${name}: ${text} (${e.planned}) — ${flow}`, tone: "wip" } : { label: `${name}: ${text} — ${flow}`, tone: "neutral" };
   });
   return (
     <LinkCard
@@ -68,7 +72,9 @@ export function EngineCard({ locale }: { locale: string }) {
       description={e.line}
       extra={
         <div className="engine-uses">
+          <EngineFlow legendOut={e.legendOut} legendBack={e.legendBack} />
           <p className="engine-uses-label">{e.usesLabel}</p>
+          <p className="engine-uses-note">{e.sends}.</p>
           <Facts items={uses} />
         </div>
       }

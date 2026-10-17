@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/open-source",
     ...BUILDING_BLOCKS.filter((b) => b.forum === "ui").map((b) => `/open-source/${b.id}`),
     "/story",
+    "/changelog",
     "/contact",
     "/privacy",
     "/terms",

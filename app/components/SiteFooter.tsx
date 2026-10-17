@@ -7,6 +7,8 @@ import { useI18n } from "./I18nProvider";
 import { BLOG_URL } from "@/lib/site";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import { useContactHref } from "./useContactHref";
+import { PLATFORM, changelogHref } from "@/lib/changelog-data";
+import { format } from "@/lib/i18n";
 
 /* The footer (NAV-SYS) is @krizaka/ui's SiteFooter: this site's own column (its pages), the Krizaka family in columns
    (fed by @krizaka/ui/sites, the same on every site), the signature, Montréal. The legal links end the signature line. */
@@ -22,6 +24,13 @@ export default function SiteFooter() {
       aria-label={t.site.menu.footerAria}
       legal={
         <>
+          {PLATFORM.site && (
+            <FamilyFooter.Link asChild>
+              <Link href={changelogHref()} prefetch={false}>
+                {format(f.version, { version: PLATFORM.site, ui: PLATFORM.ui })}
+              </Link>
+            </FamilyFooter.Link>
+          )}
           <FamilyFooter.Link asChild>
             <Link href="/privacy" prefetch={false}>{f.privacy}</Link>
           </FamilyFooter.Link>
@@ -40,6 +49,9 @@ export default function SiteFooter() {
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
           <Link href="/story" prefetch={false}>{f.story}</Link>
+        </FamilyFooter.Link>
+        <FamilyFooter.Link asChild>
+          <Link href="/changelog" prefetch={false}>{f.changelog}</Link>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
           <a href={BLOG_URL}>{f.blog}</a>
