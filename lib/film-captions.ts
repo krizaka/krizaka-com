@@ -60,3 +60,13 @@ export const TOUR_CUES: readonly Cue[] = [
   { id: "together", start: 70.4, end: 73.0 },
   { id: "family", start: 74.3, end: 76.3 },
 ];
+
+interface Viewer {
+  matchMedia?: (query: string) => { matches: boolean };
+  navigator?: { connection?: { saveData?: boolean } };
+}
+
+/** True when the visitor asked for less (reduced motion, or Save-Data): the home's dialog then plays the light code film. */
+export function prefersLightFilm(viewer: Viewer): boolean {
+  return Boolean(viewer.matchMedia?.("(prefers-reduced-motion: reduce)").matches || viewer.navigator?.connection?.saveData);
+}

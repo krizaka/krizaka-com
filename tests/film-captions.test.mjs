@@ -61,3 +61,19 @@ test("the tour (« la tournée ») says the film's own lines, in order, inside i
     assert.match(tour.credit, lang === "en" ? /AI-generated/ : /Généré par IA/, "the page says the film is AI-generated");
   }
 });
+
+test("the home's « Watch the film » plays the tour, and the light code film under reduced motion or Save-Data", async () => {
+  const { prefersLightFilm } = await import("../lib/film-captions.ts");
+  const media = (reduce) => (q) => ({ matches: reduce && q.includes("reduce") });
+  assert.equal(prefersLightFilm({ matchMedia: media(false), navigator: {} }), false);
+  assert.equal(prefersLightFilm({ matchMedia: media(true), navigator: {} }), true);
+  assert.equal(prefersLightFilm({ matchMedia: media(false), navigator: { connection: { saveData: true } } }), true);
+  assert.equal(prefersLightFilm({}), false);
+  const hero = readFileSync(new URL("../app/components/home/HomeHero.tsx", import.meta.url), "utf8");
+  assert.match(hero, /video\(TOUR_BASE\)/);
+  assert.match(hero, /vtt: "tour\.vtt"/);
+  assert.match(hero, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/);
+  const box = readFileSync(new URL("../app/components/home/FilmLightbox.tsx", import.meta.url), "utf8");
+  assert.match(box, /prefersLightFilm\(window\)/);
+  assert.match(box, /poster=\{play\.poster\}/);
+});

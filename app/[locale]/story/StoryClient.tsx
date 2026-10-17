@@ -99,25 +99,7 @@ export default function StoryClient({ parts, film, tour }: { parts: StoryParts; 
       {/* The flock, filmed from the code: first under the hero, so no reveal (LCP); the poster first, nothing fetched
           before play (preload none), never autoplayed; the lines it says are written below it (its text version). */}
       <Section id="st-world" eyebrow={w.eyebrow} title={w.title} lead={w.lead}>
-        <div className="st-film">
-          <VideoPlayer
-            src={film.mp4}
-            poster={film.poster}
-            preload="none"
-            title={w.player}
-            tracks={(["en", "fr"] as const).map((lang) => ({ src: film.captions[lang], srcLang: lang, label: w.captions[lang], default: lang === locale }))}
-            labels={playerLabels}
-          />
-        </div>
-        <h3 className="st-film-heading">{w.textVersion}</h3>
-        <ol className="st-film-lines">
-          {FILM_CUES.filter((c) => c.id !== "title").map((c) => (
-            <li key={c.id}>{w.cues[c.id]}</li>
-          ))}
-        </ol>
-        <p className="st-film-credit">{w.credit}</p>
-
-        {/* The sequel: the same birds, photoreal and on tour through five eras (AI-generated, said here and in the film). */}
+        {/* The tour first: the same birds, photoreal, through five eras (AI-generated, said here and in the film). */}
         <h3 className="st-film-heading">{w.tour.title}</h3>
         <p className="st-film-lead">{w.tour.lead}</p>
         <div className="st-film">
@@ -137,6 +119,26 @@ export default function StoryClient({ parts, film, tour }: { parts: StoryParts; 
           ))}
         </ol>
         <p className="st-film-credit">{w.tour.credit}</p>
+
+        {/* Then the original: the flock filmed from the code of @krizaka/ui. */}
+        <h3 className="st-film-heading">{w.codeTitle}</h3>
+        <div className="st-film">
+          <VideoPlayer
+            src={film.mp4}
+            poster={film.poster}
+            preload="none"
+            title={w.player}
+            tracks={(["en", "fr"] as const).map((lang) => ({ src: film.captions[lang], srcLang: lang, label: w.captions[lang], default: lang === locale }))}
+            labels={playerLabels}
+          />
+        </div>
+        <h3 className="st-film-heading">{w.textVersion}</h3>
+        <ol className="st-film-lines">
+          {FILM_CUES.filter((c) => c.id !== "title").map((c) => (
+            <li key={c.id}>{w.cues[c.id]}</li>
+          ))}
+        </ol>
+        <p className="st-film-credit">{w.credit}</p>
       </Section>
 
       <Section id="st-founder" data-kzs-scene="" divider eyebrow={stage(1, s.founder.name)} title={s.founder.title} reveal>
