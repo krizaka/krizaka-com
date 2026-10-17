@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { LegalPage as LegalTemplate } from "@krizaka/ui/legal-page";
 import TopNavBar from "./TopNavBar";
-import SiteFooter from "./SiteFooter";
 import { getDictionary } from "@/lib/i18n";
 
 /* TODO(legal): the texts name "Technologies Krizaka Inc." (company-info.md: incorporated 2026-10-08). Add the NEQ once the REQ
@@ -26,7 +25,6 @@ export default function LegalPage({ locale, page }: { locale: string; page: "pri
           children: section.paragraphs.map((p) => <p key={p}>{p}</p>),
         }))}
       />
-      <SiteFooter />
     </main>
   );
 }

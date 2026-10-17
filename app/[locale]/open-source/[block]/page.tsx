@@ -13,7 +13,6 @@ import { Facts, Page, Section, Ticks } from "@krizaka/ui/page";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { Toc, TocLayout } from "@krizaka/ui/toc";
 import TopNavBar from "@/app/components/TopNavBar";
-import SiteFooter from "@/app/components/SiteFooter";
 import BlockIcon from "@/app/components/blocks/BlockIcon";
 import FeedbackLinks from "@/app/components/blocks/FeedbackLinks";
 import { BUILDING_BLOCKS, blockById, blockRepoUrl } from "@/lib/building-blocks";
@@ -254,8 +253,6 @@ export default async function BuildingBlockPage({ params }: Props) {
           </Section>
         </TocLayout>
       </Page>
-
-      <SiteFooter />
     </main>
   );
 }

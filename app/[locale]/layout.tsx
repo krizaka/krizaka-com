@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import { ThemeProvider, ThemeScript } from "@krizaka/ui/theme";
 import { ThemeSync } from "../components/SiteTheme";
 import { I18nProvider } from "../components/I18nProvider";
+import SiteFooter from "../components/SiteFooter";
 import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
@@ -164,6 +165,8 @@ export default async function RootLayout({
           <ThemeSync />
           <I18nProvider locale={validatedLocale} messages={getDictionary(validatedLocale)}>
             {children}
+            {/* The one footer of the site: here, outside every page's main element, so it is the page's single contentinfo landmark. */}
+            <SiteFooter />
           </I18nProvider>
           {/* The Krizaka motion conductor (@krizaka/ui/motion): reveals, off-screen pause, settle, pointer — no rAF loop. */}
           <MotionObserver />

@@ -6,7 +6,6 @@ import { mavenArtifactCount, publishedCount } from "@/lib/registry-versions";
 import { PROVES_FIRST, ROSTER } from "@/lib/story";
 import { uiFacts } from "@/lib/ui-facts";
 import TopNavBar from "@/app/components/TopNavBar";
-import SiteFooter from "@/app/components/SiteFooter";
 import ProductGrid, { EngineCard } from "@/app/components/ProductCard";
 import FigureTiles from "@/app/components/FigureTiles";
 import { StackCards } from "@/app/components/home/OpenStack";
@@ -56,7 +55,6 @@ export default async function StoryPage({ params }: Props) {
           stack: <StackCards locale={locale} mavenArtifacts={mavenArtifactCount()} />,
         }}
       />
-      <SiteFooter />
     </main>
   );
 }

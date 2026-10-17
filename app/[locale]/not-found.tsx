@@ -5,7 +5,6 @@ import { ErrorPage } from "@krizaka/ui/error-page";
 import { Mascot } from "@krizaka/ui/mascots";
 import Link from "next/link";
 import TopNavBar from "@/app/components/TopNavBar";
-import SiteFooter from "@/app/components/SiteFooter";
 import { useI18n } from "@/app/components/I18nProvider";
 
 /* A page that is not there — the Error template of @krizaka/ui: the code drawn, the pigeon that lost its way, one
@@ -35,7 +34,6 @@ export default function NotFound() {
           />
         }
       />
-      <SiteFooter />
     </main>
   );
 }

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
 import { asLocale, getDictionary } from "@/lib/i18n";
 import TopNavBar from "@/app/components/TopNavBar";
-import SiteFooter from "@/app/components/SiteFooter";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { Section } from "@krizaka/ui/page";
 import ProductGrid from "@/app/components/ProductCard";
@@ -29,7 +28,6 @@ export default async function ProductsPage({ params }: Props) {
       <Section aria-label={h.title}>
         <ProductGrid locale={locale} reveal={false} withEngine />
       </Section>
-      <SiteFooter />
     </main>
   );
 }
