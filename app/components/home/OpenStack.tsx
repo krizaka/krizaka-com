@@ -2,6 +2,7 @@
    /open-source. The facts on the cards are read at build from npm and Maven Central (lib/registry-versions.ts): the
    published version, how many packages or artifacts — a fact the registries did not give is not shown. */
 
+import type { ReactNode } from "react";
 import { ForwardIcon, PackIcon, ServerIcon } from "@krizaka/icons";
 import { CardGrid } from "@krizaka/ui/card-grid";
 import { LinkCard } from "@krizaka/ui/link-card";
@@ -13,7 +14,18 @@ import { STACK, hostOf, type StackId } from "@/lib/stack";
 
 /** The two cards — Krizaka UI and Krizaka Java — each one link to its own site, with its facts. On the home and on
     /open-source. */
-export function StackCards({ locale, mavenArtifacts, titleAs = "h3" }: { locale: string; mavenArtifacts: number; titleAs?: "h2" | "h3" }) {
+export function StackCards({
+  locale,
+  mavenArtifacts,
+  titleAs = "h3",
+  visuals,
+}: {
+  locale: string;
+  mavenArtifacts: number;
+  titleAs?: "h2" | "h3";
+  /** /open-source: a still mini-visual per part (StackVisual), above its facts. */
+  visuals?: Partial<Record<StackId, ReactNode>>;
+}) {
   const site = getDictionary(locale).site;
   const s = site.home.stack;
   const npmCount = npmPackages().length;
@@ -42,7 +54,12 @@ export function StackCards({ locale, mavenArtifacts, titleAs = "h3" }: { locale:
             icon={<Icon size={22} />}
             meta={hostOf(part.url)}
             cta={format(s.visit, { host: hostOf(part.url) })}
-            extra={<Facts items={facts(part.id, part.coordinate)} />}
+            extra={
+              <>
+                {visuals?.[part.id]}
+                <Facts items={facts(part.id, part.coordinate)} />
+              </>
+            }
           />
         );
       })}

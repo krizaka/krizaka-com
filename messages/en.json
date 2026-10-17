@@ -558,27 +558,8 @@
     "openSource": {
       "eyebrow": "Open source · Apache-2.0",
       "title": "Everything we build is public.",
-      "lead": "Take a piece, read the code, tell us what to improve.",
       "github": "Browse github.com/krizaka",
       "figuresLabel": "What we publish, read from GitHub, npm and Maven Central at build",
-      "figures": {
-        "repositories": "public repositories",
-        "components": "Krizaka UI components",
-        "npm": "packages on npm",
-        "maven": "artifacts on Maven Central"
-      },
-      "stackEyebrow": "What we publish",
-      "stackTitle": "Two sites, one for each half of the stack.",
-      "stackLead": "Guides, references and every package, built from their own repositories at every release.",
-      "reposEyebrow": "The repositories",
-      "reposTitle": "Every repository, by product.",
-      "reposLead": "Read from GitHub at build. Open a product to see its repositories.",
-      "runsTitle": "What each product runs on",
-      "contributeTitle": "Want to contribute?",
-      "contributeBody": "A question, a bug, an idea: pick the repository and open a discussion or an issue.",
-      "contributeAsk": "Open a discussion or an issue",
-      "contributeGuide": "Contribution guide",
-      "count": "{count} public repositories · ",
       "repoCount": "{count} repositories",
       "kinds": {
         "main": "Main",
@@ -618,6 +599,87 @@
           "icons": "icons",
           "intl": "intl"
         }
+      },
+      "count": "{count} public repositories · ",
+      "lead": "The technical view: every package, every repository, and how they fit.",
+      "figures": {
+        "repositories": "public repositories",
+        "npm": "packages on npm",
+        "maven": "artifacts on Maven Central",
+        "license": "on every repository"
+      },
+      "stackEyebrow": "The stack",
+      "stackTitle": "Two halves, each with its own site.",
+      "stackLead": "Versions read from npm and Maven Central at build.",
+      "blocksLabel": "The building blocks, explained:",
+      "stackVisual": {
+        "identities": "One component, every product's identity",
+        "dependency": "One BOM, every Krizaka Java version"
+      },
+      "packages": {
+        "eyebrow": "Packages",
+        "title": "Every published package.",
+        "lead": "npm and Maven Central, read at build. Search, or filter by registry and family.",
+        "caption": "Every Krizaka package on npm and Maven Central",
+        "name": "Package",
+        "registry": "Registry",
+        "family": "Family",
+        "version": "Latest",
+        "downloads": "Downloads / week",
+        "links": "Links",
+        "repo": "Code",
+        "docs": "Docs",
+        "registryAria": "{name} on its registry",
+        "repoAria": "The code of {name}",
+        "docsAria": "The documentation of {name}",
+        "families": {
+          "ui": "Interface",
+          "data": "Data & i18n",
+          "realtime": "Realtime",
+          "tooling": "Tooling"
+        }
+      },
+      "repositories": {
+        "eyebrow": "Repositories",
+        "title": "Every repository, by product.",
+        "lead": "Read from GitHub at build, grouped by product; filter by platform or language.",
+        "caption": "Every public Krizaka repository",
+        "name": "Repository",
+        "product": "Product",
+        "kind": "Platform",
+        "language": "Language",
+        "updated": "Updated"
+      },
+      "table": {
+        "empty": "Nothing matches.",
+        "results": "{count} results",
+        "filters": "Filter the table",
+        "clearFilters": "Clear filters",
+        "removeFilter": "Remove {label}",
+        "activeFilter": "{header}: {value}",
+        "search": "Search {header}",
+        "group": "{value}, {count} rows",
+        "columns": "Columns"
+      },
+      "fits": {
+        "eyebrow": "How it fits",
+        "title": "Products → engine → building blocks → shared services.",
+        "lead": "Read from the products' own manifests — the list is the diagram's text version.",
+        "products": "The products",
+        "engine": "The engine",
+        "engineMeta": "{calls} products call it today · {planned} planned",
+        "blocks": "The building blocks",
+        "npm": "npm",
+        "java": "Krizaka Java",
+        "services": "The shared services",
+        "runs": "What each product runs on"
+      },
+      "contribute": {
+        "title": "Want to contribute?",
+        "body": "A question or an idea: a discussion. A bug: an issue. Pick the repository.",
+        "guide": "Contribution guide",
+        "conduct": "Code of conduct",
+        "license": "Licence: Apache-2.0"
       }
     },
     "notFound": {

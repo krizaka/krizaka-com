@@ -3,11 +3,14 @@
    build time — one source, never written by hand.
 
    Writes the git-ignored lib/registry-versions.json: { npm: { "@krizaka/ui": "2.4.0", … }, npmMeta: { "@krizaka/ui":
-   { description, keywords } }, maven: { "krizaka-bom": "0.2.0", … }, fetchedAt }.
-   - npm: every package of the @krizaka scope (registry search), then each package's `latest` dist-tag; its description
-     and keywords as published (the /open-source npm section summarises and groups them — lib/npm-catalogue.ts).
+   { description, keywords, repository, homepage, weeklyDownloads } }, maven: { "krizaka-bom": "0.2.0", … },
+   mavenMeta: { "krizaka-bom": { description, parent, scm } }, fetchedAt }.
+   - npm: every package of the @krizaka scope (registry search), then each package's `latest` dist-tag; its description,
+     keywords, repository and homepage as published, and its downloads of the last week (api.npmjs.org; absent when
+     unknown) — /open-source's packages table (lib/package-catalogue.ts).
    - Maven Central: every artifact under com/krizaka on repo1 (its directory listing), then each maven-metadata.xml's
-     <release> — the authoritative file, not the search index (which lags).
+     <release> — the authoritative file, not the search index (which lags) — and the released POM's <description>,
+     its com.krizaka <parent> and <scm><url> (the repository is derived from them).
    When a registry cannot be reached, the previous file is kept; without one, an empty one is written and the site
    hides what it cannot know. The build never fails for it.
 
@@ -30,8 +33,22 @@ async function npmVersions() {
   const names = objects.map((o) => o.package.name).filter((n) => n.startsWith("@krizaka/"));
   const entries = await Promise.all(
     names.map(async (name) => {
-      const latest = await get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`);
-      return [name, latest.version, { description: latest.description ?? "", keywords: Array.isArray(latest.keywords) ? latest.keywords : [] }];
+      const [latest, downloads] = await Promise.all([
+        get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`),
+        get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch(() => null),
+      ]);
+      const repository = typeof latest.repository === "string" ? latest.repository : latest.repository?.url;
+      return [
+        name,
+        latest.version,
+        {
+          description: latest.description ?? "",
+          keywords: Array.isArray(latest.keywords) ? latest.keywords : [],
+          ...(repository ? { repository: githubUrl(repository) } : {}),
+          ...(typeof latest.homepage === "string" ? { homepage: latest.homepage } : {}),
+          ...(Number.isInteger(downloads?.downloads) ? { weeklyDownloads: downloads.downloads } : {}),
+        },
+      ];
     }),
   );
   const published = entries.filter(([, v]) => typeof v === "string");
@@ -41,6 +58,20 @@ async function npmVersions() {
   };
 }
 
+/** `git+https://github.com/krizaka/krizaka-ui.git` → `https://github.com/krizaka/krizaka-ui`. */
+export function githubUrl(repository) {
+  return repository.replace(/^git\+/, "").replace(/^git:\/\//, "https://").replace(/\.git$/, "").replace(/^github:/, "https://github.com/");
+}
+
+/** What a released POM says about itself: its description, its com.krizaka parent, its scm url. */
+export function pomMeta(xml) {
+  const own = xml.replace(/<parent>[\s\S]*?<\/parent>/, "").replace(/<dependencies>[\s\S]*$/, "");
+  const parent = xml.match(/<parent>[\s\S]*?<groupId>com\.krizaka<\/groupId>[\s\S]*?<artifactId>([^<]+)<\/artifactId>[\s\S]*?<\/parent>/)?.[1];
+  const description = own.match(/<description>([\s\S]*?)<\/description>/)?.[1]?.replace(/\s+/g, " ").trim();
+  const scm = xml.match(/<scm>[\s\S]*?<url>([^<]+)<\/url>/)?.[1];
+  return { ...(description ? { description } : {}), ...(parent ? { parent } : {}), ...(scm ? { scm } : {}) };
+}
+
 async function mavenVersions() {
   const base = "https://repo1.maven.org/maven2/com/krizaka/";
   const listing = await get(base, "text");
@@ -48,20 +79,25 @@ async function mavenVersions() {
   const entries = await Promise.all(
     artifacts.map(async (a) => {
       const xml = await get(`${base}${a}/maven-metadata.xml`, "text").catch(() => "");
-      return [a, xml.match(/<release>([^<]+)<\/release>/)?.[1] ?? xml.match(/<latest>([^<]+)<\/latest>/)?.[1]];
+      const version = xml.match(/<release>([^<]+)<\/release>/)?.[1] ?? xml.match(/<latest>([^<]+)<\/latest>/)?.[1];
+      const pom = version ? await get(`${base}${a}/${version}/${a}-${version}.pom`, "text").catch(() => "") : "";
+      return [a, version, pomMeta(pom)];
     }),
   );
-  return Object.fromEntries(entries.filter(([, v]) => v));
+  const found = entries.filter(([, v]) => v);
+  return { versions: Object.fromEntries(found.map(([a, v]) => [a, v])), meta: Object.fromEntries(found.map(([a, , m]) => [a, m])) };
 }
 
 async function main() {
   const previous = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : { npm: {}, npmMeta: {}, maven: {} };
   const [npm, maven] = await Promise.allSettled([npmVersions(), mavenVersions()]);
   const npmOk = npm.status === "fulfilled" && Object.keys(npm.value.versions).length > 0;
+  const mavenOk = maven.status === "fulfilled" && Object.keys(maven.value.versions).length > 0;
   const out = {
     npm: npmOk ? npm.value.versions : previous.npm,
     npmMeta: npmOk ? npm.value.meta : (previous.npmMeta ?? {}),
-    maven: maven.status === "fulfilled" && Object.keys(maven.value).length ? maven.value : previous.maven,
+    maven: mavenOk ? maven.value.versions : previous.maven,
+    mavenMeta: mavenOk ? maven.value.meta : (previous.mavenMeta ?? {}),
     fetchedAt: new Date().toISOString(),
   };
   for (const [name, r] of [["npm", npm], ["Maven Central", maven]])
@@ -70,4 +106,4 @@ async function main() {
   console.log(`registry-versions: ${Object.keys(out.npm).length} npm packages, ${Object.keys(out.maven).length} Maven artifacts`);
 }
 
-await main();
+if (process.argv[1] === fileURLToPath(import.meta.url)) await main();
