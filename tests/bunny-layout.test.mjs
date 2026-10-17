@@ -68,4 +68,6 @@ test("the prefixes another writer owns are declared once, in the layout, and pru
     assert.ok(FOREIGN_WRITERS.some((p) => prefix.startsWith(p)), `${prefix} is owned by another writer`);
   }
   assert.ok(FOREIGN_WRITERS.includes("site/blog/"));
+  // dev.yasakia.com names its own recordings (its demo page, apps/site/lib/media.ts in krizaka/yasakia): never pruned here.
+  assert.ok(FOREIGN_WRITERS.some((p) => "site/products/yasakia/tour/talk.abcdef1234.mp4".startsWith(p)), "site/products/yasakia/ is owned by dev.yasakia.com");
 });
