@@ -3,7 +3,6 @@
 import { Mascot } from "@krizaka/ui/mascots";
 import { ChatIcon, FlagIcon, ForwardIcon } from "@krizaka/icons";
 import TopNavBar from "../../components/TopNavBar";
-import SiteFooter from "../../components/SiteFooter";
 import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
 import { ProductLogo } from "@krizaka/ui";
@@ -218,8 +217,6 @@ export default function ContactClient() {
           })}
         </div>
       </div>
-
-      <SiteFooter />
 
       <style>{`
 

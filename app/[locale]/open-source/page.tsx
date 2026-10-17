@@ -13,7 +13,6 @@ import ProductStackTable from "@/app/components/ProductStackTable";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
-import SiteFooter from "@/app/components/SiteFooter";
 import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
 import { BUILDING_BLOCKS, FORUMS } from "@/lib/building-blocks";
@@ -306,8 +305,6 @@ export default async function OpenSourcePage({ params }: Props) {
             </ButtonLink>
         </CtaPanel>
       </Section>
-
-      <SiteFooter />
 
       <style>{`
         .os-count { margin: 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); }

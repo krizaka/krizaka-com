@@ -11,7 +11,6 @@ import Principles from "../components/home/Principles";
 import Company from "../components/home/Company";
 import LatestPosts from "../components/home/LatestPosts";
 import ContactCta from "../components/home/ContactCta";
-import SiteFooter from "../components/SiteFooter";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 
 interface Props {
@@ -54,7 +53,6 @@ export default async function Home({ params }: Props) {
         <ContactCta />
       </SectionBackdrop>
       <ProductFaq product="krizaka" locale={locale} />
-      <SiteFooter />
     </main>
   );
 }
