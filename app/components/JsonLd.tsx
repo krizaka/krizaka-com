@@ -1,3 +1,5 @@
+import { jsonLd } from "@/lib/json-ld";
+
 /**
  * Renders a JSON-LD <script>. Server component — the payload is serialized at
  * build/render time, never on the client. Reuse for the sitewide @graph and for
@@ -7,8 +9,8 @@ export function JsonLd({ data }: { readonly data: object }) {
   return (
     <script
       type="application/ld+json"
-      // Schema payloads are first-party, build-time data (no user input).
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+      // jsonLd escapes < > & so no value can close the script tag.
+      dangerouslySetInnerHTML={{ __html: jsonLd(data) }}
     />
   );
 }
