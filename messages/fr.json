@@ -659,7 +659,13 @@
         "activeFilter": "{header} : {value}",
         "search": "Chercher : {header}",
         "group": "{value}, {count} lignes",
-        "columns": "Colonnes"
+        "columns": "Colonnes",
+        "pagination": "Pages de résultats",
+        "previous": "Précédente",
+        "next": "Suivante",
+        "page": "Page {page}",
+        "compact": "Page {page} sur {pageCount}",
+        "pageSize": "Lignes par page"
       },
       "fits": {
         "eyebrow": "Comment tout s'emboîte",

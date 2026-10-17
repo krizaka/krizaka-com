@@ -659,7 +659,13 @@
         "activeFilter": "{header}: {value}",
         "search": "Search {header}",
         "group": "{value}, {count} rows",
-        "columns": "Columns"
+        "columns": "Columns",
+        "pagination": "Pages of results",
+        "previous": "Previous",
+        "next": "Next",
+        "page": "Page {page}",
+        "compact": "Page {page} of {pageCount}",
+        "pageSize": "Rows per page"
       },
       "fits": {
         "eyebrow": "How it fits",

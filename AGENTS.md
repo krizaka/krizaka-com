@@ -79,7 +79,7 @@
   the building blocks' pages as quiet links); **packages** (`PackagesTable`: @krizaka/ui `DataTable` over
   `lib/package-catalogue.ts` — npm + Maven Central, registry and family facets, latest version, weekly downloads, the
   registry / code / docs links; the generator reads descriptions, repositories, POM parents and downloads);
-  **repositories** (`RepositoriesTable`, grouped by product, platform, language, last push from GitHub); **how it fits**
+  **repositories** (`RepositoriesTable`, read by product, platform, language, last push from GitHub; both tables 12 rows a page); **how it fits**
   (`lib/how-it-fits.ts`: products → engine → building blocks → shared services, an ordered list that is its own text
   version; the runs-on table folded); **contribute** (the contact page's picker, `lib/public-channels.ts`, the guide,
   the code of conduct, the licence). One primary action per section, no boxes in boxes.

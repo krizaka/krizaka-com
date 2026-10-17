@@ -37,6 +37,14 @@ function useTableLabels(): Partial<DataTableLabels> {
     search: (header) => format(w.search, { header }),
     group: (value, count) => format(w.group, { value, count }),
     columns: w.columns,
+    pagination: {
+      nav: w.pagination,
+      previous: w.previous,
+      next: w.next,
+      page: (page) => format(w.page, { page }),
+      compact: (page, pageCount) => format(w.compact, { page, pageCount }),
+      pageSize: w.pageSize,
+    },
   };
 }
 
@@ -99,7 +107,7 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
       columns={columns}
       getRowId={(r) => r.id}
       rowLabel={(r) => r.name}
-      defaultSort={{ column: "weeklyDownloads", direction: "descending" }}
+      defaultPageSize={12}
       density="compact"
       toolbar={<DataTableFilters />}
       labels={labels}
@@ -114,7 +122,7 @@ export function RepositoriesTable({ rows }: { rows: readonly RepositoryRow[] }) 
   const date = new Intl.DateTimeFormat(DATE_LOCALE[locale] ?? "en-CA", { dateStyle: "medium", timeZone: "UTC" });
   const columns: DataTableColumn<RepositoryRow>[] = [
     { id: "name", header: w.name, type: "title", card: "title", filter: "text", sortable: true, subtitle: (r) => r.line, href: (r) => r.url, maxWidth: 440 },
-    { id: "product", header: w.product, filter: "facet", groupable: true, nowrap: true },
+    { id: "product", header: w.product, filter: "facet", sortable: true, nowrap: true },
     { id: "kind", header: w.kind, filter: "facet", nowrap: true },
     { id: "language", header: w.language, filter: "facet", nowrap: true },
     {
@@ -133,8 +141,8 @@ export function RepositoriesTable({ rows }: { rows: readonly RepositoryRow[] }) 
       columns={columns}
       getRowId={(r) => r.id}
       rowLabel={(r) => r.name}
-      defaultGroupBy={["product"]}
-      defaultSort={{ column: "pushedAt", direction: "descending" }}
+      defaultSort={{ column: "product", direction: "ascending" }}
+      defaultPageSize={12}
       density="compact"
       toolbar={<DataTableFilters />}
       labels={labels}

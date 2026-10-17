@@ -76,7 +76,9 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
   assert.equal(page.match(/variant="primary"/g)?.length, 2, "one primary action in the hero, one in contribute");
   const tables = readFileSync(new URL("../app/[locale]/open-source/OpenSourceTables.tsx", import.meta.url), "utf8");
   assert.match(tables, /from "@krizaka\/ui\/data-table"/);
-  assert.match(tables, /defaultGroupBy=\{\["product"\]\}/);
+  assert.match(tables, /defaultSort=\{\{ column: "product", direction: "ascending" \}\}/, "repositories read by product");
+  assert.doesNotMatch(tables, /column: "weeklyDownloads", direction: "descending"/, "unknown downloads never sort first");
+  assert.equal(tables.match(/defaultPageSize=\{12\}/g)?.length, 2, "short pages, not a wall of rows");
   assert.doesNotMatch(tables, /fetch\(/, "rows come from the server, never fetched here");
   const contact = readFileSync(new URL("../app/[locale]/contact/ContactClient.tsx", import.meta.url), "utf8");
   assert.match(contact, /from "@\/lib\/public-channels"/, "one list of channels for both pages");
