@@ -1,21 +1,34 @@
 "use client";
 
-/* « Watch the full film »: the 44 s « Le monde de Krizaka » in a dialog (the same cut, captions and words as /story).
-   Nothing is fetched before it opens: the player's code is loaded on open (next/dynamic), the film with preload none. */
+/* « Watch the full film »: « Le monde de Krizaka : la tournée » (78 s, the photoreal sequel, AI-generated) in a dialog,
+   with the same captions and words as /story. Nothing is fetched before it opens: the player's code is loaded on open
+   (next/dynamic), the film with preload none and its poster first. Under reduced motion or Save-Data the dialog plays
+   the light, calm film instead: the 44 s « Le monde de Krizaka » rendered from the code (`fallback`). */
 
+import { useState } from "react";
 import dynamic from "next/dynamic";
 import { format } from "@krizaka/i18n";
 import { PlayIcon } from "@krizaka/icons";
 import { Button } from "@krizaka/ui/button";
 import { Dialog } from "@krizaka/ui/dialog";
 import { useI18n } from "@/app/components/I18nProvider";
+import { prefersLightFilm } from "@/lib/film-captions";
 
 const VideoPlayer = dynamic(() => import("@krizaka/ui/video-player").then((m) => m.VideoPlayer), { ssr: false });
 
-export default function FilmLightbox({ mp4, poster }: { mp4: string; poster: string }) {
+export interface LightboxFilm {
+  mp4: string;
+  poster: string;
+  /** The captions route under /<locale>/story/, e.g. "tour.vtt". */
+  vtt: string;
+}
+
+export default function FilmLightbox({ film, fallback }: { film: LightboxFilm; fallback: LightboxFilm }) {
   const { t, locale } = useI18n();
+  const [light, setLight] = useState(false);
   const h = t.site.home.hero;
   const w = t.site.story.world;
+  const play = light ? fallback : film;
   const labels = {
     ...w.labels,
     speed: (rate: number) => format(w.labels.speed, { rate: String(rate) }),
@@ -25,19 +38,20 @@ export default function FilmLightbox({ mp4, poster }: { mp4: string; poster: str
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button type="button" variant="ghost" size="lg" shape="cut" className="kz-home-film-trigger">
+        <Button type="button" variant="ghost" size="lg" shape="cut" className="kz-home-film-trigger" onClick={() => setLight(prefersLightFilm(window))}>
           <PlayIcon size={15} aria-hidden /> {h.film} <span className="kz-home-film-length">{h.filmLength}</span>
         </Button>
       </Dialog.Trigger>
       <Dialog.Content size="lg" closeLabel={h.filmClose} className="kz-home-film">
-        <Dialog.Title className="sr-only">{w.title}</Dialog.Title>
+        <Dialog.Title className="sr-only">{light ? w.title : w.tour.player}</Dialog.Title>
         <VideoPlayer
-          src={mp4}
-          poster={poster}
+          key={play.mp4}
+          src={play.mp4}
+          poster={play.poster}
           preload="none"
-          autoPlay
-          title={w.player}
-          tracks={(["en", "fr"] as const).map((lang) => ({ src: `/${lang}/story/film.vtt`, srcLang: lang, label: w.captions[lang], default: lang === locale }))}
+          autoPlay={!light}
+          title={light ? w.player : w.tour.player}
+          tracks={(["en", "fr"] as const).map((lang) => ({ src: `/${lang}/story/${play.vtt}`, srcLang: lang, label: w.captions[lang], default: lang === locale }))}
           labels={labels}
         />
       </Dialog.Content>

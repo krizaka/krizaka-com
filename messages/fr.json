@@ -213,7 +213,7 @@
         "lead": "Sept produits sur un même moteur d'IA, et chaque pièce qui les porte publiée sous Apache-2.0.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
-        "filmLength": "44 s",
+        "filmLength": "1 min 18",
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "proofs": {
           "repositories": "dépôts publics",
@@ -516,7 +516,7 @@
       "world": {
         "eyebrow": "La volée",
         "title": "Le monde de Krizaka",
-        "lead": "Nos oiseaux nous accompagnent depuis la première page : chacun porte une promesse. Quarante-quatre secondes, filmées depuis le code de Krizaka UI — les mêmes oiseaux que dans les produits.",
+        "lead": "Nos oiseaux sont là depuis la première page : chacun porte une promesse. Les voici en tournée à travers cinq époques, en photoréaliste, et plus bas, le film d'origine, rendu depuis le code de Krizaka UI.",
         "player": "Vidéo : le monde de Krizaka",
         "textVersion": "Ce que disent les oiseaux",
         "captions": {
@@ -551,7 +551,14 @@
           "error": "Cette vidéo ne peut pas être lue.",
           "retry": "Réessayer",
           "time": "{time} sur {duration}"
-        }
+        },
+        "tour": {
+          "title": "En tournée",
+          "lead": "Les mêmes oiseaux, en tournée à travers cinq époques : un club de stand-up, un dîner des années 1970, un studio des années 90, une plage au coucher du soleil et un échange au ralenti. Chacun tient sa promesse.",
+          "player": "Vidéo : le monde de Krizaka, en tournée",
+          "credit": "Généré par IA avec Orazaka : les oiseaux rendus depuis @krizaka/ui, ré-éclairés par FLUX.2 [klein], animés par Wan 2.2, agrandis par SeedVR2. Musique : ACE-Step 1.5 (MIT)."
+        },
+        "codeTitle": "Filmé depuis le code"
       }
     },
     "yororis": {

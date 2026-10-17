@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
 import { video } from "@/lib/cdn";
-import { FILM_BASE } from "@/lib/film-captions";
+import { FILM_BASE, TOUR_BASE } from "@/lib/film-captions";
 import { asLocale, getDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { mavenArtifactCount, publishedCount } from "@/lib/registry-versions";
@@ -46,6 +46,7 @@ export default async function StoryPage({ params }: Props) {
     { id: "packages", label: s.figures.packages, value: publishedCount() },
   ].filter((f) => f.value > 0);
   const { mp4, poster } = video(FILM_BASE);
+  const tour = video(TOUR_BASE);
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh" }}>
       <TopNavBar />
@@ -58,6 +59,7 @@ export default async function StoryPage({ params }: Props) {
           stack: <StackCards locale={locale} mavenArtifacts={mavenArtifactCount()} />,
         }}
         film={{ mp4, poster, captions: { en: "/en/story/film.vtt", fr: "/fr/story/film.vtt" } }}
+        tour={{ mp4: tour.mp4, poster: tour.poster, captions: { en: "/en/story/tour.vtt", fr: "/fr/story/tour.vtt" } }}
       />
     </main>
   );

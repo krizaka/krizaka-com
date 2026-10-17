@@ -15,7 +15,7 @@ import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { getDictionary } from "@/lib/i18n";
 import { video } from "@/lib/cdn";
-import { FILM_BASE } from "@/lib/film-captions";
+import { FILM_BASE, TOUR_BASE } from "@/lib/film-captions";
 import ButtonLink from "@/app/components/ButtonLink";
 import AmbientLoop, { type AmbientSet } from "./AmbientLoop";
 import FilmLightbox from "./FilmLightbox";
@@ -32,7 +32,8 @@ export interface HomeFigures {
 const ambient = (cut: string, theme: string) => video(`brand-films/ambient/home-ambient-${cut}-${theme}`);
 const themes = (cut: string) => ({ dark: ambient(cut, "dark"), ["light"]: ambient(cut, "light") });
 const AMBIENT: AmbientSet = { wide: themes("16x9"), tall: themes("4x5") };
-const film = video(FILM_BASE);
+const film = video(TOUR_BASE);
+const codeFilm = video(FILM_BASE);
 
 export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
   const t = getDictionary(locale).site.home.hero;
@@ -61,7 +62,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           <ButtonLink href="#products" variant="primary" size="lg" shimmer magnetic>
             {t.primary} <ForwardIcon size={16} strokeWidth={2.25} />
           </ButtonLink>
-          <FilmLightbox mp4={film.mp4} poster={film.poster} />
+          <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "tour.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
         </div>
 
         <dl className="kz-home-proofs" aria-label={t.proofsLabel}>

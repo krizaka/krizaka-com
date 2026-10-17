@@ -213,7 +213,7 @@
         "lead": "Seven products on one AI engine, and every piece they stand on published under Apache-2.0.",
         "primary": "See what we build",
         "film": "Watch the full film",
-        "filmLength": "44 s",
+        "filmLength": "1 min 18 s",
         "proofsLabel": "Krizaka in figures, read at build",
         "proofs": {
           "repositories": "public repositories",
@@ -516,7 +516,7 @@
       "world": {
         "eyebrow": "The flock",
         "title": "The world of Krizaka",
-        "lead": "Our birds have been with us since the first page: each one carries a promise. Forty-four seconds, filmed from the code of Krizaka UI — the same birds the products use.",
+        "lead": "Our birds have been with us since the first page: each one carries a promise. Here they are on tour through five eras, photoreal, and below, the original film, rendered from the code of Krizaka UI.",
         "player": "Video: the world of Krizaka",
         "textVersion": "What the birds say",
         "captions": {
@@ -551,7 +551,14 @@
           "error": "This video cannot be played.",
           "retry": "Try again",
           "time": "{time} of {duration}"
-        }
+        },
+        "tour": {
+          "title": "On tour",
+          "lead": "The same birds, on tour through five eras: a comedy club, a 1970s dinner, a 90s studio, a beach at sunset and a slow-motion rally. Each one keeps its promise.",
+          "player": "Video: the world of Krizaka, on tour",
+          "credit": "AI-generated with Orazaka: the birds rendered from @krizaka/ui, re-lit by FLUX.2 [klein], animated by Wan 2.2, upscaled by SeedVR2. Music: ACE-Step 1.5 (MIT)."
+        },
+        "codeTitle": "Filmed from the code"
       }
     },
     "yororis": {
