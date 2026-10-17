@@ -1,14 +1,14 @@
 /* Reads each product's dev-preview.json from GitHub (raw, main), writes the git-ignored lib/dev-preview-checklists.json
    and FAILS the build when lib/products.ts shows « Dev preview » for a product whose checklist, evidence or waiver does
    not support it (scripts/dev-preview-lib.mjs, tests/dev-preview.test.mjs). Other statuses are never gated.
-   `DEV_PREVIEW_OFFLINE=1` skips the network (the gate then only judges what is in the cache file). */
+   `--offline` skips the network (the gate then only judges what is in the cache file). */
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { assertStatuses, readProductStatuses } from "./dev-preview-lib.mjs";
 
 const OUT = new URL("../lib/dev-preview-checklists.json", import.meta.url);
 const statuses = readProductStatuses(readFileSync(new URL("../lib/products.ts", import.meta.url), "utf8"));
 const today = new Date().toISOString().slice(0, 10);
-const offline = process.env.DEV_PREVIEW_OFFLINE === "1";
+const offline = process.argv.includes("--offline");
 const checklists = {};
 const warnings = [];
 
