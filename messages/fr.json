@@ -69,9 +69,6 @@
       "openSource": "Open source",
       "contactCta": "Nous contacter",
       "search": "Rechercher...",
-      "switchLanguage": "Switch to English",
-      "languageShort": "EN",
-      "otherLanguage": "English",
       "footerAria": "Pied de page",
       "breadcrumb": "Fil d'Ariane",
       "searchAria": "Rechercher sur le site",
@@ -79,7 +76,8 @@
       "preferences": "Préférences",
       "mainAria": "Navigation principale",
       "homeAria": "Krizaka — accueil",
-      "blog": "Blogue"
+      "blog": "Blogue",
+      "language": "Langue"
     },
     "nav": {
       "status": {
@@ -1379,7 +1377,9 @@
         "added": "Nouveau",
         "changed": "Modifié",
         "fixed": "Corrigé",
-        "removed": "Retiré"
+        "removed": "Retiré",
+        "security": "Sécurité",
+        "breaking": "Changement majeur"
       },
       "tags": {
         "feature": "Nouveau",
