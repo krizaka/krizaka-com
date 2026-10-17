@@ -1,15 +1,19 @@
 /* Home hero — who Krizaka is, one promise, two actions and the figures that back them. A server component: the title,
    the lead and the actions are the first paint (LCP) — nothing here is revealed or animated in. Behind them, only the
-   Krizaka backdrop (SectionBackdrop: the gradient and its perspective floor) and the signature landscape on the horizon,
-   faded at both edges — decorative, still under prefers-reduced-motion. No product colour here: the products are equals,
+   Krizaka backdrop (SectionBackdrop: the gradient and its perspective floor) and the flock's ambient loop on the horizon
+   (the signature landscape filmed with its birds — the poster first, the loop only on screen; a still under reduced
+   motion or Save-Data), faded at both edges — decorative, still under prefers-reduced-motion. No product colour here: the products are equals,
    further down. Every figure is read at build (lib/org-stats.ts, lib/registry-versions.ts) and dropped when unknown. */
 
 import { ForwardIcon } from "@krizaka/icons";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
-import { Landscape } from "@krizaka/ui/landscape";
 import { Page } from "@krizaka/ui/page";
 import { getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
+import { video } from "@/lib/cdn";
+import { FILM_BASE } from "@/lib/film-captions";
+import AmbientLoop, { type AmbientSet } from "./AmbientLoop";
+import FilmLightbox from "./FilmLightbox";
 import ButtonLink from "@/app/components/ButtonLink";
 import { GitHubMark } from "../brand/GitHubMark";
 import "./home.css";
@@ -19,6 +23,12 @@ export interface HomeFigures {
   npm: number;
   maven: number;
 }
+
+/** The flock on the valley, looping (krizaka-ui tools/brand-films « home-ambient »): wide and 4:5, dark and light. */
+const ambient = (cut: string, theme: string) => video(`brand-films/ambient/home-ambient-${cut}-${theme}`);
+const themes = (cut: string) => ({ dark: ambient(cut, "dark"), ["light"]: ambient(cut, "light") });
+const AMBIENT: AmbientSet = { wide: themes("16x9"), tall: themes("4x5") };
+const film = video(FILM_BASE);
 
 export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
   const t = getDictionary(locale).site.home.hero;
@@ -33,7 +43,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
   return (
     <SectionBackdrop as="section" id="hero" className="kz-home-hero" grid aria-labelledby="hero-title">
       <div data-backdrop-layer aria-hidden className="kz-home-hero-horizon">
-        <Landscape fade={false} />
+        <AmbientLoop set={AMBIENT} />
       </div>
       <div data-backdrop-layer aria-hidden className="kz-home-hero-fade" />
 
@@ -54,6 +64,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           <ButtonLink href={GITHUB_ORG_URL} variant="ghost" size="lg">
             <GitHubMark size={15} /> GitHub
           </ButtonLink>
+          <FilmLightbox mp4={film.mp4} poster={film.poster} />
         </div>
 
         <dl className="kz-home-proofs" aria-label={t.proofsLabel}>

@@ -219,7 +219,9 @@
           "npm": "paquets sur npm",
           "maven": "artefacts sur Maven Central",
           "license": "sur chaque dépôt"
-        }
+        },
+        "film": "Voir le film en entier",
+        "filmClose": "Fermer le film"
       },
       "products": {
         "eyebrow": "Savoir-faire",

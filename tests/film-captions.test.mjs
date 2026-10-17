@@ -30,3 +30,14 @@ test("the film's site cut and its poster are on the CDN manifest", () => {
   const { files } = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", import.meta.url), "utf8"));
   for (const ext of ["mp4", "webm", "jpg"]) assert.match(files[`${FILM_BASE}.${ext}`] ?? "", /^[0-9a-f]{10}$/, ext);
 });
+
+test("the home's ambient loop: both cuts and themes on the CDN, still under reduced motion and Save-Data, only on screen", () => {
+  const { files } = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", import.meta.url), "utf8"));
+  for (const cut of ["16x9", "4x5"]) for (const theme of ["dark", "light"]) for (const ext of ["webm", "mp4", "jpg"]) assert.match(files[`brand-films/ambient/home-ambient-${cut}-${theme}.${ext}`] ?? "", /^[0-9a-f]{10}$/, `${cut} ${theme} ${ext}`);
+  const loop = readFileSync(new URL("../app/components/home/AmbientLoop.tsx", import.meta.url), "utf8");
+  for (const guard of ["prefers-reduced-motion: reduce", "saveData", "IntersectionObserver", "v.pause()", "muted", "<picture>"]) assert.ok(loop.includes(guard), guard);
+  assert.ok(!/controls/.test(loop.replace(/\/\*[\s\S]*?\*\//g, "")), "no controls on the backdrop");
+  const hero = readFileSync(new URL("../app/components/home/HomeHero.tsx", import.meta.url), "utf8");
+  assert.match(hero, /<AmbientLoop set=\{AMBIENT\} \/>/);
+  assert.match(hero, /<FilmLightbox /);
+});
