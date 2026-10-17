@@ -8,7 +8,7 @@
 # Node 24 = the version Vercel builds production with today; Alpine (musl) = sharp's prebuilt linuxmusl binaries, and
 # none of glibc's allocator fragmentation the Next self-hosting guide warns about for image optimisation.
 
-FROM node:24-alpine AS base
+FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f AS base
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
@@ -40,7 +40,7 @@ ENV NODE_ENV=production
 RUN npm run postinstall && APP_GITHUB_TOKEN=$APP_GITHUB_TOKEN npm run build
 
 # 3. Runner — standalone server, unprivileged user.
-FROM node:24-alpine AS runner
+FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f AS runner
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
