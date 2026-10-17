@@ -2602,7 +2602,8 @@
       "regulatoryClass": "STANDARD",
       "status": "PUBLISHED",
       "showcase": true,
-      "category": "business",
+      "category": "creativity-media",
+      "categorySortWeight": 80,
       "iconKey": "studio",
       "sortWeight": 100,
       "pricing": {
@@ -2629,12 +2630,12 @@
       },
       "categoryText": {
         "en": {
-          "label": "Business",
-          "description": "The packs that do the job: prospect, validate, produce."
+          "label": "Creativity & media",
+          "description": "Packs that produce images, video, sound and showcases."
         },
         "fr": {
-          "label": "Business",
-          "description": "Les packs qui font le travail : prospecter, valider, produire."
+          "label": "Création et médias",
+          "description": "Les packs qui produisent images, vidéo, son et vitrines."
         }
       },
       "studios": [
@@ -2700,14 +2701,15 @@
     {
       "key": "orazaka-media",
       "dir": "orazaka-media",
-      "version": "1.1.0",
+      "version": "1.5.0",
       "tier": "DATA",
       "kind": "TOOLKIT",
       "distribution": "OSS",
       "regulatoryClass": "STANDARD",
       "status": "PUBLISHED",
       "showcase": true,
-      "category": "business",
+      "category": "creativity-media",
+      "categorySortWeight": 80,
       "iconKey": "image",
       "sortWeight": 90,
       "pricing": {
@@ -2733,8 +2735,14 @@
         }
       },
       "categoryText": {
-        "en": null,
-        "fr": null
+        "en": {
+          "label": "Creativity & media",
+          "description": "Packs that produce images, video, sound and showcases."
+        },
+        "fr": {
+          "label": "Création et médias",
+          "description": "Les packs qui produisent images, vidéo, son et vitrines."
+        }
       },
       "studios": [
         {
@@ -3046,12 +3054,20 @@
               "title": "Durée (secondes)"
             },
             {
+              "key": "aspect",
+              "title": "Format"
+            },
+            {
               "key": "image",
               "title": "Image d'amorce (facultatif)"
             },
             {
               "key": "model",
               "title": "Modèle (facultatif)"
+            },
+            {
+              "key": "seed",
+              "title": "Graine (facultatif)"
             }
           ],
           "outputs": [
@@ -3063,12 +3079,144 @@
           "text": {
             "en": {
               "label": "Video generation",
-              "tagline": "A few seconds of footage, described then rendered.",
+              "tagline": "A vertical short (9:16) or a wide shot, described then rendered.",
               "description": null
             },
             "fr": {
               "label": "Génération vidéo",
-              "tagline": "Un plan de quelques secondes, décrit puis rendu.",
+              "tagline": "Un short vertical (9:16) ou un plan large, décrit puis rendu.",
+              "description": null
+            }
+          }
+        },
+        {
+          "key": "video-with-sound",
+          "profession": "general",
+          "iconKey": "video",
+          "pricing": "INCLUDED",
+          "status": "PUBLISHED",
+          "estimatedCredits": 4500,
+          "steps": 2,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "prompt",
+              "title": "Ce qui doit se passer à l'écran"
+            },
+            {
+              "key": "durationSeconds",
+              "title": "Durée (secondes)"
+            },
+            {
+              "key": "aspect",
+              "title": "Format"
+            },
+            {
+              "key": "image",
+              "title": "Image d'amorce (facultatif)"
+            },
+            {
+              "key": "model",
+              "title": "Modèle (facultatif)"
+            },
+            {
+              "key": "seed",
+              "title": "Graine (facultatif)"
+            },
+            {
+              "key": "music",
+              "title": "La musique"
+            },
+            {
+              "key": "foley",
+              "title": "Les bruitages (facultatif)"
+            },
+            {
+              "key": "foleyModel",
+              "title": "Modèle de bruitage (facultatif)"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "video",
+              "type": "VIDEO"
+            },
+            {
+              "key": "silent",
+              "type": "VIDEO"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Video with sound",
+              "tagline": "A video, then its sound: a music bed and optional foley, mixed at -14 LUFS.",
+              "description": null
+            },
+            "fr": {
+              "label": "Vidéo avec son",
+              "tagline": "Une vidéo, puis son son : une nappe musicale et des bruitages en option, mixés à -14 LUFS.",
+              "description": null
+            }
+          }
+        },
+        {
+          "key": "video-sound",
+          "profession": "general",
+          "iconKey": "speech",
+          "pricing": "INCLUDED",
+          "status": "PUBLISHED",
+          "estimatedCredits": 900,
+          "steps": 1,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "video",
+              "title": "La vidéo"
+            },
+            {
+              "key": "music",
+              "title": "La musique"
+            },
+            {
+              "key": "foley",
+              "title": "Les bruitages (facultatif)"
+            },
+            {
+              "key": "foleyModel",
+              "title": "Modèle de bruitage (facultatif)"
+            },
+            {
+              "key": "seed",
+              "title": "Graine (facultatif)"
+            },
+            {
+              "key": "voice",
+              "title": "Voix off (facultatif)"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "video",
+              "type": "VIDEO"
+            },
+            {
+              "key": "silent",
+              "type": "VIDEO"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Sound for a video",
+              "tagline": "Give any clip sound: music, foley, a voice-over. The silent original is kept.",
+              "description": null
+            },
+            "fr": {
+              "label": "Du son pour une vidéo",
+              "tagline": "Donnez du son à n'importe quel clip : musique, bruitages, voix off. L'original muet est conservé.",
               "description": null
             }
           }
@@ -3257,7 +3405,8 @@
       "regulatoryClass": "STANDARD",
       "status": "PUBLISHED",
       "showcase": true,
-      "category": "business",
+      "category": "business-compliance",
+      "categorySortWeight": 100,
       "iconKey": "target",
       "sortWeight": 90,
       "pricing": {
@@ -3284,12 +3433,12 @@
       },
       "categoryText": {
         "en": {
-          "label": "Business",
-          "description": "The packs that do the job: prospect, validate, produce."
+          "label": "Business & compliance",
+          "description": "Packs that do the work and keep it in order: validate, prospect, comply."
         },
         "fr": {
-          "label": "Business",
-          "description": "Les packs qui font le travail : prospecter, valider, produire."
+          "label": "Affaires et conformité",
+          "description": "Les packs qui font le travail et le mettent en règle : valider, prospecter, se conformer."
         }
       },
       "studios": [
@@ -3456,7 +3605,8 @@
       "regulatoryClass": "REGULATED",
       "status": "PUBLISHED",
       "showcase": true,
-      "category": "lifestyle",
+      "category": "wellbeing",
+      "categorySortWeight": 60,
       "iconKey": "sparkles",
       "sortWeight": 30,
       "pricing": {
@@ -3483,11 +3633,11 @@
       },
       "categoryText": {
         "en": {
-          "label": "Lifestyle",
-          "description": "The packs for you, not for your work."
+          "label": "Wellbeing",
+          "description": "Packs for you, not for your work."
         },
         "fr": {
-          "label": "Vie personnelle",
+          "label": "Bien-être",
           "description": "Les packs pour vous, pas pour votre travail."
         }
       },
@@ -3657,14 +3807,15 @@
     {
       "key": "document-validation",
       "dir": "document-validation",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "tier": "WORKER",
       "kind": null,
       "distribution": "CLOUD",
       "regulatoryClass": "SENSITIVE",
       "status": "PUBLISHED",
       "showcase": true,
-      "category": "business",
+      "category": "business-compliance",
+      "categorySortWeight": 100,
       "iconKey": "shield-check",
       "sortWeight": 20,
       "pricing": {
@@ -3701,6 +3852,15 @@
             "2026-07-01"
           ],
           "rules": 10
+        },
+        {
+          "id": "qc-residential-lease",
+          "label": "Bail de logement — Québec",
+          "jurisdiction": "QC",
+          "versions": [
+            "2024-02-21"
+          ],
+          "rules": 9
         }
       ],
       "text": {
@@ -3717,12 +3877,12 @@
       },
       "categoryText": {
         "en": {
-          "label": "Business",
-          "description": "The packs that do the job: prospect, validate, produce."
+          "label": "Business & compliance",
+          "description": "Packs that do the work and keep it in order: validate, prospect, comply."
         },
         "fr": {
-          "label": "Business",
-          "description": "Les packs qui font le travail : prospecter, valider, produire."
+          "label": "Affaires et conformité",
+          "description": "Les packs qui font le travail et le mettent en règle : valider, prospecter, se conformer."
         }
       },
       "studios": [
@@ -3830,7 +3990,8 @@
       "regulatoryClass": "STANDARD",
       "status": "DRAFT",
       "showcase": false,
-      "category": "business",
+      "category": "business-compliance",
+      "categorySortWeight": 100,
       "iconKey": "repeat",
       "sortWeight": 5,
       "pricing": {
@@ -3913,6 +4074,7 @@
       "status": "UNLISTED",
       "showcase": true,
       "category": null,
+      "categorySortWeight": null,
       "iconKey": null,
       "sortWeight": null,
       "pricing": null,
