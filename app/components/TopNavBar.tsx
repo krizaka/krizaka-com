@@ -19,6 +19,7 @@ import { Button } from "@krizaka/ui/button";
 import { Kbd } from "@krizaka/ui/kbd";
 import { KrizakaLogo } from "@krizaka/ui";
 import { useI18n } from "./I18nProvider";
+import { useLanguageSwitch } from "./LanguageSwitch";
 import { useSiteTheme } from "./SiteTheme";
 import { BLOG_URL, SITE_REPO_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
@@ -28,7 +29,8 @@ import { DocsCrumb } from "./DocsCrumb";
 import { useContactHref } from "./useContactHref";
 
 export default function TopNavBar() {
-  const { t, toggleLocale } = useI18n();
+  const { t } = useI18n();
+  const language = useLanguageSwitch();
   const m = t.site.menu;
   const contactHref = useContactHref();
   const { theme, toggleTheme } = useSiteTheme();
@@ -93,16 +95,9 @@ export default function TopNavBar() {
               {theme === "dark" ? <SunIcon size={16} /> : <MoonIcon size={16} />}
             </Button>
 
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={toggleLocale}
-              aria-label={m.switchLanguage}
-              className="hidden h-7 w-9 px-0 font-mono text-[11px] font-semibold tracking-wide md:inline-flex"
-            >
-              {m.languageShort}
-            </Button>
+            <span className="hidden md:inline-flex">
+              <NavBar.Language {...language} />
+            </span>
 
             <Button asChild variant="primary" size="sm" shape="cut" className="ml-1 hidden font-bold md:inline-flex">
               <Link href={contactHref}>{m.contactCta}</Link>
