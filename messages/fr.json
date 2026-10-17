@@ -404,12 +404,12 @@
           "title": "Une forge à mi-pente",
           "placesAria": "Les lieux que traverse l'histoire",
           "places": [
-            "Montréal",
-            "Maroc",
-            "Grenoble"
+            "Oujda",
+            "Grenoble",
+            "Montréal"
           ],
           "body": [
-            "Krizaka est un studio fondé par Oussama et installé à Montréal. Trois lieux le traversent : Montréal, où il travaille aujourd'hui, le Maroc et Grenoble.",
+            "Krizaka est un studio fondé par Oussama et installé à Montréal. Son histoire suit trois villes : Oujda, d'où il vient ; Grenoble, où il a étudié les mathématiques et la cognition, et où il a rencontré en 2011, dans un laboratoire de recherche, une machine qui apprenait à lire ; Montréal, où il vit depuis 2019 et où la forge s'est allumée.",
             "Le nom garde l'idée. Un kriss est une lame forgée en couches — du fer replié sur du fer jusqu'à ce qu'un motif monte dans l'acier. Zaka, c'est la pente que l'on gravit, un pas après l'autre. Krizaka est la forge à mi-pente de cette colline."
           ],
           "move": "Prouver, pas promettre."
