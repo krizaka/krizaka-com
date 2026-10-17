@@ -1,0 +1,78 @@
+/* The product cards' mini-visuals (ProductVisual / ProductVisuals): a fixed box per card, the card's brand light kept
+   restrained, @krizaka/ui pieces inside. Still unless `[data-play]`; nothing moves under reduced motion. Tokens only. */
+
+.pv { position: relative; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; border-radius: 14px; padding: 14px;
+  border: 1px solid var(--kz-border-subtle);
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--kz-accent) 12%, transparent), transparent 60%),
+    var(--kz-surface-0); }
+.pv > * { height: 100%; }
+.pv p { margin: 0; }
+.kz-pc-engine .pv { order: 3; flex: 0 1 400px; aspect-ratio: 2 / 1; }
+@media (max-width: 640px) { .kz-pc-engine .pv { order: 0; flex: none; } }
+
+/* Orazaka: the requests flow into the engine. */
+.pv-engine { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 6px; }
+.pv-engine-sources { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
+.pv-engine-sources li { display: flex; }
+.pv-engine-paths { width: 100%; height: 100%; overflow: visible; }
+.pv-engine-paths path { fill: none; stroke: var(--kz-accent); stroke-width: 1.2; stroke-linecap: round; opacity: .55; vector-effect: non-scaling-stroke;
+  stroke-dasharray: 6 10; animation: pv-flow 1.6s linear infinite paused; }
+.pv-engine[data-play] .pv-engine-paths path { animation-play-state: running; }
+.pv-engine-core { display: inline-flex; filter: drop-shadow(0 6px 18px color-mix(in oklab, var(--kz-accent) 45%, transparent)); }
+@keyframes pv-flow { to { stroke-dashoffset: -32; } }
+
+/* Yomizaka: a page, one passage lit, checked. */
+.pv-doc { display: flex; flex-direction: column; gap: 7px; }
+.pv-doc-title { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--kz-text-secondary); }
+.pv-doc-passage { font-size: 12.5px; line-height: 1.45; color: var(--kz-text-primary); }
+.pv-doc-passage mark { color: inherit; padding: 1px 2px; border-radius: 3px;
+  background: linear-gradient(to right, color-mix(in oklab, var(--kz-accent) 30%, transparent) 50%, transparent 50%) 0 0 / 200% 100% no-repeat;
+  background-position: 0 0; transition: background-position .9s var(--kz-ease, ease); }
+.pv-doc[data-play] .pv-doc-passage mark { animation: pv-highlight 2.6s var(--kz-ease, ease) infinite; }
+@keyframes pv-highlight { 0% { background-position: 100% 0; } 45%, 100% { background-position: 0 0; } }
+.pv-doc-check { display: inline-flex; align-items: center; gap: 8px; margin-top: auto !important; font-size: 11.5px; color: var(--kz-text-secondary); }
+
+/* Orochia: upload → encode → stream. */
+.pv-media { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+.pv-media-frame { height: 100%; aspect-ratio: 9 / 16; border-radius: 10px; display: grid; place-items: center;
+  background: linear-gradient(160deg, color-mix(in oklab, var(--kz-accent) 55%, var(--kz-surface-1)), color-mix(in oklab, var(--kz-accent-2, var(--kz-accent)) 40%, var(--kz-surface-0))); }
+.pv-media-play { width: 0; height: 0; border-left: 12px solid var(--kz-text-primary); border-top: 8px solid transparent; border-bottom: 8px solid transparent; opacity: .9; }
+.pv-media-side { display: flex; flex-direction: column; justify-content: center; gap: 10px; min-width: 0; }
+.pv-media-renditions { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px; }
+.pv-media-renditions li { padding: 2px 8px; border-radius: 999px; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary);
+  border: 1px solid var(--kz-border-default); transition: color .3s, border-color .3s, background-color .3s; }
+.pv-media-renditions li[data-on] { color: var(--kz-accent-text, var(--kz-accent)); border-color: var(--kz-accent); background: color-mix(in oklab, var(--kz-accent) 10%, transparent); }
+.pv-media-state { font-size: 12px; color: var(--kz-text-secondary); }
+
+/* Kachizaka: points, live. */
+.pv-live { display: flex; flex-direction: column; gap: 4px; }
+.pv-live-head { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--kz-text-secondary); }
+.pv-live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--kz-success, var(--kz-accent)); }
+.pv-live-dot[data-play] { animation: pv-pulse 1.4s ease-in-out infinite; }
+@keyframes pv-pulse { 50% { opacity: .35; } }
+.pv-live-value { font-family: var(--font-display), system-ui, sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -.02em; color: var(--kz-text-primary); }
+.pv-live-value span { font-family: var(--font-sans, inherit); font-size: 12px; font-weight: 500; color: var(--kz-text-secondary); }
+.pv-live :is(figure, .kz-chart) { margin-top: auto; }
+
+/* Akinaza: a day's slots. */
+.pv-day { display: flex; flex-direction: column; gap: 10px; }
+.pv-day-head { font-size: 12.5px; font-weight: 700; color: var(--kz-text-primary); }
+.pv-day-slots { flex-wrap: wrap; }
+.pv-day-booked { margin-top: auto !important; font-size: 11.5px; color: var(--kz-text-secondary); }
+
+/* Yasakia: two people, one conversation. */
+.pv-chat { display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; font-size: 12.5px; }
+
+/* Yororis: a voice. */
+.pv-voice { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+.pv-voice-bars { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 3px; height: 56%; }
+.pv-voice-bars li { flex: 1; min-height: 6%; border-radius: 999px; background: linear-gradient(to top, var(--kz-accent), var(--kz-accent-2, var(--kz-accent)));
+  transform-origin: center; animation: pv-voice 1.3s ease-in-out infinite alternate paused; }
+.pv-voice[data-play] .pv-voice-bars li { animation-play-state: running; }
+@keyframes pv-voice { from { transform: scaleY(.55); } to { transform: scaleY(1); } }
+.pv-voice-label { font-size: 12px; color: var(--kz-text-secondary); text-align: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pv *, .pv *::before, .pv *::after { animation: none !important; transition: none !important; }
+}

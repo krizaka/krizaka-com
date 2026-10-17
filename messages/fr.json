@@ -204,7 +204,7 @@
         "title": "Nous construisons du logiciel open source — et tout ce qui le porte.",
         "lead": "Sept produits sur un même moteur d'IA, et chaque pièce qui les porte publiée sous Apache-2.0.",
         "primary": "Voir ce que nous construisons",
-        "film": "Voir le film",
+        "film": "Voir le film en entier",
         "filmLength": "44 s",
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "proofs": {
@@ -213,7 +213,6 @@
           "maven": "artefacts sur Maven Central",
           "license": "sur chaque dépôt"
         },
-        "film": "Voir le film en entier",
         "filmClose": "Fermer le film"
       },
       "products": {
@@ -270,6 +269,38 @@
       "contact": {
         "title": "Parlez-nous de ce que vous construisez.",
         "cta": "Nous contacter"
+      },
+      "visuals": {
+        "orazaka": {
+          "label": "Les requêtes de chaque produit, dans un même moteur"
+        },
+        "yomizaka": {
+          "document": "Bail — page 3",
+          "quote": "Le loyer ne peut être augmenté plus d'une fois au cours d'une période de 12 mois.",
+          "checked": "Vérifié",
+          "source": "cité, page 3 · démo"
+        },
+        "orochia": {
+          "encoding": "Encodage",
+          "ready": "Prêt à diffuser · HLS"
+        },
+        "kachizaka": {
+          "live": "En direct",
+          "points": "points",
+          "title": "Points par journée (ligue de démo)"
+        },
+        "akinaza": {
+          "day": "Mardi, la journée du salon",
+          "booked": "Réservé, confirmé par courriel · démo"
+        },
+        "yasakia": {
+          "theirs": "Un café près du canal samedi ?",
+          "mine": "Oui — 10 h 30, ça me va.",
+          "typing": "En train d'écrire"
+        },
+        "yororis": {
+          "label": "Une voix, écoutée"
+        }
       }
     },
     "footer": {
