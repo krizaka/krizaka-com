@@ -70,4 +70,11 @@ test("the prefixes another writer owns are declared once, in the layout, and pru
   assert.ok(FOREIGN_WRITERS.includes("site/blog/"));
   // dev.yasakia.com names its own recordings (its demo page, apps/site/lib/media.ts in krizaka/yasakia): never pruned here.
   assert.ok(FOREIGN_WRITERS.some((p) => "site/products/yasakia/tour/talk.abcdef1234.mp4".startsWith(p)), "site/products/yasakia/ is owned by dev.yasakia.com");
+  // The other product sites name their landing recordings the same way (their lib/tour.ts): never pruned here either.
+  for (const product of ["yomizaka", "akinaza", "kachizaka", "yororis"]) {
+    const clip = `site/products/${product}/tour/phone-keep.abcdef1234.mp4`;
+    assert.ok(FOREIGN_WRITERS.some((p) => clip.startsWith(p)), `${clip} is owned by dev.${product}.com`);
+  }
+  // Yororis' gallery is still named by this site's manifest: only its tour/ is foreign (one writer per prefix).
+  assert.ok(!FOREIGN_WRITERS.some((p) => "site/products/yororis/gallery/home-phone.11203dcac9.webp".startsWith(p)));
 });
