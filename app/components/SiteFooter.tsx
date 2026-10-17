@@ -5,6 +5,7 @@ import { SiteFooter as FamilyFooter } from "@krizaka/ui/site-footer";
 import { familyLabels } from "@krizaka/ui/sites";
 import { useI18n } from "./I18nProvider";
 import { BLOG_URL } from "@/lib/site";
+import { GUIDES } from "@/lib/guides";
 import { useContactHref } from "./useContactHref";
 
 /* The footer (NAV-SYS) is @krizaka/ui's SiteFooter: this site's own column (its pages), the Krizaka family in columns
@@ -46,6 +47,13 @@ export default function SiteFooter() {
         <FamilyFooter.Link asChild>
           <Link href={contactHref}>{f.contact}</Link>
         </FamilyFooter.Link>
+      </FamilyFooter.Column>
+      <FamilyFooter.Column title={t.site.guides.footerTitle}>
+        {GUIDES.map((g) => (
+          <FamilyFooter.Link key={g.slug} asChild>
+            <Link href={`/guides/${g.slug}`} prefetch={false}>{t.site.guides.pages[g.slug].footerLabel}</Link>
+          </FamilyFooter.Link>
+        ))}
       </FamilyFooter.Column>
     </FamilyFooter>
   );

@@ -79,8 +79,8 @@ export function buildSiteGraph(locale: Locale) {
           "React and React Native components",
           "Spring Boot building blocks",
           "Sovereign AI",
-          "Law 25 (Quebec)",
-          "GDPR compliance",
+          "Privacy law in Québec (Law 25)",
+          "On-premise and self-hosted AI",
         ],
         logo: `${SITE_URL}/favicon.svg`,
         email: CONTACT_EMAIL,
@@ -143,6 +143,22 @@ export function buildFaqJsonLd(
       name: question,
       acceptedAnswer: { "@type": "Answer", text: answer },
     })),
+  };
+}
+
+/** A guide of krizaka.com (/guides/<slug>): an Article by the Organization, part of the website. */
+export function buildGuideJsonLd(a: { locale: Locale; title: string; description: string; url: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: a.title,
+    description: a.description,
+    url: a.url,
+    mainEntityOfPage: a.url,
+    inLanguage: hreflangOf(a.locale),
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": WEBSITE_ID },
   };
 }
 

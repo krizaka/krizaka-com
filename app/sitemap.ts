@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { BUILDING_BLOCKS } from "@/lib/building-blocks";
 import { lastModified } from "@/lib/lastmod";
+import { GUIDES } from "@/lib/guides";
 
 // A single sitemap is correct here: the protocol limit is 50k URLs / 50 MB, and
 // this site has ~50. A sitemap index buys nothing until we blow past that.
@@ -16,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/open-source",
     ...BUILDING_BLOCKS.filter((b) => b.forum === "ui").map((b) => `/open-source/${b.id}`),
     "/story",
+    ...GUIDES.map((g) => `/guides/${g.slug}`),
     "/contact",
     "/privacy",
     "/terms",

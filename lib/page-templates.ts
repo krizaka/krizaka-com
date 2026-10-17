@@ -31,6 +31,7 @@ export const PAGE_TEMPLATES = {
   "/privacy": "legal",
   "/terms": "legal",
   "/story": "longform",
+  "/guides/[slug]": "longform",
   "/[...missing]": "error",
 } as const satisfies Record<string, PageTemplate>;
 

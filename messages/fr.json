@@ -1242,6 +1242,196 @@
       "java": {
         "line": "Des briques Spring Boot sur Maven Central — web, sécurité, messagerie, observabilité, utilisateurs et facturation."
       }
+    },
+    "guides": {
+      "back": "Krizaka",
+      "faqEyebrow": "Questions",
+      "faqTitle": "Réponses courtes",
+      "relatedTitle": "À lire aussi",
+      "footerTitle": "Guides",
+      "pages": {
+        "on-premise-ai-montreal": {
+          "metaTitle": "IA sur place à Montréal — l'IA sur vos propres machines | Krizaka",
+          "metaDescription": "Ce que veut dire l'IA sur place (auto-hébergée), ce qu'il faut pour la faire tourner et comment Orazaka, le moteur open source de Krizaka, s'y prend.",
+          "footerLabel": "IA sur place à Montréal",
+          "eyebrow": "Guide · IA sur place",
+          "title": "IA sur place à Montréal : une IA qui tourne sur vos propres machines",
+          "lead": "Une IA sur place (auto-hébergée) garde les modèles, les requêtes et les documents sur des machines que vous contrôlez. Voici ce que cela veut dire, ce que cela demande, et comment Orazaka, le moteur open source de Krizaka, s'y prend.",
+          "sections": [
+            {
+              "id": "what",
+              "title": "Ce que veut dire « IA sur place »",
+              "body": [
+                "Une IA sur place fait tourner les modèles et le logiciel sur du matériel que vous contrôlez : un serveur au bureau, un poste de travail, ou un serveur privé que vous louez. Rien n'est envoyé à l'API d'un fournisseur pour obtenir une réponse.",
+                "La différence concrète est simple : où vont vos documents, qui peut lire les journaux, et si vous payez à la requête."
+              ],
+              "points": []
+            },
+            {
+              "id": "why",
+              "title": "Pourquoi des équipes la choisissent",
+              "body": [
+                "Les raisons qu'on entend sont concrètes, pas idéologiques."
+              ],
+              "points": [
+                "Des documents qui ne peuvent pas quitter l'immeuble : dossiers clients, baux, dossiers médicaux ou comptables.",
+                "Un coût prévisible : du matériel et de l'électricité, pas un compteur qui tourne à chaque requête.",
+                "Vos propres règles : vous choisissez les modèles et ce que chaque flux de travail peut ou ne peut pas faire.",
+                "Cela continue de fonctionner sur votre réseau local, quoi qu'il arrive au service d'un fournisseur."
+              ]
+            },
+            {
+              "id": "needs",
+              "title": "Ce qu'il faut, honnêtement",
+              "body": [
+                "Un Mac Apple Silicon récent suffit pour discuter avec un petit modèle à poids ouverts et pour essayer Orazaka. La génération d'images et de vidéo demande un GPU, par exemple un serveur Linux avec une carte NVIDIA.",
+                "Les modèles à poids ouverts que vous pouvez faire tourner vous-même sont plus petits que les plus grands modèles hébergés : certaines réponses seront moins soignées. Et il faut que quelqu'un s'occupe de la machine : mises à jour, sauvegardes, espace disque. Si votre équipe ne peut pas, l'IA sur place n'est pas la bonne réponse."
+              ],
+              "points": []
+            },
+            {
+              "id": "orazaka",
+              "title": "Comment Orazaka s'y prend",
+              "body": [
+                "Orazaka est un moteur open source (Apache-2.0) qui fait tourner sur vos machines le clavardage, les réponses tirées de vos documents, des agents, des images et de la vidéo. Chaque requête traverse un pipeline déterministe jusqu'au meilleur modèle local, et chaque pack déclare ce qu'il refuse avant qu'aucun modèle ne s'exécute.",
+                "C'est un aperçu de développement : vous pouvez lire le site et le code aujourd'hui, la connexion est fermée, et Krizaka ne vend pas d'offre hébergée."
+              ],
+              "points": []
+            },
+            {
+              "id": "montreal",
+              "title": "Conçu à Montréal",
+              "body": [
+                "Krizaka est un petit studio logiciel de Montréal, au Québec. Nous répondons en français ou en anglais, et tout ce que nous construisons est public sur GitHub."
+              ],
+              "points": []
+            }
+          ],
+          "faq": [
+            {
+              "q": "Qu'est-ce qu'une IA sur place ?",
+              "a": "Une IA dont les modèles et les données restent sur des machines que vous contrôlez, au lieu d'aller dans le nuage d'un fournisseur à chaque requête."
+            },
+            {
+              "q": "IA sur place et IA auto-hébergée, est-ce la même chose ?",
+              "a": "En pratique, oui. « Sur place » veut dire vos propres locaux; « auto-hébergée » couvre aussi un serveur privé que vous louez. Dans les deux cas, c'est vous qui exploitez le logiciel."
+            },
+            {
+              "q": "Faut-il un GPU pour la faire tourner ?",
+              "a": "Pas pour commencer. Le clavardage avec de petits modèles à poids ouverts tourne sur un Mac Apple Silicon récent. L'image et la vidéo demandent un GPU, par exemple un serveur Linux avec une carte NVIDIA."
+            },
+            {
+              "q": "Orazaka est-il prêt pour la production ?",
+              "a": "Pas encore. C'est un aperçu de développement : le site et le code sont publics, la connexion est fermée, et le statut est écrit sur chaque page de Krizaka."
+            },
+            {
+              "q": "Krizaka héberge-t-il Orazaka pour moi ?",
+              "a": "Non. Orazaka est un logiciel que vous exploitez vous-même. Krizaka ne vend pas d'offre hébergée aujourd'hui."
+            }
+          ],
+          "cta": {
+            "title": "Vous pensez faire tourner l'IA sur vos propres machines ?",
+            "body": "Dites-nous ce que vous feriez tourner et où. Nous répondons en français ou en anglais.",
+            "action": "Parler à l'équipe",
+            "secondary": "Voir Orazaka"
+          },
+          "related": "law-25-ai"
+        },
+        "law-25-ai": {
+          "metaTitle": "IA et Loi 25 au Québec — garder les renseignements sur vos machines",
+          "metaDescription": "Ce que la Loi 25 demande quand l'IA touche des renseignements personnels, ce que change une IA locale, et ce qu'elle ne règle pas. Pas un avis juridique.",
+          "footerLabel": "IA et Loi 25 au Québec",
+          "eyebrow": "Guide · Loi 25",
+          "title": "IA et Loi 25 au Québec : ce qui reste sur vos machines, et ce que la loi vous demande encore",
+          "lead": "Un guide en langage clair pour les équipes du Québec qui veulent utiliser l'IA sur des renseignements personnels. Il est écrit par des ingénieurs : ce n'est pas un avis juridique, et il ne remplace ni votre avocat ni la Commission d'accès à l'information.",
+          "sections": [
+            {
+              "id": "law",
+              "title": "Ce que la Loi 25 change pour l'IA",
+              "body": [
+                "La Loi 25 a modernisé la loi québécoise sur la protection des renseignements personnels dans le secteur privé. Pour qui utilise l'IA sur des renseignements personnels, voici ce qui compte le plus."
+              ],
+              "points": [
+                "Un consentement clair, lié à une fin précisée.",
+                "Une personne de votre organisation responsable de la protection des renseignements personnels.",
+                "Une évaluation des facteurs relatifs à la vie privée avant de communiquer des renseignements personnels à l'extérieur du Québec, et pour les projets qui les traitent.",
+                "Un registre des incidents de confidentialité, et un avis aux personnes concernées lorsqu'il y a un risque de préjudice sérieux.",
+                "Informer les personnes lorsqu'une décision les concernant repose uniquement sur un traitement automatisé."
+              ]
+            },
+            {
+              "id": "hosted",
+              "title": "Le problème d'envoyer des documents à une IA hébergée",
+              "body": [
+                "Quand une requête ou un fichier part vers un service d'IA hébergé, il quitte votre contrôle et souvent le Québec. C'est ce qui déclenche l'évaluation, le contrat avec le fournisseur, et les questions sur la conservation et sur qui peut lire quoi.",
+                "Rien de cela n'interdit l'IA hébergée. C'est du travail à faire, et dont il faut garder la preuve."
+              ],
+              "points": []
+            },
+            {
+              "id": "local",
+              "title": "Ce que change une IA sur vos propres machines",
+              "body": [
+                "Si les modèles tournent sur des machines que vous contrôlez au Québec, l'appel au modèle n'envoie plus de renseignements personnels à un tiers hors Québec. La question du transfert rétrécit, et la paperasse autour aussi.",
+                "Cela ne règle pas tout. Le consentement, la finalité, la conservation, les demandes d'accès, la gestion des incidents, la sécurité et l'évaluation du système lui-même restent à vous."
+              ],
+              "points": []
+            },
+            {
+              "id": "orazaka",
+              "title": "Ce que vous donne Orazaka, et ce qu'il ne donne pas",
+              "body": [
+                "Orazaka est un moteur open source qui fait tourner les modèles localement, garde vos données dans votre propre base, demande un consentement explicite et versionné avant qu'un pack réglementé puisse être installé, et purge ce qu'une durée de conservation ne permet plus de garder.",
+                "Il n'existe pas de pack Loi 25. Rien dans Orazaka n'est certifié, et aucune de ses parties ne remplace vos obligations. Méfiez-vous de tout produit d'IA, le nôtre compris, qui prétend le contraire."
+              ],
+              "points": []
+            },
+            {
+              "id": "questions",
+              "title": "Les questions à poser avant qu'une IA touche des renseignements personnels",
+              "body": [
+                "Posez-les à n'importe quel fournisseur, ou à votre propre équipe."
+              ],
+              "points": [
+                "Où les données sont-elles traitées, et dans quel pays ?",
+                "Qui est le sous-traitant, et que dit le contrat sur la réutilisation et la conservation ?",
+                "Qui est responsable dans notre organisation, et l'évaluation est-elle faite ?",
+                "Que se passe-t-il quand ça tourne mal : qui est avisé, et à quelle vitesse ?",
+                "Pouvons-nous supprimer les données d'une personne sur demande ?"
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "q": "La Loi 25 interdit-elle l'IA infonuagique ?",
+              "a": "Non. Elle demande un consentement, des mesures de protection et, avant que des renseignements personnels quittent le Québec, une évaluation des facteurs relatifs à la vie privée. L'IA hébergée est permise quand cela est fait."
+            },
+            {
+              "q": "Une IA locale satisfait-elle la Loi 25 ?",
+              "a": "Non. Elle supprime le transfert à un tiers, ce qui est une bonne part du travail, mais le consentement, la conservation, les droits d'accès, les incidents et la sécurité restent votre responsabilité."
+            },
+            {
+              "q": "Y a-t-il un pack Loi 25 dans Orazaka ?",
+              "a": "Non. Il n'existe pas de pack Loi 25 aujourd'hui, et Orazaka n'est certifié pour aucune loi."
+            },
+            {
+              "q": "Qu'est-ce qu'une évaluation des facteurs relatifs à la vie privée ?",
+              "a": "Une analyse écrite de la façon dont un projet touche la vie privée des personnes dont il traite les renseignements, et de ce que vous faites face aux risques. En anglais : privacy impact assessment."
+            },
+            {
+              "q": "Qui a écrit ce guide ?",
+              "a": "Les ingénieurs de Krizaka, à Montréal. Il explique ce que nous comprenons de la loi; pour votre cas, consultez un avocat ou la Commission d'accès à l'information."
+            }
+          ],
+          "cta": {
+            "title": "Envie de parler d'IA sur des renseignements personnels ?",
+            "body": "Dites-nous ce que vous traitez et où cela vit. Nous dirons simplement ce qu'Orazaka peut et ne peut pas faire pour vous.",
+            "action": "Parler à l'équipe",
+            "secondary": "Voir Orazaka"
+          },
+          "related": "on-premise-ai-montreal"
+        }
+      }
     }
   },
   "docs": {
