@@ -195,6 +195,14 @@
           "akinaza": "l'assistant fiscal",
           "yasakia": "l'agent de mise en relation",
           "yororis": "le pack bien-être"
+        },
+        "legendOut": "requêtes →",
+        "legendBack": "← résultats",
+        "sends": "Chaque produit envoie requêtes, documents et prompts au moteur",
+        "gets": "reçoit en retour : {list}",
+        "back": {
+          "results": "résultats",
+          "analytics": "analyses d'usage"
         }
       }
     },

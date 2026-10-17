@@ -195,6 +195,14 @@
           "akinaza": "the tax assistant",
           "yasakia": "the matching agent",
           "yororis": "the wellbeing pack"
+        },
+        "legendOut": "requests →",
+        "legendBack": "← results",
+        "sends": "Each product sends requests, documents and prompts to the engine",
+        "gets": "gets back: {list}",
+        "back": {
+          "results": "results",
+          "analytics": "usage analytics"
         }
       }
     },
