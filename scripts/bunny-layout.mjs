@@ -90,6 +90,7 @@ export const SITE_AREAS = {
   docs: "docs/<product>/{mobile,…}/<name> — media of the documentation pages (screenshots, clips, posters)",
   people: "people/<product>/<person>-{256,512}.webp — the demo personas' portraits, shared by the products (mirrored in people/personas/)",
   blog: "blog/<post>/<name> — the images of a post of blog.krizaka.com (cover, figures); posts name them by CDN URL, the blog repository never commits media",
+  "brand-films": "brand-films/{loops,film}/<name> — the films of the flock, rendered from the code by krizaka-ui tools/brand-films (one loop per bird, « Le monde de Krizaka »); loaded by krizaka.com /story, ui.krizaka.com's brand page and the products' sites",
 };
 
 export const SITE_AREA_NAMES = Object.keys(SITE_AREAS);

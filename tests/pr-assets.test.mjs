@@ -31,6 +31,7 @@ function fixture() {
 test("content types follow the extension", () => {
   assert.equal(contentTypeFor("a/B.PNG"), "image/png");
   assert.equal(contentTypeFor("clip.webm"), "video/webm");
+  assert.equal(contentTypeFor("film-en.vtt"), "text/vtt; charset=utf-8");
   assert.equal(contentTypeFor("m.json"), "application/json");
   assert.equal(contentTypeFor("blob.bin"), "application/octet-stream");
 });

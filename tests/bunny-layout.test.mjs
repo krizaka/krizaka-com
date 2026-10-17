@@ -15,6 +15,8 @@ test("the audit accepts the layout and flags the rest", () => {
     "site/products/orochia/tour/alex-bid.3f2a9c1b7e.mp4",
     "site/people/yasakia/hana-512.b0be072833.webp",
     "site/docs/orochia/mobile/clip-watch-poster.9fc5d19c39.webp",
+    "site/brand-films/loops/owl-square-dark.0123456789.mp4",
+    "site/brand-films/film/le-monde-de-krizaka-en.0123456789.vtt",
     "maps/v1/tiles/quebec-20261012.pmtiles",
     "maps/v1/fonts/Noto Sans Regular/0-255.pbf",
     "pr-assets/krizaka-com/111-mobile-promo/clip.mp4",

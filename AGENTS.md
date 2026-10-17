@@ -80,8 +80,11 @@
   /story's Yororis chapter) are fingerprinted in `scripts/lexicon-reviewed.json`: change one only with
   `npm run lexicon -- --accept-review YYYY-MM-DD` and say so in the PR.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
-  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, and the three Orochia clips that published
-  `@krizaka/ui` examples reach through `/assets/orochia/tour/` (a redirect in `lib/cdn.ts`).
+  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the three Orochia clips that published
+  `@krizaka/ui` examples reach through `/assets/orochia/tour/` (a redirect in `lib/cdn.ts`), and `brand-films/**` — the
+  films of the flock, rendered from the code by krizaka-ui `tools/brand-films` (« Le monde de Krizaka » on `/story`, its
+  captions from the messages through `/<locale>/story/film.vtt`; the loops of each bird, loaded by ui.krizaka.com and the
+  products' sites by their hashed URL). A new render replaces them: upload, then `cdn-assets prune`.
 - English is the default language; French is served when chosen (cookie `NEXT_LOCALE`) or opened.
 
 ## 2.2 Text & languages — nothing hard-coded

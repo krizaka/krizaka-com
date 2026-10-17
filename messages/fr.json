@@ -495,6 +495,46 @@
           "role": "La lectrice",
           "line": "Lit vos documents et garde chaque question à la maison."
         }
+      },
+      "world": {
+        "eyebrow": "La volée",
+        "title": "Le monde de Krizaka",
+        "lead": "Nos oiseaux nous accompagnent depuis la première page : chacun porte une promesse. Quarante-quatre secondes, filmées depuis le code de Krizaka UI — les mêmes oiseaux que dans les produits.",
+        "player": "Vidéo : le monde de Krizaka",
+        "textVersion": "Ce que disent les oiseaux",
+        "captions": {
+          "en": "English",
+          "fr": "Français"
+        },
+        "credit": "Rendu depuis @krizaka/ui (Mascot, Landscape, la marque Krizaka). Musique : ACE-Step 1.5 (MIT), générée avec Orazaka.",
+        "cues": {
+          "title": "Le monde de Krizaka.",
+          "falcon": "Le faucon veille : la sécurité d’abord.",
+          "owl": "Le hibou lit chaque page et reconnaît chaque visage.",
+          "duck": "Le canard construit, ligne après ligne, en open source.",
+          "flamingo": "Le flamant répond, et le paiement suit.",
+          "pigeon": "Le pigeon livre, à chaque fois.",
+          "together": "Chaque oiseau porte une promesse.",
+          "family": "Et la famille s’agrandit."
+        },
+        "labels": {
+          "play": "Lecture",
+          "pause": "Pause",
+          "mute": "Couper le son",
+          "unmute": "Rétablir le son",
+          "volume": "Volume",
+          "seek": "Position",
+          "speed": "Vitesse {rate}×",
+          "captions": "Sous-titres : {track}",
+          "captionsOff": "désactivés",
+          "fullscreen": "Plein écran",
+          "exitFullscreen": "Quitter le plein écran",
+          "pictureInPicture": "Image dans l’image",
+          "loading": "Chargement",
+          "error": "Cette vidéo ne peut pas être lue.",
+          "retry": "Réessayer",
+          "time": "{time} sur {duration}"
+        }
       }
     },
     "yororis": {

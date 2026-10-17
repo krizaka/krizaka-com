@@ -9,6 +9,7 @@
    One entrance per stage, then calm; reduced motion = a still page. */
 
 import { ForwardIcon } from "@krizaka/icons";
+import { format } from "@krizaka/i18n";
 import { Mascot } from "@krizaka/ui/mascots";
 import { ContinuePrompt } from "@krizaka/ui/continue-prompt";
 import { Landscape } from "@krizaka/ui/landscape";
@@ -17,8 +18,10 @@ import { PageHero } from "@krizaka/ui/page-hero";
 import { PromiseCard } from "@krizaka/ui/promise-card";
 import { ScrollStage } from "@krizaka/ui/scroll-stage";
 import { StageBanner } from "@krizaka/ui/stage-banner";
+import { VideoPlayer } from "@krizaka/ui/video-player";
 import type { ReactNode } from "react";
 import { contactHref } from "@/lib/contact";
+import { FILM_CUES } from "@/lib/film-captions";
 import { useI18n } from "@/app/components/I18nProvider";
 import Rich from "@/app/components/Rich";
 import ButtonLink from "@/app/components/ButtonLink";
@@ -33,10 +36,17 @@ export interface StoryParts {
   stack: ReactNode;
 }
 
+/** « Le monde de Krizaka » on the CDN (lib/cdn.ts `video()`), and its captions (same-origin WebVTT, app/[locale]/story/film.vtt). */
+export interface StoryFilm {
+  mp4: string;
+  poster: string;
+  captions: { en: string; fr: string };
+}
+
 const pad = (n: number) => String(n).padStart(2, "0");
 
-export default function StoryClient({ parts }: { parts: StoryParts }) {
-  const { t } = useI18n();
+export default function StoryClient({ parts, film }: { parts: StoryParts; film: StoryFilm }) {
+  const { t, locale } = useI18n();
   const st = t.site.story;
   const s = st.stages;
   const flock = st.flock;
@@ -52,6 +62,13 @@ export default function StoryClient({ parts }: { parts: StoryParts }) {
       bearerName={`${flock[bird].name} · ${flock[bird].role}`}
     />
   );
+  const w = st.world;
+  const playerLabels = {
+    ...w.labels,
+    speed: (rate: number) => format(w.labels.speed, { rate: String(rate) }),
+    captions: (track: string | null) => format(w.labels.captions, { track: track ?? w.labels.captionsOff }),
+    time: (time: string, duration: string) => format(w.labels.time, { time, duration }),
+  };
   const prose = (lines: readonly string[]) => (
     <div className="st-prose">
       {lines.map((p) => (
@@ -78,7 +95,29 @@ export default function StoryClient({ parts }: { parts: StoryParts }) {
         </div>
       </PageHero>
 
-      <Section id="st-founder" data-kzs-scene="" eyebrow={stage(1, s.founder.name)} title={s.founder.title} reveal>
+      {/* The flock, filmed from the code: first under the hero, so no reveal (LCP); the poster first, nothing fetched
+          before play (preload none), never autoplayed; the lines it says are written below it (its text version). */}
+      <Section id="st-world" eyebrow={w.eyebrow} title={w.title} lead={w.lead}>
+        <div className="st-film">
+          <VideoPlayer
+            src={film.mp4}
+            poster={film.poster}
+            preload="none"
+            title={w.player}
+            tracks={(["en", "fr"] as const).map((lang) => ({ src: film.captions[lang], srcLang: lang, label: w.captions[lang], default: lang === locale }))}
+            labels={playerLabels}
+          />
+        </div>
+        <h3 className="st-film-heading">{w.textVersion}</h3>
+        <ol className="st-film-lines">
+          {FILM_CUES.filter((c) => c.id !== "title").map((c) => (
+            <li key={c.id}>{w.cues[c.id]}</li>
+          ))}
+        </ol>
+        <p className="st-film-credit">{w.credit}</p>
+      </Section>
+
+      <Section id="st-founder" data-kzs-scene="" divider eyebrow={stage(1, s.founder.name)} title={s.founder.title} reveal>
         {prose(s.founder.body)}
         <Facts className="st-places" aria-label={s.founder.placesAria} items={s.founder.places.map((label) => ({ label }))} />
         {move(s.founder.move, "duck", ["↓", "↘", "→", "P"])}

@@ -37,6 +37,7 @@ const TYPES = {
   svg: "image/svg+xml",
   webm: "video/webm",
   mp4: "video/mp4",
+  vtt: "text/vtt; charset=utf-8",
   mov: "video/quicktime",
   json: "application/json",
   html: "text/html; charset=utf-8",
