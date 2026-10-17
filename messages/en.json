@@ -94,6 +94,10 @@
         "development": {
           "label": "In development",
           "long": "In development"
+        },
+        "devPreview": {
+          "label": "Dev preview",
+          "long": "Dev preview"
         }
       },
       "company": {
@@ -221,7 +225,6 @@
         "eyebrow": "Know-how",
         "title": "What we know how to do.",
         "lead": "Our core know-how is Orazaka, the engine every product's AI runs on. Each product below proves it in its own field.",
-        "preview": "Dev preview",
         "all": "All products"
       },
       "stack": {
