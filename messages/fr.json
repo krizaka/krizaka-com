@@ -204,7 +204,7 @@
         "title": "Nous construisons du logiciel open source — et tout ce qui le porte.",
         "lead": "Sept produits sur un même moteur d'IA, et chaque pièce qui les porte publiée sous Apache-2.0.",
         "primary": "Voir ce que nous construisons",
-        "film": "Voir le film",
+        "film": "Voir le film en entier",
         "filmLength": "44 s",
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "proofs": {
@@ -213,7 +213,6 @@
           "maven": "artefacts sur Maven Central",
           "license": "sur chaque dépôt"
         },
-        "film": "Voir le film en entier",
         "filmClose": "Fermer le film"
       },
       "products": {
@@ -270,6 +269,38 @@
       "contact": {
         "title": "Parlez-nous de ce que vous construisez.",
         "cta": "Nous contacter"
+      },
+      "visuals": {
+        "orazaka": {
+          "label": "Les requêtes de chaque produit, dans un même moteur"
+        },
+        "yomizaka": {
+          "document": "Bail — page 3",
+          "quote": "Le loyer ne peut être augmenté plus d'une fois au cours d'une période de 12 mois.",
+          "checked": "Vérifié",
+          "source": "cité, page 3 · démo"
+        },
+        "orochia": {
+          "encoding": "Encodage",
+          "ready": "Prêt à diffuser · HLS"
+        },
+        "kachizaka": {
+          "live": "En direct",
+          "points": "points",
+          "title": "Points par journée (ligue de démo)"
+        },
+        "akinaza": {
+          "day": "Mardi, la journée du salon",
+          "booked": "Réservé, confirmé par courriel · démo"
+        },
+        "yasakia": {
+          "theirs": "Un café près du canal samedi ?",
+          "mine": "Oui — 10 h 30, ça me va.",
+          "typing": "En train d'écrire"
+        },
+        "yororis": {
+          "label": "Une voix, écoutée"
+        }
       }
     },
     "footer": {
@@ -527,27 +558,8 @@
     "openSource": {
       "eyebrow": "Open source · Apache-2.0",
       "title": "Tout ce que nous construisons est public.",
-      "lead": "Prenez une pièce, lisez le code, dites-nous quoi améliorer.",
       "github": "Parcourir github.com/krizaka",
       "figuresLabel": "Ce que nous publions, lu sur GitHub, npm et Maven Central au build",
-      "figures": {
-        "repositories": "dépôts publics",
-        "components": "composants Krizaka UI",
-        "npm": "paquets sur npm",
-        "maven": "artefacts sur Maven Central"
-      },
-      "stackEyebrow": "Ce que nous publions",
-      "stackTitle": "Deux sites, un pour chaque moitié de la pile.",
-      "stackLead": "Guides, références et chaque paquet, construits depuis leurs propres dépôts à chaque version.",
-      "reposEyebrow": "Les dépôts",
-      "reposTitle": "Chaque dépôt, par produit.",
-      "reposLead": "Lus sur GitHub au build. Ouvrez un produit pour voir ses dépôts.",
-      "runsTitle": "Sur quoi tourne chaque produit",
-      "contributeTitle": "Envie de contribuer ?",
-      "contributeBody": "Une question, un bogue, une idée : choisissez le dépôt et ouvrez une discussion ou un ticket.",
-      "contributeAsk": "Ouvrir une discussion ou un ticket",
-      "contributeGuide": "Guide de contribution",
-      "count": "{count} dépôts publics · ",
       "repoCount": "{count} dépôts",
       "kinds": {
         "main": "Principal",
@@ -587,6 +599,87 @@
           "icons": "icônes",
           "intl": "intl"
         }
+      },
+      "count": "{count} dépôts publics · ",
+      "lead": "La vue technique : chaque paquet, chaque dépôt, et comment tout s'emboîte.",
+      "figures": {
+        "repositories": "dépôts publics",
+        "npm": "paquets sur npm",
+        "maven": "artefacts sur Maven Central",
+        "license": "sur chaque dépôt"
+      },
+      "stackEyebrow": "La pile",
+      "stackTitle": "Deux moitiés, chacune avec son site.",
+      "stackLead": "Versions lues sur npm et Maven Central au build.",
+      "blocksLabel": "Les briques, expliquées :",
+      "stackVisual": {
+        "identities": "Un composant, l'identité de chaque produit",
+        "dependency": "Un BOM, chaque version de Krizaka Java"
+      },
+      "packages": {
+        "eyebrow": "Paquets",
+        "title": "Chaque paquet publié.",
+        "lead": "npm et Maven Central, lus au build. Cherchez, ou filtrez par registre et famille.",
+        "caption": "Chaque paquet Krizaka sur npm et Maven Central",
+        "name": "Paquet",
+        "registry": "Registre",
+        "family": "Famille",
+        "version": "Dernière",
+        "downloads": "Téléchargements / sem.",
+        "links": "Liens",
+        "repo": "Code",
+        "docs": "Docs",
+        "registryAria": "{name} sur son registre",
+        "repoAria": "Le code de {name}",
+        "docsAria": "La documentation de {name}",
+        "families": {
+          "ui": "Interface",
+          "data": "Données et i18n",
+          "realtime": "Temps réel",
+          "tooling": "Outillage"
+        }
+      },
+      "repositories": {
+        "eyebrow": "Dépôts",
+        "title": "Chaque dépôt, par produit.",
+        "lead": "Lus sur GitHub au build, groupés par produit ; filtrez par plateforme ou langage.",
+        "caption": "Chaque dépôt public de Krizaka",
+        "name": "Dépôt",
+        "product": "Produit",
+        "kind": "Plateforme",
+        "language": "Langage",
+        "updated": "Mis à jour"
+      },
+      "table": {
+        "empty": "Aucun résultat.",
+        "results": "{count} résultats",
+        "filters": "Filtrer le tableau",
+        "clearFilters": "Effacer les filtres",
+        "removeFilter": "Retirer {label}",
+        "activeFilter": "{header} : {value}",
+        "search": "Chercher : {header}",
+        "group": "{value}, {count} lignes",
+        "columns": "Colonnes"
+      },
+      "fits": {
+        "eyebrow": "Comment tout s'emboîte",
+        "title": "Produits → moteur → briques → services partagés.",
+        "lead": "Lu dans les manifestes des produits — la liste est la version texte du schéma.",
+        "products": "Les produits",
+        "engine": "Le moteur",
+        "engineMeta": "{calls} produits l'appellent aujourd'hui · {planned} prévus",
+        "blocks": "Les briques",
+        "npm": "npm",
+        "java": "Krizaka Java",
+        "services": "Les services partagés",
+        "runs": "Sur quoi tourne chaque produit"
+      },
+      "contribute": {
+        "title": "Envie de contribuer ?",
+        "body": "Une question ou une idée : une discussion. Un bogue : un ticket. Choisissez le dépôt.",
+        "guide": "Guide de contribution",
+        "conduct": "Code de conduite",
+        "license": "Licence : Apache-2.0"
       }
     },
     "notFound": {
