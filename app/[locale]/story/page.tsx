@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
+import { video } from "@/lib/cdn";
+import { FILM_BASE } from "@/lib/film-captions";
 import { asLocale, getDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { mavenArtifactCount, publishedCount } from "@/lib/registry-versions";
@@ -43,6 +45,7 @@ export default async function StoryPage({ params }: Props) {
     { id: "components", label: s.figures.components, value: uiFacts().components },
     { id: "packages", label: s.figures.packages, value: publishedCount() },
   ].filter((f) => f.value > 0);
+  const { mp4, poster } = video(FILM_BASE);
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh" }}>
       <TopNavBar />
@@ -54,6 +57,7 @@ export default async function StoryPage({ params }: Props) {
           figures: <FigureTiles figures={figures} label={s.figuresAria} locale={locale} />,
           stack: <StackCards locale={locale} mavenArtifacts={mavenArtifactCount()} />,
         }}
+        film={{ mp4, poster, captions: { en: "/en/story/film.vtt", fr: "/fr/story/film.vtt" } }}
       />
     </main>
   );

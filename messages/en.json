@@ -497,6 +497,46 @@
           "role": "The reader",
           "line": "Reads your documents and keeps every question in the house."
         }
+      },
+      "world": {
+        "eyebrow": "The flock",
+        "title": "The world of Krizaka",
+        "lead": "Our birds have been with us since the first page: each one carries a promise. Forty-four seconds, filmed from the code of Krizaka UI — the same birds the products use.",
+        "player": "Video: the world of Krizaka",
+        "textVersion": "What the birds say",
+        "captions": {
+          "en": "English",
+          "fr": "Français"
+        },
+        "credit": "Rendered from @krizaka/ui (Mascot, Landscape, the Krizaka mark). Music: ACE-Step 1.5 (MIT), generated with Orazaka.",
+        "cues": {
+          "title": "The world of Krizaka.",
+          "falcon": "The falcon keeps watch: security comes first.",
+          "owl": "The owl reads every page and knows every face.",
+          "duck": "The duck builds, line by line, in the open.",
+          "flamingo": "The flamingo answers, and the payment follows.",
+          "pigeon": "The pigeon delivers, every time.",
+          "together": "Each bird carries a promise.",
+          "family": "And the family keeps growing."
+        },
+        "labels": {
+          "play": "Play",
+          "pause": "Pause",
+          "mute": "Mute",
+          "unmute": "Unmute",
+          "volume": "Volume",
+          "seek": "Seek",
+          "speed": "Speed {rate}×",
+          "captions": "Subtitles: {track}",
+          "captionsOff": "off",
+          "fullscreen": "Full screen",
+          "exitFullscreen": "Exit full screen",
+          "pictureInPicture": "Picture in picture",
+          "loading": "Loading",
+          "error": "This video cannot be played.",
+          "retry": "Try again",
+          "time": "{time} of {duration}"
+        }
       }
     },
     "yororis": {
