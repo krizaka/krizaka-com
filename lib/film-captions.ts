@@ -63,10 +63,12 @@ export const TOUR_CUES: readonly Cue[] = [
 
 interface Viewer {
   matchMedia?: (query: string) => { matches: boolean };
-  navigator?: { connection?: { saveData?: boolean } };
+  /** The browser's navigator: `connection.saveData` is not in every engine nor in the DOM types, so it is read loosely. */
+  navigator?: object;
 }
 
 /** True when the visitor asked for less (reduced motion, or Save-Data): the home's dialog then plays the light code film. */
 export function prefersLightFilm(viewer: Viewer): boolean {
-  return Boolean(viewer.matchMedia?.("(prefers-reduced-motion: reduce)").matches || viewer.navigator?.connection?.saveData);
+  const connection = (viewer.navigator as { connection?: { saveData?: boolean } } | undefined)?.connection;
+  return Boolean(viewer.matchMedia?.("(prefers-reduced-motion: reduce)").matches || connection?.saveData);
 }
