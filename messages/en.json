@@ -1245,6 +1245,196 @@
       "java": {
         "line": "Spring Boot building blocks on Maven Central — web, security, messaging, observability, users and billing."
       }
+    },
+    "guides": {
+      "back": "Krizaka",
+      "faqEyebrow": "Questions",
+      "faqTitle": "Short answers",
+      "relatedTitle": "Keep reading",
+      "footerTitle": "Guides",
+      "pages": {
+        "on-premise-ai-montreal": {
+          "metaTitle": "On-premise AI in Montréal — AI on your own machines | Krizaka",
+          "metaDescription": "What on-premise and self-hosted AI means in practice, what it needs, and how Krizaka's open-source Orazaka runs chat, documents and agents on your own machines.",
+          "footerLabel": "On-premise AI in Montréal",
+          "eyebrow": "Guide · On-premise AI",
+          "title": "On-premise AI in Montréal: AI that runs on your own machines",
+          "lead": "On-premise (self-hosted) AI keeps the models, the prompts and the documents on machines you control. Here is what that means in practice, what it asks of you, and how Orazaka, Krizaka's open-source engine, does it.",
+          "sections": [
+            {
+              "id": "what",
+              "title": "What on-premise AI means",
+              "body": [
+                "On-premise AI runs the models and the software on hardware you control: a server in your office, a workstation, or a private server you rent. Nothing is sent to a vendor's API to get an answer.",
+                "The practical difference is simple: where your documents go, who can read the logs, and whether you pay per request."
+              ],
+              "points": []
+            },
+            {
+              "id": "why",
+              "title": "Why teams choose it",
+              "body": [
+                "The reasons we hear are concrete, not ideological."
+              ],
+              "points": [
+                "Documents that cannot leave the building: client files, leases, medical or accounting records.",
+                "A cost you can predict: hardware and electricity, not a meter that runs with every request.",
+                "Your own rules: you pick the models and decide what each workflow may and may not do.",
+                "It keeps working on your local network, whatever happens to a vendor's service."
+              ]
+            },
+            {
+              "id": "needs",
+              "title": "What it needs, honestly",
+              "body": [
+                "A recent Apple Silicon Mac is enough to chat with a smaller open-weight model and to try Orazaka. Image and video generation want a GPU, for example a Linux server with an NVIDIA card.",
+                "Open-weight models you can run yourself are smaller than the largest hosted ones, so some answers will be less polished. And someone has to run the machine: updates, backups, disk space. If that does not fit your team, on-premise is not the right answer."
+              ],
+              "points": []
+            },
+            {
+              "id": "orazaka",
+              "title": "How Orazaka does it",
+              "body": [
+                "Orazaka is an open-source engine (Apache-2.0) that runs chat, answers from your own documents, agents, images and video on your machines. Every request crosses a deterministic pipeline to the best local model, and each pack declares what it refuses before any model runs.",
+                "It is a development preview: you can read the site and the source today, sign-in is closed, and Krizaka does not sell a hosted plan."
+              ],
+              "points": []
+            },
+            {
+              "id": "montreal",
+              "title": "Built in Montréal",
+              "body": [
+                "Krizaka is a small software studio in Montréal, Québec. We answer in English or French, and everything we build is public on GitHub."
+              ],
+              "points": []
+            }
+          ],
+          "faq": [
+            {
+              "q": "What is on-premise AI?",
+              "a": "AI whose models and data stay on machines you control, instead of going to a vendor's cloud for every request."
+            },
+            {
+              "q": "Is on-premise AI the same as self-hosted AI?",
+              "a": "In practice, yes. On-premise means your own premises; self-hosted also covers a private server you rent. In both cases you operate the software."
+            },
+            {
+              "q": "Do I need a GPU to run it?",
+              "a": "Not to start. Chat with smaller open-weight models runs on a recent Apple Silicon Mac. Image and video generation want a GPU, for example a Linux server with an NVIDIA card."
+            },
+            {
+              "q": "Is Orazaka ready for production?",
+              "a": "Not yet. It is a development preview: the site and the source are public, sign-in is closed, and the status is stated on every Krizaka page."
+            },
+            {
+              "q": "Does Krizaka host Orazaka for me?",
+              "a": "No. Orazaka is software you run yourself. Krizaka does not sell a hosted plan today."
+            }
+          ],
+          "cta": {
+            "title": "Thinking about running AI on your own machines?",
+            "body": "Tell us what you would run and where. We reply in English or French.",
+            "action": "Talk to the team",
+            "secondary": "See Orazaka"
+          },
+          "related": "law-25-ai"
+        },
+        "law-25-ai": {
+          "metaTitle": "AI and Québec's Law 25 — keep personal information on your machines",
+          "metaDescription": "What Québec's Law 25 asks when AI touches personal information, why running AI locally helps, and what it does not settle. A plain-language guide, not legal advice.",
+          "footerLabel": "AI and Law 25 in Québec",
+          "eyebrow": "Guide · Law 25",
+          "title": "AI and Québec's Law 25: what stays on your machines, and what the law still asks of you",
+          "lead": "A plain-language guide for teams in Québec who want to use AI on personal information. It is written by engineers: it is not legal advice, and it does not replace your lawyer or the Commission d'accès à l'information.",
+          "sections": [
+            {
+              "id": "law",
+              "title": "What Law 25 changes for AI",
+              "body": [
+                "Law 25 modernised the Québec act that protects personal information in the private sector. For anyone using AI on personal information, the parts that matter most are these."
+              ],
+              "points": [
+                "Consent that is clear and tied to a stated purpose.",
+                "A person in your organisation responsible for the protection of personal information.",
+                "A privacy impact assessment (évaluation des facteurs relatifs à la vie privée) before communicating personal information outside Québec, and for projects that process it.",
+                "A register of confidentiality incidents, and notice to the people concerned when there is a risk of serious harm.",
+                "Telling people when a decision about them is based only on automated processing."
+              ]
+            },
+            {
+              "id": "hosted",
+              "title": "The problem with sending documents to a hosted AI",
+              "body": [
+                "When a prompt or a file goes to a hosted AI service, it leaves your control and often leaves Québec. That is what triggers the assessment, the contract with the provider, and the questions about retention and who can read what.",
+                "None of this makes hosted AI forbidden. It makes it work you have to do and keep evidence of."
+              ],
+              "points": []
+            },
+            {
+              "id": "local",
+              "title": "What running AI on your own machines changes",
+              "body": [
+                "If the models run on machines you control in Québec, the model call no longer sends personal information to a third party outside Québec. The transfer question shrinks, and so does the amount of paperwork around it.",
+                "It does not settle everything. Consent, purpose, retention, access requests, incident handling, security and the assessment of the system itself are still yours."
+              ],
+              "points": []
+            },
+            {
+              "id": "orazaka",
+              "title": "What Orazaka gives you, and what it does not",
+              "body": [
+                "Orazaka is an open-source engine that runs models locally, keeps your data in your own database, asks for explicit, versioned consent before a regulated pack can be installed, and purges what a retention window says may no longer be kept.",
+                "There is no Law 25 pack. Nothing in Orazaka is certified, and no part of it replaces your obligations. Be wary of any AI product, including ours, that tells you otherwise."
+              ],
+              "points": []
+            },
+            {
+              "id": "questions",
+              "title": "Questions to ask before any AI touches personal information",
+              "body": [
+                "Use them with any vendor, or with your own team."
+              ],
+              "points": [
+                "Where is the data processed, and in which country?",
+                "Who is the processor, and what does the contract say about reuse and retention?",
+                "Who is responsible in our organisation, and has the assessment been done?",
+                "What happens when something goes wrong: who is told, and how fast?",
+                "Can we delete one person's data on request?"
+              ]
+            }
+          ],
+          "faq": [
+            {
+              "q": "Does Law 25 forbid cloud AI?",
+              "a": "No. It asks for consent, safeguards and, before personal information leaves Québec, a privacy impact assessment. Hosted AI is allowed when those are done."
+            },
+            {
+              "q": "Does running AI locally satisfy Law 25?",
+              "a": "No. It removes the transfer to a third party, which is a large part of the work, but consent, retention, access rights, incidents and security remain your responsibility."
+            },
+            {
+              "q": "Is there a Law 25 pack in Orazaka?",
+              "a": "No. There is no Law 25 pack today, and Orazaka is not certified for any law."
+            },
+            {
+              "q": "What is a privacy impact assessment?",
+              "a": "A written analysis of how a project affects the privacy of the people whose information it handles, and what you do about the risks. In French: évaluation des facteurs relatifs à la vie privée."
+            },
+            {
+              "q": "Who wrote this guide?",
+              "a": "Krizaka's engineers, in Montréal. It explains what we understand of the law; for your case, ask a lawyer or the Commission d'accès à l'information."
+            }
+          ],
+          "cta": {
+            "title": "Want to talk about AI on personal information?",
+            "body": "Tell us what you handle and where it lives. We will say plainly what Orazaka can and cannot do for it.",
+            "action": "Talk to the team",
+            "secondary": "See Orazaka"
+          },
+          "related": "on-premise-ai-montreal"
+        }
+      }
     }
   },
   "docs": {

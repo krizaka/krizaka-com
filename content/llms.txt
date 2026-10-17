@@ -22,6 +22,8 @@
 - Products (one card per product, with its site and source): {{SITE_URL}}/en/products
 - Open source (Krizaka UI, Krizaka Java and every repository): {{SITE_URL}}/en/open-source
 - Our story (where the names come from): {{SITE_URL}}/en/story
+- Guide, on-premise AI in Montréal (what it means, what it needs, how Orazaka does it): {{SITE_URL}}/en/guides/on-premise-ai-montreal
+- Guide, AI and Québec's Law 25 (what stays on your machines, what the law still asks; no Law 25 pack exists): {{SITE_URL}}/en/guides/law-25-ai
 - Contact the team: {{SITE_URL}}/en/contact
 
 ## Documentation
