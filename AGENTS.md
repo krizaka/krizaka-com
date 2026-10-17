@@ -73,10 +73,16 @@
   fight). Any input skips it; still under reduced motion and Save-Data; decorations fade in by themselves without
   JavaScript; the text is never part of it (LCP). No library, no canvas, no animation frame. **The scene** (the flock's
   ambient loop, `AmbientLoop`, `brand-films/ambient/home-ambient-*`) sits in the flow under the figures, never over them.
-- **`/open-source`** (docs-hub): simple and inviting — the hero with the figures read at build (GitHub, the Krizaka UI
-  registries, npm, Maven Central) and one action (github.com/krizaka); what we publish (`StackCards`, then the building
-  blocks); every repository by product, folded (`<details>`), and what each product runs on, folded; contribute →
-  `/contact#public` (the discussions / issues picker) and the contribution guide. No walls of text.
+- **`/open-source`** (docs-hub) is **the technical view**, as refined as the home, everything read at build: the hero
+  (one line, live figures — repositories, npm packages, Maven artifacts, the licence — GitHub); the stack (`StackCards`
+  with a still mini-visual each: the identities for Krizaka UI, the BOM dependency at its Central version for Java;
+  the building blocks' pages as quiet links); **packages** (`PackagesTable`: @krizaka/ui `DataTable` over
+  `lib/package-catalogue.ts` — npm + Maven Central, registry and family facets, latest version, weekly downloads, the
+  registry / code / docs links; the generator reads descriptions, repositories, POM parents and downloads);
+  **repositories** (`RepositoriesTable`, grouped by product, platform, language, last push from GitHub); **how it fits**
+  (`lib/how-it-fits.ts`: products → engine → building blocks → shared services, an ordered list that is its own text
+  version; the runs-on table folded); **contribute** (the contact page's picker, `lib/public-channels.ts`, the guide,
+  the code of conduct, the licence). One primary action per section, no boxes in boxes.
 - `ProductShowcase` (`app/components/home/`) renders the cards on the home (`ProductCard` stays for `/story`); each card wears
   its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
   `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage, `.brand-yomizaka` indigo, `.brand-kachizaka` gold + cobalt

@@ -10,6 +10,8 @@ export interface GithubRepository {
   topics: string[];
   language: string | null;
   archived: boolean;
+  /** When the repository last received a push (ISO), as GitHub said at build; absent offline. */
+  pushedAt?: string | null;
 }
 
 /** What a repository is, read from its GitHub topics — the chip on its line and the order inside a product. */
