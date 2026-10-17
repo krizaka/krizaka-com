@@ -51,10 +51,22 @@ export const ZONE = {
 /**
  * Prefixes of site/ written by ANOTHER writer than cdn-assets (one writer per prefix): `prune` never lists or deletes
  * under them, since their objects are not named by this site's manifest. The product sites name their own media
- * (dev.orazaka.com, dev.orochia.com, dev.yasakia.com — its demo recordings under site/products/yasakia/tour/); Orazaka's generated clips (gallery-video/, video/) come from its GPU batch;
+ * (dev.orazaka.com, dev.orochia.com, dev.yasakia.com — its demo recordings under site/products/yasakia/tour/; dev.yomizaka.com,
+ * dev.akinaza.com, dev.kachizaka.com and dev.yororis.com — their landing recordings under site/products/<product>/tour/, named
+ * in each repository's lib/tour.ts); Orazaka's generated clips (gallery-video/, video/) come from its GPU batch;
  * blog.krizaka.com names its images in krizaka-blog's lib/media.json.
  */
-export const FOREIGN_WRITERS = ["site/products/orazaka/", "site/products/orochia/", "site/products/yasakia/", "site/blog/"];
+export const FOREIGN_WRITERS = [
+  "site/products/orazaka/",
+  "site/products/orochia/",
+  "site/products/yasakia/",
+  "site/products/yomizaka/",
+  "site/products/akinaza/",
+  "site/products/kachizaka/",
+  // Yororis' gallery is still named by this site's manifest: only the landing's recordings are another writer's.
+  "site/products/yororis/tour/",
+  "site/blog/",
+];
 
 /** Folders of the zone that are retired (a renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
 export const RETIRED = [/^site\/(?:people|products)\/yazakia\//];
