@@ -65,3 +65,4 @@ lib/dev-preview-checklists.json
 docs/screenshots/
 .github/pr-assets/
 .github/screenshots/
+lib/changelog.json
