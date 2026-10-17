@@ -61,6 +61,12 @@
   the stack in brief (`OpenStack` / `StackCards` → `/open-source`); the principles (`Principles`); Montréal (`Company`
   → `/story`); the contact; the folded FAQ (FAQPage JSON-LD). Orochia is named neutrally on krizaka.com (name and one
   line, never a creator or payout pitch — `tests/home.test.mjs`).
+- **Each product card shows its field** (2026-10-17): a live mini-visual made of @krizaka/ui pieces
+  (`app/components/home/visuals/`: the engine's request flow, a lease passage checked, an encode ladder — Orochia never
+  with media —, live points with a `Sparkline`, a salon's slots as `Chip`s, two `MessageBubble`s, a voice waveform),
+  demo data in `lib/product-visuals.ts` said as demo. A fixed box (no CLS), `inert` and aria-hidden, its code a lazy
+  chunk loaded near the viewport, playing only on screen (hover on a fine pointer, always on touch), still under reduced
+  motion; timers only while playing; `tests/product-visuals.test.mjs`. The waveform is drawn here until @krizaka/ui ships one.
 - **The hero's intro** (`HeroIntro`, `home.css`, `tests/hero-intro.test.mjs`): once per session (`sessionStorage`
   `kz-intro`), it sets `html[data-intro]` = `play` | `skip` | `done`; CSS only, over the ambient loop's poster — the
   mark's stroke draws, the scene rises in with its birds, a light sweeps — ~1.2 s, then the loop fades in (they never

@@ -204,7 +204,7 @@
         "title": "We build open-source software — and the stack under it.",
         "lead": "Seven products on one AI engine, and every piece they stand on published under Apache-2.0.",
         "primary": "See what we build",
-        "film": "Watch the film",
+        "film": "Watch the full film",
         "filmLength": "44 s",
         "proofsLabel": "Krizaka in figures, read at build",
         "proofs": {
@@ -213,7 +213,6 @@
           "maven": "artifacts on Maven Central",
           "license": "on every repository"
         },
-        "film": "Watch the full film",
         "filmClose": "Close the film"
       },
       "products": {
@@ -270,6 +269,38 @@
       "contact": {
         "title": "Tell us what you're building.",
         "cta": "Contact us"
+      },
+      "visuals": {
+        "orazaka": {
+          "label": "Requests from every product, into one engine"
+        },
+        "yomizaka": {
+          "document": "Lease — page 3",
+          "quote": "The rent may not be increased more than once in a 12-month period.",
+          "checked": "Checked",
+          "source": "quoted, page 3 · demo"
+        },
+        "orochia": {
+          "encoding": "Encoding",
+          "ready": "Ready to stream · HLS"
+        },
+        "kachizaka": {
+          "live": "Live",
+          "points": "points",
+          "title": "Points per match day (demo league)"
+        },
+        "akinaza": {
+          "day": "Tuesday, the salon's day",
+          "booked": "Booked, confirmed by e-mail · demo"
+        },
+        "yasakia": {
+          "theirs": "A coffee near the canal on Saturday?",
+          "mine": "Yes — 10:30 works for me.",
+          "typing": "Typing"
+        },
+        "yororis": {
+          "label": "A voice, listened to"
+        }
       }
     },
     "footer": {

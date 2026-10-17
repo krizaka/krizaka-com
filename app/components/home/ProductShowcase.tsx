@@ -4,7 +4,8 @@
    the name, the status said honestly (lib/products.ts, gated by the dev-preview checklists), one line, and one readable
    line of what it uses Orazaka for (lib/engine-uses.ts, "planned" where the call is not wired yet). The whole card is
    one link to the product's own site (or its code while it has none); its source is a discreet second link.
-   Data: lib/products.ts, lib/engine-uses.ts — never a hand list. Words: site.products.*, site.home.products.*. */
+   Each card SHOWS its field first: a live mini-visual made of @krizaka/ui components (visuals/, lazy, decorative,
+   still under reduced motion). Data: lib/products.ts, lib/engine-uses.ts, lib/product-visuals.ts — never a hand list. Words: site.products.*, site.home.products.*. */
 
 import { ForwardIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
@@ -18,6 +19,8 @@ import { PRODUCTS, type Product } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
 import { ProductStatus } from "../ProductStatus";
 import { GitHubMark } from "../brand/GitHubMark";
+import ProductVisual from "./visuals/ProductVisual";
+import "./visuals/visuals.css";
 
 const external = (p: Product) => ({ href: p.devUrl, target: "_blank", rel: "noopener" });
 
@@ -27,6 +30,7 @@ function EngineCard({ t }: { t: TranslationDictionary }) {
   return (
     <GlowCard alive className={cn("kz-pc kz-pc-engine", "brand-" + engine.id)}>
       <span className="kz-pc-light" aria-hidden />
+      <ProductVisual id={engine.id} />
       <span className="kz-pc-mark kz-pc-mark-lg">
         <ProductLogo id={engine.id} size={88} animated={false} />
       </span>
@@ -60,6 +64,7 @@ function ProductGlowCard({ product: p, t }: { product: Product; t: TranslationDi
   return (
     <GlowCard className={cn("kz-pc", "brand-" + p.id)}>
       <span className="kz-pc-light" aria-hidden />
+      <ProductVisual id={p.id} />
       <div className="kz-pc-head">
         <span className="kz-pc-mark">
           <ProductLogo id={p.id} size={56} animated={false} />
