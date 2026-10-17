@@ -89,6 +89,7 @@
   (the magpie), `.brand-akinaza` forest green + copper (the beaver); the rest of the site is Krizaka ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); marks from `@krizaka/ui`
   (`KrizakaLogo`, `OrazakaLogo`, `OrochiaLogo`, `YasakiaLogo`, `YororisLogo`, `YomizakaLogo`, `KachizakaLogo`, `AkinazaLogo`, `ProductLogo`) — never a copy here.
+- **Product first, Orazaka as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Yomizaka reads your lease »); Orazaka appears only as the engine — one discreet « Powered by Orazaka » line and the proof sections (run ids) — never as the one doing the product's job (« Orazaka reads your lease »). Each product repository tests that its hero and steps do not name Orazaka. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are orazaka#189).
 - A product **in development** (`status: "development"`: Yomizaka, Kachizaka, Akinaza) is built in the open: its repository is
   public, sign-up is closed, and it says « In development ». Yomizaka has a dev site; Kachizaka and Akinaza have none yet, so
   their card says « See the code » and links the repository — never a dead address. Kachizaka is points only, never money;
