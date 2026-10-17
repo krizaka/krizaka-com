@@ -1,17 +1,18 @@
-/* Site navigation — one source for the bar (TopNavBar), the mobile panel, the footer and the products page.
+/* Site navigation — one source for the bar (TopNavBar), the mobile panel and the footer.
 
    krizaka.com is the company; everything else Krizaka makes has its own site (NAV-SYS, 2026-10-14): the products on
    dev.<product>.com (lib/products.ts), the open-source stack on ui.krizaka.com and java.krizaka.com (lib/stack.ts).
-   The bar, in three zones:
-   - left, who we are: the Krizaka mark, then NavBar.Family — every site of the family, from @krizaka/ui/sites;
-   - centre, this site: Products · Open source (NAV_BAR_LINKS) — never a link to another site; the story lives in the footer;
-   - right, tools: Blog · Repo · theme · language · Contact us. No "Docs": the documentation lives on its own sites. */
+   Two views only (Oussama, 2026-10-17): the home — reached through the mark, it presents the products (#products) —
+   and Open source. The bar, in three zones:
+   - left, who we are: the Krizaka mark and the word "Krizaka" (home);
+   - centre, this site: Open source (NAV_BAR_LINKS) — never a link to another site; the story lives in the footer;
+   - right, tools: Blog (blog.krizaka.com) · Repo · theme · language · Contact us. No "Docs": the documentation lives on its own sites. */
 
 import type { TranslationDictionary } from "./i18n";
 import { PRODUCTS, type ProductId, type ProductStatus } from "./products";
 
 export type { ProductStatus } from "./products";
-export type CompanyLinkId = "products" | "story" | "repos" | "contact";
+export type CompanyLinkId = "story" | "repos" | "contact";
 export type NavIcon = CompanyLinkId;
 
 /** Texts: messages → site.nav.company.<icon> (label, desc). */
@@ -33,14 +34,16 @@ export interface NavProduct {
 export const NAV_PRODUCTS: NavProduct[] = PRODUCTS.map(({ id, name, devUrl, status }) => ({ id, name, href: devUrl, status }));
 
 export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
-  { href: "/products", icon: "products" },
   { href: "/story", icon: "story" },
   { href: "/open-source", icon: "repos", match: ["/open-source/"] },
   { href: "/contact", icon: "contact" },
 ];
 
-/** The centre of the bar and the mobile panel's list: this site's sections, in this order. "Our story" is in the footer (Krizaka column). */
-export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["products", "repos"] as const).map((icon) => NAV_COMPANY.find((l) => l.icon === icon)!);
+/** The products' place: a section of the home, no page of its own (/products answers 308 there, lib/product-redirects.ts). */
+export const PRODUCTS_ANCHOR = "/#products";
+
+/** The centre of the bar and the mobile panel's list: this site's one other view. "Our story" is in the footer (Krizaka column). */
+export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["repos"] as const).map((icon) => NAV_COMPANY.find((l) => l.icon === icon)!);
 
 /* While the documentation still renders here (/docs, until it has moved to ui.krizaka.com and java.krizaka.com), the
    bar under /docs names where the reader is (Docs / <section>, DocsCrumb) and keeps the search over it. Nothing outside

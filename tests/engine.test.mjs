@@ -22,16 +22,24 @@ test("every use names a product of lib/products.ts, never the engine itself, and
 
 test("a planned use is said planned: the products not wired yet are flagged, the wired ones are not", () => {
   assert.deepEqual(uses.filter((u) => u.planned).map((u) => u.id).sort(), ["akinaza", "yasakia", "yororis"]);
+  const home = read("app/components/home/ProductShowcase.tsx");
+  assert.match(home, /use\?\.planned \? t\.site\.home\.products\.enginePlanned : t\.site\.home\.products\.engineUse/);
+  for (const l of ["en", "fr"]) {
+    const p = messages[l].site.home.products;
+    assert.match(p.engineUse, /\{use\}/);
+    assert.match(p.enginePlanned, /\{use\}/);
+    assert.notEqual(p.engineUse, p.enginePlanned, `${l}: a planned use reads differently`);
+  }
   const card = read("app/components/ProductCard.tsx");
   assert.match(card, /e\.planned/);
   assert.match(card, /tone: "wip"/);
 });
 
-test("the home and /products wear the engine as the foundation; /story's engine stage shows the engine card", () => {
-  const card = read("app/components/ProductCard.tsx");
-  assert.match(card, /foundation: <EngineCard/);
-  assert.match(card, /foundationLabel/);
-  assert.match(read("app/components/home/WhatWeBuild.tsx"), /<ProductGrid[^>]*withEngine/);
-  assert.match(read("app/[locale]/products/page.tsx"), /<ProductGrid[^>]*withEngine/);
+test("the home wears the engine as the foundation (CardGrid foundation, its own wide GlowCard); /story's engine stage shows the engine card", () => {
+  const home = read("app/components/home/ProductShowcase.tsx");
+  assert.match(home, /foundation=\{<EngineCard /);
+  assert.match(home, /foundationLabel=\{t\.site\.products\.engine\.label\}/);
+  assert.match(home, /PRODUCTS\.filter\(\(p\) => p\.id !== ENGINE\)/, "the engine is the foundation, never a card among the others");
+  assert.match(read("app/[locale]/page.tsx"), /<ProductShowcase\b/);
   assert.match(read("app/[locale]/story/page.tsx"), /engine: <EngineCard/);
 });

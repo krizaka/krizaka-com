@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 // Krizaka's story is its know-how (2026-10-14): each product proves one thing the studio knows how to do. The home,
-// /products, /open-source and /story are cut that way; a product added to lib/products.ts must say what it proves.
+// /open-source and /story are cut that way; a product added to lib/products.ts must say what it proves.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`)).site;
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name:/g)].map((m) => m[1]);
@@ -28,23 +28,23 @@ test("the known know-hows are the ones Oussama named", () => {
   assert.match(k.yororis.name, /voice/i);
 });
 
-test("one product card for the whole site: the home, /products and /story render the same ProductCard from PRODUCTS", () => {
+test("the home and /story render the products from PRODUCTS: the home's glow cards, /story's ProductCard", () => {
   const card = read("app/components/ProductCard.tsx");
   assert.match(card, /h\.knowhow\[p\.id\]/);
   assert.match(card, /<ArgumentCard/);
   assert.match(card, /href: p\.devUrl/);
   assert.match(card, /href: p\.repoUrl/);
   assert.match(card, /PRODUCTS\.filter/);
-  for (const file of ["app/components/home/WhatWeBuild.tsx", "app/[locale]/products/page.tsx", "app/[locale]/story/page.tsx"]) {
-    assert.match(read(file), /from "(@\/app\/components|\.\.)\/ProductCard"/, `${file} reads the shared card`);
-  }
+  const home = read("app/components/home/ProductShowcase.tsx");
+  assert.match(home, /h\.knowhow\[p\.id\]\.name/, "each card names the know-how it proves");
+  assert.match(home, /href=\{p\.repoUrl\}/);
+  assert.match(read("app/[locale]/story/page.tsx"), /from "@\/app\/components\/ProductCard"/, "/story reads the shared card");
   for (const file of ["app/[locale]/story/StoryClient.tsx", "app/[locale]/story/page.tsx"]) {
     assert.doesNotMatch(read(file), /ProfileCard|StatGauge|ChoiceGrid|<ProductLogo/, `${file} draws its own product tile`);
   }
   const os = read("app/[locale]/open-source/page.tsx");
-  assert.match(os, /id="knowhow"/);
-  assert.match(os, /href=\{`#\$\{nav\.id\}`\}/, "a card of the foundation leads to the product's repositories");
-  assert.match(os, /id="runs-on"/, "the runs-on table stays");
+  assert.match(os, /id="repositories"/, "every repository, by product");
+  assert.match(os, /id="runs-on"/, "the runs-on table stays (folded)");
 });
 
 test("a product card's one line is a hook: 90 characters at most, in both languages", () => {

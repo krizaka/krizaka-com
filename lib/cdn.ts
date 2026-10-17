@@ -21,6 +21,9 @@ export function cdn(path: string): string {
   return `${CDN_URL}/${manifest.root}/${path.slice(0, dot)}.${hash}${path.slice(dot)}`;
 }
 
+/** True when `path` is recorded in the manifest (a medium that may not be uploaded yet: the page then does without it). */
+export const onCdn = (path: string): boolean => Boolean(FILES[path]);
+
 /** A recording: the two encodings and its poster, recorded together (`<base>.webm|.mp4|.jpg`). */
 export interface Video {
   webm: string;

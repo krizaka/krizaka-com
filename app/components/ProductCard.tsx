@@ -1,4 +1,4 @@
-/* THE product card of krizaka.com — one block wherever a product is listed (the home, /products, /story): the
+/* The product card of /story (the home presents the products as glow cards: home/ProductShowcase.tsx): the
    @krizaka/ui ArgumentCard, worn in the product's brand (`.brand-<id>` gives its accent and its mark). Mark · the
    know-how it proves · "Proved by <name>" · its release state (lib/nav.ts statuses, said honestly) · one line · the
    way in (the product's own site, or its code while it has no site) and, discreet, its source. Data comes from
@@ -78,26 +78,21 @@ export function EngineCard({ locale }: { locale: string }) {
   );
 }
 
-/** Every product of lib/products.ts as the same card; `only` / `exclude` pick a subset (the story's stages).
- *  `withEngine`: Orazaka is not one card among the others — it is the foundation (EngineCard), and the other products
- *  are the cards it powers, in a frame joined to it (@krizaka/ui CardGrid `foundation`). */
+/** Every product of lib/products.ts as the same card; `only` / `exclude` pick a subset (the story's stages). */
 export default function ProductGrid({
   locale,
   only,
   exclude,
   reveal = true,
   min = 300,
-  withEngine = false,
 }: {
   locale: string;
   only?: readonly ProductId[];
   exclude?: readonly ProductId[];
   reveal?: boolean;
   min?: number;
-  withEngine?: boolean;
 }) {
-  const skip = withEngine ? [...(exclude ?? []), ENGINE] : exclude;
-  const list = PRODUCTS.filter((p) => (!only || only.includes(p.id)) && !skip?.includes(p.id));
+  const list = PRODUCTS.filter((p) => (!only || only.includes(p.id)) && !exclude?.includes(p.id));
   const picked = only ? only.map((id) => list.find((p) => p.id === id)).filter((p): p is Product => Boolean(p)) : list;
   return (
     <CardGrid
@@ -106,9 +101,6 @@ export default function ProductGrid({
       columns={3}
       fit={picked.length === PRODUCTS.length ? "fit" : "fill"}
       reveal={reveal}
-      {...(withEngine
-        ? { foundation: <EngineCard locale={locale} />, foundationLabel: getDictionary(locale).site.products.engine.label, className: "brand-" + ENGINE }
-        : {})}
     >
       {picked.map((p) => (
         <ProductCard key={p.id} product={p} locale={locale} />

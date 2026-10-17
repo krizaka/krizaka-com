@@ -101,10 +101,6 @@
         }
       },
       "company": {
-        "products": {
-          "label": "Products",
-          "desc": "Every product, side by side"
-        },
         "story": {
           "label": "Our story",
           "desc": "Where our names come from"
@@ -202,17 +198,14 @@
         }
       }
     },
-    "productsPage": {
-      "title": "Products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza",
-      "description": "Krizaka's open-source products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka and Akinaza — each on its own site, with its source on GitHub."
-    },
     "home": {
       "hero": {
         "eyebrow": "Montréal · Software studio",
         "title": "We build open-source software — and the stack under it.",
-        "lead": "Krizaka is a software studio in Montréal. We make seven products and publish everything they stand on: Krizaka UI for interfaces, Krizaka Java for services. Every line is public; every change is tested.",
+        "lead": "Seven products on one AI engine, and every piece they stand on published under Apache-2.0.",
         "primary": "See what we build",
-        "contact": "Contact us",
+        "film": "Watch the film",
+        "filmLength": "44 s",
         "proofsLabel": "Krizaka in figures, read at build",
         "proofs": {
           "repositories": "public repositories",
@@ -224,34 +217,23 @@
         "filmClose": "Close the film"
       },
       "products": {
-        "eyebrow": "Know-how",
-        "title": "What we know how to do.",
-        "lead": "Our core know-how is Orazaka, the engine every product's AI runs on. Each product below proves it in its own field.",
-        "all": "All products"
+        "eyebrow": "What we build",
+        "title": "One engine. The products it powers.",
+        "lead": "Every product's AI runs on Orazaka. Each one lives on its own site, with its source on GitHub.",
+        "engineUse": "On Orazaka · {use}",
+        "enginePlanned": "On Orazaka, planned · {use}"
       },
       "stack": {
-        "eyebrow": "The stack we open-source",
-        "title": "One open stack under every know-how.",
-        "lead": "Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka and Akinaza are made of the same open pieces: Krizaka UI for every screen, Krizaka Java for every service. Each product only brings its identity and its know-how.",
+        "eyebrow": "Open source",
+        "title": "The stack under every product, in the open.",
+        "lead": "Krizaka UI for every screen, Krizaka Java for every service — each on its own site.",
         "visit": "Open {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
           "npm": "{count} packages on npm",
           "maven": "{count} artifacts on Maven Central"
         },
-        "repositories": "Every repository",
-        "figures": {
-          "label": "Krizaka UI in figures, read from its published registries",
-          "components": "components",
-          "native": "also on iOS and Android",
-          "packages": "packages on npm",
-          "version": "@krizaka/ui"
-        },
-        "visual": {
-          "caption": "One component, four identities: the same Krizaka UI progress bar in each product's theme.",
-          "progress": "{name} identity"
-        },
-        "live": "See it live on ui.krizaka.com"
+        "more": "Everything we publish"
       },
       "principles": {
         "eyebrow": "How we work",
@@ -282,20 +264,12 @@
       "company": {
         "eyebrow": "Montréal",
         "title": "A Montréal studio, here for the long run.",
-        "body": "Technologies Krizaka Inc. is based in Montréal, Québec. We would rather become a reference for how software is built — open, accessible, bilingual, tested — than the loudest name in it.",
-        "story": "Read our story",
-        "openSource": "Our open source"
+        "body": "Technologies Krizaka Inc. is based in Montréal, Québec — open, accessible, bilingual, tested.",
+        "story": "Read our story"
       },
       "contact": {
         "title": "Tell us what you're building.",
         "cta": "Contact us"
-      },
-      "blog": {
-        "eyebrow": "Blog",
-        "title": "From the blog",
-        "lead": "Notes on sovereign AI, measured costs and real document runs.",
-        "all": "All posts",
-        "readingTime": "{minutes} min read"
       }
     },
     "footer": {
@@ -551,21 +525,30 @@
       }
     },
     "openSource": {
+      "eyebrow": "Open source · Apache-2.0",
       "title": "Everything we build is public.",
-      "lead": "The stack under our products has its own sites — Krizaka UI and Krizaka Java. Below them, every Krizaka repository, read from GitHub at build, and why each building block exists.",
-      "count": "{count} public repositories · ",
+      "lead": "Take a piece, read the code, tell us what to improve.",
+      "github": "Browse github.com/krizaka",
+      "figuresLabel": "What we publish, read from GitHub, npm and Maven Central at build",
+      "figures": {
+        "repositories": "public repositories",
+        "components": "Krizaka UI components",
+        "npm": "packages on npm",
+        "maven": "artifacts on Maven Central"
+      },
+      "stackEyebrow": "What we publish",
+      "stackTitle": "Two sites, one for each half of the stack.",
+      "stackLead": "Guides, references and every package, built from their own repositories at every release.",
+      "reposEyebrow": "The repositories",
+      "reposTitle": "Every repository, by product.",
+      "reposLead": "Read from GitHub at build. Open a product to see its repositories.",
+      "runsTitle": "What each product runs on",
       "contributeTitle": "Want to contribute?",
-      "contributeBody": "Every repository has its contract (AGENTS.md) and the same contribution rules. A question, a bug, an idea: open a discussion or an issue.",
+      "contributeBody": "A question, a bug, an idea: pick the repository and open a discussion or an issue.",
+      "contributeAsk": "Open a discussion or an issue",
       "contributeGuide": "Contribution guide",
-      "ask": "Ask in Discussions",
-      "write": "Write to us",
-      "jump": "On this page",
-      "catalogueCount": "{repositories} repositories · read from GitHub at build",
+      "count": "{count} public repositories · ",
       "repoCount": "{count} repositories",
-      "live": "Live",
-      "stack": "Stack",
-      "uses": "Krizaka packages it uses",
-      "engine": "Powered by Orazaka",
       "kinds": {
         "main": "Main",
         "web": "Web",
@@ -579,18 +562,6 @@
         "name": "Krizaka platform",
         "tagline": "The building blocks every product shares: Krizaka UI, the Java kits, the site and the organisation's rules."
       },
-      "nav": {
-        "products": "Products",
-        "blocks": "Building blocks",
-        "more": "More",
-        "stack": "The stack",
-        "runs": "What runs on what",
-        "knowhow": "Know-how"
-      },
-      "eyebrow": "Open source · Apache-2.0",
-      "stackEyebrow": "The stack",
-      "stackTitle": "Two sites, one for each half of the stack.",
-      "stackLead": "Guides, references and every package live there, built from their own repositories at every release.",
       "orochiaRepos": {
         "orochia": "The Orochia platform: API, web app and shared packages.",
         "orochia-admin": "The Orochia operator console.",
@@ -599,9 +570,6 @@
         "default": "A repository of the Orochia platform."
       },
       "runs": {
-        "eyebrow": "The proof",
-        "title": "One open foundation under every know-how.",
-        "lead": "Each cell is read from the products' own manifests (package.json and pom.xml) — not typed. \"Planned\" marks what is decided and tracked, not shipped yet.",
         "caption": "What each product runs on",
         "product": "Product",
         "yes": "Yes",
@@ -619,13 +587,6 @@
           "icons": "icons",
           "intl": "intl"
         }
-      },
-      "foundation": {
-        "eyebrow": "The foundation",
-        "title": "The same open pieces under every know-how.",
-        "lead": "A know-how is not a feature of one product: it stands on the shared stack. Each card names the know-how, the product that proves it and the open pieces under it, and leads to that product's repositories below.",
-        "stands": "{name} stands on {kits}.",
-        "standsAlone": "{name} is the engine the other products are meant to call."
       }
     },
     "notFound": {
@@ -1266,7 +1227,7 @@
         },
         {
           "q": "Where are the products?",
-          "a": "On their own sites: dev.orazaka.com, dev.orochia.com, dev.yasakia.com (in development) and dev.yororis.com (under construction). The Products page lists them with their source."
+          "a": "On their own sites: dev.orazaka.com, dev.orochia.com, dev.yasakia.com (in development) and dev.yororis.com (under construction). The home lists them, each with its source."
         },
         {
           "q": "Where is the documentation?",

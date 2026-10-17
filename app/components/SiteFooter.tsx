@@ -5,6 +5,7 @@ import { SiteFooter as FamilyFooter } from "@krizaka/ui/site-footer";
 import { familyLabels } from "@krizaka/ui/sites";
 import { useI18n } from "./I18nProvider";
 import { BLOG_URL } from "@/lib/site";
+import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import { useContactHref } from "./useContactHref";
 
 /* The footer (NAV-SYS) is @krizaka/ui's SiteFooter: this site's own column (its pages), the Krizaka family in columns
@@ -32,7 +33,7 @@ export default function SiteFooter() {
     >
       <FamilyFooter.Column title="Krizaka">
         <FamilyFooter.Link asChild>
-          <Link href="/products" prefetch={false}>{f.allProducts}</Link>
+          <Link href={PRODUCTS_ANCHOR} prefetch={false}>{f.allProducts}</Link>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
           <Link href="/open-source" prefetch={false}>{f.openSource}</Link>

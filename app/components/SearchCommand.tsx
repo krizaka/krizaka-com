@@ -6,14 +6,14 @@ import { Command, CommandDialog } from "@krizaka/ui/command";
 import { Kbd } from "@krizaka/ui/kbd";
 import { useI18n } from "./I18nProvider";
 import { useContactHref } from "./useContactHref";
-import { NAV_DOCS, NAV_DOCS_HUB, docsLinkText } from "@/lib/nav";
+import { NAV_DOCS, NAV_DOCS_HUB, PRODUCTS_ANCHOR, docsLinkText } from "@/lib/nav";
 
 /* The site search (⌘K): the @krizaka/ui command palette (focus trap, Escape, arrow keys, filter) over the
    site's destinations. The destinations are structure; their words are messages → site.search.items.<id>. The
    documentation entries are every NAV_DOCS set (lib/nav.ts) and the hub — a set added there is searchable here. */
 
 const SEARCH_TARGETS = [
-  { id: "products", url: "/products" },
+  { id: "products", url: PRODUCTS_ANCHOR },
   { id: "docs", url: NAV_DOCS_HUB },
   { id: "story", url: "/story" },
   { id: "openSource", url: "/open-source" },

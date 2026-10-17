@@ -91,8 +91,11 @@ export default function ContactClient() {
           </aside>
         </div>
 
+        {/* #public: /open-source's "contribute" lands here — a discussion or an issue, on the right repository. */}
         <h2
+          id="public"
           style={{
+            scrollMarginTop: "var(--kz-anchor-offset, 96px)",
             fontFamily: "var(--font-display), system-ui, sans-serif",
             fontSize: "18px",
             fontWeight: 700,

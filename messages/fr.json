@@ -101,10 +101,6 @@
         }
       },
       "company": {
-        "products": {
-          "label": "Produits",
-          "desc": "Tous les produits, côte à côte"
-        },
         "story": {
           "label": "Notre histoire",
           "desc": "D'où viennent nos noms"
@@ -202,17 +198,14 @@
         }
       }
     },
-    "productsPage": {
-      "title": "Produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza",
-      "description": "Les produits open source de Krizaka — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — chacun sur son propre site, avec son code source sur GitHub."
-    },
     "home": {
       "hero": {
         "eyebrow": "Montréal · Studio logiciel",
         "title": "Nous construisons du logiciel open source — et tout ce qui le porte.",
-        "lead": "Krizaka est un studio logiciel à Montréal. Nous faisons sept produits et publions tout ce sur quoi ils reposent : Krizaka UI pour les interfaces, Krizaka Java pour les services. Chaque ligne est publique ; chaque changement est testé.",
+        "lead": "Sept produits sur un même moteur d'IA, et chaque pièce qui les porte publiée sous Apache-2.0.",
         "primary": "Voir ce que nous construisons",
-        "contact": "Nous contacter",
+        "film": "Voir le film",
+        "filmLength": "44 s",
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "proofs": {
           "repositories": "dépôts publics",
@@ -224,34 +217,23 @@
         "filmClose": "Fermer le film"
       },
       "products": {
-        "eyebrow": "Savoir-faire",
-        "title": "Ce que nous savons faire.",
-        "lead": "Notre savoir-faire central est Orazaka, le moteur sur lequel tourne l'IA de chaque produit. Chaque produit ci-dessous le prouve dans son domaine.",
-        "all": "Tous les produits"
+        "eyebrow": "Ce que nous construisons",
+        "title": "Un moteur. Les produits qu'il propulse.",
+        "lead": "L'IA de chaque produit tourne sur Orazaka. Chacun vit sur son propre site, avec son code sur GitHub.",
+        "engineUse": "Sur Orazaka · {use}",
+        "enginePlanned": "Sur Orazaka, prévu · {use}"
       },
       "stack": {
-        "eyebrow": "La pile que nous ouvrons",
-        "title": "Une même pile ouverte sous chaque savoir-faire.",
-        "lead": "Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza sont faits des mêmes pièces ouvertes : Krizaka UI pour chaque écran, Krizaka Java pour chaque service. Chaque produit n'apporte que son identité et son savoir-faire.",
+        "eyebrow": "Open source",
+        "title": "La pile sous chaque produit, à découvert.",
+        "lead": "Krizaka UI pour chaque écran, Krizaka Java pour chaque service — chacun sur son propre site.",
         "visit": "Ouvrir {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
           "npm": "{count} paquets sur npm",
           "maven": "{count} artefacts sur Maven Central"
         },
-        "repositories": "Tous les dépôts",
-        "figures": {
-          "label": "Krizaka UI en chiffres, lus dans ses registres publiés",
-          "components": "composants",
-          "native": "aussi sur iOS et Android",
-          "packages": "paquets sur npm",
-          "version": "@krizaka/ui"
-        },
-        "visual": {
-          "caption": "Un composant, quatre identités : la même barre de progression Krizaka UI dans le thème de chaque produit.",
-          "progress": "Identité {name}"
-        },
-        "live": "Le voir en direct sur ui.krizaka.com"
+        "more": "Tout ce que nous publions"
       },
       "principles": {
         "eyebrow": "Notre façon de travailler",
@@ -282,20 +264,12 @@
       "company": {
         "eyebrow": "Montréal",
         "title": "Un studio montréalais, ici pour durer.",
-        "body": "Technologies Krizaka Inc. est établie à Montréal, au Québec. Nous préférons devenir une référence dans la façon de construire du logiciel — ouvert, accessible, bilingue, testé — plutôt que le nom le plus bruyant.",
-        "story": "Lire notre histoire",
-        "openSource": "Notre open source"
+        "body": "Technologies Krizaka Inc. est établie à Montréal, au Québec — ouvert, accessible, bilingue, testé.",
+        "story": "Lire notre histoire"
       },
       "contact": {
         "title": "Parlez-nous de ce que vous construisez.",
         "cta": "Nous contacter"
-      },
-      "blog": {
-        "eyebrow": "Blogue",
-        "title": "Du blogue",
-        "lead": "Des notes sur l'IA souveraine, les coûts mesurés et de vraies exécutions sur des documents.",
-        "all": "Tous les billets",
-        "readingTime": "{minutes} min de lecture"
       }
     },
     "footer": {
@@ -551,21 +525,30 @@
       }
     },
     "openSource": {
+      "eyebrow": "Open source · Apache-2.0",
       "title": "Tout ce que nous construisons est public.",
-      "lead": "La pile qui porte nos produits a ses propres sites — Krizaka UI et Krizaka Java. En dessous, chaque dépôt Krizaka, lu depuis GitHub au build, et la raison d'être de chaque brique.",
-      "count": "{count} dépôts publics · ",
+      "lead": "Prenez une pièce, lisez le code, dites-nous quoi améliorer.",
+      "github": "Parcourir github.com/krizaka",
+      "figuresLabel": "Ce que nous publions, lu sur GitHub, npm et Maven Central au build",
+      "figures": {
+        "repositories": "dépôts publics",
+        "components": "composants Krizaka UI",
+        "npm": "paquets sur npm",
+        "maven": "artefacts sur Maven Central"
+      },
+      "stackEyebrow": "Ce que nous publions",
+      "stackTitle": "Deux sites, un pour chaque moitié de la pile.",
+      "stackLead": "Guides, références et chaque paquet, construits depuis leurs propres dépôts à chaque version.",
+      "reposEyebrow": "Les dépôts",
+      "reposTitle": "Chaque dépôt, par produit.",
+      "reposLead": "Lus sur GitHub au build. Ouvrez un produit pour voir ses dépôts.",
+      "runsTitle": "Sur quoi tourne chaque produit",
       "contributeTitle": "Envie de contribuer ?",
-      "contributeBody": "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue.",
+      "contributeBody": "Une question, un bogue, une idée : choisissez le dépôt et ouvrez une discussion ou un ticket.",
+      "contributeAsk": "Ouvrir une discussion ou un ticket",
       "contributeGuide": "Guide de contribution",
-      "ask": "Demander dans les Discussions",
-      "write": "Nous écrire",
-      "jump": "Sur cette page",
-      "catalogueCount": "{repositories} dépôts · lus depuis GitHub au build",
+      "count": "{count} dépôts publics · ",
       "repoCount": "{count} dépôts",
-      "live": "En ligne",
-      "stack": "Pile technique",
-      "uses": "Les packages Krizaka qu'il utilise",
-      "engine": "Propulsé par Orazaka",
       "kinds": {
         "main": "Principal",
         "web": "Web",
@@ -579,18 +562,6 @@
         "name": "Plateforme Krizaka",
         "tagline": "Les briques que partagent tous les produits : Krizaka UI, les kits Java, le site et les règles de l'organisation."
       },
-      "nav": {
-        "products": "Produits",
-        "blocks": "Briques",
-        "more": "Plus",
-        "stack": "La pile",
-        "runs": "Ce qui tourne sur quoi",
-        "knowhow": "Savoir-faire"
-      },
-      "eyebrow": "Open source · Apache-2.0",
-      "stackEyebrow": "La pile",
-      "stackTitle": "Deux sites, un pour chaque moitié de la pile.",
-      "stackLead": "Les guides, les références et chaque paquet y vivent, construits depuis leurs propres dépôts à chaque version.",
       "orochiaRepos": {
         "orochia": "La plateforme Orochia : API, application web et paquets partagés.",
         "orochia-admin": "La console opérateur d'Orochia.",
@@ -599,9 +570,6 @@
         "default": "Un dépôt de la plateforme Orochia."
       },
       "runs": {
-        "eyebrow": "La preuve",
-        "title": "Une même fondation ouverte sous chaque savoir-faire.",
-        "lead": "Chaque case est lue dans les manifestes des produits (package.json et pom.xml) — jamais saisie. « Prévu » marque ce qui est décidé et suivi, pas encore livré.",
         "caption": "Ce sur quoi tourne chaque produit",
         "product": "Produit",
         "yes": "Oui",
@@ -619,13 +587,6 @@
           "icons": "icônes",
           "intl": "intl"
         }
-      },
-      "foundation": {
-        "eyebrow": "La fondation",
-        "title": "Les mêmes pièces ouvertes sous chaque savoir-faire.",
-        "lead": "Un savoir-faire n'est pas une fonction d'un produit : il repose sur la pile partagée. Chaque carte nomme le savoir-faire, le produit qui le prouve et les pièces ouvertes dessous, et mène aux dépôts de ce produit plus bas.",
-        "stands": "{name} repose sur {kits}.",
-        "standsAlone": "{name} est le moteur que les autres produits sont censés appeler."
       }
     },
     "notFound": {
@@ -1266,7 +1227,7 @@
         },
         {
           "q": "Où sont les produits ?",
-          "a": "Sur leurs propres sites : dev.orazaka.com, dev.orochia.com, dev.yasakia.com (en développement) et dev.yororis.com (en construction). La page Produits les liste avec leur code source."
+          "a": "Sur leurs propres sites : dev.orazaka.com, dev.orochia.com, dev.yasakia.com (en développement) et dev.yororis.com (en construction). L'accueil les présente, chacun avec son code source."
         },
         {
           "q": "Où est la documentation ?",
