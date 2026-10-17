@@ -94,6 +94,10 @@
         "development": {
           "label": "En développement",
           "long": "En développement"
+        },
+        "devPreview": {
+          "label": "Préversion dev",
+          "long": "Préversion de développement"
         }
       },
       "company": {
@@ -221,7 +225,6 @@
         "eyebrow": "Savoir-faire",
         "title": "Ce que nous savons faire.",
         "lead": "Notre savoir-faire central est Orazaka, le moteur sur lequel tourne l'IA de chaque produit. Chaque produit ci-dessous le prouve dans son domaine.",
-        "preview": "Préversion dev",
         "all": "Tous les produits"
       },
       "stack": {

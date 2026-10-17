@@ -66,6 +66,13 @@
   public, sign-up is closed, and it says « In development ». Yomizaka has a dev site; Kachizaka and Akinaza have none yet, so
   their card says « See the code » and links the repository — never a dead address. Kachizaka is points only, never money;
   Akinaza prepares tax returns and never files them, and is not for restaurants and bars — the card words say so, no more.
+- **« Dev preview » is data, not words** ([krizaka/.github `docs/standards/dev-preview.md`](https://github.com/krizaka/.github/blob/main/docs/standards/dev-preview.md), ADR-002).
+  `ProductStatus` has `devPreview`; every product has an explicit `status` (no status no longer means a badge). A product may wear
+  `devPreview` only when the `dev-preview.json` at the root of its repository is complete (every criterion: fresh evidence URL or a
+  justified `na`). `scripts/gen-dev-preview.mjs` (in `npm run build`) reads the checklists from GitHub raw, writes the git-ignored
+  `lib/dev-preview-checklists.json`, checks the evidence URLs and **fails the build** if the status is not supported; the pure rules
+  are in `scripts/dev-preview-lib.mjs`, guarded by `tests/dev-preview.test.mjs`. Orazaka and Orochia keep the badge under a
+  time-boxed waiver (`WAIVERS`, until 2026-11-01) while their gaps close; the test fails the day it ends. Other statuses are never gated.
 - A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
   construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
 - **Yororis' lexicon** is law for every message whose key contains `yororis`: `npm run lexicon` (in `npm run lint`) fails

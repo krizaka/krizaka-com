@@ -20,7 +20,7 @@ import { GitHubMark } from "./brand/GitHubMark";
 export function ProductCard({ product: p, locale }: { product: Product; locale: string }) {
   const site = getDictionary(locale).site;
   const h = site.products;
-  const facts: Fact[] = [p.status ? { label: site.nav.status[p.status].label, tone: "wip" } : { label: site.home.products.preview, tone: "ok" }];
+  const facts: Fact[] = [{ label: site.nav.status[p.status].label, tone: p.status === "devPreview" ? "ok" : "wip" }];
   return (
     <ArgumentCard
       id={`product-${p.id}`}

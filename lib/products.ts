@@ -7,16 +7,17 @@ import { AKINAZA_REPO_URL, KACHIZAKA_REPO_URL, OROCHIA_APP_URL, YASAKIA_REPO_URL
 
 export type ProductId = "orazaka" | "orochia" | "yasakia" | "yororis" | "yomizaka" | "kachizaka" | "akinaza";
 
-/** Where a product not released yet stands. `upcoming`: announced, coming soon. `construction`: being built, nothing
+/** Where a product stands. `devPreview`: runs on its dev site for QA, and its dev-preview.json checklist is complete
+ *  (the build refuses it otherwise: scripts/gen-dev-preview.mjs, krizaka/.github docs/standards/dev-preview.md). `upcoming`: announced, coming soon. `construction`: being built, nothing
  *  offered yet. `development`: built in the open, in development (its repository is public; a dev site when it has one).
- *  No status: released. Words: site.nav.status.<status>. */
-export type ProductStatus = "upcoming" | "construction" | "development";
+ *  Words: site.nav.status.<status>. */
+export type ProductStatus = "upcoming" | "construction" | "development" | "devPreview";
 
 export interface Product {
   /** The id the mark, the brand and the messages use (Yazakia was renamed Yasakia, 2026-10). */
   id: ProductId;
   name: string;
-  status?: ProductStatus;
+  status: ProductStatus;
   /** The product's own site: where the product is presented, demonstrated and documented. A product without a site yet
    *  (nothing deployed) points to its repository — never to a dead address. */
   devUrl: string;
@@ -27,9 +28,9 @@ export interface Product {
 }
 
 export const PRODUCTS: Product[] = [
-  { id: "orazaka", name: "Orazaka", devUrl: "https://dev.orazaka.com", repoUrl: "https://github.com/krizaka/orazaka" },
+  { id: "orazaka", name: "Orazaka", status: "devPreview", devUrl: "https://dev.orazaka.com", repoUrl: "https://github.com/krizaka/orazaka" },
   { id: "yomizaka", name: "Yomizaka", status: "development", devUrl: "https://dev.yomizaka.com", repoUrl: YOMIZAKA_REPO_URL },
-  { id: "orochia", name: "Orochia", devUrl: OROCHIA_APP_URL, repoUrl: "https://github.com/krizaka/orochia" },
+  { id: "orochia", name: "Orochia", status: "devPreview", devUrl: OROCHIA_APP_URL, repoUrl: "https://github.com/krizaka/orochia" },
   { id: "kachizaka", name: "Kachizaka", status: "development", devUrl: "https://dev.kachizaka.com", repoUrl: KACHIZAKA_REPO_URL },
   { id: "akinaza", name: "Akinaza", status: "development", devUrl: "https://dev.akinaza.com", repoUrl: AKINAZA_REPO_URL },
   { id: "yasakia", name: "Yasakia", status: "development", devUrl: "https://dev.yasakia.com", repoUrl: YASAKIA_REPO_URL },
