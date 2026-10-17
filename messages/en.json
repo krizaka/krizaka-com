@@ -219,7 +219,9 @@
           "npm": "packages on npm",
           "maven": "artifacts on Maven Central",
           "license": "on every repository"
-        }
+        },
+        "film": "Watch the full film",
+        "filmClose": "Close the film"
       },
       "products": {
         "eyebrow": "Know-how",
