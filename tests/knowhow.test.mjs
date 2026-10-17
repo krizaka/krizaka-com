@@ -58,11 +58,12 @@ test("/story keeps its spine: founder, refusal, engine, first proofs, roster, op
     const st = messages(lang).story.stages;
     assert.deepEqual(Object.keys(st), ["founder", "refusal", "engine", "proves", "roster", "open"], `${lang}: site.story.stages`);
     // The founder's path is sourced (his own profile, shared 2026-10-16; ~/Documents/krizaka/00_FONDATEUR/parcours-oussama.md,
-    // the same facts as blog.krizaka.com/about): Oujda → Grenoble → Montréal, in that order, each named in the text.
-    assert.deepEqual(st.founder.places, ["Oujda", "Grenoble", "Montréal"]);
-    for (const place of st.founder.places) assert.match(st.founder.body[0], new RegExp(place), `${lang}: ${place} is told`);
+    // the same facts as blog.krizaka.com/about): Montréal since 2018, the education in his own words; no former city, no LinkedIn.
+    assert.deepEqual(st.founder.places, ["Montréal"]);
+    assert.match(st.founder.body[0], /2018/, `${lang}: since 2018`);
+    assert.doesNotMatch(st.founder.body.join(" "), /Oujda|Grenoble|Maroc|Morocco|Java and Spring|Java et Spring|linkedin/i, `${lang}: no former city, no title, no LinkedIn`);
     assert.match(st.founder.body[0], /2011/, `${lang}: the 2011 research internship`);
-    assert.doesNotMatch(st.founder.body.join(" "), /Maroc\b|Morocco|RBC|TD Bank|BMO|Scotiabank|CIBC|Banque Nationale|National Bank|Desjardins/, `${lang}: places precise, employer never named`);
+    assert.doesNotMatch(st.founder.body.join(" "), /RBC|TD Bank|BMO|Scotiabank|CIBC|Banque Nationale|National Bank|Desjardins/, `${lang}: places precise, employer never named`);
     assert.equal(messages(lang).story.chapters, undefined, `${lang}: the per-product chapters are gone`);
   }
   const story = read("lib/story.ts");
