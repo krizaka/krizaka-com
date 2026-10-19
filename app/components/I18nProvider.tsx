@@ -19,7 +19,6 @@ interface I18nValue {
   /** The active catalogue: t.site.nav… */
   t: TranslationDictionary;
   setLocale: (l: Locale) => void;
-  toggleLocale: () => void;
 }
 
 export function I18nProvider({ children, locale, messages }: { children: ReactNode; locale: Locale; messages: TranslationDictionary }) {
@@ -55,7 +54,7 @@ export function I18nProvider({ children, locale, messages }: { children: ReactNo
 export function useI18n(): I18nValue {
   const { locale, messages, setLocale } = engine.useI18n();
   return useMemo(
-    () => ({ locale, t: messages, setLocale, toggleLocale: () => setLocale(LOCALES.find((l) => l !== locale) ?? locale) }),
+    () => ({ locale, t: messages, setLocale }),
     [locale, messages, setLocale],
   );
 }

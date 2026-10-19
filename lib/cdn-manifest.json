@@ -217,6 +217,10 @@
     "products/orazaka/video/montreal-snow-2160p.mp4": "5a2106d3d6",
     "products/orazaka/video/old-port-2160p.mp4": "f1b8a82265",
     "products/orazaka/video/snow-walk-2160p.mp4": "64771b7424",
+    "products/orochia/demo-stories/bagels.mp4": "2cc9d753f5",
+    "products/orochia/demo-stories/picnic-olive-grove.mp4": "2250f186c3",
+    "products/orochia/demo-stories/skating-pond.mp4": "04c5801692",
+    "products/orochia/demo-stories/spice-alley.mp4": "6d5fe5bd16",
     "products/orochia/tour/en/alex-back.jpg": "96622aa2c4",
     "products/orochia/tour/en/alex-back.mp4": "6efb78f4d7",
     "products/orochia/tour/en/alex-back.webm": "217de009d7",
@@ -247,6 +251,9 @@
     "products/orochia/tour/en/elena-story.jpg": "56fcd7951c",
     "products/orochia/tour/en/elena-story.mp4": "8a6b9405d1",
     "products/orochia/tour/en/elena-story.webm": "20549708d8",
+    "products/orochia/tour/en/home-phone.jpg": "555ef4cb6b",
+    "products/orochia/tour/en/home-phone.mp4": "87f5ecc2d5",
+    "products/orochia/tour/en/home-phone.webm": "d8b0da2948",
     "products/orochia/tour/en/showcase.jpg": "6c8b1a0bfc",
     "products/orochia/tour/en/showcase.mp4": "8d82f5419a",
     "products/orochia/tour/en/showcase.webm": "92bec0b594",
@@ -280,6 +287,9 @@
     "products/orochia/tour/fr/elena-story.jpg": "93fd79739a",
     "products/orochia/tour/fr/elena-story.mp4": "7d0996d8dd",
     "products/orochia/tour/fr/elena-story.webm": "61f87f5b1c",
+    "products/orochia/tour/fr/home-phone.jpg": "5a4163e0af",
+    "products/orochia/tour/fr/home-phone.mp4": "378aaf39cc",
+    "products/orochia/tour/fr/home-phone.webm": "6a1638d3c3",
     "products/orochia/tour/fr/showcase.jpg": "6a01dbf847",
     "products/orochia/tour/fr/showcase.mp4": "0e267c3eae",
     "products/orochia/tour/fr/showcase.webm": "908d9f1951",
@@ -288,6 +298,8 @@
     "products/yororis/gallery/home-desktop.webp": "d3fe677abe",
     "products/yororis/gallery/home-phone.webp": "11203dcac9",
     "products/yororis/gallery/members-desktop.webp": "b48e998ce4",
-    "products/yororis/gallery/members-phone.webp": "5e620d5caa"
+    "products/yororis/gallery/members-phone.webp": "5e620d5caa",
+    "products/yororis/tour/moment-fr-phone.jpg": "2b2c262fed",
+    "products/yororis/tour/moment-fr-phone.mp4": "f63fe27a62"
   }
 }
