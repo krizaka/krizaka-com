@@ -282,6 +282,10 @@
   `NEXT_PUBLIC_` only where the browser needs it, then the context. Every variable is declared once in `lib/env.ts`
   (zod); `tests/env.test.mjs` refuses an undeclared or misnamed one and keeps README's table (generated,
   `npm run docs:env`) in sync.
+- **Commit attribution & AI co-authors**: Commits or pull request descriptions authored with AI assistants must attribute their co-author using GitHub-recognized Git trailers:
+  - **Claude**: `Co-authored-by: Claude <noreply@anthropic.com>`
+  - **Antigravity (Gemini)**: `Co-authored-by: Antigravity (Gemini) <200291788+gemini-code-assist@users.noreply.github.com>`
+  Both map to verified GitHub user accounts ([`claude`](https://github.com/claude) and [`gemini-code-assist`](https://github.com/gemini-code-assist)), ensuring their official avatars appear on commits and in the repository's Contributors list.
 
 ## 5.1 PR captures — never committed
 

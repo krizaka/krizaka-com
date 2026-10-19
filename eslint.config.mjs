@@ -18,6 +18,8 @@ const eslintConfig = defineConfig([
     // thousands of vendored/generated issues and can never be "clean".
     "node_modules/**",
     "products/**",
+    "company/**",
+    ".source/**",
   ]),
   {
     // no-explicit-any downgraded to a warning: pragmatic in MDX/React glue code
