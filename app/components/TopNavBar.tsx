@@ -2,11 +2,11 @@
 
 /* The site bar (NAV-SYS), built on @krizaka/ui's NavBar (floating, tightening on scroll, one light gliding between the
    items and resting on the current page) and fed by lib/nav.ts. Three zones:
-   - left, who we are: the Krizaka mark (home) alone — no family switcher on the company's own site (the Products menu is the way to
-     the products; ui.krizaka.com and java.krizaka.com carry the switcher as their way back here);
-   - centre, this site: Products · Open source (the story is in the footer);
-   - right, tools: Blog · Repo · theme · language · Contact us.
-   No search and no "Docs": the site has five pages, and the documentation lives on ui.krizaka.com and java.krizaka.com.
+   - left, who we are: the Krizaka mark and the word "Krizaka" — the home, where the products are presented (two views
+     only, 2026-10-17); no family switcher on the company's own site (ui.krizaka.com and java.krizaka.com carry it);
+   - centre, this site: Open source (the story is in the footer);
+   - right, tools: Blog (blog.krizaka.com) · Repo · theme · language · Contact us, the one primary action.
+   No search and no "Docs": the documentation lives on ui.krizaka.com and java.krizaka.com.
    While /docs still renders here, its pages keep their breadcrumb and the search over them (DocsCrumb, SearchCommand).
    Below md: the mark and the mobile panel's toggle. */
 
@@ -19,6 +19,7 @@ import { Button } from "@krizaka/ui/button";
 import { Kbd } from "@krizaka/ui/kbd";
 import { KrizakaLogo } from "@krizaka/ui";
 import { useI18n } from "./I18nProvider";
+import { useLanguageSwitch } from "./LanguageSwitch";
 import { useSiteTheme } from "./SiteTheme";
 import { BLOG_URL, SITE_REPO_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
@@ -28,7 +29,8 @@ import { DocsCrumb } from "./DocsCrumb";
 import { useContactHref } from "./useContactHref";
 
 export default function TopNavBar() {
-  const { t, toggleLocale } = useI18n();
+  const { t } = useI18n();
+  const language = useLanguageSwitch();
   const m = t.site.menu;
   const contactHref = useContactHref();
   const { theme, toggleTheme } = useSiteTheme();
@@ -41,8 +43,9 @@ export default function TopNavBar() {
       <div className="kz-site-bar-wrap pointer-events-none fixed inset-x-0 top-3 z-50">
         <NavBar.Root label={m.mainAria} className="kz-site-bar pointer-events-auto" data-frame={path.startsWith("/docs/") ? "docs" : undefined}>
           <NavBar.Brand asChild>
-            <Link href="/" aria-label={m.homeAria}>
+            <Link href="/" aria-label={m.homeAria} className="kz-site-brand">
               <KrizakaLogo size={26} />
+              <span className="kz-site-brand-word">Krizaka</span>
             </Link>
           </NavBar.Brand>
 
@@ -92,16 +95,9 @@ export default function TopNavBar() {
               {theme === "dark" ? <SunIcon size={16} /> : <MoonIcon size={16} />}
             </Button>
 
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={toggleLocale}
-              aria-label={m.switchLanguage}
-              className="hidden h-7 w-9 px-0 font-mono text-[11px] font-semibold tracking-wide md:inline-flex"
-            >
-              {m.languageShort}
-            </Button>
+            <span className="hidden md:inline-flex">
+              <NavBar.Language {...language} />
+            </span>
 
             <Button asChild variant="primary" size="sm" shape="cut" className="ml-1 hidden font-bold md:inline-flex">
               <Link href={contactHref}>{m.contactCta}</Link>

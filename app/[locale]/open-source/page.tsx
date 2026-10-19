@@ -1,37 +1,52 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { contactHref } from "@/lib/contact";
+import { ChatIcon, ExternalIcon, FlagIcon } from "@krizaka/icons";
+import { ProductLogo } from "@krizaka/ui";
+import { ChipLink } from "@krizaka/ui/chip-link";
+import { CtaPanel } from "@krizaka/ui/cta-panel";
+import { Section } from "@krizaka/ui/page";
+import { PageHero } from "@krizaka/ui/page-hero";
 import { localizedMetadata } from "@/lib/seo";
 import { NAV_PRODUCTS } from "@/lib/nav";
 import { githubRepositories, publicRepositoryCount } from "@/lib/org-stats";
-import { repositoriesOf, type GithubRepository, type RepositoryKind } from "@/lib/repository-catalogue";
-import { mavenArtifactCount, publishedVersion } from "@/lib/registry-versions";
-import { KIT_PACKAGES } from "@/lib/product-stack";
-import { MANIFESTS_READ_AT, productKits, productStackRows } from "@/lib/product-stack-data";
+import { kindOfRepository, productOfRepository } from "@/lib/repository-catalogue";
+import snapshot from "@/lib/registry-versions.json";
+import manifests from "@/lib/product-manifests.json";
+import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
+import { packageRows, type RegistrySnapshot } from "@/lib/package-catalogue";
+import { howItFits } from "@/lib/how-it-fits";
+import { ENGINE_USES } from "@/lib/engine-uses";
+import { PRODUCTS } from "@/lib/products";
+import { ENGINE } from "@/lib/story";
 import { KITS } from "@/lib/product-stack";
-import ProductStackTable from "@/app/components/ProductStackTable";
+import { MANIFESTS_READ_AT, productStackRows } from "@/lib/product-stack-data";
+import { PUBLIC_CHANNELS, PUBLIC_REPOSITORIES } from "@/lib/public-channels";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
+import { STACK } from "@/lib/stack";
+import { BUILDING_BLOCKS } from "@/lib/building-blocks";
 import TopNavBar from "@/app/components/TopNavBar";
-import { ProductLogo } from "@krizaka/ui";
-import { reveal } from "@/lib/motion";
-import { BUILDING_BLOCKS, FORUMS } from "@/lib/building-blocks";
-import BlockCard from "@/app/components/blocks/BlockCard";
-import { CardGrid } from "@krizaka/ui/card-grid";
-import { LinkCard } from "@krizaka/ui/link-card";
-import { CataloguePage } from "@krizaka/ui/catalogue-page";
-import { ChipLink } from "@krizaka/ui/chip-link";
-import { CtaPanel } from "@krizaka/ui/cta-panel";
-import { Facts, Section, SectionHeading, type Fact } from "@krizaka/ui/page";
-import { StackCards } from "@/app/components/home/OpenStack";
-import { ExternalIcon, ForwardIcon, KnowledgeIcon } from "@krizaka/icons";
+import ProductStackTable from "@/app/components/ProductStackTable";
+import FigureTiles from "@/app/components/FigureTiles";
 import ButtonLink from "@/app/components/ButtonLink";
+import { StackCards } from "@/app/components/home/OpenStack";
+import { PackagesTable, RepositoriesTable, type RepositoryRow } from "./OpenSourceTables";
+import HowItFits from "./HowItFits";
+import { JavaVisual, UiVisual } from "./StackVisual";
+import "./open-source.css";
 
-/* /open-source — the hub of what Krizaka publishes, on the Catalogue template (CataloguePage): first the stack, each
-   part on its own site (Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com, lib/stack.ts); then **every**
-   repository of the org, read from GitHub at build (scripts/gen-org-stats.mjs), by product — with the Krizaka packages
-   each one uses (lib/story.ts) — and the platform's; then why each building block exists (/open-source/<block>). The
-   package lists and the guides live on the stack's own sites. Nothing here is a list typed by hand. */
+/* /open-source — the site's second view (the home is the first; 2026-10-17): the technical view, as refined as the home
+   (docs-hub template). One primary action per section, no boxes in boxes; everything read from data at build.
+   1. The hero: one line, the live figures (repositories, npm packages, Maven artifacts, the licence), GitHub.
+   2. The stack: Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com, each with a still mini-visual and its
+      latest version (npm, Maven Central); the building blocks' pages, as quiet links.
+   3. Packages: a searchable DataTable of every published package (lib/package-catalogue.ts) — registry and family
+      facets, the latest version, the weekly downloads (npm), the links.
+   4. Repositories: every repository grouped by product, with its platform, language and last push (GitHub at build).
+   5. How it fits: products → engine → building blocks → shared services (lib/how-it-fits.ts), an ordered list that is
+      its own text version; what each product runs on, folded.
+   6. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
+      conduct, the licence. */
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -42,157 +57,100 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/open-source",
     en: {
-      title: "Open source — Krizaka UI, Krizaka Java and every Krizaka repository",
-      description: "Everything Krizaka builds is public under Apache-2.0: Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com) and every repository of its products.",
+      title: "Open source — every Krizaka package and repository, and how they fit",
+      description: "Everything Krizaka builds is public under Apache-2.0: Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), every npm and Maven Central package and every repository.",
     },
     fr: {
-      title: "Open source — Krizaka UI, Krizaka Java et tous les dépôts Krizaka",
-      description: "Tout ce que Krizaka construit est public sous Apache-2.0 : Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com) et chaque dépôt de ses produits.",
+      title: "Open source — chaque paquet et dépôt Krizaka, et comment tout s'emboîte",
+      description: "Tout ce que Krizaka construit est public sous Apache-2.0 : Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), chaque paquet npm et Maven Central et chaque dépôt.",
     },
   });
 }
 
 const PRODUCT_IDS = NAV_PRODUCTS.map((p) => p.id);
-const npmUrl = (name: string) => `https://www.npmjs.com/package/${name}`;
-const centralArtifactUrl = (coordinate: string) => `https://central.sonatype.com/artifact/${coordinate.replace(":", "/")}`;
-
-/** A repository, one card: its name, kind and language, and its description in full (GitHub's words) — except Orochia's
-    repositories, whose GitHub descriptions are written for its own audience: krizaka.com says one neutral line each
-    (messages, site.openSource.orochiaRepos). */
-function RepoCard({ repo, kind, orochia }: { repo: GithubRepository; kind: string; orochia: Record<string, string> }) {
-  const description = repo.name.startsWith("orochia") ? (orochia[repo.name] ?? orochia.default) : repo.description;
-  return (
-    <li>
-      <a href={repo.url} target="_blank" rel="noopener noreferrer" className="os-repo">
-        <span className="os-repo-name">{repo.name}</span>
-        <span className="os-repo-meta">
-          {kind}
-          {repo.language ? ` · ${repo.language}` : ""}
-        </span>
-        {description && <span className="os-repo-desc">{description}</span>}
-      </a>
-    </li>
-  );
-}
+const CONDUCT_URL = "https://github.com/krizaka/.github/blob/main/CODE_OF_CONDUCT.md";
+const CONTRIBUTING_URL = "https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md";
+const LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0";
 
 export default async function OpenSourcePage({ params }: Props) {
   const { locale } = await params;
-  const site = getDictionary(locale).site;
+  const dict = getDictionary(locale);
+  const site = dict.site;
   const t = site.openSource;
-  const w = site.blocks;
-  const repositories = githubRepositories();
-  const kindLabel = (k: RepositoryKind) => t.kinds[k];
+  const names: Record<string, string> = { ...Object.fromEntries(NAV_PRODUCTS.map((p) => [p.id, p.name])), krizaka: t.platform.name };
 
-  const products = NAV_PRODUCTS.map((nav) => {
-    const repos = repositoriesOf(repositories, nav.id, PRODUCT_IDS);
-    const runsOn = productKits(nav.id);
-    const uses = runsOn.flatMap((k) => (k === "engine" ? [] : KIT_PACKAGES[k]));
-    const status: Fact = nav.status
-      ? { label: site.nav.status[nav.status].long, tone: "wip" }
-      : { label: t.live, tone: "ok" };
-    return { nav, repos, uses, status, engine: runsOn.includes("engine") && nav.id !== "orazaka", foundation: runsOn.filter((k) => k !== "engine") };
+  const repositories = githubRepositories().filter((r) => !r.archived);
+  const repoRows: RepositoryRow[] = repositories.map((r) => {
+    const product = productOfRepository(r.name, PRODUCT_IDS);
+    return {
+      id: r.name,
+      name: r.name,
+      url: r.url,
+      // Orochia's GitHub descriptions are written for its own audience: krizaka.com says one neutral line each.
+      line: r.name.startsWith("orochia") ? (t.orochiaRepos[r.name as keyof typeof t.orochiaRepos] ?? t.orochiaRepos.default) : r.description,
+      product: names[product],
+      kind: t.kinds[kindOfRepository(r, product)],
+      language: r.language ?? "—",
+      pushedAt: r.pushedAt ?? "",
+    };
   });
-  const platformRepos = repositoriesOf(repositories, "krizaka", PRODUCT_IDS);
-  const listed = products.reduce((n, p) => n + p.repos.length, platformRepos.length);
+  const javaSite = STACK.find((s) => s.id === "java")!.url;
+  const packages = packageRows(snapshot as RegistrySnapshot, repositories.map((r) => r.name), javaSite);
+  const layers = howItFits(PRODUCTS, ENGINE, ENGINE_USES, manifests.products, (snapshot as RegistrySnapshot).mavenMeta, (snapshot as RegistrySnapshot).maven ?? {});
 
-  const filters = (
-    <nav aria-label={t.jump} className="os-filters">
-      <p className="os-filters-title">{t.nav.products}</p>
-      <ul>
-        {products.map(({ nav, repos }) => (
-          <li key={nav.id}>
-            <ChipLink href={`#${nav.id}`} className={"os-chip brand-" + nav.id}>
-              <ProductLogo id={nav.id} size={16} animated={false} />
-              {nav.name}
-              <span className="os-chip-n">{repos.length}</span>
-            </ChipLink>
-          </li>
-        ))}
-        <li>
-          <ChipLink href="#krizaka" className="os-chip">
-            <ProductLogo id="krizaka" size={16} animated={false} />
-            {t.platform.name}
-            <span className="os-chip-n">{platformRepos.length}</span>
-          </ChipLink>
-        </li>
-      </ul>
-      <p className="os-filters-title">{t.nav.more}</p>
-      <ul>
-        <li>
-          <ChipLink href="#knowhow" className="os-chip">
-            {t.nav.knowhow}
-          </ChipLink>
-        </li>
-        <li>
-          <ChipLink href="#stack" className="os-chip">
-            {t.nav.stack}
-          </ChipLink>
-        </li>
-        <li>
-          <ChipLink href="#runs-on" className="os-chip">
-            {t.nav.runs}
-          </ChipLink>
-        </li>
-        <li>
-          <ChipLink href="#blocks-title" className="os-chip">
-            {t.nav.blocks}
-          </ChipLink>
-        </li>
-      </ul>
-    </nav>
-  );
+  const figures = [
+    { id: "repositories", value: publicRepositoryCount(), label: t.figures.repositories },
+    { id: "npm", value: npmPackages().length, label: t.figures.npm },
+    { id: "maven", value: mavenArtifactCount(), label: t.figures.maven },
+  ].filter((f) => f.value > 0);
 
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
       <TopNavBar />
 
-      <CataloguePage
-        eyebrow={t.eyebrow}
-        title={t.title}
-        lead={t.lead}
-        search={
-          <p className="os-count">
-            {format(t.count, { count: publicRepositoryCount() })}
-            <a href={GITHUB_ORG_URL}>github.com/krizaka</a>
-          </p>
-        }
-        filters={filters}
-        filtersLabel={t.jump}
-        count={format(t.catalogueCount, { repositories: listed })}
-        linkAs={Link}
-      >
-        <section id="stack" aria-labelledby="os-stack" className="os-product">
-          <SectionHeading id="os-stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead} />
-          <StackCards locale={locale} mavenArtifacts={mavenArtifactCount()} />
-        </section>
+      <PageHero eyebrow={t.eyebrow} title={t.title} lead={t.lead} align="center" linkAs={Link}>
+        <div className="os-hero-figures">
+          <FigureTiles figures={[...figures, { id: "license", value: "Apache-2.0", label: t.figures.license }]} label={t.figuresLabel} locale={locale} />
+        </div>
+        <div className="os-hero-actions">
+          <ButtonLink href={GITHUB_ORG_URL} variant="primary" size="lg" shimmer magnetic>
+            {t.github} <ExternalIcon size={14} aria-hidden />
+          </ButtonLink>
+        </div>
+      </PageHero>
 
-        <section id="knowhow" aria-labelledby="os-knowhow" className="os-product">
-          <SectionHeading id="os-knowhow" eyebrow={t.foundation.eyebrow} title={t.foundation.title} lead={t.foundation.lead} />
-          <CardGrid as="ul" min={340} columns={2}>
-            {products.map(({ nav, repos, foundation }) => {
-              const kits = foundation.map((k) => site.story.kits[k].name).join(", ");
-              return (
-                <LinkCard
-                  key={nav.id}
-                  href={`#${nav.id}`}
-                  linkAs={Link}
-                  layout="stack"
-                  className={"brand-" + nav.id}
-                  title={site.products.knowhow[nav.id].name}
-                  meta={format(site.products.proofBy, { name: nav.name })}
-                  icon={<ProductLogo id={nav.id} size={40} animated={false} />}
-                  description={kits ? format(t.foundation.stands, { name: nav.name, kits }) : format(t.foundation.standsAlone, { name: nav.name })}
-                  cta={format(t.repoCount, { count: repos.length })}
-                />
-              );
-            })}
-          </CardGrid>
-        </section>
+      <Section id="stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead}>
+        <StackCards
+          locale={locale}
+          mavenArtifacts={mavenArtifactCount()}
+          visuals={{ ui: <UiVisual label={t.stackVisual.identities} />, java: <JavaVisual label={t.stackVisual.dependency} /> }}
+        />
+        <nav aria-label={t.blocksLabel} className="os-blocks">
+          <span>{t.blocksLabel}</span>
+          {BUILDING_BLOCKS.map((b) => (
+            <ChipLink key={b.id} asChild size="sm">
+              <Link href={`/open-source/${b.id}`} prefetch={false}>
+                {site.blocks.items[b.id].name}
+              </Link>
+            </ChipLink>
+          ))}
+        </nav>
+      </Section>
 
-        <section id="runs-on" aria-labelledby="os-runs" className="os-product">
-          <SectionHeading id="os-runs" eyebrow={t.runs.eyebrow} title={t.runs.title} lead={t.runs.lead} />
+      <Section id="packages" eyebrow={t.packages.eyebrow} title={t.packages.title} lead={t.packages.lead} reveal divider>
+        <PackagesTable rows={packages} />
+      </Section>
+
+      <Section id="repositories" eyebrow={t.repositories.eyebrow} title={t.repositories.title} lead={t.repositories.lead} reveal divider>
+        <RepositoriesTable rows={repoRows} />
+      </Section>
+
+      <Section id="how-it-fits" eyebrow={t.fits.eyebrow} title={t.fits.title} lead={t.fits.lead} reveal divider>
+        <HowItFits layers={layers} names={names} w={t.fits} />
+        <details id="runs-on" className="os-runs">
+          <summary>{t.fits.runs}</summary>
           <ProductStackTable
-            rows={productStackRows(PRODUCT_IDS).map((r) => ({ ...r, name: NAV_PRODUCTS.find((p) => p.id === r.id)!.name }))}
+            rows={productStackRows(PRODUCT_IDS).map((r) => ({ ...r, name: names[r.id] }))}
             kits={KITS}
             labels={{
               caption: t.runs.caption,
@@ -208,158 +166,41 @@ export default async function OpenSourcePage({ params }: Props) {
             }}
           />
           <p className="os-stack-read">{format(t.runs.read, { date: MANIFESTS_READ_AT })}</p>
-        </section>
+        </details>
+      </Section>
 
-        {products.map(({ nav, repos, uses, status, engine }, i) => (
-          <section key={nav.id} id={nav.id} aria-labelledby={`os-${nav.id}`} className={"os-product brand-" + nav.id} {...(i > 0 ? reveal(0, "soft") : {})}>
-            <div className="os-product-head">
-              <ProductLogo id={nav.id} size={44} />
-              <div className="min-w-0">
-                <h2 id={`os-${nav.id}`}>{nav.name}</h2>
-                <p className="os-product-tagline">{site.products.cards[nav.id].line}</p>
+      <Section id="contribute" divider aria-labelledby="os-contribute">
+        <CtaPanel id="os-contribute" title={t.contribute.title} body={t.contribute.body} reveal>
+          <ButtonLink href={CONTRIBUTING_URL} variant="primary" size="lg">
+            {t.contribute.guide} <ExternalIcon size={13} aria-hidden />
+          </ButtonLink>
+        </CtaPanel>
+        <div className="os-picker">
+          {PUBLIC_CHANNELS.map((ch) => {
+            const words = dict.contact.channels.find((c) => c.kind === ch.id)!;
+            const Icon = ch.id === "discussions" ? ChatIcon : FlagIcon;
+            return (
+              <div key={ch.id} className="os-picker-row">
+                <p className="os-picker-title">
+                  <Icon size={16} aria-hidden /> {words.cta}
+                </p>
+                <ul className="os-picker-repos">
+                  {PUBLIC_REPOSITORIES.map(({ product, repo }) => (
+                    <li key={product}>
+                      <a href={`https://github.com/krizaka/${repo}/${ch.path}`} target="_blank" rel="noopener noreferrer">
+                        <ProductLogo id={product} size={16} animated={false} /> {site.contactPage.publicProducts[product]}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <a href={nav.href} target="_blank" rel="noopener noreferrer" className="os-product-link">
-                {site.products.visit} <ForwardIcon size={13} aria-hidden />
-              </a>
-            </div>
-            <Facts
-              className="os-product-facts"
-              items={[status, { label: format(t.repoCount, { count: repos.length }) }, ...(engine ? [{ label: t.engine }] : [])]}
-            />
-            <dl className="os-product-meta">
-              {uses.length > 0 && (
-                <div>
-                  <dt>{t.uses}</dt>
-                  <dd>
-                    <ul className="os-uses">
-                      {uses.map((coordinate) => {
-                        const version = publishedVersion(coordinate);
-                        const href = coordinate.startsWith("@") ? npmUrl(coordinate) : centralArtifactUrl(coordinate);
-                        return (
-                          <li key={coordinate}>
-                            <a href={href} target="_blank" rel="noopener noreferrer">
-                              <code>{coordinate.replace(/^com\.krizaka:/, "")}</code>
-                              {version && <span>{version}</span>}
-                            </a>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </dd>
-                </div>
-              )}
-            </dl>
-            <ul className="os-repos">
-              {repos.map((r) => (
-                <RepoCard key={r.name} repo={r} kind={kindLabel(r.kind)} orochia={t.orochiaRepos} />
-              ))}
-            </ul>
-          </section>
-        ))}
-
-        <section id="krizaka" aria-labelledby="os-krizaka" className="os-product" {...reveal(0, "soft")}>
-          <div className="os-product-head">
-            <ProductLogo id="krizaka" size={44} />
-            <div className="min-w-0">
-              <h2 id="os-krizaka">{t.platform.name}</h2>
-              <p className="os-product-tagline">{t.platform.tagline}</p>
-            </div>
-          </div>
-          <Facts className="os-product-facts" items={[{ label: format(t.repoCount, { count: platformRepos.length }) }]} />
-          <ul className="os-repos">
-            {platformRepos.map((r) => (
-              <RepoCard key={r.name} repo={r} kind={kindLabel(r.kind)} orochia={t.orochiaRepos} />
-            ))}
-          </ul>
-        </section>
-
-      </CataloguePage>
-
-      {/* The building blocks stand on the brand's backdrop (BRAND.md §4). */}
-      <Section id="blocks-title" eyebrow={w.eyebrow} title={w.title} lead={w.lead} reveal backdrop={{ dome: true }} className="os-blocks">
-        <CardGrid columns={3} min={300}>
-          {BUILDING_BLOCKS.map((block) => (
-            <BlockCard key={block.id} block={block} w={w} />
-          ))}
-        </CardGrid>
-        <CtaPanel id="forums-title" level={3} title={w.forums.title} body={w.forums.body} reveal className="os-forums">
-          <ButtonLink href={FORUMS.java.url} variant="primary" size="lg">
-            {w.forums.java} <ExternalIcon size={13} aria-hidden />
-          </ButtonLink>
-          <ButtonLink href={FORUMS.ui.url} size="lg">
-            {w.forums.ui} <ExternalIcon size={13} aria-hidden />
-          </ButtonLink>
-        </CtaPanel>
+            );
+          })}
+          <p className="os-picker-legal">
+            <a href={CONDUCT_URL}>{t.contribute.conduct}</a> · <a href={LICENSE_URL}>{t.contribute.license}</a>
+          </p>
+        </div>
       </Section>
-
-      <Section divider aria-labelledby="os-contribute">
-        <CtaPanel id="os-contribute" title={t.contributeTitle} body={t.contributeBody} reveal className="os-contribute">
-            <ButtonLink href="https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md" variant="primary" size="lg">
-              <KnowledgeIcon size={15} /> {t.contributeGuide}
-            </ButtonLink>
-            <ButtonLink href={FORUMS.java.url} size="lg">
-              {t.ask}
-            </ButtonLink>
-            <ButtonLink href={contactHref("open-source", "blocks")} size="lg">
-              {t.write}
-            </ButtonLink>
-        </CtaPanel>
-      </Section>
-
-      <style>{`
-        .os-count { margin: 0; font-family: var(--font-mono); font-size: 12px; color: var(--kz-text-muted); }
-        .os-count a { color: var(--kz-accent); text-decoration: none; }
-
-        .os-filters { display: grid; gap: 10px; }
-        .os-filters ul { list-style: none; margin: 0 0 8px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-        .os-filters-title { margin: 8px 0 0; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--kz-text-muted); }
-        .os-chip { gap: 6px; text-decoration: none; }
-        .os-chip-n { font-family: var(--font-mono); font-size: 10.5px; color: var(--kz-text-muted); }
-
-        .os-product { scroll-margin-top: var(--kz-anchor-offset, 96px); padding: 28px 0 36px; border-top: 1px solid var(--kz-border-subtle); }
-        .os-product:first-child { border-top: 0; padding-top: 0; }
-        .os-product-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; }
-        .os-product-head h2 { margin: 0; font-family: var(--kz-font-display); font-size: clamp(1.35rem, 2.6vw, 1.7rem); font-weight: 800; letter-spacing: -0.02em; }
-        .os-product-head > .min-w-0 { flex: 1 1 220px; }
-        .os-product-tagline { margin: 2px 0 0; font-size: 14px; line-height: 1.5; color: var(--kz-text-secondary); }
-        .os-product-link { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 600; color: var(--kz-accent-text, var(--kz-accent)); text-decoration: none; }
-        .os-product-link:hover { text-decoration: underline; }
-        .os-product-facts { margin: 14px 0 0; }
-        .os-product-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 24px; margin: 16px 0 0; }
-        .os-product-meta dt { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--kz-text-muted); }
-        .os-product-meta dd { margin: 6px 0 0; font-size: 13.5px; line-height: 1.55; color: var(--kz-text-secondary); }
-        .os-stack-product { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
-        .os-stack-cell { display: inline-flex; align-items: center; gap: 8px; color: var(--kz-text-primary); }
-        .os-stack-cell[data-state="no"] { color: var(--kz-text-muted, var(--kz-text-secondary)); }
-        .os-stack-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--kz-accent); }
-        .os-stack-cell[data-state="no"] .os-stack-dot { background: transparent; border: 1.5px solid var(--kz-border-default); }
-        .os-stack-cell[data-state="planned"] .os-stack-dot { background: transparent; border: 1.5px dashed var(--kz-accent); }
-        .os-stack-cell[data-state="partial"] .os-stack-dot { background: linear-gradient(90deg, var(--kz-accent) 50%, transparent 50%); border: 1.5px solid var(--kz-accent); }
-        .os-stack-read { margin: 12px 0 0; font-size: 12.5px; color: var(--kz-text-muted); }
-        .os-uses { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-        .os-uses a { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1);
-          font-size: 12px; color: var(--kz-text-primary); text-decoration: none; }
-        .os-uses a:hover { border-color: var(--kz-accent); }
-        .os-uses code { font-family: var(--font-mono); font-size: 12px; overflow-wrap: anywhere; }
-        .os-uses span { font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-muted); }
-
-        .os-repos { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: 10px; }
-        .os-repos > li { display: flex; min-width: 0; }
-        .os-repo { flex: 1; display: flex; flex-direction: column; gap: 4px; min-width: 0; padding: 12px 14px; border-radius: 12px; text-decoration: none;
-          background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); transition: border-color .2s; }
-        .os-repo:hover { border-color: var(--kz-accent); }
-        .os-repo:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; }
-        .os-repo-name { font-family: var(--font-mono); font-size: 13px; font-weight: 700; color: var(--kz-text-primary); overflow-wrap: anywhere; }
-        .os-repo-meta { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--kz-accent-text, var(--kz-accent)); }
-        .os-repo-desc { font-size: 12.5px; line-height: 1.55; color: var(--kz-text-secondary); overflow-wrap: anywhere; }
-        @media (prefers-reduced-motion: reduce) { .os-repo { transition: none; } }
-
-
-        .os-forums, .os-contribute { margin-top: 24px; }
-        .os-blocks { scroll-margin-top: 64px; }
-
-
-      `}</style>
     </main>
   );
 }

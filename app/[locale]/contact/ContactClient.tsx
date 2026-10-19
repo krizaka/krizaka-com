@@ -10,6 +10,7 @@ import { reveal } from "@/lib/motion";
 import { PageHero } from "@krizaka/ui/page-hero";
 import ButtonLink from "../../components/ButtonLink";
 import Link from "next/link";
+import { PUBLIC_CHANNELS, PUBLIC_REPOSITORIES } from "@/lib/public-channels";
 
 /* ─── Mascots: the owl answers questions, the falcon watches over bugs (@krizaka/ui/mascots, story colours) ─── */
 function OwlMascot() {
@@ -21,11 +22,7 @@ function FalconMascot() {
 }
 
 /* ─── Where each conversation happens: the products, and the building blocks they share ─── */
-const PUBLIC_REPOSITORIES = [
-  { product: "orazaka", repo: "orazaka" },
-  { product: "orochia", repo: "orochia" },
-  { product: "krizaka", repo: "krizaka-platform-kit" },
-] as const;
+
 
 /* ─── Channel data ─── */
 const CHANNELS = [
@@ -35,7 +32,7 @@ const CHANNELS = [
     Mascot: OwlMascot,
     accent: "var(--kz-info-text)",
     glow: "color-mix(in srgb, var(--kz-info) 8%, transparent)",
-    path: "discussions/new/choose",
+    path: PUBLIC_CHANNELS[0].path,
   },
   {
     id: "issues",
@@ -43,7 +40,7 @@ const CHANNELS = [
     Mascot: FalconMascot,
     accent: "var(--kz-warning-text)",
     glow: "color-mix(in srgb, var(--kz-warning) 8%, transparent)",
-    path: "issues/new/choose",
+    path: PUBLIC_CHANNELS[1].path,
   },
 ];
 
@@ -91,8 +88,11 @@ export default function ContactClient() {
           </aside>
         </div>
 
+        {/* #public: /open-source's "contribute" lands here — a discussion or an issue, on the right repository. */}
         <h2
+          id="public"
           style={{
+            scrollMarginTop: "var(--kz-anchor-offset, 96px)",
             fontFamily: "var(--font-display), system-ui, sans-serif",
             fontSize: "18px",
             fontWeight: 700,

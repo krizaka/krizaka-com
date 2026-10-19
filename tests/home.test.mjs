@@ -2,29 +2,54 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 
-// The home is the company's (2026-10-14): who Krizaka is, the four products as equals, the open-source stack on its own
-// sites, how it works, Montréal. No product is featured, no product is pitched, nothing links to the old /docs.
+// The home is one of the site's two views (Oussama, 2026-10-17; the other is Open source): the centred hero, the products
+// (Orazaka the foundation, the products it powers — the only place they are presented), the open-source stack in brief,
+// the principles in brief, Montréal, the contact. No product is pitched, nothing links to the old /docs.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const HOME = "app/[locale]/page.tsx";
-const SECTIONS = ["HomeHero", "WhatWeBuild", "OpenStack", "Principles", "Company"];
+const SECTIONS = ["HomeHero", "ProductShowcase", "OpenStack", "Principles", "Company"];
 
-test("the home is made of its five sections, then the contact and the questions", () => {
+test("the home is made of its sections, in Oussama's order, then the contact and the questions", () => {
   const home = read(HOME);
-  for (const s of [...SECTIONS, "ContactCta", "ProductFaq"]) assert.match(home, new RegExp(`<${s}\\b`), s);
+  const order = [...SECTIONS, "ContactCta", "ProductFaq"].map((s) => {
+    const at = home.search(new RegExp(`<${s}\\b`));
+    assert.ok(at > 0, s);
+    return at;
+  });
+  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → products → stack → principles → Montréal → contact");
 });
 
-test("the stack section states the idea with figures read from data and sends to the live gallery on ui.krizaka.com", () => {
+test("one primary action per section: the hero's goes to #products, the stack's to /open-source, Montréal's to /story", () => {
+  const hero = read("app/components/home/HomeHero.tsx");
+  assert.equal(hero.match(/variant="primary"/g)?.length, 1);
+  assert.match(hero, /href="#products" variant="primary"/);
+  assert.doesNotMatch(hero, /href="\/contact"/, "the bar has Contact us: no duplicate in the hero");
   const stack = read("app/components/home/OpenStack.tsx");
-  assert.match(stack, /uiFacts\(\)/);
-  assert.match(stack, /npmVersion\("@krizaka\/ui"\)/);
-  assert.match(stack, /href=\{STACK\[0\]\.url\}/);
-  assert.match(stack, /PRODUCTS\.map/, "the four identities, all of them");
+  assert.match(stack, /href="\/open-source" variant="primary"/);
+  assert.equal(stack.match(/variant="primary"/g)?.length, 1);
+  const company = read("app/components/home/Company.tsx");
+  assert.match(company, /href="\/story" variant="primary"/);
+  assert.equal(company.match(/<ButtonLink/g)?.length, 1);
 });
 
-test("the products come from lib/products.ts: one card each (Orazaka as the foundation card, tests/engine.test.mjs)", () => {
-  assert.match(read("app/components/home/WhatWeBuild.tsx"), /<ProductGrid\b/);
-  assert.match(read("app/components/ProductCard.tsx"), /PRODUCTS\.filter/);
+test("the hero: centred text painted at once, the figures read at build and climbing, the scene in the flow under them", () => {
+  const hero = read("app/components/home/HomeHero.tsx");
+  assert.doesNotMatch(hero, /"use client"/, "the hero's text is server-rendered (LCP)");
+  assert.doesNotMatch(hero, /data-reveal|reveal\(/, "nothing on the first screen is revealed");
+  assert.match(hero, /<NumberTicker value=\{p\.value\}/);
+  assert.ok(hero.indexOf("kz-home-proofs") < hero.indexOf("kz-home-scene"), "the landscape comes after the figures: the birds never cover them");
+  assert.doesNotMatch(hero.slice(hero.indexOf("kz-home-proofs"), hero.indexOf("</dl>")), /kz-intro-deco/, "the figures are never hidden by the intro");
+  const css = read("app/components/home/home.css");
+  assert.match(css, /\.kz-home-scene \{ position: relative;/, "the scene is in the flow, not over the figures");
+});
+
+test("the products come from lib/products.ts: one card each, in the product's brand", () => {
+  const showcase = read("app/components/home/ProductShowcase.tsx");
+  assert.match(showcase, /PRODUCTS\.filter/);
+  assert.match(showcase, /<GlowCard className=\{cn\("kz-pc", "brand-" \+ p\.id\)\}/);
+  assert.match(showcase, /<ProductStatus status=\{p\.status\}/, "the status is the data's (gated by the dev-preview checklists)");
+  assert.match(showcase, /p\.noSite \? h\.seeCode : h\.visit/, "no dead address: the code while there is no site");
   for (const s of SECTIONS) {
     const src = read(`app/components/home/${s}.tsx`);
     assert.doesNotMatch(src, /["'](orazaka|orochia|yasakia|yororis)["']/, `${s} names a product by hand`);
@@ -37,12 +62,12 @@ test("the home never links to the documentation that moved to ui.krizaka.com and
 });
 
 test("the old home — the product showcase, the kit gallery, the rotating title — is gone", () => {
-  for (const file of ["app/components/home/OrgHero.tsx", "app/components/home/KitShowcase.tsx", "app/components/home/BuildWithKrizaka.tsx", "lib/kit-live.ts", "lib/build-with.ts", "lib/cli-model.ts"]) {
+  for (const file of ["app/components/home/OrgHero.tsx", "app/components/home/KitShowcase.tsx", "app/components/home/BuildWithKrizaka.tsx", "app/components/home/WhatWeBuild.tsx", "lib/kit-live.ts", "lib/build-with.ts", "lib/cli-model.ts"]) {
     assert.ok(!existsSync(new URL(`../${file}`, import.meta.url)), `${file} came back`);
   }
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;
-    assert.deepEqual(Object.keys(m.home), ["hero", "products", "stack", "principles", "company", "contact", "blog"], `${lang}: site.home`);
+    assert.deepEqual(Object.keys(m.home), ["hero", "products", "stack", "principles", "company", "contact", "visuals"], `${lang}: site.home`);
     assert.equal(m.expertise, undefined, `${lang}: site.expertise`);
   }
 });

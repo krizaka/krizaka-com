@@ -11,14 +11,33 @@ const nav = read("lib/nav.ts");
 const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",(?: status: "(\w+)",)? devUrl: ([^,]+),[^\n]*/g)].map(([line, id, status, devUrl]) => ({ id, status, devUrl, noSite: /noSite: true/.test(line) }));
 const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)", url: "([^"]+)"/g)].map(([, id, name, url]) => ({ id, name, url }));
 
-test("the centre of the bar is Products · Open source, all pages of this site; Our story is not in the bar", () => {
-  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["products", "repos"\] as const\)/);
-  assert.doesNotMatch(nav, /NAV_BAR_LINKS[^=]*= \(\[[^\]]*"story"/, "no story in the bar's list");
+test("two views (2026-10-17): the mark and the word Krizaka lead home, the centre of the bar is Open source only; Our story is not in the bar", () => {
+  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["repos"\] as const\)/);
+  assert.doesNotMatch(nav, /href: "\/products"/, "no /products page: the products are a section of the home");
+  assert.match(nav, /PRODUCTS_ANCHOR = "\/#products"/);
   assert.match(nav, /\{ href: "\/open-source", icon: "repos", match: \["\/open-source\/"\] \}/, "a building block lights Open source");
+  const bar = read("app/components/TopNavBar.tsx");
+  assert.match(bar, /<Link href="\/" aria-label=\{m\.homeAria\}[^>]*>\s*<KrizakaLogo size=\{26\} \/>\s*<span className="kz-site-brand-word">Krizaka<\/span>/);
+  for (const l of ["en", "fr"]) assert.match(messages(l).site.menu.homeAria, /^Krizaka/, `${l}: the accessible name starts with the visible word`);
   // the bar and the mobile panel both read NAV_BAR_LINKS: neither names the story directly
   for (const file of ["app/components/TopNavBar.tsx", "app/components/MobilePanel.tsx"]) {
     assert.doesNotMatch(read(file), /"story"|\/story/, `${file}: no story link`);
   }
+  // right: Blog (another site) · GitHub · theme · language · Contact us, the one primary action
+  assert.match(bar, /href=\{BLOG_URL\}/);
+  assert.equal(bar.match(/variant="primary"/g)?.length, 1);
+  assert.match(bar, /variant="primary"[^>]*>\s*<Link href=\{contactHref\}>/);
+});
+
+test("every link to the products leads to the home's section, never to /products", () => {
+  for (const file of ["app/components/SiteFooter.tsx", "app/components/SearchCommand.tsx", "app/[locale]/story/StoryClient.tsx"]) {
+    assert.doesNotMatch(read(file), /["']\/products["']/, file);
+  }
+  assert.match(read("app/components/SiteFooter.tsx"), /href=\{PRODUCTS_ANCHOR\}/);
+  const sitemap = read("app/sitemap.ts");
+  assert.doesNotMatch(sitemap, /"\/products"/);
+  assert.doesNotMatch(read("lib/page-templates.ts"), /"\/products"/);
+  for (const f of ["content/llms.txt", "content/llms-full.txt"]) assert.doesNotMatch(read(f), /\/en\/products/, f);
 });
 
 test("the family: every product on its own site, the stack on its subdomains, and GitHub", () => {

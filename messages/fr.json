@@ -69,9 +69,6 @@
       "openSource": "Open source",
       "contactCta": "Nous contacter",
       "search": "Rechercher...",
-      "switchLanguage": "Switch to English",
-      "languageShort": "EN",
-      "otherLanguage": "English",
       "footerAria": "Pied de page",
       "breadcrumb": "Fil d'Ariane",
       "searchAria": "Rechercher sur le site",
@@ -79,7 +76,8 @@
       "preferences": "Préférences",
       "mainAria": "Navigation principale",
       "homeAria": "Krizaka — accueil",
-      "blog": "Blogue"
+      "blog": "Blogue",
+      "language": "Langue"
     },
     "nav": {
       "status": {
@@ -101,10 +99,6 @@
         }
       },
       "company": {
-        "products": {
-          "label": "Produits",
-          "desc": "Tous les produits, côte à côte"
-        },
         "story": {
           "label": "Notre histoire",
           "desc": "D'où viennent nos noms"
@@ -199,57 +193,52 @@
           "akinaza": "l'assistant fiscal",
           "yasakia": "l'agent de mise en relation",
           "yororis": "le pack bien-être"
+        },
+        "legendOut": "requêtes →",
+        "legendBack": "← résultats",
+        "sends": "Chaque produit envoie requêtes, documents et prompts au moteur",
+        "gets": "reçoit en retour : {list}",
+        "back": {
+          "results": "résultats",
+          "analytics": "analyses d'usage"
         }
       }
-    },
-    "productsPage": {
-      "title": "Produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza",
-      "description": "Les produits open source de Krizaka — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — chacun sur son propre site, avec son code source sur GitHub."
     },
     "home": {
       "hero": {
         "eyebrow": "Montréal · Studio logiciel",
         "title": "Nous construisons du logiciel open source — et tout ce qui le porte.",
-        "lead": "Krizaka est un studio logiciel à Montréal. Nous faisons sept produits et publions tout ce sur quoi ils reposent : Krizaka UI pour les interfaces, Krizaka Java pour les services. Chaque ligne est publique ; chaque changement est testé.",
+        "lead": "Sept produits sur un même moteur d'IA, et chaque pièce qui les porte publiée sous Apache-2.0.",
         "primary": "Voir ce que nous construisons",
-        "contact": "Nous contacter",
+        "film": "Voir le film en entier",
+        "filmLength": "1 min 18",
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "proofs": {
           "repositories": "dépôts publics",
           "npm": "paquets sur npm",
           "maven": "artefacts sur Maven Central",
           "license": "sur chaque dépôt"
-        }
+        },
+        "filmClose": "Fermer le film"
       },
       "products": {
-        "eyebrow": "Savoir-faire",
-        "title": "Ce que nous savons faire.",
-        "lead": "Notre savoir-faire central est Orazaka, le moteur sur lequel tourne l'IA de chaque produit. Chaque produit ci-dessous le prouve dans son domaine.",
-        "all": "Tous les produits"
+        "eyebrow": "Ce que nous construisons",
+        "title": "Un moteur. Les produits qu'il propulse.",
+        "lead": "L'IA de chaque produit tourne sur Orazaka. Chacun vit sur son propre site, avec son code sur GitHub.",
+        "engineUse": "Sur Orazaka · {use}",
+        "enginePlanned": "Sur Orazaka, prévu · {use}"
       },
       "stack": {
-        "eyebrow": "La pile que nous ouvrons",
-        "title": "Une même pile ouverte sous chaque savoir-faire.",
-        "lead": "Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza sont faits des mêmes pièces ouvertes : Krizaka UI pour chaque écran, Krizaka Java pour chaque service. Chaque produit n'apporte que son identité et son savoir-faire.",
+        "eyebrow": "Open source",
+        "title": "La pile sous chaque produit, à découvert.",
+        "lead": "Krizaka UI pour chaque écran, Krizaka Java pour chaque service — chacun sur son propre site.",
         "visit": "Ouvrir {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
           "npm": "{count} paquets sur npm",
           "maven": "{count} artefacts sur Maven Central"
         },
-        "repositories": "Tous les dépôts",
-        "figures": {
-          "label": "Krizaka UI en chiffres, lus dans ses registres publiés",
-          "components": "composants",
-          "native": "aussi sur iOS et Android",
-          "packages": "paquets sur npm",
-          "version": "@krizaka/ui"
-        },
-        "visual": {
-          "caption": "Un composant, quatre identités : la même barre de progression Krizaka UI dans le thème de chaque produit.",
-          "progress": "Identité {name}"
-        },
-        "live": "Le voir en direct sur ui.krizaka.com"
+        "more": "Tout ce que nous publions"
       },
       "principles": {
         "eyebrow": "Notre façon de travailler",
@@ -280,20 +269,44 @@
       "company": {
         "eyebrow": "Montréal",
         "title": "Un studio montréalais, ici pour durer.",
-        "body": "Technologies Krizaka Inc. est établie à Montréal, au Québec. Nous préférons devenir une référence dans la façon de construire du logiciel — ouvert, accessible, bilingue, testé — plutôt que le nom le plus bruyant.",
-        "story": "Lire notre histoire",
-        "openSource": "Notre open source"
+        "body": "Technologies Krizaka Inc. est établie à Montréal, au Québec — ouvert, accessible, bilingue, testé.",
+        "story": "Lire notre histoire"
       },
       "contact": {
         "title": "Parlez-nous de ce que vous construisez.",
         "cta": "Nous contacter"
       },
-      "blog": {
-        "eyebrow": "Blogue",
-        "title": "Du blogue",
-        "lead": "Des notes sur l'IA souveraine, les coûts mesurés et de vraies exécutions sur des documents.",
-        "all": "Tous les billets",
-        "readingTime": "{minutes} min de lecture"
+      "visuals": {
+        "orazaka": {
+          "label": "Les requêtes de chaque produit, dans un même moteur"
+        },
+        "yomizaka": {
+          "document": "Bail — page 3",
+          "quote": "Le loyer ne peut être augmenté plus d'une fois au cours d'une période de 12 mois.",
+          "checked": "Vérifié",
+          "source": "cité, page 3 · démo"
+        },
+        "orochia": {
+          "encoding": "Encodage",
+          "ready": "Prêt à diffuser · HLS"
+        },
+        "kachizaka": {
+          "live": "En direct",
+          "points": "points",
+          "title": "Points par journée (ligue de démo)"
+        },
+        "akinaza": {
+          "day": "Mardi, la journée du salon",
+          "booked": "Réservé, confirmé par courriel · démo"
+        },
+        "yasakia": {
+          "theirs": "Un café près du canal samedi ?",
+          "mine": "Oui — 10 h 30, ça me va.",
+          "typing": "En train d'écrire"
+        },
+        "yororis": {
+          "label": "Une voix, écoutée"
+        }
       }
     },
     "footer": {
@@ -307,7 +320,9 @@
       "madeIn": "Fait à Montréal · Apache-2.0",
       "allProducts": "Tous les produits",
       "repositories": "Tous les dépôts",
-      "blog": "Blogue"
+      "blog": "Blogue",
+      "changelog": "Journal des changements",
+      "version": "v{version} · Krizaka UI {ui}"
     },
     "contactForm": {
       "captchaLabel": "Vérification humaine",
@@ -407,12 +422,10 @@
           "title": "Une forge à mi-pente",
           "placesAria": "Les lieux que traverse l'histoire",
           "places": [
-            "Oujda",
-            "Grenoble",
             "Montréal"
           ],
           "body": [
-            "Krizaka est un studio fondé par Oussama et installé à Montréal. Son histoire suit trois villes : Oujda, d'où il vient ; Grenoble, où il a étudié les mathématiques et la cognition, et où il a rencontré en 2011, dans un laboratoire de recherche, une machine qui apprenait à lire ; Montréal, où il vit depuis 2019 et où la forge s'est allumée.",
+            "Krizaka est un studio fondé par Oussama et installé à Montréal, où il vit depuis 2018 et où la forge s'est allumée. Il a étudié les mathématiques et l'informatique, puis il s'est orienté vers les mathématiques et l'informatique appliquées aux sciences cognitives. En 2011, dans un laboratoire de recherche, il a rencontré une machine qui apprenait à lire.",
             "Le nom garde l'idée. Un kriss est une lame forgée en couches — du fer replié sur du fer jusqu'à ce qu'un motif monte dans l'acier. Zaka, c'est la pente que l'on gravit, un pas après l'autre. Krizaka est la forge à mi-pente de cette colline."
           ],
           "move": "Prouver, pas promettre."
@@ -497,6 +510,53 @@
           "role": "La lectrice",
           "line": "Lit vos documents et garde chaque question à la maison."
         }
+      },
+      "world": {
+        "eyebrow": "La volée",
+        "title": "Le monde de Krizaka",
+        "lead": "Nos oiseaux sont là depuis la première page : chacun porte une promesse. Les voici en tournée à travers cinq époques, en photoréaliste, et plus bas, le film d'origine, rendu depuis le code de Krizaka UI.",
+        "player": "Vidéo : le monde de Krizaka",
+        "textVersion": "Ce que disent les oiseaux",
+        "captions": {
+          "en": "English",
+          "fr": "Français"
+        },
+        "credit": "Rendu depuis @krizaka/ui (Mascot, Landscape, la marque Krizaka). Musique : ACE-Step 1.5 (MIT), générée avec Orazaka.",
+        "cues": {
+          "title": "Le monde de Krizaka.",
+          "falcon": "Le faucon veille : la sécurité d’abord.",
+          "owl": "Le hibou lit chaque page et reconnaît chaque visage.",
+          "duck": "Le canard construit, ligne après ligne, en open source.",
+          "flamingo": "Le flamant répond, et le paiement suit.",
+          "pigeon": "Le pigeon livre, à chaque fois.",
+          "together": "Chaque oiseau porte une promesse.",
+          "family": "Et la famille s’agrandit."
+        },
+        "labels": {
+          "play": "Lecture",
+          "pause": "Pause",
+          "mute": "Couper le son",
+          "unmute": "Rétablir le son",
+          "volume": "Volume",
+          "seek": "Position",
+          "speed": "Vitesse {rate}×",
+          "captions": "Sous-titres : {track}",
+          "captionsOff": "désactivés",
+          "fullscreen": "Plein écran",
+          "exitFullscreen": "Quitter le plein écran",
+          "pictureInPicture": "Image dans l’image",
+          "loading": "Chargement",
+          "error": "Cette vidéo ne peut pas être lue.",
+          "retry": "Réessayer",
+          "time": "{time} sur {duration}"
+        },
+        "tour": {
+          "title": "En tournée",
+          "lead": "Les mêmes oiseaux, en tournée à travers cinq époques : un club de stand-up, un dîner des années 1970, un studio des années 90, une plage au coucher du soleil et un échange au ralenti. Chacun tient sa promesse.",
+          "player": "Vidéo : le monde de Krizaka, en tournée",
+          "credit": "Généré par IA avec Orazaka : les oiseaux rendus depuis @krizaka/ui, ré-éclairés par FLUX.2 [klein], animés par Wan 2.2, agrandis par SeedVR2. Musique : ACE-Step 1.5 (MIT)."
+        },
+        "codeTitle": "Filmé depuis le code"
       }
     },
     "yororis": {
@@ -511,21 +571,11 @@
       }
     },
     "openSource": {
+      "eyebrow": "Open source · Apache-2.0",
       "title": "Tout ce que nous construisons est public.",
-      "lead": "La pile qui porte nos produits a ses propres sites — Krizaka UI et Krizaka Java. En dessous, chaque dépôt Krizaka, lu depuis GitHub au build, et la raison d'être de chaque brique.",
-      "count": "{count} dépôts publics · ",
-      "contributeTitle": "Envie de contribuer ?",
-      "contributeBody": "Chaque dépôt a son contrat (AGENTS.md) et les mêmes règles de contribution. Une question, un bogue, une idée : ouvrez une discussion ou une issue.",
-      "contributeGuide": "Guide de contribution",
-      "ask": "Demander dans les Discussions",
-      "write": "Nous écrire",
-      "jump": "Sur cette page",
-      "catalogueCount": "{repositories} dépôts · lus depuis GitHub au build",
+      "github": "Parcourir github.com/krizaka",
+      "figuresLabel": "Ce que nous publions, lu sur GitHub, npm et Maven Central au build",
       "repoCount": "{count} dépôts",
-      "live": "En ligne",
-      "stack": "Pile technique",
-      "uses": "Les packages Krizaka qu'il utilise",
-      "engine": "Propulsé par Orazaka",
       "kinds": {
         "main": "Principal",
         "web": "Web",
@@ -539,18 +589,6 @@
         "name": "Plateforme Krizaka",
         "tagline": "Les briques que partagent tous les produits : Krizaka UI, les kits Java, le site et les règles de l'organisation."
       },
-      "nav": {
-        "products": "Produits",
-        "blocks": "Briques",
-        "more": "Plus",
-        "stack": "La pile",
-        "runs": "Ce qui tourne sur quoi",
-        "knowhow": "Savoir-faire"
-      },
-      "eyebrow": "Open source · Apache-2.0",
-      "stackEyebrow": "La pile",
-      "stackTitle": "Deux sites, un pour chaque moitié de la pile.",
-      "stackLead": "Les guides, les références et chaque paquet y vivent, construits depuis leurs propres dépôts à chaque version.",
       "orochiaRepos": {
         "orochia": "La plateforme Orochia : API, application web et paquets partagés.",
         "orochia-admin": "La console opérateur d'Orochia.",
@@ -559,9 +597,6 @@
         "default": "Un dépôt de la plateforme Orochia."
       },
       "runs": {
-        "eyebrow": "La preuve",
-        "title": "Une même fondation ouverte sous chaque savoir-faire.",
-        "lead": "Chaque case est lue dans les manifestes des produits (package.json et pom.xml) — jamais saisie. « Prévu » marque ce qui est décidé et suivi, pas encore livré.",
         "caption": "Ce sur quoi tourne chaque produit",
         "product": "Produit",
         "yes": "Oui",
@@ -580,12 +615,92 @@
           "intl": "intl"
         }
       },
-      "foundation": {
-        "eyebrow": "La fondation",
-        "title": "Les mêmes pièces ouvertes sous chaque savoir-faire.",
-        "lead": "Un savoir-faire n'est pas une fonction d'un produit : il repose sur la pile partagée. Chaque carte nomme le savoir-faire, le produit qui le prouve et les pièces ouvertes dessous, et mène aux dépôts de ce produit plus bas.",
-        "stands": "{name} repose sur {kits}.",
-        "standsAlone": "{name} est le moteur que les autres produits sont censés appeler."
+      "count": "{count} dépôts publics · ",
+      "lead": "La vue technique : chaque paquet, chaque dépôt, et comment tout s'emboîte.",
+      "figures": {
+        "repositories": "dépôts publics",
+        "npm": "paquets sur npm",
+        "maven": "artefacts sur Maven Central",
+        "license": "sur chaque dépôt"
+      },
+      "stackEyebrow": "La pile",
+      "stackTitle": "Deux moitiés, chacune avec son site.",
+      "stackLead": "Versions lues sur npm et Maven Central au build.",
+      "blocksLabel": "Les briques, expliquées :",
+      "stackVisual": {
+        "identities": "Un composant, l'identité de chaque produit",
+        "dependency": "Un BOM, chaque version de Krizaka Java"
+      },
+      "packages": {
+        "eyebrow": "Paquets",
+        "title": "Chaque paquet publié.",
+        "lead": "npm et Maven Central, lus au build. Cherchez, ou filtrez par registre et famille.",
+        "caption": "Chaque paquet Krizaka sur npm et Maven Central",
+        "name": "Paquet",
+        "registry": "Registre",
+        "family": "Famille",
+        "version": "Dernière",
+        "downloads": "Téléchargements / sem.",
+        "links": "Liens",
+        "repo": "Code",
+        "docs": "Docs",
+        "registryAria": "{name} sur son registre",
+        "repoAria": "Le code de {name}",
+        "docsAria": "La documentation de {name}",
+        "families": {
+          "ui": "Interface",
+          "data": "Données et i18n",
+          "realtime": "Temps réel",
+          "tooling": "Outillage"
+        }
+      },
+      "repositories": {
+        "eyebrow": "Dépôts",
+        "title": "Chaque dépôt, par produit.",
+        "lead": "Lus sur GitHub au build, groupés par produit ; filtrez par plateforme ou langage.",
+        "caption": "Chaque dépôt public de Krizaka",
+        "name": "Dépôt",
+        "product": "Produit",
+        "kind": "Plateforme",
+        "language": "Langage",
+        "updated": "Mis à jour"
+      },
+      "table": {
+        "empty": "Aucun résultat.",
+        "results": "{count} résultats",
+        "filters": "Filtrer le tableau",
+        "clearFilters": "Effacer les filtres",
+        "removeFilter": "Retirer {label}",
+        "activeFilter": "{header} : {value}",
+        "search": "Chercher : {header}",
+        "group": "{value}, {count} lignes",
+        "columns": "Colonnes",
+        "pagination": "Pages de résultats",
+        "previous": "Précédente",
+        "next": "Suivante",
+        "page": "Page {page}",
+        "compact": "Page {page} sur {pageCount}",
+        "pageSize": "Lignes par page"
+      },
+      "fits": {
+        "eyebrow": "Comment tout s'emboîte",
+        "title": "Produits → moteur → briques → services partagés.",
+        "lead": "Lu dans les manifestes des produits — la liste est la version texte du schéma.",
+        "products": "Les produits",
+        "engine": "Le moteur",
+        "engineMeta": "{calls} produits l'appellent aujourd'hui · {planned} prévus",
+        "blocks": "Les briques",
+        "npm": "npm",
+        "java": "Krizaka Java",
+        "services": "Les services partagés",
+        "runs": "Sur quoi tourne chaque produit"
+      },
+      "contribute": {
+        "title": "Envie de contribuer ?",
+        "body": "Une question ou une idée : une discussion. Un bogue : un ticket. Choisissez le dépôt.",
+        "guide": "Guide de contribution",
+        "conduct": "Code de conduite",
+        "license": "Licence : Apache-2.0"
       }
     },
     "notFound": {
@@ -606,6 +721,7 @@
         "title": "Politique de confidentialité",
         "sections": [
           {
+            "id": "responsible",
             "title": "Qui est responsable",
             "paragraphs": [
               "Ce site est publié par Technologies Krizaka Inc., société constituée selon les lois du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada).",
@@ -613,12 +729,14 @@
             ]
           },
           {
+            "id": "commitment",
             "title": "Notre engagement",
             "paragraphs": [
               "Krizaka conçoit des logiciels qui gardent les données là où elles doivent être. Cette page dit ce que ce site collecte, ce qu'il en fait et qui y touche. Une pratique qui n'est pas écrite ici n'existe pas."
             ]
           },
           {
+            "id": "collected",
             "title": "Ce que ce site collecte",
             "paragraphs": [
               "Le formulaire de contact est la seule façon de nous confier des renseignements personnels. Nous recevons votre nom, votre courriel, votre organisation si vous l'indiquez, le sujet, l'échéance si vous l'indiquez, votre message, la langue de la page et la page d'où vous venez (pour savoir de quel produit vous parlez).",
@@ -628,6 +746,7 @@
             ]
           },
           {
+            "id": "technical",
             "title": "Données techniques",
             "paragraphs": [
               "Comme tout hébergeur, la plateforme qui sert ce site conserve des journaux techniques — adresse IP, heure, page demandée, navigateur — pour la sécurité et la prévention des abus, selon sa propre politique.",
@@ -636,6 +755,7 @@
             ]
           },
           {
+            "id": "cookies",
             "title": "Témoins et stockage local",
             "paragraphs": [
               "Un seul témoin fonctionnel, NEXT_LOCALE, retient la langue que vous avez choisie (un an). Votre préférence de thème (sombre ou clair) est gardée dans le stockage local de votre navigateur, sous le nom kz-theme.",
@@ -643,6 +763,7 @@
             ]
           },
           {
+            "id": "dev-environment",
             "title": "L'environnement de développement hébergé",
             "paragraphs": [
               "dev.orochia.com est un environnement de développement d'Orochia que nous exploitons pour tester et démontrer. Si vous y créez un compte, ce que vous saisissez (courriel, nom d'utilisateur, empreinte du mot de passe, contenu, activité) est stocké dans une base rattachée à l'application chez DigitalOcean (Toronto) et lisible par l'équipe. Les courriels qu'il envoie passent par Mailgun, et les vidéos par Bunny.",
@@ -650,6 +771,18 @@
             ]
           },
           {
+            "id": "accounts",
+            "title": "Comptes Krizaka (blog.krizaka.com)",
+            "paragraphs": [
+              "Pas encore ouvert : la connexion du blogue n'est activée qu'une fois ce service en marche, et d'ici là aucune des données ci-dessous n'est collectée. Cette section dit dès maintenant ce qui se passera alors.",
+              "Le blogue permet de se connecter avec GitHub, Google, Apple ou Facebook pour commenter, recevoir les réponses et retrouver ses billets enregistrés sur tous ses appareils. La connexion crée un compte Krizaka, tenu par accounts.krizaka.com. Ce n'est le compte d'aucun de nos produits : Orazaka, Yomizaka et les autres gardent leurs propres utilisateurs, et un compte Krizaka n'y donne aucun accès.",
+              "Nous gardons le fournisseur utilisé et l'identifiant qu'il vous donne, l'adresse courriel qu'il a vérifiée, votre nom affiché, vos commentaires, les billets enregistrés, et votre choix de recevoir ou non les réponses par courriel. Nous les utilisons seulement pour faire fonctionner votre compte : afficher votre nom à côté de vos commentaires, garder vos billets enregistrés et — seulement si vous l'activez — vous écrire quand quelqu'un vous répond. Aucun mot de passe, aucune adresse IP conservée, aucun profilage, aucune publicité.",
+              "Votre premier commentaire attend une personne de l'équipe avant de paraître ; un commentaire peut être signalé et masqué en attendant sa relecture. Les commentaires sont protégés contre les abus par Cloudflare Turnstile. Les courriels de réponse passent par notre fournisseur de courriel, Mailgun, et chacun contient un lien de désabonnement en un clic.",
+              "Les données sont stockées dans la base de données de Krizaka chez DigitalOcean (Toronto). Depuis la page de votre compte, vous pouvez télécharger tout ce que contient votre compte dans un fichier, retirer un fournisseur de connexion, arrêter les courriels de réponse ou supprimer le compte : le compte, ses billets enregistrés et ses réglages sont supprimés, ses commentaires aussi (un commentaire supprimé qui a des réponses garde sa place, sans texte ni nom). Les billets enregistrés sans compte restent seulement dans votre navigateur."
+            ]
+          },
+          {
+            "id": "software",
             "title": "Nos logiciels",
             "paragraphs": [
               "Orazaka, Orochia et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yasakia, Yororis, Kachizaka et Akinaza ne sont pas déployés et ne collectent rien.",
@@ -657,6 +790,7 @@
             ]
           },
           {
+            "id": "processors",
             "title": "Qui traite des données pour nous",
             "paragraphs": [
               "DigitalOcean — héberge ce site et l'environnement de développement (Toronto, Canada).",
@@ -667,6 +801,7 @@
             ]
           },
           {
+            "id": "rights",
             "title": "Vos droits",
             "paragraphs": [
               "Selon la Loi 25 du Québec, la LPRPDE fédérale et, si vous êtes en Europe, le RGPD, vous pouvez demander d'accéder aux renseignements que vous nous avez transmis, de les corriger ou de les supprimer, de retirer votre consentement et d'en obtenir une copie dans un format courant. Écrivez-nous par le formulaire de contact : nous répondons dans les 30 jours.",
@@ -674,6 +809,7 @@
             ]
           },
           {
+            "id": "changes",
             "title": "Modifications et contact",
             "paragraphs": [
               "Nous mettons cette page à jour quand ce que fait le site change, et la date en haut suit. Pour toute question de confidentialité, utilisez le formulaire de contact (sujet « Autre »). Technologies Krizaka Inc., Montréal, Québec."
@@ -1226,7 +1362,7 @@
         },
         {
           "q": "Où sont les produits ?",
-          "a": "Sur leurs propres sites : dev.orazaka.com, dev.orochia.com, dev.yasakia.com (en développement) et dev.yororis.com (en construction). La page Produits les liste avec leur code source."
+          "a": "Sur leurs propres sites : dev.orazaka.com, dev.orochia.com, dev.yasakia.com (en développement) et dev.yororis.com (en construction). L'accueil les présente, chacun avec son code source."
         },
         {
           "q": "Où est la documentation ?",
@@ -1245,6 +1381,38 @@
       "java": {
         "line": "Des briques Spring Boot sur Maven Central — web, sécurité, messagerie, observabilité, utilisateurs et facturation."
       }
+    },
+    "changelog": {
+      "metaTitle": "Journal des changements — ce que Krizaka a livré",
+      "metaDescription": "Ce qui a changé, version par version : Krizaka UI, Krizaka Java et les produits — nouveautés, corrections, sécurité et ruptures, avec la pull request derrière chaque ligne.",
+      "back": "Accueil",
+      "eyebrow": "Journal des changements",
+      "title": "Ce qui a été livré",
+      "lead": "L'essentiel de chaque version de Krizaka, la plus récente d'abord — lu dans les versions elles-mêmes, pas écrit pour la page.",
+      "runs": "Ce site tourne en v{version} sur Krizaka UI {ui}.",
+      "feed": "S'abonner (RSS)",
+      "logLabel": "Versions",
+      "empty": "Les données des versions n'ont pas pu être lues à la construction. Voir les versions sur GitHub.",
+      "emptyLink": "Toutes les versions sur GitHub",
+      "kinds": {
+        "added": "Nouveau",
+        "changed": "Modifié",
+        "fixed": "Corrigé",
+        "removed": "Retiré",
+        "security": "Sécurité",
+        "breaking": "Changement majeur"
+      },
+      "tags": {
+        "feature": "Nouveau",
+        "fix": "Corrigé",
+        "security": "Sécurité",
+        "breaking": "Rupture",
+        "change": "Modifié"
+      },
+      "pull": "Pull request n° {number}",
+      "feedTitle": "Krizaka — journal des changements",
+      "feedDescription": "Ce que Krizaka a livré, version par version.",
+      "langTag": "fr-CA"
     }
   },
   "docs": {

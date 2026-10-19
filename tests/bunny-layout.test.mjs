@@ -15,6 +15,8 @@ test("the audit accepts the layout and flags the rest", () => {
     "site/products/orochia/tour/alex-bid.3f2a9c1b7e.mp4",
     "site/people/yasakia/hana-512.b0be072833.webp",
     "site/docs/orochia/mobile/clip-watch-poster.9fc5d19c39.webp",
+    "site/brand-films/loops/owl-square-dark.0123456789.mp4",
+    "site/brand-films/film/le-monde-de-krizaka-en.0123456789.vtt",
     "maps/v1/tiles/quebec-20261012.pmtiles",
     "maps/v1/fonts/Noto Sans Regular/0-255.pbf",
     "pr-assets/krizaka-com/111-mobile-promo/clip.mp4",
@@ -66,4 +68,13 @@ test("the prefixes another writer owns are declared once, in the layout, and pru
     assert.ok(FOREIGN_WRITERS.some((p) => prefix.startsWith(p)), `${prefix} is owned by another writer`);
   }
   assert.ok(FOREIGN_WRITERS.includes("site/blog/"));
+  // dev.yasakia.com names its own recordings (its demo page, apps/site/lib/media.ts in krizaka/yasakia): never pruned here.
+  assert.ok(FOREIGN_WRITERS.some((p) => "site/products/yasakia/tour/talk.abcdef1234.mp4".startsWith(p)), "site/products/yasakia/ is owned by dev.yasakia.com");
+  // The other product sites name their landing recordings the same way (their lib/tour.ts): never pruned here either.
+  for (const product of ["yomizaka", "akinaza", "kachizaka", "yororis"]) {
+    const clip = `site/products/${product}/tour/phone-keep.abcdef1234.mp4`;
+    assert.ok(FOREIGN_WRITERS.some((p) => clip.startsWith(p)), `${clip} is owned by dev.${product}.com`);
+  }
+  // Yororis' gallery is still named by this site's manifest: only its tour/ is foreign (one writer per prefix).
+  assert.ok(!FOREIGN_WRITERS.some((p) => "site/products/yororis/gallery/home-phone.11203dcac9.webp".startsWith(p)));
 });

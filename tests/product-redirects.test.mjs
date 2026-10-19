@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { PRODUCT_SITES, productRedirects } from "../lib/product-redirects.ts";
 
@@ -75,15 +75,24 @@ test("the old Orazaka addresses that redirected to /products/orazaka/… go to i
   }
 });
 
+test("/products merged into the home (two views, 2026-10-17): it answers 308 with the home's products section, same language", () => {
+  for (const [path, destination, locale] of [["/products", "/#products"], ["/en/products", "/:locale#products", "en"], ["/fr/products", "/:locale#products", "fr"]]) {
+    const rule = go(path);
+    assert.equal(rule?.statusCode, 308, path);
+    assert.equal(rule.destination, destination, path);
+    assert.equal(rule.matches(path).params.locale, locale, path);
+  }
+});
+
 test("what stays on krizaka.com is never redirected", () => {
-  for (const path of ["/", "/en", "/products", "/en/products", "/fr/products", "/story", "/open-source", "/en/open-source/ui", "/contact", "/privacy", "/terms", "/docs", "/en/docs", "/en/docs/ui", "/en/docs/ui/button", "/products/orazakax"]) {
+  for (const path of ["/", "/en", "/story", "/open-source", "/en/open-source/ui", "/contact", "/privacy", "/terms", "/docs", "/en/docs", "/en/docs/ui", "/en/docs/ui/button", "/products/orazakax"]) {
     assert.equal(go(path), undefined, path);
   }
 });
 
 test("next.config.ts serves these redirects, and no product page, product docs set or kit is left", () => {
   assert.match(read("next.config.ts"), /\.\.\.productRedirects\(\)/);
-  assert.deepEqual(readdirSync(new URL("../app/[locale]/products", import.meta.url)), ["page.tsx"]);
+  assert.ok(!existsSync(new URL("../app/[locale]/products", import.meta.url)), "the products page came back");
   const pkg = JSON.parse(read("package.json"));
   assert.equal(pkg.dependencies["@krizaka/orazaka-design-system"], undefined);
   assert.equal(pkg.dependencies["@krizaka/orochia-design-system"], undefined);

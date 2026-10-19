@@ -662,6 +662,7 @@
           "CapabilityProvider",
           "ChatGeneratorClient",
           "ChatMemoryStore",
+          "EmbeddingClient",
           "ImageGeneratorClient",
           "InfrastructureStatusProvider",
           "KnowledgeService",
@@ -692,6 +693,7 @@
       "description": "Orazaka Identity and Access Management Domain",
       "ports": {
         "inbound": [
+          "AdminUserService",
           "ApiKeyService",
           "IdentityReconciliationService",
           "IdentityService",
@@ -701,6 +703,7 @@
           "UserProfileProvider"
         ],
         "outbound": [
+          "AdminUserRepositoryPort",
           "ApiKeyRepositoryPort",
           "AuthorityRepositoryPort",
           "CryptographyPort",
@@ -821,6 +824,21 @@
       }
     },
     {
+      "id": "krizaka-app-config",
+      "path": "krizaka/krizaka-platform-kit/krizaka-app-config",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "Version compatibility between a backend and the apps that call it, written once: a public cached app-config endpoint (minimum and latest version, update mode, maintenance, contract range, store URL, flags, localized message) read from database parameters, a filter that answers 426 Upgrade Required to a client below the minimum, N-1 contract compatibility with Deprecation and Sunset headers, and an audited admin API with rollback.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
       "id": "krizaka-messaging",
       "path": "krizaka/krizaka-platform-kit/krizaka-messaging",
       "repository": "krizaka-platform-kit",
@@ -860,6 +878,21 @@
       "runtime": "jvm",
       "version": "0.2.0",
       "description": "Stateless JWT security for Spring Boot services: the shared HS256 session-token decoder, the roles-claim authority mapping, one security baseline (CORS preflight, health, error page, SERVICE-only internal surface) and the service-to-service token.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "krizaka-spring-boot-starter-app-config",
+      "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-app-config",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "App version compatibility in one dependency: krizaka-app-config (the public app-config endpoint, the 426 Upgrade Required filter, N-1 contract compatibility, the audited admin API) with Spring MVC and JDBC.",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -971,6 +1004,10 @@
       "to": "krizaka-notifications-api"
     },
     {
+      "from": "krizaka-spring-boot-starter-app-config",
+      "to": "krizaka-app-config"
+    },
+    {
       "from": "krizaka-spring-boot-starter-observability",
       "to": "krizaka-observability"
     },
@@ -1037,6 +1074,10 @@
     {
       "from": "orazaka-conversation-service",
       "to": "krizaka-billing-client"
+    },
+    {
+      "from": "orazaka-conversation-service",
+      "to": "krizaka-spring-boot-starter-app-config"
     },
     {
       "from": "orazaka-conversation-service",
@@ -1310,7 +1351,7 @@
       "kind": "amqp",
       "via": "orazaka.jobs.video",
       "exchange": "orazaka.jobs",
-      "routingKey": "job.video.*, job.compose.*"
+      "routingKey": "job.video.*, job.compose.*, job.sound.*"
     },
     {
       "from": "orazaka-job-service",
@@ -1358,7 +1399,7 @@
       "kind": "amqp",
       "via": "orazaka.events.job-relay",
       "exchange": "orazaka.events",
-      "routingKey": "job.{…}.done"
+      "routingKey": "job.{…}.cancelled"
     },
     {
       "from": "orazaka-job-service",
@@ -1422,7 +1463,7 @@
       "kind": "amqp",
       "via": "orazaka.jobs.video",
       "exchange": "orazaka.jobs",
-      "routingKey": "job.video.*, job.compose.*"
+      "routingKey": "job.video.*, job.compose.*, job.sound.*"
     },
     {
       "from": "orazaka-automation-service",
@@ -1470,6 +1511,12 @@
       "from": "orazaka-edge",
       "to": "krizaka-users-service",
       "kind": "http",
+      "via": "route /api/v1/admin/users"
+    },
+    {
+      "from": "orazaka-edge",
+      "to": "krizaka-users-service",
+      "kind": "http",
       "via": "route /api/v1/api-keys"
     },
     {
@@ -1501,6 +1548,18 @@
       "to": "orazaka-conversation-service",
       "kind": "http",
       "via": "route /"
+    },
+    {
+      "from": "orazaka-edge",
+      "to": "orazaka-knowledge-service",
+      "kind": "http",
+      "via": "route /api/v1/analytics"
+    },
+    {
+      "from": "orazaka-edge",
+      "to": "orazaka-knowledge-service",
+      "kind": "http",
+      "via": "route /api/v1/recommendations"
     },
     {
       "from": "orazaka-edge",
@@ -1814,7 +1873,7 @@
       {
         "name": "orazaka.jobs.video",
         "exchange": "orazaka.jobs",
-        "binding": "job.video.*, job.compose.*",
+        "binding": "job.video.*, job.compose.*, job.sound.*",
         "dlq": "orazaka.jobs.video.dlq",
         "declaredBy": "orazaka-persistence-app"
       }
@@ -1883,12 +1942,22 @@
       {
         "module": "orazaka-job-service",
         "exchange": "orazaka.events",
+        "routingKey": "job.{…}.cancelled"
+      },
+      {
+        "module": "orazaka-job-service",
+        "exchange": "orazaka.events",
         "routingKey": "job.{…}.done"
       },
       {
         "module": "orazaka-job-service",
         "exchange": "orazaka.events",
         "routingKey": "job.{…}.error"
+      },
+      {
+        "module": "orazaka-job-service",
+        "exchange": "orazaka.events",
+        "routingKey": "job.{…}.progress"
       },
       {
         "module": "orazaka-studio-service",
@@ -1914,6 +1983,11 @@
         "module": "orazaka-studio-service",
         "exchange": "orazaka.jobs",
         "routingKey": "job.automation.approved"
+      },
+      {
+        "module": "orazaka-studio-service",
+        "exchange": "orazaka.jobs",
+        "routingKey": "job.cancel.{…}"
       }
     ],
     "consumers": [
@@ -2009,6 +2083,11 @@
       },
       {
         "module": "orazaka-worker-media",
+        "queue": "orazaka.jobs.sound",
+        "retry": "module"
+      },
+      {
+        "module": "orazaka-worker-media",
         "queue": "orazaka.jobs.video",
         "retry": "module"
       }
@@ -2038,6 +2117,11 @@
         "feature": "orazaka.core.media.video.analysis",
         "handler": "video.analyze",
         "routingKey": "job.media.generate"
+      },
+      {
+        "feature": "orazaka.studio.media.sound",
+        "handler": "media.sound",
+        "routingKey": "job.sound.generate"
       },
       {
         "feature": "orazaka.core.chat.completion",
@@ -2194,6 +2278,15 @@
         "description": "Identity principal contract (the User record) — the only identity type downstream services keep after the Phase 2 extraction; pure JDK, no dependencies"
       },
       {
+        "id": "krizaka-spring-boot-starter-app-config",
+        "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-app-config",
+        "repository": "krizaka-platform-kit",
+        "role": "starter",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "App version compatibility in one dependency: krizaka-app-config (the public app-config endpoint, the 426 Upgrade Required filter, N-1 contract compatibility, the audited admin API) with Spring MVC and JDBC."
+      },
+      {
         "id": "krizaka-spring-boot-starter-observability",
         "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-observability",
         "repository": "krizaka-platform-kit",
@@ -2228,6 +2321,15 @@
         "packaging": "jar",
         "version": "0.2.0",
         "description": "HTTP service baseline in one dependency: krizaka-web (Problem Details, request correlation, Jackson defaults, cursor pagination, declared CORS) with Spring MVC, bean validation and Actuator."
+      },
+      {
+        "id": "krizaka-app-config",
+        "path": "krizaka/krizaka-platform-kit/krizaka-app-config",
+        "repository": "krizaka-platform-kit",
+        "role": "platform",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "Version compatibility between a backend and the apps that call it, written once: a public cached app-config endpoint (minimum and latest version, update mode, maintenance, contract range, store URL, flags, localized message) read from database parameters, a filter that answers 426 Upgrade Required to a client below the minimum, N-1 contract compatibility with Deprecation and Sunset headers, and an audited admin API with rollback."
       },
       {
         "id": "krizaka-messaging",
@@ -2294,6 +2396,16 @@
       }
     ],
     "dependencies": [
+      {
+        "from": "krizaka-app-config",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-app-config",
+        "to": "krizaka-test-support",
+        "kind": "test"
+      },
       {
         "from": "krizaka-billing-api",
         "to": "krizaka-bom",
@@ -2430,7 +2542,27 @@
         "kind": "parent"
       },
       {
+        "from": "krizaka-observability",
+        "to": "krizaka-test-support",
+        "kind": "test"
+      },
+      {
         "from": "krizaka-security",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-security",
+        "to": "krizaka-test-support",
+        "kind": "test"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-app-config",
+        "to": "krizaka-app-config",
+        "kind": "compile"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-app-config",
         "to": "krizaka-parent",
         "kind": "parent"
       },
@@ -2588,6 +2720,11 @@
         "from": "krizaka-web",
         "to": "krizaka-parent",
         "kind": "parent"
+      },
+      {
+        "from": "krizaka-web",
+        "to": "krizaka-test-support",
+        "kind": "test"
       }
     ]
   },
@@ -2603,7 +2740,6 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "creativity-media",
-      "categorySortWeight": 80,
       "iconKey": "studio",
       "sortWeight": 100,
       "pricing": {
@@ -2701,7 +2837,7 @@
     {
       "key": "orazaka-media",
       "dir": "orazaka-media",
-      "version": "1.5.0",
+      "version": "1.7.0",
       "tier": "DATA",
       "kind": "TOOLKIT",
       "distribution": "OSS",
@@ -2709,7 +2845,6 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "creativity-media",
-      "categorySortWeight": 80,
       "iconKey": "image",
       "sortWeight": 90,
       "pricing": {
@@ -3090,6 +3225,106 @@
           }
         },
         {
+          "key": "cinematic-script",
+          "profession": "creative",
+          "iconKey": "video",
+          "pricing": "INCLUDED",
+          "status": "PUBLISHED",
+          "estimatedCredits": 40,
+          "steps": 1,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "brief",
+              "title": "Le brief"
+            },
+            {
+              "key": "format",
+              "title": "Le format"
+            },
+            {
+              "key": "aspect",
+              "title": "Format d'image"
+            },
+            {
+              "key": "durationSeconds",
+              "title": "Durée (secondes)"
+            },
+            {
+              "key": "shots",
+              "title": "Nombre de plans"
+            },
+            {
+              "key": "language",
+              "title": "Langue des textes"
+            },
+            {
+              "key": "model",
+              "title": "Modèle de langage (facultatif)"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "script",
+              "type": "TEXT"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Cinematic short — script",
+              "tagline": "A brief becomes a shot list: 8–12 shots, original characters, music, voice-over.",
+              "description": null
+            },
+            "fr": {
+              "label": "Court métrage — script",
+              "tagline": "Un brief devient une liste de plans : 8 à 12 plans, personnages originaux, musique, voix off.",
+              "description": null
+            }
+          }
+        },
+        {
+          "key": "cinematic-cut",
+          "profession": "creative",
+          "iconKey": "video",
+          "pricing": "INCLUDED",
+          "status": "PUBLISHED",
+          "estimatedCredits": 900,
+          "steps": 1,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "clips",
+              "title": "Les plans"
+            },
+            {
+              "key": "edit",
+              "title": "La liste de décisions de montage (JSON)"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "film",
+              "type": "VIDEO"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Cinematic short — cut",
+              "tagline": "Your shots edited into one film: cuts, ramps, grade, titles, the AI label.",
+              "description": null
+            },
+            "fr": {
+              "label": "Court métrage — montage",
+              "tagline": "Vos plans montés en un film : coupes, ralentis, étalonnage, titres, la mention IA.",
+              "description": null
+            }
+          }
+        },
+        {
           "key": "video-with-sound",
           "profession": "general",
           "iconKey": "video",
@@ -3406,7 +3641,6 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "business-compliance",
-      "categorySortWeight": 100,
       "iconKey": "target",
       "sortWeight": 90,
       "pricing": {
@@ -3433,12 +3667,12 @@
       },
       "categoryText": {
         "en": {
-          "label": "Business & compliance",
-          "description": "Packs that do the work and keep it in order: validate, prospect, comply."
+          "label": "Business & documents",
+          "description": "Packs that do the work: check documents, prospect."
         },
         "fr": {
-          "label": "Affaires et conformité",
-          "description": "Les packs qui font le travail et le mettent en règle : valider, prospecter, se conformer."
+          "label": "Affaires et documents",
+          "description": "Les packs qui font le travail : vérifier des documents, prospecter."
         }
       },
       "studios": [
@@ -3596,6 +3830,202 @@
       ]
     },
     {
+      "key": "data-analytics",
+      "dir": "data-analytics",
+      "version": "1.1.0",
+      "tier": "DATA",
+      "kind": null,
+      "distribution": "OSS",
+      "regulatoryClass": "STANDARD",
+      "status": "PUBLISHED",
+      "showcase": true,
+      "category": "data-analytics",
+      "iconKey": "chart",
+      "sortWeight": 40,
+      "pricing": {
+        "priceCents": 4900,
+        "includedCredits": 300
+      },
+      "capabilities": [],
+      "workers": [],
+      "scopeGuard": false,
+      "consent": false,
+      "safety": false,
+      "rulesets": [],
+      "text": {
+        "en": {
+          "label": "Recommendations & insights",
+          "tagline": "A feed per person and analytics per creator, on your own data.",
+          "description": "The recommender your product calls with a service key: send pseudonymous events and your eligible items, read a \"for you\" feed, similar items and creator insights — every item says why it is there. Two Studios read your videos and suggest titles and tags."
+        },
+        "fr": {
+          "label": "Recommandations et statistiques",
+          "tagline": "Un fil par personne et des statistiques par créateur, sur vos propres données.",
+          "description": "Le recommandeur que votre produit appelle avec une clé de service : envoyez des événements pseudonymes et vos articles admissibles, lisez un fil « pour vous », des articles semblables et les statistiques d'un créateur — chaque article dit pourquoi il est là. Deux Studios lisent vos vidéos et proposent titres et mots-clés."
+        }
+      },
+      "categoryText": {
+        "en": {
+          "label": "Data & analytics",
+          "description": "Packs that read your product's data: recommendations, insights, dashboards."
+        },
+        "fr": {
+          "label": "Données et analyse",
+          "description": "Les packs qui lisent les données de votre produit : recommandations, statistiques, tableaux de bord."
+        }
+      },
+      "studios": [
+        {
+          "key": "data-driven-ui",
+          "profession": "general",
+          "iconKey": "chart",
+          "pricing": "PAID",
+          "status": "PUBLISHED",
+          "estimatedCredits": 30,
+          "steps": 1,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "data",
+              "title": "Vos données"
+            },
+            {
+              "key": "question",
+              "title": "Votre question"
+            },
+            {
+              "key": "language",
+              "title": "Langue"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "answer",
+              "type": "TEXT"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Data-driven UI",
+              "tagline": "A CSV and a question become a live dashboard.",
+              "description": "Give your data (a CSV, a JSON export of your analytics) and ask: the answer comes as figures, charts and a table you can read at a glance. Every number comes from your data."
+            },
+            "fr": {
+              "label": "Interface pilotée par les données",
+              "tagline": "Un CSV et une question deviennent un tableau de bord.",
+              "description": "Donnez vos données (un CSV, l'export JSON de vos statistiques) et posez votre question : la réponse arrive en chiffres, graphiques et tableau, lisible d'un coup d'œil. Chaque nombre vient de vos données."
+            }
+          }
+        },
+        {
+          "key": "video-understanding",
+          "profession": "general",
+          "iconKey": "vision",
+          "pricing": "PAID",
+          "status": "PUBLISHED",
+          "estimatedCredits": 40,
+          "steps": 2,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "assetId",
+              "title": "L'image clé"
+            },
+            {
+              "key": "title",
+              "title": "Le titre de la vidéo"
+            },
+            {
+              "key": "description",
+              "title": "La description (facultative)"
+            },
+            {
+              "key": "language",
+              "title": "Langue de la lecture"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "reading",
+              "type": "TEXT"
+            },
+            {
+              "key": "frame",
+              "type": "TEXT"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Video understanding",
+              "tagline": "What a video is about — topics, tags and safety signals, from a keyframe.",
+              "description": "A keyframe goes through the vision model, then a reading in JSON: a summary, topics, tags, the language and safety labels. The labels go to a human moderator, never to an automatic takedown."
+            },
+            "fr": {
+              "label": "Compréhension vidéo",
+              "tagline": "De quoi parle une vidéo — sujets, mots-clés et signaux de sécurité, à partir d'une image clé.",
+              "description": "Une image clé passe par le modèle de vision, puis une lecture en JSON : un résumé, des sujets, des mots-clés, la langue et des étiquettes de sécurité. Les étiquettes vont à un modérateur humain, jamais à un retrait automatique."
+            }
+          }
+        },
+        {
+          "key": "creator-suggestions",
+          "profession": "creative",
+          "iconKey": "sparkles",
+          "pricing": "PAID",
+          "status": "PUBLISHED",
+          "estimatedCredits": 15,
+          "steps": 1,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "title",
+              "title": "Votre titre"
+            },
+            {
+              "key": "description",
+              "title": "Votre description (facultative)"
+            },
+            {
+              "key": "tags",
+              "title": "Vos mots-clés (facultatif)"
+            },
+            {
+              "key": "audienceTags",
+              "title": "Ce qui marche auprès de votre audience (facultatif)"
+            },
+            {
+              "key": "language",
+              "title": "Langue"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "suggestions",
+              "type": "TEXT"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Creator suggestions",
+              "tagline": "Three titles, a description and tags — proposals the creator approves.",
+              "description": "From the creator's own words and the tags that perform with their audience. Nothing is invented, nothing is published without the creator."
+            },
+            "fr": {
+              "label": "Suggestions pour créateurs",
+              "tagline": "Trois titres, une description et des mots-clés — des propositions que le créateur valide.",
+              "description": "À partir des mots du créateur et des mots-clés qui marchent auprès de son audience. Rien n'est inventé, rien n'est publié sans le créateur."
+            }
+          }
+        }
+      ]
+    },
+    {
       "key": "bien-etre",
       "dir": "wellbeing",
       "version": "1.0.0",
@@ -3606,7 +4036,6 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "wellbeing",
-      "categorySortWeight": 60,
       "iconKey": "sparkles",
       "sortWeight": 30,
       "pricing": {
@@ -3815,7 +4244,6 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "business-compliance",
-      "categorySortWeight": 100,
       "iconKey": "shield-check",
       "sortWeight": 20,
       "pricing": {
@@ -3877,12 +4305,12 @@
       },
       "categoryText": {
         "en": {
-          "label": "Business & compliance",
-          "description": "Packs that do the work and keep it in order: validate, prospect, comply."
+          "label": "Business & documents",
+          "description": "Packs that do the work: check documents, prospect."
         },
         "fr": {
-          "label": "Affaires et conformité",
-          "description": "Les packs qui font le travail et le mettent en règle : valider, prospecter, se conformer."
+          "label": "Affaires et documents",
+          "description": "Les packs qui font le travail : vérifier des documents, prospecter."
         }
       },
       "studios": [
@@ -3991,7 +4419,6 @@
       "status": "DRAFT",
       "showcase": false,
       "category": "business-compliance",
-      "categorySortWeight": 100,
       "iconKey": "repeat",
       "sortWeight": 5,
       "pricing": {
@@ -4074,7 +4501,6 @@
       "status": "UNLISTED",
       "showcase": true,
       "category": null,
-      "categorySortWeight": null,
       "iconKey": null,
       "sortWeight": null,
       "pricing": null,
@@ -4142,6 +4568,713 @@
           }
         }
       ]
+    }
+  ],
+  "models": [
+    {
+      "id": "whisper-base",
+      "name": "Whisper Base",
+      "vendor": "OpenAI",
+      "family": "Whisper",
+      "category": "audio",
+      "capabilities": [
+        "speech-to-text"
+      ],
+      "runsOn": "local",
+      "runtime": "LocalAI · whisper.cpp",
+      "provider": "ollama",
+      "openWeights": true,
+      "licence": {
+        "name": "MIT",
+        "url": "https://github.com/openai/whisper/blob/main/LICENSE"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "default",
+      "lastVerified": null
+    },
+    {
+      "id": "qwen2.5-coder:7b",
+      "name": "Qwen 2.5 Coder 7B",
+      "vendor": "Alibaba Cloud",
+      "family": "Qwen 2.5 Coder",
+      "category": "code",
+      "capabilities": [
+        "code"
+      ],
+      "runsOn": "local",
+      "runtime": "Ollama",
+      "provider": "ollama",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct/blob/main/LICENSE"
+      },
+      "commercialUse": "yes",
+      "contextWindow": 32768,
+      "status": "default",
+      "lastVerified": null
+    },
+    {
+      "id": "flux-2-klein-4b",
+      "name": "FLUX.2 [klein] 4B",
+      "vendor": "Black Forest Labs",
+      "family": "FLUX.2 klein",
+      "category": "image",
+      "capabilities": [
+        "image"
+      ],
+      "runsOn": "local",
+      "runtime": "stable-diffusion.cpp · Metal, CUDA",
+      "provider": "localai-image",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/black-forest-labs/FLUX.2-klein-4B/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "default",
+      "lastVerified": "2026-10-15"
+    },
+    {
+      "id": "acestep-v15-xl-turbo",
+      "name": "ACE-Step 1.5 XL turbo (music bed)",
+      "vendor": "ACE Studio · StepFun",
+      "family": "ACE-Step 1.5",
+      "category": "music",
+      "capabilities": [
+        "music"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · Metal, CUDA",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "MIT",
+        "url": "https://huggingface.co/ACE-Step/acestep-v15-xl-turbo-diffusers"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "default",
+      "lastVerified": null
+    },
+    {
+      "id": "piper-en-medium-ljspeech",
+      "name": "Piper LJSpeech (en)",
+      "vendor": "Rhasspy",
+      "family": "Piper (en-US, LJSpeech)",
+      "category": "speech",
+      "capabilities": [
+        "text-to-speech"
+      ],
+      "runsOn": "local",
+      "runtime": "LocalAI · Piper",
+      "provider": "localai",
+      "openWeights": true,
+      "licence": {
+        "name": "Public domain",
+        "url": "https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ljspeech/medium/MODEL_CARD"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "default",
+      "lastVerified": null
+    },
+    {
+      "id": "animatediff-lightning-mps",
+      "name": "AnimateDiff Lightning",
+      "vendor": "ByteDance",
+      "family": "AnimateDiff-Lightning",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "local",
+      "runtime": "PyTorch MPS · Apple Metal",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "CreativeML OpenRAIL-M",
+        "url": "https://huggingface.co/ByteDance/AnimateDiff-Lightning/blob/main/README.md"
+      },
+      "commercialUse": "conditions",
+      "contextWindow": null,
+      "status": "default",
+      "lastVerified": null
+    },
+    {
+      "id": "llava:latest",
+      "name": "LLaVA (latest)",
+      "vendor": "LLaVA team",
+      "family": "LLaVA 1.6",
+      "category": "vision",
+      "capabilities": [
+        "vision"
+      ],
+      "runsOn": "local",
+      "runtime": "Ollama",
+      "provider": "ollama",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://ollama.com/library/llava"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "default",
+      "lastVerified": null
+    },
+    {
+      "id": "whisper-tiny-en",
+      "name": "Whisper Tiny (en)",
+      "vendor": "OpenAI",
+      "family": "Whisper",
+      "category": "audio",
+      "capabilities": [
+        "speech-to-text"
+      ],
+      "runsOn": "local",
+      "runtime": "LocalAI · whisper.cpp",
+      "provider": "ollama",
+      "openWeights": true,
+      "licence": {
+        "name": "MIT",
+        "url": "https://github.com/openai/whisper/blob/main/LICENSE"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "qwen2.5:7b",
+      "name": "Qwen 2.5 7B Instruct",
+      "vendor": "Alibaba Cloud",
+      "family": "Qwen 2.5",
+      "category": "chat",
+      "capabilities": [
+        "chat"
+      ],
+      "runsOn": "local",
+      "runtime": "Ollama",
+      "provider": "ollama",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Qwen/Qwen2.5-7B-Instruct/blob/main/LICENSE"
+      },
+      "commercialUse": "yes",
+      "contextWindow": 32768,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "codellama:7b",
+      "name": "CodeLlama 7B",
+      "vendor": "Meta",
+      "family": "Code Llama",
+      "category": "code",
+      "capabilities": [
+        "code"
+      ],
+      "runsOn": "local",
+      "runtime": "Ollama",
+      "provider": "ollama",
+      "openWeights": true,
+      "licence": {
+        "name": "Llama 2 Community Licence",
+        "url": "https://ai.meta.com/llama/license/"
+      },
+      "commercialUse": "conditions",
+      "contextWindow": 16384,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "mmaudio-large-44k-v2",
+      "name": "MMAudio large 44k v2 (foley) — non-commercial",
+      "vendor": "Sony · Hkchengrex (UIUC)",
+      "family": "MMAudio",
+      "category": "foley",
+      "capabilities": [
+        "video-to-audio"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · Metal, CUDA",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "CC-BY-NC-4.0",
+        "url": "https://github.com/hkchengrex/MMAudio#licenses"
+      },
+      "commercialUse": "no",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "argmaxinc/mlx-FLUX.1-schnell-4bit-quantized",
+      "name": "FLUX.1 Schnell 4-bit (MLX)",
+      "vendor": "Black Forest Labs",
+      "family": "FLUX.1 schnell",
+      "category": "image",
+      "capabilities": [
+        "image"
+      ],
+      "runsOn": "local",
+      "runtime": "MLX · Apple Silicon",
+      "provider": "localai-image",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/argmaxinc/mlx-FLUX.1-schnell-4bit-quantized/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "v1-5-pruned-emaonly",
+      "name": "Stable Diffusion 1.5",
+      "vendor": "Stability AI",
+      "family": "Stable Diffusion 1.5",
+      "category": "image",
+      "capabilities": [
+        "image"
+      ],
+      "runsOn": "local",
+      "runtime": "stable-diffusion.cpp · Metal, CUDA",
+      "provider": "localai-image",
+      "openWeights": true,
+      "licence": {
+        "name": "CreativeML OpenRAIL-M",
+        "url": "https://huggingface.co/spaces/CompVis/stable-diffusion-license"
+      },
+      "commercialUse": "conditions",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "z-image-turbo",
+      "name": "Z-Image Turbo",
+      "vendor": "Tongyi Lab (Alibaba)",
+      "family": "Z-Image",
+      "category": "image",
+      "capabilities": [
+        "image"
+      ],
+      "runsOn": "local",
+      "runtime": "stable-diffusion.cpp · Metal, CUDA",
+      "provider": "localai-image",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Tongyi-MAI/Z-Image-Turbo/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "piper-en-low",
+      "name": "Piper Low (en)",
+      "vendor": "Rhasspy",
+      "family": "Piper (en-US, Lessac)",
+      "category": "speech",
+      "capabilities": [
+        "text-to-speech"
+      ],
+      "runsOn": "local",
+      "runtime": "LocalAI · Piper",
+      "provider": "localai",
+      "openWeights": true,
+      "licence": {
+        "name": "Lessac Blizzard 2013 data licence",
+        "url": "https://www.cstr.ed.ac.uk/projects/blizzard/2013/lessac_blizzard2013/license.html"
+      },
+      "commercialUse": "no",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "piper-en-medium-ryan",
+      "name": "Piper Ryan (en)",
+      "vendor": "Rhasspy",
+      "family": "Piper (en-US, Ryan)",
+      "category": "speech",
+      "capabilities": [
+        "text-to-speech"
+      ],
+      "runsOn": "local",
+      "runtime": "LocalAI · Piper",
+      "provider": "localai",
+      "openWeights": true,
+      "licence": {
+        "name": "CC BY-NC-SA 4.0",
+        "url": "https://huggingface.co/rhasspy/piper-voices/blob/main/en/en_US/ryan/medium/MODEL_CARD"
+      },
+      "commercialUse": "no",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "piper-fr-medium",
+      "name": "Piper Medium (fr)",
+      "vendor": "Rhasspy",
+      "family": "Piper (fr-FR, UPMC)",
+      "category": "speech",
+      "capabilities": [
+        "text-to-speech"
+      ],
+      "runsOn": "local",
+      "runtime": "LocalAI · Piper",
+      "provider": "localai",
+      "openWeights": true,
+      "licence": {
+        "name": "CC BY-SA 4.0",
+        "url": "https://huggingface.co/rhasspy/piper-voices/blob/main/fr/fr_FR/upmc/medium/MODEL_CARD"
+      },
+      "commercialUse": "conditions",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "piper-fr-siwis-medium",
+      "name": "Piper Siwis (fr-FR, féminine)",
+      "vendor": "Rhasspy",
+      "family": "Piper (fr-FR, Siwis)",
+      "category": "speech",
+      "capabilities": [
+        "text-to-speech"
+      ],
+      "runsOn": "local",
+      "runtime": "LocalAI · Piper",
+      "provider": "localai",
+      "openWeights": true,
+      "licence": {
+        "name": "CC BY 4.0",
+        "url": "https://huggingface.co/rhasspy/piper-voices/blob/main/fr/fr_FR/siwis/medium/MODEL_CARD"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "piper-fr-tom-medium",
+      "name": "Piper Tom (fr-FR, masculine)",
+      "vendor": "Rhasspy",
+      "family": "Piper (fr-FR, Tom)",
+      "category": "speech",
+      "capabilities": [
+        "text-to-speech"
+      ],
+      "runsOn": "local",
+      "runtime": "LocalAI · Piper",
+      "provider": "localai",
+      "openWeights": true,
+      "licence": {
+        "name": "AGPL-3.0",
+        "url": "https://huggingface.co/rhasspy/piper-voices/blob/main/fr/fr_FR/tom/medium/MODEL_CARD"
+      },
+      "commercialUse": "conditions",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "stable-video-diffusion-img2vid-xt",
+      "name": "Stable Video Diffusion XT (heavy, >64GB)",
+      "vendor": "Stability AI",
+      "family": "Stable Video Diffusion",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "local",
+      "runtime": "CUDA, more than 64 GB of memory",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "Stability AI Community Licence",
+        "url": "https://huggingface.co/stabilityai/stable-video-diffusion-img2vid-xt/blob/main/LICENSE.md"
+      },
+      "commercialUse": "conditions",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "wan2.1-t2v-1.3b",
+      "name": "Wan 2.1 T2V 1.3B",
+      "vendor": "Alibaba (Wan-AI)",
+      "family": "Wan 2.1",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · CUDA",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Wan-AI/Wan2.1-T2V-1.3B-Diffusers/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "wan2.2-i2v-a14b",
+      "name": "Wan 2.2 I2V A14B (720p, 4-step distill)",
+      "vendor": "Alibaba (Wan-AI)",
+      "family": "Wan 2.2",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · CUDA (80 GB)",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Wan-AI/Wan2.2-I2V-A14B-Diffusers"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "wan2.2-t2v-a14b",
+      "name": "Wan 2.2 T2V A14B (720p, 80 GB GPU)",
+      "vendor": "Alibaba (Wan-AI)",
+      "family": "Wan 2.2",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · CUDA (80 GB)",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B-Diffusers"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "wan2.2-ti2v-5b",
+      "name": "Wan 2.2 TI2V 5B",
+      "vendor": "Alibaba (Wan-AI)",
+      "family": "Wan 2.2",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · CUDA",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Wan-AI/Wan2.2-TI2V-5B-Diffusers/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "name": "DeepSeek V4 Pro",
+      "vendor": "DeepSeek",
+      "family": "DeepSeek V4",
+      "category": "chat",
+      "capabilities": [
+        "chat",
+        "reasoning"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference",
+      "openWeights": true,
+      "licence": {
+        "name": "MIT",
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Pro/blob/main/LICENSE"
+      },
+      "commercialUse": "yes",
+      "contextWindow": 1048576,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "gemma-4-31B-it",
+      "name": "Gemma 4 31B",
+      "vendor": "Google",
+      "family": "Gemma 4",
+      "category": "chat",
+      "capabilities": [
+        "chat"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/google/gemma-4-31B-it/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": 262144,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "llama-4-maverick",
+      "name": "Llama 4 Maverick",
+      "vendor": "Meta",
+      "family": "Llama 4",
+      "category": "chat",
+      "capabilities": [
+        "chat"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference",
+      "openWeights": true,
+      "licence": {
+        "name": "Llama 4 Community Licence",
+        "url": "https://github.com/meta-llama/llama-models/blob/main/models/llama4/LICENSE"
+      },
+      "commercialUse": "conditions",
+      "contextWindow": 1048576,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "mistral-3-14B",
+      "name": "Mistral 3 14B",
+      "vendor": "Mistral AI",
+      "family": "Mistral 3",
+      "category": "chat",
+      "capabilities": [
+        "chat"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/mistralai/Ministral-3-14B-Instruct-2512/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": 262144,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "gte-large-en-v1.5",
+      "name": "GTE Large (en) v1.5",
+      "vendor": "Alibaba-NLP",
+      "family": "GTE",
+      "category": "embedding",
+      "capabilities": [
+        "embeddings"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Alibaba-NLP/gte-large-en-v1.5/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": 8192,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "stable-diffusion-3.5-large",
+      "name": "Stable Diffusion 3.5 Large (DigitalOcean)",
+      "vendor": "Stability AI",
+      "family": "Stable Diffusion 3.5",
+      "category": "image",
+      "capabilities": [
+        "image"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference-images",
+      "openWeights": true,
+      "licence": {
+        "name": "Stability AI Community Licence",
+        "url": "https://stability.ai/license"
+      },
+      "commercialUse": "conditions",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "wan2-2-t2v-a14b",
+      "name": "Wan 2.2 T2V A14B (serverless)",
+      "vendor": "Alibaba (Wan-AI)",
+      "family": "Wan 2.2",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Wan-AI/Wan2.2-T2V-A14B"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "bge-m3",
+      "name": "BGE-M3",
+      "vendor": "BAAI",
+      "family": "BGE-M3",
+      "category": "embedding",
+      "capabilities": [
+        "embeddings"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference",
+      "openWeights": true,
+      "licence": {
+        "name": "MIT",
+        "url": "https://huggingface.co/BAAI/bge-m3/blob/main/LICENSE"
+      },
+      "commercialUse": "yes",
+      "contextWindow": 8192,
+      "status": "planned",
+      "lastVerified": null
     }
   ],
   "cli": {
@@ -4223,6 +5356,161 @@
             "default": null
           }
         ]
+      },
+      {
+        "name": "cinema",
+        "top": "cinema",
+        "isTop": true,
+        "description": "A cinematic short (30–60 s) from a brief: script, keyframes, shots, cut, sound — each an ordinary Studio run",
+        "args": [],
+        "aliases": [],
+        "options": []
+      },
+      {
+        "name": "cinema new",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Start a production from a brief",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "-a, --aspect <aspect>",
+            "desc": "9:16 or 16:9",
+            "default": "9:16"
+          },
+          {
+            "flag": "-d, --duration <seconds>",
+            "desc": "30 to 60",
+            "default": "45"
+          },
+          {
+            "flag": "-n, --shots <count>",
+            "desc": "8 to 12",
+            "default": "10"
+          },
+          {
+            "flag": "-l, --language <lang>",
+            "desc": "en or fr",
+            "default": "en"
+          },
+          {
+            "flag": "--seed <seed>",
+            "desc": "The production's seed (every shot's seed derives from it)",
+            "default": null
+          },
+          {
+            "flag": "--voice <voice>",
+            "desc": "A voice of the speech catalogue for the voice-over",
+            "default": null
+          },
+          {
+            "flag": "--script-model <model>",
+            "desc": "The language model that writes the script (default: the catalogue's)",
+            "default": null
+          }
+        ]
+      },
+      {
+        "name": "cinema estimate",
+        "top": "cinema",
+        "isTop": false,
+        "description": "What the rest of the production will cost and take, before it runs",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          }
+        ],
+        "aliases": [],
+        "options": []
+      },
+      {
+        "name": "cinema run",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Run (or resume) the production: script, references, keyframes, shots, cut, voice, sound",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "-y, --yes",
+            "desc": "Do not ask before spending",
+            "default": null
+          },
+          {
+            "flag": "--max-runs <n>",
+            "desc": "Stop after this many runs (review in between)",
+            "default": null
+          },
+          {
+            "flag": "--model <name>",
+            "desc": "The video model of the shots",
+            "default": "wan2.2-i2v-a14b"
+          }
+        ]
+      },
+      {
+        "name": "cinema fetch",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Download the references, keyframes, shots and the film into the production's folder",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          }
+        ],
+        "aliases": [],
+        "options": []
+      },
+      {
+        "name": "cinema reshoot",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Make shots again (a new seed): their video, then the cut and the sound",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          },
+          {
+            "name": "<shots>",
+            "desc": "Shot numbers, comma-separated"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "--new-keyframe",
+            "desc": "Make the keyframe again too",
+            "default": null
+          }
+        ]
+      },
+      {
+        "name": "cinema status",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Where the production is",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          }
+        ],
+        "aliases": [],
+        "options": []
       },
       {
         "name": "config",
@@ -4819,6 +6107,45 @@
         ]
       },
       {
+        "name": "release",
+        "top": "release",
+        "isTop": true,
+        "description": "Release bundles — check a release manifest and an offline bundle before installing it",
+        "args": [],
+        "aliases": [],
+        "options": []
+      },
+      {
+        "name": "release verify",
+        "top": "release",
+        "isTop": false,
+        "description": "Check a release manifest, and with --dir the artefacts of an offline bundle against it",
+        "args": [
+          {
+            "name": "<manifest>",
+            "desc": "Path to the release manifest (orazaka-release.json)"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "--dir <path>",
+            "desc": "Offline bundle directory whose artefacts are checked (size and SHA-256)",
+            "default": null
+          },
+          {
+            "flag": "--target <target>",
+            "desc": "Only the artefacts of one target: mac-arm64, linux-amd64 or linux-arm64",
+            "default": null
+          },
+          {
+            "flag": "--json",
+            "desc": "Print the result as JSON",
+            "default": null
+          }
+        ]
+      },
+      {
         "name": "reset",
         "top": "reset",
         "isTop": true,
@@ -5099,6 +6426,16 @@
           {
             "flag": "-m, --model <model>",
             "desc": "Specify AI model name",
+            "default": null
+          },
+          {
+            "flag": "-a, --aspect <ratio>",
+            "desc": "Frame: 9:16 (default of the Studio), 16:9 or 1:1 — the model must make it",
+            "default": null
+          },
+          {
+            "flag": "-s, --seed <number>",
+            "desc": "The same prompt, model and seed make the same shot again",
             "default": null
           },
           {

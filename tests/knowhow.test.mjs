@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 // Krizaka's story is its know-how (2026-10-14): each product proves one thing the studio knows how to do. The home,
-// /products, /open-source and /story are cut that way; a product added to lib/products.ts must say what it proves.
+// /open-source and /story are cut that way; a product added to lib/products.ts must say what it proves.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`)).site;
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name:/g)].map((m) => m[1]);
@@ -28,23 +28,23 @@ test("the known know-hows are the ones Oussama named", () => {
   assert.match(k.yororis.name, /voice/i);
 });
 
-test("one product card for the whole site: the home, /products and /story render the same ProductCard from PRODUCTS", () => {
+test("the home and /story render the products from PRODUCTS: the home's glow cards, /story's ProductCard", () => {
   const card = read("app/components/ProductCard.tsx");
   assert.match(card, /h\.knowhow\[p\.id\]/);
   assert.match(card, /<ArgumentCard/);
   assert.match(card, /href: p\.devUrl/);
   assert.match(card, /href: p\.repoUrl/);
   assert.match(card, /PRODUCTS\.filter/);
-  for (const file of ["app/components/home/WhatWeBuild.tsx", "app/[locale]/products/page.tsx", "app/[locale]/story/page.tsx"]) {
-    assert.match(read(file), /from "(@\/app\/components|\.\.)\/ProductCard"/, `${file} reads the shared card`);
-  }
+  const home = read("app/components/home/ProductShowcase.tsx");
+  assert.match(home, /h\.knowhow\[p\.id\]\.name/, "each card names the know-how it proves");
+  assert.match(home, /href=\{p\.repoUrl\}/);
+  assert.match(read("app/[locale]/story/page.tsx"), /from "@\/app\/components\/ProductCard"/, "/story reads the shared card");
   for (const file of ["app/[locale]/story/StoryClient.tsx", "app/[locale]/story/page.tsx"]) {
     assert.doesNotMatch(read(file), /ProfileCard|StatGauge|ChoiceGrid|<ProductLogo/, `${file} draws its own product tile`);
   }
   const os = read("app/[locale]/open-source/page.tsx");
-  assert.match(os, /id="knowhow"/);
-  assert.match(os, /href=\{`#\$\{nav\.id\}`\}/, "a card of the foundation leads to the product's repositories");
-  assert.match(os, /id="runs-on"/, "the runs-on table stays");
+  assert.match(os, /id="repositories"/, "every repository, by product");
+  assert.match(os, /id="runs-on"/, "the runs-on table stays (folded)");
 });
 
 test("a product card's one line is a hook: 90 characters at most, in both languages", () => {
@@ -58,11 +58,12 @@ test("/story keeps its spine: founder, refusal, engine, first proofs, roster, op
     const st = messages(lang).story.stages;
     assert.deepEqual(Object.keys(st), ["founder", "refusal", "engine", "proves", "roster", "open"], `${lang}: site.story.stages`);
     // The founder's path is sourced (his own profile, shared 2026-10-16; ~/Documents/krizaka/00_FONDATEUR/parcours-oussama.md,
-    // the same facts as blog.krizaka.com/about): Oujda → Grenoble → Montréal, in that order, each named in the text.
-    assert.deepEqual(st.founder.places, ["Oujda", "Grenoble", "Montréal"]);
-    for (const place of st.founder.places) assert.match(st.founder.body[0], new RegExp(place), `${lang}: ${place} is told`);
+    // the same facts as blog.krizaka.com/about): Montréal since 2018, the education in his own words; no former city, no LinkedIn.
+    assert.deepEqual(st.founder.places, ["Montréal"]);
+    assert.match(st.founder.body[0], /2018/, `${lang}: since 2018`);
+    assert.doesNotMatch(st.founder.body.join(" "), /Oujda|Grenoble|Maroc|Morocco|Java and Spring|Java et Spring|linkedin/i, `${lang}: no former city, no title, no LinkedIn`);
     assert.match(st.founder.body[0], /2011/, `${lang}: the 2011 research internship`);
-    assert.doesNotMatch(st.founder.body.join(" "), /Maroc\b|Morocco|RBC|TD Bank|BMO|Scotiabank|CIBC|Banque Nationale|National Bank|Desjardins/, `${lang}: places precise, employer never named`);
+    assert.doesNotMatch(st.founder.body.join(" "), /RBC|TD Bank|BMO|Scotiabank|CIBC|Banque Nationale|National Bank|Desjardins/, `${lang}: places precise, employer never named`);
     assert.equal(messages(lang).story.chapters, undefined, `${lang}: the per-product chapters are gone`);
   }
   const story = read("lib/story.ts");

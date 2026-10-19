@@ -24,9 +24,9 @@ export type PageTemplate =
 
 export const PAGE_TEMPLATES = {
   "/": "landing",
-  "/products": "catalogue",
-  "/open-source": "catalogue",
+  "/open-source": "docs-hub",
   "/open-source/[block]": "longform",
+  "/changelog": "changelog",
   "/contact": "contact",
   "/privacy": "legal",
   "/terms": "legal",

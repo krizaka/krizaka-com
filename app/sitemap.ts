@@ -12,10 +12,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Base list of static paths
   const staticPaths = [
     "",
-    "/products",
     "/open-source",
     ...BUILDING_BLOCKS.filter((b) => b.forum === "ui").map((b) => `/open-source/${b.id}`),
     "/story",
+    "/changelog",
     "/contact",
     "/privacy",
     "/terms",
@@ -48,7 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     let freq: "weekly" | "monthly" | "yearly" = "weekly";
     if (path === "") {
       priority = 1.0;
-    } else if (path === "/products") {
+    } else if (path === "/open-source") {
       priority = 0.9;
     } else if (path === "/contact" || path === "/privacy" || path === "/terms") {
       priority = 0.5;

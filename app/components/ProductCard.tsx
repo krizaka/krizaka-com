@@ -1,4 +1,4 @@
-/* THE product card of krizaka.com — one block wherever a product is listed (the home, /products, /story): the
+/* The product card of /story (the home presents the products as glow cards: home/ProductShowcase.tsx): the
    @krizaka/ui ArgumentCard, worn in the product's brand (`.brand-<id>` gives its accent and its mark). Mark · the
    know-how it proves · "Proved by <name>" · its release state (lib/nav.ts statuses, said honestly) · one line · the
    way in (the product's own site, or its code while it has no site) and, discreet, its source. Data comes from
@@ -15,6 +15,7 @@ import { format, getDictionary } from "@/lib/i18n";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { PRODUCTS, type Product, type ProductId } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
+import { EngineFlow } from "./EngineFlow";
 import { GitHubMark } from "./brand/GitHubMark";
 
 export function ProductCard({ product: p, locale }: { product: Product; locale: string }) {
@@ -55,7 +56,10 @@ export function EngineCard({ locale }: { locale: string }) {
   const uses: Fact[] = ENGINE_USES.map((u) => {
     const name = PRODUCTS.find((p) => p.id === u.id)!.name;
     const text = e.uses[u.id as keyof typeof e.uses];
-    return u.planned ? { label: `${name}: ${text} (${e.planned})`, tone: "wip" } : { label: `${name}: ${text}`, tone: "neutral" };
+    // The text version of the diagram: what goes out, what comes back (only what runs: lib/engine-uses.ts).
+    const back = new Intl.ListFormat(locale, { type: "conjunction" }).format(u.back.map((b) => e.back[b]));
+    const flow = format(e.gets, { list: back });
+    return u.planned ? { label: `${name}: ${text} (${e.planned}) — ${flow}`, tone: "wip" } : { label: `${name}: ${text} — ${flow}`, tone: "neutral" };
   });
   return (
     <LinkCard
@@ -68,7 +72,9 @@ export function EngineCard({ locale }: { locale: string }) {
       description={e.line}
       extra={
         <div className="engine-uses">
+          <EngineFlow legendOut={e.legendOut} legendBack={e.legendBack} />
           <p className="engine-uses-label">{e.usesLabel}</p>
+          <p className="engine-uses-note">{e.sends}.</p>
           <Facts items={uses} />
         </div>
       }
@@ -78,26 +84,21 @@ export function EngineCard({ locale }: { locale: string }) {
   );
 }
 
-/** Every product of lib/products.ts as the same card; `only` / `exclude` pick a subset (the story's stages).
- *  `withEngine`: Orazaka is not one card among the others — it is the foundation (EngineCard), and the other products
- *  are the cards it powers, in a frame joined to it (@krizaka/ui CardGrid `foundation`). */
+/** Every product of lib/products.ts as the same card; `only` / `exclude` pick a subset (the story's stages). */
 export default function ProductGrid({
   locale,
   only,
   exclude,
   reveal = true,
   min = 300,
-  withEngine = false,
 }: {
   locale: string;
   only?: readonly ProductId[];
   exclude?: readonly ProductId[];
   reveal?: boolean;
   min?: number;
-  withEngine?: boolean;
 }) {
-  const skip = withEngine ? [...(exclude ?? []), ENGINE] : exclude;
-  const list = PRODUCTS.filter((p) => (!only || only.includes(p.id)) && !skip?.includes(p.id));
+  const list = PRODUCTS.filter((p) => (!only || only.includes(p.id)) && !exclude?.includes(p.id));
   const picked = only ? only.map((id) => list.find((p) => p.id === id)).filter((p): p is Product => Boolean(p)) : list;
   return (
     <CardGrid
@@ -106,9 +107,6 @@ export default function ProductGrid({
       columns={3}
       fit={picked.length === PRODUCTS.length ? "fit" : "fill"}
       reveal={reveal}
-      {...(withEngine
-        ? { foundation: <EngineCard locale={locale} />, foundationLabel: getDictionary(locale).site.products.engine.label, className: "brand-" + ENGINE }
-        : {})}
     >
       {picked.map((p) => (
         <ProductCard key={p.id} product={p} locale={locale} />

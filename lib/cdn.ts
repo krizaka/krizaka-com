@@ -21,6 +21,9 @@ export function cdn(path: string): string {
   return `${CDN_URL}/${manifest.root}/${path.slice(0, dot)}.${hash}${path.slice(dot)}`;
 }
 
+/** True when `path` is recorded in the manifest (a medium that may not be uploaded yet: the page then does without it). */
+export const onCdn = (path: string): boolean => Boolean(FILES[path]);
+
 /** A recording: the two encodings and its poster, recorded together (`<base>.webm|.mp4|.jpg`). */
 export interface Video {
   webm: string;
@@ -32,8 +35,9 @@ export const video = (base: string): Video => ({ webm: cdn(`${base}.webm`), mp4:
 
 /** Where the media were served before they moved to Bunny (`/assets/…` on krizaka.com) — published examples of
     @krizaka/ui still point there (the three Orochia clips of its video examples): next.config answers each old URL with a
-    redirect to its file on the CDN. The manifest keeps exactly those files under products/orochia/tour/. */
-const LEGACY: [from: string, to: string][] = [["/assets/orochia/tour/", "products/orochia/tour/"]];
+    redirect to its file on the CDN. They were recorded on the old interface: the redirect now serves the current English recordings
+    (products/orochia/tour/en/; Orochia's own site picks its language's set, en/ or fr/). */
+const LEGACY: [from: string, to: string][] = [["/assets/orochia/tour/", "products/orochia/tour/en/"]];
 
 export function legacyRedirects(): { source: string; destination: string }[] {
   return LEGACY.flatMap(([from, to]) =>

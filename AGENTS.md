@@ -11,8 +11,8 @@
 
 ## 1. What this repo is
 
-- A **Next.js (App Router)** static-first site: the company home, `/products`, Krizaka UI and Krizaka Java
-  documentation (with their code-driven visualizations), `/story`, `/open-source`, contact and legal.
+- A **Next.js (App Router)** static-first site with **two views** (Oussama, 2026-10-17): the **home** (reached through the
+  mark; it presents the products) and **Open source** — plus `/story` (footer), contact and legal.
 - It is the **read side**. Component, version and architecture facts come from the published packages and the
   generated data — the site never hand-authors them.
 
@@ -22,8 +22,8 @@
   dev.orochia.com, dev.yasakia.com (Yasakia is being renamed Yasakia; identifiers here keep "yasakia" until that rename
   lands), dev.yororis.com and dev.yomizaka.com; Kachizaka and Akinaza (in development, nothing deployed) have no site yet, so
   their cards link to their repository (`noSite`). This repo carries **no product page, demo, gallery, journey, recording or documentation**
-  of them: one page, `/products`, has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
-  « Visit the dev site » and « Source »). Orochia's card is neutral — no adult-adjacent wording, no media.
+  of them: the home's products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
+  « Visit the dev site » and « Source »); `/products` and `/{en,fr}/products` answer 308 to `/#products` / `/<locale>#products`. Orochia's card is neutral — no adult-adjacent wording, no media.
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)` → the product's site, `/docs/orazaka/*` →
   dev.orazaka.com/docs, `/docs/orochia/*` → dev.orochia.com/docs, `/docs/yororis/*` → dev.yororis.com, the old Orazaka
@@ -46,22 +46,50 @@
 - `lib/products.ts` is the single list of the products (id, name, status, `devUrl`, `repoUrl`), `lib/stack.ts` the
   open-source stack (Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com); `lib/nav.ts` derives the navigation
   from them. The bar is the one of every Krizaka site (NAV-SYS; `@krizaka/ui/nav-bar`, composed in `TopNavBar`, never
-  hand-made, no inline styles), in three zones: **left** the Krizaka mark (home) alone (no family switcher on www — it duplicated Products; ui. and java. carry it back here); **centre** this site's sections only — Products · Open source (`NAV_BAR_LINKS`; Our story is in the footer, never the bar);
-  **right** Blog · GitHub · theme · language · Contact us (`primary`); the Blog is blog.krizaka.com (`BLOG_URL`, `krizaka/krizaka-blog`), also in the mobile panel and the footer's Krizaka column, and the home shows its latest three posts (`LatestPosts`, read at build from `/feed.xml`, nothing while the blog has none). No « Docs » and no search: the documentation lives on its
+  hand-made, no inline styles), in three zones: **left** the Krizaka mark **and the word « Krizaka »** (home, where the products are; no family switcher on www — ui. and java. carry it back here); **centre** Open source only (`NAV_BAR_LINKS`; Our story is in the footer, never the bar; links to the products use `PRODUCTS_ANCHOR` = `/#products`);
+  **right** Blog · GitHub · theme · language · Contact us (`primary`); the Blog is blog.krizaka.com (`BLOG_URL`, `krizaka/krizaka-blog`), also in the mobile panel and the footer's Krizaka column (the home has no blog section since 2026-10-17). No « Docs » and no search: the documentation lives on its
   own sites (while `/docs` still renders here, it keeps its breadcrumb `DocsCrumb` and the ⌘K search over it). Mobile:
   one panel (`MobilePanel`), this site's sections, then Blog, Contact us and the preferences, the family at the bottom. The
   footer lists the family in columns (Products · Open source · Krizaka: Our story, Blog, Contact us).
-- **The home is the company's** (landing): who Krizaka is and its promise (`HomeHero`, figures read at build), the
-  Orazaka as **the foundation** — the engine every product's AI runs on (`WhatWeBuild`: `ProductGrid withEngine` = the wide `EngineCard` with the honest list of what each product uses it for, `lib/engine-uses.ts`, « planned » where not wired — and the other products as the cards it powers, in the frame of `CardGrid foundation`; same on `/products`, the card alone on `/story`'s engine stage; `tests/engine.test.mjs`), the stack
-  (`OpenStack` / `StackCards`, versions and counts from `lib/registry-versions`), five provable working rules
-  (`Principles`), Montréal (`Company`), the contact. Orochia is named neutrally on krizaka.com (name and one line, never
-  a creator or payout pitch — `tests/home.test.mjs`).
-- `ProductCards` (`app/components/home/`) renders the cards on `/products`; each card wears
+- **The home is the company's** (landing), simplified (2026-10-17), in this order, **one primary action per section**:
+  the centred hero (`HomeHero`: the mark, who Krizaka is, « See what we build » → `#products`, « Watch the film » — « Le monde
+  de Krizaka » in a `Dialog` lightbox, player loaded on open — and the figures read at build, climbing with `NumberTicker`;
+  the landscape sits **in the flow under the figures**, never over them); the products (`ProductShowcase`: Orazaka as
+  **the foundation**, a wide `GlowCard alive`, and the other products as the cards it powers in the frame of `CardGrid
+  foundation` — each a `GlowCard` in its brand light, mark large, honest status from `lib/products.ts`, one line, and one
+  readable line of what it uses Orazaka for, `lib/engine-uses.ts`, « planned » where not wired; `tests/engine.test.mjs`);
+  the stack in brief (`OpenStack` / `StackCards` → `/open-source`); the principles (`Principles`); Montréal (`Company`
+  → `/story`); the contact; the folded FAQ (FAQPage JSON-LD). Orochia is named neutrally on krizaka.com (name and one
+  line, never a creator or payout pitch — `tests/home.test.mjs`).
+- **Each product card shows its field** (2026-10-17): a live mini-visual made of @krizaka/ui pieces
+  (`app/components/home/visuals/`: the engine's request flow, a lease passage checked, an encode ladder — Orochia never
+  with media —, live points with a `Sparkline`, a salon's slots as `Chip`s, two `MessageBubble`s, a voice waveform),
+  demo data in `lib/product-visuals.ts` said as demo. A fixed box (no CLS), `inert` and aria-hidden, its code a lazy
+  chunk loaded near the viewport, playing only on screen (hover on a fine pointer, always on touch), still under reduced
+  motion; timers only while playing; `tests/product-visuals.test.mjs`. The waveform is drawn here until @krizaka/ui ships one.
+- **The hero's intro** (`HeroIntro`, `home.css`, `tests/hero-intro.test.mjs`): once per session (`sessionStorage`
+  `kz-intro`), it sets `html[data-intro]` = `play` | `skip` | `done`; CSS only, over the ambient loop's poster — the
+  mark's stroke draws, the scene rises in with its birds, a light sweeps — ~1.2 s, then the loop fades in (they never
+  fight). Any input skips it; still under reduced motion and Save-Data; decorations fade in by themselves without
+  JavaScript; the text is never part of it (LCP). No library, no canvas, no animation frame. **The scene** (the flock's
+  ambient loop, `AmbientLoop`, `brand-films/ambient/home-ambient-*`) sits in the flow under the figures, never over them.
+- **`/open-source`** (docs-hub) is **the technical view**, as refined as the home, everything read at build: the hero
+  (one line, live figures — repositories, npm packages, Maven artifacts, the licence — GitHub); the stack (`StackCards`
+  with a still mini-visual each: the identities for Krizaka UI, the BOM dependency at its Central version for Java;
+  the building blocks' pages as quiet links); **packages** (`PackagesTable`: @krizaka/ui `DataTable` over
+  `lib/package-catalogue.ts` — npm + Maven Central, registry and family facets, latest version, weekly downloads, the
+  registry / code / docs links; the generator reads descriptions, repositories, POM parents and downloads);
+  **repositories** (`RepositoriesTable`, read by product, platform, language, last push from GitHub; both tables 12 rows a page); **how it fits**
+  (`lib/how-it-fits.ts`: products → engine → building blocks → shared services, an ordered list that is its own text
+  version; the runs-on table folded); **contribute** (the contact page's picker, `lib/public-channels.ts`, the guide,
+  the code of conduct, the licence). One primary action per section, no boxes in boxes.
+- `ProductShowcase` (`app/components/home/`) renders the cards on the home (`ProductCard` stays for `/story`); each card wears
   its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
   `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage, `.brand-yomizaka` indigo, `.brand-kachizaka` gold + cobalt
   (the magpie), `.brand-akinaza` forest green + copper (the beaver); the rest of the site is Krizaka ink + blue).
   Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); marks from `@krizaka/ui`
   (`KrizakaLogo`, `OrazakaLogo`, `OrochiaLogo`, `YasakiaLogo`, `YororisLogo`, `YomizakaLogo`, `KachizakaLogo`, `AkinazaLogo`, `ProductLogo`) — never a copy here.
+- **Product first, Orazaka as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Yomizaka reads your lease »); Orazaka appears only as the engine — one discreet « Powered by Orazaka » line and the proof sections (run ids) — never as the one doing the product's job (« Orazaka reads your lease »). Each product repository tests that its hero and steps do not name Orazaka. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are orazaka#189).
 - A product **in development** (`status: "development"`: Yomizaka, Kachizaka, Akinaza) is built in the open: its repository is
   public, sign-up is closed, and it says « In development ». Yomizaka has a dev site; Kachizaka and Akinaza have none yet, so
   their card says « See the code » and links the repository — never a dead address. Kachizaka is points only, never money;
@@ -80,8 +108,11 @@
   /story's Yororis chapter) are fingerprinted in `scripts/lexicon-reviewed.json`: change one only with
   `npm run lexicon -- --accept-review YYYY-MM-DD` and say so in the PR.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
-  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, and the three Orochia clips that published
-  `@krizaka/ui` examples reach through `/assets/orochia/tour/` (a redirect in `lib/cdn.ts`).
+  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the three Orochia clips that published
+  `@krizaka/ui` examples reach through `/assets/orochia/tour/` (a redirect in `lib/cdn.ts`), and `brand-films/**` — the
+  films of the flock, rendered from the code by krizaka-ui `tools/brand-films` (« Le monde de Krizaka » on `/story`, its
+  captions from the messages through `/<locale>/story/film.vtt`; the loops of each bird, loaded by ui.krizaka.com and the
+  products' sites by their hashed URL). A new render replaces them: upload, then `cdn-assets prune`.
 - English is the default language; French is served when chosen (cookie `NEXT_LOCALE`) or opened.
 
 ## 2.2 Text & languages — nothing hard-coded
@@ -251,6 +282,10 @@
   `NEXT_PUBLIC_` only where the browser needs it, then the context. Every variable is declared once in `lib/env.ts`
   (zod); `tests/env.test.mjs` refuses an undeclared or misnamed one and keeps README's table (generated,
   `npm run docs:env`) in sync.
+- **Commit attribution & AI co-authors**: Commits or pull request descriptions authored with AI assistants must attribute their co-author using GitHub-recognized Git trailers:
+  - **Claude**: `Co-authored-by: Claude <noreply@anthropic.com>`
+  - **Antigravity (Gemini)**: `Co-authored-by: Antigravity (Gemini) <200291788+gemini-code-assist@users.noreply.github.com>`
+  Both map to verified GitHub user accounts ([`claude`](https://github.com/claude) and [`gemini-code-assist`](https://github.com/gemini-code-assist)), ensuring their official avatars appear on commits and in the repository's Contributors list.
 
 ## 5.1 PR captures — never committed
 
@@ -348,6 +383,7 @@ with a message and, where safe, a `fix:`; written for Tsx and `.ts` is parsed as
 | `no-ambient-clock` | `new Date()` / `Date.now()` in domain code: the clock is injected |
 | `no-types-at-package-root` | `types.ts` at a package root (`<feature>/<feature>.types.ts`) |
 | `no-unjustified-numeric-export` | a numeric (or `…ToMilliseconds(n)`) `export const` in feature code without `// @fixed: <reason>` just above |
+| `no-hand-made-nav`, `no-hand-made-language-switch` | a navigation bar that is not `NavBar` of @krizaka/ui (own Radix NavigationMenu, a local `NavBar`/`TopNav`), a hand-made language switch (`hrefLang` in a component, a row of `aria-pressed={locale === …}` buttons): use `NavBar` and `NavBar.Language` (« Navigation in the family », ui.krizaka.com) |
 
 - **Run**: `npm run lint` runs everything (it includes `ast-grep test` and the ratchet). `npx ast-grep scan` lists the
   violations with their message; `npm run lint:sg:test` runs the rule tests.

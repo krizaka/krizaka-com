@@ -3,7 +3,7 @@
    /open-source: every repository of every product), read from GitHub at build time — never written by hand.
 
    Writes the git-ignored lib/org-stats.json: { org, publicRepositories, repositories: [{ name, description, url,
-   topics, language, archived }], fetchedAt }. The organisation endpoint gives `public_repos`; the repositories come
+   topics, language, archived, pushedAt }], fetchedAt }. The organisation endpoint gives `public_repos`; the repositories come
    from /orgs/<org>/repos (paginated, public only). APP_GITHUB_TOKEN, when set, lifts the anonymous rate limit — CI and the
    DigitalOcean build pass it. When GitHub cannot be reached (offline, rate limit), the previous file is kept; without
    one, nothing is written and lib/org-repositories.ts falls back to the repositories the generated product data knows
@@ -45,6 +45,7 @@ export async function fetchRepositories(org = ORG) {
       topics: r.topics ?? [],
       language: r.language ?? null,
       archived: Boolean(r.archived),
+      pushedAt: r.pushed_at ?? null,
     }))
     .sort((a, b) => a.name.localeCompare(b.name));
 }

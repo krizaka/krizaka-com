@@ -1,4 +1,4 @@
-/* Montréal & the company — where Krizaka is, what it wants to be, and the way to its story and its open source. */
+/* Montréal & the company — where Krizaka is, what it wants to be, and the way to its story (one action). */
 
 import { ForwardIcon } from "@krizaka/icons";
 import { Section, SectionHeading } from "@krizaka/ui/page";
@@ -16,14 +16,9 @@ export default function Company({ locale }: { locale: string }) {
         lead={c.body}
         reveal
         actions={
-          <>
-            <ButtonLink href="/story">
-              {c.story} <ForwardIcon size={14} />
-            </ButtonLink>
-            <ButtonLink href="/open-source" variant="ghost">
-              {c.openSource}
-            </ButtonLink>
-          </>
+          <ButtonLink href="/story" variant="primary">
+            {c.story} <ForwardIcon size={14} />
+          </ButtonLink>
         }
       />
     </Section>

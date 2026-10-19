@@ -108,16 +108,21 @@ test("the committed manifest names every media the site draws", () => {
     // The vertical clip the /docs/ui examples play (lib/ui-example-props.ts).
     ...["mp4", "jpg"].map((e) => `home/kit/challenge-v.${e}`),
     // The clips the published @krizaka/ui examples still reach through /assets/orochia/tour/ (lib/cdn.ts, next.config).
-    ...["alex-discover", "alex-bid", "elena-live"].flatMap((c) => ["webm", "mp4", "jpg"].map((e) => `products/orochia/tour/${c}.${e}`)),
+    ...["alex-discover", "alex-bid", "elena-live"].flatMap((c) => ["webm", "mp4", "jpg"].map((e) => `products/orochia/tour/en/${c}.${e}`)),
   ];
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
   // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left.
   const gone = Object.keys(files).filter((path) => /^(docs\/(orazaka|orochia)\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/(orazaka|yasakia)\/|products\/orochia\/mobile\/)/.test(path));
   assert.deepEqual(gone, []);
   assert.deepEqual(
-    Object.keys(files).filter((path) => path.startsWith("products/orochia/tour/") && !/\/(alex-discover|alex-bid|elena-live)\./.test(path)),
+    Object.keys(files).filter((path) => path.startsWith("products/orochia/tour/") && !/^products\/orochia\/tour\/(en|fr)\/[a-z-]+\.(webm|mp4|jpg)$/.test(path)),
     [],
   );
+  // Orochia's recordings come in both languages: every clip of one has its twin in the other (the old, English-only,
+  // out-of-date takes at the root of tour/ are gone).
+  const clips = (lang) => Object.keys(files).filter((p) => p.startsWith(`products/orochia/tour/${lang}/`)).map((p) => p.split("/").pop()).sort();
+  assert.deepEqual(clips("fr"), clips("en"));
+  assert.ok(clips("en").length >= 30);
 });
 
 test("prune keeps what another branch's manifest still names", async () => {
