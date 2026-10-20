@@ -9,7 +9,7 @@ import { localizedMetadata } from "@/lib/seo";
 import { video } from "@/lib/cdn";
 import { contactHref } from "@/lib/contact";
 import { ENGINE_USES } from "@/lib/engine-uses";
-import { DAWN_BASE, FILM_BASE } from "@/lib/film-captions";
+import { FILM_BASE, TOUR_BASE } from "@/lib/film-captions";
 import { asLocale, format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
@@ -65,7 +65,7 @@ function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
 
 /* /story (longform, with a sticky chapter contents): a short intro, then ten-second chapters in a fixed order — who we are,
    the engine, each product, the open stack, what is next — each a heading, a line or two, one proof visual and its
-   depth in a fold. The film « Le monde de Krizaka : l'aube » is shown once (a poster card in chapter 1, the player
+   depth in a fold. The film « Le monde de Krizaka : la tournée » is shown once (a poster card in chapter 1, the player
    opens in a lightbox, nothing fetched before). Every figure is read at build; products and their statuses come from
    lib/products.ts, what runs on the engine from lib/engine-uses.ts — nothing is typed here. */
 export default async function StoryPage({ params }: Props) {
@@ -75,7 +75,7 @@ export default async function StoryPage({ params }: Props) {
   const h = t.site.products;
   const e = h.engine;
   const engine = product(ENGINE);
-  const film = video(DAWN_BASE);
+  const film = video(TOUR_BASE);
   const codeFilm = video(FILM_BASE);
   const figures = [
     { id: "repos", label: st.open.figures.repos, value: publicRepositoryCount() },
@@ -217,7 +217,7 @@ export default async function StoryPage({ params }: Props) {
             promise={promiseOf(t, WHO_BIRD)}
             proof={
               <FilmLightbox
-                film={{ mp4: film.mp4, poster: film.poster, vtt: "dawn.vtt" }}
+                film={{ mp4: film.mp4, poster: film.poster, vtt: "tour.vtt" }}
                 fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}
                 trigger={
                   <button type="button" className="st-film" aria-label={`${st.who.film} · ${st.who.filmLength}`}>
@@ -239,7 +239,7 @@ export default async function StoryPage({ params }: Props) {
                   {st.who.fold.map((p) => (
                     <p key={p}>{p}</p>
                   ))}
-                  <p className="st-film-note">{st.who.filmNote} {st.world.dawn.credit}</p>
+                  <p className="st-film-note">{st.who.filmNote} {st.world.tour.credit}</p>
                   <ol className="st-list">
                     {(["falcon", "owl", "duck", "flamingo", "pigeon", "together", "family"] as const).map((c) => (
                       <li key={c}>{st.world.cues[c]}</li>

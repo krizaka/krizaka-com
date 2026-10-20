@@ -64,8 +64,8 @@ test("each chapter wears the right bird, with its promise from the film or the b
 
 test("the film is shown once: one poster card opening the lightbox; no inline player, no autoplay in the text", () => {
   assert.equal([...page.matchAll(/<FilmLightbox/g)].length, 1, "the reference film once");
-  assert.match(page, /video\(DAWN_BASE\)/, "« Le monde de Krizaka : l'aube »");
-  assert.match(page, /vtt: "dawn\.vtt"/);
+  assert.match(page, /video\(TOUR_BASE\)/, "« Le monde de Krizaka : la tournée »");
+  assert.match(page, /vtt: "tour\.vtt"/);
   assert.match(page, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/, "the light film under reduced motion / Save-Data");
   assert.doesNotMatch(page, /VideoPlayer|<video|autoPlay|autoplay/, "no player in the reading column");
   assert.match(page, /<Image className="st-film-poster" src=\{film\.poster\}/, "the poster is a content frame");
@@ -76,9 +76,9 @@ test("the film is shown once: one poster card opening the lightbox; no inline pl
   for (const l of ["en", "fr"]) {
     const w = messages(l).story.who;
     assert.ok(w.film && w.filmLength && w.filmNote, l);
-    assert.match(messages(l).story.world.dawn.credit, l === "en" ? /AI-generated/ : /Généré par IA/, "said on the page: AI-generated");
+    assert.match(messages(l).story.world.tour.credit, l === "en" ? /AI-generated/ : /Généré par IA/, "said on the page: AI-generated");
   }
-  assert.match(page, /st\.world\.dawn\.credit/, "the credit is on the page, not only in the film");
+  assert.match(page, /st\.world\.tour\.credit/, "the credit is on the page, not only in the film");
 });
 
 test("the text version of the film is listed once, in the fold, from the messages", () => {
