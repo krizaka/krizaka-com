@@ -213,8 +213,9 @@
         "proofs": {
           "repositories": "public repositories",
           "npm": "packages on npm",
+          "downloads": "npm downloads last week",
           "maven": "artifacts on Maven Central",
-          "license": "on every repository"
+          "license": "{license} on every repository"
         },
         "filmClose": "Close the film"
       },

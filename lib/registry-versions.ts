@@ -6,6 +6,7 @@
 
 import snapshot from "./registry-versions.json";
 import type { NpmPackageInfo } from "./npm-catalogue";
+import { weeklyTotalOfSnapshot } from "./package-catalogue";
 
 const versions = snapshot as {
   npm?: Record<string, string>;
@@ -56,3 +57,7 @@ export function npmDownloads(name: string): { weekly?: number; series?: number[]
     series: Array.isArray(meta?.weeklySeries) && meta.weeklySeries.length >= 2 ? meta.weeklySeries : undefined,
   };
 }
+
+/** npm downloads of last week across every @krizaka package (api.npmjs.org at build, as /open-source shows them);
+    undefined when the registry could not be reached. */
+export const npmWeeklyDownloads = (): number | undefined => weeklyTotalOfSnapshot(versions);

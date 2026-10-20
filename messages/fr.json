@@ -213,8 +213,9 @@
         "proofs": {
           "repositories": "dépôts publics",
           "npm": "paquets sur npm",
+          "downloads": "téléchargements npm la semaine dernière",
           "maven": "artefacts sur Maven Central",
-          "license": "sur chaque dépôt"
+          "license": "{license} sur chaque dépôt"
         },
         "filmClose": "Fermer le film"
       },

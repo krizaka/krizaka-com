@@ -34,9 +34,15 @@ export interface RegistrySnapshot {
 }
 
 /** The npm downloads of the last week across every package that reports them; undefined when none does. */
-export function weeklyTotal(rows: readonly PackageRow[]): number | undefined {
+export function weeklyTotal(rows: readonly Pick<PackageRow, "weeklyDownloads">[]): number | undefined {
   const known = rows.filter((r) => Number.isInteger(r.weeklyDownloads));
   return known.length ? known.reduce((sum, r) => sum + (r.weeklyDownloads as number), 0) : undefined;
+}
+
+/** The same total straight from the registry snapshot (the home's hero figure): every @krizaka package's last week,
+    summed over those that report it; undefined when none does — the figure is then hidden, never shown as 0. */
+export function weeklyTotalOfSnapshot(snapshot: RegistrySnapshot): number | undefined {
+  return weeklyTotal(Object.keys(snapshot.npm ?? {}).map((name) => ({ weeklyDownloads: snapshot.npmMeta?.[name]?.weeklyDownloads })));
 }
 
 const ROOT = "krizaka-parent";
