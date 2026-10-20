@@ -83,7 +83,11 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       "sovereign AI Quebec",
     ],
     icons: {
-      icon: "/favicon.svg",
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/icon.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     },
     metadataBase: new URL(SITE_URL),
     // Canonical + hreflang are set per page (see lib/seo buildAlternates), so a
