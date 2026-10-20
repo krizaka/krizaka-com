@@ -74,36 +74,9 @@
 .st-film-note { font-size: 13px !important; }
 .st-fold-list { list-style: decimal; }
 
-/* ═══ THE ENGINE — Orazaka at the centre, the products around it ═══ */
-.em { margin: 0; display: grid; gap: 10px; }
-.em-box { position: relative; width: 100%; max-width: 420px; aspect-ratio: 100 / 64; margin-inline: auto; }
-.em-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.em-line { stroke: var(--kz-accent); stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .8; }
-.em-line[data-planned] { stroke-dasharray: 3 5; opacity: .4; }
-.em-hub, .em-node { position: absolute; display: grid; place-items: center; transform: translate(-50%, -50%); }
-.em-hub { left: 50%; top: 50%; z-index: 2; }
-.em-hub > svg { padding: 8px; border-radius: 50%; background: var(--kz-surface-0); border: 1px solid var(--kz-accent); box-sizing: content-box; }
-.em-node { left: var(--x); top: var(--y); z-index: 2; }
-.em-mark { display: grid; place-items: center; padding: 6px; border-radius: 50%; background: var(--kz-surface-1); border: 1px solid var(--kz-border-default); }
-.em-node[data-planned] .em-mark { border-style: dashed; opacity: .75; }
-.em-name { position: absolute; font-size: 11.5px; font-weight: 700; line-height: 1.2; white-space: nowrap; color: var(--kz-text-primary); }
-.em-node[data-side="top"] .em-name { bottom: calc(100% + 3px); left: 50%; transform: translateX(-50%); }
-.em-node[data-side="bottom"] .em-name { top: calc(100% + 3px); left: 50%; transform: translateX(-50%); }
-.em-node[data-planned] .em-name { color: var(--kz-text-secondary); }
-.em-note { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; font-family: var(--kz-font-mono); font-size: 11px; letter-spacing: .04em; color: var(--kz-text-secondary); }
-.em-key { display: inline-flex; align-items: center; gap: 6px; text-transform: lowercase; }
-.em-key::before { content: ""; width: 20px; border-top: 2px solid var(--kz-accent); }
-.em-key-planned::before { border-top-style: dashed; opacity: .6; }
-.em-note-text { flex-basis: 100%; }
-/* Phone: the products in a grid above the engine, one stem between them; no line crosses a name. */
-@media (max-width: 559px) {
-  .em-box { aspect-ratio: auto; max-width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 8px; }
-  .em-lines { display: none; }
-  .em-node { position: static; transform: none; z-index: auto; display: grid; justify-items: center; gap: 4px; }
-  .em-name, .em-node .em-name { position: static; transform: none !important; white-space: normal; text-align: center; }
-  .em-hub { order: 9; position: relative; left: auto; top: auto; transform: none; grid-column: 1 / -1; margin-top: 22px; justify-self: center; display: grid; justify-items: center; gap: 4px; }
-  .em-hub::before { content: ""; position: absolute; bottom: calc(100% + 4px); left: 50%; height: 18px; border-left: 2px solid var(--kz-accent); opacity: .7; }
-}
+/* ═══ THE ENGINE — Orazaka at the centre, the products around it: the home's EngineFlowView (@krizaka/ui/engine-flow),
+   radial when the chapter's column is wide enough, top to bottom otherwise (its own container query). ═══ */
+.st-ch-proof > .kz-flow + .st-take { margin-top: 18px; }
 .st-uses { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .st-uses li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; line-height: 1.55; color: var(--kz-text-secondary); }
 .st-uses li > svg { flex: none; margin-top: 2px; }
@@ -119,7 +92,6 @@
 
 /* ═══ A PRODUCT'S TAKE — a poster, the recording plays on click in a lightbox ═══ */
 .st-take { display: grid; gap: 8px; justify-items: start; }
-.st-ch-proof > .em + .st-take { margin-top: 18px; }
 .st-take-card { position: relative; display: block; padding: 0; width: 168px; aspect-ratio: 9 / 16; border: 1px solid var(--kz-border-default); border-radius: 22px; overflow: hidden;
   background: var(--kz-surface-1); cursor: pointer; box-shadow: 0 12px 32px color-mix(in oklab, var(--kz-accent) 14%, transparent); }
 .st-take[data-ratio="wide"] .st-take-card { width: 100%; max-width: 240px; aspect-ratio: 19 / 16; border-radius: 14px; }

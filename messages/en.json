@@ -485,9 +485,6 @@
         "nav": "The engine",
         "title": "Orazaka, the engine",
         "lead": "Orazaka is the sovereign AI engine our products call for their AI: your documents, on your infrastructure, under your rules.",
-        "mapLabel": "Orazaka at the centre, the {count} products around it. A solid link is wired; a dashed link is planned.",
-        "mapNote": "Requests go in, results come back. Dashed: planned, not wired yet.",
-        "wired": "wired",
         "more": "What each product uses it for"
       },
       "products": {

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 // Orazaka is the engine every product's AI runs on (2026-10-16): the home and /products show it as the foundation (a
 // wide card, CardGrid `foundation`) with the other products as the cards it powers; /story's engine stage shows the
@@ -45,7 +45,7 @@ test("the home wears the engine as the foundation (CardGrid foundation, its own 
   assert.match(home, /foundationLabel=\{t\.site\.products\.engine\.label\}/);
   assert.match(home, /PRODUCTS\.filter\(\(p\) => p\.id !== ENGINE\)/, "the engine is the foundation, never a card among the others");
   assert.match(read("app/[locale]/page.tsx"), /<ProductShowcase\b/);
-  assert.match(read("app/[locale]/story/page.tsx"), /<EngineMap /);
+  assert.match(read("app/[locale]/story/page.tsx"), /<EngineFlowView t=\{t\} \/>/, "/story draws the home's engine flow — the same component");
 });
 
 // The flow is two-way (2026-10-17): products -> Orazaka (requests, documents, prompts), Orazaka -> products (results,
@@ -54,37 +54,19 @@ test("the diagram shows both directions, from data, claiming only what runs", ()
   assert.ok(uses.every((u) => u.back.length > 0 && u.back.includes("results")), "every product gets results back");
   for (const u of uses) for (const b of u.back) assert.ok(["results", "analytics"].includes(b), `${u.id}: '${b}' is not live (events/webhooks are orazaka#189)`);
   assert.deepEqual(uses.filter((u) => u.back.includes("analytics")).map((u) => u.id), ["orochia"], "analytics back: only Orochia reads it (ADR-081)");
-  // /story's engine chapter (a clean static drawing until @krizaka/ui's EngineFlow is released): one connector per product,
-  // solid where wired, dashed and dim where planned, nothing animated, a name for assistive technology.
-  const map = read("app/components/story/EngineMap.tsx");
-  assert.match(map, /ENGINE_USES\.map/, "drawn from data");
-  assert.match(map, /data-planned=\{u\.planned \? "" : undefined\}/, "a planned use is drawn dashed and dim");
-  assert.match(map, /role="img"/);
-  assert.doesNotMatch(map, /requestAnimationFrame|<canvas|animation/);
-  const css = read("app/[locale]/story/story.css");
-  assert.match(css, /\.em-line\[data-planned\][^}]*stroke-dasharray/);
-  assert.match(css, /@media \(max-width: 559px\)[^]*\.em-lines \{ display: none; \}/, "a phone gets the grid above the engine, no crossing lines");
+  // /story's engine chapter is the home's EngineFlowView (@krizaka/ui/engine-flow): the static stand-in is gone.
+  assert.ok(!existsSync(new URL("../app/components/story/EngineMap.tsx", import.meta.url)), "EngineMap came back");
+  assert.ok(!existsSync(new URL("../lib/engine-map.ts", import.meta.url)), "lib/engine-map.ts came back");
+  assert.doesNotMatch(read("app/[locale]/story/story.css"), /\.em-(line|lines|node|hub|box)\b/, "the stand-in's styles are gone");
 });
 
-test("the engine's connectors never reach a mark and never cross a name: placed on an ellipse, trimmed at both ends", async () => {
-  const { placeNodes } = await import("../lib/engine-map.ts");
-  const nodes = placeNodes(6);
-  assert.equal(nodes.length, 6);
-  assert.deepEqual(nodes.map((n) => n.side), ["top", "top", "bottom", "bottom", "bottom", "top"]);
-  for (const n of nodes) {
-    const [x1, y1, x2, y2] = n.line;
-    assert.ok(Math.hypot(x2 - 50, y2 - 32) > Math.hypot(x1 - 50, y1 - 32), "the line runs outwards from the hub");
-    assert.ok(Math.hypot(n.x - x2, n.y - y2) >= 4, "it stops short of the node's mark");
-    assert.ok(Math.hypot(x1 - 50, y1 - 32) >= 9 - 1e-9, "and starts outside the hub");
-  }
-});
 
 test("the text version of the drawing is a list of messages in both languages, with no hand-written direction", () => {
   for (const l of ["en", "fr"]) {
     const e = messages[l].site.products.engine;
     for (const k of ["sends", "gets"]) assert.ok(e[k], `${l}: engine.${k}`);
     assert.deepEqual(Object.keys(e.back).sort(), ["analytics", "results"]);
-    for (const k of ["mapLabel", "mapNote", "wired", "more"]) assert.ok(messages[l].site.story.engine[k], `${l}: story.engine.${k}`);
+    for (const k of ["more"]) assert.ok(messages[l].site.story.engine[k], `${l}: story.engine.${k}`);
   }
   const page = read("app/[locale]/story/page.tsx");
   assert.match(page, /e\.sends/);

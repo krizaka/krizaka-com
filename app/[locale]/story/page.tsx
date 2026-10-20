@@ -26,7 +26,7 @@ import { StackCards } from "@/app/components/home/OpenStack";
 import FilmLightbox from "@/app/components/home/FilmLightbox";
 import ProductVisual from "@/app/components/home/visuals/ProductVisual";
 import "@/app/components/home/visuals/visuals.css";
-import EngineMap from "@/app/components/story/EngineMap";
+import EngineFlowView from "@/app/components/home/EngineFlowView";
 import ReadingProgress from "@/app/components/story/ReadingProgress";
 import TakeCard from "@/app/components/story/TakeCard";
 import { takeOf } from "@/lib/story-takes";
@@ -267,7 +267,7 @@ export default async function StoryPage({ params }: Props) {
             promise={promiseOf(t, PRODUCT_BIRD.orazaka)}
             proof={
               <>
-                <EngineMap words={{ label: st.engine.mapLabel, note: st.engine.mapNote, wired: st.engine.wired, planned: e.planned }} />
+                <EngineFlowView t={t} />
                 {takeProof(ENGINE, engine.name)}
               </>
             }
