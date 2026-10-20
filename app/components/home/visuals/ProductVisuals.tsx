@@ -1,22 +1,22 @@
 "use client";
 
-/* The live mini-visuals of the product cards (Oussama, 2026-10-17): each card SHOWS its field, made of @krizaka/ui's own
-   components, with demo data said as such (messages → site.home.visuals). Decorative: the wrapper (ProductVisual) is
-   `inert` and hidden from assistive technology — the card's text says the same in words.
-   Each one is still at rest (its final frame); it moves only while `playing` (on screen, 2026-10-20: no hover needed),
-   never under reduced motion. Timers run only while playing; no animation
-   frame, no canvas. This module is loaded only when the first card comes near the viewport (next/dynamic). */
+/* The live plates of the products' field-guide entries (Cahier, krizaka-ui ADR-004, #417): each one SHOWS what the product
+   does, made of @krizaka/ui's own components, with demo data said as such (messages → site.home.visuals). Decorative:
+   the wrapper (ProductVisual) is `inert` and hidden from assistive technology — the entry's caption and tag say the same
+   in words. Each one is still at rest (its final frame); it moves only while `playing` (on screen), never under reduced
+   motion. Timers run only while playing; no animation frame, no canvas. This module is loaded only when the first entry
+   comes near the viewport (next/dynamic). */
 
 import { useEffect, useState, type ReactNode } from "react";
 import { MessageBubble, TypingIndicator } from "@krizaka/ui/chat";
 import { Chip } from "@krizaka/ui/chip";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { Progress } from "@krizaka/ui/progress";
-import { VerifiedBadge } from "@krizaka/ui/verified-badge";
-import { Sparkline } from "@krizaka/charts/sparkline";
+import { Stamp } from "@krizaka/ui/specimen-tag";
+import { Waveform } from "@krizaka/ui/waveform";
 import type { ProductId } from "@/lib/products";
 import { useI18n } from "../../I18nProvider";
-import { KACHIZAKA_POINTS, AKINAZA_SLOTS, OROCHIA_RENDITIONS, YORORIS_PEAKS } from "@/lib/product-visuals";
+import { AKINAZA_PRICE, AKINAZA_SLOTS, OROCHIA_RENDITIONS, receipt, standings, YORORIS_PEAKS } from "@/lib/product-visuals";
 
 /** Steps a counter while `playing` (one timer, cleared at rest); at rest it shows `rest`. */
 function useStep(playing: boolean, count: number, everyMs: number, rest: number): number {
@@ -30,90 +30,133 @@ function useStep(playing: boolean, count: number, everyMs: number, rest: number)
 }
 
 function Yomizaka({ playing }: { playing: boolean }) {
+  // A lease on lined paper: the owl reads line by line (the pen moves down while playing), the clause to review is
+  // marked and numbered in the margin, and its passage is quoted.
   const v = useI18n().t.site.home.visuals.yomizaka;
+  const line = useStep(playing, 4, 900, 3);
+  const lines = [v.before, v.quote, v.after];
   return (
-    <div className="pv-doc" data-play={playing ? "" : undefined}>
-      <p className="pv-doc-title">{v.document}</p>
-      <p className="pv-doc-clause">{v.before}</p>
-      <p className="pv-doc-passage">
-        <mark>{v.quote}</mark>
-      </p>
-      <p className="pv-doc-clause">{v.after}</p>
-      <p className="pv-doc-check">
-        <VerifiedBadge label={v.checked} showLabel size="sm" /> <span>{v.source}</span>
+    <div className="pv-lease" data-line={line}>
+      <p className="pv-lease-title">{v.document}</p>
+      <ol className="pv-lease-lines" start={4}>
+        {lines.map((text, i) => (
+          <li key={i} data-hit={i === 1 ? "" : undefined} data-read={i < line ? "" : undefined}>
+            {i === 1 && <span className="pv-lease-n">1</span>}
+            <span>{text}</span>
+          </li>
+        ))}
+      </ol>
+      <p className="pv-lease-foot">
+        <Stamp tone="construction">{v.review}</Stamp>
+        <span>
+          {v.line} 5 · {v.source}
+        </span>
       </p>
     </div>
   );
 }
 
 function Orochia({ playing }: { playing: boolean }) {
-  // Upload → encode → stream, said with a progress bar and the renditions lighting one by one (no clip: Orochia's card
-  // stays neutral, AGENTS §2).
+  // Upload → encode → stream, the renditions written one by one as they are ready. No media: Orochia's entry stays
+  // neutral on krizaka.com (AGENTS §2).
   const v = useI18n().t.site.home.visuals.orochia;
   const step = useStep(playing, OROCHIA_RENDITIONS.length + 1, 900, OROCHIA_RENDITIONS.length);
+  const done = step >= OROCHIA_RENDITIONS.length;
   return (
-    <div className="pv-media">
-      <div className="pv-media-frame" aria-hidden>
-        <span className="pv-media-play" />
-      </div>
-      <div className="pv-media-side">
-        <Progress value={Math.round((step / OROCHIA_RENDITIONS.length) * 100)} label={v.encoding} size="sm" />
-        <ul className="pv-media-renditions">
-          {OROCHIA_RENDITIONS.map((r, i) => (
-            <li key={r} data-on={i < step ? "" : undefined}>
-              {r}
-            </li>
-          ))}
-        </ul>
-        <p className="pv-media-state">{step >= OROCHIA_RENDITIONS.length ? v.ready : v.encoding}</p>
-      </div>
+    <div className="pv-encode">
+      <ol className="pv-encode-steps">
+        {v.steps.map((s, i) => (
+          <li key={s} data-on={i === 0 || (i === 1 && step > 0) || (i === 2 && done) ? "" : undefined}>
+            {s}
+          </li>
+        ))}
+      </ol>
+      <Progress value={Math.round((step / OROCHIA_RENDITIONS.length) * 100)} label={v.encoding} size="sm" />
+      <ul className="pv-encode-ladder">
+        {OROCHIA_RENDITIONS.map((r, i) => (
+          <li key={r} data-on={i < step ? "" : undefined}>
+            <span>{r}</span>
+            <span className="pv-leader" />
+            <span>{i < step ? "✓" : "…"}</span>
+          </li>
+        ))}
+      </ul>
+      <p className="pv-encode-state">{done ? <Stamp tone="ok">{v.ready}</Stamp> : v.encoding}</p>
     </div>
   );
 }
 
 function Kachizaka({ playing }: { playing: boolean }) {
+  // The standings of a friends' league, a ledger: match day after match day the totals roll; points only.
   const { t, locale } = useI18n();
   const v = t.site.home.visuals.kachizaka;
-  const step = useStep(playing, KACHIZAKA_POINTS.length - 7, 1600, KACHIZAKA_POINTS.length - 8);
-  const window8 = KACHIZAKA_POINTS.slice(step, step + 8);
-  const total = window8.reduce((a, b) => a + b, 0);
+  const day = useStep(playing, 8, 1400, 7) + 1;
+  const points = standings(day);
   return (
-    <div className="pv-live">
-      <p className="pv-live-head">
-        <span className="pv-live-dot" data-play={playing ? "" : undefined} /> {v.live}
-      </p>
-      <p className="pv-live-value">
-        <NumberTicker value={total} locale={locale} trigger="change" duration={600} /> <span className="pv-live-unit">{v.points}</span>
-      </p>
-      <Sparkline data={window8} title={v.title} variant="area" height={44} />
+    <div className="pv-score">
+      <p className="pv-score-head">{v.league}</p>
+      <ol className="pv-score-rows">
+        {v.players.map((name, i) => (
+          <li key={name}>
+            <span className="pv-score-rank">{i + 1}</span>
+            <span>{name}</span>
+            <span className="pv-leader" />
+            <span className="pv-score-value">
+              <NumberTicker value={points[i]} locale={locale} trigger="change" duration={600} align="start" /> <span className="pv-score-unit">{v.points}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }
 
 function Akinaza({ playing }: { playing: boolean }) {
-  const v = useI18n().t.site.home.visuals.akinaza;
-  const step = useStep(playing, AKINAZA_SLOTS.length, 1300, 2);
+  // A salon's day booked slot by slot, and the receipt of the chosen service: GST and QST to the cent (lib/product-visuals).
+  const { t, locale } = useI18n();
+  const v = t.site.home.visuals.akinaza;
+  const step = useStep(playing, AKINAZA_SLOTS.length, 1300, 1);
+  const r = receipt(AKINAZA_PRICE);
+  const money = new Intl.NumberFormat(`${locale}-CA`, { style: "currency", currency: "CAD" });
   return (
-    <div className="pv-day">
-      <p className="pv-day-head">{v.day}</p>
-      <Chip.Group type="single" value={AKINAZA_SLOTS[step]} label={v.day} size="sm" className="pv-day-slots">
-        {AKINAZA_SLOTS.map((slot) => (
-          <Chip key={slot} value={slot}>
-            {slot}
-          </Chip>
+    <div className="pv-shop">
+      <div>
+        <p className="pv-shop-head">{v.day}</p>
+        <Chip.Group type="single" value={AKINAZA_SLOTS[step]} label={v.day} size="sm" className="pv-shop-slots">
+          {AKINAZA_SLOTS.map((slot) => (
+            <Chip key={slot} value={slot}>
+              {slot}
+            </Chip>
+          ))}
+        </Chip.Group>
+        <p className="pv-shop-booked">{v.booked}</p>
+      </div>
+      <dl className="pv-receipt">
+        {[
+          [v.service, r.price],
+          [v.gst, r.gst],
+          [v.qst, r.qst],
+          [v.total, r.total],
+        ].map(([label, amount]) => (
+          <div key={String(label)}>
+            <dt>{label}</dt>
+            <dd>{money.format(Number(amount))}</dd>
+          </div>
         ))}
-      </Chip.Group>
-      <p className="pv-day-booked">{v.booked}</p>
+      </dl>
     </div>
   );
 }
 
 function Yasakia({ playing }: { playing: boolean }) {
-  // Their message is always there (the box is never empty); then the other one types, then answers, and it holds.
+  // Their message is always there; the other one types, then answers — and the agent's introduction is said above.
   const v = useI18n().t.site.home.visuals.yasakia;
   const step = useStep(playing, 4, 1100, 3);
   return (
     <div className="pv-chat">
+      <p className="pv-chat-intro">
+        <Stamp tone="ok">{v.intro}</Stamp>
+      </p>
       <MessageBubble text={v.theirs} time="18:02" grouped="single" />
       {step === 1 ? <TypingIndicator label={v.typing} /> : null}
       {step >= 2 && <MessageBubble text={v.mine} time="18:03" mine grouped="single" />}
@@ -122,21 +165,17 @@ function Yasakia({ playing }: { playing: boolean }) {
 }
 
 function Yororis({ playing }: { playing: boolean }) {
-  // A voice's waveform (interim: drawn here until @krizaka/ui ships a decorative Waveform; AudioPlayer needs a sound).
+  // A voice, listened to: @krizaka/ui's Waveform, breathing while it plays.
   const v = useI18n().t.site.home.visuals.yororis;
   return (
-    <div className="pv-voice" data-play={playing ? "" : undefined}>
-      <ul className="pv-voice-bars">
-        {YORORIS_PEAKS.map((p, i) => (
-          <li key={i} style={{ height: `${Math.round(p * 100)}%`, animationDelay: `${(i % 7) * 0.11}s` }} />
-        ))}
-      </ul>
+    <div className="pv-voice">
+      <Waveform peaks={YORORIS_PEAKS} bars={28} size="lg" playing={playing} />
       <p className="pv-voice-label">{v.label}</p>
     </div>
   );
 }
 
-/** Orazaka's card draws the engine flow instead (@krizaka/ui/engine-flow, EngineFlowView). */
+/** Orazaka's entry draws the engine flow instead (@krizaka/ui/engine-flow, EngineFlowView). */
 const VISUALS: Record<Exclude<ProductId, "orazaka">, (p: { playing: boolean }) => ReactNode> = {
   yomizaka: Yomizaka,
   orochia: Orochia,

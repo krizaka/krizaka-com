@@ -136,10 +136,10 @@
           "line": "Un espace d'écoute avec un visage et une voix."
         },
         "yomizaka": {
-          "line": "Baux, contrats et factures lus et vérifiés — chaque constat cite son passage."
+          "line": "Baux, contrats et factures lus et vérifiés. Chaque constat cite son passage."
         },
         "kachizaka": {
-          "line": "Pronostics entre amis, en points seulement — chaque point expliqué, chaque saison gardée."
+          "line": "Pronostics entre amis, en points seulement. Chaque point expliqué, chaque saison gardée."
         },
         "akinaza": {
           "line": "Le tout-en-un des boutiques indépendantes du Québec : salons, boulangeries, boutiques."
@@ -220,7 +220,7 @@
         "filmClose": "Fermer le film"
       },
       "products": {
-        "eyebrow": "Ce que nous construisons",
+        "number": "§ 2",
         "title": "Un moteur. Les produits qu'il propulse.",
         "lead": "L'IA de chaque produit tourne sur Orazaka. Chacun vit sur son propre site, avec son code sur GitHub.",
         "engineUse": "Sur Orazaka · {use}",
@@ -232,6 +232,41 @@
           "uses": "fait tourner {use} sur Orazaka.",
           "usesPlanned": "fera tourner {use} sur Orazaka.",
           "visit": "Visiter {host}"
+        },
+        "figureLabel": "fig.",
+        "notesLabel": "Notes sur les produits",
+        "backLabel": "Retour à la fiche",
+        "fields": {
+          "runs": "sur Orazaka",
+          "planned": "prévu",
+          "site": "site",
+          "role": "rôle",
+          "engineRole": "le moteur",
+          "back": "reçoit"
+        },
+        "figures": {
+          "orazaka": "le flux, dans les deux sens : les requêtes entrent, les résultats reviennent",
+          "yomizaka": "un bail lu ligne par ligne, la clause à revoir marquée",
+          "orochia": "un téléversement encodé en trois rendus, puis diffusé",
+          "kachizaka": "une ligue entre amis après la 8e journée, en points seulement",
+          "akinaza": "le mardi d’un salon, et son reçu avec TPS et TVQ",
+          "yasakia": "on se parle d’abord ; l’agent vous a présentés parce que vous avez dit oui tous les deux",
+          "yororis": "une voix, écoutée"
+        },
+        "notes": {
+          "orazaka": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
+          "yomizaka": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Orazaka tracée.",
+          "orochia": "Les téléversements vont au CDN par Tus, un transcodeur adaptatif encode de 360p à 1080p, et la lecture passe par des liens HLS signés qui expirent après cinq minutes.",
+          "kachizaka": "Les faits de match arrivent par les connecteurs MCP d’Orazaka, enregistrés une fois et appliqués dans l’ordre ; le classement est recalculé et poussé en direct. Des points seulement, des règles scellées au coup d’envoi.",
+          "akinaza": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise.",
+          "yasakia": "La position est arrondie à environ 1 km avant d’être enregistrée ; on présente les personnes qui se correspondent dans les deux sens, à proximité, jamais au mètre près.",
+          "yororis": "En construction : rien n’est déployé, rien n’est offert."
+        },
+        "birds": {
+          "lovebird": "l’inséparable",
+          "crane": "la grue",
+          "magpie": "la pie",
+          "beaver": "le castor"
         }
       },
       "stack": {
@@ -335,30 +370,48 @@
           "label": "Les requêtes de chaque produit, dans un même moteur"
         },
         "yomizaka": {
-          "document": "Bail — page 3",
+          "document": "Bail, page 3",
           "before": "Le bail est d'une durée de douze mois, à compter du 1er juillet.",
           "quote": "Le loyer ne peut être augmenté plus d'une fois au cours d'une période de 12 mois.",
           "after": "Le chauffage et l'eau chaude sont compris dans le loyer.",
           "checked": "Vérifié",
-          "source": "cité, page 3 · démo"
+          "source": "cité, page 3 · démo",
+          "review": "à revoir",
+          "line": "ligne"
         },
         "orochia": {
           "encoding": "Encodage",
-          "ready": "Prêt à diffuser · HLS"
+          "ready": "Prêt à diffuser · HLS",
+          "steps": [
+            "téléverser",
+            "encoder",
+            "diffuser"
+          ]
         },
         "kachizaka": {
           "live": "En direct",
           "points": "points",
-          "title": "Points par journée (ligue de démo)"
+          "title": "Points par journée (ligue de démo)",
+          "league": "Ligue entre amis, 8e journée · démo",
+          "players": [
+            "Léa",
+            "Malik",
+            "Chloé"
+          ]
         },
         "akinaza": {
           "day": "Mardi, la journée du salon",
-          "booked": "Réservé, confirmé par courriel · démo"
+          "booked": "Réservé, confirmé par courriel · démo",
+          "service": "Coupe",
+          "gst": "TPS 5 %",
+          "qst": "TVQ 9,975 %",
+          "total": "Total"
         },
         "yasakia": {
           "theirs": "Un café près du canal samedi ?",
-          "mine": "Oui — 10 h 30, ça me va.",
-          "typing": "En train d'écrire"
+          "mine": "Oui, 10 h 30, ça me va.",
+          "typing": "En train d'écrire",
+          "intro": "Présentés par l’agent : vous avez dit oui tous les deux."
         },
         "yororis": {
           "label": "Une voix, écoutée"

@@ -136,13 +136,13 @@
           "line": "A listening space with a face and a voice."
         },
         "yomizaka": {
-          "line": "Leases, contracts and invoices, read and checked — every finding quotes its passage."
+          "line": "Leases, contracts and invoices, read and checked. Every finding quotes its passage."
         },
         "kachizaka": {
-          "line": "Predictions among friends, points only — every point explained, every season kept."
+          "line": "Predictions among friends, points only. Every point explained, every season kept."
         },
         "akinaza": {
-          "line": "The all-in-one for independent Québec shops — hair salons, bakeries, boutiques."
+          "line": "The all-in-one for independent Québec shops: hair salons, bakeries, boutiques."
         }
       },
       "proofBy": "Proved by {name}",
@@ -220,7 +220,7 @@
         "filmClose": "Close the film"
       },
       "products": {
-        "eyebrow": "What we build",
+        "number": "§ 2",
         "title": "One engine. The products it powers.",
         "lead": "Every product's AI runs on Orazaka. Each one lives on its own site, with its source on GitHub.",
         "engineUse": "On Orazaka · {use}",
@@ -232,6 +232,41 @@
           "uses": "runs {use} on Orazaka.",
           "usesPlanned": "will run {use} on Orazaka.",
           "visit": "Visit {host}"
+        },
+        "figureLabel": "fig.",
+        "notesLabel": "Notes on the products",
+        "backLabel": "Back to the entry",
+        "fields": {
+          "runs": "on Orazaka",
+          "planned": "planned",
+          "site": "site",
+          "role": "role",
+          "engineRole": "the engine",
+          "back": "gets back"
+        },
+        "figures": {
+          "orazaka": "the flow, both ways: requests in, results back",
+          "yomizaka": "a lease read line by line, the clause to review marked",
+          "orochia": "an upload encoded to three renditions, then streamed",
+          "kachizaka": "a friends’ league after match day 8, points only",
+          "akinaza": "a salon’s Tuesday, and its receipt with GST and QST",
+          "yasakia": "you talk first; the agent introduced you because you both said yes",
+          "yororis": "a voice, listened to"
+        },
+        "notes": {
+          "orazaka": "Every request crosses one deterministic pipeline to a local model: your documents, your models, your network. Nothing leaves.",
+          "yomizaka": "A lease is checked rule by rule against the law in force on its date; every finding quotes its passage, every check is a traced Orazaka run.",
+          "orochia": "Uploads go to the CDN over Tus, an adaptive transcoder encodes from 360p to 1080p, and playback uses signed HLS links that expire after five minutes.",
+          "kachizaka": "Match facts come through Orazaka’s MCP connectors, stored once and applied in order; the standings are recomputed and pushed live. Points only, rules sealed at kick-off.",
+          "akinaza": "Bilingual invoices with GST and QST to the cent, a ledger the database keeps balanced, and the GST/QST return prepared for the merchant to file.",
+          "yasakia": "The position is rounded to about 1 km before it is stored; people are introduced when they match both ways, nearby, never exact.",
+          "yororis": "Under construction: nothing is deployed, nothing is offered."
+        },
+        "birds": {
+          "lovebird": "the lovebird",
+          "crane": "the crane",
+          "magpie": "the magpie",
+          "beaver": "the beaver"
         }
       },
       "stack": {
@@ -335,30 +370,48 @@
           "label": "Requests from every product, into one engine"
         },
         "yomizaka": {
-          "document": "Lease — page 3",
+          "document": "Lease, page 3",
           "before": "The lease runs for twelve months, from July 1.",
           "quote": "The rent may not be increased more than once in a 12-month period.",
           "after": "Heating and hot water are included in the rent.",
           "checked": "Checked",
-          "source": "quoted, page 3 · demo"
+          "source": "quoted, page 3 · demo",
+          "review": "to review",
+          "line": "line"
         },
         "orochia": {
           "encoding": "Encoding",
-          "ready": "Ready to stream · HLS"
+          "ready": "Ready to stream · HLS",
+          "steps": [
+            "upload",
+            "encode",
+            "stream"
+          ]
         },
         "kachizaka": {
           "live": "Live",
           "points": "points",
-          "title": "Points per match day (demo league)"
+          "title": "Points per match day (demo league)",
+          "league": "Friends’ league, match day 8 · demo",
+          "players": [
+            "Léa",
+            "Malik",
+            "Chloé"
+          ]
         },
         "akinaza": {
           "day": "Tuesday, the salon's day",
-          "booked": "Booked, confirmed by e-mail · demo"
+          "booked": "Booked, confirmed by e-mail · demo",
+          "service": "Haircut",
+          "gst": "GST 5 %",
+          "qst": "QST 9.975 %",
+          "total": "Total"
         },
         "yasakia": {
           "theirs": "A coffee near the canal on Saturday?",
-          "mine": "Yes — 10:30 works for me.",
-          "typing": "Typing"
+          "mine": "Yes, 10:30 works for me.",
+          "typing": "Typing",
+          "intro": "Introduced by the agent: you both said yes."
         },
         "yororis": {
           "label": "A voice, listened to"

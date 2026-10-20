@@ -64,12 +64,24 @@
   the stack in brief (`OpenStack` / `StackCards` → `/open-source`); the principles (`Principles`); Montréal (`Company`
   → `/story`); the contact; the folded FAQ (FAQPage JSON-LD). Orochia is named neutrally on krizaka.com (name and one
   line, never a creator or payout pitch — `tests/home.test.mjs`).
-- **Each product card shows its field** (2026-10-17): a live mini-visual made of @krizaka/ui pieces
-  (`app/components/home/visuals/`: the engine's request flow, a lease passage checked, an encode ladder — Orochia never
-  with media —, live points with a `Sparkline`, a salon's slots as `Chip`s, two `MessageBubble`s, a voice waveform),
-  demo data in `lib/product-visuals.ts` said as demo. A fixed box (no CLS), `inert` and aria-hidden, its code a lazy
-  chunk loaded near the viewport, playing as soon as it is on screen (no hover gate), still under reduced
-  motion; timers only while playing; `tests/product-visuals.test.mjs`. The waveform is drawn here until @krizaka/ui ships one.
+- **The products are field-guide entries (Cahier, krizaka-ui ADR-004, #417 — 2026-10-20).** `#products` is a page of the
+  notebook: `Section number="§ 2" paper="lines" margin`, no eyebrow. The engine leads with its `SpecimenTag` (KZ-01, the
+  stamp of its status, what it gets back) and its `EngineFlow`, captioned `fig. 1`; each product is an entry: a **plate**
+  (the live visual and its numbered `Caption`, `fig. n`) and a **specimen tag** (`@krizaka/ui/specimen-tag`: the catalogue
+  number from its place in `lib/products.ts`, the name linking to its site — or its code while it has none —, its mark, the
+  `Stamp` of its honest status — `devPreview` ok, `development` wip, `construction` construction, `upcoming` neutral —, its
+  line, what it runs on Orazaka, « planned » where not wired, and its **bird** from `PRODUCT_BIRD`: the five birds of the
+  film say their promise **as the film's cue** (`site.story.world.cues`), the family birds only their name); the notes at
+  the foot (`Footnotes`, `site.home.products.notes`) say what each product really does, sourced. No uppercase chip, no
+  em-dash in these words, no blur, glow or gradient in their styles (`tests/products-cahier.test.mjs`).
+- **Each entry's plate shows its field**: a live visual made of @krizaka/ui pieces (`app/components/home/visuals/`): a
+  lease on lined paper with the clause to review numbered in the margin and stamped, an encode ladder (upload → encode →
+  stream, the renditions written as they are ready — Orochia never with media), a friends' league's standings as a ledger
+  (`NumberTicker` at its own width, `align="start"`, the unit right after it — never a min-width), a salon's slots as
+  `Chip`s and the receipt with GST and QST computed to the cent (`receipt()` in `lib/product-visuals.ts`), the agent's
+  introduction stamped over two `MessageBubble`s, a voice on @krizaka/ui's `Waveform`. Demo data said as demo. A fixed box
+  (no CLS), `inert` and aria-hidden, its code a lazy chunk loaded near the viewport, playing as soon as it is on screen,
+  still under reduced motion; timers only while playing; `tests/product-visuals.test.mjs`.
 - **The hero's intro** (`HeroIntro`, `home.css`, `tests/hero-intro.test.mjs`): once per session (`sessionStorage`
   `kz-intro`), it sets `html[data-intro]` = `play` | `skip` | `done`; CSS only, over the ambient loop's poster — the
   mark's stroke draws, the scene rises in with its birds, a light sweeps — ~1.2 s, then the loop fades in (they never
