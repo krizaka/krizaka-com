@@ -4,18 +4,22 @@
    ambient loop (krizaka-ui tools/brand-films « home-ambient », AmbientLoop — the poster first, the loop only on screen,
    the poster alone under reduced motion or Save-Data), faded into the page.
 
+   Under the actions, the products put forward: a quiet row of their seven marks (from @krizaka/ui), each one a link to
+   its card in #products, the ones not offered yet dimmed.
+
    Once per session, HeroIntro plays the cinematic intro over the poster (home.css): the mark draws itself, the scene
    rises in with its birds, a light sweeps the backdrop, the figures climb (NumberTicker) — then the loop fades in.
    Skippable, still under reduced motion and Save-Data. Every figure is read at build and dropped when unknown. */
 
 import { ForwardIcon } from "@krizaka/icons";
-import { KrizakaLogo } from "@krizaka/ui";
+import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { getDictionary } from "@/lib/i18n";
 import { video } from "@/lib/cdn";
 import { FILM_BASE, TOUR_BASE } from "@/lib/film-captions";
+import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
 import AmbientLoop, { type AmbientSet } from "./AmbientLoop";
 import FilmLightbox from "./FilmLightbox";
@@ -33,6 +37,8 @@ const ambient = (cut: string, theme: string) => video(`brand-films/ambient/home-
 const themes = (cut: string) => ({ dark: ambient(cut, "dark"), ["light"]: ambient(cut, "light") });
 const AMBIENT: AmbientSet = { wide: themes("16x9"), tall: themes("4x5") };
 const film = video(TOUR_BASE);
+/** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
+const DIM: readonly ProductStatus[] = ["construction", "upcoming"];
 const codeFilm = video(FILM_BASE);
 
 export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
@@ -64,6 +70,18 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           </ButtonLink>
           <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "tour.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
         </div>
+
+        {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
+        <ul className="kz-home-marks" aria-label={t.marksLabel}>
+          {PRODUCTS.map((p) => (
+            <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined}>
+              <a href={`#product-${p.id}`}>
+                <ProductLogo id={p.id} size={30} animated={false} />
+                <span>{p.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
 
         <dl className="kz-home-proofs" aria-label={t.proofsLabel}>
           {counted.map((p) => (

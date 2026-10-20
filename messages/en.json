@@ -204,11 +204,12 @@
       "hero": {
         "eyebrow": "Montréal · Software studio",
         "title": "We build open-source software — and the stack under it.",
-        "lead": "Seven products on one AI engine, and every piece they stand on published under Apache-2.0.",
+        "lead": "Seven products on one AI engine — video, dating, a listening space, lease checks, predictions among friends, Québec shops — and every piece they stand on, open source.",
         "primary": "See what we build",
         "film": "Watch the full film",
         "filmLength": "1 min 18 s",
         "proofsLabel": "Krizaka in figures, read at build",
+        "marksLabel": "The seven products — each goes to its card",
         "proofs": {
           "repositories": "public repositories",
           "npm": "packages on npm",
@@ -222,19 +223,75 @@
         "title": "One engine. The products it powers.",
         "lead": "Every product's AI runs on Orazaka. Each one lives on its own site, with its source on GitHub.",
         "engineUse": "On Orazaka · {use}",
-        "enginePlanned": "On Orazaka, planned · {use}"
+        "enginePlanned": "On Orazaka, planned · {use}",
+        "flow": {
+          "label": "Orazaka and the products it powers",
+          "caption": "the engine",
+          "hint": "Point at a product, or tab to it, to see what it runs on Orazaka.",
+          "uses": "runs {use} on Orazaka.",
+          "usesPlanned": "will run {use} on Orazaka.",
+          "visit": "Visit {host}"
+        }
       },
       "stack": {
         "eyebrow": "Open source",
-        "title": "The stack under every product, in the open.",
-        "lead": "Krizaka UI for every screen, Krizaka Java for every service — each on its own site.",
+        "title": "Build with our open source.",
+        "lead": "The pieces under every product, yours to use — try them right here. Versions and downloads read at build.",
+        "more": "Everything we publish",
         "visit": "Open {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
           "npm": "{count} packages on npm",
           "maven": "{count} artifacts on Maven Central"
         },
-        "more": "Everything we publish"
+        "ui": {
+          "line": "The components of every Krizaka screen — web, iOS and Android. These are the real ones:",
+          "explore": "Explore ui.krizaka.com",
+          "playground": "Krizaka UI, live",
+          "variant": "Button style",
+          "variants": {
+            "primary": "Primary",
+            "secondary": "Secondary",
+            "ghost": "Ghost"
+          },
+          "button": "Get started",
+          "switch": "Notifications",
+          "theme": "Preview theme",
+          "themes": {
+            "dark": "Dark",
+            "light": "Light"
+          },
+          "downloads": "{count} downloads of @krizaka/ui last week",
+          "trend": "Weekly npm downloads of @krizaka/ui, last 12 weeks"
+        },
+        "motion": {
+          "name": "Krizaka Motion",
+          "line": "The motion lab: the engine flow you just saw, with its settings.",
+          "lab": "Open the lab",
+          "layout": "Layout",
+          "layouts": {
+            "radial": "Radial",
+            "top-to-bottom": "Top → bottom",
+            "left-to-right": "Left → right"
+          },
+          "mode": "What travels",
+          "modes": {
+            "in": "Requests in",
+            "out": "Results out",
+            "both": "Both ways"
+          },
+          "label": "An engine and four apps, in the layout and mode you choose",
+          "hint": "Pick a layout and a mode.",
+          "hub": "Engine",
+          "app": "App {id}"
+        },
+        "java": {
+          "line": "The building blocks of every Krizaka service, one BOM on Maven Central:",
+          "explore": "Open java.krizaka.com",
+          "tool": "Build tool",
+          "copy": "Copy",
+          "copied": "Copied"
+        }
       },
       "principles": {
         "eyebrow": "How we work",

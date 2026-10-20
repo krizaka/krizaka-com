@@ -204,11 +204,12 @@
       "hero": {
         "eyebrow": "Montréal · Studio logiciel",
         "title": "Nous construisons du logiciel open source — et tout ce qui le porte.",
-        "lead": "Sept produits sur un même moteur d'IA, et chaque pièce qui les porte publiée sous Apache-2.0.",
+        "lead": "Sept produits sur un même moteur d'IA — vidéo, rencontres, un espace d'écoute, la vérification des baux, les pronostics entre amis, les commerces du Québec — et chaque pièce qui les porte, en open source.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
         "filmLength": "1 min 18",
         "proofsLabel": "Krizaka en chiffres, lus au build",
+        "marksLabel": "Les sept produits — chacun mène à sa carte",
         "proofs": {
           "repositories": "dépôts publics",
           "npm": "paquets sur npm",
@@ -222,19 +223,75 @@
         "title": "Un moteur. Les produits qu'il propulse.",
         "lead": "L'IA de chaque produit tourne sur Orazaka. Chacun vit sur son propre site, avec son code sur GitHub.",
         "engineUse": "Sur Orazaka · {use}",
-        "enginePlanned": "Sur Orazaka, prévu · {use}"
+        "enginePlanned": "Sur Orazaka, prévu · {use}",
+        "flow": {
+          "label": "Orazaka et les produits qu'il fait tourner",
+          "caption": "le moteur",
+          "hint": "Pointez un produit, ou atteignez-le au clavier, pour voir ce qu'il fait tourner sur Orazaka.",
+          "uses": "fait tourner {use} sur Orazaka.",
+          "usesPlanned": "fera tourner {use} sur Orazaka.",
+          "visit": "Visiter {host}"
+        }
       },
       "stack": {
         "eyebrow": "Open source",
-        "title": "La pile sous chaque produit, à découvert.",
-        "lead": "Krizaka UI pour chaque écran, Krizaka Java pour chaque service — chacun sur son propre site.",
+        "title": "Construisez avec nos briques.",
+        "lead": "Les pièces sous chaque produit, à vous de les utiliser — essayez-les ici même. Versions et téléchargements lus au build.",
+        "more": "Tout ce que nous publions",
         "visit": "Ouvrir {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
           "npm": "{count} paquets sur npm",
           "maven": "{count} artefacts sur Maven Central"
         },
-        "more": "Tout ce que nous publions"
+        "ui": {
+          "line": "Les composants de chaque écran Krizaka — web, iOS et Android. Ce sont les vrais :",
+          "explore": "Explorer ui.krizaka.com",
+          "playground": "Krizaka UI, en direct",
+          "variant": "Style du bouton",
+          "variants": {
+            "primary": "Principal",
+            "secondary": "Secondaire",
+            "ghost": "Discret"
+          },
+          "button": "Commencer",
+          "switch": "Notifications",
+          "theme": "Thème de l'aperçu",
+          "themes": {
+            "dark": "Sombre",
+            "light": "Clair"
+          },
+          "downloads": "{count} téléchargements de @krizaka/ui la semaine dernière",
+          "trend": "Téléchargements npm hebdomadaires de @krizaka/ui, 12 dernières semaines"
+        },
+        "motion": {
+          "name": "Krizaka Motion",
+          "line": "Le labo du mouvement : le flux du moteur que vous venez de voir, avec ses réglages.",
+          "lab": "Ouvrir le labo",
+          "layout": "Disposition",
+          "layouts": {
+            "radial": "Radiale",
+            "top-to-bottom": "Haut → bas",
+            "left-to-right": "Gauche → droite"
+          },
+          "mode": "Ce qui circule",
+          "modes": {
+            "in": "Requêtes entrantes",
+            "out": "Résultats sortants",
+            "both": "Dans les deux sens"
+          },
+          "label": "Un moteur et quatre applications, dans la disposition et le sens choisis",
+          "hint": "Choisissez une disposition et un sens.",
+          "hub": "Moteur",
+          "app": "Appli {id}"
+        },
+        "java": {
+          "line": "Les briques de chaque service Krizaka, un seul BOM sur Maven Central :",
+          "explore": "Ouvrir java.krizaka.com",
+          "tool": "Outil de build",
+          "copy": "Copier",
+          "copied": "Copié"
+        }
       },
       "principles": {
         "eyebrow": "Notre façon de travailler",
