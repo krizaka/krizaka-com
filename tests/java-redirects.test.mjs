@@ -6,7 +6,7 @@ import { JAVA_BLOCK_PAGES, JAVA_PAGES, JAVA_SITE, javaRedirects } from "../lib/j
 
 // Krizaka Java's documentation lives on java.krizaka.com: every old /docs/java address answers 308 with the same page there.
 const require = createRequire(import.meta.url);
-const { match } = require("next/dist/compiled/path-to-regexp");
+const { match } = require("path-to-regexp");
 const rules = javaRedirects().map((rule) => ({ ...rule, matches: match(rule.source, { decode: decodeURIComponent }) }));
 const go = (path) => {
   for (const rule of rules) {
