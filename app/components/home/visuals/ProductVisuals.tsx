@@ -8,7 +8,6 @@
    frame, no canvas. This module is loaded only when the first card comes near the viewport (next/dynamic). */
 
 import { useEffect, useState, type ReactNode } from "react";
-import { ProductLogo } from "@krizaka/ui";
 import { MessageBubble, TypingIndicator } from "@krizaka/ui/chat";
 import { Chip } from "@krizaka/ui/chip";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
@@ -18,7 +17,7 @@ import { VerifiedBadge } from "@krizaka/ui/verified-badge";
 import { Sparkline } from "@krizaka/charts/sparkline";
 import type { ProductId } from "@/lib/products";
 import { useI18n } from "../../I18nProvider";
-import { ENGINE_FLOW, KACHIZAKA_POINTS, AKINAZA_SLOTS, OROCHIA_RENDITIONS, YORORIS_PEAKS } from "@/lib/product-visuals";
+import { KACHIZAKA_POINTS, AKINAZA_SLOTS, OROCHIA_RENDITIONS, YORORIS_PEAKS } from "@/lib/product-visuals";
 
 /** Steps a counter while `playing` (one timer, cleared at rest); at rest it shows `rest`. */
 function useStep(playing: boolean, count: number, everyMs: number, rest: number): number {
@@ -29,30 +28,6 @@ function useStep(playing: boolean, count: number, everyMs: number, rest: number)
     return () => window.clearInterval(id);
   }, [playing, count, everyMs]);
   return playing ? step : rest;
-}
-
-function Engine({ playing }: { playing: boolean }) {
-  // Six products on the left, their requests flowing into the engine on the right (an SVG path animation).
-  return (
-    <div className="pv-engine" data-play={playing ? "" : undefined}>
-      <ul className="pv-engine-sources">
-        {ENGINE_FLOW.map((id) => (
-          <li key={id} className={"brand-" + id}>
-            <ProductLogo id={id} size={20} animated={false} />
-          </li>
-        ))}
-      </ul>
-      <svg className="pv-engine-paths" viewBox="0 0 200 120" preserveAspectRatio="none" aria-hidden>
-        {ENGINE_FLOW.map((id, i) => {
-          const y = 10 + i * 20;
-          return <path key={id} d={`M0 ${y} C 90 ${y}, 110 60, 200 60`} style={{ animationDelay: `${i * 0.18}s` }} />;
-        })}
-      </svg>
-      <span className="pv-engine-core brand-orazaka">
-        <ProductLogo id="orazaka" size={44} animated={false} />
-      </span>
-    </div>
-  );
 }
 
 function Yomizaka({ playing }: { playing: boolean }) {
@@ -161,8 +136,8 @@ function Yororis({ playing }: { playing: boolean }) {
   );
 }
 
-const VISUALS: Record<ProductId, (p: { playing: boolean }) => ReactNode> = {
-  orazaka: Engine,
+/** Orazaka's card draws the engine flow instead (@krizaka/ui/engine-flow, EngineFlowView). */
+const VISUALS: Record<Exclude<ProductId, "orazaka">, (p: { playing: boolean }) => ReactNode> = {
   yomizaka: Yomizaka,
   orochia: Orochia,
   kachizaka: Kachizaka,
@@ -171,7 +146,7 @@ const VISUALS: Record<ProductId, (p: { playing: boolean }) => ReactNode> = {
   yororis: Yororis,
 };
 
-export default function ProductVisuals({ id, playing }: { id: ProductId; playing: boolean }) {
+export default function ProductVisuals({ id, playing }: { id: Exclude<ProductId, "orazaka">; playing: boolean }) {
   const Visual = VISUALS[id];
   return <Visual playing={playing} />;
 }

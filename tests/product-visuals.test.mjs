@@ -10,11 +10,13 @@ const visuals = read("app/components/home/visuals/ProductVisuals.tsx");
 const css = read("app/components/home/visuals/visuals.css");
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name:/g)].map((m) => m[1]);
 
-test("every product has its visual, and every card shows it", () => {
-  for (const id of ids) assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
+// Orazaka's card draws the engine flow instead (2026-10-20: @krizaka/ui/engine-flow, tests/engine.test.mjs).
+test("every product but the engine has its visual, and every product card shows it", () => {
+  for (const id of ids.filter((id) => id !== "orazaka")) assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
+  assert.doesNotMatch(visuals, /^  orazaka:/m, "the engine's old dashed-lines visual is gone");
   const showcase = read("app/components/home/ProductShowcase.tsx");
-  assert.match(showcase, /<ProductVisual id=\{engine\.id\} \/>/);
-  assert.match(showcase, /<ProductVisual id=\{p\.id\} \/>/);
+  assert.match(showcase, /<EngineFlowView t=\{t\} \/>/);
+  assert.match(showcase, /p\.id !== ENGINE && <ProductVisual id=\{p\.id as Exclude<ProductId, typeof ENGINE>\} \/>/);
 });
 
 test("lazy, decorative and without layout shift", () => {

@@ -1,10 +1,7 @@
 /* The demo data of the product cards' mini-visuals (app/components/home/visuals) — structure only, said as demo data on
    the page; the words are messages (site.home.visuals.<id>). Nothing here claims a real user, figure or result. */
 
-import type { ProductId } from "./products";
 
-/** The products whose requests flow into the engine on Orazaka's card, top to bottom (every product but the engine). */
-export const ENGINE_FLOW: readonly Exclude<ProductId, "orazaka">[] = ["yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"];
 
 /** Orochia: the renditions an upload is encoded to before it streams (adaptive HLS ladder). */
 export const OROCHIA_RENDITIONS = ["360p", "720p", "1080p"] as const;

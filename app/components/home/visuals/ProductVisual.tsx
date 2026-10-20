@@ -21,7 +21,7 @@ const subscribe = (change: () => void) => {
   return () => queries.forEach((q) => q.removeEventListener("change", change));
 };
 
-export default function ProductVisual({ id }: { id: ProductId }) {
+export default function ProductVisual({ id }: { id: Exclude<ProductId, "orazaka"> }) {
   const box = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
   const [onScreen, setOnScreen] = useState(false);

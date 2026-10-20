@@ -1,5 +1,6 @@
 /* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Orazaka is the
-   foundation: a wide @krizaka/ui GlowCard, its ring turning, its mark large; the other products are the cards it powers
+   foundation: a wide @krizaka/ui GlowCard, its ring turning, its words beside the engine flow (EngineFlowView,
+   @krizaka/ui/engine-flow: radial, top to bottom on a phone); the other products are the cards it powers
    (CardGrid `foundation`, "Powered by Orazaka"), each a GlowCard in its own brand light (`.brand-<id>`): the mark large,
    the name, the status said honestly (lib/products.ts, gated by the dev-preview checklists), one line, and one readable
    line of what it uses Orazaka for (lib/engine-uses.ts, "planned" where the call is not wired yet). The whole card is
@@ -15,10 +16,11 @@ import { GlowCard } from "@krizaka/ui/glow-card";
 import { Section } from "@krizaka/ui/page";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { PRODUCTS, type Product } from "@/lib/products";
+import { PRODUCTS, type Product, type ProductId } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
 import { ProductStatus } from "../ProductStatus";
 import { GitHubMark } from "../brand/GitHubMark";
+import EngineFlowView from "./EngineFlowView";
 import ProductVisual from "./visuals/ProductVisual";
 import "./visuals/visuals.css";
 
@@ -28,12 +30,8 @@ function EngineCard({ t }: { t: TranslationDictionary }) {
   const engine = PRODUCTS.find((p) => p.id === ENGINE)!;
   const h = t.site.products;
   return (
-    <GlowCard alive className={cn("kz-pc kz-pc-engine", "brand-" + engine.id)}>
+    <GlowCard alive id={"product-" + engine.id} className={cn("kz-pc kz-pc-engine", "brand-" + engine.id)}>
       <span className="kz-pc-light" aria-hidden />
-      <ProductVisual id={engine.id} />
-      <span className="kz-pc-mark kz-pc-mark-lg">
-        <ProductLogo id={engine.id} size={88} animated={false} />
-      </span>
       <div className="kz-pc-body">
         <p className="kz-pc-meta">
           {h.engine.meta} <ProductStatus status={engine.status} t={t} />
@@ -53,6 +51,7 @@ function EngineCard({ t }: { t: TranslationDictionary }) {
           </a>
         </p>
       </div>
+      <EngineFlowView t={t} />
     </GlowCard>
   );
 }
@@ -62,9 +61,9 @@ function ProductGlowCard({ product: p, t }: { product: Product; t: TranslationDi
   const use = ENGINE_USES.find((u) => u.id === p.id);
   const useText = use ? h.engine.uses[use.id as keyof typeof h.engine.uses] : undefined;
   return (
-    <GlowCard className={cn("kz-pc", "brand-" + p.id)}>
+    <GlowCard id={"product-" + p.id} className={cn("kz-pc", "brand-" + p.id)}>
       <span className="kz-pc-light" aria-hidden />
-      <ProductVisual id={p.id} />
+      {p.id !== ENGINE && <ProductVisual id={p.id as Exclude<ProductId, typeof ENGINE>} />}
       <div className="kz-pc-head">
         <span className="kz-pc-mark">
           <ProductLogo id={p.id} size={56} animated={false} />

@@ -91,3 +91,30 @@ test("the text version of the drawing is a list of messages in both languages, w
   assert.match(page, /e\.gets/);
   assert.match(page, /e\.planned/, "a planned use is said planned in the list too");
 });
+
+// The engine section uses @krizaka/ui's EngineFlow (2026-10-20, the coordinator's decisions): radial on desktop and
+// tablet, top to bottom on a phone, both ways only where it runs, planned products dim and still, photons, S-shaped
+// Bézier conduits, no settings for visitors, a node says what it uses Orazaka for with a link to its site.
+test("the home's engine card draws @krizaka/ui's EngineFlow from the data, with no settings for visitors", () => {
+  const view = read("app/components/home/EngineFlowView.tsx");
+  assert.match(view, /from "@krizaka\/ui\/engine-flow"/, "the one motion system: the primitive of Krizaka UI, never a copy");
+  assert.match(view, /layout="radial"/);
+  assert.match(view, /compactLayout="top-to-bottom"/);
+  assert.match(view, /particles="photons"/);
+  assert.match(view, /conduit="bezier"/);
+  assert.match(view, /ENGINE_USES\.map/);
+  assert.match(view, /flow: u\.planned \? "in" : u\.back\.length > 0 \? "both" : "in"/, "both ways only where results come back");
+  assert.match(view, /planned: u\.planned/);
+  assert.match(view, /href: p\.devUrl/);
+  assert.doesNotMatch(view, /Chip|Slider|Switch|useState/, "the lab's parameters panel is not a home feature");
+  assert.doesNotMatch(view, /requestAnimationFrame|<canvas/);
+  assert.match(read("app/components/home/ProductShowcase.tsx"), /<EngineFlowView t=\{t\} \/>/);
+  assert.ok(!/ENGINE_FLOW/.test(read("lib/product-visuals.ts")), "the old dashed-lines engine visual is gone");
+  for (const l of ["en", "fr"]) {
+    const f = messages[l].site.home.products.flow;
+    for (const k of ["label", "caption", "hint", "visit"]) assert.ok(f[k], `${l}: flow.${k}`);
+    assert.match(f.uses, /\{use\}/);
+    assert.match(f.usesPlanned, /\{use\}/);
+    assert.notEqual(f.uses, f.usesPlanned, `${l}: a planned use reads as the future`);
+  }
+});

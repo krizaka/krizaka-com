@@ -9,7 +9,7 @@ import type { NpmPackageInfo } from "./npm-catalogue";
 
 const versions = snapshot as {
   npm?: Record<string, string>;
-  npmMeta?: Record<string, { description?: string; keywords?: string[] }>;
+  npmMeta?: Record<string, { description?: string; keywords?: string[]; weeklyDownloads?: number; weeklySeries?: number[] }>;
   maven?: Record<string, string>;
 };
 
@@ -46,3 +46,13 @@ export const npmPackages = (): NpmPackageInfo[] =>
     description: versions.npmMeta?.[name]?.description ?? "",
     keywords: versions.npmMeta?.[name]?.keywords ?? [],
   }));
+
+/** An npm package's downloads as api.npmjs.org gave them at build: last week's, and the last 12 weekly sums (oldest
+    first, only when complete). Each is absent when unknown — never a typed number. */
+export function npmDownloads(name: string): { weekly?: number; series?: number[] } {
+  const meta = versions.npmMeta?.[name];
+  return {
+    weekly: Number.isInteger(meta?.weeklyDownloads) ? meta?.weeklyDownloads : undefined,
+    series: Array.isArray(meta?.weeklySeries) && meta.weeklySeries.length >= 2 ? meta.weeklySeries : undefined,
+  };
+}

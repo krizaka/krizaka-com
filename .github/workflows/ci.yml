@@ -82,4 +82,8 @@ jobs:
           node scripts/check-seo.mjs --base http://localhost:3000
           # The family contract shared by every Krizaka site (robots, AI crawlers, sitemap, llms.txt, JSON-LD back to the Organization).
           node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization --types Organization,WebSite
+          # 360–1440 px, dark and light: no page scrolls sideways (a real browser on the real container).
+          npm ci --ignore-scripts --no-audit --no-fund
+          npx playwright install --with-deps chromium
+          node scripts/check-overflow.mjs --base http://localhost:3000
           docker logs site | tail -20

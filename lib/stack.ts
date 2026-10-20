@@ -26,3 +26,11 @@ export const STACK: StackPart[] = [
 
 /** `ui.krizaka.com` — an address as it reads in a sentence. */
 export const hostOf = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+
+/** Krizaka Motion — the motion lab (krizaka/krizaka-motion): experimental generative visuals played on GitHub Pages. Not
+    a package: what proves itself moves into Krizaka UI (the engine flow is @krizaka/ui/engine-flow). */
+export const MOTION_LAB = {
+  name: "Krizaka Motion",
+  url: "https://krizaka.github.io/krizaka-motion/orazaka",
+  repoUrl: `${GITHUB_ORG_URL}/krizaka-motion`,
+} as const;

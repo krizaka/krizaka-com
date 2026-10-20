@@ -47,7 +47,7 @@ test("the hero: centred text painted at once, the figures read at build and clim
 test("the products come from lib/products.ts: one card each, in the product's brand", () => {
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.match(showcase, /PRODUCTS\.filter/);
-  assert.match(showcase, /<GlowCard className=\{cn\("kz-pc", "brand-" \+ p\.id\)\}/);
+  assert.match(showcase, /<GlowCard id=\{"product-" \+ p\.id\} className=\{cn\("kz-pc", "brand-" \+ p\.id\)\}/, "each card is an anchor the hero's marks reach");
   assert.match(showcase, /<ProductStatus status=\{p\.status\}/, "the status is the data's (gated by the dev-preview checklists)");
   assert.match(showcase, /p\.noSite \? h\.seeCode : h\.visit/, "no dead address: the code while there is no site");
   for (const s of SECTIONS) {
@@ -81,4 +81,49 @@ test("Orochia is described neutrally: no creator, payout or payment pitch on kri
     assert.doesNotMatch(m.structuredData.organization, pitch, `${lang}: structuredData.organization`);
     assert.doesNotMatch(JSON.stringify(m.faq.krizaka), pitch, `${lang}: faq.krizaka`);
   }
+});
+
+// 2026-10-20 (the coordinator's decisions): the hero puts the products forward — a quiet row of the seven marks, each a
+// link to its card, the ones not offered yet dimmed — and its lead names what they are for; no new media (LCP).
+test("the hero's row of product marks: from lib/products.ts, each to its card, dimmed when nothing is offered yet", () => {
+  const hero = read("app/components/home/HomeHero.tsx");
+  assert.match(hero, /<ul className="kz-home-marks" aria-label=\{t\.marksLabel\}>/);
+  assert.match(hero, /PRODUCTS\.map\(\(p\) =>/);
+  assert.match(hero, /href=\{`#product-\$\{p\.id\}`\}/);
+  assert.match(hero, /<ProductLogo id=\{p\.id\} size=\{30\} animated=\{false\} \/>/);
+  assert.match(hero, /DIM: readonly ProductStatus\[\] = \["construction", "upcoming"\]/);
+  assert.doesNotMatch(hero, /<video|<img|AmbientLoop set=\{[^A]/, "no new media in the hero");
+  assert.ok(hero.indexOf("kz-home-actions") < hero.indexOf("kz-home-marks") && hero.indexOf("kz-home-marks") < hero.indexOf("kz-home-proofs"), "under the actions, above the figures");
+  for (const lang of ["en", "fr"]) {
+    const h = messages(lang).site.home.hero;
+    assert.ok(h.marksLabel, `${lang}: hero.marksLabel`);
+    assert.ok(h.lead.length < 240, `${lang}: the lead stays one sentence`);
+  }
+});
+
+// « Build with our open source » (2026-10-20): the stack put forward and playable — Krizaka UI's real components,
+// Krizaka Motion's flow with two of the lab's settings, Krizaka Java's BOM — every version and figure read at build.
+test("the open-source section: three playable tiles, versions and downloads read at build, one primary action", () => {
+  const stack = read("app/components/home/OpenStack.tsx");
+  assert.match(stack, /<UiPlayground/);
+  assert.match(stack, /<MotionPlayground/);
+  assert.match(stack, /<CodeTabs/);
+  assert.match(stack, /npmDownloads\(ui\.coordinate\)/);
+  assert.match(stack, /mavenVersion\("krizaka-bom"\)/);
+  assert.match(stack, /publishedVersion\(ui\.coordinate\)/);
+  assert.doesNotMatch(stack, /\d+\.\d+\.\d+/, "no version typed by hand");
+  const ui = read("app/components/home/playground/UiPlayground.tsx");
+  for (const piece of ["@krizaka/ui/button", "@krizaka/ui/switch", "@krizaka/ui/chip", "@krizaka/charts/sparkline"]) assert.match(ui, new RegExp(piece));
+  assert.match(ui, /theme-\$\{theme\}/, "the theme preview is scoped to the tile");
+  const motion = read("app/components/home/playground/MotionPlayground.tsx");
+  assert.match(motion, /from "@krizaka\/ui\/engine-flow"/);
+  assert.match(motion, /FLOW_LAYOUTS/);
+  assert.match(motion, /FLOW_MODES/);
+  for (const lang of ["en", "fr"]) {
+    const s = messages(lang).site.home.stack;
+    for (const k of ["ui", "motion", "java"]) assert.ok(s[k], `${lang}: stack.${k}`);
+    assert.deepEqual(Object.keys(s.motion.layouts), ["radial", "top-to-bottom", "left-to-right"]);
+    assert.deepEqual(Object.keys(s.motion.modes), ["in", "out", "both"]);
+  }
+  assert.equal(messages("fr").site.home.stack.title, "Construisez avec nos briques.");
 });
