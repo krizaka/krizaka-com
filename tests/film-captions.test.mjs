@@ -42,27 +42,27 @@ test("the home's ambient loop: both cuts and themes on the CDN, still under redu
   assert.match(hero, /<FilmLightbox /);
 });
 
-test("the reference film (« l'aube ») says the film's own lines, in order, inside its length, and is on the CDN", async () => {
-  const { DAWN_BASE, DAWN_CUES, DAWN_SECONDS } = await import("../lib/film-captions.ts");
+test("the tour (« la tournée ») says the film's own lines, in order, inside its length, and is on the CDN", async () => {
+  const { TOUR_BASE, TOUR_CUES, TOUR_SECONDS } = await import("../lib/film-captions.ts");
   const ids = FILM_CUES.map((c) => c.id);
-  DAWN_CUES.forEach((c, i) => {
+  TOUR_CUES.forEach((c, i) => {
     assert.ok(ids.includes(c.id), `${c.id} is a line of the film`);
-    assert.ok(c.start < c.end && c.end <= DAWN_SECONDS, c.id);
-    if (i) assert.ok(DAWN_CUES[i - 1].end <= c.start, `${c.id} overlaps the line before`);
+    assert.ok(c.start < c.end && c.end <= TOUR_SECONDS, c.id);
+    if (i) assert.ok(TOUR_CUES[i - 1].end <= c.start, `${c.id} overlaps the line before`);
   });
-  for (const bird of FILM_CAST) assert.ok(DAWN_CUES.some((c) => c.id === bird), `${bird} says its promise at dawn`);
-  const vtt = filmVtt(messages("en").site.story.world.cues, DAWN_CUES);
-  assert.match(vtt, /^WEBVTT\n\nfalcon\n00:00:05\.690 --> 00:00:08\.420\nThe falcon keeps watch: security comes first\.\n/);
+  for (const bird of FILM_CAST) assert.ok(TOUR_CUES.some((c) => c.id === bird), `${bird} says its promise on tour`);
+  const vtt = filmVtt(messages("en").site.story.world.cues, TOUR_CUES);
+  assert.match(vtt, /^WEBVTT\n\nfalcon\n00:00:10\.730 --> 00:00:15\.730\nThe falcon keeps watch: security comes first\.\n/);
   const { files } = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", import.meta.url), "utf8"));
-  for (const ext of ["mp4", "webm", "jpg"]) assert.match(files[`${DAWN_BASE}.${ext}`] ?? "", /^[0-9a-f]{10}$/, ext);
+  for (const ext of ["mp4", "webm", "jpg"]) assert.match(files[`${TOUR_BASE}.${ext}`] ?? "", /^[0-9a-f]{10}$/, ext);
   for (const lang of ["en", "fr"]) {
-    const dawn = messages(lang).site.story.world.dawn;
-    for (const k of ["title", "lead", "player", "credit"]) assert.ok(dawn[k].trim(), `${lang} ${k}`);
-    assert.match(dawn.credit, lang === "en" ? /AI-generated/ : /Généré par IA/, "the page says the film is AI-generated");
+    const tour = messages(lang).site.story.world.tour;
+    for (const k of ["title", "lead", "player", "credit"]) assert.ok(tour[k].trim(), `${lang} ${k}`);
+    assert.match(tour.credit, lang === "en" ? /AI-generated/ : /Généré par IA/, "the page says the film is AI-generated");
   }
 });
 
-test("the home's « Watch the film » plays the reference film (« l'aube »), and the light code film under reduced motion or Save-Data", async () => {
+test("the home's « Watch the film » plays the tour, and the light code film under reduced motion or Save-Data", async () => {
   const { prefersLightFilm } = await import("../lib/film-captions.ts");
   const media = (reduce) => (q) => ({ matches: reduce && q.includes("reduce") });
   assert.equal(prefersLightFilm({ matchMedia: media(false), navigator: {} }), false);
@@ -70,29 +70,19 @@ test("the home's « Watch the film » plays the reference film (« l'aube »), a
   assert.equal(prefersLightFilm({ matchMedia: media(false), navigator: { connection: { saveData: true } } }), true);
   assert.equal(prefersLightFilm({}), false);
   const hero = readFileSync(new URL("../app/components/home/HomeHero.tsx", import.meta.url), "utf8");
-  assert.match(hero, /video\(DAWN_BASE\)/);
-  assert.match(hero, /vtt: "dawn\.vtt"/);
+  assert.match(hero, /video\(TOUR_BASE\)/);
+  assert.match(hero, /vtt: "tour\.vtt"/);
   assert.match(hero, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/);
   const box = readFileSync(new URL("../app/components/home/FilmLightbox.tsx", import.meta.url), "utf8");
   assert.match(box, /prefersLightFilm\(window\)/);
   assert.match(box, /poster=\{play\.poster\}/);
 });
 
-test("the previous reference film (« la tournée ») is replaced, never accumulated, on the CDN", () => {
-  const { files } = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", import.meta.url), "utf8"));
-  assert.deepEqual(Object.keys(files).filter((k) => k.startsWith("brand-films/epic/")), []);
-  for (const lang of ["en", "fr"]) for (const kind of ["2160p", "1080p", "9x16"]) {
-    assert.match(files[`brand-films/dawn/le-monde-de-krizaka-l-aube-${kind}-${lang}.mp4`] ?? "", /^[0-9a-f]{10}$/, `${kind} ${lang}`);
+test("« l'aube » is withdrawn from the site (Oussama, 2026-10-20): no page draws it, the manifest names none of its files", async () => {
+  const { readFileSync, readdirSync, statSync } = await import("node:fs");
+  const { join } = await import("node:path");
+  const walk = (dir) => readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
+  for (const file of [...walk("app"), ...walk("lib")].filter((f) => /\.(tsx?|json)$/.test(f))) {
+    assert.doesNotMatch(readFileSync(file, "utf8"), /brand-films\/dawn|l-aube/, `${file} still draws « l'aube »`);
   }
-});
-
-test("the home's button says the reference film's own length", async () => {
-  const { DAWN_SECONDS } = await import("../lib/film-captions.ts");
-  const minutes = Math.floor(DAWN_SECONDS / 60);
-  const seconds = Math.round(DAWN_SECONDS % 60);
-  // Every place that says the film's length (the home's button, /story's poster card) says this one.
-  const lengths = (node) => Object.entries(node).flatMap(([k, v]) => (v && typeof v === "object" ? lengths(v) : k === "filmLength" ? [v] : []));
-  for (const value of lengths(messages("en"))) assert.equal(value, `${minutes} min ${seconds} s`);
-  for (const value of lengths(messages("fr"))) assert.equal(value, `${minutes} min ${String(seconds).padStart(2, "0")}`);
-  assert.ok(lengths(messages("en")).length >= 2);
 });
