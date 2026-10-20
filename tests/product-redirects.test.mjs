@@ -5,9 +5,9 @@ import { createRequire } from "node:module";
 import { PRODUCT_SITES, productRedirects } from "../lib/product-redirects.ts";
 
 // The products live on their own sites (dev.<product>.com): every old address of a product page, demo or documentation
-// answers 308 with the product's site. The sources are matched with the same path-to-regexp Next.js compiles them with.
+// answers 308 with the product's site. The sources are matched with the same path-to-regexp (6.x) Next.js compiles them with.
 const require = createRequire(import.meta.url);
-const { match } = require("next/dist/compiled/path-to-regexp");
+const { match } = require("path-to-regexp");
 const rules = productRedirects().map((rule) => ({ ...rule, matches: match(rule.source, { decode: decodeURIComponent }) }));
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 

@@ -5,9 +5,9 @@ import { createRequire } from "node:module";
 import { UI_SITE, uiPathOf, uiRedirects } from "../lib/ui-redirects.ts";
 
 // Krizaka UI's documentation moved to ui.krizaka.com: every old /docs/ui address — with or without the locale — answers
-// 308 with its page there. The sources are matched with the same path-to-regexp Next.js compiles them with.
+// 308 with its page there. The sources are matched with the same path-to-regexp (6.x) Next.js compiles them with.
 const require = createRequire(import.meta.url);
-const { match } = require("next/dist/compiled/path-to-regexp");
+const { match } = require("path-to-regexp");
 const rules = uiRedirects().map((rule) => ({ ...rule, matches: match(rule.source, { decode: decodeURIComponent }) }));
 
 /** Where an old address goes: the first rule that matches it, its destination filled with the matched params. */
