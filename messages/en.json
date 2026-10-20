@@ -336,7 +336,9 @@
         },
         "yomizaka": {
           "document": "Lease — page 3",
+          "before": "The lease runs for twelve months, from July 1.",
           "quote": "The rent may not be increased more than once in a 12-month period.",
+          "after": "Heating and hot water are included in the rent.",
           "checked": "Checked",
           "source": "quoted, page 3 · demo"
         },

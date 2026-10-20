@@ -28,14 +28,17 @@ test("the known know-hows are the ones Oussama named", () => {
   assert.match(k.yororis.name, /voice/i);
 });
 
-test("the home and /story render the products from PRODUCTS: the home's glow cards, /story's chapters", () => {
+test("the home and /story render the products from PRODUCTS: the home's rows, /story's chapters", () => {
   const story = read("app/[locale]/story/page.tsx");
   assert.match(story, /h\.knowhow\[id\]/);
   assert.match(story, /href=\{p\.devUrl\}/);
   assert.match(story, /href=\{p\.repoUrl\}/);
   assert.match(story, /PRODUCT_CHAPTERS/);
   const home = read("app/components/home/ProductShowcase.tsx");
-  assert.match(home, /h\.knowhow\[p\.id\]\.name/, "each card names the know-how it proves");
+  // 2026-10-20 (home redesign, « one label instead of three »): on the home the know-how is SHOWN by each row's live
+  // visual, not said again as a mono eyebrow beside the status; /story's chapters keep naming it (above).
+  assert.doesNotMatch(home, /h\.knowhow/, "one label per row on the home: the status");
+  assert.match(home, /<ProductVisual id=\{p\.id\} \/>/, "the know-how is shown by the row's visual");
   assert.match(home, /href=\{p\.repoUrl\}/);
   assert.doesNotMatch(story, /ProfileCard|StatGauge|ChoiceGrid/, "/story draws no tile of its own");
   const os = read("app/[locale]/open-source/page.tsx");

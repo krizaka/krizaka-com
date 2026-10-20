@@ -5,7 +5,7 @@
    Only what runs is drawn (lib/engine-uses.ts): requests go in from every wired product and results come back to it;
    a planned product is dim, its conduit dashed and still. No settings for visitors (the lab has them). Pointing at or
    focusing a product says what it uses Orazaka for, with a link to its site. Paused off screen, still under reduced
-   motion; the text version is each product card's « On Orazaka · … » line. Words: site.home.products.flow.* */
+   motion; the text version is each product row's « On Orazaka · … » line. Words: site.home.products.flow.* */
 
 import { ProductLogo } from "@krizaka/ui";
 import { EngineFlow, type EngineFlowNode } from "@krizaka/ui/engine-flow";
@@ -24,7 +24,7 @@ export default function EngineFlowView({ t }: { t: TranslationDictionary }) {
     return {
       id: u.id,
       label: p.name,
-      className: "brand-" + u.id,
+      className: "brand-" + u.id + " kz-home-n-" + u.id, // kz-home-n-<id>: ProductsLink ties the node to its row
       mark: <ProductLogo id={u.id} size={28} animated={false} />,
       // Requests in from every wired product; results back where they run (every wired use has `results`).
       flow: u.planned ? "in" : u.back.length > 0 ? "both" : "in",

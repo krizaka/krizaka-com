@@ -16,7 +16,7 @@ test("every product but the engine has its visual, and every product card shows 
   assert.doesNotMatch(visuals, /^  orazaka:/m, "the engine's old dashed-lines visual is gone");
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.match(showcase, /<EngineFlowView t=\{t\} \/>/);
-  assert.match(showcase, /p\.id !== ENGINE && <ProductVisual id=\{p\.id\} \/>/);
+  assert.match(showcase, /<ProductVisual id=\{p\.id\} \/>/);
 });
 
 test("lazy, decorative and without layout shift", () => {
@@ -26,24 +26,28 @@ test("lazy, decorative and without layout shift", () => {
   assert.match(css, /^\.pv \{ position: relative; aspect-ratio: 16 \/ 9;/m, "the box has its size before the visual loads");
 });
 
-test("it plays only on screen (hover on a fine pointer, always on touch), never under reduced motion; no rAF, no canvas", () => {
+// 2026-10-20 (redesign): the visuals play as soon as they are on screen, on every pointer — no hover to wake them.
+test("it plays when on screen, never under reduced motion, never off screen; no rAF, no canvas", () => {
   assert.match(frame, /REDUCE = "\(prefers-reduced-motion: reduce\)"/);
-  assert.match(frame, /FINE = "\(hover: hover\) and \(pointer: fine\)"/);
-  assert.match(frame, /const playing = mode !== "still" && onScreen && \(mode === "screen" \|\| hover\);/);
+  assert.match(frame, /const playing = !still && onScreen;/);
+  assert.doesNotMatch(frame, /pointerenter|FINE =/, "no hover gate");
   assert.match(visuals, /window\.clearInterval/);
   assert.match(css, /@media \(prefers-reduced-motion: reduce\) \{\s*\.pv \*, \.pv \*::before, \.pv \*::after \{ animation: none !important; transition: none !important; \}/);
   for (const src of [frame, visuals]) assert.doesNotMatch(src, /requestAnimationFrame|<canvas|getContext\(/);
 });
 
 test("built from @krizaka/ui components, demo data said as such, Orochia without media (AGENTS §2)", () => {
-  for (const part of ["@krizaka/ui/chat", "@krizaka/ui/chip", "@krizaka/ui/progress", "@krizaka/ui/skeleton", "@krizaka/ui/verified-badge", "@krizaka/charts/sparkline", "@krizaka/ui/number-ticker"]) {
+  for (const part of ["@krizaka/ui/chat", "@krizaka/ui/chip", "@krizaka/ui/progress", "@krizaka/ui/verified-badge", "@krizaka/charts/sparkline", "@krizaka/ui/number-ticker"]) {
     assert.ok(visuals.includes(`from "${part}"`), part);
   }
+  assert.doesNotMatch(visuals, /SkeletonText/, "no generic skeleton lines: the lease shows its clauses");
+  assert.doesNotMatch(css, /^\.pv \{[^}]*border: 1px/m, "no box in a box: the visual has no border of its own");
   const orochia = visuals.slice(visuals.indexOf("function Orochia"), visuals.indexOf("function Kachizaka"));
   assert.doesNotMatch(orochia, /<video|cdn\(|video\(/, "no clip on Orochia's card");
   for (const l of ["en", "fr"]) {
     const v = JSON.parse(read(`messages/${l}.json`)).site.home.visuals;
     assert.deepEqual(Object.keys(v).sort(), [...ids].sort(), l);
     assert.match(v.yomizaka.source + v.akinaza.booked, /d[ée]mo/, `${l}: the demo data says it is demo`);
+    for (const k of ["before", "after"]) assert.ok(v.yomizaka[k], `${l}: visuals.yomizaka.${k}`);
   }
 });

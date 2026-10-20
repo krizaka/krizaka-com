@@ -39,13 +39,34 @@ test("a planned use is said planned: the products not wired yet are flagged, the
   assert.match(story, /u\.planned \? ` \(\$\{e\.planned\}\)` : ""/);
 });
 
-test("the home wears the engine as the foundation (CardGrid foundation, its own wide GlowCard); /story's engine chapter draws the engine and its uses", () => {
+// 2026-10-20 (home products redesign): no frame around the products and no box in a box — the engine leads the section
+// (its words and its EngineFlow, sticky beside the list on a wide screen), the products are a quiet list it powers, and
+// each product is tied to its node in the flow (in view or pointed at, both ways). /story's engine chapter draws the same flow.
+test("the home leads with the engine and its flow, then the products it powers — no foundation frame, no card in a card", () => {
   const home = read("app/components/home/ProductShowcase.tsx");
-  assert.match(home, /foundation=\{<EngineCard /);
-  assert.match(home, /foundationLabel=\{t\.site\.products\.engine\.label\}/);
-  assert.match(home, /PRODUCTS\.filter\(\(p\) => p\.id !== ENGINE\)/, "the engine is the foundation, never a card among the others");
+  assert.match(home, /<EngineBlock t=\{t\} \/>/);
+  assert.ok(home.indexOf("<EngineBlock") < home.indexOf('className="kz-prod-list"'), "the engine comes first, the products after");
+  assert.match(home, /PRODUCTS\.filter\(\(p\) => p\.id !== ENGINE\)/, "the engine is the hub, never a row among the others");
+  assert.doesNotMatch(home, /foundation=|CardGrid|GlowCard/, "the frame and the boxes are gone");
   assert.match(read("app/[locale]/page.tsx"), /<ProductShowcase\b/);
   assert.match(read("app/[locale]/story/page.tsx"), /<EngineFlowView t=\{t\} \/>/, "/story draws the home's engine flow — the same component");
+  const css = read("app/components/home/home.css");
+  assert.match(css, /\.kz-prod-engine \{[^}]*position: sticky;/, "the flow stays beside the list on a wide screen");
+});
+
+test("each product is tied to its node in the flow: in view or pointed at, both ways, from the data", () => {
+  assert.match(read("app/components/home/EngineFlowView.tsx"), /className: "brand-" \+ u\.id \+ " kz-home-n-" \+ u\.id/);
+  const link = read("app/components/home/ProductsLink.tsx");
+  assert.match(link, /^"use client";/);
+  assert.match(link, /IntersectionObserver/, "the row in the middle of the screen lights its node");
+  assert.match(link, /\(min-width: 1024px\)/, "scroll-linked only where the flow sits beside the list");
+  assert.match(link, /closest\("\.kz-flow-node"\)/, "pointing at a node lights its product");
+  assert.match(link, /closest(<HTMLElement>)?\("\[data-product\]"\)/, "pointing at a product lights its node");
+  assert.match(link, /dataset\.lit/);
+  assert.doesNotMatch(link, /requestAnimationFrame|<canvas|scroll", /, "no scroll listener, no animation frame");
+  const home = read("app/components/home/ProductShowcase.tsx");
+  assert.match(home, /<ProductsLink /);
+  assert.match(home, /data-product=\{p\.id\}/);
 });
 
 // The flow is two-way (2026-10-17): products -> Orazaka (requests, documents, prompts), Orazaka -> products (results,

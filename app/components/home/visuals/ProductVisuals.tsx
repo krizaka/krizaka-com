@@ -3,8 +3,8 @@
 /* The live mini-visuals of the product cards (Oussama, 2026-10-17): each card SHOWS its field, made of @krizaka/ui's own
    components, with demo data said as such (messages → site.home.visuals). Decorative: the wrapper (ProductVisual) is
    `inert` and hidden from assistive technology — the card's text says the same in words.
-   Each one is still at rest (its final frame); it moves only while `playing` (on screen, and hovered or focused on a
-   fine pointer — always on screen on touch), never under reduced motion. Timers run only while playing; no animation
+   Each one is still at rest (its final frame); it moves only while `playing` (on screen, 2026-10-20: no hover needed),
+   never under reduced motion. Timers run only while playing; no animation
    frame, no canvas. This module is loaded only when the first card comes near the viewport (next/dynamic). */
 
 import { useEffect, useState, type ReactNode } from "react";
@@ -12,7 +12,6 @@ import { MessageBubble, TypingIndicator } from "@krizaka/ui/chat";
 import { Chip } from "@krizaka/ui/chip";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { Progress } from "@krizaka/ui/progress";
-import { SkeletonText } from "@krizaka/ui/skeleton";
 import { VerifiedBadge } from "@krizaka/ui/verified-badge";
 import { Sparkline } from "@krizaka/charts/sparkline";
 import type { ProductId } from "@/lib/products";
@@ -35,11 +34,11 @@ function Yomizaka({ playing }: { playing: boolean }) {
   return (
     <div className="pv-doc" data-play={playing ? "" : undefined}>
       <p className="pv-doc-title">{v.document}</p>
-      <SkeletonText lines={2} />
+      <p className="pv-doc-clause">{v.before}</p>
       <p className="pv-doc-passage">
         <mark>{v.quote}</mark>
       </p>
-      <SkeletonText lines={2} />
+      <p className="pv-doc-clause">{v.after}</p>
       <p className="pv-doc-check">
         <VerifiedBadge label={v.checked} showLabel size="sm" /> <span>{v.source}</span>
       </p>
@@ -110,12 +109,13 @@ function Akinaza({ playing }: { playing: boolean }) {
 }
 
 function Yasakia({ playing }: { playing: boolean }) {
+  // Their message is always there (the box is never empty); then the other one types, then answers, and it holds.
   const v = useI18n().t.site.home.visuals.yasakia;
   const step = useStep(playing, 4, 1100, 3);
   return (
     <div className="pv-chat">
-      {step >= 1 && <MessageBubble text={v.theirs} time="18:02" grouped="single" />}
-      {step === 0 || step === 1 ? <TypingIndicator label={v.typing} /> : null}
+      <MessageBubble text={v.theirs} time="18:02" grouped="single" />
+      {step === 1 ? <TypingIndicator label={v.typing} /> : null}
       {step >= 2 && <MessageBubble text={v.mine} time="18:03" mine grouped="single" />}
     </div>
   );
