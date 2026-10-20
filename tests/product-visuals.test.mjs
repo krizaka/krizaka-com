@@ -16,7 +16,7 @@ test("every product but the engine has its visual, and every product card shows 
   assert.doesNotMatch(visuals, /^  orazaka:/m, "the engine's old dashed-lines visual is gone");
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.match(showcase, /<EngineFlowView t=\{t\} \/>/);
-  assert.match(showcase, /p\.id !== ENGINE && <ProductVisual id=\{p\.id as Exclude<ProductId, typeof ENGINE>\} \/>/);
+  assert.match(showcase, /p\.id !== ENGINE && <ProductVisual id=\{p\.id\} \/>/);
 });
 
 test("lazy, decorative and without layout shift", () => {

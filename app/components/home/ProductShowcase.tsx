@@ -16,7 +16,7 @@ import { GlowCard } from "@krizaka/ui/glow-card";
 import { Section } from "@krizaka/ui/page";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { PRODUCTS, type Product, type ProductId } from "@/lib/products";
+import { PRODUCTS, type Product } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
 import { ProductStatus } from "../ProductStatus";
 import { GitHubMark } from "../brand/GitHubMark";
@@ -63,7 +63,7 @@ function ProductGlowCard({ product: p, t }: { product: Product; t: TranslationDi
   return (
     <GlowCard id={"product-" + p.id} className={cn("kz-pc", "brand-" + p.id)}>
       <span className="kz-pc-light" aria-hidden />
-      {p.id !== ENGINE && <ProductVisual id={p.id as Exclude<ProductId, typeof ENGINE>} />}
+      {p.id !== ENGINE && <ProductVisual id={p.id} />}
       <div className="kz-pc-head">
         <span className="kz-pc-mark">
           <ProductLogo id={p.id} size={56} animated={false} />

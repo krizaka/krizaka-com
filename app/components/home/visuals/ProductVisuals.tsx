@@ -146,7 +146,7 @@ const VISUALS: Record<Exclude<ProductId, "orazaka">, (p: { playing: boolean }) =
   yororis: Yororis,
 };
 
-export default function ProductVisuals({ id, playing }: { id: Exclude<ProductId, "orazaka">; playing: boolean }) {
-  const Visual = VISUALS[id];
-  return <Visual playing={playing} />;
+export default function ProductVisuals({ id, playing }: { id: ProductId; playing: boolean }) {
+  const Visual = id === "orazaka" ? undefined : VISUALS[id];
+  return Visual ? <Visual playing={playing} /> : null;
 }
