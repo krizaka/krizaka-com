@@ -20,7 +20,7 @@ import { format, getDictionary } from "@/lib/i18n";
 import { figureColumns } from "@/lib/figure-grid";
 import type { CSSProperties } from "react";
 import { video } from "@/lib/cdn";
-import { FILM_BASE, TOUR_BASE } from "@/lib/film-captions";
+import { DAWN_BASE, FILM_BASE } from "@/lib/film-captions";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
 import AmbientLoop, { type AmbientSet } from "./AmbientLoop";
@@ -40,7 +40,7 @@ export interface HomeFigures {
 const ambient = (cut: string, theme: string) => video(`brand-films/ambient/home-ambient-${cut}-${theme}`);
 const themes = (cut: string) => ({ dark: ambient(cut, "dark"), ["light"]: ambient(cut, "light") });
 const AMBIENT: AmbientSet = { wide: themes("16x9"), tall: themes("4x5") };
-const film = video(TOUR_BASE);
+const film = video(DAWN_BASE);
 /** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
 const DIM: readonly ProductStatus[] = ["construction", "upcoming"];
 const codeFilm = video(FILM_BASE);
@@ -76,7 +76,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           <ButtonLink href="#products" variant="primary" size="lg">
             {t.primary} <ForwardIcon size={16} strokeWidth={2.25} />
           </ButtonLink>
-          <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "tour.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
+          <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "dawn.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
         </div>
 
         {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}

@@ -44,21 +44,24 @@ export function filmVtt(words: Record<FilmCueId, string>, cues: readonly Cue[] =
   return `WEBVTT\n\n${cues.map((c) => `${c.id}\n${clock(c.start)} --> ${clock(c.end)}\n${words[c.id]}\n`).join("\n")}`;
 }
 
-/* « Le monde de Krizaka : la tournée » — the photoreal sequel (krizaka-ui tools/brand-films/epic): the same birds, rendered
-   from @krizaka/ui, re-lit and animated by models (AI-generated, said on the page and in the film). It says the film's
-   own lines, at its own times (epic/edl.json → the cut's timeline): change both together. */
-export const TOUR_BASE = "brand-films/epic/le-monde-de-krizaka-la-tournee-16x9";
+/* « Le monde de Krizaka : l'aube » — the reference film since 2026-10-20 (Oussama), after « la tournée » (2026-10-17):
+   night falls over the valley, each bird keeps its promise, the flock greets the dawn as the phoenix rises. Made with
+   Orazaka's cinema pack (krizaka-ui tools/brand-films/dawn): the birds rendered from @krizaka/ui, re-lit and animated by
+   models (AI-generated, said on the page and in the file). The site's cut has no narrator and no drawn text: the page
+   gives the captions in its language, at the film's own times (dawn/edl.json → the cut's timeline): change both together. */
+export const DAWN_BASE = "brand-films/dawn/le-monde-de-krizaka-l-aube-16x9";
 // @fixed: the length of the rendered file (the cut's timeline), a fact of the media.
-export const TOUR_SECONDS = 78.3;
+export const DAWN_SECONDS = 62.42;
 
-export const TOUR_CUES: readonly Cue[] = [
-  { id: "falcon", start: 10.73, end: 15.73 },
-  { id: "owl", start: 24.52, end: 29.92 },
-  { id: "flamingo", start: 30.92, end: 35.12 },
-  { id: "duck", start: 35.47, end: 39.77 },
-  { id: "pigeon", start: 59.68, end: 66.18 },
-  { id: "together", start: 70.4, end: 73.0 },
-  { id: "family", start: 74.3, end: 76.3 },
+export const DAWN_CUES: readonly Cue[] = [
+  { id: "falcon", start: 5.69, end: 8.42 },
+  { id: "owl", start: 8.82, end: 14.0 },
+  { id: "duck", start: 14.16, end: 16.55 },
+  { id: "title", start: 16.55, end: 19.1 },
+  { id: "flamingo", start: 22.49, end: 26.74 },
+  { id: "pigeon", start: 30.49, end: 36.29 },
+  { id: "together", start: 38.49, end: 42.78 },
+  { id: "family", start: 43.19, end: 53.83 },
 ];
 
 interface Viewer {

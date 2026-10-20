@@ -207,7 +207,7 @@
         "lead": "Seven products on one AI engine — video, dating, a listening space, lease checks, predictions among friends, Québec shops — and every piece they stand on, open source.",
         "primary": "See what we build",
         "film": "Watch the full film",
-        "filmLength": "1 min 18 s",
+        "filmLength": "1 min 2 s",
         "proofsLabel": "Krizaka in figures, read at build",
         "marksLabel": "The seven products — each goes to its card",
         "proofs": {
@@ -480,7 +480,7 @@
           "We set out to build the opposite. Nothing leaves the forge untested or undocumented, and everything that leaves it is open source under Apache-2.0 — read the pattern in the steel."
         ],
         "film": "Watch the film",
-        "filmLength": "1 min 18 s",
+        "filmLength": "1 min 2 s",
         "filmNote": "A film made with the birds of Krizaka. Each one carries a promise."
       },
       "engine": {
@@ -594,13 +594,13 @@
           "retry": "Try again",
           "time": "{time} of {duration}"
         },
-        "tour": {
-          "title": "On tour",
-          "lead": "The same birds, on tour through five eras: a comedy club, a 1970s dinner, a 90s studio, a beach at sunset and a slow-motion rally. Each one keeps its promise.",
-          "player": "Video: the world of Krizaka, on tour",
-          "credit": "AI-generated with Orazaka: the birds rendered from @krizaka/ui, re-lit by FLUX.2 [klein], animated by Wan 2.2, upscaled by SeedVR2. Music: ACE-Step 1.5 (MIT)."
-        },
-        "codeTitle": "Filmed from the code"
+        "codeTitle": "Filmed from the code",
+        "dawn": {
+          "title": "Dawn",
+          "lead": "Night falls over the valley. The falcon keeps watch, the owl reads, the duck builds; at dawn the flamingo answers and the pigeon delivers, and the whole flock greets the sun as the phoenix rises.",
+          "player": "Video: the world of Krizaka, at dawn",
+          "credit": "AI-generated with Orazaka: the birds rendered from @krizaka/ui, re-lit by FLUX.2 [klein], animated by Wan 2.2 A14B at 40 steps and LTX-Video, upscaled to 4K by SeedVR2. Music: ACE-Step 1.5 (MIT). Voice: Kokoro-82M (Apache-2.0)."
+        }
       }
     },
     "yororis": {

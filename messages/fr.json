@@ -207,7 +207,7 @@
         "lead": "Sept produits sur un même moteur d'IA — vidéo, rencontres, un espace d'écoute, la vérification des baux, les pronostics entre amis, les commerces du Québec — et chaque pièce qui les porte, en open source.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
-        "filmLength": "1 min 18",
+        "filmLength": "1 min 02",
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "marksLabel": "Les sept produits — chacun mène à sa carte",
         "proofs": {
@@ -480,7 +480,7 @@
           "Nous avons voulu construire le contraire. Rien ne sort de la forge sans test ni documentation, et tout ce qui en sort est open source sous Apache-2.0 — lisez le motif dans l'acier."
         ],
         "film": "Voir le film",
-        "filmLength": "1 min 18",
+        "filmLength": "1 min 02",
         "filmNote": "Un film fait avec les oiseaux de Krizaka. Chacun porte une promesse."
       },
       "engine": {
@@ -594,13 +594,13 @@
           "retry": "Réessayer",
           "time": "{time} sur {duration}"
         },
-        "tour": {
-          "title": "En tournée",
-          "lead": "Les mêmes oiseaux, en tournée à travers cinq époques : un club de stand-up, un dîner des années 1970, un studio des années 90, une plage au coucher du soleil et un échange au ralenti. Chacun tient sa promesse.",
-          "player": "Vidéo : le monde de Krizaka, en tournée",
-          "credit": "Généré par IA avec Orazaka : les oiseaux rendus depuis @krizaka/ui, ré-éclairés par FLUX.2 [klein], animés par Wan 2.2, agrandis par SeedVR2. Musique : ACE-Step 1.5 (MIT)."
-        },
-        "codeTitle": "Filmé depuis le code"
+        "codeTitle": "Filmé depuis le code",
+        "dawn": {
+          "title": "L’aube",
+          "lead": "La nuit tombe sur la vallée. Le faucon veille, le hibou lit, le canard construit ; à l’aube le flamant répond et le pigeon livre, et toute la volée salue le soleil quand le phénix s’élève.",
+          "player": "Vidéo : le monde de Krizaka, à l’aube",
+          "credit": "Généré par IA avec Orazaka : les oiseaux rendus depuis @krizaka/ui, ré-éclairés par FLUX.2 [klein], animés par Wan 2.2 A14B à 40 étapes et LTX-Video, agrandis en 4K par SeedVR2. Musique : ACE-Step 1.5 (MIT). Voix : Kokoro-82M (Apache-2.0)."
+        }
       }
     },
     "yororis": {
