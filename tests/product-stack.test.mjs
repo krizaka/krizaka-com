@@ -61,8 +61,8 @@ test("the table, product by product (Orochia: neutral facts only)", () => {
 
 test("the table lives on /open-source, /story only points to it", () => {
   assert.match(read("app/[locale]/open-source/page.tsx"), /ProductStackTable/);
-  assert.doesNotMatch(read("app/[locale]/story/StoryClient.tsx"), /<table/);
-  assert.match(read("app/[locale]/story/StoryClient.tsx"), /href="\/open-source#runs-on"/);
+  assert.doesNotMatch(read("app/[locale]/story/page.tsx"), /<table/);
+  assert.match(read("app/[locale]/story/page.tsx"), /href="\/open-source"/);
 });
 
 test("no message says a product runs on Orazaka while its cell is Planned", () => {
@@ -70,9 +70,9 @@ test("no message says a product runs on Orazaka while its cell is Planned", () =
   assert.ok(planned.length > 0);
   const words = { en: /planned/i, fr: /prévu/i };
   for (const lang of ["en", "fr"]) {
-    const stages = JSON.parse(read(`messages/${lang}.json`)).site.story.stages;
-    // The engine stage and the first proofs: a sentence naming a planned product next to the engine must say "planned".
-    const sentences = [...stages.engine.body, stages.proves.lead].flatMap((p) => p.split(/(?<=[.!?])\s+/));
+    const story = JSON.parse(read(`messages/${lang}.json`)).site.story;
+    // The engine chapter and what comes next: a sentence naming a planned product next to the engine must say "planned".
+    const sentences = [story.engine.lead, story.next.wire, story.next.lead].flatMap((p) => p.split(/(?<=[.!?])\s+/));
     for (const id of planned) {
       const name = id[0].toUpperCase() + id.slice(1);
       for (const s of sentences.filter((s) => s.includes(name) && s.includes("Orazaka"))) assert.match(s, words[lang], `${lang} story: "${s}"`);

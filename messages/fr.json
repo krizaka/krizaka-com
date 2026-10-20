@@ -181,10 +181,8 @@
       "hookLabel": "Ce que c'est",
       "engine": {
         "meta": "La fondation",
-        "title": "Le moteur : l'IA de chaque produit tourne sur Orazaka",
         "line": "Un pipeline, vos modèles, votre réseau. Chaque produit ci-dessous l'appelle pour son IA, jamais un modèle en direct.",
         "label": "Propulsé par Orazaka",
-        "usesLabel": "Ce que chaque produit lui demande",
         "planned": "prévu",
         "uses": {
           "orochia": "recherche et recommandations",
@@ -194,8 +192,6 @@
           "yasakia": "l'agent de mise en relation",
           "yororis": "le pack bien-être"
         },
-        "legendOut": "requêtes →",
-        "legendBack": "← résultats",
         "sends": "Chaque produit envoie requêtes, documents et prompts au moteur",
         "gets": "reçoit en retour : {list}",
         "back": {
@@ -400,83 +396,75 @@
     "story": {
       "intro": {
         "eyebrow": "Notre histoire",
-        "presents": "Krizaka présente",
-        "title": "Un studio. Un moteur. <b>Tous les produits sur les mêmes briques.</b>",
-        "lead": "Krizaka est un studio né d'un refus : vos données ne devraient pas avoir à quitter la maison pour être utiles, et personne ne devrait croire un logiciel sur parole. Alors nous forgeons les briques au grand jour, nous construisons dessus un moteur d'IA — Orazaka — et nous livrons nos produits sur les deux."
+        "title": "Un studio. Un moteur. <b>Chaque produit sur les mêmes briques.</b>",
+        "lead": "Krizaka est un studio montréalais fondé sur un refus : personne ne devrait prendre un logiciel sur parole. Nous forgeons des briques ouvertes, construisons dessus un moteur d'IA souverain — Orazaka — et livrons nos produits sur les deux.",
+        "start": "Commencer la lecture",
+        "products": "Découvrir les produits"
       },
-      "arcade": {
-        "continue": "Continuer ?",
-        "insertCoin": "Insérer une pièce",
-        "stage": "Étape",
-        "creditLabel": "Crédit 01",
-        "restartBtn": "Retour en haut",
-        "cabinetLabel": "Krizaka · borne d'arcade",
-        "coinEntry": "1 crédit = 1 histoire",
-        "playerStart": "Start 1J",
-        "specialMove": "Coup spécial",
-        "corner": "Dans son coin"
+      "toc": "Dans cette histoire",
+      "chapter": "Chapitre {n}",
+      "who": {
+        "nav": "Qui nous sommes",
+        "title": "Un studio à Montréal",
+        "lead": "Fondé par Oussama, à Montréal depuis 2018. Krizaka est la forge à mi-pente : un kris est une lame forgée en couches, zaka la pente qu'on gravit pas à pas.",
+        "refusal": "Nous refusons le logiciel pris sur parole : tout ce que nous livrons est testé, documenté et open source sous Apache-2.0.",
+        "placesAria": "Où est Krizaka",
+        "places": [
+          "Montréal"
+        ],
+        "more": "Le fondateur et le refus",
+        "fold": [
+          "Krizaka est un studio fondé par Oussama et installé à Montréal, où il vit depuis 2018 et où la forge s'est allumée. Il a étudié les mathématiques et l'informatique, puis il s'est orienté vers les mathématiques et l'informatique appliquées aux sciences cognitives. En 2011, dans un laboratoire de recherche, il a rencontré une machine qui apprenait à lire.",
+          "Les logiciels auxquels on nous demandait de faire confiance étaient devenus des boîtes noires : des données expédiées dans le cloud d'un autre, des revenus soumis aux règles d'un autre, un code que personne dehors ne pouvait lire.",
+          "Nous avons voulu construire le contraire. Rien ne sort de la forge sans test ni documentation, et tout ce qui en sort est open source sous Apache-2.0 — lisez le motif dans l'acier."
+        ],
+        "film": "Voir le film",
+        "filmLength": "1 min 18",
+        "filmNote": "Un film fait avec les oiseaux de Krizaka. Chacun porte une promesse."
       },
-      "stages": {
-        "founder": {
-          "name": "Le fondateur",
-          "title": "Une forge à mi-pente",
-          "placesAria": "Les lieux que traverse l'histoire",
-          "places": [
-            "Montréal"
-          ],
-          "body": [
-            "Krizaka est un studio fondé par Oussama et installé à Montréal, où il vit depuis 2018 et où la forge s'est allumée. Il a étudié les mathématiques et l'informatique, puis il s'est orienté vers les mathématiques et l'informatique appliquées aux sciences cognitives. En 2011, dans un laboratoire de recherche, il a rencontré une machine qui apprenait à lire.",
-            "Le nom garde l'idée. Un kriss est une lame forgée en couches — du fer replié sur du fer jusqu'à ce qu'un motif monte dans l'acier. Zaka, c'est la pente que l'on gravit, un pas après l'autre. Krizaka est la forge à mi-pente de cette colline."
-          ],
-          "move": "Prouver, pas promettre."
-        },
-        "refusal": {
-          "name": "Le refus",
-          "title": "Personne ne devrait croire un logiciel sur parole",
-          "body": [
-            "Les logiciels auxquels on nous demandait de faire confiance étaient devenus des boîtes noires : des données expédiées dans le cloud d'un autre, des revenus soumis aux règles d'un autre, un code que personne dehors ne pouvait lire.",
-            "Nous avons voulu construire le contraire. Rien ne sort de la forge sans test ni documentation, et tout ce qui en sort est open source sous Apache-2.0 — lisez le motif dans l'acier."
-          ]
-        },
-        "engine": {
-          "name": "Le moteur",
-          "title": "Orazaka, l'oracle qui ne quitte jamais la maison",
-          "body": [
-            "Ōrāre — parler, interroger — est la racine d'oracle. Orazaka amène l'oracle sur votre colline : des réponses tirées de vos propres documents, sur votre infrastructure, selon vos règles, chaque ligne qui y touche étant publique.",
-            "C'est le moteur que nos produits sont conçus pour appeler, afin d'offrir de l'intelligence sans rien envoyer ailleurs. Quand le lien d'un produit avec lui est encore prévu, nous écrivons « prévu »."
-          ],
-          "move": "Vos données ne quittent jamais la maison."
-        },
-        "proves": {
-          "name": "Premières preuves",
-          "title": "Ce qu'il prouve d'abord",
-          "lead": "Deux produits portent la preuve avant les autres. Yomizaka lit les baux, contrats et factures d'un cabinet québécois — ses analyses sont conçues comme des exécutions d'Orazaka, prévues tant qu'aucune n'est enregistrée sur dev. Orochia montre le savoir-faire média derrière les plateformes de créateurs : téléversement, encodage et diffusion, sur son propre site de dev."
-        },
-        "roster": {
-          "name": "Le reste de l'équipe",
-          "title": "Le reste de ce que nous construisons",
-          "lead": "La même carte, le même statut honnête : chaque produit a son propre site, ou son code au grand jour en attendant."
-        },
-        "open": {
-          "name": "Briques ouvertes",
-          "title": "La lame repliée : tout est ouvert",
-          "body": "Tous les produits reposent sur les mêmes briques publiques — publiées, versionnées, Apache-2.0. Les chiffres sont lus dans les registres à la construction.",
-          "figuresAria": "Les briques ouvertes en chiffres",
-          "figures": {
-            "repos": "dépôts publics",
-            "components": "composants dans Krizaka UI",
-            "packages": "paquets publiés"
-          },
-          "cta": "Sur quoi tourne chaque produit",
-          "ctaAll": "Tout ce que nous avons ouvert"
-        }
+      "engine": {
+        "nav": "Le moteur",
+        "title": "Orazaka, le moteur",
+        "lead": "Orazaka est le moteur d'IA souverain que nos produits appellent pour leur IA : vos documents, sur votre infrastructure, selon vos règles.",
+        "mapLabel": "Orazaka au centre, les {count} produits autour. Un lien plein est branché ; un lien en tirets est prévu.",
+        "mapNote": "Les requêtes vont vers le moteur, les résultats reviennent. En tirets : prévu, pas encore branché.",
+        "wired": "branché",
+        "more": "Ce que chaque produit en fait"
       },
-      "closing": {
-        "title": "Premier round terminé. Continuer ?",
-        "body": "Un moteur et des produits que vous pouvez faire tourner aujourd'hui, d'autres en route, chaque ligne au grand jour, et des promesses écrites là où vous pouvez nous les rappeler. Les prochaines manches se jouent avec celles et ceux qui les utilisent — essayez-les, lisez-les, ou écrivez-nous."
+      "products": {
+        "promise": "Sa promesse",
+        "how": "Comment ça marche",
+        "demo": "Illustration, données de démo"
       },
-      "ctaProducts": "Découvrir les produits",
-      "ctaContact": "Nous écrire",
+      "birds": {
+        "lovebird": "L'inséparable est présent : deux personnes se rencontrent.",
+        "crane": "La grue écoute.",
+        "magpie": "La pie tient le score.",
+        "beaver": "Le castor construit la boutique."
+      },
+      "open": {
+        "nav": "Les briques ouvertes",
+        "title": "Tout ce qui nous porte est ouvert",
+        "lead": "Chaque produit repose sur les mêmes briques publiques : publiées, versionnées, Apache-2.0. Les chiffres sont lus dans les registres au build.",
+        "figuresAria": "Les briques ouvertes en chiffres",
+        "figures": {
+          "repos": "dépôts publics",
+          "components": "composants dans Krizaka UI",
+          "packages": "paquets publiés"
+        },
+        "more": "Les deux bibliothèques",
+        "cta": "Tout ce que nous avons ouvert"
+      },
+      "next": {
+        "nav": "La suite",
+        "title": "La suite, dite telle qu'elle est",
+        "lead": "Un produit dit ce qu'il est aujourd'hui, et le moteur dit « prévu » tant qu'il ne tourne pas. Aucune date n'est promise ici.",
+        "wire": "Brancher Orazaka à {products}, où son usage est encore prévu.",
+        "reach": "Amener {products} en préversion de développement, chacun prouvé sur sa propre liste de contrôle.",
+        "boardAria": "Où en est chaque produit",
+        "cta": "Écrivez-nous",
+        "ctaProducts": "Découvrir les produits"
+      },
       "kits": {
         "ui": {
           "name": "Krizaka UI",
@@ -497,18 +485,6 @@
         "engine": {
           "name": "Orazaka",
           "line": "Le moteur d'IA souverain"
-        }
-      },
-      "flock": {
-        "duck": {
-          "name": "Le canard",
-          "role": "Le bâtisseur",
-          "line": "Calme en surface, qui pagaie dur dessous : le code, les tests, la doc."
-        },
-        "owl": {
-          "name": "Le hibou",
-          "role": "La lectrice",
-          "line": "Lit vos documents et garde chaque question à la maison."
         }
       },
       "world": {
