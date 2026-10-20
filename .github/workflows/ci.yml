@@ -15,9 +15,19 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  changes:
+    # A change that touches no code (issue and PR templates, the dependabot and Scorecard files, licence and policy text)
+    # skips the two jobs below, which report « Skipped » and keep the required checks satisfied. Fails open.
+    uses: krizaka/.github/.github/workflows/changes.yml@ccd224612f5bb9db815335654f359a595a597fbb # main
+    with:
+      ignore: '^\.github/(?!workflows/ci\.yml$)|^(LICENSE|SECURITY|CODE_OF_CONDUCT|SUPPORT)(\.md)?$'
+
   validate:
     name: Build & Validate
+    needs: changes
+    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -37,6 +47,14 @@ jobs:
       - name: Run tests
         run: npm test
 
+      # Next.js's build cache (webpack/SWC): the next build reuses what the sources did not change.
+      - name: Next.js build cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .next/cache
+          key: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+          restore-keys: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
+
       - name: Run build
         run: npm run build
         env:
@@ -45,7 +63,10 @@ jobs:
 
   container:
     name: Container image
+    needs: changes
+    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - name: Checkout repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
