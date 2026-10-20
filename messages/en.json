@@ -621,6 +621,7 @@
         "repositories": "public repositories",
         "npm": "packages on npm",
         "maven": "artifacts on Maven Central",
+        "downloads": "npm downloads last week",
         "license": "on every repository"
       },
       "stackEyebrow": "The stack",
@@ -642,6 +643,7 @@
         "version": "Latest",
         "downloads": "Downloads / week",
         "links": "Links",
+        "trend": "Downloads over the last 12 weeks",
         "repo": "Code",
         "docs": "Docs",
         "registryAria": "{name} on its registry",
