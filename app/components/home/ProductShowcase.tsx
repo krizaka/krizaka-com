@@ -1,95 +1,142 @@
-/* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Redesigned
-   2026-10-20 (Oussama: « box in box in box », too many labels, a card wall under the new flow): no frame and no card in
-   a card. The engine leads — its words and @krizaka/ui's EngineFlow (EngineFlowView), sticky beside the list on a wide
-   screen — and the products it powers are a quiet list, one row each in its own brand light (`.brand-<id>`): a live
-   mini-visual edge to edge (visuals/, lazy, decorative, still under reduced motion), the mark beside the name, the status
-   said once (lib/products.ts, gated by the dev-preview checklists), one line, and one readable line of what it uses
-   Orazaka for (lib/engine-uses.ts, "planned" where the call is not wired yet). The whole row is one link to the product's
-   own site (or its code while it has none); its source is a discreet second link. Each row is tied to its node in the
-   flow (ProductsLink): in the middle of the screen or pointed at, its node lights, and the reverse.
-   Data: lib/products.ts, lib/engine-uses.ts, lib/product-visuals.ts — never a hand list. Words: site.products.*, site.home.products.*. */
+/* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Cahier (krizaka-ui
+   ADR-004, #417; Oussama 2026-10-20: « our showcase: refined, less AI, very complete and designed »): the section is a page
+   of the field notebook, on lined paper with its red margin and its number (§ 2). The engine leads — its specimen tag,
+   its flow (@krizaka/ui's EngineFlow, EngineFlowView) sticky beside the entries on a wide screen, the figure's caption.
+   Each product is an entry of the field guide, in its own brand light (`.brand-<id>`):
+   - a plate: a live visual of what it does, made of @krizaka/ui pieces (visuals/, lazy, decorative, still under reduced
+     motion), and its numbered caption (`fig. n`);
+   - a specimen tag: its catalogue number, its name (the link to its own site, or its code while it has none), its mark,
+     the stamp of its honest status (lib/products.ts, gated by the dev-preview checklists), its line, its bird (the film's
+     promise for the five birds of the film, the name for the family), what it runs on Orazaka (lib/engine-uses.ts,
+     « planned » where the call is not wired yet) and a note number;
+   - the notes at the foot of the section: what each product really does, sourced.
+   Each entry is tied to its node in the flow (ProductsLink): in the middle of the screen or pointed at, its node lights,
+   and the reverse. Data: lib/products.ts, lib/engine-uses.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words:
+   site.home.products.*, site.products.*, site.story.world.cues. */
 
 import { ForwardIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
+import { Caption, FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
+import { Mascot } from "@krizaka/ui/mascots";
 import { Section } from "@krizaka/ui/page";
+import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { PRODUCTS, type Product } from "@/lib/products";
-import { ENGINE } from "@/lib/story";
-import { ProductStatus } from "../ProductStatus";
+import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
+import { ENGINE, PRODUCT_BIRD } from "@/lib/story";
 import { GitHubMark } from "../brand/GitHubMark";
 import EngineFlowView from "./EngineFlowView";
 import ProductsLink from "./ProductsLink";
 import ProductVisual from "./visuals/ProductVisual";
 import "./visuals/visuals.css";
 
-const external = (p: Product) => ({ href: p.devUrl, target: "_blank", rel: "noopener" });
+/** The stamp of a status: `ok` only for what is out, `wip` in development, `construction` not open yet. */
+const STAMP: Record<ProductStatus, StampTone> = { devPreview: "ok", development: "wip", construction: "construction", upcoming: "neutral" };
+const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 
-function EngineBlock({ t }: { t: TranslationDictionary }) {
-  const engine = PRODUCTS.find((p) => p.id === ENGINE)!;
+const external = (p: Product) => ({ href: p.devUrl, target: "_blank", rel: "noopener" });
+const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+/** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
+const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
+
+/** The bird of a product and what it says: the film's promise for the five birds of the film, its name for the family. */
+function Bird({ p, t }: { p: Product; t: TranslationDictionary }) {
+  const bird = PRODUCT_BIRD[p.id];
+  const film = (FILM_BIRDS as readonly string[]).includes(bird);
+  const words = film ? t.site.story.world.cues[bird as (typeof FILM_BIRDS)[number]] : t.site.home.products.birds[bird as keyof TranslationDictionary["site"]["home"]["products"]["birds"]];
+  return (
+    <p className="kz-entry-bird">
+      <Mascot bird={bird} mood="welcome" tone="own" size={48} animated={false} aria-hidden />
+      <span>{words}</span>
+    </p>
+  );
+}
+
+function Foot({ p, t }: { p: Product; t: TranslationDictionary }) {
   const h = t.site.products;
   return (
-    <div id={"product-" + engine.id} className={cn("kz-prod-engine", "brand-" + engine.id)}>
-      <div className="kz-prod-engine-text">
-        <div className="kz-prod-head">
-          <h3 className="kz-prod-name kz-prod-name-engine">
-            <a {...external(engine)} className="kz-prod-plain">
-              {engine.name}
-            </a>
-          </h3>
-          <ProductStatus status={engine.status} t={t} />
-        </div>
-        <p className="kz-prod-line">{h.engine.line}</p>
-        <p className="kz-prod-foot">
-          <a {...external(engine)} className="kz-prod-cta kz-prod-plain">
-            {h.visit} <ForwardIcon size={14} aria-hidden />
+    <>
+      <a {...external(p)} aria-label={p.noSite ? format(h.seeCodeAria, { name: p.name }) : format(h.visitAria, { name: p.name })}>
+        {p.noSite ? h.seeCode : h.visit} <ForwardIcon size={13} aria-hidden />
+      </a>
+      {!p.noSite && (
+        <a href={p.repoUrl} aria-label={format(h.sourceAria, { name: p.name })}>
+          <GitHubMark size={14} /> {h.source}
+        </a>
+      )}
+    </>
+  );
+}
+
+function EngineBlock({ t }: { t: TranslationDictionary }) {
+  const p = PRODUCTS.find((x) => x.id === ENGINE)!;
+  const s = t.site.home.products;
+  const back = t.site.products.engine.back;
+  const n = PRODUCTS.indexOf(p) + 1;
+  return (
+    <div id={"product-" + p.id} className={cn("kz-prod-engine", "brand-" + p.id)}>
+      <SpecimenTag
+        code={`${code(p)} · ${s.fields.engineRole}`}
+        title={
+          <a {...external(p)} className="kz-entry-name">
+            {p.name}
           </a>
-          <a href={engine.repoUrl} className="kz-prod-source" aria-label={format(h.sourceAria, { name: engine.name })}>
-            <GitHubMark size={16} />
-          </a>
+        }
+        mark={<ProductLogo id={p.id} size={30} animated={false} />}
+        status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
+        fields={[{ label: s.fields.back, value: `${back.results}, ${back.analytics}` }]}
+        footer={<Foot p={p} t={t} />}
+      >
+        <p>
+          {t.site.products.engine.line}
+          <FootnoteRef n={n} prefix="kz-note" />
         </p>
-      </div>
-      <EngineFlowView t={t} />
+        <Bird p={p} t={t} />
+      </SpecimenTag>
+      <figure className="kz-entry-flow">
+        <EngineFlowView t={t} />
+        <Caption figure={`${s.figureLabel} 1`}>{s.figures[p.id]}</Caption>
+      </figure>
     </div>
   );
 }
 
-function ProductRow({ product: p, t }: { product: Product; t: TranslationDictionary }) {
-  const h = t.site.products;
+function ProductEntry({ product: p, t }: { product: Product; t: TranslationDictionary }) {
+  const s = t.site.home.products;
   const use = ENGINE_USES.find((u) => u.id === p.id);
-  const useText = use ? h.engine.uses[use.id as keyof typeof h.engine.uses] : undefined;
+  const useText = use ? t.site.products.engine.uses[use.id as keyof typeof t.site.products.engine.uses] : undefined;
+  const n = PRODUCTS.indexOf(p) + 1;
   return (
-    <li id={"product-" + p.id} className={cn("kz-prod-row", "brand-" + p.id)} data-product={p.id}>
-      <ProductVisual id={p.id} />
-      <div className="kz-prod-text">
-        <div className="kz-prod-head">
-          <ProductLogo id={p.id} size={32} animated={false} />
-          <h3 className="kz-prod-name">
-            <a {...external(p)} className="kz-prod-link" aria-label={p.noSite ? format(h.seeCodeAria, { name: p.name }) : undefined}>
-              {p.name}
-            </a>
-          </h3>
-          <ProductStatus status={p.status} t={t} />
-        </div>
-        <p className="kz-prod-line">{h.cards[p.id].line}</p>
+    <li id={"product-" + p.id} className={cn("kz-entry", "brand-" + p.id)} data-product={p.id}>
+      <figure className="kz-entry-plate">
+        <ProductVisual id={p.id} />
+        <Caption figure={`${s.figureLabel} ${n}`}>{s.figures[p.id]}</Caption>
+      </figure>
+      <SpecimenTag
+        className="kz-entry-tag"
+        code={code(p)}
+        title={
+          <a {...external(p)} className="kz-entry-name">
+            {p.name}
+          </a>
+        }
+        mark={<ProductLogo id={p.id} size={30} animated={false} />}
+        status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
+        fields={[{ label: s.fields.site, value: host(p.devUrl) }]}
+        footer={<Foot p={p} t={t} />}
+      >
+        <p>
+          {t.site.products.cards[p.id].line}
+          <FootnoteRef n={n} prefix="kz-note" />
+        </p>
         {useText && (
-          <p className="kz-prod-uses" data-planned={use?.planned ? "" : undefined}>
-            <ProductLogo id={ENGINE} size={14} animated={false} />
-            <span>{format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, { use: useText })}</span>
+          <p className="kz-entry-uses" data-planned={use?.planned ? "" : undefined}>
+            {format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, { use: useText })}
           </p>
         )}
-        <p className="kz-prod-foot">
-          <span className="kz-prod-cta">
-            {p.noSite ? h.seeCode : h.visit} <ForwardIcon size={14} aria-hidden />
-          </span>
-          {!p.noSite && (
-            <a href={p.repoUrl} className="kz-prod-source" aria-label={format(h.sourceAria, { name: p.name })}>
-              <GitHubMark size={16} />
-            </a>
-          )}
-        </p>
-      </div>
+        <Bird p={p} t={t} />
+      </SpecimenTag>
     </li>
   );
 }
@@ -99,15 +146,16 @@ export default function ProductShowcase({ locale }: { locale: string }) {
   const s = t.site.home.products;
   const others = PRODUCTS.filter((p) => p.id !== ENGINE);
   return (
-    <Section id="products" eyebrow={s.eyebrow} title={s.title} lead={s.lead} reveal>
+    <Section id="products" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
       <ProductsLink className={cn("kz-prod", "brand-" + ENGINE)}>
         <EngineBlock t={t} />
-        <ul className="kz-prod-list" aria-label={t.site.products.engine.label}>
+        <ol className="kz-prod-list" aria-label={t.site.products.engine.label}>
           {others.map((p) => (
-            <ProductRow key={p.id} product={p} t={t} />
+            <ProductEntry key={p.id} product={p} t={t} />
           ))}
-        </ul>
+        </ol>
       </ProductsLink>
+      <Footnotes className="kz-prod-notes" prefix="kz-note" label={s.notesLabel} backLabel={s.backLabel} notes={PRODUCTS.map((p) => `${p.name}. ${s.notes[p.id]}`)} />
     </Section>
   );
 }

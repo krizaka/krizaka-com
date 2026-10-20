@@ -58,9 +58,9 @@ html.light [data-hue="ink"]    { --kz-hue: hsl(222 30% 22%); --kz-hue-2: hsl(217
   /* The Krizaka typography: the files of @krizaka/fonts, loaded and preloaded by next/font/local in the locale layout
      (--font-kz-*: hashed families with their own adjusted fallback), in the token roles. The site's older styles read
      --font-display / --font-mono: they follow the tokens. */
-  --kz-font-sans: var(--font-kz-text), Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --kz-font-display: var(--font-kz-display), "Plus Jakarta Sans", var(--font-kz-text), system-ui, sans-serif;
-  --kz-font-mono: var(--font-kz-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --kz-font-sans: var(--font-kz-text), "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --kz-font-display: var(--font-kz-display), "Young Serif", Georgia, serif;
+  --kz-font-mono: var(--font-kz-mono), "Courier Prime", "Courier New", ui-monospace, Menlo, monospace;
   --font-display: var(--kz-font-display);
   --font-mono: var(--kz-font-mono);
 
@@ -124,7 +124,7 @@ body {
   color: var(--kz-text-primary);
   font-family: var(--kz-font-text);
   font-feature-settings: 'cv02', 'cv03', 'cv04';
-  letter-spacing: -0.011em; /* Inter at 16 px (the body-md step of the type scale) */
+  letter-spacing: 0; /* Atkinson Hyperlegible Next is drawn open: no tightening (Cahier) */
   min-height: 100dvh;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;

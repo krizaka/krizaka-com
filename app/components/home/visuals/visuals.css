@@ -1,72 +1,76 @@
-/* The product cards' mini-visuals (ProductVisual / ProductVisuals): a fixed box per card, the card's brand light kept
-   restrained, @krizaka/ui pieces inside. Still unless `[data-play]`; nothing moves under reduced motion. Tokens only. */
+/* The plates of the products' field-guide entries (ProductVisual / ProductVisuals, Cahier — krizaka-ui ADR-004): a fixed
+   box per entry (no layout shift), a sheet of paper laid on the lined page, @krizaka/ui pieces inside, set in the
+   notebook's faces. Still unless playing; nothing moves under reduced motion. No glow, no gradient, no uppercase.
+   Tokens only. */
 
-.pv { position: relative; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; border-radius: 14px; padding: 14px;
-  background:
-    radial-gradient(120% 90% at 100% 0%, color-mix(in oklab, var(--kz-accent) 12%, transparent), transparent 60%),
-    var(--kz-surface-1); }
+.pv { position: relative; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; padding: 16px 18px; background: var(--kz-surface-1);
+  box-shadow: var(--kz-shadow-md); }
 .pv > * { height: 100%; }
 .pv p { margin: 0; }
+.pv-leader { flex: 1; min-width: 12px; border-bottom: 1.5px dotted var(--kz-text-muted); transform: translateY(-4px); }
 
-/* Yomizaka: a page, one passage lit, checked. */
-.pv-doc { display: flex; flex-direction: column; gap: 7px; }
-.pv-doc-title { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--kz-text-secondary); }
-.pv-doc-clause { font-size: 11.5px; line-height: 1.4; color: var(--kz-text-secondary); opacity: .75; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-/* A reading line passes down the page while it plays — the document being read. */
-.pv-doc { position: relative; }
-.pv-doc[data-play]::after { content: ""; position: absolute; left: -14px; right: -14px; top: 0; height: 28px; pointer-events: none;
-  background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--kz-accent) 16%, transparent), transparent);
-  animation: pv-read 2.6s var(--kz-ease, ease) infinite; }
-@keyframes pv-read { from { transform: translateY(-28px); } to { transform: translateY(160px); } }
-.pv-doc-passage { font-size: 12.5px; line-height: 1.45; color: var(--kz-text-primary); }
-.pv-doc-passage mark { color: inherit; padding: 1px 2px; border-radius: 3px;
-  background: linear-gradient(to right, color-mix(in oklab, var(--kz-accent) 30%, transparent) 50%, transparent 50%) 0 0 / 200% 100% no-repeat;
-  background-position: 0 0; transition: background-position .9s var(--kz-ease, ease); }
-.pv-doc[data-play] .pv-doc-passage mark { animation: pv-highlight 2.6s var(--kz-ease, ease) infinite; }
-@keyframes pv-highlight { 0% { background-position: 100% 0; } 45%, 100% { background-position: 0 0; } }
-.pv-doc-check { display: inline-flex; align-items: center; gap: 8px; margin-top: auto !important; font-size: 11.5px; color: var(--kz-text-secondary); }
+/* Yomizaka: a lease on lined paper, the clause to review numbered in the margin, the pen moving down the lines. */
+.pv-lease { display: flex; flex-direction: column; gap: 8px; padding-left: 28px; position: relative; }
+.pv-lease::before { content: ""; position: absolute; inset-block: -16px; left: 18px; width: 1.5px; background: var(--kz-paper-rule-margin); opacity: .8; }
+.pv-lease-title { font-family: var(--kz-font-display); font-size: 15px; line-height: 20px; color: var(--kz-text-primary); }
+.pv-lease-lines { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-family: var(--kz-font-mono); font-size: 11.5px; line-height: 16px; color: var(--kz-text-secondary); }
+.pv-lease-lines li { position: relative; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pv-lease-lines li[data-read] { color: var(--kz-text-primary); }
+.pv-lease-lines li[data-hit] > span:last-child { color: var(--kz-text-primary); background: linear-gradient(to top, color-mix(in oklab, var(--kz-accent) 30%, transparent) 40%, transparent 40%); }
+.pv-lease-n { position: absolute; left: -2px; top: 4px; display: grid; place-items: center; width: 16px; height: 16px; border: 1.5px solid var(--kz-paper-rule-margin); border-radius: 9999px;
+  font-family: var(--kz-font-text); font-size: 10px; font-weight: 700; color: var(--kz-paper-rule-margin); }
+.pv-lease-lines li[data-hit] { padding-left: 22px; }
+.pv-lease-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: auto !important; font-family: var(--kz-font-mono); font-size: 11.5px; color: var(--kz-text-secondary); }
 
-/* Orochia: upload → encode → stream. */
-.pv-media { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
-.pv-media-frame { height: 100%; aspect-ratio: 9 / 16; border-radius: 10px; display: grid; place-items: center;
-  background: linear-gradient(160deg, color-mix(in oklab, var(--kz-accent) 55%, var(--kz-surface-1)), color-mix(in oklab, var(--kz-accent-2, var(--kz-accent)) 40%, var(--kz-surface-0))); }
-.pv-media-play { width: 0; height: 0; border-left: 12px solid var(--kz-text-primary); border-top: 8px solid transparent; border-bottom: 8px solid transparent; opacity: .9; }
-.pv-media-side { display: flex; flex-direction: column; justify-content: center; gap: 10px; min-width: 0; }
-.pv-media-renditions { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.pv-media-renditions li { padding: 2px 8px; border-radius: 999px; font-family: var(--font-mono); font-size: 11px; color: var(--kz-text-secondary);
-  border: 1px solid var(--kz-border-default); transition: color .3s, border-color .3s, background-color .3s; }
-.pv-media-renditions li[data-on] { color: var(--kz-accent-text, var(--kz-accent)); border-color: var(--kz-accent); background: color-mix(in oklab, var(--kz-accent) 10%, transparent); }
-.pv-media-state { font-size: 12px; color: var(--kz-text-secondary); }
+/* Orochia: upload → encode → stream, the renditions written in a ledger as they are ready. No media. */
+.pv-encode { display: flex; flex-direction: column; gap: 10px; font-family: var(--kz-font-mono); font-size: 12px; }
+.pv-encode-steps { margin: 0; padding: 0; list-style: none; display: flex; gap: 8px; color: var(--kz-text-muted); }
+.pv-encode-steps li + li::before { content: "→"; margin-right: 8px; color: var(--kz-text-muted); }
+.pv-encode-steps li[data-on] { color: var(--kz-text-primary); font-weight: 700; }
+.pv-encode-ladder { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; color: var(--kz-text-secondary); }
+.pv-encode-ladder li { display: flex; align-items: baseline; gap: 6px; line-height: 20px; }
+.pv-encode-ladder li[data-on] { color: var(--kz-text-primary); }
+.pv-encode-state { margin-top: auto !important; color: var(--kz-text-secondary); }
 
-/* Kachizaka: points, live. */
-.pv-live { display: flex; flex-direction: column; gap: 4px; }
-.pv-live-head { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--kz-text-secondary); }
-.pv-live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--kz-success, var(--kz-accent)); }
-.pv-live-dot[data-play] { animation: pv-pulse 1.4s ease-in-out infinite; }
-@keyframes pv-pulse { 50% { opacity: .35; } }
-.pv-live-value { display: flex; align-items: baseline; gap: 6px; margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: 26px; font-weight: 800; line-height: 1.2; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--kz-text-primary); }
-.pv-live-value .kz-count { min-width: 3ch; justify-items: start; }
-.pv-live-unit { font-family: var(--font-sans, inherit); font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--kz-text-secondary); }
-.pv-live :is(figure, .kz-chart) { margin-top: auto; }
+/* Kachizaka: the standings as a ledger — rank, name, the dotted leader, the points. The ticker takes its own width
+   (NumberTicker reserves the final value's), aligned at its start; the unit follows it on the same baseline. */
+.pv-score { display: flex; flex-direction: column; gap: 10px; }
+.pv-score-head { font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-secondary); }
+.pv-score-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; color: var(--kz-text-primary); }
+.pv-score-rows li { display: flex; align-items: baseline; gap: 8px; line-height: 28px; }
+.pv-score-rank { width: 1.4em; font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-paper-rule-margin); }
+.pv-score-value { display: inline-flex; align-items: baseline; gap: 0.3em; font-family: var(--kz-font-display); font-size: 20px; line-height: 28px; font-variant-numeric: tabular-nums; }
+.pv-score-unit { font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-secondary); }
 
-/* Akinaza: a day's slots. */
-.pv-day { display: flex; flex-direction: column; gap: 10px; }
-.pv-day-head { font-size: 12.5px; font-weight: 700; color: var(--kz-text-primary); }
-.pv-day-slots { flex-wrap: wrap; }
-.pv-day-booked { margin-top: auto !important; font-size: 11.5px; color: var(--kz-text-secondary); }
+/* Akinaza: the salon's day, and the receipt of the service with GST and QST to the cent. */
+.pv-shop { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.pv-shop-head { font-family: var(--kz-font-display); font-size: 14px; line-height: 20px; color: var(--kz-text-primary); margin-bottom: 8px !important; }
+.pv-shop-slots { flex-wrap: wrap; }
+.pv-shop-booked { margin-top: 8px !important; font-family: var(--kz-font-mono); font-size: 11px; color: var(--kz-text-secondary); }
+.pv-receipt { margin: 0; padding: 10px 12px; display: grid; gap: 2px; font-family: var(--kz-font-mono); font-size: 12px; line-height: 20px;
+  background: var(--kz-surface-0); border: 1px dashed var(--kz-border-strong); }
+.pv-receipt > div { display: flex; justify-content: space-between; gap: 8px; }
+.pv-receipt dt { color: var(--kz-text-secondary); white-space: nowrap; }
+.pv-receipt dd { margin: 0; color: var(--kz-text-primary); font-variant-numeric: tabular-nums; }
+.pv-receipt > div:last-child { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--kz-border-strong); font-weight: 700; }
 
-/* Yasakia: two people, one conversation. */
-.pv-chat { display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; font-size: 12.5px; }
+/* Yasakia: you talk first; the agent's introduction is stamped above the conversation. */
+.pv-chat { display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; font-size: 12.5px; }
+.pv-chat-intro { margin-bottom: auto !important; }
+.pv-chat-intro .kz-stamp { white-space: normal; transform: rotate(-1.5deg); }
 
-/* Yororis: a voice. */
-.pv-voice { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
-.pv-voice-bars { list-style: none; margin: 0; padding: 0; display: flex; align-items: center; gap: 3px; height: 56%; }
-.pv-voice-bars li { flex: 1; min-height: 6%; border-radius: 999px; background: linear-gradient(to top, var(--kz-accent), var(--kz-accent-2, var(--kz-accent)));
-  transform-origin: center; animation: pv-voice 1.3s ease-in-out infinite alternate paused; }
-.pv-voice[data-play] .pv-voice-bars li { animation-play-state: running; }
-@keyframes pv-voice { from { transform: scaleY(.55); } to { transform: scaleY(1); } }
-.pv-voice-label { font-size: 12px; color: var(--kz-text-secondary); text-align: center; }
+/* Yororis: a voice, listened to (@krizaka/ui's Waveform). */
+.pv-voice { display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+.pv-voice-label { font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-secondary); text-align: center; }
 
+@media (min-width: 640px) and (max-width: 1279.98px) {
+  .pv { aspect-ratio: 4 / 3; }
+}
+@media (max-width: 420px) {
+  .pv { aspect-ratio: 4 / 3; }
+  .pv-shop { grid-template-columns: 1fr; }
+  .pv-shop .pv-shop-booked { display: none; }
+}
 @media (prefers-reduced-motion: reduce) {
   .pv *, .pv *::before, .pv *::after { animation: none !important; transition: none !important; }
 }

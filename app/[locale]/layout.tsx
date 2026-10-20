@@ -18,7 +18,7 @@ import "@krizaka/ui/story.css";
 import { MotionObserver } from "@krizaka/ui/motion";
 import { cn } from "@krizaka/ui/cn";
 
-/* The Krizaka typefaces — the files of @krizaka/fonts (SIL OFL 1.1), loaded by next/font/local so the two faces of the
+/* The Krizaka typefaces (Cahier, krizaka-ui ADR-004: Young Serif, Atkinson Hyperlegible Next, Courier Prime) — the files of @krizaka/fonts (SIL OFL 1.1), loaded by next/font/local so the two faces of the
    first screen are preloaded and fingerprinted, with next/font's metric-adjusted fallback (CLS 0). The latin file of
    each family covers English and French; globals.css puts them in the token roles (--kz-font-*). The arguments must be
    literals, relative to this file.
@@ -27,25 +27,28 @@ import { cn } from "@krizaka/ui/cn";
    else in the metric-adjusted fallback for this visit only (cached for the next). With `swap`, a late face repainted
    the hero and moved the LCP by seconds on a slow phone. */
 const textFace = localFont({
-  src: "../../node_modules/@krizaka/fonts/files/web/inter-latin-wght.woff2",
+  src: "../../node_modules/@krizaka/fonts/files/web/atkinson-hyperlegible-next-latin-wght.woff2",
   weight: "400 700",
   variable: "--font-kz-text",
   display: "optional",
 });
 const displayFace = localFont({
-  src: "../../node_modules/@krizaka/fonts/files/web/plus-jakarta-sans-latin-wght.woff2",
-  weight: "500 800",
+  src: "../../node_modules/@krizaka/fonts/files/web/young-serif-latin-400.woff2",
+  weight: "400",
+  adjustFontFallback: "Times New Roman", // a serif face: its fallback is a serif (Cahier, krizaka-ui ADR-004)
   variable: "--font-kz-display",
   display: "optional",
 });
 const monoFace = localFont({
-  src: "../../node_modules/@krizaka/fonts/files/web/jetbrains-mono-latin-wght.woff2",
-  weight: "400 700",
+  src: [
+    { path: "../../node_modules/@krizaka/fonts/files/web/courier-prime-latin-400.woff2", weight: "400" },
+    { path: "../../node_modules/@krizaka/fonts/files/web/courier-prime-latin-700.woff2", weight: "700" },
+  ],
   variable: "--font-kz-mono",
   display: "swap",
   preload: false, // labels and code, never the first paint
   adjustFontFallback: false,
-  fallback: ["ui-monospace", "Menlo", "Consolas", "monospace"],
+  fallback: ["Courier New", "ui-monospace", "Menlo", "monospace"],
 });
 
 /* ─── SEO METADATA ─── */

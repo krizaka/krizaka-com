@@ -9,7 +9,7 @@
           mask-image: linear-gradient(to top, transparent, #000 30%, transparent 90%); }
 
 .kz-intro-mark { display: inline-flex; margin-bottom: 8px; filter: drop-shadow(0 8px 28px color-mix(in oklab, var(--kz-accent) 35%, transparent)); }
-.kz-home-eyebrow { margin: 0; font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+.kz-home-eyebrow { margin: 0; font-family: var(--font-mono); font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none;
   color: var(--kz-accent-text); }
 .kz-home-title { max-width: 20ch; margin: 16px 0 0; font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(2.2rem, 6vw, 4rem);
   font-weight: 800; letter-spacing: -.035em; line-height: 1.05; color: var(--kz-text-primary); text-wrap: balance; }
@@ -78,59 +78,47 @@ html[data-intro="play"] .kz-intro-sweep { animation: kz-intro-sweep 1.3s cubic-b
    each, its visual edge to edge, the mark beside the name, one label (the status). A row in the middle of the screen,
    or pointed at, lights its node in the flow and the reverse (ProductsLink sets `data-lit`). Quiet hovers only: a tint,
    no lift, no pointer light (krizaka-ui#393). Tokens only. ─── */
-.kz-prod { display: grid; gap: clamp(36px, 5vw, 64px); }
-.kz-prod-engine { position: relative; display: flex; flex-direction: column; gap: clamp(16px, 2.4vw, 24px); min-width: 0; }
-.kz-prod-engine::before { content: ""; position: absolute; inset: 22% 8% 4%; z-index: -1; pointer-events: none; border-radius: 50%;
-  background: radial-gradient(closest-side, color-mix(in oklab, var(--kz-accent) 10%, transparent), transparent); }
-.kz-prod-engine-text { display: flex; flex-direction: column; gap: 10px; max-width: 46ch; }
+/* ─── The products: a page of the field notebook (Cahier, krizaka-ui ADR-004, #417) ───
+   The engine's tag and its flow, sticky beside the entries on a wide screen; each entry a plate (its live visual and its
+   numbered caption) and a specimen tag. Paper and ink: no glow, no box in a box, no capitals by style. Tokens only. */
+.kz-prod { display: grid; gap: clamp(40px, 5vw, 64px); }
+.kz-prod-engine { position: relative; display: flex; flex-direction: column; gap: 24px; min-width: 0; }
+.kz-prod-engine .kz-tag { max-width: 34rem; }
 .kz-home-flow { position: relative; z-index: 2; width: 100%; max-width: 600px; margin: 0 auto; }
+.kz-entry-flow { margin: 0; display: grid; gap: 4px; }
+.kz-entry-flow .kz-caption { text-align: center; }
+.kz-entry-name { color: inherit; text-decoration: none; }
+.kz-entry-name:hover { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+.kz-entry-uses { margin: 8px 0 0 !important; font-family: var(--kz-font-mono); font-size: 13px; line-height: 16px; }
+.kz-entry-uses[data-planned] { opacity: .78; }
+.kz-entry-bird { display: flex; align-items: center; gap: 10px; margin: 10px 0 0 !important; font-family: var(--kz-font-mono); font-size: 12.5px; line-height: 16px; }
+.kz-entry-bird > svg { flex: none; }
+.kz-tag-foot a { display: inline-flex; align-items: center; gap: 6px; }
 
-.kz-prod-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
-.kz-prod-head > svg { flex: none; }
-.kz-prod-name { margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
-.kz-prod-name-engine { font-size: clamp(1.8rem, 3.2vw, 2.4rem); }
-.kz-prod-plain { color: var(--kz-text-primary); text-decoration: none; }
-.kz-prod-link { color: var(--kz-text-primary); text-decoration: none; }
-.kz-prod-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
-.kz-prod-link:focus-visible { outline: none; }
-.kz-prod-row:has(.kz-prod-link:focus-visible) { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; }
-.kz-prod-line { margin: 0; font-size: 15px; line-height: 1.55; color: var(--kz-text-secondary); }
-.kz-prod-engine .kz-prod-line { font-size: 16px; }
-.kz-prod-uses { display: flex; align-items: flex-start; gap: 8px; margin: 0; font-size: 13.5px; line-height: 1.45; color: var(--kz-text-primary); }
-.kz-prod-uses > svg { flex: none; margin-top: 2px; }
-.kz-prod-uses[data-planned] { color: var(--kz-text-secondary); }
-.kz-prod-foot { display: flex; align-items: center; gap: 14px; margin: auto 0 0; padding-top: 4px; }
-.kz-prod-cta { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: var(--kz-accent-text, var(--kz-accent)); text-decoration: none; }
-.kz-prod-cta svg { transition: transform .3s var(--kz-ease, ease); }
-.kz-prod-row:is(:hover, :focus-within) .kz-prod-cta svg, .kz-prod-cta:hover svg { transform: translateX(3px); }
-.kz-prod-source { position: relative; z-index: 2; display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 999px;
-  color: var(--kz-text-secondary); border: 1px solid var(--kz-border-subtle); transition: color .2s, border-color .2s; }
-.kz-prod-source:hover { color: var(--kz-text-primary); border-color: var(--kz-border-default); }
-.kz-prod-source:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; }
-
-.kz-prod-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.kz-prod-row { position: relative; display: grid; gap: 14px 24px; align-items: center; padding: 14px; margin: 0 -14px; border-radius: 18px;
-  transition: background-color .3s var(--kz-ease, ease); }
-.kz-prod-row:is(:hover, [data-lit]) { background: color-mix(in oklab, var(--kz-accent) 6%, transparent); }
-.kz-prod-text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.kz-prod-row .pv { border-radius: 12px; }
+.kz-prod-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: clamp(40px, 5vw, 56px); min-width: 0; }
+.kz-entry { position: relative; display: grid; gap: 16px 24px; align-items: start; }
+.kz-entry-plate { margin: 0; min-width: 0; }
+.kz-entry-tag { min-width: 0; }
+.kz-entry[data-lit] .kz-entry-tag { border-color: var(--kz-accent); }
+.kz-entry[data-lit] .kz-entry-plate .pv { box-shadow: var(--kz-shadow-lg); }
 @media (min-width: 640px) {
-  .kz-prod-row { grid-template-columns: minmax(0, 15.5rem) minmax(0, 1fr); }
-  .kz-prod-row .pv { aspect-ratio: 4 / 3; }
+  .kz-entry { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 }
 @media (min-width: 1024px) {
-  .kz-prod { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); align-items: start; }
+  .kz-prod { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); align-items: start; }
   .kz-prod-engine { position: sticky; top: var(--kz-anchor-offset); }
+  .kz-entry { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
 }
+.kz-prod-notes { max-width: 62rem; margin-top: clamp(40px, 5vw, 64px); }
 
-/* The node of the row in view (or pointed at) lights in the flow — the same language as the flow's own active node. */
+/* The node of the entry in view (or pointed at) lights in the flow — the same language as the flow's own active node. */
 .kz-prod .kz-flow-node, .kz-prod .kz-flow-link { transition: opacity .3s var(--kz-ease, ease); }
 .kz-prod[data-lit] .kz-flow:not([data-active]) .kz-flow-link:not([data-lit]) { opacity: .25; }
 .kz-prod[data-lit] .kz-flow-link[data-lit] .kz-flow-wire { opacity: .9; }
 .kz-prod[data-lit] .kz-flow:not([data-active]) .kz-flow-node[data-lit] { opacity: 1; }
 .kz-flow-node[data-lit] .kz-flow-node-mark { border-color: var(--kz-accent); box-shadow: 0 0 0 4px color-mix(in oklab, var(--kz-accent) 20%, transparent); }
 @media (prefers-reduced-motion: reduce) {
-  .kz-prod-row, .kz-prod-cta svg, .kz-prod .kz-flow-node, .kz-prod .kz-flow-link { transition: none; }
+  .kz-prod .kz-flow-node, .kz-prod .kz-flow-link { transition: none; }
 }
 
 /* ─── The principles, in brief ─── */
