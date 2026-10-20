@@ -219,7 +219,7 @@ export default async function BuildingBlockPage({ params }: Props) {
                 <CodeBlock code={block.install[0].code} language={block.install[0].lang} file={block.install[0].file} copyLabel={w.copy} copiedLabel={w.copied} />
               )}
               <div className="rd-links">
-                <ButtonLink href={block.docs} variant="primary" size="lg" shimmer>
+                <ButtonLink href={block.docs} variant="primary" size="lg">
                   {p.docs} {block.docs.startsWith("/") ? <ForwardIcon size={14} aria-hidden /> : <ExternalIcon size={13} aria-hidden />}
                 </ButtonLink>
                 <ButtonLink href={blockRepoUrl(block)} size="lg">

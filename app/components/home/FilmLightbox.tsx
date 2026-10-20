@@ -39,7 +39,7 @@ export default function FilmLightbox({ film, fallback, trigger }: { film: Lightb
     <Dialog.Root>
       <Dialog.Trigger asChild onClick={() => setLight(prefersLightFilm(window))}>
         {trigger ?? (
-          <Button type="button" variant="ghost" size="lg" shape="cut" className="kz-home-film-trigger">
+          <Button type="button" variant="ghost" size="lg" className="kz-home-film-trigger">
             <PlayIcon size={15} aria-hidden /> {h.film} <span className="kz-home-film-length">{h.filmLength}</span>
           </Button>
         )}

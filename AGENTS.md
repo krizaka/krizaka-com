@@ -196,15 +196,17 @@
   layout: blocks arrive once with `reveal(i)` (`lib/motion.ts` → `[data-reveal]`, staggered 70 ms; `reveal(i, "soft")`
   for schemas and dense content; never on the first screen), figures climb with `NumberTicker`
   (`@krizaka/ui/number-ticker`), loops pause off screen (`data-offscreen`) and wait for the page to settle
-  (`html[data-motion]`), the pointer lights the node of the signature icons and pulls `magnetic` buttons. The site only
+  (`html[data-motion]`). **Nothing moves under the pointer** (krizaka-ui#393, ADR-003): a hover changes a colour — a card's
+  surface and hairline one step up, a button its hover colour — never a position; no lift, no zoom, no light that follows
+  the pointer, no `magnetic`, no `shimmer`; the keyboard focus is a 2 px `--kz-ring` ring. Only an arrow leans where it leads. The site only
   adds what is its own, in `app/globals.css` (« SITE MOTION ») and `org-hero.css`: no second conductor, no counter of its
   own. No animation library for new work, no permanent `requestAnimationFrame`, no canvas; docs stay almost still (a
   reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui, not into a copy here.
 - **Every action is the @krizaka/ui `Button`** — through `ButtonLink` (`app/components/ButtonLink.tsx`, the router
   adapter) for links: `primary` for the one action a block is about, `secondary` for the others, `ghost` for quiet chips;
-  the Krizaka chamfer (`shape="cut"`) on every call to action — heroes, closing calls, contact, featured cards, the bar's
-  « Contact us »; `lg` on a hero or a closing call, `md` in a section. `shimmer` only on **the** main action of a page
-  (with `magnetic` on a hero). No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
+  **one shape, the Button's default** (an 8 px radius, the radius of a field; never `shape="cut"` — the chamfer is retired,
+  krizaka-ui#393 — and never `shimmer` or `magnetic`, deprecated no-ops); `lg` on a hero or a closing call, `md` in a
+  section. No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
 ## 4.1 The Krizaka page language — from `@krizaka/ui` blocks
 
 - **Every page is made of the page blocks of [`@krizaka/ui`](https://ui.krizaka.com) (category *Blocks*),
@@ -235,8 +237,8 @@
     corner** (`mark`), the **hook in one line** (≤ 90 characters, regular weight), compact `facts`, **one short action**
     (`more`, « Details → ») and discreet icon actions (`ActionBar variant="icons"`). What it does, the bird's quote and
     the long version are **never on the face**: on the detail page (`more`) or unfolded in place (`panelLabel`, a
-    native `<details>`; a grid with folds aligns its cards at the top). The pointer lifts the card and carries a light
-    over it (`PointerLight`, built into `CardGrid`) — still under reduced motion.
+    native `<details>`; a grid with folds aligns its cards at the top). Under the pointer the card's surface and hairline
+    go one step up — it never lifts and no light follows the pointer (`PointerLight` is a deprecated no-op).
   - `MascotQuote` — a rule told by a bird (`inline` in an unfolded card or a detail page, `callout` in a section, at
     most one per section). The bird carries a promise, never decoration: the falcon watches (security), the owl reads
     and knows every face (documents, identity), the duck builds (code), the flamingo answers or gets paid, the pigeon

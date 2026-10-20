@@ -64,7 +64,6 @@
 .st-film { position: relative; display: block; width: 100%; max-width: 420px; padding: 0; border: 1px solid var(--kz-border-default); border-radius: 14px; overflow: hidden;
   background: var(--kz-surface-1); cursor: pointer; text-align: left; color: var(--kz-text-primary); aspect-ratio: 16 / 9; }
 .st-film-poster { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--kz-ease, ease); }
-.st-film:hover .st-film-poster { transform: scale(1.03); }
 .st-film-play { position: absolute; inset: 0; margin: auto; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; color: #fff;
   background: color-mix(in oklab, #000 55%, transparent); backdrop-filter: blur(6px); border: 1px solid color-mix(in oklab, #fff 40%, transparent); }
 .st-film-caption { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; gap: 8px; padding: 22px 14px 10px; font-size: 13px; font-weight: 700; color: #fff;
@@ -96,7 +95,6 @@
   background: var(--kz-surface-1); cursor: pointer; box-shadow: 0 12px 32px color-mix(in oklab, var(--kz-accent) 14%, transparent); }
 .st-take[data-ratio="wide"] .st-take-card { width: 100%; max-width: 240px; aspect-ratio: 19 / 16; border-radius: 14px; }
 .st-take-poster { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .5s var(--kz-ease, ease); }
-.st-take-card:hover .st-take-poster { transform: scale(1.03); }
 .st-take-play { position: absolute; inset: 0; margin: auto; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: #fff;
   background: color-mix(in oklab, #000 55%, transparent); backdrop-filter: blur(6px); border: 1px solid color-mix(in oklab, #fff 40%, transparent); }
 .st-take-card:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 3px; }

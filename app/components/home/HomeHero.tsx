@@ -73,7 +73,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
         <p className="kz-home-lead">{t.lead}</p>
 
         <div className="kz-home-actions">
-          <ButtonLink href="#products" variant="primary" size="lg" shimmer magnetic>
+          <ButtonLink href="#products" variant="primary" size="lg">
             {t.primary} <ForwardIcon size={16} strokeWidth={2.25} />
           </ButtonLink>
           <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "tour.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />

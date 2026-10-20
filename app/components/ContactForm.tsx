@@ -300,8 +300,8 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
           type="submit"
           variant="primary"
           size="lg"
-          shape="cut"
-          shimmer
+         
+         
           className="kz-cf-submit"
           loading={status === "sending"}
           status={serverError ? "error" : null}
@@ -329,7 +329,7 @@ const STYLES = `
   .kz-cf-topic { position:relative; display:flex; align-items:flex-start; gap:12px; padding:14px; border-radius:14px; cursor:pointer;
     background:var(--kz-surface-0); border:1px solid var(--kz-border-default);
     transition:border-color 160ms ease, background-color 160ms ease, transform 160ms ease; }
-  .kz-cf-topic:hover { border-color:color-mix(in srgb, var(--kz-accent) 50%, var(--kz-border-default)); transform:translateY(-1px); }
+  .kz-cf-topic:hover { border-color:var(--kz-border-strong); }
   .kz-cf-topic input { position:absolute; opacity:0; pointer-events:none; }
   .kz-cf-topic:has(input:focus-visible) { outline:2px solid var(--kz-accent); outline-offset:2px; }
   .kz-cf-topic[data-selected] { border-color:var(--kz-accent); background:color-mix(in srgb, var(--kz-accent) 7%, var(--kz-surface-0)); }
