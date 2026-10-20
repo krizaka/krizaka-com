@@ -44,8 +44,9 @@
 .pv-live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--kz-success, var(--kz-accent)); }
 .pv-live-dot[data-play] { animation: pv-pulse 1.4s ease-in-out infinite; }
 @keyframes pv-pulse { 50% { opacity: .35; } }
-.pv-live-value { font-family: var(--font-display), system-ui, sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -.02em; color: var(--kz-text-primary); }
-.pv-live-value span { font-family: var(--font-sans, inherit); font-size: 12px; font-weight: 500; color: var(--kz-text-secondary); }
+.pv-live-value { display: flex; align-items: baseline; gap: 6px; margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: 26px; font-weight: 800; line-height: 1.2; letter-spacing: -.02em; font-variant-numeric: tabular-nums; color: var(--kz-text-primary); }
+.pv-live-value .kz-count { min-width: 3ch; justify-items: start; }
+.pv-live-unit { font-family: var(--font-sans, inherit); font-size: 12px; font-weight: 500; letter-spacing: 0; color: var(--kz-text-secondary); }
 .pv-live :is(figure, .kz-chart) { margin-top: auto; }
 
 /* Akinaza: a day's slots. */

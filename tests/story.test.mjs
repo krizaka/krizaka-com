@@ -146,3 +146,49 @@ test("each product shows its real take: a poster that plays on click in a lightb
   assert.match(css, /\.st-take-card \{[^}]*width: 168px[^}]*aspect-ratio: 9 \/ 16/, "a fixed small phone frame");
   for (const l of ["en", "fr"]) for (const k of ["watch", "close", "player", "inLang"]) assert.ok(messages(l).story.products.take[k], `${l}: take.${k}`);
 });
+
+// The birds of /story (bug 2026-10-20: « Le faucon veille » wore a blue bird that read as the pigeon). A chapter's bird
+// is drawn in ITS OWN colours (tone="own", as in the film and on /contact) — in the page's brand tone every bird took the
+// same blue — and each bird carries the promise it is cast for (brand reference: the falcon watches, the owl reads, the
+// duck builds, the flamingo answers and the payment follows, the pigeon delivers).
+const BIRD_WORD = { en: { falcon: "falcon", owl: "owl", duck: "duck", flamingo: "flamingo", pigeon: "pigeon" }, fr: { falcon: "faucon", owl: "hibou", duck: "canard", flamingo: "flamant", pigeon: "pigeon" } };
+const PROMISE = { falcon: /watch|veille/i, owl: /read|lit /i, duck: /build|construit/i, flamingo: /answer|répond/i, pigeon: /deliver|livre/i };
+
+test("a chapter's bird is drawn in its own colours, never in the page's brand tone", () => {
+  assert.match(chapter, /<Mascot bird=\{bird\}[^>]*tone="own"/);
+});
+
+test("each of the five birds of the film says its own promise, in both languages", () => {
+  for (const lang of ["en", "fr"]) {
+    const cues = messages(lang).story.world.cues;
+    for (const [bird, word] of Object.entries(BIRD_WORD[lang])) {
+      assert.match(cues[bird].toLowerCase(), new RegExp(word), `${lang}: the ${bird}'s line names the ${bird}`);
+      assert.match(cues[bird], PROMISE[bird], `${lang}: the ${bird}'s line says its promise`);
+    }
+  }
+});
+
+test("the chapters cast the right birds: falcon for who we are, duck for open source, one bird per subject", () => {
+  assert.match(story, /WHO_BIRD: StoryBird = "falcon"/);
+  assert.match(story, /OPEN_BIRD: StoryBird = "duck"/);
+  const cast = Object.fromEntries([...story.matchAll(/^\s+(\w+): "(\w+)",$/gm)].map((m) => [m[1], m[2]]));
+  assert.equal(cast.orazaka, "flamingo", "the engine answers, and the payment follows");
+  assert.equal(cast.yomizaka, "owl", "Yomizaka reads documents");
+  assert.equal(cast.orochia, "pigeon", "Orochia delivers");
+  const birds = [...Object.values(cast), "falcon", "duck"];
+  assert.equal(new Set(birds).size, birds.length, "never the same bird twice on the page");
+  assert.match(page, /bird=\{WHO_BIRD\}\s+promise=\{promiseOf\(t, WHO_BIRD\)\}/, "the who chapter's promise is its own bird's");
+  assert.match(page, /bird=\{PRODUCT_BIRD\.orazaka\}\s+promise=\{promiseOf\(t, PRODUCT_BIRD\.orazaka\)\}/);
+  assert.match(page, /promise=\{promiseOf\(t, bird\)\}/);
+});
+
+test("the own palettes of the birds are distinct (the falcon is orange, not the pigeon's blue)", async () => {
+  const { renderToStaticMarkup } = await import("react-dom/server");
+  const React = (await import("react")).default;
+  const { Mascot } = await import("@krizaka/ui/mascots");
+  const fills = (bird) => new Set([...renderToStaticMarkup(React.createElement(Mascot, { bird, mood: "success", size: 44, animated: false, tone: "own" })).matchAll(/#[0-9a-f]{6}/gi)].map((m) => m[0].toLowerCase()));
+  const f = fills("falcon");
+  const p = fills("pigeon");
+  assert.ok(f.has("#ff9f00") && !p.has("#ff9f00"), "the falcon wears its orange");
+  assert.ok(p.has("#22d3ee") && !f.has("#22d3ee"), "the pigeon wears its cyan-indigo");
+});

@@ -62,7 +62,7 @@ export default function StoryChapter({
           <div className="st-ch-lead">{lead}</div>
           {bird && promise && (
             <p className="st-ch-promise">
-              <Mascot bird={bird} mood="success" size={44} animated={false} />
+              <Mascot bird={bird} mood="success" tone="own" size={44} animated={false} />
               <span>{promise}</span>
             </p>
           )}

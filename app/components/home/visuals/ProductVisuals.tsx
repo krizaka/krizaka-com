@@ -83,7 +83,7 @@ function Kachizaka({ playing }: { playing: boolean }) {
         <span className="pv-live-dot" data-play={playing ? "" : undefined} /> {v.live}
       </p>
       <p className="pv-live-value">
-        <NumberTicker value={total} locale={locale} trigger="change" duration={600} /> <span>{v.points}</span>
+        <NumberTicker value={total} locale={locale} trigger="change" duration={600} /> <span className="pv-live-unit">{v.points}</span>
       </p>
       <Sparkline data={window8} title={v.title} variant="area" height={44} />
     </div>
