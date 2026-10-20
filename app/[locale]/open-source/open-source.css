@@ -2,6 +2,7 @@
    table cells, the architecture diagram, the contribution picker. Colours are tokens only. */
 
 .os-hero-figures { width: 100%; max-width: 900px; margin: 28px auto 0; }
+.os-hero-license { margin: 12px 0 0; text-align: center; font-size: 13px; color: var(--kz-text-secondary); }
 .os-hero-actions { display: flex; justify-content: center; margin-top: 24px; }
 
 /* The stack: still visuals inside the cards, then the building blocks as quiet links. */
