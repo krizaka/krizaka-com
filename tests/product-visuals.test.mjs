@@ -51,3 +51,21 @@ test("built from @krizaka/ui components, demo data said as such, Orochia without
     for (const k of ["before", "after"]) assert.ok(v.yomizaka[k], `${l}: visuals.yomizaka.${k}`);
   }
 });
+
+// Kachizaka's points counter (bug 2026-10-20: the digits looked misaligned while they rolled). The cause: the unit's rule
+// was `.pv-live-value span`, which also hit every span inside NumberTicker (ghost, roll, each digit column) and shrank the
+// number to the unit's 12 px sans while its line box stayed 26 px. The unit has its own class; the number keeps the
+// display face, tabular digits, one fixed line height, a baseline shared with the unit and a fixed width.
+test("the points counter: the unit's style never reaches the ticker, digits are tabular on a shared baseline in a fixed width", () => {
+  assert.match(visuals, /<span className="pv-live-unit">\{v\.points\}<\/span>/);
+  assert.doesNotMatch(css, /\.pv-live-value span\b/, "a descendant selector would restyle the ticker's own spans");
+  assert.match(css, /\.pv-live-unit \{[^}]*font-size: 12px/);
+  const value = css.match(/^\.pv-live-value \{([^}]*)\}/m)?.[1] ?? "";
+  assert.match(value, /font-variant-numeric: tabular-nums/);
+  assert.match(value, /line-height: 1\.2/);
+  assert.match(value, /display: flex/);
+  assert.match(value, /align-items: baseline/);
+  const count = css.match(/^\.pv-live-value \.kz-count \{([^}]*)\}/m)?.[1] ?? "";
+  assert.match(count, /min-width: \d+(\.\d+)?ch/, "a fixed width: the counter never pushes the unit while it rolls");
+  assert.match(count, /justify-items: start/, "left edge on the label");
+});
