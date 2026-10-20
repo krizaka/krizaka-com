@@ -30,7 +30,7 @@ test("two views (2026-10-17): the mark and the word Krizaka lead home, the centr
 });
 
 test("every link to the products leads to the home's section, never to /products", () => {
-  for (const file of ["app/components/SiteFooter.tsx", "app/components/SearchCommand.tsx", "app/[locale]/story/StoryClient.tsx"]) {
+  for (const file of ["app/components/SiteFooter.tsx", "app/components/SearchCommand.tsx", "app/[locale]/story/page.tsx"]) {
     assert.doesNotMatch(read(file), /["']\/products["']/, file);
   }
   assert.match(read("app/components/SiteFooter.tsx"), /href=\{PRODUCTS_ANCHOR\}/);

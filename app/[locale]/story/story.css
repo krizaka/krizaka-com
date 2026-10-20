@@ -1,35 +1,133 @@
-/* /story — the little this page adds around the blocks of @krizaka/ui (PageHero, Section, StageBanner, PromiseCard,
-   ProductCard, Stat tiles, ContinuePrompt): a reading measure, the places line, spacing between a stage's parts and
-   the closing cabinet. Tokens only; the arcade look itself comes from @krizaka/ui/story.css (`variant="arcade"`). */
+/* /story — chaptered longform: a short intro, then ten-second chapters beside a sticky contents (@krizaka/ui Toc /
+   TocLayout, in Page). The little this page adds: the reading hairline, the chapter shell (number, heading, one line,
+   the bird's promise, one proof visual, a native fold), the film's poster card, the engine's drawing, the status board.
+   Tokens only (var(--kz-*)), dark and light; one column on a phone; nothing moves under reduced motion (nothing here
+   animates but the hairline following the scroll). */
 
 .st { position: relative; color: var(--kz-text-primary); overflow-x: clip; }
 .st-accent { display: block; background: linear-gradient(100deg, var(--kz-text-primary) 10%, var(--kz-accent-text) 55%, var(--kz-accent-2, var(--kz-accent-text)) 100%);
   -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: .08em; }
-.st :is(h2[id], [id]) { scroll-margin-top: var(--kz-anchor-offset, 96px); }
-
-.st-prose { display: grid; gap: 14px; max-width: 62ch; }
-.st-prose p { margin: 0; font-size: 16px; line-height: 1.8; color: var(--kz-text-secondary); }
-.st-places { margin-top: 18px; }
-.st > section .kzs-promise { margin-top: 26px; max-width: 34rem; }
-.st-cards { margin-top: 28px; }
+.st :is(section[id], h2[id]) { scroll-margin-top: var(--kz-anchor-offset, 96px); }
 .st-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
 .st-actions:first-child { margin-top: 0; }
-.st-cards + .st-actions { margin-top: 28px; }
 
-/* ═══ THE FLOCK — the film and its text version ═══ */
-.st-film { margin-top: 8px; max-width: 64rem; border-radius: 18px; overflow: hidden; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
-.st-film-heading { margin: 28px 0 10px; font-family: var(--kz-font-mono); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--kz-text-secondary); }
-.st-film-lines { display: grid; gap: 6px; margin: 0; padding-left: 1.25rem; max-width: 62ch; font-size: 15.5px; line-height: 1.7; color: var(--kz-text-primary); }
-.st-film-lead { margin: 0 0 14px; max-width: 62ch; font-size: 15.5px; line-height: 1.7; color: var(--kz-text-secondary); }
-.st-film-credit { margin: 14px 0 0; max-width: 62ch; font-size: 13px; line-height: 1.6; color: var(--kz-text-tertiary, var(--kz-text-secondary)); }
+/* Reading progress: a hairline over the page's very top. */
+.st-progress { --st-read: 0; position: fixed; inset: 0 0 auto 0; z-index: 60; height: 3px; pointer-events: none;
+  background: linear-gradient(90deg, var(--kz-accent), var(--kz-accent-2, var(--kz-accent))); transform-origin: 0 50%; transform: scaleX(var(--st-read)); }
 
-/* ═══ CONTINUE? ═══ */
-.st-closing { position: relative; overflow: hidden; padding: clamp(80px, 10vw, 112px) var(--kz-page-gutter, 20px) clamp(300px, 34vw, 440px); text-align: center; }
-.st-closing .kzs-prompt { position: relative; z-index: 1; }
-.st-crt-heading { margin: 8px 0 0; font-family: var(--font-display), system-ui, sans-serif; font-size: clamp(1.5rem, 3.2vw, 2.1rem); font-weight: 800; letter-spacing: -.03em;
-  line-height: 1.15; color: var(--kz-text-primary); text-wrap: balance; }
-.st-crt-body { margin: 0; max-width: 560px; font-size: 15.5px; line-height: 1.75; color: var(--kz-text-secondary); }
-.st-crt-ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 8px; }
-.st-landscape { position: absolute; inset: auto 0 0 0; height: 300px; opacity: .7; pointer-events: none;
-  -webkit-mask-image: linear-gradient(to top, black 60%, transparent); mask-image: linear-gradient(to top, black 60%, transparent); }
-@media (min-width: 768px) { .st-landscape { height: 440px; } }
+.st-body { padding-block: clamp(8px, 2vw, 24px) clamp(56px, 8vw, 96px); }
+/* The contents: sticky beside the chapters; on a phone a pill row that stays under the bar. */
+.st .kz-toc-aside { align-self: start; }
+@media (max-width: 860px) {
+  .st .kz-toc-aside { position: sticky; top: var(--kz-bar-h, 56px); z-index: 20; padding-block: 8px; background: color-mix(in oklab, var(--kz-surface-0) 92%, transparent); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--kz-border-subtle); }
+}
+
+/* ═══ A CHAPTER ═══ */
+.st-ch { padding-block: clamp(28px, 4vw, 44px); border-top: 1px solid var(--kz-border-subtle); }
+.st-ch:first-child { border-top: 0; padding-top: 8px; }
+.st-ch-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: start; }
+@media (min-width: 900px) { .st-ch-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 40px; } }
+.st-ch-text { min-width: 0; display: grid; gap: 10px; justify-items: start; }
+.st-ch-meta { margin: 0; display: flex; align-items: center; gap: 12px; font-family: var(--kz-font-mono); font-size: 12px; letter-spacing: .08em; color: var(--kz-text-secondary); }
+.st-ch-n { color: var(--kz-accent-text); font-weight: 700; }
+.st-place { text-transform: uppercase; }
+.st-ch-title { margin: 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-family: var(--font-display), system-ui, sans-serif;
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.15; text-wrap: balance; }
+.st-ch-title svg { flex: none; }
+.st-ch-kicker { margin: 0; font-family: var(--kz-font-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--kz-accent-text); }
+.st-ch-lead { display: grid; gap: 8px; max-width: 58ch; }
+.st-ch-lead p { margin: 0; font-size: 16px; line-height: 1.7; color: var(--kz-text-secondary); }
+.st-ch-promise { margin: 6px 0 0; display: flex; align-items: center; gap: 12px; max-width: 58ch; font-size: 14.5px; line-height: 1.5; font-weight: 600; color: var(--kz-text-primary); }
+.st-ch-promise > :first-child { flex: none; }
+.st-ch-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.st-ch-proof { min-width: 0; }
+
+/* The fold: depth on demand. */
+.st-ch-fold { margin-top: 18px; border: 1px solid var(--kz-border-subtle); border-radius: 12px; background: var(--kz-surface-1); }
+.st-ch-fold > summary { cursor: pointer; padding: 12px 16px; font-size: 14px; font-weight: 600; color: var(--kz-text-primary); list-style: none; display: flex; align-items: center; gap: 8px; min-height: 44px; }
+.st-ch-fold > summary::-webkit-details-marker { display: none; }
+.st-ch-fold > summary::before { content: "+"; font-family: var(--kz-font-mono); color: var(--kz-accent-text); width: 1ch; }
+.st-ch-fold[open] > summary::before { content: "–"; }
+.st-ch-fold > summary:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; border-radius: 12px; }
+.st-ch-fold-body { display: grid; gap: 10px; padding: 0 16px 16px; max-width: 70ch; }
+.st-ch-fold-body p { margin: 0; font-size: 15px; line-height: 1.7; color: var(--kz-text-secondary); }
+.st-uses-line { font-family: var(--kz-font-mono); font-size: 12.5px !important; color: var(--kz-accent-text) !important; }
+.st-list { margin: 0; padding-left: 1.2rem; list-style: disc; display: grid; gap: 6px; font-size: 15px; line-height: 1.6; color: var(--kz-text-secondary); }
+.st-ch-lead .st-list { margin-top: 4px; }
+
+/* A product's proof: its field's mini-visual (demo data, said so). */
+.st-proof { display: grid; gap: 8px; max-width: 420px; }
+.st-proof-note { margin: 0; font-family: var(--kz-font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--kz-text-secondary); }
+
+/* The film: one poster card (a content frame), the player opens in a lightbox. 16:9, never wider than the column. */
+.st-film { position: relative; display: block; width: 100%; max-width: 420px; padding: 0; border: 1px solid var(--kz-border-default); border-radius: 14px; overflow: hidden;
+  background: var(--kz-surface-1); cursor: pointer; text-align: left; color: var(--kz-text-primary); aspect-ratio: 16 / 9; }
+.st-film-poster { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--kz-ease, ease); }
+.st-film:hover .st-film-poster { transform: scale(1.03); }
+.st-film-play { position: absolute; inset: 0; margin: auto; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+  background: color-mix(in oklab, #000 55%, transparent); backdrop-filter: blur(6px); border: 1px solid color-mix(in oklab, #fff 40%, transparent); }
+.st-film-caption { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; gap: 8px; padding: 22px 14px 10px; font-size: 13px; font-weight: 700; color: #fff;
+  background: linear-gradient(to top, color-mix(in oklab, #000 72%, transparent), transparent); }
+.st-film-caption span { font-family: var(--kz-font-mono); font-weight: 500; opacity: .85; }
+.st-film:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 3px; }
+.st-film-note { font-size: 13px !important; }
+.st-fold-list { list-style: decimal; }
+
+/* ═══ THE ENGINE — Orazaka at the centre, the products around it ═══ */
+.em { margin: 0; display: grid; gap: 10px; }
+.em-box { position: relative; width: 100%; max-width: 420px; aspect-ratio: 100 / 64; margin-inline: auto; }
+.em-lines { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.em-line { stroke: var(--kz-accent); stroke-width: 1.6; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: .8; }
+.em-line[data-planned] { stroke-dasharray: 3 5; opacity: .4; }
+.em-hub, .em-node { position: absolute; display: grid; place-items: center; transform: translate(-50%, -50%); }
+.em-hub { left: 50%; top: 50%; z-index: 2; }
+.em-hub > svg { padding: 8px; border-radius: 50%; background: var(--kz-surface-0); border: 1px solid var(--kz-accent); box-sizing: content-box; }
+.em-node { left: var(--x); top: var(--y); z-index: 2; }
+.em-mark { display: grid; place-items: center; padding: 6px; border-radius: 50%; background: var(--kz-surface-1); border: 1px solid var(--kz-border-default); }
+.em-node[data-planned] .em-mark { border-style: dashed; opacity: .75; }
+.em-name { position: absolute; font-size: 11.5px; font-weight: 700; line-height: 1.2; white-space: nowrap; color: var(--kz-text-primary); }
+.em-node[data-side="top"] .em-name { bottom: calc(100% + 3px); left: 50%; transform: translateX(-50%); }
+.em-node[data-side="bottom"] .em-name { top: calc(100% + 3px); left: 50%; transform: translateX(-50%); }
+.em-node[data-planned] .em-name { color: var(--kz-text-secondary); }
+.em-note { display: flex; flex-wrap: wrap; gap: 4px 14px; align-items: center; font-family: var(--kz-font-mono); font-size: 11px; letter-spacing: .04em; color: var(--kz-text-secondary); }
+.em-key { display: inline-flex; align-items: center; gap: 6px; text-transform: lowercase; }
+.em-key::before { content: ""; width: 20px; border-top: 2px solid var(--kz-accent); }
+.em-key-planned::before { border-top-style: dashed; opacity: .6; }
+.em-note-text { flex-basis: 100%; }
+/* Phone: the products in a grid above the engine, one stem between them; no line crosses a name. */
+@media (max-width: 559px) {
+  .em-box { aspect-ratio: auto; max-width: 100%; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 8px; }
+  .em-lines { display: none; }
+  .em-node { position: static; transform: none; z-index: auto; display: grid; justify-items: center; gap: 4px; }
+  .em-name, .em-node .em-name { position: static; transform: none !important; white-space: normal; text-align: center; }
+  .em-hub { order: 9; position: relative; left: auto; top: auto; transform: none; grid-column: 1 / -1; margin-top: 22px; justify-self: center; display: grid; justify-items: center; gap: 4px; }
+  .em-hub::before { content: ""; position: absolute; bottom: calc(100% + 4px); left: 50%; height: 18px; border-left: 2px solid var(--kz-accent); opacity: .7; }
+}
+.st-uses { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.st-uses li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; line-height: 1.55; color: var(--kz-text-secondary); }
+.st-uses li > svg { flex: none; margin-top: 2px; }
+.st-uses strong { color: var(--kz-text-primary); }
+.st-uses li[data-planned] { opacity: .85; }
+
+/* ═══ WHAT'S NEXT — where each product stands ═══ */
+.st-board { display: grid; gap: 12px; }
+.st-board-col { padding: 12px 14px; border: 1px solid var(--kz-border-subtle); border-radius: 12px; background: var(--kz-surface-1); }
+.st-board-label { margin: 0 0 8px; }
+.st-board ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.st-board li { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; }
+
+/* ═══ A PRODUCT'S TAKE — a poster, the recording plays on click in a lightbox ═══ */
+.st-take { display: grid; gap: 8px; justify-items: start; }
+.st-ch-proof > .em + .st-take { margin-top: 18px; }
+.st-take-card { position: relative; display: block; padding: 0; width: 168px; aspect-ratio: 9 / 16; border: 1px solid var(--kz-border-default); border-radius: 22px; overflow: hidden;
+  background: var(--kz-surface-1); cursor: pointer; box-shadow: 0 12px 32px color-mix(in oklab, var(--kz-accent) 14%, transparent); }
+.st-take[data-ratio="wide"] .st-take-card { width: 100%; max-width: 240px; aspect-ratio: 19 / 16; border-radius: 14px; }
+.st-take-poster { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .5s var(--kz-ease, ease); }
+.st-take-card:hover .st-take-poster { transform: scale(1.03); }
+.st-take-play { position: absolute; inset: 0; margin: auto; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+  background: color-mix(in oklab, #000 55%, transparent); backdrop-filter: blur(6px); border: 1px solid color-mix(in oklab, #fff 40%, transparent); }
+.st-take-card:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 3px; }
+.st-take-note { margin: 0; font-family: var(--kz-font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--kz-text-secondary); }
+.st-take-dialog[data-ratio="phone"] { width: min(380px, calc(100vw - 32px)); max-height: 94vh; overflow: auto; }
+@media (min-width: 900px) { .st-ch-proof:has(.st-take[data-ratio="phone"]) { justify-self: end; } }
