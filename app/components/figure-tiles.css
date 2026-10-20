@@ -1,0 +1,10 @@
+/* FigureTiles `columns`: full rows (lib/figure-grid.ts) — `--kz-fig-cols-narrow` on a phone, `--kz-fig-cols` from 640 px.
+   The label takes the free height, so every value of a row sits on one line even when a label wraps; a value never
+   breaks (« 4,514 », « 3.27.0 »). */
+.kz-fig-grid.kz-fig-grid { grid-template-columns: repeat(var(--kz-fig-cols-narrow, 2), minmax(0, 1fr)); }
+@media (min-width: 640px) {
+  .kz-fig-grid.kz-fig-grid { grid-template-columns: repeat(var(--kz-fig-cols, 4), minmax(0, 1fr)); }
+}
+.kz-fig-grid > * { min-width: 0; }
+.kz-fig-grid > * > p:first-child { flex: 1; }
+.kz-fig-grid > * > p:nth-child(2) { white-space: nowrap; }

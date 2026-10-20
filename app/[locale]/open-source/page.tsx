@@ -112,7 +112,8 @@ export default async function OpenSourcePage({ params }: Props) {
 
       <PageHero eyebrow={t.eyebrow} title={t.title} lead={t.lead} align="center" linkAs={Link}>
         <div className="os-hero-figures">
-          <FigureTiles figures={[...figures, { id: "license", value: "Apache-2.0", label: t.figures.license }]} label={t.figuresLabel} locale={locale} />
+          <FigureTiles figures={figures} label={t.figuresLabel} locale={locale} columns />
+          <p className="os-hero-license">{format(t.figures.license, { license: "Apache-2.0" })}</p>
         </div>
         <div className="os-hero-actions">
           <ButtonLink href={GITHUB_ORG_URL} variant="primary" size="lg" shimmer magnetic>

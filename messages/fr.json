@@ -622,7 +622,7 @@
         "npm": "paquets sur npm",
         "maven": "artefacts sur Maven Central",
         "downloads": "téléchargements npm la semaine dernière",
-        "license": "sur chaque dépôt"
+        "license": "{license} sur chaque dépôt"
       },
       "stackEyebrow": "La pile",
       "stackTitle": "Deux moitiés, chacune avec son site.",
