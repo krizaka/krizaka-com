@@ -318,7 +318,8 @@
       "repositories": "Tous les dépôts",
       "blog": "Blogue",
       "changelog": "Journal des changements",
-      "version": "v{version} · Krizaka UI {ui}"
+      "version": "v{version} · Krizaka UI {ui}",
+      "siteColumn": "Sur krizaka.com"
     },
     "contactForm": {
       "captchaLabel": "Vérification humaine",
@@ -435,7 +436,16 @@
         "promise": "Sa promesse",
         "how": "Comment ça marche",
         "demo": "Illustration, données de démo",
-        "constructionNote": "En construction : une application réservée aux tests tourne sur dev, et rien n'est encore offert au public."
+        "constructionNote": "En construction : une application réservée aux tests tourne sur dev, et rien n'est encore offert au public.",
+        "take": {
+          "watch": "Voir la prise",
+          "close": "Fermer la prise",
+          "player": "Vidéo : {name} sur son site de dev",
+          "inLang": {
+            "fr": "en français",
+            "en": "en anglais"
+          }
+        }
       },
       "birds": {
         "lovebird": "L'inséparable est présent : deux personnes se rencontrent.",

@@ -123,3 +123,25 @@ test("the arcade stages are gone from /story", () => {
   assert.doesNotMatch(page, /StageBanner|PromiseCard|ScrollStage|ContinuePrompt/);
   for (const l of ["en", "fr"]) assert.equal(messages(l).story.arcade, undefined);
 });
+
+test("each product shows its real take: a poster that plays on click in a lightbox, the mini-visual only as the fallback", () => {
+  const takes = read("lib/story-takes.ts");
+  const ids = ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"];
+  for (const id of ids) assert.match(takes, new RegExp(`\\n  ${id}: \\{ ratio:`), `${id} has a take`);
+  // every file a take names is on the CDN (recorded in the manifest), in the language it needs
+  const { files } = JSON.parse(read("lib/cdn-manifest.json"));
+  for (const m of takes.matchAll(/(mp4|webm|poster): "(products\/[^"]+)"/g)) {
+    for (const l of m[2].includes("{l}") ? ["en", "fr"] : ["en"]) {
+      const path = m[2].replace("{l}", l);
+      assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, `${path} is on the CDN`);
+    }
+  }
+  const card = read("app/components/story/TakeCard.tsx");
+  assert.match(card, /preload="none"/);
+  assert.match(card, /next\/dynamic/, "the player's code loads on click");
+  assert.match(card, /<Dialog\.Root>/);
+  assert.match(page, /takeOf\(id, locale\)/);
+  assert.match(page, /takeProof\(id, p\.name\) \?\? \(/, "mini-visual = fallback");
+  assert.match(css, /\.st-take-card \{[^}]*width: 168px[^}]*aspect-ratio: 9 \/ 16/, "a fixed small phone frame");
+  for (const l of ["en", "fr"]) for (const k of ["watch", "close", "player", "inLang"]) assert.ok(messages(l).story.products.take[k], `${l}: take.${k}`);
+});

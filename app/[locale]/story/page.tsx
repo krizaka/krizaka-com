@@ -28,6 +28,8 @@ import ProductVisual from "@/app/components/home/visuals/ProductVisual";
 import "@/app/components/home/visuals/visuals.css";
 import EngineMap from "@/app/components/story/EngineMap";
 import ReadingProgress from "@/app/components/story/ReadingProgress";
+import TakeCard from "@/app/components/story/TakeCard";
+import { takeOf } from "@/lib/story-takes";
 import StoryChapter from "@/app/components/story/StoryChapter";
 import "./story.css";
 
@@ -110,6 +112,12 @@ export default async function StoryPage({ params }: Props) {
     </ul>
   );
 
+  /** The product's real take (a poster, played in a lightbox on click), when one is recorded; the mini-visual otherwise. */
+  const takeProof = (id: (typeof PRODUCT_CHAPTERS)[number] | typeof ENGINE, name: string) => {
+    const take = takeOf(id, locale);
+    return take ? <TakeCard take={take} name={name} other={Boolean(take.lang && take.lang !== locale)} /> : null;
+  };
+
   const productChapter = (id: (typeof PRODUCT_CHAPTERS)[number]) => {
     const p = product(id);
     const use = ENGINE_USES.find((u) => u.id === id);
@@ -141,12 +149,12 @@ export default async function StoryPage({ params }: Props) {
         }
         bird={bird}
         promise={promiseOf(t, bird)}
-        proof={
+        proof={takeProof(id, p.name) ?? (
           <div className="st-proof" data-pv-host>
             <ProductVisual id={id} />
             <p className="st-proof-note">{st.products.demo}</p>
           </div>
-        }
+        )}
         fold={
           yororis
             ? { summary: t.site.yororis.reviewed.isNotRule.split(".")[0]!, children: <ul className="st-list">{t.site.yororis.reviewed.isNot.map((x) => <li key={x}>{x}</li>)}</ul> }
@@ -257,7 +265,12 @@ export default async function StoryPage({ params }: Props) {
             lead={<p>{st.engine.lead}</p>}
             bird={PRODUCT_BIRD.orazaka}
             promise={promiseOf(t, PRODUCT_BIRD.orazaka)}
-            proof={<EngineMap words={{ label: st.engine.mapLabel, note: st.engine.mapNote, wired: st.engine.wired, planned: e.planned }} />}
+            proof={
+              <>
+                <EngineMap words={{ label: st.engine.mapLabel, note: st.engine.mapNote, wired: st.engine.wired, planned: e.planned }} />
+                {takeProof(ENGINE, engine.name)}
+              </>
+            }
             fold={{
               summary: st.engine.more,
               children: (

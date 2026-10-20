@@ -116,3 +116,18 @@
 .st-board-label { margin: 0 0 8px; }
 .st-board ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; }
 .st-board li { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; }
+
+/* ═══ A PRODUCT'S TAKE — a poster, the recording plays on click in a lightbox ═══ */
+.st-take { display: grid; gap: 8px; justify-items: start; }
+.st-ch-proof > .em + .st-take { margin-top: 18px; }
+.st-take-card { position: relative; display: block; padding: 0; width: 168px; aspect-ratio: 9 / 16; border: 1px solid var(--kz-border-default); border-radius: 22px; overflow: hidden;
+  background: var(--kz-surface-1); cursor: pointer; box-shadow: 0 12px 32px color-mix(in oklab, var(--kz-accent) 14%, transparent); }
+.st-take[data-ratio="wide"] .st-take-card { width: 100%; max-width: 240px; aspect-ratio: 19 / 16; border-radius: 14px; }
+.st-take-poster { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform .5s var(--kz-ease, ease); }
+.st-take-card:hover .st-take-poster { transform: scale(1.03); }
+.st-take-play { position: absolute; inset: 0; margin: auto; width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+  background: color-mix(in oklab, #000 55%, transparent); backdrop-filter: blur(6px); border: 1px solid color-mix(in oklab, #fff 40%, transparent); }
+.st-take-card:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 3px; }
+.st-take-note { margin: 0; font-family: var(--kz-font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--kz-text-secondary); }
+.st-take-dialog[data-ratio="phone"] { width: min(380px, calc(100vw - 32px)); max-height: 94vh; overflow: auto; }
+@media (min-width: 900px) { .st-ch-proof:has(.st-take[data-ratio="phone"]) { justify-self: end; } }

@@ -318,7 +318,8 @@
       "repositories": "Every repository",
       "blog": "Blog",
       "changelog": "Changelog",
-      "version": "v{version} · Krizaka UI {ui}"
+      "version": "v{version} · Krizaka UI {ui}",
+      "siteColumn": "On krizaka.com"
     },
     "contactForm": {
       "captchaLabel": "Human check",
@@ -435,7 +436,16 @@
         "promise": "Its promise",
         "how": "How it works",
         "demo": "Illustration with demo data",
-        "constructionNote": "Under construction: a QA-only app runs on dev, and nothing is offered to the public yet."
+        "constructionNote": "Under construction: a QA-only app runs on dev, and nothing is offered to the public yet.",
+        "take": {
+          "watch": "Watch the take",
+          "close": "Close the take",
+          "player": "Video: {name} running on its dev site",
+          "inLang": {
+            "fr": "in French",
+            "en": "in English"
+          }
+        }
       },
       "birds": {
         "lovebird": "The lovebird is present: two people meet.",

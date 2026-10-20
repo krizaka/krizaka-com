@@ -8,7 +8,7 @@ const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const footer = read("app/components/SiteFooter.tsx");
 
 test("the footer's Krizaka column links Our story to /story", () => {
-  const column = footer.slice(footer.indexOf('<FamilyFooter.Column title="Krizaka">'), footer.indexOf("</FamilyFooter.Column>"));
+  const column = footer.slice(footer.indexOf('<FamilyFooter.Column title={f.siteColumn}>'), footer.indexOf("</FamilyFooter.Column>"));
   assert.match(column, /<Link href="\/story" prefetch=\{false\}>\{f\.story\}<\/Link>/);
 });
 
@@ -39,4 +39,13 @@ test("no page renders a footer of its own", () => {
     .filter((file) => /\.tsx$/.test(file) && file !== "app/components/SiteFooter.tsx" && file !== "app/[locale]/layout.tsx")
     .filter((file) => /<SiteFooter\b|<FamilyFooter\b|<footer\b/.test(read(file)));
   assert.deepEqual(offenders, []);
+});
+
+// One SiteFooter, the « site » variant, never two bands that say the same thing (2026-10-20, Oussama: « le footer a l'air
+// doublé »): the site's own column is titled for what it is (« On krizaka.com »), not « Krizaka » like the family's first.
+test("the footer is @krizaka/ui's one SiteFooter, the site variant, its own column not named like the family's", () => {
+  assert.match(footer, /variant="site"/);
+  assert.equal(footer.match(/<FamilyFooter(?=[\s>])/g)?.length, 1);
+  assert.doesNotMatch(footer, /<FamilyFooter\.Column title="Krizaka"/);
+  for (const l of ["en", "fr"]) assert.ok(messages(l).site.footer.siteColumn, `${l}: site.footer.siteColumn`);
 });

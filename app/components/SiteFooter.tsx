@@ -20,6 +20,7 @@ export default function SiteFooter() {
   return (
     <FamilyFooter
       current="krizaka"
+      variant="site"
       labels={familyLabels[locale]}
       aria-label={t.site.menu.footerAria}
       legal={
@@ -40,7 +41,7 @@ export default function SiteFooter() {
         </>
       }
     >
-      <FamilyFooter.Column title="Krizaka">
+      <FamilyFooter.Column title={f.siteColumn}>
         <FamilyFooter.Link asChild>
           <Link href={PRODUCTS_ANCHOR} prefetch={false}>{f.allProducts}</Link>
         </FamilyFooter.Link>
