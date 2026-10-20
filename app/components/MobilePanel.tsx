@@ -51,7 +51,7 @@ export function MobilePanel({ path }: { path: string }) {
       </section>
 
       <div className="flex flex-col gap-2.5 border-t border-border-subtle pt-3">
-        <Button asChild variant="primary" shape="cut" size="lg" className="w-full">
+        <Button asChild variant="primary" size="lg" className="w-full">
           <Link href={contact}>{t.site.menu.contactCta}</Link>
         </Button>
         <div role="group" aria-label={t.site.menu.preferences} className="grid grid-cols-2 gap-2">

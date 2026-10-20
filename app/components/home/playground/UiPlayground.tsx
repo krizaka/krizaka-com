@@ -33,7 +33,7 @@ export default function UiPlayground({ w, series }: { w: UiPlaygroundWords; seri
   return (
     <div className={"kz-play" + (theme ? ` theme-${theme}` : "")} role="group" aria-label={w.label}>
       <div className="kz-play-stage">
-        <Button variant={variant} shape="cut">
+        <Button variant={variant}>
           {w.button}
         </Button>
         <Switch label={w.switch} checked={on} onCheckedChange={setOn} />

@@ -190,7 +190,7 @@ export default async function StoryPage({ params }: Props) {
         lead={st.intro.lead}
       >
         <div className="st-actions">
-          <ButtonLink href="#who" variant="primary" size="lg" shimmer>
+          <ButtonLink href="#who" variant="primary" size="lg">
             {st.intro.start} <ForwardIcon size={15} />
           </ButtonLink>
           <ButtonLink href={PRODUCTS_ANCHOR} size="lg">

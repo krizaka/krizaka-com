@@ -116,7 +116,7 @@ export default async function OpenSourcePage({ params }: Props) {
           <p className="os-hero-license">{format(t.figures.license, { license: "Apache-2.0" })}</p>
         </div>
         <div className="os-hero-actions">
-          <ButtonLink href={GITHUB_ORG_URL} variant="primary" size="lg" shimmer magnetic>
+          <ButtonLink href={GITHUB_ORG_URL} variant="primary" size="lg">
             {t.github} <ExternalIcon size={14} aria-hidden />
           </ButtonLink>
         </div>

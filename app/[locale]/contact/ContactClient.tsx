@@ -223,7 +223,7 @@ export default function ContactClient() {
         /* The channel cards answer the pointer, and their mascot wakes up (still otherwise: nothing loops by itself). */
         .contact-card { transition: border-color 250ms var(--kz-ease), box-shadow 250ms var(--kz-ease), transform 250ms var(--kz-ease), opacity .8s var(--kz-ease), filter .8s var(--kz-ease); }
         @media (hover: hover) {
-          .contact-card:hover { transform: translateY(-4px); border-color: var(--ch) !important; box-shadow: 0 16px 40px -18px var(--ch), 0 0 24px var(--ch-glow); }
+          .contact-card:hover { border-color: var(--kz-border-strong) !important; background: var(--kz-surface-2); }
           .contact-card:hover .ct-blink { animation: ct-blink 4s infinite; }
           .contact-card:hover .ct-sway { animation: ct-sway 2.8s ease-in-out infinite; }
           .contact-card:hover .ct-sway-rev, .contact-card:hover .ct-flap-rev { animation-direction: reverse; }
@@ -235,7 +235,7 @@ export default function ContactClient() {
         @keyframes ct-scan { 0%, 100% { opacity: .3; } 50% { opacity: 1; } }
         @keyframes ct-flap { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
         @media (prefers-reduced-motion: reduce) {
-          .contact-card, .contact-card:hover { transform: none; }
+          .contact-card { transition: none; }
           .contact-card :is(.ct-blink, .ct-sway, .ct-scan, .ct-flap) { animation: none !important; }
         }
 

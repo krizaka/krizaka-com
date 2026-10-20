@@ -39,16 +39,16 @@
    blocks. Krizaka palette only (blues and ink, never a product colour); --kz-hue is decorative (≥ 3:1 on the surfaces),
    --kz-hue-text is for small text (≥ 4.5:1 on surface-0, -1 and -2, both themes). Without a hue, blocks fall back to
    the page's accent, so a brand page stays on brand. */
-[data-hue="cobalt"] { --kz-hue: hsl(217 92% 60%); --kz-hue-2: hsl(206 92% 62%); --kz-hue-text: hsl(217 92% 74%); }
-[data-hue="sky"]    { --kz-hue: hsl(199 89% 52%); --kz-hue-2: hsl(190 85% 52%); --kz-hue-text: hsl(199 89% 66%); }
+[data-hue="cobalt"] { --kz-hue: hsl(210 52% 60%); --kz-hue-2: hsl(200 45% 62%); --kz-hue-text: hsl(208 58% 74%); }
+[data-hue="sky"]    { --kz-hue: hsl(199 55% 55%); --kz-hue-2: hsl(190 50% 52%); --kz-hue-text: hsl(199 55% 70%); }
 [data-hue="cyan"]   { --kz-hue: hsl(186 72% 45%); --kz-hue-2: hsl(196 80% 52%); --kz-hue-text: hsl(186 70% 58%); }
-[data-hue="indigo"] { --kz-hue: hsl(234 85% 68%); --kz-hue-2: hsl(222 90% 64%); --kz-hue-text: hsl(234 90% 80%); }
+[data-hue="indigo"] { --kz-hue: hsl(232 50% 70%); --kz-hue-2: hsl(222 50% 66%); --kz-hue-text: hsl(232 60% 82%); }
 [data-hue="steel"]  { --kz-hue: hsl(212 32% 62%); --kz-hue-2: hsl(206 40% 70%); --kz-hue-text: hsl(212 36% 74%); }
 [data-hue="ink"]    { --kz-hue: hsl(220 16% 80%); --kz-hue-2: hsl(217 40% 70%); --kz-hue-text: hsl(220 16% 86%); }
-html.light [data-hue="cobalt"] { --kz-hue: hsl(217 92% 50%); --kz-hue-2: hsl(206 92% 48%); --kz-hue-text: hsl(217 92% 40%); }
-html.light [data-hue="sky"]    { --kz-hue: hsl(199 89% 40%); --kz-hue-2: hsl(190 85% 38%); --kz-hue-text: hsl(200 90% 29%); }
+html.light [data-hue="cobalt"] { --kz-hue: hsl(208 54% 40%); --kz-hue-2: hsl(200 50% 36%); --kz-hue-text: hsl(208 56% 32%); }
+html.light [data-hue="sky"]    { --kz-hue: hsl(199 60% 34%); --kz-hue-2: hsl(190 55% 32%); --kz-hue-text: hsl(200 62% 27%); }
 html.light [data-hue="cyan"]   { --kz-hue: hsl(186 80% 32%); --kz-hue-2: hsl(196 80% 38%); --kz-hue-text: hsl(188 85% 24%); }
-html.light [data-hue="indigo"] { --kz-hue: hsl(234 66% 52%); --kz-hue-2: hsl(222 80% 52%); --kz-hue-text: hsl(234 60% 45%); }
+html.light [data-hue="indigo"] { --kz-hue: hsl(232 45% 48%); --kz-hue-2: hsl(222 45% 46%); --kz-hue-text: hsl(232 45% 40%); }
 html.light [data-hue="steel"]  { --kz-hue: hsl(212 28% 46%); --kz-hue-2: hsl(206 34% 50%); --kz-hue-text: hsl(212 30% 34%); }
 html.light [data-hue="ink"]    { --kz-hue: hsl(222 30% 22%); --kz-hue-2: hsl(217 50% 40%); --kz-hue-text: hsl(222 30% 20%); }
 /* The bird and the icon node of a subject wear its hue. */
@@ -251,26 +251,6 @@ body {
   }
 }
 
-/* Cursor-tracked spotlight — a soft accent bloom follows the pointer across
-   a card. --spot-x/--spot-y are written by an onMouseMove handler; they fall
-   back to the card centre so the hover still reads without JS. */
-.kz-spotlight::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity var(--kz-transition-smooth);
-  background: radial-gradient(
-    220px circle at var(--spot-x, 50%) var(--spot-y, 50%),
-    color-mix(in srgb, var(--kz-accent) 16%, transparent),
-    transparent 62%
-  );
-}
-@media (hover: hover) and (pointer: fine) {
-  .kz-spotlight:hover::after { opacity: 1; }
-}
 
 
 /* ─── Links of the organisation pages (sections, frame and headings come from @krizaka/ui/page) ─── */
@@ -311,8 +291,8 @@ html.light .kz-backdrop-media { mix-blend-mode: screen; }
    ─────────────────────────────────────────────────────────────────
    The vocabulary is @krizaka/ui's (motion.css through @krizaka/tailwind; conducted by MotionObserver, mounted once in
    the locale layout): `[data-reveal]` / `[data-reveal="soft"]` (lib/motion.ts `reveal(i)`), NumberTicker, the
-   off-screen pause (`data-offscreen`), the settle step (`html[data-motion]`), the node of the signature icons, magnetic
-   buttons. Below, only what is the site's own. No animation library, no permanent requestAnimationFrame, no canvas;
+   off-screen pause (`data-offscreen`), the settle step (`html[data-motion]`), the node of the signature icons; nothing
+   moves under the pointer (krizaka-ui#393). Below, only what is the site's own. No animation library, no permanent requestAnimationFrame, no canvas;
    composited properties only; still under prefers-reduced-motion.
    ═══════════════════════════════════════════════════════════════════ */
 

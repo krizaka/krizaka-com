@@ -99,7 +99,7 @@ export default function TopNavBar() {
               <NavBar.Language {...language} />
             </span>
 
-            <Button asChild variant="primary" size="sm" shape="cut" className="ml-1 hidden font-bold md:inline-flex">
+            <Button asChild variant="primary" size="sm" className="ml-1 hidden font-bold md:inline-flex">
               <Link href={contactHref}>{m.contactCta}</Link>
             </Button>
 
