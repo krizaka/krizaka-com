@@ -5,7 +5,7 @@
    (next/dynamic), the film with preload none and its poster first. Under reduced motion or Save-Data the dialog plays
    the light, calm film instead: the 44 s « Le monde de Krizaka » rendered from the code (`fallback`). */
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { format } from "@krizaka/i18n";
 import { PlayIcon } from "@krizaka/icons";
@@ -23,7 +23,7 @@ export interface LightboxFilm {
   vtt: string;
 }
 
-export default function FilmLightbox({ film, fallback }: { film: LightboxFilm; fallback: LightboxFilm }) {
+export default function FilmLightbox({ film, fallback, trigger }: { film: LightboxFilm; fallback: LightboxFilm; /** Another way to open it (/story: the poster card); the home's ghost button by default. */ trigger?: ReactNode }) {
   const { t, locale } = useI18n();
   const [light, setLight] = useState(false);
   const h = t.site.home.hero;
@@ -37,10 +37,12 @@ export default function FilmLightbox({ film, fallback }: { film: LightboxFilm; f
   };
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild>
-        <Button type="button" variant="ghost" size="lg" shape="cut" className="kz-home-film-trigger" onClick={() => setLight(prefersLightFilm(window))}>
-          <PlayIcon size={15} aria-hidden /> {h.film} <span className="kz-home-film-length">{h.filmLength}</span>
-        </Button>
+      <Dialog.Trigger asChild onClick={() => setLight(prefersLightFilm(window))}>
+        {trigger ?? (
+          <Button type="button" variant="ghost" size="lg" shape="cut" className="kz-home-film-trigger">
+            <PlayIcon size={15} aria-hidden /> {h.film} <span className="kz-home-film-length">{h.filmLength}</span>
+          </Button>
+        )}
       </Dialog.Trigger>
       <Dialog.Content size="lg" closeLabel={h.filmClose} className="kz-home-film">
         <Dialog.Title className="sr-only">{light ? w.title : w.tour.player}</Dialog.Title>

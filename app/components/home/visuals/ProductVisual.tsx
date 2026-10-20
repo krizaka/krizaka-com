@@ -31,7 +31,7 @@ export default function ProductVisual({ id }: { id: ProductId }) {
   useEffect(() => {
     const el = box.current;
     if (!el) return;
-    const card = el.closest(".kz-pc");
+    const card = el.closest(".kz-pc, [data-pv-host]");
     const enter = () => setHover(true);
     const leave = () => setHover(false);
     card?.addEventListener("pointerenter", enter);

@@ -4,18 +4,24 @@
    ambient loop (krizaka-ui tools/brand-films « home-ambient », AmbientLoop — the poster first, the loop only on screen,
    the poster alone under reduced motion or Save-Data), faded into the page.
 
+   Under the actions, the products put forward: a quiet row of their seven marks (from @krizaka/ui), each one a link to
+   its card in #products, the ones not offered yet dimmed.
+
    Once per session, HeroIntro plays the cinematic intro over the poster (home.css): the mark draws itself, the scene
    rises in with its birds, a light sweeps the backdrop, the figures climb (NumberTicker) — then the loop fades in.
    Skippable, still under reduced motion and Save-Data. Every figure is read at build and dropped when unknown. */
 
 import { ForwardIcon } from "@krizaka/icons";
-import { KrizakaLogo } from "@krizaka/ui";
+import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
-import { getDictionary } from "@/lib/i18n";
+import { format, getDictionary } from "@/lib/i18n";
+import { figureColumns } from "@/lib/figure-grid";
+import type { CSSProperties } from "react";
 import { video } from "@/lib/cdn";
 import { FILM_BASE, TOUR_BASE } from "@/lib/film-captions";
+import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
 import AmbientLoop, { type AmbientSet } from "./AmbientLoop";
 import FilmLightbox from "./FilmLightbox";
@@ -25,6 +31,8 @@ import "./home.css";
 export interface HomeFigures {
   repositories: number;
   npm: number;
+  /** npm downloads of last week (api.npmjs.org at build); absent when unknown. */
+  downloads?: number;
   maven: number;
 }
 
@@ -33,6 +41,8 @@ const ambient = (cut: string, theme: string) => video(`brand-films/ambient/home-
 const themes = (cut: string) => ({ dark: ambient(cut, "dark"), ["light"]: ambient(cut, "light") });
 const AMBIENT: AmbientSet = { wide: themes("16x9"), tall: themes("4x5") };
 const film = video(TOUR_BASE);
+/** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
+const DIM: readonly ProductStatus[] = ["construction", "upcoming"];
 const codeFilm = video(FILM_BASE);
 
 export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
@@ -40,8 +50,12 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
   const counted = [
     { id: "repositories", value: figures.repositories, label: t.proofs.repositories },
     { id: "npm", value: figures.npm, label: t.proofs.npm },
+    { id: "downloads", value: figures.downloads ?? 0, label: t.proofs.downloads },
     { id: "maven", value: figures.maven, label: t.proofs.maven },
   ].filter((p) => p.value > 0);
+  // Full rows on a phone and wide (lib/figure-grid.ts): 4 figures → 2 × 2, then one row; never a lone cell.
+  const grid = figureColumns(counted.length);
+  const cols = { "--kz-fig-cols": grid.wide, "--kz-fig-cols-narrow": grid.narrow } as CSSProperties;
 
   return (
     <SectionBackdrop as="section" id="hero" className="kz-home-hero" grid aria-labelledby="hero-title">
@@ -65,7 +79,19 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "tour.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
         </div>
 
-        <dl className="kz-home-proofs" aria-label={t.proofsLabel}>
+        {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
+        <ul className="kz-home-marks" aria-label={t.marksLabel}>
+          {PRODUCTS.map((p) => (
+            <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined}>
+              <a href={`#product-${p.id}`}>
+                <ProductLogo id={p.id} size={30} animated={false} />
+                <span>{p.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <dl className="kz-home-proofs" aria-label={t.proofsLabel} style={cols}>
           {counted.map((p) => (
             <div key={p.id}>
               <dt>{p.label}</dt>
@@ -74,11 +100,8 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
               </dd>
             </div>
           ))}
-          <div>
-            <dt>{t.proofs.license}</dt>
-            <dd>Apache-2.0</dd>
-          </div>
         </dl>
+        <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
       </Page>
 
       <div className="kz-home-scene kz-intro-deco" aria-hidden>

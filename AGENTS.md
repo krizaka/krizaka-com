@@ -108,7 +108,7 @@
   /story's Yororis chapter) are fingerprinted in `scripts/lexicon-reviewed.json`: change one only with
   `npm run lexicon -- --accept-review YYYY-MM-DD` and say so in the PR.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
-  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the three Orochia clips that published
+  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), the three Orochia clips that published
   `@krizaka/ui` examples reach through `/assets/orochia/tour/` (a redirect in `lib/cdn.ts`), and `brand-films/**` — the
   films of the flock, rendered from the code by krizaka-ui `tools/brand-films` (« Le monde de Krizaka » on `/story`, its
   captions from the messages through `/<locale>/story/film.vtt`; the loops of each bird, loaded by ui.krizaka.com and the

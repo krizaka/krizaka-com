@@ -17,3 +17,24 @@ export const PROVES_FIRST: readonly ProductId[] = ["yomizaka", "orochia"];
 
 /** The rest of the roster (stage 05): every other product of lib/products.ts, in its order. */
 export const ROSTER: readonly ProductId[] = PRODUCTS.map((p) => p.id).filter((id) => id !== ENGINE && !PROVES_FIRST.includes(id));
+
+/** The chapters of /story, in reading order (anchors and the sticky contents): who we are, the engine, each product
+ *  (the first proofs, then the rest of the roster), the open stack, what is next. A product added to lib/products.ts
+ *  gets its chapter by itself. */
+export const PRODUCT_CHAPTERS: readonly ProductId[] = [...PROVES_FIRST, ...ROSTER];
+export const STORY_ANCHORS = ["who", "engine", ...PRODUCT_CHAPTERS, "open", "next"] as const;
+
+/** The bird each chapter wears, from the cast of the film (the brand reference, « Référence : les personnages et le
+ *  discours »): one promise per subject, never the same bird twice on the page. */
+export type StoryBird = "falcon" | "owl" | "duck" | "flamingo" | "pigeon" | "lovebird" | "crane" | "magpie" | "beaver";
+export const PRODUCT_BIRD: Record<ProductId, StoryBird> = {
+  orazaka: "flamingo",
+  yomizaka: "owl",
+  orochia: "pigeon",
+  kachizaka: "magpie",
+  akinaza: "beaver",
+  yasakia: "lovebird",
+  yororis: "crane",
+};
+export const WHO_BIRD: StoryBird = "falcon";
+export const OPEN_BIRD: StoryBird = "duck";

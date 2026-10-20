@@ -8,19 +8,6 @@
     var(--kz-surface-0); }
 .pv > * { height: 100%; }
 .pv p { margin: 0; }
-.kz-pc-engine .pv { order: 3; flex: 0 1 400px; aspect-ratio: 2 / 1; }
-@media (max-width: 640px) { .kz-pc-engine .pv { order: 0; flex: none; } }
-
-/* Orazaka: the requests flow into the engine. */
-.pv-engine { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 6px; }
-.pv-engine-sources { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: space-between; height: 100%; }
-.pv-engine-sources li { display: flex; }
-.pv-engine-paths { width: 100%; height: 100%; overflow: visible; }
-.pv-engine-paths path { fill: none; stroke: var(--kz-accent); stroke-width: 1.2; stroke-linecap: round; opacity: .55; vector-effect: non-scaling-stroke;
-  stroke-dasharray: 6 10; animation: pv-flow 1.6s linear infinite paused; }
-.pv-engine[data-play] .pv-engine-paths path { animation-play-state: running; }
-.pv-engine-core { display: inline-flex; filter: drop-shadow(0 6px 18px color-mix(in oklab, var(--kz-accent) 45%, transparent)); }
-@keyframes pv-flow { to { stroke-dashoffset: -32; } }
 
 /* Yomizaka: a page, one passage lit, checked. */
 .pv-doc { display: flex; flex-direction: column; gap: 7px; }

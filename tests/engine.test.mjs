@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 // Orazaka is the engine every product's AI runs on (2026-10-16): the home and /products show it as the foundation (a
 // wide card, CardGrid `foundation`) with the other products as the cards it powers; /story's engine stage shows the
@@ -34,18 +34,18 @@ test("a planned use is said planned: the products not wired yet are flagged, the
     assert.match(p.enginePlanned, /\{use\}/);
     assert.notEqual(p.engineUse, p.enginePlanned, `${l}: a planned use reads differently`);
   }
-  const card = read("app/components/ProductCard.tsx");
-  assert.match(card, /e\.planned/);
-  assert.match(card, /tone: "wip"/);
+  const story = read("app/[locale]/story/page.tsx");
+  assert.match(story, /use\.planned \? t\.site\.home\.products\.enginePlanned : t\.site\.home\.products\.engineUse/);
+  assert.match(story, /u\.planned \? ` \(\$\{e\.planned\}\)` : ""/);
 });
 
-test("the home wears the engine as the foundation (CardGrid foundation, its own wide GlowCard); /story's engine stage shows the engine card", () => {
+test("the home wears the engine as the foundation (CardGrid foundation, its own wide GlowCard); /story's engine chapter draws the engine and its uses", () => {
   const home = read("app/components/home/ProductShowcase.tsx");
   assert.match(home, /foundation=\{<EngineCard /);
   assert.match(home, /foundationLabel=\{t\.site\.products\.engine\.label\}/);
   assert.match(home, /PRODUCTS\.filter\(\(p\) => p\.id !== ENGINE\)/, "the engine is the foundation, never a card among the others");
   assert.match(read("app/[locale]/page.tsx"), /<ProductShowcase\b/);
-  assert.match(read("app/[locale]/story/page.tsx"), /engine: <EngineCard/);
+  assert.match(read("app/[locale]/story/page.tsx"), /<EngineFlowView t=\{t\} \/>/, "/story draws the home's engine flow — the same component");
 });
 
 // The flow is two-way (2026-10-17): products -> Orazaka (requests, documents, prompts), Orazaka -> products (results,
@@ -54,25 +54,49 @@ test("the diagram shows both directions, from data, claiming only what runs", ()
   assert.ok(uses.every((u) => u.back.length > 0 && u.back.includes("results")), "every product gets results back");
   for (const u of uses) for (const b of u.back) assert.ok(["results", "analytics"].includes(b), `${u.id}: '${b}' is not live (events/webhooks are orazaka#189)`);
   assert.deepEqual(uses.filter((u) => u.back.includes("analytics")).map((u) => u.id), ["orochia"], "analytics back: only Orochia reads it (ADR-081)");
-  const flow = read("app/components/EngineFlow.tsx");
-  assert.match(flow, /data-lane="out"/);
-  assert.match(flow, /data-lane="back"/);
-  assert.match(flow, /aria-hidden/);
-  assert.match(flow, /data-motion-scope/, "off-screen pause comes from @krizaka/ui's motion system");
-  assert.match(flow, /u\.planned/, "a planned use is drawn still and dim");
-  assert.doesNotMatch(flow, /requestAnimationFrame|<canvas/);
-  assert.match(read("app/components/ProductCard.tsx"), /<EngineFlow/);
-  const css = read("app/globals.css");
-  assert.match(css, /\.engine-flow/);
-  assert.match(css, /prefers-reduced-motion: no-preference[^}]*\{[^]*engine-flow-dots/, "motion only when allowed; reduced motion keeps static arrows");
+  // /story's engine chapter is the home's EngineFlowView (@krizaka/ui/engine-flow): the static stand-in is gone.
+  assert.ok(!existsSync(new URL("../app/components/story/EngineMap.tsx", import.meta.url)), "EngineMap came back");
+  assert.ok(!existsSync(new URL("../lib/engine-map.ts", import.meta.url)), "lib/engine-map.ts came back");
+  assert.doesNotMatch(read("app/[locale]/story/story.css"), /\.em-(line|lines|node|hub|box)\b/, "the stand-in's styles are gone");
 });
 
-test("the text version and the legend are messages in both languages, with no hand-written direction", () => {
+
+test("the text version of the drawing is a list of messages in both languages, with no hand-written direction", () => {
   for (const l of ["en", "fr"]) {
     const e = messages[l].site.products.engine;
-    for (const k of ["legendOut", "legendBack", "sends", "gets"]) assert.ok(e[k], `${l}: engine.${k}`);
+    for (const k of ["sends", "gets"]) assert.ok(e[k], `${l}: engine.${k}`);
     assert.deepEqual(Object.keys(e.back).sort(), ["analytics", "results"]);
+    for (const k of ["more"]) assert.ok(messages[l].site.story.engine[k], `${l}: story.engine.${k}`);
   }
-  assert.match(read("app/components/ProductCard.tsx"), /e\.sends/);
-  assert.match(read("app/components/ProductCard.tsx"), /e\.gets/);
+  const page = read("app/[locale]/story/page.tsx");
+  assert.match(page, /e\.sends/);
+  assert.match(page, /e\.gets/);
+  assert.match(page, /e\.planned/, "a planned use is said planned in the list too");
+});
+
+// The engine section uses @krizaka/ui's EngineFlow (2026-10-20, the coordinator's decisions): radial on desktop and
+// tablet, top to bottom on a phone, both ways only where it runs, planned products dim and still, photons, S-shaped
+// Bézier conduits, no settings for visitors, a node says what it uses Orazaka for with a link to its site.
+test("the home's engine card draws @krizaka/ui's EngineFlow from the data, with no settings for visitors", () => {
+  const view = read("app/components/home/EngineFlowView.tsx");
+  assert.match(view, /from "@krizaka\/ui\/engine-flow"/, "the one motion system: the primitive of Krizaka UI, never a copy");
+  assert.match(view, /layout="radial"/);
+  assert.match(view, /compactLayout="top-to-bottom"/);
+  assert.match(view, /particles="photons"/);
+  assert.match(view, /conduit="bezier"/);
+  assert.match(view, /ENGINE_USES\.map/);
+  assert.match(view, /flow: u\.planned \? "in" : u\.back\.length > 0 \? "both" : "in"/, "both ways only where results come back");
+  assert.match(view, /planned: u\.planned/);
+  assert.match(view, /href: p\.devUrl/);
+  assert.doesNotMatch(view, /Chip|Slider|Switch|useState/, "the lab's parameters panel is not a home feature");
+  assert.doesNotMatch(view, /requestAnimationFrame|<canvas/);
+  assert.match(read("app/components/home/ProductShowcase.tsx"), /<EngineFlowView t=\{t\} \/>/);
+  assert.ok(!/ENGINE_FLOW/.test(read("lib/product-visuals.ts")), "the old dashed-lines engine visual is gone");
+  for (const l of ["en", "fr"]) {
+    const f = messages[l].site.home.products.flow;
+    for (const k of ["label", "caption", "hint", "visit"]) assert.ok(f[k], `${l}: flow.${k}`);
+    assert.match(f.uses, /\{use\}/);
+    assert.match(f.usesPlanned, /\{use\}/);
+    assert.notEqual(f.uses, f.usesPlanned, `${l}: a planned use reads as the future`);
+  }
 });

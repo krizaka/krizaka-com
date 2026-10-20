@@ -111,8 +111,9 @@ test("the committed manifest names every media the site draws", () => {
     ...["alex-discover", "alex-bid", "elena-live"].flatMap((c) => ["webm", "mp4", "jpg"].map((e) => `products/orochia/tour/en/${c}.${e}`)),
   ];
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
-  // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left.
-  const gone = Object.keys(files).filter((path) => /^(docs\/(orazaka|orochia)\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/(orazaka|yasakia)\/|products\/orochia\/mobile\/)/.test(path));
+  // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left —
+  // but the real takes /story plays in its lightbox (lib/story-takes.ts: the Orazaka landing take, the Yasakia take).
+  const gone = Object.keys(files).filter((path) => /^(docs\/(orazaka|orochia)\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/(orazaka|yasakia)\/(?!home\/take-|tour\/take-full)|products\/orochia\/mobile\/)/.test(path));
   assert.deepEqual(gone, []);
   assert.deepEqual(
     Object.keys(files).filter((path) => path.startsWith("products/orochia/tour/") && !/^products\/orochia\/tour\/(en|fr)\/[a-z-]+\.(webm|mp4|jpg)$/.test(path)),
