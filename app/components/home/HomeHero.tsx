@@ -16,7 +16,9 @@ import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
-import { getDictionary } from "@/lib/i18n";
+import { format, getDictionary } from "@/lib/i18n";
+import { figureColumns } from "@/lib/figure-grid";
+import type { CSSProperties } from "react";
 import { video } from "@/lib/cdn";
 import { FILM_BASE, TOUR_BASE } from "@/lib/film-captions";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
@@ -29,6 +31,8 @@ import "./home.css";
 export interface HomeFigures {
   repositories: number;
   npm: number;
+  /** npm downloads of last week (api.npmjs.org at build); absent when unknown. */
+  downloads?: number;
   maven: number;
 }
 
@@ -46,8 +50,12 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
   const counted = [
     { id: "repositories", value: figures.repositories, label: t.proofs.repositories },
     { id: "npm", value: figures.npm, label: t.proofs.npm },
+    { id: "downloads", value: figures.downloads ?? 0, label: t.proofs.downloads },
     { id: "maven", value: figures.maven, label: t.proofs.maven },
   ].filter((p) => p.value > 0);
+  // Full rows on a phone and wide (lib/figure-grid.ts): 4 figures → 2 × 2, then one row; never a lone cell.
+  const grid = figureColumns(counted.length);
+  const cols = { "--kz-fig-cols": grid.wide, "--kz-fig-cols-narrow": grid.narrow } as CSSProperties;
 
   return (
     <SectionBackdrop as="section" id="hero" className="kz-home-hero" grid aria-labelledby="hero-title">
@@ -83,7 +91,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           ))}
         </ul>
 
-        <dl className="kz-home-proofs" aria-label={t.proofsLabel}>
+        <dl className="kz-home-proofs" aria-label={t.proofsLabel} style={cols}>
           {counted.map((p) => (
             <div key={p.id}>
               <dt>{p.label}</dt>
@@ -92,11 +100,8 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
               </dd>
             </div>
           ))}
-          <div>
-            <dt>{t.proofs.license}</dt>
-            <dd>Apache-2.0</dd>
-          </div>
         </dl>
+        <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
       </Page>
 
       <div className="kz-home-scene kz-intro-deco" aria-hidden>

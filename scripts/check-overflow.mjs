@@ -25,8 +25,9 @@ try {
       } catch {}
     }, c.theme);
     const page = await context.newPage();
-    await page.goto(base + c.path, { waitUntil: "networkidle", timeout: 60_000 });
-    await page.waitForTimeout(500);
+    // `load`, then a short settle: a live page may never go network-idle (the contact page's captcha keeps polling).
+    await page.goto(base + c.path, { waitUntil: "load", timeout: 60_000 });
+    await page.waitForTimeout(1500);
     const { scrollWidth, culprits } = await page.evaluate(() => {
       const w = document.documentElement.clientWidth;
       const wide = [...document.querySelectorAll("body *")]
