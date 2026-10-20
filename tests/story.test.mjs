@@ -93,8 +93,8 @@ test("a product chapter shows its field's mini-visual (demo data, said so), clai
   assert.match(page, /p\.noSite \? h\.seeCode : h\.visit/);
 });
 
-test("Yororis: its chapter quotes the reviewed statement verbatim and adds no word of its own about it", () => {
-  assert.match(page, /t\.site\.yororis\.reviewed\.construction/);
+test("Yororis: its chapter keeps the reviewed « is not » list verbatim and says where it stands", () => {
+  assert.match(page, /st\.products\.constructionNote/, "where it stands, said plainly: QA-only on dev, nothing public");
   assert.match(page, /t\.site\.yororis\.reviewed\.isNot/);
   // new messages never carry « yororis » in their key (the lexicon reads those): the chapter's words are the shared ones.
   for (const l of ["en", "fr"]) assert.doesNotMatch(JSON.stringify(Object.keys(messages(l).story)), /yororis/i);

@@ -24,7 +24,7 @@ test("the known know-hows are the ones Oussama named", () => {
   const k = messages("en").products.knowhow;
   assert.match(k.orazaka.name, /engine/i);
   assert.match(k.orochia.name, /media/i);
-  assert.match(k.yasakia.name, /geolocation/i);
+  assert.match(k.yasakia.name, /introductions/i);
   assert.match(k.yororis.name, /voice/i);
 });
 

@@ -142,7 +142,7 @@
           "line": "Pronostics entre amis, en points seulement — chaque point expliqué, chaque saison gardée."
         },
         "akinaza": {
-          "line": "Le tout-en-un des boutiques indépendantes du Québec : salons, boulangeries, cafés."
+          "line": "Le tout-en-un des boutiques indépendantes du Québec : salons, boulangeries, boutiques."
         }
       },
       "proofBy": "Prouvé par {name}",
@@ -156,7 +156,7 @@
           "proof": "Les envois partent directement vers le CDN en Tus, un transcodeur adaptatif encode, la lecture passe par des liens HLS signés qui expirent après cinq minutes, et chaque transaction se règle par séquestre."
         },
         "yasakia": {
-          "name": "La géolocalisation",
+          "name": "Présentations, photos vérifiées",
           "proof": "La position est arrondie à environ 1 km avant d'être stockée, et la base répond au rayon et rapproche qui vous êtes de qui vous cherchez — à proximité, jamais exacte."
         },
         "yororis": {
@@ -434,7 +434,8 @@
       "products": {
         "promise": "Sa promesse",
         "how": "Comment ça marche",
-        "demo": "Illustration, données de démo"
+        "demo": "Illustration, données de démo",
+        "constructionNote": "En construction : une application réservée aux tests tourne sur dev, et rien n'est encore offert au public."
       },
       "birds": {
         "lovebird": "L'inséparable est présent : deux personnes se rencontrent.",

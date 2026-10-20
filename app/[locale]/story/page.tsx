@@ -135,8 +135,8 @@ export default async function StoryPage({ params }: Props) {
         lead={
           <>
             <p>{h.cards[id].line}</p>
-            {/* Yororis says plainly what it is not yet: the reviewed statement, verbatim (scripts/lexicon.mjs). */}
-            {yororis && <p>{t.site.yororis.reviewed.construction}</p>}
+            {/* Yororis says plainly where it stands; the reviewed « is not » list stays verbatim in the fold (scripts/lexicon.mjs). */}
+            {yororis && <p>{st.products.constructionNote}</p>}
           </>
         }
         bird={bird}

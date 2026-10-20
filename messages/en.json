@@ -142,7 +142,7 @@
           "line": "Predictions among friends, points only — every point explained, every season kept."
         },
         "akinaza": {
-          "line": "The all-in-one for independent Québec shops — hair salons, bakeries, cafés, boutiques."
+          "line": "The all-in-one for independent Québec shops — hair salons, bakeries, boutiques."
         }
       },
       "proofBy": "Proved by {name}",
@@ -156,7 +156,7 @@
           "proof": "Uploads go straight to the CDN over Tus, an adaptive transcoder encodes, playback uses signed HLS links that expire after five minutes, and every transaction settles through escrow."
         },
         "yasakia": {
-          "name": "Geolocation",
+          "name": "Introductions, verified photos",
           "proof": "The position is rounded to about 1 km before it is stored, and the database answers the radius and matches who you are with who you seek — nearby, never exact."
         },
         "yororis": {
@@ -434,7 +434,8 @@
       "products": {
         "promise": "Its promise",
         "how": "How it works",
-        "demo": "Illustration with demo data"
+        "demo": "Illustration with demo data",
+        "constructionNote": "Under construction: a QA-only app runs on dev, and nothing is offered to the public yet."
       },
       "birds": {
         "lovebird": "The lovebird is present: two people meet.",
