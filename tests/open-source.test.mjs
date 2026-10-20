@@ -86,11 +86,11 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
 });
 
 test("the packages: every npm and Maven artifact, its family, its repository only when it exists", async () => {
-  const { packageRows, mavenFamily } = await import("../lib/package-catalogue.ts");
+  const { packageRows, mavenFamily, weeklyTotal } = await import("../lib/package-catalogue.ts");
   const snap = {
     npm: { "@krizaka/ui": "3.21.0", "@krizaka/query": "0.2.1" },
     npmMeta: {
-      "@krizaka/ui": { description: "Components: a lot", keywords: ["design-system"], repository: "https://github.com/krizaka/krizaka-ui", homepage: "https://ui.krizaka.com", weeklyDownloads: 12 },
+      "@krizaka/ui": { description: "Components: a lot", keywords: ["design-system"], repository: "https://github.com/krizaka/krizaka-ui", homepage: "https://ui.krizaka.com", weeklyDownloads: 12, weeklySeries: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] },
       "@krizaka/query": { description: "Server state", keywords: ["react-query"] },
     },
     maven: { "krizaka-users-api": "0.1.0", "krizaka-users": "0.1.0", "krizaka-bom": "0.2.0" },
@@ -104,6 +104,12 @@ test("the packages: every npm and Maven artifact, its family, its repository onl
   assert.equal(ui.line, "Components");
   assert.equal(ui.family, "ui");
   assert.equal(ui.weeklyDownloads, 12);
+  assert.deepEqual(ui.weeklySeries, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  assert.equal(rows.find((r) => r.name === "@krizaka/query").weeklySeries, undefined, "an absent series stays absent");
+  assert.equal(weeklyTotal(rows), 12);
+  assert.equal(weeklyTotal(rows.filter((r) => r.registry === "maven")), undefined, "Maven Central has no download count: no total");
+  const bad = packageRows({ npm: { "@krizaka/x": "1.0.0" }, npmMeta: { "@krizaka/x": { weeklyDownloads: 3, weeklySeries: [1, 2, "3"] } } }, [], "https://java.krizaka.com");
+  assert.equal(bad[0].weeklySeries, undefined, "a malformed series is dropped, not drawn");
   assert.equal(rows.find((r) => r.name === "@krizaka/query").weeklyDownloads, undefined, "unknown downloads stay unknown");
   const api = rows.find((r) => r.name === "krizaka-users-api");
   assert.equal(api.repoUrl, "https://github.com/krizaka/krizaka-users");

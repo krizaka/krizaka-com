@@ -13,7 +13,7 @@ import { kindOfRepository, productOfRepository } from "@/lib/repository-catalogu
 import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
 import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
-import { packageRows, type RegistrySnapshot } from "@/lib/package-catalogue";
+import { packageRows, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { howItFits } from "@/lib/how-it-fits";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { PRODUCTS } from "@/lib/products";
@@ -102,6 +102,8 @@ export default async function OpenSourcePage({ params }: Props) {
     { id: "repositories", value: publicRepositoryCount(), label: t.figures.repositories },
     { id: "npm", value: npmPackages().length, label: t.figures.npm },
     { id: "maven", value: mavenArtifactCount(), label: t.figures.maven },
+    // Read from api.npmjs.org at build; absent (0) when the registry was unreachable. Maven Central publishes no download count.
+    { id: "downloads", value: weeklyTotal(packages) ?? 0, label: t.figures.downloads },
   ].filter((f) => f.value > 0);
 
   return (

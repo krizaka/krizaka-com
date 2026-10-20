@@ -3,11 +3,11 @@
    build time — one source, never written by hand.
 
    Writes the git-ignored lib/registry-versions.json: { npm: { "@krizaka/ui": "2.4.0", … }, npmMeta: { "@krizaka/ui":
-   { description, keywords, repository, homepage, weeklyDownloads } }, maven: { "krizaka-bom": "0.2.0", … },
+   { description, keywords, repository, homepage, weeklyDownloads, weeklySeries } }, maven: { "krizaka-bom": "0.2.0", … },
    mavenMeta: { "krizaka-bom": { description, parent, scm } }, fetchedAt }.
    - npm: every package of the @krizaka scope (registry search), then each package's `latest` dist-tag; its description,
      keywords, repository and homepage as published, and its downloads of the last week (api.npmjs.org; absent when
-     unknown) — /open-source's packages table (lib/package-catalogue.ts).
+     unknown) and its 12 weekly sums (range endpoint, scripts/npm-downloads-lib.mjs) — /open-source's packages table (lib/package-catalogue.ts).
    - Maven Central: every artifact under com/krizaka on repo1 (its directory listing), then each maven-metadata.xml's
      <release> — the authoritative file, not the search index (which lags) — and the released POM's <description>,
      its com.krizaka <parent> and <scm><url> (the repository is derived from them).
@@ -18,6 +18,7 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { rangeWindow, weeklyBuckets } from "./npm-downloads-lib.mjs";
 import { fileURLToPath } from "node:url";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "registry-versions.json");
@@ -28,15 +29,36 @@ const get = async (url, as = "json") => {
   return as === "json" ? res.json() : res.text();
 };
 
+/** api.npmjs.org rate-limits bursts (429): the range requests go one at a time, each retried after a pause. */
+async function getPaced(url, tries = 4) {
+  for (let i = 0; i < tries; i++) {
+    try {
+      return await get(url);
+    } catch (e) {
+      if (i === tries - 1 || !/429/.test(String(e.message))) return null;
+      await new Promise((r) => setTimeout(r, 3000 * (i + 1)));
+    }
+  }
+  return null;
+}
+
 async function npmVersions() {
   const { objects } = await get("https://registry.npmjs.org/-/v1/search?text=%40krizaka&size=100");
   const names = objects.map((o) => o.package.name).filter((n) => n.startsWith("@krizaka/"));
-  const entries = await Promise.all(
-    names.map(async (name) => {
+  const entries = [];
+  for (const name of names) {
+    entries.push(
+      await (async () => {
       const [latest, downloads] = await Promise.all([
         get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`),
         get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch(() => null),
       ]);
+      // npm posts its counts a day or two late: the window ends on the day `last-week` itself ends on (never on a
+      // day not yet counted, which would read as 0), so the newest bucket equals the weekly figure.
+      const endDay = /^\d{4}-\d{2}-\d{2}$/.test(downloads?.end ?? "") ? downloads.end : null;
+      const window = endDay ? rangeWindow(endDay, 12) : null;
+      const range = window ? await getPaced(`https://api.npmjs.org/downloads/range/${window.start}:${window.end}/${name}`) : null;
+      const series = window ? weeklyBuckets(range, window.end, 12) : null;
       const repository = typeof latest.repository === "string" ? latest.repository : latest.repository?.url;
       return [
         name,
@@ -47,10 +69,12 @@ async function npmVersions() {
           ...(repository ? { repository: githubUrl(repository) } : {}),
           ...(typeof latest.homepage === "string" ? { homepage: latest.homepage } : {}),
           ...(Number.isInteger(downloads?.downloads) ? { weeklyDownloads: downloads.downloads } : {}),
+          ...(series ? { weeklySeries: series } : {}),
         },
       ];
-    }),
-  );
+      })(),
+    );
+  }
   const published = entries.filter(([, v]) => typeof v === "string");
   return {
     versions: Object.fromEntries(published.map(([n, v]) => [n, v])),

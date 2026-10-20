@@ -621,6 +621,7 @@
         "repositories": "dépôts publics",
         "npm": "paquets sur npm",
         "maven": "artefacts sur Maven Central",
+        "downloads": "téléchargements npm la semaine dernière",
         "license": "sur chaque dépôt"
       },
       "stackEyebrow": "La pile",
@@ -642,6 +643,7 @@
         "version": "Dernière",
         "downloads": "Téléchargements / sem.",
         "links": "Liens",
+        "trend": "Téléchargements sur les 12 dernières semaines",
         "repo": "Code",
         "docs": "Docs",
         "registryAria": "{name} sur son registre",

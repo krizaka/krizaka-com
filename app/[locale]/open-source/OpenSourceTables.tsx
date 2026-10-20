@@ -7,6 +7,7 @@
 
 import { format } from "@krizaka/i18n";
 import { ExternalIcon } from "@krizaka/icons";
+import { Sparkline } from "@krizaka/charts/sparkline";
 import { DataTable, DataTableFilters, type DataTableColumn, type DataTableLabels } from "@krizaka/ui/data-table";
 import type { PackageRow } from "@/lib/package-catalogue";
 import { useI18n } from "@/app/components/I18nProvider";
@@ -83,7 +84,15 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
       align: "end",
       sortable: true,
       value: (r) => r.weeklyDownloads ?? null,
-      cell: (r) => (r.weeklyDownloads == null ? "—" : new Intl.NumberFormat(locale).format(r.weeklyDownloads)),
+      cell: (r) =>
+        r.weeklyDownloads == null ? (
+          "—"
+        ) : (
+          <span className="os-downloads">
+            {r.weeklySeries ? <Sparkline data={r.weeklySeries} variant="area" width={72} height={22} title={`${r.name} — ${w.trend}`} /> : null}
+            {new Intl.NumberFormat(locale).format(r.weeklyDownloads)}
+          </span>
+        ),
     },
     {
       id: "links",

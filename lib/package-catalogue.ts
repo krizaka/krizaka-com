@@ -19,6 +19,8 @@ export interface PackageRow {
   version: string;
   /** Downloads of the last week (npm only; absent when unknown). */
   weeklyDownloads?: number;
+  /** The last 12 weekly sums, oldest first (npm only; absent unless complete). */
+  weeklySeries?: number[];
   registryUrl: string;
   repoUrl?: string;
   docsUrl?: string;
@@ -26,9 +28,15 @@ export interface PackageRow {
 
 export interface RegistrySnapshot {
   npm?: Record<string, string>;
-  npmMeta?: Record<string, { description?: string; keywords?: string[]; repository?: string; homepage?: string; weeklyDownloads?: number }>;
+  npmMeta?: Record<string, { description?: string; keywords?: string[]; repository?: string; homepage?: string; weeklyDownloads?: number; weeklySeries?: number[] }>;
   maven?: Record<string, string>;
   mavenMeta?: Record<string, { description?: string; parent?: string; scm?: string }>;
+}
+
+/** The npm downloads of the last week across every package that reports them; undefined when none does. */
+export function weeklyTotal(rows: readonly PackageRow[]): number | undefined {
+  const known = rows.filter((r) => Number.isInteger(r.weeklyDownloads));
+  return known.length ? known.reduce((sum, r) => sum + (r.weeklyDownloads as number), 0) : undefined;
 }
 
 const ROOT = "krizaka-parent";
@@ -59,6 +67,7 @@ export function packageRows(snapshot: RegistrySnapshot, repositories: readonly s
       line: summary(meta.description ?? ""),
       version,
       ...(Number.isInteger(meta.weeklyDownloads) ? { weeklyDownloads: meta.weeklyDownloads } : {}),
+      ...(Array.isArray(meta.weeklySeries) && meta.weeklySeries.length === 12 && meta.weeklySeries.every(Number.isInteger) ? { weeklySeries: meta.weeklySeries } : {}),
       registryUrl: `https://www.npmjs.com/package/${name}`,
       ...(meta.repository?.startsWith(GITHUB) ? { repoUrl: meta.repository } : {}),
       ...(meta.homepage ? { docsUrl: meta.homepage } : {}),
