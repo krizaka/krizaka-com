@@ -150,7 +150,7 @@ export default async function StoryPage({ params }: Props) {
         bird={bird}
         promise={promiseOf(t, bird)}
         proof={takeProof(id, p.name) ?? (
-          <div className="st-proof" data-pv-host>
+          <div className="st-proof">
             <ProductVisual id={id} />
             <p className="st-proof-note">{st.products.demo}</p>
           </div>

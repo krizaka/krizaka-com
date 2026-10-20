@@ -54,10 +54,13 @@
 - **The home is the company's** (landing), simplified (2026-10-17), in this order, **one primary action per section**:
   the centred hero (`HomeHero`: the mark, who Krizaka is, « See what we build » → `#products`, « Watch the film » — « Le monde
   de Krizaka » in a `Dialog` lightbox, player loaded on open — and the figures read at build, climbing with `NumberTicker`;
-  the landscape sits **in the flow under the figures**, never over them); the products (`ProductShowcase`: Orazaka as
-  **the foundation**, a wide `GlowCard alive`, and the other products as the cards it powers in the frame of `CardGrid
-  foundation` — each a `GlowCard` in its brand light, mark large, honest status from `lib/products.ts`, one line, and one
-  readable line of what it uses Orazaka for, `lib/engine-uses.ts`, « planned » where not wired; `tests/engine.test.mjs`);
+  the landscape sits **in the flow under the figures**, never over them); the products (`ProductShowcase`, redesigned 2026-10-20 — **no frame, no card in a card**: the engine leads, its words
+  and the `EngineFlow` (`EngineFlowView`), **sticky beside the list from 1024 px**; the products it powers are a quiet
+  list, one row each in its brand light — the live visual edge to edge (no border), the mark **beside** the name, **one
+  label** (the honest status from `lib/products.ts`), one line, and one readable line of what it uses Orazaka for,
+  `lib/engine-uses.ts`, « planned » where not wired; quiet tint on hover, no lift, no pointer light. Each row is tied to
+  its node in the flow (`ProductsLink`: the row in the middle of the screen, or pointed at, lights its node; pointing at a
+  node lights its row — `data-lit`, one IntersectionObserver, no scroll listener); `tests/engine.test.mjs`);
   the stack in brief (`OpenStack` / `StackCards` → `/open-source`); the principles (`Principles`); Montréal (`Company`
   → `/story`); the contact; the folded FAQ (FAQPage JSON-LD). Orochia is named neutrally on krizaka.com (name and one
   line, never a creator or payout pitch — `tests/home.test.mjs`).
@@ -65,7 +68,7 @@
   (`app/components/home/visuals/`: the engine's request flow, a lease passage checked, an encode ladder — Orochia never
   with media —, live points with a `Sparkline`, a salon's slots as `Chip`s, two `MessageBubble`s, a voice waveform),
   demo data in `lib/product-visuals.ts` said as demo. A fixed box (no CLS), `inert` and aria-hidden, its code a lazy
-  chunk loaded near the viewport, playing only on screen (hover on a fine pointer, always on touch), still under reduced
+  chunk loaded near the viewport, playing as soon as it is on screen (no hover gate), still under reduced
   motion; timers only while playing; `tests/product-visuals.test.mjs`. The waveform is drawn here until @krizaka/ui ships one.
 - **The hero's intro** (`HeroIntro`, `home.css`, `tests/hero-intro.test.mjs`): once per session (`sessionStorage`
   `kz-intro`), it sets `html[data-intro]` = `play` | `skip` | `done`; CSS only, over the ambient loop's poster — the
@@ -83,7 +86,7 @@
   (`lib/how-it-fits.ts`: products → engine → building blocks → shared services, an ordered list that is its own text
   version; the runs-on table folded); **contribute** (the contact page's picker, `lib/public-channels.ts`, the guide,
   the code of conduct, the licence). One primary action per section, no boxes in boxes.
-- `ProductShowcase` (`app/components/home/`) renders the cards on the home (`ProductCard` stays for `/story`); each card wears
+- `ProductShowcase` (`app/components/home/`) renders the product rows on the home (`ProductCard` stays for `/story`); each row wears
   its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
   `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage, `.brand-yomizaka` indigo, `.brand-kachizaka` gold + cobalt
   (the magpie), `.brand-akinaza` forest green + copper (the beaver); the rest of the site is Krizaka ink + blue).

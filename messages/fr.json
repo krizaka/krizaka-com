@@ -336,7 +336,9 @@
         },
         "yomizaka": {
           "document": "Bail — page 3",
+          "before": "Le bail est d'une durée de douze mois, à compter du 1er juillet.",
           "quote": "Le loyer ne peut être augmenté plus d'une fois au cours d'une période de 12 mois.",
+          "after": "Le chauffage et l'eau chaude sont compris dans le loyer.",
           "checked": "Vérifié",
           "source": "cité, page 3 · démo"
         },
