@@ -86,4 +86,7 @@ jobs:
           npm ci --ignore-scripts --no-audit --no-fund
           npx playwright install --with-deps chromium
           node scripts/check-overflow.mjs --base http://localhost:3000
+          # The engine flow's dots travel and the engine breathes (reduced motion OFF; at rest when ON): check-overflow runs
+          # under reduced motion and could not see a frozen figure.
+          node scripts/check-motion.mjs --base http://localhost:3000
           docker logs site | tail -20
