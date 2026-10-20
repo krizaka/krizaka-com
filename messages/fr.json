@@ -484,9 +484,6 @@
         "nav": "Le moteur",
         "title": "Orazaka, le moteur",
         "lead": "Orazaka est le moteur d'IA souverain que nos produits appellent pour leur IA : vos documents, sur votre infrastructure, selon vos règles.",
-        "mapLabel": "Orazaka au centre, les {count} produits autour. Un lien plein est branché ; un lien en tirets est prévu.",
-        "mapNote": "Les requêtes vont vers le moteur, les résultats reviennent. En tirets : prévu, pas encore branché.",
-        "wired": "branché",
         "more": "Ce que chaque produit en fait"
       },
       "products": {
