@@ -1055,7 +1055,6 @@
       "lead": "Deploying Orazaka or Orochia, building on a Krizaka component, a custom integration, a sovereign-AI audit or a partnership: write to the team, we reply within two business days.",
       "publicTitle": "Or talk in public",
       "publicLead": "Questions, bugs and ideas about our open-source repositories are discussed on GitHub.",
-      "whichProduct": "where?",
       "nextTitle": "What happens next",
       "nextSteps": [
         {
@@ -1076,11 +1075,11 @@
         "English · Français",
         "Montréal, Québec"
       ],
-      "publicProducts": {
-        "orazaka": "Orazaka",
-        "orochia": "Orochia",
-        "krizaka": "Building blocks"
-      }
+      "groupProducts": "Products",
+      "groupStack": "Open source",
+      "viaIssue": "via an issue",
+      "discussionsAria": "{name}: ask a question",
+      "issuesAria": "{name}: report a bug or propose a feature"
     },
     "search": {
       "placeholder": "Search pages and documentation...",

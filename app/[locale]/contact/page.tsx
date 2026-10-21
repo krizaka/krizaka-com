@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
+import { publicChannels } from "@/lib/github-channels";
 import ContactClient from "./ContactClient";
 
 interface Props {
@@ -24,5 +25,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function ContactPage() {
-  return <ContactClient />;
+  return <ContactClient groups={publicChannels()} />;
 }

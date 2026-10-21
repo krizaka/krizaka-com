@@ -1,16 +1,15 @@
 "use client";
 
 import { Mascot } from "@krizaka/ui/mascots";
-import { ChatIcon, FlagIcon, ForwardIcon } from "@krizaka/icons";
+import { ChatIcon, FlagIcon } from "@krizaka/icons";
 import TopNavBar from "../../components/TopNavBar";
 import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
-import { ProductLogo } from "@krizaka/ui";
 import { reveal } from "@/lib/motion";
 import { PageHero } from "@krizaka/ui/page-hero";
-import ButtonLink from "../../components/ButtonLink";
 import Link from "next/link";
-import { PUBLIC_CHANNELS, PUBLIC_REPOSITORIES } from "@/lib/public-channels";
+import PublicChannelList from "../../components/PublicChannelList";
+import type { ChannelGroup, ChannelKind } from "@/lib/public-channels";
 
 /* ─── Mascots: the owl answers questions, the falcon watches over bugs (@krizaka/ui/mascots, story colours) ─── */
 function OwlMascot() {
@@ -32,7 +31,7 @@ const CHANNELS = [
     Mascot: OwlMascot,
     accent: "var(--kz-info-text)",
     glow: "color-mix(in srgb, var(--kz-info) 8%, transparent)",
-    path: PUBLIC_CHANNELS[0].path,
+    kind: "discussions" as ChannelKind,
   },
   {
     id: "issues",
@@ -40,11 +39,11 @@ const CHANNELS = [
     Mascot: FalconMascot,
     accent: "var(--kz-warning-text)",
     glow: "color-mix(in srgb, var(--kz-warning) 8%, transparent)",
-    path: PUBLIC_CHANNELS[1].path,
+    kind: "issues" as ChannelKind,
   },
 ];
 
-export default function ContactClient() {
+export default function ContactClient({ groups }: { groups: ChannelGroup[] }) {
   const { t } = useI18n();
 
   // Only keep the first 2 channels (Questions & Bugs), skip "Partenariats & presse"
@@ -106,21 +105,12 @@ export default function ContactClient() {
           {t.site.contactPage.publicLead}
         </p>
 
-        {/* ─── Two Channel Cards ─── */}
-        <div
-          className="contact-grid"
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "20px",
-            marginBottom: "48px",
-          }}
-        >
+        {/* ─── Two channels, each a grouped list: Products · Open source ─── */}
+        <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "20px", marginBottom: "48px" }}>
           {channels.map((ch, index) => {
             const channelDef = CHANNELS[index];
             if (!channelDef) return null;
-            const { Mascot, Icon, accent, glow, path } = channelDef;
-
+            const { Mascot, Icon, accent, glow, kind } = channelDef;
             return (
               <div
                 key={ch.kind}
@@ -132,84 +122,27 @@ export default function ContactClient() {
                   ["--ch-glow" as string]: glow,
                   display: "flex",
                   flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center",
-                  padding: "40px 28px 32px",
+                  padding: "28px 24px 20px",
                   borderRadius: "0",
                   border: "1px solid var(--kz-border-subtle)",
                   background: "var(--kz-surface-1)",
                   boxShadow: "var(--kz-shadow-md)",
+                  minWidth: 0,
                 }}
               >
-                {/* Mascot */}
-                <div style={{ marginBottom: "20px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
                   <Mascot />
+                  <div style={{ minWidth: 0 }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontFamily: "var(--font-mono, monospace)", fontSize: "10px", fontWeight: 700, color: "var(--kz-text-secondary)" }}>
+                      <span style={{ color: accent, display: "flex" }}><Icon size={14} aria-hidden /></span> GitHub
+                    </span>
+                    <h3 style={{ fontFamily: "var(--font-display), system-ui, sans-serif", fontSize: "17px", fontWeight: 700, color: "var(--kz-text-primary)", margin: "2px 0 0", letterSpacing: "-0.01em" }}>
+                      {ch.title}
+                    </h3>
+                  </div>
                 </div>
-
-                {/* Icon + Category */}
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    marginBottom: "12px",
-                  }}
-                >
-                  <span style={{ color: accent, display: "flex" }}>
-                    <Icon size={15} aria-hidden />
-                  </span>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-mono, monospace)",
-                      fontSize: "10px",
-                      fontWeight: 700,
-                      color: "var(--kz-text-secondary)",
-                    }}
-                  >
-                    GitHub
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h2
-                  style={{
-                    fontFamily: "var(--font-display), system-ui, sans-serif",
-                    fontSize: "17px",
-                    fontWeight: 700,
-                    color: "var(--kz-text-primary)",
-                    marginBottom: "8px",
-                    letterSpacing: "-0.01em",
-                  }}
-                >
-                  {ch.title}
-                </h2>
-
-                {/* Description */}
-                <p
-                  style={{
-                    fontSize: "13px",
-                    color: "var(--kz-text-secondary)",
-                    lineHeight: 1.6,
-                    marginBottom: "20px",
-                    flex: 1,
-                  }}
-                >
-                  {ch.desc}
-                </p>
-
-                {/* CTA — one link per product: each has its own repository */}
-                <span style={{ fontSize: "12px", color: "var(--kz-text-secondary)", marginBottom: "10px" }}>
-                  {ch.cta} — {t.site.contactPage.whichProduct}
-                </span>
-                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", justifyContent: "center" }}>
-                  {PUBLIC_REPOSITORIES.map(({ product, repo }) => (
-                    <ButtonLink key={product} href={`https://github.com/krizaka/${repo}/${path}`}>
-                      <ProductLogo id={product} size={18} animated={false} />
-                      {t.site.contactPage.publicProducts[product]}
-                      <ForwardIcon size={13} aria-hidden />
-                    </ButtonLink>
-                  ))}
-                </div>
+                <p style={{ fontSize: "13px", color: "var(--kz-text-secondary)", lineHeight: 1.6, margin: "0 0 16px" }}>{ch.desc}</p>
+                <PublicChannelList groups={groups} kind={kind} words={t.site.contactPage} />
               </div>
             );
           })}
