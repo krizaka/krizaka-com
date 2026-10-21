@@ -9,7 +9,7 @@ const footer = read("app/components/SiteFooter.tsx");
 
 test("the footer's Krizaka column links Our story to /story", () => {
   const column = footer.slice(footer.indexOf('<FamilyFooter.Column title={f.siteColumn}>'), footer.indexOf("</FamilyFooter.Column>"));
-  assert.match(column, /<Link href="\/story" prefetch=\{false\}>\{f\.story\}<\/Link>/);
+  assert.match(column, /<Link href=\{to\("\/story"\)\} prefetch=\{false\} aria-current=\{here\("\/story"\)\}>\{f\.story\}<\/Link>/);
 });
 
 test("the footer's story label exists in both languages", () => {

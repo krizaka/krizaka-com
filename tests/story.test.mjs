@@ -64,8 +64,8 @@ test("each chapter wears the right bird, with its promise from the film or the b
 
 test("the film is shown once: one poster card opening the lightbox; no inline player, no autoplay in the text", () => {
   assert.equal([...page.matchAll(/<FilmLightbox/g)].length, 1, "the reference film once");
-  assert.match(page, /video\(TOUR_BASE\)/, "« Le monde de Krizaka : la tournée »");
-  assert.match(page, /vtt: "tour\.vtt"/);
+  assert.match(page, /storyFilm\(\)/, "the film slot: la tournée today, the newest film on the CDN tomorrow (lib/story-film.ts)");
+  assert.match(page, /vtt: film\.vtt/);
   assert.match(page, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/, "the light film under reduced motion / Save-Data");
   assert.doesNotMatch(page, /VideoPlayer|<video|autoPlay|autoplay/, "no player in the reading column");
   assert.match(page, /<Image className="st-film-poster" src=\{film\.poster\}/, "the poster is a content frame");
@@ -127,8 +127,10 @@ test("the arcade stages are gone from /story", () => {
 
 test("each product shows its real take: a poster that plays on click in a lightbox, the mini-visual only as the fallback", () => {
   const takes = read("lib/story-takes.ts");
-  const ids = ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"];
-  for (const id of ids) assert.match(takes, new RegExp(`\\n  ${id}: \\{ ratio:`), `${id} has a take`);
+  const ids = ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia"];
+  for (const id of ids) assert.match(takes, new RegExp(`\\n  ${id}: \\{\\s*ratio:`), `${id} has a take`);
+  // Yororis' recording shows the dev build's QA banner: no take (its mini-visual) until it is re-recorded — no QA name on the page.
+  assert.doesNotMatch(takes, /\n  yororis: \{/);
   // every file a take names is on the CDN (recorded in the manifest), in the language it needs
   const { files } = JSON.parse(read("lib/cdn-manifest.json"));
   for (const m of takes.matchAll(/(mp4|webm|poster): "(products\/[^"]+)"/g)) {
@@ -144,7 +146,7 @@ test("each product shows its real take: a poster that plays on click in a lightb
   assert.match(page, /takeOf\(id, locale\)/);
   assert.match(page, /takeProof\(id, p\.name\) \?\? \(/, "mini-visual = fallback");
   assert.match(css, /\.st-take-card \{[^}]*width: 168px[^}]*aspect-ratio: 9 \/ 16/, "a fixed small phone frame");
-  for (const l of ["en", "fr"]) for (const k of ["watch", "close", "player", "inLang"]) assert.ok(messages(l).story.products.take[k], `${l}: take.${k}`);
+  for (const l of ["en", "fr"]) for (const k of ["watch", "close", "player", "inLang", "watchRender", "renderPlayer"]) assert.ok(messages(l).story.products.take[k], `${l}: take.${k}`);
 });
 
 // The birds of /story (bug 2026-10-20: « Le faucon veille » wore a blue bird that read as the pigeon). A chapter's bird
@@ -191,4 +193,65 @@ test("the own palettes of the birds are distinct (the falcon is orange, not the 
   const p = fills("pigeon");
   assert.ok(f.has("#ff9f00") && !p.has("#ff9f00"), "the falcon wears its orange");
   assert.ok(p.has("#22d3ee") && !f.has("#22d3ee"), "the pigeon wears its cyan-indigo");
+});
+
+// Story peer review (2026-10-21): one strong medium per chapter, captions in both languages, a film slot ready for « le relais ».
+import { takeVtt } from "../lib/take-captions.ts";
+// lib/story-takes.ts reads the CDN manifest (a JSON import): the test reads its source.
+const TAKE_PRODUCTS = [...read("lib/story-takes.ts").matchAll(/\n  (\w+): \{\s*ratio:/g)].map((m) => m[1]);
+import { pickFilm } from "../lib/film-captions.ts";
+
+test("every take has its captions in both languages, one line per cue, cues in order inside the take", () => {
+  const specs = read("lib/story-takes.ts");
+  for (const id of TAKE_PRODUCTS) {
+    const m = specs.match(new RegExp(`\\n  ${id}: \\{[\\s\\S]*?cues: (\\[\\[[^\\n]*\\]\\])`));
+    assert.ok(m, `${id}: cues`);
+    const cues = JSON.parse(m[1]);
+    cues.forEach(([a, b], i) => {
+      assert.ok(a < b, `${id} cue ${i}`);
+      if (i) assert.ok(cues[i - 1][1] <= a, `${id} cue ${i} overlaps`);
+    });
+    for (const l of ["en", "fr"]) {
+      const words = messages(l).story.products.take.captions[id];
+      assert.equal(words.length, cues.length, `${l} ${id}: one line per cue`);
+      assert.ok(words.every((w) => w.trim()), `${l} ${id}: no empty line`);
+    }
+  }
+  const vtt = takeVtt([[0, 6], [6.5, 11]], ["One", "Two"]);
+  assert.equal(vtt, "WEBVTT\n\n00:00:00.000 --> 00:00:06.000\nOne\n\n00:00:06.500 --> 00:00:11.000\nTwo\n");
+});
+
+test("the captions route serves each take's lines same-origin and the player lists both languages", () => {
+  const route = read("app/[locale]/story/captions/[take]/route.ts");
+  assert.match(route, /text\/vtt/);
+  assert.match(route, /force-static/);
+  assert.match(read("app/components/story/TakeCard.tsx"), /\/story\/captions\/\$\{id\}/);
+});
+
+test("the engine shows a scene it rendered (the Old Port), Yasakia its batch in both languages, Yororis none until re-recorded", () => {
+  const takes = read("lib/story-takes.ts");
+  assert.match(takes, /orazaka: \{ ratio: "film", mp4: "products\/orazaka\/video\/old-port\.mp4"/);
+  assert.match(takes, /products\/yasakia\/tour\/take-en-batch\.mp4/);
+  assert.match(takes, /fr: \{ mp4: "products\/yasakia\/tour\/take-batch\.mp4"/);
+  assert.doesNotMatch(takes, /take-full|moment-fr-phone/);
+  assert.equal(read("lib/cdn-manifest.json").includes("take-full"), false, "the 3-minute walkthrough is out of the manifest");
+  assert.ok(TAKE_PRODUCTS.includes("orazaka") && !TAKE_PRODUCTS.includes("yororis"));
+});
+
+test("no take names Orazaka as the one doing a product's job, and Orochia's take is its feed and its tip", () => {
+  const caps = messages("en").story.products.take.captions;
+  for (const id of Object.keys(caps).filter((k) => k !== "orazaka")) assert.doesNotMatch(caps[id].join(" "), /Orazaka/, id);
+  assert.doesNotMatch(JSON.stringify(caps), /\bQA\b/);
+});
+
+test("the film slot takes the newest film whose files are on the CDN, else the one under it", () => {
+  const films = [
+    { id: "relais", base: "brand-films/relay/x", vtt: "relais.vtt" },
+    { id: "tournee", base: "brand-films/epic/y", vtt: "tour.vtt" },
+  ];
+  const has = (...bases) => (p) => bases.some((b) => ["webm", "mp4", "jpg"].map((e) => `${b}.${e}`).includes(p));
+  assert.equal(pickFilm(films, has("brand-films/epic/y")).id, "tournee");
+  assert.equal(pickFilm(films, has("brand-films/relay/x", "brand-films/epic/y")).id, "relais");
+  assert.equal(pickFilm(films, () => false).id, "tournee", "never a dead poster: the oldest is always the fallback");
+  assert.match(read("lib/story-film.ts"), /id: "tournee"/);
 });

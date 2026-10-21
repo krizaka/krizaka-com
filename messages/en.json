@@ -568,6 +568,40 @@
           "inLang": {
             "fr": "in French",
             "en": "in English"
+          },
+          "watchRender": "Watch a scene it rendered",
+          "renderPlayer": "Video: a scene rendered by {name}",
+          "captions": {
+            "orazaka": [
+              "A scene rendered by Orazaka: the Old Port at night, a few seconds of generated video."
+            ],
+            "yomizaka": [
+              "A lease is dropped into the library.",
+              "Yomizaka reads it and keeps its text.",
+              "A search for « deposit » finds the clause in every lease."
+            ],
+            "orochia": [
+              "The feed opens on short stories.",
+              "A story plays full screen.",
+              "A viewer tips its creator in one tap.",
+              "The creator sees her earnings."
+            ],
+            "kachizaka": [
+              "A league is created with friends.",
+              "Everyone picks the scores of the matches.",
+              "The standings update as results come in."
+            ],
+            "akinaza": [
+              "A customer picks a service and books.",
+              "The owner sees the day's walks.",
+              "A walk report and a photo go to the client.",
+              "The books roll up into a GST return, ready to review."
+            ],
+            "yasakia": [
+              "No batch yet: the agent has not met you.",
+              "The agent writes your portrait.",
+              "Your batch arrives: a few people, each with the reason why."
+            ]
           }
         }
       },
@@ -597,8 +631,7 @@
         "wire": "Wire Orazaka to {products}, where its use is still planned.",
         "reach": "Bring {products} to a dev preview, each proved on its own checklist.",
         "boardAria": "Where each product stands",
-        "cta": "Write to us",
-        "ctaProducts": "Explore the products"
+        "cta": "Write to us"
       },
       "kits": {
         "ui": {
