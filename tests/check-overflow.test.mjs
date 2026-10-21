@@ -20,7 +20,10 @@ test("a page that scrolls sideways is a failure that names what passes the edge;
 });
 
 test("CI runs the check against the container", () => {
+  // The pipeline is the org's node-ci.yml; the container job runs this repository's smoke script against the image.
   const ci = readFileSync(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8");
-  assert.match(ci, /node scripts\/check-overflow\.mjs --base http:\/\/localhost:3000/);
-  assert.match(ci, /playwright install --with-deps chromium/);
+  assert.match(ci, /container-smoke: scripts\/ci-container-smoke\.sh/);
+  const smoke = readFileSync(new URL("../scripts/ci-container-smoke.sh", import.meta.url), "utf8");
+  assert.match(smoke, /node scripts\/check-overflow\.mjs --base http:\/\/localhost:3000/);
+  assert.match(smoke, /playwright install --with-deps chromium/);
 });
