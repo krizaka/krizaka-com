@@ -181,3 +181,16 @@ npm test         # node:test — tests/*.test.mjs
 npm run build    # SSG build — run before pushing
 npm run start
 ```
+
+## Who builds this
+
+Krizaka is built in the open by a small crew, and every contribution is signed by who made it:
+
+| Contributor | Role |
+| :--- | :--- |
+| [Oussama (Wu-sama)](https://github.com/oussamaABID) | Founder: product, decisions, review |
+| Claude (Anthropic) | Co-author of the code, tests and pull requests |
+| Gemini (Antigravity) | Code review, audits and the roadmap's issues |
+| `orazaka[bot]` | Orazaka, the Krizaka engine: commits the images and videos it generates |
+| `krizaka-agents[bot]` | The team's automation: CI follow-up, issues, pull requests and the roadmap |
+| `dependabot[bot]` | Dependency updates |
