@@ -87,7 +87,7 @@
   mark's stroke draws, the scene rises in with its birds, a light sweeps — ~1.2 s, then the loop fades in (they never
   fight). Any input skips it; still under reduced motion and Save-Data; decorations fade in by themselves without
   JavaScript; the text is never part of it (LCP). No library, no canvas, no animation frame. **The scene** (the flock's
-  ambient loop, `AmbientLoop`, `brand-films/ambient/home-ambient-*`) sits in the flow under the figures, never over them.
+  ambient loop, `AmbientLoop`, `brand-films/ambient/home-valley-*`) sits in the flow under the figures, never over them.
 - **`/open-source`** (docs-hub) is **the technical view**, as refined as the home, everything read at build: the hero
   (one line, live figures — repositories, npm packages, Maven artifacts, the licence — GitHub); the stack (`StackCards`
   with a still mini-visual each: the identities for Krizaka UI, the BOM dependency at its Central version for Java;
