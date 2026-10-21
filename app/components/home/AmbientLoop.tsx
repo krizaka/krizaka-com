@@ -1,6 +1,6 @@
 "use client";
 
-/* The home's ambient loop — the flock on the hero's valley (krizaka-ui tools/brand-films, « home-ambient »): a muted,
+/* The home's ambient loop — the flock on the hero's valley (krizaka-ui tools/brand-films, « home-valley »): a muted,
    seamless 12 s backdrop that melts into the page's surface. The poster paints first (the hero's text stays the LCP);
    the video is created only after mount, plays only while on screen and pauses off it; under reduced motion or
    Save-Data the poster stays (the live flock too is still). The posters load lazily (the other theme's never), the film only after `load`. One per theme (html.light hides the other, which then never intersects, never loads);

@@ -3,7 +3,7 @@
    and the figures that back them; on the right, Plate I — the five birds of the film, each with its promise as the film
    says it (BirdPlate, the cues of site.story.world). The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first paint (LCP) — never revealed,
    never part of the intro. Under the figures, IN THE FLOW (the birds never cover a figure), the scene: the flock's
-   ambient loop (krizaka-ui tools/brand-films « home-ambient », AmbientLoop — the poster first, the loop only on screen,
+   ambient loop (krizaka-ui tools/brand-films « home-valley », AmbientLoop — the poster first, the loop only on screen,
    the poster alone under reduced motion or Save-Data), faded into the page.
 
    Under the actions, the products put forward: a quiet row of their seven marks (from @krizaka/ui), each one a link to
