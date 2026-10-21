@@ -16,7 +16,7 @@ export const MAX_AGE_DAYS = 60;
 
 /** Products that wore « Dev preview » before the gate existed keep it until this date while their gaps close. The test
  *  `the real waivers have not expired` fails the day it ends. */
-export const WAIVERS = { orazaka: "2026-11-01", orochia: "2026-11-01" };
+export const WAIVERS = { orazaka: "2026-11-15", orochia: "2026-11-01" }; // orazaka extended by Oussama on 2026-10-21 (audit trail + ops.cost, ADR-085)
 
 const DAY = 86_400_000;
 const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);

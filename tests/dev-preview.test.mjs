@@ -93,3 +93,8 @@ test("the build reads the checklists before it builds", () => {
   assert.match(read("package.json"), /gen-dev-preview\.mjs/);
   assert.match(read(".gitignore"), /dev-preview-checklists\.json/);
 });
+
+test("the Orazaka waiver runs to 2026-11-15 (extended 2026-10-21), Orochia's stays 2026-11-01", () => {
+  assert.equal(WAIVERS.orazaka, "2026-11-15");
+  assert.equal(WAIVERS.orochia, "2026-11-01");
+});
