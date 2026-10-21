@@ -45,6 +45,11 @@
   border: 1px solid var(--kz-border-default); box-shadow: var(--kz-shadow-md); }
 @media (max-width: 640px) { .kz-home-scene { height: 88vw; } }
 .kz-ambient, .kz-ambient-layer { position: absolute; inset: 0; }
+.kz-ambient-layer { container-type: size; }
+/* The live flock in the film's frame: it covers the layer like the film (object-fit: cover, anchored at the bottom). */
+.kz-ambient-layer .kz-flock { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: max(100cqw, calc(100cqh * 16 / 9)); }
+.kz-ambient-layer .kz-flock-tall { display: none; width: max(100cqw, calc(100cqh * 4 / 5)); }
+@media (max-width: 640px) { .kz-ambient-layer .kz-flock-wide { display: none; } .kz-ambient-layer .kz-flock-tall { display: block; } }
 .kz-ambient-layer :is(img, video) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; }
 html.light .kz-ambient-layer[data-theme-only="dark"], html:not(.light) .kz-ambient-layer[data-theme-only="light"] { display: none; }
 .kz-ambient-layer video { transition: opacity 1s var(--kz-ease, ease); }
