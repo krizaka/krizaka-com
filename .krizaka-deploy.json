@@ -1,0 +1,11 @@
+{
+  "app": "krizaka-com",
+  "url": "https://www.krizaka.com",
+  "health": "/api/health",
+  "indexing": "on",
+  "indexingVariable": false,
+  "spec": "deploy/digitalocean/app.yaml",
+  "product": "krizaka",
+  "seoFamily": { "script": "scripts/check-seo-family.mjs", "args": ["--organization", "--types", "Organization,WebSite"] },
+  "waitMinutes": 25
+}

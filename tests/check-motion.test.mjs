@@ -38,6 +38,9 @@ test("a page without a visible flow is a failure, not a pass", () => {
 });
 
 test("CI runs the check against the container", () => {
+  // The pipeline is the org's node-ci.yml; the container job runs this repository's smoke script against the image.
   const ci = readFileSync(new URL("../.github/workflows/ci.yml", import.meta.url), "utf8");
-  assert.match(ci, /node scripts\/check-motion\.mjs --base http:\/\/localhost:3000/);
+  assert.match(ci, /container-smoke: scripts\/ci-container-smoke\.sh/);
+  const smoke = readFileSync(new URL("../scripts/ci-container-smoke.sh", import.meta.url), "utf8");
+  assert.match(smoke, /node scripts\/check-motion\.mjs --base http:\/\/localhost:3000/);
 });
