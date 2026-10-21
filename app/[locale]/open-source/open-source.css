@@ -20,7 +20,7 @@
 .os-links a:hover { text-decoration: underline; }
 /* `position: relative`: the sparkline's screen-reader table (@krizaka/charts `.kzc-sr`, absolute) stays inside the table's
    horizontal scroller instead of widening the page (it overflowed /fr/open-source at 768 px). */
-.os-downloads { position: relative; display: inline-flex; align-items: center; justify-content: flex-end; gap: 0.5rem; font-variant-numeric: tabular-nums; }
+.os-downloads { position: relative; display: inline-flex; align-items: center; justify-content: flex-end; gap: 0.5rem; font-variant-numeric: var(--kz-figures, lining-nums tabular-nums); }
 .os-downloads > :first-child:not(:last-child) { flex: none; width: 72px; color: var(--kz-text-secondary); }
 
 .os-updated { font-family: var(--font-mono); font-size: 11.5px; color: var(--kz-text-secondary); }

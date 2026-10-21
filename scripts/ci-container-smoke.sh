@@ -34,5 +34,8 @@ node scripts/check-overflow.mjs --base http://localhost:3000
 # The engine flow's dots travel and the engine breathes (reduced motion OFF; at rest when ON): check-overflow runs
 # under reduced motion and could not see a frozen figure.
 node scripts/check-motion.mjs --base http://localhost:3000
+# A row of figures is one line of lining numbers: lining, tabular digits and one baseline per row, 360/768/1440, dark
+# and light, EN and FR (scripts/figures-lib.mjs; Oussama, 2026-10-21).
+node scripts/check-figures.mjs --base http://localhost:3000
 # A footer link lands at the top of its page, heading focused; one footer landmark per page (/story peer review).
 node scripts/check-arrival.mjs --base http://localhost:3000

@@ -68,13 +68,13 @@ test("Akinaza's receipt: GST and QST to the cent, computed, never typed", async 
 // Kachizaka's points (bug 2026-10-20, then #417: « 46     points »). The earlier fix gave the counter a min-width of 3ch,
 // which left a hole after a two-digit total. The counter now takes its own width (NumberTicker reserves the final
 // value's width itself), aligned at its start, the unit right after it on the same baseline.
-test("the points: the ticker takes its own width at its start, the unit follows it, no hole, tabular digits", () => {
+test("the points: the ticker takes its own width at its start, the unit follows it, no hole, lining tabular digits", () => {
   assert.match(visuals, /<NumberTicker [^>]*align="start"/);
   assert.match(visuals, /<span className="pv-score-unit">\{v\.points\}<\/span>/);
   assert.doesNotMatch(css, /\.kz-count \{[^}]*min-width/, "a fixed width leaves a hole after two digits");
   assert.doesNotMatch(css, /\.pv-score-value span\b/, "a descendant selector would restyle the ticker's own spans");
   const value = css.match(/^\.pv-score-value \{([^}]*)\}/m)?.[1] ?? "";
-  assert.match(value, /font-variant-numeric: tabular-nums/);
+  assert.match(value, /font-variant-numeric: var\(--kz-figures, lining-nums tabular-nums\)/);
   assert.match(value, /align-items: baseline/);
   assert.match(value, /gap: 0\.3em/);
 });

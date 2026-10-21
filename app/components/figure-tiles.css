@@ -7,4 +7,4 @@
 }
 .kz-fig-grid > * { min-width: 0; }
 .kz-fig-grid > * > p:first-child { flex: 1; }
-.kz-fig-grid > * > p:nth-child(2) { white-space: nowrap; }
+.kz-fig-grid > * > p:nth-child(2) { white-space: nowrap; font-variant-numeric: var(--kz-figures, lining-nums tabular-nums); }

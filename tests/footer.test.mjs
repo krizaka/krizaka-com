@@ -2,14 +2,20 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-// The story lives in the footer's Krizaka column (not in the top bar): the footer must link /story in both languages.
+// The story lives in the footer's « Krizaka » column — the family's (@krizaka/ui 3.39, krizaka-ui#438, one calm band):
+// our story, the blog and contact, in the reader's language. www no longer repeats them in a column of its own.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const footer = read("app/components/SiteFooter.tsx");
 
-test("the footer's Krizaka column links Our story to /story", () => {
-  const column = footer.slice(footer.indexOf('<FamilyFooter.Column title={f.siteColumn}>'), footer.indexOf("</FamilyFooter.Column>"));
-  assert.match(column, /<Link href=\{to\("\/story"\)\} prefetch=\{false\} aria-current=\{here\("\/story"\)\}>\{f\.story\}<\/Link>/);
+test("the family's Krizaka column links Our story to /story (both languages); www's own column does not repeat it", async () => {
+  const { companyLinks, familyLabels } = await import("@krizaka/ui/sites");
+  const story = companyLinks.find((l) => l.id === "story");
+  assert.equal(story.url.en, "https://www.krizaka.com/story");
+  assert.equal(story.url.fr, "https://www.krizaka.com/fr/story");
+  assert.equal(familyLabels.en.company.story, "Our story");
+  const column = footer.slice(footer.indexOf("<FamilyFooter.Column title={f.siteColumn}>"), footer.indexOf("</FamilyFooter.Column>"));
+  assert.doesNotMatch(column, /f\.story|f\.blog|f\.contact|BLOG_URL/);
 });
 
 test("the footer's story label exists in both languages", () => {

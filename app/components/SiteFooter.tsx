@@ -5,18 +5,17 @@ import { usePathname } from "next/navigation";
 import { SiteFooter as FamilyFooter } from "@krizaka/ui/site-footer";
 import { familyLabels } from "@krizaka/ui/sites";
 import { useI18n } from "./I18nProvider";
-import { BLOG_URL } from "@/lib/site";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
-import { useContactHref } from "./useContactHref";
 import { PLATFORM, changelogHref } from "@/lib/changelog-data";
 import { format } from "@/lib/i18n";
 
-/* The footer (NAV-SYS) is @krizaka/ui's SiteFooter: this site's own column (its pages), the Krizaka family in columns
-   (fed by @krizaka/ui/sites, the same on every site), the signature, Montréal. The legal links end the signature line. */
+/* The footer (NAV-SYS) is @krizaka/ui's SiteFooter, one calm band (krizaka-ui#434): this site's own column — only what
+   the family's columns do not hold (the products, open source, the changelog) — beside the family's (Products · Open
+   source · Krizaka: our story, the blog, contact, from @krizaka/ui/sites), then one line: the signature, Montréal and the
+   legal links. Nothing twice. */
 export default function SiteFooter() {
   const { t, locale } = useI18n();
   const f = t.site.footer;
-  const contactHref = useContactHref();
   const pathname = usePathname();
   // Locale-prefixed addresses: an unprefixed href answers a 307 from proxy.ts, and Next.js skips its scroll-to-top for a
   // navigation that went through a redirect (the visitor arrived mid-page, 2026-10-21). The prefix goes straight to the page.
@@ -55,16 +54,7 @@ export default function SiteFooter() {
           <Link href={to("/open-source")} prefetch={false} aria-current={here("/open-source")}>{f.openSource}</Link>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
-          <Link href={to("/story")} prefetch={false} aria-current={here("/story")}>{f.story}</Link>
-        </FamilyFooter.Link>
-        <FamilyFooter.Link asChild>
           <Link href={to("/changelog")} prefetch={false} aria-current={here("/changelog")}>{f.changelog}</Link>
-        </FamilyFooter.Link>
-        <FamilyFooter.Link asChild>
-          <a href={BLOG_URL}>{f.blog}</a>
-        </FamilyFooter.Link>
-        <FamilyFooter.Link asChild>
-          <Link href={to(contactHref)} aria-current={here("/contact")}>{f.contact}</Link>
         </FamilyFooter.Link>
       </FamilyFooter.Column>
     </FamilyFooter>
