@@ -39,8 +39,8 @@ export interface HomeFigures {
   maven: number;
 }
 
-/** The flock on the valley, looping (krizaka-ui tools/brand-films « home-ambient »): wide and 4:5, dark and light. */
-const ambient = (cut: string, theme: string) => video(`brand-films/ambient/home-ambient-${cut}-${theme}`);
+/** The valley, looping, without its birds (the live Flock stands on it; krizaka-ui tools/brand-films « home-valley »): wide and 4:5, dark and light. */
+const ambient = (cut: string, theme: string) => video(`brand-films/ambient/home-valley-${cut}-${theme}`);
 const themes = (cut: string) => ({ dark: ambient(cut, "dark"), ["light"]: ambient(cut, "light") });
 const AMBIENT: AmbientSet = { wide: themes("16x9"), tall: themes("4x5") };
 const film = video(RELAY_BASE);
