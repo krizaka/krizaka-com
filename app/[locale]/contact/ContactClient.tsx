@@ -135,10 +135,10 @@ export default function ContactClient() {
                   alignItems: "center",
                   textAlign: "center",
                   padding: "40px 28px 32px",
-                  borderRadius: "20px",
+                  borderRadius: "0",
                   border: "1px solid var(--kz-border-subtle)",
-                  background: "color-mix(in srgb, var(--kz-surface-1) 70%, transparent)",
-                  backdropFilter: "blur(16px)",
+                  background: "var(--kz-surface-1)",
+                  boxShadow: "var(--kz-shadow-md)",
                 }}
               >
                 {/* Mascot */}
@@ -164,8 +164,6 @@ export default function ContactClient() {
                       fontSize: "10px",
                       fontWeight: 700,
                       color: "var(--kz-text-secondary)",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
                     }}
                   >
                     GitHub

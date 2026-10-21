@@ -1,5 +1,7 @@
-/* Home hero — centred: the Krizaka mark, who Krizaka is, one promise, one action (and the film, quietly), the figures
-   that back them. A server component: the title, the lead and the actions are the first paint (LCP) — never revealed,
+/* Home hero — the first page of the field notebook (Cahier, krizaka-ui ADR-004, #417): asymmetric, never centred. On the
+   left, the date line of the notes, who Krizaka is, one promise, one action (and the film, quietly), the products' marks
+   and the figures that back them; on the right, Plate I — the five birds of the film, each with its promise as the film
+   says it (BirdPlate, the cues of site.story.world). The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first paint (LCP) — never revealed,
    never part of the intro. Under the figures, IN THE FLOW (the birds never cover a figure), the scene: the flock's
    ambient loop (krizaka-ui tools/brand-films « home-ambient », AmbientLoop — the poster first, the loop only on screen,
    the poster alone under reduced motion or Save-Data), faded into the page.
@@ -14,6 +16,7 @@
 import { ForwardIcon } from "@krizaka/icons";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
+import { BirdPlate } from "@krizaka/ui/bird-plate";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { format, getDictionary } from "@/lib/i18n";
@@ -46,7 +49,9 @@ const DIM: readonly ProductStatus[] = ["construction", "upcoming"];
 const codeFilm = video(FILM_BASE);
 
 export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
-  const t = getDictionary(locale).site.home.hero;
+  const dict = getDictionary(locale);
+  const t = dict.site.home.hero;
+  const cues = dict.site.story.world.cues;
   const counted = [
     { id: "repositories", value: figures.repositories, label: t.proofs.repositories },
     { id: "npm", value: figures.npm, label: t.proofs.npm },
@@ -58,15 +63,20 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
   const cols = { "--kz-fig-cols": grid.wide, "--kz-fig-cols-narrow": grid.narrow } as CSSProperties;
 
   return (
-    <SectionBackdrop as="section" id="hero" className="kz-home-hero" grid aria-labelledby="hero-title">
+    <SectionBackdrop as="section" id="hero" className="kz-home-hero" aria-labelledby="hero-title">
       <HeroIntro />
       <div data-backdrop-layer aria-hidden className="kz-intro-sweep" />
 
-      <Page className="kz-home-hero-inner">
-        <span className="kz-intro-mark kz-intro-deco" aria-hidden>
-          <KrizakaLogo size={88} />
-        </span>
-        <p className="kz-home-eyebrow">{t.eyebrow}</p>
+      <Page className="kz-home-hero-inner" margin>
+        <div className="kz-home-hero-grid">
+        <div className="kz-home-hero-words">
+        <p className="kz-home-eyebrow">
+          <span className="kz-home-number">{t.number}</span>
+          <span className="kz-intro-mark kz-intro-deco" aria-hidden>
+            <KrizakaLogo size={28} />
+          </span>
+          {t.eyebrow}
+        </p>
         <h1 id="hero-title" className="kz-home-title">
           {t.title}
         </h1>
@@ -102,6 +112,20 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           ))}
         </dl>
         <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
+        </div>
+        <BirdPlate
+          className="kz-home-plate"
+          title={t.plate.title}
+          subtitle={t.plate.subtitle}
+          figures={[
+            { bird: "falcon", label: t.plate.falcon, promise: cues.falcon },
+            { bird: "owl", label: t.plate.owl, promise: cues.owl },
+            { bird: "duck", label: t.plate.duck, promise: cues.duck },
+            { bird: "flamingo", label: t.plate.flamingo, promise: cues.flamingo },
+            { bird: "pigeon", label: t.plate.pigeon, promise: cues.pigeon },
+          ]}
+        />
+        </div>
       </Page>
 
       <div className="kz-home-scene kz-intro-deco" aria-hidden>

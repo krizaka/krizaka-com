@@ -18,7 +18,7 @@ function Dot({ status, className }: { status: Status; className?: string }) {
     <span
       aria-hidden
       className={cn(
-        "inline-block size-1.5 shrink-0 rounded-full",
+        "inline-block size-1.5 shrink-0 rotate-45",
         status === "upcoming" || status === "devPreview" ? "bg-accent" : status === "development" ? "border-[1.5px] border-accent bg-accent/40" : "border-[1.5px] border-accent bg-transparent",
         className,
       )}
@@ -53,7 +53,7 @@ export function ProductStatus({
       data-status={status}
       title={words.long}
       className={cn(
-        "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border border-border-default px-2 py-px align-middle font-mono text-[10px] font-semibold uppercase leading-4 tracking-[0.1em] text-fg-accent",
+        "inline-flex shrink-0 items-center gap-1.5 whitespace-nowrap rounded-sm border border-border-default px-1.5 py-px align-middle font-mono text-[11.5px] leading-4 text-fg-secondary",
         className,
       )}
     >

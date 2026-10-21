@@ -112,7 +112,8 @@ export default function OpenStack({ locale }: { locale: string; mavenArtifacts?:
   return (
     <Section
       id="stack"
-      eyebrow={s.eyebrow}
+      number={s.number}
+      margin
       title={s.title}
       lead={s.lead}
       reveal

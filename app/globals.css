@@ -276,11 +276,11 @@ body {
    --kz-surface-0 (krizaka/krizaka-ui#38), so `.kz-backdrop` from @krizaka/ui needs no override here. */
 /* `glide`: rises from the page surface into the brand tint and settles back on it — consecutive sections of
    different brands (the home) meet on the surface, never on a hard band. */
-html .kz-backdrop.bp-glide { background: linear-gradient(180deg, var(--kz-surface-0), var(--kz-brand-gradient-from) 24%, var(--kz-brand-gradient-via) 62%, var(--kz-surface-0)); }
+html .kz-backdrop.bp-glide { background: var(--kz-surface-0); }
 html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
 
 /* Terminal (Orazaka three commands) */
-.bp-term { border-radius: 16px; overflow: hidden; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1); box-shadow: var(--kz-shadow-lg); }
+.bp-term { border-radius: 0; overflow: hidden; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1); box-shadow: var(--kz-shadow-lg); }
 .bp-term pre { margin: 0; padding: 18px; font-family: var(--font-mono); font-size: 13.5px; line-height: 2; color: var(--kz-text-primary); overflow-x: auto; }
 .bp-term pre span { color: var(--kz-accent-text); }
 /* Light theme: the footage is screened onto the tint (its shadows vanish), never a grey panel. */
@@ -383,12 +383,12 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
 .rd-links { display: flex; flex-wrap: wrap; gap: 10px; }
 .rd-status { display: grid; gap: 10px; }
 .rd-release { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 14px;
-  border-radius: 14px; background: var(--kz-surface-1); border: 1px solid var(--kz-border-default); text-decoration: none; color: inherit; }
+  border-radius: 0; background: var(--kz-surface-1); border: 1px solid var(--kz-border-default); text-decoration: none; color: inherit; }
 .rd-release:hover { border-color: var(--kz-border-strong); }
 .rd-release:focus-visible { outline: 2px solid var(--kz-accent); outline-offset: 2px; }
 .rd-release > code { font-family: var(--kz-font-mono); font-size: 12.5px; color: var(--kz-text-primary); overflow-wrap: anywhere; }
 .rd-next { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-.rd-next li { padding: 12px 14px 12px 16px; border-radius: 14px; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary);
+.rd-next li { padding: 12px 14px 12px 16px; border-radius: 0; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary);
   background: color-mix(in srgb, var(--kz-warning) 6%, var(--kz-surface-1)); border: 1px solid color-mix(in srgb, var(--kz-warning) 26%, transparent);
   box-shadow: inset 3px 0 0 var(--kz-warning); }
 .rd-next a { display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; font-family: var(--kz-font-mono); font-size: 12px; font-weight: 700;

@@ -18,7 +18,7 @@ const PRINCIPLES: { id: "sovereign" | "accessible" | "bilingual" | "tested" | "o
 export default function Principles({ locale, repositories }: { locale: string; repositories: number }) {
   const p = getDictionary(locale).site.home.principles;
   return (
-    <Section id="principles" eyebrow={p.eyebrow} title={p.title} reveal divider>
+    <Section id="principles" number={p.number} title={p.title} reveal divider margin>
       <ul className="kz-home-principles">
         {PRINCIPLES.map(({ id, icon: Icon }, i) => (
           <li key={id} {...reveal(i % 3)}>

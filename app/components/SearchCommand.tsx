@@ -100,7 +100,7 @@ export function SearchCommand({
             >
               <span className="flex w-full items-center justify-between gap-3">
                 <span className="text-[13.5px] font-semibold">{item.title}</span>
-                <Command.Shortcut className="uppercase tracking-wide">{item.category}</Command.Shortcut>
+                <Command.Shortcut className="font-mono">{item.category}</Command.Shortcut>
               </span>
               <span className="text-[11.5px] text-fg-secondary">{item.desc}</span>
             </Command.Item>

@@ -13,7 +13,7 @@ export function DocsCrumb({ pathname }: { pathname: string }) {
   const { t } = useI18n();
   const section = docsSectionOf(pathname);
   const crumb =
-    "inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-full px-3 text-sm font-medium text-fg-secondary no-underline transition-colors " +
+    "inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-sm px-3 text-sm font-medium text-fg-secondary no-underline transition-colors " +
     "hover:bg-surface-2 hover:text-fg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring";
   return (
     <nav aria-label={t.site.menu.breadcrumb} className="hidden min-w-0 md:block">
