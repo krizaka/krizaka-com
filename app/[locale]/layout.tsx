@@ -4,6 +4,7 @@ import { ThemeProvider, ThemeScript } from "@krizaka/ui/theme";
 import { ThemeSync } from "../components/SiteTheme";
 import { I18nProvider } from "../components/I18nProvider";
 import SiteFooter from "../components/SiteFooter";
+import RouteArrival from "../components/RouteArrival";
 import { JsonLd } from "../components/JsonLd";
 import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
@@ -171,6 +172,7 @@ export default async function RootLayout({
         <ThemeProvider defaultMode="dark">
           <ThemeSync />
           <I18nProvider locale={validatedLocale} messages={getDictionary(validatedLocale)}>
+            <RouteArrival />
             {children}
             {/* The one footer of the site: here, outside every page's main element, so it is the page's single contentinfo landmark. */}
             <SiteFooter />

@@ -9,7 +9,8 @@ import { localizedMetadata } from "@/lib/seo";
 import { video } from "@/lib/cdn";
 import { contactHref } from "@/lib/contact";
 import { ENGINE_USES } from "@/lib/engine-uses";
-import { FILM_BASE, TOUR_BASE } from "@/lib/film-captions";
+import { FILM_BASE } from "@/lib/film-captions";
+import { storyFilm } from "@/lib/story-film";
 import { asLocale, format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
@@ -75,7 +76,7 @@ export default async function StoryPage({ params }: Props) {
   const h = t.site.products;
   const e = h.engine;
   const engine = product(ENGINE);
-  const film = video(TOUR_BASE);
+  const film = storyFilm();
   const codeFilm = video(FILM_BASE);
   const figures = [
     { id: "repos", label: st.open.figures.repos, value: publicRepositoryCount() },
@@ -115,7 +116,7 @@ export default async function StoryPage({ params }: Props) {
   /** The product's real take (a poster, played in a lightbox on click), when one is recorded; the mini-visual otherwise. */
   const takeProof = (id: (typeof PRODUCT_CHAPTERS)[number] | typeof ENGINE, name: string) => {
     const take = takeOf(id, locale);
-    return take ? <TakeCard take={take} name={name} other={Boolean(take.lang && take.lang !== locale)} /> : null;
+    return take ? <TakeCard take={take} name={name} id={id} other={Boolean(take.lang && take.lang !== locale)} /> : null;
   };
 
   const productChapter = (id: (typeof PRODUCT_CHAPTERS)[number]) => {
@@ -217,7 +218,7 @@ export default async function StoryPage({ params }: Props) {
             promise={promiseOf(t, WHO_BIRD)}
             proof={
               <FilmLightbox
-                film={{ mp4: film.mp4, poster: film.poster, vtt: "tour.vtt" }}
+                film={{ mp4: film.mp4, poster: film.poster, vtt: film.vtt }}
                 fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}
                 trigger={
                   <button type="button" className="st-film" aria-label={`${st.who.film} · ${st.who.filmLength}`}>
@@ -342,14 +343,9 @@ export default async function StoryPage({ params }: Props) {
               </div>
             }
             actions={
-              <>
-                <ButtonLink href={contactHref("story")} variant="primary" size="lg">
-                  {st.next.cta} <ForwardIcon size={15} />
-                </ButtonLink>
-                <ButtonLink href={PRODUCTS_ANCHOR} size="lg">
-                  {st.next.ctaProducts}
-                </ButtonLink>
-              </>
+              <ButtonLink href={contactHref("story")} variant="primary" size="lg">
+                {st.next.cta} <ForwardIcon size={15} />
+              </ButtonLink>
             }
           />
         </TocLayout>

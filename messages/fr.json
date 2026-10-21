@@ -568,6 +568,40 @@
           "inLang": {
             "fr": "en français",
             "en": "en anglais"
+          },
+          "watchRender": "Voir une scène rendue par le moteur",
+          "renderPlayer": "Vidéo : une scène rendue par {name}",
+          "captions": {
+            "orazaka": [
+              "Une scène rendue par Orazaka : le Vieux-Port la nuit, quelques secondes de vidéo générée."
+            ],
+            "yomizaka": [
+              "Un bail est déposé dans la bibliothèque.",
+              "Yomizaka le lit et garde son texte.",
+              "Une recherche sur « dépôt » trouve la clause dans chaque bail."
+            ],
+            "orochia": [
+              "Le fil s'ouvre sur de courtes histoires.",
+              "Une histoire se lit en plein écran.",
+              "Un spectateur donne un pourboire à la créatrice en un geste.",
+              "La créatrice voit ses revenus."
+            ],
+            "kachizaka": [
+              "Une ligue se crée entre amis.",
+              "Chacun choisit les pointages des matchs.",
+              "Le classement se met à jour au fil des résultats."
+            ],
+            "akinaza": [
+              "Un client choisit un service et réserve.",
+              "La propriétaire voit les promenades du jour.",
+              "Un rapport de promenade et une photo partent vers le client.",
+              "Les livres se résument en une déclaration de TPS, prête à réviser."
+            ],
+            "yasakia": [
+              "Pas encore de sélection : l'agent ne vous connaît pas.",
+              "L'agent écrit votre portrait.",
+              "Votre sélection arrive : quelques personnes, chacune avec la raison."
+            ]
           }
         }
       },
@@ -597,8 +631,7 @@
         "wire": "Brancher Orazaka à {products}, où son usage est encore prévu.",
         "reach": "Amener {products} en préversion de développement, chacun prouvé sur sa propre liste de contrôle.",
         "boardAria": "Où en est chaque produit",
-        "cta": "Écrivez-nous",
-        "ctaProducts": "Découvrir les produits"
+        "cta": "Écrivez-nous"
       },
       "kits": {
         "ui": {

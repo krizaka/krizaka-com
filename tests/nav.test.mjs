@@ -33,7 +33,7 @@ test("every link to the products leads to the home's section, never to /products
   for (const file of ["app/components/SiteFooter.tsx", "app/components/SearchCommand.tsx", "app/[locale]/story/page.tsx"]) {
     assert.doesNotMatch(read(file), /["']\/products["']/, file);
   }
-  assert.match(read("app/components/SiteFooter.tsx"), /href=\{PRODUCTS_ANCHOR\}/);
+  assert.match(read("app/components/SiteFooter.tsx"), /href=\{to\(PRODUCTS_ANCHOR\)\}/);
   const sitemap = read("app/sitemap.ts");
   assert.doesNotMatch(sitemap, /"\/products"/);
   assert.doesNotMatch(read("lib/page-templates.ts"), /"\/products"/);

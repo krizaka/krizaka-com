@@ -100,7 +100,7 @@ test("the changelog route, its feed and its template exist; the page is in the s
 
 test("the footer shows the version and the UI version and links /changelog#<version>; the page owns that anchor", () => {
   const footer = read("app/components/SiteFooter.tsx");
-  assert.match(footer, /href=\{changelogHref\(\)\}/);
+  assert.match(footer, /href=\{to\(changelogHref\(\)\)\}/);
   assert.match(footer, /PLATFORM\.ui/);
   assert.match(read("lib/changelog-data.ts"), /`\/changelog#\$\{version\}`/);
   assert.match(read("app/[locale]/changelog/page.tsx"), /<span id=\{PLATFORM\.site\}>/);

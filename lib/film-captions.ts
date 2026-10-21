@@ -72,3 +72,15 @@ export function prefersLightFilm(viewer: Viewer): boolean {
   const connection = (viewer.navigator as { connection?: { saveData?: boolean } } | undefined)?.connection;
   return Boolean(viewer.matchMedia?.("(prefers-reduced-motion: reduce)").matches || connection?.saveData);
 }
+
+/** A film the /story chapter « Who we are » may show: its files (`<base>.webm|.mp4|.jpg`) and its captions route under /<locale>/story/. */
+export interface StoryFilm {
+  id: string;
+  base: string;
+  vtt: string;
+}
+
+/** The slot of the reference film: the first of `films` (newest first) whose three files are all on the CDN; the last one (the oldest, always uploaded) otherwise. */
+export function pickFilm(films: readonly StoryFilm[], onCdn: (path: string) => boolean): StoryFilm {
+  return films.find((f) => ["webm", "mp4", "jpg"].every((ext) => onCdn(`${f.base}.${ext}`))) ?? films[films.length - 1]!;
+}
