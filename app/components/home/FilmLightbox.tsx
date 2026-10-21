@@ -45,14 +45,14 @@ export default function FilmLightbox({ film, fallback, trigger }: { film: Lightb
         )}
       </Dialog.Trigger>
       <Dialog.Content size="lg" closeLabel={h.filmClose} className="kz-home-film">
-        <Dialog.Title className="sr-only">{light ? w.title : w.tour.player}</Dialog.Title>
+        <Dialog.Title className="sr-only">{light ? w.title : w.relay.player}</Dialog.Title>
         <VideoPlayer
           key={play.mp4}
           src={play.mp4}
           poster={play.poster}
           preload="none"
           autoPlay={!light}
-          title={light ? w.player : w.tour.player}
+          title={light ? w.player : w.relay.player}
           tracks={(["en", "fr"] as const).map((lang) => ({ src: `/${lang}/story/${play.vtt}`, srcLang: lang, label: w.captions[lang], default: lang === locale }))}
           labels={labels}
         />
