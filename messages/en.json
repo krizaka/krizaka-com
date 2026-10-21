@@ -342,6 +342,7 @@
         "number": "§ 4",
         "eyebrow": "How we work",
         "title": "Five rules, checked rather than promised.",
+        "folio": "page 4 of 6",
         "items": {
           "sovereign": {
             "title": "Your data stays where you decide",
@@ -369,8 +370,10 @@
         "number": "§ 5",
         "eyebrow": "Montréal",
         "title": "A Montréal studio, here for the long run.",
-        "body": "Technologies Krizaka Inc. is based in Montréal, Québec — open, accessible, bilingual, tested.",
-        "story": "Read our story"
+        "body": "Technologies Krizaka Inc. is based in Montréal, Québec: open, accessible, bilingual, tested.",
+        "story": "Read our story",
+        "stamp": "Made in Montréal",
+        "folio": "page 5 of 6"
       },
       "contact": {
         "number": "§ 6",
