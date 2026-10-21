@@ -194,7 +194,8 @@
       "description": "Connector automation (Jira, Slack, WhatsApp, Messenger, CLI agents) with Quartz scheduling and execution telemetry.",
       "dependsOn": [
         "orazaka-build",
-        "krizaka-billing"
+        "krizaka-billing",
+        "orazaka-ai-engine"
       ]
     },
     {
@@ -233,17 +234,6 @@
       "kind": "npm",
       "layer": "app",
       "description": "Next.js (App Router) client of the Orazaka platform with its mandatory BFF.",
-      "dependsOn": [
-        "orazaka-ui-kit"
-      ]
-    },
-    {
-      "name": "orazaka-web-admin",
-      "url": "https://github.com/krizaka/orazaka-web-admin",
-      "path": "orazaka-apps/ui/orazaka-web-admin",
-      "kind": "npm",
-      "layer": "app",
-      "description": "Next.js SecOps & administration console of the Orazaka platform.",
       "dependsOn": [
         "orazaka-ui-kit"
       ]
@@ -304,21 +294,6 @@
       "runtime": "node",
       "version": null,
       "description": "Expo / React Native client of the Orazaka platform (talks to the edge with Bearer tokens).",
-      "ports": {
-        "inbound": [],
-        "outbound": []
-      }
-    },
-    {
-      "id": "orazaka-web-admin",
-      "path": "orazaka-apps/ui/orazaka-web-admin",
-      "repository": "orazaka-web-admin",
-      "owner": "orazaka",
-      "role": "client",
-      "layer": "app",
-      "runtime": "node",
-      "version": null,
-      "description": "Next.js SecOps & administration console of the Orazaka platform.",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -839,6 +814,21 @@
       }
     },
     {
+      "id": "krizaka-idempotency",
+      "path": "krizaka/krizaka-platform-kit/krizaka-idempotency",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "HTTP Idempotency-Key, written once: an action runs at most once per key, a retry with the same key and request replays the stored response, the same key with another request is a 422 Problem Details; PostgreSQL or in-memory store, observed. Promoted from Orazaka (ADR-083).",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
       "id": "krizaka-messaging",
       "path": "krizaka/krizaka-platform-kit/krizaka-messaging",
       "repository": "krizaka-platform-kit",
@@ -863,6 +853,36 @@
       "runtime": "jvm",
       "version": "0.2.0",
       "description": "One observability standard for Spring Boot services: every service names itself (product, service, version) or does not start, its metrics carry those names as common tags, and the defaults every service repeats — ECS JSON console logs, health/info/prometheus exposed, 10% trace sampling — are set once, at the lowest priority.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "krizaka-persistence",
+      "path": "krizaka/krizaka-platform-kit/krizaka-persistence",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "The tables of the kit's JDBC stores (outbox, message claims, idempotency keys, app-config) created and kept up to date by Flyway at startup, in their own history table, only for the stores a service declares; production defaults for the connection pool.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "krizaka-ratelimit",
+      "path": "krizaka/krizaka-platform-kit/krizaka-ratelimit",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "A requests-per-minute limit per key, written once: a token bucket per key (client address by default, or any key you resolve), observe or enforce, 429 with Retry-After as Problem Details, observed. Promoted from the Orazaka edge (ADR-083) and krizaka-users.",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -899,6 +919,21 @@
       }
     },
     {
+      "id": "krizaka-spring-boot-starter-idempotency",
+      "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-idempotency",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "HTTP Idempotency-Key in one dependency: krizaka-idempotency (at most once per key, replay, 422 on reuse, PostgreSQL store) with Spring MVC and JDBC. Add your JDBC driver.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
       "id": "krizaka-spring-boot-starter-observability",
       "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-observability",
       "repository": "krizaka-platform-kit",
@@ -914,6 +949,21 @@
       }
     },
     {
+      "id": "krizaka-spring-boot-starter-persistence",
+      "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-persistence",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "The tables of the kit's JDBC stores migrated at startup in one dependency: krizaka-persistence (Flyway, its own history table, only the declared stores, pool defaults) with Spring JDBC and the PostgreSQL driver.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
       "id": "krizaka-spring-boot-starter-rabbitmq",
       "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-rabbitmq",
       "repository": "krizaka-platform-kit",
@@ -923,6 +973,21 @@
       "runtime": "jvm",
       "version": "0.2.0",
       "description": "Events and consumers over RabbitMQ in one dependency: krizaka-messaging (outbox publishing, consumer queues with retry then DLQ, idempotent consumption) with Spring AMQP, JDBC and Jackson. Add your JDBC driver.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "krizaka-spring-boot-starter-ratelimit",
+      "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-ratelimit",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "A requests-per-minute limit per key in one dependency: krizaka-ratelimit (token bucket per key, observe or enforce, 429 with Retry-After as Problem Details) with Spring MVC.",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -959,6 +1024,21 @@
       }
     },
     {
+      "id": "krizaka-spring-boot-starter-webhooks",
+      "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-webhooks",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "Signed webhooks in one dependency: krizaka-webhooks (Standard Webhooks signing and sending, verification with a 401 Problem Details, secret rotation) with Spring MVC.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
       "id": "krizaka-web",
       "path": "krizaka/krizaka-platform-kit/krizaka-web",
       "repository": "krizaka-platform-kit",
@@ -968,6 +1048,21 @@
       "runtime": "jvm",
       "version": "0.2.0",
       "description": "The HTTP baseline of a Spring Boot service, written once: RFC 9457 Problem Details with stable error codes, X-Request-Id correlation into the MDC, Jackson 3 defaults, opaque cursor pagination and declared CORS origins.",
+      "ports": {
+        "inbound": [],
+        "outbound": []
+      }
+    },
+    {
+      "id": "krizaka-webhooks",
+      "path": "krizaka/krizaka-platform-kit/krizaka-webhooks",
+      "repository": "krizaka-platform-kit",
+      "owner": "krizaka",
+      "role": "platform",
+      "layer": "framework",
+      "runtime": "jvm",
+      "version": "0.2.0",
+      "description": "Signed webhooks, written once, the Standard Webhooks way: sign and send with a stable id and secret rotation, verify what you receive (signature, constant-time, timestamp tolerance) with a 401 Problem Details otherwise; observed. Promoted from Orazaka (orazaka#189) and krizaka-notifications.",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -996,6 +1091,10 @@
       "to": "krizaka-security"
     },
     {
+      "from": "krizaka-idempotency",
+      "to": "krizaka-web"
+    },
+    {
       "from": "krizaka-notifications-service",
       "to": "krizaka-messaging"
     },
@@ -1004,16 +1103,40 @@
       "to": "krizaka-notifications-api"
     },
     {
+      "from": "krizaka-ratelimit",
+      "to": "krizaka-web"
+    },
+    {
       "from": "krizaka-spring-boot-starter-app-config",
       "to": "krizaka-app-config"
+    },
+    {
+      "from": "krizaka-spring-boot-starter-idempotency",
+      "to": "krizaka-idempotency"
+    },
+    {
+      "from": "krizaka-spring-boot-starter-idempotency",
+      "to": "krizaka-spring-boot-starter-web"
     },
     {
       "from": "krizaka-spring-boot-starter-observability",
       "to": "krizaka-observability"
     },
     {
+      "from": "krizaka-spring-boot-starter-persistence",
+      "to": "krizaka-persistence"
+    },
+    {
       "from": "krizaka-spring-boot-starter-rabbitmq",
       "to": "krizaka-messaging"
+    },
+    {
+      "from": "krizaka-spring-boot-starter-ratelimit",
+      "to": "krizaka-ratelimit"
+    },
+    {
+      "from": "krizaka-spring-boot-starter-ratelimit",
+      "to": "krizaka-spring-boot-starter-web"
     },
     {
       "from": "krizaka-spring-boot-starter-security",
@@ -1022,6 +1145,14 @@
     {
       "from": "krizaka-spring-boot-starter-web",
       "to": "krizaka-web"
+    },
+    {
+      "from": "krizaka-spring-boot-starter-webhooks",
+      "to": "krizaka-spring-boot-starter-web"
+    },
+    {
+      "from": "krizaka-spring-boot-starter-webhooks",
+      "to": "krizaka-webhooks"
     },
     {
       "from": "krizaka-users-client",
@@ -1052,12 +1183,24 @@
       "to": "krizaka-users-core"
     },
     {
+      "from": "krizaka-webhooks",
+      "to": "krizaka-web"
+    },
+    {
       "from": "orazaka-automation-service",
       "to": "krizaka-billing-client"
     },
     {
       "from": "orazaka-automation-service",
       "to": "krizaka-messaging"
+    },
+    {
+      "from": "orazaka-automation-service",
+      "to": "krizaka-security"
+    },
+    {
+      "from": "orazaka-automation-service",
+      "to": "orazaka-assets"
     },
     {
       "from": "orazaka-business",
@@ -1346,14 +1489,6 @@
       "routingKey": "evt.capability.changed"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-worker-media",
-      "kind": "amqp",
-      "via": "orazaka.jobs.video",
-      "exchange": "orazaka.jobs",
-      "routingKey": "job.video.*, job.compose.*, job.sound.*"
-    },
-    {
       "from": "orazaka-job-service",
       "to": "krizaka-billing-service",
       "kind": "amqp",
@@ -1458,14 +1593,6 @@
       "routingKey": "job.text.*, job.media.analyze"
     },
     {
-      "from": "orazaka-studio-service",
-      "to": "orazaka-worker-media",
-      "kind": "amqp",
-      "via": "orazaka.jobs.video",
-      "exchange": "orazaka.jobs",
-      "routingKey": "job.video.*, job.compose.*, job.sound.*"
-    },
-    {
       "from": "orazaka-automation-service",
       "to": "krizaka-billing-service",
       "kind": "http",
@@ -1545,6 +1672,18 @@
     },
     {
       "from": "orazaka-edge",
+      "to": "orazaka-automation-service",
+      "kind": "http",
+      "via": "route /api/v1/automations"
+    },
+    {
+      "from": "orazaka-edge",
+      "to": "orazaka-automation-service",
+      "kind": "http",
+      "via": "route /hooks/"
+    },
+    {
+      "from": "orazaka-edge",
       "to": "orazaka-conversation-service",
       "kind": "http",
       "via": "route /"
@@ -1596,12 +1735,6 @@
       "to": "krizaka-billing-service",
       "kind": "http",
       "via": "krizaka-billing-client"
-    },
-    {
-      "from": "orazaka-web-admin",
-      "to": "orazaka-edge",
-      "kind": "http",
-      "via": "localhost:8088"
     },
     {
       "from": "orazaka-web-client",
@@ -1808,6 +1941,13 @@
         "declaredBy": "krizaka-notifications-service"
       },
       {
+        "name": "orazaka.automation.studio-runs",
+        "exchange": "orazaka.events",
+        "binding": null,
+        "dlq": "orazaka.automation.studio-runs.dlq",
+        "declaredBy": "orazaka-automation-service"
+      },
+      {
         "name": "orazaka.events.job-relay",
         "exchange": "orazaka.events",
         "binding": "job.#",
@@ -1873,7 +2013,7 @@
       {
         "name": "orazaka.jobs.video",
         "exchange": "orazaka.jobs",
-        "binding": "job.video.*, job.compose.*, job.sound.*",
+        "binding": "job.video.*",
         "dlq": "orazaka.jobs.video.dlq",
         "declaredBy": "orazaka-persistence-app"
       }
@@ -2023,6 +2163,11 @@
       },
       {
         "module": "orazaka-automation-service",
+        "queue": "orazaka.automation.studio-runs",
+        "retry": "kit"
+      },
+      {
+        "module": "orazaka-automation-service",
         "queue": "orazaka.jobs.automation",
         "retry": "kit"
       },
@@ -2084,11 +2229,6 @@
       {
         "module": "orazaka-worker-media",
         "queue": "orazaka.jobs.sound",
-        "retry": "module"
-      },
-      {
-        "module": "orazaka-worker-media",
-        "queue": "orazaka.jobs.video",
         "retry": "module"
       }
     ],
@@ -2287,6 +2427,15 @@
         "description": "App version compatibility in one dependency: krizaka-app-config (the public app-config endpoint, the 426 Upgrade Required filter, N-1 contract compatibility, the audited admin API) with Spring MVC and JDBC."
       },
       {
+        "id": "krizaka-spring-boot-starter-idempotency",
+        "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-idempotency",
+        "repository": "krizaka-platform-kit",
+        "role": "starter",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "HTTP Idempotency-Key in one dependency: krizaka-idempotency (at most once per key, replay, 422 on reuse, PostgreSQL store) with Spring MVC and JDBC. Add your JDBC driver."
+      },
+      {
         "id": "krizaka-spring-boot-starter-observability",
         "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-observability",
         "repository": "krizaka-platform-kit",
@@ -2296,6 +2445,15 @@
         "description": "The Krizaka observability standard in one dependency: krizaka-observability (required service names, common metric tags, ECS logs, exposure and sampling defaults) with Actuator, OpenTelemetry tracing over OTLP and a Prometheus registry."
       },
       {
+        "id": "krizaka-spring-boot-starter-persistence",
+        "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-persistence",
+        "repository": "krizaka-platform-kit",
+        "role": "starter",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "The tables of the kit's JDBC stores migrated at startup in one dependency: krizaka-persistence (Flyway, its own history table, only the declared stores, pool defaults) with Spring JDBC and the PostgreSQL driver."
+      },
+      {
         "id": "krizaka-spring-boot-starter-rabbitmq",
         "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-rabbitmq",
         "repository": "krizaka-platform-kit",
@@ -2303,6 +2461,15 @@
         "packaging": "jar",
         "version": "0.2.0",
         "description": "Events and consumers over RabbitMQ in one dependency: krizaka-messaging (outbox publishing, consumer queues with retry then DLQ, idempotent consumption) with Spring AMQP, JDBC and Jackson. Add your JDBC driver."
+      },
+      {
+        "id": "krizaka-spring-boot-starter-ratelimit",
+        "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-ratelimit",
+        "repository": "krizaka-platform-kit",
+        "role": "starter",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "A requests-per-minute limit per key in one dependency: krizaka-ratelimit (token bucket per key, observe or enforce, 429 with Retry-After as Problem Details) with Spring MVC."
       },
       {
         "id": "krizaka-spring-boot-starter-security",
@@ -2323,6 +2490,15 @@
         "description": "HTTP service baseline in one dependency: krizaka-web (Problem Details, request correlation, Jackson defaults, cursor pagination, declared CORS) with Spring MVC, bean validation and Actuator."
       },
       {
+        "id": "krizaka-spring-boot-starter-webhooks",
+        "path": "krizaka/krizaka-platform-kit/starters/krizaka-spring-boot-starter-webhooks",
+        "repository": "krizaka-platform-kit",
+        "role": "starter",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "Signed webhooks in one dependency: krizaka-webhooks (Standard Webhooks signing and sending, verification with a 401 Problem Details, secret rotation) with Spring MVC."
+      },
+      {
         "id": "krizaka-app-config",
         "path": "krizaka/krizaka-platform-kit/krizaka-app-config",
         "repository": "krizaka-platform-kit",
@@ -2330,6 +2506,15 @@
         "packaging": "jar",
         "version": "0.2.0",
         "description": "Version compatibility between a backend and the apps that call it, written once: a public cached app-config endpoint (minimum and latest version, update mode, maintenance, contract range, store URL, flags, localized message) read from database parameters, a filter that answers 426 Upgrade Required to a client below the minimum, N-1 contract compatibility with Deprecation and Sunset headers, and an audited admin API with rollback."
+      },
+      {
+        "id": "krizaka-idempotency",
+        "path": "krizaka/krizaka-platform-kit/krizaka-idempotency",
+        "repository": "krizaka-platform-kit",
+        "role": "platform",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "HTTP Idempotency-Key, written once: an action runs at most once per key, a retry with the same key and request replays the stored response, the same key with another request is a 422 Problem Details; PostgreSQL or in-memory store, observed. Promoted from Orazaka (ADR-083)."
       },
       {
         "id": "krizaka-messaging",
@@ -2350,6 +2535,24 @@
         "description": "One observability standard for Spring Boot services: every service names itself (product, service, version) or does not start, its metrics carry those names as common tags, and the defaults every service repeats — ECS JSON console logs, health/info/prometheus exposed, 10% trace sampling — are set once, at the lowest priority."
       },
       {
+        "id": "krizaka-persistence",
+        "path": "krizaka/krizaka-platform-kit/krizaka-persistence",
+        "repository": "krizaka-platform-kit",
+        "role": "platform",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "The tables of the kit's JDBC stores (outbox, message claims, idempotency keys, app-config) created and kept up to date by Flyway at startup, in their own history table, only for the stores a service declares; production defaults for the connection pool."
+      },
+      {
+        "id": "krizaka-ratelimit",
+        "path": "krizaka/krizaka-platform-kit/krizaka-ratelimit",
+        "repository": "krizaka-platform-kit",
+        "role": "platform",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "A requests-per-minute limit per key, written once: a token bucket per key (client address by default, or any key you resolve), observe or enforce, 429 with Retry-After as Problem Details, observed. Promoted from the Orazaka edge (ADR-083) and krizaka-users."
+      },
+      {
         "id": "krizaka-security",
         "path": "krizaka/krizaka-platform-kit/krizaka-security",
         "repository": "krizaka-platform-kit",
@@ -2366,6 +2569,15 @@
         "packaging": "jar",
         "version": "0.2.0",
         "description": "The HTTP baseline of a Spring Boot service, written once: RFC 9457 Problem Details with stable error codes, X-Request-Id correlation into the MDC, Jackson 3 defaults, opaque cursor pagination and declared CORS origins."
+      },
+      {
+        "id": "krizaka-webhooks",
+        "path": "krizaka/krizaka-platform-kit/krizaka-webhooks",
+        "repository": "krizaka-platform-kit",
+        "role": "platform",
+        "packaging": "jar",
+        "version": "0.2.0",
+        "description": "Signed webhooks, written once, the Standard Webhooks way: sign and send with a stable id and secret rotation, verify what you receive (signature, constant-time, timestamp tolerance) with a 401 Problem Details otherwise; observed. Promoted from Orazaka (orazaka#189) and krizaka-notifications."
       },
       {
         "id": "krizaka-bom",
@@ -2482,6 +2694,21 @@
         "kind": "parent"
       },
       {
+        "from": "krizaka-idempotency",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-idempotency",
+        "to": "krizaka-test-support",
+        "kind": "test"
+      },
+      {
+        "from": "krizaka-idempotency",
+        "to": "krizaka-web",
+        "kind": "compile"
+      },
+      {
         "from": "krizaka-messaging",
         "to": "krizaka-parent",
         "kind": "parent"
@@ -2547,6 +2774,46 @@
         "kind": "test"
       },
       {
+        "from": "krizaka-persistence",
+        "to": "krizaka-app-config",
+        "kind": "test"
+      },
+      {
+        "from": "krizaka-persistence",
+        "to": "krizaka-idempotency",
+        "kind": "test"
+      },
+      {
+        "from": "krizaka-persistence",
+        "to": "krizaka-messaging",
+        "kind": "test"
+      },
+      {
+        "from": "krizaka-persistence",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-persistence",
+        "to": "krizaka-test-support",
+        "kind": "test"
+      },
+      {
+        "from": "krizaka-ratelimit",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-ratelimit",
+        "to": "krizaka-test-support",
+        "kind": "test"
+      },
+      {
+        "from": "krizaka-ratelimit",
+        "to": "krizaka-web",
+        "kind": "compile"
+      },
+      {
         "from": "krizaka-security",
         "to": "krizaka-parent",
         "kind": "parent"
@@ -2567,6 +2834,21 @@
         "kind": "parent"
       },
       {
+        "from": "krizaka-spring-boot-starter-idempotency",
+        "to": "krizaka-idempotency",
+        "kind": "compile"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-idempotency",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-idempotency",
+        "to": "krizaka-spring-boot-starter-web",
+        "kind": "compile"
+      },
+      {
         "from": "krizaka-spring-boot-starter-observability",
         "to": "krizaka-observability",
         "kind": "compile"
@@ -2575,6 +2857,16 @@
         "from": "krizaka-spring-boot-starter-observability",
         "to": "krizaka-parent",
         "kind": "parent"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-persistence",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-persistence",
+        "to": "krizaka-persistence",
+        "kind": "compile"
       },
       {
         "from": "krizaka-spring-boot-starter-rabbitmq",
@@ -2590,6 +2882,21 @@
         "from": "krizaka-spring-boot-starter-rabbitmq",
         "to": "krizaka-test-support",
         "kind": "test"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-ratelimit",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-ratelimit",
+        "to": "krizaka-ratelimit",
+        "kind": "compile"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-ratelimit",
+        "to": "krizaka-spring-boot-starter-web",
+        "kind": "compile"
       },
       {
         "from": "krizaka-spring-boot-starter-security",
@@ -2609,6 +2916,21 @@
       {
         "from": "krizaka-spring-boot-starter-web",
         "to": "krizaka-web",
+        "kind": "compile"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-webhooks",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-webhooks",
+        "to": "krizaka-spring-boot-starter-web",
+        "kind": "compile"
+      },
+      {
+        "from": "krizaka-spring-boot-starter-webhooks",
+        "to": "krizaka-webhooks",
         "kind": "compile"
       },
       {
@@ -2725,6 +3047,21 @@
         "from": "krizaka-web",
         "to": "krizaka-test-support",
         "kind": "test"
+      },
+      {
+        "from": "krizaka-webhooks",
+        "to": "krizaka-parent",
+        "kind": "parent"
+      },
+      {
+        "from": "krizaka-webhooks",
+        "to": "krizaka-test-support",
+        "kind": "test"
+      },
+      {
+        "from": "krizaka-webhooks",
+        "to": "krizaka-web",
+        "kind": "compile"
       }
     ]
   },
@@ -2732,7 +3069,7 @@
     {
       "key": "realestate-studio",
       "dir": "realestate-studio",
-      "version": "1.0.0",
+      "version": "1.3.0",
       "tier": "DATA",
       "kind": null,
       "distribution": "OSS",
@@ -2740,6 +3077,7 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "creativity-media",
+      "categorySortWeight": 80,
       "iconKey": "studio",
       "sortWeight": 100,
       "pricing": {
@@ -2837,7 +3175,7 @@
     {
       "key": "orazaka-media",
       "dir": "orazaka-media",
-      "version": "1.7.0",
+      "version": "1.13.0",
       "tier": "DATA",
       "kind": "TOOLKIT",
       "distribution": "OSS",
@@ -2845,6 +3183,7 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "creativity-media",
+      "categorySortWeight": 80,
       "iconKey": "image",
       "sortWeight": 90,
       "pricing": {
@@ -2910,7 +3249,7 @@
             },
             {
               "key": "model",
-              "title": "Modèle (facultatif)"
+              "title": "Modèle"
             }
           ],
           "outputs": [
@@ -3198,11 +3537,15 @@
             },
             {
               "key": "model",
-              "title": "Modèle (facultatif)"
+              "title": "Modèle"
             },
             {
               "key": "seed",
-              "title": "Graine (facultatif)"
+              "title": "Graine"
+            },
+            {
+              "key": "upscale",
+              "title": "Netteté"
             }
           ],
           "outputs": [
@@ -3220,6 +3563,102 @@
             "fr": {
               "label": "Génération vidéo",
               "tagline": "Un short vertical (9:16) ou un plan large, décrit puis rendu.",
+              "description": null
+            }
+          }
+        },
+        {
+          "key": "cinematic-treatment",
+          "profession": "creative",
+          "iconKey": "video",
+          "pricing": "INCLUDED",
+          "status": "PUBLISHED",
+          "estimatedCredits": 30,
+          "steps": 1,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "brief",
+              "title": "Le brief"
+            },
+            {
+              "key": "aspect",
+              "title": "Format d'image"
+            },
+            {
+              "key": "durationSeconds",
+              "title": "Durée (secondes)"
+            },
+            {
+              "key": "notes",
+              "title": "Notes de la critique"
+            },
+            {
+              "key": "language",
+              "title": "Langue des textes"
+            },
+            {
+              "key": "model",
+              "title": "Modèle de langage"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "treatment",
+              "type": "TEXT"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Cinematic short — treatment",
+              "tagline": "A short brief becomes a story: an arc, intentions, living shots, directed lines, music, sound.",
+              "description": null
+            },
+            "fr": {
+              "label": "Court métrage — traitement",
+              "tagline": "Un brief court devient une histoire : un arc, des intentions, des plans vivants, des répliques dirigées, musique et sons.",
+              "description": null
+            }
+          }
+        },
+        {
+          "key": "cinematic-critique",
+          "profession": "creative",
+          "iconKey": "video",
+          "pricing": "INCLUDED",
+          "status": "PUBLISHED",
+          "estimatedCredits": 10,
+          "steps": 1,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "treatment",
+              "title": "Le traitement à juger"
+            },
+            {
+              "key": "model",
+              "title": "Modèle de langage"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "critique",
+              "type": "TEXT"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Cinematic short — critique",
+              "tagline": "A director's read of a treatment: scores, flat or off-topic shots rejected, what to change.",
+              "description": null
+            },
+            "fr": {
+              "label": "Court métrage — critique",
+              "tagline": "La lecture d'un réalisateur : des notes, les plans plats ou hors sujet rejetés, quoi changer.",
               "description": null
             }
           }
@@ -3262,7 +3701,7 @@
             },
             {
               "key": "model",
-              "title": "Modèle de langage (facultatif)"
+              "title": "Modèle de langage"
             }
           ],
           "outputs": [
@@ -3354,7 +3793,7 @@
             },
             {
               "key": "model",
-              "title": "Modèle (facultatif)"
+              "title": "Modèle"
             },
             {
               "key": "seed",
@@ -3473,12 +3912,8 @@
               "title": "Le texte à lire"
             },
             {
-              "key": "voice",
-              "title": "Voix"
-            },
-            {
               "key": "model",
-              "title": "Modèle (facultatif)"
+              "title": "Voix"
             }
           ],
           "outputs": [
@@ -3522,7 +3957,7 @@
             },
             {
               "key": "model",
-              "title": "Modèle (facultatif)"
+              "title": "Modèle"
             }
           ],
           "outputs": [
@@ -3562,7 +3997,7 @@
             },
             {
               "key": "model",
-              "title": "Modèle (facultatif)"
+              "title": "Modèle"
             }
           ],
           "outputs": [
@@ -3602,7 +4037,7 @@
             },
             {
               "key": "model",
-              "title": "Modèle (facultatif)"
+              "title": "Modèle"
             }
           ],
           "outputs": [
@@ -3633,7 +4068,7 @@
     {
       "key": "outbound-prospection",
       "dir": "outbound-prospection",
-      "version": "1.1.0",
+      "version": "1.3.0",
       "tier": "DATA",
       "kind": null,
       "distribution": "OSS",
@@ -3641,6 +4076,7 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "business-compliance",
+      "categorySortWeight": 100,
       "iconKey": "target",
       "sortWeight": 90,
       "pricing": {
@@ -3832,7 +4268,7 @@
     {
       "key": "data-analytics",
       "dir": "data-analytics",
-      "version": "1.1.0",
+      "version": "1.6.0",
       "tier": "DATA",
       "kind": null,
       "distribution": "OSS",
@@ -3840,6 +4276,7 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "data-analytics",
+      "categorySortWeight": 70,
       "iconKey": "chart",
       "sortWeight": 40,
       "pricing": {
@@ -3889,7 +4326,7 @@
           "inputs": [
             {
               "key": "data",
-              "title": "Vos données"
+              "title": "Vos données (facultatif)"
             },
             {
               "key": "question",
@@ -3898,6 +4335,10 @@
             {
               "key": "language",
               "title": "Langue"
+            },
+            {
+              "key": "model",
+              "title": "Modèle de langage"
             }
           ],
           "outputs": [
@@ -4028,7 +4469,7 @@
     {
       "key": "bien-etre",
       "dir": "wellbeing",
-      "version": "1.0.0",
+      "version": "1.5.0",
       "tier": "DATA",
       "kind": null,
       "distribution": "CLOUD",
@@ -4036,6 +4477,7 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "wellbeing",
+      "categorySortWeight": 60,
       "iconKey": "sparkles",
       "sortWeight": 30,
       "pricing": {
@@ -4236,7 +4678,7 @@
     {
       "key": "document-validation",
       "dir": "document-validation",
-      "version": "1.1.0",
+      "version": "1.7.0",
       "tier": "WORKER",
       "kind": null,
       "distribution": "CLOUD",
@@ -4244,6 +4686,7 @@
       "status": "PUBLISHED",
       "showcase": true,
       "category": "business-compliance",
+      "categorySortWeight": 100,
       "iconKey": "shield-check",
       "sortWeight": 20,
       "pricing": {
@@ -4282,13 +4725,31 @@
           "rules": 10
         },
         {
+          "id": "qc-invoice",
+          "label": "Facture — Québec (TPS et TVQ)",
+          "jurisdiction": "QC",
+          "versions": [
+            "2024-06-20"
+          ],
+          "rules": 8
+        },
+        {
           "id": "qc-residential-lease",
           "label": "Bail de logement — Québec",
           "jurisdiction": "QC",
           "versions": [
             "2024-02-21"
           ],
-          "rules": 9
+          "rules": 10
+        },
+        {
+          "id": "qc-service-contract",
+          "label": "Contrat de service — Québec (première étape)",
+          "jurisdiction": "QC",
+          "versions": [
+            "2026-10-19"
+          ],
+          "rules": 4
         }
       ],
       "text": {
@@ -4381,6 +4842,10 @@
             {
               "key": "asOf",
               "title": "Règles en vigueur à la date du"
+            },
+            {
+              "key": "ruleset",
+              "title": "Corpus nommé"
             }
           ],
           "outputs": [
@@ -4411,7 +4876,7 @@
     {
       "key": "echo-toolkit",
       "dir": "echo-toolkit",
-      "version": "1.0.0",
+      "version": "1.2.0",
       "tier": "WORKER",
       "kind": null,
       "distribution": "OSS",
@@ -4419,6 +4884,7 @@
       "status": "DRAFT",
       "showcase": false,
       "category": "business-compliance",
+      "categorySortWeight": 100,
       "iconKey": "repeat",
       "sortWeight": 5,
       "pricing": {
@@ -4491,9 +4957,290 @@
       ]
     },
     {
+      "key": "media-safety",
+      "dir": "media-safety",
+      "version": "1.2.0",
+      "tier": "WORKER",
+      "kind": null,
+      "distribution": "CLOUD",
+      "regulatoryClass": "SENSITIVE",
+      "status": "UNLISTED",
+      "showcase": true,
+      "category": null,
+      "categorySortWeight": null,
+      "iconKey": null,
+      "sortWeight": null,
+      "pricing": null,
+      "capabilities": [
+        "orazaka.safety.media.assess"
+      ],
+      "workers": [
+        "orazaka-worker-safety"
+      ],
+      "scopeGuard": true,
+      "consent": false,
+      "safety": false,
+      "rulesets": [],
+      "text": {
+        "en": {
+          "label": "Media safety",
+          "tagline": "Is this photo, video or voice message safe to show?",
+          "description": "Judges pictures (a photo, or frames of a video) and a voice message's transcript against a short, public set of lines: no nudity or sexual content, no graphic violence, no threats or harassment. An answer nobody could read is never a pass."
+        },
+        "fr": {
+          "label": "Sécurité des médias",
+          "tagline": "Cette photo, cette vidéo ou ce message vocal peut-il être montré sans danger ?",
+          "description": "Juge des images (une photo, ou des images d'une vidéo) et la transcription d'un message vocal selon quelques lignes publiques : pas de nudité ni de contenu sexuel, pas de violence graphique, pas de menace ni de harcèlement. Une réponse que personne n'a pu lire n'est jamais un feu vert."
+        }
+      },
+      "categoryText": {
+        "en": null,
+        "fr": null
+      },
+      "studios": [
+        {
+          "key": "media-safety",
+          "profession": "general",
+          "iconKey": "shield-check",
+          "pricing": "FREE",
+          "status": "PUBLISHED",
+          "estimatedCredits": 30,
+          "steps": 4,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "frames",
+              "title": "Les images à examiner"
+            },
+            {
+              "key": "frameCount",
+              "title": "Le nombre d'images"
+            },
+            {
+              "key": "audio",
+              "title": "Le son à juger (facultatif)"
+            },
+            {
+              "key": "expectsSpeech",
+              "title": "Il y a du son à juger"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "report",
+              "type": "JSON"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Media safety",
+              "tagline": "A safety check that fails closed.",
+              "description": "A vision question per picture, a transcript and a text judgement for sound, then closed rules. Unreadable means held, never approved."
+            },
+            "fr": {
+              "label": "Sécurité des médias",
+              "tagline": "Un contrôle de sécurité qui échoue du côté prudent.",
+              "description": "Une question de vision par image, une transcription et un jugement du texte pour le son, puis des règles fermées. Illisible veut dire retenu, jamais approuvé."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "message-authenticity",
+      "dir": "message-authenticity",
+      "version": "1.3.0",
+      "tier": "WORKER",
+      "kind": null,
+      "distribution": "CLOUD",
+      "regulatoryClass": "SENSITIVE",
+      "status": "UNLISTED",
+      "showcase": true,
+      "category": null,
+      "categorySortWeight": null,
+      "iconKey": null,
+      "sortWeight": null,
+      "pricing": null,
+      "capabilities": [
+        "orazaka.message.authenticity.read"
+      ],
+      "workers": [
+        "orazaka-worker-authenticity"
+      ],
+      "scopeGuard": true,
+      "consent": false,
+      "safety": false,
+      "rulesets": [],
+      "text": {
+        "en": {
+          "label": "Message authenticity",
+          "tagline": "Does this message read like a person wrote it? A signal, never a verdict.",
+          "description": "Reads one message with a small open classifier and answers a coarse level — never a score. It can be wrong, above all on short texts and on non-native or French writing. It never writes a message for anyone."
+        },
+        "fr": {
+          "label": "Authenticité des messages",
+          "tagline": "Ce message ressemble-t-il à un texte écrit par une personne ? Un signal, jamais un verdict.",
+          "description": "Lit un message avec un petit classifieur ouvert et répond un niveau grossier — jamais un score. Il peut se tromper, surtout sur les textes courts et sur une écriture non native ou en français. Il n'écrit aucun message à la place de quiconque."
+        }
+      },
+      "categoryText": {
+        "en": null,
+        "fr": null
+      },
+      "studios": [
+        {
+          "key": "message-authenticity",
+          "profession": "general",
+          "iconKey": "shield-check",
+          "pricing": "FREE",
+          "status": "PUBLISHED",
+          "estimatedCredits": 5,
+          "steps": 1,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "text",
+              "title": "Le message"
+            },
+            {
+              "key": "locale",
+              "title": "Langue du compte (facultatif)"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "report",
+              "type": "JSON"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Message authenticity",
+              "tagline": "A coarse signal on a text, never a verdict.",
+              "description": "One step, no generative model. The text is read and forgotten; the answer is low, mid, high or unavailable."
+            },
+            "fr": {
+              "label": "Authenticité des messages",
+              "tagline": "Un signal grossier sur un texte, jamais un verdict.",
+              "description": "Une seule étape, aucun modèle génératif. Le texte est lu puis oublié ; la réponse est bas, moyen, haut ou indisponible."
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "profile-photo-check",
+      "dir": "profile-photo-check",
+      "version": "1.2.0",
+      "tier": "WORKER",
+      "kind": null,
+      "distribution": "CLOUD",
+      "regulatoryClass": "SENSITIVE",
+      "status": "UNLISTED",
+      "showcase": true,
+      "category": null,
+      "categorySortWeight": null,
+      "iconKey": null,
+      "sortWeight": null,
+      "pricing": null,
+      "capabilities": [
+        "orazaka.photo.profile.inspect",
+        "orazaka.photo.profile.assess"
+      ],
+      "workers": [
+        "orazaka-worker-photo"
+      ],
+      "scopeGuard": true,
+      "consent": false,
+      "safety": false,
+      "rulesets": [],
+      "text": {
+        "en": {
+          "label": "Profile photo check",
+          "tagline": "Are these photos one real adult's profile?",
+          "description": "Checks a set of profile photos: enough of them, enough with a face, the same person from one face photo to the next, nothing written over the picture, no screenshots. It answers in codes, identifies no one and recognises no celebrity."
+        },
+        "fr": {
+          "label": "Vérification des photos de profil",
+          "tagline": "Ces photos forment-elles le profil d'une vraie personne adulte ?",
+          "description": "Vérifie un ensemble de photos de profil : assez de photos, assez de photos de visage, la même personne d'une photo de visage à l'autre, rien d'écrit sur l'image, pas de capture d'écran. Elle répond en codes, n'identifie personne et ne reconnaît aucune célébrité."
+        }
+      },
+      "categoryText": {
+        "en": null,
+        "fr": null
+      },
+      "studios": [
+        {
+          "key": "profile-photo-check",
+          "profession": "general",
+          "iconKey": "vision",
+          "pricing": "FREE",
+          "status": "PUBLISHED",
+          "estimatedCredits": 40,
+          "steps": 3,
+          "stepKinds": [
+            "CAPABILITY"
+          ],
+          "inputs": [
+            {
+              "key": "photos",
+              "title": "Les photos (fichiers envoyés)"
+            },
+            {
+              "key": "photosBase64",
+              "title": "Les mêmes photos, en base64"
+            },
+            {
+              "key": "compareFaces",
+              "title": "Comparer les visages entre eux"
+            },
+            {
+              "key": "minPhotos",
+              "title": "Photos au moins"
+            },
+            {
+              "key": "maxPhotos",
+              "title": "Photos au plus"
+            },
+            {
+              "key": "minFacePhotos",
+              "title": "Photos de visage au moins"
+            }
+          ],
+          "outputs": [
+            {
+              "key": "report",
+              "type": "JSON"
+            },
+            {
+              "key": "passes",
+              "type": "TEXT"
+            }
+          ],
+          "text": {
+            "en": {
+              "label": "Profile photo check",
+              "tagline": "Faces present, the same person throughout, nothing written on the photo.",
+              "description": "Finds the faces in each photo, asks a vision model three yes/no questions about it, and gives a verdict made of codes. The face vectors live for one job and are never kept; a model answer that cannot be read blocks nothing."
+            },
+            "fr": {
+              "label": "Vérification des photos de profil",
+              "tagline": "Des visages présents, la même personne partout, rien d'écrit sur la photo.",
+              "description": "Trouve les visages de chaque photo, pose à un modèle de vision trois questions par oui ou non, et rend un verdict fait de codes. Les vecteurs de visage vivent le temps d'un travail et ne sont jamais gardés ; une réponse illisible du modèle ne bloque rien."
+            }
+          }
+        }
+      ]
+    },
+    {
       "key": "trade-showcase",
       "dir": "trade-showcase",
-      "version": "1.0.0",
+      "version": "1.2.0",
       "tier": "DATA",
       "kind": null,
       "distribution": "OSS",
@@ -4501,6 +5248,7 @@
       "status": "UNLISTED",
       "showcase": true,
       "category": null,
+      "categorySortWeight": null,
       "iconKey": null,
       "sortWeight": null,
       "pricing": null,
@@ -4880,6 +5628,28 @@
       "lastVerified": null
     },
     {
+      "id": "kokoro-82m",
+      "name": "Kokoro 82M (GPU host)",
+      "vendor": "hexgrad",
+      "family": "Kokoro",
+      "category": "speech",
+      "capabilities": [
+        "text-to-speech"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · CUDA",
+      "provider": "gpu-speech",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/hexgrad/Kokoro-82M"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
       "id": "piper-en-low",
       "name": "Piper Low (en)",
       "vendor": "Rhasspy",
@@ -4990,6 +5760,28 @@
       "lastVerified": null
     },
     {
+      "id": "ltx-video-0.9.8-13b-distilled",
+      "name": "LTX-Video 0.9.8 13B distilled (720p, GPU)",
+      "vendor": "Lightricks",
+      "family": "LTX-Video",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · CUDA (80 GB)",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "LTX-Video Open Weights License 0.X",
+        "url": "https://huggingface.co/Lightricks/LTX-Video-0.9.8-13B-distilled/blob/main/LTX-Video-Open-Weights-License-0.X.txt"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
       "id": "stable-video-diffusion-img2vid-xt",
       "name": "Stable Video Diffusion XT (heavy, >64GB)",
       "vendor": "Stability AI",
@@ -5056,6 +5848,28 @@
       "lastVerified": null
     },
     {
+      "id": "wan2.2-i2v-a14b-hq",
+      "name": "Wan 2.2 I2V A14B (720p, 40 steps)",
+      "vendor": "Alibaba (Wan-AI)",
+      "family": "Wan 2.2",
+      "category": "video",
+      "capabilities": [
+        "video"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · CUDA (80 GB)",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/Wan-AI/Wan2.2-I2V-A14B-Diffusers"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
       "id": "wan2.2-t2v-a14b",
       "name": "Wan 2.2 T2V A14B (720p, 80 GB GPU)",
       "vendor": "Alibaba (Wan-AI)",
@@ -5093,6 +5907,28 @@
       "licence": {
         "name": "Apache-2.0",
         "url": "https://huggingface.co/Wan-AI/Wan2.2-TI2V-5B-Diffusers/blob/main/README.md"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
+      "id": "seedvr2-3b",
+      "name": "SeedVR2 3B (video upscale, GPU)",
+      "vendor": "ByteDance Seed",
+      "family": "SeedVR2",
+      "category": "video-upscale",
+      "capabilities": [
+        "video-upscale"
+      ],
+      "runsOn": "local",
+      "runtime": "worker-media · CUDA",
+      "provider": "localai-video",
+      "openWeights": true,
+      "licence": {
+        "name": "Apache-2.0",
+        "url": "https://huggingface.co/ByteDance-Seed/SeedVR2-3B"
       },
       "commercialUse": "yes",
       "contextWindow": null,
@@ -5255,6 +6091,29 @@
       "lastVerified": null
     },
     {
+      "id": "nemotron-nano-12b-v2-vl",
+      "name": "Nemotron Nano 12B v2 VL",
+      "vendor": "NVIDIA",
+      "family": "Nemotron Nano v2 VL",
+      "category": "vision",
+      "capabilities": [
+        "vision",
+        "chat"
+      ],
+      "runsOn": "provider",
+      "runtime": "DigitalOcean serverless inference",
+      "provider": "do-inference",
+      "openWeights": true,
+      "licence": {
+        "name": "NVIDIA Open Model License",
+        "url": "https://huggingface.co/nvidia/NVIDIA-Nemotron-Nano-12B-v2-VL-BF16"
+      },
+      "commercialUse": "yes",
+      "contextWindow": null,
+      "status": "available",
+      "lastVerified": null
+    },
+    {
       "id": "bge-m3",
       "name": "BGE-M3",
       "vendor": "BAAI",
@@ -5410,6 +6269,11 @@
             "default": null
           },
           {
+            "flag": "--voice-model <model>",
+            "desc": "The speech model of the voice-over (e.g. kokoro-82m while a cinema GPU host runs)",
+            "default": null
+          },
+          {
             "flag": "--script-model <model>",
             "desc": "The language model that writes the script (default: the catalogue's)",
             "default": null
@@ -5513,6 +6377,235 @@
         "options": []
       },
       {
+        "name": "cinema plan",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Start a production from a treatment (a directed shot list): no language model, every shot as written",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "-r, --references <dir>",
+            "desc": "Where the characters' reference renders are (<name>-alpha.png)",
+            "default": null
+          },
+          {
+            "flag": "-l, --language <lang>",
+            "desc": "en or fr (the captions)",
+            "default": "en"
+          },
+          {
+            "flag": "--seed <seed>",
+            "desc": "Overrides the treatment's seedBase",
+            "default": null
+          },
+          {
+            "flag": "--update",
+            "desc": "The treatment changed: keep every shot already made, add the new ones",
+            "default": null
+          }
+        ]
+      },
+      {
+        "name": "cinema sheet",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Make the reference sheet of each character that has a reference render (kept as drawn, never redrawn)",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          }
+        ],
+        "aliases": [],
+        "options": []
+      },
+      {
+        "name": "cinema jobs",
+        "top": "cinema",
+        "isTop": false,
+        "description": "The pending shots as jobs for a GPU host that runs the worker's own generator",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "-o, --out <file>",
+            "desc": "Write them to a file instead of printing them",
+            "default": null
+          }
+        ]
+      },
+      {
+        "name": "cinema take",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Record a take a GPU host made for a shot",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          },
+          {
+            "name": "<shot>",
+            "desc": "The shot's number"
+          },
+          {
+            "name": "<file>",
+            "desc": "The take (mp4)"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "--seconds <s>",
+            "desc": "How long the host took to make it",
+            "default": null
+          }
+        ]
+      },
+      {
+        "name": "cinema review",
+        "top": "cinema",
+        "isTop": false,
+        "description": "A take's review sheet: a frame every 8 under the cast's reference sheet",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "The production's folder"
+          },
+          {
+            "name": "<shot>",
+            "desc": "The shot's number"
+          },
+          {
+            "name": "<file>",
+            "desc": "The take (mp4)"
+          }
+        ],
+        "aliases": [],
+        "options": []
+      },
+      {
+        "name": "cinema treat",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Write the story of a brief (arc, intentions, purposeful shots, directed lines, music cues, sound list) and judge it",
+        "args": [
+          {
+            "name": "<dir>",
+            "desc": "Where the treatment and its critique are written"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "-l, --language <lang>",
+            "desc": "en or fr",
+            "default": "en"
+          },
+          {
+            "flag": "-d, --duration <s>",
+            "desc": "Seconds of film",
+            "default": "60"
+          },
+          {
+            "flag": "-a, --aspect <aspect>",
+            "desc": "16:9 or 9:16",
+            "default": "16:9"
+          },
+          {
+            "flag": "--revisions <n>",
+            "desc": "How many times a rejected draft goes back to the writer",
+            "default": "2"
+          },
+          {
+            "flag": "--no-judge",
+            "desc": "The rubric alone decides (no language-model judge)",
+            "default": null
+          },
+          {
+            "flag": "--model <name>",
+            "desc": "The chat model of the writer and the judge",
+            "default": null
+          }
+        ]
+      },
+      {
+        "name": "cinema critique",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Judge a treatment against the rubric (arc, purpose, alive, on-topic, continuity, voice, music, sound)",
+        "args": [
+          {
+            "name": "<treatment>",
+            "desc": "The treatment (JSON)"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "-l, --language <lang>",
+            "desc": "en or fr",
+            "default": "en"
+          },
+          {
+            "flag": "--judge",
+            "desc": "Also ask the language-model judge (a cinematic-critique run)",
+            "default": null
+          },
+          {
+            "flag": "--model <name>",
+            "desc": "The judge's chat model",
+            "default": null
+          },
+          {
+            "flag": "-o, --out <file>",
+            "desc": "Write the critique (JSON) there",
+            "default": null
+          }
+        ]
+      },
+      {
+        "name": "cinema timeline",
+        "top": "cinema",
+        "isTop": false,
+        "description": "Place every line, music cue and sound of a treatment on the cut, and say which lines do not fit their shots",
+        "args": [
+          {
+            "name": "<treatment>",
+            "desc": "The treatment (JSON)"
+          }
+        ],
+        "aliases": [],
+        "options": [
+          {
+            "flag": "-l, --language <lang>",
+            "desc": "en or fr",
+            "default": "en"
+          },
+          {
+            "flag": "--voice <report>",
+            "desc": "The voice step's report: [{id, seconds}] measured per line",
+            "default": null
+          },
+          {
+            "flag": "--spans <file>",
+            "desc": "The cut's own shot spans ([[start, end], …], e.g. the worker's cut.timeline) instead of back to back",
+            "default": null
+          }
+        ]
+      },
+      {
         "name": "config",
         "top": "config",
         "isTop": true,
@@ -5594,13 +6687,13 @@
         "name": "dev",
         "top": "dev",
         "isTop": true,
-        "description": "Launch the full Orazaka application stack in parallel (9 services + Web, Admin, Mobile)",
+        "description": "Launch the full Orazaka application stack in parallel (9 services + Web, Mobile)",
         "args": [],
         "aliases": [],
         "options": [
           {
             "flag": "--only <services>",
-            "desc": "Launch only these services (comma-separated: edge,router,identity,automation,knowledge,job,billing,studio,notifications,web,admin,mobile)",
+            "desc": "Launch only these services (comma-separated: edge,router,identity,automation,knowledge,job,billing,studio,notifications,web,mobile)",
             "default": null
           },
           {
@@ -5655,7 +6748,7 @@
           },
           {
             "flag": "--skip-admin",
-            "desc": "Skip Admin console",
+            "desc": "Deprecated no-op: the operator console is served by the web client",
             "default": null
           },
           {
@@ -6521,7 +7614,7 @@
       },
       {
         "command": "dev",
-        "description": "Launch the full Orazaka application stack in parallel (9 services + Web, Admin, Mobile)",
+        "description": "Launch the full Orazaka application stack in parallel (9 services + Web, Mobile)",
         "processes": [
           {
             "key": "edge",
@@ -6572,11 +7665,6 @@
             "key": "web",
             "label": "WEB-CLIENT",
             "port": 3000
-          },
-          {
-            "key": "admin",
-            "label": "WEB-ADMIN",
-            "port": 3001
           },
           {
             "key": "mobile",

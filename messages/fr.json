@@ -745,7 +745,6 @@
       },
       "orochiaRepos": {
         "orochia": "La plateforme Orochia : API, application web et paquets partagés.",
-        "orochia-admin": "La console opérateur d'Orochia.",
         "orochia-mobile": "L'application mobile Orochia (iOS et Android).",
         "orochia-design-system": "Les jetons de design et composants partagés par les applications Orochia.",
         "default": "Un dépôt de la plateforme Orochia."

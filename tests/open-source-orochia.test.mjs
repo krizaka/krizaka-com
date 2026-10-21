@@ -11,7 +11,7 @@ const BANNED = /creator|createur|créateur|18\+|revenue|revenu|adult|90\s?%|payo
 test("each Orochia repository has a neutral line in both languages, and a default", () => {
   for (const lang of ["en", "fr"]) {
     const lines = messages(lang);
-    for (const key of ["orochia", "orochia-admin", "orochia-mobile", "orochia-design-system", "default"]) {
+    for (const key of ["orochia", "orochia-mobile", "orochia-design-system", "default"]) {
       assert.ok(lines[key]?.length > 10, `${lang}: ${key}`);
       assert.ok(!BANNED.test(lines[key]), `${lang}: ${key} is not neutral: ${lines[key]}`);
     }
