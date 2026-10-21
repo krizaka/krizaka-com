@@ -5,7 +5,7 @@
 #   docker build -t krizaka-com .
 #   docker run --rm -p 3000:3000 --env-file .env.local krizaka-com     # contact delivery is optional (503 without it)
 #
-# Node 24 = the version Vercel builds production with today; Alpine (musl) = sharp's prebuilt linuxmusl binaries, and
+# Node 24 = the production runtime; Alpine (musl) = sharp's prebuilt linuxmusl binaries, and
 # none of glibc's allocator fragmentation the Next self-hosting guide warns about for image optimisation.
 
 FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f AS base
@@ -19,7 +19,7 @@ FROM base AS deps
 COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts
 
-# 2. Build — the same `npm run build` as CI and Vercel (it regenerates the org figures and the
+# 2. Build — the same `npm run build` as CI (it regenerates the org figures and the
 #    registry versions, then `next build`).
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules

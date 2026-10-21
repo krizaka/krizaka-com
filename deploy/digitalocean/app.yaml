@@ -11,7 +11,7 @@ region: tor
 domains:
   - domain: www.krizaka.com
     type: PRIMARY
-  # The apex only redirects to www (ingress below), as Vercel does today.
+  # The apex only redirects to www (ingress below).
   - domain: krizaka.com
     type: ALIAS
 ingress:
