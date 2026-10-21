@@ -64,7 +64,7 @@ test("each chapter wears the right bird, with its promise from the film or the b
 
 test("the film is shown once: one poster card opening the lightbox; no inline player, no autoplay in the text", () => {
   assert.equal([...page.matchAll(/<FilmLightbox/g)].length, 1, "the reference film once");
-  assert.match(page, /storyFilm\(\)/, "the film slot: la tournée today, the newest film on the CDN tomorrow (lib/story-film.ts)");
+  assert.match(page, /storyFilm\(\)/, "the film slot: « le relais » (lib/story-film.ts)");
   assert.match(page, /vtt: film\.vtt/);
   assert.match(page, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/, "the light film under reduced motion / Save-Data");
   assert.doesNotMatch(page, /VideoPlayer|<video|autoPlay|autoplay/, "no player in the reading column");
@@ -76,13 +76,14 @@ test("the film is shown once: one poster card opening the lightbox; no inline pl
   for (const l of ["en", "fr"]) {
     const w = messages(l).story.who;
     assert.ok(w.film && w.filmLength && w.filmNote, l);
-    assert.match(messages(l).story.world.tour.credit, l === "en" ? /AI-generated/ : /Généré par IA/, "said on the page: AI-generated");
+    assert.match(messages(l).story.world.relay.credit, l === "en" ? /AI-generated/ : /Généré par IA/, "said on the page: AI-generated");
   }
-  assert.match(page, /st\.world\.tour\.credit/, "the credit is on the page, not only in the film");
+  assert.match(page, /st\.world\.relay\.credit/, "the credit is on the page, not only in the film");
 });
 
-test("the text version of the film is listed once, in the fold, from the messages", () => {
-  assert.equal([...page.matchAll(/st\.world\.cues\[c\]/g)].length, 1);
+test("the text version of the film is listed once, in the fold, from the messages, in the relay's order", () => {
+  assert.equal([...page.matchAll(/st\.world\.relay\.cues\[c\.id\]/g)].length, 1);
+  assert.match(page, /RELAY_CUES\.map\(\(c\) =>/);
 });
 
 test("a product chapter shows its field's mini-visual (demo data, said so), claims only what runs, and links its site and its source", () => {
@@ -253,5 +254,5 @@ test("the film slot takes the newest film whose files are on the CDN, else the o
   assert.equal(pickFilm(films, has("brand-films/epic/y")).id, "tournee");
   assert.equal(pickFilm(films, has("brand-films/relay/x", "brand-films/epic/y")).id, "relais");
   assert.equal(pickFilm(films, () => false).id, "tournee", "never a dead poster: the oldest is always the fallback");
-  assert.match(read("lib/story-film.ts"), /id: "tournee"/);
+  assert.match(read("lib/story-film.ts"), /id: "relais", base: RELAY_BASE, vtt: "relay\.vtt"/);
 });
