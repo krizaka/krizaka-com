@@ -116,6 +116,25 @@
   Search Console / Bing verification is by DNS TXT record, never a file or a token in the repository; the sitemap to submit
   is `https://www.<product>.com/sitemap.xml`.
 
+## 2.5 Service discovery — the mobile apps' backend addresses are data
+
+- **The apps never hard-code a backend address** ([krizaka/.github ADR-003](https://github.com/krizaka/.github/blob/main/docs/adr/ADR-003-mobile-service-discovery.md)):
+  they load `https://www.krizaka.com/.well-known/krizaka/services.json` through [`@krizaka/discovery`](https://ui.krizaka.com/packages/discovery),
+  so a URL change is never a store release. This site **serves** it; it is the one place the addresses are edited.
+- **The data** is `lib/services.ts` (one entry per product and environment: `apiBase`, `webBase`, optional `authBase` / `mediaBase`,
+  `minAppVersion`, `latestAppVersion`, `status` `ok | maintenance`, optional `message` `{ en, fr }`). A product appears when a
+  client reads it; the values are what is **live**: APIs, auth and webhooks stay on the dev sites; `webBase` moves to www.<product>.com once that product's www serves the app (#119).
+- **Signed, never on the host.** `npm run services:sign` signs the data with the vault's Ed25519 key (`APP_DISCOVERY_SIGNING_KEY_K1`,
+  read by `secret.sh`, never printed) into the committed `lib/services.signed.json`; the build (`services:check`) and
+  `tests/services.test.mjs` fail when the data and the signature disagree. The hosting platform and CI hold no private key.
+  `issuedAt` only grows. A new key id (`k2`, the standby) is baked in `@krizaka/discovery` first, then used.
+- **Served** by `app/.well-known/krizaka/services.json/route.ts` (static), `Cache-Control: public, max-age=300`, CORS open for GET
+  (`next.config.ts`). The **fallback copy** is `discovery/services.json` on Bunny (`krizaka-assets`, one writer:
+  `npm run services:sign -- --publish --env-file …`); `npm run services:sign -- --live` compares both live copies with the
+  committed one. After a deploy of a changed manifest, publish the Bunny copy.
+- **Every address** passes the apps' allow-list (`https`, `krizaka.com` or the product's own domain; never a shared CDN host):
+  `tests/services.test.mjs`. Never add a product page, only an entry.
+
 ## 3. Theming — dark **and** light are first-class
 
 - One token system: `@krizaka/tokens` through the `@krizaka/tailwind` preset (imported by `app/globals.css`) —

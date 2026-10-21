@@ -82,6 +82,17 @@ const nextConfig: NextConfig = {
         ],
       },
       {
+        // The manifest of the mobile apps (ADR-003): a short cache so a moved address reaches the phones in minutes, open
+        // to a GET from anywhere (it is public and signed). Declared after the catch-all revalidating rule, which it replaces.
+        source: "/.well-known/krizaka/services.json",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=300, stale-while-revalidate=60" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          { key: "Access-Control-Allow-Methods", value: "GET, HEAD, OPTIONS" },
+          { key: "Content-Type", value: "application/json; charset=utf-8" },
+        ],
+      },
+      {
         // AI/agent + crawl assets: short cache, always revalidate.
         source: "/:file(llms.txt|llms-full.txt)",
         headers: [

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "keyId": "k1",
+  "issuedAt": "2026-10-21T13:46:53Z",
+  "services": {
+    "orazaka": {
+      "dev": {
+        "apiBase": "https://dev.orazaka.com/edge",
+        "webBase": "https://dev.orazaka.com",
+        "minAppVersion": "1.0.0",
+        "latestAppVersion": "1.0.0",
+        "status": "ok"
+      }
+    },
+    "orochia": {
+      "dev": {
+        "apiBase": "https://dev.orochia.com",
+        "webBase": "https://dev.orochia.com",
+        "minAppVersion": "1.0.0",
+        "latestAppVersion": "1.0.0",
+        "status": "ok"
+      }
+    },
+    "yasakia": {
+      "dev": {
+        "apiBase": "https://dev.yasakia.com",
+        "webBase": "https://dev.yasakia.com",
+        "minAppVersion": "0.1.0",
+        "latestAppVersion": "0.1.0",
+        "status": "ok"
+      }
+    }
+  },
+  "signature": "plg+KMe6vDDE2nCWZqvKat6wrAFIxPRbIJVeYHjZoRwuJSwzsDjYUVtTTkBJVNbK3NttrYS5dCJBxYupnLmcBw=="
+}

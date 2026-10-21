@@ -31,6 +31,11 @@ export const ZONE = {
     path: "site/<area>/<product?>/<kind>/<name>.<hash>.<ext>",
     what: "media loaded by the pages — hashed names, recorded in lib/cdn-manifest.json, never overwritten; URLs published packages still use stay valid",
   },
+  discovery: {
+    writer: "scripts/sign-services.mjs --publish (krizaka-com) — the signed manifest, never hand-made",
+    path: "discovery/services.json",
+    what: "the fallback copy of https://www.krizaka.com/.well-known/krizaka/services.json (ADR-003): the mobile apps read it when the www app is down — the same signed document, overwritten on each signing, short cache",
+  },
   ui: {
     writer: "krizaka-ui (docs site and Storybook media)",
     path: "ui/<area>/<name>.<hash>.<ext>",
@@ -169,6 +174,7 @@ export function misplaced(path) {
   if (root === "products" && !new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path)) {
     return `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`;
   }
+  if (root === "discovery" && path !== "discovery/services.json") return "not discovery/services.json";
   if (root === "ui" && path.split("/").length < 3) return "not ui/<area>/<file>";
   if (root === "maps" && !/^maps\/v1\/(tiles\/[a-z0-9-]+-\d{8}\.pmtiles|fonts\/[A-Za-z0-9 ]+\/\d+-\d+\.pbf)$/.test(path)) {
     return "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf";
