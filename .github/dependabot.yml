@@ -1,6 +1,7 @@
 # Dependabot — the Krizaka model (monthly, quiet; DEPS 2026-10-13, krizaka/.github).
 # Once a month (the 1st, 06:00 Paris), ONE grouped pull request per ecosystem — every update, majors included — and at
 # most one open per ecosystem. Security fixes stay on and arrive grouped apart, as soon as an advisory is published.
+# The pin of the shared pipeline (krizaka/.github node-ci.yml, a commit SHA with its tag as comment) moves with the github-actions group.
 # The ignore rules below are decisions, not oversights: Node LTS only (22/24), PostgreSQL 16 (parity with the
 # DigitalOcean databases), TypeScript 7 / ESLint 10 only once @krizaka/config supports them (krizaka/krizaka-ui#141),
 # the Expo SDK pins its own toolchain, and each deferred major names its tracking issue.
