@@ -8,10 +8,10 @@ import ButtonLink from "@/app/components/ButtonLink";
 export default function Company({ locale }: { locale: string }) {
   const c = getDictionary(locale).site.home.company;
   return (
-    <Section id="company" aria-labelledby="company-title" divider>
+    <Section id="company" aria-labelledby="company-title" divider margin>
       <SectionHeading
         id="company-title"
-        eyebrow={c.eyebrow}
+        number={c.number}
         title={c.title}
         lead={c.body}
         reveal

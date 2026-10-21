@@ -16,7 +16,8 @@ export default function ContactCta({ topic }: { topic?: ContactTopic }) {
   const c = t.site.home.contact;
   const href = useContactHref(topic);
   return (
-    <Section id="contact" aria-labelledby="contact-title" spacing="sm">
+    <Section id="contact" aria-labelledby="contact-title" spacing="sm" margin>
+      <span className="kz-heading-number kz-contact-number">{c.number}</span>
       <CtaPanel id="contact-title" title={c.title} reveal>
         <ButtonLink href={href} prefetch={false} variant="primary" size="lg">
           {c.cta} <ForwardIcon size={17} />

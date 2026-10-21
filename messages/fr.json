@@ -202,14 +202,15 @@
     },
     "home": {
       "hero": {
-        "eyebrow": "Montréal · Studio logiciel",
-        "title": "Nous construisons du logiciel open source — et tout ce qui le porte.",
-        "lead": "Sept produits sur un même moteur d'IA — vidéo, rencontres, un espace d'écoute, la vérification des baux, les pronostics entre amis, les commerces du Québec — et chaque pièce qui les porte, en open source.",
+        "number": "§ 1",
+        "eyebrow": "Carnet d'un studio logiciel · Montréal, Québec",
+        "title": "Nous construisons du logiciel open source, et tout ce qui le porte.",
+        "lead": "Sept produits sur un même moteur d'IA : vidéo, rencontres, un espace d'écoute, la vérification des baux, les pronostics entre amis, les commerces du Québec. Chaque pièce qui les porte est open source.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
         "filmLength": "1 min 18",
         "proofsLabel": "Krizaka en chiffres, lus au build",
-        "marksLabel": "Les sept produits — chacun mène à sa carte",
+        "marksLabel": "Les sept produits, chacun mène à sa fiche",
         "proofs": {
           "repositories": "dépôts publics",
           "npm": "paquets sur npm",
@@ -217,7 +218,16 @@
           "maven": "artefacts sur Maven Central",
           "license": "{license} sur chaque dépôt"
         },
-        "filmClose": "Fermer le film"
+        "filmClose": "Fermer le film",
+        "plate": {
+          "title": "Planche I · La volée",
+          "subtitle": "cinq promesses, telles que le film les dit",
+          "falcon": "le faucon",
+          "owl": "le hibou",
+          "duck": "le canard",
+          "flamingo": "le flamant",
+          "pigeon": "le pigeon"
+        }
       },
       "products": {
         "number": "§ 2",
@@ -270,6 +280,7 @@
         }
       },
       "stack": {
+        "number": "§ 3",
         "eyebrow": "Open source",
         "title": "Construisez avec nos briques.",
         "lead": "Les pièces sous chaque produit, à vous de les utiliser — essayez-les ici même. Versions et téléchargements lus au build.",
@@ -330,6 +341,7 @@
         }
       },
       "principles": {
+        "number": "§ 4",
         "eyebrow": "Notre façon de travailler",
         "title": "Cinq règles, vérifiées plutôt que promises.",
         "items": {
@@ -356,12 +368,14 @@
         }
       },
       "company": {
+        "number": "§ 5",
         "eyebrow": "Montréal",
         "title": "Un studio montréalais, ici pour durer.",
         "body": "Technologies Krizaka Inc. est établie à Montréal, au Québec — ouvert, accessible, bilingue, testé.",
         "story": "Lire notre histoire"
       },
       "contact": {
+        "number": "§ 6",
         "title": "Parlez-nous de ce que vous construisez.",
         "cta": "Nous contacter"
       },
