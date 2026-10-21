@@ -130,8 +130,7 @@ views (docs) use classes.
 
 `/contact`, the home page and every product page end with a contact form that posts to
 `app/api/contact`. Configure at least one delivery channel through environment variables — `.env.local` in
-development (copy `.env.example`), the hosting environment in production (Vercel → Settings →
-Environment Variables; on DigitalOcean App Platform, the app's secrets — `deploy/digitalocean/app.yaml`). Without one the endpoint answers `503` instead of pretending:
+development (copy `.env.example`), the hosting environment in production (DigitalOcean App Platform: the app's secrets — `deploy/digitalocean/app.yaml`). Without one the endpoint answers `503` instead of pretending:
 
 Every variable of the site is named by its bounded context (krizaka/.github#46) and declared once in
 [`lib/env.ts`](lib/env.ts) (zod); this table is generated from it (`npm run docs:env`, checked by `npm test`):
