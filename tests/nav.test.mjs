@@ -8,7 +8,7 @@ import { existsSync, readFileSync } from "node:fs";
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const nav = read("lib/nav.ts");
-const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",(?: status: "(\w+)",)? devUrl: ([^,]+),[^\n]*/g)].map(([line, id, status, devUrl]) => ({ id, status, devUrl, noSite: /noSite: true/.test(line) }));
+const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",(?: status: "(\w+)",)? siteUrl: ([^,]+),[^\n]*/g)].map(([line, id, status, siteUrl]) => ({ id, status, siteUrl }));
 const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)", url: "([^"]+)"/g)].map(([, id, name, url]) => ({ id, name, url }));
 
 test("two views (2026-10-17): the mark and the word Krizaka lead home, the centre of the bar is Open source only; Our story is not in the bar", () => {
@@ -42,9 +42,10 @@ test("every link to the products leads to the home's section, never to /products
 
 test("the family: every product on its own site, the stack on its subdomains, and GitHub", () => {
   assert.deepEqual(products.map((p) => p.id), ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"]);
-  // A product on its own dev site — or, in development with nothing deployed yet, its repository (never a dead address).
-  for (const p of products) assert.match(p.devUrl, /^("https:\/\/dev\.[a-z]+\.com"|OROCHIA_APP_URL|[A-Z]+_REPO_URL)$/, p.id);
-  for (const p of products.filter((x) => /_REPO_URL$/.test(x.devUrl))) assert.ok(p.noSite && p.status === "development", `${p.id}: a repository address only while in development, said so`);
+  // A product is reached at its public address, www.<product>.com — never at its dev host (not indexed, it sends its pages to www).
+  for (const p of products) {
+    assert.equal(p.siteUrl, `wwwUrl("${p.id}")`, p.id);
+  }
   assert.deepEqual(stack, [
     { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com" },
     { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com" },

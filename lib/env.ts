@@ -34,7 +34,6 @@ const text = z.string().min(1);
 const url = z.string().url();
 
 export const ENV_VARS: readonly EnvVar[] = [
-  { name: "NEXT_PUBLIC_APP_DEMO_URL", context: "APP", need: "recommended", build: true, default: "https://dev.orochia.com", schema: url, doc: "Where the running product demo is: every \"open the app\" link, the structured data and llms.txt (`lib/site.ts`)." },
   { name: "APP_GITHUB_TOKEN", context: "APP", need: "optional", build: true, secret: true, schema: text, doc: "A read-only token so the organisation figures (`scripts/gen-org-stats.mjs`) are not rate-limited at build; the build never fails without it." },
   { name: "NEXT_PUBLIC_MEDIA_CDN_URL", context: "MEDIA", need: "optional", build: true, default: "https://krizaka-assets.b-cdn.net", schema: url, doc: "Where the media (tours, gallery, home backdrop) are served from (`lib/cdn.ts`)." },
   { name: "MEDIA_STORAGE_API_KEY", context: "MEDIA", need: "optional", secret: true, tooling: true, schema: text, doc: "Storage zone password — PR captures and site media (`scripts/pr-assets.mjs`, `scripts/cdn-assets.mjs`)." },

@@ -9,13 +9,6 @@ export const GITHUB_REPO = "orazaka";
 /** The canonical host: www (the apex answers 308 to www, see deploy/digitalocean/app.yaml). */
 export const SITE_URL = "https://www.krizaka.com";
 
-/**
- * Where Orochia runs — its card on /products and llms.txt point here.
- * NEXT_PUBLIC_APP_DEMO_URL switches it (dev today, production later) without touching the code;
- * it is read at build time, so a change takes effect on the next deployment.
- */
-export const OROCHIA_APP_URL = (process.env.NEXT_PUBLIC_APP_DEMO_URL || "https://dev.orochia.com").replace(/\/$/, "");
-
 export const CONTACT_EMAIL = "bonjour@krizaka.com";
 
 export const GITHUB_ORG_URL = `https://github.com/${GITHUB_ORG}`;

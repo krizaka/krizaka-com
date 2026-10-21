@@ -25,15 +25,12 @@ FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # Build-time values (App Platform passes BUILD_TIME / RUN_AND_BUILD_TIME variables as build args):
-# - where every "open Orochia" link points (inlined in the pages and the client bundle);
 # - where the media are served from (lib/cdn.ts; empty = https://krizaka-assets.b-cdn.net);
 # - an optional read-only GitHub token so scripts/gen-org-stats.mjs is not rate-limited (the build never fails without it).
 #   It stays in this stage: the runner image does not inherit it.
-ARG NEXT_PUBLIC_APP_DEMO_URL
 ARG NEXT_PUBLIC_MEDIA_CDN_URL
 ARG NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY
 ARG APP_GITHUB_TOKEN
-ENV NEXT_PUBLIC_APP_DEMO_URL=$NEXT_PUBLIC_APP_DEMO_URL
 ENV NEXT_PUBLIC_MEDIA_CDN_URL=$NEXT_PUBLIC_MEDIA_CDN_URL
 ENV NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY=$NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY
 ENV NODE_ENV=production

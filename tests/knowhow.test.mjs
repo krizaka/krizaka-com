@@ -31,7 +31,7 @@ test("the known know-hows are the ones Oussama named", () => {
 test("the home and /story render the products from PRODUCTS: the home's rows, /story's chapters", () => {
   const story = read("app/[locale]/story/page.tsx");
   assert.match(story, /h\.knowhow\[id\]/);
-  assert.match(story, /href=\{p\.devUrl\}/);
+  assert.match(story, /href=\{p\.siteUrl\}/);
   assert.match(story, /href=\{p\.repoUrl\}/);
   assert.match(story, /PRODUCT_CHAPTERS/);
   const home = read("app/components/home/ProductShowcase.tsx");

@@ -39,7 +39,7 @@ test("every variable the site, its scripts, .env.example and the App Platform sp
 });
 
 test("values are checked against their schema — names only", () => {
-  assert.deepEqual(checkEnv({ MAIL_PROVIDER: "mailgun", NEXT_PUBLIC_APP_DEMO_URL: "https://dev.orochia.com" }), []);
+  assert.deepEqual(checkEnv({ MAIL_PROVIDER: "mailgun" }), []);
   const problems = checkEnv({ MAIL_PROVIDER: "postmark", NEXT_PUBLIC_MEDIA_CDN_URL: "not-a-url" });
   assert.equal(problems.length, 2);
   assert.ok(problems.every((p) => !p.includes("postmark") && !p.includes("not-a-url")));

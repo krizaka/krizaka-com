@@ -35,7 +35,7 @@ import "./visuals/visuals.css";
 const STAMP: Record<ProductStatus, StampTone> = { devPreview: "ok", development: "wip", construction: "construction", upcoming: "neutral" };
 const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 
-const external = (p: Product) => ({ href: p.devUrl, target: "_blank", rel: "noopener" });
+const external = (p: Product) => ({ href: p.siteUrl, target: "_blank", rel: "noopener" });
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 /** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
@@ -57,14 +57,12 @@ function Foot({ p, t }: { p: Product; t: TranslationDictionary }) {
   const h = t.site.products;
   return (
     <>
-      <a {...external(p)} aria-label={p.noSite ? format(h.seeCodeAria, { name: p.name }) : format(h.visitAria, { name: p.name })}>
-        {p.noSite ? h.seeCode : h.visit} <ForwardIcon size={13} aria-hidden />
+      <a {...external(p)} aria-label={format(h.visitAria, { name: p.name })}>
+        {h.visit} <ForwardIcon size={13} aria-hidden />
       </a>
-      {!p.noSite && (
-        <a href={p.repoUrl} aria-label={format(h.sourceAria, { name: p.name })}>
-          <GitHubMark size={14} /> {h.source}
-        </a>
-      )}
+      <a href={p.repoUrl} aria-label={format(h.sourceAria, { name: p.name })}>
+        <GitHubMark size={14} /> {h.source}
+      </a>
     </>
   );
 }
@@ -123,7 +121,7 @@ function ProductEntry({ product: p, t }: { product: Product; t: TranslationDicti
         }
         mark={<ProductLogo id={p.id} size={30} animated={false} />}
         status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
-        fields={[{ label: s.fields.site, value: host(p.devUrl) }]}
+        fields={[{ label: s.fields.site, value: host(p.siteUrl) }]}
         footer={<Foot p={p} t={t} />}
       >
         <p>

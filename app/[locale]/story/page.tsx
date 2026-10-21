@@ -163,14 +163,12 @@ export default async function StoryPage({ params }: Props) {
         }
         actions={
           <>
-            <ButtonLink href={p.devUrl} variant="primary">
-              {p.noSite ? h.seeCode : h.visit} <ForwardIcon size={14} />
+            <ButtonLink href={p.siteUrl} variant="primary">
+              {h.visit} <ForwardIcon size={14} />
             </ButtonLink>
-            {!p.noSite && (
-              <ButtonLink href={p.repoUrl} variant="ghost" ariaLabel={format(h.sourceAria, { name: p.name })}>
-                {h.source}
-              </ButtonLink>
-            )}
+            <ButtonLink href={p.repoUrl} variant="ghost" ariaLabel={format(h.sourceAria, { name: p.name })}>
+              {h.source}
+            </ButtonLink>
           </>
         }
       />
@@ -282,7 +280,7 @@ export default async function StoryPage({ params }: Props) {
               ),
             }}
             actions={
-              <ButtonLink href={engine.devUrl} variant="primary">
+              <ButtonLink href={engine.siteUrl} variant="primary">
                 {h.visit} <ForwardIcon size={14} />
               </ButtonLink>
             }

@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { PRODUCT_SITES, productRedirects } from "../lib/product-redirects.ts";
 
-// The products live on their own sites (dev.<product>.com): every old address of a product page, demo or documentation
+// The products live on their own sites (www.<product>.com): every old address of a product page, demo or documentation
 // answers 308 with the product's site. The sources are matched with the same path-to-regexp (6.x) Next.js compiles them with.
 const require = createRequire(import.meta.url);
 const { match } = require("path-to-regexp");
@@ -16,19 +16,19 @@ const go = (path) => rules.find((rule) => rule.matches(path));
 
 test("the products' sites: Yazakia is renamed Yasakia; Yomizaka has its site (#171); Kachizaka and Akinaza, in development, their repository", () => {
   assert.deepEqual(PRODUCT_SITES, {
-    orazaka: "https://dev.orazaka.com",
-    orochia: "https://dev.orochia.com",
-    yasakia: "https://dev.yasakia.com",
-    yororis: "https://dev.yororis.com",
-    yomizaka: "https://dev.yomizaka.com",
-    kachizaka: "https://github.com/krizaka/kachizaka",
-    akinaza: "https://github.com/krizaka/akinaza",
+    orazaka: "https://www.orazaka.com",
+    orochia: "https://www.orochia.com",
+    yasakia: "https://www.yasakia.com",
+    yororis: "https://www.yororis.com",
+    yomizaka: "https://www.yomizaka.com",
+    kachizaka: "https://www.kachizaka.com",
+    akinaza: "https://www.akinaza.com",
   });
 });
 
 test("Yomizaka's documentation goes to its site (#171)", () => {
   const rule = go("/fr/docs/yomizaka/getting-started");
-  assert.equal(rule?.destination, "https://dev.yomizaka.com/docs");
+  assert.equal(rule?.destination, "https://www.yomizaka.com");
   assert.equal(rule?.statusCode, 308);
 });
 
@@ -47,20 +47,20 @@ test("Yazakia's old address goes to Yasakia's site, with or without the locale",
   for (const path of ["/products/yazakia", "/en/products/yazakia", "/fr/products/yazakia/demos"]) {
     const rule = go(path);
     assert.ok(rule, path);
-    assert.equal(rule.destination, "https://dev.yasakia.com", path);
+    assert.equal(rule.destination, "https://www.yasakia.com", path);
     assert.equal(rule.statusCode, 308, path);
   }
 });
 
 test("the products' documentation goes to the product's site: Orazaka and Orochia to /docs, Yororis to its home", () => {
   for (const [path, destination] of [
-    ["/docs/orazaka", "https://dev.orazaka.com/docs"],
-    ["/en/docs/orazaka/cli", "https://dev.orazaka.com/docs"],
-    ["/fr/docs/orazaka/ui/button", "https://dev.orazaka.com/docs"],
-    ["/docs/orochia", "https://dev.orochia.com/docs"],
-    ["/en/docs/orochia/admin_console", "https://dev.orochia.com/docs"],
-    ["/docs/yororis", "https://dev.yororis.com"],
-    ["/fr/docs/yororis", "https://dev.yororis.com"],
+    ["/docs/orazaka", "https://www.orazaka.com"],
+    ["/en/docs/orazaka/cli", "https://www.orazaka.com"],
+    ["/fr/docs/orazaka/ui/button", "https://www.orazaka.com"],
+    ["/docs/orochia", "https://www.orochia.com"],
+    ["/en/docs/orochia/admin_console", "https://www.orochia.com"],
+    ["/docs/yororis", "https://www.yororis.com"],
+    ["/fr/docs/yororis", "https://www.yororis.com"],
   ]) {
     const rule = go(path);
     assert.ok(rule, path);
@@ -71,7 +71,7 @@ test("the products' documentation goes to the product's site: Orazaka and Orochi
 
 test("the old Orazaka addresses that redirected to /products/orazaka/… go to its site", () => {
   for (const path of ["/orazaka", "/en/architecture", "/demos", "/fr/editions", "/get-started", "/ingenierie-cognitive", "/en/packages", "/roadmap", "/solutions", "/en/use-cases", "/fr/use-cases/some-case"]) {
-    assert.equal(go(path)?.destination, "https://dev.orazaka.com", path);
+    assert.equal(go(path)?.destination, "https://www.orazaka.com", path);
   }
 });
 

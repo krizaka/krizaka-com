@@ -118,8 +118,8 @@
       "title": "Un moteur, les produits qu'il propulse",
       "pageTitle": "Un moteur, et les produits qu'il propulse",
       "lead": "Orazaka est le moteur sur lequel tourne l'IA de chaque produit Krizaka : c'est notre savoir-faire central. Chaque produit le prouve dans son domaine, sur son propre site, avec son code source sur GitHub.",
-      "visit": "Voir le site de dev",
-      "visitAria": "{name} — voir le site de dev",
+      "visit": "Voir le site",
+      "visitAria": "{name} — voir le site",
       "source": "Code source",
       "sourceAria": "{name} — code source sur GitHub",
       "cards": {
@@ -176,8 +176,6 @@
           "proof": "Rendez-vous, dossiers clients avec consentement Loi 25, factures bilingues avec TPS et TVQ au cent près, un registre que la base garde équilibré, et la déclaration TPS/TVQ préparée pour que le commerçant la produise."
         }
       },
-      "seeCode": "Voir le code",
-      "seeCodeAria": "Le code de {name} sur GitHub — en développement, pas encore de site",
       "hookLabel": "Ce que c'est",
       "engine": {
         "meta": "La fondation",
@@ -1517,7 +1515,7 @@
         },
         {
           "q": "Où sont les produits ?",
-          "a": "Sur leurs propres sites : dev.orazaka.com, dev.orochia.com, dev.yasakia.com (en développement) et dev.yororis.com (en construction). L'accueil les présente, chacun avec son code source."
+          "a": "À leurs propres adresses : www.orazaka.com, www.orochia.com, www.yasakia.com, www.yororis.com, www.yomizaka.com, www.kachizaka.com et www.akinaza.com. L'accueil les présente, chacun avec son code source."
         },
         {
           "q": "Où est la documentation ?",
