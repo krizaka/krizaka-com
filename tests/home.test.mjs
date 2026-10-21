@@ -33,15 +33,12 @@ test("one primary action per section: the hero's goes to #products, the stack's 
   assert.equal(company.match(/<ButtonLink/g)?.length, 1);
 });
 
-test("the hero: centred text painted at once, the figures read at build and climbing, the scene in the flow under them", () => {
+test("the hero: text painted at once, the figures read at build and climbing", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.doesNotMatch(hero, /"use client"/, "the hero's text is server-rendered (LCP)");
   assert.doesNotMatch(hero, /data-reveal|reveal\(/, "nothing on the first screen is revealed");
   assert.match(hero, /<NumberTicker value=\{p\.value\}/);
-  assert.ok(hero.indexOf("kz-home-proofs") < hero.indexOf("kz-home-scene"), "the landscape comes after the figures: the birds never cover them");
   assert.doesNotMatch(hero.slice(hero.indexOf("kz-home-proofs"), hero.indexOf("</dl>")), /kz-intro-deco/, "the figures are never hidden by the intro");
-  const css = read("app/components/home/home.css");
-  assert.match(css, /\.kz-home-scene \{ position: relative;/, "the scene is in the flow, not over the figures");
 });
 
 test("the products come from lib/products.ts: one card each, in the product's brand", () => {

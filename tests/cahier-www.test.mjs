@@ -42,8 +42,8 @@ test("the site's own styles carry no template tell", () => {
   assert.doesNotMatch(read("app/globals.css"), /bp-glide \{ background: linear-gradient/, "the brand wash between sections");
 });
 
-test("the hero keeps its contract: one primary action, server-rendered, the figures before the scene", () => {
+test("the hero keeps its contract: one primary action, server-rendered; the flock is no longer in it (it opens the products)", () => {
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
   assert.doesNotMatch(hero, /"use client"|data-reveal/);
-  assert.ok(hero.indexOf("kz-home-proofs") < hero.indexOf("kz-home-scene"));
+  assert.doesNotMatch(hero, /kz-home-scene|AmbientLoop/);
 });
