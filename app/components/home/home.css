@@ -132,14 +132,6 @@ html[data-intro="play"] .kz-intro-sweep { animation: kz-intro-sweep 1.3s cubic-b
   .kz-prod .kz-flow-node, .kz-prod .kz-flow-link { transition: none; }
 }
 
-/* ─── The principles, in brief ─── */
-.kz-home-principles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
-  gap: 1px; background: var(--kz-border-subtle); border: 1px solid var(--kz-border-subtle); border-radius: 0; overflow: hidden; }
-.kz-home-principles > li { padding: 22px; background: var(--kz-surface-0); }
-.kz-home-principles svg { color: var(--kz-accent-text); }
-.kz-home-principles h3 { margin: 12px 0 6px; font-size: 15.5px; font-weight: 700; color: var(--kz-text-primary); }
-.kz-home-principles p { margin: 0; font-size: 14px; line-height: 1.55; color: var(--kz-text-secondary); }
-
 .kz-home-film { padding: 0; overflow: hidden; }
 
 /* ─── Build with our open source: three tiles, each with something to try (OpenStack) ───
@@ -168,3 +160,24 @@ html[data-intro="play"] .kz-intro-sweep { animation: kz-intro-sweep 1.3s cubic-b
 /* The contact's number hangs in the margin like every section's (Cahier). */
 .kz-contact-number { display: block; margin-bottom: 8px; }
 @media (min-width: 1180px) { #contact .kz-frame { position: relative; } .kz-contact-number { position: absolute; left: calc(var(--kz-gutter) - 64px); top: 6px; } }
+
+/* ─── Cahier touches (krizaka-ui ADR-004): § 4 and § 5 on ruled paper, with restraint ───
+   The five rules as a numbered notebook list: the number hangs in the margin in the margin's red, each rule is ruled off
+   by a hairline of the paper, the icon is a pencil mark. A small stamp in § 5; a folio (page number) closes each page.
+   Static: no motion, no new script. Tokens only. */
+.kz-notebook-list { list-style: none; counter-reset: kz-rule; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); }
+.kz-notebook-list > li { counter-increment: kz-rule; position: relative; min-width: 0; padding: 18px 0 18px 2.75rem;
+  border-bottom: 1px solid var(--kz-paper-rule-major); }
+.kz-notebook-list > li:first-child { border-top: 1px solid var(--kz-paper-rule-major); }
+.kz-notebook-list > li::before { content: counter(kz-rule); position: absolute; left: 0; top: 18px; width: 2rem; text-align: right;
+  font-family: var(--kz-font-mono); font-size: 13.5px; line-height: 1.5; color: var(--kz-paper-rule-margin); }
+.kz-notebook-list svg { float: right; margin: 2px 0 8px 12px; color: var(--kz-accent-text); }
+.kz-notebook-list h3 { margin: 0 0 4px; font-size: 16px; font-weight: 700; color: var(--kz-text-primary); }
+.kz-notebook-list p { margin: 0; max-width: 56ch; font-size: 14.5px; line-height: 1.55; color: var(--kz-text-secondary); }
+@media (min-width: 900px) {
+  .kz-notebook-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(32px, 5vw, 64px); }
+  .kz-notebook-list > li:nth-child(2) { border-top: 1px solid var(--kz-paper-rule-major); }
+}
+.kz-company-stamp { margin: 20px 0 0; }
+.kz-folio { margin: clamp(28px, 4vw, 44px) 0 0; text-align: right; font-family: var(--kz-font-mono); font-size: 12.5px; line-height: 16px;
+  color: var(--kz-text-secondary); }
