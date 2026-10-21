@@ -15,101 +15,46 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  changes:
-    # A change that touches no code (issue and PR templates, the dependabot and Scorecard files, licence and policy text)
-    # skips the two jobs below, which report « Skipped » and keep the required checks satisfied. Fails open.
-    uses: krizaka/.github/.github/workflows/changes.yml@ccd224612f5bb9db815335654f359a595a597fbb # main
+  # The pipeline is the org's (krizaka/.github docs/standards/ci-and-deploy.md): the changes gate, the caches, the timeouts and the
+  # gate that always reports live there. This file says only what is krizaka.com's.
+  ci:
+    uses: krizaka/.github/.github/workflows/node-ci.yml@70fb536c28d970c5d8125ff08f1ecb7d8570c4fb # v1.0.0
+    permissions:
+      contents: read
     with:
+      next-cache-paths: .next/cache
+      # scripts/gen-org-stats.mjs reads the organisation's public repository count without the anonymous rate limit
+      github-token-env: APP_GITHUB_TOKEN
+      container: true
+      container-build-args: |
+        NEXT_PUBLIC_APP_DEMO_URL=https://dev.orochia.com
+      container-image: krizaka-com:ci
+      container-smoke: scripts/ci-container-smoke.sh
+      container-playwright-cache: true
+      # A change that touches no code (issue and PR templates, the dependabot and Scorecard files, licence and policy text)
+      # skips the heavy jobs. Fails open.
       ignore: '^\.github/(?!workflows/ci\.yml$)|^(LICENSE|SECURITY|CODE_OF_CONDUCT|SUPPORT)(\.md)?$'
 
+  # The names branch protection requires (« Build & Validate », « Container image ») are kept by two shims that read the
+  # gate's verdict: red when anything of the pipeline is red, green when it is green or legitimately skipped.
   validate:
     name: Build & Validate
-    needs: changes
-    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
+    needs: ci
+    if: ${{ always() }}
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 2
+    env:
+      RESULT: ${{ needs.ci.outputs.result }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - name: Set up Node.js 22
-        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: 22
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run linter
-        run: npm run lint
-
-      - name: Run tests
-        run: npm test
-
-      # Next.js's build cache (webpack/SWC): the next build reuses what the sources did not change.
-      - name: Next.js build cache
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
-        with:
-          path: .next/cache
-          key: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
-          restore-keys: next-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
-
-      - name: Run build
-        run: npm run build
-        env:
-          # scripts/gen-org-stats.mjs reads the organisation's public repository count without the anonymous rate limit
-          APP_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: test "$RESULT" = success
 
   container:
     name: Container image
-    needs: changes
-    if: ${{ !cancelled() && needs.changes.outputs.code != 'false' }}
+    needs: ci
+    if: ${{ always() }}
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 2
+    env:
+      RESULT: ${{ needs.ci.outputs.result }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-
-      - name: Build the production image (Dockerfile, Next.js standalone)
-        run: docker build --build-arg NEXT_PUBLIC_APP_DEMO_URL=https://dev.orochia.com -t krizaka-com:ci .
-
-      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
-        with:
-          node-version: 22
-
-      - name: Smoke-test the container
-        run: |
-          docker run -d --name site -p 3000:3000 krizaka-com:ci
-          for i in $(seq 1 30); do curl -fsS http://localhost:3000/api/health && break; sleep 1; done
-          check() { code=$(curl -s -o /dev/null -w '%{http_code}' "$@"); echo "$code $*"; [ "$code" = "$EXPECT" ]; }
-          EXPECT=200 check http://localhost:3000/en
-          EXPECT=308 check http://localhost:3000/fr/docs/ui
-          EXPECT=308 check http://localhost:3000/docs/ui/button
-          EXPECT=200 check http://localhost:3000/en/open-source
-          # Two views (2026-10-17): /products merged into the home, 308 to its products section.
-          EXPECT=308 check http://localhost:3000/en/products
-          # The products live on their own sites: their old addresses answer 308 (lib/product-redirects.ts).
-          EXPECT=308 check http://localhost:3000/en/products/orochia
-          EXPECT=308 check http://localhost:3000/docs/orazaka/cli
-          EXPECT=200 check http://localhost:3000/sitemap.xml
-          EXPECT=200 check http://localhost:3000/llms.txt
-          EXPECT=307 check http://localhost:3000/
-          EXPECT=404 check http://localhost:3000/en/this-page-does-not-exist
-          # No delivery channel configured: the contact API fails closed.
-          EXPECT=503 check -X POST http://localhost:3000/api/contact -H 'content-type: application/json' \
-            -d '{"name":"CI","email":"ci@example.com","company":"","topic":"other","message":"Container smoke test.","locale":"en"}'
-          # The SEO contract on the HTML the server really sends (canonical www, hreflang, JSON-LD, robots, llms.txt).
-          node scripts/check-seo.mjs --base http://localhost:3000
-          # The family contract shared by every Krizaka site (robots, AI crawlers, sitemap, llms.txt, JSON-LD back to the Organization).
-          node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization --types Organization,WebSite
-          # 360–1440 px, dark and light: no page scrolls sideways (a real browser on the real container).
-          npm ci --ignore-scripts --no-audit --no-fund
-          npx playwright install --with-deps chromium
-          node scripts/check-overflow.mjs --base http://localhost:3000
-          # The engine flow's dots travel and the engine breathes (reduced motion OFF; at rest when ON): check-overflow runs
-          # under reduced motion and could not see a frozen figure.
-          node scripts/check-motion.mjs --base http://localhost:3000
-          # A footer link lands at the top of its page, heading focused; one footer landmark per page (/story peer review).
-          node scripts/check-arrival.mjs --base http://localhost:3000
-          docker logs site | tail -20
+      - run: test "$RESULT" = success
