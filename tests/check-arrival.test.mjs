@@ -45,11 +45,12 @@ test("one footer landmark per page; two or none fail", () => {
 test("the footer's internal links carry the locale, and its own page is aria-current", () => {
   const footer = read("app/components/SiteFooter.tsx");
   assert.match(footer, /const to = \(path: string\) => `\/\$\{locale\}/);
-  for (const href of ['to("/story")', 'to("/open-source")', 'to("/changelog")', 'to("/privacy")', 'to("/terms")', "to(PRODUCTS_ANCHOR)", "to(contactHref)"]) {
+  // The story, the blog and contact are the family's « Krizaka » column now (@krizaka/ui 3.39, one-band footer): not here.
+  for (const href of ['to("/open-source")', 'to("/changelog")', 'to("/privacy")', 'to("/terms")', "to(PRODUCTS_ANCHOR)"]) {
     assert.ok(footer.includes(`href={${href}}`), `${href} is prefixed`);
   }
   assert.doesNotMatch(footer, /<Link href="\//, "no unprefixed footer link: it would go through proxy.ts's 307");
-  assert.equal(footer.match(/aria-current=\{here\(/g).length >= 6, true);
+  assert.equal(footer.match(/aria-current=\{here\(/g).length >= 5, true);
 });
 
 test("the locale layout mounts RouteArrival: scroll to 0 and focus on the h1, when the page (not the language, not an anchor) changes", () => {
