@@ -34,5 +34,5 @@ export const PRODUCTS: Product[] = [
   { id: "kachizaka", name: "Kachizaka", status: "development", siteUrl: wwwUrl("kachizaka"), repoUrl: KACHIZAKA_REPO_URL },
   { id: "akinaza", name: "Akinaza", status: "development", siteUrl: wwwUrl("akinaza"), repoUrl: AKINAZA_REPO_URL },
   { id: "yasakia", name: "Yasakia", status: "development", siteUrl: wwwUrl("yasakia"), repoUrl: YASAKIA_REPO_URL },
-  { id: "yororis", name: "Yororis", status: "construction", siteUrl: wwwUrl("yororis"), repoUrl: YORORIS_REPO_URL },
+  { id: "yororis", name: "Yororis", status: "development", siteUrl: wwwUrl("yororis"), repoUrl: YORORIS_REPO_URL },
 ];

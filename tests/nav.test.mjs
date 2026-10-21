@@ -55,9 +55,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
-test("the products' statuses: Yasakia coming soon, Yororis under construction, Yomizaka, Kachizaka, Akinaza and Yasakia in development, Orazaka and Orochia in Dev preview (a status the checklists gate: tests/dev-preview.test.mjs)", () => {
+test("the products' statuses: Yasakia coming soon, Yomizaka, Kachizaka, Akinaza and Yasakia in development, Orazaka and Orochia in Dev preview (a status the checklists gate: tests/dev-preview.test.mjs)", () => {
   const status = Object.fromEntries(products.map((p) => [p.id, p.status]));
-  assert.deepEqual(status, { orazaka: "devPreview", orochia: "devPreview", yasakia: "development", yororis: "construction", yomizaka: "development", kachizaka: "development", akinaza: "development" });
+  assert.deepEqual(status, { orazaka: "devPreview", orochia: "devPreview", yasakia: "development", yororis: "development", yomizaka: "development", kachizaka: "development", akinaza: "development" });
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {

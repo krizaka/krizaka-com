@@ -57,7 +57,7 @@ test("na is allowed only where the standard allows it, with a real reason", () =
 });
 
 test("a product wearing devPreview needs a complete checklist; any other status is never gated", () => {
-  const statuses = { kachizaka: "devPreview", akinaza: "development", yororis: "construction" };
+  const statuses = { kachizaka: "devPreview", akinaza: "development", yororis: "development" };
   assert.match(assertStatuses(statuses, {}, { today: TODAY }).join("\n"), /kachizaka.*no checklist/);
   const incomplete = complete();
   incomplete.criteria["docs.current"] = { evidence: null, gap: "not audited" };

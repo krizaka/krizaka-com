@@ -268,7 +268,7 @@
           "kachizaka": "Match facts come through Orazaka’s MCP connectors, stored once and applied in order; the standings are recomputed and pushed live. Points only, rules sealed at kick-off.",
           "akinaza": "Bilingual invoices with GST and QST to the cent, a ledger the database keeps balanced, and the GST/QST return prepared for the merchant to file.",
           "yasakia": "The position is rounded to about 1 km before it is stored; people are introduced when they match both ways, nearby, never exact.",
-          "yororis": "Under construction: nothing is deployed, nothing is offered."
+          "yororis": "In development, built in the open: nothing is offered yet."
         },
         "birds": {
           "lovebird": "the lovebird",
@@ -1124,7 +1124,7 @@
         "orazaka": "Sovereign, on-premise AI orchestration engine: chat, knowledge, jobs and automation under your own roof.",
         "orochia": "An open-source video platform for independent creators: upload, encode and stream.",
         "yasakia": "A mobile dating app where you talk first. In development.",
-        "yororis": "A listening space with a face and a voice. Under construction.",
+        "yororis": "A listening space with a face and a voice. In development.",
         "krizaka-ui": "The Krizaka design system: React and React Native components, tokens, icons, fonts and charts.",
         "krizaka-java": "The Spring Boot building blocks of every Krizaka service, published on Maven Central under com.krizaka.",
         "yomizaka": "Leases, contracts and invoices read and checked by Orazaka. In development.",
