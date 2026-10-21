@@ -745,7 +745,6 @@
       },
       "orochiaRepos": {
         "orochia": "The Orochia platform: API, web app and shared packages.",
-        "orochia-admin": "The Orochia operator console.",
         "orochia-mobile": "The Orochia mobile app (iOS and Android).",
         "orochia-design-system": "Design tokens and components shared by the Orochia apps.",
         "default": "A repository of the Orochia platform."

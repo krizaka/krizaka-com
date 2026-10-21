@@ -9,7 +9,7 @@ const repo = (name, topics = [], archived = false) => ({ name, description: "", 
 
 test("a repository belongs to the product it is named after, anything else to the platform", () => {
   assert.equal(productOfRepository("orochia", PRODUCTS), "orochia");
-  assert.equal(productOfRepository("orochia-admin", PRODUCTS), "orochia");
+  assert.equal(productOfRepository("orochia-console", PRODUCTS), "orochia");
   assert.equal(productOfRepository("yororis-mobile", PRODUCTS), "yororis");
   assert.equal(productOfRepository("krizaka-ui", PRODUCTS), "krizaka");
   assert.equal(productOfRepository(".github", PRODUCTS), "krizaka");
@@ -24,13 +24,13 @@ test("the kind of a repository comes from its topics", () => {
   assert.equal(kindOfRepository(repo("orazaka-ui-kit", ["react-native", "npm-package"]), "orazaka"), "library");
   assert.equal(kindOfRepository(repo("orazaka-edge", ["java", "spring-boot"]), "orazaka"), "service");
   assert.equal(kindOfRepository(repo("orazaka-cli", ["cli", "typescript"]), "orazaka"), "tooling");
-  assert.equal(kindOfRepository(repo("orochia-admin", ["nextjs", "bff"]), "orochia"), "web");
+  assert.equal(kindOfRepository(repo("orochia-console", ["nextjs", "bff"]), "orochia"), "web");
   assert.equal(kindOfRepository(repo("x-y", []), "x"), "other");
 });
 
 test("a product lists all its repositories, main first, archived ones left out", () => {
-  const all = [repo("orochia-mobile", ["expo"]), repo("orochia"), repo("orochia-admin", ["nextjs"]), repo("orochia-old", [], true), repo("krizaka-ui", ["design-system"])];
-  assert.deepEqual(repositoriesOf(all, "orochia", PRODUCTS).map((r) => r.name), ["orochia", "orochia-admin", "orochia-mobile"]);
+  const all = [repo("orochia-mobile", ["expo"]), repo("orochia"), repo("orochia-console", ["nextjs"]), repo("orochia-old", [], true), repo("krizaka-ui", ["design-system"])];
+  assert.deepEqual(repositoriesOf(all, "orochia", PRODUCTS).map((r) => r.name), ["orochia", "orochia-console", "orochia-mobile"]);
   assert.deepEqual(repositoriesOf(all, "krizaka", PRODUCTS).map((r) => r.name), ["krizaka-ui"]);
 });
 

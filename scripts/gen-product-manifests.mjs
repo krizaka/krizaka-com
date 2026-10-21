@@ -20,11 +20,11 @@ const RAW = "https://raw.githubusercontent.com/krizaka";
     records a real Orazaka run of the product on dev (its run id) — the only proof that it runs on the engine. */
 const PRODUCTS = {
   orazaka: {
-    npm: ["orazaka-web-client:package.json", "orazaka-web-admin:package.json", "orazaka-mobile-client:package.json"],
+    npm: ["orazaka-web-client:package.json", "orazaka-mobile-client:package.json"],
     maven: ["orazaka-edge", "orazaka-ai-engine", "orazaka-automation-service", "orazaka-conversation-service", "orazaka-job-service", "orazaka-knowledge-service"].map((r) => `${r}:pom.xml`),
     evidence: ["orazaka-web-client:src/core/hooks/useJobSSE.ts"],
   },
-  orochia: { npm: ["orochia:apps/web/package.json", "orochia-admin:package.json", "orochia-mobile:package.json"], maven: ["orochia:pom.xml"], engineRun: "orochia:apps/web/lib/explorer-run.json" },
+  orochia: { npm: ["orochia:apps/web/package.json", "orochia-mobile:package.json"], maven: ["orochia:pom.xml"], engineRun: "orochia:apps/web/lib/explorer-run.json" },
   yasakia: { npm: ["yasakia:apps/web/package.json", "yasakia-mobile:package.json"], maven: ["yasakia:pom.xml"] },
   yororis: { npm: ["yororis:site/package.json", "yororis-mobile:package.json"], maven: ["yororis:pom.xml"] },
   yomizaka: { npm: ["yomizaka:apps/web/package.json"], maven: [], engineRun: "yomizaka:apps/web/lib/demo-run.ts" },
