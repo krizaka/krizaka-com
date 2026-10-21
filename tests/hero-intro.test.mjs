@@ -32,18 +32,16 @@ test("no animation frame, no canvas, no animation library — CSS animations onl
 
 test("the choreography over the poster: the mark draws, the scene rises in with its birds, a light sweeps, then the loop fades in; everything at rest under reduced motion; nothing stays hidden without JavaScript", () => {
   assert.match(css, /html\[data-intro="play"\] \.kz-intro-mark path\[stroke-linecap\] \{[^}]*kz-intro-draw/);
-  assert.match(css, /html\[data-intro="play"\] \.kz-home-scene \.kz-ambient \{[^}]*kz-intro-rise/);
-  assert.match(css, /html\[data-intro="play"\] \.kz-ambient-layer video \{ opacity: 0; \}/, "the loop waits for the intro to end: they never fight");
   assert.match(css, /html\[data-intro="play"\] \.kz-intro-sweep \{[^}]*kz-intro-sweep/);
   assert.match(css, /\.kz-intro-deco \{ animation: kz-intro-fallback [^}]*both; \}/, "without script, the decorations fade in by themselves");
   const reduced = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce)"));
   assert.match(reduced, /\.kz-intro-deco, html\[data-intro\] \.kz-intro-deco \{ animation: none; opacity: 1; \}/);
 });
 
-test("the scene sits in the flow under the figures, and the hero keeps the flock's ambient loop", () => {
+test("the scene is not in the hero any more: the flock opens the products section", () => {
   const hero = read("app/components/home/HomeHero.tsx");
-  assert.ok(hero.indexOf("kz-home-proofs") < hero.indexOf("kz-home-scene"));
-  assert.match(hero, /<div className="kz-home-scene kz-intro-deco" aria-hidden>\s*<AmbientLoop set=\{AMBIENT\} \/>/);
+  assert.doesNotMatch(hero, /AmbientLoop|kz-home-scene/);
+  assert.match(read("app/components/home/ProductShowcase.tsx"), /<ProductsFlock set=\{VALLEY\} \/>/);
 });
 
 test("« Le monde de Krizaka » opens in a lightbox from the hero; the player's code loads only when it opens", () => {

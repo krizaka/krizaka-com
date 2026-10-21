@@ -38,8 +38,8 @@ test("the home's ambient loop (the valley without its birds): both cuts and them
   for (const guard of ["prefers-reduced-motion: reduce", "saveData", "IntersectionObserver", "v.pause()", "muted", "<picture>", 'loading="lazy"', 'addEventListener("load"']) assert.ok(loop.includes(guard), guard);
   assert.ok(!/controls/.test(loop.replace(/\/\*[\s\S]*?\*\//g, "")), "no controls on the backdrop");
   const hero = readFileSync(new URL("../app/components/home/HomeHero.tsx", import.meta.url), "utf8");
-  assert.match(hero, /<AmbientLoop set=\{AMBIENT\} \/>/);
   assert.match(hero, /<FilmLightbox /);
+  assert.match(readFileSync(new URL("../app/components/home/ProductsFlock.tsx", import.meta.url), "utf8"), /<AmbientLoop set=\{set\} \/>/);
 });
 
 test("the relay (« le relais », the reference film) says its own lines, in order, inside its length, and is on the CDN", async () => {

@@ -24,12 +24,20 @@ import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
+import { video } from "@/lib/cdn";
 import { ENGINE, PRODUCT_BIRD } from "@/lib/story";
 import { GitHubMark } from "../brand/GitHubMark";
+import type { AmbientSet } from "./AmbientLoop";
 import EngineFlowView from "./EngineFlowView";
+import ProductsFlock from "./ProductsFlock";
 import ProductsLink from "./ProductsLink";
 import ProductVisual from "./visuals/ProductVisual";
 import "./visuals/visuals.css";
+
+/** The valley, looping, without its birds (the live flock stands on it; krizaka-ui tools/brand-films « home-valley »): wide and 4:5, dark and light. */
+const valley = (cut: string, theme: string) => video(`brand-films/ambient/home-valley-${cut}-${theme}`);
+const cuts = (cut: string) => ({ dark: valley(cut, "dark"), ["light"]: valley(cut, "light") });
+const VALLEY: AmbientSet = { wide: cuts("16x9"), tall: cuts("4x5") };
 
 /** The stamp of a status: `ok` only for what is out, `wip` in development, `construction` not open yet. */
 const STAMP: Record<ProductStatus, StampTone> = { devPreview: "ok", development: "wip", construction: "construction", upcoming: "neutral" };
@@ -144,16 +152,20 @@ export default function ProductShowcase({ locale }: { locale: string }) {
   const s = t.site.home.products;
   const others = PRODUCTS.filter((p) => p.id !== ENGINE);
   return (
-    <Section id="products" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
-      <ProductsLink className={cn("kz-prod", "brand-" + ENGINE)}>
-        <EngineBlock t={t} />
-        <ol className="kz-prod-list" aria-label={t.site.products.engine.label}>
-          {others.map((p) => (
-            <ProductEntry key={p.id} product={p} t={t} />
-          ))}
-        </ol>
-      </ProductsLink>
-      <Footnotes className="kz-prod-notes" prefix="kz-note" label={s.notesLabel} backLabel={s.backLabel} notes={PRODUCTS.map((p) => `${p.name}. ${s.notes[p.id]}`)} />
-    </Section>
+    <div id="products" className="kz-products">
+      {/* The flock opens the section: each bird is a product (ProductsFlock), its ground running into the section below. */}
+      <ProductsFlock set={VALLEY} />
+      <Section id="products-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
+        <ProductsLink className={cn("kz-prod", "brand-" + ENGINE)}>
+          <EngineBlock t={t} />
+          <ol className="kz-prod-list" aria-label={t.site.products.engine.label}>
+            {others.map((p) => (
+              <ProductEntry key={p.id} product={p} t={t} />
+            ))}
+          </ol>
+        </ProductsLink>
+        <Footnotes className="kz-prod-notes" prefix="kz-note" label={s.notesLabel} backLabel={s.backLabel} notes={PRODUCTS.map((p) => `${p.name}. ${s.notes[p.id]}`)} />
+      </Section>
+    </div>
   );
 }

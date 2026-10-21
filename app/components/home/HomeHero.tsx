@@ -2,9 +2,8 @@
    left, the date line of the notes, who Krizaka is, one promise, one action (and the film, quietly), the products' marks
    and the figures that back them; on the right, Plate I — the five birds of the film, each with its promise as the film
    says it (BirdPlate, the cues of site.story.world). The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first paint (LCP) — never revealed,
-   never part of the intro. Under the figures, IN THE FLOW (the birds never cover a figure), the scene: the flock's
-   ambient loop (krizaka-ui tools/brand-films « home-valley », AmbientLoop — the poster first, the loop only on screen,
-   the poster alone under reduced motion or Save-Data), faded into the page.
+   never part of the intro. The flock's scene is no longer here: it opens the products section (ProductsFlock), the flock being
+   the products.
 
    Under the actions, the products put forward: a quiet row of their seven marks (from @krizaka/ui), each one a link to
    its card in #products, the ones not offered yet dimmed.
@@ -26,7 +25,6 @@ import { video } from "@/lib/cdn";
 import { FILM_BASE, RELAY_BASE } from "@/lib/film-captions";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
-import AmbientLoop, { type AmbientSet } from "./AmbientLoop";
 import FilmLightbox from "./FilmLightbox";
 import HeroIntro from "./HeroIntro";
 import "./home.css";
@@ -39,10 +37,6 @@ export interface HomeFigures {
   maven: number;
 }
 
-/** The valley, looping, without its birds (the live Flock stands on it; krizaka-ui tools/brand-films « home-valley »): wide and 4:5, dark and light. */
-const ambient = (cut: string, theme: string) => video(`brand-films/ambient/home-valley-${cut}-${theme}`);
-const themes = (cut: string) => ({ dark: ambient(cut, "dark"), ["light"]: ambient(cut, "light") });
-const AMBIENT: AmbientSet = { wide: themes("16x9"), tall: themes("4x5") };
 const film = video(RELAY_BASE);
 /** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
 const DIM: readonly ProductStatus[] = ["construction", "upcoming"];
@@ -128,10 +122,6 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
         </div>
       </Page>
 
-      <div className="kz-home-scene kz-intro-deco" aria-hidden>
-        <AmbientLoop set={AMBIENT} />
-        <div className="kz-home-scene-fade" />
-      </div>
     </SectionBackdrop>
   );
 }

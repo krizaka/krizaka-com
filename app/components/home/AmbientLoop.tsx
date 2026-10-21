@@ -1,15 +1,12 @@
 "use client";
 
-/* The home's ambient loop — the flock on the hero's valley (krizaka-ui tools/brand-films, « home-valley »): a muted,
-   seamless 12 s backdrop that melts into the page's surface. The poster paints first (the hero's text stays the LCP);
-   the video is created only after mount, plays only while on screen and pauses off it; under reduced motion or
-   Save-Data the poster stays (the live flock too is still). The posters load lazily (the other theme's never), the film only after `load`. One per theme (html.light hides the other, which then never intersects, never loads);
+/* The valley, looping — the backdrop of the flock band that opens the products (ProductsFlock; krizaka-ui tools/brand-films
+   « home-valley »: the sky, the peaks and the ridge, no birds): a muted, seamless 12 s loop. The poster paints first, the
+   video is created only after mount and `load`, plays only while on screen and pauses off it; under reduced motion or
+   Save-Data the poster stays. One layer per theme (html.light hides the other, which then never intersects, never loads);
    the wide cut above 640 px, the 4:5 cut below. Decorative. */
 
-import { Flock } from "@krizaka/ui/flock";
 import { useEffect, useRef, useState } from "react";
-
-import { FLOCK_TALL, FLOCK_WIDE } from "@/lib/home-flock";
 
 export interface AmbientSources {
   webm: string;
@@ -65,10 +62,6 @@ function Layer({ theme, set }: { theme: "dark" | "light"; set: AmbientSet }) {
           <source src={src.mp4} type="video/mp4" />
         </video>
       ) : null}
-      {/* The birds are live (krizaka-ui Flock): at ease in character, glancing at each other, the pigeon delivering — over a
-          valley that has none. Same frame as the film (cover, anchored at the bottom), so they stand on its ridge. */}
-      <Flock className="kz-flock kz-flock-wide" tone="own" ratio={FLOCK_WIDE.ratio} birds={FLOCK_WIDE.birds} />
-      <Flock className="kz-flock kz-flock-tall" tone="own" ratio={FLOCK_TALL.ratio} birds={FLOCK_TALL.birds} />
     </div>
   );
 }
