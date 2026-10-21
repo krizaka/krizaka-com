@@ -33,33 +33,37 @@ const clock = (t: number) => {
   return `${hh}:${mm}:${ss}.${String(ms % 1000).padStart(3, "0")}`;
 };
 
-interface Cue {
-  id: FilmCueId;
+interface Cue<Id extends string> {
+  id: Id;
   start: number;
   end: number;
 }
 
-/** The captions as WebVTT, one cue per line, in the words given (a locale's site.story.world.cues). */
-export function filmVtt(words: Record<FilmCueId, string>, cues: readonly Cue[] = FILM_CUES): string {
+/** The captions as WebVTT, one cue per line, in the words given (a locale's site.story.world.cues, or a film's own). */
+export function filmVtt<Id extends string = FilmCueId>(words: Record<Id, string>, cues: readonly Cue<Id>[] = FILM_CUES as unknown as readonly Cue<Id>[]): string {
   return `WEBVTT\n\n${cues.map((c) => `${c.id}\n${clock(c.start)} --> ${clock(c.end)}\n${words[c.id]}\n`).join("\n")}`;
 }
 
-/* « Le monde de Krizaka : la tournée » — the photoreal sequel (krizaka-ui tools/brand-films/epic): the same birds, rendered
-   from @krizaka/ui, re-lit and animated by models (AI-generated, said on the page and in the film). It says the film's
-   own lines, at its own times (epic/edl.json → the cut's timeline): change both together. */
-export const TOUR_BASE = "brand-films/epic/le-monde-de-krizaka-la-tournee-16x9";
-// @fixed: the length of the rendered file (the cut's timeline), a fact of the media.
-export const TOUR_SECONDS = 78.3;
+/* « Le monde de Krizaka : le relais » — the reference film (krizaka-ui tools/brand-films, the v2 of the cinema pack, orazaka#289): a parcel
+   handed from bird to bird, Morocco → Mile End → the Alps → Québec → California, the birds rendered from @krizaka/ui and
+   animated by models (AI-generated, said on the page and by the player). Its own lines at its own times (the finish's
+   timeline, v2/finish-report.json): change both together. The words are messages (site.story.world.relay.cues.<id>). */
+export const RELAY_BASE = "brand-films/relay/le-monde-de-krizaka-le-relais-16x9";
+// @fixed: the length of the rendered file (the finish's measured length), a fact of the media.
+export const RELAY_SECONDS = 68;
 
-export const TOUR_CUES: readonly Cue[] = [
-  { id: "falcon", start: 10.73, end: 15.73 },
-  { id: "owl", start: 24.52, end: 29.92 },
-  { id: "flamingo", start: 30.92, end: 35.12 },
-  { id: "duck", start: 35.47, end: 39.77 },
-  { id: "pigeon", start: 59.68, end: 66.18 },
-  { id: "together", start: 70.4, end: 73.0 },
-  { id: "family", start: 74.3, end: 76.3 },
-];
+export const RELAY_CUES = [
+  { id: "falcon", start: 3.235, end: 7.585 },
+  { id: "owl", start: 11.404, end: 15.244 },
+  { id: "duck", start: 20.801, end: 24.051 },
+  { id: "cold", start: 34.948, end: 38.158 },
+  { id: "quebec", start: 40.538, end: 44.938 },
+  { id: "flamingo", start: 48.142, end: 51.411 },
+  { id: "pigeon", start: 58.142, end: 60.84 },
+  { id: "together", start: 61.23, end: 64.98 },
+] as const;
+
+export type RelayCueId = (typeof RELAY_CUES)[number]["id"];
 
 interface Viewer {
   matchMedia?: (query: string) => { matches: boolean };

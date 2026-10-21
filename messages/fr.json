@@ -208,7 +208,7 @@
         "lead": "Sept produits sur un même moteur d'IA : vidéo, rencontres, un espace d'écoute, la vérification des baux, les pronostics entre amis, les commerces du Québec. Chaque pièce qui les porte est open source.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
-        "filmLength": "1 min 18",
+        "filmLength": "1 min 08",
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "marksLabel": "Les sept produits, chacun mène à sa fiche",
         "proofs": {
@@ -547,7 +547,7 @@
           "Nous avons voulu construire le contraire. Rien ne sort de la forge sans test ni documentation, et tout ce qui en sort est open source sous Apache-2.0 — lisez le motif dans l'acier."
         ],
         "film": "Voir le film",
-        "filmLength": "1 min 18",
+        "filmLength": "1 min 08",
         "filmNote": "Un film fait avec les oiseaux de Krizaka. Chacun porte une promesse."
       },
       "engine": {
@@ -658,7 +658,7 @@
       "world": {
         "eyebrow": "La volée",
         "title": "Le monde de Krizaka",
-        "lead": "Nos oiseaux sont là depuis la première page : chacun porte une promesse. Les voici en tournée à travers cinq époques, en photoréaliste, et plus bas, le film d'origine, rendu depuis le code de Krizaka UI.",
+        "lead": "Nos oiseaux sont là depuis la première page : chacun porte une promesse. Les voici qui se passent un colis du Maroc à la Californie, en photoréaliste, et plus bas, le film d’origine, rendu depuis le code de Krizaka UI.",
         "player": "Vidéo : le monde de Krizaka",
         "textVersion": "Ce que disent les oiseaux",
         "captions": {
@@ -694,11 +694,21 @@
           "retry": "Réessayer",
           "time": "{time} sur {duration}"
         },
-        "tour": {
-          "title": "En tournée",
-          "lead": "Les mêmes oiseaux, en tournée à travers cinq époques : un club de stand-up, un dîner des années 1970, un studio des années 90, une plage au coucher du soleil et un échange au ralenti. Chacun tient sa promesse.",
-          "player": "Vidéo : le monde de Krizaka, en tournée",
-          "credit": "Généré par IA avec Orazaka : les oiseaux rendus depuis @krizaka/ui, ré-éclairés par FLUX.2 [klein], animés par Wan 2.2, agrandis par SeedVR2. Musique : ACE-Step 1.5 (MIT)."
+        "relay": {
+          "title": "Le relais",
+          "lead": "Un colis, passé d’oiseau en oiseau : l’aube au Maroc, un café du Mile End, un orage sur les Alpes, une nuit froide au Québec, la côte californienne. Chaque oiseau tient sa promesse.",
+          "player": "Vidéo : le monde de Krizaka, le relais",
+          "credit": "Généré par IA avec Orazaka : les oiseaux rendus depuis @krizaka/ui, composés par FLUX.2 [klein], animés par Wan 2.2 et LTX-Video, agrandis par SeedVR2. Voix : Zonos v0.1 (Apache-2.0). Musique : ACE-Step 1.5 (MIT).",
+          "cues": {
+            "falcon": "Le faucon veille : la sécurité d’abord.",
+            "owl": "Le hibou lit chaque page et reconnaît chaque visage.",
+            "duck": "Le canard construit, ligne après ligne, en open source.",
+            "cold": "Puis la nuit est devenue froide…",
+            "quebec": "Au Québec, on t’aide… pis on s’obstine sur comment.",
+            "flamingo": "Le flamant répond, et le paiement suit.",
+            "pigeon": "Le pigeon livre, à chaque fois.",
+            "together": "Chaque oiseau porte une promesse."
+          }
         },
         "codeTitle": "Filmé depuis le code"
       }

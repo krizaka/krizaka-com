@@ -1,6 +1,6 @@
 "use client";
 
-/* « Watch the full film »: « Le monde de Krizaka : la tournée » (78 s, the photoreal sequel, AI-generated) in a dialog,
+/* « Watch the full film »: « Le monde de Krizaka : le relais » (the reference film, AI-generated) in a dialog,
    with the same captions and words as /story. Nothing is fetched before it opens: the player's code is loaded on open
    (next/dynamic), the film with preload none and its poster first. Under reduced motion or Save-Data the dialog plays
    the light, calm film instead: the 44 s « Le monde de Krizaka » rendered from the code (`fallback`). */
@@ -19,7 +19,7 @@ const VideoPlayer = dynamic(() => import("@krizaka/ui/video-player").then((m) =>
 export interface LightboxFilm {
   mp4: string;
   poster: string;
-  /** The captions route under /<locale>/story/, e.g. "tour.vtt". */
+  /** The captions route under /<locale>/story/, e.g. "relay.vtt". */
   vtt: string;
 }
 
