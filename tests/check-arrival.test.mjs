@@ -84,6 +84,7 @@ test("no page renders a footer of its own, whatever its folder", () => {
 });
 
 test("CI runs the arrival check against the container", () => {
-  const ci = read(".github/workflows/ci.yml");
-  assert.match(ci, /node scripts\/check-arrival\.mjs --base http:\/\/localhost:3000/);
+  // The pipeline is the org's node-ci.yml; the container job runs this repository's smoke script against the image.
+  assert.match(read(".github/workflows/ci.yml"), /container-smoke: scripts\/ci-container-smoke\.sh/);
+  assert.match(read("scripts/ci-container-smoke.sh"), /node scripts\/check-arrival\.mjs --base http:\/\/localhost:3000/);
 });
