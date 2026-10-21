@@ -65,6 +65,7 @@ records them.
 | Media | Where it is served from |
 | :--- | :--- |
 | The brand film « Le monde de Krizaka : le relais » (the reference film: the home's « Watch the film » and /story), its narrated EN/FR and 9:16 cuts and captions | `site/brand-films/relay/` |
+| Orochia's film « Orochia : la première livraison » (on Orochia @orochia and @krizaka; drawn on no page here), its narrated EN/FR and 9:16 cuts and captions | `site/brand-films/orochia/` |
 | The earlier brand film « Le monde de Krizaka : la tournée », its 9:16 cuts and captions (no longer drawn) | `site/brand-films/epic/` |
 | The images and clips of the blog post on what image and video generation costs | `site/blog/what-image-and-video-generation-costs/` |
 
