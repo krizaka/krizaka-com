@@ -26,8 +26,6 @@ jobs:
       # scripts/gen-org-stats.mjs reads the organisation's public repository count without the anonymous rate limit
       github-token-env: APP_GITHUB_TOKEN
       container: true
-      container-build-args: |
-        NEXT_PUBLIC_APP_DEMO_URL=https://dev.orochia.com
       container-image: krizaka-com:ci
       container-smoke: scripts/ci-container-smoke.sh
       container-playwright-cache: true

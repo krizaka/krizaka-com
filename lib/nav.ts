@@ -27,11 +27,11 @@ export interface NavLink<I extends NavIcon = NavIcon> {
 export interface NavProduct {
   id: ProductId;
   name: string;
-  /** The product's dev site. */
+  /** The product's public address (www.<product>.com). */
   href: string;
   status?: ProductStatus;
 }
-export const NAV_PRODUCTS: NavProduct[] = PRODUCTS.map(({ id, name, devUrl, status }) => ({ id, name, href: devUrl, status }));
+export const NAV_PRODUCTS: NavProduct[] = PRODUCTS.map(({ id, name, siteUrl, status }) => ({ id, name, href: siteUrl, status }));
 
 export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
   { href: "/story", icon: "story" },

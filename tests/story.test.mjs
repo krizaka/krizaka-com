@@ -92,7 +92,7 @@ test("a product chapter shows its field's mini-visual (demo data, said so), clai
   assert.match(read("app/components/home/visuals/ProductVisual.tsx"), /const playing = !still && onScreen;/);
   assert.doesNotMatch(page, /data-pv-host/);
   for (const l of ["en", "fr"]) assert.ok(messages(l).story.products.demo, l);
-  assert.match(page, /p\.noSite \? h\.seeCode : h\.visit/);
+  assert.match(page, /href=\{p\.siteUrl\}/);
 });
 
 test("Yororis: its chapter keeps the reviewed « is not » list verbatim and says where it stands", () => {

@@ -18,96 +18,25 @@
 
 ## 2. What is generated, what is written
 
-- **krizaka.com is the company's lightweight showcase.** The products have their own sites — dev.orazaka.com,
-  dev.orochia.com, dev.yasakia.com (Yasakia is being renamed Yasakia; identifiers here keep "yasakia" until that rename
-  lands), dev.yororis.com and dev.yomizaka.com; Kachizaka and Akinaza (in development, nothing deployed) have no site yet, so
-  their cards link to their repository (`noSite`). This repo carries **no product page, demo, gallery, journey, recording or documentation**
-  of them: the home's products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
-  « Visit the dev site » and « Source »); `/products` and `/{en,fr}/products` answer 308 to `/#products` / `/<locale>#products`. Orochia's card is neutral — no adult-adjacent wording, no media.
+- **krizaka.com is the company's lightweight showcase.** Each product has **its public address at `www.<product>.com`**
+  (orazaka, orochia, yasakia — identifiers keep "yasakia" until the rename lands —, yororis, yomizaka, kachizaka, akinaza;
+  epic krizaka/.github#119, 2026-10-21): the product's real app on its own deployment, sign-up closed everywhere; the apex
+  `<product>.com` answers 308 with www. `lib/products.ts` carries `siteUrl` (www) — **every public link, sitemap, llms.txt and JSON-LD
+  uses it, never a `dev.<product>.com` host** (the legal pages name dev.orochia.com in words, as the privacy policy and terms
+  must). `dev.<product>.com` is the development host of the same deployment: `noindex`, robots `Disallow: /`, every HTML page
+  answers 308 to the same path on www, and only what is called keeps serving there (`/api/*`, auth callbacks, webhooks,
+  `/.well-known/*`, `/healthz` — the mobile builds and the services' server-to-server calls), with `X-Robots-Tag: noindex`.
+  This repo carries **no product page, demo, gallery, journey, recording or documentation** of the products: the home's
+  products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
+  « Visit the site » → its www address, and « Source »); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
+  `/<locale>#products`. Orochia's card is neutral — no adult-adjacent wording, no media.
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
-  `tests/product-redirects.test.mjs`): `/products/<p>(/…)` → the product's site, `/docs/orazaka/*` →
-  dev.orazaka.com/docs, `/docs/orochia/*` → dev.orochia.com/docs, `/docs/yororis/*` → dev.yororis.com, the old Orazaka
-  pages (`/architecture`, `/demos`, `/use-cases`…) → dev.orazaka.com — all 308, with or without the locale prefix.
+  `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
+  `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
   Never add a product page back: change the product's site.
-- **Krizaka Java's documentation is java.krizaka.com** (`lib/java-redirects.ts`, tested by `tests/java-redirects.test.mjs`):
-  `/docs/java(/<guide>)` → the same guide on the site, in each language, 308. Its content, its building blocks map
-  (generated from the POMs by `krizaka-build/site/scripts/gen-building-blocks.mjs`) and its CI live in
-  [`krizaka/krizaka-build`](https://github.com/krizaka/krizaka-build) (`site/`) — never rebuilt here.
-- `app/data/architecture.json` and `app/data/orochia-architecture.json` are **generated** by the product repositories
-  (`orazaka docs sync`, `npm run docs:generate`). **Never hand-edit** `app/data/`. They stay only because the open-source
-  repository lists (`lib/org-data.ts`) read them; nothing draws them here any more (the `buildingBlocks` key of
-  `architecture.json` is the generator's leftover — the map moved to java.krizaka.com). A fact a list needs and the data
-  lacks is added to the **generator**, never to the site.
-- Orazaka's packs, use cases, gallery and the synced `orazaka-content/` / `orochia-content/` docs (and their publication
-  manifests) are gone from this repository.
-
-## 2.1 Products are presented the same way
-
-- `lib/products.ts` is the single list of the products (id, name, status, `devUrl`, `repoUrl`), `lib/stack.ts` the
-  open-source stack (Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com); `lib/nav.ts` derives the navigation
-  from them. The bar is the one of every Krizaka site (NAV-SYS; `@krizaka/ui/nav-bar`, composed in `TopNavBar`, never
-  hand-made, no inline styles), in three zones: **left** the Krizaka mark **and the word « Krizaka »** (home, where the products are; no family switcher on www — ui. and java. carry it back here); **centre** Open source only (`NAV_BAR_LINKS`; Our story is in the footer, never the bar; links to the products use `PRODUCTS_ANCHOR` = `/#products`);
-  **right** Blog · GitHub · theme · language · Contact us (`primary`); the Blog is blog.krizaka.com (`BLOG_URL`, `krizaka/krizaka-blog`), also in the mobile panel and the footer's Krizaka column (the home has no blog section since 2026-10-17). No « Docs » and no search: the documentation lives on its
-  own sites (while `/docs` still renders here, it keeps its breadcrumb `DocsCrumb` and the ⌘K search over it). Mobile:
-  one panel (`MobilePanel`), this site's sections, then Blog, Contact us and the preferences, the family at the bottom. The
-  footer lists the family in columns (Products · Open source · Krizaka: Our story, Blog, Contact us).
-- **The home is the company's** (landing), simplified (2026-10-17), in this order, **one primary action per section**:
-  the centred hero (`HomeHero`: the mark, who Krizaka is, « See what we build » → `#products`, « Watch the film » — « Le monde
-  de Krizaka » in a `Dialog` lightbox, player loaded on open — and the figures read at build, climbing with `NumberTicker`;
-  the landscape sits **in the flow under the figures**, never over them); the products (`ProductShowcase`, redesigned 2026-10-20 — **no frame, no card in a card**: the engine leads, its words
-  and the `EngineFlow` (`EngineFlowView`), **sticky beside the list from 1024 px**; the products it powers are a quiet
-  list, one row each in its brand light — the live visual edge to edge (no border), the mark **beside** the name, **one
-  label** (the honest status from `lib/products.ts`), one line, and one readable line of what it uses Orazaka for,
-  `lib/engine-uses.ts`, « planned » where not wired; quiet tint on hover, no lift, no pointer light. Each row is tied to
-  its node in the flow (`ProductsLink`: the row in the middle of the screen, or pointed at, lights its node; pointing at a
-  node lights its row — `data-lit`, one IntersectionObserver, no scroll listener); `tests/engine.test.mjs`);
-  the stack in brief (`OpenStack` / `StackCards` → `/open-source`); the principles (`Principles`); Montréal (`Company`
-  → `/story`); the contact; the folded FAQ (FAQPage JSON-LD). Orochia is named neutrally on krizaka.com (name and one
-  line, never a creator or payout pitch — `tests/home.test.mjs`).
-- **The products are field-guide entries (Cahier, krizaka-ui ADR-004, #417 — 2026-10-20).** `#products` is a page of the
-  notebook: `Section number="§ 2" paper="lines" margin`, no eyebrow. The engine leads with its `SpecimenTag` (KZ-01, the
-  stamp of its status, what it gets back) and its `EngineFlow`, captioned `fig. 1`; each product is an entry: a **plate**
-  (the live visual and its numbered `Caption`, `fig. n`) and a **specimen tag** (`@krizaka/ui/specimen-tag`: the catalogue
-  number from its place in `lib/products.ts`, the name linking to its site — or its code while it has none —, its mark, the
-  `Stamp` of its honest status — `devPreview` ok, `development` wip, `construction` construction, `upcoming` neutral —, its
-  line, what it runs on Orazaka, « planned » where not wired, and its **bird** from `PRODUCT_BIRD`: the five birds of the
-  film say their promise **as the film's cue** (`site.story.world.cues`), the family birds only their name); the notes at
-  the foot (`Footnotes`, `site.home.products.notes`) say what each product really does, sourced. No uppercase chip, no
-  em-dash in these words, no blur, glow or gradient in their styles (`tests/products-cahier.test.mjs`).
-- **Each entry's plate shows its field**: a live visual made of @krizaka/ui pieces (`app/components/home/visuals/`): a
-  lease on lined paper with the clause to review numbered in the margin and stamped, an encode ladder (upload → encode →
-  stream, the renditions written as they are ready — Orochia never with media), a friends' league's standings as a ledger
-  (`NumberTicker` at its own width, `align="start"`, the unit right after it — never a min-width), a salon's slots as
-  `Chip`s and the receipt with GST and QST computed to the cent (`receipt()` in `lib/product-visuals.ts`), the agent's
-  introduction stamped over two `MessageBubble`s, a voice on @krizaka/ui's `Waveform`. Demo data said as demo. A fixed box
-  (no CLS), `inert` and aria-hidden, its code a lazy chunk loaded near the viewport, playing as soon as it is on screen,
-  still under reduced motion; timers only while playing; `tests/product-visuals.test.mjs`.
-- **The hero's intro** (`HeroIntro`, `home.css`, `tests/hero-intro.test.mjs`): once per session (`sessionStorage`
-  `kz-intro`), it sets `html[data-intro]` = `play` | `skip` | `done`; CSS only, over the ambient loop's poster — the
-  mark's stroke draws, the scene rises in with its birds, a light sweeps — ~1.2 s, then the loop fades in (they never
-  fight). Any input skips it; still under reduced motion and Save-Data; decorations fade in by themselves without
-  JavaScript; the text is never part of it (LCP). No library, no canvas, no animation frame. **The scene** (the flock's
-  ambient loop, `AmbientLoop`, `brand-films/ambient/home-valley-*`) sits in the flow under the figures, never over them.
-- **`/open-source`** (docs-hub) is **the technical view**, as refined as the home, everything read at build: the hero
-  (one line, live figures — repositories, npm packages, Maven artifacts, the licence — GitHub); the stack (`StackCards`
-  with a still mini-visual each: the identities for Krizaka UI, the BOM dependency at its Central version for Java;
-  the building blocks' pages as quiet links); **packages** (`PackagesTable`: @krizaka/ui `DataTable` over
-  `lib/package-catalogue.ts` — npm + Maven Central, registry and family facets, latest version, weekly downloads, the
-  registry / code / docs links; the generator reads descriptions, repositories, POM parents and downloads);
-  **repositories** (`RepositoriesTable`, read by product, platform, language, last push from GitHub; both tables 12 rows a page); **how it fits**
-  (`lib/how-it-fits.ts`: products → engine → building blocks → shared services, an ordered list that is its own text
-  version; the runs-on table folded); **contribute** (the contact page's picker, `lib/public-channels.ts`, the guide,
-  the code of conduct, the licence). One primary action per section, no boxes in boxes.
-- `ProductShowcase` (`app/components/home/`) renders the product rows on the home (`ProductCard` stays for `/story`); each row wears
-  its brand (`@krizaka/tokens/brands/scoped.css`: `.brand-orazaka` orange, `.brand-orochia` violet → magenta,
-  `.brand-yasakia` emerald → turquoise, `.brand-yororis` sand → sage, `.brand-yomizaka` indigo, `.brand-kachizaka` gold + cobalt
-  (the magpie), `.brand-akinaza` forest green + copper (the beaver); the rest of the site is Krizaka ink + blue).
-  Icons come from [`@krizaka/icons`](https://www.npmjs.com/package/@krizaka/icons); marks from `@krizaka/ui`
-  (`KrizakaLogo`, `OrazakaLogo`, `OrochiaLogo`, `YasakiaLogo`, `YororisLogo`, `YomizakaLogo`, `KachizakaLogo`, `AkinazaLogo`, `ProductLogo`) — never a copy here.
 - **Product first, Orazaka as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Yomizaka reads your lease »); Orazaka appears only as the engine — one discreet « Powered by Orazaka » line and the proof sections (run ids) — never as the one doing the product's job (« Orazaka reads your lease »). Each product repository tests that its hero and steps do not name Orazaka. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are orazaka#189).
 - A product **in development** (`status: "development"`: Yomizaka, Kachizaka, Akinaza) is built in the open: its repository is
-  public, sign-up is closed, and it says « In development ». Yomizaka has a dev site; Kachizaka and Akinaza have none yet, so
-  their card says « See the code » and links the repository — never a dead address. Kachizaka is points only, never money;
+  public, sign-up is closed, and it says « In development ». Each has its www address (its card says « Visit the site »). Kachizaka is points only, never money;
   Akinaza prepares tax returns and never files them, and is not for restaurants and bars — the card words say so, no more.
 - **« Dev preview » is data, not words** ([krizaka/.github `docs/standards/dev-preview.md`](https://github.com/krizaka/.github/blob/main/docs/standards/dev-preview.md), ADR-002).
   `ProductStatus` has `devPreview`; every product has an explicit `status` (no status no longer means a badge). A product may wear
@@ -168,7 +97,7 @@
 
 ## 2.4 Search engines & AI assistants — one contract for the whole family
 
-- Every Krizaka site (www · ui. · java. · dev.orazaka · dev.orochia · dev.yasakia · dev.yororis · the admin consoles) owes
+- Every Krizaka site (www · ui. · java. · www.<product>.com · the dev.<product>.com hosts · the admin consoles) owes
   the same files, checked by **`scripts/check-seo-family.mjs`** — one dependency-free file, copied unchanged into each
   site's repository (keep the copies identical; its unit test is `tests/check-seo-family.test.mjs`). CI runs it against the
   container: `node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization`.
@@ -178,9 +107,14 @@
   `lastmod`; `llms.txt` (llmstxt.org) that links back to the family; a canonical that is the page itself on the site's
   host; Open Graph + Twitter card **with an image**; JSON-LD whose every node leads back to the Organization
   `https://www.krizaka.com/#organization` (this site defines it, and says it `owns` the products and open-source sites).
-- Indexing policy: www, ui., java., dev.orazaka, dev.yasakia, dev.yororis are indexed; both `admin.*` consoles and
-  `dev.orochia.com` are `noindex` (robots `Disallow: /` + `X-Robots-Tag` + meta) — but still serve correct files for the day
-  they open. Search Console / Bing verification is by DNS TXT record, never a file or a token in the repository.
+- Indexing policy (epic krizaka/.github#119, 2026-10-21): **indexed** — www.krizaka.com, ui., java. and the products' public
+  addresses `www.<product>.com` (sign-up closed; the apex answers 308 with www); **`noindex`** — every `dev.<product>.com`
+  (robots `Disallow: /`, `X-Robots-Tag: noindex`; its pages answer 308 to www, its API keeps serving — checked by
+  `check-seo-family.mjs --redirects-to https://www.<product>.com`) and both `admin.*` consoles — but they still serve
+  correct files for the day they open. Orochia's www stays `noindex` until its indexing is decided on its own (an adult
+  platform: `APP_SEARCH_INDEXING=off` in its spec). Providers (Stripe, Google…) are given the www URLs, never a dev host.
+  Search Console / Bing verification is by DNS TXT record, never a file or a token in the repository; the sitemap to submit
+  is `https://www.<product>.com/sitemap.xml`.
 
 ## 3. Theming — dark **and** light are first-class
 
@@ -286,9 +220,8 @@
   down; `retire` lists the dependencies on their way out — none left), and `depcruise` (`.dependency-cruiser.cjs`,
   extending `@krizaka/config/dependency-cruiser`) fails the lint on a forbidden import or a cycle.
 
-- Links to the running Orochia go through `OROCHIA_APP_URL` (`lib/site.ts`), set by
-  `NEXT_PUBLIC_APP_DEMO_URL` (dev today, production later; read at build time). `llms.txt` and
-  `llms-full.txt` are rendered from `content/` with that URL — never hard-code the app's address.
+- A product's public address is `siteUrl` in `lib/products.ts` (`www.<product>.com`, `lib/product-hosts.ts`): never hard-code a
+  product's address, and never link a `dev.<product>.com` host from a public page. `llms.txt` and `llms-full.txt` are rendered from `content/`.
 - The contact form posts to `app/api/contact` (validation in `lib/contact.ts`). Delivery is
   configured by environment and fails closed (503) when nothing is set:
   `MAIL_PROVIDER=mailgun` + `MAIL_API_KEY` + `MAIL_DOMAIN` + `MAIL_CONTACT_TO` (+ `MAIL_API_URL`, `MAIL_FROM`)

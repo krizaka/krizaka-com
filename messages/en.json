@@ -118,8 +118,8 @@
       "title": "One engine, the products it powers",
       "pageTitle": "One engine, and the products it powers",
       "lead": "Orazaka is the engine every Krizaka product's AI runs on: that is our core know-how. Each product proves it in its own field, on its own site, with its source on GitHub.",
-      "visit": "Visit the dev site",
-      "visitAria": "{name} — visit the dev site",
+      "visit": "Visit the site",
+      "visitAria": "{name} — visit the site",
       "source": "Source",
       "sourceAria": "{name} — source on GitHub",
       "cards": {
@@ -176,8 +176,6 @@
           "proof": "Bookings, client files with Loi 25 consent, bilingual invoices with GST and QST to the cent, a ledger the database keeps balanced, and the GST/QST return prepared for the merchant to file."
         }
       },
-      "seeCode": "See the code",
-      "seeCodeAria": "The code of {name} on GitHub — in development, no site yet",
       "hookLabel": "What it is",
       "engine": {
         "meta": "The foundation",
@@ -1516,7 +1514,7 @@
         },
         {
           "q": "Where are the products?",
-          "a": "On their own sites: dev.orazaka.com, dev.orochia.com, dev.yasakia.com (in development) and dev.yororis.com (under construction). The home lists them, each with its source."
+          "a": "On their own addresses: www.orazaka.com, www.orochia.com, www.yasakia.com, www.yororis.com, www.yomizaka.com, www.kachizaka.com and www.akinaza.com. The home lists them, each with its source."
         },
         {
           "q": "Where is the documentation?",
