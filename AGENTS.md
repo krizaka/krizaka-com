@@ -336,6 +336,8 @@
 - CI (`.github/workflows/ci.yml`: lint, `npm test`, build) runs them on every pull request and must be green. A test is
   never skipped, weakened or deleted to get there.
 
+- **The fast local loop.** `npm run dev:check` (ESLint on the files changed against origin/main, `tsc --noEmit`, the unit tests: ~10 s) is what to run while working; `npm test` is unit-only and takes seconds; CI still runs the whole of lint, test and build. `dev` and `postinstall` reuse `lib/*.json` younger than 6 h (`scripts/gen-fresh.mjs`; `KRIZAKA_GEN_FORCE=1` or `KRIZAKA_GEN_MAX_AGE_MIN=0` refetches; `build` and CI always fetch).
+
 ## Static rules & codemods (ast-grep)
 
 The org code rules (addendum 2026-10-15) are lint rules, not review comments. [`@ast-grep/cli`](https://ast-grep.github.io)
