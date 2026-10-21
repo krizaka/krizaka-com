@@ -20,7 +20,8 @@ import { PRODUCTS } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
 import { KITS } from "@/lib/product-stack";
 import { MANIFESTS_READ_AT, productStackRows } from "@/lib/product-stack-data";
-import { PUBLIC_CHANNELS, PUBLIC_REPOSITORIES } from "@/lib/public-channels";
+import { PUBLIC_CHANNELS } from "@/lib/public-channels";
+import { publicChannels } from "@/lib/github-channels";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { STACK } from "@/lib/stack";
@@ -76,6 +77,7 @@ export default async function OpenSourcePage({ params }: Props) {
   const { locale } = await params;
   const dict = getDictionary(locale);
   const site = dict.site;
+  const channelGroups = publicChannels();
   const t = site.openSource;
   const names: Record<string, string> = { ...Object.fromEntries(NAV_PRODUCTS.map((p) => [p.id, p.name])), krizaka: t.platform.name };
 
@@ -188,10 +190,10 @@ export default async function OpenSourcePage({ params }: Props) {
                   <Icon size={16} aria-hidden /> {words.cta}
                 </p>
                 <ul className="os-picker-repos">
-                  {PUBLIC_REPOSITORIES.map(({ product, repo }) => (
-                    <li key={product}>
-                      <a href={`https://github.com/krizaka/${repo}/${ch.path}`} target="_blank" rel="noopener noreferrer">
-                        <ProductLogo id={product} size={16} animated={false} /> {site.contactPage.publicProducts[product]}
+                  {channelGroups.flatMap((g) => g.entries).map((e) => (
+                    <li key={e.id}>
+                      <a href={e[ch.id].href} target="_blank" rel="noopener noreferrer">
+                        <ProductLogo id={e.mark as never} size={16} animated={false} /> {e.name}
                       </a>
                     </li>
                   ))}

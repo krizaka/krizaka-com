@@ -1055,7 +1055,6 @@
       "lead": "Déploiement d'Orazaka ou d'Orochia, projet bâti sur une brique Krizaka, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
       "publicTitle": "Ou échangeons en public",
       "publicLead": "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub.",
-      "whichProduct": "où ?",
       "nextTitle": "La suite",
       "nextSteps": [
         {
@@ -1076,11 +1075,11 @@
         "Français · English",
         "Montréal, Québec"
       ],
-      "publicProducts": {
-        "orazaka": "Orazaka",
-        "orochia": "Orochia",
-        "krizaka": "Briques Krizaka"
-      }
+      "groupProducts": "Produits",
+      "groupStack": "Open source",
+      "viaIssue": "via une issue",
+      "discussionsAria": "{name} : poser une question",
+      "issuesAria": "{name} : signaler un bug ou proposer une fonctionnalité"
     },
     "search": {
       "placeholder": "Rechercher une page, la documentation...",
