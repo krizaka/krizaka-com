@@ -59,6 +59,10 @@ services:
         value: 2
         window: FIVE_MINUTES
     envs:
+      # The running Orochia (OROCHIA_APP_URL, lib/site.ts): its API/auth base.
+      - key: NEXT_PUBLIC_APP_DEMO_URL
+        scope: RUN_AND_BUILD_TIME
+        value: https://dev.orochia.com
       # Where the media (tours, gallery, home backdrop) are served from — Bunny, under site/ (lib/cdn.ts).
       - key: NEXT_PUBLIC_MEDIA_CDN_URL
         scope: RUN_AND_BUILD_TIME
