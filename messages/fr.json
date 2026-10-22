@@ -535,21 +535,16 @@
       "who": {
         "nav": "Qui nous sommes",
         "title": "Un studio à Montréal",
-        "lead": "Fondé par Oussama, à Montréal depuis 2018. Krizaka est la forge à mi-pente : un kris est une lame forgée en couches, zaka la pente qu'on gravit pas à pas.",
-        "refusal": "Nous refusons le logiciel pris sur parole : tout ce que nous livrons est testé, documenté et open source sous Apache-2.0.",
+        "lead": "Krizaka est un studio fondé par Oussama à Montréal. C'est la forge à mi-pente : un kris est une lame forgée en couches, zaka la pente qu'on gravit pas à pas.",
+        "refusal": "Les logiciels auxquels on nous demandait de faire confiance étaient devenus des boîtes noires. Nous construisons le contraire : tout ce que nous livrons est testé, documenté et open source sous Apache-2.0.",
         "placesAria": "Où est Krizaka",
         "places": [
           "Montréal"
         ],
-        "more": "Le fondateur et le refus",
-        "fold": [
-          "Krizaka est un studio fondé par Oussama et installé à Montréal, où il vit depuis 2018 et où la forge s'est allumée. Il a étudié les mathématiques et l'informatique, puis il s'est orienté vers les mathématiques et l'informatique appliquées aux sciences cognitives. En 2011, dans un laboratoire de recherche, il a rencontré une machine qui apprenait à lire.",
-          "Les logiciels auxquels on nous demandait de faire confiance étaient devenus des boîtes noires : des données expédiées dans le cloud d'un autre, des revenus soumis aux règles d'un autre, un code que personne dehors ne pouvait lire.",
-          "Nous avons voulu construire le contraire. Rien ne sort de la forge sans test ni documentation, et tout ce qui en sort est open source sous Apache-2.0 — lisez le motif dans l'acier."
-        ],
         "film": "Voir le film",
         "filmLength": "1 min 08",
-        "filmNote": "Un film fait avec les oiseaux de Krizaka. Chacun porte une promesse."
+        "filmCredit": "Film généré avec Orazaka",
+        "filmCredits": "crédits"
       },
       "engine": {
         "nav": "Le moteur",

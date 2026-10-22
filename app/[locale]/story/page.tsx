@@ -9,7 +9,7 @@ import { localizedMetadata } from "@/lib/seo";
 import { video } from "@/lib/cdn";
 import { contactHref } from "@/lib/contact";
 import { ENGINE_USES } from "@/lib/engine-uses";
-import { FILM_BASE, RELAY_CUES } from "@/lib/film-captions";
+import { FILM_BASE } from "@/lib/film-captions";
 import { storyFilm } from "@/lib/story-film";
 import { asLocale, format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
@@ -215,6 +215,7 @@ export default async function StoryPage({ params }: Props) {
             bird={WHO_BIRD}
             promise={promiseOf(t, WHO_BIRD)}
             proof={
+              <>
               <FilmLightbox
                 film={{ mp4: film.mp4, poster: film.poster, vtt: film.vtt }}
                 fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}
@@ -230,23 +231,11 @@ export default async function StoryPage({ params }: Props) {
                   </button>
                 }
               />
+              <p className="st-film-note">
+                {st.who.filmCredit} · <a href={`/${locale}/story/relay.vtt`}>{st.who.filmCredits}</a>
+              </p>
+              </>
             }
-            fold={{
-              summary: st.who.more,
-              children: (
-                <>
-                  {st.who.fold.map((p) => (
-                    <p key={p}>{p}</p>
-                  ))}
-                  <p className="st-film-note">{st.who.filmNote} {st.world.relay.credit}</p>
-                  <ol className="st-list">
-                    {RELAY_CUES.map((c) => (
-                      <li key={c.id}>{st.world.relay.cues[c.id]}</li>
-                    ))}
-                  </ol>
-                </>
-              ),
-            }}
           />
 
           <StoryChapter

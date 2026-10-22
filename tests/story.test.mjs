@@ -75,15 +75,16 @@ test("the film is shown once: one poster card opening the lightbox; no inline pl
   assert.match(box, /trigger\?: ReactNode/);
   for (const l of ["en", "fr"]) {
     const w = messages(l).story.who;
-    assert.ok(w.film && w.filmLength && w.filmNote, l);
-    assert.match(messages(l).story.world.relay.credit, l === "en" ? /AI-generated/ : /Généré par IA/, "said on the page: AI-generated");
+    assert.ok(w.film && w.filmLength && w.filmCredit && w.filmCredits, l);
   }
-  assert.match(page, /st\.world\.relay\.credit/, "the credit is on the page, not only in the film");
 });
 
-test("the text version of the film is listed once, in the fold, from the messages, in the relay's order", () => {
-  assert.equal([...page.matchAll(/st\.world\.relay\.cues\[c\.id\]/g)].length, 1);
-  assert.match(page, /RELAY_CUES\.map\(\(c\) =>/);
+test("the film block shows no captions list and no credits wall: one quiet line, the captions live in the <track>", () => {
+  assert.doesNotMatch(page, /RELAY_CUES|relay\.cues/, "captions are never printed as a list");
+  assert.doesNotMatch(page, /st\.world\.relay\.credit\b/, "no credits paragraph");
+  assert.doesNotMatch(page, /summary: st\.who/, "no fold on the founder chapter");
+  assert.match(page, /st\.who\.filmCredit/);
+  for (const l of ["en", "fr"]) assert.ok(messages(l).story.who.filmCredit.length < 50, l);
 });
 
 test("a product chapter shows its field's mini-visual (demo data, said so), claims only what runs, and links its site and its source", () => {
