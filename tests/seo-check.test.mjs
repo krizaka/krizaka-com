@@ -22,8 +22,8 @@ test("the apex canonical, a repeated brand and broken JSON-LD are caught", () =>
   assert.ok(bad.some((p) => p.includes("apex")));
 });
 
-test("the home without its FAQPage is refused", () => {
-  assert.ok(auditHtml(page({ ld: '{"@context":"https://schema.org","@type":"Organization"}' }), "/en").some((p) => p.includes("FAQPage")));
+test("the home without its WebSite JSON-LD is refused", () => {
+  assert.ok(auditHtml(page({ ld: '{"@context":"https://schema.org","@type":"Organization"}' }), "/en").some((p) => p.includes("WebSite")));
 });
 
 test("robots.txt must welcome the AI crawlers", () => {

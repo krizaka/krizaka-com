@@ -342,7 +342,7 @@
         "number": "§ 4",
         "eyebrow": "Notre façon de travailler",
         "title": "Cinq règles, vérifiées plutôt que promises.",
-        "folio": "page 4 sur 6",
+        "folio": "page {page} sur {total}",
         "items": {
           "sovereign": {
             "title": "Vos données restent où vous décidez",
@@ -365,20 +365,6 @@
             "body": "{count} dépôts publics sous Apache-2.0, à lire ligne par ligne."
           }
         }
-      },
-      "company": {
-        "number": "§ 5",
-        "eyebrow": "Montréal",
-        "title": "Un studio montréalais, ici pour durer.",
-        "body": "Technologies Krizaka Inc. est établie à Montréal, au Québec : ouverte, accessible, bilingue, testée.",
-        "story": "Lire notre histoire",
-        "stamp": "Fait à Montréal",
-        "folio": "page 5 sur 6"
-      },
-      "contact": {
-        "number": "§ 6",
-        "title": "Parlez-nous de ce que vous construisez.",
-        "cta": "Nous contacter"
       },
       "visuals": {
         "orazaka": {
@@ -1521,28 +1507,6 @@
       "inProgress": "{count} en cours",
       "feedback": "Vos retours",
       "details": "Détails"
-    },
-    "faq": {
-      "eyebrow": "Questions",
-      "title": "Questions fréquentes",
-      "krizaka": [
-        {
-          "q": "Qu'est-ce que Krizaka ?",
-          "a": "Krizaka est un studio logiciel à Montréal, au Québec. Il construit des produits open source — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — et la pile qui les porte, Krizaka UI et Krizaka Java. Chaque dépôt est public sous Apache-2.0."
-        },
-        {
-          "q": "Où sont les produits ?",
-          "a": "À leurs propres adresses : www.orazaka.com, www.orochia.com, www.yasakia.com, www.yororis.com, www.yomizaka.com, www.kachizaka.com et www.akinaza.com. L'accueil les présente, chacun avec son code source."
-        },
-        {
-          "q": "Où est la documentation ?",
-          "a": "Krizaka UI est documenté sur ui.krizaka.com et Krizaka Java sur java.krizaka.com ; chaque produit se documente sur son propre site."
-        },
-        {
-          "q": "Où est basé Krizaka ?",
-          "a": "Montréal, Québec, Canada."
-        }
-      ]
     },
     "stack": {
       "ui": {

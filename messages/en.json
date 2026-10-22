@@ -342,7 +342,7 @@
         "number": "§ 4",
         "eyebrow": "How we work",
         "title": "Five rules, checked rather than promised.",
-        "folio": "page 4 of 6",
+        "folio": "page {page} of {total}",
         "items": {
           "sovereign": {
             "title": "Your data stays where you decide",
@@ -365,20 +365,6 @@
             "body": "{count} public repositories under Apache-2.0, readable line by line."
           }
         }
-      },
-      "company": {
-        "number": "§ 5",
-        "eyebrow": "Montréal",
-        "title": "A Montréal studio, here for the long run.",
-        "body": "Technologies Krizaka Inc. is based in Montréal, Québec: open, accessible, bilingual, tested.",
-        "story": "Read our story",
-        "stamp": "Made in Montréal",
-        "folio": "page 5 of 6"
-      },
-      "contact": {
-        "number": "§ 6",
-        "title": "Tell us what you're building.",
-        "cta": "Contact us"
       },
       "visuals": {
         "orazaka": {
@@ -1521,28 +1507,6 @@
       "inProgress": "{count} in progress",
       "feedback": "Talk back",
       "details": "Details"
-    },
-    "faq": {
-      "eyebrow": "Questions",
-      "title": "Frequently asked questions",
-      "krizaka": [
-        {
-          "q": "What is Krizaka?",
-          "a": "Krizaka is a software studio in Montréal, Québec. It builds open-source products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka and Akinaza — and the stack under them, Krizaka UI and Krizaka Java. Every repository is public under Apache-2.0."
-        },
-        {
-          "q": "Where are the products?",
-          "a": "On their own addresses: www.orazaka.com, www.orochia.com, www.yasakia.com, www.yororis.com, www.yomizaka.com, www.kachizaka.com and www.akinaza.com. The home lists them, each with its source."
-        },
-        {
-          "q": "Where is the documentation?",
-          "a": "Krizaka UI is documented on ui.krizaka.com and Krizaka Java on java.krizaka.com; each product documents itself on its own site."
-        },
-        {
-          "q": "Where is Krizaka based?",
-          "a": "Montréal, Québec, Canada."
-        }
-      ]
     },
     "stack": {
       "ui": {

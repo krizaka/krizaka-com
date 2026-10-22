@@ -1,26 +1,30 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
+import { HOME_SECTIONS, folioOf } from "../lib/home-sections.ts";
 
 // The home is one of the site's two views (Oussama, 2026-10-17; the other is Open source): the centred hero, the products
 // (Orazaka the foundation, the products it powers — the only place they are presented), the open-source stack in brief,
-// the principles in brief, Montréal, the contact. No product is pitched, nothing links to the old /docs.
+// the principles in brief (Montréal and the closing contact left on 2026-10-22: /story is in the footer, Contact us in the bar). No product is pitched, nothing links to the old /docs.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const HOME = "app/[locale]/page.tsx";
-const SECTIONS = ["HomeHero", "ProductShowcase", "OpenStack", "Principles", "Company"];
+const SECTIONS = ["HomeHero", "ProductShowcase", "OpenStack", "Principles"];
 
-test("the home is made of its sections, in Oussama's order, then the contact and the questions", () => {
+test("the home is made of its four sections, in Oussama's order: no Company, no closing contact panel, no FAQ", () => {
   const home = read(HOME);
-  const order = [...SECTIONS, "ContactCta", "ProductFaq"].map((s) => {
+  assert.doesNotMatch(home, /<Company\b|<ContactCta\b|<ProductFaq\b|section-backdrop/, "§ 5, § 6 and the FAQ are gone");
+  assert.ok(!existsSync(new URL("../app/components/ProductFaq.tsx", import.meta.url)), "ProductFaq came back");
+  for (const f of ["Company", "ContactCta"]) assert.ok(!existsSync(new URL(`../app/components/home/${f}.tsx`, import.meta.url)), `${f} came back`);
+  const order = SECTIONS.map((s) => {
     const at = home.search(new RegExp(`<${s}\\b`));
     assert.ok(at > 0, s);
     return at;
   });
-  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → products → stack → principles → Montréal → contact");
+  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → products → stack → principles");
 });
 
-test("one primary action per section: the hero's goes to #products, the stack's to /open-source, Montréal's to /story", () => {
+test("one primary action per section: the hero's goes to #products, the stack's to /open-source", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
   assert.match(hero, /href="#products" variant="primary"/);
@@ -28,9 +32,6 @@ test("one primary action per section: the hero's goes to #products, the stack's 
   const stack = read("app/components/home/OpenStack.tsx");
   assert.match(stack, /href="\/open-source" variant="primary"/);
   assert.equal(stack.match(/variant="primary"/g)?.length, 1);
-  const company = read("app/components/home/Company.tsx");
-  assert.match(company, /href="\/story" variant="primary"/);
-  assert.equal(company.match(/<ButtonLink/g)?.length, 1);
 });
 
 test("the hero: text painted at once, the figures read at build and climbing", () => {
@@ -67,7 +68,7 @@ test("the old home — the product showcase, the kit gallery, the rotating title
   }
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;
-    assert.deepEqual(Object.keys(m.home), ["hero", "products", "stack", "principles", "company", "contact", "visuals"], `${lang}: site.home`);
+    assert.deepEqual(Object.keys(m.home), ["hero", "products", "stack", "principles", "visuals"], `${lang}: site.home`);
     assert.equal(m.expertise, undefined, `${lang}: site.expertise`);
   }
 });
@@ -79,7 +80,7 @@ test("Orochia is described neutrally: no creator, payout or payment pitch on kri
     assert.doesNotMatch(m.products.cards.orochia.line, pitch, `${lang}: products.cards.orochia`);
     assert.doesNotMatch(JSON.stringify(m.home), pitch, `${lang}: site.home`);
     assert.doesNotMatch(m.structuredData.organization, pitch, `${lang}: structuredData.organization`);
-    assert.doesNotMatch(JSON.stringify(m.faq.krizaka), pitch, `${lang}: faq.krizaka`);
+    assert.equal(m.faq, undefined, `${lang}: site.faq`);
   }
 });
 
@@ -144,4 +145,17 @@ test("Akinaza is for studios, salons and the self-employed, one short human line
   }
   assert.match(en, /Your appointments, invoices and taxes, sorted/);
   assert.match(fr, /Vos rendez-vous, vos factures et vos taxes, réglés/);
+});
+
+// The numbers in the margin and the folios come from the section list, never typed (2026-10-22: § 5 and § 6 removed).
+test("the section list is the home's four sections; the numbers and the folio are derived from it", () => {
+  assert.deepEqual([...HOME_SECTIONS], ["hero", "products", "stack", "principles"]);
+  assert.deepEqual(folioOf("principles"), { page: 4, total: 4 });
+  assert.deepEqual(folioOf("hero"), { page: 1, total: 4 });
+  for (const lang of ["en", "fr"]) {
+    const h = messages(lang).site.home;
+    assert.match(h.principles.folio, /\{page\}.*\{total\}/, `${lang}: the folio is a template, not typed digits`);
+    HOME_SECTIONS.forEach((id, i) => assert.equal(h[id === "stack" ? "stack" : id].number, `§ ${i + 1}`, `${lang}: ${id}`));
+  }
+  assert.match(read("app/components/home/Principles.tsx"), /format\(p\.folio, folioOf\("principles"\)\)/);
 });
