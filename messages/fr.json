@@ -142,7 +142,7 @@
           "line": "Pronostics entre amis, en points seulement. Chaque point expliqué, chaque saison gardée."
         },
         "akinaza": {
-          "line": "L'OS bilingue conçu pour la Loi 25 et la Loi 96 : studios, salons, autonomes."
+          "line": "Vos rendez-vous, vos factures et vos taxes, réglés."
         }
       },
       "proofBy": "Prouvé par {name}",
@@ -1144,7 +1144,7 @@
         "krizaka-java": "Les briques Spring Boot de chaque service Krizaka, publiées sur Maven Central sous com.krizaka.",
         "yomizaka": "Des baux, contrats et factures lus et vérifiés par Orazaka. En développement.",
         "kachizaka": "Les pronostics entre amis, en points seulement, avec des données en direct. En développement.",
-        "akinaza": "L'OS bilingue conçu pour la Loi 25 et la Loi 96, pour les studios, salons et travailleurs autonomes du Québec. En développement."
+        "akinaza": "Vos rendez-vous, vos factures et vos taxes, réglés, pour les salons, studios et travailleurs autonomes du Québec. En développement."
       },
       "socialImage": {
         "tagline": "Des logiciels open source, faits à Montréal.",
