@@ -122,6 +122,7 @@ function Akinaza({ playing }: { playing: boolean }) {
     <div className="pv-shop">
       <div>
         <p className="pv-shop-head">{v.day}</p>
+        {/* @ephemeral: a decorative product visual, played by a timer, not a choice */}
         <Chip.Group type="single" value={AKINAZA_SLOTS[step]} label={v.day} size="sm" className="pv-shop-slots">
           {AKINAZA_SLOTS.map((slot) => (
             <Chip key={slot} value={slot}>

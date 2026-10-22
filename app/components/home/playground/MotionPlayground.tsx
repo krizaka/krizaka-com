@@ -42,6 +42,7 @@ export default function MotionPlayground({ w }: { w: MotionPlaygroundWords }) {
         nodes={APPS.map((id) => ({ id, label: w.app.replace("{id}", id), flow: mode, mark: <span className="kz-play-dot">{id}</span> }))}
         hint={w.hint}
       />
+      {/* @ephemeral: the home's motion playground: a control of a live demo, never an address */}
       <Chip.Group type="single" required size="sm" label={w.layout} value={layout} onValueChange={(v) => v && setLayout(v as FlowLayout)}>
         {FLOW_LAYOUTS.map((l) => (
           <Chip key={l} value={l}>
@@ -49,6 +50,7 @@ export default function MotionPlayground({ w }: { w: MotionPlaygroundWords }) {
           </Chip>
         ))}
       </Chip.Group>
+      {/* @ephemeral: the home's motion playground: a control of a live demo, never an address */}
       <Chip.Group type="single" required size="sm" label={w.mode} value={mode} onValueChange={(v) => v && setMode(v as FlowMode)}>
         {FLOW_MODES.map((m) => (
           <Chip key={m} value={m}>

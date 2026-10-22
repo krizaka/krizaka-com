@@ -41,6 +41,7 @@ export default function UiPlayground({ w, series }: { w: UiPlaygroundWords; seri
           {w.switch}
         </span>
       </div>
+      {/* @ephemeral: the home's UI playground: a control of a live demo, never an address */}
       <Chip.Group type="single" required size="sm" label={w.variant} value={variant} onValueChange={(v) => v && setVariant(v as UiVariant)}>
         {UI_VARIANTS.map((v) => (
           <Chip key={v} value={v}>
@@ -48,6 +49,7 @@ export default function UiPlayground({ w, series }: { w: UiPlaygroundWords; seri
           </Chip>
         ))}
       </Chip.Group>
+      {/* @ephemeral: the home's UI playground: a control of a live demo, never an address */}
       <Chip.Group type="single" size="sm" label={w.theme} value={theme} onValueChange={(v) => setTheme(v as "dark" | "light" | "")}>
         <Chip value="dark">{w.themes.dark}</Chip>
         <Chip value="light">{w.themes.light}</Chip>
