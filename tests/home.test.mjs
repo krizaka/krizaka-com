@@ -160,3 +160,17 @@ test("the section list is the home's five sections, in the honest order; the num
   }
   assert.match(read("app/components/home/Principles.tsx"), /format\(p\.folio, folioOf\("principles"\)\)/);
 });
+
+// 2026-10-22 (Oussama): Akinaza and Yomizaka are presented as one need — « gestion et conformité » — in the hero's lead and
+// the products section, without the word « intelligent » (Akinaza's own rule: no AI wording for its product).
+test("the duo is named by its need: management and compliance tools", () => {
+  const want = { en: /management and compliance tools/, fr: /outils de gestion et de conformité/ };
+  for (const lang of ["en", "fr"]) {
+    const h = messages(lang).site.home;
+    assert.match(h.hero.lead, want[lang], `${lang}: hero.lead`);
+    assert.match(h.hero.lead, /Akinaza/);
+    assert.match(h.hero.lead, /Yomizaka/);
+    assert.match(h.products.title, want[lang], `${lang}: products.title`);
+    assert.doesNotMatch(`${h.products.title} ${h.products.lead}`, /intelligen/i);
+  }
+});

@@ -208,7 +208,7 @@
         "number": "§ 1",
         "eyebrow": "Field notes of a software studio · Montréal, Québec",
         "title": "We build open-source software, and the stack under it.",
-        "lead": "We started with Orazaka, an AI engine. Building it gave us Krizaka UI and Krizaka Java, both open source. Then came the products that run on them, and Krizaka, the company, was born from that work.",
+        "lead": "We started with Orazaka, an AI engine, which gave us Krizaka UI, Krizaka Java and Krizaka TS, all open source. On them we build management and compliance tools for Québec businesses: Akinaza and Yomizaka.",
         "primary": "See what we build",
         "film": "Watch the full film",
         "filmLength": "1 min 8 s",
@@ -256,8 +256,8 @@
       },
       "products": {
         "number": "§ 4",
-        "title": "Then the products, built on it.",
-        "lead": "Each one lives on its own site, with its source on GitHub.",
+        "title": "Then the products: management and compliance tools.",
+        "lead": "Akinaza runs a service business: bookings, invoices, GST and QST. Yomizaka checks the paperwork: leases, contracts, invoices. Each one lives on its own site, with its source on GitHub.",
         "engineUse": "On Orazaka · {use}",
         "enginePlanned": "On Orazaka, planned · {use}",
         "flow": {
@@ -798,7 +798,7 @@
         "license": "{license} on every repository"
       },
       "stackEyebrow": "The stack",
-      "stackTitle": "Two halves, each with its own site.",
+      "stackTitle": "Three bricks, each documented.",
       "stackLead": "Versions read from npm and Maven Central at build.",
       "blocksLabel": "The building blocks, explained:",
       "stackVisual": {
@@ -1541,6 +1541,9 @@
       },
       "java": {
         "line": "Spring Boot building blocks on Maven Central — web, security, messaging, observability, users and billing."
+      },
+      "ts": {
+        "line": "TypeScript building blocks on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief. Each package documented in its README."
       }
     },
     "changelog": {
