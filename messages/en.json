@@ -887,7 +887,16 @@
             "title": "Who is responsible",
             "paragraphs": [
               "This website is published by Technologies Krizaka Inc., a company incorporated under the laws of Québec, operating as Krizaka (Montréal, Québec, Canada).",
-              "The person in charge of the protection of personal information is the founder and president of the company. You reach them through the contact form on krizaka.com (topic “Other”); there is no other channel to look for."
+              "The person in charge of the protection of personal information is the founder and president of the company; their title and contact are published in the next section."
+            ]
+          },
+          {
+            "id": "privacy-officer",
+            "title": "Privacy officer",
+            "paragraphs": [
+              "Under Québec’s Law 25, the person in charge of the protection of personal information is published here.",
+              "Title: Privacy Officer (« Responsable de la protection des renseignements personnels »), Technologies Krizaka Inc., Montréal, Québec, Canada.",
+              "Contact: contact@krizaka.com. Write to this address to access, correct or delete your information, withdraw a consent or file a complaint; we answer within 30 days."
             ]
           },
           {
