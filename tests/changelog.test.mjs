@@ -203,12 +203,3 @@ test("the page filters through the address and reads both languages", () => {
   assert.match(generator, /release-repos\.json/);
   assert.match(generator, /releaseProblems/);
 });
-
-test("the changelog rebuilds on a product release and every day, with only the token it needs", () => {
-  const wf = read(".github/workflows/changelog-refresh.yml");
-  assert.match(wf, /repository_dispatch:\n\s+types: \[product-release\]/);
-  assert.match(wf, /schedule:\n\s+- cron:/);
-  assert.match(wf, /^permissions: \{\}/m);
-  assert.match(wf, /create-deployment "\$id" --force-rebuild/);
-  for (const line of wf.split("\n").filter((l) => /uses:/.test(l))) assert.match(line, /@[0-9a-f]{40} #/, `pinned by SHA: ${line.trim()}`);
-});

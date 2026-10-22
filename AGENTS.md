@@ -36,7 +36,7 @@
   Never add a product page back: change the product's site.
 - **The changelog is data** (`/changelog`, krizaka/.github#184): `scripts/gen-changelog.mjs` reads, at build, the GitHub Releases of
   the repositories listed in `krizaka/.github/release-repos.json` (written by the shared `release-notes` workflow: `YYYY.MM.DD.N`,
-  an English and a French section; Orazaka is one product line) and the `@krizaka/*` versions. `changelog-refresh.yml` rebuilds
+  an English and a French section; Orazaka is one product line) and the `@krizaka/*` versions. krizaka/.github's `changelog-rebuild.yml` (environment `dev`) rebuilds
   on the `product-release` dispatch and daily. The page filters by `?produit=` (the address is the state), obeys the focus (the
   other products come back with the notebook, `?carnet=complet`), keeps its RSS and shows the French lines on `/fr`. The public
   text has no personal name and no em dash: `cleanText` (lib/changelog.ts) cleans, `releaseProblems` fails the build.
