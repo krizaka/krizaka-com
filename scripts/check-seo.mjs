@@ -51,7 +51,7 @@ export function auditHtml(html, path) {
     }
   }
   if (path.split("/")[2] === undefined || path.split("/").length === 2) {
-    for (const t of ["Organization", "WebSite", "FAQPage"]) if (!types.includes(t)) problems.push(`home: ${t} JSON-LD missing`);
+    for (const t of ["Organization", "WebSite"]) if (!types.includes(t)) problems.push(`home: ${t} JSON-LD missing`);
   }
   if (/^\/(en|fr)\/docs\/[^/]+\/.+/.test(path)) {
     for (const t of ["TechArticle", "BreadcrumbList"]) if (!types.includes(t)) problems.push(`docs page: ${t} JSON-LD missing`);

@@ -60,8 +60,8 @@
 - **French is the default language** (Loi 96, `lib/locale-negotiation.ts`): an unprefixed URL goes to the cookie `NEXT_LOCALE` if set, else English only when the browser asks for English and never French, else French; hreflang `x-default` → `/fr`.
 
 - **The home's order** (2026-10-22, lightened): the hero (`HomeHero`), the products (`ProductShowcase`), the stack in brief
-  (`OpenStack`), the principles (`Principles`), the folded FAQ (FAQPage JSON-LD) — and it stops there: no Montréal
-  (`Company`) section and no closing contact panel. `/story` is in the footer, « Contact us » in the bar. The section
+  (`OpenStack`), the principles (`Principles`) — and it stops there: no Montréal (`Company`) section, no closing
+  contact panel and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). `/story` is in the footer, « Contact us » in the bar. The section
   numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed (`tests/home.test.mjs`).
 
 ## 2.2 Text & languages — nothing hard-coded

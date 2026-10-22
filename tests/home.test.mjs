@@ -11,16 +11,17 @@ const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const HOME = "app/[locale]/page.tsx";
 const SECTIONS = ["HomeHero", "ProductShowcase", "OpenStack", "Principles"];
 
-test("the home is made of its sections, in Oussama's order, then the questions: no Company, no closing contact panel", () => {
+test("the home is made of its four sections, in Oussama's order: no Company, no closing contact panel, no FAQ", () => {
   const home = read(HOME);
-  assert.doesNotMatch(home, /<Company\b|<ContactCta\b|section-backdrop/, "§ 5 and § 6 are gone");
+  assert.doesNotMatch(home, /<Company\b|<ContactCta\b|<ProductFaq\b|section-backdrop/, "§ 5, § 6 and the FAQ are gone");
+  assert.ok(!existsSync(new URL("../app/components/ProductFaq.tsx", import.meta.url)), "ProductFaq came back");
   for (const f of ["Company", "ContactCta"]) assert.ok(!existsSync(new URL(`../app/components/home/${f}.tsx`, import.meta.url)), `${f} came back`);
-  const order = [...SECTIONS, "ProductFaq"].map((s) => {
+  const order = SECTIONS.map((s) => {
     const at = home.search(new RegExp(`<${s}\\b`));
     assert.ok(at > 0, s);
     return at;
   });
-  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → products → stack → principles → questions");
+  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → products → stack → principles");
 });
 
 test("one primary action per section: the hero's goes to #products, the stack's to /open-source", () => {
@@ -79,7 +80,7 @@ test("Orochia is described neutrally: no creator, payout or payment pitch on kri
     assert.doesNotMatch(m.products.cards.orochia.line, pitch, `${lang}: products.cards.orochia`);
     assert.doesNotMatch(JSON.stringify(m.home), pitch, `${lang}: site.home`);
     assert.doesNotMatch(m.structuredData.organization, pitch, `${lang}: structuredData.organization`);
-    assert.doesNotMatch(JSON.stringify(m.faq.krizaka), pitch, `${lang}: faq.krizaka`);
+    assert.equal(m.faq, undefined, `${lang}: site.faq`);
   }
 });
 

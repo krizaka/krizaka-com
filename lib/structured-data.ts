@@ -129,24 +129,6 @@ export function buildBreadcrumbJsonLd(
   };
 }
 
-/**
- * FAQPage schema. Only emit this on a page that *visibly* renders the same Q&A —
- * Google flags FAQ markup without matching on-page content.
- */
-export function buildFaqJsonLd(
-  qa: ReadonlyArray<{ question: string; answer: string }>,
-) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: qa.map(({ question, answer }) => ({
-      "@type": "Question",
-      name: question,
-      acceptedAnswer: { "@type": "Answer", text: answer },
-    })),
-  };
-}
-
 /** A documentation page: TechArticle in the product's docs, with its breadcrumb. */
 export function buildTechArticleJsonLd(a: { locale: Locale; title: string; description: string; url: string }) {
   return {

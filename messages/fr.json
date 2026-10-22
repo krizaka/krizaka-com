@@ -1508,28 +1508,6 @@
       "feedback": "Vos retours",
       "details": "Détails"
     },
-    "faq": {
-      "eyebrow": "Questions",
-      "title": "Questions fréquentes",
-      "krizaka": [
-        {
-          "q": "Qu'est-ce que Krizaka ?",
-          "a": "Krizaka est un studio logiciel à Montréal, au Québec. Il construit des produits open source — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — et la pile qui les porte, Krizaka UI et Krizaka Java. Chaque dépôt est public sous Apache-2.0."
-        },
-        {
-          "q": "Où sont les produits ?",
-          "a": "À leurs propres adresses : www.orazaka.com, www.orochia.com, www.yasakia.com, www.yororis.com, www.yomizaka.com, www.kachizaka.com et www.akinaza.com. L'accueil les présente, chacun avec son code source."
-        },
-        {
-          "q": "Où est la documentation ?",
-          "a": "Krizaka UI est documenté sur ui.krizaka.com et Krizaka Java sur java.krizaka.com ; chaque produit se documente sur son propre site."
-        },
-        {
-          "q": "Où est basé Krizaka ?",
-          "a": "Montréal, Québec, Canada."
-        }
-      ]
-    },
     "stack": {
       "ui": {
         "line": "Composants, jetons, icônes et polices pour React et React Native — l'interface de chaque produit Krizaka."
