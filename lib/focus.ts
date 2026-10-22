@@ -29,11 +29,10 @@ export const focusProps = (id: string): { "data-focus"?: "off" } => (isHidden(id
 /** The entries to show: the whole list when the notebook is open, else without the products outside the focus. */
 export const inFocus = <T extends { id: string }>(list: readonly T[], open: boolean): T[] => (open ? [...list] : list.filter((x) => !isHidden(x.id)));
 
-/** What the server cannot mark: the family footer (`@krizaka/ui/sites`, no filter) is hidden by the address its links carry,
- *  /story's contents (`@krizaka/ui/toc`) by the anchors of the chapters. Only while the notebook is closed. */
+/** What the server cannot mark: /story's contents (`@krizaka/ui/toc`) by the anchors of the chapters. Only while the notebook
+ *  is closed. (The footer no longer needs it: `SiteFooter` takes a `products` filter, fed by `FOCUS_IDS` and `useCarnet()`.) */
 export const hiddenCss = (): string =>
   HIDDEN_IDS.flatMap((id) => [
-    `html:not([data-carnet]) footer li:has(> a[href="${wwwUrl(id)}"]){display:none}`,
     `html:not([data-carnet]) .kz-toc li:has(> a[href="#p-${id}"]){display:none}`,
   ]).join("\n");
 

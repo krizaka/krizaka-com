@@ -65,14 +65,14 @@ test("on a phone: five taps on the hint within four seconds", () => {
   assert.equal(slow.done, false);
 });
 
-test("the family footer (no filter in @krizaka/ui) hides the four by the address its links carry", () => {
+test("the footer is filtered by SiteFooter's `products` prop (FOCUS_IDS until the notebook is open), not by CSS on the links' addresses", () => {
+  const footer = read("app/components/SiteFooter.tsx");
+  assert.match(footer, /products=\{wholeNotebook \? undefined : FOCUS_IDS\}/);
+  assert.match(footer, /useCarnet\(\)/);
   const css = hiddenCss();
-  for (const id of HIDDEN_IDS) {
-    assert.equal(siteById(id).url, wwwUrl(id), `${id}: the footer's link is the product's www address`);
-    assert.ok(css.includes(`a[href="${wwwUrl(id)}"]`), id);
-  }
-  for (const id of FOCUS_IDS) assert.ok(!css.includes(wwwUrl(id)), `${id} stays in the footer`);
-  assert.match(css, /html:not\(\[data-carnet\]\)/, "only while the notebook is closed");
+  for (const id of HIDDEN_IDS) assert.ok(!css.includes(`footer`) && !css.includes(`a[href="${wwwUrl(id)}"]`), `${id}: no footer CSS hack`);
+  for (const id of HIDDEN_IDS) assert.equal(siteById(id).url, wwwUrl(id));
+  assert.match(css, /html:not\(\[data-carnet\]\)/, "the story's contents are still hidden only while the notebook is closed");
 });
 
 test("machines see everything: JSON-LD owns all products; llms.txt, sitemap and robots do not know the focus", () => {

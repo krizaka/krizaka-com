@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import { SiteFooter as FamilyFooter } from "@krizaka/ui/site-footer";
 import { familyLabels } from "@krizaka/ui/sites";
 import { useI18n } from "./I18nProvider";
+import { useCarnet } from "./useCarnet";
+import { FOCUS_IDS } from "@/lib/focus";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import { PLATFORM, changelogHref } from "@/lib/changelog-data";
 import { format } from "@/lib/i18n";
@@ -15,6 +17,7 @@ import { format } from "@/lib/i18n";
    legal links. Nothing twice. */
 export default function SiteFooter() {
   const { t, locale } = useI18n();
+  const wholeNotebook = useCarnet();
   const f = t.site.footer;
   const pathname = usePathname();
   // Locale-prefixed addresses: an unprefixed href answers a 307 from proxy.ts, and Next.js skips its scroll-to-top for a
@@ -25,6 +28,7 @@ export default function SiteFooter() {
   return (
     <FamilyFooter
       current="krizaka"
+      products={wholeNotebook ? undefined : FOCUS_IDS}
       variant="site"
       labels={familyLabels[locale]}
       aria-label={t.site.menu.footerAria}
