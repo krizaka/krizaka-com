@@ -142,7 +142,7 @@
           "line": "Predictions among friends, points only. Every point explained, every season kept."
         },
         "akinaza": {
-          "line": "The all-in-one for independent Québec shops: hair salons, bakeries, boutiques."
+          "line": "The bilingual OS designed for Loi 25 and Loi 96, for studios, salons and the self-employed."
         }
       },
       "proofBy": "Proved by {name}",
@@ -173,7 +173,7 @@
         },
         "akinaza": {
           "name": "Running a shop, for less",
-          "proof": "Bookings, client files with Loi 25 consent, bilingual invoices with GST and QST to the cent, a ledger the database keeps balanced, and the GST/QST return prepared for the merchant to file."
+          "proof": "Appointment booking, bilingual GST/QST invoices to the cent, a ledger the database keeps balanced, and a tax report prepared for Revenu Québec, which the merchant reviews and files. Data in Canada."
         }
       },
       "hookLabel": "What it is",
@@ -1135,7 +1135,7 @@
         "krizaka-java": "The Spring Boot building blocks of every Krizaka service, published on Maven Central under com.krizaka.",
         "yomizaka": "Leases, contracts and invoices read and checked by Orazaka. In development.",
         "kachizaka": "Predictions among friends, points only, with live data. In development.",
-        "akinaza": "The all-in-one for independent Québec shops: bookings, bilingual invoices with GST/QST, Loi 25. In development."
+        "akinaza": "The bilingual OS designed for Loi 25 and Loi 96, for studios, salons and the self-employed in Québec. In development."
       },
       "socialImage": {
         "tagline": "Open-source software, made in Montréal.",

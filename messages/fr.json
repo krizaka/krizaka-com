@@ -142,7 +142,7 @@
           "line": "Pronostics entre amis, en points seulement. Chaque point expliqué, chaque saison gardée."
         },
         "akinaza": {
-          "line": "Le tout-en-un des boutiques indépendantes du Québec : salons, boulangeries, boutiques."
+          "line": "L'OS bilingue conçu pour la Loi 25 et la Loi 96, pour les studios, salons et travailleurs autonomes."
         }
       },
       "proofBy": "Prouvé par {name}",
@@ -173,7 +173,7 @@
         },
         "akinaza": {
           "name": "Tenir une boutique, pour moins cher",
-          "proof": "Rendez-vous, dossiers clients avec consentement Loi 25, factures bilingues avec TPS et TVQ au cent près, un registre que la base garde équilibré, et la déclaration TPS/TVQ préparée pour que le commerçant la produise."
+          "proof": "Prise de rendez-vous, factures bilingues TPS/TVQ au cent près, un grand livre que la base garde équilibré et un rapport de taxes préparé pour Revenu Québec, que le commerçant vérifie et produit. Données au Canada."
         }
       },
       "hookLabel": "Ce que c'est",
@@ -1135,7 +1135,7 @@
         "krizaka-java": "Les briques Spring Boot de chaque service Krizaka, publiées sur Maven Central sous com.krizaka.",
         "yomizaka": "Des baux, contrats et factures lus et vérifiés par Orazaka. En développement.",
         "kachizaka": "Les pronostics entre amis, en points seulement, avec des données en direct. En développement.",
-        "akinaza": "Le tout-en-un des boutiques du Québec : rendez-vous, factures bilingues avec TPS/TVQ, Loi 25. En développement."
+        "akinaza": "L'OS bilingue conçu pour la Loi 25 et la Loi 96, pour les studios, salons et travailleurs autonomes du Québec. En développement."
       },
       "socialImage": {
         "tagline": "Des logiciels open source, faits à Montréal.",

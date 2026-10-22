@@ -127,3 +127,15 @@ test("the open-source section: three playable tiles, versions and downloads read
   }
   assert.equal(messages("fr").site.home.stack.title, "Construisez avec nos briques.");
 });
+
+test("Akinaza is positioned for studios, salons and the self-employed, « designed for » Loi 25 and Loi 96, never « compliant » (until a lawyer validates)", () => {
+  for (const lang of ["en", "fr"]) {
+    const text = JSON.stringify(messages(lang), (k, v) => v).split("\n").join(" ");
+    const akinaza = [...text.matchAll(/"akinaza":\{[^{}]*\}|"akinaza":"[^"]*"/g)].map((m) => m[0]).join(" ");
+    assert.doesNotMatch(akinaza, /conforme|conformité|compliant|compliance|complies/i, lang);
+    assert.doesNotMatch(akinaza, /bakeries|boulangeries/i, `${lang}: no on-site consumption businesses`);
+  }
+  const en = JSON.stringify(messages("en")), fr = JSON.stringify(messages("fr"));
+  assert.match(en, /designed for Loi 25 and Loi 96, for studios, salons and the self-employed/);
+  assert.match(fr, /conçu pour la Loi 25 et la Loi 96, pour les studios, salons et travailleurs autonomes/);
+});
