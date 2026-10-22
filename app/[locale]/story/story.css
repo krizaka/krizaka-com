@@ -71,6 +71,9 @@
 .st-film-caption span { font-family: var(--kz-font-mono); font-weight: 500; opacity: .85; }
 .st-film:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 3px; }
 .st-film-note { margin: 8px 0 0; font-size: 13px; color: var(--kz-text-muted); }
+.st-film-credits { all: unset; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.st-film-credits:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; }
+.st-credits-list { margin: 12px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; font-size: 15px; color: var(--kz-text-secondary); }
 .st-film-note a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .st-fold-list { list-style: decimal; }
 
