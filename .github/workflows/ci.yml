@@ -18,7 +18,7 @@ jobs:
   # The pipeline is the org's (krizaka/.github docs/standards/ci-and-deploy.md): the changes gate, the caches, the timeouts and the
   # gate that always reports live there. This file says only what is krizaka.com's.
   ci:
-    uses: krizaka/.github/.github/workflows/node-ci.yml@85261e5053a68318d79324a77a8e68332e081540 # v1.2.0
+    uses: krizaka/.github/.github/workflows/node-ci.yml@d95527618e5b070cff81d248964290b732e31886 # v1.4.0
     permissions:
       contents: read
     with:
@@ -32,27 +32,3 @@ jobs:
       # A change that touches no code (issue and PR templates, the dependabot and Scorecard files, licence and policy text)
       # skips the heavy jobs. Fails open.
       ignore: '^\.github/(?!workflows/ci\.yml$)|^(LICENSE|SECURITY|CODE_OF_CONDUCT|SUPPORT)(\.md)?$'
-
-  # The names branch protection requires (« Build & Validate », « Container image ») are kept by two shims that read the
-  # gate's verdict: red when anything of the pipeline is red, green when it is green or legitimately skipped.
-  validate:
-    name: Build & Validate
-    needs: ci
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    env:
-      RESULT: ${{ needs.ci.outputs.result }}
-    steps:
-      - run: test "$RESULT" = success
-
-  container:
-    name: Container image
-    needs: ci
-    if: ${{ always() }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 2
-    env:
-      RESULT: ${{ needs.ci.outputs.result }}
-    steps:
-      - run: test "$RESULT" = success
