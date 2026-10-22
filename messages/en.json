@@ -1544,12 +1544,12 @@
       }
     },
     "changelog": {
-      "metaTitle": "Changelog — what shipped at Krizaka",
-      "metaDescription": "What changed, version by version: Krizaka UI, Krizaka Java and the products — new, fixed, security and breaking, with the pull request behind each line.",
+      "metaTitle": "Changelog: what shipped at Krizaka",
+      "metaDescription": "What changed, version by version: Krizaka UI, Krizaka Java and the products: new, fixed, security and breaking, with the pull request behind each line.",
       "back": "Home",
       "eyebrow": "Changelog",
       "title": "What shipped",
-      "lead": "The highlights of every Krizaka release, newest first — read from the releases themselves, not written for the page.",
+      "lead": "The highlights of every Krizaka release, newest first, read from the releases themselves, not written for the page.",
       "runs": "This site runs v{version} on Krizaka UI {ui}.",
       "feed": "Subscribe (RSS)",
       "logLabel": "Releases",
@@ -1570,8 +1570,22 @@
         "breaking": "Breaking",
         "change": "Changed"
       },
+      "filterLabel": "Filter by product",
+      "filters": {
+        "all": "Everything",
+        "orazaka": "Orazaka",
+        "akinaza": "Akinaza",
+        "yomizaka": "Yomizaka",
+        "orochia": "Orochia",
+        "yasakia": "Yasakia",
+        "yororis": "Yororis",
+        "kachizaka": "Kachizaka",
+        "ui": "Krizaka UI",
+        "java": "Krizaka Java"
+      },
+      "noneForFilter": "Nothing shipped for this product yet.",
       "pull": "Pull request #{number}",
-      "feedTitle": "Krizaka — changelog",
+      "feedTitle": "Krizaka changelog",
       "feedDescription": "What shipped at Krizaka, release by release.",
       "langTag": "en"
     }

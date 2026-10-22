@@ -17,21 +17,51 @@ export interface ChangeItem {
 export interface Release {
   /** What was released: `@krizaka/ui`, `Orazaka`. */
   source: string;
+  /** The filter it belongs to (`?produit=`): a product id, `ui` or `java`. */
+  product: string;
+  /** Which repository of a product made of several (`edge` for orazaka-edge); absent for a single-repository product. */
+  part?: string;
   version: string;
   /** ISO date, `2026-10-17`. */
   date: string;
   /** The release's page (GitHub release, npm). */
   url?: string;
+  /** The changes in English; `fr` the same in French when the release wrote both (else the reader of /fr gets these). */
   changes: ChangeItem[];
+  fr?: ChangeItem[];
 }
 
 export const CHANGE_TAGS: readonly ChangeTag[] = ["breaking", "security", "feature", "fix", "change"];
 
 const REPO_PR = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/(\d+)/;
 
+/** Public text names no one and carries no em dash: the sources are the team's own words, the page is the company's. */
+export const PERSONAL_NAMES = ["Oussama", "Abid"] as const;
+const NAME = PERSONAL_NAMES.join("|");
+const NAME_ASIDE = new RegExp(`\\s*\\([^)]*\\b(?:${NAME})\\b[^)]*\\)`, "gi");
+
+/** A colon says what an em dash says; an aside that names a person is dropped. */
+export const cleanText = (s: string): string => s.replace(NAME_ASIDE, "").replace(/\s+—\s+/g, ": ").replace(/—/g, "-");
+
+/** What is still wrong with a public line after `cleanText` (empty = fine): the lint of the generator. */
+export function textProblems(text: string): string[] {
+  const problems: string[] = [];
+  if (text.includes("—")) problems.push("an em dash");
+  const name = new RegExp(`\\b(?:${NAME})\\b`, "i").exec(text)?.[0];
+  if (name) problems.push(`a personal name (${name})`);
+  return problems;
+}
+
+/** Every problem of every public line of the releases, as `<release>: <line> has <problem>` (empty = fine). */
+export function releaseProblems(releases: readonly Release[]): string[] {
+  return releases.flatMap((r) =>
+    [...r.changes, ...(r.fr ?? [])].flatMap((c) => textProblems(c.text).map((p) => `${releaseLabel(r)}: "${c.text.slice(0, 60)}" has ${p}`)),
+  );
+}
+
 /** A line of markdown as a reader reads it: links keep their words, backticks and emphasis go. */
 export function plain(md: string): string {
-  return md
+  return cleanText(md)
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
     .replace(/`([^`]*)`/g, "$1")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
@@ -62,7 +92,7 @@ export function prOf(line: string): ChangeItem["pr"] {
 const CHANGESET_TAG: Record<string, ChangeTag> = { major: "breaking", minor: "feature", patch: "fix" };
 
 /** The releases of a changesets CHANGELOG.md, newest first as written. Dates are not in the file: `dateOf(version)`. */
-export function parseChangesets(md: string, source: string, dateOf: (version: string) => string | undefined): Release[] {
+export function parseChangesets(md: string, source: string, dateOf: (version: string) => string | undefined, product = "ui"): Release[] {
   const releases: Release[] = [];
   let current: Release | undefined;
   let level: ChangeTag = "change";
@@ -70,7 +100,7 @@ export function parseChangesets(md: string, source: string, dateOf: (version: st
     const h2 = /^## (\d+\.\d+\.\d+\S*)\s*$/.exec(raw);
     if (h2) {
       const date = dateOf(h2[1]);
-      current = date ? { source, version: h2[1], date, changes: [] } : undefined;
+      current = date ? { source, product, version: h2[1], date, changes: [] } : undefined;
       if (current) releases.push(current);
       continue;
     }
@@ -122,6 +152,22 @@ export function parseReleaseBody(body: string): ChangeItem[] {
   return items;
 }
 
+const SECTION = /^## (English|Français)\s*$/gm;
+
+/** A release written by the shared workflow (krizaka/.github `release-notes`): `## English` and `## Français` sections,
+    each a list of changes. Any other body (GitHub's generated notes, a hand-written one) is read as English alone. */
+export function parseReleaseBodies(body: string): { en: ChangeItem[]; fr?: ChangeItem[] } {
+  const marks = [...body.matchAll(SECTION)];
+  if (!marks.length) return { en: parseReleaseBody(body) };
+  const part = (name: string) => {
+    const i = marks.findIndex((m) => m[1] === name);
+    return i < 0 ? undefined : body.slice(marks[i].index + marks[i][0].length, marks[i + 1]?.index);
+  };
+  const en = part("English");
+  const fr = part("Français");
+  return { en: parseReleaseBody(en ?? fr ?? ""), fr: fr === undefined || en === undefined ? undefined : parseReleaseBody(fr) };
+}
+
 /** The draft generator: conventional PR titles → a plain-language draft entry (Markdown) for a human or an agent to polish. */
 export function draftFromTitles(titles: readonly string[], heading: string): string {
   const groups = new Map<ChangeTag, string[]>();
@@ -144,9 +190,15 @@ export function newestFirst(a: Release, b: Release): number {
   return b.date.localeCompare(a.date) || b.version.localeCompare(a.version, undefined, { numeric: true });
 }
 
+/** The changes of a release in a language: French when the release wrote it, else the English lines. */
+export const changesFor = (r: Pick<Release, "changes" | "fr">, lang: "en" | "fr"): ChangeItem[] => ({ en: r.changes, fr: r.fr ?? r.changes })[lang];
+
+/** What a release is called: `@krizaka/ui 3.22.0`, `Orazaka edge 2026.10.22.1`. */
+export const releaseLabel = (r: Pick<Release, "source" | "part" | "version">): string => [r.source, r.part, r.version].filter(Boolean).join(" ");
+
 /** A stable anchor: `krizaka-ui-3-22-0`; the bare version is the anchor of the site's own entry. */
-export const anchorOf = (r: Pick<Release, "source" | "version">): string =>
-  `${r.source}-${r.version}`.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+export const anchorOf = (r: Pick<Release, "source" | "part" | "version">): string =>
+  releaseLabel(r).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -160,12 +212,13 @@ export function changelogRss(opts: {
   feedUrl: string;
   language: string;
   tagLabel: Record<ChangeTag, string>;
+  lang: "en" | "fr";
 }): string {
   const items = opts.releases
     .map((r) => {
-      const list = r.changes.map((c) => `<li><b>${esc(opts.tagLabel[c.tag])}</b> ${esc(c.text)}</li>`).join("");
+      const list = changesFor(r, opts.lang).map((c) => `<li><b>${esc(opts.tagLabel[c.tag])}</b> ${esc(c.text)}</li>`).join("");
       const link = `${opts.pageUrl}#${anchorOf(r)}`;
-      return `<item><title>${esc(`${r.source} ${r.version}`)}</title><link>${esc(link)}</link><guid isPermaLink="true">${esc(link)}</guid><pubDate>${new Date(`${r.date}T12:00:00Z`).toUTCString()}</pubDate><description>${esc(`<ul>${list}</ul>`)}</description></item>`;
+      return `<item><title>${esc(releaseLabel(r))}</title><link>${esc(link)}</link><guid isPermaLink="true">${esc(link)}</guid><pubDate>${new Date(`${r.date}T12:00:00Z`).toUTCString()}</pubDate><description>${esc(`<ul>${list}</ul>`)}</description></item>`;
     })
     .join("");
   return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${esc(opts.title)}</title><link>${esc(opts.pageUrl)}</link><description>${esc(opts.description)}</description><language>${opts.language}</language><atom:link href="${esc(opts.feedUrl)}" rel="self" type="application/rss+xml"/>${items}</channel></rss>`;
