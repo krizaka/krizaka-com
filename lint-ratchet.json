@@ -21,6 +21,7 @@
     "fetchInClientEffect": 0,
     "directTanstackImport": 0,
     "localTableOrForm": 2,
-    "retiredImport": 0
+    "retiredImport": 0,
+    "routeStateSelection": 0
   }
 }
