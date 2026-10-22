@@ -18,10 +18,11 @@ jobs:
   # The pipeline is the org's (krizaka/.github docs/standards/ci-and-deploy.md): the changes gate, the caches, the timeouts and the
   # gate that always reports live there. This file says only what is krizaka.com's.
   ci:
-    uses: krizaka/.github/.github/workflows/node-ci.yml@d95527618e5b070cff81d248964290b732e31886 # v1.4.0
+    uses: krizaka/.github/.github/workflows/node-ci.yml@1cb2e1b6f572ba712083cb6f05fd041370c5ea0b # v1.5.0
     permissions:
       contents: read
     with:
+      duplication: true      # jscpd + dup-ratchet.json: duplicated lines may only go down
       next-cache-paths: .next/cache
       # scripts/gen-org-stats.mjs reads the organisation's public repository count without the anonymous rate limit
       github-token-env: APP_GITHUB_TOKEN
