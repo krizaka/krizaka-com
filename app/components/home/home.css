@@ -41,7 +41,7 @@
 /* ─── The photo (ProductsFlock, Cahier): the band is a print pinned in the notebook — tilted about -1.6°, a thin white print
    border, a soft paper shadow (layered, never a glow), a strip of tape at two corners. The tilt is a transform, so nothing
    shifts; the band inside reserves its height. Eased on a phone. ─── */
-.kz-photo-wrap { margin: clamp(8px, 2vw, 32px) auto 0; max-width: var(--kz-page-max); padding: clamp(14px, 2.4vw, 28px) var(--kz-page-gutter) clamp(18px, 3vw, 36px); }
+.kz-photo-wrap { margin: clamp(8px, 2vw, 32px) auto 0; max-width: var(--kz-page-max); padding: clamp(14px, 2.4vw, 28px) var(--kz-page-gutter) clamp(18px, 3vw, 36px); overflow-x: clip; }
 .kz-photo { position: relative; --kz-print: hsl(44 30% 96%); --kz-tape: hsl(46 58% 82% / 0.7); padding: clamp(7px, 1.2vw, 14px); background: var(--kz-print);
   transform: rotate(-1.6deg); transform-origin: 50% 60%;
   box-shadow: 0 1px 1px hsl(30 20% 8% / 0.22), 0 6px 12px -4px hsl(30 20% 8% / 0.3), 0 22px 36px -18px hsl(30 20% 8% / 0.4); }

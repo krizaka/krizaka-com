@@ -46,3 +46,7 @@ test("the band sits in the page frame inside the photo, the birds play scenes an
 test("the tilt does not leak onto the section below (the photo wrapper holds its own space)", () => {
   assert.match(rule(".kz-photo-wrap"), /max-width: var\(--kz-page-max\)/);
 });
+
+test("the tilt and the tape never scroll the page sideways: the wrapper clips the horizontal overflow (CI overflow check, 360 to 1440 px)", () => {
+  assert.match(rule(".kz-photo-wrap"), /overflow-x: clip/);
+});
