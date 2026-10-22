@@ -8,9 +8,6 @@ import HomeHero from "../components/home/HomeHero";
 import ProductShowcase from "../components/home/ProductShowcase";
 import OpenStack from "../components/home/OpenStack";
 import Principles from "../components/home/Principles";
-import Company from "../components/home/Company";
-import ContactCta from "../components/home/ContactCta";
-import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -36,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /* HOME — one of the site's two views (the other is Open source; 2026-10-17), on the landing template, in this order:
    the centred hero (once-per-session intro, the film), the products — Orazaka the foundation, the products it powers —
    (the only place they are presented: /products answers 308 to #products), the open-source stack in brief, the
-   principles in brief, Montréal, the contact, then the questions (folded; FAQPage JSON-LD). One primary action per
+   principles in brief, then the questions (folded; FAQPage JSON-LD). One primary action per
    section. Every figure is read at build: GitHub (lib/org-stats.ts), npm and Maven Central (lib/registry-versions.ts). */
 export default async function Home({ params }: Props) {
   const { locale } = await params;
@@ -48,10 +45,6 @@ export default async function Home({ params }: Props) {
       <ProductShowcase locale={locale} />
       <OpenStack locale={locale} mavenArtifacts={figures.maven} />
       <Principles locale={locale} repositories={figures.repositories} />
-      <Company locale={locale} />
-      <SectionBackdrop className="bp-glide" dome={false}>
-        <ContactCta />
-      </SectionBackdrop>
       <ProductFaq product="krizaka" locale={locale} />
     </main>
   );

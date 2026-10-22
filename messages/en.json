@@ -342,7 +342,7 @@
         "number": "§ 4",
         "eyebrow": "How we work",
         "title": "Five rules, checked rather than promised.",
-        "folio": "page 4 of 6",
+        "folio": "page {page} of {total}",
         "items": {
           "sovereign": {
             "title": "Your data stays where you decide",
@@ -365,20 +365,6 @@
             "body": "{count} public repositories under Apache-2.0, readable line by line."
           }
         }
-      },
-      "company": {
-        "number": "§ 5",
-        "eyebrow": "Montréal",
-        "title": "A Montréal studio, here for the long run.",
-        "body": "Technologies Krizaka Inc. is based in Montréal, Québec: open, accessible, bilingual, tested.",
-        "story": "Read our story",
-        "stamp": "Made in Montréal",
-        "folio": "page 5 of 6"
-      },
-      "contact": {
-        "number": "§ 6",
-        "title": "Tell us what you're building.",
-        "cta": "Contact us"
       },
       "visuals": {
         "orazaka": {
