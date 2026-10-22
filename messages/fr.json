@@ -63,6 +63,11 @@
     "tagline": "Le moteur d'orchestration IA souverain, open source. Conçu au Québec."
   },
   "site": {
+    "carnet": {
+      "found": "Ah, vous avez trouvé la page cachée du carnet.",
+      "close": "Refermer le carnet",
+      "region": "Le carnet, ouvert en entier"
+    },
     "menu": {
       "products": "Produits",
       "docs": "Docs",
@@ -208,7 +213,7 @@
         "film": "Voir le film en entier",
         "filmLength": "1 min 08",
         "proofsLabel": "Krizaka en chiffres, lus au build",
-        "marksLabel": "Les sept produits, chacun mène à sa fiche",
+        "marksLabel": "Les produits, chacun mène à sa fiche",
         "proofs": {
           "repositories": "dépôts publics",
           "npm": "paquets sur npm",
@@ -1075,7 +1080,7 @@
     "contactPage": {
       "eyebrow": "Contact",
       "title": "Parlons de votre projet",
-      "lead": "Déploiement d'Orazaka ou d'Orochia, projet bâti sur une brique Krizaka, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
+      "lead": "Déploiement d'Orazaka, projet bâti sur une brique Krizaka, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
       "publicTitle": "Ou échangeons en public",
       "publicLead": "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub.",
       "nextTitle": "La suite",

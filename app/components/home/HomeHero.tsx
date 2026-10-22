@@ -24,6 +24,7 @@ import type { CSSProperties } from "react";
 import { video } from "@/lib/cdn";
 import { FILM_BASE, RELAY_BASE } from "@/lib/film-captions";
 import { heroMarkOrder } from "@/lib/home-sections";
+import { focusProps } from "@/lib/focus";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
 import FilmLightbox from "./FilmLightbox";
@@ -87,7 +88,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
         {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
         <ul className="kz-home-marks" aria-label={t.marksLabel}>
           {heroMarkOrder(PRODUCTS).map((p) => (
-            <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined}>
+            <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined} {...focusProps(p.id)}>
               <a href={`#product-${p.id}`}>
                 <ProductLogo id={p.id} size={30} animated={false} />
                 <span>{p.name}</span>

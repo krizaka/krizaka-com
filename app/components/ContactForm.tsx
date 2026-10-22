@@ -13,6 +13,8 @@ import { CONTACT_TIMELINES, CONTACT_TOPICS, cleanSource, topicForSource, type Co
 import { ProductLogo } from "@krizaka/ui";
 import { Button } from "@krizaka/ui/button";
 import CaptchaWidget, { CAPTCHA_SITE_KEY } from "./CaptchaWidget";
+import { inFocus } from "@/lib/focus";
+import { useCarnet } from "./useCarnet";
 
 type Status = "idle" | "sending" | "sent" | "error";
 type Field = "name" | "email" | "message";
@@ -56,6 +58,11 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
   const { t, locale } = useI18n();
   const c = t.site.contactForm;
   const [topic, setTopic] = useState<ContactTopic | null>(defaultTopic);
+  // The picker lists the products of the focus (lib/focus.ts); the whole notebook brings back the others. A topic the
+  // visitor arrived with (?topic=…) or has chosen stays on the list.
+  const notebook = useCarnet();
+  const topics = inFocus(CONTACT_TOPICS.map((id) => ({ id })), notebook).map((x) => x.id);
+  const listed = topic && !topics.includes(topic) ? CONTACT_TOPICS.filter((id) => id === topic || topics.includes(id)) : topics;
   const [topicMissing, setTopicMissing] = useState(false);
   const [timeline, setTimeline] = useState<ContactTimeline | null>(null);
   const [values, setValues] = useState({ name: "", email: "", company: "", message: "" });
@@ -173,7 +180,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
           <span className="kz-cf-num">1</span> {c.stepTopic}
         </legend>
         <div className="kz-cf-topics" role="radiogroup" aria-required="true" aria-invalid={topicMissing || undefined} aria-describedby={topicMissing ? "kz-cf-topic-error" : undefined}>
-          {CONTACT_TOPICS.map((id) => (
+          {listed.map((id) => (
             <label key={id} className="kz-cf-topic" data-selected={topic === id || undefined}>
               <input type="radio" name="topic" value={id} checked={topic === id} onChange={() => { setTopic(id); setTopicMissing(false); }} />
               <span className="kz-cf-topic-icon">

@@ -5,6 +5,7 @@
 
 import { ProductLogo } from "@krizaka/ui";
 import { Progress } from "@krizaka/ui/progress";
+import { focusProps } from "@/lib/focus";
 import { PRODUCTS } from "@/lib/products";
 import { mavenVersion } from "@/lib/registry-versions";
 
@@ -13,7 +14,7 @@ export function UiVisual({ label }: { label: string }) {
     <figure className="os-visual" inert aria-hidden>
       <ul className="os-visual-identities">
         {PRODUCTS.map((p, i) => (
-          <li key={p.id} className={"brand-" + p.id}>
+          <li key={p.id} className={"brand-" + p.id} {...focusProps(p.id)}>
             <ProductLogo id={p.id} size={16} animated={false} />
             <Progress value={35 + ((i * 9) % 55)} label={p.name} size="sm" />
           </li>

@@ -6,16 +6,21 @@
 import type { ReactNode } from "react";
 import { Mascot } from "@krizaka/ui/mascots";
 import type { StoryBird } from "@/lib/story";
+import Mode from "../Mode";
 
 export interface ChapterFold {
   summary: string;
   children: ReactNode;
 }
 
+const digits = (n: number) => String(n).padStart(2, "0");
+
 export default function StoryChapter({
   id,
   number,
   chapterLabel,
+  focusNumber,
+  focusChapterLabel,
   brand,
   meta,
   title,
@@ -26,11 +31,15 @@ export default function StoryChapter({
   proof,
   fold,
   actions,
+  ...rest
 }: {
   id: string;
   number: number;
   /** « Chapter 03 », read by screen readers before the heading. */
   chapterLabel: string;
+  /** The number and label while only the focus shows (lib/focus.ts): the chapters are counted without the hidden ones. */
+  focusNumber?: number;
+  focusChapterLabel?: string;
   brand?: string;
   /** Beside the number: a status chip, a place. */
   meta?: ReactNode;
@@ -43,15 +52,26 @@ export default function StoryChapter({
   proof?: ReactNode;
   fold?: ChapterFold;
   actions?: ReactNode;
+  "data-focus"?: "off";
 }) {
+  const split = focusNumber !== undefined && focusNumber !== number;
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={"st-ch" + (brand ? " brand-" + brand : "")} data-chapter={id}>
+    <section id={id} aria-labelledby={`${id}-title`} className={"st-ch" + (brand ? " brand-" + brand : "")} data-chapter={id} data-focus={rest["data-focus"]}>
       <div className="st-ch-grid">
         <div className="st-ch-text">
           <p className="st-ch-meta">
             <span className="st-ch-n">
-              <span className="sr-only">{chapterLabel}</span>
-              <span aria-hidden>{String(number).padStart(2, "0")}</span>
+              {split ? (
+                <>
+                  <span className="sr-only"><Mode focus={focusChapterLabel ?? chapterLabel} full={chapterLabel} /></span>
+                  <span aria-hidden><Mode focus={digits(focusNumber!)} full={digits(number)} /></span>
+                </>
+              ) : (
+                <>
+                  <span className="sr-only">{chapterLabel}</span>
+                  <span aria-hidden>{digits(number)}</span>
+                </>
+              )}
             </span>
             {meta}
           </p>

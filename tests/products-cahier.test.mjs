@@ -50,7 +50,8 @@ test("every entry has a numbered figure caption and a sourced note, in both lang
     assert.deepEqual(Object.keys(p.figures).sort(), [...ids].sort(), `${l}: a caption per product`);
     assert.deepEqual(Object.keys(p.notes).sort(), [...ids].sort(), `${l}: a sourced note per product`);
   }
-  assert.match(showcase, /figure=\{`\$\{s\.figureLabel\} \$\{/);
+  assert.match(showcase, /figure=\{figNo\(s\.figureLabel, p\)\}/, "the figure is numbered (the page's order in the focus, the catalogue's once open)");
+  assert.match(showcase, /`\$\{label\} \$\{fullN\(p\)\}`/);
   assert.match(showcase, /notes=\{/);
 });
 

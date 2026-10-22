@@ -41,3 +41,14 @@ export const BAND_TALL: { ratio: number; birds: PlacedBird[] } = {
     at("yasakia", 78, 88, 23),
   ],
 };
+
+/* The focus (lib/focus.ts): while only Orazaka, Akinaza and Yomizaka show, the band holds their three birds — the engine's
+   flamingo in the middle and larger — until the notebook is open whole and the seven of the bands above perch again. */
+export const FOCUS_WIDE: { ratio: number; birds: PlacedBird[] } = {
+  ratio: BAND_WIDE.ratio,
+  birds: [at("akinaza", 31, 83.3, 11.5), at("orazaka", 50, 83.3, 14.5), at("yomizaka", 69, 83.3, 11.5)],
+};
+export const FOCUS_TALL: { ratio: number; birds: PlacedBird[] } = {
+  ratio: BAND_TALL.ratio,
+  birds: [at("akinaza", 30, 75, 20), at("yomizaka", 70, 75, 20), at("orazaka", 50, 88, 27)],
+};

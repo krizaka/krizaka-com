@@ -16,6 +16,7 @@ import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
 import { packageRows, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { howItFits } from "@/lib/how-it-fits";
 import { ENGINE_USES } from "@/lib/engine-uses";
+import { focusProps } from "@/lib/focus";
 import { PRODUCTS } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
 import { KITS } from "@/lib/product-stack";
@@ -90,6 +91,7 @@ export default async function OpenSourcePage({ params }: Props) {
       url: r.url,
       // Orochia's GitHub descriptions are written for its own audience: krizaka.com says one neutral line each.
       line: r.name.startsWith("orochia") ? (t.orochiaRepos[r.name as keyof typeof t.orochiaRepos] ?? t.orochiaRepos.default) : r.description,
+      productId: product,
       product: names[product],
       kind: t.kinds[kindOfRepository(r, product)],
       language: r.language ?? "—",
@@ -191,7 +193,7 @@ export default async function OpenSourcePage({ params }: Props) {
                 </p>
                 <ul className="os-picker-repos">
                   {channelGroups.flatMap((g) => g.entries).map((e) => (
-                    <li key={e.id}>
+                    <li key={e.id} {...focusProps(e.id)}>
                       <a href={e[ch.id].href} target="_blank" rel="noopener noreferrer">
                         <ProductLogo id={e.mark as never} size={16} animated={false} /> {e.name}
                       </a>
