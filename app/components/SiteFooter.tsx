@@ -29,6 +29,7 @@ export default function SiteFooter() {
     <FamilyFooter
       current="krizaka"
       products={wholeNotebook ? undefined : FOCUS_IDS}
+      path={pathname}
       variant="site"
       labels={familyLabels[locale]}
       aria-label={t.site.menu.footerAria}
