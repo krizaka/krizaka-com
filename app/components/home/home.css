@@ -38,9 +38,25 @@
 .kz-home-proofs dd { margin: 0; white-space: nowrap; font-family: var(--font-display), Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 400;
   color: var(--kz-text-primary); font-variant-numeric: var(--kz-figures, lining-nums tabular-nums); }
 
-/* ─── The flock that opens the products (ProductsFlock): a full-width band, no frame and no border. The valley film (the
-   backdrop, 16:9 or 4:5 on a phone) is cropped at its ground — the ridge is the band's last line and runs straight into the
-   section below — and the live birds stand on it, each one a product. The stage keeps the film's ratio, so the birds keep
+/* ─── The photo (ProductsFlock, Cahier): the band is a print pinned in the notebook — tilted about -1.6°, a thin white print
+   border, a soft paper shadow (layered, never a glow), a strip of tape at two corners. The tilt is a transform, so nothing
+   shifts; the band inside reserves its height. Eased on a phone. ─── */
+.kz-photo-wrap { margin: clamp(8px, 2vw, 32px) auto 0; max-width: var(--kz-page-max); padding: clamp(14px, 2.4vw, 28px) var(--kz-page-gutter) clamp(18px, 3vw, 36px); }
+.kz-photo { position: relative; --kz-print: hsl(44 30% 96%); --kz-tape: hsl(46 58% 82% / 0.7); padding: clamp(7px, 1.2vw, 14px); background: var(--kz-print);
+  transform: rotate(-1.6deg); transform-origin: 50% 60%;
+  box-shadow: 0 1px 1px hsl(30 20% 8% / 0.22), 0 6px 12px -4px hsl(30 20% 8% / 0.3), 0 22px 36px -18px hsl(30 20% 8% / 0.4); }
+.kz-photo::before, .kz-photo::after { content: ""; position: absolute; width: clamp(54px, 8vw, 92px); height: clamp(17px, 2.4vw, 26px); background: var(--kz-tape);
+  box-shadow: 0 1px 2px hsl(30 20% 8% / 0.22); clip-path: polygon(0 8%, 4% 0, 8% 10%, 12% 0, 100% 0, 96% 25%, 100% 50%, 96% 75%, 100% 100%, 12% 100%, 8% 90%, 4% 100%, 0 92%); }
+.kz-photo::before { top: calc(-0.55 * clamp(17px, 2.4vw, 26px)); left: calc(-0.35 * clamp(54px, 8vw, 92px)); transform: rotate(-34deg); }
+.kz-photo::after { bottom: calc(-0.55 * clamp(17px, 2.4vw, 26px)); right: calc(-0.35 * clamp(54px, 8vw, 92px)); transform: rotate(-34deg); }
+.kz-photo .kz-band { margin: 0; }
+.kz-photo .kz-band::before { display: none; }
+@media (max-width: 640px) { .kz-photo { transform: rotate(-1deg); } }
+@media (max-width: 640px) { .kz-photo::before { left: -4px; } .kz-photo::after { right: -4px; } }
+
+/* ─── The flock inside the photo: a full-width band, no frame of its own. The valley film (the
+   backdrop, 16:9 or 4:5 on a phone) is cropped at its ground — the ridge is the band's last line — and the live birds
+   stand on it, each one a product. The stage keeps the film's ratio, so the birds keep
    their places; the band's own ratio reserves its height (no layout shift). ─── */
 .kz-band { position: relative; width: 100%; container-type: inline-size; overflow: hidden; aspect-ratio: 16 / 6.1; max-height: 560px;
   margin: clamp(8px, 2vw, 32px) 0 0; }
