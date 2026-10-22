@@ -2,6 +2,8 @@
 
 import { DataTable, type DataTableColumn } from "@krizaka/ui/data-table";
 import { ProductLogo } from "@krizaka/ui";
+import { inFocus } from "@/lib/focus";
+import { useCarnet } from "./useCarnet";
 import type { FoundationPart, KitId, StackCell, Transport } from "@/lib/product-stack";
 
 export interface StackTableRow {
@@ -25,7 +27,8 @@ export interface StackTableLabels {
 
 /** What each product runs on: a real data table (DataTable of @krizaka/ui — headers, caption, cards on a phone), every
     cell worded, so it reads without its dots. The cells come from the manifests (lib/product-stack.ts). */
-export default function ProductStackTable({ rows, kits, labels }: { rows: StackTableRow[]; kits: readonly KitId[]; labels: StackTableLabels }) {
+export default function ProductStackTable({ rows: all, kits, labels }: { rows: StackTableRow[]; kits: readonly KitId[]; labels: StackTableLabels }) {
+  const rows = inFocus(all, useCarnet());
   const word = (c: StackCell) => {
     if (c.state === "engine") return labels.isEngine;
     if (c.state === "planned") return labels.planned;

@@ -34,6 +34,15 @@
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
   `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
   Never add a product page back: change the product's site.
+- **The focus** (Oussama, 2026-10-22): by default krizaka.com shows **three products** — Orazaka, Akinaza, Yomizaka (`FOCUS_IDS`,
+  `lib/focus.ts`, the one list). The four others stay in the data and in every page, **hidden, not removed**: an item of a hidden
+  product wears `{...focusProps(id)}` (`data-focus="off"`, hidden by `app/components/focus.css`), a sentence or number worded for
+  both cases is a `<Mode focus full>`, a client list filters with `useCarnet()` (the flock, the engine flow, the contact picker,
+  the open-source tables); the family footer (`@krizaka/ui/sites` has no filter) and /story's contents are hidden by CSS from
+  `hiddenCss()`. The state is the address, `?carnet=complet` (read before the first paint, kept across client navigations,
+  « refermer » is a link to the same page without it). A visual focus only: the JSON-LD Organization still owns every product,
+  `llms.txt`, the sitemaps, the redirects and the products' own sites are untouched (`tests/focus.test.mjs`). A new list of
+  products must wear the focus; a new product is in or out of `FOCUS_IDS`.
 - **Product first, Orazaka as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Yomizaka reads your lease »); Orazaka appears only as the engine — one discreet « Powered by Orazaka » line and the proof sections (run ids) — never as the one doing the product's job (« Orazaka reads your lease »). Each product repository tests that its hero and steps do not name Orazaka. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are orazaka#189).
 - A product **in development** (`status: "development"`: Yomizaka, Kachizaka, Akinaza) is built in the open: its repository is
   public, sign-up is closed, and it says « In development ». Each has its www address (its card says « Visit the site »). Kachizaka is points only, never money;

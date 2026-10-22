@@ -7,6 +7,7 @@ import { Section } from "@krizaka/ui/page";
 import { format, getDictionary } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import { folioOf } from "@/lib/home-sections";
+import PencilHint from "../PencilHint";
 
 const PRINCIPLES: { id: "sovereign" | "accessible" | "bilingual" | "tested" | "open"; icon: ComponentType<IconProps> }[] = [
   { id: "sovereign", icon: LockIcon },
@@ -29,7 +30,10 @@ export default function Principles({ locale, repositories }: { locale: string; r
           </li>
         ))}
       </ol>
-      <p className="kz-folio">{format(p.folio, folioOf("principles"))}</p>
+      <p className="kz-folio">
+        <PencilHint />
+        {format(p.folio, folioOf("principles"))}
+      </p>
     </Section>
   );
 }

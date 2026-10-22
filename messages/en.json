@@ -63,6 +63,11 @@
     "tagline": "The sovereign AI orchestration engine, open source. Built in Québec."
   },
   "site": {
+    "carnet": {
+      "found": "Ah, you found the notebook’s hidden page.",
+      "close": "Close the notebook",
+      "region": "The notebook, open whole"
+    },
     "menu": {
       "products": "Products",
       "docs": "Docs",
@@ -208,7 +213,7 @@
         "film": "Watch the full film",
         "filmLength": "1 min 8 s",
         "proofsLabel": "Krizaka in figures, read at build",
-        "marksLabel": "The seven products, each to its entry",
+        "marksLabel": "The products, each to its entry",
         "proofs": {
           "repositories": "public repositories",
           "npm": "packages on npm",
@@ -1075,7 +1080,7 @@
     "contactPage": {
       "eyebrow": "Contact",
       "title": "Let's talk about your project",
-      "lead": "Deploying Orazaka or Orochia, building on a Krizaka component, a custom integration, a sovereign-AI audit or a partnership: write to the team, we reply within two business days.",
+      "lead": "Deploying Orazaka, building on a Krizaka component, a custom integration, a sovereign-AI audit or a partnership: write to the team, we reply within two business days.",
       "publicTitle": "Or talk in public",
       "publicLead": "Questions, bugs and ideas about our open-source repositories are discussed on GitHub.",
       "nextTitle": "What happens next",

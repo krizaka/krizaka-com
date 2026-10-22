@@ -43,7 +43,7 @@ export function proxy(request: NextRequest) {
     const locale = getLocale(request);
 
     const response = NextResponse.redirect(
-      new URL(`/${locale}${pathname === "/" ? "" : pathname}`, request.url)
+      new URL(`/${locale}${pathname === "/" ? "" : pathname}${request.nextUrl.search}`, request.url)
     );
     response.cookies.set("NEXT_LOCALE", locale, {
       path: "/",

@@ -11,9 +11,10 @@
 import { Flock } from "@krizaka/ui/flock";
 import { useEffect, useState } from "react";
 
-import { BAND_TALL, BAND_WIDE, type PlacedBird } from "@/lib/products-flock";
+import { BAND_TALL, BAND_WIDE, FOCUS_TALL, FOCUS_WIDE, type PlacedBird } from "@/lib/products-flock";
 import { PRODUCTS } from "@/lib/products";
 import AmbientLoop, { type AmbientSet } from "./AmbientLoop";
+import { useCarnet } from "../useCarnet";
 
 const nameOf = (id: string) => PRODUCTS.find((p) => p.id === id)?.name ?? id;
 const point = (id: string | null) => window.dispatchEvent(new CustomEvent("kz-products-point", { detail: id }));
@@ -46,6 +47,10 @@ function Hits({ band, lit }: { band: { birds: PlacedBird[] }; lit: string | null
 
 export default function ProductsFlock({ set }: { set: AmbientSet }) {
   const [lit, setLit] = useState<string | null>(null);
+  // Three birds while only the focus shows (lib/focus.ts), the seven once the notebook is open whole.
+  const open = useCarnet();
+  const WIDE = open ? BAND_WIDE : FOCUS_WIDE;
+  const TALL = open ? BAND_TALL : FOCUS_TALL;
   useEffect(() => {
     const on = (e: Event) => setLit((e as CustomEvent<string | null>).detail ?? null);
     window.addEventListener("kz-products-lit", on);
@@ -57,12 +62,12 @@ export default function ProductsFlock({ set }: { set: AmbientSet }) {
       <div className="kz-band-stage">
         <AmbientLoop set={set} />
         <div className="kz-band-wide">
-          <Flock className="kz-band-flock" tone="own" ratio={BAND_WIDE.ratio} birds={BAND_WIDE.birds} tempo={1.7} greet active={active(BAND_WIDE)} />
-          <Hits band={BAND_WIDE} lit={lit} />
+          <Flock className="kz-band-flock" tone="own" ratio={WIDE.ratio} birds={WIDE.birds} tempo={1.7} greet active={active(WIDE)} />
+          <Hits band={WIDE} lit={lit} />
         </div>
         <div className="kz-band-tall">
-          <Flock className="kz-band-flock" tone="own" ratio={BAND_TALL.ratio} birds={BAND_TALL.birds} tempo={1.7} greet active={active(BAND_TALL)} />
-          <Hits band={BAND_TALL} lit={lit} />
+          <Flock className="kz-band-flock" tone="own" ratio={TALL.ratio} birds={TALL.birds} tempo={1.7} greet active={active(TALL)} />
+          <Hits band={TALL} lit={lit} />
         </div>
       </div>
     </div>
