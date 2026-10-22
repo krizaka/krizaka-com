@@ -21,6 +21,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ loc
     pageUrl: `${SITE_URL}/${locale}/changelog`,
     feedUrl: `${SITE_URL}/${locale}/changelog/feed.xml`,
     language: c.langTag,
+    lang: locale,
     tagLabel: c.tags,
   });
   return new Response(xml, { headers: { "Content-Type": "application/rss+xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });

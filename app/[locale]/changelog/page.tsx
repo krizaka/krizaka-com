@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ChangelogPage, type ChangeKind, type ChangelogEntry } from "@krizaka/ui/changelog-page";
+import type { ChangeKind, ChangelogEntry } from "@krizaka/ui/changelog-page";
 import { buildAlternates } from "@/lib/seo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
-import { anchorOf, type ChangeTag } from "@/lib/changelog";
+import { anchorOf, changesFor, releaseLabel, type ChangeTag } from "@/lib/changelog";
+import { FILTER_IDS } from "@/lib/changelog-filter";
 import { PLATFORM, RELEASES } from "@/lib/changelog-data";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
 import ButtonLink from "@/app/components/ButtonLink";
+import ChangelogView from "@/app/components/ChangelogView";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -34,13 +35,14 @@ export default async function ChangelogRoute({ params }: Props) {
   const c = getDictionary(locale).site.changelog;
   const date = new Intl.DateTimeFormat(c.langTag, { dateStyle: "long", timeZone: "UTC" });
 
-  const entries: ChangelogEntry[] = RELEASES.map((r) => ({
+  const entries: (ChangelogEntry & { product: string })[] = RELEASES.map((r) => ({
     id: anchorOf(r),
+    product: r.product,
     date: r.date,
     dateLabel: date.format(new Date(`${r.date}T12:00:00Z`)),
-    version: r.url ? <a href={r.url}>{`${r.source} ${r.version}`}</a> : `${r.source} ${r.version}`,
+    version: r.url ? <a href={r.url}>{releaseLabel(r)}</a> : releaseLabel(r),
     title: r.source,
-    changes: r.changes.map((ch) => ({
+    changes: changesFor(r, locale).map((ch) => ({
       kind: KIND[ch.tag],
       text: (
         <>
@@ -62,9 +64,8 @@ export default async function ChangelogRoute({ params }: Props) {
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100dvh" }}>
       <TopNavBar />
-      <ChangelogPage
+      <ChangelogView
         back={{ href: "/", label: c.back }}
-        linkAs={Link}
         eyebrow={c.eyebrow}
         title={c.title}
         lead={
@@ -79,7 +80,11 @@ export default async function ChangelogRoute({ params }: Props) {
             )}
           </>
         }
-        actions={<ButtonLink href={`/${locale}/changelog/feed.xml`} variant="secondary" size="md">{c.feed}</ButtonLink>}
+        feed={<ButtonLink href={`/${locale}/changelog/feed.xml`} variant="secondary" size="md">{c.feed}</ButtonLink>}
+        filterLabel={c.filterLabel}
+        allLabel={c.filters.all}
+        filterNames={Object.fromEntries(FILTER_IDS.map((id) => [id, c.filters[id]])) as Record<(typeof FILTER_IDS)[number], string>}
+        none={c.noneForFilter}
         kindLabels={c.kinds}
         logLabel={c.logLabel}
         entries={entries}

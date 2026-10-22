@@ -34,6 +34,12 @@
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
   `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
   Never add a product page back: change the product's site.
+- **The changelog is data** (`/changelog`, krizaka/.github#184): `scripts/gen-changelog.mjs` reads, at build, the GitHub Releases of
+  the repositories listed in `krizaka/.github/release-repos.json` (written by the shared `release-notes` workflow: `YYYY.MM.DD.N`,
+  an English and a French section; Orazaka is one product line) and the `@krizaka/*` versions. `changelog-refresh.yml` rebuilds
+  on the `product-release` dispatch and daily. The page filters by `?produit=` (the address is the state), obeys the focus (the
+  other products come back with the notebook, `?carnet=complet`), keeps its RSS and shows the French lines on `/fr`. The public
+  text has no personal name and no em dash: `cleanText` (lib/changelog.ts) cleans, `releaseProblems` fails the build.
 - **The focus** (Oussama, 2026-10-22): by default krizaka.com shows **three products** — Orazaka, Akinaza, Yomizaka (`FOCUS_IDS`,
   `lib/focus.ts`, the one list). The four others stay in the data and in every page, **hidden, not removed**: an item of a hidden
   product wears `{...focusProps(id)}` (`data-focus="off"`, hidden by `app/components/focus.css`), a sentence or number worded for

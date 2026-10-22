@@ -4,8 +4,12 @@
    Writes the git-ignored lib/changelog.json ({ releases: Release[], platform: { site, ui, tokens }, fetchedAt }), the shape of lib/changelog.ts:
    - the @krizaka packages of krizaka-ui: each package's changesets CHANGELOG.md (raw GitHub), dated from the npm
      registry's publish times;
-   - GitHub Releases of the products and of Krizaka Java (krizaka-build): their bodies parsed for tagged changes.
+   - GitHub Releases of the products (Orazaka is several repositories) and of Krizaka Java: the repositories are the
+     list of krizaka/.github `release-repos.json` (one source, also read by the weekly digest); a release written by the
+     shared `release-notes` workflow carries an English and a French section, both kept.
    Only highlights: a release without a change a reader would care about is dropped; the list is cut at 60 entries.
+   The public text is linted (lib/changelog.ts `releaseProblems`): no personal name, no em dash; a line that still has
+   one fails the build, and the previous deployment stays up.
    GITHUB_TOKEN (when set) lifts the API rate limit. When a source cannot be reached the previous file is kept; without
    one an empty file is written, and the page says so honestly. The build never fails for it.
 
@@ -14,20 +18,11 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { newestFirst, parseChangesets, parseReleaseBody } from "../lib/changelog.ts";
+import { newestFirst, parseChangesets, parseReleaseBodies, releaseProblems } from "../lib/changelog.ts";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "changelog.json");
 const PACKAGES = ["ui", "tokens", "icons", "i18n", "tailwind", "charts"]; // krizaka-ui/packages/<dir>
-const PRODUCT_REPOS = [
-  ["orazaka", "Orazaka"],
-  ["orochia", "Orochia"],
-  ["yomizaka", "Yomizaka"],
-  ["yasakia", "Yasakia"],
-  ["yororis", "Yororis"],
-  ["kachizaka", "Kachizaka"],
-  ["akinaza", "Akinaza"],
-  ["krizaka-build", "Krizaka Java"],
-];
+const REPOS_LIST = "https://raw.githubusercontent.com/krizaka/.github/main/release-repos.json";
 const MAX = 60;
 const headers = { "user-agent": "krizaka-com-build", ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}) };
 const get = async (url, as = "json") => {
@@ -46,22 +41,40 @@ async function packageReleases(dir) {
   return releases.map((r) => ({ ...r, url: `https://www.npmjs.com/package/${name}/v/${r.version}` }));
 }
 
-async function repoReleases([repo, source]) {
+async function repoReleases({ id, name, repo, parts }) {
   const list = await get(`https://api.github.com/repos/krizaka/${repo}/releases?per_page=10`);
   return list
     .filter((r) => !r.draft && r.published_at)
-    .map((r) => ({
-      source,
-      version: String(r.tag_name).replace(/^v/, ""),
-      date: r.published_at.slice(0, 10),
-      url: r.html_url,
-      changes: parseReleaseBody(r.body ?? ""),
-    }))
+    .map((r) => {
+      const { en, fr } = parseReleaseBodies(r.body ?? "");
+      return {
+        source: name,
+        product: id,
+        ...(parts ? { part: repo.replace(`${id}-`, "") } : {}),
+        version: String(r.tag_name).replace(/^v/, ""),
+        date: r.published_at.slice(0, 10),
+        url: r.html_url,
+        changes: en,
+        ...(fr ? { fr } : {}),
+      };
+    })
     .filter((r) => r.changes.length > 0);
 }
 
-const settled = await Promise.allSettled([...PACKAGES.map(packageReleases), ...PRODUCT_REPOS.map(repoReleases)]);
+/** One task per repository of every product, from the shared list. */
+async function productTasks() {
+  const { products } = await get(REPOS_LIST);
+  return products.flatMap(({ id, name, repos }) => repos.map((repo) => () => repoReleases({ id, name, repo, parts: repos.length > 1 })));
+}
+
+const tasks = [...PACKAGES.map((dir) => () => packageReleases(dir)), ...(await productTasks().catch((e) => (console.warn(`changelog: ${e.message}`), [])))];
+const settled = await Promise.allSettled(tasks.map((run) => run()));
 const releases = settled.flatMap((s) => (s.status === "fulfilled" ? s.value : [])).sort(newestFirst).slice(0, MAX);
+const problems = releaseProblems(releases);
+if (problems.length) {
+  console.error(`changelog: public text refused:\n- ${problems.join("\n- ")}`);
+  process.exit(1);
+}
 const failed = settled.filter((s) => s.status === "rejected");
 if (failed.length) console.warn(`changelog: ${failed.length} source(s) unreachable (${failed.map((f) => f.reason?.message).join("; ")})`);
 

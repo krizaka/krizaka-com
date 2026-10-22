@@ -1544,12 +1544,12 @@
       }
     },
     "changelog": {
-      "metaTitle": "Journal des changements — ce que Krizaka a livré",
-      "metaDescription": "Ce qui a changé, version par version : Krizaka UI, Krizaka Java et les produits — nouveautés, corrections, sécurité et ruptures, avec la pull request derrière chaque ligne.",
+      "metaTitle": "Journal des changements : ce que Krizaka a livré",
+      "metaDescription": "Ce qui a changé, version par version : Krizaka UI, Krizaka Java et les produits : nouveautés, corrections, sécurité et ruptures, avec la pull request derrière chaque ligne.",
       "back": "Accueil",
       "eyebrow": "Journal des changements",
       "title": "Ce qui a été livré",
-      "lead": "L'essentiel de chaque version de Krizaka, la plus récente d'abord — lu dans les versions elles-mêmes, pas écrit pour la page.",
+      "lead": "L'essentiel de chaque version de Krizaka, la plus récente d'abord, lu dans les versions elles-mêmes, pas écrit pour la page.",
       "runs": "Ce site tourne en v{version} sur Krizaka UI {ui}.",
       "feed": "S'abonner (RSS)",
       "logLabel": "Versions",
@@ -1570,8 +1570,22 @@
         "breaking": "Rupture",
         "change": "Modifié"
       },
+      "filterLabel": "Filtrer par produit",
+      "filters": {
+        "all": "Tout",
+        "orazaka": "Orazaka",
+        "akinaza": "Akinaza",
+        "yomizaka": "Yomizaka",
+        "orochia": "Orochia",
+        "yasakia": "Yasakia",
+        "yororis": "Yororis",
+        "kachizaka": "Kachizaka",
+        "ui": "Krizaka UI",
+        "java": "Krizaka Java"
+      },
+      "noneForFilter": "Rien n'a encore été livré pour ce produit.",
       "pull": "Pull request n° {number}",
-      "feedTitle": "Krizaka — journal des changements",
+      "feedTitle": "Krizaka, journal des changements",
       "feedDescription": "Ce que Krizaka a livré, version par version.",
       "langTag": "fr-CA"
     }
