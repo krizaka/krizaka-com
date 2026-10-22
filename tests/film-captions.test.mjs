@@ -2,7 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { FILM_BASE, FILM_CAST, FILM_CUES, FILM_SECONDS, filmVtt } from "../lib/film-captions.ts";
+import { FILM_BASE, FILM_CAST, FILM_CUES, FILM_SECONDS, filmVtt, vttResponse } from "../lib/film-captions.ts";
 
 const messages = (lang) => JSON.parse(readFileSync(new URL(`../messages/${lang}.json`, import.meta.url), "utf8"));
 
@@ -115,4 +115,11 @@ test("Orochia's film « la première livraison » is kept on the CDN (the manife
   for (const file of [...walk("app"), ...walk("lib")].filter((f) => /\.tsx?$/.test(f))) {
     assert.doesNotMatch(readFileSync(file, "utf8"), /brand-films\/orochia/, `${file} draws Orochia's film`);
   }
+});
+
+test("both caption routes answer through one response: same-origin WebVTT, cacheable for an hour", async () => {
+  const res = vttResponse(filmVtt(messages("en").site.story.world.cues));
+  assert.equal(res.headers.get("content-type"), "text/vtt; charset=utf-8");
+  assert.equal(res.headers.get("cache-control"), "public, max-age=3600");
+  assert.match(await res.text(), /^WEBVTT/);
 });

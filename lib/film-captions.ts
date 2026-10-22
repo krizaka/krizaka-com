@@ -88,3 +88,8 @@ export interface StoryFilm {
 export function pickFilm(films: readonly StoryFilm[], onCdn: (path: string) => boolean): StoryFilm {
   return films.find((f) => ["webm", "mp4", "jpg"].every((ext) => onCdn(`${f.base}.${ext}`))) ?? films[films.length - 1]!;
 }
+
+/** The captions as a response: same-origin and cacheable (both film routes send exactly this). */
+export function vttResponse(vtt: string): Response {
+  return new Response(vtt, { headers: { "Content-Type": "text/vtt; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+}
