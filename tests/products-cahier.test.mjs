@@ -23,7 +23,7 @@ test("built from the Cahier's blocks of @krizaka/ui, on lined paper with its mar
   assert.match(showcase, /<Section id="products-guide" number=\{s\.number\}[^>]*paper="lines"[^>]*margin/);
   assert.doesNotMatch(showcase, /eyebrow=/, "no overline above the heading");
   assert.doesNotMatch(showcase, /<ProductStatus status=/, "the status is a stamp, not an uppercase mono chip");
-  for (const l of ["en", "fr"]) assert.equal(messages[l].site.home.products.number, "§ 2", l);
+  for (const l of ["en", "fr"]) assert.equal(messages[l].site.home.products.number, "§ 4", l);
 });
 
 test("the stamp says the status honestly, from the data", () => {

@@ -23,6 +23,7 @@ import { Section } from "@krizaka/ui/page";
 import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
+import { heroMarkOrder } from "@/lib/home-sections";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { video } from "@/lib/cdn";
 import { ENGINE, PRODUCT_BIRD } from "@/lib/story";
@@ -75,35 +76,66 @@ function Foot({ p, t }: { p: Product; t: TranslationDictionary }) {
   );
 }
 
-function EngineBlock({ t }: { t: TranslationDictionary }) {
+/** Orazaka, the provider: a wide foundation plate (not a product tag) in its orange, what it gives, its flow, and the products
+ *  it powers pinned under it, each one a link to its entry. Only what runs is said (results, analytics; run events and
+ *  webhooks are orazaka#189). */
+function EngineFoundation({ t }: { t: TranslationDictionary }) {
   const p = PRODUCTS.find((x) => x.id === ENGINE)!;
   const s = t.site.home.products;
-  const back = t.site.products.engine.back;
+  const e = t.site.home.engine;
+  const eng = t.site.products.engine;
+  const powered = heroMarkOrder(PRODUCTS).filter((x) => x.id !== ENGINE);
+  const back = [...new Set(ENGINE_USES.flatMap((u) => u.back))].map((k) => eng.back[k]).join(", ");
   const n = PRODUCTS.indexOf(p) + 1;
   return (
-    <div id={"product-" + p.id} className={cn("kz-prod-engine", "brand-" + p.id)}>
-      <SpecimenTag
-        code={`${code(p)} · ${s.fields.engineRole}`}
-        title={
-          <a {...external(p)} className="kz-entry-name">
-            {p.name}
-          </a>
-        }
-        mark={<ProductLogo id={p.id} size={30} animated={false} />}
-        status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
-        fields={[{ label: s.fields.back, value: `${back.results}, ${back.analytics}` }]}
-        footer={<Foot p={p} t={t} />}
-      >
-        <p>
-          {t.site.products.engine.line}
-          <FootnoteRef n={n} prefix="kz-note" />
-        </p>
-        <Bird p={p} t={t} />
-      </SpecimenTag>
+    <div id={"product-" + p.id} className={cn("kz-foundation", "brand-" + p.id)} data-kind="engine">
+      <header className="kz-foundation-head">
+        <ProductLogo id={p.id} size={44} animated={false} />
+        <div>
+          <p className="kz-foundation-role">{s.fields.engineRole}</p>
+          <h3>
+            <a {...external(p)} className="kz-entry-name">{p.name}</a>
+          </h3>
+        </div>
+        <span className="kz-foundation-status">{t.site.nav.status[p.status].label}</span>
+      </header>
+      <p className="kz-foundation-line">
+        {e.line}
+        <FootnoteRef n={n} prefix="kz-note" />
+      </p>
+      <ul className="kz-foundation-gives" aria-label={e.givesLabel}>
+        {(["models", "pipeline", "analytics"] as const).map((k) => (
+          <li key={k}>
+            <b>{e.gives[k].name}</b>
+            <span>{e.gives[k].line}</span>
+          </li>
+        ))}
+      </ul>
       <figure className="kz-entry-flow">
         <EngineFlowView t={t} />
         <Caption figure={`${s.figureLabel} 1`}>{s.figures[p.id]}</Caption>
       </figure>
+      <p className="kz-foundation-back">{format(eng.gets, { list: back })}</p>
+      <div className="kz-foundation-powers">
+        <p>{e.powers}</p>
+        <ul>
+          {powered.map((x) => {
+            const use = ENGINE_USES.find((u) => u.id === x.id);
+            return (
+              <li key={x.id} className={"brand-" + x.id} data-planned={use?.planned ? "" : undefined}>
+                <a href={`#product-${x.id}`}>
+                  <ProductLogo id={x.id} size={24} animated={false} />
+                  <span>{x.name}</span>
+                  {use?.planned && <em>{eng.planned}</em>}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+      <div className="kz-foundation-links">
+        <Foot p={p} t={t} />
+      </div>
     </div>
   );
 }
@@ -138,7 +170,7 @@ function ProductEntry({ product: p, t }: { product: Product; t: TranslationDicti
         </p>
         {useText && (
           <p className="kz-entry-uses" data-planned={use?.planned ? "" : undefined}>
-            {format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, { use: useText })}
+            <a href="#product-orazaka">{format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, { use: useText })}</a>
           </p>
         )}
         <Bird p={p} t={t} />
@@ -147,18 +179,31 @@ function ProductEntry({ product: p, t }: { product: Product; t: TranslationDicti
   );
 }
 
+/** « Orazaka, our first build »: the engine, its specimen tag beside its flow. The first chapter after the hero (§ 2). */
+export function EngineSection({ locale }: { locale: string }) {
+  const t = getDictionary(locale);
+  const s = t.site.home.engine;
+  return (
+    <div id="engine" className="kz-products">
+      <Section id="engine-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
+        <EngineFoundation t={t} />
+      </Section>
+    </div>
+  );
+}
+
+/** The products built on the engine and the open stack (§ 4): the flock, then one entry each. */
 export default function ProductShowcase({ locale }: { locale: string }) {
   const t = getDictionary(locale);
   const s = t.site.home.products;
-  const others = PRODUCTS.filter((p) => p.id !== ENGINE);
+  const others = heroMarkOrder(PRODUCTS).filter((p) => p.id !== ENGINE);
   return (
     <div id="products" className="kz-products">
       {/* The flock opens the section: each bird is a product (ProductsFlock), its ground running into the section below. */}
       <ProductsFlock set={VALLEY} />
       <Section id="products-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
-        <ProductsLink className={cn("kz-prod", "brand-" + ENGINE)}>
-          <EngineBlock t={t} />
-          <ol className="kz-prod-list" aria-label={t.site.products.engine.label}>
+        <ProductsLink className="kz-prod-solo">
+          <ol className="kz-prod-list" aria-label={s.title}>
             {others.map((p) => (
               <ProductEntry key={p.id} product={p} t={t} />
             ))}

@@ -203,7 +203,7 @@
         "number": "§ 1",
         "eyebrow": "Field notes of a software studio · Montréal, Québec",
         "title": "We build open-source software, and the stack under it.",
-        "lead": "Seven products on one AI engine: video, dating, a listening space, lease checks, predictions among friends, Québec shops. Every piece they stand on is open source.",
+        "lead": "We started with Orazaka, an AI engine. Building it gave us Krizaka UI and Krizaka Java, both open source. Then came the products that run on them, and Krizaka, the company, was born from that work.",
         "primary": "See what we build",
         "film": "Watch the full film",
         "filmLength": "1 min 8 s",
@@ -227,10 +227,32 @@
           "pigeon": "the pigeon"
         }
       },
-      "products": {
+      "engine": {
         "number": "§ 2",
-        "title": "One engine. The products it powers.",
-        "lead": "Every product's AI runs on Orazaka. Each one lives on its own site, with its source on GitHub.",
+        "title": "Orazaka, our first build.",
+        "lead": "The AI engine everything started from. Every product runs on it.",
+        "givesLabel": "What Orazaka provides",
+        "powers": "It powers",
+        "gives": {
+          "models": {
+            "name": "Models",
+            "line": "Yours, behind one pipeline."
+          },
+          "pipeline": {
+            "name": "Pipeline",
+            "line": "Every request is a traced run."
+          },
+          "analytics": {
+            "name": "Analytics",
+            "line": "Results and usage analytics come back to the product."
+          }
+        },
+        "line": "One pipeline, your models, your network. Each product calls it for its AI and never a model directly."
+      },
+      "products": {
+        "number": "§ 4",
+        "title": "Then the products, built on it.",
+        "lead": "Each one lives on its own site, with its source on GitHub.",
         "engineUse": "On Orazaka · {use}",
         "enginePlanned": "On Orazaka, planned · {use}",
         "flow": {
@@ -281,7 +303,7 @@
         "number": "§ 3",
         "eyebrow": "Open source",
         "title": "Build with our open source.",
-        "lead": "The pieces under every product, yours to use — try them right here. Versions and downloads read at build.",
+        "lead": "Born from building Orazaka, yours to use. Try them right here. Versions and downloads read at build.",
         "more": "Everything we publish",
         "visit": "Open {host}",
         "facts": {
@@ -339,7 +361,7 @@
         }
       },
       "principles": {
-        "number": "§ 4",
+        "number": "§ 5",
         "eyebrow": "How we work",
         "title": "Five rules, checked rather than promised.",
         "folio": "page {page} of {total}",

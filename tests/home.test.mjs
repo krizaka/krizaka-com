@@ -9,25 +9,26 @@ import { HOME_SECTIONS, folioOf } from "../lib/home-sections.ts";
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const HOME = "app/[locale]/page.tsx";
-const SECTIONS = ["HomeHero", "ProductShowcase", "OpenStack", "Principles"];
+const SECTIONS = ["HomeHero", "ProductShowcase", "OpenStack", "Principles"]; // the files
+const ORDER = ["HomeHero", "EngineSection", "OpenStack", "ProductShowcase", "Principles"]; // the tags, in the story's order
 
 test("the home is made of its four sections, in Oussama's order: no Company, no closing contact panel, no FAQ", () => {
   const home = read(HOME);
   assert.doesNotMatch(home, /<Company\b|<ContactCta\b|<ProductFaq\b|section-backdrop/, "§ 5, § 6 and the FAQ are gone");
   assert.ok(!existsSync(new URL("../app/components/ProductFaq.tsx", import.meta.url)), "ProductFaq came back");
   for (const f of ["Company", "ContactCta"]) assert.ok(!existsSync(new URL(`../app/components/home/${f}.tsx`, import.meta.url)), `${f} came back`);
-  const order = SECTIONS.map((s) => {
+  const order = ORDER.map((s) => {
     const at = home.search(new RegExp(`<${s}\\b`));
     assert.ok(at > 0, s);
     return at;
   });
-  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → products → stack → principles");
+  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → engine → stack → products → principles");
 });
 
 test("one primary action per section: the hero's goes to #products, the stack's to /open-source", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
-  assert.match(hero, /href="#products" variant="primary"/);
+  assert.match(hero, /href="#engine" variant="primary"/);
   assert.doesNotMatch(hero, /href="\/contact"/, "the bar has Contact us: no duplicate in the hero");
   const stack = read("app/components/home/OpenStack.tsx");
   assert.match(stack, /href="\/open-source" variant="primary"/);
@@ -44,10 +45,10 @@ test("the hero: text painted at once, the figures read at build and climbing", (
 
 test("the products come from lib/products.ts: one card each, in the product's brand", () => {
   const showcase = read("app/components/home/ProductShowcase.tsx");
-  assert.match(showcase, /PRODUCTS\.filter/);
+  assert.match(showcase, /PRODUCTS\.filter|heroMarkOrder\(PRODUCTS\)/);
   assert.match(showcase, /<li id=\{"product-" \+ p\.id\} className=\{cn\("kz-entry", "brand-" \+ p\.id\)\}/, "each product is an anchor the hero's marks reach, in its brand");
   assert.match(showcase, /tone: STAMP\[p\.status\]/, "the status is the data's (gated by the dev-preview checklists), stamped");
-  assert.equal(showcase.match(/<SpecimenTag\b/g)?.length, 2, "the status is said once per product (the engine's tag, each entry's)");
+  assert.equal(showcase.match(/<SpecimenTag\b/g)?.length, 1, "the products wear the specimen tag; the engine is a foundation plate, another form");
   assert.doesNotMatch(showcase, /knowhow|kz-pc-meta/, "one label per product: no mono eyebrow beside the status");
   assert.match(showcase, /mark=\{<ProductLogo id=\{p\.id\} size=\{\d+\} animated=\{false\} \/>\}/, "the mark sits beside the name on the tag, never over the visual");
   assert.match(showcase, /href: p\.siteUrl/, "a card links the product's public www page, never its dev host");
@@ -68,7 +69,7 @@ test("the old home — the product showcase, the kit gallery, the rotating title
   }
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;
-    assert.deepEqual(Object.keys(m.home), ["hero", "products", "stack", "principles", "visuals"], `${lang}: site.home`);
+    assert.deepEqual(Object.keys(m.home), ["hero", "engine", "products", "stack", "principles", "visuals"], `${lang}: site.home`);
     assert.equal(m.expertise, undefined, `${lang}: site.expertise`);
   }
 });
@@ -89,7 +90,7 @@ test("Orochia is described neutrally: no creator, payout or payment pitch on kri
 test("the hero's row of product marks: from lib/products.ts, each to its card, dimmed when nothing is offered yet", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.match(hero, /<ul className="kz-home-marks" aria-label=\{t\.marksLabel\}>/);
-  assert.match(hero, /PRODUCTS\.map\(\(p\) =>/);
+  assert.match(hero, /heroMarkOrder\(PRODUCTS\)\.map\(\(p\) =>/);
   assert.match(hero, /href=\{`#product-\$\{p\.id\}`\}/);
   assert.match(hero, /<ProductLogo id=\{p\.id\} size=\{30\} animated=\{false\} \/>/);
   assert.match(hero, /DIM: readonly ProductStatus\[\] = \["construction", "upcoming"\]/);
@@ -148,10 +149,10 @@ test("Akinaza is for studios, salons and the self-employed, one short human line
 });
 
 // The numbers in the margin and the folios come from the section list, never typed (2026-10-22: § 5 and § 6 removed).
-test("the section list is the home's four sections; the numbers and the folio are derived from it", () => {
-  assert.deepEqual([...HOME_SECTIONS], ["hero", "products", "stack", "principles"]);
-  assert.deepEqual(folioOf("principles"), { page: 4, total: 4 });
-  assert.deepEqual(folioOf("hero"), { page: 1, total: 4 });
+test("the section list is the home's five sections, in the honest order; the numbers and the folio are derived from it", () => {
+  assert.deepEqual([...HOME_SECTIONS], ["hero", "engine", "stack", "products", "principles"]);
+  assert.deepEqual(folioOf("principles"), { page: 5, total: 5 });
+  assert.deepEqual(folioOf("hero"), { page: 1, total: 5 });
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home;
     assert.match(h.principles.folio, /\{page\}.*\{total\}/, `${lang}: the folio is a template, not typed digits`);

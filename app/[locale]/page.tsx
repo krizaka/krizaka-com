@@ -4,7 +4,7 @@ import { publicRepositoryCount } from "@/lib/org-stats";
 import { mavenArtifactCount, npmPackages, npmWeeklyDownloads } from "@/lib/registry-versions";
 import TopNavBar from "../components/TopNavBar";
 import HomeHero from "../components/home/HomeHero";
-import ProductShowcase from "../components/home/ProductShowcase";
+import ProductShowcase, { EngineSection } from "../components/home/ProductShowcase";
 import OpenStack from "../components/home/OpenStack";
 import Principles from "../components/home/Principles";
 
@@ -30,9 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 /* HOME — one of the site's two views (the other is Open source; 2026-10-17), on the landing template, in this order:
-   the centred hero (once-per-session intro, the film), the products — Orazaka the foundation, the products it powers —
-   (the only place they are presented: /products answers 308 to #products), the open-source stack in brief, the
-   principles in brief, and it stops there (no Montréal, no contact panel, no FAQ; 2026-10-22). One primary action per
+   the hero (once-per-session intro, the film), the honest chronology: Orazaka, our first build (EngineSection), the
+   open-source stack born from it, the products built on both (the only place they are presented: /products answers
+   308 to #products), the principles in brief, and it stops there (no Montréal, no contact panel, no FAQ; 2026-10-22). One primary action per
    section. Every figure is read at build: GitHub (lib/org-stats.ts), npm and Maven Central (lib/registry-versions.ts). */
 export default async function Home({ params }: Props) {
   const { locale } = await params;
@@ -41,8 +41,9 @@ export default async function Home({ params }: Props) {
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
       <TopNavBar />
       <HomeHero locale={locale} figures={figures} />
-      <ProductShowcase locale={locale} />
+      <EngineSection locale={locale} />
       <OpenStack locale={locale} mavenArtifacts={figures.maven} />
+      <ProductShowcase locale={locale} />
       <Principles locale={locale} repositories={figures.repositories} />
     </main>
   );

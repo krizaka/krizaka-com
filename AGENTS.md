@@ -59,10 +59,15 @@
   products' sites by their hashed URL). A new render replaces them: upload, then `cdn-assets prune`.
 - **French is the default language** (Loi 96, `lib/locale-negotiation.ts`): an unprefixed URL goes to the cookie `NEXT_LOCALE` if set, else English only when the browser asks for English and never French, else French; hreflang `x-default` → `/fr`.
 
-- **The home's order** (2026-10-22, lightened): the hero (`HomeHero`), the products (`ProductShowcase`), the stack in brief
-  (`OpenStack`), the principles (`Principles`) — and it stops there: no Montréal (`Company`) section, no closing
-  contact panel and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). `/story` is in the footer, « Contact us » in the bar. The section
-  numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed (`tests/home.test.mjs`).
+- **The home's order** (2026-10-22, the honest chronology, #337): the hero (`HomeHero`, whose lead tells it in two or three
+  short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the open stack that came out of
+  building it**, Krizaka UI and Krizaka Java (`OpenStack`, § 3), then **the products built on them** (`ProductShowcase`, § 4),
+  then the principles (`Principles`, § 5), and it stops there: no Montréal (`Company`) section, no closing contact panel
+  and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). Krizaka, the company,
+  was born from that work: the Organization `owns` the products and sites, its `foundingDate` is unchanged. The marks row under the hero
+  follows the story: Orazaka, Akinaza, Yomizaka, then the rest (`heroMarkOrder`). `/story` is in the footer, « Contact us »
+  in the bar. The section numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed
+  (`tests/home.test.mjs`, `tests/home-order.test.mjs`).
 
 ## 2.2 Text & languages — nothing hard-coded
 
