@@ -128,7 +128,7 @@ test("the open-source section: three playable tiles, versions and downloads read
   assert.equal(messages("fr").site.home.stack.title, "Construisez avec nos briques.");
 });
 
-test("Akinaza is positioned for studios, salons and the self-employed, « designed for » Loi 25 and Loi 96, never « compliant » (until a lawyer validates)", () => {
+test("Akinaza is for studios, salons and the self-employed, one short human line, never « compliant » (until a lawyer validates)", () => {
   for (const lang of ["en", "fr"]) {
     const text = JSON.stringify(messages(lang), (k, v) => v).split("\n").join(" ");
     const akinaza = [...text.matchAll(/"akinaza":\{[^{}]*\}|"akinaza":"[^"]*"/g)].map((m) => m[0]).join(" ");
@@ -136,6 +136,12 @@ test("Akinaza is positioned for studios, salons and the self-employed, « design
     assert.doesNotMatch(akinaza, /bakeries|boulangeries/i, `${lang}: no on-site consumption businesses`);
   }
   const en = JSON.stringify(messages("en")), fr = JSON.stringify(messages("fr"));
-  assert.match(en, /designed for Loi 25 and Loi 96, for studios, salons and the self-employed/);
-  assert.match(fr, /conçu pour la Loi 25 et la Loi 96, pour les studios, salons et travailleurs autonomes/);
+  // The card speaks to the customer's day, in one short line: no law as a headline, never an « OS » (Oussama, 2026-10-22).
+  for (const [lang, m] of [["en", messages("en")], ["fr", messages("fr")]]) {
+    const line = m.site.products.cards.akinaza.line;
+    assert.ok(line.length <= 60, `${lang}: one short line`);
+    assert.doesNotMatch(line, /Loi 25|Loi 96|\bOS\b/, lang);
+  }
+  assert.match(en, /Your appointments, invoices and taxes, sorted/);
+  assert.match(fr, /Vos rendez-vous, vos factures et vos taxes, réglés/);
 });
