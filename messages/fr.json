@@ -208,7 +208,7 @@
         "number": "§ 1",
         "eyebrow": "Carnet d'un studio logiciel · Montréal, Québec",
         "title": "Nous construisons du logiciel open source, et tout ce qui le porte.",
-        "lead": "Nous avons commencé par Orazaka, un moteur d'IA. En le construisant, nous avons sorti Krizaka UI et Krizaka Java, en open source. Puis sont venus les produits qui tournent dessus, et Krizaka, l'entreprise, est née de ce travail.",
+        "lead": "Nous avons commencé par Orazaka, un moteur d'IA, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TS, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour les entreprises du Québec : Akinaza et Yomizaka.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
         "filmLength": "1 min 08",
@@ -256,8 +256,8 @@
       },
       "products": {
         "number": "§ 4",
-        "title": "Puis les produits, bâtis dessus.",
-        "lead": "Chacun vit sur son propre site, avec son code sur GitHub.",
+        "title": "Puis les produits : des outils de gestion et de conformité.",
+        "lead": "Akinaza fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Yomizaka vérifie les papiers : baux, contrats, factures. Chacun vit sur son propre site, avec son code sur GitHub.",
         "engineUse": "Sur Orazaka · {use}",
         "enginePlanned": "Sur Orazaka, prévu · {use}",
         "flow": {
@@ -798,7 +798,7 @@
         "license": "{license} sur chaque dépôt"
       },
       "stackEyebrow": "La pile",
-      "stackTitle": "Deux moitiés, chacune avec son site.",
+      "stackTitle": "Trois briques, chacune documentée.",
       "stackLead": "Versions lues sur npm et Maven Central au build.",
       "blocksLabel": "Les briques, expliquées :",
       "stackVisual": {
@@ -1541,6 +1541,9 @@
       },
       "java": {
         "line": "Des briques Spring Boot sur Maven Central — web, sécurité, messagerie, observabilité, utilisateurs et facturation."
+      },
+      "ts": {
+        "line": "Des briques TypeScript sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine. Chaque paquet documenté dans son README."
       }
     },
     "changelog": {

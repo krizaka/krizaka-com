@@ -7,19 +7,19 @@
    `StackCards` (the two link cards) stays for /open-source. */
 
 import type { ReactNode } from "react";
-import { ForwardIcon, PackIcon, ServerIcon } from "@krizaka/icons";
+import { AutomationIcon, ForwardIcon, PackIcon, ServerIcon } from "@krizaka/icons";
 import { CardGrid } from "@krizaka/ui/card-grid";
 import { CodeBlock, CodeTabs } from "@krizaka/ui/code-block";
 import { LinkCard } from "@krizaka/ui/link-card";
 import { Facts, Section, type Fact } from "@krizaka/ui/page";
 import { format, getDictionary } from "@/lib/i18n";
-import { mavenVersion, npmDownloads, npmPackages, publishedVersion } from "@/lib/registry-versions";
+import { mavenVersion, npmDownloads, npmPackages, npmPackagesFrom, publishedVersion } from "@/lib/registry-versions";
 import ButtonLink from "@/app/components/ButtonLink";
-import { MOTION_LAB, STACK, hostOf, type StackId } from "@/lib/stack";
+import { MOTION_LAB, STACK, hostOf, type StackId, type StackPart } from "@/lib/stack";
 import MotionPlayground from "./playground/MotionPlayground";
 import UiPlayground from "./playground/UiPlayground";
 
-/** The two cards — Krizaka UI and Krizaka Java — each one link to its own site, with its facts. On /open-source. */
+/** The three cards — Krizaka UI, Krizaka Java and Krizaka TS — each one link to its own site, with its facts. On /open-source. */
 export function StackCards({
   locale,
   mavenArtifacts,
@@ -35,10 +35,13 @@ export function StackCards({
   const site = getDictionary(locale).site;
   const s = site.home.stack;
   const npmCount = npmPackages().length;
-  const facts = (id: StackId, coordinate: string): Fact[] => {
-    const version = publishedVersion(coordinate);
+  const facts = (part: (typeof STACK)[number]): Fact[] => {
+    const { id, coordinate } = part;
+    const version = coordinate && publishedVersion(coordinate);
+    const tsCount = id === "ts" ? npmPackagesFrom(part.repoUrl).length : 0;
     const list: (Fact | false)[] = [
-      Boolean(version) && { label: `${coordinate.replace(/^com\.krizaka:/, "")} ${version}`, tone: "ok" },
+      Boolean(version) && { label: `${coordinate!.replace(/^com\.krizaka:/, "")} ${version}`, tone: "ok" },
+      tsCount > 0 && { label: format(s.facts.npm, { count: tsCount }), tone: "ok" },
       id === "ui" && { label: s.facts.platforms },
       id === "ui" && npmCount > 0 && { label: format(s.facts.npm, { count: npmCount }) },
       id === "java" && mavenArtifacts > 0 && { label: format(s.facts.maven, { count: mavenArtifacts }) },
@@ -47,9 +50,9 @@ export function StackCards({
     return list.filter((f): f is Fact => Boolean(f));
   };
   return (
-    <CardGrid as="ul" min={320} columns={2} fit="fit" className="kz-home-stack-cards">
+    <CardGrid as="ul" min={300} columns={3} fit="fit" className="kz-home-stack-cards">
       {STACK.map((part) => {
-        const Icon = part.id === "ui" ? PackIcon : ServerIcon;
+        const Icon = { ui: PackIcon, java: ServerIcon, ts: AutomationIcon }[part.id];
         return (
           <LinkCard
             key={part.id}
@@ -63,7 +66,7 @@ export function StackCards({
             extra={
               <>
                 {visuals?.[part.id]}
-                <Facts items={facts(part.id, part.coordinate)} />
+                <Facts items={facts(part)} />
               </>
             }
           />
@@ -89,7 +92,7 @@ function Tile({ name, meta, line, children, facts, href, cta }: { name: string; 
   );
 }
 
-const ui = STACK.find((p) => p.id === "ui")!;
+const ui = STACK.find((p): p is StackPart & { coordinate: string } => p.id === "ui")!;
 const java = STACK.find((p) => p.id === "java")!;
 
 /** « Build with our open source », on the home, after the products. */
