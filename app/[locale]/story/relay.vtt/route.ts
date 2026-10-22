@@ -1,15 +1,7 @@
-import { filmVtt, RELAY_CUES, vttResponse } from "@/lib/film-captions";
-import { asLocale, getDictionary } from "@/lib/i18n";
+import { captionHandler, captionLocales } from "@/lib/caption-route";
+import { RELAY_CUES } from "@/lib/film-captions";
 
-// The captions of « Le monde de Krizaka : le relais » (/story and the home), in the page's language: same-origin (a <track> from the CDN would
-// need CORS), built once per deployment from the messages.
+// The captions of « Le monde de Krizaka : le relais » (/story and the home), in the page's language: same-origin, built once per deployment.
 export const dynamic = "force-static";
-
-export function generateStaticParams() {
-  return [{ locale: "en" }, { locale: "fr" }];
-}
-
-export async function GET(_request: Request, { params }: { params: Promise<{ locale: string }> }) {
-  const words = getDictionary(asLocale((await params).locale)).site.story.world.relay.cues;
-  return vttResponse(filmVtt(words, RELAY_CUES));
-}
+export const generateStaticParams = captionLocales;
+export const GET = captionHandler((d) => d.site.story.world.relay.cues, RELAY_CUES);
