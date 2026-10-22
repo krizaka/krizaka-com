@@ -203,7 +203,7 @@
         "number": "§ 1",
         "eyebrow": "Carnet d'un studio logiciel · Montréal, Québec",
         "title": "Nous construisons du logiciel open source, et tout ce qui le porte.",
-        "lead": "Sept produits sur un même moteur d'IA : vidéo, rencontres, un espace d'écoute, la vérification des baux, les pronostics entre amis, les commerces du Québec. Chaque pièce qui les porte est open source.",
+        "lead": "Nous avons commencé par Orazaka, un moteur d'IA. En le construisant, nous avons sorti Krizaka UI et Krizaka Java, en open source. Puis sont venus les produits qui tournent dessus, et Krizaka, l'entreprise, est née de ce travail.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
         "filmLength": "1 min 08",
@@ -227,10 +227,32 @@
           "pigeon": "le pigeon"
         }
       },
-      "products": {
+      "engine": {
         "number": "§ 2",
-        "title": "Un moteur. Les produits qu'il propulse.",
-        "lead": "L'IA de chaque produit tourne sur Orazaka. Chacun vit sur son propre site, avec son code sur GitHub.",
+        "title": "Orazaka, notre première construction.",
+        "lead": "Le moteur d'IA, d'où tout est parti. Chaque produit tourne dessus.",
+        "givesLabel": "Ce que fournit Orazaka",
+        "powers": "Il propulse",
+        "gives": {
+          "models": {
+            "name": "Modèles",
+            "line": "Les vôtres, derrière un seul pipeline."
+          },
+          "pipeline": {
+            "name": "Pipeline",
+            "line": "Chaque requête est une exécution tracée."
+          },
+          "analytics": {
+            "name": "Analyses",
+            "line": "Résultats et analyses d'usage reviennent au produit."
+          }
+        },
+        "line": "Un pipeline, vos modèles, votre réseau. Chaque produit l'appelle pour son IA, jamais un modèle en direct."
+      },
+      "products": {
+        "number": "§ 4",
+        "title": "Puis les produits, bâtis dessus.",
+        "lead": "Chacun vit sur son propre site, avec son code sur GitHub.",
         "engineUse": "Sur Orazaka · {use}",
         "enginePlanned": "Sur Orazaka, prévu · {use}",
         "flow": {
@@ -281,7 +303,7 @@
         "number": "§ 3",
         "eyebrow": "Open source",
         "title": "Construisez avec nos briques.",
-        "lead": "Les pièces sous chaque produit, à vous de les utiliser — essayez-les ici même. Versions et téléchargements lus au build.",
+        "lead": "Sorties de la construction d'Orazaka, à vous de les utiliser. Essayez-les ici même. Versions et téléchargements lus au build.",
         "more": "Tout ce que nous publions",
         "visit": "Ouvrir {host}",
         "facts": {
@@ -339,7 +361,7 @@
         }
       },
       "principles": {
-        "number": "§ 4",
+        "number": "§ 5",
         "eyebrow": "Notre façon de travailler",
         "title": "Cinq règles, vérifiées plutôt que promises.",
         "folio": "page {page} sur {total}",

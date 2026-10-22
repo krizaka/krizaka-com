@@ -44,14 +44,16 @@ test("a planned use is said planned: the products not wired yet are flagged, the
 // each product is tied to its node in the flow (in view or pointed at, both ways). /story's engine chapter draws the same flow.
 test("the home leads with the engine and its flow, then the products it powers — no foundation frame, no card in a card", () => {
   const home = read("app/components/home/ProductShowcase.tsx");
-  assert.match(home, /<EngineBlock t=\{t\} \/>/);
-  assert.ok(home.indexOf("<EngineBlock") < home.indexOf('className="kz-prod-list"'), "the engine comes first, the products after");
-  assert.match(home, /PRODUCTS\.filter\(\(p\) => p\.id !== ENGINE\)/, "the engine is the hub, never a row among the others");
+  assert.match(home, /<EngineFoundation t=\{t\} \/>/);
+  assert.ok(home.indexOf("<EngineFoundation t") < home.indexOf('className="kz-prod-list"'), "the engine comes first, the products after");
+  assert.match(home, /heroMarkOrder\(PRODUCTS\)\.filter\(\(p\) => p\.id !== ENGINE\)/, "the engine is the hub, never a row among the others");
   assert.doesNotMatch(home, /foundation=|CardGrid|GlowCard/, "the frame and the boxes are gone");
-  assert.match(read("app/[locale]/page.tsx"), /<ProductShowcase\b/);
+  const page = read("app/[locale]/page.tsx");
+  const at = (s) => page.indexOf(s);
+  assert.ok(at("<HomeHero") < at("<EngineSection") && at("<EngineSection") < at("<OpenStack") && at("<OpenStack") < at("<ProductShowcase") && at("<ProductShowcase") < at("<Principles"), "the page tells the story: engine, open stack, products, principles");
   assert.match(read("app/[locale]/story/page.tsx"), /<EngineFlowView t=\{t\} \/>/, "/story draws the home's engine flow — the same component");
   const css = read("app/components/home/home.css");
-  assert.match(css, /\.kz-prod-engine \{[^}]*position: sticky;/, "the flow stays beside the list on a wide screen");
+  assert.match(css, /\.kz-foundation \{[^}]*border-top: 6px solid var\(--kz-accent\)/, "the engine is a wide foundation plate in its accent, not a tag");
 });
 
 test("each product is tied to its node in the flow: in view or pointed at, both ways, from the data", () => {

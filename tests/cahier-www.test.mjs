@@ -26,7 +26,7 @@ test("every section of the home is numbered in the margin (§ n), none carries a
   for (const s of ["OpenStack", "Principles"]) assert.match(read(`app/components/home/${s}.tsx`), /\.number\}/, `${s} has no number`);
   for (const l of ["en", "fr"]) {
     const h = msgs[l].site.home;
-    assert.deepEqual([h.hero.number, h.products.number, h.stack.number, h.principles.number], ["§ 1", "§ 2", "§ 3", "§ 4"], l);
+    assert.deepEqual([h.hero.number, h.engine.number, h.stack.number, h.products.number, h.principles.number], ["§ 1", "§ 2", "§ 3", "§ 4", "§ 5"], l);
   }
 });
 

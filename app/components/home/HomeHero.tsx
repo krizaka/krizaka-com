@@ -23,6 +23,7 @@ import { figureColumns } from "@/lib/figure-grid";
 import type { CSSProperties } from "react";
 import { video } from "@/lib/cdn";
 import { FILM_BASE, RELAY_BASE } from "@/lib/film-captions";
+import { heroMarkOrder } from "@/lib/home-sections";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
 import FilmLightbox from "./FilmLightbox";
@@ -77,7 +78,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
         <p className="kz-home-lead">{t.lead}</p>
 
         <div className="kz-home-actions">
-          <ButtonLink href="#products" variant="primary" size="lg">
+          <ButtonLink href="#engine" variant="primary" size="lg">
             {t.primary} <ForwardIcon size={16} strokeWidth={2.25} />
           </ButtonLink>
           <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "relay.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
@@ -85,7 +86,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
 
         {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
         <ul className="kz-home-marks" aria-label={t.marksLabel}>
-          {PRODUCTS.map((p) => (
+          {heroMarkOrder(PRODUCTS).map((p) => (
             <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined}>
               <a href={`#product-${p.id}`}>
                 <ProductLogo id={p.id} size={30} animated={false} />
