@@ -535,21 +535,16 @@
       "who": {
         "nav": "Who we are",
         "title": "A studio in Montréal",
-        "lead": "Founded by Oussama, in Montréal since 2018. Krizaka is the forge halfway up the hill: a kris is a blade forged in layers, zaka the slope you climb step by step.",
-        "refusal": "We refuse software taken on faith: everything we ship is tested, documented and open source under Apache-2.0.",
+        "lead": "Krizaka is a studio founded by Oussama in Montréal. It is the forge halfway up the hill: a kris is a blade forged in layers, zaka the slope you climb step by step.",
+        "refusal": "The software we were asked to trust had become black boxes. We build the opposite: everything we ship is tested, documented and open source under Apache-2.0.",
         "placesAria": "Where Krizaka is",
         "places": [
           "Montréal"
         ],
-        "more": "The founder and the refusal",
-        "fold": [
-          "Krizaka is a studio founded by Oussama and based in Montréal, where he has lived since 2018 and where the forge was lit. He studied mathematics and computer science, then turned to mathematics and computing applied to cognitive science. In 2011, in a research lab, he met a machine that was learning to read.",
-          "The software we were asked to trust had turned into a black box: data shipped to someone else's cloud, income routed through someone else's rules, code nobody outside could read.",
-          "We set out to build the opposite. Nothing leaves the forge untested or undocumented, and everything that leaves it is open source under Apache-2.0 — read the pattern in the steel."
-        ],
         "film": "Watch the film",
         "filmLength": "1 min 8 s",
-        "filmNote": "A film made with the birds of Krizaka. Each one carries a promise."
+        "filmCredit": "Film generated with Orazaka",
+        "filmCredits": "credits"
       },
       "engine": {
         "nav": "The engine",

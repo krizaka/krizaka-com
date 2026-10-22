@@ -55,12 +55,12 @@ test("a product card's one line is a hook: 90 characters at most, in both langua
 test("/story keeps its founder's facts and its chapters come from PRODUCTS (the roster is the rest of them)", () => {
   for (const lang of ["en", "fr"]) {
     const who = messages(lang).story.who;
-    // The founder's path is sourced (his own profile, shared 2026-10-16; ~/Documents/krizaka/00_FONDATEUR/parcours-oussama.md,
-    // the same facts as blog.krizaka.com/about): Montréal since 2018, the education in his own words; no former city, no LinkedIn.
+    // The founder is minimal (2026-10-21): name and city, no studies, lab, year or personal detail.
     assert.deepEqual(who.places, ["Montréal"]);
-    assert.match(who.lead, /2018/, `${lang}: since 2018`);
-    assert.match(who.fold[0], /2018/, `${lang}: since 2018`);
-    assert.match(who.fold[0], /2011/, `${lang}: the 2011 research internship`);
+    const text = [who.lead, who.refusal].join(" ");
+    assert.match(text, /Oussama/);
+    assert.doesNotMatch(text, /20\d\d|19\d\d|laborato|research lab|étudi|studied|mathémat|mathemat|cognit|—/i, `${lang}: no study, lab or year`);
+    assert.equal(who.fold, undefined, "no founder fold");
     const all = JSON.stringify(who);
     assert.doesNotMatch(all, /Oujda|Grenoble|Maroc|Morocco|Java and Spring|Java et Spring|linkedin/i, `${lang}: no former city, no title, no LinkedIn`);
     assert.doesNotMatch(all, /RBC|TD Bank|BMO|Scotiabank|CIBC|Banque Nationale|National Bank|Desjardins/, `${lang}: places precise, employer never named`);

@@ -70,7 +70,8 @@
   background: linear-gradient(to top, color-mix(in oklab, #000 72%, transparent), transparent); }
 .st-film-caption span { font-family: var(--kz-font-mono); font-weight: 500; opacity: .85; }
 .st-film:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 3px; }
-.st-film-note { font-size: 13px !important; }
+.st-film-note { margin: 8px 0 0; font-size: 13px; color: var(--kz-text-muted); }
+.st-film-note a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .st-fold-list { list-style: decimal; }
 
 /* ═══ THE ENGINE — Orazaka at the centre, the products around it: the home's EngineFlowView (@krizaka/ui/engine-flow),
