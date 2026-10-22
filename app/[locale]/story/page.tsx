@@ -24,6 +24,7 @@ import FigureTiles from "@/app/components/FigureTiles";
 import Rich from "@/app/components/Rich";
 import { ProductStatus } from "@/app/components/ProductStatus";
 import { StackCards } from "@/app/components/home/OpenStack";
+import FilmCredits from "@/app/components/story/FilmCredits";
 import FilmLightbox from "@/app/components/home/FilmLightbox";
 import ProductVisual from "@/app/components/home/visuals/ProductVisual";
 import "@/app/components/home/visuals/visuals.css";
@@ -231,9 +232,7 @@ export default async function StoryPage({ params }: Props) {
                   </button>
                 }
               />
-              <p className="st-film-note">
-                {st.who.filmCredit} · <a href={`/${locale}/story/relay.vtt`}>{st.who.filmCredits}</a>
-              </p>
+              <FilmCredits />
               </>
             }
           />

@@ -83,7 +83,11 @@ test("the film block shows no captions list and no credits wall: one quiet line,
   assert.doesNotMatch(page, /RELAY_CUES|relay\.cues/, "captions are never printed as a list");
   assert.doesNotMatch(page, /st\.world\.relay\.credit\b/, "no credits paragraph");
   assert.doesNotMatch(page, /summary: st\.who/, "no fold on the founder chapter");
-  assert.match(page, /st\.who\.filmCredit/);
+  assert.match(page, /<FilmCredits \/>/);
+  assert.doesNotMatch(page, /relay\.vtt/, "« crédits » never opens a raw .vtt");
+  const fc = read("app/components/story/FilmCredits.tsx");
+  assert.match(fc, /@krizaka\/ui\/dialog/, "the credits list opens in the Krizaka UI Dialog");
+  for (const l of ["en", "fr"]) assert.ok(messages(l).story.who.creditsList.length >= 5, l);
   for (const l of ["en", "fr"]) assert.ok(messages(l).story.who.filmCredit.length < 50, l);
 });
 

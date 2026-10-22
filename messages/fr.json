@@ -544,7 +544,18 @@
         "film": "Voir le film",
         "filmLength": "1 min 08",
         "filmCredit": "Film généré avec Orazaka",
-        "filmCredits": "crédits"
+        "filmCredits": "crédits",
+        "creditsTitle": "Crédits du film",
+        "creditsClose": "Fermer",
+        "creditsList": [
+          "Généré par IA avec Orazaka",
+          "Oiseaux : rendus depuis @krizaka/ui",
+          "Images : FLUX.2 [klein]",
+          "Animation : Wan 2.2 et LTX-Video",
+          "Agrandissement : SeedVR2",
+          "Voix : Zonos v0.1 (Apache-2.0)",
+          "Musique : ACE-Step 1.5 (MIT)"
+        ]
       },
       "engine": {
         "nav": "Le moteur",
