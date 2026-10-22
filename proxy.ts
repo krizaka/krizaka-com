@@ -1,14 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { negotiateLocale } from "@/lib/locale-negotiation";
 
 const locales = ["fr", "en"];
-// English is the site's default language. French is served when the visitor chose it
-// (the language switch writes NEXT_LOCALE) or opened a /fr URL — matching hreflang x-default.
-const defaultLocale = "en";
-
+// Loi 96: French is the default. English is served when the visitor chose it (the language
+// switch writes NEXT_LOCALE), opened an /en URL, or their browser asks for English and never French.
 function getLocale(request: NextRequest): string {
-  const cookie = request.cookies.get("NEXT_LOCALE")?.value;
-  return cookie === "fr" || cookie === "en" ? cookie : defaultLocale;
+  return negotiateLocale(request.cookies.get("NEXT_LOCALE")?.value, request.headers.get("accept-language"));
 }
 
 export function proxy(request: NextRequest) {

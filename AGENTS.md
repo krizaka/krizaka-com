@@ -57,7 +57,7 @@
   films of the flock, rendered from the code by krizaka-ui `tools/brand-films` (« Le monde de Krizaka » on `/story`, its
   captions from the messages through `/<locale>/story/film.vtt`; the loops of each bird, loaded by ui.krizaka.com and the
   products' sites by their hashed URL). A new render replaces them: upload, then `cdn-assets prune`.
-- English is the default language; French is served when chosen (cookie `NEXT_LOCALE`) or opened.
+- **French is the default language** (Loi 96, `lib/locale-negotiation.ts`): an unprefixed URL goes to the cookie `NEXT_LOCALE` if set, else English only when the browser asks for English and never French, else French; hreflang `x-default` → `/fr`.
 
 ## 2.2 Text & languages — nothing hard-coded
 

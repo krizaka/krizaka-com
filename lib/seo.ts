@@ -10,8 +10,8 @@ const normalize = (locale: string): Locale => (locale === "en" ? "en" : "fr");
  *
  * - `canonical` is the page's OWN localized URL (never the bare "/", which the
  *   middleware 307-redirects per Accept-Language).
- * - `languages` advertises every locale of THIS path, with `x-default` → en
- *   (the international fallback), matching the middleware and the sitemap.
+ * - `languages` advertises every locale of THIS path, with `x-default` → fr
+ *   (Loi 96: French first), matching the middleware and the sitemap.
  *
  * @param locale active locale ("fr" | "en")
  * @param path   route path WITHOUT locale prefix, "" for home, else "/contact"
@@ -27,7 +27,7 @@ export function buildAlternates(
     languages: {
       "fr-CA": `${SITE_URL}/fr${p}`,
       en: `${SITE_URL}/en${p}`,
-      "x-default": `${SITE_URL}/en${p}`,
+      "x-default": `${SITE_URL}/fr${p}`,
     },
     // For AI engines: the machine-readable summary of the site, advertised in every page's <head>.
     types: { "text/plain": `${SITE_URL}/llms.txt` },

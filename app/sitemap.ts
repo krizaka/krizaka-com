@@ -31,7 +31,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const languages = {
       "fr-CA": `${baseUrl}/fr${path}`,
       en: `${baseUrl}/en${path}`,
-      "x-default": `${baseUrl}/en${path}`,
+      "x-default": `${baseUrl}/fr${path}`,
     };
     return locales.map((loc) => ({
       url: `${baseUrl}/${loc}${path}`,

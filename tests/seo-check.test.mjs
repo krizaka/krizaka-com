@@ -7,7 +7,7 @@ const page = (over = {}) => `<html><head><title>${over.title ?? "Orazaka | Kriza
 <link rel="canonical" href="${over.canonical ?? "https://www.krizaka.com/en/products"}"/>
 <link rel="alternate" hrefLang="fr-CA" href="https://www.krizaka.com/fr/products"/>
 <link rel="alternate" hrefLang="en" href="https://www.krizaka.com/en/products"/>
-<link rel="alternate" hrefLang="x-default" href="https://www.krizaka.com/en/products"/>
+<link rel="alternate" hrefLang="x-default" href="https://www.krizaka.com/fr/products"/>
 <script type="application/ld+json">${over.ld ?? '{"@context":"https://schema.org","@type":"FAQPage"}'}</script></head><body></body></html>`;
 
 test("a well-formed product page has no problem", () => {
