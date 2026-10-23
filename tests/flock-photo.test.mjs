@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
+import { HERO_FLOCK } from "../lib/products-flock.ts";
 
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 const css = read("app/components/home/home.css");
@@ -33,4 +34,13 @@ test("the story's film poster is a taped photo, while the existing lightbox trig
   assert.match(story, /from "@krizaka\/ui\/taped-photo"/);
   assert.match(story, /<TapedPhoto className="st-film-photo">\s*<FilmLightbox/);
   assert.match(story, /trigger=\{\s*<button type="button" className="st-film"/);
+  assert.match(read("app/[locale]/story/story.css"), /\.st-film:focus-visible\s*\{[^}]*outline-offset:\s*-3px/);
+});
+
+test("the hero flock captions stay within the scene at every bird position", () => {
+  const hero = read("app/components/home/HomeHero.tsx");
+  assert.deepEqual(HERO_FLOCK.birds.filter(({ bird }) => ["falcon", "pigeon"].includes(bird)).map(({ bird, x }) => [bird, x]), [["falcon", 15], ["pigeon", 85]]);
+  assert.match(hero, /--flock-x/);
+  assert.match(css, /\.kz-home-flock-caption\s*\{[^}]*transform:\s*translate\(clamp\([^;]*100cqw[^;]*\),\s*-2px\)/);
+  assert.match(css, /\.kz-home-flock-caption\s*\{[^}]*max-width:\s*min\(260px,\s*calc\(100cqw - 16px\)\)/);
 });

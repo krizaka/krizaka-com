@@ -70,7 +70,7 @@
 .st-film-caption { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; gap: 8px; padding: 22px 14px 10px; font-size: 13px; font-weight: 700; color: #fff;
   background: linear-gradient(to top, color-mix(in oklab, #000 72%, transparent), transparent); }
 .st-film-caption span { font-family: var(--kz-font-mono); font-weight: 500; opacity: .85; }
-.st-film:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 3px; }
+.st-film:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: -3px; }
 .st-film-note { margin: 8px 0 0; font-size: 13px; color: var(--kz-text-muted); }
 .st-film-credits { all: unset; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .st-film-credits:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; }

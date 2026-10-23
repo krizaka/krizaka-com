@@ -129,7 +129,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
                   href="/story#who"
                   className="kz-home-flock-hit"
                   aria-label={`${label}: ${promise}`}
-                  style={{ left: `${x - size / 2}%`, width: `${size}%`, top: `calc(${y}% - ${size * 0.9}cqw)` }}
+                  style={{ left: `${x - size / 2}%`, width: `${size}%`, top: `calc(${y}% - ${size * 0.9}cqw)`, "--flock-x": `${x}cqw` } as CSSProperties}
                 >
                   <span className="kz-home-flock-caption" aria-hidden>
                     {promise}
