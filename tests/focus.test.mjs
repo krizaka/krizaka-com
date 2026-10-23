@@ -93,7 +93,6 @@ test("every list of products wears the focus: CSS attribute on the server, the h
     "app/components/PublicChannelList.tsx": /focusProps\(/,
     "app/[locale]/open-source/OpenSourceTables.tsx": /useCarnet\(\)/,
     "app/[locale]/open-source/HowItFits.tsx": /focusProps\(/,
-    "app/[locale]/open-source/StackVisual.tsx": /focusProps\(/,
     "app/[locale]/story/page.tsx": /focusProps\(|<Mode\b/,
   };
   for (const [file, rule] of Object.entries(files)) assert.match(read(file), rule, file);

@@ -6,11 +6,6 @@
 .os-hero-actions { display: flex; justify-content: center; margin-top: 24px; }
 
 /* The stack: still visuals inside the cards, then the building blocks as quiet links. */
-.os-visual { margin: 4px 0 12px; padding: 12px; border-radius: 0; background: var(--kz-surface-0); border: 1px solid var(--kz-border-subtle); }
-.os-visual figcaption { margin-top: 8px; font-size: 11.5px; color: var(--kz-text-secondary); }
-.os-visual-identities { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px 14px; }
-.os-visual-identities li { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 8px; }
-.os-visual-code { margin: 0; overflow-x: auto; font-family: var(--font-mono); font-size: 11.5px; line-height: 1.55; color: var(--kz-text-primary); }
 .os-blocks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 20px; font-size: 13px; color: var(--kz-text-secondary); }
 
 /* The tables. */

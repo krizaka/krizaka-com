@@ -174,3 +174,17 @@ test("the duo is named by its need: management and compliance tools", () => {
     assert.doesNotMatch(`${h.products.title} ${h.products.lead}`, /intelligen/i);
   }
 });
+
+// 2026-10-22 (Oussama): one mechanism for the stack wherever it is shown — four tiles (UI, Motion, Java, TS), each with
+// something to try or to copy; Java's dependency and TS's install command have a copy button; no link card holds a button.
+test("the stack tiles: one component on the home, /open-source and /story, with Java and TS to copy", () => {
+  const stack = read("app/components/home/OpenStack.tsx");
+  assert.match(stack, /export function StackTiles/);
+  assert.match(stack, /npmPackagesFrom\(ts\.repoUrl\)/, "TS's packages read at build, never typed");
+  assert.match(stack, /code=\{install\}[^>]*copyLabel=/, "the TS install command can be copied");
+  assert.match(stack, /file="pom\.xml" copyLabel=/, "the Java dependency can be copied");
+  assert.match(stack, /import "\.\/stack-tiles\.css"/, "the tiles carry their own styles to every page");
+  assert.doesNotMatch(stack, /LinkCard|StackCards/);
+  for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"]) assert.match(read(page), /<StackTiles locale=\{locale\} \/>/, page);
+  for (const lang of ["en", "fr"]) assert.ok(messages(lang).site.home.stack.ts.line, `${lang}: stack.ts.line`);
+});

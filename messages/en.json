@@ -338,7 +338,7 @@
         },
         "motion": {
           "name": "Krizaka Motion",
-          "line": "The motion lab: the engine flow you just saw, with its settings.",
+          "line": "The motion lab: the engine's flow, with its settings.",
           "lab": "Open the lab",
           "layout": "Layout",
           "layouts": {
@@ -363,6 +363,10 @@
           "tool": "Build tool",
           "copy": "Copy",
           "copied": "Copied"
+        },
+        "ts": {
+          "line": "The products' TypeScript building blocks, on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief. One command to add them:",
+          "explore": "Read the documentation"
         }
       },
       "principles": {
@@ -801,10 +805,6 @@
       "stackTitle": "Three bricks, each documented.",
       "stackLead": "Versions read from npm and Maven Central at build.",
       "blocksLabel": "The building blocks, explained:",
-      "stackVisual": {
-        "identities": "One component, every product's identity",
-        "dependency": "One BOM, every Krizaka Java version"
-      },
       "packages": {
         "eyebrow": "Packages",
         "title": "Every published package.",
