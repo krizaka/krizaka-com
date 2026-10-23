@@ -308,7 +308,7 @@
         "number": "§ 3",
         "eyebrow": "Open source",
         "title": "Build with our open source.",
-        "lead": "Born from building Orazaka, yours to use. Try them right here. Versions and downloads read at build.",
+        "lead": "Born from building Orazaka, yours to use. The versions, the examples and every package are on Open source.",
         "more": "Everything we publish",
         "visit": "Open {host}",
         "facts": {
@@ -317,31 +317,34 @@
           "maven": "{count} artifacts on Maven Central"
         },
         "ui": {
-          "line": "The components of every Krizaka screen — web, iOS and Android. These are the real ones:",
+          "line": "The components of every Krizaka screen — web, iOS and Android.",
           "explore": "Explore ui.krizaka.com",
           "downloads": "{count} downloads of @krizaka/ui last week",
-          "trend": "Weekly npm downloads of @krizaka/ui, last 12 weeks",
           "showcase": {
-            "label": "A sample of Krizaka UI: a list of people with an avatar, a trend line and a status badge.",
-            "rows": [
-              {
-                "name": "Ada Lovelace",
-                "status": "Active"
-              },
-              {
-                "name": "Grace Hopper",
-                "status": "Invited"
-              },
-              {
-                "name": "Alan Turing",
-                "status": "Review"
-              }
-            ]
+            "label": "A sample of Krizaka UI: a profile card with an avatar, a meter, a row of chips, a switch and a button.",
+            "person": {
+              "name": "Ada Lovelace",
+              "role": "Product designer"
+            },
+            "meter": {
+              "label": "Profile complete",
+              "valueText": "80%"
+            },
+            "teams": {
+              "label": "Team",
+              "items": [
+                "Design",
+                "Engineering",
+                "Support"
+              ]
+            },
+            "digest": "Weekly digest",
+            "invite": "Invite"
           }
         },
         "motion": {
           "name": "Krizaka Motion",
-          "line": "The motion lab: the engine's flow, with its settings.",
+          "line": "The motion lab: the engine's flow, its layouts, what travels.",
           "lab": "Open the lab",
           "layout": "Layout",
           "layouts": {
@@ -361,14 +364,14 @@
           "app": "App {id}"
         },
         "java": {
-          "line": "The building blocks of every Krizaka service, one BOM on Maven Central:",
+          "line": "The building blocks of every Krizaka service, one BOM on Maven Central.",
           "explore": "Open java.krizaka.com",
           "tool": "Build tool",
           "copy": "Copy",
           "copied": "Copied"
         },
         "ts": {
-          "line": "The products' TypeScript building blocks, on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief. One command to add them:",
+          "line": "The products' TypeScript building blocks, on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief.",
           "explore": "Read the documentation"
         }
       },

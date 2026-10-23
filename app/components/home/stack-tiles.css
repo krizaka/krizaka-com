@@ -1,15 +1,13 @@
 /* The stack tiles (OpenStack.tsx `StackTiles`), wherever they are drawn: the home, /open-source, /story. Owned by the component,
    not by a page, so a page that shows them is styled without importing another page's sheet.
-   One column on a phone; each tile a column whose action sits at its foot. Tokens only. */
-.kz-build { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin: 0; padding: 0; list-style: none; }
-/* Four tiles, two by two from a tablet: each keeps room for what it lets you try or copy. */
-@media (min-width: 680px) { .kz-build { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+   The grid is @krizaka/ui's CardGrid: every cell of a row is as tall as the tallest (one column on a phone), and each tile
+   is a column whose action sits at its foot. Tokens only. */
+.kz-build { --kz-cards-gap: 18px; }
 .kz-build-tile { display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 22px; border-radius: 0;
   border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-1); }
 .kz-build-meta { margin: 0; font-family: var(--font-mono); font-size: 11.5px; color: var(--kz-text-secondary); }
 .kz-build-name { margin: 0; font-size: 1.25rem; font-weight: 750; color: var(--kz-text-primary); }
 .kz-build-line { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--kz-text-secondary); }
-.kz-build-try { min-width: 0; margin: 4px 0; }
 .kz-build-cta { align-self: flex-start; margin-top: auto; }
 
 .kz-play { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 0;
@@ -18,24 +16,38 @@
 .kz-play-flow .kz-flow-detail { min-height: 1lh; margin-top: 6px; font-size: 13px; }
 .kz-play-dot { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--kz-accent-text, var(--kz-accent)); }
 
-/* The example fills its card: it grows to the card's height (every card of a row is as tall as the tallest), so the facts
-   and the action line up at the foot and no empty band is left under it. */
-.kz-build-try { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 15rem; }
+/* /open-source and /story: the example fills its card — it grows to the card's height (every card of a row is as tall as
+   the tallest), so the facts and the action line up at the foot and no empty band is left under it. */
+.kz-build-try { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 15rem; margin: 4px 0; min-width: 0; }
 .kz-build-try > * { flex: 1 1 auto; }
 
-/* The home's short version: a still visual of one height, never a demo. */
-.kz-build-still { display: flex; flex-direction: column; flex: 1 1 auto; height: 11rem; overflow: hidden; pointer-events: none; user-select: none; }
-.kz-build-still > * { flex: 1 1 auto; }
+/* The home's short version: one still picture per tile, in a box of one minimum height that grows to the tile's foot —
+   the picture fills the card, never a demo, never an empty band (Oussama, 2026-10-23). The tiles of a row share one
+   height (CardGrid), so a shorter line above a picture makes its box a line taller, never a band under it. The picture
+   cannot be reached: inert, no pointer, no selection. */
+.kz-build-still { display: grid; flex: 1 1 auto; min-height: 16rem; margin: 4px 0; min-width: 0; overflow: hidden; pointer-events: none; user-select: none; }
+.kz-build-still > * { min-height: 0; min-width: 0; }
+.kz-build-still .kz-play { justify-content: center; }
+/* The still of the engine flow: no wider than a phone's column, so its radial drawing stays the height of the others. */
+.kz-build-still .kz-play-flow { width: 100%; max-width: 24rem; margin: 0 auto; }
 .kz-build-still-mark { display: grid; place-content: center; gap: 12px; }
 .kz-build-java-mark { grid-template-columns: repeat(3, 2rem); align-items: center; }
 .kz-build-java-mark span { height: 3.5rem; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
 .kz-build-java-mark span:nth-child(2) { height: 4.5rem; }
-.kz-build-ts-mark { grid-template-columns: repeat(2, 2.25rem); }
+.kz-build-ts-mark { grid-template-columns: repeat(3, 2.25rem); }
 .kz-build-ts-mark span { aspect-ratio: 1; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
+/* A set of packages, by name (read at build): a cloud of quiet badges, centred in the box. */
+.kz-build-cloud { display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 8px; padding: 16px;
+  border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
 
-.kz-showcase { display: flex; flex-direction: column; justify-content: center; gap: 12px; margin: 0; }
-.kz-showcase-rows { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.kz-showcase-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.kz-showcase-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; font-weight: 600; }
+/* Krizaka UI's picture: the kit's own card, centred, no wider than a phone's column. */
+.kz-showcase { display: flex; flex-direction: column; gap: 10px; margin: 0; min-width: 0; }
+.kz-showcase-card { width: 100%; max-width: 22rem; margin: 0 auto; }
+.kz-showcase-body { gap: 12px; }
+.kz-showcase-person { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.kz-showcase-who { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.kz-showcase-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; font-weight: 600; color: var(--kz-text-primary); }
+.kz-showcase-role { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; color: var(--kz-text-secondary); }
+.kz-showcase-switch { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--kz-text-primary); }
+.kz-showcase-button { align-self: flex-start; }
 .kz-showcase-caption { margin: 0; font-size: 12.5px; color: var(--kz-text-secondary); }
-@media (max-width: 420px) { .kz-showcase-row svg { display: none; } }

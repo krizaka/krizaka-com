@@ -42,7 +42,7 @@ export default function MotionPlayground({ w, still }: { w: MotionPlaygroundWord
         breathe={still ? false : undefined}
         hub={{ label: w.hub, mark: <KrizakaLogo size={30} animated={false} /> }}
         nodes={APPS.map((id) => ({ id, label: w.app.replace("{id}", id), flow: mode, mark: <span className="kz-play-dot">{id}</span> }))}
-        hint={w.hint}
+        hint={still ? undefined : w.hint}
       />
       {still ? null : (
         <>
