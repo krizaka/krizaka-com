@@ -125,10 +125,13 @@ export default async function StoryPage({ params }: Props) {
     </ul>
   );
 
+  /** The printed pictures lean in turn, left then right, down the chapters (a slight tilt: the print's own lean). */
+  const lean = (anchor: (typeof STORY_ANCHORS)[number]) => (number(anchor) % 2 ? -1.4 : 1.4);
+
   /** The product's real take (a poster, played in a lightbox on click), when one is recorded; the mini-visual otherwise. */
-  const takeProof = (id: (typeof PRODUCT_CHAPTERS)[number] | typeof ENGINE, name: string) => {
+  const takeProof = (id: (typeof PRODUCT_CHAPTERS)[number] | typeof ENGINE, name: string, anchor: (typeof STORY_ANCHORS)[number]) => {
     const take = takeOf(id, locale);
-    return take ? <TakeCard take={take} name={name} id={id} other={Boolean(take.lang && take.lang !== locale)} /> : null;
+    return take ? <TakeCard take={take} name={name} id={id} other={Boolean(take.lang && take.lang !== locale)} tilt={lean(anchor)} /> : null;
   };
 
   const productChapter = (id: (typeof PRODUCT_CHAPTERS)[number]) => {
@@ -162,7 +165,7 @@ export default async function StoryPage({ params }: Props) {
         }
         bird={bird}
         promise={promiseOf(t, bird)}
-        proof={takeProof(id, p.name) ?? (
+        proof={takeProof(id, p.name, id) ?? (
           <div className="st-proof">
             <ProductVisual id={id} />
             <p className="st-proof-note">{st.products.demo}</p>
@@ -233,7 +236,7 @@ export default async function StoryPage({ params }: Props) {
             promise={promiseOf(t, WHO_BIRD)}
             proof={
               <>
-              <TapedPhoto className="st-film-photo">
+              <TapedPhoto className="st-film-photo" tilt={lean("who")}>
                 <FilmLightbox
                   film={{ mp4: film.mp4, poster: film.poster, vtt: film.vtt }}
                   fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}
@@ -272,7 +275,7 @@ export default async function StoryPage({ params }: Props) {
             proof={
               <>
                 <EngineFlowView t={t} />
-                {takeProof(ENGINE, engine.name)}
+                {takeProof(ENGINE, engine.name, "engine")}
               </>
             }
             fold={{
