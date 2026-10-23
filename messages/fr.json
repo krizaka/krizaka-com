@@ -1549,7 +1549,7 @@
         "line": "Des briques Spring Boot sur Maven Central — web, sécurité, messagerie, observabilité, utilisateurs et facturation."
       },
       "ts": {
-        "line": "Des briques TypeScript sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine. Chaque paquet documenté dans son README."
+        "line": "Des briques TypeScript sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine. Chaque paquet documenté sur ts.krizaka.com."
       }
     },
     "changelog": {

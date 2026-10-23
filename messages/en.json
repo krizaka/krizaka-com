@@ -1549,7 +1549,7 @@
         "line": "Spring Boot building blocks on Maven Central — web, security, messaging, observability, users and billing."
       },
       "ts": {
-        "line": "TypeScript building blocks on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief. Each package documented in its README."
+        "line": "TypeScript building blocks on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief. Each package documented on ts.krizaka.com."
       }
     },
     "changelog": {

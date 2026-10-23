@@ -1,7 +1,7 @@
 /* Site navigation — one source for the bar (TopNavBar), the mobile panel and the footer.
 
    krizaka.com is the company; everything else Krizaka makes has its own site (NAV-SYS, 2026-10-14): the products on
-   dev.<product>.com (lib/products.ts), the open-source stack on ui.krizaka.com and java.krizaka.com (lib/stack.ts).
+   dev.<product>.com (lib/products.ts), the open-source stack on ui.krizaka.com, java.krizaka.com and ts.krizaka.com (lib/stack.ts).
    Two views only (Oussama, 2026-10-17): the home — reached through the mark, it presents the products (#products) —
    and Open source. The bar, in three zones:
    - left, who we are: the Krizaka mark and the word "Krizaka" (home);
