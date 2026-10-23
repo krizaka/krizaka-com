@@ -14,7 +14,7 @@ export type NomenclatureLayer = (typeof NOMENCLATURE_LAYERS)[number];
 
 /** What a module is: a product (or its app), the engine, a Java building block, a TypeScript package, a worker (a
     service that runs), a site, or tooling. */
-export const NOMENCLATURE_KINDS = ["product", "engine", "java", "package", "worker", "site", "tooling"] as const;
+export const NOMENCLATURE_KINDS = ["product", "engine", "java", "package", "web", "worker", "site", "tooling"] as const;
 export type NomenclatureKind = (typeof NOMENCLATURE_KINDS)[number];
 
 export interface Publication {
@@ -68,15 +68,22 @@ function classify(
   publications: readonly Publication[],
   isService: boolean,
 ): { layer: NomenclatureLayer; kind: NomenclatureKind } {
-  if (product === engineId) return repo.name === engineId ? { layer: "engine", kind: "engine" } : { layer: "engine", kind: kindOfRepository(repo, product) === "service" ? "worker" : "package" };
-  if (product !== "krizaka") {
-    const k = kindOfRepository(repo, product);
-    return { layer: "products", kind: k === "main" ? "product" : k === "service" ? "worker" : k === "library" ? "package" : k === "tooling" ? "tooling" : "product" };
+  const role = kindOfRepository(repo, product);
+  if (product === engineId) {
+    if (repo.name === engineId) return { layer: "engine", kind: "engine" };
+    if (isService || role === "service") return { layer: "engine", kind: "worker" };
+    if (publications.some((p) => p.registry === "maven")) return { layer: "engine", kind: "java" };
+    if (role === "tooling") return { layer: "engine", kind: "tooling" };
+    if (role === "web") return { layer: "engine", kind: "web" };
+    return { layer: "engine", kind: "package" };
   }
-  if (isService) return { layer: "services", kind: "worker" };
+  if (product !== "krizaka") {
+    return { layer: "products", kind: role === "main" ? "product" : role === "service" ? "worker" : role === "library" ? "package" : role === "tooling" ? "tooling" : "product" };
+  }
+  if (isService || role === "service") return { layer: "services", kind: "worker" };
   if (publications.some((p) => p.registry === "maven")) return { layer: "blocks", kind: "java" };
   if (publications.length > 0) return { layer: "blocks", kind: "package" };
-  if (has(repo.topics, "website") || /^krizaka-(com|ui-site)$/.test(repo.name)) return { layer: "platform", kind: "site" };
+  if (has(repo.topics, "website") || role === "web" || /^krizaka-(com|ui-site)$/.test(repo.name)) return { layer: "platform", kind: "site" };
   return { layer: "platform", kind: "tooling" };
 }
 

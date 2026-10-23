@@ -902,6 +902,7 @@
           "engine": "Moteur",
           "java": "Brique (Java)",
           "package": "Paquet (TypeScript)",
+          "web": "Client web",
           "worker": "Worker",
           "site": "Site",
           "tooling": "Outillage"

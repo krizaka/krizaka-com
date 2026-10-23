@@ -191,7 +191,7 @@ export function NomenclatureTable({ rows: all }: { rows: readonly ModuleRow[] })
         ) : (
           <span className="os-links">
             {r.publications.map((p) => (
-              <a key={p.registry + p.name} href={p.url} target="_blank" rel="noopener noreferrer" aria-label={format(w.registryAria, { name: p.name })}>
+              <a key={p.registry + p.name} href={p.url} target="_blank" rel="noopener noreferrer" aria-label={format(w.registryAria, { name: `${p.name} ${p.version}` })}>
                 {p.name} <code className="os-version">{p.version}</code>
               </a>
             ))}

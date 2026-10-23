@@ -84,7 +84,8 @@ export default async function OpenSourcePage({ params }: Props) {
   const t = site.openSource;
   const names: Record<string, string> = { ...Object.fromEntries(NAV_PRODUCTS.map((p) => [p.id, p.name])), krizaka: t.platform.name };
 
-  const repositories = githubRepositories().filter((r) => !r.archived);
+  const allRepositories = githubRepositories();
+  const repositories = allRepositories.filter((r) => !r.archived);
   const repoRows: RepositoryRow[] = repositories.map((r) => {
     const product = productOfRepository(r.name, PRODUCT_IDS);
     return {
@@ -105,14 +106,17 @@ export default async function OpenSourcePage({ params }: Props) {
   const layers = howItFits(PRODUCTS, ENGINE, ENGINE_USES, manifests.products, (snapshot as RegistrySnapshot).mavenMeta, (snapshot as RegistrySnapshot).maven ?? {});
 
   const modules = nomenclature({
-    repositories,
+    repositories: allRepositories,
     snapshot: snapshot as RegistrySnapshot,
     manifests: manifests.products,
     products: PRODUCT_IDS,
     engineId: ENGINE,
     engineCallers: ENGINE_USES.filter((u) => !u.planned).map((u) => u.id),
     javaDocs: javaSite,
-  });
+  }).map((r) => ({
+    ...r,
+    line: r.name.startsWith("orochia") ? (t.orochiaRepos[r.name as keyof typeof t.orochiaRepos] ?? t.orochiaRepos.default) : r.line,
+  }));
 
   const figures = [
     { id: "repositories", value: publicRepositoryCount(), label: t.figures.repositories },

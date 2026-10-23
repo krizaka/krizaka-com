@@ -902,6 +902,7 @@
           "engine": "Engine",
           "java": "Building block (Java)",
           "package": "Package (TypeScript)",
+          "web": "Web client",
           "worker": "Worker",
           "site": "Site",
           "tooling": "Tooling"
