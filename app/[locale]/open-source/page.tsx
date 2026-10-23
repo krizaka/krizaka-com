@@ -15,6 +15,7 @@ import manifests from "@/lib/product-manifests.json";
 import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
 import { packageRows, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { howItFits } from "@/lib/how-it-fits";
+import { nomenclature } from "@/lib/nomenclature";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { focusProps } from "@/lib/focus";
 import { PRODUCTS } from "@/lib/products";
@@ -32,7 +33,7 @@ import ProductStackTable from "@/app/components/ProductStackTable";
 import FigureTiles from "@/app/components/FigureTiles";
 import ButtonLink from "@/app/components/ButtonLink";
 import { StackTiles } from "@/app/components/home/OpenStack";
-import { PackagesTable, RepositoriesTable, type RepositoryRow } from "./OpenSourceTables";
+import { NomenclatureTable, PackagesTable, RepositoriesTable, type RepositoryRow } from "./OpenSourceTables";
 import HowItFits from "./HowItFits";
 import "./open-source.css";
 
@@ -46,7 +47,9 @@ import "./open-source.css";
    4. Repositories: every repository grouped by product, with its platform, language and last push (GitHub at build).
    5. How it fits: products → engine → building blocks → shared services (lib/how-it-fits.ts), an ordered list that is
       its own text version; what each product runs on, folded.
-   6. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
+   6. La nomenclature: every module of the family by layer (lib/nomenclature.ts), generated at build; a public
+      repository missing from it fails the build.
+   7. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
       conduct, the licence. */
 
 interface Props {
@@ -100,6 +103,16 @@ export default async function OpenSourcePage({ params }: Props) {
   const javaSite = STACK.find((s) => s.id === "java")!.url;
   const packages = packageRows(snapshot as RegistrySnapshot, repositories.map((r) => r.name), javaSite);
   const layers = howItFits(PRODUCTS, ENGINE, ENGINE_USES, manifests.products, (snapshot as RegistrySnapshot).mavenMeta, (snapshot as RegistrySnapshot).maven ?? {});
+
+  const modules = nomenclature({
+    repositories,
+    snapshot: snapshot as RegistrySnapshot,
+    manifests: manifests.products,
+    products: PRODUCT_IDS,
+    engineId: ENGINE,
+    engineCallers: ENGINE_USES.filter((u) => !u.planned).map((u) => u.id),
+    javaDocs: javaSite,
+  });
 
   const figures = [
     { id: "repositories", value: publicRepositoryCount(), label: t.figures.repositories },
@@ -169,6 +182,10 @@ export default async function OpenSourcePage({ params }: Props) {
           />
           <p className="os-stack-read">{format(t.runs.read, { date: MANIFESTS_READ_AT })}</p>
         </details>
+      </Section>
+
+      <Section id="nomenclature" eyebrow={t.nomenclature.eyebrow} title={t.nomenclature.title} lead={t.nomenclature.lead} reveal divider>
+        <NomenclatureTable rows={modules} />
       </Section>
 
       <Section id="contribute" divider aria-labelledby="os-contribute">

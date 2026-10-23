@@ -876,6 +876,37 @@
         "services": "Les services partagés",
         "runs": "Sur quoi tourne chaque produit"
       },
+      "nomenclature": {
+        "eyebrow": "La nomenclature",
+        "title": "Une carte de référence du système Krizaka.",
+        "lead": "Chaque module de la famille, par couche : son rôle, son dépôt, son registre et sa version, et qui l'utilise. Générée à la construction ; le tableau en est la version texte.",
+        "caption": "Chaque module du système Krizaka",
+        "name": "Module",
+        "layer": "Couche",
+        "kind": "Nature",
+        "registries": "Registre et version",
+        "usedBy": "Utilisé par",
+        "repo": "Dépôt",
+        "repoAria": "Dépôt de {name}",
+        "registryAria": "{name} sur son registre",
+        "none": "—",
+        "layers": {
+          "products": "Produits",
+          "engine": "Orazaka",
+          "blocks": "Briques",
+          "services": "Services partagés",
+          "platform": "Sites et outillage"
+        },
+        "kinds": {
+          "product": "Produit",
+          "engine": "Moteur",
+          "java": "Brique (Java)",
+          "package": "Paquet (TypeScript)",
+          "worker": "Worker",
+          "site": "Site",
+          "tooling": "Outillage"
+        }
+      },
       "contribute": {
         "title": "Envie de contribuer ?",
         "body": "Une question ou une idée : une discussion. Un bogue : un ticket. Choisissez le dépôt.",
