@@ -6,6 +6,8 @@
    Every variable is declared in lib/env.ts (krizaka/.github#46).
    Both may be set; the message is accepted when at least one channel delivers it. */
 
+import { z } from "zod";
+
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
 export const CONTACT_TOPICS = ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza", "blocks", "partnership", "other"] as const;
@@ -66,24 +68,39 @@ export interface ContactMessage {
 export type ContactValidation = { ok: true; value: ContactMessage } | { ok: false; field: string };
 
 const EMAIL = /^[^\s@<>()]+@[^\s@<>()]+\.[^\s@<>()]{2,}$/;
-const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max + 1) : "");
+
+// @fixed: The message size limit is a technical constraint shared by the API and form.
+export const CONTACT_MESSAGE_MAX = 5000;
+
+/** The one validation schema of the contact form: the server (validateContact) and the form's fields read it. */
+export const ContactFormSchema = z.object({
+  name: z.string().trim().min(2).max(120),
+  email: z.string().trim().max(200).regex(EMAIL),
+  company: z.string().trim().max(160),
+  message: z.string().trim().min(10).max(CONTACT_MESSAGE_MAX),
+});
+export type ContactField = keyof typeof ContactFormSchema.shape;
+
+/** Whether one field's value passes the schema (the client checks fields as they are left). */
+export const isValidContactField = (field: ContactField, value: string): boolean => ContactFormSchema.shape[field].safeParse(value).success;
+const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
 /** Validates an untrusted JSON body. `website` is a honeypot: humans never fill it. */
 export function validateContact(body: unknown): ContactValidation | { ok: "spam" } {
   const b = (body ?? {}) as Record<string, unknown>;
-  if (str(b.website, 200)) return { ok: "spam" };
-  const name = str(b.name, 120);
-  const email = str(b.email, 200);
-  const company = str(b.company, 160);
-  const message = str(b.message, 5000);
+  if (str(b.website)) return { ok: "spam" };
+  const name = str(b.name);
+  const email = str(b.email);
+  const company = str(b.company);
+  const message = str(b.message);
   const topic = CONTACT_TOPICS.includes(b.topic as ContactTopic) ? (b.topic as ContactTopic) : null;
-  if (name.length < 2 || name.length > 120) return { ok: false, field: "name" };
-  if (!EMAIL.test(email) || email.length > 200) return { ok: false, field: "email" };
-  if (company.length > 160) return { ok: false, field: "company" };
+  if (!isValidContactField("name", name)) return { ok: false, field: "name" };
+  if (!isValidContactField("email", email)) return { ok: false, field: "email" };
+  if (!isValidContactField("company", company)) return { ok: false, field: "company" };
   if (!topic) return { ok: false, field: "topic" };
   const timeline = CONTACT_TIMELINES.includes(b.timeline as ContactTimeline) ? (b.timeline as ContactTimeline) : null;
   if (b.timeline !== undefined && b.timeline !== null && b.timeline !== "" && !timeline) return { ok: false, field: "timeline" };
-  if (message.length < 10 || message.length > 5000) return { ok: false, field: "message" };
+  if (!isValidContactField("message", message)) return { ok: false, field: "message" };
   return { ok: true, value: { name, email, company, topic, timeline, message, locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en", source: cleanSource(b.source) } };
 }
 
