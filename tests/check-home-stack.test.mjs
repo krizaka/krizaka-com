@@ -45,6 +45,9 @@ test("every tile has a still picture, the pictures of a row are alike, and the t
   assert.match(homeStackProblems(desktop, uneven).join("\n"), /pictures of row 2 differ in height \(176, 240px\)/);
   assert.deepEqual(homeStackProblems(desktop, { ...ok(), tiles: [tile(), tile({ meta: "krizaka.github.io" }), tile({ still: 300, meta: "java.krizaka.com" }), tile({ still: 300, meta: "ts.krizaka.com" })] }), [], "rows are compared, not the whole grid");
   assert.match(homeStackProblems(phone, uneven).join("\n"), /pictures differ in height \(240, 240, 176, 240px\)/, "one column: every box keeps its minimum height");
+  const linux = ok();
+  linux.tiles[0] = tile({ still: 256 + 28 });
+  assert.deepEqual(homeStackProblems(phone, linux), [], "one column: the kit's card may stand two lines above the floor (its fonts differ by platform)");
   const rows = ok();
   rows.tiles[1] = tile({ height: 470, meta: "krizaka.github.io" });
   assert.match(homeStackProblems(desktop, rows).join("\n"), /tiles of row 1 differ in height \(420, 470px\)/);
@@ -64,7 +67,7 @@ test("no empty band under a picture, and the tile names a site address — a hos
   for (const meta of ["https://krizaka.github.io/krizaka-motion", "krizaka.github.io/krizaka-motion/", "Krizaka Motion"]) {
     const bad = ok();
     bad.tiles[1] = tile({ meta });
-    assert.match(homeStackProblems(desktop, bad).join("\n"), new RegExp(`tile 2 names "${meta.replace(/[/.]/g, "\\$&")}", not a site address`), meta);
+    assert.deepEqual(homeStackProblems(desktop, bad), [`/en at 1440px (dark): tile 2 names "${meta}", not a site address`]);
   }
 });
 

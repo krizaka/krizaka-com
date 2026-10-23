@@ -77,10 +77,11 @@ export function homeStackProblems({ path, width, theme }, sample) {
     const stills = row.map((t) => t.still).filter((h) => h !== null);
     if (stills.length > 1 && spread(stills) > MAX_PICTURE_DELTA_PX) problems.push(`${where}: the pictures of row ${n} differ in height (${stills.join(", ")}px)`);
   }
-  // One column: every picture keeps the box's minimum height.
+  // One column: every box keeps the minimum height; a picture taller than it by itself (the kit's card, whose fonts
+  // differ by platform) may exceed the others by two lines at most.
   if (columns === 1) {
     const stills = sample.tiles.map((t) => t.still).filter((h) => h !== null);
-    if (stills.length > 1 && spread(stills) > TOLERANCE_PX) problems.push(`${where}: the pictures differ in height (${stills.join(", ")}px)`);
+    if (stills.length > 1 && spread(stills) > MAX_PICTURE_DELTA_PX) problems.push(`${where}: the pictures differ in height (${stills.join(", ")}px)`);
   }
   return problems;
 }
