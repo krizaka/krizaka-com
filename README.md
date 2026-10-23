@@ -116,7 +116,7 @@ and `/docs/<product>/…` addresses answer **308** with the product's www addres
 
 krizaka.com renders no documentation. **Krizaka UI** is documented on [ui.krizaka.com](https://ui.krizaka.com), built
 from [krizaka-ui](https://github.com/krizaka/krizaka-ui) (`apps/site`) at every change; **Krizaka Java** on
-[java.krizaka.com](https://java.krizaka.com), built from `krizaka/krizaka-build`; the products on their own sites. The old
+[java.krizaka.com](https://java.krizaka.com), built from `krizaka/krizaka-build`; **Krizaka TS** on [ts.krizaka.com](https://ts.krizaka.com), built from `krizaka/krizaka-ts` (`site/`); the products on their own sites. The old
 `/docs/ui/*` and `/docs/java/*` addresses answer 308 with their page there (`lib/ui-redirects.ts`, `lib/java-redirects.ts`),
 and `/docs` goes to `/open-source`.
 

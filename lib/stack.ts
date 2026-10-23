@@ -1,6 +1,5 @@
 /* The stack Krizaka open-sources — the pieces every product is built on, each on its own site, built from its own
-   repository (ui.krizaka.com, java.krizaka.com; Krizaka TS documents itself in its repository — each package its README —
-   until ts.krizaka.com exists). Structure only: the words are messages → site.stack.<id>; the versions
+   repository (ui.krizaka.com, java.krizaka.com, ts.krizaka.com). Structure only: the words are messages → site.stack.<id>; the versions
    and counts shown beside them are read at build (lib/registry-versions.ts), never typed here. */
 
 import { GITHUB_ORG_URL, KRIZAKA_UI_REPO_URL } from "./site";
@@ -23,8 +22,7 @@ export interface StackPart {
 export const STACK: StackPart[] = [
   { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com", repoUrl: KRIZAKA_UI_REPO_URL, registry: "npm", coordinate: "@krizaka/ui" },
   { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com", repoUrl: `${GITHUB_ORG_URL}/krizaka-build`, registry: "maven", coordinate: "com.krizaka:krizaka-bom" },
-  // Its documentation is the repository's README and each package's, until ts.krizaka.com (krizaka/krizaka-ts#28).
-  { id: "ts", name: "Krizaka TS", url: `${GITHUB_ORG_URL}/krizaka-ts`, repoUrl: `${GITHUB_ORG_URL}/krizaka-ts`, registry: "npm" },
+  { id: "ts", name: "Krizaka TS", url: "https://ts.krizaka.com", repoUrl: `${GITHUB_ORG_URL}/krizaka-ts`, registry: "npm" },
 ];
 
 /** `ui.krizaka.com` — an address as it reads in a sentence. */
