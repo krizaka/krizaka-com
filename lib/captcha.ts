@@ -6,6 +6,11 @@
  */
 export const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
+// @fixed: a Turnstile token is a few hundred characters; 4096 bounds what is sent upstream
+const MAX_TOKEN_LENGTH = 4096;
+// @fixed: a form submit must not hang on the verification service
+const VERIFY_TIMEOUT_MS = 8000;
+
 type Fetch = (url: string, init: { method: string; body: string; headers: Record<string, string>; signal?: AbortSignal }) => Promise<{ ok: boolean; json(): Promise<unknown> }>;
 
 export function captchaConfigured(env: Record<string, string | undefined> = process.env): boolean {
@@ -20,7 +25,7 @@ export async function verifyCaptcha(
   fetchImpl: Fetch = fetch as unknown as Fetch,
 ): Promise<boolean> {
   if (!captchaConfigured(env)) return true;
-  if (typeof token !== "string" || !token.trim() || token.length > 4096) return false;
+  if (typeof token !== "string" || !token.trim() || token.length > MAX_TOKEN_LENGTH) return false;
   const body = new URLSearchParams({ secret: env.ABUSE_CAPTCHA_SECRET_KEY!.trim(), response: token });
   if (ip && ip !== "unknown") body.set("remoteip", ip);
   try {
@@ -28,10 +33,9 @@ export async function verifyCaptcha(
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: body.toString(),
-      signal: AbortSignal.timeout(8000),
+      signal: AbortSignal.timeout(VERIFY_TIMEOUT_MS),
     });
-    if (!res.ok) return false;
-    return (await res.json() as { success?: boolean }).success === true;
+    return res.ok && ((await res.json()) as { success?: boolean }).success === true;
   } catch {
     return false;
   }
