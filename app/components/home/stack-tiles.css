@@ -26,8 +26,12 @@
 /* The home's short version: a still visual of one height, never a demo. */
 .kz-build-still { display: flex; flex-direction: column; flex: 1 1 auto; height: 11rem; overflow: hidden; pointer-events: none; user-select: none; }
 .kz-build-still > * { flex: 1 1 auto; }
-.kz-build-code { display: flex; align-items: center; padding: 16px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0);
-  font-family: var(--font-mono); font-size: 12.5px; color: var(--kz-text-primary); overflow-wrap: anywhere; }
+.kz-build-still-mark { display: grid; place-content: center; gap: 12px; }
+.kz-build-java-mark { grid-template-columns: repeat(3, 2rem); align-items: center; }
+.kz-build-java-mark span { height: 3.5rem; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
+.kz-build-java-mark span:nth-child(2) { height: 4.5rem; }
+.kz-build-ts-mark { grid-template-columns: repeat(2, 2.25rem); }
+.kz-build-ts-mark span { aspect-ratio: 1; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
 
 .kz-showcase { display: flex; flex-direction: column; justify-content: center; gap: 12px; margin: 0; }
 .kz-showcase-rows { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }

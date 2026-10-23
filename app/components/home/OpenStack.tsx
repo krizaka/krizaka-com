@@ -1,11 +1,5 @@
-/* The open source, put forward on the home and PLAYABLE (2026-10-20): « Build with our open source » — three tiles, one
-   per piece of the stack, each with something to try and its own site:
-   - Krizaka UI: a composed piece of real components (UiShowcase) and @krizaka/ui's real npm downloads → ui.krizaka.com;
-   - Krizaka Motion: the engine flow in a small frame with the lab's layout and mode → the lab on GitHub Pages;
-   - Krizaka Java: the BOM to paste, Maven or Gradle (CodeTabs), at the version Maven Central gives → java.krizaka.com.
-   - Krizaka TypeScript: the command that installs its packages, as npm lists them at build → its repository (READMEs as docs).
-   Every version and figure is read at build (lib/registry-versions.ts). `StackTiles` is the one mechanism of the home and of
-   /open-source: every tile has something to try or to copy, its facts, and the way to its site. */
+/* The open source section: short, still previews on the home; full examples and facts on /open-source and /story.
+   Versions and figures are read at build (lib/registry-versions.ts). */
 
 import type { ReactNode } from "react";
 import { ForwardIcon } from "@krizaka/icons";
@@ -26,7 +20,7 @@ function Tile({ name, meta, line, children, facts, href, cta, compact }: { name:
       <p className="kz-build-meta">{meta}</p>
       <h3 className="kz-build-name">{name}</h3>
       <p className="kz-build-line">{line}</p>
-      <div className={compact ? "kz-build-still" : "kz-build-try"} aria-hidden={compact || undefined}>
+      <div className={compact ? "kz-build-still" : "kz-build-try"} aria-hidden={compact || undefined} inert={compact || undefined}>
         {children}
       </div>
       {!compact && facts.length > 0 && <Facts items={facts} />}
@@ -95,7 +89,7 @@ export function StackTiles({ locale, compact }: { locale: string; compact?: bool
           cta={s.java.explore}
           facts={bom ? [{ label: `krizaka-bom ${bom}`, tone: "ok" }] : []}
         >
-          {compact ? <code className="kz-build-code">com.krizaka:krizaka-bom{bom ? `:${bom}` : ""}</code> : <CodeTabs
+          {compact ? <div className="kz-build-still-mark kz-build-java-mark" aria-hidden="true"><span /><span /><span /></div> : <CodeTabs
             label={s.java.tool}
             tabs={[
               { id: "maven", label: "Maven", content: <CodeBlock code={maven} language="xml" file="pom.xml" copyLabel={s.java.copy} copiedLabel={s.java.copied} /> },
@@ -112,7 +106,7 @@ export function StackTiles({ locale, compact }: { locale: string; compact?: bool
           cta={s.ts.explore}
           facts={tsPackages.length ? [{ label: format(s.facts.npm, { count: tsPackages.length }), tone: "ok" }, { label: "Apache-2.0" }] : []}
         >
-          {compact ? <code className="kz-build-code">npm install {tsPackages[0] ?? "@krizaka/…"}</code> : tsPackages.length ? <CodeBlock code={install} language="bash" file="terminal" copyLabel={s.java.copy} copiedLabel={s.java.copied} /> : null}
+          {compact ? <div className="kz-build-still-mark kz-build-ts-mark" aria-hidden="true"><span /><span /><span /><span /></div> : tsPackages.length ? <CodeBlock code={install} language="bash" file="terminal" copyLabel={s.java.copy} copiedLabel={s.java.copied} /> : null}
         </Tile>
       </ul>
   );

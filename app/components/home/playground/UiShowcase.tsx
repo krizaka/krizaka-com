@@ -21,7 +21,6 @@ export interface UiShowcaseWords {
 }
 
 const TONES: BadgeProps["tone"][] = ["success", "accent", "warning", "neutral"];
-const FALLBACK = [3, 5, 4, 7, 6, 9, 8, 11];
 
 const initials = (name: string) =>
   name
@@ -32,15 +31,15 @@ const initials = (name: string) =>
     .toUpperCase();
 
 export default function UiShowcase({ w, series }: { w: UiShowcaseWords; series?: number[] }) {
-  const data = series && series.length > 1 ? series : FALLBACK;
+  const data = series && series.length > 1 ? series : undefined;
   return (
-    <figure className="kz-play kz-showcase" role="img" aria-label={w.label}>
+    <figure className="kz-play kz-showcase" role="img" aria-label={[w.label, w.downloads].filter(Boolean).join(". ")}>
       <ul className="kz-showcase-rows" aria-hidden>
         {w.rows.map((row, i) => (
           <li key={row.name} className="kz-showcase-row">
             <Avatar size="sm" fallback={initials(row.name)} alt="" />
             <span className="kz-showcase-name">{row.name}</span>
-            <Sparkline data={rotate(data, i)} variant="area" width={72} height={22} title={w.trend} />
+            {data ? <Sparkline data={rotate(data, i)} variant="area" width={72} height={22} title={w.trend} /> : null}
             <Badge tone={TONES[i % TONES.length]} dot>
               {row.status}
             </Badge>

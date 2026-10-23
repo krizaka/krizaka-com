@@ -38,6 +38,8 @@ export default function MotionPlayground({ w, still }: { w: MotionPlaygroundWord
         label={w.label}
         layout={layout}
         compactLayout={false}
+        particles={still ? "none" : undefined}
+        breathe={still ? false : undefined}
         hub={{ label: w.hub, mark: <KrizakaLogo size={30} animated={false} /> }}
         nodes={APPS.map((id) => ({ id, label: w.app.replace("{id}", id), flow: mode, mark: <span className="kz-play-dot">{id}</span> }))}
         hint={w.hint}

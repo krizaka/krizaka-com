@@ -117,11 +117,16 @@ test("the open-source section: three playable tiles, versions and downloads read
   const ui = read("app/components/home/playground/UiShowcase.tsx");
   for (const piece of ["@krizaka/ui/avatar", "@krizaka/ui/badge", "@krizaka/charts/sparkline"]) assert.match(ui, new RegExp(piece));
   assert.match(ui, /aria-hidden/, "the composed piece is inert, with a text equivalent");
+  assert.match(ui, /aria-label=\{\[w\.label, w\.downloads\]/, "the image name includes the weekly download count");
+  assert.match(ui, /data \? <Sparkline/, "sparklines appear only for a real download series");
+  assert.doesNotMatch(ui, /FALLBACK/, "no synthetic download history");
   assert.doesNotMatch(ui, /"use client"|var\(--kz|#[0-9a-f]{3,6}\b/i, "published components only, no colour of its own");
   const motion = read("app/components/home/playground/MotionPlayground.tsx");
   assert.match(motion, /from "@krizaka\/ui\/engine-flow"/);
   assert.match(motion, /FLOW_LAYOUTS/);
   assert.match(motion, /FLOW_MODES/);
+  assert.match(motion, /particles=\{still \? "none" : undefined\}/, "the still preview has no photons");
+  assert.match(motion, /breathe=\{still \? false : undefined\}/, "the still preview has no breathing hub");
   for (const lang of ["en", "fr"]) {
     const s = messages(lang).site.home.stack;
     for (const k of ["ui", "motion", "java"]) assert.ok(s[k], `${lang}: stack.${k}`);
@@ -188,7 +193,10 @@ test("the stack tiles: one component on the home, /open-source and /story, with 
   assert.doesNotMatch(stack, /LinkCard|StackCards/);
   for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"]) assert.match(read(page), /<StackTiles locale=\{locale\} \/>/, page);
   assert.match(stack, /<StackTiles locale=\{locale\} compact \/>/, "the home keeps the short version: name, line, a still visual, a link");
-  assert.match(stack, /compact \? \(?<code|compact \? <code/, "Java and TS examples to copy stay on /open-source only");
+  assert.doesNotMatch(stack, /compact \? <code/, "the home has no code snippets");
+  assert.match(stack, /kz-build-still-mark kz-build-java-mark/, "Java has a static non-code visual");
+  assert.match(stack, /kz-build-still-mark kz-build-ts-mark/, "TypeScript has a static non-code visual");
+  assert.match(stack, /inert=\{compact \|\| undefined\}/, "the compact preview subtree cannot receive focus");
   assert.match(read("app/components/home/stack-tiles.css"), /\.kz-build-try \{[^}]*flex: 1 1 auto/, "the example grows to fill its card");
   for (const lang of ["en", "fr"]) assert.ok(messages(lang).site.home.stack.ts.line, `${lang}: stack.ts.line`);
 });
