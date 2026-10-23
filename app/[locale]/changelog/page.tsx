@@ -7,7 +7,6 @@ import { FILTER_IDS } from "@/lib/changelog-filter";
 import { PLATFORM, RELEASES } from "@/lib/changelog-data";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import TopNavBar from "@/app/components/TopNavBar";
-import ButtonLink from "@/app/components/ButtonLink";
 import ChangelogView from "@/app/components/ChangelogView";
 
 interface Props {
@@ -80,7 +79,7 @@ export default async function ChangelogRoute({ params }: Props) {
             )}
           </>
         }
-        feed={<ButtonLink href={`/${locale}/changelog/feed.xml`} variant="secondary" size="md">{c.feed}</ButtonLink>}
+        feed={{ href: `/${locale}/changelog/feed.xml`, label: c.feed }}
         filterLabel={c.filterLabel}
         allLabel={c.filters.all}
         filterNames={Object.fromEntries(FILTER_IDS.map((id) => [id, c.filters[id]])) as Record<(typeof FILTER_IDS)[number], string>}

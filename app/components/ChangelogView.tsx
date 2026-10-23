@@ -5,7 +5,7 @@
    chips are real links: without JavaScript they reload the page with the filter. */
 
 import Link from "next/link";
-import type { MouseEvent, ReactNode } from "react";
+import type { MouseEvent } from "react";
 import { ChangelogPage, type ChangelogEntry } from "@krizaka/ui/changelog-page";
 import { ChipLink } from "@krizaka/ui/chip-link";
 import { FILTER_PARAM, filterHref, filterOf, visibleEntries, visibleFilters, type FilterId } from "@/lib/changelog-filter";
@@ -14,7 +14,8 @@ import { setSearch, useSearchParam } from "./useSearchParam";
 
 type Props = Omit<React.ComponentProps<typeof ChangelogPage>, "entries" | "linkAs" | "actions"> & {
   entries: readonly (ChangelogEntry & { product: string })[];
-  feed: ReactNode;
+  /** The RSS feed: a chip of the same row, at its end — one size for everything the row offers (krizaka-com#357). */
+  feed: { href: string; label: string };
   filterLabel: string;
   allLabel: string;
   filterNames: Record<FilterId, string>;
@@ -41,16 +42,22 @@ export default function ChangelogView({ entries, feed, filterLabel, allLabel, fi
         entries={shown}
         actions={
           <>
-            <nav aria-label={filterLabel} style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-              {chips.map(({ id, label }) => (
-                <ChipLink key={id ?? "all"} asChild size="sm" selected={selected === id}>
-                  <a href={filterHref("", id)} onClick={choose(id)}>
-                    {label}
-                  </a>
-                </ChipLink>
-              ))}
-            </nav>
-            {feed}
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.5rem", width: "100%" }}>
+              <nav aria-label={filterLabel} style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+                {chips.map(({ id, label }) => (
+                  <ChipLink key={id ?? "all"} asChild size="md" selected={selected === id}>
+                    <a href={filterHref("", id)} onClick={choose(id)}>
+                      {label}
+                    </a>
+                  </ChipLink>
+                ))}
+              </nav>
+              <ChipLink asChild size="md" style={{ marginInlineStart: "auto" }}>
+                <a href={feed.href} type="application/rss+xml">
+                  {feed.label}
+                </a>
+              </ChipLink>
+            </div>
           </>
         }
       />

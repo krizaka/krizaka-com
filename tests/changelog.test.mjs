@@ -203,3 +203,11 @@ test("the page filters through the address and reads both languages", () => {
   assert.match(generator, /release-repos\.json/);
   assert.match(generator, /releaseProblems/);
 });
+
+test("krizaka-com#357: the changelog's row is one size — the filters and the RSS feed are md chips, no larger button beside them", () => {
+  const view = read("app/components/ChangelogView.tsx");
+  assert.doesNotMatch(view, /size="sm"/);
+  assert.equal((view.match(/<ChipLink\b[^>]*size="md"/g) ?? []).length, 2);
+  assert.match(view, /type="application\/rss\+xml"/);
+  assert.doesNotMatch(read("app/[locale]/changelog/page.tsx"), /feed=\{<ButtonLink/);
+});
