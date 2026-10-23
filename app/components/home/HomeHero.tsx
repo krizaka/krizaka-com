@@ -1,9 +1,8 @@
 /* Home hero — the first page of the field notebook (Cahier, krizaka-ui ADR-004, #417): asymmetric, never centred. On the
    left, the date line of the notes, who Krizaka is, one promise, one action (and the film, quietly), the products' marks
-   and the figures that back them; on the right, Plate I — the five birds of the film, each with its promise as the film
-   says it (BirdPlate, the cues of site.story.world). The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first paint (LCP) — never revealed,
-   never part of the intro. The flock's scene is no longer here: it opens the products section (ProductsFlock), the flock being
-   the products.
+   and the figures that back them; on the right, the taped scene of the five birds, each with its promise from the film.
+   The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first
+   paint (LCP) — never revealed, never part of the intro.
 
    Under the actions, the products put forward: a quiet row of their seven marks (from @krizaka/ui), each one a link to
    its card in #products, the ones not offered yet dimmed.
@@ -13,22 +12,27 @@
    Skippable, still under reduced motion and Save-Data. Every figure is read at build and dropped when unknown. */
 
 import { ForwardIcon } from "@krizaka/icons";
+import Link from "next/link";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
-import { BirdPlate } from "@krizaka/ui/bird-plate";
+import { Flock } from "@krizaka/ui/flock";
+import { TapedPhoto } from "@krizaka/ui/taped-photo";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { format, getDictionary } from "@/lib/i18n";
 import { figureColumns } from "@/lib/figure-grid";
 import type { CSSProperties } from "react";
 import { video } from "@/lib/cdn";
-import { FILM_BASE, RELAY_BASE } from "@/lib/film-captions";
+import { FILM_BASE, FILM_CAST, RELAY_BASE } from "@/lib/film-captions";
 import { heroMarkOrder } from "@/lib/home-sections";
 import { focusProps } from "@/lib/focus";
+import { HERO_FLOCK } from "@/lib/products-flock";
+import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
 import FilmLightbox from "./FilmLightbox";
 import HeroIntro from "./HeroIntro";
+import AmbientLoop from "./AmbientLoop";
 import "./home.css";
 
 export interface HomeFigures {
@@ -48,6 +52,11 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
   const dict = getDictionary(locale);
   const t = dict.site.home.hero;
   const cues = dict.site.story.world.cues;
+  const cueBirds = FILM_CAST.map((bird) => ({
+    ...HERO_FLOCK.birds.find((placed) => placed.bird === bird)!,
+    label: t.plate[bird],
+    promise: cues[bird],
+  }));
   const counted = [
     { id: "repositories", value: figures.repositories, label: t.proofs.repositories },
     { id: "npm", value: figures.npm, label: t.proofs.npm },
@@ -109,18 +118,33 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
         </dl>
         <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
         </div>
-        <BirdPlate
-          className="kz-home-plate"
-          title={t.plate.title}
-          subtitle={t.plate.subtitle}
-          figures={[
-            { bird: "falcon", label: t.plate.falcon, promise: cues.falcon },
-            { bird: "owl", label: t.plate.owl, promise: cues.owl },
-            { bird: "duck", label: t.plate.duck, promise: cues.duck },
-            { bird: "flamingo", label: t.plate.flamingo, promise: cues.flamingo },
-            { bird: "pigeon", label: t.plate.pigeon, promise: cues.pigeon },
-          ]}
-        />
+        <TapedPhoto className="kz-home-plate" caption={t.plate.title}>
+          <div className="kz-home-flock">
+            <AmbientLoop set={VALLEY} />
+            <Flock className="kz-home-flock-stage" birds={HERO_FLOCK.birds} ratio={HERO_FLOCK.ratio} tone="own" tempo={1.7} scenes greet />
+            <div className="kz-home-flock-links">
+              {cueBirds.map(({ bird, x, y, size, label, promise }) => (
+                <Link
+                  key={bird}
+                  href="/story#who"
+                  className="kz-home-flock-hit"
+                  aria-label={`${label}: ${promise}`}
+                  style={{ left: `${x - size / 2}%`, width: `${size}%`, top: `calc(${y}% - ${size * 0.9}cqw)` }}
+                >
+                  <span className="kz-home-flock-caption" aria-hidden>
+                    {promise}
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <ul className="sr-only" aria-label={t.plate.title}>
+            <li>{t.plate.subtitle}</li>
+            {cueBirds.map(({ bird, label, promise }) => (
+              <li key={bird}>{label}: {promise}</li>
+            ))}
+          </ul>
+        </TapedPhoto>
         </div>
       </Page>
 

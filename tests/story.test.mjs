@@ -69,7 +69,8 @@ test("the film is shown once: one poster card opening the lightbox; no inline pl
   assert.match(page, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/, "the light film under reduced motion / Save-Data");
   assert.doesNotMatch(page, /VideoPlayer|<video|autoPlay|autoplay/, "no player in the reading column");
   assert.match(page, /<Image className="st-film-poster" src=\{film\.poster\}/, "the poster is a content frame");
-  assert.match(css, /\.st-film \{[^}]*max-width: 420px[^}]*aspect-ratio: 16 \/ 9/, "sized for the column, 16:9");
+  assert.match(css, /\.st-film-photo \{ max-width: 420px; \}/, "taped print sized for the column");
+  assert.match(css, /\.st-film \{[^}]*aspect-ratio: 16 \/ 9/, "poster remains 16:9");
   const box = read("app/components/home/FilmLightbox.tsx");
   assert.match(box, /preload="none"/);
   assert.match(box, /trigger\?: ReactNode/);

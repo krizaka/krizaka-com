@@ -5,7 +5,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
-import { BAND_TALL, BAND_WIDE } from "../lib/products-flock.ts";
+import { BAND_TALL, BAND_WIDE, HERO_FLOCK } from "../lib/products-flock.ts";
 
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name:/g)].map((m) => m[1]);
@@ -27,6 +27,14 @@ test("every product has its bird on the band, in both cuts, inside the frame, th
 test("the pigeon (Orochia) is at one end of the wide band, so its parcel crosses it all", () => {
   const xs = BAND_WIDE.birds.map((b) => b.x);
   assert.equal(BAND_WIDE.birds.find((b) => b.bird === "pigeon").x, Math.min(...xs));
+});
+
+test("the hero's five film birds are placed in the tall scene as data", () => {
+  assert.equal(HERO_FLOCK.ratio, 4 / 5);
+  assert.deepEqual(HERO_FLOCK.birds.map((b) => b.bird), ["falcon", "owl", "duck", "flamingo", "pigeon"]);
+  for (const b of HERO_FLOCK.birds) {
+    assert.ok(b.x - b.size / 2 >= 0 && b.x + b.size / 2 <= 100 && b.y > 60 && b.y < 100, b.bird);
+  }
 });
 
 test("the band opens the products section, outside the hero, full width, without a frame", () => {

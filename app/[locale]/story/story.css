@@ -60,9 +60,10 @@
 .st-proof { display: grid; gap: 8px; max-width: 420px; }
 .st-proof-note { margin: 0; font-family: var(--kz-font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--kz-text-secondary); }
 
-/* The film: one poster card (a content frame), the player opens in a lightbox. 16:9, never wider than the column. */
-.st-film { position: relative; display: block; width: 100%; max-width: 420px; padding: 0; border: 1px solid var(--kz-border-default); border-radius: 14px; overflow: hidden;
-  background: var(--kz-surface-1); cursor: pointer; text-align: left; color: var(--kz-text-primary); aspect-ratio: 16 / 9; }
+/* The film: a taped poster, the player opens in a lightbox. 16:9, never wider than the column. */
+.st-film-photo { max-width: 420px; }
+.st-film { position: relative; display: block; width: 100%; padding: 0; border: 0; overflow: hidden;
+  background: transparent; cursor: pointer; text-align: left; color: var(--kz-text-primary); aspect-ratio: 16 / 9; }
 .st-film-poster { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--kz-ease, ease); }
 .st-film-play { position: absolute; inset: 0; margin: auto; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; color: #fff;
   background: color-mix(in oklab, #000 55%, transparent); backdrop-filter: blur(6px); border: 1px solid color-mix(in oklab, #fff 40%, transparent); }

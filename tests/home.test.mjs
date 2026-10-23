@@ -94,12 +94,31 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
   assert.match(hero, /href=\{`#product-\$\{p\.id\}`\}/);
   assert.match(hero, /<ProductLogo id=\{p\.id\} size=\{30\} animated=\{false\} \/>/);
   assert.match(hero, /DIM: readonly ProductStatus\[\] = \["construction", "upcoming"\]/);
-  assert.doesNotMatch(hero, /<video|<img|AmbientLoop set=\{[^A]/, "no new media in the hero");
+  assert.doesNotMatch(hero, /<video|<img/, "the ambient scene remains lazy and does not add eagerly loaded media");
+  assert.match(hero, /<AmbientLoop set=\{VALLEY\} \/>/);
   assert.ok(hero.indexOf("kz-home-actions") < hero.indexOf("kz-home-marks") && hero.indexOf("kz-home-marks") < hero.indexOf("kz-home-proofs"), "under the actions, above the figures");
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home.hero;
     assert.ok(h.marksLabel, `${lang}: hero.marksLabel`);
     assert.ok(h.lead.length < 240, `${lang}: the lead stays one sentence`);
+  }
+});
+
+test("the hero uses the shared taped flock photo and keeps all five film promises accessible", () => {
+  const hero = read("app/components/home/HomeHero.tsx");
+  assert.match(hero, /from "@krizaka\/ui\/taped-photo"/);
+  assert.match(hero, /<TapedPhoto[^>]*caption=\{t\.plate\.title\}/);
+  assert.doesNotMatch(hero, /BirdPlate/);
+  assert.match(hero, /<Flock[^>]*scenes/);
+  assert.match(hero, /FILM_CAST\.map/);
+  assert.match(hero, /promise: cues\[bird\]/);
+  assert.match(hero, /className="sr-only"/);
+  assert.match(hero, /cueBirds\.map/);
+  assert.match(hero, /HERO_FLOCK/);
+  assert.ok(hero.indexOf("kz-home-actions") < hero.indexOf("<TapedPhoto"), "the photo follows the first-paint text and actions");
+  for (const lang of ["en", "fr"]) {
+    const cues = messages(lang).site.story.world.cues;
+    for (const bird of ["falcon", "owl", "duck", "flamingo", "pigeon"]) assert.ok(cues[bird], `${lang}: ${bird} promise`);
   }
 });
 
