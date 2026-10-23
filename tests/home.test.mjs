@@ -107,16 +107,17 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
 // Krizaka Motion's flow with two of the lab's settings, Krizaka Java's BOM — every version and figure read at build.
 test("the open-source section: three playable tiles, versions and downloads read at build, one primary action", () => {
   const stack = read("app/components/home/OpenStack.tsx");
-  assert.match(stack, /<UiPlayground/);
+  assert.match(stack, /<UiShowcase/);
   assert.match(stack, /<MotionPlayground/);
   assert.match(stack, /<CodeTabs/);
   assert.match(stack, /npmDownloads\(ui\.coordinate\)/);
   assert.match(stack, /mavenVersion\("krizaka-bom"\)/);
   assert.match(stack, /publishedVersion\(ui\.coordinate\)/);
   assert.doesNotMatch(stack, /\d+\.\d+\.\d+/, "no version typed by hand");
-  const ui = read("app/components/home/playground/UiPlayground.tsx");
-  for (const piece of ["@krizaka/ui/button", "@krizaka/ui/switch", "@krizaka/ui/chip", "@krizaka/charts/sparkline"]) assert.match(ui, new RegExp(piece));
-  assert.match(ui, /theme-\$\{theme\}/, "the theme preview is scoped to the tile");
+  const ui = read("app/components/home/playground/UiShowcase.tsx");
+  for (const piece of ["@krizaka/ui/avatar", "@krizaka/ui/badge", "@krizaka/charts/sparkline"]) assert.match(ui, new RegExp(piece));
+  assert.match(ui, /aria-hidden/, "the composed piece is inert, with a text equivalent");
+  assert.doesNotMatch(ui, /"use client"|var\(--kz|#[0-9a-f]{3,6}\b/i, "published components only, no colour of its own");
   const motion = read("app/components/home/playground/MotionPlayground.tsx");
   assert.match(motion, /from "@krizaka\/ui\/engine-flow"/);
   assert.match(motion, /FLOW_LAYOUTS/);
@@ -186,6 +187,9 @@ test("the stack tiles: one component on the home, /open-source and /story, with 
   assert.match(stack, /import "\.\/stack-tiles\.css"/, "the tiles carry their own styles to every page");
   assert.doesNotMatch(stack, /LinkCard|StackCards/);
   for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"]) assert.match(read(page), /<StackTiles locale=\{locale\} \/>/, page);
+  assert.match(stack, /<StackTiles locale=\{locale\} compact \/>/, "the home keeps the short version: name, line, a still visual, a link");
+  assert.match(stack, /compact \? \(?<code|compact \? <code/, "Java and TS examples to copy stay on /open-source only");
+  assert.match(read("app/components/home/stack-tiles.css"), /\.kz-build-try \{[^}]*flex: 1 1 auto/, "the example grows to fill its card");
   for (const lang of ["en", "fr"]) assert.ok(messages(lang).site.home.stack.ts.line, `${lang}: stack.ts.line`);
 });
 

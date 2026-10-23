@@ -319,22 +319,25 @@
         "ui": {
           "line": "The components of every Krizaka screen — web, iOS and Android. These are the real ones:",
           "explore": "Explore ui.krizaka.com",
-          "playground": "Krizaka UI, live",
-          "variant": "Button style",
-          "variants": {
-            "primary": "Primary",
-            "secondary": "Secondary",
-            "ghost": "Ghost"
-          },
-          "button": "Get started",
-          "switch": "Notifications",
-          "theme": "Preview theme",
-          "themes": {
-            "dark": "Dark",
-            "light": "Light"
-          },
           "downloads": "{count} downloads of @krizaka/ui last week",
-          "trend": "Weekly npm downloads of @krizaka/ui, last 12 weeks"
+          "trend": "Weekly npm downloads of @krizaka/ui, last 12 weeks",
+          "showcase": {
+            "label": "A sample of Krizaka UI: a list of people with an avatar, a trend line and a status badge.",
+            "rows": [
+              {
+                "name": "Ada Lovelace",
+                "status": "Active"
+              },
+              {
+                "name": "Grace Hopper",
+                "status": "Invited"
+              },
+              {
+                "name": "Alan Turing",
+                "status": "Review"
+              }
+            ]
+          }
         },
         "motion": {
           "name": "Krizaka Motion",

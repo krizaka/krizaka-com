@@ -14,10 +14,24 @@
 
 .kz-play { display: flex; flex-direction: column; gap: 12px; padding: 16px; border-radius: 0;
   border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); color: var(--kz-text-primary); }
-.kz-play-stage { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; min-height: 48px; }
-.kz-play-switch-label { margin-left: -6px; font-size: 13.5px; color: var(--kz-text-secondary); }
-.kz-play-trend { position: relative; display: flex; align-items: center; gap: 10px; margin: 0; font-size: 12.5px; color: var(--kz-text-secondary); }
-.kz-play-trend svg { flex: none; }
 .kz-play-flow { --kz-flow-mark: 2.25rem; --kz-flow-hub: 3.75rem; }
 .kz-play-flow .kz-flow-detail { min-height: 1lh; margin-top: 6px; font-size: 13px; }
 .kz-play-dot { font-family: var(--font-mono); font-size: 12px; font-weight: 700; color: var(--kz-accent-text, var(--kz-accent)); }
+
+/* The example fills its card: it grows to the card's height (every card of a row is as tall as the tallest), so the facts
+   and the action line up at the foot and no empty band is left under it. */
+.kz-build-try { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 15rem; }
+.kz-build-try > * { flex: 1 1 auto; }
+
+/* The home's short version: a still visual of one height, never a demo. */
+.kz-build-still { display: flex; flex-direction: column; flex: 1 1 auto; height: 11rem; overflow: hidden; pointer-events: none; user-select: none; }
+.kz-build-still > * { flex: 1 1 auto; }
+.kz-build-code { display: flex; align-items: center; padding: 16px; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0);
+  font-family: var(--font-mono); font-size: 12.5px; color: var(--kz-text-primary); overflow-wrap: anywhere; }
+
+.kz-showcase { display: flex; flex-direction: column; justify-content: center; gap: 12px; margin: 0; }
+.kz-showcase-rows { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.kz-showcase-row { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.kz-showcase-name { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13.5px; font-weight: 600; }
+.kz-showcase-caption { margin: 0; font-size: 12.5px; color: var(--kz-text-secondary); }
+@media (max-width: 420px) { .kz-showcase-row svg { display: none; } }
