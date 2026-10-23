@@ -49,6 +49,7 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.deepEqual(stack, [
     { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com" },
     { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com" },
+    { id: "ts", name: "Krizaka TS", url: "https://ts.krizaka.com" },
   ]);
   // the family's own list is @krizaka/ui's: the site's stack must agree with it
   for (const s of stack) assert.equal(siteById(s.id).url, s.url, `@krizaka/ui/sites: ${s.id}`);
