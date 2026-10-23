@@ -188,3 +188,15 @@ test("the stack tiles: one component on the home, /open-source and /story, with 
   for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"]) assert.match(read(page), /<StackTiles locale=\{locale\} \/>/, page);
   for (const lang of ["en", "fr"]) assert.ok(messages(lang).site.home.stack.ts.line, `${lang}: stack.ts.line`);
 });
+
+test("§ 5 puts the right to be forgotten first, says the books are kept, and reads its figures at build (Oussama, 2026-10-23)", () => {
+  const src = readFileSync(new URL("../app/components/home/Principles.tsx", import.meta.url), "utf8");
+  assert.match(src, /\{ id: "forgotten", icon: TrashIcon \}/);
+  assert.ok(src.indexOf('"forgotten"') < src.indexOf('"books"'), "the right to be forgotten comes first");
+  for (const lang of ["en", "fr"]) {
+    const items = messages(lang).site.home.principles.items;
+    assert.deepEqual(Object.keys(items), ["forgotten", "books", "facts", "sovereign", "quality", "open"]);
+    assert.match(items.open.body, /\{count\}.*\{npm\}.*\{maven\}/, `${lang}: the figures are placeholders, never typed`);
+    assert.match(items.books.body, /(never file|jamais à votre place)/, `${lang}: Akinaza prepares the return, never files it`);
+  }
+});

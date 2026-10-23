@@ -166,7 +166,7 @@ html[data-intro="play"] .kz-intro-sweep { animation: kz-intro-sweep 1.3s cubic-b
 .kz-home-film { padding: 0; overflow: hidden; }
 
 /* ─── Cahier touches (krizaka-ui ADR-004): § 4 and § 5 on ruled paper, with restraint ───
-   The five rules as a numbered notebook list: the number hangs in the margin in the margin's red, each rule is ruled off
+   The six rules as a numbered notebook list: the number hangs in the margin in the margin's red, each rule is ruled off
    by a hairline of the paper, the icon is a pencil mark. A folio (page number) closes the page.
    Static: no motion, no new script. Tokens only. */
 .kz-notebook-list { list-style: none; counter-reset: kz-rule; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); }

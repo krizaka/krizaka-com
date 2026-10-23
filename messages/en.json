@@ -372,28 +372,32 @@
       "principles": {
         "number": "§ 5",
         "eyebrow": "How we work",
-        "title": "Five rules, checked rather than promised.",
+        "title": "Six rules, checked rather than promised.",
         "folio": "page {page} of {total}",
         "items": {
+          "forgotten": {
+            "title": "Forgotten means erased",
+            "body": "The right to be forgotten is one action, not a request: an Akinaza client erased takes their file, notes and attachments with them; a document Yomizaka does not keep is purged after its check; Orazaka deletes a run's data at the end of its retention. Invoices stay only as long as the law requires."
+          },
+          "books": {
+            "title": "Invoices, taxes and the books, handled",
+            "body": "Every invoice knows what was received and what is still owed; GST and QST go to a ledger as each invoice is issued, and Akinaza prepares your return. You file it: we never file for you."
+          },
+          "facts": {
+            "title": "A check reports what it saw",
+            "body": "Yomizaka's authenticity report reads facts off the file, with no model, no score and never a verdict on a person: three levels, each defined in writing, and what it did not examine."
+          },
           "sovereign": {
             "title": "Your data stays where you decide",
             "body": "Orazaka runs on your own servers. This site has no analytics and no tracker."
           },
-          "accessible": {
-            "title": "Accessible, in both themes",
-            "body": "We aim for WCAG 2.2 AA in dark and light: keyboard, screen readers, reduced motion."
-          },
-          "bilingual": {
-            "title": "English and French",
-            "body": "Every word of this site exists in both languages; CI fails when one is missing."
-          },
-          "tested": {
-            "title": "Tested, or not done",
-            "body": "Every change ships with its tests, and nothing merges until CI is green."
+          "quality": {
+            "title": "Tested, bilingual, accessible",
+            "body": "Every change ships with its tests and nothing merges until CI is green; every word exists in English and French, checked by CI; we aim for WCAG 2.2 AA in dark and light."
           },
           "open": {
             "title": "Open by default",
-            "body": "{count} public repositories under Apache-2.0, readable line by line."
+            "body": "{count} public repositories, {npm} npm packages and {maven} Maven artifacts under Apache-2.0, readable line by line."
           }
         }
       },
