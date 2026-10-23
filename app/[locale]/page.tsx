@@ -44,7 +44,7 @@ export default async function Home({ params }: Props) {
       <EngineSection locale={locale} />
       <OpenStack locale={locale} mavenArtifacts={figures.maven} />
       <ProductShowcase locale={locale} />
-      <Principles locale={locale} repositories={figures.repositories} />
+      <Principles locale={locale} figures={figures} />
     </main>
   );
 }

@@ -1,23 +1,26 @@
-/* "How we work" — five rules, each one something the code, the CI or this site shows (no analytics here, the i18n
-   check in CI, tests on every pull request, the public repositories). Short on purpose: a title and one sentence. */
+/* "How we work" — six rules, each one something the code, the CI or this site shows: erasure that erases (Akinaza's
+   client erasure, Yomizaka's purge, Orazaka's retention), the books kept (payments against invoices, the GST/QST
+   ledger, a return prepared and never filed), checks that report facts (no model, no score), the data where it is
+   decided, the quality gates, the open code. Its figures are read at build. Short on purpose: a title and one sentence. */
 
 import type { ComponentType } from "react";
-import { AutomationIcon, GlobeIcon, KnowledgeIcon, LockIcon, EyeIcon, type IconProps } from "@krizaka/icons";
+import { AutomationIcon, KnowledgeIcon, LockIcon, SearchIcon, TrashIcon, WalletIcon, type IconProps } from "@krizaka/icons";
 import { Section } from "@krizaka/ui/page";
 import { format, getDictionary } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import { folioOf } from "@/lib/home-sections";
 import PencilHint from "../PencilHint";
 
-const PRINCIPLES: { id: "sovereign" | "accessible" | "bilingual" | "tested" | "open"; icon: ComponentType<IconProps> }[] = [
+const PRINCIPLES: { id: "forgotten" | "books" | "facts" | "sovereign" | "quality" | "open"; icon: ComponentType<IconProps> }[] = [
+  { id: "forgotten", icon: TrashIcon },
+  { id: "books", icon: WalletIcon },
+  { id: "facts", icon: SearchIcon },
   { id: "sovereign", icon: LockIcon },
-  { id: "accessible", icon: EyeIcon },
-  { id: "bilingual", icon: GlobeIcon },
-  { id: "tested", icon: AutomationIcon },
+  { id: "quality", icon: AutomationIcon },
   { id: "open", icon: KnowledgeIcon },
 ];
 
-export default function Principles({ locale, repositories }: { locale: string; repositories: number }) {
+export default function Principles({ locale, figures }: { locale: string; figures: { repositories: number; npm: number; maven: number } }) {
   const p = getDictionary(locale).site.home.principles;
   return (
     <Section id="principles" number={p.number} title={p.title} paper="lines" reveal divider margin>
@@ -26,7 +29,7 @@ export default function Principles({ locale, repositories }: { locale: string; r
           <li key={id} {...reveal(i % 3)}>
             <Icon size={20} aria-hidden />
             <h3>{p.items[id].title}</h3>
-            <p>{format(p.items[id].body, { count: repositories })}</p>
+            <p>{format(p.items[id].body, { count: figures.repositories, npm: figures.npm, maven: figures.maven })}</p>
           </li>
         ))}
       </ol>

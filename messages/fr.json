@@ -372,28 +372,32 @@
       "principles": {
         "number": "§ 5",
         "eyebrow": "Notre façon de travailler",
-        "title": "Cinq règles, vérifiées plutôt que promises.",
+        "title": "Six règles, vérifiées plutôt que promises.",
         "folio": "page {page} sur {total}",
         "items": {
+          "forgotten": {
+            "title": "Oublié veut dire effacé",
+            "body": "Le droit à l'oubli est un geste, pas une demande : un client effacé dans Akinaza part avec sa fiche, ses notes et ses pièces jointes ; un document que Yomizaka ne garde pas est purgé après sa vérification ; Orazaka supprime les données d'une exécution au terme de sa rétention. Les factures restent le temps que la loi exige, pas plus."
+          },
+          "books": {
+            "title": "Factures, taxes et compta, on s'en charge",
+            "body": "Chaque facture sait ce qui a été reçu et ce qui reste dû ; la TPS et la TVQ vont au registre à l'émission de chaque facture, et Akinaza prépare votre déclaration. Vous la produisez : nous ne la produisons jamais à votre place."
+          },
+          "facts": {
+            "title": "Une vérification dit ce qu'elle a vu",
+            "body": "Le rapport d'authenticité de Yomizaka lit des faits dans le fichier, sans modèle, sans score et jamais de verdict sur une personne : trois niveaux, chacun défini par écrit, et ce qu'il n'a pas examiné."
+          },
           "sovereign": {
-            "title": "Vos données restent où vous décidez",
+            "title": "Vos données restent où vous le décidez",
             "body": "Orazaka tourne sur vos propres serveurs. Ce site n'a ni mesure d'audience ni traceur."
           },
-          "accessible": {
-            "title": "Accessible, dans les deux thèmes",
-            "body": "Nous visons WCAG 2.2 AA en sombre et en clair : clavier, lecteurs d'écran, mouvement réduit."
-          },
-          "bilingual": {
-            "title": "Français et anglais",
-            "body": "Chaque mot de ce site existe dans les deux langues ; la CI échoue s'il en manque un."
-          },
-          "tested": {
-            "title": "Testé, ou pas fini",
-            "body": "Chaque changement arrive avec ses tests, et rien n'est fusionné tant que la CI n'est pas verte."
+          "quality": {
+            "title": "Testé, bilingue, accessible",
+            "body": "Chaque changement arrive avec ses tests et rien n'est fusionné avant que la CI soit verte ; chaque mot existe en français et en anglais, vérifié par la CI ; nous visons le WCAG 2.2 AA en sombre et en clair."
           },
           "open": {
             "title": "Ouvert par défaut",
-            "body": "{count} dépôts publics sous Apache-2.0, à lire ligne par ligne."
+            "body": "{count} dépôts publics, {npm} paquets npm et {maven} artefacts Maven sous Apache-2.0, lisibles ligne à ligne."
           }
         }
       },
