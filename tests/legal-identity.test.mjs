@@ -27,3 +27,9 @@ test("nothing private reaches the site: no street, postal code, phone or tax acc
   }
   assert.doesNotMatch(site, /Sainte-Marguerite|H4C/);
 });
+
+test("the footer signs with the registered name — « A Technologies Krizaka company », never « A Krizaka company »", () => {
+  assert.match(read("app/components/SiteFooter.tsx"), /company: format\(f\.signature, COMPANY\)/);
+  for (const l of ["en", "fr"]) assert.match(JSON.parse(read(`messages/${l}.json`)).site.footer.signature, /\{name\}/);
+  assert.match(site, /name: "Technologies Krizaka"/);
+});

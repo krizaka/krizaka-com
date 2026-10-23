@@ -465,7 +465,8 @@
       "changelog": "Changelog",
       "version": "v{version} · Krizaka UI {ui}",
       "siteColumn": "On krizaka.com",
-      "company": "{legalName} · NEQ {neq} · Montréal, Quebec"
+      "company": "{legalName} · NEQ {neq} · Montréal, Quebec",
+      "signature": "A {name} company"
     },
     "contactForm": {
       "captchaLabel": "Human check",

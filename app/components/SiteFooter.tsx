@@ -32,7 +32,9 @@ export default function SiteFooter() {
       products={wholeNotebook ? undefined : FOCUS_IDS}
       path={pathname}
       variant="site"
-      labels={familyLabels[locale]}
+      // The signature names the company as it is registered (Technologies Krizaka, lib/site.ts COMPANY), not « Krizaka »:
+      // the words are this site's, the component only places them (krizaka-ui: the host provides them).
+      labels={{ ...familyLabels[locale], signature: { ...familyLabels[locale].signature, company: format(f.signature, COMPANY) } }}
       aria-label={t.site.menu.footerAria}
       legal={
         <>
