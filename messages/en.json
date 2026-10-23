@@ -464,7 +464,8 @@
       "blog": "Blog",
       "changelog": "Changelog",
       "version": "v{version} · Krizaka UI {ui}",
-      "siteColumn": "On krizaka.com"
+      "siteColumn": "On krizaka.com",
+      "company": "{legalName} · NEQ {neq} · Montréal, Quebec"
     },
     "contactForm": {
       "captchaLabel": "Human check",
@@ -899,7 +900,7 @@
             "id": "responsible",
             "title": "Who is responsible",
             "paragraphs": [
-              "This website is published by Technologies Krizaka Inc., a company incorporated under the laws of Québec, operating as Krizaka (Montréal, Québec, Canada).",
+              "This site is published by {legalName} (Québec enterprise number, NEQ, {neq}), a business corporation incorporated on October 8, 2026 under Quebec's Business Corporations Act, operating as Krizaka (Montréal, Quebec, Canada).",
               "The person in charge of the protection of personal information is the founder and president of the company; their title and contact are published in the next section."
             ]
           },
@@ -1009,7 +1010,7 @@
           {
             "title": "Who we are",
             "paragraphs": [
-              "krizaka.com is published by Technologies Krizaka Inc., a company incorporated under the laws of Québec, operating as Krizaka (Montréal, Québec, Canada). To reach us, use the contact form."
+              "krizaka.com is published by {legalName} (Québec enterprise number, NEQ, {neq}), a business corporation incorporated under Quebec's Business Corporations Act, operating as Krizaka (Montréal, Quebec, Canada). To reach us, use the contact form or write to contact@krizaka.com."
             ]
           },
           {

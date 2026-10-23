@@ -464,7 +464,8 @@
       "blog": "Blogue",
       "changelog": "Journal des changements",
       "version": "v{version} · Krizaka UI {ui}",
-      "siteColumn": "Sur krizaka.com"
+      "siteColumn": "Sur krizaka.com",
+      "company": "{legalName} · NEQ {neq} · Montréal (Québec)"
     },
     "contactForm": {
       "captchaLabel": "Vérification humaine",
@@ -899,7 +900,7 @@
             "id": "responsible",
             "title": "Qui est responsable",
             "paragraphs": [
-              "Ce site est publié par Technologies Krizaka Inc., société constituée selon les lois du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada).",
+              "Ce site est publié par {legalName} (NEQ {neq}), société par actions constituée le 8 octobre 2026 selon la Loi sur les sociétés par actions du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada).",
               "La personne responsable de la protection des renseignements personnels est le fondateur et président de la société ; son titre et son contact sont publiés dans la section suivante."
             ]
           },
@@ -1009,7 +1010,7 @@
           {
             "title": "Qui nous sommes",
             "paragraphs": [
-              "krizaka.com est publié par Technologies Krizaka Inc., société constituée selon les lois du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada). Pour nous joindre, utilisez le formulaire de contact."
+              "krizaka.com est publié par {legalName} (NEQ {neq}), société par actions constituée selon la Loi sur les sociétés par actions du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada). Pour nous joindre, utilisez le formulaire de contact ou écrivez à contact@krizaka.com."
             ]
           },
           {

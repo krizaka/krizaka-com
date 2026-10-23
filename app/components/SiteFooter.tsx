@@ -10,6 +10,7 @@ import { FOCUS_IDS } from "@/lib/focus";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import { PLATFORM, changelogHref } from "@/lib/changelog-data";
 import { format } from "@/lib/i18n";
+import { COMPANY } from "@/lib/site";
 
 /* The footer (NAV-SYS) is @krizaka/ui's SiteFooter, one calm band (krizaka-ui#434): this site's own column — only what
    the family's columns do not hold (the products, open source, the changelog) — beside the family's (Products · Open
@@ -35,6 +36,8 @@ export default function SiteFooter() {
       aria-label={t.site.menu.footerAria}
       legal={
         <>
+          {/* Who publishes the site, as the law asks: the legal name and the NEQ (lib/site.ts COMPANY), never an address. */}
+          <span className="kz-footer-company">{format(f.company, COMPANY)}</span>
           {PLATFORM.site && (
             <FamilyFooter.Link asChild>
               <Link href={to(changelogHref())} prefetch={false} aria-current={here(changelogHref())}>

@@ -11,6 +11,13 @@ export const SITE_URL = "https://www.krizaka.com";
 
 export const CONTACT_EMAIL = "bonjour@krizaka.com";
 
+/**
+ * The company behind the site, as the Registraire des entreprises du Québec publishes it (certificate of 2026-10-08) — what a
+ * footer and the legal pages must show. Never the head office's street (a home address), a phone or a tax account number:
+ * those stay in the company's records (tests/legal-identity.test.mjs).
+ */
+export const COMPANY = { legalName: "Technologies Krizaka Inc.", neq: "1182652231" } as const;
+
 export const GITHUB_ORG_URL = `https://github.com/${GITHUB_ORG}`;
 export const NPM_ORG_URL = `https://www.npmjs.com/org/${GITHUB_ORG}`;
 export const GITHUB_REPO_URL = `https://github.com/${GITHUB_ORG}/${GITHUB_REPO}`;
