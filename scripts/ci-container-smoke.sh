@@ -39,3 +39,7 @@ node scripts/check-motion.mjs --base http://localhost:3000
 node scripts/check-figures.mjs --base http://localhost:3000
 # A footer link lands at the top of its page, heading focused; one footer landmark per page (/story peer review).
 node scripts/check-arrival.mjs --base http://localhost:3000
+# The home's stack section stays short: no code block, no playground control, one still picture of one height per tile,
+# the tiles of a row as tall as each other, nothing empty under a picture — 390 and 1440 px, dark and light, EN and FR
+# (scripts/home-stack-lib.mjs; Oussama, 2026-10-23).
+node scripts/check-home-stack.mjs --base http://localhost:3000

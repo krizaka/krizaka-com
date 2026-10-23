@@ -28,10 +28,16 @@ export const STACK: StackPart[] = [
 /** `ui.krizaka.com` — an address as it reads in a sentence. */
 export const hostOf = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
-/** Krizaka Motion — the motion lab (krizaka/krizaka-motion): experimental generative visuals played on GitHub Pages. Not
-    a package: what proves itself moves into Krizaka UI (the engine flow is @krizaka/ui/engine-flow). */
+/* The lab's site. GitHub Pages today; it becomes https://motion.krizaka.com the day krizaka-motion#55 serves the lab
+   there — one value here, and every card's host (`hostOf(MOTION_LAB.url)`) follows: no host is ever typed in a component. */
+const MOTION_SITE = "https://krizaka.github.io/krizaka-motion";
+
+/** Krizaka Motion — the motion lab (krizaka/krizaka-motion): experimental generative visuals played from its site. Not
+    a package: what proves itself moves into Krizaka UI (the engine flow is @krizaka/ui/engine-flow). `url` is the site
+    (the host the cards name), `labUrl` the scene « Open the lab » opens. */
 export const MOTION_LAB = {
   name: "Krizaka Motion",
-  url: "https://krizaka.github.io/krizaka-motion/orazaka",
+  url: MOTION_SITE,
+  labUrl: `${MOTION_SITE}/orazaka`,
   repoUrl: `${GITHUB_ORG_URL}/krizaka-motion`,
 } as const;
