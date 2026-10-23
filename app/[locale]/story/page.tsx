@@ -15,7 +15,7 @@ import { asLocale, format, getDictionary, type TranslationDictionary } from "@/l
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { focusProps, isHidden } from "@/lib/focus";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
-import { mavenArtifactCount, publishedCount } from "@/lib/registry-versions";
+import { publishedCount } from "@/lib/registry-versions";
 import { ENGINE, OPEN_BIRD, PRODUCT_BIRD, PRODUCT_CHAPTERS, STORY_ANCHORS, WHO_BIRD, type StoryBird } from "@/lib/story";
 import { uiFacts } from "@/lib/ui-facts";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
@@ -25,7 +25,7 @@ import FigureTiles from "@/app/components/FigureTiles";
 import Mode from "@/app/components/Mode";
 import Rich from "@/app/components/Rich";
 import { ProductStatus } from "@/app/components/ProductStatus";
-import { StackCards } from "@/app/components/home/OpenStack";
+import { StackTiles } from "@/app/components/home/OpenStack";
 import FilmCredits from "@/app/components/story/FilmCredits";
 import FilmLightbox from "@/app/components/home/FilmLightbox";
 import ProductVisual from "@/app/components/home/visuals/ProductVisual";
@@ -298,7 +298,7 @@ export default async function StoryPage({ params }: Props) {
             bird={OPEN_BIRD}
             promise={promiseOf(t, OPEN_BIRD)}
             proof={<FigureTiles figures={figures} label={st.open.figuresAria} locale={locale} columns />}
-            fold={{ summary: st.open.more, children: <StackCards locale={locale} mavenArtifacts={mavenArtifactCount()} /> }}
+            fold={{ summary: st.open.more, children: <StackTiles locale={locale} /> }}
             actions={
               <ButtonLink href="/open-source" variant="primary">
                 {st.open.cta} <ForwardIcon size={14} />

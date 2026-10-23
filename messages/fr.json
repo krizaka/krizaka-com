@@ -338,7 +338,7 @@
         },
         "motion": {
           "name": "Krizaka Motion",
-          "line": "Le labo du mouvement : le flux du moteur que vous venez de voir, avec ses réglages.",
+          "line": "Le labo du mouvement : le flux du moteur, avec ses réglages.",
           "lab": "Ouvrir le labo",
           "layout": "Disposition",
           "layouts": {
@@ -363,6 +363,10 @@
           "tool": "Outil de build",
           "copy": "Copier",
           "copied": "Copié"
+        },
+        "ts": {
+          "line": "Les briques TypeScript des produits, sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine. Une commande pour les ajouter :",
+          "explore": "Lire la documentation"
         }
       },
       "principles": {
@@ -801,10 +805,6 @@
       "stackTitle": "Trois briques, chacune documentée.",
       "stackLead": "Versions lues sur npm et Maven Central au build.",
       "blocksLabel": "Les briques, expliquées :",
-      "stackVisual": {
-        "identities": "Un composant, l'identité de chaque produit",
-        "dependency": "Un BOM, chaque version de Krizaka Java"
-      },
       "packages": {
         "eyebrow": "Paquets",
         "title": "Chaque paquet publié.",

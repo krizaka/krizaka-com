@@ -31,10 +31,9 @@ import TopNavBar from "@/app/components/TopNavBar";
 import ProductStackTable from "@/app/components/ProductStackTable";
 import FigureTiles from "@/app/components/FigureTiles";
 import ButtonLink from "@/app/components/ButtonLink";
-import { StackCards } from "@/app/components/home/OpenStack";
+import { StackTiles } from "@/app/components/home/OpenStack";
 import { PackagesTable, RepositoriesTable, type RepositoryRow } from "./OpenSourceTables";
 import HowItFits from "./HowItFits";
-import { JavaVisual, UiVisual } from "./StackVisual";
 import "./open-source.css";
 
 /* /open-source — the site's second view (the home is the first; 2026-10-17): the technical view, as refined as the home
@@ -127,11 +126,7 @@ export default async function OpenSourcePage({ params }: Props) {
       </PageHero>
 
       <Section id="stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead}>
-        <StackCards
-          locale={locale}
-          mavenArtifacts={mavenArtifactCount()}
-          visuals={{ ui: <UiVisual label={t.stackVisual.identities} />, java: <JavaVisual label={t.stackVisual.dependency} /> }}
-        />
+        <StackTiles locale={locale} />
         <nav aria-label={t.blocksLabel} className="os-blocks">
           <span>{t.blocksLabel}</span>
           {BUILDING_BLOCKS.map((b) => (

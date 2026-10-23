@@ -3,78 +3,21 @@
    - Krizaka UI: real components to play with (UiPlayground) and @krizaka/ui's real npm downloads → ui.krizaka.com;
    - Krizaka Motion: the engine flow in a small frame with the lab's layout and mode → the lab on GitHub Pages;
    - Krizaka Java: the BOM to paste, Maven or Gradle (CodeTabs), at the version Maven Central gives → java.krizaka.com.
-   Every version and figure is read at build (lib/registry-versions.ts); one primary action: /open-source.
-   `StackCards` (the two link cards) stays for /open-source. */
+   - Krizaka TS: the command that installs its packages, as npm lists them at build → its repository (READMEs as docs).
+   Every version and figure is read at build (lib/registry-versions.ts). `StackTiles` is the one mechanism of the home and of
+   /open-source: every tile has something to try or to copy, its facts, and the way to its site. */
 
 import type { ReactNode } from "react";
-import { AutomationIcon, ForwardIcon, PackIcon, ServerIcon } from "@krizaka/icons";
-import { CardGrid } from "@krizaka/ui/card-grid";
+import { ForwardIcon } from "@krizaka/icons";
 import { CodeBlock, CodeTabs } from "@krizaka/ui/code-block";
-import { LinkCard } from "@krizaka/ui/link-card";
 import { Facts, Section, type Fact } from "@krizaka/ui/page";
 import { format, getDictionary } from "@/lib/i18n";
-import { mavenVersion, npmDownloads, npmPackages, npmPackagesFrom, publishedVersion } from "@/lib/registry-versions";
+import { mavenVersion, npmDownloads, npmPackagesFrom, publishedVersion } from "@/lib/registry-versions";
 import ButtonLink from "@/app/components/ButtonLink";
-import { MOTION_LAB, STACK, hostOf, type StackId, type StackPart } from "@/lib/stack";
+import { MOTION_LAB, STACK, hostOf, type StackPart } from "@/lib/stack";
 import MotionPlayground from "./playground/MotionPlayground";
 import UiPlayground from "./playground/UiPlayground";
-
-/** The three cards — Krizaka UI, Krizaka Java and Krizaka TS — each one link to its own site, with its facts. On /open-source. */
-export function StackCards({
-  locale,
-  mavenArtifacts,
-  titleAs = "h3",
-  visuals,
-}: {
-  locale: string;
-  mavenArtifacts: number;
-  titleAs?: "h2" | "h3";
-  /** /open-source: a still mini-visual per part (StackVisual), above its facts. */
-  visuals?: Partial<Record<StackId, ReactNode>>;
-}) {
-  const site = getDictionary(locale).site;
-  const s = site.home.stack;
-  const npmCount = npmPackages().length;
-  const facts = (part: (typeof STACK)[number]): Fact[] => {
-    const { id, coordinate } = part;
-    const version = coordinate && publishedVersion(coordinate);
-    const tsCount = id === "ts" ? npmPackagesFrom(part.repoUrl).length : 0;
-    const list: (Fact | false)[] = [
-      Boolean(version) && { label: `${coordinate!.replace(/^com\.krizaka:/, "")} ${version}`, tone: "ok" },
-      tsCount > 0 && { label: format(s.facts.npm, { count: tsCount }), tone: "ok" },
-      id === "ui" && { label: s.facts.platforms },
-      id === "ui" && npmCount > 0 && { label: format(s.facts.npm, { count: npmCount }) },
-      id === "java" && mavenArtifacts > 0 && { label: format(s.facts.maven, { count: mavenArtifacts }) },
-      { label: "Apache-2.0" },
-    ];
-    return list.filter((f): f is Fact => Boolean(f));
-  };
-  return (
-    <CardGrid as="ul" min={300} columns={3} fit="fit" className="kz-home-stack-cards">
-      {STACK.map((part) => {
-        const Icon = { ui: PackIcon, java: ServerIcon, ts: AutomationIcon }[part.id];
-        return (
-          <LinkCard
-            key={part.id}
-            href={part.url}
-            title={part.name}
-            titleAs={titleAs}
-            description={site.stack[part.id].line}
-            icon={<Icon size={22} />}
-            meta={hostOf(part.url)}
-            cta={format(s.visit, { host: hostOf(part.url) })}
-            extra={
-              <>
-                {visuals?.[part.id]}
-                <Facts items={facts(part)} />
-              </>
-            }
-          />
-        );
-      })}
-    </CardGrid>
-  );
-}
+import "./stack-tiles.css";
 
 /** One tile of the section: its name, one line, the thing to try, its facts, the way to its site. */
 function Tile({ name, meta, line, children, facts, href, cta }: { name: string; meta: string; line: string; children: ReactNode; facts: Fact[]; href: string; cta: string }) {
@@ -94,10 +37,14 @@ function Tile({ name, meta, line, children, facts, href, cta }: { name: string; 
 
 const ui = STACK.find((p): p is StackPart & { coordinate: string } => p.id === "ui")!;
 const java = STACK.find((p) => p.id === "java")!;
+const ts = STACK.find((p) => p.id === "ts")!;
 
-/** « Build with our open source », on the home, after the products. */
-export default function OpenStack({ locale }: { locale: string; mavenArtifacts?: number }) {
+/** The four tiles — Krizaka UI, Krizaka Motion, Krizaka Java, Krizaka TS — on the home and on /open-source. */
+export function StackTiles({ locale }: { locale: string }) {
   const s = getDictionary(locale).site.home.stack;
+  const tsPackages = npmPackagesFrom(ts.repoUrl);
+  // One package per line: readable on a phone, and it still pastes as one command.
+  const install = ["npm install", ...tsPackages.map((name) => `  ${name}`)].join(" \\\n");
   const uiVersion = publishedVersion(ui.coordinate);
   const downloads = npmDownloads(ui.coordinate);
   const bom = mavenVersion("krizaka-bom");
@@ -113,21 +60,7 @@ export default function OpenStack({ locale }: { locale: string; mavenArtifacts?:
 }`;
   const fmt = new Intl.NumberFormat(locale);
   return (
-    <Section
-      id="stack"
-      number={s.number}
-      margin
-      title={s.title}
-      lead={s.lead}
-      reveal
-      divider
-      actions={
-        <ButtonLink href="/open-source" variant="primary">
-          {s.more} <ForwardIcon size={14} />
-        </ButtonLink>
-      }
-    >
-      <ul className="kz-build">
+    <ul className="kz-build">
         <Tile
           name={ui.name}
           meta={hostOf(ui.url)}
@@ -170,7 +103,39 @@ export default function OpenStack({ locale }: { locale: string; mavenArtifacts?:
             ]}
           />
         </Tile>
+        <Tile
+          name={ts.name}
+          meta={hostOf(ts.url)}
+          line={s.ts.line}
+          href={ts.url}
+          cta={s.ts.explore}
+          facts={tsPackages.length ? [{ label: format(s.facts.npm, { count: tsPackages.length }), tone: "ok" }, { label: "Apache-2.0" }] : []}
+        >
+          {tsPackages.length ? <CodeBlock code={install} language="bash" file="terminal" copyLabel={s.java.copy} copiedLabel={s.java.copied} /> : null}
+        </Tile>
       </ul>
+  );
+}
+
+/** « Build with our open source », on the home, after the products. */
+export default function OpenStack({ locale }: { locale: string; mavenArtifacts?: number }) {
+  const s = getDictionary(locale).site.home.stack;
+  return (
+    <Section
+      id="stack"
+      number={s.number}
+      margin
+      title={s.title}
+      lead={s.lead}
+      reveal
+      divider
+      actions={
+        <ButtonLink href="/open-source" variant="primary">
+          {s.more} <ForwardIcon size={14} />
+        </ButtonLink>
+      }
+    >
+      <StackTiles locale={locale} />
     </Section>
   );
 }
