@@ -3,7 +3,7 @@
    - Krizaka UI: real components to play with (UiPlayground) and @krizaka/ui's real npm downloads → ui.krizaka.com;
    - Krizaka Motion: the engine flow in a small frame with the lab's layout and mode → the lab on GitHub Pages;
    - Krizaka Java: the BOM to paste, Maven or Gradle (CodeTabs), at the version Maven Central gives → java.krizaka.com.
-   - Krizaka TS: the command that installs its packages, as npm lists them at build → its repository (READMEs as docs).
+   - Krizaka TypeScript: the command that installs its packages, as npm lists them at build → its repository (READMEs as docs).
    Every version and figure is read at build (lib/registry-versions.ts). `StackTiles` is the one mechanism of the home and of
    /open-source: every tile has something to try or to copy, its facts, and the way to its site. */
 
@@ -39,7 +39,7 @@ const ui = STACK.find((p): p is StackPart & { coordinate: string } => p.id === "
 const java = STACK.find((p) => p.id === "java")!;
 const ts = STACK.find((p) => p.id === "ts")!;
 
-/** The four tiles — Krizaka UI, Krizaka Motion, Krizaka Java, Krizaka TS — on the home and on /open-source. */
+/** The four tiles — Krizaka UI, Krizaka Motion, Krizaka Java, Krizaka TypeScript — on the home and on /open-source. */
 export function StackTiles({ locale }: { locale: string }) {
   const s = getDictionary(locale).site.home.stack;
   const tsPackages = npmPackagesFrom(ts.repoUrl);
