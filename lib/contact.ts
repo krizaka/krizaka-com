@@ -69,6 +69,7 @@ export type ContactValidation = { ok: true; value: ContactMessage } | { ok: fals
 
 const EMAIL = /^[^\s@<>()]+@[^\s@<>()]+\.[^\s@<>()]{2,}$/;
 
+// @fixed: The message size limit is a technical constraint shared by the API and form.
 export const CONTACT_MESSAGE_MAX = 5000;
 
 /** The one validation schema of the contact form: the server (validateContact) and the form's fields read it. */
@@ -82,16 +83,16 @@ export type ContactField = keyof typeof ContactFormSchema.shape;
 
 /** Whether one field's value passes the schema (the client checks fields as they are left). */
 export const isValidContactField = (field: ContactField, value: string): boolean => ContactFormSchema.shape[field].safeParse(value).success;
-const str = (v: unknown, max: number) => (typeof v === "string" ? v.trim().slice(0, max + 1) : "");
+const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
 /** Validates an untrusted JSON body. `website` is a honeypot: humans never fill it. */
 export function validateContact(body: unknown): ContactValidation | { ok: "spam" } {
   const b = (body ?? {}) as Record<string, unknown>;
-  if (str(b.website, 200)) return { ok: "spam" };
-  const name = str(b.name, 120);
-  const email = str(b.email, 200);
-  const company = str(b.company, 160);
-  const message = str(b.message, CONTACT_MESSAGE_MAX);
+  if (str(b.website)) return { ok: "spam" };
+  const name = str(b.name);
+  const email = str(b.email);
+  const company = str(b.company);
+  const message = str(b.message);
   const topic = CONTACT_TOPICS.includes(b.topic as ContactTopic) ? (b.topic as ContactTopic) : null;
   if (!isValidContactField("name", name)) return { ok: false, field: "name" };
   if (!isValidContactField("email", email)) return { ok: false, field: "email" };
