@@ -1,7 +1,7 @@
 "use client";
 
 /* The opening of the products section: the flock on the valley, cropped at its ground, as a photo pinned in the notebook —
-   slightly tilted, a thin white print border, a soft paper shadow, tape at two corners (home.css « photo »). Each bird IS a product (lib/products-flock.ts): hovering, focusing or tapping one lights
+   slightly tilted, a thin white print border, a soft paper shadow, tape at two corners (@krizaka/ui TapedPhoto). Each bird IS a product (lib/products-flock.ts): hovering, focusing or tapping one lights
    its row and its node in the list below, and the row (or the node) lights its bird — the same link the engine flow has
    (ProductsLink, through `kz-products-point` / `kz-products-lit` on window). A bird has its name on hover or focus, and is a
    link to its entry. The birds themselves are krizaka-ui's Flock: at ease in character, glancing at each other, the pigeon
@@ -9,11 +9,13 @@
    The ridge of the film is the page's surface: below the band the section's paper continues. */
 
 import { Flock } from "@krizaka/ui/flock";
+import { TapedPhoto } from "@krizaka/ui/taped-photo";
 import { useEffect, useState } from "react";
 
 import { BAND_TALL, BAND_WIDE, FOCUS_TALL, FOCUS_WIDE, type PlacedBird } from "@/lib/products-flock";
 import { PRODUCTS } from "@/lib/products";
-import AmbientLoop, { type AmbientSet } from "./AmbientLoop";
+import type { AmbientSet } from "@/lib/home-ambient";
+import AmbientLoop from "./AmbientLoop";
 import { useCarnet } from "../useCarnet";
 
 const nameOf = (id: string) => PRODUCTS.find((p) => p.id === id)?.name ?? id;
@@ -58,8 +60,8 @@ export default function ProductsFlock({ set }: { set: AmbientSet }) {
   }, []);
   const active = (b: { birds: PlacedBird[] }) => b.birds.find((x) => x.product === lit)?.bird ?? null;
   return (
-    <figure className="kz-photo-wrap">
-      <div className="kz-photo">
+    <div className="kz-band-photo-wrap">
+      <TapedPhoto className="kz-band-photo">
         <div className="kz-band">
           <div className="kz-band-stage">
             <AmbientLoop set={set} />
@@ -73,7 +75,7 @@ export default function ProductsFlock({ set }: { set: AmbientSet }) {
             </div>
           </div>
         </div>
-      </div>
-    </figure>
+      </TapedPhoto>
+    </div>
   );
 }

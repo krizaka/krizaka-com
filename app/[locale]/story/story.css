@@ -60,16 +60,17 @@
 .st-proof { display: grid; gap: 8px; max-width: 420px; }
 .st-proof-note { margin: 0; font-family: var(--kz-font-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--kz-text-secondary); }
 
-/* The film: one poster card (a content frame), the player opens in a lightbox. 16:9, never wider than the column. */
-.st-film { position: relative; display: block; width: 100%; max-width: 420px; padding: 0; border: 1px solid var(--kz-border-default); border-radius: 14px; overflow: hidden;
-  background: var(--kz-surface-1); cursor: pointer; text-align: left; color: var(--kz-text-primary); aspect-ratio: 16 / 9; }
+/* The film: a taped poster, the player opens in a lightbox. 16:9, never wider than the column. */
+.st-film-photo { max-width: 420px; }
+.st-film { position: relative; display: block; width: 100%; padding: 0; border: 0; overflow: hidden;
+  background: transparent; cursor: pointer; text-align: left; color: var(--kz-text-primary); aspect-ratio: 16 / 9; }
 .st-film-poster { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--kz-ease, ease); }
 .st-film-play { position: absolute; inset: 0; margin: auto; width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; color: #fff;
   background: color-mix(in oklab, #000 55%, transparent); backdrop-filter: blur(6px); border: 1px solid color-mix(in oklab, #fff 40%, transparent); }
 .st-film-caption { position: absolute; inset: auto 0 0 0; display: flex; justify-content: space-between; gap: 8px; padding: 22px 14px 10px; font-size: 13px; font-weight: 700; color: #fff;
   background: linear-gradient(to top, color-mix(in oklab, #000 72%, transparent), transparent); }
 .st-film-caption span { font-family: var(--kz-font-mono); font-weight: 500; opacity: .85; }
-.st-film:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 3px; }
+.st-film:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: -3px; }
 .st-film-note { margin: 8px 0 0; font-size: 13px; color: var(--kz-text-muted); }
 .st-film-credits { all: unset; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .st-film-credits:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; }
