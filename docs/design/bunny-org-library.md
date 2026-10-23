@@ -20,6 +20,8 @@ Conclusion: **no Orochia image is reusable at the org level.** Every one is a pe
 
 Name: **`krizaka/`** (as asked; it says « shared by the whole organisation », unlike `brand/`, which is the identity of each brand, and `people/`, which is only portraits). Versioned by folder, like `people/defaults/v1/`: a changed picture is a new `v2/`, never an overwrite.
 
+`krizaka/v1/` is **generated-only**. Krizaka UI's `tools/export-brand.mjs` is its sole writer and owns every file there, including `manifest.json`. No hand upload or `cdn-assets` operation writes under this prefix.
+
 ```
 krizaka/v1/
   avatars/<brand>/{person,plain}-<1-6>{.svg,-256.webp,-512.webp}   default avatars per product
@@ -36,15 +38,16 @@ krizaka/v1/
 | Covers | **Generated** from the brand tokens and marks (gradients, one bird mark small) | no photo, so nothing carries a context |
 | Empty-state icons and illustrations | **Generated** from the icon set / flock SVGs of `@krizaka/ui` | one source, both themes |
 | Placeholders | **Generated** (flat SVG on tokens; blurhash recorded in the manifest) | tiny, deterministic |
-| Anything drawn by hand, if ever | **Uploaded once** with `cdn-assets upload --to krizaka/v1/…`, hash in a manifest | only when no code can render it; reviewed for context-free content |
+| Anything drawn by hand, if ever | **Reviewed upload** under `site/org/<kind>/`, using `cdn-assets upload --to site/org/<kind>/…`; hash recorded in `lib/cdn-manifest.json` | only when no code can render it; reviewed for context-free content |
 
-Names: generated files keep **stable names under a versioned folder** (the folder is the version, as `people/defaults/v1/`). Uploaded files take `<name>.<10 hex SHA-256>.<ext>` and are immutable (as `site/`). Nothing is generated from Orochia's art.
+Names: generated files keep **stable names under a versioned folder** (the folder is the version, as `people/defaults/v1/`). Reviewed uploads take `<name>.<10 hex SHA-256>.<ext>` and are immutable (as `site/`). `site/org/` is managed only by `scripts/cdn-assets.mjs` and its entries in `lib/cdn-manifest.json`; it is disjoint from the exporter's `krizaka/v1/` tree and manifest. Nothing is generated from Orochia's art.
 
 ## 3. Target tree of the zone, one writer per prefix
 
 ```
 brand/<brand>/…                        tools/export-brand.mjs (krizaka-ui)  — unchanged
-krizaka/v1/…                           tools/export-brand.mjs (krizaka-ui) for the generated kinds · scripts/cdn-assets.mjs library for hand uploads (new prefix)
+krizaka/v1/…                           tools/export-brand.mjs (krizaka-ui), exclusive writer including manifest.json
+site/org/…                             scripts/cdn-assets.mjs upload; hashes in lib/cdn-manifest.json
 people/defaults/v1/<brand>/…           kept as an alias of krizaka/v1/avatars/<brand>/ (published @krizaka/ui uses it); then frozen
 people/personas/<product>/…            scripts/cdn-assets.mjs library (mirror) — never orochia
 products/<product>/<kind>/…            scripts/cdn-assets.mjs library (mirror)
@@ -60,7 +63,7 @@ Migration (each step its own PR, nothing deleted before the end):
 2. **Update the manifest and pages**: `lib/cdn.ts` learns the `krizaka/` logical prefix (fails the build on an unknown path, as today); pages and apps switch to it.
 3. **Keep old URLs**: `people/defaults/v1/…` stays served (published `@krizaka/ui` examples use it); the `/assets/…` legacy redirects in `lib/cdn.ts` (`LEGACY`) are kept and, if a path moves, one line is added there.
 4. **Prune**: `cdn-assets prune` removes only what no manifest of main or of an unmerged branch names. `people/defaults/v1/` is never pruned while a published package version references it.
-5. **README.txt** at the zone root stays generated from `LAYOUT_README` (`cdn-assets readme`), which gains the `krizaka/` entry and its rule « generated from code, never uploaded by hand ».
+5. **README.txt** at the zone root stays generated from `LAYOUT_README` (`cdn-assets readme`), which gains the `krizaka/` entry and its rule « generated only by `tools/export-brand.mjs`, including its manifest; no hand uploads ». It also documents `site/org/` as the home for reviewed uploads, tracked by `lib/cdn-manifest.json`.
 
 ## 4. How apps load them
 
@@ -70,9 +73,9 @@ Migration (each step its own PR, nothing deleted before the end):
 
 ## 5. The cut: issues, in order
 
-1. **krizaka-com — layout**: add `krizaka` to `ZONE` and the README text in `bunny-layout.mjs`, `tree` audit, tests (`tests`/`rule` for the new prefix).
-2. **krizaka-com — `cdn-assets`**: `krizaka/` logical paths in `lib/cdn.ts`, `upload --to krizaka/v1/…`, `library` and `check` support, legacy redirect for `people/defaults/v1/`.
-3. **krizaka-ui — export**: `tools/export-brand.mjs` renders avatars, covers, empty icons and illustrations, placeholders, `manifest.json` under `krizaka/v1/`; `Avatar` and empty states resolve logical paths.
+1. **krizaka-com — layout**: add `krizaka` to `ZONE` as generated-only with `tools/export-brand.mjs` owning the entire prefix and its `manifest.json`; document reviewed uploads under `site/org/` in `bunny-layout.mjs`, audit, and tests.
+2. **krizaka-com — `cdn-assets`**: support logical paths in `lib/cdn.ts` for the generated `krizaka/` files, keep reviewed uploads at `site/org/` in `lib/cdn-manifest.json`, and add the legacy redirect for `people/defaults/v1/`. Never enable uploads to `krizaka/v1/`.
+3. **krizaka-ui — export**: `tools/export-brand.mjs` exclusively renders avatars, covers, empty icons and illustrations, placeholders, and its `manifest.json` under `krizaka/v1/`; `Avatar` and empty states resolve logical paths.
 4. **Product adoptions**: each product repo reads its brand folder for defaults (one small PR each; Orochia last, after #153).
 5. **Prune and freeze**: once adopted and the packages released, freeze `people/defaults/v1/` (kept, aliased).
 
