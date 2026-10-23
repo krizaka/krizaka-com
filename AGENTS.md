@@ -107,7 +107,7 @@
 - krizaka.com renders **no documentation** and carries no docs engine (no Fumadocs, no MDX collection, no generated
   pages). Each open-source project documents itself on its site, built from its own repository at every change:
   **Krizaka UI → https://ui.krizaka.com** (krizaka-ui `apps/site`: one page per component generated from the registries,
-  the foundations, the templates, EN/FR) and **Krizaka Java → https://java.krizaka.com** (krizaka-build `site/`) and **Krizaka TS → https://ts.krizaka.com** (krizaka-ts `site/`: one page per package, generated from the packages). The
+  the foundations, the templates, EN/FR) and **Krizaka Java → https://java.krizaka.com** (krizaka-build `site/`) and **Krizaka TypeScript → https://ts.krizaka.com** (krizaka-ts `site/`: one page per package, generated from the packages). The
   products document themselves on their sites (dev.<product>.com).
 - Every old address answers **308** with its page there: `/docs/ui/*` and `/{en,fr}/docs/ui/*` through
   `lib/ui-redirects.ts` (the same map as krizaka-ui `apps/site/lib/urls.ts`; tested by `tests/ui-redirects.test.mjs`),

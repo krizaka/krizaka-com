@@ -208,7 +208,7 @@
         "number": "§ 1",
         "eyebrow": "Field notes of a software studio · Montréal, Québec",
         "title": "We build open-source software, and the stack under it.",
-        "lead": "We started with Orazaka, an AI engine, which gave us Krizaka UI, Krizaka Java and Krizaka TS, all open source. On them we build management and compliance tools for Québec businesses: Akinaza and Yomizaka.",
+        "lead": "We started with Orazaka, an AI engine, which gave us Krizaka UI, Krizaka Java and Krizaka TypeScript, all open source. On them we build management and compliance tools for Québec businesses: Akinaza and Yomizaka.",
         "primary": "See what we build",
         "film": "Watch the full film",
         "filmLength": "1 min 8 s",

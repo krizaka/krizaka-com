@@ -15,14 +15,14 @@ export interface StackPart {
   repoUrl: string;
   /** Where it is published. */
   registry: "npm" | "maven";
-  /** The coordinate whose published version the site shows; none for a set of packages released one by one (Krizaka TS). */
+  /** The coordinate whose published version the site shows; none for a set of packages released one by one (Krizaka TypeScript). */
   coordinate?: string;
 }
 
 export const STACK: StackPart[] = [
   { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com", repoUrl: KRIZAKA_UI_REPO_URL, registry: "npm", coordinate: "@krizaka/ui" },
   { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com", repoUrl: `${GITHUB_ORG_URL}/krizaka-build`, registry: "maven", coordinate: "com.krizaka:krizaka-bom" },
-  { id: "ts", name: "Krizaka TS", url: "https://ts.krizaka.com", repoUrl: `${GITHUB_ORG_URL}/krizaka-ts`, registry: "npm" },
+  { id: "ts", name: "Krizaka TypeScript", url: "https://ts.krizaka.com", repoUrl: `${GITHUB_ORG_URL}/krizaka-ts`, registry: "npm" },
 ];
 
 /** `ui.krizaka.com` — an address as it reads in a sentence. */

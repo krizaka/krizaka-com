@@ -208,7 +208,7 @@
         "number": "§ 1",
         "eyebrow": "Carnet d'un studio logiciel · Montréal, Québec",
         "title": "Nous construisons du logiciel open source, et tout ce qui le porte.",
-        "lead": "Nous avons commencé par Orazaka, un moteur d'IA, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TS, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour les entreprises du Québec : Akinaza et Yomizaka.",
+        "lead": "Nous avons commencé par Orazaka, un moteur d'IA, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TypeScript, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour les entreprises du Québec : Akinaza et Yomizaka.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
         "filmLength": "1 min 08",

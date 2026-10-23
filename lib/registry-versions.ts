@@ -48,7 +48,7 @@ export const npmPackages = (): NpmPackageInfo[] =>
     keywords: versions.npmMeta?.[name]?.keywords ?? [],
   }));
 
-/** The @krizaka packages published from one repository (its GitHub URL, as npm gave it at build): Krizaka TS's count. */
+/** The @krizaka packages published from one repository (its GitHub URL, as npm gave it at build): Krizaka TypeScript's count. */
 export const npmPackagesFrom = (repoUrl: string): string[] =>
   Object.keys(versions.npm ?? {}).filter((name) => versions.npmMeta?.[name]?.repository === repoUrl).sort();
 
