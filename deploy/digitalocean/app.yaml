@@ -3,7 +3,10 @@
 #   doctl apps spec validate deploy/digitalocean/app.yaml
 #   doctl apps create --spec deploy/digitalocean/app.yaml
 #   doctl apps update <APP_ID> --spec deploy/digitalocean/app.yaml   # ⚠ can blank the SECRETs (no value here): check them afterwards
-# Secret values live in the app (Settings → Environment Variables), entered once. Every merge on main redeploys.
+# Secret values live in the app (Settings → Environment Variables), entered once.
+# The app deploys from `production`, not `main` (the release train, #389): a published release fast-forwards `production`
+# to its tag (.github/workflows/production.yml). The live app is switched by scripts/do-app-production-branch.sh, once,
+# after the first release exists.
 # DNS stays at the registrar (Porkbun): www = CNAME to the app's ondigitalocean.app host, apex = ALIAS to the same host.
 # App Platform issues and renews the Let's Encrypt certificates of both names once the records point to it.
 name: krizaka-com
@@ -34,7 +37,7 @@ services:
   - name: web
     github:
       repo: krizaka/krizaka-com
-      branch: main
+      branch: production
       deploy_on_push: true
     dockerfile_path: Dockerfile
     source_dir: /

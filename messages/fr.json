@@ -473,7 +473,7 @@
       "repositories": "Tous les dépôts",
       "blog": "Blogue",
       "changelog": "Journal des changements",
-      "version": "v{version} · Krizaka UI {ui}",
+      "version": "v{version}",
       "siteColumn": "Sur krizaka.com",
       "company": "{legalName} · NEQ {neq} · Montréal (Québec)",
       "signature": "Une entreprise de {name}"
@@ -881,6 +881,38 @@
         "java": "Krizaka Java",
         "services": "Les services partagés",
         "runs": "Sur quoi tourne chaque produit"
+      },
+      "nomenclature": {
+        "eyebrow": "La nomenclature",
+        "title": "Une carte de référence du système Krizaka.",
+        "lead": "Chaque module de la famille, par couche : son rôle, son dépôt, son registre et sa version, et qui l'utilise. Générée à la construction ; le tableau en est la version texte.",
+        "caption": "Chaque module du système Krizaka",
+        "name": "Module",
+        "layer": "Couche",
+        "kind": "Nature",
+        "registries": "Registre et version",
+        "usedBy": "Utilisé par",
+        "repo": "Dépôt",
+        "repoAria": "Dépôt de {name}",
+        "registryAria": "{name} sur son registre",
+        "none": "—",
+        "layers": {
+          "products": "Produits",
+          "engine": "Orazaka",
+          "blocks": "Briques",
+          "services": "Services partagés",
+          "platform": "Sites et outillage"
+        },
+        "kinds": {
+          "product": "Produit",
+          "engine": "Moteur",
+          "java": "Brique (Java)",
+          "package": "Paquet (TypeScript)",
+          "web": "Client web",
+          "worker": "Worker",
+          "site": "Site",
+          "tooling": "Outillage"
+        }
       },
       "contribute": {
         "title": "Envie de contribuer ?",
@@ -1565,7 +1597,7 @@
       "eyebrow": "Journal des changements",
       "title": "Ce qui a été livré",
       "lead": "L'essentiel de chaque version de Krizaka, la plus récente d'abord, lu dans les versions elles-mêmes, pas écrit pour la page.",
-      "runs": "Ce site tourne en v{version} sur Krizaka UI {ui}.",
+      "runs": "Ce site tourne en v{version}.",
       "feed": "S'abonner (RSS)",
       "logLabel": "Versions",
       "empty": "Les données des versions n'ont pas pu être lues à la construction. Voir les versions sur GitHub.",

@@ -473,7 +473,7 @@
       "repositories": "Every repository",
       "blog": "Blog",
       "changelog": "Changelog",
-      "version": "v{version} · Krizaka UI {ui}",
+      "version": "v{version}",
       "siteColumn": "On krizaka.com",
       "company": "{legalName} · NEQ {neq} · Montréal, Quebec",
       "signature": "A {name} company"
@@ -881,6 +881,38 @@
         "java": "Krizaka Java",
         "services": "The shared services",
         "runs": "What each product runs on"
+      },
+      "nomenclature": {
+        "eyebrow": "The nomenclature",
+        "title": "One reference map of the Krizaka system.",
+        "lead": "Every module of the family, by layer: its role, its repository, its registry and version, and who uses it. Generated at build; the table is the text version.",
+        "caption": "Every module of the Krizaka system",
+        "name": "Module",
+        "layer": "Layer",
+        "kind": "Kind",
+        "registries": "Registry and version",
+        "usedBy": "Used by",
+        "repo": "Repository",
+        "repoAria": "{name} repository",
+        "registryAria": "{name} on its registry",
+        "none": "—",
+        "layers": {
+          "products": "Products",
+          "engine": "Orazaka",
+          "blocks": "Building blocks",
+          "services": "Shared services",
+          "platform": "Sites and tooling"
+        },
+        "kinds": {
+          "product": "Product",
+          "engine": "Engine",
+          "java": "Building block (Java)",
+          "package": "Package (TypeScript)",
+          "web": "Web client",
+          "worker": "Worker",
+          "site": "Site",
+          "tooling": "Tooling"
+        }
       },
       "contribute": {
         "title": "Want to contribute?",
@@ -1565,7 +1597,7 @@
       "eyebrow": "Changelog",
       "title": "What shipped",
       "lead": "The highlights of every Krizaka release, newest first, read from the releases themselves, not written for the page.",
-      "runs": "This site runs v{version} on Krizaka UI {ui}.",
+      "runs": "This site runs v{version}.",
       "feed": "Subscribe (RSS)",
       "logLabel": "Releases",
       "empty": "The release data could not be read at build time. See the releases on GitHub.",

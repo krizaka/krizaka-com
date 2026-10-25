@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /* The company changelog, read at build from the release data of the family — never written by hand.
 
-   Writes the git-ignored lib/changelog.json ({ releases: Release[], platform: { site, ui, tokens }, fetchedAt }), the shape of lib/changelog.ts:
+   Writes the git-ignored lib/changelog.json ({ releases: Release[], platform: { site, release }, fetchedAt }), the shape of lib/changelog.ts:
    - the @krizaka packages of krizaka-ui: each package's changesets CHANGELOG.md (raw GitHub), dated from the npm
      registry's publish times;
    - GitHub Releases of the products (Orazaka is several repositories) and of Krizaka Java: the repositories are the
@@ -18,7 +18,7 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { newestFirst, parseChangesets, parseReleaseBodies, releaseProblems } from "../lib/changelog.ts";
+import { SITE_REPO, newestFirst, parseChangesets, parseReleaseBodies, releaseProblems, siteReleaseUrl } from "../lib/changelog.ts";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "changelog.json");
 const PACKAGES = ["ui", "tokens", "icons", "i18n", "tailwind", "charts"]; // krizaka-ui/packages/<dir>
@@ -78,16 +78,15 @@ if (problems.length) {
 const failed = settled.filter((s) => s.status === "rejected");
 if (failed.length) console.warn(`changelog: ${failed.length} source(s) unreachable (${failed.map((f) => f.reason?.message).join("; ")})`);
 
-// The versions the site runs on, read from what is installed (the lockfile's result), never typed.
+// krizaka.com's own version only (package.json, bumped by release-please), never the packages it runs on: those belong to
+// a deployment, not to the page. The footer links its GitHub release when it is published (the releases list before).
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
-const versionOf = (file) => {
-  try {
-    return JSON.parse(readFileSync(path.join(root, file), "utf8")).version;
-  } catch {
-    return undefined;
-  }
-};
-const platform = { site: versionOf("package.json"), ui: versionOf("node_modules/@krizaka/ui/package.json"), tokens: versionOf("node_modules/@krizaka/tokens/package.json") };
+const site = JSON.parse(readFileSync(path.join(root, "package.json"), "utf8")).version;
+const published = await get(`https://api.github.com/repos/${SITE_REPO}/releases/tags/v${site}`).then(
+  () => true,
+  () => false,
+);
+const platform = { site, release: siteReleaseUrl(site, published) };
 
 if (releases.length || !existsSync(OUT)) {
   writeFileSync(OUT, `${JSON.stringify({ releases, platform, fetchedAt: new Date().toISOString() }, null, 1)}\n`);

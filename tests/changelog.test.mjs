@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { anchorOf, changeFromTitle, changelogRss, changesFor, cleanText, draftFromTitles, parseChangesets, parseReleaseBodies, parseReleaseBody, releaseLabel, releaseProblems, tagOf, textProblems } from "../lib/changelog.ts";
+import { anchorOf, changeFromTitle, changelogRss, changesFor, cleanText, draftFromTitles, parseChangesets, parseReleaseBodies, parseReleaseBody, releaseLabel, releaseProblems, SITE_REPO, siteReleaseUrl, tagOf, textProblems } from "../lib/changelog.ts";
 import { filterHref, filterOf, visibleEntries, visibleFilters } from "../lib/changelog-filter.ts";
 import { changelogProblems } from "../scripts/check-changelog-build.mjs";
 
@@ -99,12 +99,34 @@ test("the changelog route, its feed and its template exist; the page is in the s
   assert.match(read("app/[locale]/changelog/page.tsx"), /RELEASES\.map/, "the entries come from the release data");
 });
 
-test("the footer shows the version and the UI version and links /changelog#<version>; the page owns that anchor", () => {
+test("the footer shows krizaka.com's own version only, on its GitHub release; no package version on the page", () => {
   const footer = read("app/components/SiteFooter.tsx");
-  assert.match(footer, /href=\{to\(changelogHref\(\)\)\}/);
-  assert.match(footer, /PLATFORM\.ui/);
-  assert.match(read("lib/changelog-data.ts"), /`\/changelog#\$\{version\}`/);
+  assert.match(footer, /<a href=\{PLATFORM\.release\}>\{format\(f\.version, \{ version: PLATFORM\.site \}\)\}<\/a>/);
+  assert.doesNotMatch(footer, /PLATFORM\.(ui|tokens)|Krizaka UI|@krizaka\/ui \$/);
+  for (const lang of ["en", "fr"]) {
+    const m = messages(lang).site;
+    assert.equal(m.footer.version, "v{version}", `${lang}: the footer says vX.Y.Z and nothing else`);
+    assert.doesNotMatch(m.changelog.runs, /\{ui\}|Krizaka UI/, `${lang}: /changelog names no package version`);
+  }
+  assert.doesNotMatch(read("lib/changelog-data.ts"), /\bui:|tokens:/, "PLATFORM carries the site's version only");
+  assert.doesNotMatch(read("scripts/gen-changelog.mjs"), /node_modules\/@krizaka/, "the generator reads no installed package's version");
   assert.match(read("app/[locale]/changelog/page.tsx"), /<span id=\{PLATFORM\.site\}>/);
+});
+
+test("the site's release link: its GitHub release once published, the releases list before (never a dead link)", () => {
+  assert.equal(SITE_REPO, "krizaka/krizaka-com");
+  assert.equal(siteReleaseUrl("0.2.0", true), "https://github.com/krizaka/krizaka-com/releases/tag/v0.2.0");
+  assert.equal(siteReleaseUrl("0.2.0", false), "https://github.com/krizaka/krizaka-com/releases");
+  assert.equal(siteReleaseUrl("", true), "https://github.com/krizaka/krizaka-com/releases");
+});
+
+test("the site's version is release-please's: package.json and the manifest agree", () => {
+  const pkg = JSON.parse(read("package.json"));
+  const manifest = JSON.parse(read(".release-please-manifest.json"));
+  const config = JSON.parse(read("release-please-config.json"));
+  assert.equal(manifest["."], pkg.version);
+  assert.equal(config.packages["."]["release-type"] ?? config["release-type"], "node");
+  assert.match(pkg.version, /^\d+\.\d+\.\d+$/);
 });
 
 test("the build check demands the latest release and the footer's anchor on the page", () => {

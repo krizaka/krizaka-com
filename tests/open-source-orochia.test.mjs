@@ -21,4 +21,5 @@ test("each Orochia repository has a neutral line in both languages, and a defaul
 test("the page shows that line, never the GitHub description, for an Orochia repository", () => {
   const page = read("app/[locale]/open-source/page.tsx");
   assert.match(page, /r\.name\.startsWith\("orochia"\) \? \(t\.orochiaRepos\[r\.name as keyof typeof t\.orochiaRepos\] \?\? t\.orochiaRepos\.default\) : r\.description/);
+  assert.match(page, /const modules = nomenclature\([\s\S]*?\)\.map\(\(r\) => \(\{\s*\.\.\.r,\s*line: r\.name\.startsWith\("orochia"\) \? \(t\.orochiaRepos\[r\.name as keyof typeof t\.orochiaRepos\] \?\? t\.orochiaRepos\.default\) : r\.line,/);
 });

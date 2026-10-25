@@ -181,11 +181,33 @@ logged (`contact: mailgun refused (…)`) and the visitor gets a `502`.
 
 The site also builds as a container: `Dockerfile` (Next.js `output: "standalone"`, Node 24 Alpine, sharp for
 `next/image`, health check `GET /api/health`) and `deploy/digitalocean/app.yaml` (App Platform spec: `www` primary,
-apex redirected, auto-deploy on `main`). CI builds the image and smoke-tests it on every pull request.
+apex redirected, deploys from `production` — see « Deploys »). CI builds the image and smoke-tests it on every pull request.
 
 ```bash
 docker build -t krizaka-com . && docker run --rm -p 3000:3000 krizaka-com   # add --env-file .env.local for the contact form
 ```
+
+## Deploys
+
+A release train: every pull request merged on `main` boards the next release; production ships releases, not merges.
+
+1. **release-please** (`.github/workflows/release-please.yml`, `release-please-config.json`, `.release-please-manifest.json`)
+   keeps one « chore: release X.Y.Z » pull request open from the Conventional Commits merged since the last release: it
+   bumps `package.json` and writes `CHANGELOG.md`. Merging it tags `vX.Y.Z` and publishes the GitHub release.
+2. **`production`** — `.github/workflows/production.yml` runs on `release: published` and fast-forwards the `production`
+   branch to the tag (`scripts/promote-production.mjs`: a release tag on `main` only, never forced, never backwards; a
+   diverged `production` is refused). It can be re-run by hand: `gh workflow run production.yml -f tag=vX.Y.Z`.
+3. **DigitalOcean App Platform** (app `krizaka-com`) deploys from `production` (`deploy/digitalocean/app.yaml`,
+   `github.branch: production`). A merge on `main` deploys nothing by itself.
+
+The switch of the live app from `main` to `production` is `scripts/do-app-production-branch.sh` (`--dry-run` first): it
+reads the live spec, changes only that branch, applies it, and refuses while `production` does not exist — run it once,
+after the first release. The footer shows the site's own version (`vX.Y.Z`, `package.json`, read at build) and links its
+GitHub release; the versions of the packages it runs on belong to the deployment, not to the page.
+
+The release pull request and the release need a GitHub App token to start CI and `release: published` (GitHub ignores the
+events of `GITHUB_TOKEN`): repository variable `RELEASE_APP_ID`, secret `RELEASE_APP_PRIVATE_KEY`. Without them the
+release job dispatches `production.yml` itself.
 
 ## Develop
 
