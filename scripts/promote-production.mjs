@@ -15,6 +15,7 @@ import { execFileSync } from "node:child_process";
 
 export const BRANCH = "production";
 export const RELEASE_TAG = /^v\d+\.\d+\.\d+$/;
+const SAFE_PATH = "/usr/bin:/bin:/usr/local/bin";
 
 /**
  * What to do with `production`, from the facts git gives (pure).
@@ -41,7 +42,9 @@ function main(argv) {
     console.error("usage: promote-production.mjs <vX.Y.Z> [--dry-run] [--remote origin]");
     process.exit(2);
   }
-  const git = (...a) => execFileSync("git", a, { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+  // git from fixed system directories only, never from a PATH someone could write to.
+  const env = { ...process.env, PATH: SAFE_PATH };
+  const git = (...a) => execFileSync("git", a, { encoding: "utf8", env, stdio: ["ignore", "pipe", "pipe"] }).trim();
   const ancestor = (a, b) => {
     try {
       git("merge-base", "--is-ancestor", a, b);

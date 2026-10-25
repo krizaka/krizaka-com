@@ -16,7 +16,7 @@ set -euo pipefail
 APP_ID="5070cde0-f34d-439d-a2f9-6375dccdf5b2" # krizaka-com
 REPO="krizaka/krizaka-com"
 DRY_RUN=0
-while [ $# -gt 0 ]; do
+while [[ $# -gt 0 ]]; do
   case "$1" in
     --dry-run) DRY_RUN=1 ;;
     --app) APP_ID="$2"; shift ;;
@@ -54,21 +54,21 @@ awk -v repo="$REPO" '
   END { if (ingh) flush(); if (!changed) exit 3 }
 ' "$tmp/live.yaml" > "$tmp/new.yaml" || status=$?
 
-if [ "${status:-0}" = 3 ]; then
+if [[ "${status:-0}" = 3 ]]; then
   if grep -Eq '^[[:space:]]*branch:[[:space:]]*production[[:space:]]*$' "$tmp/live.yaml"; then
     echo "The app $APP_ID already deploys from production: nothing to do."
     exit 0
   fi
   echo "No 'branch: main' under 'repo: $REPO' in the live spec of $APP_ID: look at it by hand." >&2
   exit 1
-elif [ "${status:-0}" != 0 ]; then
+elif [[ "${status:-0}" != 0 ]]; then
   exit "$status"
 fi
 
 echo "The change to the live spec of $APP_ID:"
 diff -U1 "$tmp/live.yaml" "$tmp/new.yaml" | sed -n '3,$p' || true
 
-if [ "$DRY_RUN" = 1 ]; then
+if [[ "$DRY_RUN" = 1 ]]; then
   echo "[dry-run] nothing applied."
   exit 0
 fi
