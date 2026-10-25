@@ -473,7 +473,7 @@
       "repositories": "Tous les dépôts",
       "blog": "Blogue",
       "changelog": "Journal des changements",
-      "version": "v{version} · Krizaka UI {ui}",
+      "version": "v{version}",
       "siteColumn": "Sur krizaka.com",
       "company": "{legalName} · NEQ {neq} · Montréal (Québec)",
       "signature": "Une entreprise de {name}"
@@ -1565,7 +1565,7 @@
       "eyebrow": "Journal des changements",
       "title": "Ce qui a été livré",
       "lead": "L'essentiel de chaque version de Krizaka, la plus récente d'abord, lu dans les versions elles-mêmes, pas écrit pour la page.",
-      "runs": "Ce site tourne en v{version} sur Krizaka UI {ui}.",
+      "runs": "Ce site tourne en v{version}.",
       "feed": "S'abonner (RSS)",
       "logLabel": "Versions",
       "empty": "Les données des versions n'ont pas pu être lues à la construction. Voir les versions sur GitHub.",

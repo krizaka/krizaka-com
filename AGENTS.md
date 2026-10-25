@@ -281,6 +281,13 @@
   - **Antigravity (Gemini)**: `Co-authored-by: Antigravity (Gemini) <200291788+gemini-code-assist@users.noreply.github.com>`
   Both map to verified GitHub user accounts ([`claude`](https://github.com/claude) and [`gemini-code-assist`](https://github.com/gemini-code-assist)), ensuring their official avatars appear on commits and in the repository's Contributors list.
 
+- **Deploys: a release train** (#389). release-please (`release-type: node`) keeps one « chore: release X.Y.Z » pull
+  request from the Conventional Commits on `main` (`package.json`, `CHANGELOG.md`); merging it tags `vX.Y.Z` and publishes
+  the release; `production.yml` fast-forwards the `production` branch to the tag (`scripts/promote-production.mjs`, never
+  forced, never backwards). **The DigitalOcean app deploys from `production`, not `main`** (switched once by
+  `scripts/do-app-production-branch.sh`). Never push to `production` by hand, never hand-edit the version or `CHANGELOG.md`.
+  The footer shows krizaka.com's own version only (`vX.Y.Z` → its GitHub release); package versions are never on the page.
+
 ## 5.1 PR captures — never committed
 
 - Screenshots, recordings and metrics of a PR (before/after, Lighthouse…) are **never committed**, in

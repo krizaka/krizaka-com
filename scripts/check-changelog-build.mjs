@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-/* After `next build`: /changelog is prerendered in both languages, shows the latest release, carries the anchor the footer
-   links to (/changelog#<site version>), and the RSS feed exists. A page that cannot be right does not ship.
+/* After `next build`: /changelog is prerendered in both languages, shows the latest release, carries the anchor of the site's own
+   version (/changelog#<site version>), and the RSS feed exists. A page that cannot be right does not ship.
    Usage: node scripts/check-changelog-build.mjs   (run by `npm run build`) */
 
 import { existsSync, readFileSync } from "node:fs";
@@ -16,7 +16,7 @@ export function changelogProblems(html, { latest, siteVersion }) {
   const problems = [];
   if (!/<h1[^>]*>/.test(html)) problems.push("no h1");
   if (latest && !html.includes(releaseLabel(latest))) problems.push(`the latest release (${releaseLabel(latest)}) is not on the page`);
-  if (siteVersion && !html.includes(`id="${siteVersion}"`)) problems.push(`no anchor #${siteVersion} for the footer's link`);
+  if (siteVersion && !html.includes(`id="${siteVersion}"`)) problems.push(`no anchor #${siteVersion} for the site's version`);
   return problems;
 }
 

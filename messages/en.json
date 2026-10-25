@@ -473,7 +473,7 @@
       "repositories": "Every repository",
       "blog": "Blog",
       "changelog": "Changelog",
-      "version": "v{version} · Krizaka UI {ui}",
+      "version": "v{version}",
       "siteColumn": "On krizaka.com",
       "company": "{legalName} · NEQ {neq} · Montréal, Quebec",
       "signature": "A {name} company"
@@ -1565,7 +1565,7 @@
       "eyebrow": "Changelog",
       "title": "What shipped",
       "lead": "The highlights of every Krizaka release, newest first, read from the releases themselves, not written for the page.",
-      "runs": "This site runs v{version} on Krizaka UI {ui}.",
+      "runs": "This site runs v{version}.",
       "feed": "Subscribe (RSS)",
       "logLabel": "Releases",
       "empty": "The release data could not be read at build time. See the releases on GitHub.",
