@@ -15,7 +15,7 @@ import { execFileSync } from "node:child_process";
 
 export const BRANCH = "production";
 export const RELEASE_TAG = /^v\d+\.\d+\.\d+$/;
-const SAFE_PATH = "/usr/bin:/bin:/usr/local/bin";
+const SAFE_PATH = "/usr/bin:/bin";
 
 /**
  * What to do with `production`, from the facts git gives (pure).
