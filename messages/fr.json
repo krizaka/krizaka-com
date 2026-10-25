@@ -308,7 +308,7 @@
         "number": "§ 3",
         "eyebrow": "Open source",
         "title": "Construisez avec nos briques.",
-        "lead": "Sorties de la construction d'Orazaka, à vous de les utiliser. Essayez-les ici même. Versions et téléchargements lus au build.",
+        "lead": "Sorties de la construction d'Orazaka, à vous de les utiliser. Les versions, les exemples et tous les paquets sont sur Open source.",
         "more": "Tout ce que nous publions",
         "visit": "Ouvrir {host}",
         "facts": {
@@ -317,28 +317,34 @@
           "maven": "{count} artefacts sur Maven Central"
         },
         "ui": {
-          "line": "Les composants de chaque écran Krizaka — web, iOS et Android. Ce sont les vrais :",
+          "line": "Les composants de chaque écran Krizaka — web, iOS et Android.",
           "explore": "Explorer ui.krizaka.com",
-          "playground": "Krizaka UI, en direct",
-          "variant": "Style du bouton",
-          "variants": {
-            "primary": "Principal",
-            "secondary": "Secondaire",
-            "ghost": "Discret"
-          },
-          "button": "Commencer",
-          "switch": "Notifications",
-          "theme": "Thème de l'aperçu",
-          "themes": {
-            "dark": "Sombre",
-            "light": "Clair"
-          },
           "downloads": "{count} téléchargements de @krizaka/ui la semaine dernière",
-          "trend": "Téléchargements npm hebdomadaires de @krizaka/ui, 12 dernières semaines"
+          "showcase": {
+            "label": "Un aperçu de Krizaka UI : une carte de profil avec avatar, jauge, rangée de puces, interrupteur et bouton.",
+            "person": {
+              "name": "Ada Lovelace",
+              "role": "Designer produit"
+            },
+            "meter": {
+              "label": "Profil complété",
+              "valueText": "80 %"
+            },
+            "teams": {
+              "label": "Équipe",
+              "items": [
+                "Design",
+                "Ingénierie",
+                "Soutien"
+              ]
+            },
+            "digest": "Résumé de la semaine",
+            "invite": "Inviter"
+          }
         },
         "motion": {
           "name": "Krizaka Motion",
-          "line": "Le labo du mouvement : le flux du moteur, avec ses réglages.",
+          "line": "Le labo du mouvement : le flux du moteur, ses dispositions, ce qui circule.",
           "lab": "Ouvrir le labo",
           "layout": "Disposition",
           "layouts": {
@@ -358,14 +364,14 @@
           "app": "Appli {id}"
         },
         "java": {
-          "line": "Les briques de chaque service Krizaka, un seul BOM sur Maven Central :",
+          "line": "Les briques de chaque service Krizaka, un seul BOM sur Maven Central.",
           "explore": "Ouvrir java.krizaka.com",
           "tool": "Outil de build",
           "copy": "Copier",
           "copied": "Copié"
         },
         "ts": {
-          "line": "Les briques TypeScript des produits, sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine. Une commande pour les ajouter :",
+          "line": "Les briques TypeScript des produits, sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine.",
           "explore": "Lire la documentation"
         }
       },
@@ -467,7 +473,7 @@
       "repositories": "Tous les dépôts",
       "blog": "Blogue",
       "changelog": "Journal des changements",
-      "version": "v{version} · Krizaka UI {ui}",
+      "version": "v{version}",
       "siteColumn": "Sur krizaka.com",
       "company": "{legalName} · NEQ {neq} · Montréal (Québec)",
       "signature": "Une entreprise de {name}"
@@ -1591,7 +1597,7 @@
       "eyebrow": "Journal des changements",
       "title": "Ce qui a été livré",
       "lead": "L'essentiel de chaque version de Krizaka, la plus récente d'abord, lu dans les versions elles-mêmes, pas écrit pour la page.",
-      "runs": "Ce site tourne en v{version} sur Krizaka UI {ui}.",
+      "runs": "Ce site tourne en v{version}.",
       "feed": "S'abonner (RSS)",
       "logLabel": "Versions",
       "empty": "Les données des versions n'ont pas pu être lues à la construction. Voir les versions sur GitHub.",

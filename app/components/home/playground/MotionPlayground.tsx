@@ -28,7 +28,7 @@ export interface MotionPlaygroundWords {
 
 const APPS = ["A", "B", "C", "D"];
 
-export default function MotionPlayground({ w }: { w: MotionPlaygroundWords }) {
+export default function MotionPlayground({ w, still }: { w: MotionPlaygroundWords; still?: boolean }) {
   const [layout, setLayout] = useState<FlowLayout>("radial");
   const [mode, setMode] = useState<FlowMode>("both");
   return (
@@ -38,10 +38,14 @@ export default function MotionPlayground({ w }: { w: MotionPlaygroundWords }) {
         label={w.label}
         layout={layout}
         compactLayout={false}
+        particles={still ? "none" : undefined}
+        breathe={still ? false : undefined}
         hub={{ label: w.hub, mark: <KrizakaLogo size={30} animated={false} /> }}
         nodes={APPS.map((id) => ({ id, label: w.app.replace("{id}", id), flow: mode, mark: <span className="kz-play-dot">{id}</span> }))}
-        hint={w.hint}
+        hint={still ? undefined : w.hint}
       />
+      {still ? null : (
+        <>
       {/* @ephemeral: the home's motion playground: a control of a live demo, never an address */}
       <Chip.Group type="single" required size="sm" label={w.layout} value={layout} onValueChange={(v) => v && setLayout(v as FlowLayout)}>
         {FLOW_LAYOUTS.map((l) => (
@@ -58,6 +62,8 @@ export default function MotionPlayground({ w }: { w: MotionPlaygroundWords }) {
           </Chip>
         ))}
       </Chip.Group>
+        </>
+      )}
     </div>
   );
 }

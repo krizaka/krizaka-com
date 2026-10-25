@@ -281,6 +281,13 @@
   - **Antigravity (Gemini)**: `Co-authored-by: Antigravity (Gemini) <200291788+gemini-code-assist@users.noreply.github.com>`
   Both map to verified GitHub user accounts ([`claude`](https://github.com/claude) and [`gemini-code-assist`](https://github.com/gemini-code-assist)), ensuring their official avatars appear on commits and in the repository's Contributors list.
 
+- **Deploys: a release train** (#389). release-please (`release-type: node`) keeps one « chore: release X.Y.Z » pull
+  request from the Conventional Commits on `main` (`package.json`, `CHANGELOG.md`); merging it tags `vX.Y.Z` and publishes
+  the release; `production.yml` fast-forwards the `production` branch to the tag (`scripts/promote-production.mjs`, never
+  forced, never backwards). **The DigitalOcean app deploys from `production`, not `main`** (switched once by
+  `scripts/do-app-production-branch.sh`). Never push to `production` by hand, never hand-edit the version or `CHANGELOG.md`.
+  The footer shows krizaka.com's own version only (`vX.Y.Z` → its GitHub release); package versions are never on the page.
+
 ## 5.1 PR captures — never committed
 
 - Screenshots, recordings and metrics of a PR (before/after, Lighthouse…) are **never committed**, in
@@ -411,3 +418,19 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Before you open or update a pull request (coding agents)
+
+These are the defects code review found most often on 2026-10-23. Check them yourself before you open or update a pull request:
+1. **Checks:** run the repository's full check (lint, typecheck, tests, build) and fix it. Never push a red check.
+2. **Concurrency:** any « count then insert » or « check then write » runs in one transaction with a lock, and has a concurrency test.
+3. **One gate:** a rule (limit, permission, validation) is enforced in the service, so no route can skip it. Test every route.
+4. **Errors:** a cleanup (ROLLBACK, DROP, close) never masks the original error. Rethrow it, or throw an `AggregateError` with the original first.
+5. **Validation:** validate the original input, never a truncated or pre-trimmed copy. Server and client reject the same inputs.
+6. **Accessibility:**
+   - every control has a unique label, and FR/EN pairs say their language;
+   - focus rings are never clipped by `overflow`;
+   - text never overflows its box at 360 px.
+7. **Naming:** environment variables follow `<CONTEXT>_<THING>` (`APP_`, `DATABASE_`, `AUTH_`, `MEDIA_`, `MAIL_`, `PAYMENTS_`, `AI_`…) and are declared once.
+8. **Words:** every user-facing string is in the FR and EN messages, and no colour is hard-coded.
+9. **Review threads:** answer every one. Fix it test-first, or reply with the reason, then resolve it.

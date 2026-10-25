@@ -10,6 +10,18 @@ export interface PlacedBird extends FlockBird {
   product: ProductId;
 }
 
+/** The five birds of the film, in a tall frame like the band on a phone. */
+export const HERO_FLOCK: { ratio: number; birds: FlockBird[] } = {
+  ratio: 4 / 5,
+  birds: [
+    { bird: "falcon", x: 15, y: 75, size: 20 },
+    { bird: "owl", x: 38, y: 75, size: 20 },
+    { bird: "duck", x: 62, y: 75, size: 20 },
+    { bird: "flamingo", x: 50, y: 88, size: 27 },
+    { bird: "pigeon", x: 85, y: 75, size: 20 },
+  ],
+};
+
 /** Each product's bird — the same as lib/story.ts PRODUCT_BIRD (a test keeps them equal; this module stays importable by node:test). */
 const BIRD: Record<ProductId, FlockBird["bird"]> = { orazaka: "flamingo", yomizaka: "owl", orochia: "pigeon", kachizaka: "magpie", akinaza: "beaver", yasakia: "lovebird", yororis: "crane" };
 const at = (product: ProductId, x: number, y: number, size: number): PlacedBird => ({ product, bird: BIRD[product], x, y, size });
