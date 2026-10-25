@@ -10,6 +10,7 @@ import { ExternalIcon } from "@krizaka/icons";
 import { Sparkline } from "@krizaka/charts/sparkline";
 import { DataTable, DataTableFilters, type DataTableColumn, type DataTableLabels } from "@krizaka/ui/data-table";
 import type { PackageRow } from "@/lib/package-catalogue";
+import type { ModuleRow } from "@/lib/nomenclature";
 import { useI18n } from "@/app/components/I18nProvider";
 import { useCarnet } from "@/app/components/useCarnet";
 import { isHidden, namesHidden } from "@/lib/focus";
@@ -162,6 +163,57 @@ export function RepositoriesTable({ rows: all }: { rows: readonly RepositoryRow[
       rowLabel={(r) => r.name}
       defaultSort={{ column: "product", direction: "ascending" }}
       defaultPageSize={12}
+      density="compact"
+      toolbar={<DataTableFilters />}
+      labels={labels}
+    />
+  );
+}
+
+export function NomenclatureTable({ rows: all }: { rows: readonly ModuleRow[] }) {
+  const { t } = useI18n();
+  // The rows of the products outside the focus wait for the notebook to open whole (lib/focus.ts).
+  const notebook = useCarnet();
+  const rows = notebook ? all : all.filter((r) => !isHidden(r.productId)).map((r) => (namesHidden(r.line) ? { ...r, line: "" } : r));
+  const w = t.site.openSource.nomenclature;
+  const labels = useTableLabels();
+  const columns: DataTableColumn<ModuleRow>[] = [
+    { id: "name", header: w.name, type: "title", card: "title", filter: "text", sortable: true, subtitle: (r) => r.line, href: (r) => r.repoUrl, maxWidth: 420 },
+    { id: "layer", header: w.layer, filter: "facet", nowrap: true, value: (r) => w.layers[r.layer] },
+    { id: "kind", header: w.kind, filter: "facet", nowrap: true, value: (r) => w.kinds[r.kind] },
+    {
+      id: "registries",
+      header: w.registries,
+      value: (r) => r.publications.map((p) => `${p.name} ${p.version}`).join(" "),
+      cell: (r) =>
+        r.publications.length === 0 ? (
+          w.none
+        ) : (
+          <span className="os-links">
+            {r.publications.map((p) => (
+              <a key={p.registry + p.name} href={p.url} target="_blank" rel="noopener noreferrer" aria-label={format(w.registryAria, { name: `${p.name} ${p.version}` })}>
+                {p.name} <code className="os-version">{p.version}</code>
+              </a>
+            ))}
+          </span>
+        ),
+    },
+    { id: "usedBy", header: w.usedBy, value: (r) => r.usedBy.filter((id) => notebook || !isHidden(id)).join(", ") || w.none },
+    {
+      id: "links",
+      header: w.repo,
+      hideable: false,
+      cell: (r) => (r.repoUrl ? <Links links={[{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }]} /> : w.none),
+    },
+  ];
+  return (
+    <DataTable
+      caption={w.caption}
+      rows={rows}
+      columns={columns}
+      getRowId={(r) => r.id}
+      rowLabel={(r) => r.name}
+      defaultPageSize={20}
       density="compact"
       toolbar={<DataTableFilters />}
       labels={labels}
