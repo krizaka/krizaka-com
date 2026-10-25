@@ -169,6 +169,10 @@
   Tailwind literal color utilities (`bg-zinc-900`, `text-blue-400`, …) for
   surfaces/text/borders. Semantic accents (e.g. per-phase/per-layer identity)
   may use fixed mid-tone colors that read on both themes.
+- **The Cahier register, not the product register** (ADR-006, Krizaka UI 2027): this site never sets `data-surface="product"` or a
+  `.brand-<product>` root on `<html>` / `<body>` (the product cards scope their brand on the card), so the 2027 product values and
+  Plus Jakarta Sans never reach it; Young Serif stays. Fields and checkboxes draw `--kz-border-control` (the Cahier aliases it to the
+  strong border); `tests/cahier-register.test.mjs` guards it.
 - `color-scheme` is pinned to the active theme (`:root` dark / `html.light`
   light) so scrollbars, controls and third-party CSS follow it.
 - Every new view must be verified in **both** themes before it is considered done.
