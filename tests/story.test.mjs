@@ -69,7 +69,8 @@ test("the film is shown once: one poster card opening the lightbox; no inline pl
   assert.match(page, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/, "the light film under reduced motion / Save-Data");
   assert.doesNotMatch(page, /VideoPlayer|<video|autoPlay|autoplay/, "no player in the reading column");
   assert.match(page, /<Image className="st-film-poster" src=\{film\.poster\}/, "the poster is a content frame");
-  assert.match(css, /\.st-film \{[^}]*max-width: 420px[^}]*aspect-ratio: 16 \/ 9/, "sized for the column, 16:9");
+  assert.match(css, /\.st-film-photo \{ max-width: 420px; \}/, "taped print sized for the column");
+  assert.match(css, /\.st-film \{[^}]*aspect-ratio: 16 \/ 9/, "poster remains 16:9");
   const box = read("app/components/home/FilmLightbox.tsx");
   assert.match(box, /preload="none"/);
   assert.match(box, /trigger\?: ReactNode/);
@@ -150,7 +151,7 @@ test("each product shows its real take: a poster that plays on click in a lightb
   assert.match(card, /next\/dynamic/, "the player's code loads on click");
   assert.match(card, /<Dialog\.Root>/);
   assert.match(page, /takeOf\(id, locale\)/);
-  assert.match(page, /takeProof\(id, p\.name\) \?\? \(/, "mini-visual = fallback");
+  assert.match(page, /takeProof\(id, p\.name, id\) \?\? \(/, "mini-visual = fallback");
   assert.match(css, /\.st-take-card \{[^}]*width: 168px[^}]*aspect-ratio: 9 \/ 16/, "a fixed small phone frame");
   for (const l of ["en", "fr"]) for (const k of ["watch", "close", "player", "inLang", "watchRender", "renderPlayer"]) assert.ok(messages(l).story.products.take[k], `${l}: take.${k}`);
 });
@@ -260,4 +261,47 @@ test("the film slot takes the newest film whose files are on the CDN, else the o
   assert.equal(pickFilm(films, has("brand-films/relay/x", "brand-films/epic/y")).id, "relais");
   assert.equal(pickFilm(films, () => false).id, "tournee", "never a dead poster: the oldest is always the fallback");
   assert.match(read("lib/story-film.ts"), /id: "relais", base: RELAY_BASE, vtt: "relay\.vtt"/);
+});
+
+// Taped prints (2026-10-23): every picture or video of /story sits in @krizaka/ui's TapedPhoto — the film poster, each
+// product's take — with a slight tilt that alternates; the diagrams (the engine flow, the mini-visuals) stay as they are.
+test("every picture of /story is a taped print: the film and each take sit inside a TapedPhoto, the diagrams outside", () => {
+  const take = read("app/components/story/TakeCard.tsx");
+  // The nearest TapedPhoto opened before a marker is still open at it (not closed in between).
+  const inPrint = (src, marker) => {
+    const at = src.indexOf(marker);
+    assert.ok(at >= 0, `${marker} is on the page`);
+    const open = src.lastIndexOf("<TapedPhoto", at);
+    assert.ok(open >= 0 && !src.slice(open, at).includes("</TapedPhoto>"), `${marker} sits in a TapedPhoto`);
+    assert.ok(src.indexOf("</TapedPhoto>", at) > at, `${marker}: its print closes after it`);
+  };
+  const outOfPrint = (src, marker) => {
+    const at = src.indexOf(marker);
+    assert.ok(at >= 0, `${marker} is on the page`);
+    const open = src.lastIndexOf("<TapedPhoto", at);
+    assert.ok(open < 0 || src.slice(open, at).includes("</TapedPhoto>"), `${marker} is not framed by a print`);
+  };
+  inPrint(page, "<FilmLightbox");
+  inPrint(take, "<Image");
+  inPrint(take, "<Dialog.Root>");
+  assert.equal([...page.matchAll(/<Image\b/g)].length, 1, "the film's poster is the page's only picture of its own, the takes come from TakeCard");
+  assert.equal([...take.matchAll(/<TapedPhoto\b/g)].length, 1, "one print per take");
+  assert.equal([...page.matchAll(/<TapedPhoto\b/g)].length, 1, "the film is the page's own print");
+  assert.match(page, /<TakeCard take=\{take\} name=\{name\} id=\{id\}/, "the page draws the takes through TakeCard");
+  // the diagrams stay as they are
+  outOfPrint(page, "<EngineFlowView");
+  outOfPrint(page, "<ProductVisual");
+  outOfPrint(page, "<ProductLogo");
+  // the print's tilt: slight, and alternating left and right down the chapters
+  assert.match(page, /const lean = \(anchor: \(typeof STORY_ANCHORS\)\[number\]\) => \(number\(anchor\) % 2 \? -1\.4 : 1\.4\);/);
+  assert.match(page, /tilt=\{lean\("who"\)\}/);
+  assert.match(page, /takeProof\(ENGINE, engine\.name, "engine"\)/);
+  assert.match(page, /takeProof\(id, p\.name, id\)/);
+  assert.match(take, /<TapedPhoto className="st-take-photo" tilt=\{tilt\}/, "the take's print takes the chapter's tilt");
+  // the take keeps its caption, its lightbox and its focus ring inside the print
+  assert.match(take, /caption=\{\s*<>\s*\{film \? k\.watchRender : k\.watch\}/);
+  assert.match(css, /\.st-take-card:focus-visible \{[^}]*outline-offset: -3px/, "the ring is drawn inside the print, never clipped by its picture");
+  assert.doesNotMatch(css, /\.st-take-card:focus-visible \{[^}]*outline-offset: [1-9]/);
+  // no hand-made tape: the print is TapedPhoto's own
+  assert.doesNotMatch(css, /clip-path|\.st-[\w-]*tape\b/i);
 });

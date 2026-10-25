@@ -10,11 +10,13 @@ const hero = read("app/components/home/HomeHero.tsx");
 const home = read("app/components/home/home.css");
 const msgs = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read("messages/fr.json")) };
 
-test("the first page is asymmetric: the words on the left, Plate I of the flock on the right, never centred", () => {
-  assert.match(hero, /from "@krizaka\/ui\/bird-plate"/);
-  assert.match(hero, /<BirdPlate\b/);
-  for (const b of ["falcon", "owl", "duck", "flamingo", "pigeon"]) assert.match(hero, new RegExp(`bird: "${b}"`), b);
-  assert.match(hero, /t\.site\.story\.world\.cues|cues\[/, "the plate's lines are the film's cues");
+test("the first page is asymmetric: the words on the left, the taped film flock on the right, never centred", () => {
+  assert.match(hero, /from "@krizaka\/ui\/taped-photo"/);
+  assert.match(hero, /<TapedPhoto\b/);
+  assert.match(hero, /<Flock[^>]*birds=\{HERO_FLOCK\.birds\}/);
+  assert.match(hero, /from "@krizaka\/ui\/flock"/);
+  assert.match(hero, /t\.plate\.title/);
+  assert.doesNotMatch(hero, /BirdPlate/);
   const inner = home.match(/\.kz-home-hero-inner \{([^}]*)\}/)?.[1] ?? "";
   assert.doesNotMatch(inner, /text-align: center|align-items: center/, "a centred hero");
   assert.match(home, /\.kz-home-hero-grid \{[^}]*grid-template-columns/);
@@ -42,8 +44,9 @@ test("the site's own styles carry no template tell", () => {
   assert.doesNotMatch(read("app/globals.css"), /bp-glide \{ background: linear-gradient/, "the brand wash between sections");
 });
 
-test("the hero keeps its contract: one primary action, server-rendered; the flock is no longer in it (it opens the products)", () => {
+test("the hero keeps its contract: one primary action, server-rendered, with its first-paint text before the scene", () => {
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
   assert.doesNotMatch(hero, /"use client"|data-reveal/);
-  assert.doesNotMatch(hero, /kz-home-scene|AmbientLoop/);
+  assert.match(hero, /<AmbientLoop set=\{VALLEY\} \/>/);
+  assert.ok(hero.indexOf("kz-home-actions") < hero.indexOf("<TapedPhoto"), "the scene follows the first-paint text");
 });

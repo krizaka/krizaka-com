@@ -9,7 +9,7 @@ import { useSearchParams } from "next/navigation";
 import { CheckIcon, ChatIcon, ForwardIcon, UsersIcon, WarningIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
 import { format } from "@krizaka/i18n";
-import { CONTACT_TIMELINES, CONTACT_TOPICS, cleanSource, topicForSource, type ContactTimeline, type ContactTopic } from "@/lib/contact";
+import { CONTACT_TIMELINES, CONTACT_TOPICS, CONTACT_MESSAGE_MAX, cleanSource, isValidContactField, topicForSource, type ContactField, type ContactTimeline, type ContactTopic } from "@/lib/contact";
 import { ProductLogo } from "@krizaka/ui";
 import { Button } from "@krizaka/ui/button";
 import CaptchaWidget, { CAPTCHA_SITE_KEY } from "./CaptchaWidget";
@@ -17,15 +17,9 @@ import { inFocus } from "@/lib/focus";
 import { useCarnet } from "./useCarnet";
 
 type Status = "idle" | "sending" | "sent" | "error";
-type Field = "name" | "email" | "message";
+type Field = Exclude<ContactField, "company">;
 
-const MESSAGE_MAX = 5000;
-const EMAIL = /^[^\s@<>()]+@[^\s@<>()]+\.[^\s@<>()]{2,}$/;
-const RULES: Record<Field, (v: string) => boolean> = {
-  name: (v) => v.trim().length >= 2,
-  email: (v) => EMAIL.test(v.trim()),
-  message: (v) => v.trim().length >= 10,
-};
+const MESSAGE_MAX = CONTACT_MESSAGE_MAX;
 
 function TopicIcon({ topic }: { topic: ContactTopic }) {
   if (topic === "orazaka" || topic === "orochia" || topic === "yasakia" || topic === "yororis" || topic === "yomizaka" || topic === "blocks") {
@@ -79,7 +73,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
     if (status === "sent") doneRef.current?.focus();
   }, [status]);
 
-  const invalid = (field: Field) => (touched[field] && !RULES[field](values[field])) || serverError?.field === field;
+  const invalid = (field: Field) => (touched[field] && !isValidContactField(field, values[field])) || serverError?.field === field;
   const set = (field: keyof typeof values) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setValues((v) => ({ ...v, [field]: e.target.value }));
   const leave = (field: Field) => () => setTouched((x) => ({ ...x, [field]: true }));
@@ -93,7 +87,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
       formRef.current?.querySelector<HTMLElement>('input[name="topic"]')?.focus();
       return;
     }
-    const firstInvalid = fields.find((f) => !RULES[f](values[f]));
+    const firstInvalid = fields.find((f) => !isValidContactField(f, values[f]));
     if (firstInvalid) {
       formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
       return;
@@ -219,8 +213,9 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
               autoComplete="name"
               aria-invalid={invalid("name") || undefined}
               aria-describedby={invalid("name") ? "cf-name-error" : undefined}
+              aria-errormessage={invalid("name") ? "cf-name-error" : undefined}
             />
-            {invalid("name") && <em id="cf-name-error">{c.fieldErrors.name}</em>}
+            {invalid("name") && <em id="cf-name-error" role="alert">{c.fieldErrors.name}</em>}
           </label>
           <label className="kz-cf-field">
             <span>{c.email}</span>
@@ -235,8 +230,9 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
               autoComplete="email"
               aria-invalid={invalid("email") || undefined}
               aria-describedby={invalid("email") ? "cf-email-error" : undefined}
+              aria-errormessage={invalid("email") ? "cf-email-error" : undefined}
             />
-            {invalid("email") && <em id="cf-email-error">{c.fieldErrors.email}</em>}
+            {invalid("email") && <em id="cf-email-error" role="alert">{c.fieldErrors.email}</em>}
           </label>
         </div>
         <label className="kz-cf-field">
@@ -281,9 +277,10 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
             placeholder={c.placeholders[topic ?? "other"]}
             aria-invalid={invalid("message") || undefined}
             aria-describedby={invalid("message") ? "cf-message-error" : "cf-message-count"}
+            aria-errormessage={invalid("message") ? "cf-message-error" : undefined}
           />
           <span className="kz-cf-under">
-            {invalid("message") ? <em id="cf-message-error">{c.fieldErrors.message}</em> : <span className="kz-cf-hint">{c.shortcut}</span>}
+            {invalid("message") ? <em id="cf-message-error" role="alert">{c.fieldErrors.message}</em> : <span className="kz-cf-hint">{c.shortcut}</span>}
             <span id="cf-message-count" className="kz-cf-count" data-near={count > MESSAGE_MAX * 0.9 || undefined}>
               {format(c.counter, { count: count.toLocaleString(locale), max: MESSAGE_MAX.toLocaleString(locale) })}
             </span>

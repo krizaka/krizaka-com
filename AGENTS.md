@@ -169,6 +169,10 @@
   Tailwind literal color utilities (`bg-zinc-900`, `text-blue-400`, …) for
   surfaces/text/borders. Semantic accents (e.g. per-phase/per-layer identity)
   may use fixed mid-tone colors that read on both themes.
+- **The Cahier register, not the product register** (ADR-006, Krizaka UI 2027): this site never sets `data-surface="product"` or a
+  `.brand-<product>` root on `<html>` / `<body>` (the product cards scope their brand on the card), so the 2027 product values and
+  Plus Jakarta Sans never reach it; Young Serif stays. Fields and checkboxes draw `--kz-border-control` (the Cahier aliases it to the
+  strong border); `tests/cahier-register.test.mjs` guards it.
 - `color-scheme` is pinned to the active theme (`:root` dark / `html.light`
   light) so scrollbars, controls and third-party CSS follow it.
 - Every new view must be verified in **both** themes before it is considered done.
@@ -280,6 +284,13 @@
   - **Claude**: `Co-authored-by: Claude <81847+claude@users.noreply.github.com>`
   - **Antigravity (Gemini)**: `Co-authored-by: Antigravity (Gemini) <200291788+gemini-code-assist@users.noreply.github.com>`
   Both map to verified GitHub user accounts ([`claude`](https://github.com/claude) and [`gemini-code-assist`](https://github.com/gemini-code-assist)), ensuring their official avatars appear on commits and in the repository's Contributors list.
+
+- **Deploys: a release train** (#389). release-please (`release-type: node`) keeps one « chore: release X.Y.Z » pull
+  request from the Conventional Commits on `main` (`package.json`, `CHANGELOG.md`); merging it tags `vX.Y.Z` and publishes
+  the release; `production.yml` fast-forwards the `production` branch to the tag (`scripts/promote-production.mjs`, never
+  forced, never backwards). **The DigitalOcean app deploys from `production`, not `main`** (switched once by
+  `scripts/do-app-production-branch.sh`). Never push to `production` by hand, never hand-edit the version or `CHANGELOG.md`.
+  The footer shows krizaka.com's own version only (`vX.Y.Z` → its GitHub release); package versions are never on the page.
 
 ## 5.1 PR captures — never committed
 
@@ -411,3 +422,19 @@ This version has breaking changes — APIs, conventions, and file structure may 
 This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
+
+## Before you open or update a pull request (coding agents)
+
+These are the defects code review found most often on 2026-10-23. Check them yourself before you open or update a pull request:
+1. **Checks:** run the repository's full check (lint, typecheck, tests, build) and fix it. Never push a red check.
+2. **Concurrency:** any « count then insert » or « check then write » runs in one transaction with a lock, and has a concurrency test.
+3. **One gate:** a rule (limit, permission, validation) is enforced in the service, so no route can skip it. Test every route.
+4. **Errors:** a cleanup (ROLLBACK, DROP, close) never masks the original error. Rethrow it, or throw an `AggregateError` with the original first.
+5. **Validation:** validate the original input, never a truncated or pre-trimmed copy. Server and client reject the same inputs.
+6. **Accessibility:**
+   - every control has a unique label, and FR/EN pairs say their language;
+   - focus rings are never clipped by `overflow`;
+   - text never overflows its box at 360 px.
+7. **Naming:** environment variables follow `<CONTEXT>_<THING>` (`APP_`, `DATABASE_`, `AUTH_`, `MEDIA_`, `MAIL_`, `PAYMENTS_`, `AI_`…) and are declared once.
+8. **Words:** every user-facing string is in the FR and EN messages, and no colour is hard-coded.
+9. **Review threads:** answer every one. Fix it test-first, or reply with the reason, then resolve it.

@@ -52,6 +52,13 @@ export const npmPackages = (): NpmPackageInfo[] =>
 export const npmPackagesFrom = (repoUrl: string): string[] =>
   Object.keys(versions.npm ?? {}).filter((name) => versions.npmMeta?.[name]?.repository === repoUrl).sort();
 
+/** The Java modules on Maven Central, by artifact id, without their `-api` / `-client` / `-service` companions (one name per
+    building block, as the home's still picture names them); empty when Central could not be read. */
+export const mavenModuleIds = (): string[] =>
+  Object.keys(versions.maven ?? {})
+    .filter((id) => !/-(api|client|service)$/.test(id))
+    .sort();
+
 /** An npm package's downloads as api.npmjs.org gave them at build: last week's, and the last 12 weekly sums (oldest
     first, only when complete). Each is absent when unknown — never a typed number. */
 export function npmDownloads(name: string): { weekly?: number; series?: number[] } {
