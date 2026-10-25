@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.3.0](https://github.com/krizaka/krizaka-com/compare/v0.2.0...v0.3.0) (2026-10-25)
+
+
+### Features
+
+* **open-source:** add "La nomenclature", a generated reference map of the Krizaka system ([#378](https://github.com/krizaka/krizaka-com/issues/378)) ([e6cae8b](https://github.com/krizaka/krizaka-com/commit/e6cae8b681f63ccd77e3600c4fff4affc571bd45))
+
+
+### Bug Fixes
+
+* **seo:** claim no Law 25 / GDPR / PIPEDA conformity in llms-full.txt and the Organization ([#397](https://github.com/krizaka/krizaka-com/issues/397)) ([f7010c7](https://github.com/krizaka/krizaka-com/commit/f7010c7ac6290b89547f0677206b79b992318f9f))
+
 ## [0.2.0](https://github.com/krizaka/krizaka-com/compare/v0.1.0...v0.2.0) (2026-10-25)
 
 
