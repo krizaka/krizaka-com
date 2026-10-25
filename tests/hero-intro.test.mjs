@@ -38,10 +38,12 @@ test("the choreography over the poster: the mark draws, the scene rises in with 
   assert.match(reduced, /\.kz-intro-deco, html\[data-intro\] \.kz-intro-deco \{ animation: none; opacity: 1; \}/);
 });
 
-test("the scene is not in the hero any more: the flock opens the products section", () => {
+test("the ambient flock appears in the hero and the products section, each in its own taped photo", () => {
   const hero = read("app/components/home/HomeHero.tsx");
-  assert.doesNotMatch(hero, /AmbientLoop|kz-home-scene/);
+  assert.match(hero, /<AmbientLoop set=\{VALLEY\} \/>/);
+  assert.match(hero, /<TapedPhoto/);
   assert.match(read("app/components/home/ProductShowcase.tsx"), /<ProductsFlock set=\{VALLEY\} \/>/);
+  assert.match(read("app/components/home/ProductsFlock.tsx"), /<TapedPhoto/);
 });
 
 test("« Le monde de Krizaka » opens in a lightbox from the hero; the player's code loads only when it opens", () => {

@@ -8,12 +8,9 @@
 
 import { useEffect, useRef, useState } from "react";
 
-export interface AmbientSources {
-  webm: string;
-  mp4: string;
-  poster: string;
-}
-export type AmbientSet = Record<"wide" | "tall", Record<"dark" | "light", AmbientSources>>;
+import type { AmbientSet } from "@/lib/home-ambient";
+
+export type { AmbientSet } from "@/lib/home-ambient";
 
 const TALL = "(max-width: 640px)";
 

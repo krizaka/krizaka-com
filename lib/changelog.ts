@@ -223,3 +223,11 @@ export function changelogRss(opts: {
     .join("");
   return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${esc(opts.title)}</title><link>${esc(opts.pageUrl)}</link><description>${esc(opts.description)}</description><language>${opts.language}</language><atom:link href="${esc(opts.feedUrl)}" rel="self" type="application/rss+xml"/>${items}</channel></rss>`;
 }
+
+/* krizaka.com's own version (the release train, release-please): package.json, bumped by « chore: release », tagged
+   `v<version>` with a GitHub release. The footer links that release once it exists, the releases list before. */
+export const SITE_REPO = "krizaka/krizaka-com";
+
+/** The page of the site's release `v<version>` when it is published, else the releases list (never a dead link). */
+export const siteReleaseUrl = (version: string, published: boolean): string =>
+  version && published ? `https://github.com/${SITE_REPO}/releases/tag/v${version}` : `https://github.com/${SITE_REPO}/releases`;

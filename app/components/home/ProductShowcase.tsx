@@ -25,22 +25,16 @@ import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { focusProps, isHidden } from "@/lib/focus";
 import { heroMarkOrder } from "@/lib/home-sections";
+import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
-import { video } from "@/lib/cdn";
 import { ENGINE, PRODUCT_BIRD } from "@/lib/story";
 import { GitHubMark } from "../brand/GitHubMark";
 import Mode from "../Mode";
-import type { AmbientSet } from "./AmbientLoop";
 import EngineFlowView from "./EngineFlowView";
 import ProductsFlock from "./ProductsFlock";
 import ProductsLink from "./ProductsLink";
 import ProductVisual from "./visuals/ProductVisual";
 import "./visuals/visuals.css";
-
-/** The valley, looping, without its birds (the live flock stands on it; krizaka-ui tools/brand-films « home-valley »): wide and 4:5, dark and light. */
-const valley = (cut: string, theme: string) => video(`brand-films/ambient/home-valley-${cut}-${theme}`);
-const cuts = (cut: string) => ({ dark: valley(cut, "dark"), ["light"]: valley(cut, "light") });
-const VALLEY: AmbientSet = { wide: cuts("16x9"), tall: cuts("4x5") };
 
 /** The stamp of a status: `ok` only for what is out, `wip` in development, `construction` not open yet. */
 const STAMP: Record<ProductStatus, StampTone> = { devPreview: "ok", development: "wip", construction: "construction", upcoming: "neutral" };
