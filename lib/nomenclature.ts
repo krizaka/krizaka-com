@@ -9,6 +9,9 @@ import { kindOfRepository, productOfRepository, type GithubRepository } from "./
 import { mavenFamily, packageRows, type PackageRow, type RegistrySnapshot } from "./package-catalogue.ts";
 import type { Manifest } from "./how-it-fits.ts";
 
+/** Code-point order, the one `.sort()` used: stable across locales and runtimes. */
+const byCodePoint = (a: string, b: string) => (a < b ? -1 : a > b ? 1 : 0);
+
 export const NOMENCLATURE_LAYERS = ["products", "engine", "blocks", "services", "platform"] as const;
 export type NomenclatureLayer = (typeof NOMENCLATURE_LAYERS)[number];
 
@@ -109,7 +112,7 @@ export function nomenclature(input: NomenclatureInput): ModuleRow[] {
     Object.entries(manifests)
       .filter(([, m]) => names.some((n) => m.npm.includes(n) || m.maven.includes(n)))
       .map(([id]) => id)
-      .sort();
+      .sort(byCodePoint);
 
   const rows: ModuleRow[] = repositories.map((repo) => {
     const own = byRepo.get(repo.name) ?? [];
@@ -126,7 +129,7 @@ export function nomenclature(input: NomenclatureInput): ModuleRow[] {
       line: repo.description,
       repoUrl: repo.url,
       publications,
-      usedBy: repo.name === engineId ? [...engineCallers].sort() : usedBy(own.map((p) => p.name)),
+      usedBy: repo.name === engineId ? [...engineCallers].sort(byCodePoint) : usedBy(own.map((p) => p.name)),
     };
   });
 
