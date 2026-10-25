@@ -1,7 +1,7 @@
 # Bunny: an org-level media library, and the target tree of the zone
 
 Status: **proposal (phase 1)**. Nothing changes on Bunny and `scripts/bunny-layout.mjs` is untouched until Claude (CTO) comments « validé ».
-Issue: krizaka/krizaka-com#381. Reads: AGENTS.md §5.2, `scripts/bunny-layout.mjs`, `scripts/cdn-assets.mjs`, `lib/cdn-manifest.json`, `lib/cdn.ts`, krizaka-ui `tools/export-brand.mjs`.
+Issues: krizaka/krizaka-com#381, #387. Reads: AGENTS.md §5.2, `scripts/bunny-layout.mjs`, `scripts/cdn-assets.mjs`, `lib/cdn-manifest.json`, `lib/cdn.ts`, krizaka-ui `tools/export-brand.mjs`.
 
 ## 1. Inventory (from `lib/cdn-manifest.json` and the layout)
 
@@ -15,6 +15,23 @@ Issue: krizaka/krizaka-com#381. Reads: AGENTS.md §5.2, `scripts/bunny-layout.mj
 | Backgrounds, icon-like art | **none exist** for Orochia in the manifest | - | - |
 
 Conclusion: **no Orochia image is reusable at the org level.** Every one is a person, a scene or a film of an adult-adjacent creator platform. Orochia's media move to its zone `orochia-dev` (krizaka/orochia#153) and are never mirrored here. The org library is therefore built from what Krizaka already *generates from code* — the marks and `defaultAvatarSvg` of `@krizaka/ui` — and not from Orochia's art. Non-Orochia candidates already in the manifest and eligible for reuse: `people/ui/*` (8 neutral personas of ui.krizaka.com, as demo portraits only) and `brand-films/loops/*` (birds).
+
+### 1.1 The default media set supplied on 2026-10-24: the first org-level candidates
+
+Oussama supplied a reference set on 2026-10-24: **12 default avatars** (illustrated, 1024², PNG + WebP) and **12 default banners** (1920×640), plus one photo of the Krizaka spirit (krizaka-com#387). The files live in his private company folder: they are **not in any repository, and none is added by this PR**. They are the **first org-level candidates**, ahead of anything generated, and each folder of §2 takes one of two sources:
+
+| Logical folder | Takes | Source |
+| :--- | :--- | :--- |
+| `krizaka/v1/avatars/default-<01-12>` | the 12 supplied avatars (WebP; PNG only where a product needs lossless) | **Supplied**, reviewed upload under `site/org/avatars/` |
+| `krizaka/v1/covers/default-<01-12>` | the 12 supplied banners | **Supplied**, reviewed upload under `site/org/covers/` |
+| `krizaka/v1/avatars/<brand>/` | one default avatar per brand, drawn by the code | **Generated** from `@krizaka/ui` `defaultAvatarSvg` |
+| `krizaka/v1/covers/<brand>/` | brand covers | **Generated** from the brand tokens and marks |
+| `krizaka/v1/icons/`, `illustrations/`, `placeholders/` | empty-state art | **Generated** |
+| the culture photo | not a default: it is used as a page photo, not as a library entry | out of this library |
+
+The supplied files keep the rule « one writer per prefix »: the exporter still owns `krizaka/v1/` (§2); the supplied set is written only by `scripts/cdn-assets.mjs` under `site/org/` and resolved from the `krizaka/v1/avatars/default-NN` logical path by `lib/cdn.ts`. Issue #387 proposed a `library/krizaka-defaults/` prefix: it is **replaced** by this layout (one org prefix, not two), to be confirmed at « validé ».
+
+**The published manifest is sanitised.** Whatever manifest is published for the supplied set (id, kind, FR/EN alt, tags, product affinity, CDN URLs, size, hash) holds **no company identifier** (no company number, registration or tax number, legal or internal name) and **no personal data** (no person's name, email, phone, address, file path of the private folder, or EXIF/metadata of a photo). Only the whitelisted fields above are written; anything else is dropped, not copied. `tests/bunny-org-library.test.mjs` asserts that this document says so, and the manifest builder will carry its own test that refuses any non-whitelisted field. Alt texts come from the manifest, never hard-coded; the café banner is decoration only.
 
 ## 2. The org level: `krizaka/`
 
