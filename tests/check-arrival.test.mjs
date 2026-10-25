@@ -50,7 +50,8 @@ test("the footer's internal links carry the locale, and its own page is aria-cur
     assert.ok(footer.includes(`href={${href}}`), `${href} is prefixed`);
   }
   assert.doesNotMatch(footer, /<Link href="\//, "no unprefixed footer link: it would go through proxy.ts's 307");
-  assert.equal(footer.match(/aria-current=\{here\(/g).length >= 5, true);
+  // the version links off-site (its GitHub release, #389): the four pages of the site are aria-current
+  assert.equal(footer.match(/aria-current=\{here\(/g).length >= 4, true);
 });
 
 test("the locale layout mounts RouteArrival: scroll to 0 and focus on the h1, when the page (not the language, not an anchor) changes", () => {

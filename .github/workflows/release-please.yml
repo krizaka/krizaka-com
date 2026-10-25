@@ -1,0 +1,55 @@
+# The release train (krizaka/krizaka-com#389): every pull request merged on main boards the next release. release-please
+# keeps one « chore: release X.Y.Z » pull request open from the Conventional Commits merged since the last release
+# (package.json's version, CHANGELOG.md). Merging it tags vX.Y.Z and publishes the GitHub release; production.yml then
+# fast-forwards the `production` branch to that tag, and the DigitalOcean app deploys from `production` (README « Deploys »).
+#
+# A pull request or a release made with GITHUB_TOKEN starts no workflow (GitHub's rule): no CI on the release pull request,
+# no `release: published`. A GitHub App installation token does start them. Configure once: repository variable
+# RELEASE_APP_ID and secret RELEASE_APP_PRIVATE_KEY (an App with contents + pull-requests write on this repository). Until
+# they exist GITHUB_TOKEN is used and the job dispatches production.yml itself (a workflow_dispatch is allowed).
+name: release-please
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - id: app
+        if: ${{ vars.RELEASE_APP_ID != '' }}
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      - id: release
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          token: ${{ steps.app.outputs.token || secrets.GITHUB_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+
+      # Without the App, the release published with GITHUB_TOKEN fires no `release: published`: promote it explicitly.
+      # (With the App, production.yml runs on the event; promoting twice is a no-op.)
+      - name: Promote the release to production
+        if: steps.release.outputs.release_created == 'true' && steps.app.outputs.token == ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag_name }}
+        run: gh workflow run production.yml --repo "$GITHUB_REPOSITORY" --ref main -f tag="$TAG"

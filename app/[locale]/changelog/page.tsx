@@ -73,8 +73,8 @@ export default async function ChangelogRoute({ params }: Props) {
             {PLATFORM.site && (
               <>
                 {" "}
-                {/* the footer's link lands here: /changelog#<version> */}
-                <span id={PLATFORM.site}>{format(c.runs, { version: PLATFORM.site, ui: PLATFORM.ui })}</span>
+                {/* the site's own version, anchored: /changelog#<version> */}
+                <span id={PLATFORM.site}>{format(c.runs, { version: PLATFORM.site })}</span>
               </>
             )}
           </>

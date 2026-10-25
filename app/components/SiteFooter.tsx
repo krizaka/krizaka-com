@@ -8,7 +8,7 @@ import { useI18n } from "./I18nProvider";
 import { useCarnet } from "./useCarnet";
 import { FOCUS_IDS } from "@/lib/focus";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
-import { PLATFORM, changelogHref } from "@/lib/changelog-data";
+import { PLATFORM } from "@/lib/changelog-data";
 import { format } from "@/lib/i18n";
 import { COMPANY } from "@/lib/site";
 
@@ -40,11 +40,11 @@ export default function SiteFooter() {
         <>
           {/* Who publishes the site, as the law asks: the legal name and the NEQ (lib/site.ts COMPANY), never an address. */}
           <span className="kz-footer-company">{format(f.company, COMPANY)}</span>
+          {/* krizaka.com's own version only (release-please, package.json), on its GitHub release: the versions of the
+              packages it runs on belong to a deployment, not to the page (2026-10-24). */}
           {PLATFORM.site && (
             <FamilyFooter.Link asChild>
-              <Link href={to(changelogHref())} prefetch={false} aria-current={here(changelogHref())}>
-                {format(f.version, { version: PLATFORM.site, ui: PLATFORM.ui })}
-              </Link>
+              <a href={PLATFORM.release}>{format(f.version, { version: PLATFORM.site })}</a>
             </FamilyFooter.Link>
           )}
           <FamilyFooter.Link asChild>
