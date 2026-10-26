@@ -295,3 +295,43 @@ test("every picture of /story is a taped print: the film and each take sit insid
   // no hand-made tape: the print is TapedPhoto's own
   assert.doesNotMatch(css, /clip-path|\.st-[\w-]*tape\b/i);
 });
+
+// 2026-10-26 (Oussama: « aligne les photos ou vidéos une fois à droite et une fois à gauche pour que ça fasse histoire »):
+// the chapters' picture alternates sides, in CSS and from the chapter's number; one column on a phone.
+test("the chapters' media alternate sides: right, left, right…, with CSS only, one column below 900px", () => {
+  const sideOf = chapter.match(/sideOf = \(number: number\)[^=]*=> \(number % 2 \? "(\w+)" : "(\w+)"\)/);
+  assert.deepEqual([sideOf[1], sideOf[2]], ["right", "left"], "chapter 1 on the right, chapter 2 on the left");
+  assert.match(chapter, /data-side=\{sideOf\(number\)\}/);
+  const left = css.match(/@media \(min-width: 900px\) \{\s*\.st-ch\[data-side="left"\] \.st-ch-grid[\s\S]*?\n\}/);
+  assert.ok(left, "the swap lives in the desktop media query only");
+  assert.match(left[0], /grid-template-columns: minmax\(0, 380px\) minmax\(0, 1fr\)/);
+  assert.match(left[0], /\.st-ch-proof \{ order: -1; \}/);
+  assert.doesNotMatch(css.replace(left[0], ""), /data-side="left"\] \.st-ch-(grid|proof) \{/, "a phone keeps the one column and the same order");
+  assert.doesNotMatch(page, /style=\{\{[^}]*(order|direction|gridTemplate)/, "no inline layout");
+});
+
+test("each chapter links to the blog chapter that tells it in full, in the page's language", () => {
+  assert.match(story, /BLOG_CHAPTER[^=]*= \{/);
+  for (const a of ["who", "engine", "yomizaka", "akinaza", "open", "next"]) {
+    assert.match(story, new RegExp(`${a}: "[a-z-]+"`), a);
+    for (const l of ["en", "fr"]) assert.ok(messages(l).story.blog[a], `${l}: blog.${a}`);
+  }
+  assert.match(story, /BLOG_PREFIX = \{ en: "", fr: "\/fr" \}/);
+  for (const a of ['"who"', '"engine"', "id as keyof typeof BLOG_CHAPTER", '"open"', '"next"']) assert.ok(page.includes(`{readOn(${a})}`) || page.includes(`actions={readOn(${a})}`), `readOn(${a})`);
+  for (const l of ["en", "fr"]) assert.match(messages(l).story.products.readAria, /\{title\}/);
+});
+
+// Only Orazaka, Yomizaka and Akinaza are in focus (2026-10-26). The paused products are not on /story: no chapter, no
+// card, no link, no media; the page says at most « explored, paused », without a name.
+test("no paused product on /story: not in the chapters, the messages, the takes or the film's captions", () => {
+  const paused = /orochia|kachizaka|yasakia|yazakia|yororis/i;
+  assert.deepEqual([...productIds].sort(), ["akinaza", "orazaka", "yomizaka"], "lib/products.ts lists only the products in focus");
+  assert.doesNotMatch(page, paused);
+  assert.doesNotMatch(story.replace(/Record<ProductId[^;]*;/g, ""), paused);
+  assert.doesNotMatch(read("lib/story-takes.ts").replace(/\/\*[\s\S]*?\*\//g, ""), paused);
+  assert.doesNotMatch(read("lib/story-film.ts").replace(/\/\*[\s\S]*?\*\//g, ""), paused);
+  for (const l of ["en", "fr"]) {
+    assert.doesNotMatch(JSON.stringify(messages(l).story), paused, `${l}: story messages`);
+    assert.doesNotMatch(read("lib/film-captions.ts") + JSON.stringify(messages(l).story.world), paused, `${l}: film captions`);
+  }
+});

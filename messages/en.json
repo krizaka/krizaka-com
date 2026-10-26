@@ -490,7 +490,7 @@
       "intro": {
         "eyebrow": "Our story",
         "title": "One studio. One engine. <b>Every product on the same blocks.</b>",
-        "lead": "Krizaka is a studio from Montréal built on one refusal: nobody should take software on faith. We forge open building blocks, build a sovereign AI engine on them — Orazaka — and ship our products on both.",
+        "lead": "A studio in Montréal, started from a simple idea: software should show its work. Here is how it went, from a laptop that ran out of memory to three products built in the open.",
         "start": "Start reading",
         "products": "Explore the products"
       },
@@ -498,9 +498,9 @@
       "chapter": "Chapter {n}",
       "who": {
         "nav": "Who we are",
-        "title": "A studio in Montréal",
-        "lead": "Krizaka is a studio founded by Oussama in Montréal. It is the forge halfway up the hill: a kris is a blade forged in layers, zaka the slope you climb step by step.",
-        "refusal": "The software we were asked to trust had become black boxes. We build the opposite: everything we ship is tested, documented and open source under Apache-2.0.",
+        "title": "It started in Montréal",
+        "lead": "Krizaka is a studio Oussama builds in Montréal, almost alone, with AI agents he directs and reviews. A kris is a blade forged in layers; zaka is the slope you climb one step at a time.",
+        "refusal": "We started from one question: where was my document read, by which model, and who can see the result? Software that cannot answer asks for trust on faith. So what we ship is tested, documented and open source under Apache-2.0.",
         "placesAria": "Where Krizaka is",
         "places": [
           "Montréal"
@@ -524,7 +524,7 @@
       "engine": {
         "nav": "The engine",
         "title": "Orazaka, the engine",
-        "lead": "Orazaka is the sovereign AI engine our products call for their AI: your documents, on your infrastructure, under your rules.",
+        "lead": "It began as a personal project on a laptop, to see what models running at home could do. Today it is the engine our products call for their AI: every request is a run that keeps its id, its version and its rules.",
         "more": "What each product uses it for"
       },
       "products": {
@@ -557,6 +557,16 @@
               "The books roll up into a GST return, ready to review."
             ]
           }
+        },
+        "read": "Read the full chapter",
+        "readAria": "Read the full chapter on the blog: {title}",
+        "lines": {
+          "yomizaka": "Read before you sign. Drop in a lease, a contract or an invoice: Yomizaka checks it rule by rule and quotes the exact passage behind each finding.",
+          "akinaza": "A small shop's day in one place: bookings, bilingual invoices, and a tax return prepared for the owner to review. Akinaza prepares it and never files it."
+        },
+        "proofs": {
+          "yomizaka": "Each rule cites its article of law. The Québec rules still wait for a lawyer's review, and the screen says so: it sorts, it does not give legal advice. Sign-up is closed while we test on real leases.",
+          "akinaza": "Appointments, invoices with GST and QST, a ledger the database keeps balanced, and a tax report the merchant reviews and files. In development: sign-up is closed."
         }
       },
       "birds": {
@@ -564,8 +574,8 @@
       },
       "open": {
         "nav": "The open stack",
-        "title": "Everything we stand on is open",
-        "lead": "Every product stands on the same public blocks: published, versioned, Apache-2.0. The figures are read from the registries at build.",
+        "title": "What we stand on is open",
+        "lead": "The blocks under every product are public: a component kit and Java building blocks, published and versioned, Apache-2.0. We use them first, so a fix made once reaches every product.",
         "figuresAria": "The open blocks in figures",
         "figures": {
           "repos": "public repositories",
@@ -577,8 +587,8 @@
       },
       "next": {
         "nav": "What's next",
-        "title": "What comes next, said as it stands",
-        "lead": "A product says what it is today, and the engine says planned until it runs. No date is promised here.",
+        "title": "What comes next",
+        "lead": "Three products are in development, in the open, with sign-up closed. Other ideas were explored and are paused so these can be finished. No date is promised: a product says what it is today.",
         "wire": "Wire Orazaka to {products}, where its use is still planned.",
         "reach": "Bring {products} to a dev preview, each proved on its own checklist.",
         "boardAria": "Where each product stands",
@@ -662,6 +672,14 @@
           }
         },
         "codeTitle": "Filmed from the code"
+      },
+      "blog": {
+        "who": "Why I am building Krizaka in Montréal",
+        "engine": "An AI engine on a laptop",
+        "yomizaka": "The first products: Yomizaka and Akinaza",
+        "akinaza": "The first products: Yomizaka and Akinaza",
+        "open": "One interface, from the web to the Mac",
+        "next": "Building almost alone, with agents"
       }
     },
     "openSource": {
