@@ -18,10 +18,16 @@ jobs:
   # The pipeline is the org's (krizaka/.github docs/standards/ci-and-deploy.md): the changes gate, the caches, the timeouts and the
   # gate that always reports live there. This file says only what is krizaka.com's.
   ci:
-    uses: krizaka/.github/.github/workflows/node-ci.yml@1cb2e1b6f572ba712083cb6f05fd041370c5ea0b # v1.5.0
+    uses: krizaka/.github/.github/workflows/node-ci.yml@ed3646a1323982543e81aad3fa0130cd69400cc8 # ci/sonar-after-tests-image-scan (repin on merge)
     permissions:
       contents: read
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     with:
+      # SonarCloud CI analysis after the tests, with the coverage `test:coverage` writes (krizaka/.github#237).
+      sonar: true
+      sonar-coverage-paths: coverage/lcov.info
+      test-script: test:coverage
       duplication: true      # jscpd + dup-ratchet.json: duplicated lines may only go down
       next-cache-paths: .next/cache
       # scripts/gen-org-stats.mjs reads the organisation's public repository count without the anonymous rate limit
