@@ -29,7 +29,7 @@ node scripts/check-seo.mjs --base http://localhost:3000
 node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization --types Organization,WebSite
 # 360–1440 px, dark and light: no page scrolls sideways (a real browser on the real container).
 npm ci --ignore-scripts --no-audit --no-fund
-npx playwright install --with-deps chromium
+node_modules/.bin/playwright install --with-deps chromium
 node scripts/check-overflow.mjs --base http://localhost:3000
 # The engine flow's dots travel and the engine breathes (reduced motion OFF; at rest when ON): check-overflow runs
 # under reduced motion and could not see a frozen figure.
