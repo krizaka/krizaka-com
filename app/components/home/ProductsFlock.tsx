@@ -4,19 +4,18 @@
    slightly tilted, a thin white print border, a soft paper shadow, tape at two corners (@krizaka/ui TapedPhoto). Each bird IS a product (lib/products-flock.ts): hovering, focusing or tapping one lights
    its row and its node in the list below, and the row (or the node) lights its bird — the same link the engine flow has
    (ProductsLink, through `kz-products-point` / `kz-products-lit` on window). A bird has its name on hover or focus, and is a
-   link to its entry. The birds themselves are krizaka-ui's Flock: at ease in character, glancing at each other, the pigeon
-   (Orochia) carrying its parcel across the band, each jumping once as the band comes into view; still under reduced motion.
+   link to its entry. The birds themselves are krizaka-ui's Flock: at ease in character, glancing at each other,
+   each jumping once as the band comes into view; still under reduced motion.
    The ridge of the film is the page's surface: below the band the section's paper continues. */
 
 import { Flock } from "@krizaka/ui/flock";
 import { TapedPhoto } from "@krizaka/ui/taped-photo";
 import { useEffect, useState } from "react";
 
-import { BAND_TALL, BAND_WIDE, FOCUS_TALL, FOCUS_WIDE, type PlacedBird } from "@/lib/products-flock";
+import { BAND_TALL, BAND_WIDE, type PlacedBird } from "@/lib/products-flock";
 import { PRODUCTS } from "@/lib/products";
 import type { AmbientSet } from "@/lib/home-ambient";
 import AmbientLoop from "./AmbientLoop";
-import { useCarnet } from "../useCarnet";
 
 const nameOf = (id: string) => PRODUCTS.find((p) => p.id === id)?.name ?? id;
 const point = (id: string | null) => window.dispatchEvent(new CustomEvent("kz-products-point", { detail: id }));
@@ -49,10 +48,8 @@ function Hits({ band, lit }: { band: { birds: PlacedBird[] }; lit: string | null
 
 export default function ProductsFlock({ set }: { set: AmbientSet }) {
   const [lit, setLit] = useState<string | null>(null);
-  // Three birds while only the focus shows (lib/focus.ts), the seven once the notebook is open whole.
-  const open = useCarnet();
-  const WIDE = open ? BAND_WIDE : FOCUS_WIDE;
-  const TALL = open ? BAND_TALL : FOCUS_TALL;
+  const WIDE = BAND_WIDE;
+  const TALL = BAND_TALL;
   useEffect(() => {
     const on = (e: Event) => setLit((e as CustomEvent<string | null>).detail ?? null);
     window.addEventListener("kz-products-lit", on);

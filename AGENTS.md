@@ -19,17 +19,20 @@
 ## 2. What is generated, what is written
 
 - **krizaka.com is the company's lightweight showcase.** Each product has **its public address at `www.<product>.com`**
-  (orazaka, orochia, yasakia — identifiers keep "yasakia" until the rename lands —, yororis, yomizaka, kachizaka, akinaza;
-  epic krizaka/.github#119, 2026-10-21): the product's real app on its own deployment, sign-up closed everywhere; the apex
+  (orazaka, yomizaka, akinaza; epic krizaka/.github#119, 2026-10-21): the product's real app on its own deployment, sign-up closed everywhere; the apex
   `<product>.com` answers 308 with www. `lib/products.ts` carries `siteUrl` (www) — **every public link, sitemap, llms.txt and JSON-LD
-  uses it, never a `dev.<product>.com` host** (the legal pages name dev.orochia.com in words, as the privacy policy and terms
-  must). `dev.<product>.com` is the development host of the same deployment: `noindex`, robots `Disallow: /`, every HTML page
+  uses it, never a `dev.<product>.com` host**. `dev.<product>.com` is the development host of the same deployment: `noindex`, robots `Disallow: /`, every HTML page
   answers 308 to the same path on www, and only what is called keeps serving there (`/api/*`, auth callbacks, webhooks,
   `/.well-known/*`, `/healthz` — the mobile builds and the services' server-to-server calls), with `X-Robots-Tag: noindex`.
   This repo carries **no product page, demo, gallery, journey, recording or documentation** of the products: the home's
   products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
   « Visit the site » → its www address, and « Source »); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
-  `/<locale>#products`. Orochia's card is neutral — no adult-adjacent wording, no media.
+  `/<locale>#products`.
+- **Paused products** (Oussama, 2026-10-25): Orochia, Kachizaka, Yasakia and Yororis are paused — their environments deleted,
+  their repositories private, their CI off. krizaka.com names them nowhere (`lib/products.ts` has the three products in focus;
+  `tests/home.test.mjs` refuses their names in the messages, `llms.txt` and the JSON-LD); their old addresses answer 308 with
+  `/#products` (`lib/product-redirects.ts`). A paused product comes back as an ordinary product: its entry in `lib/products.ts`,
+  its messages, its tests.
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
   `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
@@ -37,37 +40,25 @@
 - **The changelog is data** (`/changelog`, krizaka/.github#184): `scripts/gen-changelog.mjs` reads, at build, the GitHub Releases of
   the repositories listed in `krizaka/.github/release-repos.json` (written by the shared `release-notes` workflow: `YYYY.MM.DD.N`,
   an English and a French section; Orazaka is one product line) and the `@krizaka/*` versions. krizaka/.github's `changelog-rebuild.yml` (environment `dev`) rebuilds
-  on the `product-release` dispatch and daily. The page filters by `?produit=` (the address is the state), obeys the focus (the
-  other products come back with the notebook, `?carnet=complet`), keeps its RSS and shows the French lines on `/fr`. The public
+  on the `product-release` dispatch and daily. The page filters by `?produit=` (the address is the state), lists only the
+  products it presents and the stack, keeps its RSS and shows the French lines on `/fr`. The public
   text has no personal name and no em dash: `cleanText` (lib/changelog.ts) cleans, `releaseProblems` fails the build.
-- **The focus** (Oussama, 2026-10-22): by default krizaka.com shows **three products** — Orazaka, Akinaza, Yomizaka (`FOCUS_IDS`,
-  `lib/focus.ts`, the one list). The four others stay in the data and in every page, **hidden, not removed**: an item of a hidden
-  product wears `{...focusProps(id)}` (`data-focus="off"`, hidden by `app/components/focus.css`), a sentence or number worded for
-  both cases is a `<Mode focus full>`, a client list filters with `useCarnet()` (the flock, the engine flow, the contact picker,
-  the open-source tables); the family footer (`@krizaka/ui/sites` has no filter) and /story's contents are hidden by CSS from
-  `hiddenCss()`. The state is the address, `?carnet=complet` (read before the first paint, kept across client navigations,
-  « refermer » is a link to the same page without it). A visual focus only: the JSON-LD Organization still owns every product,
-  `llms.txt`, the sitemaps, the redirects and the products' own sites are untouched (`tests/focus.test.mjs`). A new list of
-  products must wear the focus; a new product is in or out of `FOCUS_IDS`.
 - **Product first, Orazaka as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Yomizaka reads your lease »); Orazaka appears only as the engine — one discreet « Powered by Orazaka » line and the proof sections (run ids) — never as the one doing the product's job (« Orazaka reads your lease »). Each product repository tests that its hero and steps do not name Orazaka. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are orazaka#189).
-- A product **in development** (`status: "development"`: Yomizaka, Kachizaka, Akinaza) is built in the open: its repository is
-  public, sign-up is closed, and it says « In development ». Each has its www address (its card says « Visit the site »). Kachizaka is points only, never money;
+- A product **in development** (`status: "development"`: Orazaka, Yomizaka, Akinaza) is built in the open: its repository is
+  public, sign-up is closed, and it says « In development ». Each has its www address (its card says « Visit the site »).
   Akinaza prepares tax returns and never files them, and is not for restaurants and bars — the card words say so, no more.
 - **« Dev preview » is data, not words** ([krizaka/.github `docs/standards/dev-preview.md`](https://github.com/krizaka/.github/blob/main/docs/standards/dev-preview.md), ADR-002).
   `ProductStatus` has `devPreview`; every product has an explicit `status` (no status no longer means a badge). A product may wear
   `devPreview` only when the `dev-preview.json` at the root of its repository is complete (every criterion: fresh evidence URL or a
   justified `na`). `scripts/gen-dev-preview.mjs` (in `npm run build`) reads the checklists from GitHub raw, writes the git-ignored
   `lib/dev-preview-checklists.json`, checks the evidence URLs and **fails the build** if the status is not supported; the pure rules
-  are in `scripts/dev-preview-lib.mjs`, guarded by `tests/dev-preview.test.mjs`. Orazaka and Orochia keep the badge under a
-  time-boxed waiver (`WAIVERS`, until 2026-11-01) while their gaps close; the test fails the day it ends. Other statuses are never gated.
+  are in `scripts/dev-preview-lib.mjs`, guarded by `tests/dev-preview.test.mjs`. No product wears it today (Orazaka went back to
+  `development` on 2026-10-25, the CTO's call) and `WAIVERS` is empty; a waiver is time-boxed and its test fails the day it ends.
+  Other statuses are never gated.
 - A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
   construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
-- **Yororis' lexicon** is law for every message whose key contains `yororis`: `npm run lexicon` (in `npm run lint`) fails
-  on the "never" column of `company/prompts-yororis.md` §2.1. The reviewed texts (`site.yororis.reviewed.*`, quoted by
-  /story's Yororis chapter) are fingerprinted in `scripts/lexicon-reviewed.json`: change one only with
-  `npm run lexicon -- --accept-review YYYY-MM-DD` and say so in the PR.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
-  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), the three Orochia clips that published
+  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), the three clips that older published
   `@krizaka/ui` examples reach through `/assets/orochia/tour/` (a redirect in `lib/cdn.ts`), and `brand-films/**` — the
   films of the flock, rendered from the code by krizaka-ui `tools/brand-films` (« Le monde de Krizaka » on `/story`, its
   captions from the messages through `/<locale>/story/film.vtt`; the loops of each bird, loaded by ui.krizaka.com and the
@@ -136,8 +127,7 @@
   addresses `www.<product>.com` (sign-up closed; the apex answers 308 with www); **`noindex`** — every `dev.<product>.com`
   (robots `Disallow: /`, `X-Robots-Tag: noindex`; its pages answer 308 to www, its API keeps serving — checked by
   `check-seo-family.mjs --redirects-to https://www.<product>.com`) and both `admin.*` consoles — but they still serve
-  correct files for the day they open. Orochia's www stays `noindex` until its indexing is decided on its own (an adult
-  platform: `APP_SEARCH_INDEXING=off` in its spec). Providers (Stripe, Google…) are given the www URLs, never a dev host.
+  correct files for the day they open. Providers (Stripe, Google…) are given the www URLs, never a dev host.
   Search Console / Bing verification is by DNS TXT record, never a file or a token in the repository; the sitemap to submit
   is `https://www.<product>.com/sitemap.xml`.
 
@@ -180,7 +170,7 @@
 ## 4. Visualizations
 
 - **No architecture drawing here.** Krizaka Java's building blocks map (`ModuleMap`, generated from the POMs) lives on
-  java.krizaka.com (`krizaka-build/site`); the Orazaka and Orochia models, journeys, pipeline and topology on the products'
+  java.krizaka.com (`krizaka-build/site`); the Orazaka models, journeys, pipeline and topology on the products'
   sites. A schema is added here only when a page here draws it.
 - **Mermaid is retired**, with no fallback: never rendered in the browser, never shipped (`mermaid` is not a dependency),
   and a ` ```mermaid ` fence in a published doc fails the build. (Unpublished

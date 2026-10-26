@@ -23,13 +23,11 @@ import { Section } from "@krizaka/ui/page";
 import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { focusProps, isHidden } from "@/lib/focus";
 import { heroMarkOrder } from "@/lib/home-sections";
 import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { ENGINE, PRODUCT_BIRD } from "@/lib/story";
 import { GitHubMark } from "../brand/GitHubMark";
-import Mode from "../Mode";
 import EngineFlowView from "./EngineFlowView";
 import ProductsFlock from "./ProductsFlock";
 import ProductsLink from "./ProductsLink";
@@ -45,14 +43,11 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
 /** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
 
-/** The numbers of the figures and the notes: the catalogue's (a product's place in lib/products.ts) once the notebook is
- *  open whole, and the order of the page (1, 2, 3) while only the focus shows — never a gap in the notes. */
-const fullN = (p: Product) => PRODUCTS.indexOf(p) + 1;
-const SHOWN = heroMarkOrder(PRODUCTS).filter((x) => !isHidden(x.id));
-const focusN = (p: Product) => SHOWN.findIndex((x) => x.id === p.id) + 1;
-const fnRef = (p: Product) =>
-  isHidden(p.id) ? <FootnoteRef n={fullN(p)} prefix="kz-note" /> : <Mode focus={<FootnoteRef n={focusN(p)} prefix="kz-nf" />} full={<FootnoteRef n={fullN(p)} prefix="kz-note" />} />;
-const figNo = (label: string, p: Product) => (isHidden(p.id) ? `${label} ${fullN(p)}` : <>{label} <Mode focus={focusN(p)} full={fullN(p)} /></>);
+/** The numbers of the figures and the notes: the order of the page (1, 2, 3) — never a gap in the notes. */
+const SHOWN = heroMarkOrder(PRODUCTS);
+const nOf = (p: Product) => SHOWN.findIndex((x) => x.id === p.id) + 1;
+const fnRef = (p: Product) => <FootnoteRef n={nOf(p)} prefix="kz-note" />;
+const figNo = (label: string, p: Product) => `${label} ${nOf(p)}`;
 
 /** The bird of a product and what it says: the film's promise for the five birds of the film, its name for the family. */
 function Bird({ p, t }: { p: Product; t: TranslationDictionary }) {
@@ -126,7 +121,7 @@ function EngineFoundation({ t }: { t: TranslationDictionary }) {
           {powered.map((x) => {
             const use = ENGINE_USES.find((u) => u.id === x.id);
             return (
-              <li key={x.id} className={"brand-" + x.id} data-planned={use?.planned ? "" : undefined} {...focusProps(x.id)}>
+              <li key={x.id} className={"brand-" + x.id} data-planned={use?.planned ? "" : undefined}>
                 <a href={`#product-${x.id}`}>
                   <ProductLogo id={x.id} size={24} animated={false} />
                   <span>{x.name}</span>
@@ -149,7 +144,7 @@ function ProductEntry({ product: p, t }: { product: Product; t: TranslationDicti
   const use = ENGINE_USES.find((u) => u.id === p.id);
   const useText = use ? t.site.products.engine.uses[use.id as keyof typeof t.site.products.engine.uses] : undefined;
   return (
-    <li id={"product-" + p.id} className={cn("kz-entry", "brand-" + p.id)} data-product={p.id} {...focusProps(p.id)}>
+    <li id={"product-" + p.id} className={cn("kz-entry", "brand-" + p.id)} data-product={p.id}>
       <figure className="kz-entry-plate">
         <ProductVisual id={p.id} />
         <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
@@ -212,11 +207,7 @@ export default function ProductShowcase({ locale }: { locale: string }) {
             ))}
           </ol>
         </ProductsLink>
-        {/* The notes of the focus (1, 2, 3 in the page's order) and, once the notebook is open, the whole catalogue's. */}
-        <Mode
-          focus={<Footnotes className="kz-prod-notes" prefix="kz-nf" label={s.notesLabel} backLabel={s.backLabel} notes={SHOWN.map((p) => `${p.name}. ${s.notes[p.id]}`)} />}
-          full={<Footnotes className="kz-prod-notes" prefix="kz-note" label={s.notesLabel} backLabel={s.backLabel} notes={PRODUCTS.map((p) => `${p.name}. ${s.notes[p.id]}`)} />}
-        />
+        <Footnotes className="kz-prod-notes" prefix="kz-note" label={s.notesLabel} backLabel={s.backLabel} notes={SHOWN.map((p) => `${p.name}. ${s.notes[p.id]}`)} />
       </Section>
     </div>
   );

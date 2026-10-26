@@ -8,15 +8,11 @@
    comes near the viewport (next/dynamic). */
 
 import { useEffect, useState, type ReactNode } from "react";
-import { MessageBubble, TypingIndicator } from "@krizaka/ui/chat";
 import { Chip } from "@krizaka/ui/chip";
-import { NumberTicker } from "@krizaka/ui/number-ticker";
-import { Progress } from "@krizaka/ui/progress";
 import { Stamp } from "@krizaka/ui/specimen-tag";
-import { Waveform } from "@krizaka/ui/waveform";
 import type { ProductId } from "@/lib/products";
 import { useI18n } from "../../I18nProvider";
-import { AKINAZA_PRICE, AKINAZA_SLOTS, OROCHIA_RENDITIONS, receipt, standings, YORORIS_PEAKS } from "@/lib/product-visuals";
+import { AKINAZA_PRICE, AKINAZA_SLOTS, receipt } from "@/lib/product-visuals";
 
 /** Steps a counter while `playing` (one timer, cleared at rest); at rest it shows `rest`. */
 function useStep(playing: boolean, count: number, everyMs: number, rest: number): number {
@@ -52,61 +48,6 @@ function Yomizaka({ playing }: { playing: boolean }) {
           {v.line} 5 · {v.source}
         </span>
       </p>
-    </div>
-  );
-}
-
-function Orochia({ playing }: { playing: boolean }) {
-  // Upload → encode → stream, the renditions written one by one as they are ready. No media: Orochia's entry stays
-  // neutral on krizaka.com (AGENTS §2).
-  const v = useI18n().t.site.home.visuals.orochia;
-  const step = useStep(playing, OROCHIA_RENDITIONS.length + 1, 900, OROCHIA_RENDITIONS.length);
-  const done = step >= OROCHIA_RENDITIONS.length;
-  return (
-    <div className="pv-encode">
-      <ol className="pv-encode-steps">
-        {v.steps.map((s, i) => (
-          <li key={s} data-on={i === 0 || (i === 1 && step > 0) || (i === 2 && done) ? "" : undefined}>
-            {s}
-          </li>
-        ))}
-      </ol>
-      <Progress value={Math.round((step / OROCHIA_RENDITIONS.length) * 100)} label={v.encoding} size="sm" />
-      <ul className="pv-encode-ladder">
-        {OROCHIA_RENDITIONS.map((r, i) => (
-          <li key={r} data-on={i < step ? "" : undefined}>
-            <span>{r}</span>
-            <span className="pv-leader" />
-            <span>{i < step ? "✓" : "…"}</span>
-          </li>
-        ))}
-      </ul>
-      <p className="pv-encode-state">{done ? <Stamp tone="ok">{v.ready}</Stamp> : v.encoding}</p>
-    </div>
-  );
-}
-
-function Kachizaka({ playing }: { playing: boolean }) {
-  // The standings of a friends' league, a ledger: match day after match day the totals roll; points only.
-  const { t, locale } = useI18n();
-  const v = t.site.home.visuals.kachizaka;
-  const day = useStep(playing, 8, 1400, 7) + 1;
-  const points = standings(day);
-  return (
-    <div className="pv-score">
-      <p className="pv-score-head">{v.league}</p>
-      <ol className="pv-score-rows">
-        {v.players.map((name, i) => (
-          <li key={name}>
-            <span className="pv-score-rank">{i + 1}</span>
-            <span>{name}</span>
-            <span className="pv-leader" />
-            <span className="pv-score-value">
-              <NumberTicker value={points[i]} locale={locale} trigger="change" duration={600} align="start" /> <span className="pv-score-unit">{v.points}</span>
-            </span>
-          </li>
-        ))}
-      </ol>
     </div>
   );
 }
@@ -149,41 +90,10 @@ function Akinaza({ playing }: { playing: boolean }) {
   );
 }
 
-function Yasakia({ playing }: { playing: boolean }) {
-  // Their message is always there; the other one types, then answers — and the agent's introduction is said above.
-  const v = useI18n().t.site.home.visuals.yasakia;
-  const step = useStep(playing, 4, 1100, 3);
-  return (
-    <div className="pv-chat">
-      <p className="pv-chat-intro">
-        <Stamp tone="ok">{v.intro}</Stamp>
-      </p>
-      <MessageBubble text={v.theirs} time="18:02" grouped="single" />
-      {step === 1 ? <TypingIndicator label={v.typing} /> : null}
-      {step >= 2 && <MessageBubble text={v.mine} time="18:03" mine grouped="single" />}
-    </div>
-  );
-}
-
-function Yororis({ playing }: { playing: boolean }) {
-  // A voice, listened to: @krizaka/ui's Waveform, breathing while it plays.
-  const v = useI18n().t.site.home.visuals.yororis;
-  return (
-    <div className="pv-voice">
-      <Waveform peaks={YORORIS_PEAKS} bars={28} size="lg" playing={playing} />
-      <p className="pv-voice-label">{v.label}</p>
-    </div>
-  );
-}
-
 /** Orazaka's entry draws the engine flow instead (@krizaka/ui/engine-flow, EngineFlowView). */
 const VISUALS: Record<Exclude<ProductId, "orazaka">, (p: { playing: boolean }) => ReactNode> = {
   yomizaka: Yomizaka,
-  orochia: Orochia,
-  kachizaka: Kachizaka,
   akinaza: Akinaza,
-  yasakia: Yasakia,
-  yororis: Yororis,
 };
 
 export default function ProductVisuals({ id, playing }: { id: ProductId; playing: boolean }) {

@@ -18,7 +18,7 @@ export interface GithubRepository {
 export const REPOSITORY_KINDS = ["main", "web", "mobile", "service", "library", "tooling", "other"] as const;
 export type RepositoryKind = (typeof REPOSITORY_KINDS)[number];
 
-/** The product a repository belongs to: its name is the product's or starts with it (`orochia-mobile`); anything else
+/** The product a repository belongs to: its name is the product's or starts with it (`orazaka-cli`); anything else
     is the platform (`krizaka`: krizaka-ui, the Java building blocks, the site, the org profile). */
 export function productOfRepository<P extends string>(name: string, products: readonly P[]): P | "krizaka" {
   return products.find((p) => name === p || name.startsWith(`${p}-`)) ?? "krizaka";

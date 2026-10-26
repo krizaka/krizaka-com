@@ -1,5 +1,5 @@
 {
-  "readAt": "2026-10-21",
+  "readAt": "2026-10-26",
   "products": {
     "orazaka": {
       "sources": [
@@ -15,6 +15,7 @@
       "npm": [
         "@krizaka/charts",
         "@krizaka/config",
+        "@krizaka/discovery",
         "@krizaka/fonts",
         "@krizaka/i18n",
         "@krizaka/icons",
@@ -43,99 +44,27 @@
         "orazaka-web-client:src/core/hooks/useJobSSE.ts"
       ]
     },
-    "orochia": {
+    "yomizaka": {
       "sources": [
-        "orochia:apps/web/package.json",
-        "orochia-mobile:package.json"
+        "yomizaka:apps/web/package.json"
       ],
       "npm": [
-        "@krizaka/app-config",
+        "@krizaka/api-keys",
+        "@krizaka/auth",
         "@krizaka/charts",
         "@krizaka/config",
         "@krizaka/fonts",
         "@krizaka/i18n",
         "@krizaka/icons",
         "@krizaka/intl",
-        "@krizaka/orochia-design-system",
-        "@krizaka/pacer",
-        "@krizaka/push",
-        "@krizaka/realtime",
-        "@krizaka/tailwind",
-        "@krizaka/tokens",
-        "@krizaka/ui"
-      ],
-      "maven": [],
-      "evidence": [],
-      "engineRun": "f9b8f811-d15d-457e-8fbf-25c9be23772e"
-    },
-    "yasakia": {
-      "sources": [
-        "yasakia:apps/web/package.json",
-        "yasakia-mobile:package.json"
-      ],
-      "npm": [
-        "@krizaka/app-config",
-        "@krizaka/charts",
-        "@krizaka/config",
-        "@krizaka/fonts",
-        "@krizaka/i18n",
-        "@krizaka/icons",
-        "@krizaka/push",
+        "@krizaka/organize",
+        "@krizaka/payments",
         "@krizaka/query",
-        "@krizaka/realtime",
+        "@krizaka/settings",
         "@krizaka/tailwind",
         "@krizaka/tokens",
-        "@krizaka/ui"
-      ],
-      "maven": [],
-      "evidence": []
-    },
-    "yororis": {
-      "sources": [
-        "yororis:site/package.json"
-      ],
-      "npm": [
-        "@krizaka/fonts",
-        "@krizaka/icons",
-        "@krizaka/tailwind",
-        "@krizaka/tokens",
-        "@krizaka/ui"
-      ],
-      "maven": [],
-      "evidence": []
-    },
-    "yomizaka": {
-      "sources": [
-        "yomizaka:apps/web/package.json"
-      ],
-      "npm": [
-        "@krizaka/config",
-        "@krizaka/fonts",
-        "@krizaka/i18n",
-        "@krizaka/icons",
-        "@krizaka/query",
-        "@krizaka/tailwind",
-        "@krizaka/tokens",
-        "@krizaka/ui"
-      ],
-      "maven": [],
-      "evidence": []
-    },
-    "kachizaka": {
-      "sources": [
-        "kachizaka:apps/web/package.json",
-        "kachizaka:apps/mobile/package.json"
-      ],
-      "npm": [
-        "@krizaka/config",
-        "@krizaka/fonts",
-        "@krizaka/i18n",
-        "@krizaka/icons",
-        "@krizaka/query",
-        "@krizaka/realtime",
-        "@krizaka/tailwind",
-        "@krizaka/tokens",
-        "@krizaka/ui"
+        "@krizaka/ui",
+        "@krizaka/webhooks"
       ],
       "maven": [],
       "evidence": []
@@ -146,15 +75,26 @@
         "akinaza:apps/mobile/package.json"
       ],
       "npm": [
+        "@krizaka/api-keys",
+        "@krizaka/app-client",
+        "@krizaka/auth",
+        "@krizaka/brief",
+        "@krizaka/charts",
         "@krizaka/config",
+        "@krizaka/discovery",
         "@krizaka/fonts",
         "@krizaka/i18n",
         "@krizaka/icons",
+        "@krizaka/intl",
+        "@krizaka/organize",
+        "@krizaka/payments",
         "@krizaka/query",
         "@krizaka/realtime",
+        "@krizaka/settings",
         "@krizaka/tailwind",
         "@krizaka/tokens",
-        "@krizaka/ui"
+        "@krizaka/ui",
+        "@krizaka/webhooks"
       ],
       "maven": [],
       "evidence": []

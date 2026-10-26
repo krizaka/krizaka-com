@@ -23,11 +23,7 @@ const hreflangOf = (locale: Locale) => HREFLANG[locale];
     Words are messages (`site.structuredData.family.<id>`); here only structure — ids, urls, categories. */
 const FAMILY = [
   { id: "orazaka", name: "Orazaka", url: wwwUrl("orazaka"), repo: "orazaka", category: "BusinessApplication", kind: "app" },
-  { id: "orochia", name: "Orochia", url: wwwUrl("orochia"), repo: "orochia", category: "MultimediaApplication", kind: "app" },
-  { id: "yasakia", name: "Yasakia", url: wwwUrl("yasakia"), repo: "yasakia", category: "LifestyleApplication", kind: "app" },
-  { id: "yororis", name: "Yororis", url: wwwUrl("yororis"), repo: "yororis", category: "LifestyleApplication", kind: "app" },
   { id: "yomizaka", name: "Yomizaka", url: wwwUrl("yomizaka"), repo: "yomizaka", category: "BusinessApplication", kind: "app" },
-  { id: "kachizaka", name: "Kachizaka", url: wwwUrl("kachizaka"), repo: "kachizaka", category: "GameApplication", kind: "app" },
   { id: "akinaza", name: "Akinaza", url: wwwUrl("akinaza"), repo: "akinaza", category: "BusinessApplication", kind: "app" },
   { id: "krizaka-ui", name: "Krizaka UI", url: "https://ui.krizaka.com", repo: "krizaka-ui", language: "TypeScript", kind: "code" },
   { id: "krizaka-java", name: "Krizaka Java", url: "https://java.krizaka.com", repo: "krizaka-platform-kit", language: "Java", kind: "code" },

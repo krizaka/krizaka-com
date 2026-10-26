@@ -2,9 +2,10 @@
    status, a link to the product's public address (www.<product>.com, the real app served by the product's own
    deployment, sign-up closed) and a link to its source. The development hosts (dev.<product>.com) are not indexed, send
    their pages to www and are never linked from a public page. This site carries no product demo,
-   recording or documentation (next.config.ts redirects the old addresses). Structure only: the words are messages. */
+   recording or documentation (next.config.ts redirects the old addresses). Structure only: the words are messages.
+   Four products are paused (2026-10-25): they are not presented here, and their repositories are private. */
 
-import { AKINAZA_REPO_URL, KACHIZAKA_REPO_URL, YASAKIA_REPO_URL, YOMIZAKA_REPO_URL, YORORIS_REPO_URL } from "./site";
+import { AKINAZA_REPO_URL, YOMIZAKA_REPO_URL } from "./site";
 import { wwwUrl, type ProductId } from "./product-hosts";
 
 export type { ProductId } from "./product-hosts";
@@ -16,7 +17,7 @@ export type { ProductId } from "./product-hosts";
 export type ProductStatus = "upcoming" | "construction" | "development" | "devPreview";
 
 export interface Product {
-  /** The id the mark, the brand and the messages use (Yazakia was renamed Yasakia, 2026-10). */
+  /** The id the mark, the brand and the messages use. */
   id: ProductId;
   name: string;
   status: ProductStatus;
@@ -28,11 +29,7 @@ export interface Product {
 }
 
 export const PRODUCTS: Product[] = [
-  { id: "orazaka", name: "Orazaka", status: "devPreview", siteUrl: wwwUrl("orazaka"), repoUrl: "https://github.com/krizaka/orazaka" },
+  { id: "orazaka", name: "Orazaka", status: "development", siteUrl: wwwUrl("orazaka"), repoUrl: "https://github.com/krizaka/orazaka" },
   { id: "yomizaka", name: "Yomizaka", status: "development", siteUrl: wwwUrl("yomizaka"), repoUrl: YOMIZAKA_REPO_URL },
-  { id: "orochia", name: "Orochia", status: "devPreview", siteUrl: wwwUrl("orochia"), repoUrl: "https://github.com/krizaka/orochia" },
-  { id: "kachizaka", name: "Kachizaka", status: "development", siteUrl: wwwUrl("kachizaka"), repoUrl: KACHIZAKA_REPO_URL },
   { id: "akinaza", name: "Akinaza", status: "development", siteUrl: wwwUrl("akinaza"), repoUrl: AKINAZA_REPO_URL },
-  { id: "yasakia", name: "Yasakia", status: "development", siteUrl: wwwUrl("yasakia"), repoUrl: YASAKIA_REPO_URL },
-  { id: "yororis", name: "Yororis", status: "development", siteUrl: wwwUrl("yororis"), repoUrl: YORORIS_REPO_URL },
 ];

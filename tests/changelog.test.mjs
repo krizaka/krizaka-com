@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { anchorOf, changeFromTitle, changelogRss, changesFor, cleanText, draftFromTitles, parseChangesets, parseReleaseBodies, parseReleaseBody, releaseLabel, releaseProblems, SITE_REPO, siteReleaseUrl, tagOf, textProblems } from "../lib/changelog.ts";
-import { filterHref, filterOf, visibleEntries, visibleFilters } from "../lib/changelog-filter.ts";
+import { FILTER_IDS, filterHref, filterOf, visibleEntries } from "../lib/changelog-filter.ts";
 import { changelogProblems } from "../scripts/check-changelog-build.mjs";
 
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
@@ -202,20 +202,17 @@ test("no em dash in the changelog's words, in either language", () => {
   for (const lang of ["en", "fr"]) assert.deepEqual(textProblems(JSON.stringify(messages(lang).site.changelog)), [], lang);
 });
 
-test("the product filter: the address is the state, the focus applies, an unknown value means everything", () => {
+test("the product filter: the address is the state, a paused product is not listed, an unknown value means everything", () => {
   assert.equal(filterOf("yomizaka"), "yomizaka");
   assert.equal(filterOf("nope"), undefined);
   assert.equal(filterOf(null), undefined);
   assert.equal(filterHref("", "yomizaka"), "?produit=yomizaka");
-  assert.equal(filterHref("?carnet=complet&produit=ui", undefined), "?carnet=complet");
+  assert.equal(filterHref("?lang=fr&produit=ui", undefined), "?lang=fr");
   assert.equal(filterHref("?produit=ui", undefined), "?");
-  assert.ok(!visibleFilters(false).includes("orochia") && visibleFilters(true).includes("orochia"));
-  assert.deepEqual(visibleFilters(false), ["orazaka", "yomizaka", "akinaza", "ui", "java"]);
-  const entries = [{ product: "yomizaka" }, { product: "orochia" }, { product: "ui" }];
-  assert.equal(visibleEntries(entries, undefined, false).length, 2);
-  assert.equal(visibleEntries(entries, undefined, true).length, 3);
-  assert.deepEqual(visibleEntries(entries, "ui", false), [{ product: "ui" }]);
-  assert.deepEqual(visibleEntries(entries, "orochia", false), []);
+  assert.deepEqual([...FILTER_IDS], ["orazaka", "yomizaka", "akinaza", "ui", "java"]);
+  const entries = [{ product: "yomizaka" }, { product: "paused" }, { product: "ui" }];
+  assert.equal(visibleEntries(entries, undefined).length, 2);
+  assert.deepEqual(visibleEntries(entries, "ui"), [{ product: "ui" }]);
 });
 
 test("the page filters through the address and reads both languages", () => {

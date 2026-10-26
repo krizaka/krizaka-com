@@ -14,14 +14,10 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf
 /** Where an old address goes: the first rule that matches it. */
 const go = (path) => rules.find((rule) => rule.matches(path));
 
-test("the products' sites: Yazakia is renamed Yasakia; Yomizaka has its site (#171); Kachizaka and Akinaza, in development, their repository", () => {
+test("the products' sites: the three presented products, each at www.<product>.com", () => {
   assert.deepEqual(PRODUCT_SITES, {
     orazaka: "https://www.orazaka.com",
-    orochia: "https://www.orochia.com",
-    yasakia: "https://www.yasakia.com",
-    yororis: "https://www.yororis.com",
     yomizaka: "https://www.yomizaka.com",
-    kachizaka: "https://www.kachizaka.com",
     akinaza: "https://www.akinaza.com",
   });
 });
@@ -43,24 +39,23 @@ test("every /products/<product> address — with or without the locale, any dept
   }
 });
 
-test("Yazakia's old address goes to Yasakia's site, with or without the locale", () => {
-  for (const path of ["/products/yazakia", "/en/products/yazakia", "/fr/products/yazakia/demos"]) {
-    const rule = go(path);
-    assert.ok(rule, path);
-    assert.equal(rule.destination, "https://www.yasakia.com", path);
-    assert.equal(rule.statusCode, 308, path);
+test("the paused products' old addresses (2026-10-25) answer 308 with the home's products section, never a 404", () => {
+  for (const id of ["orochia", "yasakia", "yazakia", "yororis", "kachizaka"]) {
+    for (const path of [`/products/${id}`, `/en/products/${id}`, `/fr/products/${id}/demos`, `/docs/${id}`, `/en/docs/${id}/admin_console`]) {
+      const rule = go(path);
+      assert.ok(rule, path);
+      assert.equal(rule.destination, "/#products", path);
+      assert.equal(rule.statusCode, 308, path);
+    }
   }
 });
 
-test("the products' documentation goes to the product's site: Orazaka and Orochia to /docs, Yororis to its home", () => {
+test("the products' documentation goes to the product's site", () => {
   for (const [path, destination] of [
     ["/docs/orazaka", "https://www.orazaka.com"],
     ["/en/docs/orazaka/cli", "https://www.orazaka.com"],
     ["/fr/docs/orazaka/ui/button", "https://www.orazaka.com"],
-    ["/docs/orochia", "https://www.orochia.com"],
-    ["/en/docs/orochia/admin_console", "https://www.orochia.com"],
-    ["/docs/yororis", "https://www.yororis.com"],
-    ["/fr/docs/yororis", "https://www.yororis.com"],
+    ["/docs/yomizaka", "https://www.yomizaka.com"],
   ]) {
     const rule = go(path);
     assert.ok(rule, path);

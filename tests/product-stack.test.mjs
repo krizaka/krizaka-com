@@ -9,8 +9,8 @@ const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf
 const { products: manifests } = JSON.parse(read("lib/product-manifests.json"));
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",/g)].map((m) => m[1]);
 
-test("every product of lib/products.ts has a row — Orochia included", () => {
-  assert.deepEqual(ids, ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"]);
+test("every product of lib/products.ts has a row", () => {
+  assert.deepEqual(ids, ["orazaka", "yomizaka", "akinaza"]);
   const rows = stackRows(ids, manifests);
   assert.deepEqual(rows.map((r) => r.id), ids);
   for (const r of rows) {
@@ -45,17 +45,13 @@ test("the engine is the only product that is the engine; the others run on it on
   for (const id of ids.filter((i) => i !== ENGINE)) if (!manifests[id]?.engineRun) assert.notEqual(stackCell(id, "engine", manifests[id]).state, "yes");
 });
 
-test("the table, product by product (Orochia: neutral facts only)", () => {
+test("the table, product by product", () => {
   const word = (c) => (c.state === "partial" ? `partial:${c.parts.join("+")}` : c.state === "yes" && c.transport ? c.transport : c.state);
   const table = Object.fromEntries(stackRows(ids, manifests).map((r) => [r.id, r.cells.map(word)]));
   assert.deepEqual(table, {
     orazaka: ["yes", "yes", "sse", "yes", "engine"],
-    orochia: ["yes", "yes", "ssePush", "no", "yes"],
-    yasakia: ["yes", "partial:tokens+icons", "ssePush", "no", "planned"],
-    yororis: ["yes", "partial:tokens+icons", "planned", "no", "planned"],
-    yomizaka: ["yes", "partial:tokens+icons", "no", "no", "planned"],
-    kachizaka: ["yes", "partial:tokens+icons", "sse", "no", "planned"],
-    akinaza: ["yes", "partial:tokens+icons", "sse", "no", "planned"],
+    yomizaka: ["yes", "yes", "no", "no", "planned"],
+    akinaza: ["yes", "yes", "sse", "no", "planned"],
   });
 });
 

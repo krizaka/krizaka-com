@@ -10,7 +10,7 @@ import { z } from "zod";
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
-export const CONTACT_TOPICS = ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza", "blocks", "partnership", "other"] as const;
+export const CONTACT_TOPICS = ["orazaka", "yomizaka", "akinaza", "blocks", "partnership", "other"] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
 /* Where a visitor came from (`/contact?source=<slug>`): pre-selects the topic and travels with the message, so the
@@ -21,12 +21,8 @@ export const cleanSource = (v: unknown): string | null => (typeof v === "string"
 /** The source of a page: its product, its documentation or open source, else its first segment ("home" for /). */
 export function contactSourceFromPath(pathname: string): string {
   const path = pathname.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
-  if (/^\/(products|docs)\/orochia(\/|$)/.test(path)) return "orochia";
   if (/^\/(products|docs)\/orazaka(\/|$)/.test(path)) return "orazaka";
-  if (/^\/(products|docs)\/yasakia(\/|$)/.test(path)) return "yasakia";
-  if (/^\/(products|docs)\/yororis(\/|$)/.test(path)) return "yororis";
   if (/^\/(products|docs)\/yomizaka(\/|$)/.test(path)) return "yomizaka";
-  if (/^\/products\/kachizaka(\/|$)/.test(path)) return "kachizaka";
   if (/^\/products\/akinaza(\/|$)/.test(path)) return "akinaza";
   if (/^\/open-source(\/|$)/.test(path)) return "open-source";
   if (/^\/docs\/(ui|java)(\/|$)/.test(path)) return `docs-${path.split("/")[2]}`;
@@ -35,7 +31,7 @@ export function contactSourceFromPath(pathname: string): string {
 
 /** The topic a source implies — none when the page is about Krizaka as a whole (home, story…). */
 export function topicForSource(source: string | null): ContactTopic | null {
-  if (source === "orochia" || source === "orazaka" || source === "yasakia" || source === "yororis" || source === "yomizaka" || source === "kachizaka" || source === "akinaza") return source;
+  if (source === "orazaka" || source === "yomizaka" || source === "akinaza") return source;
   if (source === "open-source" || source === "docs-ui" || source === "docs-java") return "blocks";
   return null;
 }
@@ -106,11 +102,7 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
 
 const TOPIC_LABEL: Record<ContactTopic, string> = {
   orazaka: "Orazaka",
-  orochia: "Orochia",
-  yasakia: "Yasakia",
-  yororis: "Yororis",
   yomizaka: "Yomizaka",
-  kachizaka: "Kachizaka",
   akinaza: "Akinaza",
   blocks: "Building blocks",
   partnership: "Partnership",

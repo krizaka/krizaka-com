@@ -36,8 +36,8 @@ test("it plays when on screen, never under reduced motion, never off screen; no 
   for (const src of [frame, visuals]) assert.doesNotMatch(src, /requestAnimationFrame|<canvas|getContext\(/);
 });
 
-test("built from @krizaka/ui components, specific to each field, demo data said as such, Orochia without media (AGENTS §2)", () => {
-  for (const part of ["@krizaka/ui/chat", "@krizaka/ui/chip", "@krizaka/ui/progress", "@krizaka/ui/number-ticker", "@krizaka/ui/waveform", "@krizaka/ui/specimen-tag"]) {
+test("built from @krizaka/ui components, specific to each field, demo data said as such", () => {
+  for (const part of ["@krizaka/ui/chip", "@krizaka/ui/specimen-tag"]) {
     assert.ok(visuals.includes(`from "${part}"`), part);
   }
   // #417: no generic chart and no gradient rectangle with a play button — each visual shows what the product does.
@@ -45,12 +45,11 @@ test("built from @krizaka/ui components, specific to each field, demo data said 
   assert.doesNotMatch(visuals + css, /pv-media-play|pv-media-frame/, "a play button on a gradient rectangle");
   assert.doesNotMatch(visuals, /SkeletonText/, "no generic skeleton lines: the lease shows its clauses");
   assert.doesNotMatch(css, /^\.pv \{[^}]*border: 1px/m, "no box in a box: the visual has no border of its own");
-  const orochia = visuals.slice(visuals.indexOf("function Orochia"), visuals.indexOf("function Kachizaka"));
-  assert.doesNotMatch(orochia, /<video|cdn\(|video\(/, "no clip on Orochia's card");
+  assert.doesNotMatch(visuals, /<video|cdn\(|video\(/, "a visual is drawn, never a clip");
   for (const l of ["en", "fr"]) {
     const v = JSON.parse(read(`messages/${l}.json`)).site.home.visuals;
     assert.deepEqual(Object.keys(v).sort(), [...ids].sort(), l);
-    assert.match(v.yomizaka.source + v.akinaza.booked + v.kachizaka.league, /d[ée]mo/, `${l}: the demo data says it is demo`);
+    assert.match(v.yomizaka.source + v.akinaza.booked, /d[ée]mo/, `${l}: the demo data says it is demo`);
     for (const k of ["before", "after"]) assert.ok(v.yomizaka[k], `${l}: visuals.yomizaka.${k}`);
   }
 });
@@ -65,16 +64,3 @@ test("Akinaza's receipt: GST and QST to the cent, computed, never typed", async 
   assert.deepEqual(receipt(62), { price: 62, gst: 3.1, qst: 6.18, total: 71.28 });
 });
 
-// Kachizaka's points (bug 2026-10-20, then #417: « 46     points »). The earlier fix gave the counter a min-width of 3ch,
-// which left a hole after a two-digit total. The counter now takes its own width (NumberTicker reserves the final
-// value's width itself), aligned at its start, the unit right after it on the same baseline.
-test("the points: the ticker takes its own width at its start, the unit follows it, no hole, lining tabular digits", () => {
-  assert.match(visuals, /<NumberTicker [^>]*align="start"/);
-  assert.match(visuals, /<span className="pv-score-unit">\{v\.points\}<\/span>/);
-  assert.doesNotMatch(css, /\.kz-count \{[^}]*min-width/, "a fixed width leaves a hole after two digits");
-  assert.doesNotMatch(css, /\.pv-score-value span\b/, "a descendant selector would restyle the ticker's own spans");
-  const value = css.match(/^\.pv-score-value \{([^}]*)\}/m)?.[1] ?? "";
-  assert.match(value, /font-variant-numeric: var\(--kz-figures, lining-nums tabular-nums\)/);
-  assert.match(value, /align-items: baseline/);
-  assert.match(value, /gap: 0\.3em/);
-});

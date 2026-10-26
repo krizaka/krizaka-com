@@ -32,16 +32,8 @@ export const BLOG_URL = "https://blog.krizaka.com";
 /** The site's own repository. */
 export const SITE_REPO_URL = `${GITHUB_ORG_URL}/krizaka-com`;
 
-/** Yasakia, the dating app (coming soon; formerly Yazakia): its repository. */
-export const YASAKIA_REPO_URL = `${GITHUB_ORG_URL}/yasakia`;
-
-/** Yororis, the listening space (under construction): its repository. The products card links its static site
-    (dev.yororis.com) and its source — no application address, no download link (krizaka/yororis docs/FRAMEWORK.md §5). */
-export const YORORIS_REPO_URL = `${GITHUB_ORG_URL}/yororis`;
-
 /** Yomizaka, documents read and checked by Orazaka (coming soon): its repository. */
 export const YOMIZAKA_REPO_URL = `${GITHUB_ORG_URL}/yomizaka`;
-export const KACHIZAKA_REPO_URL = `${GITHUB_ORG_URL}/kachizaka`;
 export const AKINAZA_REPO_URL = `${GITHUB_ORG_URL}/akinaza`;
 
 /** The repositories the docs link to. */

@@ -13,8 +13,6 @@ import { CONTACT_TIMELINES, CONTACT_TOPICS, CONTACT_MESSAGE_MAX, cleanSource, is
 import { ProductLogo } from "@krizaka/ui";
 import { Button } from "@krizaka/ui/button";
 import CaptchaWidget, { CAPTCHA_SITE_KEY } from "./CaptchaWidget";
-import { inFocus } from "@/lib/focus";
-import { useCarnet } from "./useCarnet";
 
 type Status = "idle" | "sending" | "sent" | "error";
 type Field = Exclude<ContactField, "company">;
@@ -22,7 +20,7 @@ type Field = Exclude<ContactField, "company">;
 const MESSAGE_MAX = CONTACT_MESSAGE_MAX;
 
 function TopicIcon({ topic }: { topic: ContactTopic }) {
-  if (topic === "orazaka" || topic === "orochia" || topic === "yasakia" || topic === "yororis" || topic === "yomizaka" || topic === "blocks") {
+  if (topic === "orazaka" || topic === "yomizaka" || topic === "akinaza" || topic === "blocks") {
     return <ProductLogo id={topic === "blocks" ? "krizaka" : topic} size={26} animated={false} />;
   }
   const Icon = topic === "partnership" ? UsersIcon : ChatIcon;
@@ -30,7 +28,7 @@ function TopicIcon({ topic }: { topic: ContactTopic }) {
 }
 
 /** Every link to this page carries ?source=<page> (and ?topic= when the page knows it): the topic is pre-selected from
-    it — Orochia from Orochia, the building blocks from open source — and nothing is pre-selected from a page about
+    it — Yomizaka from Yomizaka, the building blocks from open source — and nothing is pre-selected from a page about
     Krizaka as a whole. The static page renders without a choice until the URL is read. */
 export default function ContactForm({ defaultTopic = null }: { defaultTopic?: ContactTopic | null }) {
   return (
@@ -52,11 +50,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
   const { t, locale } = useI18n();
   const c = t.site.contactForm;
   const [topic, setTopic] = useState<ContactTopic | null>(defaultTopic);
-  // The picker lists the products of the focus (lib/focus.ts); the whole notebook brings back the others. A topic the
-  // visitor arrived with (?topic=…) or has chosen stays on the list.
-  const notebook = useCarnet();
-  const topics = inFocus(CONTACT_TOPICS.map((id) => ({ id })), notebook).map((x) => x.id);
-  const listed = topic && !topics.includes(topic) ? CONTACT_TOPICS.filter((id) => id === topic || topics.includes(id)) : topics;
+  const listed = CONTACT_TOPICS;
   const [topicMissing, setTopicMissing] = useState(false);
   const [timeline, setTimeline] = useState<ContactTimeline | null>(null);
   const [values, setValues] = useState({ name: "", email: "", company: "", message: "" });

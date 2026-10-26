@@ -8,13 +8,12 @@
    motion; the text version is each product row's « On Orazaka · … » line. Words: site.home.products.flow.* */
 
 import { ProductLogo } from "@krizaka/ui";
-import type { EngineFlowNode } from "@krizaka/ui/engine-flow";
+import { EngineFlow, type EngineFlowNode } from "@krizaka/ui/engine-flow";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, type TranslationDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/products";
 import { hostOf } from "@/lib/stack";
 import { ENGINE } from "@/lib/story";
-import EngineFlowFocus from "./EngineFlowFocus";
 
 export default function EngineFlowView({ t }: { t: TranslationDictionary }) {
   const f = t.site.home.products.flow;
@@ -38,7 +37,7 @@ export default function EngineFlowView({ t }: { t: TranslationDictionary }) {
     };
   });
   return (
-    <EngineFlowFocus
+    <EngineFlow
       className={"kz-home-flow brand-" + ENGINE}
       label={f.label}
       hub={{ label: engine.name, caption: f.caption, mark: <ProductLogo id={ENGINE} size={56} animated={false} /> }}

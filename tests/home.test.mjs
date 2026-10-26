@@ -74,14 +74,15 @@ test("the old home — the product showcase, the kit gallery, the rotating title
   }
 });
 
-test("Orochia is described neutrally: no creator, payout or payment pitch on krizaka.com's shared words", () => {
-  const pitch = /creator|créat|payout|paid|payé|payment|paiement|tip|pourboire|90 ?%/i;
+// 2026-10-25 (Oussama): Orochia, Kachizaka, Yasakia and Yororis are paused — no word of the site names them any more.
+test("the paused products are named nowhere in the site's words, and no FAQ comes back", () => {
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;
-    assert.doesNotMatch(m.products.cards.orochia.line, pitch, `${lang}: products.cards.orochia`);
-    assert.doesNotMatch(JSON.stringify(m.home), pitch, `${lang}: site.home`);
-    assert.doesNotMatch(m.structuredData.organization, pitch, `${lang}: structuredData.organization`);
+    assert.doesNotMatch(JSON.stringify(m), /orochia|yasakia|yororis|kachizaka|yazakia/i, `${lang}: messages`);
     assert.equal(m.faq, undefined, `${lang}: site.faq`);
+  }
+  for (const f of ["content/llms.txt", "content/llms-full.txt", "lib/products.ts", "lib/structured-data.ts"]) {
+    assert.doesNotMatch(read(f), /\b(orochia|yasakia|yororis|kachizaka)\b/i, f);
   }
 });
 

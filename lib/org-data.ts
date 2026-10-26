@@ -5,7 +5,6 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 import orazaka from "@/app/data/architecture.json";
-import orochia from "@/app/data/orochia-architecture.json";
 
 export type Loc = "fr" | "en";
 export type L = Record<Loc, string>;
@@ -14,7 +13,7 @@ export interface OrgRepository {
   name: string;
   url: string;
   description: string;
-  product: "krizaka" | "orazaka" | "orochia";
+  product: "krizaka" | "orazaka";
   group: string;
 }
 
@@ -44,13 +43,6 @@ export function orgRepositories(): OrgRepository[] {
     product: "orazaka",
     group: "workspace",
   };
-  const oc = orochia.repositories.map((r) => ({
-    name: r.name,
-    url: r.url,
-    description: r.description,
-    product: "orochia" as const,
-    group: "orochia",
-  }));
   // Organisation-level repositories that belong to no product (they have no generated architecture file).
   const shared: OrgRepository[] = [
     {
@@ -61,5 +53,5 @@ export function orgRepositories(): OrgRepository[] {
       group: "domain",
     },
   ];
-  return [workspace, ...oz, ...oc, ...shared];
+  return [workspace, ...oz, ...shared];
 }

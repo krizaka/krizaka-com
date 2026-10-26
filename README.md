@@ -7,48 +7,27 @@
 
 <h1 align="center">krizaka-com</h1>
 
-<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Orazaka, Orochia, Yasakia (coming soon), Yororis (under construction), Yomizaka, Kachizaka and Akinaza (in development).</strong></p>
+<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Orazaka, Yomizaka and Akinaza (in development).</strong></p>
 
 <p align="center">
   <a href="https://scorecard.dev/viewer/?uri=github.com/krizaka/krizaka-com"><img src="https://api.scorecard.dev/projects/github.com/krizaka/krizaka-com/badge?style=flat-square" alt="OpenSSF Scorecard" /></a>
   <img src="https://img.shields.io/github/package-json/dependency-version/krizaka/krizaka-com/next?style=flat-square&label=Next.js" alt="Next.js (live from package.json)" />
   <a href="https://github.com/krizaka/orazaka"><img src="https://img.shields.io/badge/AI_Engine-Orazaka-f67e23?style=flat-square" alt="Orazaka" /></a>
-  <a href="https://github.com/krizaka/orochia"><img src="https://img.shields.io/badge/Streaming-Orochia-7c3aed?style=flat-square" alt="Orochia" /></a>
-  <a href="https://github.com/krizaka/yasakia"><img src="https://img.shields.io/badge/Dating_(soon)-Yasakia-10b981?style=flat-square" alt="Yasakia (coming soon)" /></a>
-  <a href="https://github.com/krizaka/yororis"><img src="https://img.shields.io/badge/Listening_(under_construction)-Yororis-5d894d?style=flat-square" alt="Yororis (under construction)" /></a>
   <a href="https://github.com/krizaka/yomizaka"><img src="https://img.shields.io/badge/Documents_(in_development)-Yomizaka-5362c6?style=flat-square" alt="Yomizaka (in development)" /></a>
-  <a href="https://github.com/krizaka/kachizaka"><img src="https://img.shields.io/badge/Predictions_(in_development)-Kachizaka-d9a21b?style=flat-square" alt="Kachizaka (in development)" /></a>
   <a href="https://github.com/krizaka/akinaza"><img src="https://img.shields.io/badge/Shops_(in_development)-Akinaza-2f6f4e?style=flat-square" alt="Akinaza (in development)" /></a>
   <a href="https://github.com/krizaka"><img src="https://img.shields.io/badge/GitHub_Org-krizaka-196df5?style=flat-square" alt="Krizaka Organization" /></a>
-  <img src="https://img.shields.io/badge/Loi%2025%20%2F%20GDPR%20%2F%202257-success?style=flat-square" alt="Compliance" />
+  <img src="https://img.shields.io/badge/Loi%2025%20%2F%20GDPR-success?style=flat-square" alt="Compliance" />
 </p>
 
 <p align="center">
   <a href="https://www.krizaka.com">Website</a> · <a href="https://www.krizaka.com/docs">Docs</a> · <a href="https://www.krizaka.com/en/products">Products</a> · <a href="https://www.krizaka.com/en/open-source">Open source</a>
 </p>
 
-<table>
-<tr>
-<td width="50%" valign="top"><a href="https://www.krizaka.com/en/products/orazaka/demos"><img src="https://raw.githubusercontent.com/krizaka/.github/main/profile/assets/orazaka-tour.gif" alt="Orazaka's web client, signed in as Eric: a customer's return request answered from his own returns policy, then a product photo generated locally"></a></td>
-<td width="50%" valign="top"><a href="https://www.krizaka.com/en/products/orochia/demos"><img src="https://raw.githubusercontent.com/krizaka/.github/main/profile/assets/orochia-tour.gif" alt="Orochia, signed in as Alex: Elena's story opened from the ring on her profile, sound on, a like, a private reply and a $10 tip"></a></td>
-</tr>
-<tr>
-<td align="center"><sub>Orazaka — Eric answers a customer from his own documents, then generates the product photo. Everything ran on one Mac.</sub></td>
-<td align="center"><sub>Orochia — Alex opens Elena's story, likes it, replies privately and tips her; Elena keeps 90 %.</sub></td>
-</tr>
-</table>
-
-<p align="center"><sub>The two released products, recorded on the real applications — the same clips play on krizaka.com. The third, <a href="https://www.yasakia.com">Yasakia</a> (the dating app where you talk first), is announced on the site and gets its clip when the app ships; the fourth, <a href="https://www.krizaka.com/en/products/yororis">Yororis</a> (a listening space with a face and a voice), is under construction — not deployed, not offered, no date.</sub></p>
-
 | Product | What it is | Status | Page |
 |---|---|---|---|
-| [Orazaka](https://github.com/krizaka/orazaka) | Sovereign, on-premise AI orchestration engine | Released | [www.orazaka.com](https://www.orazaka.com) |
-| [Orochia](https://github.com/krizaka/orochia) | The video platform for independent creators | Released | [www.orochia.com](https://www.orochia.com) |
-| [Yasakia](https://github.com/krizaka/yasakia) | The dating app where you talk first | Coming soon | [www.yasakia.com](https://www.yasakia.com) |
-| [Yororis](https://github.com/krizaka/yororis) | A listening space with a face and a voice, powered by Orazaka's wellbeing pack | Under construction (not offered; its words checked by `npm run lexicon`) | [www.yororis.com](https://www.yororis.com) |
+| [Orazaka](https://github.com/krizaka/orazaka) | Sovereign, on-premise AI orchestration engine | In development | [www.orazaka.com](https://www.orazaka.com) |
 | [Yomizaka](https://github.com/krizaka/yomizaka) | Your documents, read and checked by Orazaka | In development (sign-up closed) | [www.yomizaka.com](https://www.yomizaka.com) |
-| [Kachizaka](https://github.com/krizaka/kachizaka) | Predictions among friends, points only, never money | In development (nothing deployed) | [www.kachizaka.com](https://www.kachizaka.com) |
-| [Akinaza](https://github.com/krizaka/akinaza) | Bookings, invoices and a GST/QST ledger for independent Québec shops; prepares the return, never files it | In development (nothing deployed) | [www.kachizaka.com](https://www.kachizaka.com) |
+| [Akinaza](https://github.com/krizaka/akinaza) | Bookings, invoices and a GST/QST ledger for independent Québec shops; prepares the return, never files it | In development (sign-up closed) | [www.akinaza.com](https://www.akinaza.com) |
 
 ---
 
@@ -65,7 +44,6 @@ records them.
 | Media | Where it is served from |
 | :--- | :--- |
 | The brand film « Le monde de Krizaka : le relais » (the reference film: the home's « Watch the film » and /story), its narrated EN/FR and 9:16 cuts and captions | `site/brand-films/relay/` |
-| Orochia's film « Orochia : la première livraison » (on Orochia @orochia and @krizaka; drawn on no page here), its narrated EN/FR and 9:16 cuts and captions | `site/brand-films/orochia/` |
 | The earlier brand film « Le monde de Krizaka : la tournée », its 9:16 cuts and captions (no longer drawn) | `site/brand-films/epic/` |
 | The images and clips of the blog post on what image and video generation costs | `site/blog/what-image-and-video-generation-costs/` |
 
@@ -86,7 +64,7 @@ one schema component for every product (`app/components/diagrams/`, no diagram l
 | `app/[locale]/` | All routes; `[locale]` is `en` (default) or `fr` (Québec). `layout.tsx` wires fonts, theme, i18n, the sitewide JSON-LD graph and base metadata. |
 | `app/components/` | UI. Big ones: `TopNavBar`, `home/ProductCards` (one card per product), `diagrams/` (the module map of Krizaka Java), `docs/`. |
 | `app/robots.ts` · `app/sitemap.ts` · `app/manifest.ts` | SEO route handlers. |
-| `app/data/architecture.json` · `orochia-architecture.json` | **Generated** module graphs + repository maps (read-only): Krizaka Java's building blocks and the open-source repository lists. |
+| `app/data/architecture.json` | **Generated** module graphs + repository maps (read-only): Krizaka Java's building blocks and the open-source repository lists. |
 | `proxy.ts` | Edge middleware (Next 16 name): no-locale URL → `/en` by default, `/fr` when the `NEXT_LOCALE` cookie says so; a `/fr` or `/en` page sets that cookie. |
 | `next.config.ts` | Security headers, WebP, cache policy, and the 308 redirects of the old product addresses (`lib/product-redirects.ts`). |
 | `lib/seo.ts` | `localizedMetadata()` + `buildAlternates()` — per-page title/description/canonical/hreflang. |
@@ -98,9 +76,7 @@ one schema component for every product (`app/components/diagrams/`, no diagram l
 ## Products
 
 krizaka.com is the company's showcase. Each product's public address is `www.<product>.com` —
-[www.orazaka.com](https://www.orazaka.com), [www.orochia.com](https://www.orochia.com),
-[www.yasakia.com](https://www.yasakia.com), [www.yororis.com](https://www.yororis.com),
-[www.yomizaka.com](https://www.yomizaka.com), [www.kachizaka.com](https://www.kachizaka.com) and
+[www.orazaka.com](https://www.orazaka.com), [www.yomizaka.com](https://www.yomizaka.com) and
 [www.akinaza.com](https://www.akinaza.com) (sign-up closed; the apex answers 308 with www; `dev.<product>.com` is
 not indexed and sends its pages to www). The home presents them, each with its source. The old `/products/<product>/…`
 and `/docs/<product>/…` addresses answer **308** with the product's www address (`lib/product-redirects.ts`). The generated `app/data/*.json` are never hand-edited.

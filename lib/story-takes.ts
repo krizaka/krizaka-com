@@ -38,23 +38,11 @@ interface Spec extends Paths {
 
 /* One take per chapter, chosen for what the chapter tells (story peer review, 2026-10-21):
    - orazaka: a scene the engine rendered (the Old Port at night), not a thumbnail of its chat — the engine's proof is what it makes;
-   - yasakia: « your batch » (14 s), the idea of the product, in both languages — not the 3-minute walkthrough;
-   - yororis: none for now — its recording shows the QA banner of the dev build; the chapter keeps its mini-visual until it is re-recorded;
-   the others keep their recordings (a lease read, a feed and a tip, a league, a shop's day). Orochia stays neutral: its feed and its tip. */
+   the others keep their recordings (a lease read, a shop's day). */
 const SPECS: Partial<Record<ProductId, Spec>> = {
   orazaka: { ratio: "film", mp4: "products/orazaka/video/old-port.mp4", webm: "products/orazaka/video/old-port.webm", poster: "products/orazaka/video/old-port-poster.webp", cues: [[0, 5]] },
   yomizaka: { ratio: "phone", mp4: "products/yomizaka/tour/take-{l}.mp4", webm: "products/yomizaka/tour/take-{l}.webm", poster: "products/yomizaka/tour/story-poster-{l}.jpg", cues: [[0, 6], [6, 11], [11, 18.2]] },
-  orochia: { ratio: "phone", mp4: "products/orochia/tour/{l}/home-phone.mp4", webm: "products/orochia/tour/{l}/home-phone.webm", poster: "products/orochia/tour/{l}/home-phone.jpg", cues: [[0, 6], [6, 12], [12, 15], [15, 20.2]] },
-  kachizaka: { ratio: "phone", lang: "fr", mp4: "products/kachizaka/tour/journey.mp4", poster: "products/kachizaka/tour/story-poster.jpg", cues: [[0, 8], [8, 20], [20, 34]] },
   akinaza: { ratio: "phone", mp4: "products/akinaza/tour/hero-{l}.mp4", webm: "products/akinaza/tour/hero-{l}.webm", poster: "products/akinaza/tour/phone-hero-{l}.jpg", cues: [[0, 12], [12, 25], [25, 37], [37, 49.5]] },
-  yasakia: {
-    ratio: "phone",
-    mp4: "products/yasakia/tour/take-en-batch.mp4",
-    webm: "products/yasakia/tour/take-en-batch.webm",
-    poster: "products/yasakia/tour/take-en-batch.jpg",
-    fr: { mp4: "products/yasakia/tour/take-batch.mp4", webm: "products/yasakia/tour/take-batch.webm", poster: "products/yasakia/tour/take-batch.jpg" },
-    cues: [[0, 5], [5, 9], [9, 14.3]],
-  },
 };
 
 /** The take of a product in the page's language, or null when none is recorded on the CDN (the chapter then keeps its mini-visual). */

@@ -63,11 +63,6 @@
     "tagline": "Le moteur d'orchestration IA souverain, open source. Conçu au Québec."
   },
   "site": {
-    "carnet": {
-      "found": "Ah, vous avez trouvé la page cachée du carnet.",
-      "close": "Refermer le carnet",
-      "region": "Le carnet, ouvert en entier"
-    },
     "menu": {
       "products": "Produits",
       "docs": "Docs",
@@ -131,20 +126,8 @@
         "orazaka": {
           "line": "Une IA souveraine sur votre infrastructure : vos données ne quittent jamais la maison."
         },
-        "orochia": {
-          "line": "Une plateforme vidéo open source : téléverser, encoder et diffuser."
-        },
-        "yasakia": {
-          "line": "L'app de rencontre où l'on se parle d'abord : un agent IA présente les bons profils."
-        },
-        "yororis": {
-          "line": "Un espace d'écoute avec un visage et une voix."
-        },
         "yomizaka": {
           "line": "Baux, contrats et factures lus et vérifiés. Chaque constat cite son passage."
-        },
-        "kachizaka": {
-          "line": "Pronostics entre amis, en points seulement. Chaque point expliqué, chaque saison gardée."
         },
         "akinaza": {
           "line": "Vos rendez-vous, vos factures et vos taxes, réglés."
@@ -156,25 +139,9 @@
           "name": "Le moteur",
           "proof": "Chaque requête traverse un pipeline déterministe jusqu'au meilleur modèle local : vos documents, vos modèles, votre réseau — rien ne sort."
         },
-        "orochia": {
-          "name": "La maîtrise des médias",
-          "proof": "Les envois partent directement vers le CDN en Tus, un transcodeur adaptatif encode, la lecture passe par des liens HLS signés qui expirent après cinq minutes, et chaque transaction se règle par séquestre."
-        },
-        "yasakia": {
-          "name": "Présentations, photos vérifiées",
-          "proof": "La position est arrondie à environ 1 km avant d'être stockée, et la base répond au rayon et rapproche qui vous êtes de qui vous cherchez — à proximité, jamais exacte."
-        },
-        "yororis": {
-          "name": "La voix et l'image",
-          "proof": "Un espace d'écoute avec un visage et une voix — en construction : rien n'est déployé, rien n'est proposé."
-        },
         "yomizaka": {
           "name": "La lecture des documents",
           "proof": "Un bail vérifié règle par règle au regard de la loi en vigueur à une date, un PDF examiné à la recherche de retouches : chaque constat cite son passage, chaque vérification est un run Orazaka tracé."
-        },
-        "kachizaka": {
-          "name": "Des données en direct",
-          "proof": "Les faits de match lus par les connecteurs MCP d'Orazaka, gardés une fois et appliqués dans l'ordre ; le classement est recalculé et poussé en direct en Server-Sent Events — des points seulement, des règles scellées au coup d'envoi."
         },
         "akinaza": {
           "name": "Tenir une boutique, pour moins cher",
@@ -188,12 +155,8 @@
         "label": "Propulsé par Orazaka",
         "planned": "prévu",
         "uses": {
-          "orochia": "recherche et recommandations",
           "yomizaka": "vérifications de documents, chacune une exécution tracée",
-          "kachizaka": "flux de matchs en direct",
-          "akinaza": "l'assistant fiscal",
-          "yasakia": "l'agent de mise en relation",
-          "yororis": "le pack bien-être"
+          "akinaza": "l'assistant fiscal"
         },
         "sends": "Chaque produit envoie requêtes, documents et prompts au moteur",
         "gets": "reçoit en retour : {list}",
@@ -282,25 +245,14 @@
         "figures": {
           "orazaka": "le flux, dans les deux sens : les requêtes entrent, les résultats reviennent",
           "yomizaka": "un bail lu ligne par ligne, la clause à revoir marquée",
-          "orochia": "un téléversement encodé en trois rendus, puis diffusé",
-          "kachizaka": "une ligue entre amis après la 8e journée, en points seulement",
-          "akinaza": "le mardi d’un salon, et son reçu avec TPS et TVQ",
-          "yasakia": "on se parle d’abord ; l’agent vous a présentés parce que vous avez dit oui tous les deux",
-          "yororis": "une voix, écoutée"
+          "akinaza": "le mardi d’un salon, et son reçu avec TPS et TVQ"
         },
         "notes": {
           "orazaka": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
           "yomizaka": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Orazaka tracée.",
-          "orochia": "Les téléversements vont au CDN par Tus, un transcodeur adaptatif encode de 360p à 1080p, et la lecture passe par des liens HLS signés qui expirent après cinq minutes.",
-          "kachizaka": "Les faits de match arrivent par les connecteurs MCP d’Orazaka, enregistrés une fois et appliqués dans l’ordre ; le classement est recalculé et poussé en direct. Des points seulement, des règles scellées au coup d’envoi.",
-          "akinaza": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise.",
-          "yasakia": "La position est arrondie à environ 1 km avant d’être enregistrée ; on présente les personnes qui se correspondent dans les deux sens, à proximité, jamais au mètre près.",
-          "yororis": "En développement, construit en public : rien n’est encore offert."
+          "akinaza": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise."
         },
         "birds": {
-          "lovebird": "l’inséparable",
-          "crane": "la grue",
-          "magpie": "la pie",
           "beaver": "le castor"
         }
       },
@@ -421,26 +373,6 @@
           "review": "à revoir",
           "line": "ligne"
         },
-        "orochia": {
-          "encoding": "Encodage",
-          "ready": "Prêt à diffuser · HLS",
-          "steps": [
-            "téléverser",
-            "encoder",
-            "diffuser"
-          ]
-        },
-        "kachizaka": {
-          "live": "En direct",
-          "points": "points",
-          "title": "Points par journée (ligue de démo)",
-          "league": "Ligue entre amis, 8e journée · démo",
-          "players": [
-            "Léa",
-            "Malik",
-            "Chloé"
-          ]
-        },
         "akinaza": {
           "day": "Mardi, la journée du salon",
           "booked": "Réservé, confirmé par courriel · démo",
@@ -448,15 +380,6 @@
           "gst": "TPS 5 %",
           "qst": "TVQ 9,975 %",
           "total": "Total"
-        },
-        "yasakia": {
-          "theirs": "Un café près du canal samedi ?",
-          "mine": "Oui, 10 h 30, ça me va.",
-          "typing": "En train d'écrire",
-          "intro": "Présentés par l’agent : vous avez dit oui tous les deux."
-        },
-        "yororis": {
-          "label": "Une voix, écoutée"
         }
       }
     },
@@ -489,26 +412,18 @@
       "optional": "facultatif",
       "topics": {
         "orazaka": "Orazaka",
-        "orochia": "Orochia",
-        "yasakia": "Yasakia",
-        "yororis": "Yororis",
         "blocks": "Briques Krizaka",
         "partnership": "Partenariat",
         "other": "Autre chose",
         "yomizaka": "Yomizaka",
-        "kachizaka": "Kachizaka",
         "akinaza": "Akinaza"
       },
       "topicHints": {
         "orazaka": "Déployer ou auditer la passerelle d'IA souveraine",
-        "orochia": "Lancer ou intégrer la plateforme vidéo pour créateurs",
-        "yasakia": "Savoir quand l'app de rencontre ouvre, ou aider à la construire",
-        "yororis": "Discuter de Yororis — en construction, rien n'est encore offert",
         "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
         "partnership": "Intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe",
         "yomizaka": "Parler de Yomizaka — en développement, inscription fermée",
-        "kachizaka": "Parlez-nous de Kachizaka — en développement, inscriptions fermées",
         "akinaza": "Parlez-nous d'Akinaza — en développement, inscriptions fermées"
       },
       "timeline": "Pour quand ?",
@@ -520,14 +435,10 @@
       "message": "Votre message",
       "placeholders": {
         "orazaka": "Votre infrastructure (infonuagique, sur site, isolée), les modèles utilisés, vos contraintes de conformité…",
-        "orochia": "Vos créateurs et votre public, les moyens de paiement voulus, votre date de lancement…",
-        "yasakia": "Quand vous aimeriez l'essayer, sur quel téléphone, ce que vous attendez d'une app de rencontre…",
-        "yororis": "Qui vous êtes, le programme de mieux-être de votre organisation, ce qui compte pour vous dans le cadre de Yororis…",
         "blocks": "Le composant (sécurité, messagerie, utilisateurs, notifications, facturation, UI…), votre stack et ce que vous voulez construire…",
         "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
         "other": "Comment pouvons-nous vous aider ?",
         "yomizaka": "Quels documents vous avez à lire : baux, factures fournisseurs, un inventaire Loi 25…",
-        "kachizaka": "Votre ligue : combien d'amis, quel sport et quelle compétition, comment vous comptez les points aujourd'hui…",
         "akinaza": "Votre boutique : ce que vous vendez, comment vous réservez et facturez aujourd'hui, ce que vos outils vous coûtent…"
       },
       "counter": "{count} / {max}",
@@ -596,7 +507,6 @@
         "promise": "Sa promesse",
         "how": "Comment ça marche",
         "demo": "Illustration, données de démo",
-        "constructionNote": "En construction : une application réservée aux tests tourne sur dev, et rien n'est encore offert au public.",
         "take": {
           "watch": "Voir la prise",
           "close": "Fermer la prise",
@@ -616,35 +526,16 @@
               "Yomizaka le lit et garde son texte.",
               "Une recherche sur « dépôt » trouve la clause dans chaque bail."
             ],
-            "orochia": [
-              "Le fil s'ouvre sur de courtes histoires.",
-              "Une histoire se lit en plein écran.",
-              "Un spectateur donne un pourboire à la créatrice en un geste.",
-              "La créatrice voit ses revenus."
-            ],
-            "kachizaka": [
-              "Une ligue se crée entre amis.",
-              "Chacun choisit les pointages des matchs.",
-              "Le classement se met à jour au fil des résultats."
-            ],
             "akinaza": [
               "Un client choisit un service et réserve.",
               "La propriétaire voit les promenades du jour.",
               "Un rapport de promenade et une photo partent vers le client.",
               "Les livres se résument en une déclaration de TPS, prête à réviser."
-            ],
-            "yasakia": [
-              "Pas encore de sélection : l'agent ne vous connaît pas.",
-              "L'agent écrit votre portrait.",
-              "Votre sélection arrive : quelques personnes, chacune avec la raison."
             ]
           }
         }
       },
       "birds": {
-        "lovebird": "L'inséparable est présent : deux personnes se rencontrent.",
-        "crane": "La grue écoute.",
-        "magpie": "La pie tient le score.",
         "beaver": "Le castor construit la boutique."
       },
       "open": {
@@ -749,17 +640,6 @@
         "codeTitle": "Filmé depuis le code"
       }
     },
-    "yororis": {
-      "reviewed": {
-        "construction": "Nous construisons Yororis en public et nous étudions son cadre — juridique, éthique, clinique — avant toute mise à disposition. Rien n'est en ligne, rien n'est offert, et il n'y a pas de date.",
-        "isNot": [
-          "Pas un soin : Yororis ne prétend à aucun effet sur la santé et ne remplace personne qui vous accompagne.",
-          "Pas un service d'urgence : en cas de crise, des personnes formées à l'écoute répondent tout de suite.",
-          "Pas une personne : une présence IA qui le dit, chaque fois."
-        ],
-        "isNotRule": "Pas un soin, pas un service d'urgence, pas une personne. En cas de crise au Canada, appelez ou textez le 9-8-8 — au Québec, le 811 (Info-Social)."
-      }
-    },
     "openSource": {
       "eyebrow": "Open source · Apache-2.0",
       "title": "Tout ce que nous construisons est public.",
@@ -778,12 +658,6 @@
       "platform": {
         "name": "Plateforme Krizaka",
         "tagline": "Les briques que partagent tous les produits : Krizaka UI, les kits Java, le site et les règles de l'organisation."
-      },
-      "orochiaRepos": {
-        "orochia": "La plateforme Orochia : API, application web et paquets partagés.",
-        "orochia-mobile": "L'application mobile Orochia (iOS et Android).",
-        "orochia-design-system": "Les jetons de design et composants partagés par les applications Orochia.",
-        "default": "Un dépôt de la plateforme Orochia."
       },
       "runs": {
         "caption": "Ce sur quoi tourne chaque produit",
@@ -991,14 +865,6 @@
             ]
           },
           {
-            "id": "dev-environment",
-            "title": "L'environnement de développement hébergé",
-            "paragraphs": [
-              "dev.orochia.com est un environnement de développement d'Orochia que nous exploitons pour tester et démontrer. Si vous y créez un compte, ce que vous saisissez (courriel, nom d'utilisateur, empreinte du mot de passe, contenu, activité) est stocké dans une base rattachée à l'application chez DigitalOcean (Toronto) et lisible par l'équipe. Les courriels qu'il envoie passent par Mailgun, et les vidéos par Bunny.",
-              "Ce n'est pas un service de production : il peut être réinitialisé ou effacé à tout moment ; n'y mettez que des données d'essai. Une section des Conditions le décrit."
-            ]
-          },
-          {
             "id": "accounts",
             "title": "Comptes Krizaka (blog.krizaka.com)",
             "paragraphs": [
@@ -1013,7 +879,7 @@
             "id": "software",
             "title": "Nos logiciels",
             "paragraphs": [
-              "Orazaka, Orochia et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yasakia, Yororis, Kachizaka et Akinaza ne sont pas déployés et ne collectent rien.",
+              "Orazaka et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yomizaka et Akinaza sont en développement et ne collectent rien par ce site.",
               "Si vous y branchez des services externes (fournisseurs d'IA, passerelles de paiement, CDN vidéo), les données que vous envoyez vont directement à ces fournisseurs, selon leurs propres politiques."
             ]
           },
@@ -1059,13 +925,13 @@
           {
             "title": "Ce que couvrent ces conditions",
             "paragraphs": [
-              "Ces conditions couvrent ce site, les logiciels ouverts et les briques que nous publions, et l'environnement de développement hébergé dev.orochia.com. Elles ne décrivent pas un service payant : aucun n'est offert aujourd'hui."
+              "Ces conditions couvrent ce site, ainsi que les logiciels ouverts et les briques que nous publions. Elles ne décrivent pas un service payant : aucun n’est offert aujourd’hui."
             ]
           },
           {
             "title": "Licence des logiciels",
             "paragraphs": [
-              "Les logiciels que nous publions sont ouverts, distribués sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les dépôts Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza sur github.com/krizaka, les paquets @krizaka/* sur npm et les artefacts com.krizaka sur Maven. Chaque dépôt porte sa licence.",
+              "Les logiciels que nous publions sont ouverts, distribués sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les dépôts Orazaka, Yomizaka et Akinaza sur github.com/krizaka, les paquets @krizaka/* sur npm et les artefacts com.krizaka sur Maven. Chaque dépôt porte sa licence.",
               "La licence couvre le code. Elle ne donne pas le droit d'utiliser comme les vôtres les noms, logos et marques de produits de Krizaka."
             ]
           },
@@ -1076,22 +942,9 @@
             ]
           },
           {
-            "title": "Exploiter Orochia",
-            "paragraphs": [
-              "Orochia est conçu pour des plateformes pouvant héberger du contenu pour adultes. L'exploitant est responsable de sa propre vérification de l'âge, de la tenue de ses registres (dont le 18 U.S.C. § 2257 là où il s'applique), de la modération, du traitement des retraits et des règles de ses fournisseurs de paiement. Le logiciel fournit des outils pour ces devoirs ; il ne les remplit pas à votre place."
-            ]
-          },
-          {
             "title": "Produits pas encore disponibles",
             "paragraphs": [
-              "Yasakia est un produit à venir : rien n'est encore offert, et ce que le site en dit décrit des intentions, pas un service.",
-              "Yororis est en construction. Il n'est pas déployé, pas offert, et personne ne peut s'y inscrire. C'est un espace d'écoute avec une présence IA, pas un service de santé, pas un service de soin, et rien de ce que le site en dit n'est un conseil, de quelque nature que ce soit. Ses pages montrent comment il se construit et permettent d'en discuter avec nous par le formulaire de contact."
-            ]
-          },
-          {
-            "title": "L'environnement de développement hébergé",
-            "paragraphs": [
-              "dev.orochia.com est un environnement d'essai d'Orochia. Il est fourni sans aucune garantie : il peut être indisponible, modifié, réinitialisé ou effacé à tout moment et sans préavis, et ce que vous y mettez peut être perdu. N'y mettez que des données d'essai et ne vous y fiez pour rien d'important. Rien n'y est une offre commerciale."
+              "Yomizaka et Akinaza sont en développement : l’inscription est fermée et rien n’est encore offert, et ce que le site en dit décrit des intentions, pas un service."
             ]
           },
           {
@@ -1183,7 +1036,7 @@
         "products": {
           "title": "Produits",
           "category": "Krizaka",
-          "desc": "Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza — chacun sur son propre site."
+          "desc": "Orazaka, Yomizaka et Akinaza — chacun sur son propre site."
         }
       },
       "label": "Rechercher sur le site",
@@ -1191,21 +1044,17 @@
       "docsCategory": "Documentation"
     },
     "structuredData": {
-      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka et Akinaza, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com).",
+      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Orazaka, Yomizaka et Akinaza, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com).",
       "family": {
         "orazaka": "Moteur d'orchestration d'IA souverain et sur site : conversation, connaissances, tâches et automatisation chez vous.",
-        "orochia": "Une plateforme vidéo open source pour les créateurs indépendants : téléverser, encoder et diffuser.",
-        "yasakia": "Une application de rencontre mobile où l'on se parle d'abord. En développement.",
-        "yororis": "Un espace d'écoute avec un visage et une voix. En développement.",
         "krizaka-ui": "Le design system de Krizaka : composants React et React Native, tokens, icônes, polices et graphiques.",
         "krizaka-java": "Les briques Spring Boot de chaque service Krizaka, publiées sur Maven Central sous com.krizaka.",
         "yomizaka": "Des baux, contrats et factures lus et vérifiés par Orazaka. En développement.",
-        "kachizaka": "Les pronostics entre amis, en points seulement, avec des données en direct. En développement.",
         "akinaza": "Vos rendez-vous, vos factures et vos taxes, réglés, pour les salons, studios et travailleurs autonomes du Québec. En développement."
       },
       "socialImage": {
         "tagline": "Des logiciels open source, faits à Montréal.",
-        "line": "Krizaka UI · Krizaka Java · Orazaka · Orochia · Yasakia · Yororis · Yomizaka · Kachizaka · Akinaza"
+        "line": "Krizaka UI · Krizaka Java · Orazaka · Yomizaka · Akinaza"
       }
     },
     "blocks": {
@@ -1406,7 +1255,7 @@
           "notFor": [
             "Il vous faut le suivi d'ouverture et de clic, des campagnes ou des e-mails HTML riches : prenez un service d'e-mail marketing.",
             "Votre application n'a pas de broker de messages et n'en veut pas.",
-            "Il vous faut des notifications push mobiles : pas encore un canal (Orochia utilise le service push d'Expo de son côté)."
+            "Il vous faut des notifications push mobiles : pas encore un canal."
           ],
           "status": "0.1.0 sur Maven Central (le contrat `-api`). Le service se construit depuis les sources ou en image ; la 0.2.0 sort en novembre.",
           "next": {
@@ -1533,7 +1382,7 @@
             {
               "chose": "Un seul vocabulaire de jetons ; le sombre sur `:root`, le clair sur `html.light` ; une marque surcharge des valeurs (`brands/scoped.css`).",
               "refused": "Des variantes `light:/dark:` dans les composants, et un jeu de jetons par produit.",
-              "because": "Un thème ou une marque est un jeu de valeurs : l'orange d'Orazaka et le violet d'Orochia utilisent les mêmes composants que ce site.",
+              "because": "Un thème ou une marque est un jeu de valeurs : l’orange d’Orazaka et le vert d’Akinaza utilisent les mêmes composants que ce site.",
               "cost": "Les composants ne lisent que `var(--kz-*)` ; les couleurs de palette brutes sont refusées par les règles de lint."
             },
             {
@@ -1623,10 +1472,6 @@
         "orazaka": "Orazaka",
         "akinaza": "Akinaza",
         "yomizaka": "Yomizaka",
-        "orochia": "Orochia",
-        "yasakia": "Yasakia",
-        "yororis": "Yororis",
-        "kachizaka": "Kachizaka",
         "ui": "Krizaka UI",
         "java": "Krizaka Java"
       },
