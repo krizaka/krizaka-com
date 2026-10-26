@@ -490,7 +490,7 @@
       "intro": {
         "eyebrow": "Notre histoire",
         "title": "Un studio. Un moteur. <b>Chaque produit sur les mêmes briques.</b>",
-        "lead": "Krizaka est un studio montréalais fondé sur un refus : personne ne devrait prendre un logiciel sur parole. Nous forgeons des briques ouvertes, construisons dessus un moteur d'IA souverain — Orazaka — et livrons nos produits sur les deux.",
+        "lead": "Un studio à Montréal, parti d'une idée simple : un logiciel devrait montrer son travail. Voici comment ça s'est passé, d'un portable à bout de souffle à trois produits construits à découvert.",
         "start": "Commencer la lecture",
         "products": "Découvrir les produits"
       },
@@ -498,9 +498,9 @@
       "chapter": "Chapitre {n}",
       "who": {
         "nav": "Qui nous sommes",
-        "title": "Un studio à Montréal",
-        "lead": "Krizaka est un studio fondé par Oussama à Montréal. C'est la forge à mi-pente : un kris est une lame forgée en couches, zaka la pente qu'on gravit pas à pas.",
-        "refusal": "Les logiciels auxquels on nous demandait de faire confiance étaient devenus des boîtes noires. Nous construisons le contraire : tout ce que nous livrons est testé, documenté et open source sous Apache-2.0.",
+        "title": "Ça a commencé à Montréal",
+        "lead": "Krizaka est un studio qu'Oussama construit à Montréal, presque seul, avec des agents d'IA qu'il dirige et relit. Un kris est une lame forgée en couches ; zaka, la pente qu'on gravit un pas à la fois.",
+        "refusal": "Tout est parti d'une question : où mon document a-t-il été lu, par quel modèle, et qui voit le résultat ? Un logiciel qui ne sait pas répondre demande qu'on le croie sur parole. Alors ce que nous livrons est testé, documenté et open source sous Apache-2.0.",
         "placesAria": "Où est Krizaka",
         "places": [
           "Montréal"
@@ -524,7 +524,7 @@
       "engine": {
         "nav": "Le moteur",
         "title": "Orazaka, le moteur",
-        "lead": "Orazaka est le moteur d'IA souverain que nos produits appellent pour leur IA : vos documents, sur votre infrastructure, selon vos règles.",
+        "lead": "Au départ, un projet perso sur un portable, pour voir ce que des modèles chez soi savent faire. Aujourd'hui, c'est le moteur que nos produits appellent pour leur IA : chaque requête garde son id, sa version et ses règles.",
         "more": "Ce que chaque produit en fait"
       },
       "products": {
@@ -557,6 +557,16 @@
               "Les livres se résument en une déclaration de TPS, prête à réviser."
             ]
           }
+        },
+        "read": "Lire le chapitre complet",
+        "readAria": "Lire le chapitre complet sur le blogue : {title}",
+        "lines": {
+          "yomizaka": "Lisez avant de signer. Déposez un bail, un contrat ou une facture : Yomizaka le vérifie règle par règle et cite le passage exact derrière chaque constat.",
+          "akinaza": "La journée d'une petite boutique au même endroit : rendez-vous, factures bilingues et une déclaration de taxes préparée, que le commerçant relit. Akinaza la prépare, jamais il ne la dépose."
+        },
+        "proofs": {
+          "yomizaka": "Chaque règle cite son article de loi. Les règles québécoises attendent encore la relecture d'un avocat, et l'écran le dit : il trie, il ne donne pas d'avis juridique. Inscriptions fermées pendant nos essais sur de vrais baux.",
+          "akinaza": "Rendez-vous, factures avec TPS et TVQ, un grand livre que la base de données garde équilibré, et un rapport de taxes que le commerçant relit et dépose lui-même. En développement : inscriptions fermées."
         }
       },
       "birds": {
@@ -564,8 +574,8 @@
       },
       "open": {
         "nav": "Les briques ouvertes",
-        "title": "Tout ce qui nous porte est ouvert",
-        "lead": "Chaque produit repose sur les mêmes briques publiques : publiées, versionnées, Apache-2.0. Les chiffres sont lus dans les registres au build.",
+        "title": "Ce qui nous porte est ouvert",
+        "lead": "Les briques sous chaque produit sont publiques : un kit de composants et des briques Java, publiés et versionnés, Apache-2.0. Nous les utilisons d'abord, donc un correctif fait une fois profite à tous les produits.",
         "figuresAria": "Les briques ouvertes en chiffres",
         "figures": {
           "repos": "dépôts publics",
@@ -577,8 +587,8 @@
       },
       "next": {
         "nav": "La suite",
-        "title": "La suite, dite telle qu'elle est",
-        "lead": "Un produit dit ce qu'il est aujourd'hui, et le moteur dit « prévu » tant qu'il ne tourne pas. Aucune date n'est promise ici.",
+        "title": "La suite",
+        "lead": "Trois produits sont en développement, à découvert, inscriptions fermées. D'autres idées ont été explorées et sont en pause pour finir celles-ci. Aucune date promise : un produit dit ce qu'il est aujourd'hui.",
         "wire": "Brancher Orazaka à {products}, où son usage est encore prévu.",
         "reach": "Amener {products} en préversion de développement, chacun prouvé sur sa propre liste de contrôle.",
         "boardAria": "Où en est chaque produit",
@@ -662,6 +672,14 @@
           }
         },
         "codeTitle": "Filmé depuis le code"
+      },
+      "blog": {
+        "who": "Pourquoi je construis Krizaka à Montréal",
+        "engine": "Un moteur d'IA sur un portable",
+        "yomizaka": "Les premiers produits : Yomizaka et Akinaza",
+        "akinaza": "Les premiers produits : Yomizaka et Akinaza",
+        "open": "Une seule interface, du web au Mac",
+        "next": "Construire presque seul, avec des agents"
       }
     },
     "openSource": {

@@ -16,7 +16,7 @@ import { asLocale, format, getDictionary, type TranslationDictionary } from "@/l
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
 import { publishedCount } from "@/lib/registry-versions";
-import { ENGINE, OPEN_BIRD, PRODUCT_BIRD, PRODUCT_CHAPTERS, STORY_ANCHORS, WHO_BIRD, type StoryBird } from "@/lib/story";
+import { BLOG_CHAPTER, blogChapterUrl, ENGINE, OPEN_BIRD, PRODUCT_BIRD, PRODUCT_CHAPTERS, STORY_ANCHORS, WHO_BIRD, type StoryBird } from "@/lib/story";
 import { uiFacts } from "@/lib/ui-facts";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import TopNavBar from "@/app/components/TopNavBar";
@@ -101,6 +101,17 @@ export default async function StoryPage({ params }: Props) {
     chapterLabel: chapterLabel(number(anchor)),
   });
 
+  /** The blog chapter that tells this part in full: a quiet link beside the chapter's main action. */
+  const readOn = (anchor: keyof typeof BLOG_CHAPTER) => (
+    <ButtonLink
+      href={blogChapterUrl(BLOG_CHAPTER[anchor], locale)}
+      variant="ghost"
+      ariaLabel={format(st.products.readAria, { title: st.blog[anchor] })}
+    >
+      {st.products.read}
+    </ButtonLink>
+  );
+
   const usesList = (
     <ul className="st-uses">
       {ENGINE_USES.map((u) => {
@@ -150,7 +161,7 @@ export default async function StoryPage({ params }: Props) {
         kicker={h.knowhow[id].name}
         lead={
           <>
-            <p>{h.cards[id].line}</p>
+            <p>{st.products.lines[id as keyof typeof st.products.lines]}</p>
           </>
         }
         bird={bird}
@@ -161,7 +172,7 @@ export default async function StoryPage({ params }: Props) {
             <p className="st-proof-note">{st.products.demo}</p>
           </div>
         )}
-        fold={{ summary: st.products.how, children: <><p>{h.knowhow[id].proof}</p>{useLine && <p className="st-uses-line">{useLine}</p>}</> }}
+        fold={{ summary: st.products.how, children: <><p>{st.products.proofs[id as keyof typeof st.products.proofs]}</p>{useLine && <p className="st-uses-line">{useLine}</p>}</> }}
         actions={
           <>
             <ButtonLink href={p.siteUrl} variant="primary">
@@ -170,6 +181,7 @@ export default async function StoryPage({ params }: Props) {
             <ButtonLink href={p.repoUrl} variant="ghost" ariaLabel={format(h.sourceAria, { name: p.name })}>
               {h.source}
             </ButtonLink>
+            {readOn(id as keyof typeof BLOG_CHAPTER)}
           </>
         }
       />
@@ -238,6 +250,7 @@ export default async function StoryPage({ params }: Props) {
               <FilmCredits />
               </>
             }
+            actions={readOn("who")}
           />
 
           <StoryChapter
@@ -270,9 +283,12 @@ export default async function StoryPage({ params }: Props) {
               ),
             }}
             actions={
-              <ButtonLink href={engine.siteUrl} variant="primary">
-                {h.visit} <ForwardIcon size={14} />
-              </ButtonLink>
+              <>
+                <ButtonLink href={engine.siteUrl} variant="primary">
+                  {h.visit} <ForwardIcon size={14} />
+                </ButtonLink>
+                {readOn("engine")}
+              </>
             }
           />
 
@@ -288,9 +304,12 @@ export default async function StoryPage({ params }: Props) {
             proof={<FigureTiles figures={figures} label={st.open.figuresAria} locale={locale} columns />}
             fold={{ summary: st.open.more, children: <StackTiles locale={locale} /> }}
             actions={
-              <ButtonLink href="/open-source" variant="primary">
-                {st.open.cta} <ForwardIcon size={14} />
-              </ButtonLink>
+              <>
+                <ButtonLink href="/open-source" variant="primary">
+                  {st.open.cta} <ForwardIcon size={14} />
+                </ButtonLink>
+                {readOn("open")}
+              </>
             }
           />
 
@@ -329,9 +348,12 @@ export default async function StoryPage({ params }: Props) {
               </div>
             }
             actions={
-              <ButtonLink href={contactHref("story")} variant="primary" size="lg">
-                {st.next.cta} <ForwardIcon size={15} />
-              </ButtonLink>
+              <>
+                <ButtonLink href={contactHref("story")} variant="primary" size="lg">
+                  {st.next.cta} <ForwardIcon size={15} />
+                </ButtonLink>
+                {readOn("next")}
+              </>
             }
           />
         </TocLayout>

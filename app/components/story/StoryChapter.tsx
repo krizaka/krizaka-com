@@ -12,6 +12,10 @@ export interface ChapterFold {
   children: ReactNode;
 }
 
+/** Which side the chapter's picture or video sits on, down the page: the first on the right, the second on the left, and so on
+ *  (a story read top to bottom). On a phone every chapter is one column and the CSS ignores the side. */
+export const sideOf = (number: number): "right" | "left" => (number % 2 ? "right" : "left");
+
 const digits = (n: number) => String(n).padStart(2, "0");
 
 export default function StoryChapter({
@@ -47,7 +51,7 @@ export default function StoryChapter({
   actions?: ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={"st-ch" + (brand ? " brand-" + brand : "")} data-chapter={id}>
+    <section id={id} aria-labelledby={`${id}-title`} className={"st-ch" + (brand ? " brand-" + brand : "")} data-chapter={id} data-side={sideOf(number)}>
       <div className="st-ch-grid">
         <div className="st-ch-text">
           <p className="st-ch-meta">
