@@ -22,10 +22,17 @@ test("the products' sites: the three presented products, each at www.<product>.c
   });
 });
 
-test("Yomizaka's documentation goes to its site (#171)", () => {
-  const rule = go("/fr/docs/yomizaka/getting-started");
-  assert.equal(rule?.destination, "https://www.yomizaka.com");
-  assert.equal(rule?.statusCode, 308);
+test("Yomizaka's documentation lands on its /docs page, in the language of the address (#171, yomizaka#387)", () => {
+  for (const [path, destination] of [
+    ["/fr/docs/yomizaka/getting-started", "https://www.yomizaka.com/:locale/docs"],
+    ["/en/docs/yomizaka", "https://www.yomizaka.com/:locale/docs"],
+    ["/docs/yomizaka", "https://www.yomizaka.com/docs"],
+    ["/docs/yomizaka/api", "https://www.yomizaka.com/docs"],
+  ]) {
+    const rule = go(path);
+    assert.equal(rule?.destination, destination, path);
+    assert.equal(rule?.statusCode, 308, path);
+  }
 });
 
 test("every /products/<product> address — with or without the locale, any depth — goes to the product's site, 308", () => {
@@ -55,7 +62,7 @@ test("the products' documentation goes to the product's site", () => {
     ["/docs/orazaka", "https://www.orazaka.com"],
     ["/en/docs/orazaka/cli", "https://www.orazaka.com"],
     ["/fr/docs/orazaka/ui/button", "https://www.orazaka.com"],
-    ["/docs/yomizaka", "https://www.yomizaka.com"],
+    ["/docs/yomizaka", "https://www.yomizaka.com/docs"],
   ]) {
     const rule = go(path);
     assert.ok(rule, path);
