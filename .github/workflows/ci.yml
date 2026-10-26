@@ -18,7 +18,7 @@ jobs:
   # The pipeline is the org's (krizaka/.github docs/standards/ci-and-deploy.md): the changes gate, the caches, the timeouts and the
   # gate that always reports live there. This file says only what is krizaka.com's.
   ci:
-    uses: krizaka/.github/.github/workflows/node-ci.yml@ed3646a1323982543e81aad3fa0130cd69400cc8 # ci/sonar-after-tests-image-scan (repin on merge)
+    uses: krizaka/.github/.github/workflows/node-ci.yml@ef411b383fe119bd90bf7fdc01ab44f5268011f5 # main (SonarCloud after verify, image scan)
     permissions:
       contents: read
     secrets:
