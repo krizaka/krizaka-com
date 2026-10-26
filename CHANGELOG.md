@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/krizaka/krizaka-com/compare/v0.6.0...v0.6.1) (2026-10-26)
+
+
+### Bug Fixes
+
+* **security:** Next.js 16.4.3 — patches the critical RCE (GHSA-2464-fhr4-w9xw) in the production image ([#415](https://github.com/krizaka/krizaka-com/issues/415)) ([d6335a7](https://github.com/krizaka/krizaka-com/commit/d6335a74373d5114a36373a63df6e578c193c56a)), closes [#414](https://github.com/krizaka/krizaka-com/issues/414)
+
 ## [0.6.0](https://github.com/krizaka/krizaka-com/compare/v0.5.0...v0.6.0) (2026-10-26)
 
 
