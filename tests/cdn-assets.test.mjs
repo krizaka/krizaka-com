@@ -108,7 +108,7 @@ test("the committed manifest names every media the site draws", () => {
     // The vertical clip the /docs/ui examples play (lib/ui-example-props.ts).
     ...["mp4", "jpg"].map((e) => `home/kit/challenge-v.${e}`),
     // The clips the published @krizaka/ui examples still reach through /assets/orochia/tour/ (lib/cdn.ts, next.config).
-    ...["alex-discover", "alex-bid", "elena-live"].flatMap((c) => ["webm", "mp4", "jpg"].map((e) => `products/orochia/tour/en/${c}.${e}`)),
+    ...["alex-discover", "alex-story", "alex-bid", "alex-unlock", "elena-live", "elena-earnings", "elena-publish"].flatMap((c) => ["webm", "mp4", "jpg"].map((e) => `products/orochia/tour/en/${c}.${e}`)),
   ];
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
   // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left —
@@ -119,7 +119,7 @@ test("the committed manifest names every media the site draws", () => {
     Object.keys(files).filter((path) => path.startsWith("products/orochia/tour/") && !/^products\/orochia\/tour\/(en|fr)\/[a-z-]+\.(webm|mp4|jpg)$/.test(path)),
     [],
   );
-  // Paused products (2026-10-25) keep no media here but the three clips above: their tours, galleries and takes are gone.
+  // Paused products (2026-10-25) keep no media here but the clips above: their tours, galleries and takes are gone.
   assert.deepEqual(
     Object.keys(files).filter((path) => /^products\/(orochia|yasakia|yororis|kachizaka)\//.test(path) && !need.includes(path)),
     [],
