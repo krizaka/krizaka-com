@@ -14,7 +14,6 @@ const consts = Object.fromEntries([...site.matchAll(/export const (\w+) = `\$\{G
 const resolve = (expr) => (expr.startsWith('"') ? expr.slice(1, -1) : consts[expr]);
 const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "(\w+)".*repoUrl: ("[^"]+"|\w+) \}/g)].map((m) => ({ id: m[1], name: m[2], repoUrl: resolve(m[3]) }));
 const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)".*repoUrl: (`\$\{GITHUB_ORG_URL\}\/([\w-]+)`|\w+),/g)].map((m) => ({ id: m[1], name: m[2], repoUrl: m[4] ? `https://github.com/krizaka/${m[4]}` : resolve(m[3]) }));
-stack.push({ id: "motion", name: "Krizaka Motion", repoUrl: "https://github.com/krizaka/krizaka-motion" });
 
 const state = { fetchedAt: "2026-10-21", repos: Object.fromEntries([...products, ...stack].map((p) => [repoName(p.repoUrl), { discussions: false, issues: true }])) };
 state.repos.orazaka.discussions = true;
@@ -81,7 +80,7 @@ test("both pages use the derived list; the words are messages in both languages;
   assert.doesNotMatch(src, /PUBLIC_REPOSITORIES/);
   assert.match(read("lib/github-channels.ts"), /PRODUCTS/);
   assert.match(read("lib/github-channels.ts"), /STACK/);
-  assert.match(read("lib/github-channels.ts"), /MOTION_LAB/);
+  assert.doesNotMatch(read("lib/github-channels.ts"), /MOTION_LAB/, "Krizaka Motion is in the stack list");
   assert.match(read("package.json"), /gen-github-channels\.mjs/, "read at build, like the other GitHub data");
   for (const f of ["app/[locale]/contact/ContactClient.tsx", "app/[locale]/open-source/page.tsx"]) assert.doesNotMatch(read(f), /PUBLIC_REPOSITORIES/, f);
   for (const l of ["en", "fr"]) {

@@ -7,7 +7,7 @@ import path from "node:path";
 import { parseChannelState } from "../scripts/github-channels-lib.mjs";
 import { buildPublicChannels, type ChannelGroup, type ChannelState } from "./public-channels";
 import { PRODUCTS } from "./products";
-import { MOTION_LAB, STACK } from "./stack";
+import { STACK } from "./stack";
 
 function snapshot(): ChannelState {
   try {
@@ -18,10 +18,7 @@ function snapshot(): ChannelState {
 }
 
 export function publicChannels(): ChannelGroup[] {
-  const stack = [
-    ...STACK.map(({ id, name, repoUrl }) => ({ id, name, repoUrl })),
-    { id: "motion", name: MOTION_LAB.name, repoUrl: MOTION_LAB.repoUrl },
-  ];
+  const stack = STACK.map(({ id, name, repoUrl }) => ({ id, name, repoUrl }));
   return buildPublicChannels(
     PRODUCTS.map(({ id, name, repoUrl }) => ({ id, name, repoUrl })),
     stack,

@@ -325,6 +325,30 @@
         "ts": {
           "line": "The products' TypeScript building blocks, on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief.",
           "explore": "Read the documentation"
+        },
+        "row": {
+          "listLabel": "What we publish",
+          "docs": "Docs",
+          "lab": "Open the lab",
+          "source": "Source",
+          "docsAria": "Documentation of {name}",
+          "labAria": "Open the lab of {name}",
+          "sourceAria": "Source code of {name}",
+          "packages": "{count} packages",
+          "stamps": {
+            "released": "Released",
+            "development": "In development"
+          },
+          "fields": {
+            "site": "site",
+            "registry": "registry",
+            "licence": "licence"
+          },
+          "registries": {
+            "npm": "npm",
+            "maven": "Maven Central",
+            "none": "not a package"
+          }
         }
       },
       "principles": {

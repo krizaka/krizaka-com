@@ -154,8 +154,8 @@ test("the open-source section: three playable tiles, versions and downloads read
   assert.match(motion, /from "@krizaka\/ui\/engine-flow"/);
   assert.match(motion, /FLOW_LAYOUTS/);
   assert.match(motion, /FLOW_MODES/);
-  assert.match(motion, /particles=\{still \? "none" : undefined\}/, "the still preview has no photons");
-  assert.match(motion, /breathe=\{still \? false : undefined\}/, "the still preview has no breathing hub");
+  assert.match(motion, /calm=\{calm\}/, "the home's preview is EngineFlow's calm level, not a still frame");
+  assert.doesNotMatch(motion, /particles=\{still|breathe=\{still/, "no still override: the photons and the breath run at the calm rate");
   for (const lang of ["en", "fr"]) {
     const s = messages(lang).site.home.stack;
     for (const k of ["ui", "motion", "java"]) assert.ok(s[k], `${lang}: stack.${k}`);
@@ -210,9 +210,10 @@ test("the duo is named by its need: management and compliance tools", () => {
   }
 });
 
-// 2026-10-22 (Oussama): one mechanism for the stack wherever it is shown — four tiles (UI, Motion, Java, TS), each with
-// something to try or to copy; Java's dependency and TS's install command have a copy button; no link card holds a button.
-test("the stack tiles: one component on the home, /open-source and /story, with Java and TS to copy", () => {
+// 2026-10-22 (Oussama): /open-source and /story show the stack as four full cards (UI, Motion, Java, TS), each with
+// something to try or to copy; Java's dependency and TS's install command have a copy button. The home shows the same
+// publications as rows (2026-10-25, krizaka-com#392; tests/stack-config.test.mjs).
+test("the full stack cards: one component on /open-source and /story, with Java and TS to copy", () => {
   const stack = read("app/components/home/OpenStack.tsx");
   assert.match(stack, /export function StackTiles/);
   assert.match(stack, /npmPackagesFrom\(ts\.repoUrl\)/, "TS's packages read at build, never typed");
@@ -221,53 +222,34 @@ test("the stack tiles: one component on the home, /open-source and /story, with 
   assert.match(stack, /import "\.\/stack-tiles\.css"/, "the tiles carry their own styles to every page");
   assert.doesNotMatch(stack, /LinkCard|StackCards/);
   for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"]) assert.match(read(page), /<StackTiles locale=\{locale\} \/>/, page);
-  assert.match(stack, /<StackTiles locale=\{locale\} compact \/>/, "the home keeps the short version: name, line, a still visual, a link");
-  assert.doesNotMatch(stack, /compact \? <code/, "the home has no code snippets");
-  assert.match(stack, /<Cloud names=\{mavenModuleIds\(\)\} mark="java" \/>/, "Java's still is the real module names, read at build");
-  assert.match(stack, /<Cloud names=\{tsPackages\} mark="ts" \/>/, "TypeScript's still is the real package names, read at build");
-  assert.match(stack, /names\.slice\(0, CLOUD_MAX\)\.map\(\(name\) => \(\s*<Badge/, "a cloud of quiet badges, never a version");
-  assert.match(stack, /inert=\{compact \|\| undefined\}/, "the compact preview subtree cannot receive focus");
+  assert.doesNotMatch(read("app/components/home/OpenStack.tsx").slice(stack.indexOf("export default function OpenStack")), /StackTiles/, "the home shows rows, not the cards");
   assert.match(stack, /<CardGrid as="ul"[^>]*min=\{420\}[^>]*columns=\{2\}/, "the grid is @krizaka/ui's CardGrid: the tiles of a row share one height");
-  assert.doesNotMatch(stack, /<li\b|align="start"/, "the cells are the grid's, stretched");
   assert.match(read("app/components/home/stack-tiles.css"), /\.kz-build-try \{[^}]*flex: 1 1 auto/, "the example grows to fill its card");
   for (const lang of ["en", "fr"]) assert.ok(messages(lang).site.home.stack.ts.line, `${lang}: stack.ts.line`);
 });
 
-// 2026-10-23 (Oussama, on the live section): the home stays short — per tile a host, a name, one line, one still picture
-// of one height and one link. The code, the versions and the playground's settings live on /open-source only; the Motion
-// tile's host is the stack data's (motion.krizaka.com the day krizaka-motion#55 lands), never typed in a component.
-// scripts/check-home-stack.mjs verifies the rendered section in a browser on the container.
-test("the home's stack section: no code block, no playground control, one still of one height per tile, the Motion host from the data", () => {
+// 2026-10-25 (Oussama): the home's stack is one row per publication, like the products' — the live visual and a specimen
+// tag. The Motion row's host is the stack data's (motion.krizaka.com), never typed in a component. The rendered rows are
+// checked in a browser by scripts/check-home-stack.mjs on the container.
+test("the home's stack section: rows from the list, no playground control, the Motion host from the data", () => {
   const stack = read("app/components/home/OpenStack.tsx");
-  const css = read("app/components/home/stack-tiles.css");
   const motion = read("app/components/home/playground/MotionPlayground.tsx");
-  // Every code block of the component is the full card's branch, never the compact one.
-  for (const m of stack.matchAll(/<Code(Block|Tabs)\b/g)) {
-    const before = stack.slice(0, m.index);
-    const fork = before.lastIndexOf("compact ?");
-    assert.ok(fork > before.lastIndexOf("</Tile>"), `a ${m[0]} outside a tile's compact ? … : … fork`);
-    assert.ok(before.slice(fork).includes(" : "), `a ${m[0]} in the compact branch`);
-  }
-  assert.match(stack, /<MotionPlayground still=\{compact\}/, "the home shows a still of the engine flow");
-  assert.match(stack, /<UiShowcase\b/, "Krizaka UI's picture is the same composition on every page");
-  assert.doesNotMatch(stack.slice(stack.indexOf("<UiShowcase"), stack.indexOf("</Tile>")), /trend|series/, "no chart of its own in the picture");
-  // The playground's knobs (layout, what travels) are rendered only when the flow is not still.
+  const full = stack.indexOf("export function StackTiles");
+  const rows = stack.slice(0, full);
+  assert.doesNotMatch(rows, /<Code(Block|Tabs)\b/, "no code block in a home row");
+  assert.match(stack, /<MotionPlayground w=/, "the full card keeps the playground's settings");
+  assert.match(read("app/components/home/stack/StackVisuals.tsx"), /<MotionPlayground calm /, "the home shows the engine flow at its calm level");
+  assert.match(read("app/components/home/stack/StackVisuals.tsx"), /<UiShowcase\b/, "Krizaka UI's picture is the same composition on every page");
+  // The playground's knobs (layout, what travels) are rendered only when the flow is not calm.
   const knobs = motion.indexOf("<Chip.Group");
-  assert.ok(knobs > motion.indexOf("still ? null : ("), "the layout and mode chips are playground controls: only on /open-source");
-  assert.match(motion, /hint=\{still \? undefined : w\.hint\}/, "a still has no instruction to pick anything");
-  // One box for every picture, of one minimum height, growing to the tile's foot: no empty band, no demo taller than another.
-  assert.match(css, /\.kz-build-still \{[^}]*flex: 1 1 auto;[^}]*min-height: 16rem/, "the still's box has one minimum height and fills the tile");
-  assert.match(css, /\.kz-build-still \{[^}]*overflow: hidden/, "nothing spills under the picture");
-  assert.match(css, /\.kz-build \{ --kz-cards-gap/, "the grid is the CardGrid's; the component only sets its gap");
-  assert.doesNotMatch(css, /\.kz-build \{[^}]*grid-template-columns/, "no grid of its own beside CardGrid's");
-  // The Motion tile reads its host from the data, and nothing in the components types a host.
-  assert.match(stack, /meta=\{hostOf\(MOTION_LAB\.url\)\}/, "the host is hostOf(MOTION_LAB.url)");
-  assert.match(stack, /href=\{MOTION_LAB\.labUrl\}/, "the action opens the lab's scene");
+  assert.ok(knobs > motion.indexOf("calm ? null : ("), "the layout and mode chips are playground controls: only on /open-source");
+  assert.match(motion, /hint=\{calm \? undefined : w\.hint\}/, "a calm flow has no instruction to pick anything");
+  assert.match(stack, /meta=\{hostOf\(motion\.url\)\}/, "the full card's host is hostOf of the data's url");
+  assert.match(stack, /href=\{stackActionUrl\(motion\)\}/, "the action opens the lab's scene");
   assert.doesNotMatch(stack, /github\.io|motion\.krizaka\.com|\.replace\(/, "no host typed or rewritten in the component");
   const data = read("lib/stack.ts");
-  assert.match(data, /const MOTION_SITE = "https:\/\/[a-z0-9.-]+(\/[a-z-]+)?";/, "one value in the data");
-  assert.match(data, /url: MOTION_SITE,\n\s+labUrl: `\$\{MOTION_SITE\}\/orazaka`/, "the lab's scene derives from the site");
-  assert.match(data, /motion\.krizaka\.com[^\n]*krizaka-motion#55/, "the data says what flips when the lab's own host serves it");
+  assert.match(data, /const MOTION_SITE = "https:\/\/[a-z0-9.-]+";/, "one value in the data");
+  assert.match(data, /url: MOTION_SITE,[^\n]*actionPath: "\/orazaka"/, "the lab's scene derives from the site");
   for (const lang of ["en", "fr"]) {
     const s = messages(lang).site.home.stack;
     assert.doesNotMatch(s.lead, /(Try them|Essayez-les|read at build|lus au build)/, `${lang}: the lead no longer promises a demo or figures on the home`);
