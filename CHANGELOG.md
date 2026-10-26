@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.5.0](https://github.com/krizaka/krizaka-com/compare/v0.4.2...v0.5.0) (2026-10-26)
+
+
+### Features
+
+* **home:** the stack as one row per publication, Motion calm at motion.krizaka.com ([#410](https://github.com/krizaka/krizaka-com/issues/410)) ([a62e27b](https://github.com/krizaka/krizaka-com/commit/a62e27bc6ed67ecdb89deb689de5094e2a00fc3c))
+
+
+### Bug Fixes
+
+* **security:** Sonar vulnerabilities (workflows, taint, PATH) ([#408](https://github.com/krizaka/krizaka-com/issues/408)) ([d7cf065](https://github.com/krizaka/krizaka-com/commit/d7cf06580791f04054f7c2c978b206e8c7bf2f3a))
+
 ## [0.4.2](https://github.com/krizaka/krizaka-com/compare/v0.4.1...v0.4.2) (2026-10-26)
 
 
