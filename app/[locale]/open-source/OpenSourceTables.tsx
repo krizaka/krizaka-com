@@ -12,8 +12,6 @@ import { DataTable, DataTableFilters, type DataTableColumn, type DataTableLabels
 import type { PackageRow } from "@/lib/package-catalogue";
 import type { ModuleRow } from "@/lib/nomenclature";
 import { useI18n } from "@/app/components/I18nProvider";
-import { useCarnet } from "@/app/components/useCarnet";
-import { isHidden, namesHidden } from "@/lib/focus";
 
 const DATE_LOCALE: Record<string, string> = { en: "en-CA", fr: "fr-CA" };
 
@@ -22,7 +20,7 @@ export interface RepositoryRow {
   name: string;
   url: string;
   line: string;
-  /** The product's id (or `krizaka` for the platform): the focus hides the rows of the products outside it. */
+  /** The product's id (or `krizaka` for the platform). */
   productId: string;
   product: string;
   kind: string;
@@ -66,11 +64,8 @@ function Links({ links }: { links: readonly { href: string; label: string; aria:
   );
 }
 
-export function PackagesTable({ rows: all }: { rows: readonly PackageRow[] }) {
+export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
   const { t, locale } = useI18n();
-  // A line that names a product outside the focus waits for the notebook to open whole (lib/focus.ts).
-  const notebook = useCarnet();
-  const rows = notebook ? all : all.filter((r) => !namesHidden(r.name)).map((r) => (namesHidden(r.line) ? { ...r, line: "" } : r));
   const w = t.site.openSource.packages;
   const labels = useTableLabels();
   const familyLabel = (f: string) => (f in w.families ? w.families[f as keyof typeof w.families] : f);
@@ -132,11 +127,8 @@ export function PackagesTable({ rows: all }: { rows: readonly PackageRow[] }) {
   );
 }
 
-export function RepositoriesTable({ rows: all }: { rows: readonly RepositoryRow[] }) {
+export function RepositoriesTable({ rows }: { rows: readonly RepositoryRow[] }) {
   const { t, locale } = useI18n();
-  // The product facet and the rows follow the focus (lib/focus.ts): three products by default, all once the notebook is open.
-  const notebook = useCarnet();
-  const rows = notebook ? all : all.filter((r) => !isHidden(r.productId)).map((r) => (namesHidden(r.line) ? { ...r, line: "" } : r));
   const w = t.site.openSource.repositories;
   const labels = useTableLabels();
   const date = new Intl.DateTimeFormat(DATE_LOCALE[locale] ?? "en-CA", { dateStyle: "medium", timeZone: "UTC" });
@@ -170,11 +162,8 @@ export function RepositoriesTable({ rows: all }: { rows: readonly RepositoryRow[
   );
 }
 
-export function NomenclatureTable({ rows: all }: { rows: readonly ModuleRow[] }) {
+export function NomenclatureTable({ rows }: { rows: readonly ModuleRow[] }) {
   const { t } = useI18n();
-  // The rows of the products outside the focus wait for the notebook to open whole (lib/focus.ts).
-  const notebook = useCarnet();
-  const rows = notebook ? all : all.filter((r) => !isHidden(r.productId)).map((r) => (namesHidden(r.line) ? { ...r, line: "" } : r));
   const w = t.site.openSource.nomenclature;
   const labels = useTableLabels();
   const columns: DataTableColumn<ModuleRow>[] = [
@@ -198,7 +187,7 @@ export function NomenclatureTable({ rows: all }: { rows: readonly ModuleRow[] })
           </span>
         ),
     },
-    { id: "usedBy", header: w.usedBy, value: (r) => r.usedBy.filter((id) => notebook || !isHidden(id)).join(", ") || w.none },
+    { id: "usedBy", header: w.usedBy, value: (r) => r.usedBy.join(", ") || w.none },
     {
       id: "links",
       header: w.repo,

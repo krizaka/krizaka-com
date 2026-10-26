@@ -1,6 +1,5 @@
 import { ProductLogo } from "@krizaka/ui";
 import { ForwardIcon } from "@krizaka/icons";
-import { focusProps } from "@/lib/focus";
 import { format } from "@/lib/i18n";
 import type { ChannelGroup, ChannelKind } from "@/lib/public-channels";
 import "./public-channels.css";
@@ -26,7 +25,7 @@ export default function PublicChannelList({ groups, kind, words }: { groups: Cha
               const link = e[kind];
               const aria = format(kind === "discussions" ? words.discussionsAria : words.issuesAria, { name: e.name });
               return (
-                <li key={e.id} {...focusProps(e.id)}>
+                <li key={e.id}>
                   <a className="pc-row" href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.viaIssue ? `${aria} (${words.viaIssue})` : aria}>
                     <ProductLogo id={e.mark as never} size={22} animated={false} />
                     <span className="pc-name">{e.name}</span>

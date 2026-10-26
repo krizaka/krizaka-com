@@ -41,7 +41,7 @@ test("every link to the products leads to the home's section, never to /products
 });
 
 test("the family: every product on its own site, the stack on its subdomains, and GitHub", () => {
-  assert.deepEqual(products.map((p) => p.id), ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"]);
+  assert.deepEqual(products.map((p) => p.id), ["orazaka", "yomizaka", "akinaza"]);
   // A product is reached at its public address, www.<product>.com — never at its dev host (not indexed, it sends its pages to www).
   for (const p of products) {
     assert.equal(p.siteUrl, `wwwUrl("${p.id}")`, p.id);
@@ -56,9 +56,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
-test("the products' statuses: Yasakia coming soon, Yomizaka, Kachizaka, Akinaza and Yasakia in development, Orazaka and Orochia in Dev preview (a status the checklists gate: tests/dev-preview.test.mjs)", () => {
+test("the products' statuses: all three in development (Orazaka left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
   const status = Object.fromEntries(products.map((p) => [p.id, p.status]));
-  assert.deepEqual(status, { orazaka: "devPreview", orochia: "devPreview", yasakia: "development", yororis: "development", yomizaka: "development", kachizaka: "development", akinaza: "development" });
+  assert.deepEqual(status, { orazaka: "development", yomizaka: "development", akinaza: "development" });
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {

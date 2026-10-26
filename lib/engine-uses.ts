@@ -16,10 +16,6 @@ export interface EngineUse {
 }
 
 export const ENGINE_USES: readonly EngineUse[] = [
-  { id: "orochia", back: ["results", "analytics"] }, // Explorer: search and recommendations; the creator insights read the audience funnel back (lib/analytics)
   { id: "yomizaka", back: ["results"] }, // document analyses are Orazaka runs (document-validation pack)
-  { id: "kachizaka", back: ["results"] }, // match facts read through Orazaka's MCP sports-feed connector
   { id: "akinaza", back: ["results"], planned: true }, // the tax-assistant Studio (contract and a fake Studio exist)
-  { id: "yasakia", back: ["results"], planned: true }, // the matching agent (port with an `orazaka` adapter to come)
-  { id: "yororis", back: ["results"], planned: true }, // the wellbeing pack (under construction)
 ];

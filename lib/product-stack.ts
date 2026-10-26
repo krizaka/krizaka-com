@@ -36,15 +36,10 @@ export type FoundationPart = keyof typeof FOUNDATION_PARTS;
 export const ENGINE = "orazaka";
 
 /** Decided, tracked, not shipped: shown as "Planned", never as "Yes". Each line names its issue.
-    - Yasakia: the brain, `packages/ai` with an `orazaka` adapter (PY3 of its roadmap; nothing in the repository yet).
-    - Yororis: under construction — realtime and the engine are its design, not shipped. */
+ */
 export const PLANNED: Record<string, readonly KitId[]> = {
-  yasakia: ["engine"],
-  yororis: ["realtime", "engine"],
     // Yomizaka: every analysis is an Orazaka run by design; "Yes" once a run is recorded on dev (lib/demo-run.ts of krizaka/yomizaka).
   yomizaka: ["engine"],
-  // Kachizaka: match facts through Orazaka's MCP connector (the client is in packages/mcp; "Yes" once a real run on dev).
-  kachizaka: ["engine"],
   // Akinaza: the tax-assistant Studio on Orazaka (the contract is in packages/mcp; "Yes" once a real run on dev).
   akinaza: ["engine"],
 };

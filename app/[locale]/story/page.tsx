@@ -14,7 +14,6 @@ import { FILM_BASE } from "@/lib/film-captions";
 import { storyFilm } from "@/lib/story-film";
 import { asLocale, format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
-import { focusProps, isHidden } from "@/lib/focus";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
 import { publishedCount } from "@/lib/registry-versions";
 import { ENGINE, OPEN_BIRD, PRODUCT_BIRD, PRODUCT_CHAPTERS, STORY_ANCHORS, WHO_BIRD, type StoryBird } from "@/lib/story";
@@ -23,7 +22,6 @@ import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import TopNavBar from "@/app/components/TopNavBar";
 import ButtonLink from "@/app/components/ButtonLink";
 import FigureTiles from "@/app/components/FigureTiles";
-import Mode from "@/app/components/Mode";
 import Rich from "@/app/components/Rich";
 import { ProductStatus } from "@/app/components/ProductStatus";
 import { StackTiles } from "@/app/components/home/OpenStack";
@@ -97,14 +95,10 @@ export default async function StoryPage({ params }: Props) {
   ]);
   const items = STORY_ANCHORS.map((id) => ({ id: id === "who" || id === "engine" || id === "open" || id === "next" ? id : `p-${id}`, label: chapterNames.get(id)! }));
   const number = (anchor: (typeof STORY_ANCHORS)[number]) => STORY_ANCHORS.indexOf(anchor) + 1;
-  // While only the focus shows, the chapters are numbered 1, 2, 3… without the hidden ones; opened whole, by the catalogue.
-  const focusAnchors = STORY_ANCHORS.filter((a) => !isHidden(a));
   const chapterLabel = (n: number) => format(st.chapter, { n: String(n) });
   const numbered = (anchor: (typeof STORY_ANCHORS)[number]) => ({
     number: number(anchor),
     chapterLabel: chapterLabel(number(anchor)),
-    focusNumber: focusAnchors.indexOf(anchor) + 1,
-    focusChapterLabel: chapterLabel(focusAnchors.indexOf(anchor) + 1),
   });
 
   const usesList = (
@@ -113,7 +107,7 @@ export default async function StoryPage({ params }: Props) {
         const p = product(u.id);
         const back = new Intl.ListFormat(locale, { type: "conjunction" }).format(u.back.map((b) => e.back[b]));
         return (
-          <li key={u.id} className={"brand-" + u.id} data-planned={u.planned ? "" : undefined} {...focusProps(u.id)}>
+          <li key={u.id} className={"brand-" + u.id} data-planned={u.planned ? "" : undefined}>
             <ProductLogo id={u.id} size={22} animated={false} />
             <span>
               <strong>{p.name}</strong> — {e.uses[u.id as keyof typeof e.uses]}
@@ -140,14 +134,12 @@ export default async function StoryPage({ params }: Props) {
     const useLine = use
       ? format(use.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, { use: e.uses[use.id as keyof typeof e.uses] })
       : undefined;
-    const yororis = id === "yororis";
     const bird = PRODUCT_BIRD[id];
     return (
       <StoryChapter
         key={id}
         id={`p-${id}`}
         {...numbered(id)}
-        {...focusProps(id)}
         brand={id}
         meta={<ProductStatus status={p.status} t={t} />}
         title={
@@ -159,8 +151,6 @@ export default async function StoryPage({ params }: Props) {
         lead={
           <>
             <p>{h.cards[id].line}</p>
-            {/* Yororis says plainly where it stands; the reviewed « is not » list stays verbatim in the fold (scripts/lexicon.mjs). */}
-            {yororis && <p>{st.products.constructionNote}</p>}
           </>
         }
         bird={bird}
@@ -171,11 +161,7 @@ export default async function StoryPage({ params }: Props) {
             <p className="st-proof-note">{st.products.demo}</p>
           </div>
         )}
-        fold={
-          yororis
-            ? { summary: t.site.yororis.reviewed.isNotRule.split(".")[0]!, children: <ul className="st-list">{t.site.yororis.reviewed.isNot.map((x) => <li key={x}>{x}</li>)}</ul> }
-            : { summary: st.products.how, children: <><p>{h.knowhow[id].proof}</p>{useLine && <p className="st-uses-line">{useLine}</p>}</> }
-        }
+        fold={{ summary: st.products.how, children: <><p>{h.knowhow[id].proof}</p>{useLine && <p className="st-uses-line">{useLine}</p>}</> }}
         actions={
           <>
             <ButtonLink href={p.siteUrl} variant="primary">
@@ -190,12 +176,8 @@ export default async function StoryPage({ params }: Props) {
     );
   };
 
-  /** A sentence that names products: worded for the focus (the hidden ones left out) and for the notebook open whole. */
-  const words = (message: string, list: readonly Product[]) => {
-    const shown = list.filter((p) => !isHidden(p.id));
-    const full = format(message, { products: names(locale, list) });
-    return shown.length === list.length ? full : shown.length === 0 ? <span data-focus="off">{full}</span> : <Mode focus={format(message, { products: names(locale, shown) })} full={full} />;
-  };
+  /** A sentence that names products. */
+  const words = (message: string, list: readonly Product[]) => format(message, { products: names(locale, list) });
   const planned = ENGINE_USES.filter((u) => u.planned);
   const developing = PRODUCTS.filter((p) => p.status === "development");
   const board: Status[] = ["devPreview", "development", "construction"];
@@ -330,13 +312,13 @@ export default async function StoryPage({ params }: Props) {
                 {board.map((status) => {
                   const list = PRODUCTS.filter((p) => p.status === status);
                   return list.length === 0 ? null : (
-                    <div key={status} className="st-board-col" data-status={status} {...(list.every((p) => isHidden(p.id)) ? { "data-focus": "off" } : {})}>
+                    <div key={status} className="st-board-col" data-status={status}>
                       <p className="st-board-label">
                         <ProductStatus status={status} t={t} />
                       </p>
                       <ul>
                         {list.map((p) => (
-                          <li key={p.id} className={"brand-" + p.id} {...focusProps(p.id)}>
+                          <li key={p.id} className={"brand-" + p.id}>
                             <ProductLogo id={p.id} size={20} animated={false} /> {p.name}
                           </li>
                         ))}

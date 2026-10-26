@@ -15,7 +15,7 @@ const uses = [...read("lib/engine-uses.ts").matchAll(/\{ id: "(\w+)", back: \[([
 
 test("every use names a product of lib/products.ts, never the engine itself, and has words in both languages", () => {
   const products = read("lib/products.ts");
-  assert.ok(uses.length >= 5);
+  assert.ok(uses.length >= 2);
   for (const u of uses) {
     assert.match(products, new RegExp(`id: "${u.id}"`), `${u.id} is a product`);
     assert.notEqual(u.id, "orazaka");
@@ -25,7 +25,7 @@ test("every use names a product of lib/products.ts, never the engine itself, and
 });
 
 test("a planned use is said planned: the products not wired yet are flagged, the wired ones are not", () => {
-  assert.deepEqual(uses.filter((u) => u.planned).map((u) => u.id).sort(), ["akinaza", "yasakia", "yororis"]);
+  assert.deepEqual(uses.filter((u) => u.planned).map((u) => u.id).sort(), ["akinaza"]);
   const home = read("app/components/home/ProductShowcase.tsx");
   assert.match(home, /use\?\.planned \? t\.site\.home\.products\.enginePlanned : t\.site\.home\.products\.engineUse/);
   for (const l of ["en", "fr"]) {
@@ -76,7 +76,7 @@ test("each product is tied to its node in the flow: in view or pointed at, both 
 test("the diagram shows both directions, from data, claiming only what runs", () => {
   assert.ok(uses.every((u) => u.back.length > 0 && u.back.includes("results")), "every product gets results back");
   for (const u of uses) for (const b of u.back) assert.ok(["results", "analytics"].includes(b), `${u.id}: '${b}' is not live (events/webhooks are orazaka#189)`);
-  assert.deepEqual(uses.filter((u) => u.back.includes("analytics")).map((u) => u.id), ["orochia"], "analytics back: only Orochia reads it (ADR-081)");
+  assert.deepEqual(uses.filter((u) => u.back.includes("analytics")).map((u) => u.id), [], "analytics back: no product presented reads it yet (ADR-081)");
   // /story's engine chapter is the home's EngineFlowView (@krizaka/ui/engine-flow): the static stand-in is gone.
   assert.ok(!existsSync(new URL("../app/components/story/EngineMap.tsx", import.meta.url)), "EngineMap came back");
   assert.ok(!existsSync(new URL("../lib/engine-map.ts", import.meta.url)), "lib/engine-map.ts came back");

@@ -43,7 +43,7 @@ export const MANIFEST = resolve(dirname(fileURLToPath(import.meta.url)), "../lib
 /** The first 10 hex of the SHA-256: enough to tell two versions apart, short enough to read. */
 export const hashOf = (buf) => createHash("sha256").update(buf).digest("hex").slice(0, 10);
 
-/** `products/orochia/tour/alex-bid.mp4` + `3f2a…` → `products/orochia/tour/alex-bid.3f2a….mp4`. */
+/** `products/akinaza/tour/hero-en.mp4` + `3f2a…` → `products/akinaza/tour/hero-en.3f2a….mp4`. */
 export function versioned(path, hash) {
   const dot = path.lastIndexOf(".");
   if (dot <= path.lastIndexOf("/")) throw new Error(`${path} has no extension`);
@@ -53,7 +53,7 @@ export function versioned(path, hash) {
 /** A logical path: lower-case segments of letters, digits, `-` and `_`, an extension. */
 export function logicalPath(value, name = "to") {
   const p = String(value ?? "").trim().replace(/^\/+|\/+$/g, "");
-  if (!/^[a-z0-9_-]+(\/[a-z0-9_-]+)*(\.[a-z0-9]+)?$/.test(p)) throw new Error(`--${name} "${value}" is not a path like products/orochia/tour`);
+  if (!/^[a-z0-9_-]+(\/[a-z0-9_-]+)*(\.[a-z0-9]+)?$/.test(p)) throw new Error(`--${name} "${value}" is not a path like products/akinaza/tour`);
   const area = p.split("/")[0];
   if (!SITE_AREA_NAMES.includes(area)) throw new Error(`--${name} "${value}": "${area}" is not an area of site/ (${SITE_AREA_NAMES.join(", ")})`);
   return p;

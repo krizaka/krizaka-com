@@ -22,26 +22,6 @@
 .pv-lease-lines li[data-hit] { padding-left: 22px; }
 .pv-lease-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: auto !important; font-family: var(--kz-font-mono); font-size: 11.5px; color: var(--kz-text-secondary); }
 
-/* Orochia: upload → encode → stream, the renditions written in a ledger as they are ready. No media. */
-.pv-encode { display: flex; flex-direction: column; gap: 10px; font-family: var(--kz-font-mono); font-size: 12px; }
-.pv-encode-steps { margin: 0; padding: 0; list-style: none; display: flex; gap: 8px; color: var(--kz-text-muted); }
-.pv-encode-steps li + li::before { content: "→"; margin-right: 8px; color: var(--kz-text-muted); }
-.pv-encode-steps li[data-on] { color: var(--kz-text-primary); font-weight: 700; }
-.pv-encode-ladder { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; color: var(--kz-text-secondary); }
-.pv-encode-ladder li { display: flex; align-items: baseline; gap: 6px; line-height: 20px; }
-.pv-encode-ladder li[data-on] { color: var(--kz-text-primary); }
-.pv-encode-state { margin-top: auto !important; color: var(--kz-text-secondary); }
-
-/* Kachizaka: the standings as a ledger — rank, name, the dotted leader, the points. The ticker takes its own width
-   (NumberTicker reserves the final value's), aligned at its start; the unit follows it on the same baseline. */
-.pv-score { display: flex; flex-direction: column; gap: 10px; }
-.pv-score-head { font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-secondary); }
-.pv-score-rows { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; color: var(--kz-text-primary); }
-.pv-score-rows li { display: flex; align-items: baseline; gap: 8px; line-height: 28px; }
-.pv-score-rank { width: 1.4em; font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-paper-rule-margin); }
-.pv-score-value { display: inline-flex; align-items: baseline; gap: 0.3em; font-family: var(--kz-font-display); font-size: 20px; line-height: 28px; font-variant-numeric: var(--kz-figures, lining-nums tabular-nums); }
-.pv-score-unit { font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-secondary); }
-
 /* Akinaza: the salon's day, and the receipt of the service with GST and QST to the cent. */
 .pv-shop { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
 .pv-shop-head { font-family: var(--kz-font-display); font-size: 14px; line-height: 20px; color: var(--kz-text-primary); margin-bottom: 8px !important; }
@@ -53,15 +33,6 @@
 .pv-receipt dt { color: var(--kz-text-secondary); white-space: nowrap; }
 .pv-receipt dd { margin: 0; color: var(--kz-text-primary); font-variant-numeric: var(--kz-figures, lining-nums tabular-nums); }
 .pv-receipt > div:last-child { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--kz-border-strong); font-weight: 700; }
-
-/* Yasakia: you talk first; the agent's introduction is stamped above the conversation. */
-.pv-chat { display: flex; flex-direction: column; justify-content: flex-end; gap: 8px; font-size: 12.5px; }
-.pv-chat-intro { margin-bottom: auto !important; }
-.pv-chat-intro .kz-stamp { white-space: normal; transform: rotate(-1.5deg); }
-
-/* Yororis: a voice, listened to (@krizaka/ui's Waveform). */
-.pv-voice { display: flex; flex-direction: column; justify-content: center; gap: 12px; }
-.pv-voice-label { font-family: var(--kz-font-mono); font-size: 12px; color: var(--kz-text-secondary); text-align: center; }
 
 @media (min-width: 640px) and (max-width: 1279.98px) {
   .pv { aspect-ratio: 4 / 3; }

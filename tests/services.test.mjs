@@ -21,7 +21,7 @@ const keypair = () => {
 test("every entry is a known product, in a known environment, on the product's own domain or krizaka.com", () => {
   const ids = new Set([...read("lib/products.ts").matchAll(/^  \{ id: "(\w+)"/gm)].map((m) => m[1]));
   assert.deepEqual([...ids].sort(), Object.keys(PRODUCT_DOMAINS).sort(), "every product has its domain");
-  assert.ok(Object.keys(SERVICES).length >= 3);
+  assert.ok(Object.keys(SERVICES).length >= 1);
   for (const [product, environments] of Object.entries(SERVICES)) {
     assert.ok(ids.has(product), `${product} is a product`);
     for (const [environment, entry] of Object.entries(environments)) {
@@ -38,8 +38,10 @@ test("every entry is a known product, in a known environment, on the product's o
 });
 
 test("a product nothing is deployed for has no entry (never a dead address)", () => {
-  assert.equal(SERVICES.kachizaka, undefined);
   assert.equal(SERVICES.akinaza, undefined);
+  assert.equal(SERVICES.yomizaka, undefined);
+  // The paused products' environments are deleted (2026-10-25): their entries left with them.
+  for (const id of ["orochia", "yasakia"]) assert.equal(SERVICES[id], undefined, id);
 });
 
 test("the committed manifest is signed by a baked key and is the signature of lib/services.ts (npm run services:sign)", () => {
@@ -52,10 +54,10 @@ test("the committed manifest is signed by a baked key and is the signature of li
 
 test("an edit of the data without a new signature fails the check; so does a hand-edited manifest", () => {
   const edited = structuredClone(SERVICES);
-  edited.orochia.dev.apiBase = "https://www.orochia.com";
+  edited.orazaka.dev.apiBase = "https://www.orazaka.com";
   assert.match(checkSigned(signedRaw(), edited)[0], /services:sign/);
   const forged = JSON.parse(signedRaw());
-  forged.services.orochia.dev.apiBase = "https://www.orochia.com";
+  forged.services.orazaka.dev.apiBase = "https://www.orazaka.com";
   assert.match(checkSigned(JSON.stringify(forged), SERVICES)[0], /does not verify \(bad-signature\)/);
   assert.match(checkSigned("{", SERVICES)[0], /malformed/);
 });

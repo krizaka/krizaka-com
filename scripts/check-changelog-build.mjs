@@ -7,7 +7,7 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { releaseLabel } from "../lib/changelog.ts";
-import { isHidden } from "../lib/focus.ts";
+import { FILTER_IDS } from "../lib/changelog-filter.ts";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -22,8 +22,8 @@ export function changelogProblems(html, { latest, siteVersion }) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const data = JSON.parse(readFileSync(path.join(root, "lib", "changelog.json"), "utf8"));
-  // the page is prerendered with the focus (hidden products appear when the notebook opens)
-  const latest = data.releases?.find((r) => !isHidden(r.product));
+  // the page shows the releases of the products and the stack it presents (lib/changelog-filter.ts)
+  const latest = data.releases?.find((r) => FILTER_IDS.includes(r.product));
   const failures = [];
   for (const locale of ["en", "fr"]) {
     const page = path.join(root, ".next", "server", "app", locale, "changelog.html");

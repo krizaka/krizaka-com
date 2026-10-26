@@ -18,16 +18,9 @@ Each product has its own public page (www.<product>.com, coming soon); krizaka.c
 
 - Orazaka: an open-source, sovereign AI orchestration engine that runs on the operator's own infrastructure
   (data stays on the operator's machines; it holds no certification and has no Law 25 pack). Site https://www.orazaka.com — source https://github.com/krizaka/orazaka
-- Orochia: an open-source video platform: upload, encode and stream. Site https://www.orochia.com — source https://github.com/krizaka/orochia
-- Yasakia (in development): a mobile dating app where you talk first. Site https://www.yasakia.com —
-  source https://github.com/krizaka/yasakia
-- Yororis (under construction: not deployed, not offered, no date): a listening space with a face and a voice. Site
-  https://www.yororis.com — source https://github.com/krizaka/yororis
 - Yomizaka (in development): your documents, read and checked by Orazaka — leases checked against the law in force on a date,
   PDFs examined for signs of editing, every finding quoted and every run traced. Site https://www.yomizaka.com — source
   https://github.com/krizaka/yomizaka
-- Kachizaka (in development): predictions among friends, points only and never money; scoring rules sealed at
-  kick-off, every point explained. Site https://www.kachizaka.com — source https://github.com/krizaka/kachizaka
 - Akinaza (in development): bookings, bilingual invoices with GST/QST and a tax ledger for independent Québec
   shops. It prepares the GST/QST return; the merchant reviews and files it. Not for restaurants and bars. Site
   https://www.akinaza.com — source https://github.com/krizaka/akinaza

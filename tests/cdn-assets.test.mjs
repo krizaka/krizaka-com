@@ -112,18 +112,18 @@ test("the committed manifest names every media the site draws", () => {
   ];
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
   // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left —
-  // but the recordings www.orazaka.com plays (its home take and web steps: orazaka-web-client reads this manifest) and the real takes /story plays in its lightbox (lib/story-takes.ts: the engine's Old Port render, the Yasakia batch take) and the phone clips of Orazaka's mobile app as the demo persona (products/orazaka/mobile/, orazaka-web-client#245).
-  const gone = Object.keys(files).filter((path) => /^(docs\/(orazaka|orochia)\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/(orazaka|yasakia)\/(?!home\/take-|web\/step-|mobile\/|tour\/take-(en-)?batch|video\/old-port)|products\/orochia\/mobile\/)/.test(path));
+  // but the recordings www.orazaka.com plays (its home take and web steps: orazaka-web-client reads this manifest) and the real takes /story plays in its lightbox (lib/story-takes.ts: the engine's Old Port render) and the phone clips of Orazaka's mobile app as the demo persona (products/orazaka/mobile/, orazaka-web-client#245).
+  const gone = Object.keys(files).filter((path) => /^(docs\/(orazaka|orochia)\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/orazaka\/(?!home\/take-|web\/step-|mobile\/|video\/old-port)|products\/orochia\/mobile\/)/.test(path));
   assert.deepEqual(gone, []);
   assert.deepEqual(
     Object.keys(files).filter((path) => path.startsWith("products/orochia/tour/") && !/^products\/orochia\/tour\/(en|fr)\/[a-z-]+\.(webm|mp4|jpg)$/.test(path)),
     [],
   );
-  // Orochia's recordings come in both languages: every clip of one has its twin in the other (the old, English-only,
-  // out-of-date takes at the root of tour/ are gone).
-  const clips = (lang) => Object.keys(files).filter((p) => p.startsWith(`products/orochia/tour/${lang}/`)).map((p) => p.split("/").pop()).sort();
-  assert.deepEqual(clips("fr"), clips("en"));
-  assert.ok(clips("en").length >= 30);
+  // Paused products (2026-10-25) keep no media here but the three clips above: their tours, galleries and takes are gone.
+  assert.deepEqual(
+    Object.keys(files).filter((path) => /^products\/(orochia|yasakia|yororis|kachizaka)\//.test(path) && !need.includes(path)),
+    [],
+  );
 });
 
 test("prune keeps what another branch's manifest still names", async () => {
