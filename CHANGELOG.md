@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.1](https://github.com/krizaka/krizaka-com/compare/v0.4.0...v0.4.1) (2026-10-26)
+
+
+### Bug Fixes
+
+* **cdn:** keep every clip the published @krizaka/ui examples reach through /assets/orochia/tour (404 since [#399](https://github.com/krizaka/krizaka-com/issues/399)) ([#402](https://github.com/krizaka/krizaka-com/issues/402)) ([364407e](https://github.com/krizaka/krizaka-com/commit/364407e98fa7980b64de00349b94e6aced586193))
+
 ## [0.4.0](https://github.com/krizaka/krizaka-com/compare/v0.3.0...v0.4.0) (2026-10-26)
 
 
