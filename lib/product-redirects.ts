@@ -42,7 +42,9 @@ export function productRedirects(): Redirect[] {
     ...(Object.entries(PRODUCT_SITES) as [string, string][]).map(([id, site]) => to(`/products/${id}/:path*`, site)),
     // The products' documentation (Krizaka UI and Krizaka Java stay here).
     to("/docs/orazaka/:path*", orazaka),
-    to("/docs/yomizaka/:path*", yomizaka),
+    // Yomizaka documents itself at /docs (yomizaka#387): a single page, in the visitor's language when the address names one.
+    { source: "/:locale(fr|en)/docs/yomizaka/:path*", destination: `${yomizaka}/:locale/docs`, statusCode: 308 },
+    { source: "/docs/yomizaka/:path*", destination: `${yomizaka}/docs`, statusCode: 308 },
     // The retired products' pages and documentation → the products section.
     ...RETIRED.flatMap((id) => [to(`/products/${id}/:path*`, "/#products"), to(`/docs/${id}/:path*`, "/#products")]),
     // Old Orazaka addresses.
