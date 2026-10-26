@@ -14,6 +14,7 @@
     "cdn": "node scripts/cdn-assets.mjs",
     "i18n:check": "krizaka-i18n check messages",
     "test": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/*.test.mjs",
+    "test:coverage": "mkdir -p coverage && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test --experimental-test-coverage --test-reporter=spec --test-reporter-destination=stdout --test-reporter=lcov --test-reporter-destination=coverage/lcov.info tests/*.test.mjs",
     "docs:env": "UPDATE_DOCS=1 node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --test tests/env.test.mjs",
     "postinstall": "node scripts/gen-fresh.mjs",
     "changelog:draft": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/changelog-draft.mjs",
