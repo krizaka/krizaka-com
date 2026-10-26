@@ -1,7 +1,7 @@
 "use client";
 
 /* One query parameter of the address as React state, in place (no navigation): the page's state is its URL. The same
-   pattern as useCarnet; Next's router follows `history.replaceState`. Empty on the server and on the first render. */
+   pattern for every URL-state reader; Next's router follows `history.replaceState`. Empty on the server and on the first render. */
 
 import { useSyncExternalStore } from "react";
 

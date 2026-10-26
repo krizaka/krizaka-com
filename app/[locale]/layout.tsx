@@ -6,10 +6,8 @@ import { I18nProvider } from "../components/I18nProvider";
 import SiteFooter from "../components/SiteFooter";
 import RouteArrival from "../components/RouteArrival";
 import { JsonLd } from "../components/JsonLd";
-import CarnetEgg, { CarnetScript } from "../components/Carnet";
 import { buildSiteGraph } from "@/lib/structured-data";
 import { getDictionary } from "@/lib/i18n";
-import { hiddenCss } from "@/lib/focus";
 import { CDN_URL } from "@/lib/cdn";
 import { SITE_URL } from "@/lib/site";
 import "../globals.css";
@@ -72,8 +70,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       template: "%s | Krizaka",
     },
     description: isEn
-      ? "Krizaka is an open-source software studio in Montréal, Québec. Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza — each on its own site."
-      : "Krizaka est un studio logiciel open source à Montréal, au Québec. Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Orochia, Yasakia, Yororis, Yomizaka, Kachizaka, Akinaza — chacun sur son propre site.",
+      ? "Krizaka is an open-source software studio in Montréal, Québec. Krizaka UI and Krizaka Java, the building blocks of its products — Orazaka, Yomizaka, Akinaza — each on its own site."
+      : "Krizaka est un studio logiciel open source à Montréal, au Québec. Krizaka UI et Krizaka Java, les briques de ses produits — Orazaka, Yomizaka, Akinaza — chacun sur son propre site.",
     keywords: [
       "studio logiciel open source Montréal",
       "design system React",
@@ -160,10 +158,6 @@ export default async function RootLayout({
         {/* Applies the persisted theme (`kz-theme`), else the site's default — dark — before the first paint: no flash.
             The same defaultMode as the provider below. */}
         <ThemeScript defaultMode="dark" />
-        {/* The focus (lib/focus.ts): `?carnet=complet` is read before the first paint; the family footer has no filter, so its
-            hidden products are hidden by their address until the notebook is open. */}
-        <CarnetScript />
-        <style>{hiddenCss()}</style>
         {/* The recordings, posters and gallery come from Bunny (lib/cdn.ts): open the connection early. */}
         <link rel="preconnect" href={CDN_URL} />
         {/* Sitewide linked @graph: Organization · WebSite · SoftwareApplication.
@@ -182,8 +176,6 @@ export default async function RootLayout({
             {children}
             {/* The one footer of the site: here, outside every page's main element, so it is the page's single contentinfo landmark. */}
             <SiteFooter />
-            {/* The Konami code, its note and its way back (Carnet.tsx): decoration, it never blocks. */}
-            <CarnetEgg />
           </I18nProvider>
           {/* The Krizaka motion conductor (@krizaka/ui/motion): reveals, off-screen pause, settle, pointer — no rAF loop. */}
           <MotionObserver />

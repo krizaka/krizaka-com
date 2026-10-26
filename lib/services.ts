@@ -4,8 +4,8 @@
    then a pull request and its deploy — never a store release. tests/services.test.mjs fails when the data and the
    signature disagree, or when an address leaves its allow-list.
 
-   A product appears here when it has a client that reads it (a mobile app today): Orazaka, Orochia, Yasakia. Kachizaka and
-   Akinaza have nothing deployed; Yomizaka and Yororis have no mobile app yet — their entry arrives with it (one edit).
+   A product appears here when it has a client that reads it (a mobile app today): Orazaka. Yomizaka and Akinaza have no
+   mobile app reading it yet — their entry arrives with it (one edit).
    The values are what is LIVE: APIs, auth, webhooks and /.well-known stay on the dev sites (dev.<product>.com); `webBase`
    moves to www.<product>.com product by product, the day the #119 session posts that product's www live in
    orchestration.md (www serves the real app, never a coming-soon page) — one edit here, then `npm run services:sign`. */
@@ -49,33 +49,11 @@ export const SERVICES: Partial<Record<ProductId, Partial<Record<ServiceEnvironme
       status: "ok",
     },
   },
-  orochia: {
-    dev: {
-      apiBase: "https://dev.orochia.com",
-      webBase: "https://dev.orochia.com",
-      minAppVersion: "1.0.0",
-      latestAppVersion: "1.0.0",
-      status: "ok",
-    },
-  },
-  yasakia: {
-    dev: {
-      apiBase: "https://dev.yasakia.com",
-      webBase: "https://dev.yasakia.com",
-      minAppVersion: "0.1.0",
-      latestAppVersion: "0.1.0",
-      status: "ok",
-    },
-  },
 };
 
-/** The domains a product's addresses may live on, besides krizaka.com: its own (`orochia.com`). */
+/** The domains a product's addresses may live on, besides krizaka.com: its own (`orazaka.com`). */
 export const PRODUCT_DOMAINS: Record<ProductId, string> = {
   orazaka: "orazaka.com",
-  orochia: "orochia.com",
-  yasakia: "yasakia.com",
-  yororis: "yororis.com",
   yomizaka: "yomizaka.com",
-  kachizaka: "kachizaka.com",
   akinaza: "akinaza.com",
 };

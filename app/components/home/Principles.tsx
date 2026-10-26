@@ -9,7 +9,6 @@ import { Section } from "@krizaka/ui/page";
 import { format, getDictionary } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import { folioOf } from "@/lib/home-sections";
-import PencilHint from "../PencilHint";
 
 const PRINCIPLES: { id: "forgotten" | "books" | "facts" | "sovereign" | "quality" | "open"; icon: ComponentType<IconProps> }[] = [
   { id: "forgotten", icon: TrashIcon },
@@ -34,7 +33,6 @@ export default function Principles({ locale, figures }: { locale: string; figure
         ))}
       </ol>
       <p className="kz-folio">
-        <PencilHint />
         {format(p.folio, folioOf("principles"))}
       </p>
     </Section>

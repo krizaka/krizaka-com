@@ -17,7 +17,6 @@ import { packageRows, weeklyTotal, type RegistrySnapshot } from "@/lib/package-c
 import { howItFits } from "@/lib/how-it-fits";
 import { nomenclature } from "@/lib/nomenclature";
 import { ENGINE_USES } from "@/lib/engine-uses";
-import { focusProps } from "@/lib/focus";
 import { PRODUCTS } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
 import { KITS } from "@/lib/product-stack";
@@ -92,8 +91,7 @@ export default async function OpenSourcePage({ params }: Props) {
       id: r.name,
       name: r.name,
       url: r.url,
-      // Orochia's GitHub descriptions are written for its own audience: krizaka.com says one neutral line each.
-      line: r.name.startsWith("orochia") ? (t.orochiaRepos[r.name as keyof typeof t.orochiaRepos] ?? t.orochiaRepos.default) : r.description,
+      line: r.description,
       productId: product,
       product: names[product],
       kind: t.kinds[kindOfRepository(r, product)],
@@ -113,10 +111,7 @@ export default async function OpenSourcePage({ params }: Props) {
     engineId: ENGINE,
     engineCallers: ENGINE_USES.filter((u) => !u.planned).map((u) => u.id),
     javaDocs: javaSite,
-  }).map((r) => ({
-    ...r,
-    line: r.name.startsWith("orochia") ? (t.orochiaRepos[r.name as keyof typeof t.orochiaRepos] ?? t.orochiaRepos.default) : r.line,
-  }));
+  });
 
   const figures = [
     { id: "repositories", value: publicRepositoryCount(), label: t.figures.repositories },
@@ -209,7 +204,7 @@ export default async function OpenSourcePage({ params }: Props) {
                 </p>
                 <ul className="os-picker-repos">
                   {channelGroups.flatMap((g) => g.entries).map((e) => (
-                    <li key={e.id} {...focusProps(e.id)}>
+                    <li key={e.id}>
                       <a href={e[ch.id].href} target="_blank" rel="noopener noreferrer">
                         <ProductLogo id={e.mark as never} size={16} animated={false} /> {e.name}
                       </a>

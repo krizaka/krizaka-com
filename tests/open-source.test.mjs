@@ -4,13 +4,13 @@ import { readFileSync } from "node:fs";
 import { kindOfRepository, productOfRepository, repositoriesOf } from "../lib/repository-catalogue.ts";
 import { groupOfPackage, groupPackages, summary } from "../lib/npm-catalogue.ts";
 
-const PRODUCTS = ["orazaka", "orochia", "yasakia", "yororis"];
+const PRODUCTS = ["orazaka", "yomizaka", "akinaza"];
 const repo = (name, topics = [], archived = false) => ({ name, description: "", url: `https://github.com/krizaka/${name}`, topics, language: null, archived });
 
 test("a repository belongs to the product it is named after, anything else to the platform", () => {
-  assert.equal(productOfRepository("orochia", PRODUCTS), "orochia");
-  assert.equal(productOfRepository("orochia-console", PRODUCTS), "orochia");
-  assert.equal(productOfRepository("yororis-mobile", PRODUCTS), "yororis");
+  assert.equal(productOfRepository("yomizaka", PRODUCTS), "yomizaka");
+  assert.equal(productOfRepository("yomizaka-console", PRODUCTS), "yomizaka");
+  assert.equal(productOfRepository("akinaza-mobile", PRODUCTS), "akinaza");
   assert.equal(productOfRepository("krizaka-ui", PRODUCTS), "krizaka");
   assert.equal(productOfRepository(".github", PRODUCTS), "krizaka");
   // A prefix is a whole segment: "orazakatools" is not Orazaka's.
@@ -19,18 +19,18 @@ test("a repository belongs to the product it is named after, anything else to th
 
 test("the kind of a repository comes from its topics", () => {
   assert.equal(kindOfRepository(repo("orazaka"), "orazaka"), "main");
-  assert.equal(kindOfRepository(repo("orochia-mobile", ["expo", "react-native"]), "orochia"), "mobile");
-  assert.equal(kindOfRepository(repo("orochia-design-system", ["design-system", "react", "npm-package"]), "orochia"), "library");
+  assert.equal(kindOfRepository(repo("yomizaka-mobile", ["expo", "react-native"]), "yomizaka"), "mobile");
+  assert.equal(kindOfRepository(repo("yomizaka-design-system", ["design-system", "react", "npm-package"]), "yomizaka"), "library");
   assert.equal(kindOfRepository(repo("orazaka-ui-kit", ["react-native", "npm-package"]), "orazaka"), "library");
   assert.equal(kindOfRepository(repo("orazaka-edge", ["java", "spring-boot"]), "orazaka"), "service");
   assert.equal(kindOfRepository(repo("orazaka-cli", ["cli", "typescript"]), "orazaka"), "tooling");
-  assert.equal(kindOfRepository(repo("orochia-console", ["nextjs", "bff"]), "orochia"), "web");
+  assert.equal(kindOfRepository(repo("yomizaka-console", ["nextjs", "bff"]), "yomizaka"), "web");
   assert.equal(kindOfRepository(repo("x-y", []), "x"), "other");
 });
 
 test("a product lists all its repositories, main first, archived ones left out", () => {
-  const all = [repo("orochia-mobile", ["expo"]), repo("orochia"), repo("orochia-console", ["nextjs"]), repo("orochia-old", [], true), repo("krizaka-ui", ["design-system"])];
-  assert.deepEqual(repositoriesOf(all, "orochia", PRODUCTS).map((r) => r.name), ["orochia", "orochia-console", "orochia-mobile"]);
+  const all = [repo("yomizaka-mobile", ["expo"]), repo("yomizaka"), repo("yomizaka-console", ["nextjs"]), repo("yomizaka-old", [], true), repo("krizaka-ui", ["design-system"])];
+  assert.deepEqual(repositoriesOf(all, "yomizaka", PRODUCTS).map((r) => r.name), ["yomizaka", "yomizaka-console", "yomizaka-mobile"]);
   assert.deepEqual(repositoriesOf(all, "krizaka", PRODUCTS).map((r) => r.name), ["krizaka-ui"]);
 });
 
@@ -98,7 +98,9 @@ test("the packages: every npm and Maven artifact, its family, its repository onl
   };
   assert.equal(mavenFamily("krizaka-users-api", snap.mavenMeta), "krizaka-users");
   assert.equal(mavenFamily("krizaka-bom", snap.mavenMeta), "krizaka-bom");
-  const rows = packageRows(snap, ["krizaka-users"], "https://java.krizaka.com");
+  const rows = packageRows(snap, ["krizaka-users", "krizaka-ui"], "https://java.krizaka.com");
+  // A package whose source repository is no longer public (a paused product's, 2026-10-25) is left out.
+  assert.deepEqual(packageRows(snap, ["krizaka-users"], "https://java.krizaka.com").map((r) => r.id).filter((id) => id.startsWith("npm:")), ["npm:@krizaka/query"]);
   assert.deepEqual(rows.map((r) => r.id), ["npm:@krizaka/query", "npm:@krizaka/ui", "maven:krizaka-bom", "maven:krizaka-users", "maven:krizaka-users-api"]);
   const ui = rows.find((r) => r.name === "@krizaka/ui");
   assert.equal(ui.line, "Components");
@@ -120,14 +122,14 @@ test("the packages: every npm and Maven artifact, its family, its repository onl
 test("how it fits: products → engine → building blocks → shared services, from the manifests", async () => {
   const { howItFits } = await import("../lib/how-it-fits.ts");
   const layers = howItFits(
-    [{ id: "orazaka" }, { id: "orochia" }, { id: "akinaza" }],
+    [{ id: "orazaka" }, { id: "yomizaka" }, { id: "akinaza" }],
     "orazaka",
-    [{ id: "orochia" }, { id: "akinaza", planned: true }],
-    { orochia: { npm: ["@krizaka/ui"], maven: [] }, orazaka: { npm: ["@krizaka/ui", "@krizaka/tokens"], maven: ["krizaka-users-client", "krizaka-security"] } },
+    [{ id: "yomizaka" }, { id: "akinaza", planned: true }],
+    { yomizaka: { npm: ["@krizaka/ui"], maven: [] }, orazaka: { npm: ["@krizaka/ui", "@krizaka/tokens"], maven: ["krizaka-users-client", "krizaka-security"] } },
     { "krizaka-users-client": { parent: "krizaka-users" }, "krizaka-users": { parent: "krizaka-parent" }, "krizaka-security": { parent: "krizaka-platform-kit" }, "krizaka-platform-kit": { parent: "krizaka-parent" } },
     { "krizaka-users-service": "0.1.0" },
   );
-  assert.deepEqual(layers.products, ["orochia", "akinaza"]);
+  assert.deepEqual(layers.products, ["yomizaka", "akinaza"]);
   assert.deepEqual(layers.engine, { id: "orazaka", calls: 1, planned: 1 });
   assert.deepEqual(layers.blocks, { npm: ["@krizaka/tokens", "@krizaka/ui"], java: ["krizaka-security"] });
   assert.deepEqual(layers.services, ["krizaka-users"]);

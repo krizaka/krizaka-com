@@ -39,7 +39,7 @@ test("each product wears its bird; the five birds of the film say their promise 
   assert.match(showcase, /t\.site\.story\.world\.cues/, "a film bird's line is the film's cue itself, never retyped");
   for (const l of ["en", "fr"]) {
     const birds = messages[l].site.home.products.birds;
-    assert.deepEqual(Object.keys(birds).sort(), ["beaver", "crane", "lovebird", "magpie"], `${l}: only the family birds are named here`);
+    assert.deepEqual(Object.keys(birds).sort(), ["beaver"], `${l}: only the family birds are named here`);
     for (const b of Object.values(birds)) assert.ok(b.length < 20, `${l}: ${b} is a name, not an invented promise`);
   }
 });
@@ -50,8 +50,8 @@ test("every entry has a numbered figure caption and a sourced note, in both lang
     assert.deepEqual(Object.keys(p.figures).sort(), [...ids].sort(), `${l}: a caption per product`);
     assert.deepEqual(Object.keys(p.notes).sort(), [...ids].sort(), `${l}: a sourced note per product`);
   }
-  assert.match(showcase, /figure=\{figNo\(s\.figureLabel, p\)\}/, "the figure is numbered (the page's order in the focus, the catalogue's once open)");
-  assert.match(showcase, /`\$\{label\} \$\{fullN\(p\)\}`/);
+  assert.match(showcase, /figure=\{figNo\(s\.figureLabel, p\)\}/, "the figure is numbered in the page's order");
+  assert.match(showcase, /`\$\{label\} \$\{nOf\(p\)\}`/);
   assert.match(showcase, /notes=\{/);
 });
 

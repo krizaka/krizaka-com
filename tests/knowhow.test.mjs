@@ -9,7 +9,7 @@ const messages = (lang) => JSON.parse(read(`messages/${lang}.json`)).site;
 const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name:/g)].map((m) => m[1]);
 
 test("every product of lib/products.ts proves a know-how, in both languages", () => {
-  assert.ok(ids.length >= 4, ids.join());
+  assert.ok(ids.length >= 3, ids.join());
   for (const lang of ["en", "fr"]) {
     const k = messages(lang).products.knowhow;
     assert.deepEqual(Object.keys(k).sort(), [...ids].sort(), `${lang}: site.products.knowhow`);
@@ -23,9 +23,6 @@ test("every product of lib/products.ts proves a know-how, in both languages", ()
 test("the known know-hows are the ones Oussama named", () => {
   const k = messages("en").products.knowhow;
   assert.match(k.orazaka.name, /engine/i);
-  assert.match(k.orochia.name, /media/i);
-  assert.match(k.yasakia.name, /introductions/i);
-  assert.match(k.yororis.name, /voice/i);
 });
 
 test("the home and /story render the products from PRODUCTS: the home's rows, /story's chapters", () => {
@@ -66,12 +63,7 @@ test("/story keeps its founder's facts and its chapters come from PRODUCTS (the 
     assert.doesNotMatch(all, /RBC|TD Bank|BMO|Scotiabank|CIBC|Banque Nationale|National Bank|Desjardins/, `${lang}: places precise, employer never named`);
   }
   const story = read("lib/story.ts");
-  assert.match(story, /PROVES_FIRST[^=]*= \["yomizaka", "orochia"\]/);
+  assert.match(story, /PROVES_FIRST[^=]*= \["yomizaka"\]/);
   assert.match(story, /ROSTER[^=]*= PRODUCTS\.map/);
   assert.match(story, /PRODUCT_CHAPTERS[^=]*= \[\.\.\.PROVES_FIRST, \.\.\.ROSTER\]/);
-});
-
-test("Orochia's know-how is worded neutrally", () => {
-  const pitch = /creator|créat|payout|paid|payé|payment|paiement|\btips?\b|pourboire|90 ?%|adult|adulte|18\+/i;
-  for (const lang of ["en", "fr"]) assert.doesNotMatch(JSON.stringify(messages(lang).products.knowhow.orochia), pitch, lang);
 });

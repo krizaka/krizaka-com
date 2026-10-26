@@ -3,7 +3,6 @@
    the same with a screen reader, at phone width (one column), in both themes, with no motion. */
 
 import { ProductLogo } from "@krizaka/ui";
-import { focusProps, focusTextProps } from "@/lib/focus";
 import { format } from "@/lib/i18n";
 import type { Layers } from "@/lib/how-it-fits";
 import type { ProductId } from "@/lib/products";
@@ -25,7 +24,7 @@ export default function HowItFits({ layers, names, w }: { layers: Layers; names:
         <p className="os-fits-name">{w.products}</p>
         <ul className="os-fits-items">
           {layers.products.map((id) => (
-            <li key={id} className={"os-fits-chip brand-" + id} {...focusProps(id)}>
+            <li key={id} className={"os-fits-chip brand-" + id}>
               <ProductLogo id={id as ProductId} size={18} animated={false} /> {names[id]}
             </li>
           ))}
@@ -45,7 +44,7 @@ export default function HowItFits({ layers, names, w }: { layers: Layers; names:
         <p className="os-fits-sub">{w.npm}</p>
         <ul className="os-fits-items">
           {layers.blocks.npm.map((n) => (
-            <li key={n} className="os-fits-chip os-fits-code" {...focusTextProps(n)}>
+            <li key={n} className="os-fits-chip os-fits-code">
               {n}
             </li>
           ))}
@@ -53,7 +52,7 @@ export default function HowItFits({ layers, names, w }: { layers: Layers; names:
         <p className="os-fits-sub">{w.java}</p>
         <ul className="os-fits-items">
           {layers.blocks.java.map((n) => (
-            <li key={n} className="os-fits-chip os-fits-code" {...focusTextProps(n)}>
+            <li key={n} className="os-fits-chip os-fits-code">
               {n}
             </li>
           ))}
@@ -63,7 +62,7 @@ export default function HowItFits({ layers, names, w }: { layers: Layers; names:
         <p className="os-fits-name">{w.services}</p>
         <ul className="os-fits-items">
           {layers.services.map((n) => (
-            <li key={n} className="os-fits-chip os-fits-code" {...focusTextProps(n)}>
+            <li key={n} className="os-fits-chip os-fits-code">
               {n}
             </li>
           ))}

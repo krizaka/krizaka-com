@@ -9,11 +9,7 @@
 ## Products (each has its own page, coming soon)
 
 - Orazaka — sovereign, on-premise AI orchestration engine. Site: https://www.orazaka.com · source: https://github.com/krizaka/orazaka
-- Orochia — an open-source video platform: upload, encode and stream. Site: https://www.orochia.com · source: https://github.com/krizaka/orochia
-- Yasakia (in development) — a mobile dating app where you talk first. Site: https://www.yasakia.com · source: https://github.com/krizaka/yasakia
-- Yororis (under construction) — a listening space with a face and a voice. Site: https://www.yororis.com · source: https://github.com/krizaka/yororis
 - Yomizaka (in development) — your documents, read and checked by Orazaka. Site: https://www.yomizaka.com · source: https://github.com/krizaka/yomizaka
-- Kachizaka (in development) — predictions among friends, points only, never money. Site: https://www.kachizaka.com · source: https://github.com/krizaka/kachizaka
 - Akinaza (in development) — bookings, invoices and a GST/QST ledger for independent Québec shops; it prepares tax returns, the merchant files them. Site: https://www.akinaza.com · source: https://github.com/krizaka/akinaza
 
 ## Key pages

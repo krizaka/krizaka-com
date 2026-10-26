@@ -9,11 +9,11 @@ test("the canonical host is www, and nothing else hard-codes the apex", () => {
   assert.doesNotMatch(read("app/[locale]/layout.tsx"), /"https:\/\/krizaka\.com/);
 });
 
-test("the home title is the company's; its description names the four products and the stack", () => {
+test("the home title is the company's; its description names the products and the stack", () => {
   const home = read("app/[locale]/page.tsx");
   assert.match(home, /title: "Krizaka — open-source software studio in Montréal",/);
   assert.match(home, /title: "Krizaka — studio logiciel open source à Montréal",/);
-  for (const p of ["Krizaka UI", "Krizaka Java", "Orazaka", "Orochia", "Yasakia", "Yororis", "Yomizaka", "Kachizaka", "Akinaza"]) assert.ok(home.includes(p), p);
+  for (const p of ["Krizaka UI", "Krizaka Java", "Orazaka", "Yomizaka", "Akinaza"]) assert.ok(home.includes(p), p);
 });
 
 test("the Organization is in Montréal and points to GitHub", () => {
@@ -25,7 +25,7 @@ test("the Organization is in Montréal and points to GitHub", () => {
 test("the Organization owns the products and the open-source sites, each published by it", () => {
   const sd = read("lib/structured-data.ts");
   assert.match(sd, /owns: owned\.map/);
-  for (const url of ["wwwUrl(\"orazaka\")", "wwwUrl(\"orochia\")", "wwwUrl(\"yasakia\")", "wwwUrl(\"yororis\")", "https://java.krizaka.com"]) {
+  for (const url of ["wwwUrl(\"orazaka\")", "wwwUrl(\"yomizaka\")", "wwwUrl(\"akinaza\")", "https://java.krizaka.com"]) {
     assert.ok(sd.includes(url), `${url} is owned by the Organization`);
   }
   assert.ok((sd.match(/publisher: \{ "@id": ORG_ID \}/g) ?? []).length >= 3);

@@ -60,10 +60,19 @@ export function mavenFamily(artifact: string, meta: RegistrySnapshot["mavenMeta"
 
 const GITHUB = "https://github.com/krizaka/";
 
+/** The org repository a package's source URL names (`https://github.com/krizaka/krizaka-ui/tree/main/…` → `krizaka-ui`). */
+const repositoryOf = (url: string | undefined): string | undefined =>
+  url?.startsWith(GITHUB) ? url.slice(GITHUB.length).split(/[/#]/)[0]!.replace(/\.git$/, "") : undefined;
+
 /** Every published package as a row, npm first, each registry sorted by name. `repositories`: the org's repository
-    names (a Maven module's repository is linked only when it exists). `javaDocs`: the Krizaka Java site. */
+    names (a Maven module's repository is linked only when it exists; an npm package whose source repository is no longer
+    public — a paused product's — is left out). `javaDocs`: the Krizaka Java site. */
 export function packageRows(snapshot: RegistrySnapshot, repositories: readonly string[], javaDocs: string): PackageRow[] {
-  const npm = Object.entries(snapshot.npm ?? {}).map(([name, version]): PackageRow => {
+  const isPublic = (name: string) => {
+    const repo = repositoryOf(snapshot.npmMeta?.[name]?.repository);
+    return !repo || repositories.length === 0 || repositories.includes(repo);
+  };
+  const npm = Object.entries(snapshot.npm ?? {}).filter(([name]) => isPublic(name)).map(([name, version]): PackageRow => {
     const meta = snapshot.npmMeta?.[name] ?? {};
     return {
       id: `npm:${name}`,

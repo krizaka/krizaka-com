@@ -25,7 +25,6 @@ import type { CSSProperties } from "react";
 import { video } from "@/lib/cdn";
 import { FILM_BASE, FILM_CAST, RELAY_BASE } from "@/lib/film-captions";
 import { heroMarkOrder } from "@/lib/home-sections";
-import { focusProps } from "@/lib/focus";
 import { HERO_FLOCK } from "@/lib/products-flock";
 import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
@@ -97,7 +96,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
         {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
         <ul className="kz-home-marks" aria-label={t.marksLabel}>
           {heroMarkOrder(PRODUCTS).map((p) => (
-            <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined} {...focusProps(p.id)}>
+            <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined}>
               <a href={`#product-${p.id}`}>
                 <ProductLogo id={p.id} size={30} animated={false} />
                 <span>{p.name}</span>

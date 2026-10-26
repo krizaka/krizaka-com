@@ -24,9 +24,8 @@ test("every product has its bird on the band, in both cuts, inside the frame, th
   }
 });
 
-test("the pigeon (Orochia) is at one end of the wide band, so its parcel crosses it all", () => {
-  const xs = BAND_WIDE.birds.map((b) => b.x);
-  assert.equal(BAND_WIDE.birds.find((b) => b.bird === "pigeon").x, Math.min(...xs));
+test("the wide band holds the three products, the engine's flamingo between the two it powers", () => {
+  assert.deepEqual(BAND_WIDE.birds.map((b) => b.product), ["akinaza", "orazaka", "yomizaka"]);
 });
 
 test("the hero's five film birds are placed in the tall scene as data", () => {

@@ -12,8 +12,8 @@ import { PRODUCTS, type ProductId } from "./products";
 /** The engine: the product the others are powered by (stage 03). */
 export const ENGINE: ProductId = "orazaka";
 
-/** What the engine proves first (stage 04): a Québec firm's documents (Yomizaka) and the media craft (Orochia). */
-export const PROVES_FIRST: readonly ProductId[] = ["yomizaka", "orochia"];
+/** What the engine proves first (stage 04): a Québec firm's documents (Yomizaka). */
+export const PROVES_FIRST: readonly ProductId[] = ["yomizaka"];
 
 /** The rest of the roster (stage 05): every other product of lib/products.ts, in its order. */
 export const ROSTER: readonly ProductId[] = PRODUCTS.map((p) => p.id).filter((id) => id !== ENGINE && !PROVES_FIRST.includes(id));
@@ -30,11 +30,7 @@ export type StoryBird = "falcon" | "owl" | "duck" | "flamingo" | "pigeon" | "lov
 export const PRODUCT_BIRD: Record<ProductId, StoryBird> = {
   orazaka: "flamingo",
   yomizaka: "owl",
-  orochia: "pigeon",
-  kachizaka: "magpie",
   akinaza: "beaver",
-  yasakia: "lovebird",
-  yororis: "crane",
 };
 export const WHO_BIRD: StoryBird = "falcon";
 export const OPEN_BIRD: StoryBird = "duck";
