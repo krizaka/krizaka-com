@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.2](https://github.com/krizaka/krizaka-com/compare/v0.4.1...v0.4.2) (2026-10-26)
+
+
+### Bug Fixes
+
+* **cdn:** alex-back, the last clip the published @krizaka/ui examples reach ([#406](https://github.com/krizaka/krizaka-com/issues/406)) ([ff274da](https://github.com/krizaka/krizaka-com/commit/ff274da3b4f7e9d40aa2c5f36042e997e9a73f44))
+
 ## [0.4.1](https://github.com/krizaka/krizaka-com/compare/v0.4.0...v0.4.1) (2026-10-26)
 
 
