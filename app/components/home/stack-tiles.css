@@ -21,21 +21,32 @@
 .kz-build-try { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 15rem; margin: 4px 0; min-width: 0; }
 .kz-build-try > * { flex: 1 1 auto; }
 
-/* The home's short version: one still picture per tile, in a box of one minimum height that grows to the tile's foot —
-   the picture fills the card, never a demo, never an empty band (Oussama, 2026-10-23). The tiles of a row share one
-   height (CardGrid), so a shorter line above a picture makes its box a line taller, never a band under it. The picture
-   cannot be reached: inert, no pointer, no selection. */
-.kz-build-still { display: grid; flex: 1 1 auto; min-height: 16rem; margin: 4px 0; min-width: 0; overflow: hidden; pointer-events: none; user-select: none; }
-.kz-build-still > * { min-height: 0; min-width: 0; }
-.kz-build-still .kz-play { justify-content: center; }
-/* The still of the engine flow: no wider than a phone's column, so its radial drawing stays the height of the others. */
-.kz-build-still .kz-play-flow { width: 100%; max-width: 24rem; margin: 0 auto; }
-.kz-build-still-mark { display: grid; place-content: center; gap: 12px; }
-.kz-build-java-mark { grid-template-columns: repeat(3, 2rem); align-items: center; }
-.kz-build-java-mark span { height: 3.5rem; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
-.kz-build-java-mark span:nth-child(2) { height: 4.5rem; }
-.kz-build-ts-mark { grid-template-columns: repeat(3, 2.25rem); }
-.kz-build-ts-mark span { aspect-ratio: 1; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
+/* The home's rows (OpenStack.tsx `StackRow`), one per publication of lib/stack.ts: the live visual on the left, the specimen
+   tag on the right, alternating from one row to the next like the products'; one column on a phone, the tag under its
+   visual. The visual's box has a fixed height (no layout shift), its picture centred; it cannot be reached (inert, no
+   pointer, no selection). */
+.kz-stack-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: clamp(40px, 5vw, 56px); min-width: 0; }
+.kz-stack-row { display: grid; gap: 16px 24px; align-items: center; }
+.kz-stack-plate { margin: 0; min-width: 0; }
+.kz-stack-tag { min-width: 0; }
+.kz-stack-visual { display: grid; place-items: center; height: 20rem; min-width: 0; overflow: hidden; padding: 16px; background: var(--kz-surface-1);
+  box-shadow: var(--kz-shadow-md); pointer-events: none; user-select: none; }
+.kz-stack-visual > * { min-height: 0; min-width: 0; max-width: 100%; }
+.kz-stack-visual .kz-play { width: 100%; max-width: 26rem; background: transparent; border: 0; padding: 0; }
+.kz-stack-visual .kz-play-flow { width: 100%; margin: 0 auto; }
+.kz-stack-visual .kz-build-cloud { border: 0; background: transparent; }
+.kz-stack-visual .kz-showcase { width: 100%; }
+@media (min-width: 640px) {
+  .kz-stack-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+@media (min-width: 1024px) {
+  .kz-stack-row { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
+  .kz-stack-row:nth-child(even) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+  .kz-stack-row:nth-child(even) .kz-stack-plate { order: 2; }
+}
+/* The tag's actions (the site, the source) wear the products' foot. */
+.kz-stack-tag .kz-tag-foot a { display: inline-flex; align-items: center; gap: 6px; }
+
 /* A set of packages, by name (read at build): a cloud of quiet badges, centred in the box. */
 .kz-build-cloud { display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 8px; padding: 16px;
   border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
@@ -51,3 +62,8 @@
 .kz-showcase-switch { display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--kz-text-primary); }
 .kz-showcase-button { align-self: flex-start; }
 .kz-showcase-caption { margin: 0; font-size: 12.5px; color: var(--kz-text-secondary); }
+
+/* The quiet marks of a set of packages whose registry could not be read at build. */
+.kz-build-still-mark { display: grid; place-content: center; gap: 12px; }
+.kz-build-ts-mark { grid-template-columns: repeat(3, 2.25rem); }
+.kz-build-ts-mark span { aspect-ratio: 1; border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }

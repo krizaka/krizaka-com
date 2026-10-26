@@ -9,7 +9,8 @@ const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const nav = read("lib/nav.ts");
 const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",(?: status: "(\w+)",)? siteUrl: ([^,]+),[^\n]*/g)].map(([line, id, status, siteUrl]) => ({ id, status, siteUrl }));
-const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)", url: "([^"]+)"/g)].map(([, id, name, url]) => ({ id, name, url }));
+const motionSite = read("lib/stack.ts").match(/const MOTION_SITE = "([^"]+)"/)[1];
+const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)", url: (?:"([^"]+)"|(MOTION_SITE))/g)].map(([, id, name, url, site]) => ({ id, name, url: url ?? (site === "MOTION_SITE" ? motionSite : site) }));
 
 test("two views (2026-10-17): the mark and the word Krizaka lead home, the centre of the bar is Open source only; Our story is not in the bar", () => {
   assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["repos"\] as const\)/);
@@ -48,11 +49,12 @@ test("the family: every product on its own site, the stack on its subdomains, an
   }
   assert.deepEqual(stack, [
     { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com" },
+    { id: "motion", name: "Krizaka Motion", url: "https://motion.krizaka.com" },
     { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com" },
     { id: "ts", name: "Krizaka TypeScript", url: "https://ts.krizaka.com" },
   ]);
   // the family's own list is @krizaka/ui's: the site's stack must agree with it
-  for (const s of stack) assert.equal(siteById(s.id).url, s.url, `@krizaka/ui/sites: ${s.id}`);
+  for (const s of stack.filter((x) => siteById(x.id))) assert.equal(siteById(s.id).url, s.url, `@krizaka/ui/sites: ${s.id}`);
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 

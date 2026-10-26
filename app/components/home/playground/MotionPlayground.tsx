@@ -1,7 +1,7 @@
 "use client";
 
 /* Krizaka Motion, live, in the « Build with our open source » section: the engine flow of @krizaka/ui in a small frame,
-   with two of the lab's settings — the layout and what travels. Four apps around one engine, drawn neutrally (the
+   with two of the lab's settings (on /open-source), or at its calm level (the home's row: slow photons and breath, no hint, no control) — the layout and what travels. Four apps around one engine, drawn neutrally (the
    home's real flow is on Orazaka's card); the lab has the rest. Words arrive as props (site.home.stack.motion). */
 
 import { useState } from "react";
@@ -28,7 +28,7 @@ export interface MotionPlaygroundWords {
 
 const APPS = ["A", "B", "C", "D"];
 
-export default function MotionPlayground({ w, still }: { w: MotionPlaygroundWords; still?: boolean }) {
+export default function MotionPlayground({ w, calm }: { w: MotionPlaygroundWords; calm?: boolean }) {
   const [layout, setLayout] = useState<FlowLayout>("radial");
   const [mode, setMode] = useState<FlowMode>("both");
   return (
@@ -38,13 +38,12 @@ export default function MotionPlayground({ w, still }: { w: MotionPlaygroundWord
         label={w.label}
         layout={layout}
         compactLayout={false}
-        particles={still ? "none" : undefined}
-        breathe={still ? false : undefined}
+        calm={calm}
         hub={{ label: w.hub, mark: <KrizakaLogo size={30} animated={false} /> }}
         nodes={APPS.map((id) => ({ id, label: w.app.replace("{id}", id), flow: mode, mark: <span className="kz-play-dot">{id}</span> }))}
-        hint={still ? undefined : w.hint}
+        hint={calm ? undefined : w.hint}
       />
-      {still ? null : (
+      {calm ? null : (
         <>
       {/* @ephemeral: the home's motion playground: a control of a live demo, never an address */}
       <Chip.Group type="single" required size="sm" label={w.layout} value={layout} onValueChange={(v) => v && setLayout(v as FlowLayout)}>

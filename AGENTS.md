@@ -67,7 +67,7 @@
 
 - **The home's order** (2026-10-22, the honest chronology, #337): the hero (`HomeHero`, whose lead tells it in two or three
   short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the open stack that came out of
-  building it**, Krizaka UI and Krizaka Java (`OpenStack`, § 3), then **the products built on them** (`ProductShowcase`, § 4),
+  building it**, Krizaka UI, Motion, Java and TypeScript (`OpenStack`, § 3: one row per publication of `lib/stack.ts` — the live visual on one side and a `SpecimenTag` on the other, library code `KZ-L01…`, a stamp with the release read at build, the fields site / registry / licence instead of a bird, « Docs » or « Open the lab » and « Source »; the rows alternate and fall to one column on a phone; Motion plays EngineFlow's `calm` level; adding a publication is an entry in `lib/stack.ts` plus its messages, `tests/stack-config.test.mjs`), then **the products built on them** (`ProductShowcase`, § 4),
   then the principles (`Principles`, § 5), and it stops there: no Montréal (`Company`) section, no closing contact panel
   and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). Krizaka, the company,
   was born from that work: the Organization `owns` the products and sites, its `foundingDate` is unchanged. The marks row under the hero

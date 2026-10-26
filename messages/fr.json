@@ -325,6 +325,30 @@
         "ts": {
           "line": "Les briques TypeScript des produits, sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine.",
           "explore": "Lire la documentation"
+        },
+        "row": {
+          "listLabel": "Ce que nous publions",
+          "docs": "Documentation",
+          "lab": "Ouvrir le labo",
+          "source": "Code source",
+          "docsAria": "Documentation de {name}",
+          "labAria": "Ouvrir le labo de {name}",
+          "sourceAria": "Code source de {name}",
+          "packages": "{count} paquets",
+          "stamps": {
+            "released": "Publié",
+            "development": "En développement"
+          },
+          "fields": {
+            "site": "site",
+            "registry": "registre",
+            "licence": "licence"
+          },
+          "registries": {
+            "npm": "npm",
+            "maven": "Maven Central",
+            "none": "pas un paquet"
+          }
         }
       },
       "principles": {
