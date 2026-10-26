@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.7.0](https://github.com/krizaka/krizaka-com/compare/v0.6.1...v0.7.0) (2026-10-26)
+
+
+### Features
+
+* **story:** chapters alternate sides, text rewritten from the blog, paused products out ([#418](https://github.com/krizaka/krizaka-com/issues/418)) ([9bce999](https://github.com/krizaka/krizaka-com/commit/9bce99930d9090691053b14a7ddb7817514f0006))
+
 ## [0.6.1](https://github.com/krizaka/krizaka-com/compare/v0.6.0...v0.6.1) (2026-10-26)
 
 
