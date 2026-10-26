@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/krizaka/krizaka-com/compare/v0.5.0...v0.6.0) (2026-10-26)
+
+
+### Features
+
+* **redirects:** /docs/yomizaka/* lands on Yomizaka's own /docs (yomizaka[#387](https://github.com/krizaka/krizaka-com/issues/387)) ([#411](https://github.com/krizaka/krizaka-com/issues/411)) ([7623ff6](https://github.com/krizaka/krizaka-com/commit/7623ff6c251509d6bdb30ccc8ad44279f10d532b))
+
 ## [0.5.0](https://github.com/krizaka/krizaka-com/compare/v0.4.2...v0.5.0) (2026-10-26)
 
 
