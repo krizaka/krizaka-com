@@ -24,7 +24,7 @@ export interface StackVisualData {
 /* How many names the picture of a set of packages shows: what fits its box on two or three lines. */
 const CLOUD_MAX = 9;
 
-function Cloud({ names }: { names: string[] }) {
+function Cloud({ names }: Readonly<{ names: readonly string[] }>) {
   if (names.length === 0) {
     return (
       <div className={"kz-build-still-mark kz-build-ts-mark"}>
@@ -45,7 +45,7 @@ function Cloud({ names }: { names: string[] }) {
   );
 }
 
-export default function StackVisuals({ visual, data }: { visual: VisualId; data: StackVisualData }) {
+export default function StackVisuals({ visual, data }: Readonly<{ visual: VisualId; data: StackVisualData }>) {
   switch (visual) {
     case "ui-showcase":
       return <UiShowcase w={data.ui} />;

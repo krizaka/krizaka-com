@@ -42,7 +42,7 @@ export function sampleHomeStackInPage() {
     // The first field of the record is the site, in both languages.
     const site = tag?.querySelector(".kz-tag-fields > div");
     return {
-      id: row.getAttribute("data-stack") ?? "",
+      id: row.dataset.stack ?? "",
       visual: visual ? rect(visual) : null,
       tag: tag ? rect(tag) : null,
       code: tag?.querySelector(".kz-tag-code")?.textContent?.trim() ?? "",
@@ -59,6 +59,28 @@ export function sampleHomeStackInPage() {
   };
 }
 
+/** The problems of one row at one width: its parts, its code and site, its two actions, its place beside or under its visual. */
+function rowProblems(where, row, i, { side, viewport }) {
+  const n = `row ${i + 1} (${row.id})`;
+  if (!row.visual) return [`${where}: ${n} has no visual`];
+  if (!row.tag) return [`${where}: ${n} has no specimen tag`];
+  const problems = [];
+  const code = CODE.exec(row.code);
+  if (!code || Number(code[1]) !== i + 1) problems.push(`${where}: ${n} is coded "${row.code}", expected KZ-L${String(i + 1).padStart(2, "0")}`);
+  if (!ADDRESS.test(row.site)) problems.push(`${where}: ${n} names "${row.site}", not a site address`);
+  if (row.actions !== 2) problems.push(`${where}: ${n} has ${row.actions} action(s), expected 2`);
+  if (row.tag.right > viewport + TOLERANCE_PX || row.visual.right > viewport + TOLERANCE_PX) problems.push(`${where}: ${n} overflows the screen`);
+  if (!side) {
+    if (row.tag.top < row.visual.bottom - TOLERANCE_PX) problems.push(`${where}: ${n}: on a phone the tag goes under its visual`);
+    return problems;
+  }
+  if (!(row.tag.top < row.visual.bottom && row.visual.top < row.tag.bottom)) problems.push(`${where}: ${n}: the tag is not beside its visual`);
+  const visualFirst = i % 2 === 0;
+  const alternates = visualFirst ? row.visual.left < row.tag.left : row.tag.left < row.visual.left;
+  if (!alternates) problems.push(`${where}: ${n} does not alternate (the visual should be on the ${visualFirst ? "left" : "right"})`);
+  return problems;
+}
+
 /** The failure lines of one sample; empty when the section behaves. */
 export function homeStackProblems({ path, width, theme }, sample, expected = ROWS) {
   const where = `${path} at ${width}px (${theme})`;
@@ -67,26 +89,9 @@ export function homeStackProblems({ path, width, theme }, sample, expected = ROW
   if (sample.code > 0) problems.push(`${where}: ${sample.code} code element(s) in the stack section — code lives on /open-source`);
   if (sample.controls > 0) problems.push(`${where}: ${sample.controls} live control(s) in the stack section — playground controls live on /open-source`);
   if (sample.rows.length !== expected) problems.push(`${where}: ${sample.rows.length} rows, expected ${expected}`);
-  const side = width >= SIDE_BY_SIDE_PX;
   const heights = sample.rows.map((r) => r.visual?.height).filter((h) => h !== undefined);
   if (heights.length > 1 && Math.max(...heights) - Math.min(...heights) > TOLERANCE_PX) problems.push(`${where}: the visuals differ in height (${heights.join(", ")}px) — one fixed box`);
-  sample.rows.forEach((row, i) => {
-    const n = `row ${i + 1} (${row.id})`;
-    if (!row.visual) return void problems.push(`${where}: ${n} has no visual`);
-    if (!row.tag) return void problems.push(`${where}: ${n} has no specimen tag`);
-    const code = CODE.exec(row.code);
-    if (!code || Number(code[1]) !== i + 1) problems.push(`${where}: ${n} is coded "${row.code}", expected KZ-L${String(i + 1).padStart(2, "0")}`);
-    if (!ADDRESS.test(row.site)) problems.push(`${where}: ${n} names "${row.site}", not a site address`);
-    if (row.actions !== 2) problems.push(`${where}: ${n} has ${row.actions} action(s), expected 2`);
-    if (row.tag.right > sample.viewport + TOLERANCE_PX || row.visual.right > sample.viewport + TOLERANCE_PX) problems.push(`${where}: ${n} overflows the screen`);
-    if (side) {
-      const level = row.tag.top < row.visual.bottom && row.visual.top < row.tag.bottom;
-      if (!level) problems.push(`${where}: ${n}: the tag is not beside its visual`);
-      const visualFirst = i % 2 === 0;
-      if (visualFirst ? row.visual.left >= row.tag.left : row.tag.left >= row.visual.left) problems.push(`${where}: ${n} does not alternate (the visual should be on the ${visualFirst ? "left" : "right"})`);
-    } else if (row.tag.top < row.visual.bottom - TOLERANCE_PX) {
-      problems.push(`${where}: ${n}: on a phone the tag goes under its visual`);
-    }
-  });
+  const layout = { side: width >= SIDE_BY_SIDE_PX, viewport: sample.viewport };
+  sample.rows.forEach((row, i) => problems.push(...rowProblems(where, row, i, layout)));
   return problems;
 }

@@ -27,7 +27,7 @@ import "./stack-tiles.css";
 
 /** The release a publication shows beside its stamp, read at build: `<coordinate> <version>` for a package or the BOM, the
     package count for a set released one by one. `undefined` when the registry could not be read, or while in development. */
-function releaseOf(part: StackPart, s: TranslationDictionary["site"]["home"]["stack"]): string | undefined {
+function releaseOf(part: Readonly<StackPart>, s: Readonly<TranslationDictionary["site"]["home"]["stack"]>): string | undefined {
   if (part.status !== "released") return undefined;
   if (part.coordinate) {
     const artifact = part.coordinate.split(":")[1] ?? part.coordinate;
@@ -39,15 +39,19 @@ function releaseOf(part: StackPart, s: TranslationDictionary["site"]["home"]["st
 }
 
 /** The names of a set of packages, read at build — a Maven BOM's modules, or the npm packages of a repository. */
-const namesOf = (part: StackPart) => (part.registry === "maven" ? mavenModuleIds() : part.registry === "npm" && !part.coordinate ? npmPackagesFrom(part.repoUrl) : []);
+function namesOf(part: StackPart): string[] {
+  if (part.registry === "maven") return mavenModuleIds();
+  if (part.registry === "npm" && !part.coordinate) return npmPackagesFrom(part.repoUrl);
+  return [];
+}
 
 /** The snippet of the `code` visual: the install command, never a version typed here. */
-function snippetOf(part: StackPart, names: string[]): string {
+function snippetOf(part: Readonly<StackPart>, names: readonly string[]): string {
   if (part.registry === "maven") return `implementation(platform("${part.coordinate}:${mavenVersion(part.coordinate?.split(":")[1] ?? "") ?? "+"}"))`;
   return ["npm install", ...(part.coordinate ? [`  ${part.coordinate}`] : names.map((n) => `  ${n}`))].join(" \\\n");
 }
 
-function StackRow({ part, t }: { part: StackPart; t: TranslationDictionary }) {
+function StackRow({ part, t }: Readonly<{ part: StackPart; t: TranslationDictionary }>) {
   const s = t.site.home.stack;
   const r = s.row;
   const names = namesOf(part);
@@ -175,7 +179,7 @@ export function StackTiles({ locale }: { locale: string }) {
 }
 
 /** « Build with our open source », on the home, after the engine: one row per publication of lib/stack.ts. */
-export default function OpenStack({ locale }: { locale: string; mavenArtifacts?: number }) {
+export default function OpenStack({ locale }: Readonly<{ locale: string; mavenArtifacts?: number }>) {
   const t = getDictionary(locale);
   const s = t.site.home.stack;
   return (

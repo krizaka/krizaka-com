@@ -13,7 +13,7 @@ import type { StackVisualData } from "./StackVisuals";
 
 const StackVisuals = dynamic(() => import("./StackVisuals"), { ssr: false });
 
-export default function StackVisual({ visual, data }: { visual: VisualId; data: StackVisualData }) {
+export default function StackVisual({ visual, data }: Readonly<{ visual: VisualId; data: StackVisualData }>) {
   const box = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
 
