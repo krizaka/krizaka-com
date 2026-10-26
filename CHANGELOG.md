@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/krizaka/krizaka-com/compare/v0.3.0...v0.4.0) (2026-10-26)
+
+
+### Features
+
+* **products:** krizaka.com presents Orazaka, Yomizaka and Akinaza; Orochia, Kachizaka, Yasakia and Yororis are paused ([#399](https://github.com/krizaka/krizaka-com/issues/399)) ([f619ed9](https://github.com/krizaka/krizaka-com/commit/f619ed994fd70e4c64df6e59c907d6cab9f5e341))
+
 ## [0.3.0](https://github.com/krizaka/krizaka-com/compare/v0.2.0...v0.3.0) (2026-10-25)
 
 
