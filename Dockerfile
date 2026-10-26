@@ -26,15 +26,14 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 # Build-time values (App Platform passes BUILD_TIME / RUN_AND_BUILD_TIME variables as build args):
 # - where the media are served from (lib/cdn.ts; empty = https://krizaka-assets.b-cdn.net);
-# - an optional read-only GitHub token so scripts/gen-org-stats.mjs is not rate-limited (the build never fails without it).
-#   It stays in this stage: the runner image does not inherit it.
+# No secret goes through a build argument (it would stay in the image history): scripts/gen-org-stats.mjs reads the public
+# GitHub API anonymously here and keeps the previous list when it is rate-limited (the build never fails for it).
 ARG NEXT_PUBLIC_MEDIA_CDN_URL
 ARG NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY
-ARG APP_GITHUB_TOKEN
 ENV NEXT_PUBLIC_MEDIA_CDN_URL=$NEXT_PUBLIC_MEDIA_CDN_URL
 ENV NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY=$NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY
 ENV NODE_ENV=production
-RUN npm run postinstall && APP_GITHUB_TOKEN=$APP_GITHUB_TOKEN npm run build
+RUN npm run postinstall && npm run build
 
 # 3. Runner — standalone server, unprivileged user.
 FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f AS runner
