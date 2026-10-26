@@ -19,6 +19,8 @@
   <img src="https://img.shields.io/badge/Loi%2025%20%2F%20GDPR-success?style=flat-square" alt="Compliance" />
 </p>
 
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-com&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-com) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-com&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-com) [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-com&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-com) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-com&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-com) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=krizaka_krizaka-com&metric=coverage)](https://sonarcloud.io/summary/new_code?id=krizaka_krizaka-com)
+
 <p align="center">
   <a href="https://www.krizaka.com">Website</a> · <a href="https://www.krizaka.com/docs">Docs</a> · <a href="https://www.krizaka.com/en/products">Products</a> · <a href="https://www.krizaka.com/en/open-source">Open source</a>
 </p>
