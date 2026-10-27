@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.8.0](https://github.com/krizaka/krizaka-com/compare/v0.7.0...v0.8.0) (2026-10-27)
+
+
+### Features
+
+* **home:** products refreshed — real-app visuals, dev site and build-read version, pinned tags; libraries move to /open-source, which lists only open source ([#425](https://github.com/krizaka/krizaka-com/issues/425)) ([0194187](https://github.com/krizaka/krizaka-com/commit/019418771aeb9a14b1342f845111950642436bbb))
+
 ## [0.7.0](https://github.com/krizaka/krizaka-com/compare/v0.6.1...v0.7.0) (2026-10-26)
 
 
