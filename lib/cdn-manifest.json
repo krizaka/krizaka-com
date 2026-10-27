@@ -1,6 +1,15 @@
 {
   "root": "site",
   "files": {
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-1200.avif": "bb50d951e3",
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-1200.webp": "961c9fe2fd",
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-1536.avif": "ddc94ec9e0",
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-1536.webp": "bc0f5787ce",
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-480.avif": "53222a0903",
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-480.webp": "9f73494de1",
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-768.avif": "c3feebcc6e",
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-768.webp": "57957399fc",
+    "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-960.webp": "a5a985a821",
     "blog/what-image-and-video-generation-costs/cost-per-output.svg": "b1d820ac89",
     "blog/what-image-and-video-generation-costs/riad-flux2-klein-mac.webp": "3ef96eafe6",
     "blog/what-image-and-video-generation-costs/riad-sd15-mac.webp": "3f6d038efb",
