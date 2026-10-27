@@ -64,30 +64,42 @@ export function repositoryOfUrl(url: string | undefined): string | undefined {
 
 const has = (topics: readonly string[], ...any: string[]) => any.some((t) => topics.includes(t));
 
+type Classified = { layer: NomenclatureLayer; kind: NomenclatureKind };
+type RepoRole = ReturnType<typeof kindOfRepository>;
+
+/** The kind of a product's own repository, by its role. */
+const PRODUCT_KIND: Partial<Record<RepoRole, NomenclatureKind>> = { service: "worker", library: "package", tooling: "tooling" };
+
+/** The kind of a repository of the engine, most specific first. */
+const ENGINE_KIND_BY_ROLE: Partial<Record<RepoRole, NomenclatureKind>> = { tooling: "tooling", web: "web" };
+
+function classifyEngine(repo: GithubRepository, engineId: string, publications: readonly Publication[], isService: boolean, role: RepoRole): Classified {
+  const layer = "engine";
+  if (repo.name === engineId) return { layer, kind: "engine" };
+  if (isService || role === "service") return { layer, kind: "worker" };
+  if (publications.some((p) => p.registry === "maven")) return { layer, kind: "java" };
+  return { layer, kind: ENGINE_KIND_BY_ROLE[role] ?? "package" };
+}
+
+function classifyFamily(repo: GithubRepository, publications: readonly Publication[], isService: boolean, role: RepoRole): Classified {
+  if (isService || role === "service") return { layer: "services", kind: "worker" };
+  if (publications.some((p) => p.registry === "maven")) return { layer: "blocks", kind: "java" };
+  if (publications.length > 0) return { layer: "blocks", kind: "package" };
+  const isSite = has(repo.topics, "website") || role === "web" || /^krizaka-(com|ui-site)$/.test(repo.name);
+  return { layer: "platform", kind: isSite ? "site" : "tooling" };
+}
+
 function classify(
   repo: GithubRepository,
   product: string,
   engineId: string,
   publications: readonly Publication[],
   isService: boolean,
-): { layer: NomenclatureLayer; kind: NomenclatureKind } {
+): Classified {
   const role = kindOfRepository(repo, product);
-  if (product === engineId) {
-    if (repo.name === engineId) return { layer: "engine", kind: "engine" };
-    if (isService || role === "service") return { layer: "engine", kind: "worker" };
-    if (publications.some((p) => p.registry === "maven")) return { layer: "engine", kind: "java" };
-    if (role === "tooling") return { layer: "engine", kind: "tooling" };
-    if (role === "web") return { layer: "engine", kind: "web" };
-    return { layer: "engine", kind: "package" };
-  }
-  if (product !== "krizaka") {
-    return { layer: "products", kind: role === "main" ? "product" : role === "service" ? "worker" : role === "library" ? "package" : role === "tooling" ? "tooling" : "product" };
-  }
-  if (isService || role === "service") return { layer: "services", kind: "worker" };
-  if (publications.some((p) => p.registry === "maven")) return { layer: "blocks", kind: "java" };
-  if (publications.length > 0) return { layer: "blocks", kind: "package" };
-  if (has(repo.topics, "website") || role === "web" || /^krizaka-(com|ui-site)$/.test(repo.name)) return { layer: "platform", kind: "site" };
-  return { layer: "platform", kind: "tooling" };
+  if (product === engineId) return classifyEngine(repo, engineId, publications, isService, role);
+  if (product !== "krizaka") return { layer: "products", kind: PRODUCT_KIND[role] ?? "product" };
+  return classifyFamily(repo, publications, isService, role);
 }
 
 /** Every module of the family, in layer order then by name. */

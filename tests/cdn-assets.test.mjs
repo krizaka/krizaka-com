@@ -4,7 +4,7 @@ import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from 
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { FOREIGN_WRITERS } from "../scripts/bunny-layout.mjs";
-import { check, hashOf, logicalPath, main, plan, prune, readManifest, versioned } from "../scripts/cdn-assets.mjs";
+import { check, hashOf, logicalPath, main, plan, prune, publishReadme, purgeUnhashed, readManifest, versioned } from "../scripts/cdn-assets.mjs";
 
 const cfg = { apiKey: "secret-key", zone: "kz-zone", endpoint: "storage.bunnycdn.com", pullZone: "cdn.example.net" };
 const env = { MEDIA_STORAGE_API_KEY: "secret-key", MEDIA_STORAGE_ZONE: "kz-zone", MEDIA_CDN_HOSTNAME: "cdn.example.net" };
@@ -184,4 +184,28 @@ test("prune lists nothing under Orazaka's own clips (gallery-video/, video/), wh
   };
   const fetchImpl = async (url) => ({ ok: true, status: 200, json: async () => listing[url] ?? [] });
   assert.deepEqual(await prune({ cfg, manifest, fetchImpl, log: () => {} }), []);
+});
+
+test("purgeUnhashed: POSTs the Bunny purge of the file's URL with the account key (not the storage key)", async () => {
+  const calls = [];
+  const fetchImpl = async (url, init) => { calls.push({ url, init }); return { ok: true, status: 200 }; };
+  assert.equal(await purgeUnhashed({ cfg, paths: ["org/v1/org.json"], accountKey: "acct", fetchImpl, log: () => {} }), true);
+  assert.equal(calls[0].url, "https://api.bunny.net/purge?url=https%3A%2F%2Fcdn.example.net%2Forg%2Fv1%2Forg.json&async=false");
+  assert.equal(calls[0].init.method, "POST");
+  assert.equal(calls[0].init.headers.AccessKey, "acct");
+});
+test("purgeUnhashed: without the account key it says so and calls nothing; a refusal is reported", async () => {
+  const lines = [];
+  assert.equal(await purgeUnhashed({ cfg, paths: ["README.txt"], fetchImpl: () => assert.fail("no call"), log: (l) => lines.push(l) }), false);
+  assert.match(lines[0], /MEDIA_ACCOUNT_API_KEY is not set/);
+  const refused = await purgeUnhashed({ cfg, paths: ["README.txt"], accountKey: "a", fetchImpl: async () => ({ ok: false, status: 401 }), log: (l) => lines.push(l) });
+  assert.equal(refused, false);
+  assert.match(lines[1], /NOT purged: HTTP 401/);
+});
+test("publishReadme: uploads README.txt, then purges it", async () => {
+  const calls = [];
+  const fetchImpl = async (url, init) => { calls.push({ url, method: init.method }); return { ok: true, status: 200 }; };
+  await publishReadme({ cfg, accountKey: "acct", fetchImpl, log: () => {} });
+  assert.deepEqual(calls.map((c) => c.method), ["PUT", "POST"]);
+  assert.match(calls[1].url, /api\.bunny\.net\/purge\?url=.*README\.txt/);
 });

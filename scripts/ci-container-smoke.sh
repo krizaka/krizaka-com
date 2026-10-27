@@ -31,6 +31,9 @@ node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://ww
 npm ci --ignore-scripts --no-audit --no-fund
 node_modules/.bin/playwright install --with-deps chromium
 node scripts/check-overflow.mjs --base http://localhost:3000
+# Accessibility: axe-core WCAG 2.1 AA (contrast, names, labels, landmarks) on every sitemap page, dark and light, phone and
+# desktop; a11y-baseline.json is the ratchet (a new violation fails, the count only goes down).
+node scripts/check-a11y.mjs --base http://localhost:3000
 # The engine flow's dots travel and the engine breathes (reduced motion OFF; at rest when ON): check-overflow runs
 # under reduced motion and could not see a frozen figure.
 node scripts/check-motion.mjs --base http://localhost:3000

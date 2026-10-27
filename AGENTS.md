@@ -368,6 +368,12 @@
 
 - **The fast local loop.** `npm run dev:check` (ESLint on the files changed against origin/main, `tsc --noEmit`, the unit tests: ~10 s) is what to run while working; `npm test` is unit-only and takes seconds; CI still runs the whole of lint, test and build. `dev` and `postinstall` reuse `lib/*.json` younger than 6 h (`scripts/gen-fresh.mjs`; `KRIZAKA_GEN_FORCE=1` or `KRIZAKA_GEN_MAX_AGE_MIN=0` refetches; `build` and CI always fetch).
 
+- **Accessibility is a guard, not a hand check.** `scripts/check-a11y.mjs` (in `scripts/ci-container-smoke.sh`) runs axe-core
+  (WCAG 2.1 AA: contrast, names, labels, landmarks) through [`@krizaka/a11y-audit`](https://www.npmjs.com/package/@krizaka/a11y-audit) —
+  never `axe-core` itself — on every sitemap page, dark and light, phone and desktop. `a11y-baseline.json` counts the violations
+  per rule: a new one fails, the count only goes down (`node scripts/check-a11y.mjs --a11y-update` after a fix). Serious and
+  critical findings are fixed, never recorded (`tests/a11y-guard.test.mjs`).
+
 ## Static rules & codemods (ast-grep)
 
 The org code rules (addendum 2026-10-15) are lint rules, not review comments. [`@ast-grep/cli`](https://ast-grep.github.io)
@@ -434,3 +440,5 @@ These are the defects code review found most often on 2026-10-23. Check them you
 7. **Naming:** environment variables follow `<CONTEXT>_<THING>` (`APP_`, `DATABASE_`, `AUTH_`, `MEDIA_`, `MAIL_`, `PAYMENTS_`, `AI_`…) and are declared once.
 8. **Words:** every user-facing string is in the FR and EN messages, and no colour is hard-coded.
 9. **Review threads:** answer every one. Fix it test-first, or reply with the reason, then resolve it.
+
+**Repository layout:** the root follows [krizaka/.github `docs/standards/repo-layout.md`](https://github.com/krizaka/.github/blob/main/docs/standards/repo-layout.md); the CI guard `check-repo-layout` fails on a stray root file, and a justified extra is declared in `.repo-layout.json` with its why.

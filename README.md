@@ -126,6 +126,7 @@ Every variable of the site is named by its bounded context (krizaka/.github#46) 
 | :--- | :---: | :---: | :--- | :--- |
 | `NEXT_PUBLIC_MEDIA_CDN_URL` *(build)* | — |  | `https://krizaka-assets.b-cdn.net` | Where the media (tours, gallery, home backdrop) are served from (`lib/cdn.ts`). |
 | `MEDIA_STORAGE_API_KEY` *(scripts)* | — | ✓ |  | Storage zone password — PR captures and site media (`scripts/pr-assets.mjs`, `scripts/cdn-assets.mjs`). |
+| `MEDIA_ACCOUNT_API_KEY` *(scripts)* | — | ✓ |  | Bunny account key (not the storage zone's) — purges by URL of the files that change in place, after `cdn-assets.mjs readme` (`scripts/cdn-assets.mjs`; org Actions secret). |
 | `MEDIA_STORAGE_ZONE` *(scripts)* | — |  |  | Storage zone name of the asset scripts. |
 | `MEDIA_STORAGE_ENDPOINT` *(scripts)* | — |  | `storage.bunnycdn.com` | Storage API host of the zone's region. |
 | `MEDIA_CDN_HOSTNAME` *(scripts)* | — |  |  | Pull zone hostname serving the zone (the scripts check the first file answers publicly). |
