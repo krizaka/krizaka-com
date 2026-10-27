@@ -362,6 +362,12 @@
 
 - **The fast local loop.** `npm run dev:check` (ESLint on the files changed against origin/main, `tsc --noEmit`, the unit tests: ~10 s) is what to run while working; `npm test` is unit-only and takes seconds; CI still runs the whole of lint, test and build. `dev` and `postinstall` reuse `lib/*.json` younger than 6 h (`scripts/gen-fresh.mjs`; `KRIZAKA_GEN_FORCE=1` or `KRIZAKA_GEN_MAX_AGE_MIN=0` refetches; `build` and CI always fetch).
 
+- **Accessibility is a guard, not a hand check.** `scripts/check-a11y.mjs` (in `scripts/ci-container-smoke.sh`) runs axe-core
+  (WCAG 2.1 AA: contrast, names, labels, landmarks) through [`@krizaka/a11y-audit`](https://www.npmjs.com/package/@krizaka/a11y-audit) —
+  never `axe-core` itself — on every sitemap page, dark and light, phone and desktop. `a11y-baseline.json` counts the violations
+  per rule: a new one fails, the count only goes down (`node scripts/check-a11y.mjs --a11y-update` after a fix). Serious and
+  critical findings are fixed, never recorded (`tests/a11y-guard.test.mjs`).
+
 ## Static rules & codemods (ast-grep)
 
 The org code rules (addendum 2026-10-15) are lint rules, not review comments. [`@ast-grep/cli`](https://ast-grep.github.io)
