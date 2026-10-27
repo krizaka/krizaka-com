@@ -308,12 +308,18 @@
   ```
   brand/<krizaka|orazaka|orochia|yasakia|yororis|yomizaka|kachizaka|akinaza>/   logo + mark, SVG and PNG 256/512/1024 on transparent, dark & light,
                                                      avatar 500/1024, social-preview 1280x640 · brand/manifest.json
-  people/defaults/v1/<brand>/                        default profile pictures: person|plain-<1-6> .svg / -256.webp / -512.webp
+  people/defaults/v1/<brand>/                        default profile pictures: person|plain-<1-6> .svg / -256.webp / -512.webp (legacy sets by brand)
+  defaults/v1/<person|folder|organisation|shop|banner>/<id>-<size>.webp   the central default pictures (krizaka-ui tools/export-defaults.mjs);
+                                                     their catalogue is the `defaults` section of the Krizaka org JSON (@krizaka/org)
   people/personas/<product>/                         the demo personas' portraits
   products/<product>/{home,tour,mobile,gallery,studios,docs}/<name>.<ext>   a readable mirror of what the products serve
   site/<area>/…/<name>.<hash>.<ext>                  what the pages load (hashed, immutable)
   ui/  maps/  pr-assets/                             ui.krizaka.com media · the basemap · PR evidence (§5.1)
   ```
+- **Default media URLs (avatars, banners, logos) come from the Krizaka org JSON** (`https://krizaka-assets.b-cdn.net/org/v1/org.json`,
+  `@krizaka/org`: `listDefaults(kind)`, `defaultFor(kind, seed)`) — **never hard-coded or bundled in an app**; ast-grep's
+  `no-hard-coded-default-media` refuses a `people/defaults`, `defaults/v<n>/` or `krizaka-defaults` path
+  ([standard](https://github.com/krizaka/.github/blob/main/docs/standards/default-media.md)). A folder is never given a person.
 - **`brand/` and `people/defaults/` are generated from the code**, never drawn or uploaded by hand: krizaka-ui's
   `tools/export-brand.mjs` renders `@krizaka/ui`'s marks and `defaultAvatarSvg` (the source of `Avatar`'s
   `defaultAvatar`) to SVG/PNG/WebP and uploads them with a `manifest.json`. A mark changes in krizaka-ui, then the export
