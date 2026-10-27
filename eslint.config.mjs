@@ -56,6 +56,6 @@ eslintConfig.push(
 
 // The stack rules of krizaka-ui's ADR-001 (warnings, counted by krizaka-ratchet): no fetch in a client effect, no direct
 // @tanstack/* import, no hand-written table or multi-field form. The counts in lint-ratchet.json only go down.
-eslintConfig.push(...krizakaStack());
+eslintConfig.push(...krizakaStack({ complexity: "warn" }));
 
 export default eslintConfig;
