@@ -11,8 +11,8 @@ export function versionOfHealthz(body) {
   return typeof body.version === "string" && VERSION.test(body.version) ? body.version : undefined;
 }
 
-/** The healthz address of a product's dev host. */
-export const healthzUrl = (id) => `https://dev.${id}.com/api/healthz`;
+/** The healthz address of a product: its www host, the same app as dev with no redirect hop (Oussama, 2026-10-26). */
+export const healthzUrl = (id) => `https://www.${id}.com/api/healthz`;
 
 /** The file's new content: each product's fresh version, or the one the previous file had (a dev site down at build time
     never blanks a version the page already knew), or none. */
