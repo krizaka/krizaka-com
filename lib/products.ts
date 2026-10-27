@@ -5,7 +5,7 @@
    Four products are paused (2026-10-25): they are not presented here, and their repositories are private. */
 
 import { AKINAZA_REPO_URL, YOMIZAKA_REPO_URL } from "./site";
-import { devUrl, wwwUrl, type ProductId } from "./product-hosts";
+import { wwwUrl, type ProductId } from "./product-hosts";
 
 export type { ProductId } from "./product-hosts";
 
@@ -23,15 +23,12 @@ export interface Product {
   /** The product's public address, www.<product>.com: what every public link, sitemap and declaration to a provider
    *  uses (lib/product-hosts.ts). Never the dev host. */
   siteUrl: string;
-  /** Its development site, dev.<product>.com: where the card sends « See the dev site » while the product is in development
-   *  (production is not open). The version it runs is read at build (lib/dev-versions.ts). */
-  devUrl: string;
   /** Its source on GitHub. */
   repoUrl: string;
 }
 
 export const PRODUCTS: Product[] = [
-  { id: "orazaka", name: "Orazaka", status: "development", siteUrl: wwwUrl("orazaka"), devUrl: devUrl("orazaka"), repoUrl: "https://github.com/krizaka/orazaka" },
-  { id: "yomizaka", name: "Yomizaka", status: "development", siteUrl: wwwUrl("yomizaka"), devUrl: devUrl("yomizaka"), repoUrl: YOMIZAKA_REPO_URL },
-  { id: "akinaza", name: "Akinaza", status: "development", siteUrl: wwwUrl("akinaza"), devUrl: devUrl("akinaza"), repoUrl: AKINAZA_REPO_URL },
+  { id: "orazaka", name: "Orazaka", status: "development", siteUrl: wwwUrl("orazaka"), repoUrl: "https://github.com/krizaka/orazaka" },
+  { id: "yomizaka", name: "Yomizaka", status: "development", siteUrl: wwwUrl("yomizaka"), repoUrl: YOMIZAKA_REPO_URL },
+  { id: "akinaza", name: "Akinaza", status: "development", siteUrl: wwwUrl("akinaza"), repoUrl: AKINAZA_REPO_URL },
 ];

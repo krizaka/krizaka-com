@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { healthzUrl, mergeVersions, versionOfHealthz } from "../scripts/dev-versions-lib.mjs";
-import { devHost, devUrl } from "../lib/product-hosts.ts";
+import { wwwHost, wwwUrl } from "../lib/product-hosts.ts";
 
 // 2026-10-26: each product's card shows its dev address and the version its dev site runs — read at build from /api/healthz
 // (scripts/gen-dev-versions.mjs, like the registries' versions), never typed.
@@ -24,19 +24,19 @@ test("an unreachable dev site keeps the previous version, and without one shows 
   assert.deepEqual(mergeVersions(IDS, {}, {}), {});
 });
 
-test("the dev address and the healthz address of a product follow its id", () => {
-  assert.equal(devHost("akinaza"), "dev.akinaza.com");
-  assert.equal(devUrl("yomizaka"), "https://dev.yomizaka.com");
-  assert.equal(healthzUrl("orazaka"), "https://dev.orazaka.com/api/healthz");
+test("the www address and the healthz address of a product follow its id (dev is exposed as www)", () => {
+  assert.equal(wwwHost("akinaza"), "www.akinaza.com");
+  assert.equal(wwwUrl("yomizaka"), "https://www.yomizaka.com");
+  assert.equal(healthzUrl("orazaka"), "https://www.orazaka.com/api/healthz");
 });
 
-test("every product has a dev URL, and the card shows it with the build-read version", () => {
+test("every product has its www site, and the card shows it with the build-read version", () => {
   const products = read("lib/products.ts");
-  for (const id of IDS) assert.match(products, new RegExp(`id: "${id}"[^\\n]*devUrl: devUrl\\("${id}"\\)`), id);
+  for (const id of IDS) assert.match(products, new RegExp(`id: "${id}"[^\\n]*siteUrl: wwwUrl\\("${id}"\\)`), id);
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.match(showcase, /import \{ devVersion \} from "@\/lib\/dev-versions"/);
-  assert.match(showcase, /href: p\.devUrl/, "the name and « See the dev site » go to the dev site (production is not open)");
-  assert.match(showcase, /host\(p\.devUrl\)/);
+  assert.match(showcase, /href: p\.siteUrl/, "the name and « See the site » go to www (dev is exposed there)");
+  assert.match(showcase, /host\(p\.siteUrl\)/);
   assert.match(showcase, /devVersion\(p\.id\)/);
   assert.doesNotMatch(showcase, /\d+\.\d+\.\d+/, "no version typed in the component");
   assert.doesNotMatch(read("lib/dev-versions.ts"), /\d+\.\d+\.\d+/, "no version typed in the reader");
@@ -49,11 +49,12 @@ test("the versions are generated at build and by dev, git-ignored", () => {
   assert.match(read(".gitignore"), /^lib\/dev-versions\.json$/m);
 });
 
-test("the words: « See the dev site » / « Voir le site de dev » exist in both languages", () => {
+test("the words: « See the site » / « Voir le site » exist in both languages", () => {
   for (const lang of ["en", "fr"]) {
     const m = JSON.parse(read(`messages/${lang}.json`)).site;
-    for (const k of ["visitDev", "visitDevAria"]) assert.ok(m.products[k], `${lang}: products.${k}`);
-    for (const k of ["dev", "version"]) assert.ok(m.home.products.fields[k], `${lang}: fields.${k}`);
+    for (const k of ["visitSite", "visitSiteAria"]) assert.ok(m.products[k], `${lang}: products.${k}`);
+    for (const k of ["site", "version"]) assert.ok(m.home.products.fields[k], `${lang}: fields.${k}`);
   }
-  assert.equal(JSON.parse(read("messages/fr.json")).site.products.visitDev, "Voir le site de dev");
+  assert.equal(JSON.parse(read("messages/fr.json")).site.products.visitSite, "Voir le site");
+  assert.equal(JSON.parse(read("messages/en.json")).site.products.visitSite, "See the site");
 });

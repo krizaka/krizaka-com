@@ -31,9 +31,9 @@ export default function EngineFlowView({ t }: { t: TranslationDictionary }) {
       planned: u.planned,
       status: u.planned ? e.planned : undefined,
       description: format(u.planned ? f.usesPlanned : f.uses, { use: e.uses[u.id as keyof typeof e.uses] }),
-      href: p.devUrl,
+      href: p.siteUrl,
       external: true,
-      linkLabel: format(f.visit, { host: hostOf(p.devUrl) }),
+      linkLabel: format(f.visit, { host: hostOf(p.siteUrl) }),
     };
   });
   return (

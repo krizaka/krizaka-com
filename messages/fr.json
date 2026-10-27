@@ -165,8 +165,8 @@
           "analytics": "analyses d'usage"
         }
       },
-      "visitDev": "Voir le site de dev",
-      "visitDevAria": "{name} — voir le site de dev"
+      "visitSite": "Voir le site",
+      "visitSiteAria": "{name} — voir le site"
     },
     "home": {
       "hero": {
@@ -242,7 +242,7 @@
           "role": "rôle",
           "engineRole": "le moteur",
           "back": "reçoit",
-          "dev": "site de dev",
+          "site": "site",
           "version": "version"
         },
         "figures": {

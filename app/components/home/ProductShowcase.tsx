@@ -40,7 +40,7 @@ import "./visuals/visuals.css";
 const STAMP: Record<ProductStatus, StampTone> = { devPreview: "ok", development: "wip", construction: "construction", upcoming: "neutral" };
 const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 
-const external = (p: Product) => ({ href: p.devUrl, target: "_blank", rel: "noopener" });
+const external = (p: Product) => ({ href: p.siteUrl, target: "_blank", rel: "noopener" });
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 /** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
@@ -64,19 +64,19 @@ function Bird({ p, t }: { p: Product; t: TranslationDictionary }) {
   );
 }
 
-/** The dev site of a product and the version it runs, read at build (lib/dev-versions.ts): the card's two honest facts while
- *  production is not open. The version is left out when the dev site could not be read — never typed. */
+/** The site of a product and the version it runs, read at build (lib/dev-versions.ts): the card's two facts while the product
+ *  is in development. The version is left out when the site could not be read — never typed. */
 function devFields(p: Product, s: TranslationDictionary["site"]["home"]["products"]) {
   const version = devVersion(p.id);
-  return [{ label: s.fields.dev, value: host(p.devUrl) }, ...(version ? [{ label: s.fields.version, value: version }] : [])];
+  return [{ label: s.fields.site, value: host(p.siteUrl) }, ...(version ? [{ label: s.fields.version, value: version }] : [])];
 }
 
 function Foot({ p, t }: { p: Product; t: TranslationDictionary }) {
   const h = t.site.products;
   return (
     <>
-      <a {...external(p)} aria-label={format(h.visitDevAria, { name: p.name })}>
-        {h.visitDev} <ForwardIcon size={13} aria-hidden />
+      <a {...external(p)} aria-label={format(h.visitSiteAria, { name: p.name })}>
+        {h.visitSite} <ForwardIcon size={13} aria-hidden />
       </a>
       <a href={p.repoUrl} aria-label={format(h.sourceAria, { name: p.name })}>
         <GitHubMark size={14} /> {h.source}

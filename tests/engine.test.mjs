@@ -110,7 +110,7 @@ test("the home's engine card draws @krizaka/ui's EngineFlow from the data, with 
   assert.match(view, /ENGINE_USES\.map/);
   assert.match(view, /flow: u\.planned \? "in" : u\.back\.length > 0 \? "both" : "in"/, "both ways only where results come back");
   assert.match(view, /planned: u\.planned/);
-  assert.match(view, /href: p\.devUrl/);
+  assert.match(view, /href: p\.siteUrl/);
   assert.doesNotMatch(view, /Chip|Slider|Switch|useState/, "the lab's parameters panel is not a home feature");
   assert.doesNotMatch(view, /requestAnimationFrame|<canvas/);
   assert.match(read("app/components/home/ProductShowcase.tsx"), /<EngineFlowView t=\{t\} \/>/);
