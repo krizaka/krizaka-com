@@ -16,7 +16,8 @@
 // `tree` counts and weighs the zone by folder and lists what does not belong (docs: scripts/bunny-layout.mjs, AGENTS.md §5.2);
 // `library` mirrors what site/ serves into the browsable folders (products/<product>/…, people/personas/…) under human names;
 // `prune --retired` also removes the folders of a renamed product (RETIRED in bunny-layout.mjs) that no manifest of main names.
-// `readme` publishes the layout as README.txt at the zone root. This script writes only under site/.
+// `readme` publishes the layout as README.txt at the zone root, then purges it by URL (MEDIA_ACCOUNT_API_KEY, the Bunny account key).
+// This script writes only under site/.
 //
 // Areas under site/ (PR captures are apart, under pr-assets/ — scripts/pr-assets.mjs; the basemap under maps/):
 //   site/home/…      the home page (backdrop loops, the kit in a phone)
@@ -285,10 +286,28 @@ export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.lo
 }
 
 /** Publishes the layout as README.txt at the root of the zone — the only file allowed there. */
-export async function publishReadme({ cfg, fetchImpl = globalThis.fetch, log = console.log }) {
+export async function publishReadme({ cfg, accountKey, fetchImpl = globalThis.fetch, log = console.log }) {
   const res = await fetchImpl(storageUrl(cfg, README_NAME), { method: "PUT", headers: { AccessKey: cfg.apiKey, "Content-Type": "text/plain; charset=utf-8" }, body: LAYOUT_README });
   if (!res.ok) throw new Error(`upload of ${README_NAME} failed: HTTP ${res.status}`);
   log(`${cdnUrl(cfg, README_NAME)} published`);
+  await purgeUnhashed({ cfg, paths: [README_NAME], accountKey, fetchImpl, log });
+}
+
+/** A file that changes IN PLACE (the README, org/v1/org.json…) is served stale by the pull zone until purged: purge it by URL right
+    after publishing it (Bunny `POST /purge?url=`, the ACCOUNT key). A hashed `site/` file never needs it. Without the key it says so. */
+export async function purgeUnhashed({ cfg, paths, accountKey, fetchImpl = globalThis.fetch, log = console.log }) {
+  if (!accountKey) {
+    log("not purged: MEDIA_ACCOUNT_API_KEY is not set (the pull zone may serve the old file until its cache expires)");
+    return false;
+  }
+  let ok = true;
+  for (const p of paths) {
+    const url = cdnUrl(cfg, p);
+    const res = await fetchImpl(`https://api.bunny.net/purge?${new URLSearchParams({ url, async: "false" })}`, { method: "POST", headers: { AccessKey: accountKey } });
+    log(res.ok ? `${url} purged` : `${url} NOT purged: HTTP ${res.status}`);
+    ok &&= res.ok;
+  }
+  return ok;
 }
 
 const USAGE = `usage:
@@ -344,7 +363,7 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     return bad.length ? 1 : 0;
   }
   if (command === "readme") {
-    await publishReadme({ cfg: loadConfig(merged), fetchImpl, log });
+    await publishReadme({ cfg: loadConfig(merged), accountKey: merged.MEDIA_ACCOUNT_API_KEY, fetchImpl, log });
     return 0;
   }
   log(USAGE);
