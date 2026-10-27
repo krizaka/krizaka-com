@@ -21,6 +21,11 @@ export const ZONE = {
     path: "people/defaults/v1/<brand>/{person,plain}-<1-6>{.svg,-256.webp,-512.webp} · people/personas/<product>/<name>-{256,512}.webp",
     what: "profile pictures: the default avatars a product shows when a person has no photo (generated, versioned by folder), and the demo personas' portraits",
   },
+  defaults: {
+    writer: "tools/export-defaults.mjs (krizaka-ui) — generated from @krizaka/ui and the founder's set, never hand-made",
+    path: "defaults/v1/<person|folder|organisation|shop>/<id>-{256,512,1024}.webp (+ <id>.svg when drawn) · defaults/v1/banner/<id>-{960,1920}.webp · defaults/v1/manifest.json",
+    what: "the central default pictures of the family (people, folders, organisations, shops, banners), versioned by folder (a changed picture is v2; v1 keeps serving). Their catalogue — ids, alt EN/FR, URLs — is the `defaults` section of the Krizaka org JSON (@krizaka/org); an app reads the URLs from there, never hard-codes one",
+  },
   products: {
     writer: "scripts/cdn-assets.mjs library (krizaka-com) — a readable mirror of what the products serve",
     path: "products/<product>/{home,tour,mobile,gallery,studios,docs}/<name>.<ext>",
@@ -131,7 +136,8 @@ site/products/orochia and the Orochia personas there (steps: krizaka/orochia iss
 Until then they stay where they are under site/ (not mirrored in products/ or people/personas/).
 
 Rules
-  - brand/ and people/defaults/ are generated from the code of @krizaka/ui: change the component, run the export, never upload by hand.
+  - brand/, people/defaults/ and defaults/ are generated from the code of @krizaka/ui: change the component, run the export, never upload by hand.
+  - Default media URLs (avatars, banners, logos) come from the Krizaka org JSON (org/v1/org.json), never hard-coded or bundled in an app.
   - products/ and people/personas/ are a mirror of site/ (node scripts/cdn-assets.mjs library): browse here, load from site/.  - site/ files are immutable: <name>.<10 hex of SHA-256>.<ext>. A change is a new file; the superseded one is removed
     by \`node scripts/cdn-assets.mjs prune\`, which keeps anything named by a manifest of main or of an unmerged branch.
   - pr-assets/ is evidence: kept as long as a PR or an issue links it. Delete a whole <repo>/<topic>/ only when nothing
@@ -154,6 +160,9 @@ export function assertUnder(prefix, path) {
   return path;
 }
 
+/** The defaults' manifest, and a default picture: `<kind>/<id>-<size>.webp` or `<kind>/<id>.svg` (two patterns, each readable at a glance). */
+const DEFAULTS_MANIFEST = /^defaults\/v\d+\/manifest\.json$/;
+const DEFAULTS_FILE = /^defaults\/v\d+\/(person|folder|organisation|shop|banner)\/[a-z0-9]+(-[a-z0-9]+)*(\.svg|-\d+\.webp)$/;
 const SITE_FILE = /^site\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a-f]{10}\.[a-z0-9]+$/;
 const FILE = "[A-Za-z0-9._-]+";
 const brandAlt = BRANDS.join("|");
@@ -170,6 +179,9 @@ export function misplaced(path) {
   if (root === "brand" && !new RegExp(`^brand/(manifest\\.json|(${brandAlt})/${FILE})$`).test(path)) return `not brand/<${brandAlt}>/<file> or brand/manifest.json`;
   if (root === "people" && !new RegExp(`^people/(defaults/v1/(manifest\\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`).test(path)) {
     return "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>";
+  }
+  if (root === "defaults" && !DEFAULTS_MANIFEST.test(path) && !DEFAULTS_FILE.test(path)) {
+    return "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json";
   }
   if (root === "products" && !new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path)) {
     return `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`;
