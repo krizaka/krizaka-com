@@ -9,7 +9,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 import { Chip } from "@krizaka/ui/chip";
-import { Stamp } from "@krizaka/ui/specimen-tag";
+import { CheckIcon } from "@krizaka/icons";
 import type { ProductId } from "@/lib/products";
 import { useI18n } from "../../I18nProvider";
 import { AKINAZA_PRICE, AKINAZA_SLOTS, receipt } from "@/lib/product-visuals";
@@ -26,34 +26,43 @@ function useStep(playing: boolean, count: number, everyMs: number, rest: number)
 }
 
 function Yomizaka({ playing }: { playing: boolean }) {
-  // A lease on lined paper: the owl reads line by line (the pen moves down while playing), the clause to review is
-  // marked and numbered in the margin, and its passage is quoted.
+  // The lease and its finding, as the app shows them (dev.yomizaka.com, 2026-10-26): « The lease » — its lines, the passage
+  // underlined — an arrow, then « The finding »: the rule broken, a badge, the quoted passage, the article of law. While
+  // playing, the pen reads the lines one by one and the finding lands last; at rest, everything is read.
   const v = useI18n().t.site.home.visuals.yomizaka;
-  const line = useStep(playing, 4, 900, 3);
-  const lines = [v.before, v.quote, v.after];
+  const step = useStep(playing, 5, 800, 4);
   return (
-    <div className="pv-lease" data-line={line}>
-      <p className="pv-lease-title">{v.document}</p>
-      <ol className="pv-lease-lines" start={4}>
-        {lines.map((text, i) => (
-          <li key={i} data-hit={i === 1 ? "" : undefined} data-read={i < line ? "" : undefined}>
-            {i === 1 && <span className="pv-lease-n">1</span>}
-            <span>{text}</span>
-          </li>
-        ))}
-      </ol>
-      <p className="pv-lease-foot">
-        <Stamp tone="construction">{v.review}</Stamp>
-        <span>
-          {v.line} 5 · {v.source}
+    <div className="pv-lease" data-step={step}>
+      <p className="pv-label">{v.document}</p>
+      <p className="pv-lease-lines">
+        <span data-read={step >= 1 ? "" : undefined}>{v.term}</span>
+        <span data-read={step >= 2 ? "" : undefined}>{v.rent}</span>
+        <span data-read={step >= 3 ? "" : undefined}>
+          {v.before}
+          <mark>{v.quote}</mark>
+          {v.after}
         </span>
       </p>
+      <p className="pv-lease-arrow" aria-hidden>
+        ↓
+      </p>
+      <p className="pv-label">{v.finding}</p>
+      <div className="pv-finding" data-found={step >= 4 ? "" : undefined}>
+        <p className="pv-finding-title">{v.title}</p>
+        <p className="pv-finding-meta">
+          <span className="pv-badge">{v.badge}</span>
+          <span>{v.demo}</span>
+        </p>
+        <p className="pv-finding-quote">{v.passage}</p>
+        <p className="pv-finding-law">{v.law}</p>
+      </div>
     </div>
   );
 }
 
 function Akinaza({ playing }: { playing: boolean }) {
-  // A salon's day booked slot by slot, and the receipt of the chosen service: GST and QST to the cent (lib/product-visuals).
+  // What the storefront shows (dev.akinaza.com, a demo salon): a service card — name, minutes, what is included, the price —,
+  // the day's free slots booked one by one, and the receipt of the chosen service with GST and QST to the cent.
   const { t, locale } = useI18n();
   const v = t.site.home.visuals.akinaza;
   const step = useStep(playing, AKINAZA_SLOTS.length, 1300, 1);
@@ -61,7 +70,22 @@ function Akinaza({ playing }: { playing: boolean }) {
   const money = new Intl.NumberFormat(`${locale}-CA`, { style: "currency", currency: "CAD" });
   return (
     <div className="pv-shop">
-      <div>
+      <div className="pv-service">
+        <p className="pv-service-name">{v.service}</p>
+        <p className="pv-service-min">{v.minutes}</p>
+        <ul>
+          {v.includes.map((item) => (
+            <li key={item}>
+              <CheckIcon size={12} aria-hidden /> {item}
+            </li>
+          ))}
+        </ul>
+        <p className="pv-service-foot">
+          <b>{money.format(AKINAZA_PRICE)}</b>
+          <span>{v.choose} →</span>
+        </p>
+      </div>
+      <div className="pv-shop-day">
         <p className="pv-shop-head">{v.day}</p>
         {/* @ephemeral: a decorative product visual, played by a timer, not a choice */}
         <Chip.Group type="single" value={AKINAZA_SLOTS[step]} label={v.day} size="sm" className="pv-shop-slots">
@@ -72,20 +96,20 @@ function Akinaza({ playing }: { playing: boolean }) {
           ))}
         </Chip.Group>
         <p className="pv-shop-booked">{v.booked}</p>
+        <dl className="pv-receipt">
+          {[
+            [v.service, r.price],
+            [v.gst, r.gst],
+            [v.qst, r.qst],
+            [v.total, r.total],
+          ].map(([label, amount]) => (
+            <div key={String(label)}>
+              <dt>{label}</dt>
+              <dd>{money.format(Number(amount))}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
-      <dl className="pv-receipt">
-        {[
-          [v.service, r.price],
-          [v.gst, r.gst],
-          [v.qst, r.qst],
-          [v.total, r.total],
-        ].map(([label, amount]) => (
-          <div key={String(label)}>
-            <dt>{label}</dt>
-            <dd>{money.format(Number(amount))}</dd>
-          </div>
-        ))}
-      </dl>
     </div>
   );
 }

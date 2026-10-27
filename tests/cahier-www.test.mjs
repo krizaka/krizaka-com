@@ -23,12 +23,12 @@ test("the first page is asymmetric: the words on the left, the taped film flock 
 });
 
 test("every section of the home is numbered in the margin (§ n), none carries an eyebrow", () => {
-  const sections = ["HomeHero", "ProductShowcase", "OpenStack", "Principles"];
+  const sections = ["HomeHero", "ProductShowcase", "Principles"];
   for (const s of sections) assert.doesNotMatch(read(`app/components/home/${s}.tsx`), /eyebrow=/, `${s} still has an eyebrow`);
-  for (const s of ["OpenStack", "Principles"]) assert.match(read(`app/components/home/${s}.tsx`), /\.number\}/, `${s} has no number`);
+  for (const s of ["Principles"]) assert.match(read(`app/components/home/${s}.tsx`), /\.number\}/, `${s} has no number`);
   for (const l of ["en", "fr"]) {
     const h = msgs[l].site.home;
-    assert.deepEqual([h.hero.number, h.engine.number, h.stack.number, h.products.number, h.principles.number], ["§ 1", "§ 2", "§ 3", "§ 4", "§ 5"], l);
+    assert.deepEqual([h.hero.number, h.engine.number, h.products.number, h.principles.number], ["§ 1", "§ 2", "§ 3", "§ 4"], l);
   }
 });
 

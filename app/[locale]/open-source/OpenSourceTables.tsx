@@ -20,9 +20,6 @@ export interface RepositoryRow {
   name: string;
   url: string;
   line: string;
-  /** The product's id (or `krizaka` for the platform). */
-  productId: string;
-  product: string;
   kind: string;
   language: string;
   /** ISO date of the last push, or "" when unknown. */
@@ -134,7 +131,6 @@ export function RepositoriesTable({ rows }: { rows: readonly RepositoryRow[] }) 
   const date = new Intl.DateTimeFormat(DATE_LOCALE[locale] ?? "en-CA", { dateStyle: "medium", timeZone: "UTC" });
   const columns: DataTableColumn<RepositoryRow>[] = [
     { id: "name", header: w.name, type: "title", card: "title", filter: "text", sortable: true, subtitle: (r) => r.line, href: (r) => r.url, maxWidth: 440 },
-    { id: "product", header: w.product, filter: "facet", sortable: true, nowrap: true },
     { id: "kind", header: w.kind, filter: "facet", nowrap: true },
     { id: "language", header: w.language, filter: "facet", nowrap: true },
     {
@@ -153,7 +149,7 @@ export function RepositoriesTable({ rows }: { rows: readonly RepositoryRow[] }) 
       columns={columns}
       getRowId={(r) => r.id}
       rowLabel={(r) => r.name}
-      defaultSort={{ column: "product", direction: "ascending" }}
+      defaultSort={{ column: "pushedAt", direction: "descending" }}
       defaultPageSize={12}
       density="compact"
       toolbar={<DataTableFilters />}
@@ -187,7 +183,6 @@ export function NomenclatureTable({ rows }: { rows: readonly ModuleRow[] }) {
           </span>
         ),
     },
-    { id: "usedBy", header: w.usedBy, value: (r) => r.usedBy.join(", ") || w.none },
     {
       id: "links",
       header: w.repo,

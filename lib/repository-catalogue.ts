@@ -45,3 +45,10 @@ export function repositoriesOf<P extends string>(repositories: readonly GithubRe
     .map((r) => ({ ...r, kind: kindOfRepository(r, product) }))
     .sort((a, b) => REPOSITORY_KINDS.indexOf(a.kind) - REPOSITORY_KINDS.indexOf(b.kind) || a.name.localeCompare(b.name));
 }
+
+/** What Krizaka open-sources, as /open-source lists it: the platform's repositories (libraries, kits, tooling, sites), never a
+    product's. The products are operated by Krizaka (2026-10-26): their repositories are not offered here as open source, and
+    nothing on /open-source says anything about their licence. */
+export function openSourceRepositories<R extends Pick<GithubRepository, "name" | "archived">>(repositories: readonly R[], products: readonly string[]): R[] {
+  return repositories.filter((r) => !r.archived && productOfRepository(r.name, products) === "krizaka");
+}

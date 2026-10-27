@@ -164,7 +164,9 @@
           "results": "results",
           "analytics": "usage analytics"
         }
-      }
+      },
+      "visitDev": "See the dev site",
+      "visitDevAria": "{name} — see the dev site"
     },
     "home": {
       "hero": {
@@ -218,7 +220,7 @@
         "line": "One pipeline, your models, your network. Each product calls it for its AI and never a model directly."
       },
       "products": {
-        "number": "§ 4",
+        "number": "§ 3",
         "title": "Then the products: management and compliance tools.",
         "lead": "Akinaza runs a service business: bookings, invoices, GST and QST. Yomizaka checks the paperwork: leases, contracts, invoices. Each one lives on its own site, with its source on GitHub.",
         "engineUse": "On Orazaka · {use}",
@@ -237,10 +239,11 @@
         "fields": {
           "runs": "on Orazaka",
           "planned": "planned",
-          "site": "site",
           "role": "role",
           "engineRole": "the engine",
-          "back": "gets back"
+          "back": "gets back",
+          "dev": "dev site",
+          "version": "version"
         },
         "figures": {
           "orazaka": "the flow, both ways: requests in, results back",
@@ -257,12 +260,6 @@
         }
       },
       "stack": {
-        "number": "§ 3",
-        "eyebrow": "Open source",
-        "title": "Build with our open source.",
-        "lead": "Born from building Orazaka, yours to use. The versions, the examples and every package are on Open source.",
-        "more": "Everything we publish",
-        "visit": "Open {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
           "npm": "{count} packages on npm",
@@ -325,34 +322,10 @@
         "ts": {
           "line": "The products' TypeScript building blocks, on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief.",
           "explore": "Read the documentation"
-        },
-        "row": {
-          "listLabel": "What we publish",
-          "docs": "Docs",
-          "lab": "Open the lab",
-          "source": "Source",
-          "docsAria": "Documentation of {name}",
-          "labAria": "Open the lab of {name}",
-          "sourceAria": "Source code of {name}",
-          "packages": "{count} packages",
-          "stamps": {
-            "released": "Released",
-            "development": "In development"
-          },
-          "fields": {
-            "site": "site",
-            "registry": "registry",
-            "licence": "licence"
-          },
-          "registries": {
-            "npm": "npm",
-            "maven": "Maven Central",
-            "none": "not a package"
-          }
         }
       },
       "principles": {
-        "number": "§ 5",
+        "number": "§ 4",
         "eyebrow": "How we work",
         "title": "Six rules, checked rather than promised.",
         "folio": "page {page} of {total}",
@@ -388,19 +361,30 @@
           "label": "Requests from every product, into one engine"
         },
         "yomizaka": {
-          "document": "Lease, page 3",
-          "before": "The lease runs for twelve months, from July 1.",
-          "quote": "The rent may not be increased more than once in a 12-month period.",
-          "after": "Heating and hot water are included in the rent.",
-          "checked": "Checked",
-          "source": "quoted, page 3 · demo",
-          "review": "to review",
-          "line": "line"
+          "document": "The lease",
+          "term": "Term: 12 months, from July 1, 2026 to June 30, 2027.",
+          "rent": "Monthly rent: $1,450, payable on the 1st of the month.",
+          "before": "The tenant pays a ",
+          "quote": "security deposit of $1,450",
+          "after": " at signing.",
+          "finding": "The finding",
+          "title": "Security deposit not allowed: only the first month may be asked in advance",
+          "badge": "Not met",
+          "passage": "« security deposit of $1,450 »",
+          "law": "C.c.Q., art. 1904, para. 1",
+          "demo": "line 3 · demo"
         },
         "akinaza": {
           "day": "Tuesday, the salon's day",
           "booked": "Booked, confirmed by e-mail · demo",
-          "service": "Haircut",
+          "service": "Short cut",
+          "minutes": "30 min",
+          "includes": [
+            "Consultation",
+            "Wash",
+            "Styling"
+          ],
+          "choose": "Choose",
           "gst": "GST 5 %",
           "qst": "QST 9.975 %",
           "total": "Total"
@@ -684,7 +668,7 @@
     },
     "openSource": {
       "eyebrow": "Open source · Apache-2.0",
-      "title": "Everything we build is public.",
+      "title": "What we open-source.",
       "github": "Browse github.com/krizaka",
       "figuresLabel": "What we publish, read from GitHub, npm and Maven Central at build",
       "repoCount": "{count} repositories",
@@ -701,27 +685,8 @@
         "name": "Krizaka platform",
         "tagline": "The building blocks every product shares: Krizaka UI, the Java kits, the site and the organisation's rules."
       },
-      "runs": {
-        "caption": "What each product runs on",
-        "product": "Product",
-        "yes": "Yes",
-        "no": "No",
-        "partial": "Partly",
-        "isEngine": "Is the engine",
-        "planned": "Planned",
-        "read": "Read from the repositories' manifests on {date}.",
-        "transport": {
-          "sse": "SSE",
-          "ssePush": "SSE + push"
-        },
-        "parts": {
-          "tokens": "tokens",
-          "icons": "icons",
-          "intl": "intl"
-        }
-      },
       "count": "{count} public repositories · ",
-      "lead": "The technical view: every package, every repository, and how they fit.",
+      "lead": "The technical view: every package and repository we publish under Apache-2.0, and how they fit. Our products are operated by Krizaka.",
       "figures": {
         "repositories": "public repositories",
         "npm": "packages on npm",
@@ -759,11 +724,10 @@
       },
       "repositories": {
         "eyebrow": "Repositories",
-        "title": "Every repository, by product.",
-        "lead": "Read from GitHub at build, grouped by product; filter by platform or language.",
+        "title": "Every repository we publish.",
+        "lead": "Read from GitHub at build; filter by platform or language.",
         "caption": "Every public Krizaka repository",
         "name": "Repository",
-        "product": "Product",
         "kind": "Platform",
         "language": "Language",
         "updated": "Updated"
@@ -787,16 +751,12 @@
       },
       "fits": {
         "eyebrow": "How it fits",
-        "title": "Products → engine → building blocks → shared services.",
-        "lead": "Read from the products' own manifests — the list is the diagram's text version.",
-        "products": "The products",
-        "engine": "The engine",
-        "engineMeta": "{calls} products call it today · {planned} planned",
+        "title": "Building blocks → shared services.",
+        "lead": "Read from the manifests of what we run — the list is the diagram's text version.",
         "blocks": "The building blocks",
         "npm": "npm",
         "java": "Krizaka Java",
-        "services": "The shared services",
-        "runs": "What each product runs on"
+        "services": "The shared services"
       },
       "nomenclature": {
         "eyebrow": "The nomenclature",
@@ -807,7 +767,6 @@
         "layer": "Layer",
         "kind": "Kind",
         "registries": "Registry and version",
-        "usedBy": "Used by",
         "repo": "Repository",
         "repoAria": "{name} repository",
         "registryAria": "{name} on its registry",

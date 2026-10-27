@@ -9,8 +9,8 @@ import { HOME_SECTIONS, folioOf } from "../lib/home-sections.ts";
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const HOME = "app/[locale]/page.tsx";
-const SECTIONS = ["HomeHero", "ProductShowcase", "OpenStack", "Principles"]; // the files
-const ORDER = ["HomeHero", "EngineSection", "OpenStack", "ProductShowcase", "Principles"]; // the tags, in the story's order
+const SECTIONS = ["HomeHero", "ProductShowcase", "Principles"]; // the files
+const ORDER = ["HomeHero", "EngineSection", "ProductShowcase", "Principles"]; // the tags, in the story's order
 
 test("the home is made of its four sections, in Oussama's order: no Company, no closing contact panel, no FAQ", () => {
   const home = read(HOME);
@@ -22,17 +22,14 @@ test("the home is made of its four sections, in Oussama's order: no Company, no 
     assert.ok(at > 0, s);
     return at;
   });
-  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → engine → stack → products → principles");
+  assert.deepEqual(order, [...order].sort((a, b) => a - b), "hero → engine → products → principles (the libraries live on /open-source)");
 });
 
-test("one primary action per section: the hero's goes to #products, the stack's to /open-source", () => {
+test("one primary action per section: the hero's goes to #engine", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
   assert.match(hero, /href="#engine" variant="primary"/);
   assert.doesNotMatch(hero, /href="\/contact"/, "the bar has Contact us: no duplicate in the hero");
-  const stack = read("app/components/home/OpenStack.tsx");
-  assert.match(stack, /href="\/open-source" variant="primary"/);
-  assert.equal(stack.match(/variant="primary"/g)?.length, 1);
 });
 
 test("the hero: text painted at once, the figures read at build and climbing", () => {
@@ -51,7 +48,7 @@ test("the products come from lib/products.ts: one card each, in the product's br
   assert.equal(showcase.match(/<SpecimenTag\b/g)?.length, 1, "the products wear the specimen tag; the engine is a foundation plate, another form");
   assert.doesNotMatch(showcase, /knowhow|kz-pc-meta/, "one label per product: no mono eyebrow beside the status");
   assert.match(showcase, /mark=\{<ProductLogo id=\{p\.id\} size=\{\d+\} animated=\{false\} \/>\}/, "the mark sits beside the name on the tag, never over the visual");
-  assert.match(showcase, /href: p\.siteUrl/, "a card links the product's public www page, never its dev host");
+  assert.match(showcase, /href: p\.devUrl/, "a card links the product's dev site (production is not open; 2026-10-26)");
   for (const s of SECTIONS) {
     const src = read(`app/components/home/${s}.tsx`);
     assert.doesNotMatch(src, /["'](orazaka|orochia|yasakia|yororis)["']/, `${s} names a product by hand`);
@@ -162,7 +159,6 @@ test("the open-source section: three playable tiles, versions and downloads read
     assert.deepEqual(Object.keys(s.motion.layouts), ["radial", "top-to-bottom", "left-to-right"]);
     assert.deepEqual(Object.keys(s.motion.modes), ["in", "out", "both"]);
   }
-  assert.equal(messages("fr").site.home.stack.title, "Construisez avec nos briques.");
 });
 
 test("Akinaza is for studios, salons and the self-employed, one short human line, never « compliant » (until a lawyer validates)", () => {
@@ -184,14 +180,14 @@ test("Akinaza is for studios, salons and the self-employed, one short human line
 });
 
 // The numbers in the margin and the folios come from the section list, never typed (2026-10-22: § 5 and § 6 removed).
-test("the section list is the home's five sections, in the honest order; the numbers and the folio are derived from it", () => {
-  assert.deepEqual([...HOME_SECTIONS], ["hero", "engine", "stack", "products", "principles"]);
-  assert.deepEqual(folioOf("principles"), { page: 5, total: 5 });
-  assert.deepEqual(folioOf("hero"), { page: 1, total: 5 });
+test("the section list is the home's four sections, in the honest order; the numbers and the folio are derived from it", () => {
+  assert.deepEqual([...HOME_SECTIONS], ["hero", "engine", "products", "principles"]);
+  assert.deepEqual(folioOf("principles"), { page: 4, total: 4 });
+  assert.deepEqual(folioOf("hero"), { page: 1, total: 4 });
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home;
     assert.match(h.principles.folio, /\{page\}.*\{total\}/, `${lang}: the folio is a template, not typed digits`);
-    HOME_SECTIONS.forEach((id, i) => assert.equal(h[id === "stack" ? "stack" : id].number, `§ ${i + 1}`, `${lang}: ${id}`));
+    HOME_SECTIONS.forEach((id, i) => assert.equal(h[id].number, `§ ${i + 1}`, `${lang}: ${id}`));
   }
   assert.match(read("app/components/home/Principles.tsx"), /format\(p\.folio, folioOf\("principles"\)\)/);
 });
@@ -211,8 +207,8 @@ test("the duo is named by its need: management and compliance tools", () => {
 });
 
 // 2026-10-22 (Oussama): /open-source and /story show the stack as four full cards (UI, Motion, Java, TS), each with
-// something to try or to copy; Java's dependency and TS's install command have a copy button. The home shows the same
-// publications as rows (2026-10-25, krizaka-com#392; tests/stack-config.test.mjs).
+// something to try or to copy; Java's dependency and TS's install command have a copy button. The home no longer shows the
+// libraries (2026-10-26): /open-source is their one place.
 test("the full stack cards: one component on /open-source and /story, with Java and TS to copy", () => {
   const stack = read("app/components/home/OpenStack.tsx");
   assert.match(stack, /export function StackTiles/);
@@ -222,40 +218,23 @@ test("the full stack cards: one component on /open-source and /story, with Java 
   assert.match(stack, /import "\.\/stack-tiles\.css"/, "the tiles carry their own styles to every page");
   assert.doesNotMatch(stack, /LinkCard|StackCards/);
   for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"]) assert.match(read(page), /<StackTiles locale=\{locale\} \/>/, page);
-  assert.doesNotMatch(read("app/components/home/OpenStack.tsx").slice(stack.indexOf("export default function OpenStack")), /StackTiles/, "the home shows rows, not the cards");
   assert.match(stack, /<CardGrid as="ul"[^>]*min=\{420\}[^>]*columns=\{2\}/, "the grid is @krizaka/ui's CardGrid: the tiles of a row share one height");
   assert.match(read("app/components/home/stack-tiles.css"), /\.kz-build-try \{[^}]*flex: 1 1 auto/, "the example grows to fill its card");
   for (const lang of ["en", "fr"]) assert.ok(messages(lang).site.home.stack.ts.line, `${lang}: stack.ts.line`);
 });
 
-// 2026-10-25 (Oussama): the home's stack is one row per publication, like the products' — the live visual and a specimen
-// tag. The Motion row's host is the stack data's (motion.krizaka.com), never typed in a component. The rendered rows are
-// checked in a browser by scripts/check-home-stack.mjs on the container.
-test("the home's stack section: rows from the list, no playground control, the Motion host from the data", () => {
+// The Motion card's host is the stack data's (motion.krizaka.com), never typed in a component.
+test("the stack cards: the Motion host from the data, no playground control on a calm flow", () => {
   const stack = read("app/components/home/OpenStack.tsx");
   const motion = read("app/components/home/playground/MotionPlayground.tsx");
-  const full = stack.indexOf("export function StackTiles");
-  const rows = stack.slice(0, full);
-  assert.doesNotMatch(rows, /<Code(Block|Tabs)\b/, "no code block in a home row");
   assert.match(stack, /<MotionPlayground w=/, "the full card keeps the playground's settings");
-  assert.match(read("app/components/home/stack/StackVisuals.tsx"), /<MotionPlayground calm /, "the home shows the engine flow at its calm level");
-  assert.match(read("app/components/home/stack/StackVisuals.tsx"), /<UiShowcase\b/, "Krizaka UI's picture is the same composition on every page");
-  // The playground's knobs (layout, what travels) are rendered only when the flow is not calm.
-  const knobs = motion.indexOf("<Chip.Group");
-  assert.ok(knobs > motion.indexOf("calm ? null : ("), "the layout and mode chips are playground controls: only on /open-source");
-  assert.match(motion, /hint=\{calm \? undefined : w\.hint\}/, "a calm flow has no instruction to pick anything");
   assert.match(stack, /meta=\{hostOf\(motion\.url\)\}/, "the full card's host is hostOf of the data's url");
   assert.match(stack, /href=\{stackActionUrl\(motion\)\}/, "the action opens the lab's scene");
   assert.doesNotMatch(stack, /github\.io|motion\.krizaka\.com|\.replace\(/, "no host typed or rewritten in the component");
   const data = read("lib/stack.ts");
   assert.match(data, /const MOTION_SITE = "https:\/\/[a-z0-9.-]+";/, "one value in the data");
   assert.match(data, /url: MOTION_SITE,[^\n]*actionPath: "\/orazaka"/, "the lab's scene derives from the site");
-  for (const lang of ["en", "fr"]) {
-    const s = messages(lang).site.home.stack;
-    assert.doesNotMatch(s.lead, /(Try them|Essayez-les|read at build|lus au build)/, `${lang}: the lead no longer promises a demo or figures on the home`);
-    assert.match(s.lead, /Open source/, `${lang}: the lead sends the detail to Open source`);
-  }
-  assert.match(read("scripts/ci-container-smoke.sh"), /check-home-stack\.mjs/, "the rendered section is checked on the container");
+  assert.match(motion, /hint=\{calm \? undefined : w\.hint\}/, "a calm flow has no instruction to pick anything");
 });
 
 test("§ 5 puts the right to be forgotten first, says the books are kept, and reads its figures at build (Oussama, 2026-10-23)", () => {

@@ -1,4 +1,4 @@
-/* The stack tiles (OpenStack.tsx `StackTiles`), wherever they are drawn: the home, /open-source, /story. Owned by the component,
+/* The stack tiles (OpenStack.tsx `StackTiles`), wherever they are drawn: /open-source, /story. Owned by the component,
    not by a page, so a page that shows them is styled without importing another page's sheet.
    The grid is @krizaka/ui's CardGrid: every cell of a row is as tall as the tallest (one column on a phone), and each tile
    is a column whose action sits at its foot. Tokens only. */
@@ -20,36 +20,6 @@
    the tallest), so the facts and the action line up at the foot and no empty band is left under it. */
 .kz-build-try { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 15rem; margin: 4px 0; min-width: 0; }
 .kz-build-try > * { flex: 1 1 auto; }
-
-/* The home's rows (OpenStack.tsx `StackRow`), one per publication of lib/stack.ts: the live visual on the left, the specimen
-   tag on the right, alternating from one row to the next like the products'; one column on a phone, the tag under its
-   visual. The visual's box has a fixed height (no layout shift), its picture centred; it cannot be reached (inert, no
-   pointer, no selection). */
-.kz-stack-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: clamp(40px, 5vw, 56px); min-width: 0; }
-.kz-stack-row { display: grid; gap: 16px 24px; align-items: center; }
-.kz-stack-plate { margin: 0; min-width: 0; }
-.kz-stack-tag { min-width: 0; }
-.kz-stack-visual { display: grid; place-items: center; height: 20rem; min-width: 0; overflow: hidden; padding: 16px; background: var(--kz-surface-1);
-  box-shadow: var(--kz-shadow-md); pointer-events: none; user-select: none; }
-.kz-stack-visual > * { min-height: 0; min-width: 0; max-width: 100%; }
-.kz-stack-visual .kz-play { width: 100%; max-width: 26rem; background: transparent; border: 0; padding: 0; }
-.kz-stack-visual .kz-play-flow { width: 100%; margin: 0 auto; }
-.kz-stack-visual .kz-build-cloud { border: 0; background: transparent; }
-.kz-stack-visual .kz-showcase { width: 100%; }
-@media (min-width: 640px) {
-  .kz-stack-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-}
-@media (min-width: 1024px) {
-  .kz-stack-row { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); }
-  .kz-stack-row:nth-child(even) { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
-  .kz-stack-row:nth-child(even) .kz-stack-plate { order: 2; }
-}
-/* The tag's actions (the site, the source) wear the products' foot. */
-.kz-stack-tag .kz-tag-foot a { display: inline-flex; align-items: center; gap: 6px; }
-
-/* A set of packages, by name (read at build): a cloud of quiet badges, centred in the box. */
-.kz-build-cloud { display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 8px; padding: 16px;
-  border: 1px solid var(--kz-border-subtle); background: var(--kz-surface-0); }
 
 /* Krizaka UI's picture: the kit's own card, centred, no wider than a phone's column. */
 .kz-showcase { display: flex; flex-direction: column; gap: 10px; margin: 0; min-width: 0; }

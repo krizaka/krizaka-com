@@ -64,7 +64,7 @@ test("groups keep their order and drop when empty", () => {
 
 test("/open-source is the technical view (2026-10-17): live figures, the stack, packages, repositories, how it fits, contribute", () => {
   const page = readFileSync(new URL("../app/[locale]/open-source/page.tsx", import.meta.url), "utf8");
-  for (const read of ["publicRepositoryCount()", "npmPackages().length", "mavenArtifactCount()", '"Apache-2.0"']) assert.ok(page.includes(read), read);
+  for (const read of ["repositories.length", "npmPackages().length", "mavenArtifactCount()", '"Apache-2.0"']) assert.ok(page.includes(read), read);
   for (const id of ["stack", "packages", "repositories", "how-it-fits", "contribute"]) assert.match(page, new RegExp(`<Section id="${id}"`), id);
   assert.match(page, /<PackagesTable rows=\{packages\} \/>/);
   assert.match(page, /<RepositoriesTable rows=\{repoRows\} \/>/);
@@ -76,7 +76,7 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
   assert.equal(page.match(/variant="primary"/g)?.length, 2, "one primary action in the hero, one in contribute");
   const tables = readFileSync(new URL("../app/[locale]/open-source/OpenSourceTables.tsx", import.meta.url), "utf8");
   assert.match(tables, /from "@krizaka\/ui\/data-table"/);
-  assert.match(tables, /defaultSort=\{\{ column: "product", direction: "ascending" \}\}/, "repositories read by product");
+  assert.match(tables, /defaultSort=\{\{ column: "pushedAt", direction: "descending" \}\}/, "repositories read by last push, newest first");
   assert.doesNotMatch(tables, /column: "weeklyDownloads", direction: "descending"/, "unknown downloads never sort first");
   assert.equal(tables.match(/defaultPageSize=\{12\}/g)?.length, 2, "short pages, not a wall of rows");
   assert.doesNotMatch(tables, /fetch\(/, "rows come from the server, never fetched here");
@@ -119,20 +119,14 @@ test("the packages: every npm and Maven artifact, its family, its repository onl
   assert.equal(rows.find((r) => r.name === "krizaka-bom").repoUrl, undefined, "no repository named krizaka-bom: no link");
 });
 
-test("how it fits: products → engine → building blocks → shared services, from the manifests", async () => {
+test("how it fits: building blocks → shared services, from the manifests (no product, no engine layer)", async () => {
   const { howItFits } = await import("../lib/how-it-fits.ts");
   const layers = howItFits(
-    [{ id: "orazaka" }, { id: "yomizaka" }, { id: "akinaza" }],
-    "orazaka",
-    [{ id: "yomizaka" }, { id: "akinaza", planned: true }],
     { yomizaka: { npm: ["@krizaka/ui"], maven: [] }, orazaka: { npm: ["@krizaka/ui", "@krizaka/tokens"], maven: ["krizaka-users-client", "krizaka-security"] } },
     { "krizaka-users-client": { parent: "krizaka-users" }, "krizaka-users": { parent: "krizaka-parent" }, "krizaka-security": { parent: "krizaka-platform-kit" }, "krizaka-platform-kit": { parent: "krizaka-parent" } },
     { "krizaka-users-service": "0.1.0" },
   );
-  assert.deepEqual(layers.products, ["yomizaka", "akinaza"]);
-  assert.deepEqual(layers.engine, { id: "orazaka", calls: 1, planned: 1 });
-  assert.deepEqual(layers.blocks, { npm: ["@krizaka/tokens", "@krizaka/ui"], java: ["krizaka-security"] });
-  assert.deepEqual(layers.services, ["krizaka-users"]);
+  assert.deepEqual(layers, { blocks: { npm: ["@krizaka/tokens", "@krizaka/ui"], java: ["krizaka-security"] }, services: ["krizaka-users"] });
 });
 
 test("the registries' generator reads a POM's own description, its com.krizaka parent and the repository of an npm package", async () => {
