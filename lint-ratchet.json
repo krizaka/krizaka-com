@@ -19,6 +19,8 @@
     "arbitraryVar": 0,
     "classNameTemplate": 0,
     "fetchInClientEffect": 0,
+    "asyncInEffect": 0,
+    "derivedStateInEffect": 0,
     "directTanstackImport": 0,
     "localTableOrForm": 2,
     "retiredImport": 0,
