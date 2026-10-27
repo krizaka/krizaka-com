@@ -393,6 +393,8 @@ with a message and, where safe, a `fix:`; written for Tsx and `.ts` is parsed as
   behaviour is identical — run `npm run lint && npm test` after, and land the result in a small pull request.
 - A rule is never silenced to get a PR green; fix the code, or (a business parameter that is a technical fact) justify it with `// @fixed:`.
 
+- **A bug means a missing guard** ([standard](https://github.com/krizaka/.github/blob/main/docs/standards/bug-means-missing-guard.md)): the fix PR first adds a guard that fails on `main`, then fixes the bug; the bug issue says why the guards missed it.
+
 ## 6. Definition of done
 
 1. `npm run build` is green and the route is statically generated.
