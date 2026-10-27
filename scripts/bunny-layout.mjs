@@ -160,6 +160,9 @@ export function assertUnder(prefix, path) {
   return path;
 }
 
+/** The defaults' manifest, and a default picture: `<kind>/<id>-<size>.webp` or `<kind>/<id>.svg` (two patterns, each readable at a glance). */
+const DEFAULTS_MANIFEST = /^defaults\/v\d+\/manifest\.json$/;
+const DEFAULTS_FILE = /^defaults\/v\d+\/(person|folder|organisation|shop|banner)\/[a-z0-9]+(-[a-z0-9]+)*(\.svg|-\d+\.webp)$/;
 const SITE_FILE = /^site\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a-f]{10}\.[a-z0-9]+$/;
 const FILE = "[A-Za-z0-9._-]+";
 const brandAlt = BRANDS.join("|");
@@ -177,7 +180,7 @@ export function misplaced(path) {
   if (root === "people" && !new RegExp(`^people/(defaults/v1/(manifest\\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`).test(path)) {
     return "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>";
   }
-  if (root === "defaults" && !new RegExp(`^defaults/v\\d+/(manifest\\.json|(person|folder|organisation|shop|banner)/[a-z0-9]+(-[a-z0-9]+)*(\\.svg|-\\d+\\.webp))$`).test(path)) {
+  if (root === "defaults" && !DEFAULTS_MANIFEST.test(path) && !DEFAULTS_FILE.test(path)) {
     return "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json";
   }
   if (root === "products" && !new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path)) {
