@@ -68,8 +68,8 @@ test("/open-source carries « La nomenclature », generated, with no module type
   assert.match(page, /<NomenclatureTable rows=\{modules\} \/>/);
   assert.match(page, /nomenclature\(\{/);
   assert.match(page, /const allRepositories = githubRepositories\(\);/);
-  assert.match(page, /const repositories = allRepositories\.filter\(\(r\) => !r\.archived\);/);
-  assert.match(page, /nomenclature\(\{\s*repositories: allRepositories,/);
+  assert.match(page, /const repositories = openSourceRepositories\(allRepositories, PRODUCT_IDS\);/);
+  assert.match(page, /nomenclature\(\{\s*repositories,/, "only the open-source repositories are mapped");
 });
 
 test("registry links expose the package version in their accessible name", () => {

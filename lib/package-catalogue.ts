@@ -66,10 +66,13 @@ const repositoryOf = (url: string | undefined): string | undefined =>
 
 /** Every published package as a row, npm first, each registry sorted by name. `repositories`: the org's repository
     names (a Maven module's repository is linked only when it exists; an npm package whose source repository is no longer
-    public — a paused product's — is left out). `javaDocs`: the Krizaka Java site. */
-export function packageRows(snapshot: RegistrySnapshot, repositories: readonly string[], javaDocs: string): PackageRow[] {
+    public — a paused product's — is left out). `products`: the products' ids — a package built from a product's own
+    repository (`orazaka-cli`, `orazaka-ui-kit`) is part of that operated product, not of the open-source list, and is left
+    out. `javaDocs`: the Krizaka Java site. */
+export function packageRows(snapshot: RegistrySnapshot, repositories: readonly string[], javaDocs: string, products: readonly string[] = []): PackageRow[] {
   const isPublic = (name: string) => {
     const repo = repositoryOf(snapshot.npmMeta?.[name]?.repository);
+    if (repo && products.some((p) => repo === p || repo.startsWith(`${p}-`))) return false;
     return !repo || repositories.length === 0 || repositories.includes(repo);
   };
   const npm = Object.entries(snapshot.npm ?? {}).filter(([name]) => isPublic(name)).map(([name, version]): PackageRow => {

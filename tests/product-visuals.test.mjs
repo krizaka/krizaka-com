@@ -37,7 +37,7 @@ test("it plays when on screen, never under reduced motion, never off screen; no 
 });
 
 test("built from @krizaka/ui components, specific to each field, demo data said as such", () => {
-  for (const part of ["@krizaka/ui/chip", "@krizaka/ui/specimen-tag"]) {
+  for (const part of ["@krizaka/ui/chip", "@krizaka/icons"]) {
     assert.ok(visuals.includes(`from "${part}"`), part);
   }
   // #417: no generic chart and no gradient rectangle with a play button — each visual shows what the product does.

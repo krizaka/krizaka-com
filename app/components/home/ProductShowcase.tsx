@@ -5,7 +5,8 @@
    Each product is an entry of the field guide, in its own brand light (`.brand-<id>`):
    - a plate: a live visual of what it does, made of @krizaka/ui pieces (visuals/, lazy, decorative, still under reduced
      motion), and its numbered caption (`fig. n`);
-   - a specimen tag: its catalogue number, its name (the link to its own site, or its code while it has none), its mark,
+   - a specimen tag: its catalogue number, its name (the link to its dev site), its mark, its dev address and the version it
+     runs (read at build, lib/dev-versions.ts),
      the stamp of its honest status (lib/products.ts, gated by the dev-preview checklists), its line, its bird (the film's
      promise for the five birds of the film, the name for the family), what it runs on Orazaka (lib/engine-uses.ts,
      « planned » where the call is not wired yet) and a note number;
@@ -21,6 +22,7 @@ import { Caption, FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
 import { Mascot } from "@krizaka/ui/mascots";
 import { Section } from "@krizaka/ui/page";
 import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
+import { devVersion } from "@/lib/dev-versions";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { heroMarkOrder } from "@/lib/home-sections";
@@ -38,7 +40,7 @@ import "./visuals/visuals.css";
 const STAMP: Record<ProductStatus, StampTone> = { devPreview: "ok", development: "wip", construction: "construction", upcoming: "neutral" };
 const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 
-const external = (p: Product) => ({ href: p.siteUrl, target: "_blank", rel: "noopener" });
+const external = (p: Product) => ({ href: p.devUrl, target: "_blank", rel: "noopener" });
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 /** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
@@ -62,12 +64,19 @@ function Bird({ p, t }: { p: Product; t: TranslationDictionary }) {
   );
 }
 
+/** The dev site of a product and the version it runs, read at build (lib/dev-versions.ts): the card's two honest facts while
+ *  production is not open. The version is left out when the dev site could not be read — never typed. */
+function devFields(p: Product, s: TranslationDictionary["site"]["home"]["products"]) {
+  const version = devVersion(p.id);
+  return [{ label: s.fields.dev, value: host(p.devUrl) }, ...(version ? [{ label: s.fields.version, value: version }] : [])];
+}
+
 function Foot({ p, t }: { p: Product; t: TranslationDictionary }) {
   const h = t.site.products;
   return (
     <>
-      <a {...external(p)} aria-label={format(h.visitAria, { name: p.name })}>
-        {h.visit} <ForwardIcon size={13} aria-hidden />
+      <a {...external(p)} aria-label={format(h.visitDevAria, { name: p.name })}>
+        {h.visitDev} <ForwardIcon size={13} aria-hidden />
       </a>
       <a href={p.repoUrl} aria-label={format(h.sourceAria, { name: p.name })}>
         <GitHubMark size={14} /> {h.source}
@@ -98,6 +107,13 @@ function EngineFoundation({ t }: { t: TranslationDictionary }) {
         </div>
         <span className="kz-foundation-status">{t.site.nav.status[p.status].label}</span>
       </header>
+      <p className="kz-foundation-dev">
+        {devFields(p, s).map((f) => (
+          <span key={f.label}>
+            {f.label} <b>{f.value}</b>
+          </span>
+        ))}
+      </p>
       <p className="kz-foundation-line">
         {e.line}
         {fnRef(p)}
@@ -159,7 +175,7 @@ function ProductEntry({ product: p, t }: { product: Product; t: TranslationDicti
         }
         mark={<ProductLogo id={p.id} size={30} animated={false} />}
         status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
-        fields={[{ label: s.fields.site, value: host(p.siteUrl) }]}
+        fields={devFields(p, s)}
         footer={<Foot p={p} t={t} />}
       >
         <p>

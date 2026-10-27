@@ -39,8 +39,8 @@ test("the home and /story render the products from PRODUCTS: the home's rows, /s
   assert.match(home, /href=\{p\.repoUrl\}/);
   assert.doesNotMatch(story, /ProfileCard|StatGauge|ChoiceGrid/, "/story draws no tile of its own");
   const os = read("app/[locale]/open-source/page.tsx");
-  assert.match(os, /id="repositories"/, "every repository, by product");
-  assert.match(os, /id="runs-on"/, "the runs-on table stays (folded)");
+  assert.match(os, /id="repositories"/, "every open-source repository");
+  assert.doesNotMatch(os, /id="runs-on"/, "no table of what each product runs on: the products are operated, not open source");
 });
 
 test("a product card's one line is a hook: 90 characters at most, in both languages", () => {

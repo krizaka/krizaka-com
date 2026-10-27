@@ -6,7 +6,7 @@ import { baseFromArgv } from "../scripts/site-pages.mjs";
 // One browser loop for every check of the rendered site (scripts/site-pages.mjs): the checks keep only their rule
 // (a lib, tested) and their visit. The duplicate-code ratchet (dup-ratchet.json) only goes down.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
-const CHECKS = ["scripts/check-overflow.mjs", "scripts/check-motion.mjs", "scripts/check-figures.mjs", "scripts/check-home-stack.mjs"];
+const CHECKS = ["scripts/check-overflow.mjs", "scripts/check-motion.mjs", "scripts/check-figures.mjs"];
 
 test("the site to check comes from --base, localhost:3000 by default, never with a trailing slash", () => {
   assert.equal(baseFromArgv(["node", "x"]), "http://localhost:3000");

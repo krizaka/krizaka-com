@@ -7,20 +7,15 @@ import { CtaPanel } from "@krizaka/ui/cta-panel";
 import { Section } from "@krizaka/ui/page";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { localizedMetadata } from "@/lib/seo";
-import { NAV_PRODUCTS } from "@/lib/nav";
-import { githubRepositories, publicRepositoryCount } from "@/lib/org-stats";
-import { kindOfRepository, productOfRepository } from "@/lib/repository-catalogue";
+import { githubRepositories } from "@/lib/org-stats";
+import { kindOfRepository, openSourceRepositories } from "@/lib/repository-catalogue";
 import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
 import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
 import { packageRows, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { howItFits } from "@/lib/how-it-fits";
 import { nomenclature } from "@/lib/nomenclature";
-import { ENGINE_USES } from "@/lib/engine-uses";
 import { PRODUCTS } from "@/lib/products";
-import { ENGINE } from "@/lib/story";
-import { KITS } from "@/lib/product-stack";
-import { MANIFESTS_READ_AT, productStackRows } from "@/lib/product-stack-data";
 import { PUBLIC_CHANNELS } from "@/lib/public-channels";
 import { publicChannels } from "@/lib/github-channels";
 import { format, getDictionary } from "@/lib/i18n";
@@ -28,7 +23,6 @@ import { GITHUB_ORG_URL } from "@/lib/site";
 import { STACK } from "@/lib/stack";
 import { BUILDING_BLOCKS } from "@/lib/building-blocks";
 import TopNavBar from "@/app/components/TopNavBar";
-import ProductStackTable from "@/app/components/ProductStackTable";
 import FigureTiles from "@/app/components/FigureTiles";
 import ButtonLink from "@/app/components/ButtonLink";
 import { StackTiles } from "@/app/components/home/OpenStack";
@@ -43,9 +37,10 @@ import "./open-source.css";
       latest version (npm, Maven Central); the building blocks' pages, as quiet links.
    3. Packages: a searchable DataTable of every published package (lib/package-catalogue.ts) — registry and family
       facets, the latest version, the weekly downloads (npm), the links.
-   4. Repositories: every repository grouped by product, with its platform, language and last push (GitHub at build).
-   5. How it fits: products → engine → building blocks → shared services (lib/how-it-fits.ts), an ordered list that is
-      its own text version; what each product runs on, folded.
+   4. Repositories: every open-source repository with its platform, language and last push (GitHub at build).
+   5. How it fits: building blocks → shared services (lib/how-it-fits.ts), an ordered list that is its own text version.
+   Only what is open source is listed: the products are operated by Krizaka (lib/repository-catalogue.ts
+   `openSourceRepositories`), out of every list, and the page claims nothing about their licence.
    6. La nomenclature: every module of the family by layer (lib/nomenclature.ts), generated at build; a public
       repository missing from it fails the build.
    7. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
@@ -61,16 +56,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: "/open-source",
     en: {
       title: "Open source — every Krizaka package and repository, and how they fit",
-      description: "Everything Krizaka builds is public under Apache-2.0: Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), every npm and Maven Central package and every repository.",
+      description: "What Krizaka open-sources, under Apache-2.0: Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), every npm and Maven Central package and every repository we publish. Our products are operated by Krizaka.",
     },
     fr: {
       title: "Open source — chaque paquet et dépôt Krizaka, et comment tout s'emboîte",
-      description: "Tout ce que Krizaka construit est public sous Apache-2.0 : Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), chaque paquet npm et Maven Central et chaque dépôt.",
+      description: "Ce que Krizaka publie en open source, sous Apache-2.0 : Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), chaque paquet npm et Maven Central et chaque dépôt que nous publions. Nos produits sont exploités par Krizaka.",
     },
   });
 }
 
-const PRODUCT_IDS = NAV_PRODUCTS.map((p) => p.id);
+const PRODUCT_IDS = PRODUCTS.map((p) => p.id);
 const CONDUCT_URL = "https://github.com/krizaka/.github/blob/main/CODE_OF_CONDUCT.md";
 const CONTRIBUTING_URL = "https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md";
 const LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0";
@@ -81,40 +76,35 @@ export default async function OpenSourcePage({ params }: Props) {
   const site = dict.site;
   const channelGroups = publicChannels();
   const t = site.openSource;
-  const names: Record<string, string> = { ...Object.fromEntries(NAV_PRODUCTS.map((p) => [p.id, p.name])), krizaka: t.platform.name };
-
+  // What is open source: the platform's repositories and packages. The products are operated by Krizaka (2026-10-26) —
+  // out of every list and table here, and nothing on this page says anything about their licence.
   const allRepositories = githubRepositories();
-  const repositories = allRepositories.filter((r) => !r.archived);
-  const repoRows: RepositoryRow[] = repositories.map((r) => {
-    const product = productOfRepository(r.name, PRODUCT_IDS);
-    return {
-      id: r.name,
-      name: r.name,
-      url: r.url,
-      line: r.description,
-      productId: product,
-      product: names[product],
-      kind: t.kinds[kindOfRepository(r, product)],
-      language: r.language ?? "—",
-      pushedAt: r.pushedAt ?? "",
-    };
-  });
+  const repositories = openSourceRepositories(allRepositories, PRODUCT_IDS);
+  const repoRows: RepositoryRow[] = repositories.map((r) => ({
+    id: r.name,
+    name: r.name,
+    url: r.url,
+    line: r.description,
+    kind: t.kinds[kindOfRepository(r, "krizaka")],
+    language: r.language ?? "—",
+    pushedAt: r.pushedAt ?? "",
+  }));
   const javaSite = STACK.find((s) => s.id === "java")!.url;
-  const packages = packageRows(snapshot as RegistrySnapshot, repositories.map((r) => r.name), javaSite);
-  const layers = howItFits(PRODUCTS, ENGINE, ENGINE_USES, manifests.products, (snapshot as RegistrySnapshot).mavenMeta, (snapshot as RegistrySnapshot).maven ?? {});
+  const packages = packageRows(snapshot as RegistrySnapshot, allRepositories.filter((r) => !r.archived).map((r) => r.name), javaSite, PRODUCT_IDS);
+  const layers = howItFits(manifests.products, (snapshot as RegistrySnapshot).mavenMeta, (snapshot as RegistrySnapshot).maven ?? {});
 
   const modules = nomenclature({
-    repositories: allRepositories,
+    repositories,
     snapshot: snapshot as RegistrySnapshot,
-    manifests: manifests.products,
-    products: PRODUCT_IDS,
-    engineId: ENGINE,
-    engineCallers: ENGINE_USES.filter((u) => !u.planned).map((u) => u.id),
+    manifests: {},
+    products: [],
+    engineId: "",
+    engineCallers: [],
     javaDocs: javaSite,
   });
 
   const figures = [
-    { id: "repositories", value: publicRepositoryCount(), label: t.figures.repositories },
+    { id: "repositories", value: repositories.length, label: t.figures.repositories },
     { id: "npm", value: npmPackages().length, label: t.figures.npm },
     { id: "maven", value: mavenArtifactCount(), label: t.figures.maven },
     // Read from api.npmjs.org at build; absent (0) when the registry was unreachable. Maven Central publishes no download count.
@@ -160,27 +150,7 @@ export default async function OpenSourcePage({ params }: Props) {
       </Section>
 
       <Section id="how-it-fits" eyebrow={t.fits.eyebrow} title={t.fits.title} lead={t.fits.lead} reveal divider>
-        <HowItFits layers={layers} names={names} w={t.fits} />
-        <details id="runs-on" className="os-runs">
-          <summary>{t.fits.runs}</summary>
-          <ProductStackTable
-            rows={productStackRows(PRODUCT_IDS).map((r) => ({ ...r, name: names[r.id] }))}
-            kits={KITS}
-            labels={{
-              caption: t.runs.caption,
-              product: t.runs.product,
-              yes: t.runs.yes,
-              no: t.runs.no,
-              partial: t.runs.partial,
-              isEngine: t.runs.isEngine,
-              planned: t.runs.planned,
-              transport: t.runs.transport,
-              parts: t.runs.parts,
-              kits: Object.fromEntries(KITS.map((k) => [k, site.story.kits[k].name])) as Record<(typeof KITS)[number], string>,
-            }}
-          />
-          <p className="os-stack-read">{format(t.runs.read, { date: MANIFESTS_READ_AT })}</p>
-        </details>
+        <HowItFits layers={layers} w={t.fits} />
       </Section>
 
       <Section id="nomenclature" eyebrow={t.nomenclature.eyebrow} title={t.nomenclature.title} lead={t.nomenclature.lead} reveal divider>
@@ -203,7 +173,7 @@ export default async function OpenSourcePage({ params }: Props) {
                   <Icon size={16} aria-hidden /> {words.cta}
                 </p>
                 <ul className="os-picker-repos">
-                  {channelGroups.flatMap((g) => g.entries).map((e) => (
+                  {channelGroups.filter((g) => g.group === "stack").flatMap((g) => g.entries).map((e) => (
                     <li key={e.id}>
                       <a href={e[ch.id].href} target="_blank" rel="noopener noreferrer">
                         <ProductLogo id={e.mark as never} size={16} animated={false} /> {e.name}

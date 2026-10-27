@@ -26,7 +26,7 @@
   `/.well-known/*`, `/healthz` — the mobile builds and the services' server-to-server calls), with `X-Robots-Tag: noindex`.
   This repo carries **no product page, demo, gallery, journey, recording or documentation** of the products: the home's
   products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
-  « Visit the site » → its www address, and « Source »); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
+  « See the dev site » → `devUrl` with its build-read version, and « Source »; 2026-10-26: production is not open); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
   `/<locale>#products`.
 - **Paused products** (Oussama, 2026-10-25): Orochia, Kachizaka, Yasakia and Yororis are paused — their environments deleted,
   their repositories private, their CI off. krizaka.com names them nowhere (`lib/products.ts` has the three products in focus;
@@ -45,7 +45,7 @@
   text has no personal name and no em dash: `cleanText` (lib/changelog.ts) cleans, `releaseProblems` fails the build.
 - **Product first, Orazaka as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Yomizaka reads your lease »); Orazaka appears only as the engine — one discreet « Powered by Orazaka » line and the proof sections (run ids) — never as the one doing the product's job (« Orazaka reads your lease »). Each product repository tests that its hero and steps do not name Orazaka. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are orazaka#189).
 - A product **in development** (`status: "development"`: Orazaka, Yomizaka, Akinaza) is built in the open: its repository is
-  public, sign-up is closed, and it says « In development ». Each has its www address (its card says « Visit the site »).
+  public, sign-up is closed, and it says « In development ». Each card links its dev site (« See the dev site », 2026-10-26); the www address stays for the nav, sitemap and JSON-LD.
   Akinaza prepares tax returns and never files them, and is not for restaurants and bars — the card words say so, no more.
 - **« Dev preview » is data, not words** ([krizaka/.github `docs/standards/dev-preview.md`](https://github.com/krizaka/.github/blob/main/docs/standards/dev-preview.md), ADR-002).
   `ProductStatus` has `devPreview`; every product has an explicit `status` (no status no longer means a badge). A product may wear
@@ -66,13 +66,11 @@
 - **French is the default language** (Loi 96, `lib/locale-negotiation.ts`): an unprefixed URL goes to the cookie `NEXT_LOCALE` if set, else English only when the browser asks for English and never French, else French; hreflang `x-default` → `/fr`.
 
 - **The home's order** (2026-10-22, the honest chronology, #337): the hero (`HomeHero`, whose lead tells it in two or three
-  short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the open stack that came out of
-  building it**, Krizaka UI, Motion, Java and TypeScript (`OpenStack`, § 3: one row per publication of `lib/stack.ts` — the live visual on one side and a `SpecimenTag` on the other, library code `KZ-L01…`, a stamp with the release read at build, the fields site / registry / licence instead of a bird, « Docs » or « Open the lab » and « Source »; the rows alternate and fall to one column on a phone; Motion plays EngineFlow's `calm` level; adding a publication is an entry in `lib/stack.ts` plus its messages, `tests/stack-config.test.mjs`), then **the products built on them** (`ProductShowcase`, § 4),
-  then the principles (`Principles`, § 5), and it stops there: no Montréal (`Company`) section, no closing contact panel
+  short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the products built on it** (`ProductShowcase`, § 3: each card names its dev address and the version its dev site runs — read at build from `/api/healthz`, `scripts/gen-dev-versions.mjs` → git-ignored `lib/dev-versions.json`, `tests/dev-versions.test.mjs` — and links « See the dev site » while production is not open; the tags hang slightly off the square, -0.6° then +0.5°, straight under reduced motion and on focus; the plates redraw what the apps show, demo data said as demo), then the principles (`Principles`, § 4), and it stops there: no Montréal (`Company`) section, no closing contact panel
   and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). Krizaka, the company,
   was born from that work: the Organization `owns` the products and sites, its `foundingDate` is unchanged. The marks row under the hero
   follows the story: Orazaka, Akinaza, Yomizaka, then the rest (`heroMarkOrder`). `/story` is in the footer, « Contact us »
-  in the bar. The section numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed
+  in the bar. **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live on `/open-source` only (`StackTiles`, from `lib/stack.ts`). **`/open-source` lists only what is open source** — the platform's libraries, kits and tooling (`openSourceRepositories`, `packageRows(…, products)`); the products (Orazaka, Yomizaka, Akinaza) are *operated by Krizaka*, out of every list and table there, and no page here claims a licence for them (a legal session decides). The section numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed
   (`tests/home.test.mjs`, `tests/home-order.test.mjs`).
 
 ## 2.2 Text & languages — nothing hard-coded
@@ -259,7 +257,7 @@
   extending `@krizaka/config/dependency-cruiser`) fails the lint on a forbidden import or a cycle.
 
 - A product's public address is `siteUrl` in `lib/products.ts` (`www.<product>.com`, `lib/product-hosts.ts`): never hard-code a
-  product's address, and never link a `dev.<product>.com` host from a public page. `llms.txt` and `llms-full.txt` are rendered from `content/`.
+  product's address, and a `dev.<product>.com` host is linked only by the home's product cards (`devUrl`, 2026-10-26: the products are in development), never by the nav, sitemap or JSON-LD. `llms.txt` and `llms-full.txt` are rendered from `content/`.
 - The contact form posts to `app/api/contact` (validation in `lib/contact.ts`). Delivery is
   configured by environment and fails closed (503) when nothing is set:
   `MAIL_PROVIDER=mailgun` + `MAIL_API_KEY` + `MAIL_DOMAIN` + `MAIL_CONTACT_TO` (+ `MAIL_API_URL`, `MAIL_FROM`)

@@ -12,6 +12,7 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 const GENERATORS = [
   ["gen-org-stats.mjs", "lib/org-stats.json"],
   ["gen-registry-versions.mjs", "lib/registry-versions.json"],
+  ["gen-dev-versions.mjs", "lib/dev-versions.json"],
   ["gen-changelog.mjs", "lib/changelog.json"],
 ];
 const e = process["env"];

@@ -50,7 +50,7 @@ test("the home leads with the engine and its flow, then the products it powers â
   assert.doesNotMatch(home, /foundation=|CardGrid|GlowCard/, "the frame and the boxes are gone");
   const page = read("app/[locale]/page.tsx");
   const at = (s) => page.indexOf(s);
-  assert.ok(at("<HomeHero") < at("<EngineSection") && at("<EngineSection") < at("<OpenStack") && at("<OpenStack") < at("<ProductShowcase") && at("<ProductShowcase") < at("<Principles"), "the page tells the story: engine, open stack, products, principles");
+  assert.ok(at("<HomeHero") < at("<EngineSection") && at("<EngineSection") < at("<ProductShowcase") && at("<ProductShowcase") < at("<Principles"), "the page tells the story: engine, products, principles (the libraries live on /open-source)");
   assert.match(read("app/[locale]/story/page.tsx"), /<EngineFlowView t=\{t\} \/>/, "/story draws the home's engine flow â€” the same component");
   const css = read("app/components/home/home.css");
   assert.match(css, /\.kz-foundation \{[^}]*border-top: 6px solid var\(--kz-accent\)/, "the engine is a wide foundation plate in its accent, not a tag");
@@ -110,7 +110,7 @@ test("the home's engine card draws @krizaka/ui's EngineFlow from the data, with 
   assert.match(view, /ENGINE_USES\.map/);
   assert.match(view, /flow: u\.planned \? "in" : u\.back\.length > 0 \? "both" : "in"/, "both ways only where results come back");
   assert.match(view, /planned: u\.planned/);
-  assert.match(view, /href: p\.siteUrl/);
+  assert.match(view, /href: p\.devUrl/);
   assert.doesNotMatch(view, /Chip|Slider|Switch|useState/, "the lab's parameters panel is not a home feature");
   assert.doesNotMatch(view, /requestAnimationFrame|<canvas/);
   assert.match(read("app/components/home/ProductShowcase.tsx"), /<EngineFlowView t=\{t\} \/>/);

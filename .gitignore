@@ -61,6 +61,8 @@ PLAN_DEPLOIEMENT.md
 /lib/github-channels.json
 # The published versions of the packages, read from npm and Maven Central at build (scripts/gen-registry-versions.mjs)
 lib/registry-versions.json
+# The version each product's dev site runs, read from its /api/healthz at build (scripts/gen-dev-versions.mjs)
+lib/dev-versions.json
 # The products' Dev preview checklists, read from GitHub at build (scripts/gen-dev-preview.mjs)
 lib/dev-preview-checklists.json
 

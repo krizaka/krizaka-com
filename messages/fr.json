@@ -164,7 +164,9 @@
           "results": "résultats",
           "analytics": "analyses d'usage"
         }
-      }
+      },
+      "visitDev": "Voir le site de dev",
+      "visitDevAria": "{name} — voir le site de dev"
     },
     "home": {
       "hero": {
@@ -218,7 +220,7 @@
         "line": "Un pipeline, vos modèles, votre réseau. Chaque produit l'appelle pour son IA, jamais un modèle en direct."
       },
       "products": {
-        "number": "§ 4",
+        "number": "§ 3",
         "title": "Puis les produits : des outils de gestion et de conformité.",
         "lead": "Akinaza fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Yomizaka vérifie les papiers : baux, contrats, factures. Chacun vit sur son propre site, avec son code sur GitHub.",
         "engineUse": "Sur Orazaka · {use}",
@@ -237,10 +239,11 @@
         "fields": {
           "runs": "sur Orazaka",
           "planned": "prévu",
-          "site": "site",
           "role": "rôle",
           "engineRole": "le moteur",
-          "back": "reçoit"
+          "back": "reçoit",
+          "dev": "site de dev",
+          "version": "version"
         },
         "figures": {
           "orazaka": "le flux, dans les deux sens : les requêtes entrent, les résultats reviennent",
@@ -257,12 +260,6 @@
         }
       },
       "stack": {
-        "number": "§ 3",
-        "eyebrow": "Open source",
-        "title": "Construisez avec nos briques.",
-        "lead": "Sorties de la construction d'Orazaka, à vous de les utiliser. Les versions, les exemples et tous les paquets sont sur Open source.",
-        "more": "Tout ce que nous publions",
-        "visit": "Ouvrir {host}",
         "facts": {
           "platforms": "Web · iOS · Android",
           "npm": "{count} paquets sur npm",
@@ -325,34 +322,10 @@
         "ts": {
           "line": "Les briques TypeScript des produits, sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine.",
           "explore": "Lire la documentation"
-        },
-        "row": {
-          "listLabel": "Ce que nous publions",
-          "docs": "Documentation",
-          "lab": "Ouvrir le labo",
-          "source": "Code source",
-          "docsAria": "Documentation de {name}",
-          "labAria": "Ouvrir le labo de {name}",
-          "sourceAria": "Code source de {name}",
-          "packages": "{count} paquets",
-          "stamps": {
-            "released": "Publié",
-            "development": "En développement"
-          },
-          "fields": {
-            "site": "site",
-            "registry": "registre",
-            "licence": "licence"
-          },
-          "registries": {
-            "npm": "npm",
-            "maven": "Maven Central",
-            "none": "pas un paquet"
-          }
         }
       },
       "principles": {
-        "number": "§ 5",
+        "number": "§ 4",
         "eyebrow": "Notre façon de travailler",
         "title": "Six règles, vérifiées plutôt que promises.",
         "folio": "page {page} sur {total}",
@@ -388,19 +361,30 @@
           "label": "Les requêtes de chaque produit, dans un même moteur"
         },
         "yomizaka": {
-          "document": "Bail, page 3",
-          "before": "Le bail est d'une durée de douze mois, à compter du 1er juillet.",
-          "quote": "Le loyer ne peut être augmenté plus d'une fois au cours d'une période de 12 mois.",
-          "after": "Le chauffage et l'eau chaude sont compris dans le loyer.",
-          "checked": "Vérifié",
-          "source": "cité, page 3 · démo",
-          "review": "à revoir",
-          "line": "ligne"
+          "document": "Le bail",
+          "term": "Durée : 12 mois, du 1er juillet 2026 au 30 juin 2027.",
+          "rent": "Loyer mensuel : 1 450 $, payable le premier jour du mois.",
+          "before": "La locataire verse un ",
+          "quote": "dépôt de sécurité de 1 450 $",
+          "after": " à la signature.",
+          "finding": "Le constat",
+          "title": "Dépôt de garantie interdit : seul le premier mois peut être exigé d'avance",
+          "badge": "Point non respecté",
+          "passage": "« dépôt de sécurité de 1 450 $ »",
+          "law": "C.c.Q., art. 1904, al. 1",
+          "demo": "ligne 3 · démo"
         },
         "akinaza": {
           "day": "Mardi, la journée du salon",
           "booked": "Réservé, confirmé par courriel · démo",
-          "service": "Coupe",
+          "service": "Coupe courte",
+          "minutes": "30 min",
+          "includes": [
+            "Consultation",
+            "Lavage",
+            "Coiffage"
+          ],
+          "choose": "Choisir",
           "gst": "TPS 5 %",
           "qst": "TVQ 9,975 %",
           "total": "Total"
@@ -684,7 +668,7 @@
     },
     "openSource": {
       "eyebrow": "Open source · Apache-2.0",
-      "title": "Tout ce que nous construisons est public.",
+      "title": "Ce que nous publions en open source.",
       "github": "Parcourir github.com/krizaka",
       "figuresLabel": "Ce que nous publions, lu sur GitHub, npm et Maven Central au build",
       "repoCount": "{count} dépôts",
@@ -701,27 +685,8 @@
         "name": "Plateforme Krizaka",
         "tagline": "Les briques que partagent tous les produits : Krizaka UI, les kits Java, le site et les règles de l'organisation."
       },
-      "runs": {
-        "caption": "Ce sur quoi tourne chaque produit",
-        "product": "Produit",
-        "yes": "Oui",
-        "no": "Non",
-        "partial": "En partie",
-        "isEngine": "C'est le moteur",
-        "planned": "Prévu",
-        "read": "Lu dans les manifestes des dépôts le {date}.",
-        "transport": {
-          "sse": "SSE",
-          "ssePush": "SSE + push"
-        },
-        "parts": {
-          "tokens": "tokens",
-          "icons": "icônes",
-          "intl": "intl"
-        }
-      },
       "count": "{count} dépôts publics · ",
-      "lead": "La vue technique : chaque paquet, chaque dépôt, et comment tout s'emboîte.",
+      "lead": "La vue technique : chaque paquet et chaque dépôt que nous publions sous Apache-2.0, et comment tout s'emboîte. Nos produits sont exploités par Krizaka.",
       "figures": {
         "repositories": "dépôts publics",
         "npm": "paquets sur npm",
@@ -759,11 +724,10 @@
       },
       "repositories": {
         "eyebrow": "Dépôts",
-        "title": "Chaque dépôt, par produit.",
-        "lead": "Lus sur GitHub au build, groupés par produit ; filtrez par plateforme ou langage.",
+        "title": "Chaque dépôt que nous publions.",
+        "lead": "Lus sur GitHub au build ; filtrez par plateforme ou langage.",
         "caption": "Chaque dépôt public de Krizaka",
         "name": "Dépôt",
-        "product": "Produit",
         "kind": "Plateforme",
         "language": "Langage",
         "updated": "Mis à jour"
@@ -787,16 +751,12 @@
       },
       "fits": {
         "eyebrow": "Comment tout s'emboîte",
-        "title": "Produits → moteur → briques → services partagés.",
-        "lead": "Lu dans les manifestes des produits — la liste est la version texte du schéma.",
-        "products": "Les produits",
-        "engine": "Le moteur",
-        "engineMeta": "{calls} produits l'appellent aujourd'hui · {planned} prévus",
+        "title": "Briques → services partagés.",
+        "lead": "Lu dans les manifestes de ce que nous exploitons — la liste est la version texte du schéma.",
         "blocks": "Les briques",
         "npm": "npm",
         "java": "Krizaka Java",
-        "services": "Les services partagés",
-        "runs": "Sur quoi tourne chaque produit"
+        "services": "Les services partagés"
       },
       "nomenclature": {
         "eyebrow": "La nomenclature",
@@ -807,7 +767,6 @@
         "layer": "Couche",
         "kind": "Nature",
         "registries": "Registre et version",
-        "usedBy": "Utilisé par",
         "repo": "Dépôt",
         "repoAria": "Dépôt de {name}",
         "registryAria": "{name} sur son registre",

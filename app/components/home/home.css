@@ -139,6 +139,17 @@ html[data-intro="play"] .kz-intro-sweep { animation: kz-intro-sweep 1.3s cubic-b
 .kz-entry { position: relative; display: grid; gap: 16px 24px; align-items: start; }
 .kz-entry-plate { margin: 0; min-width: 0; }
 .kz-entry-tag { min-width: 0; }
+/* Pinned tags (Oussama, 2026-10-26: « the cards not necessarily straight, to keep the same style »): each tag hangs a
+   little off the square, one way then the other. Straight under reduced motion, and straight while one of its links holds
+   the focus, so the focus ring is never drawn tilted. */
+.kz-prod-list > .kz-entry:nth-child(odd) .kz-entry-tag { transform: rotate(-0.6deg); }
+.kz-prod-list > .kz-entry:nth-child(even) .kz-entry-tag { transform: rotate(0.5deg); }
+.kz-prod-list > .kz-entry .kz-entry-tag { transition: transform .25s var(--kz-ease, ease); transform-origin: 50% 0; }
+.kz-prod-list > .kz-entry:nth-child(n) .kz-entry-tag:focus-within { transform: none; }
+.kz-entry { padding-inline: 4px; }
+@media (prefers-reduced-motion: reduce) {
+  .kz-prod-list > .kz-entry:nth-child(n) .kz-entry-tag { transform: none; transition: none; }
+}
 .kz-entry[data-lit] .kz-entry-tag { border-color: var(--kz-accent); }
 .kz-entry[data-lit] .kz-entry-plate .pv { box-shadow: var(--kz-shadow-lg); }
 @media (min-width: 640px) {
@@ -191,6 +202,8 @@ html[data-intro="play"] .kz-intro-sweep { animation: kz-intro-sweep 1.3s cubic-b
 .kz-foundation-role { margin: 0 0 4px; font-family: var(--kz-font-mono); font-size: 12.5px; color: var(--kz-accent-text, var(--kz-accent)); }
 .kz-foundation-status { margin-left: auto; font-family: var(--kz-font-mono); font-size: 12.5px; border: 1px solid var(--kz-accent); padding: 2px 10px; }
 .kz-foundation-line { margin: 0; max-width: 46rem; }
+.kz-foundation-dev { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; font-family: var(--kz-font-mono); font-size: 12.5px; color: var(--kz-text-secondary); }
+.kz-foundation-dev b { font-weight: 600; color: var(--kz-text-primary); }
 .kz-foundation-gives { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
 .kz-foundation-gives li { display: grid; gap: 2px; padding-left: 12px; border-left: 2px solid var(--kz-accent); }
 .kz-foundation-gives span, .kz-foundation-back { color: var(--kz-text-muted); font-size: 14px; }
@@ -206,7 +219,7 @@ html[data-intro="play"] .kz-intro-sweep { animation: kz-intro-sweep 1.3s cubic-b
 .kz-entry-uses a { color: inherit; text-decoration: underline; text-decoration-color: var(--kz-accent); text-underline-offset: 4px; }
 @media (min-width: 1024px) {
   .kz-foundation { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(32px, 4vw, 56px); }
-  .kz-foundation-head, .kz-foundation-line, .kz-foundation-gives, .kz-foundation-links { grid-column: 1; }
+  .kz-foundation-head, .kz-foundation-dev, .kz-foundation-line, .kz-foundation-gives, .kz-foundation-links { grid-column: 1; }
   .kz-foundation .kz-entry-flow { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
   .kz-foundation-back, .kz-foundation-powers { grid-column: 1 / -1; }
   .kz-foundation-gives { grid-template-columns: 1fr; }

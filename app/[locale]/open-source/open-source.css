@@ -27,17 +27,11 @@
 .os-fits-name { position: relative; margin: 0; padding: 2px 10px; background: var(--kz-surface-0); font-family: var(--font-mono); font-size: 11px; font-weight: 600;
   letter-spacing: 0; text-transform: none; color: var(--kz-accent-text, var(--kz-accent)); }
 .os-fits-sub { position: relative; margin: 0; padding: 0 8px; background: var(--kz-surface-0); font-size: 12px; color: var(--kz-text-secondary); }
-.os-fits-meta { position: relative; margin: 0; padding: 0 8px; background: var(--kz-surface-0); font-size: 12.5px; color: var(--kz-text-secondary); }
 .os-fits-items { position: relative; list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 900px; }
 .os-fits-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 2px; font-size: 13px; font-weight: 600;
   color: var(--kz-text-primary); background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); }
 .os-fits-code { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; }
-.os-fits-chip-lg { padding: 8px 16px; font-size: 15px; border-color: var(--kz-accent); box-shadow: 0 0 0 4px color-mix(in oklab, var(--kz-accent) 12%, transparent); }
 
-.os-runs { margin-top: 28px; }
-.os-runs > summary { cursor: pointer; font-weight: 700; font-size: 14.5px; color: var(--kz-text-primary); padding: 8px 0; }
-.os-runs > summary:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; border-radius: 6px; }
-.os-stack-read { margin: 12px 0 0; font-size: 12.5px; color: var(--kz-text-muted); }
 .os-stack-product { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
 .os-stack-cell { display: inline-flex; align-items: center; gap: 8px; color: var(--kz-text-primary); }
 .os-stack-cell[data-state="no"] { color: var(--kz-text-muted, var(--kz-text-secondary)); }
