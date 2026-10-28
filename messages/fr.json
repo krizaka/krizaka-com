@@ -789,6 +789,20 @@
           "tooling": "Outillage"
         }
       },
+      "ci": {
+        "eyebrow": "Comment nous livrons",
+        "title": "Un pipeline, un outil de déploiement",
+        "source": "Lu à chaque build dans notre standard CI et déploiement de krizaka/.github, il ne vieillit donc jamais (en anglais).",
+        "full": "Lire le document complet",
+        "listLabel": "En bref"
+      },
+      "standards": {
+        "eyebrow": "Nos standards",
+        "title": "Les règles que nous nous imposons",
+        "lead": "Chaque standard de krizaka/.github, lu à chaque build : un nouveau apparaît ici tout seul. Ils sont rédigés en anglais.",
+        "open": "Lire le standard",
+        "listLabel": "Standards de Krizaka"
+      },
       "contribute": {
         "title": "Envie de contribuer ?",
         "body": "Une question ou une idée : une discussion. Un bogue : un ticket. Choisissez le dépôt.",

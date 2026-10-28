@@ -28,10 +28,15 @@ import ButtonLink from "@/app/components/ButtonLink";
 import { StackTiles } from "@/app/components/home/OpenStack";
 import { NomenclatureTable, PackagesTable, RepositoriesTable, type RepositoryRow } from "./OpenSourceTables";
 import HowItFits from "./HowItFits";
+import { CiIntroSection, StandardsSection } from "./Standards";
+import standards from "@/lib/standards.json";
+import type { StandardsSnapshot } from "@/lib/standards";
 import "./open-source.css";
 
 /* /open-source — the site's second view (the home is the first; 2026-10-17): the technical view, as refined as the home
    (docs-hub template). One primary action per section, no boxes in boxes; everything read from data at build.
+   0. How we ship: the intro of krizaka/.github's CI and deploy standard, then a card per standard (lib/standards.ts,
+      read at build by scripts/gen-standards.mjs; the last good copy, or a failed build — never an empty section).
    1. The hero: one line, the live figures (repositories, npm packages, Maven artifacts, the licence), GitHub.
    2. The stack: Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com, each with a still mini-visual and its
       latest version (npm, Maven Central); the building blocks' pages, as quiet links.
@@ -126,6 +131,9 @@ export default async function OpenSourcePage({ params }: Props) {
           </ButtonLink>
         </div>
       </PageHero>
+
+      <CiIntroSection data={standards as StandardsSnapshot} w={t.ci} />
+      <StandardsSection data={standards as StandardsSnapshot} w={t.standards} />
 
       <Section id="stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead}>
         <StackTiles locale={locale} />
