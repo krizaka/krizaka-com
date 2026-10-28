@@ -5,6 +5,7 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  merge_group:
 
 # Read-only token: the build only reads public data (the org's repository count).
 permissions:
