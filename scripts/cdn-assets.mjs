@@ -208,7 +208,7 @@ export async function prune({ cfg, manifest, yes = false, retired = false, extra
   }
   // The folders this manifest writes: site/ (legacy) and the v2 folders its entries land in.
   const v2 = named.filter((p) => !p.startsWith(`${LEGACY_ROOT}/`)).map((p) => p.split("/").slice(0, p.startsWith("org/") ? 3 : 2).join("/"));
-  const dirs = [...new Set([LEGACY_ROOT, ...v2])].sort();
+  const dirs = [...new Set([LEGACY_ROOT, ...v2])].sort((a, b) => a.localeCompare(b));
   const all = [];
   for (const d of dirs) all.push(...(await listObjects(cfg, d, fetchImpl)));
   const foreign = (p) => [...FOREIGN_WRITERS, ...FOREIGN_WRITERS_V2].some((prefix) => p.startsWith(prefix));

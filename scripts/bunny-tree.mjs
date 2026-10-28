@@ -43,7 +43,7 @@ const serialise = (n) => ({
   name: n.name,
   path: n.path,
   status: statusOf(n),
-  ...(n.issues.size ? { issues: [...n.issues].sort() } : {}),
+  ...(n.issues.size ? { issues: [...n.issues].sort((a, b) => a.localeCompare(b)) } : {}),
   count: n.count,
   mb: mb(n.bytes),
   legacy: n.legacy,
