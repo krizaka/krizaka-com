@@ -324,8 +324,74 @@
           "explore": "Lire la documentation"
         }
       },
-      "principles": {
+      "knowhow": {
         "number": "§ 4",
+        "title": "Ce que nous savons faire, montré par du code qui tourne.",
+        "lead": "Chaque carte mène à sa preuve : un dépôt ou un site. Les chiffres sont lus à la construction depuis les registres et GitHub, jamais saisis.",
+        "listLabel": "Savoir-faire et leurs preuves",
+        "facts": {
+          "components": "{count} composants",
+          "native": "{count} tournent aussi sur iOS et Android",
+          "maven": "{count} artefacts sur Maven Central",
+          "repositories": "{count} dépôts publics",
+          "npm": "{count} paquets npm",
+          "downloads": "{count} téléchargements par semaine"
+        },
+        "items": {
+          "engine": {
+            "title": "Un moteur d'IA sur vos propres serveurs",
+            "line": "Chaque requête est une exécution tracée derrière un seul pipeline, avec les modèles que vous choisissez. Les produits appellent le moteur, jamais un modèle directement.",
+            "cta": "Voir le code"
+          },
+          "documents": {
+            "title": "Des documents lus et vérifiés",
+            "line": "Chaque constat cite le passage dont il vient. Le rapport d'authenticité lit des faits dans le fichier : pas de modèle, pas de score, jamais un verdict sur une personne.",
+            "cta": "Voir le code"
+          },
+          "shops": {
+            "title": "Les livres d'une petite entreprise",
+            "line": "Rendez-vous, factures et registre de la TPS et de la TVQ tenu à chaque facture émise. Akinaza prépare votre déclaration ; vous la produisez.",
+            "cta": "Voir le code"
+          },
+          "design": {
+            "title": "Un système de design, publié",
+            "line": "Krizaka UI est sur npm et se trouve sous chaque produit et chaque site de Krizaka.",
+            "cta": "Explorer Krizaka UI"
+          },
+          "java": {
+            "title": "Des briques Java",
+            "line": "Des starters Spring Boot et des services partagés publiés sur Maven Central, versionnés ensemble par une seule nomenclature (BOM).",
+            "cta": "Explorer Krizaka Java"
+          },
+          "open": {
+            "title": "Du code ouvert",
+            "line": "Les briques sont sous Apache-2.0 ; le code des produits est public aussi, sous la Functional Source License, chaque version passant sous Apache-2.0 deux ans après sa sortie.",
+            "cta": "Voir l'open source"
+          }
+        }
+      },
+      "direction": {
+        "number": "§ 5",
+        "title": "Où nous allons, dans l'ordre.",
+        "lead": "Pas de dates et pas de promesses : nous disons une chose quand elle tourne.",
+        "story": "Lire notre histoire",
+        "steps": {
+          "now": {
+            "title": "Maintenant",
+            "body": "{names} sont construits au grand jour : le code est public et les inscriptions sont fermées."
+          },
+          "next": {
+            "title": "Ensuite",
+            "body": "Les premiers clients : les vérifications de Yomizaka pour les entreprises, les boutiques d'Akinaza, et une offre pour les sociétés, Entreprise : modules sur mesure, adoption d'une IA souveraine et maintenance."
+          },
+          "later": {
+            "title": "Plus tard",
+            "body": "Des produits utiles et efficaces pour tout le monde, sur la même pile ouverte."
+          }
+        }
+      },
+      "principles": {
+        "number": "§ 6",
         "eyebrow": "Notre façon de travailler",
         "title": "Six règles, vérifiées plutôt que promises.",
         "folio": "page {page} sur {total}",
@@ -352,7 +418,7 @@
           },
           "open": {
             "title": "Ouvert par défaut",
-            "body": "{count} dépôts publics, {npm} paquets npm et {maven} artefacts Maven sous Apache-2.0, lisibles ligne à ligne."
+            "body": "{count} dépôts publics, {npm} paquets npm et {maven} artefacts Maven, lisibles ligne à ligne : les briques sous Apache-2.0, les produits sous la Functional Source License."
           }
         }
       },
@@ -946,7 +1012,7 @@
           {
             "title": "Licence des logiciels",
             "paragraphs": [
-              "Les logiciels que nous publions sont ouverts, distribués sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les dépôts Orazaka, Yomizaka et Akinaza sur github.com/krizaka, les paquets @krizaka/* sur npm et les artefacts com.krizaka sur Maven. Chaque dépôt porte sa licence.",
+              "Les briques que nous publions sont ouvertes, sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les paquets @krizaka/* sur npm, les artefacts com.krizaka sur Maven et leurs dépôts sur github.com/krizaka. Les dépôts des produits (Yomizaka, Akinaza et les applications Orazaka) sont publics sous la Functional Source License 1.1 (FSL-1.1-ALv2) : vous pouvez les lire, les exécuter et les modifier pour tout usage autre qu'un produit concurrent, et chaque version passe sous Apache 2.0 deux ans après sa sortie. Chaque dépôt porte sa licence, qui prévaut.",
               "La licence couvre le code. Elle ne donne pas le droit d'utiliser comme les vôtres les noms, logos et marques de produits de Krizaka."
             ]
           },
