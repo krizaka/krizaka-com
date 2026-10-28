@@ -34,7 +34,7 @@ import { readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { execFileSync } from "node:child_process";
-import { FOREIGN_WRITERS, LAYOUT_README, README_NAME, RETIRED, SITE_AREA_NAMES, assertUnder, layoutHelp, libraryPath, misplaced } from "./bunny-layout.mjs";
+import { FOREIGN_WRITERS, LAYOUT_README, README_NAME, RETIRED, SITE_AREA_NAMES, assertUnder, layoutHelp, libraryPath, placement } from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 
 export const ROOT = "site";
@@ -248,8 +248,8 @@ export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetc
   return newest;
 }
 
-/** The whole zone, listed from its root: [{ path, size }]. */
-async function listZone(cfg, fetchImpl) {
+/** The whole zone (or the folder <from>, e.g. "brand/"), listed: [{ path, size }]. Shared with scripts/bunny-tree.mjs. */
+export async function listZone(cfg, fetchImpl = globalThis.fetch, from = "") {
   const out = [];
   const walk = async (dir) => {
     const res = await fetchImpl(`${storageUrl(cfg, dir).replace(/\/$/, "")}/`, { headers: { AccessKey: cfg.apiKey, Accept: "application/json" } });
@@ -260,13 +260,15 @@ async function listZone(cfg, fetchImpl) {
       else out.push({ path: p, size: item.Length ?? 0 });
     }
   };
-  await walk("");
+  await walk(from);
   return out;
 }
 
-/** Counts and weight per folder (two levels under site/ and maps/, the repository and topic under pr-assets/), then what does not belong. */
-export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.log }) {
-  const objects = await listZone(cfg, fetchImpl);
+/** Counts and weight per folder (two levels under site/ and maps/, the repository and topic under pr-assets/), then the
+    audit (ADR-014): every object is `ok` (target layout), `legacy` (an old root, still served, with its target) or
+    `misplaced`. Misplaced objects are listed one by one; legacy ones per folder. */
+export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.log, objects }) {
+  objects ??= await listZone(cfg, fetchImpl);
   const depth = (p) => (p === README_NAME ? 1 : p.startsWith("people/") || p.startsWith("products/") || p.startsWith("brand/") ? 2 : 3);
   const rows = new Map();
   for (const o of objects) {
@@ -279,10 +281,70 @@ export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.lo
   for (const [key, r] of [...rows].sort(([a], [b]) => a.localeCompare(b))) log(`${key.padEnd(64)} ${String(r.n).padStart(5)}  ${(r.bytes / 1048576).toFixed(1).padStart(8)} MB`);
   const total = objects.reduce((a, o) => a + o.size, 0);
   log(`\n${objects.length} object(s), ${(total / 1048576).toFixed(0)} MB`);
-  const bad = objects.map((o) => ({ ...o, why: misplaced(o.path) })).filter((o) => o.why);
+  const placed = objects.map((o) => ({ ...o, ...placement(o.path) }));
+  const legacy = placed.filter((o) => o.state === "legacy");
+  const bad = placed.filter((o) => o.state === "misplaced");
+  const groups = new Map();
+  for (const o of legacy) {
+    const key = `${o.path.split("/").slice(0, 2).join("/")}/ → ${o.target ? `${o.target.split("/").slice(0, o.target.startsWith("org/") ? 3 : 2).join("/")}/` : o.why}`;
+    groups.set(key, (groups.get(key) ?? 0) + 1);
+  }
+  if (legacy.length) log(`\n${legacy.length} legacy object(s), still served until their writer switches (ADR-014):`);
+  for (const [key, n] of [...groups].sort(([a], [b]) => a.localeCompare(b))) log(`  LEGACY  ${String(n).padStart(5)}  ${key}`);
   for (const b of bad) log(`  MISPLACED  ${b.path} — ${b.why}`);
-  log(bad.length ? `${bad.length} object(s) outside the layout` : "every object follows the layout");
-  return { objects, misplaced: bad };
+  log(bad.length ? `${bad.length} object(s) outside the layout` : "every object follows the layout (target or legacy)");
+  return { objects, misplaced: bad, legacy };
+}
+
+/**
+ * Copies every legacy object that has a target (ADR-014) to it: downloaded from the storage zone, sent to the target path,
+ * skipped when the target already holds a file of the same size. Old paths are never touched (they keep serving). A
+ * re-copied file that changes in place (not hashed) is purged on the pull zone. A preview without `yes`.
+ */
+export async function migrate({ cfg, only = "", yes = false, accountKey, fetchImpl = globalThis.fetch, log = console.log, objects }) {
+  objects ??= await listZone(cfg, fetchImpl, only);
+  const sizes = new Map(objects.map((o) => [o.path, o.size]));
+  const listed = new Set();
+  const todo = [];
+  for (const o of objects) {
+    const p = placement(o.path);
+    if (!o.path.startsWith(only) || p.state !== "legacy" || !p.target) continue;
+    // The target's folder (org/v1/<part>/ or apps/<app>/, ui/<area>/) is listed once, when the listing did not cover it.
+    const dir = p.target.split("/").slice(0, p.target.startsWith("org/") ? 3 : 2).join("/");
+    if (!sizes.has(p.target) && !listed.has(dir)) {
+      listed.add(dir);
+      for (const t of await listZone(cfg, fetchImpl, `${dir}/`).catch(() => [])) sizes.set(t.path, t.size);
+    }
+    if (sizes.get(p.target) === o.size) continue;
+    todo.push({ from: o.path, to: p.target, size: o.size, replaced: sizes.has(p.target) });
+  }
+  const bytes = todo.reduce((a, t) => a + t.size, 0);
+  log(`${todo.length} object(s) to copy, ${(bytes / 1048576).toFixed(1)} MB${yes ? "" : " — a preview: run again with --yes"}`);
+  if (!yes) {
+    for (const t of todo.slice(0, 20)) log(`  would copy  ${t.from}  →  ${t.to}`);
+    if (todo.length > 20) log(`  … and ${todo.length - 20} more`);
+    return todo;
+  }
+  const purge = [];
+  for (let i = 0; i < todo.length; i += 6) {
+    await Promise.all(
+      todo.slice(i, i + 6).map(async (t) => {
+        const src = await fetchImpl(storageUrl(cfg, t.from), { headers: { AccessKey: cfg.apiKey } });
+        if (!src.ok) throw new Error(`download of ${t.from} failed: HTTP ${src.status}`);
+        const body = Buffer.from(await src.arrayBuffer());
+        const res = await fetchImpl(storageUrl(cfg, t.to), {
+          method: "PUT",
+          headers: { AccessKey: cfg.apiKey, "Content-Type": contentTypeFor(t.to), Checksum: createHash("sha256").update(body).digest("hex").toUpperCase() },
+          body,
+        });
+        if (!res.ok) throw new Error(`upload of ${t.to} failed: HTTP ${res.status}`);
+        if (t.replaced) purge.push(t.to);
+      }),
+    );
+    log(`  copied ${Math.min(i + 6, todo.length)}/${todo.length}`);
+  }
+  if (purge.length) await purgeUnhashed({ cfg, paths: purge, accountKey, fetchImpl, log });
+  return todo;
 }
 
 /** Publishes the layout as README.txt at the root of the zone — the only file allowed there. */
@@ -314,13 +376,14 @@ const USAGE = `usage:
   node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> [--env-file <path>] [--dry-run]
   node scripts/cdn-assets.mjs check [--env-file <path>]
   node scripts/cdn-assets.mjs prune [--env-file <path>] [--min-age <hours, default 24>] [--retired] [--yes]
-  node scripts/cdn-assets.mjs library [--env-file <path>] [--dry-run]   mirror site/ into products/ and people/personas/ (human names)
-  node scripts/cdn-assets.mjs tree [--env-file <path>]      count/size per folder, and what is outside the layout
+  node scripts/cdn-assets.mjs library [--env-file <path>] [--dry-run]   RETIRED (ADR-014): the human-name mirror is no longer written
+  node scripts/cdn-assets.mjs tree [--env-file <path>] [--strict]   count/size per folder; fails on a misplaced object (and on a legacy one with --strict)
+  node scripts/cdn-assets.mjs migrate [--only <prefix>] [--env-file <path>] [--yes]   copy the legacy objects to their target (ADR-014), old paths kept
   node scripts/cdn-assets.mjs readme [--env-file <path>]    publish the layout as README.txt at the zone root
 ${layoutHelp()}`;
 
 export async function main(argv, { env = process.env, fetchImpl, log = console.log, manifestFile = MANIFEST } = {}) {
-  const args = parseArgs(argv.filter((a) => a !== "--yes" && a !== "--retired"));
+  const args = parseArgs(argv.filter((a) => a !== "--yes" && a !== "--retired" && a !== "--strict"));
   const yes = argv.includes("--yes");
   const [command, target] = args._;
   if (args.help || !command) {
@@ -355,12 +418,16 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     return 0;
   }
   if (command === "library") {
-    await library({ cfg: loadConfig(merged), dryRun: args.dryRun, fetchImpl, log });
-    return 0;
+    log("library is retired (ADR-014): the human-name mirror (products/, people/personas/) is no longer written; browse the tree (scripts/bunny-tree.mjs)");
+    return 1;
   }
   if (command === "tree") {
-    const { misplaced: bad } = await tree({ cfg: loadConfig(merged), fetchImpl, log });
-    return bad.length ? 1 : 0;
+    const { misplaced: bad, legacy } = await tree({ cfg: loadConfig(merged), fetchImpl, log });
+    return bad.length || (argv.includes("--strict") && legacy.length) ? 1 : 0;
+  }
+  if (command === "migrate") {
+    await migrate({ cfg: loadConfig(merged), only: args.only ?? "", yes, accountKey: merged.MEDIA_ACCOUNT_API_KEY, fetchImpl, log });
+    return 0;
   }
   if (command === "readme") {
     await publishReadme({ cfg: loadConfig(merged), accountKey: merged.MEDIA_ACCOUNT_API_KEY, fetchImpl, log });

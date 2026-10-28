@@ -1,6 +1,6 @@
 # Bunny: an org-level media library, and the target tree of the zone
 
-Status: **proposal (phase 1)**. Nothing changes on Bunny and `scripts/bunny-layout.mjs` is untouched until Claude (CTO) comments « validé ».
+Status: **superseded** by krizaka/.github ADR-014 (2026-10-28: `org/v<n>/` is the org's CDN, `apps/<app>/` per app; the `krizaka/v1/` prefix below was never built). Kept for its inventory. Former status: **proposal (phase 1)**. Nothing changes on Bunny and `scripts/bunny-layout.mjs` is untouched until Claude (CTO) comments « validé ».
 Issues: krizaka/krizaka-com#381, #387. Reads: AGENTS.md §5.2, `scripts/bunny-layout.mjs`, `scripts/cdn-assets.mjs`, `lib/cdn-manifest.json`, `lib/cdn.ts`, krizaka-ui `tools/export-brand.mjs`.
 
 ## 1. Inventory (from `lib/cdn-manifest.json` and the layout)
