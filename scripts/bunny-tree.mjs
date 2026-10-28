@@ -81,11 +81,10 @@ export async function main(argv, { env = process.env, fetchImpl = globalThis.fet
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  main(process.argv.slice(2)).then(
-    (code) => process.exit(code),
-    (err) => {
-      console.error(`bunny-tree: ${err.message}`);
-      process.exit(1);
-    },
-  );
+  try {
+    process.exit(await main(process.argv.slice(2)));
+  } catch (err) {
+    console.error(`bunny-tree: ${err.message}`);
+    process.exit(1);
+  }
 }

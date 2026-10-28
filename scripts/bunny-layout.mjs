@@ -220,49 +220,55 @@ const SITE_FILE = /^site\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a
 const FILE = "[A-Za-z0-9._-]+";
 const brandAlt = BRANDS.join("|");
 
+/** Per legacy root: why <path> does not fit it, or null. */
+const LEGACY_RULES = {
+  site: (path, [, area]) => {
+    if (!SITE_AREA_NAMES.includes(area)) return `site/${area}/ is not an area (${SITE_AREA_NAMES.join(", ")})`;
+    return SITE_FILE.test(path) ? null : "not <name>.<hash>.<ext> under site/<area>/…";
+  },
+  brand: (path) =>
+    new RegExp(String.raw`^brand/((manifest|index)\.json|(${brandAlt})/${FILE})$`).test(path) ? null : `not brand/<${brandAlt}>/<file> or brand/{manifest,index}.json`,
+  people: (path) =>
+    new RegExp(String.raw`^people/(defaults/v1/(manifest\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`).test(path)
+      ? null
+      : "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>",
+  defaults: (path) =>
+    DEFAULTS_MANIFEST.test(path) || DEFAULTS_FILE.test(path)
+      ? null
+      : "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json",
+  products: (path) =>
+    new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path) ? null : `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`,
+  discovery: (path) => (path === "discovery/services.json" ? null : "not discovery/services.json"),
+  ui: (path, parts) => (parts.length < 3 ? "not ui/<area>/<file>" : null),
+  maps: (path) =>
+    /^maps\/v1\/(tiles\/[a-z0-9-]+-\d{8}\.pmtiles|fonts\/[A-Za-z0-9 ]+\/\d+-\d+\.pbf)$/.test(path) ? null : "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf",
+  "pr-assets": (path, parts) => (parts.length < 4 || !parts[1] || !parts[2] ? "not pr-assets/<repo>/<pr-or-topic>/<file>" : null),
+};
+
 /** Why <path> does not belong in the LEGACY layout (the roots of `ZONE`, still served while they migrate), or null. */
 function legacyMisplaced(path) {
-  const [root, second, third] = path.split("/");
+  const parts = path.split("/");
   if (path === README_NAME) return null;
-  if (!ZONE[root]) return `unknown root "${root}/" (allowed: ${Object.keys(ZONE).join(", ")}, ${README_NAME})`;
-  if (root === "site") {
-    if (!SITE_AREA_NAMES.includes(second)) return `site/${second}/ is not an area (${SITE_AREA_NAMES.join(", ")})`;
-    if (!SITE_FILE.test(path)) return "not <name>.<hash>.<ext> under site/<area>/…";
-  }
-  if (root === "brand" && !new RegExp(`^brand/((manifest|index)\\.json|(${brandAlt})/${FILE})$`).test(path)) return `not brand/<${brandAlt}>/<file> or brand/{manifest,index}.json`;
-  if (root === "people" && !new RegExp(`^people/(defaults/v1/(manifest\\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`).test(path)) {
-    return "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>";
-  }
-  if (root === "defaults" && !DEFAULTS_MANIFEST.test(path) && !DEFAULTS_FILE.test(path)) {
-    return "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json";
-  }
-  if (root === "products" && !new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path)) {
-    return `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`;
-  }
-  if (root === "discovery" && path !== "discovery/services.json") return "not discovery/services.json";
-  if (root === "ui" && path.split("/").length < 3) return "not ui/<area>/<file>";
-  if (root === "maps" && !/^maps\/v1\/(tiles\/[a-z0-9-]+-\d{8}\.pmtiles|fonts\/[A-Za-z0-9 ]+\/\d+-\d+\.pbf)$/.test(path)) {
-    return "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf";
-  }
-  if (root === "pr-assets" && (!second || !third || path.split("/").length < 4)) return "not pr-assets/<repo>/<pr-or-topic>/<file>";
-  return null;
+  const rule = ZONE[parts[0]] ? LEGACY_RULES[parts[0]] : undefined;
+  if (!rule) return `unknown root "${parts[0]}/" (allowed: ${Object.keys(ZONE).join(", ")}, ${README_NAME})`;
+  return rule(path, parts);
 }
 
 // ── Placement: ok (target), legacy (old layout, with its target), misplaced ─────────────────────────────────────────
 
-const HASHED = "[a-z0-9_-]+(?:\\.[a-z0-9_-]+)*\\.[0-9a-f]{10}\\.[a-z0-9]+";
+const HASHED = String.raw`[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a-f]{10}\.[a-z0-9]+`;
 const ORG_FILE = new RegExp(
   [
-    "(?:org|org\\.schema|app\\.schema)(?:\\.[0-9a-f]{10})?\\.json",
-    "apps/[a-z0-9-]+(?:\\.[0-9a-f]{10})?\\.json",
-    "defaults/manifest\\.json",
-    "defaults/(?:person|folder|organisation|shop|banner)/[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.svg|-\\d+\\.webp)",
-    "brand/(?:manifest|index)\\.json",
+    String.raw`(?:org|org\.schema|app\.schema)(?:\.[0-9a-f]{10})?\.json`,
+    String.raw`apps/[a-z0-9-]+(?:\.[0-9a-f]{10})?\.json`,
+    String.raw`defaults/manifest\.json`,
+    String.raw`defaults/(?:person|folder|organisation|shop|banner)/[a-z0-9]+(?:-[a-z0-9]+)*(?:\.svg|-\d+\.webp)`,
+    String.raw`brand/(?:manifest|index)\.json`,
     `brand/(?:${brandAlt})/${FILE}`,
-    "maps/tiles/[a-z0-9-]+-\\d{8}\\.pmtiles",
-    "maps/fonts/[A-Za-z0-9 ]+/\\d+-\\d+\\.pbf",
+    String.raw`maps/tiles/[a-z0-9-]+-\d{8}\.pmtiles`,
+    String.raw`maps/fonts/[A-Za-z0-9 ]+/\d+-\d+\.pbf`,
     `films/[a-z0-9-]+/(?:[a-z0-9-]+/)?${HASHED}`,
-    "discovery/services\\.json",
+    String.raw`discovery/services\.json`,
   ].map((p) => `(?:${p})`).join("|"),
 );
 const APP_FILE = new RegExp(`^apps/(?:${APPS.join("|")})/[a-z0-9_-]+/(?:[a-z0-9_-]+/)*${HASHED}$`);
