@@ -141,7 +141,7 @@ export const TARGET = {
   org: {
     writer: "the generator of each part (listed above) — never a hand upload",
     path: `org/${ORG_VERSION}/{org.json,apps,defaults,brand,maps,films,discovery}/…`,
-    what: `THE ORG'S CDN — what the whole family reads: the org JSON and each app's config (@krizaka/org), the default pictures (ADR-011), the marks, the basemap, the films, the discovery manifest:\n${Object.values(ORG_PARTS).map((t) => `    ${t}`).join("\n")}`,
+    what: "THE ORG'S CDN — what the whole family reads: the org JSON and each app's config (@krizaka/org), the default pictures (ADR-011), the marks, the basemap, the films, the discovery manifest:\n    " + Object.values(ORG_PARTS).join("\n    "),
   },
   apps: {
     writer: "scripts/cdn-assets.mjs (krizaka-com) and each app's own media script (its repository names its files)",
@@ -290,25 +290,31 @@ export function targetMisplaced(path) {
  * `site/products/akinaza/tour/a.<hash>.mp4` → `apps/akinaza/tour/a.<hash>.mp4`.
  */
 export function targetOf(path) {
-  const org = `org/${ORG_VERSION}`;
-  const parts = path.split("/");
-  const [root, a, b] = parts;
-  const rest = (n) => parts.slice(n).join("/");
-  if (root === "defaults" && a === "v1") return `${org}/defaults/${rest(2)}`;
-  if (root === "maps" && a === "v1") return `${org}/maps/${rest(2)}`;
-  if (root === "brand") return `${org}/brand/${rest(1)}`;
-  if (root === "discovery") return `${org}/discovery/${rest(1)}`;
-  if (root !== "site" || RETIRED.some((re) => re.test(path))) return null; // people/ and products/: the frozen set and the retired mirror (ADR-014)
-  if (a === "home") return `apps/www/home/${rest(2)}`;
-  if (a === "blog") return `apps/blog/${rest(2)}`;
-  if (a === "products" && APPS.includes(b)) return `apps/${b}/${rest(3)}`;
-  if (a === "docs" && APPS.includes(b)) return `apps/${b}/docs/${rest(3)}`;
-  if (a === "people" && b === "ui") return `ui/personas/${rest(3)}`;
-  if (a === "people" && APPS.includes(b)) return `apps/${b}/personas/${rest(3)}`;
-  if (a === "brand-films" && b === "orochia") return `apps/orochia/films/${rest(3)}`;
-  if (a === "brand-films") return `${org}/films/${rest(2)}`;
-  return null;
+  if (RETIRED.some((re) => re.test(path))) return null;
+  for (const [re, to] of TARGET_OF) {
+    const m = re.exec(path);
+    if (m) return to(m);
+  }
+  return null; // people/ and products/: the frozen set and the retired mirror (ADR-014)
 }
+
+const ORG = `org/${ORG_VERSION}`;
+const APP = `(${APPS.join("|")})`;
+/** The legacy → target rules of `targetOf`, first match wins. */
+const TARGET_OF = [
+  [/^defaults\/v1\/(.+)$/, (m) => `${ORG}/defaults/${m[1]}`],
+  [/^maps\/v1\/(.+)$/, (m) => `${ORG}/maps/${m[1]}`],
+  [/^brand\/(.+)$/, (m) => `${ORG}/brand/${m[1]}`],
+  [/^discovery\/(.+)$/, (m) => `${ORG}/discovery/${m[1]}`],
+  [/^site\/home\/(.+)$/, (m) => `apps/www/home/${m[1]}`],
+  [/^site\/blog\/(.+)$/, (m) => `apps/blog/${m[1]}`],
+  [new RegExp(`^site/products/${APP}/(.+)$`), (m) => `apps/${m[1]}/${m[2]}`],
+  [new RegExp(`^site/docs/${APP}/(.+)$`), (m) => `apps/${m[1]}/docs/${m[2]}`],
+  [/^site\/people\/ui\/(.+)$/, (m) => `ui/personas/${m[1]}`],
+  [new RegExp(`^site/people/${APP}/(.+)$`), (m) => `apps/${m[1]}/personas/${m[2]}`],
+  [/^site\/brand-films\/orochia\/(.+)$/, (m) => `apps/orochia/films/${m[1]}`],
+  [/^site\/brand-films\/(.+)$/, (m) => `${ORG}/films/${m[1]}`],
+];
 
 /** Why a legacy object has no target (shown by the audit). */
 export function frozenReason(path) {

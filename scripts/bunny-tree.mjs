@@ -19,39 +19,44 @@ import { loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 export const DEFAULT_OUT = join(homedir(), "Documents/krizaka/tools/cockpit-next/data/bunny-tree.json");
 const mb = (bytes) => Math.round((bytes / 1048576) * 100) / 100;
 
+/** A folder of the tree, before serialisation. */
+const node = (name, path) => ({ name, path, count: 0, bytes: 0, legacy: 0, misplacedCount: 0, children: new Map() });
+
+/** The folders of <path> under <root>, `depth` at most, created on the way: [root, …, deepest]. */
+function chainOf(root, path, depth) {
+  const chain = [root];
+  for (const f of path.split("/").slice(0, -1).slice(0, depth)) {
+    const at = chain.at(-1);
+    if (!at.children.has(f)) at.children.set(f, node(f, at.path ? `${at.path}/${f}` : f));
+    chain.push(at.children.get(f));
+  }
+  return chain;
+}
+
+const serialise = (n) => ({
+  name: n.name,
+  path: n.path,
+  count: n.count,
+  mb: mb(n.bytes),
+  legacy: n.legacy,
+  misplaced: n.misplacedCount > 0,
+  misplacedCount: n.misplacedCount,
+  children: [...n.children.values()].sort((a, b) => a.name.localeCompare(b.name)).map(serialise),
+});
+
 /** [{ path, size }] → the folder tree, `depth` levels deep (files are counted in their folder, never listed). */
 export function buildTree(objects, { depth = MAX_FOLDERS, now = new Date() } = {}) {
-  const node = (name, path) => ({ name, path, count: 0, bytes: 0, legacy: 0, misplacedCount: 0, children: new Map() });
   const root = node("", "");
   for (const o of objects) {
-    const p = placement(o.path);
-    const folders = o.path.split("/").slice(0, -1).slice(0, depth);
-    const chain = [root];
-    let at = root;
-    for (const f of folders) {
-      const path = at.path ? `${at.path}/${f}` : f;
-      if (!at.children.has(f)) at.children.set(f, node(f, path));
-      at = at.children.get(f);
-      chain.push(at);
-    }
-    for (const n of chain) {
+    const { state } = placement(o.path);
+    for (const n of chainOf(root, o.path, depth)) {
       n.count++;
       n.bytes += o.size;
-      if (p.state === "legacy") n.legacy++;
-      if (p.state === "misplaced") n.misplacedCount++;
+      n.legacy += state === "legacy" ? 1 : 0;
+      n.misplacedCount += state === "misplaced" ? 1 : 0;
     }
   }
-  const out = (n) => ({
-    name: n.name,
-    path: n.path,
-    count: n.count,
-    mb: mb(n.bytes),
-    legacy: n.legacy,
-    misplaced: n.misplacedCount > 0,
-    misplacedCount: n.misplacedCount,
-    children: [...n.children.values()].sort((a, b) => a.name.localeCompare(b.name)).map(out),
-  });
-  const tree = out(root);
+  const tree = serialise(root);
   return {
     generatedAt: now.toISOString(),
     zone: "krizaka-assets",

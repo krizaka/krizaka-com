@@ -269,10 +269,29 @@ export async function listZone(cfg, fetchImpl = globalThis.fetch, from = "") {
     `misplaced`. Misplaced objects are listed one by one; legacy ones per folder. */
 export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.log, objects }) {
   objects ??= await listZone(cfg, fetchImpl);
-  const depth = (p) => (p === README_NAME ? 1 : p.startsWith("people/") || p.startsWith("products/") || p.startsWith("brand/") ? 2 : 3);
+  logFolders(objects, log);
+  const placed = objects.map((o) => ({ ...o, ...placement(o.path) }));
+  const legacy = placed.filter((o) => o.state === "legacy");
+  const bad = placed.filter((o) => o.state === "misplaced");
+  if (legacy.length) log(`\n${legacy.length} legacy object(s), still served until their writer switches (ADR-014):`);
+  for (const [key, n] of legacyGroups(legacy)) log(`  LEGACY  ${String(n).padStart(5)}  ${key}`);
+  for (const b of bad) log(`  MISPLACED  ${b.path} — ${b.why}`);
+  log(bad.length ? `${bad.length} object(s) outside the layout` : "every object follows the layout (target or legacy)");
+  return { objects, misplaced: bad, legacy };
+}
+
+/** How many folders of <path> a row of the tree shows. */
+function rowDepth(path) {
+  if (path === README_NAME) return 1;
+  return ["people/", "products/", "brand/"].some((p) => path.startsWith(p)) ? 2 : 3;
+}
+
+/** The count and weight per folder, then the total. */
+function logFolders(objects, log) {
   const rows = new Map();
   for (const o of objects) {
-    const key = o.path.split("/").slice(0, Math.min(depth(o.path), o.path.split("/").length - 1) || 1).join("/");
+    const parts = o.path.split("/");
+    const key = parts.slice(0, Math.min(rowDepth(o.path), parts.length - 1) || 1).join("/");
     const r = rows.get(key) ?? { n: 0, bytes: 0 };
     r.n++;
     r.bytes += o.size;
@@ -281,19 +300,41 @@ export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.lo
   for (const [key, r] of [...rows].sort(([a], [b]) => a.localeCompare(b))) log(`${key.padEnd(64)} ${String(r.n).padStart(5)}  ${(r.bytes / 1048576).toFixed(1).padStart(8)} MB`);
   const total = objects.reduce((a, o) => a + o.size, 0);
   log(`\n${objects.length} object(s), ${(total / 1048576).toFixed(0)} MB`);
-  const placed = objects.map((o) => ({ ...o, ...placement(o.path) }));
-  const legacy = placed.filter((o) => o.state === "legacy");
-  const bad = placed.filter((o) => o.state === "misplaced");
+}
+
+/** The folder a target lands in: `org/v1/<part>/`, or `apps/<app>/`, `ui/<area>/`. */
+const targetFolder = (target) => `${target.split("/").slice(0, target.startsWith("org/") ? 3 : 2).join("/")}/`;
+
+/** Legacy objects counted per « old folder → target folder (or why none) », sorted. */
+function legacyGroups(legacy) {
   const groups = new Map();
   for (const o of legacy) {
-    const key = `${o.path.split("/").slice(0, 2).join("/")}/ → ${o.target ? `${o.target.split("/").slice(0, o.target.startsWith("org/") ? 3 : 2).join("/")}/` : o.why}`;
+    const from = o.path.split("/").slice(0, 2).join("/");
+    const key = `${from}/ → ${o.target ? targetFolder(o.target) : o.why}`;
     groups.set(key, (groups.get(key) ?? 0) + 1);
   }
-  if (legacy.length) log(`\n${legacy.length} legacy object(s), still served until their writer switches (ADR-014):`);
-  for (const [key, n] of [...groups].sort(([a], [b]) => a.localeCompare(b))) log(`  LEGACY  ${String(n).padStart(5)}  ${key}`);
-  for (const b of bad) log(`  MISPLACED  ${b.path} — ${b.why}`);
-  log(bad.length ? `${bad.length} object(s) outside the layout` : "every object follows the layout (target or legacy)");
-  return { objects, misplaced: bad, legacy };
+  return [...groups].sort(([a], [b]) => a.localeCompare(b));
+}
+
+/** What `migrate` copies: each legacy object with a target that does not already hold a file of its size. */
+async function migrationPlan({ cfg, only, objects, fetchImpl }) {
+  const sizes = new Map(objects.map((o) => [o.path, o.size]));
+  const listed = new Set();
+  const known = async (target) => {
+    // The target's folder is listed once, when the listing did not cover it.
+    const dir = targetFolder(target);
+    if (sizes.has(target) || listed.has(dir)) return;
+    listed.add(dir);
+    for (const t of await listZone(cfg, fetchImpl, dir).catch(() => [])) sizes.set(t.path, t.size);
+  };
+  const todo = [];
+  for (const o of objects) {
+    const p = placement(o.path);
+    if (!o.path.startsWith(only) || p.state !== "legacy" || !p.target) continue;
+    await known(p.target);
+    if (sizes.get(p.target) !== o.size) todo.push({ from: o.path, to: p.target, size: o.size, replaced: sizes.has(p.target) });
+  }
+  return todo;
 }
 
 /**
@@ -303,21 +344,7 @@ export async function tree({ cfg, fetchImpl = globalThis.fetch, log = console.lo
  */
 export async function migrate({ cfg, only = "", yes = false, accountKey, fetchImpl = globalThis.fetch, log = console.log, objects }) {
   objects ??= await listZone(cfg, fetchImpl, only);
-  const sizes = new Map(objects.map((o) => [o.path, o.size]));
-  const listed = new Set();
-  const todo = [];
-  for (const o of objects) {
-    const p = placement(o.path);
-    if (!o.path.startsWith(only) || p.state !== "legacy" || !p.target) continue;
-    // The target's folder (org/v1/<part>/ or apps/<app>/, ui/<area>/) is listed once, when the listing did not cover it.
-    const dir = p.target.split("/").slice(0, p.target.startsWith("org/") ? 3 : 2).join("/");
-    if (!sizes.has(p.target) && !listed.has(dir)) {
-      listed.add(dir);
-      for (const t of await listZone(cfg, fetchImpl, `${dir}/`).catch(() => [])) sizes.set(t.path, t.size);
-    }
-    if (sizes.get(p.target) === o.size) continue;
-    todo.push({ from: o.path, to: p.target, size: o.size, replaced: sizes.has(p.target) });
-  }
+  const todo = await migrationPlan({ cfg, only, objects, fetchImpl });
   const bytes = todo.reduce((a, t) => a + t.size, 0);
   log(`${todo.length} object(s) to copy, ${(bytes / 1048576).toFixed(1)} MB${yes ? "" : " — a preview: run again with --yes"}`);
   if (!yes) {
