@@ -17,7 +17,7 @@
 // `library` mirrors what site/ serves into the browsable folders (products/<product>/…, people/personas/…) under human names;
 // `prune --retired` also removes the folders of a renamed product (RETIRED in bunny-layout.mjs) that no manifest of main names.
 // `readme` publishes the layout as README.txt at the zone root, then purges it by URL (MEDIA_ACCOUNT_API_KEY, the Bunny account key).
-// This script writes only under site/.
+// This script writes only in layout v2 (assertWritable): sites/, org/v1/films/, apps/ — and deletes legacy objects nothing names.
 //
 // Areas under site/ (PR captures are apart, under pr-assets/ — scripts/pr-assets.mjs; the basemap under maps/):
 //   site/home/…      the home page (backdrop loops, the kit in a phone)
@@ -30,14 +30,16 @@
 // which defaults to the one the site reads (lib/cdn.ts). No dependency: Node ≥ 20.
 
 import { createHash } from "node:crypto";
-import { readFileSync, statSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { execFileSync } from "node:child_process";
-import { FOREIGN_WRITERS, LAYOUT_README, README_NAME, RETIRED, SITE_AREA_NAMES, assertUnder, layoutHelp, libraryPath, placement } from "./bunny-layout.mjs";
+import { FOREIGN_WRITERS, FOREIGN_WRITERS_V2, LAYOUT_README, README_NAME, RETIRED, SITE_AREA_NAMES, assertWritable, layoutHelp, libraryPath, manifestObject, placement, targetOf } from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 
-export const ROOT = "site";
+/** The manifest root of layout v2 (ADR-014): entries resolve under sites/, org/v1/films/ and apps/ (manifestObject). "site" is the legacy root. */
+export const ROOT = "sites";
+export const LEGACY_ROOT = "site";
 export const DEFAULT_PULL_ZONE = "krizaka-assets.b-cdn.net";
 export const MANIFEST = resolve(dirname(fileURLToPath(import.meta.url)), "../lib/cdn-manifest.json");
 
@@ -75,7 +77,8 @@ export function writeManifest(manifest, file = MANIFEST) {
   writeFileSync(file, `${JSON.stringify({ root: manifest.root, files }, null, 2)}\n`);
 }
 
-const objectPath = (root, path, hash) => assertUnder(ROOT, `${root}/${versioned(path, hash)}`);
+/** The object of a manifest entry: layout v2 for this manifest, the legacy site/ path for an old branch's. */
+export const objectPath = (root, path, hash) => manifestObject(root, path, hash, versioned);
 const enc = (p) => p.split("/").map(encodeURIComponent).join("/");
 const storageUrl = (cfg, p) => `https://${cfg.endpoint}/${encodeURIComponent(cfg.zone)}/${enc(p)}`;
 const cdnUrl = (cfg, p) => `https://${cfg.pullZone}/${enc(p)}`;
@@ -96,7 +99,7 @@ export async function upload({ src, to, cfg, manifest, dryRun = false, fetchImpl
   for (const f of plan(src, to)) {
     const body = readFileSync(f.path);
     const hash = hashOf(body);
-    const path = objectPath(manifest.root, f.logical, hash);
+    const path = assertWritable(objectPath(manifest.root, f.logical, hash));
     const same = manifest.files[f.logical] === hash;
     if (!same && !dryRun) {
       const res = await fetchImpl(storageUrl(cfg, path), {
@@ -194,25 +197,97 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
 export const MIN_AGE_MS = 24 * 3600 * 1000;
 
 export async function prune({ cfg, manifest, yes = false, retired = false, extraKeep = new Set(), minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log }) {
-  const keep = new Set([...Object.entries(manifest.files).map(([l, h]) => objectPath(manifest.root, l, h)), ...extraKeep]);
+  const entries = Object.entries(manifest.files);
+  const named = entries.map(([l, h]) => objectPath(manifest.root, l, h));
+  // Until the release that reads layout v2 is live (krizaka-com#450), the legacy copy of every current entry serves too.
+  const legacyNamed = entries.map(([l, h]) => objectPath(LEGACY_ROOT, l, h));
+  const keep = new Set([...named, ...legacyNamed, ...extraKeep]);
+  for (const p of [...keep]) {
+    const t = targetOf(p);
+    if (t) keep.add(t);
+  }
+  // The folders this manifest writes: site/ (legacy) and the v2 folders its entries land in.
+  const v2 = named.filter((p) => !p.startsWith(`${LEGACY_ROOT}/`)).map((p) => p.split("/").slice(0, p.startsWith("org/") ? 3 : 2).join("/"));
+  const dirs = [...new Set([LEGACY_ROOT, ...v2])].sort();
+  const all = [];
+  for (const d of dirs) all.push(...(await listObjects(cfg, d, fetchImpl)));
+  const foreign = (p) => [...FOREIGN_WRITERS, ...FOREIGN_WRITERS_V2].some((prefix) => p.startsWith(prefix));
   // --retired: only the folders of a renamed product (RETIRED), named by no manifest of main — work on old branches that predates the rename does not keep them.
-  const all = await listObjects(cfg, manifest.root, fetchImpl);
   const unnamed = retired
-    ? all.filter((o) => RETIRED.some((re) => re.test(o.path)) && !Object.entries(manifest.files).some(([l, h]) => objectPath(manifest.root, l, h) === o.path))
-    : all.filter((o) => !keep.has(o.path) && !FOREIGN_WRITERS.some((prefix) => o.path.startsWith(prefix)));
+    ? all.filter((o) => RETIRED.some((re) => re.test(o.path)) && !legacyNamed.includes(o.path))
+    : all.filter((o) => !keep.has(o.path) && !foreign(o.path));
   const stale = unnamed.filter((o) => !o.changed || now - o.changed >= minAgeMs).map((o) => o.path);
   const recent = unnamed.length - stale.length;
   if (recent) log(`kept ${recent} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be committing its manifest)`);
   for (const p of stale) {
-    assertUnder(ROOT, p);
-    if (yes) {
-      const res = await fetchImpl(storageUrl(cfg, p), { method: "DELETE", headers: { AccessKey: cfg.apiKey } });
-      if (!res.ok) throw new Error(`deletion of ${p} failed: HTTP ${res.status}`);
-    }
+    if (!dirs.some((d) => p.startsWith(`${d}/`))) throw new Error(`${p} is outside the folders this manifest writes`);
+    if (yes) await remove(cfg, p, fetchImpl);
     log(`${yes ? "deleted" : "would delete"}  ${p}`);
   }
-  log(`${stale.length} stale object(s) under ${manifest.root}/${yes ? "" : " — run again with --yes to delete them"}`);
+  log(`${stale.length} stale object(s) under ${dirs.join(", ")}${yes ? "" : " — run again with --yes to delete them"}`);
   return stale;
+}
+
+async function remove(cfg, p, fetchImpl) {
+  const res = await fetchImpl(storageUrl(cfg, p), { method: "DELETE", headers: { AccessKey: cfg.apiKey } });
+  if (!res.ok) throw new Error(`deletion of ${p} failed: HTTP ${res.status}`);
+}
+
+/**
+ * What still names an object outside layout v2: `urls` (paths after the pull zone's host, found in the org's code on main,
+ * the latest npm tarballs, the live pages and every branch's manifest), `hex` (10-hex content hashes found there: a file
+ * whose hash is named is used, wherever its folder is built) and `prefixes` (folders whose names are built in code,
+ * e.g. `brand/`). Read from <dir>/ref-urls.txt, ref-hex10.txt and ref-prefixes.txt, one per line.
+ */
+export function readRefs(dir) {
+  const lines = (f) => {
+    try {
+      return readFileSync(join(dir, f), "utf8").split("\n").map((l) => l.trim()).filter(Boolean);
+    } catch (err) {
+      if (err.code === "ENOENT") return [];
+      throw err;
+    }
+  };
+  return { urls: new Set(lines("ref-urls.txt")), hex: new Set(lines("ref-hex10.txt")), prefixes: lines("ref-prefixes.txt") };
+}
+
+/** True when something still names <path>: its URL, a folder URL above it, a built prefix, or its content hash. */
+export function isNamed(path, refs) {
+  if (refs.urls.has(path) || refs.prefixes.some((p) => path.startsWith(p))) return true;
+  const hash = /\.([0-9a-f]{10})\.[a-z0-9]+$/.exec(path)?.[1];
+  if (hash && refs.hex.has(hash)) return true;
+  for (let i = path.lastIndexOf("/"); i > 0; i = path.lastIndexOf("/", i - 1)) if (refs.urls.has(path.slice(0, i + 1))) return true;
+  return false;
+}
+
+/** The objects outside layout v2 (legacy or misplaced) that nothing names and are older than `minAgeMs`: what purge-unused deletes. */
+export function unusedLegacy(objects, refs, { now = Date.now(), minAgeMs = MIN_AGE_MS } = {}) {
+  return objects.filter((o) => placement(o.path).state !== "ok" && o.path !== README_NAME && !isNamed(o.path, refs) && (!o.changed || now - o.changed >= minAgeMs));
+}
+
+/**
+ * Deletes the objects outside layout v2 that nothing names (`unusedLegacy`) — a preview without `yes`. With `backup`, each
+ * non-empty object is downloaded there first (same relative path) and the deletion stops if a download fails. A target
+ * object (org/, sites/, apps/, pr-assets/) is never deleted by this command.
+ */
+export async function purgeUnused({ cfg, refs, yes = false, backup, minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log, objects }) {
+  objects ??= await listZone(cfg, fetchImpl);
+  const unused = unusedLegacy(objects, refs, { now, minAgeMs });
+  const bytes = unused.reduce((a, o) => a + o.size, 0);
+  log(`${unused.length} unused object(s) outside layout v2, ${(bytes / 1048576).toFixed(1)} MB${yes ? "" : " — a preview: run again with --yes"}`);
+  for (const o of unused) {
+    if (placement(o.path).state === "ok") throw new Error(`${o.path} is in the target layout: never purged`);
+    if (yes && backup && o.size > 0) {
+      const res = await fetchImpl(storageUrl(cfg, o.path), { headers: { AccessKey: cfg.apiKey } });
+      if (!res.ok) throw new Error(`backup of ${o.path} failed: HTTP ${res.status}`);
+      const file = join(backup, o.path);
+      mkdirSync(dirname(file), { recursive: true });
+      writeFileSync(file, Buffer.from(await res.arrayBuffer()));
+    }
+    if (yes) await remove(cfg, o.path, fetchImpl);
+    log(`${yes ? "deleted" : "would delete"}  ${(o.size / 1024).toFixed(0).padStart(7)} kB  ${o.path}`);
+  }
+  return unused;
 }
 
 /**
@@ -257,7 +332,7 @@ export async function listZone(cfg, fetchImpl = globalThis.fetch, from = "") {
     for (const item of await res.json()) {
       const p = `${dir}${item.ObjectName}`;
       if (item.IsDirectory) await walk(`${p}/`);
-      else out.push({ path: p, size: item.Length ?? 0 });
+      else out.push({ path: p, size: item.Length ?? 0, changed: item.LastChanged ? Date.parse(`${item.LastChanged}Z`) : 0 });
     }
   };
   await walk(from);
@@ -302,8 +377,8 @@ function logFolders(objects, log) {
   log(`\n${objects.length} object(s), ${(total / 1048576).toFixed(0)} MB`);
 }
 
-/** The folder a target lands in: `org/v1/<part>/`, or `apps/<app>/`, `ui/<area>/`. */
-const targetFolder = (target) => `${target.split("/").slice(0, target.startsWith("org/") ? 3 : 2).join("/")}/`;
+/** The folder a target lands in: `org/v1/<part>/`, `sites/<site>/<kind>/`, `apps/<app>/<kind>/`. */
+const targetFolder = (target) => `${target.split("/").slice(0, 3).join("/")}/`;
 
 /** Legacy objects counted per « old folder → target folder (or why none) », sorted. */
 function legacyGroups(legacy) {
@@ -406,6 +481,7 @@ const USAGE = `usage:
   node scripts/cdn-assets.mjs library [--env-file <path>] [--dry-run]   RETIRED (ADR-014): the human-name mirror is no longer written
   node scripts/cdn-assets.mjs tree [--env-file <path>] [--strict]   count/size per folder; fails on a misplaced object (and on a legacy one with --strict)
   node scripts/cdn-assets.mjs migrate [--only <prefix>] [--env-file <path>] [--yes]   copy the legacy objects to their target (ADR-014), old paths kept
+  node scripts/cdn-assets.mjs purge-unused --refs <dir> [--backup <dir>] [--env-file <path>] [--yes]   delete what is outside layout v2 and named by nothing (refs: see readRefs)
   node scripts/cdn-assets.mjs readme [--env-file <path>]    publish the layout as README.txt at the zone root
 ${layoutHelp()}`;
 
@@ -454,6 +530,13 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
   }
   if (command === "migrate") {
     await migrate({ cfg: loadConfig(merged), only: args.only ?? "", yes, accountKey: merged.MEDIA_ACCOUNT_API_KEY, fetchImpl, log });
+    return 0;
+  }
+  if (command === "purge-unused") {
+    if (!args.refs) throw new Error("purge-unused needs --refs <dir> (ref-urls.txt, ref-hex10.txt, ref-prefixes.txt)");
+    const refs = readRefs(args.refs);
+    if (!refs.urls.size) throw new Error(`${args.refs}/ref-urls.txt is empty: refusing to purge without references`);
+    await purgeUnused({ cfg: loadConfig(merged), refs, yes, backup: args.backup, minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000, fetchImpl, log });
     return 0;
   }
   if (command === "readme") {

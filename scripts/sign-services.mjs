@@ -1,7 +1,7 @@
 // Signs the manifest of the mobile apps (ADR-003, krizaka/.github#120).
 //   node scripts/sign-services.mjs            sign lib/services.ts → lib/services.signed.json (only when the data changed)
 //   node scripts/sign-services.mjs --check    verify the committed document is the signature of lib/services.ts (the build runs it)
-//   node scripts/sign-services.mjs --publish  also upload the document to Bunny (discovery/services.json), the fallback copy
+//   node scripts/sign-services.mjs --publish  also upload the document to Bunny (org/v1/discovery/services.json, and the legacy discovery/ copy while read), the fallback copy
 //   node scripts/sign-services.mjs --live     compare what www.krizaka.com and the Bunny copy serve with the committed document
 // The private key never leaves the company vault: it is read with secret.sh (or from APP_DISCOVERY_SIGNING_KEY_<KEYID>
 // in the environment) and never printed. Credentials of Bunny: --env-file as scripts/cdn-assets.mjs.
@@ -13,13 +13,23 @@ import { homedir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { KRIZAKA_MANIFEST_URLS } from "@krizaka/discovery";
-import { assertUnder } from "./bunny-layout.mjs";
+import { assertWritable, placement } from "./bunny-layout.mjs";
 import { loadConfig, parseEnvFile, storageUrl } from "./pr-assets.mjs";
 import { checkSigned, signServices } from "./services-lib.mjs";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 export const SIGNED_FILE = join(root, "lib/services.signed.json");
-export const BUNNY_PATH = "discovery/services.json";
+/** Where the fallback copy lives in layout v2 (ADR-014). */
+export const BUNNY_PATH = "org/v1/discovery/services.json";
+/** The legacy copy, refreshed (never created) only while the published @krizaka/discovery still reads it (krizaka-com#450). */
+export const LEGACY_BUNNY_PATH = "discovery/services.json";
+
+/** The paths `publish` writes: the v2 one, plus the legacy one while a published reader (KRIZAKA_MANIFEST_URLS) names it. */
+export function publishPaths(urls = KRIZAKA_MANIFEST_URLS) {
+  const legacy = urls.some((u) => new URL(u).pathname === `/${LEGACY_BUNNY_PATH}`);
+  if (legacy && placement(LEGACY_BUNNY_PATH).state !== "legacy") throw new Error(`${LEGACY_BUNNY_PATH} is no longer a legacy path`);
+  return [assertWritable(BUNNY_PATH), ...(legacy ? [LEGACY_BUNNY_PATH] : [])];
+}
 
 const readSeed = (keyId, { env = process.env, run = execFileSync } = {}) => {
   const name = `APP_DISCOVERY_SIGNING_KEY_${keyId.toUpperCase()}`;
@@ -29,15 +39,16 @@ const readSeed = (keyId, { env = process.env, run = execFileSync } = {}) => {
 };
 
 /** Uploads the committed document to the fallback prefix of the zone. */
-export async function publish({ raw, cfg, fetchImpl = globalThis.fetch, log = console.log }) {
-  const path = assertUnder("discovery", BUNNY_PATH);
-  const res = await fetchImpl(storageUrl(cfg, path), {
-    method: "PUT",
-    headers: { AccessKey: cfg.apiKey, "Content-Type": "application/json", Checksum: createHash("sha256").update(raw).digest("hex").toUpperCase() },
-    body: raw,
-  });
-  if (!res.ok) throw new Error(`upload of ${path} failed: HTTP ${res.status}`);
-  log(`published ${path}`);
+export async function publish({ raw, cfg, fetchImpl = globalThis.fetch, log = console.log, urls }) {
+  for (const path of publishPaths(urls)) {
+    const res = await fetchImpl(storageUrl(cfg, path), {
+      method: "PUT",
+      headers: { AccessKey: cfg.apiKey, "Content-Type": "application/json", Checksum: createHash("sha256").update(raw).digest("hex").toUpperCase() },
+      body: raw,
+    });
+    if (!res.ok) throw new Error(`upload of ${path} failed: HTTP ${res.status}`);
+    log(`published ${path}`);
+  }
 }
 
 /** Fetches every manifest URL and reports which ones serve the committed document (by its signature). */

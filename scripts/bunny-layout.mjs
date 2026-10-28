@@ -9,53 +9,24 @@ export const BRANDS = ["krizaka", "orazaka", "orochia", "yasakia", "yororis", "y
 /** The kinds of media under products/<product>/. */
 export const PRODUCT_KINDS = ["home", "tour", "mobile", "gallery", "studios", "docs"];
 
-/** The LEGACY roots (before ADR-014): still served, frozen once their writer switches, pruned when nothing names them. Each one's target is `targetOf`. */
+/** The LEGACY folders (before layout v2): still served while something names them, never written again. `targetOf` maps each object. */
 export const ZONE = {
-  brand: {
-    writer: "tools/export-brand.mjs (krizaka-ui) — generated from @krizaka/ui, never hand-made",
-    path: "brand/<krizaka|orazaka|orochia|yasakia|yororis>/{logo,mark}-{dark,light}[-256|512|1024].{svg,png} · avatar-{500,1024}.png · social-preview-1280x640.png · brand/manifest.json",
-    what: "the logos and marks of the family: SVG, PNG on transparent (dark and light variants), account avatar, social preview — stable names, always the latest",
-  },
+  brand: { target: "org/v1/brand/", path: "brand/<brand>/<file> · brand/{manifest,index}.json", what: "the marks of the family (export-brand)" },
+  defaults: { target: "org/v1/defaults/", path: "defaults/v1/<kind>/<id>-<size>.webp · defaults/v1/manifest.json", what: "the default pictures of the org JSON (export-defaults)" },
   people: {
-    writer: "tools/export-brand.mjs (krizaka-ui) for defaults/ · scripts/cdn-assets.mjs library (krizaka-com) for personas/",
-    path: "people/defaults/v1/<brand>/{person,plain}-<1-6>{.svg,-256.webp,-512.webp} · people/personas/<product>/<name>-{256,512}.webp",
-    what: "profile pictures: the default avatars a product shows when a person has no photo (generated, versioned by folder), and the demo personas' portraits",
+    target: "org/v1/defaults/tones/ (people/defaults/) · deleted when unused (people/personas/, the retired mirror)",
+    path: "people/defaults/v1/<brand>/<file> · people/personas/<site>/<file>",
+    what: "the generated avatar tones of @krizaka/ui, and the human-name mirror of the personas",
   },
-  defaults: {
-    writer: "tools/export-defaults.mjs (krizaka-ui) — generated from @krizaka/ui and the founder's set, never hand-made",
-    path: "defaults/v1/<person|folder|organisation|shop>/<id>-{256,512,1024}.webp (+ <id>.svg when drawn) · defaults/v1/banner/<id>-{960,1920}.webp · defaults/v1/manifest.json",
-    what: "the central default pictures of the family (people, folders, organisations, shops, banners), versioned by folder (a changed picture is v2; v1 keeps serving). Their catalogue — ids, alt EN/FR, URLs — is the `defaults` section of the Krizaka org JSON (@krizaka/org); an app reads the URLs from there, never hard-codes one",
-  },
-  products: {
-    writer: "scripts/cdn-assets.mjs library (krizaka-com) — a readable mirror of what the products serve",
-    path: "products/<product>/{home,tour,mobile,gallery,studios,docs}/<name>.<ext>",
-    what: "the media of each product — loops, tours, screenshots, posters — under human names, to browse and download. The pages load the hashed copies of site/, not these",
-  },
+  maps: { target: "org/v1/maps/", path: "maps/v1/{tiles,fonts}/…", what: "the basemap of @krizaka/ui/map (map-assets)" },
+  discovery: { target: "org/v1/discovery/", path: "discovery/services.json", what: "the signed services manifest (ADR-003)" },
   site: {
-    writer: "scripts/cdn-assets.mjs (krizaka-com)",
+    target: "sites/<site>/<kind>/ · org/v1/films/ · apps/akinaza/defaults/",
     path: "site/<area>/<product?>/<kind>/<name>.<hash>.<ext>",
-    what: "media loaded by the pages — hashed names, recorded in lib/cdn-manifest.json, never overwritten; URLs published packages still use stay valid",
+    what: "the media the pages load (cdn-assets and the product sites), hashed",
   },
-  discovery: {
-    writer: "scripts/sign-services.mjs --publish (krizaka-com) — the signed manifest, never hand-made",
-    path: "discovery/services.json",
-    what: "the fallback copy of https://www.krizaka.com/.well-known/krizaka/services.json (ADR-003): the mobile apps read it when the www app is down — the same signed document, overwritten on each signing, short cache",
-  },
-  ui: {
-    writer: "krizaka-ui (docs site and Storybook media)",
-    path: "ui/<area>/<name>.<hash>.<ext>",
-    what: "media of ui.krizaka.com: the map previews, the landing kit",
-  },
-  maps: {
-    writer: "tools/map-assets.mjs (krizaka-ui)",
-    path: "maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles · maps/v1/fonts/<font stack>/<start>-<end>.pbf",
-    what: "the basemap of @krizaka/ui/map — Protomaps extracts and glyphs; a new extract is a new dated file",
-  },
-  "pr-assets": {
-    writer: "scripts/pr-assets.mjs (any repository)",
-    path: "pr-assets/<repo>/<pr-or-topic>/<file>",
-    what: "review evidence linked from PR and issue bodies — screenshots, recordings, metrics; never committed to a repository",
-  },
+  ui: { target: "sites/ui/", path: "ui/<area>/<name>.<hash>.<ext>", what: "media of ui.krizaka.com" },
+  products: { target: "none — the retired human-name mirror of site/, deleted when unused", path: "products/<product>/<kind>/<name>.<ext>", what: "a browsable copy of site/" },
 };
 
 /**
@@ -77,6 +48,9 @@ export const FOREIGN_WRITERS = [
   "site/products/yororis/tour/",
   "site/blog/",
 ];
+
+/** The same writers' folders in layout v2: prune never deletes under them either. */
+export const FOREIGN_WRITERS_V2 = ["sites/orazaka/", "sites/orochia/", "sites/yasakia/", "sites/yomizaka/", "sites/akinaza/", "apps/akinaza/", "sites/kachizaka/", "sites/yororis/tour/", "sites/blog/"];
 
 /** Folders of the zone that are retired (a renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
 export const RETIRED = [/^site\/(?:people|products)\/yazakia\//];
@@ -117,41 +91,49 @@ export const SITE_AREAS = {
 
 export const SITE_AREA_NAMES = Object.keys(SITE_AREAS);
 
-// ── THE TARGET LAYOUT (ADR-014, 2026-10-28) ──────────────────────────────────────────────────────────────────────────
-// « structure par app, et l'org a les defaults, avatar, bannière… » · « la carte c'est une donnée org » · « l'org a un CDN ».
+// ── THE TARGET LAYOUT v2 (ADR-014 as amended, 2026-10-28) ───────────────────────────────────────────────────────────
+// « org est la racine de tout ce qui appartient à Krizaka, notre maison mère : elle offre les valeurs par défaut ; puis les
+// sites, chacun ses données ; enfin les applications, seulement quand une app lit ou stocke des données à elle. »
 
 /** The version folder of the org's CDN: compatible changes only; a breaking one is v2, published beside v1. */
 export const ORG_VERSION = "v1";
-/** No object of org/, apps/ or ui/ sits under more than this many folders. */
+/** No object of org/, sites/ or apps/ sits under more than this many folders. */
 export const MAX_FOLDERS = 5;
-/** One folder per app under apps/: krizaka.com, the blog, and each product (Krizaka's own media are the org's). */
-export const APPS = ["www", "blog", ...BRANDS.filter((b) => b !== "krizaka")];
+const PRODUCTS = BRANDS.filter((b) => b !== "krizaka");
+/** One folder per public site: krizaka.com, the blog, ui.krizaka.com, java.krizaka.com and each product's dev site. */
+export const SITES = ["www", "blog", "ui", "java", ...PRODUCTS];
+/** One folder per application that reads or stores media of its own at runtime (uploads, generated, its own defaults). */
+export const APPS = PRODUCTS;
 /** What the org's CDN holds, one generator each. */
 export const ORG_PARTS = {
   json: "org.json · org.<hash>.json · org.schema[.<hash>].json · app.schema[.<hash>].json · apps/<app>[.<hash>].json — @krizaka/org scripts/publish.mjs (krizaka-ts)",
-  defaults: "defaults/<person|banner|shop|folder|organisation>/<id>-<size>.webp (or <id>.svg) · defaults/manifest.json — tools/export-defaults.mjs (krizaka-ui)",
+  defaults: "defaults/<person|banner|shop|folder|organisation>/<id>-<size>.webp (or <id>.svg) · defaults/tones/<brand>/<file> (the generated tones of @krizaka/ui's Avatar) · defaults/manifest.json — tools/export-defaults.mjs, tools/export-brand.mjs (krizaka-ui)",
   brand: "brand/<brand>/<file> · brand/{manifest,index}.json — tools/export-brand.mjs (krizaka-ui)",
   maps: "maps/tiles/<region>-<YYYYMMDD>.pmtiles · maps/fonts/<stack>/<a>-<b>.pbf — tools/map-assets.mjs (krizaka-ui)",
   films: "films/<series>/<name>.<hash>.<ext> — the films of the flock (krizaka-ui tools/brand-films), uploaded by scripts/cdn-assets.mjs",
   discovery: "discovery/services.json — scripts/sign-services.mjs --publish (krizaka-com), ADR-003",
 };
+/** The kinds of a site's media (`sites/<site>/<kind>/…`): what the files are for, never who wrote them. */
+export const SITE_KINDS = ["home", "tour", "gallery", "gallery-video", "video", "cinema", "compare", "showcase", "web", "mobile", "docs", "personas", "download", "demo", "demo-stories", "films", "posts", "shared", "landing", "maps", "shop"];
+/** The kinds of an app's own media (`apps/<app>/<kind>/…`). */
+export const APP_KINDS = ["defaults", "uploads", "generated"];
 
-/** The four roots of the target layout. */
+/** The four roots of the target layout, in reading order: the org, the sites, the apps, the evidence. */
 export const TARGET = {
   org: {
     writer: "the generator of each part (listed above) — never a hand upload",
     path: `org/${ORG_VERSION}/{org.json,apps,defaults,brand,maps,films,discovery}/…`,
-    what: "THE ORG'S CDN — what the whole family reads: the org JSON and each app's config (@krizaka/org), the default pictures (ADR-011), the marks, the basemap, the films, the discovery manifest:\n    " + Object.values(ORG_PARTS).join("\n    "),
+    what: "THE ORG — Krizaka's own data, the values every site and app reads by default: the org JSON and each app's config (@krizaka/org), the default pictures (ADR-011) and avatar tones, the marks, the basemap, the films, the discovery manifest:\n    " + Object.values(ORG_PARTS).join("\n    "),
+  },
+  sites: {
+    writer: "scripts/cdn-assets.mjs (krizaka-com: www) and each site's own media script (its repository names its files)",
+    path: "sites/<site>/<kind>/[<sub>/…]<name>.<hash>.<ext>",
+    what: `THE SITES — what one public site shows (${SITES.join(" · ")}): home, tour, gallery, video, mobile, docs, personas, download, demo, films; the blog's posts under posts/<post>/. Hashed, immutable`,
   },
   apps: {
-    writer: "scripts/cdn-assets.mjs (krizaka-com) and each app's own media script (its repository names its files)",
-    path: "apps/<app>/<kind>/[<sub>/…]<name>.<hash>.<ext>",
-    what: "the media of ONE app — home, tour, gallery, video, mobile, docs, personas, download, demo, its own defaults; the blog's kind is the post. Hashed, immutable",
-  },
-  ui: {
-    writer: "krizaka-ui (docs site and Storybook media)",
-    path: "ui/<area>/<name>.<hash>.<ext>",
-    what: "media of ui.krizaka.com: the map previews, the landing kit, its demo personas (ui/personas/)",
+    writer: "the application itself (its media script or its runtime) — only when it reads or stores media of its own",
+    path: "apps/<app>/<defaults|uploads|generated>/[<sub>/…]<name>.<hash>.<ext>",
+    what: `THE APPLICATIONS — runtime data of one app (${APPS.join(" · ")}): its own default art, what its users upload, what it generates`,
   },
   "pr-assets": {
     writer: "scripts/pr-assets.mjs (any repository)",
@@ -160,48 +142,59 @@ export const TARGET = {
   },
 };
 
-export const LAYOUT_README = `KRIZAKA ASSETS — layout of this storage zone (served by krizaka-assets.b-cdn.net)
-Decision: krizaka/.github docs/adr/ADR-014-bunny-org-cdn-and-apps.md. Each prefix has ONE script that writes it and refuses the others.
+/** The sub-issue of krizaka/.github#368 whose PR switches the readers and writers of a legacy folder (then it is pruned). */
+export const SWITCH_ISSUES = [
+  [/^site\/blog\//, "krizaka/krizaka-blog#176"],
+  [/^site\/(?:products|docs|people)\/akinaza\//, "krizaka/akinaza#493"],
+  [/^site\/(?:products|docs|people)\/yomizaka\//, "krizaka/yomizaka#494"],
+  [/^site\/(?:products|docs|people)\/yasakia\//, "krizaka/yasakia#182"],
+  [/^site\/(?:products|docs|people)\/kachizaka\//, "krizaka/kachizaka#121"],
+  [/^site\/(?:products|docs|people)\/yororis\//, "krizaka/yororis#136"],
+  [/^site\/(?:(?:products|docs|people)\/orochia\/|brand-films\/orochia\/)/, "krizaka/orochia#425"],
+  [/^site\/(?:products|docs|people)\/orazaka\//, "krizaka/orazaka-web-client#320"],
+  [/^site\/people\/ui\/|^ui\/|^maps\/|^brand\/|^site\/brand-films\//, "krizaka/krizaka-ui#817"],
+  [/^people\/personas\/ui\//, "krizaka/yororis#136"],
+  [/^defaults\/|^people\/defaults\//, "krizaka/krizaka-ts#200"],
+  [/^site\/|^discovery\//, "krizaka/krizaka-com#450"],
+];
+/** The switch sub-issue of a legacy path, or null (a target path, or a retired folder: nothing to switch, only to prune). */
+export const switchIssue = (path) => SWITCH_ISSUES.find(([re]) => re.test(path))?.[1] ?? null;
 
-TARGET LAYOUT — four roots, at most ${MAX_FOLDERS} folders deep
+export const LAYOUT_README = `KRIZAKA ASSETS — layout of this storage zone (served by krizaka-assets.b-cdn.net)
+Decision: krizaka/.github docs/adr/ADR-014-bunny-org-cdn-and-apps.md (layout v2). Each prefix has ONE script that writes it
+and refuses the others. Nothing else sits at the root.
+
+TARGET LAYOUT — four roots, at most ${MAX_FOLDERS} folders deep: the org, then the sites, then the applications, then the evidence
 ${Object.entries(TARGET)
   .map(([prefix, z]) => `${prefix}/\n  ${z.what}\n  ${z.path}\n  written by ${z.writer}`)
   .join("\n\n")}
 
-Apps: ${APPS.join(" · ")}.
+Sites: ${SITES.join(" · ")}. Apps: ${APPS.join(" · ")}. Brands: ${BRANDS.join(" · ")}.
 
-LEGACY ROOTS — still served (published packages and live sites name them), copied to the target by
-\`node scripts/cdn-assets.mjs migrate\`, frozen once their writer switches, pruned only when nothing names them.
+LEGACY FOLDERS — still served only while a published package or a live site names them; copied to the target by
+\`node scripts/cdn-assets.mjs migrate\`, never written again, deleted (\`cdn-assets purge-unused\`) once nothing names them.
 
 ${Object.entries(ZONE)
-  .map(([prefix, z]) => `${prefix}/\n  ${z.what}\n  ${z.path}\n  written by ${z.writer}`)
+  .map(([prefix, z]) => `${prefix}/  →  ${z.target}\n  ${z.what}`)
   .join("\n\n")}
 
-Brands: ${BRANDS.join(" · ")}. (Yasakia was called Yazakia: the old names are retired.)
-
-site/ areas
-${Object.entries(SITE_AREAS)
-  .map(([area, text]) => `  ${area.padEnd(9)} ${text}`)
-  .join("\n")}
-
-Orochia has its own storage zone (orochia-dev) and Stream library: its new media do not go in this zone. Plan: move
-site/products/orochia and the Orochia personas there (steps: krizaka/orochia issue "Move Orochia's media to its own zone").
-Until then they stay where they are under site/ (not mirrored in products/ or people/personas/).
+Orochia has its own storage zone (orochia-dev) and Stream library: its new media do not go in this zone
+(krizaka/orochia#153); sites/orochia/ holds only what is still here.
 
 Rules
-  - brand/, people/defaults/ and defaults/ are generated from the code of @krizaka/ui: change the component, run the export, never upload by hand.
-  - Default media URLs (avatars, banners, logos) come from the Krizaka org JSON (org/v1/org.json), never hard-coded or bundled in an app.
-  - products/ and people/personas/ are a mirror of site/ (node scripts/cdn-assets.mjs library): browse here, load from site/.  - site/ files are immutable: <name>.<10 hex of SHA-256>.<ext>. A change is a new file; the superseded one is removed
-    by \`node scripts/cdn-assets.mjs prune\`, which keeps anything named by a manifest of main or of an unmerged branch.
-  - pr-assets/ is evidence: kept as long as a PR or an issue links it. Delete a whole <repo>/<topic>/ only when nothing
-    links it any more.
-  - Add a file with the script of its prefix, never by hand. Audit with \`node scripts/cdn-assets.mjs tree\`.
+  - org/ is generated from the code (@krizaka/ui, @krizaka/org): change the component, run the export, never upload by hand.
+  - Default media URLs (avatars, banners, logos) come from the Krizaka org JSON (org/v1/org.json), never hard-coded.
+  - sites/ and apps/ files are immutable: <name>.<10 hex of SHA-256>.<ext>. A change is a new file; the superseded one is
+    removed by \`node scripts/cdn-assets.mjs prune\`, which keeps anything named by a manifest of main or of an unmerged branch.
+  - A new write outside the target layout fails (assertWritable).
+  - pr-assets/ is evidence: kept as long as a PR or an issue links it.
+  - Audit with \`node scripts/cdn-assets.mjs tree\`; browse with the cockpit (scripts/bunny-tree.mjs).
   - Contract: krizaka-com AGENTS.md section 5.2.
 `;
 
 /** Appended to the --help of every script that writes the zone. */
 export const layoutHelp = () =>
-  `\nBunny layout (full text: AGENTS.md §5.2, README.txt at the zone root):\n${Object.entries(ZONE)
+  `\nBunny layout v2 (full text: AGENTS.md §5.2, README.txt at the zone root):\n${Object.entries(TARGET)
     .map(([prefix, z]) => `  ${prefix.padEnd(10)} ${z.path}  — ${z.writer}`)
     .join("\n")}`;
 
@@ -263,6 +256,8 @@ const ORG_FILE = new RegExp(
     String.raw`apps/[a-z0-9-]+(?:\.[0-9a-f]{10})?\.json`,
     String.raw`defaults/manifest\.json`,
     String.raw`defaults/(?:person|folder|organisation|shop|banner)/[a-z0-9]+(?:-[a-z0-9]+)*(?:\.svg|-\d+\.webp)`,
+    String.raw`defaults/tones/manifest\.json`,
+    `defaults/tones/(?:${brandAlt})/${FILE}`,
     String.raw`brand/(?:manifest|index)\.json`,
     `brand/(?:${brandAlt})/${FILE}`,
     String.raw`maps/tiles/[a-z0-9-]+-\d{8}\.pmtiles`,
@@ -271,7 +266,8 @@ const ORG_FILE = new RegExp(
     String.raw`discovery/services\.json`,
   ].map((p) => `(?:${p})`).join("|"),
 );
-const APP_FILE = new RegExp(`^apps/(?:${APPS.join("|")})/[a-z0-9_-]+/(?:[a-z0-9_-]+/)*${HASHED}$`);
+const SITE_OBJECT = new RegExp(`^sites/(?:${SITES.join("|")})/(?:${SITE_KINDS.join("|")})/(?:[a-z0-9_-]+/)*${HASHED}$`);
+const APP_OBJECT = new RegExp(`^apps/(?:${APPS.join("|")})/(?:${APP_KINDS.join("|")})/(?:[a-z0-9_-]+/)*${HASHED}$`);
 
 /** Why <path> does not belong in the TARGET layout, or null. */
 export function targetMisplaced(path) {
@@ -284,16 +280,16 @@ export function targetMisplaced(path) {
     const m = /^org\/v\d+\/(.+)$/.exec(path);
     if (!m || !new RegExp(`^(?:${ORG_FILE.source})$`).test(m[1])) return `not org/v<n>/<${Object.keys(ORG_PARTS).join("|")}>/… (see ORG_PARTS)`;
   }
-  if (root === "apps" && !APP_FILE.test(path)) return `not apps/<${APPS.join("|")}>/<kind>/…/<name>.<hash>.<ext>`;
-  if (root === "ui" && parts.length < 3) return "not ui/<area>/<file>";
+  if (root === "sites" && !SITE_OBJECT.test(path)) return `not sites/<${SITES.join("|")}>/<${SITE_KINDS.join("|")}>/…/<name>.<hash>.<ext>`;
+  if (root === "apps" && !APP_OBJECT.test(path)) return `not apps/<${APPS.join("|")}>/<${APP_KINDS.join("|")}>/…/<name>.<hash>.<ext>`;
   if (root === "pr-assets" && parts.length < 4) return "not pr-assets/<repo>/<pr-or-topic>/<file>";
   return null;
 }
 
 /**
- * Where a LEGACY object goes in the target layout, or null when it has none (a frozen duplicate, a retired mirror, a
- * renamed product): `brand/orazaka/mark-dark.svg` → `org/v1/brand/orazaka/mark-dark.svg`,
- * `site/products/akinaza/tour/a.<hash>.mp4` → `apps/akinaza/tour/a.<hash>.mp4`.
+ * Where a LEGACY object goes in the target layout, or null when it has none (the retired mirror, a renamed product):
+ * `brand/orazaka/mark-dark.svg` → `org/v1/brand/orazaka/mark-dark.svg`,
+ * `site/products/akinaza/tour/a.<hash>.mp4` → `sites/akinaza/tour/a.<hash>.mp4`.
  */
 export function targetOf(path) {
   if (RETIRED.some((re) => re.test(path))) return null;
@@ -301,38 +297,43 @@ export function targetOf(path) {
     const m = re.exec(path);
     if (m) return to(m);
   }
-  return null; // people/ and products/: the frozen set and the retired mirror (ADR-014)
+  return null; // products/ and people/personas/: the retired mirror (ADR-014)
 }
 
 const ORG = `org/${ORG_VERSION}`;
-const APP = `(${APPS.join("|")})`;
+const PRODUCT = `(${PRODUCTS.join("|")})`;
 /** The legacy → target rules of `targetOf`, first match wins. */
 const TARGET_OF = [
   [/^defaults\/v1\/(.+)$/, (m) => `${ORG}/defaults/${m[1]}`],
+  [/^people\/defaults\/v1\/(.+)$/, (m) => `${ORG}/defaults/tones/${m[1]}`],
   [/^maps\/v1\/(.+)$/, (m) => `${ORG}/maps/${m[1]}`],
   [/^brand\/(.+)$/, (m) => `${ORG}/brand/${m[1]}`],
   [/^discovery\/(.+)$/, (m) => `${ORG}/discovery/${m[1]}`],
-  [/^site\/home\/(.+)$/, (m) => `apps/www/home/${m[1]}`],
-  [/^site\/blog\/(.+)$/, (m) => `apps/blog/${m[1]}`],
-  [new RegExp(`^site/products/${APP}/(.+)$`), (m) => `apps/${m[1]}/${m[2]}`],
-  [new RegExp(`^site/docs/${APP}/(.+)$`), (m) => `apps/${m[1]}/docs/${m[2]}`],
-  [/^site\/people\/ui\/(.+)$/, (m) => `ui/personas/${m[1]}`],
-  [new RegExp(`^site/people/${APP}/(.+)$`), (m) => `apps/${m[1]}/personas/${m[2]}`],
-  [/^site\/brand-films\/orochia\/(.+)$/, (m) => `apps/orochia/films/${m[1]}`],
+  [/^ui\/(.+)$/, (m) => `sites/ui/${m[1]}`],
+  [/^site\/home\/(.+)$/, (m) => `sites/www/home/${m[1]}`],
+  [/^site\/blog\/shared\/(.+)$/, (m) => `sites/blog/shared/${m[1]}`],
+  [/^site\/blog\/(.+)$/, (m) => `sites/blog/posts/${m[1]}`],
+  // Akinaza's trade art is what the app shows a shop without a photo, at runtime: the app's own defaults.
+  [/^site\/products\/akinaza\/defaults\/(.+)$/, (m) => `apps/akinaza/defaults/${m[1]}`],
+  [new RegExp(`^site/products/${PRODUCT}/(.+)$`), (m) => `sites/${m[1]}/${m[2]}`],
+  [new RegExp(`^site/docs/${PRODUCT}/(.+)$`), (m) => `sites/${m[1]}/docs/${m[2]}`],
+  [/^site\/people\/ui\/(.+)$/, (m) => `sites/ui/personas/${m[1]}`],
+  [new RegExp(`^site/people/${PRODUCT}/(.+)$`), (m) => `sites/${m[1]}/personas/${m[2]}`],
+  [/^site\/brand-films\/orochia\/(.+)$/, (m) => `sites/orochia/films/${m[1]}`],
   [/^site\/brand-films\/(.+)$/, (m) => `${ORG}/films/${m[1]}`],
 ];
 
 /** Why a legacy object has no target (shown by the audit). */
 export function frozenReason(path) {
-  if (path.startsWith("people/defaults/")) return "frozen: the duplicate default avatars — the org JSON's `defaults` section is the one set (ADR-014 §2)";
-  if (path.startsWith("products/") || path.startsWith("people/personas/")) return "retired: the human-name mirror of site/ (ADR-014 §1)";
+  if (path.startsWith("products/") || path.startsWith("people/personas/")) return "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it";
   if (RETIRED.some((re) => re.test(path))) return "retired: a renamed product";
   return null;
 }
 
 /**
- * The state of an object: `ok` (target layout), `legacy` (a valid object of an old root, still served, with its
- * `target` or the reason it has none) or `misplaced` (`why`). The audit fails on misplaced, and on legacy with --strict.
+ * The state of an object: `ok` (target layout), `legacy` (a valid object of an old folder, still served, with its
+ * `target` or the reason it has none, and its switch `issue`) or `misplaced` (`why`). The audit fails on misplaced, and
+ * on legacy with --strict.
  */
 export function placement(path) {
   if (path === README_NAME || TARGET[path.split("/")[0]]) {
@@ -346,11 +347,30 @@ export function placement(path) {
     const bad = targetMisplaced(target);
     if (bad) return { state: "misplaced", why: `its target ${target} would be misplaced: ${bad}` };
   }
-  return { state: "legacy", target, why: target ? undefined : frozenReason(path) };
+  return { state: "legacy", target, why: target ? undefined : frozenReason(path), issue: switchIssue(path) };
 }
 
 /** Why <path> does not belong in the zone (neither the target layout nor a valid legacy object), or null. */
 export function misplaced(path) {
   const p = placement(path);
   return p.state === "misplaced" ? p.why : null;
+}
+
+/** Throws unless <path> is in the TARGET layout — every writer calls it before a PUT: a new write outside v2 fails. */
+export function assertWritable(path) {
+  const why = targetMisplaced(path);
+  if (why || path.split("/").includes("..")) throw new Error(`${path} is outside the Bunny layout v2 (${why ?? "'..'"}) — new files go under ${Object.keys(TARGET).join("/, ")}/ only`);
+  return path;
+}
+
+/**
+ * The object of a site manifest entry (`lib/cdn-manifest.json`: a logical path and its hash). `root: "site"` is the
+ * legacy form (old branches); any other root is layout v2: `home/backdrop/a.mp4` → `sites/www/home/backdrop/a.<hash>.mp4`.
+ */
+export function manifestObject(root, logical, hash, versionedPath) {
+  const legacy = `site/${versionedPath(logical, hash)}`;
+  if (root === "site") return legacy;
+  const target = targetOf(legacy);
+  if (!target) throw new Error(`${logical} has no place in the Bunny layout v2 (site/ area unknown)`);
+  return target;
 }

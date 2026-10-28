@@ -53,10 +53,10 @@ test("upload sends versioned files, records them, and skips what is already ther
   await main(["upload", join(dir, "tour"), "--to", "products/orochia/tour"], { env, fetchImpl, log: (l) => logs.push(l), manifestFile });
   const puts = calls.filter((c) => c.method === "PUT");
   assert.equal(puts.length, 2);
-  assert.equal(puts[1].url, `https://storage.bunnycdn.com/kz-zone/site/products/orochia/tour/alex-bid.${hashOf("mp4")}.mp4`);
+  assert.equal(puts[1].url, `https://storage.bunnycdn.com/kz-zone/sites/orochia/tour/alex-bid.${hashOf("mp4")}.mp4`, "layout v2: sites/<site>/<kind>/");
   assert.equal(puts[1].headers["Content-Type"], "video/mp4");
   const manifest = JSON.parse(readFileSync(manifestFile, "utf8"));
-  assert.deepEqual(manifest, { root: "site", files: { "products/orochia/tour/alex-bid.jpg": hashOf("jpg"), "products/orochia/tour/alex-bid.mp4": hashOf("mp4") } });
+  assert.deepEqual(manifest, { root: "sites", files: { "products/orochia/tour/alex-bid.jpg": hashOf("jpg"), "products/orochia/tour/alex-bid.mp4": hashOf("mp4") } });
   assert.ok(!logs.join("\n").includes("secret-key"), "the key is never printed");
 
   const again = recorder();
@@ -103,7 +103,7 @@ test("prune deletes only objects the manifest no longer names, and only with --y
 
 test("the committed manifest names every media the site draws", () => {
   const { root, files } = readManifest();
-  assert.equal(root, "site");
+  assert.equal(root, "sites", "layout v2");
   const need = [
     // The vertical clip the /docs/ui examples play (lib/ui-example-props.ts).
     ...["mp4", "jpg"].map((e) => `home/kit/challenge-v.${e}`),
