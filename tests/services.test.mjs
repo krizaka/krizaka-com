@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { KRIZAKA_HOST_SUFFIXES, KRIZAKA_MANIFEST_URLS, KRIZAKA_PUBLIC_KEYS, createDiscovery, isAllowedUrl, verifyManifest } from "@krizaka/discovery";
 import { PRODUCT_DOMAINS, SERVICES, SERVICES_KEY_ID } from "../lib/services.ts";
 import { checkSigned, signServices } from "../scripts/services-lib.mjs";
-import { ZONE, assertUnder, misplaced } from "../scripts/bunny-layout.mjs";
+import { ZONE, assertWritable, misplaced } from "../scripts/bunny-layout.mjs";
 
 // ADR-003 (krizaka/.github#120): the mobile apps read their backend addresses from a signed manifest on krizaka.com.
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
@@ -125,24 +125,27 @@ test("the route, its headers (short cache, open GET) and the locale proxy's bypa
   assert.ok("/.well-known/krizaka/services.json".includes("."));
 });
 
-test("the fallback copy lives under its own prefix of the Bunny zone, written by this script only", () => {
-  assert.ok(ZONE.discovery);
-  assert.match(ZONE.discovery.writer, /sign-services/);
-  assert.equal(misplaced("discovery/services.json"), null);
+test("the fallback copy lives in the org's CDN (layout v2); the legacy copy is only refreshed while a published reader names it", async () => {
+  const { BUNNY_PATH, LEGACY_BUNNY_PATH, publishPaths } = await import("../scripts/sign-services.mjs");
+  assert.match(ZONE.discovery.target, /org\/v1\/discovery/);
+  assert.equal(misplaced(BUNNY_PATH), null);
+  assert.equal(assertWritable(BUNNY_PATH), "org/v1/discovery/services.json");
+  assert.throws(() => assertWritable(LEGACY_BUNNY_PATH), /outside the Bunny layout v2/);
   assert.ok(misplaced("discovery/other.txt"));
-  assert.equal(assertUnder("discovery", "discovery/services.json"), "discovery/services.json");
   assert.equal(KRIZAKA_MANIFEST_URLS[1], "https://krizaka-assets.b-cdn.net/discovery/services.json");
+  assert.deepEqual(publishPaths(), [BUNNY_PATH, LEGACY_BUNNY_PATH], "the published @krizaka/discovery still reads discovery/");
+  assert.deepEqual(publishPaths(["https://www.krizaka.com/.well-known/krizaka/services.json", "https://krizaka-assets.b-cdn.net/org/v1/discovery/services.json"]), [BUNNY_PATH]);
 });
 
-test("publishing sends the committed document to discovery/services.json with its checksum; a refusal throws", async () => {
-  const { publish, BUNNY_PATH } = await import("../scripts/sign-services.mjs");
+test("publishing sends the committed document to org/v1/discovery/services.json with its checksum; a refusal throws", async () => {
+  const { publish } = await import("../scripts/sign-services.mjs");
   const raw = signedRaw();
   const cfg = { apiKey: "k", zone: "krizaka-assets", endpoint: "storage.example", pullZone: "krizaka-assets.b-cdn.net" };
   const calls = [];
   const fetchImpl = async (url, init) => (calls.push({ url, init }), { ok: true, status: 201 });
   await publish({ raw, cfg, fetchImpl, log: () => {} });
-  assert.equal(BUNNY_PATH, "discovery/services.json");
-  assert.equal(calls[0].url, "https://storage.example/krizaka-assets/discovery/services.json");
+  assert.equal(calls[0].url, "https://storage.example/krizaka-assets/org/v1/discovery/services.json");
+  assert.equal(calls[1].url, "https://storage.example/krizaka-assets/discovery/services.json");
   assert.equal(calls[0].init.method, "PUT");
   assert.equal(calls[0].init.headers["Content-Type"], "application/json");
   assert.equal(calls[0].init.body, raw);

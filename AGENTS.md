@@ -301,59 +301,50 @@
 
 ## 5.2 Site media — on Bunny, never committed
 
-- **Target layout (ADR-014, krizaka/.github, 2026-10-28)** — four roots, at most five folders deep: `org/v<n>/` is **the org's CDN**
-  (the org JSON and `apps/` configs of `@krizaka/org`, `defaults/<kind>/`, `brand/<brand>/`, `maps/{tiles,fonts}/`, `films/`, `discovery/`),
-  `apps/<app>/<kind>/…` one folder per app (`www`, `blog`, each product), `ui/`, `pr-assets/`. The roots below are **legacy**: still served,
-  copied to their target by `node scripts/cdn-assets.mjs migrate` (a preview without `--yes`), frozen once their writer switches, pruned
-  only when no published version or live site names them. `cdn-assets tree` reports `ok` / `legacy` / `misplaced` and fails on misplaced
-  (`--strict`: on legacy too); `.github/workflows/bunny-audit.yml` runs it daily. One default-avatar set: the org JSON's `defaults`
-  (`people/defaults/` is frozen); the human-name mirror (`products/`, `people/personas/`, `library`) is retired — browse with
-  `node scripts/bunny-tree.mjs` (the cockpit's `data/bunny-tree.json`).
-- Bunny Storage (zone `krizaka-assets`) is **the media library of Krizaka** — browse it by brand, person, product. The
-  layout is `scripts/bunny-layout.mjs` (the README.txt at the zone root is generated from it; `node scripts/cdn-assets.mjs
-  tree` audits the zone against it), one writer per prefix:
+- **Layout v2 (ADR-014, krizaka/.github, 2026-10-28)** — Bunny Storage (zone `krizaka-assets`) has four roots, at most five
+  folders deep, in reading order: **the org**, then **the sites**, then **the apps** (`scripts/bunny-layout.mjs` is the single
+  source; the README.txt at the zone root is generated from it):
 
   ```
-  brand/<krizaka|orazaka|orochia|yasakia|yororis|yomizaka|kachizaka|akinaza>/   logo + mark, SVG and PNG 256/512/1024 on transparent, dark & light,
-                                                     avatar 500/1024, social-preview 1280x640 · brand/manifest.json
-  people/defaults/v1/<brand>/                        default profile pictures: person|plain-<1-6> .svg / -256.webp / -512.webp (legacy sets by brand)
-  defaults/v1/<person|folder|organisation|shop|banner>/<id>-<size>.webp   the central default pictures (krizaka-ui tools/export-defaults.mjs);
-                                                     their catalogue is the `defaults` section of the Krizaka org JSON (@krizaka/org)
-  people/personas/<product>/                         the demo personas' portraits
-  products/<product>/{home,tour,mobile,gallery,studios,docs}/<name>.<ext>   a readable mirror of what the products serve
-  site/<area>/…/<name>.<hash>.<ext>                  what the pages load (hashed, immutable)
-  ui/  maps/  pr-assets/                             ui.krizaka.com media · the basemap · PR evidence (§5.1)
+  org/v<n>/                 Krizaka's own data, the defaults of the family: org.json + apps/<app>.json (@krizaka/org),
+                            defaults/<kind>/ + defaults/tones/<brand>/, brand/<brand>/, maps/{tiles,fonts}/, films/<series>/, discovery/
+  sites/<site>/<kind>/…     what one public site shows (www, blog, ui, java, each dev site), hashed: home, tour, gallery, docs, personas…
+  apps/<app>/<kind>/…       runtime data of one app only (defaults, uploads, generated) — e.g. apps/akinaza/defaults/
+  pr-assets/<repo>/<topic>/ PR evidence (§5.1)
   ```
+
+  This site's manifest (`lib/cdn-manifest.json`, root `sites`) resolves through `manifestObject`: `home/…` → `sites/www/home/…`,
+  `products/<p>/…` → `sites/<p>/…`, `brand-films/…` → `org/v1/films/…`. **A new write outside v2 fails** (`assertWritable`).
+  The old folders (`brand/`, `defaults/`, `people/`, `maps/`, `discovery/`, `site/`, `ui/`, `products/`) are **legacy**: copied
+  by `cdn-assets migrate` (copy, never move), kept only while something names them (code on main, the latest npm tarballs,
+  live pages, unmerged manifests), each with its switch issue (`SWITCH_ISSUES`); what nothing names is deleted
+  (`cdn-assets purge-unused --refs <dir> --backup <vault> --yes`). `cdn-assets tree` reports `ok` / `legacy` / `misplaced`
+  (`--strict`: fails on legacy too); `node scripts/bunny-tree.mjs` feeds the cockpit (`status`, `issues`, `totals.legacyRoots`).
 - **Default media URLs (avatars, banners, logos) come from the Krizaka org JSON** (`https://krizaka-assets.b-cdn.net/org/v1/org.json`,
   `@krizaka/org`: `listDefaults(kind)`, `defaultFor(kind, seed)`) — **never hard-coded or bundled in an app**; ast-grep's
   `no-hard-coded-default-media` refuses a `people/defaults`, `defaults/v<n>/` or `krizaka-defaults` path
   ([standard](https://github.com/krizaka/.github/blob/main/docs/standards/default-media.md)). A folder is never given a person.
-- **`brand/` and `people/defaults/` are generated from the code**, never drawn or uploaded by hand: krizaka-ui's
-  `tools/export-brand.mjs` renders `@krizaka/ui`'s marks and `defaultAvatarSvg` (the source of `Avatar`'s
-  `defaultAvatar`) to SVG/PNG/WebP and uploads them with a `manifest.json`. A mark changes in krizaka-ui, then the export
-  is re-run. Default avatars are versioned by folder (`v1`): a changed picture is a new folder.
-- **`products/` and `people/personas/` are a mirror**: `node scripts/cdn-assets.mjs library` copies the newest hashed
-  file of `site/` to its human name. Pages and apps keep loading `site/` (its URLs never change content, and published
-  packages use them); the mirror is for browsing and downloading.
-- **Orochia has its own storage zone (`orochia-dev`) and Stream library**: new Orochia media go there, not in this zone.
-  `site/products/orochia` and `site/people/orochia` move there later (krizaka/orochia#153); until then they stay under `site/` and are never mirrored in `products/` or `people/personas/`.
-- **Yazakia is retired (renamed Yasakia)**: its folders are in `RETIRED` (`bunny-layout.mjs`); `cdn-assets prune
-  --retired --yes` removes them. Never write a `yazakia` path again.
-- The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — are sent under
-  `site/` with `cdn-assets upload`:
+- **`org/v1/brand/` and `org/v1/defaults/` are generated from the code**, never drawn or uploaded by hand (krizaka-ui
+  `tools/export-brand.mjs`, `tools/export-defaults.mjs`). A mark changes in krizaka-ui, then the export is re-run; a
+  changed picture gets a new id or `org/v2/`.
+- **Orochia has its own storage zone (`orochia-dev`) and Stream library**: new Orochia media go there, not in this zone;
+  `sites/orochia/` holds only what is still here (krizaka/orochia#153).
+- **Yazakia is retired (renamed Yasakia)**: its folders are in `RETIRED` (`bunny-layout.mjs`). Never write a `yazakia` path again.
+- The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — are sent with
+  `cdn-assets upload`; the logical path (`--to`) keeps its area (`home`, `products/<p>/<kind>`, `docs/<p>`, `people/<p>`,
+  `brand-films/<series>`) and lands in layout v2:
 
   ```
-  site/home/backdrop/<product>.<hash>.{webm,mp4,jpg}
-  site/blog/<post>/<name>.<hash>.<ext>            (the blog's images; the blog repository never commits media)
-  site/products/<product>/tour/<clip>.<hash>.{webm,mp4,jpg}
-  site/products/<product>/gallery/<id>.<hash>.webp
+  home/backdrop/<product>.mp4          → sites/www/home/backdrop/<product>.<hash>.mp4
+  products/<product>/tour/<clip>.mp4   → sites/<product>/tour/<clip>.<hash>.mp4
+  brand-films/<series>/<name>.mp4      → org/v1/films/<series>/<name>.<hash>.mp4
   ```
 
   `node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> --env-file <path/to/.env>` (`--dry-run` to preview)
   sends each file as `<name>.<hash>.<ext>` (first 10 hex of its SHA-256 — a URL never changes content, so it is cached
   for good) and records its hash in `lib/cdn-manifest.json` — commit that file, never the media. A file already
   recorded with the same hash is skipped. `check` asks the pull zone for every recorded file; `prune` previews (and
-  with `--yes` deletes) the old versions the manifest no longer names, never under another writer's prefixes (`FOREIGN_WRITERS` in `bunny-layout.mjs`: the product sites, Orazaka's `gallery-video/` and `video/`, the blog). Same credentials as §5.1, never printed.
+  with `--yes` deletes) the old versions the manifest no longer names, never under another writer's prefixes (`FOREIGN_WRITERS` / `FOREIGN_WRITERS_V2` in `bunny-layout.mjs`: the product sites, the blog), and keeps the legacy `site/` copy of every current entry until the v2 release is live. Same credentials as §5.1, never printed.
 - Code never writes a media URL: `lib/cdn.ts` turns a logical path (`cdn("products/orazaka/gallery/
   tea-pour.webp")`, `video("products/orochia/tour/alex-bid")` → `{ webm, mp4, poster }`) and fails the build on a
   path the manifest does not know. The host is `NEXT_PUBLIC_MEDIA_CDN_URL` (read at build; default
