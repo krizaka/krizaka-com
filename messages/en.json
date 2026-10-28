@@ -365,7 +365,7 @@
           },
           "open": {
             "title": "Code in the open",
-            "line": "The repositories and packages are public, under the Apache-2.0 licence.",
+            "line": "The building blocks are under Apache-2.0; the products' code is public too, under the Functional Source License, each version becoming Apache-2.0 two years after its release.",
             "cta": "See the open source"
           }
         }
@@ -418,7 +418,7 @@
           },
           "open": {
             "title": "Open by default",
-            "body": "{count} public repositories, {npm} npm packages and {maven} Maven artifacts under Apache-2.0, readable line by line."
+            "body": "{count} public repositories, {npm} npm packages and {maven} Maven artifacts, readable line by line: the building blocks under Apache-2.0, the products under the Functional Source License."
           }
         }
       },
@@ -1012,7 +1012,7 @@
           {
             "title": "Software license",
             "paragraphs": [
-              "The software we publish is open source, distributed under the Apache License 2.0 — you may use, modify and distribute it, commercially too, under that license: the Orazaka, Yomizaka and Akinaza repositories on github.com/krizaka, the @krizaka/* packages on npm and the com.krizaka artifacts on Maven. Each repository carries its license.",
+              "The building blocks we publish are open source under the Apache License 2.0 — you may use, modify and distribute them, commercially too, under that license: the @krizaka/* packages on npm, the com.krizaka artifacts on Maven and their repositories on github.com/krizaka. The products' repositories (Yomizaka, Akinaza and the Orazaka applications) are public under the Functional Source License 1.1 (FSL-1.1-ALv2): you may read, run and modify them for any purpose other than a competing product, and each version becomes Apache 2.0 two years after its release. Each repository carries its license, which prevails.",
               "The license covers the code. It does not grant the right to use the Krizaka names, logos and product marks as your own."
             ]
           },

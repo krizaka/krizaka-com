@@ -23,7 +23,7 @@ test("every capability has its words in both languages, and a proof that opens",
 test("figures are read, never typed: no digit in the capability words, facts dropped when unread", () => {
   for (const l of ["en", "fr"]) {
     const k = msg(l).home;
-    assert.doesNotMatch(JSON.stringify(k.knowhow.items).replace("Apache-2.0", ""), /\d/, `${l}: no digit in the capabilities' words`);
+    assert.doesNotMatch(JSON.stringify(k.knowhow.items).replaceAll("Apache-2.0", ""), /\d/, `${l}: no digit in the capabilities' words`);
     assert.doesNotMatch(JSON.stringify(k.direction.steps), /\d/, `${l}: no digit in the direction`);
     for (const f of Object.values(k.knowhow.facts)) assert.match(f, /\{count\}/);
   }
@@ -62,4 +62,14 @@ test("the tone is restrained: no hype word in the new sections, in either langua
 
 test("one primary action per section: no primary button in the two sections", () => {
   for (const f of ["KnowHow", "Direction"]) assert.doesNotMatch(read(`app/components/home/${f}.tsx`), /variant="primary"/, f);
+});
+
+test("licence words are true to the repositories: the products are FSL-1.1, never said to be Apache-2.0", async () => {
+  const { readFileSync } = await import("node:fs");
+  for (const l of ["en", "fr"]) {
+    const text = readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8");
+    assert.doesNotMatch(text, /(Yomizaka|Akinaza)[^"]{0,120}(Apache License 2\.0|licence Apache 2\.0)[^"]{0,20}:/, `${l}: a product named under Apache 2.0`);
+    assert.doesNotMatch(text, /(dépôts et (les )?paquets sont publics, sous licence Apache|repositories and packages are public, under the Apache)/, `${l}: « everything is Apache-2.0 »`);
+    assert.match(text, /Functional Source License/, `${l}: the products' licence is named`);
+  }
 });
