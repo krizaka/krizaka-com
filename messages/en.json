@@ -324,8 +324,74 @@
           "explore": "Read the documentation"
         }
       },
-      "principles": {
+      "knowhow": {
         "number": "§ 4",
+        "title": "What we can do, shown by code that runs.",
+        "lead": "Each card leads to its proof: a repository or a site. Figures are read at build from the registries and GitHub, never typed.",
+        "listLabel": "Capabilities and their evidence",
+        "facts": {
+          "components": "{count} components",
+          "native": "{count} also run on iOS and Android",
+          "maven": "{count} artifacts on Maven Central",
+          "repositories": "{count} public repositories",
+          "npm": "{count} npm packages",
+          "downloads": "{count} downloads a week"
+        },
+        "items": {
+          "engine": {
+            "title": "An AI engine on your own servers",
+            "line": "Every request is a traced run behind one pipeline, with the models you choose. The products call the engine, never a model directly.",
+            "cta": "See the source"
+          },
+          "documents": {
+            "title": "Documents read and checked",
+            "line": "Each finding quotes the passage it comes from. The authenticity report reads facts off the file: no model, no score, never a verdict on a person.",
+            "cta": "See the source"
+          },
+          "shops": {
+            "title": "The books of a small business",
+            "line": "Appointments, invoices and a GST and QST ledger kept as each invoice is issued. Akinaza prepares your return; you file it.",
+            "cta": "See the source"
+          },
+          "design": {
+            "title": "A design system, published",
+            "line": "Krizaka UI is on npm and sits under every product and every Krizaka site.",
+            "cta": "Explore Krizaka UI"
+          },
+          "java": {
+            "title": "Java building blocks",
+            "line": "Spring Boot starters and shared services published on Maven Central, versioned together by one bill of materials.",
+            "cta": "Explore Krizaka Java"
+          },
+          "open": {
+            "title": "Code in the open",
+            "line": "The repositories and packages are public, under the Apache-2.0 licence.",
+            "cta": "See the open source"
+          }
+        }
+      },
+      "direction": {
+        "number": "§ 5",
+        "title": "Where we are going, in order.",
+        "lead": "No dates and no promises: we say a thing when it runs.",
+        "story": "Read our story",
+        "steps": {
+          "now": {
+            "title": "Now",
+            "body": "{names} are built in the open: the code is public and sign-up is closed."
+          },
+          "next": {
+            "title": "Next",
+            "body": "The first customers: Yomizaka's checks for businesses, Akinaza's shops, and one offer for companies, Entreprise: custom modules, sovereign AI adoption and maintenance."
+          },
+          "later": {
+            "title": "Later",
+            "body": "Useful, efficient products for everyone, on the same open stack."
+          }
+        }
+      },
+      "principles": {
+        "number": "§ 6",
         "eyebrow": "How we work",
         "title": "Six rules, checked rather than promised.",
         "folio": "page {page} of {total}",
