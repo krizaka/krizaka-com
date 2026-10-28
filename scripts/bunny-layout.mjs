@@ -9,7 +9,7 @@ export const BRANDS = ["krizaka", "orazaka", "orochia", "yasakia", "yororis", "y
 /** The kinds of media under products/<product>/. */
 export const PRODUCT_KINDS = ["home", "tour", "mobile", "gallery", "studios", "docs"];
 
-/** The prefixes of the zone root, who writes them, and what is allowed under them. */
+/** The LEGACY roots (before ADR-014): still served, frozen once their writer switches, pruned when nothing names them. Each one's target is `targetOf`. */
 export const ZONE = {
   brand: {
     writer: "tools/export-brand.mjs (krizaka-ui) — generated from @krizaka/ui, never hand-made",
@@ -117,8 +117,61 @@ export const SITE_AREAS = {
 
 export const SITE_AREA_NAMES = Object.keys(SITE_AREAS);
 
+// ── THE TARGET LAYOUT (ADR-014, 2026-10-28) ──────────────────────────────────────────────────────────────────────────
+// « structure par app, et l'org a les defaults, avatar, bannière… » · « la carte c'est une donnée org » · « l'org a un CDN ».
+
+/** The version folder of the org's CDN: compatible changes only; a breaking one is v2, published beside v1. */
+export const ORG_VERSION = "v1";
+/** No object of org/, apps/ or ui/ sits under more than this many folders. */
+export const MAX_FOLDERS = 5;
+/** One folder per app under apps/: krizaka.com, the blog, and each product (Krizaka's own media are the org's). */
+export const APPS = ["www", "blog", ...BRANDS.filter((b) => b !== "krizaka")];
+/** What the org's CDN holds, one generator each. */
+export const ORG_PARTS = {
+  json: "org.json · org.<hash>.json · org.schema[.<hash>].json · app.schema[.<hash>].json · apps/<app>[.<hash>].json — @krizaka/org scripts/publish.mjs (krizaka-ts)",
+  defaults: "defaults/<person|banner|shop|folder|organisation>/<id>-<size>.webp (or <id>.svg) · defaults/manifest.json — tools/export-defaults.mjs (krizaka-ui)",
+  brand: "brand/<brand>/<file> · brand/{manifest,index}.json — tools/export-brand.mjs (krizaka-ui)",
+  maps: "maps/tiles/<region>-<YYYYMMDD>.pmtiles · maps/fonts/<stack>/<a>-<b>.pbf — tools/map-assets.mjs (krizaka-ui)",
+  films: "films/<series>/<name>.<hash>.<ext> — the films of the flock (krizaka-ui tools/brand-films), uploaded by scripts/cdn-assets.mjs",
+  discovery: "discovery/services.json — scripts/sign-services.mjs --publish (krizaka-com), ADR-003",
+};
+
+/** The four roots of the target layout. */
+export const TARGET = {
+  org: {
+    writer: "the generator of each part (listed above) — never a hand upload",
+    path: `org/${ORG_VERSION}/{org.json,apps,defaults,brand,maps,films,discovery}/…`,
+    what: "THE ORG'S CDN — what the whole family reads: the org JSON and each app's config (@krizaka/org), the default pictures (ADR-011), the marks, the basemap, the films, the discovery manifest:\n    " + Object.values(ORG_PARTS).join("\n    "),
+  },
+  apps: {
+    writer: "scripts/cdn-assets.mjs (krizaka-com) and each app's own media script (its repository names its files)",
+    path: "apps/<app>/<kind>/[<sub>/…]<name>.<hash>.<ext>",
+    what: "the media of ONE app — home, tour, gallery, video, mobile, docs, personas, download, demo, its own defaults; the blog's kind is the post. Hashed, immutable",
+  },
+  ui: {
+    writer: "krizaka-ui (docs site and Storybook media)",
+    path: "ui/<area>/<name>.<hash>.<ext>",
+    what: "media of ui.krizaka.com: the map previews, the landing kit, its demo personas (ui/personas/)",
+  },
+  "pr-assets": {
+    writer: "scripts/pr-assets.mjs (any repository)",
+    path: "pr-assets/<repo>/<pr-or-topic>/<file>",
+    what: "review evidence linked from PR and issue bodies — screenshots, recordings, metrics; never committed to a repository",
+  },
+};
+
 export const LAYOUT_README = `KRIZAKA ASSETS — layout of this storage zone (served by krizaka-assets.b-cdn.net)
-Nothing else lives at the root. Each prefix has ONE script that writes it and refuses the others.
+Decision: krizaka/.github docs/adr/ADR-014-bunny-org-cdn-and-apps.md. Each prefix has ONE script that writes it and refuses the others.
+
+TARGET LAYOUT — four roots, at most ${MAX_FOLDERS} folders deep
+${Object.entries(TARGET)
+  .map(([prefix, z]) => `${prefix}/\n  ${z.what}\n  ${z.path}\n  written by ${z.writer}`)
+  .join("\n\n")}
+
+Apps: ${APPS.join(" · ")}.
+
+LEGACY ROOTS — still served (published packages and live sites name them), copied to the target by
+\`node scripts/cdn-assets.mjs migrate\`, frozen once their writer switches, pruned only when nothing names them.
 
 ${Object.entries(ZONE)
   .map(([prefix, z]) => `${prefix}/\n  ${z.what}\n  ${z.path}\n  written by ${z.writer}`)
@@ -167,30 +220,137 @@ const SITE_FILE = /^site\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a
 const FILE = "[A-Za-z0-9._-]+";
 const brandAlt = BRANDS.join("|");
 
-/** Why <path> does not belong in the zone, or null. */
-export function misplaced(path) {
-  const [root, second, third] = path.split("/");
+/** Per legacy root: why <path> does not fit it, or null. */
+const LEGACY_RULES = {
+  site: (path, [, area]) => {
+    if (!SITE_AREA_NAMES.includes(area)) return `site/${area}/ is not an area (${SITE_AREA_NAMES.join(", ")})`;
+    return SITE_FILE.test(path) ? null : "not <name>.<hash>.<ext> under site/<area>/…";
+  },
+  brand: (path) =>
+    new RegExp(String.raw`^brand/((manifest|index)\.json|(${brandAlt})/${FILE})$`).test(path) ? null : `not brand/<${brandAlt}>/<file> or brand/{manifest,index}.json`,
+  people: (path) =>
+    new RegExp(String.raw`^people/(defaults/v1/(manifest\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`).test(path)
+      ? null
+      : "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>",
+  defaults: (path) =>
+    DEFAULTS_MANIFEST.test(path) || DEFAULTS_FILE.test(path)
+      ? null
+      : "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json",
+  products: (path) =>
+    new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path) ? null : `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`,
+  discovery: (path) => (path === "discovery/services.json" ? null : "not discovery/services.json"),
+  ui: (path, parts) => (parts.length < 3 ? "not ui/<area>/<file>" : null),
+  maps: (path) =>
+    /^maps\/v1\/(tiles\/[a-z0-9-]+-\d{8}\.pmtiles|fonts\/[A-Za-z0-9 ]+\/\d+-\d+\.pbf)$/.test(path) ? null : "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf",
+  "pr-assets": (path, parts) => (parts.length < 4 || !parts[1] || !parts[2] ? "not pr-assets/<repo>/<pr-or-topic>/<file>" : null),
+};
+
+/** Why <path> does not belong in the LEGACY layout (the roots of `ZONE`, still served while they migrate), or null. */
+function legacyMisplaced(path) {
+  const parts = path.split("/");
   if (path === README_NAME) return null;
-  if (!ZONE[root]) return `unknown root "${root}/" (allowed: ${Object.keys(ZONE).join(", ")}, ${README_NAME})`;
-  if (root === "site") {
-    if (!SITE_AREA_NAMES.includes(second)) return `site/${second}/ is not an area (${SITE_AREA_NAMES.join(", ")})`;
-    if (!SITE_FILE.test(path)) return "not <name>.<hash>.<ext> under site/<area>/…";
+  const rule = ZONE[parts[0]] ? LEGACY_RULES[parts[0]] : undefined;
+  if (!rule) return `unknown root "${parts[0]}/" (allowed: ${Object.keys(ZONE).join(", ")}, ${README_NAME})`;
+  return rule(path, parts);
+}
+
+// ── Placement: ok (target), legacy (old layout, with its target), misplaced ─────────────────────────────────────────
+
+const HASHED = String.raw`[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a-f]{10}\.[a-z0-9]+`;
+const ORG_FILE = new RegExp(
+  [
+    String.raw`(?:org|org\.schema|app\.schema)(?:\.[0-9a-f]{10})?\.json`,
+    String.raw`apps/[a-z0-9-]+(?:\.[0-9a-f]{10})?\.json`,
+    String.raw`defaults/manifest\.json`,
+    String.raw`defaults/(?:person|folder|organisation|shop|banner)/[a-z0-9]+(?:-[a-z0-9]+)*(?:\.svg|-\d+\.webp)`,
+    String.raw`brand/(?:manifest|index)\.json`,
+    `brand/(?:${brandAlt})/${FILE}`,
+    String.raw`maps/tiles/[a-z0-9-]+-\d{8}\.pmtiles`,
+    String.raw`maps/fonts/[A-Za-z0-9 ]+/\d+-\d+\.pbf`,
+    `films/[a-z0-9-]+/(?:[a-z0-9-]+/)?${HASHED}`,
+    String.raw`discovery/services\.json`,
+  ].map((p) => `(?:${p})`).join("|"),
+);
+const APP_FILE = new RegExp(`^apps/(?:${APPS.join("|")})/[a-z0-9_-]+/(?:[a-z0-9_-]+/)*${HASHED}$`);
+
+/** Why <path> does not belong in the TARGET layout, or null. */
+export function targetMisplaced(path) {
+  const parts = path.split("/");
+  const [root] = parts;
+  if (path === README_NAME) return null;
+  if (!TARGET[root]) return `unknown root "${root}/" (target: ${Object.keys(TARGET).join(", ")})`;
+  if (root !== "pr-assets" && parts.length - 1 > MAX_FOLDERS) return `deeper than ${MAX_FOLDERS} folders`;
+  if (root === "org") {
+    const m = /^org\/v\d+\/(.+)$/.exec(path);
+    if (!m || !new RegExp(`^(?:${ORG_FILE.source})$`).test(m[1])) return `not org/v<n>/<${Object.keys(ORG_PARTS).join("|")}>/… (see ORG_PARTS)`;
   }
-  if (root === "brand" && !new RegExp(`^brand/(manifest\\.json|(${brandAlt})/${FILE})$`).test(path)) return `not brand/<${brandAlt}>/<file> or brand/manifest.json`;
-  if (root === "people" && !new RegExp(`^people/(defaults/v1/(manifest\\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`).test(path)) {
-    return "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>";
-  }
-  if (root === "defaults" && !DEFAULTS_MANIFEST.test(path) && !DEFAULTS_FILE.test(path)) {
-    return "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json";
-  }
-  if (root === "products" && !new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path)) {
-    return `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`;
-  }
-  if (root === "discovery" && path !== "discovery/services.json") return "not discovery/services.json";
-  if (root === "ui" && path.split("/").length < 3) return "not ui/<area>/<file>";
-  if (root === "maps" && !/^maps\/v1\/(tiles\/[a-z0-9-]+-\d{8}\.pmtiles|fonts\/[A-Za-z0-9 ]+\/\d+-\d+\.pbf)$/.test(path)) {
-    return "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf";
-  }
-  if (root === "pr-assets" && (!second || !third || path.split("/").length < 4)) return "not pr-assets/<repo>/<pr-or-topic>/<file>";
+  if (root === "apps" && !APP_FILE.test(path)) return `not apps/<${APPS.join("|")}>/<kind>/…/<name>.<hash>.<ext>`;
+  if (root === "ui" && parts.length < 3) return "not ui/<area>/<file>";
+  if (root === "pr-assets" && parts.length < 4) return "not pr-assets/<repo>/<pr-or-topic>/<file>";
   return null;
+}
+
+/**
+ * Where a LEGACY object goes in the target layout, or null when it has none (a frozen duplicate, a retired mirror, a
+ * renamed product): `brand/orazaka/mark-dark.svg` → `org/v1/brand/orazaka/mark-dark.svg`,
+ * `site/products/akinaza/tour/a.<hash>.mp4` → `apps/akinaza/tour/a.<hash>.mp4`.
+ */
+export function targetOf(path) {
+  if (RETIRED.some((re) => re.test(path))) return null;
+  for (const [re, to] of TARGET_OF) {
+    const m = re.exec(path);
+    if (m) return to(m);
+  }
+  return null; // people/ and products/: the frozen set and the retired mirror (ADR-014)
+}
+
+const ORG = `org/${ORG_VERSION}`;
+const APP = `(${APPS.join("|")})`;
+/** The legacy → target rules of `targetOf`, first match wins. */
+const TARGET_OF = [
+  [/^defaults\/v1\/(.+)$/, (m) => `${ORG}/defaults/${m[1]}`],
+  [/^maps\/v1\/(.+)$/, (m) => `${ORG}/maps/${m[1]}`],
+  [/^brand\/(.+)$/, (m) => `${ORG}/brand/${m[1]}`],
+  [/^discovery\/(.+)$/, (m) => `${ORG}/discovery/${m[1]}`],
+  [/^site\/home\/(.+)$/, (m) => `apps/www/home/${m[1]}`],
+  [/^site\/blog\/(.+)$/, (m) => `apps/blog/${m[1]}`],
+  [new RegExp(`^site/products/${APP}/(.+)$`), (m) => `apps/${m[1]}/${m[2]}`],
+  [new RegExp(`^site/docs/${APP}/(.+)$`), (m) => `apps/${m[1]}/docs/${m[2]}`],
+  [/^site\/people\/ui\/(.+)$/, (m) => `ui/personas/${m[1]}`],
+  [new RegExp(`^site/people/${APP}/(.+)$`), (m) => `apps/${m[1]}/personas/${m[2]}`],
+  [/^site\/brand-films\/orochia\/(.+)$/, (m) => `apps/orochia/films/${m[1]}`],
+  [/^site\/brand-films\/(.+)$/, (m) => `${ORG}/films/${m[1]}`],
+];
+
+/** Why a legacy object has no target (shown by the audit). */
+export function frozenReason(path) {
+  if (path.startsWith("people/defaults/")) return "frozen: the duplicate default avatars — the org JSON's `defaults` section is the one set (ADR-014 §2)";
+  if (path.startsWith("products/") || path.startsWith("people/personas/")) return "retired: the human-name mirror of site/ (ADR-014 §1)";
+  if (RETIRED.some((re) => re.test(path))) return "retired: a renamed product";
+  return null;
+}
+
+/**
+ * The state of an object: `ok` (target layout), `legacy` (a valid object of an old root, still served, with its
+ * `target` or the reason it has none) or `misplaced` (`why`). The audit fails on misplaced, and on legacy with --strict.
+ */
+export function placement(path) {
+  if (path === README_NAME || TARGET[path.split("/")[0]]) {
+    const why = targetMisplaced(path);
+    return why ? { state: "misplaced", why } : { state: "ok" };
+  }
+  const why = legacyMisplaced(path);
+  if (why) return { state: "misplaced", why };
+  const target = targetOf(path);
+  if (target) {
+    const bad = targetMisplaced(target);
+    if (bad) return { state: "misplaced", why: `its target ${target} would be misplaced: ${bad}` };
+  }
+  return { state: "legacy", target, why: target ? undefined : frozenReason(path) };
+}
+
+/** Why <path> does not belong in the zone (neither the target layout nor a valid legacy object), or null. */
+export function misplaced(path) {
+  const p = placement(path);
+  return p.state === "misplaced" ? p.why : null;
 }

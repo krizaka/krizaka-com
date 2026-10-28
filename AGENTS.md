@@ -301,6 +301,14 @@
 
 ## 5.2 Site media — on Bunny, never committed
 
+- **Target layout (ADR-014, krizaka/.github, 2026-10-28)** — four roots, at most five folders deep: `org/v<n>/` is **the org's CDN**
+  (the org JSON and `apps/` configs of `@krizaka/org`, `defaults/<kind>/`, `brand/<brand>/`, `maps/{tiles,fonts}/`, `films/`, `discovery/`),
+  `apps/<app>/<kind>/…` one folder per app (`www`, `blog`, each product), `ui/`, `pr-assets/`. The roots below are **legacy**: still served,
+  copied to their target by `node scripts/cdn-assets.mjs migrate` (a preview without `--yes`), frozen once their writer switches, pruned
+  only when no published version or live site names them. `cdn-assets tree` reports `ok` / `legacy` / `misplaced` and fails on misplaced
+  (`--strict`: on legacy too); `.github/workflows/bunny-audit.yml` runs it daily. One default-avatar set: the org JSON's `defaults`
+  (`people/defaults/` is frozen); the human-name mirror (`products/`, `people/personas/`, `library`) is retired — browse with
+  `node scripts/bunny-tree.mjs` (the cockpit's `data/bunny-tree.json`).
 - Bunny Storage (zone `krizaka-assets`) is **the media library of Krizaka** — browse it by brand, person, product. The
   layout is `scripts/bunny-layout.mjs` (the README.txt at the zone root is generated from it; `node scripts/cdn-assets.mjs
   tree` audits the zone against it), one writer per prefix:
