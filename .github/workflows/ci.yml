@@ -29,6 +29,9 @@ jobs:
       sonar: true
       sonar-coverage-paths: coverage/lcov.info
       test-script: test:coverage
+      # The shared install runs no dependency script (npm ci --ignore-scripts, krizaka/.github setup): the generators of lib/*.json
+      # (postinstall: scripts/gen-fresh.mjs) run here, explicitly, before the lint reads them (depcruise: not-to-unresolvable).
+      install-command: npm ci --ignore-scripts --prefer-offline --no-audit --no-fund && node scripts/gen-fresh.mjs
       duplication: true      # jscpd + dup-ratchet.json: duplicated lines may only go down
       next-cache-paths: .next/cache
       # scripts/gen-org-stats.mjs reads the organisation's public repository count without the anonymous rate limit
