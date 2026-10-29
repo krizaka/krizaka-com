@@ -94,7 +94,7 @@ test("the build reads the checklists before it builds", () => {
   assert.match(read(".gitignore"), /dev-preview-checklists\.json/);
 });
 
-test("no waiver is left: Orazaka is in development (the CTO's call, 2026-10-25) and Orochia is paused", () => {
+test("no waiver is left: Orazaka is in development", () => {
   assert.deepEqual(WAIVERS, {});
   assert.ok(!Object.values(readProductStatuses(read("lib/products.ts"))).includes("devPreview"));
 });

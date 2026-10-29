@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { heroMarkOrder } from "../lib/home-sections.ts";
-const PRODUCTS = ["orazaka", "yomizaka", "orochia", "kachizaka", "akinaza", "yasakia", "yororis"].map((id) => ({ id }));
+const PRODUCTS = ["orazaka", "yomizaka", "akinaza"].map((id) => ({ id }));
 
 const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"));
 

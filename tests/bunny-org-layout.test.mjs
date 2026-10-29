@@ -32,15 +32,15 @@ test("the org's CDN holds the org JSON, the apps, the defaults, the marks, the b
     "org/v1/discovery/services.json",
     "org/v2/org.json",
   ]) assert.deepEqual(placement(ok), { state: "ok" }, ok);
-  for (const bad of ["org/org.json", "org/v1/notes.txt", "org/v1/defaults/avatar/x-256.webp", "org/v1/brand/yazakia/logo.svg", "org/v1/films/relay/le-relais.mp4"]) {
+  for (const bad of ["org/org.json", "org/v1/notes.txt", "org/v1/defaults/avatar/x-256.webp", "org/v1/brand/retired/logo.svg", "org/v1/films/relay/le-relais.mp4"]) {
     assert.equal(placement(bad).state, "misplaced", bad);
   }
 });
 
 test("four roots only: the org, the sites, the apps, the evidence — nothing else at the root", () => {
   assert.deepEqual(Object.keys(TARGET), ["org", "sites", "apps", "pr-assets"]);
-  assert.deepEqual(SITES, ["www", "blog", "ui", "java", "orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza"]);
-  assert.deepEqual(APPS, ["orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza"]);
+  assert.deepEqual(SITES, ["www", "blog", "ui", "java", "orazaka", "yomizaka", "akinaza"]);
+  assert.deepEqual(APPS, ["orazaka", "yomizaka", "akinaza"]);
   for (const ok of [
     "sites/akinaza/tour/en/hero.3f2a9c1b7e.mp4",
     "sites/blog/posts/cinematic-ai-videos/cover.0123456789.webp",
@@ -49,7 +49,7 @@ test("four roots only: the org, the sites, the apps, the evidence — nothing el
     "sites/ui/personas/ada-256.0123456789.webp",
     "sites/ui/maps/cluster-dark.731f2c4fa2.png",
     "apps/akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif",
-    "apps/orochia/uploads/u1/a.0123456789.webp",
+    "apps/yomizaka/uploads/u1/a.0123456789.webp",
   ]) assert.equal(misplaced(ok), null, ok);
   for (const bad of [
     "sites/krizaka/home/a.0123456789.png",
@@ -87,10 +87,9 @@ test("every legacy folder maps to its target, or says why it has none, with the 
     "site/products/akinaza/tour/a.0123456789.mp4": "sites/akinaza/tour/a.0123456789.mp4",
     "site/products/akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif": "apps/akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif",
     "site/docs/orazaka/mobile/x.0123456789.webp": "sites/orazaka/docs/mobile/x.0123456789.webp",
-    "site/people/yasakia/hana-512.b0be072833.webp": "sites/yasakia/personas/hana-512.b0be072833.webp",
+    "site/people/yomizaka/hana-512.b0be072833.webp": "sites/yomizaka/personas/hana-512.b0be072833.webp",
     "site/people/ui/ada-256.0123456789.webp": "sites/ui/personas/ada-256.0123456789.webp",
     "site/brand-films/relay/a.0123456789.mp4": "org/v1/films/relay/a.0123456789.mp4",
-    "site/brand-films/orochia/a.0123456789.mp4": "sites/orochia/films/a.0123456789.mp4",
   };
   for (const [from, to] of Object.entries(cases)) {
     assert.equal(targetOf(from), to, from);
@@ -104,8 +103,7 @@ test("every legacy folder maps to its target, or says why it has none, with the 
   assert.equal(switchIssue("site/home/kit/a.0123456789.png"), "krizaka/krizaka-com#450");
   // The human-name mirror is retired: no target, deleted once unused.
   assert.match(placement("products/orazaka/tour/tea-pour.mp4").why, /retired/);
-  assert.match(placement("people/personas/yasakia/hana-512.webp").why, /retired/);
-  assert.match(placement("site/products/yazakia/mobile/loop.46dbace273.mp4").why, /renamed/);
+  assert.match(placement("people/personas/ui/hana-512.webp").why, /retired/);
   assert.equal(placement("site/misc/a.0123456789.png").state, "misplaced");
 });
 
@@ -127,22 +125,22 @@ test("purge-unused deletes only what is outside v2 and named by nothing, backing
   const old = now - 48 * 3600000;
   const z = zone({
     "products/orazaka/tour/a.mp4": "mp4",
-    "people/personas/yasakia/empty.webp": "",
+    "people/personas/ui/empty.webp": "",
     "brand/orazaka/mark-dark.svg": "<svg/>",
     "sites/www/home/x.2222222222.png": "png",
     "pr-assets/r/1/a.png": "png",
   });
   const objects = [...z.store].map(([path, b]) => ({ path, size: b.length, changed: old }));
   objects.push({ path: "site/home/fresh.3333333333.png", size: 3, changed: now - 3600000 });
-  assert.deepEqual(unusedLegacy(objects, refs, { now }).map((o) => o.path).sort(), ["people/personas/yasakia/empty.webp", "products/orazaka/tour/a.mp4"], "targets, named and recent objects are kept");
+  assert.deepEqual(unusedLegacy(objects, refs, { now }).map((o) => o.path).sort(), ["people/personas/ui/empty.webp", "products/orazaka/tour/a.mp4"], "targets, named and recent objects are kept");
   const preview = await purgeUnused({ cfg, refs, objects, now, fetchImpl: z.fetchImpl, log: () => {} });
   assert.equal(preview.length, 2);
   assert.equal(z.calls.filter((c) => c.method !== "GET").length, 0, "a preview deletes nothing");
   const backup = mkdtempSync(join(tmpdir(), "purge-"));
   await purgeUnused({ cfg, refs, objects, now, yes: true, backup, fetchImpl: z.fetchImpl, log: () => {} });
   assert.equal(readFileSync(join(backup, "products/orazaka/tour/a.mp4"), "utf8"), "mp4", "backed up before deletion");
-  assert.equal(existsSync(join(backup, "people/personas/yasakia/empty.webp")), false, "an empty object is not backed up");
-  assert.deepEqual(z.calls.filter((c) => c.method === "DELETE").map((c) => c.path).sort(), ["people/personas/yasakia/empty.webp", "products/orazaka/tour/a.mp4"]);
+  assert.equal(existsSync(join(backup, "people/personas/ui/empty.webp")), false, "an empty object is not backed up");
+  assert.deepEqual(z.calls.filter((c) => c.method === "DELETE").map((c) => c.path).sort(), ["people/personas/ui/empty.webp", "products/orazaka/tour/a.mp4"]);
   assert.ok(z.store.has("brand/orazaka/mark-dark.svg") && z.store.has("sites/www/home/x.2222222222.png"));
 });
 

@@ -5,7 +5,7 @@
 
 export const README_NAME = "README.txt";
 
-export const BRANDS = ["krizaka", "orazaka", "orochia", "yasakia", "yororis", "yomizaka", "kachizaka", "akinaza"];
+export const BRANDS = ["krizaka", "orazaka", "yomizaka", "akinaza"];
 /** The kinds of media under products/<product>/. */
 export const PRODUCT_KINDS = ["home", "tour", "mobile", "gallery", "studios", "docs"];
 
@@ -32,45 +32,36 @@ export const ZONE = {
 /**
  * Prefixes of site/ written by ANOTHER writer than cdn-assets (one writer per prefix): `prune` never lists or deletes
  * under them, since their objects are not named by this site's manifest. The product sites name their own media
- * (dev.orazaka.com, dev.orochia.com, dev.yasakia.com — its demo recordings under site/products/yasakia/tour/; dev.yomizaka.com,
- * dev.akinaza.com, dev.kachizaka.com and dev.yororis.com — their landing recordings under site/products/<product>/tour/, named
+ * (dev.orazaka.com, dev.yomizaka.com and dev.akinaza.com — their landing recordings under site/products/<product>/tour/, named
  * in each repository's lib/tour.ts); Orazaka's generated clips (gallery-video/, video/) come from its GPU batch;
  * blog.krizaka.com names its images in krizaka-blog's lib/media.json.
  */
 export const FOREIGN_WRITERS = [
   "site/products/orazaka/",
-  "site/products/orochia/",
-  "site/products/yasakia/",
   "site/products/yomizaka/",
   "site/products/akinaza/",
-  "site/products/kachizaka/",
-  // Yororis' gallery is still named by this site's manifest: only the landing's recordings are another writer's.
-  "site/products/yororis/tour/",
   "site/blog/",
 ];
 
 /** The same writers' folders in layout v2: prune never deletes under them either. */
-export const FOREIGN_WRITERS_V2 = ["sites/orazaka/", "sites/orochia/", "sites/yasakia/", "sites/yomizaka/", "sites/akinaza/", "apps/akinaza/", "sites/kachizaka/", "sites/yororis/tour/", "sites/blog/"];
+export const FOREIGN_WRITERS_V2 = ["sites/orazaka/", "sites/yomizaka/", "sites/akinaza/", "apps/akinaza/", "sites/blog/"];
 
-/** Folders of the zone that are retired (a renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
-export const RETIRED = [/^site\/(?:people|products)\/yazakia\//];
+/** Folders of the zone that are retired (a departed or renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
+export const RETIRED = [/^site\/(?:people|products|docs)\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//, /^site\/brand-films\/orochia\//];
 
 /**
  * Where a hashed file of site/ is mirrored in the browsable library, or null when it has no place there.
  * `home/backdrop/orazaka.mp4` → `products/orazaka/home/backdrop.mp4`; `people/ui/ada-256.webp` → `people/personas/ui/ada-256.webp`.
  */
 export function libraryPath(logical) {
-  // Orochia has its own storage zone and Stream library: its media are never mirrored in this zone (krizaka/orochia#153).
-  if (logical.split("/").includes("orochia") || /(^|\/)orochia[-.]/.test(logical)) return null;
   const parts = logical.split("/");
   const [area, a, b] = parts;
-  const product = (id) => (id === "yazakia" ? "yasakia" : id);
-  if (area === "people" && parts.length === 3) return a === "yazakia" ? null : `people/personas/${a}/${b}`;
-  if (area === "products" && parts.length >= 4 && PRODUCT_KINDS.includes(b)) return a === "yazakia" ? `products/yasakia/${parts.slice(2).join("/")}` : logical;
-  if (area === "docs" && parts.length >= 3) return `products/${product(a)}/docs/${parts.slice(2).join("/")}`;
+  if (area === "people" && parts.length === 3) return `people/personas/${a}/${b}`;
+  if (area === "products" && parts.length >= 4 && PRODUCT_KINDS.includes(b)) return logical;
+  if (area === "docs" && parts.length >= 3) return `products/${a}/docs/${parts.slice(2).join("/")}`;
   if (area === "home" && a === "backdrop" && parts.length === 3) {
     const [name, ...ext] = b.split(".");
-    return `products/${product(name)}/home/backdrop.${ext.join(".")}`;
+    return `products/${name}/home/backdrop.${ext.join(".")}`;
   }
   if (area === "home" && a === "kit-native" && parts.length === 3) {
     const m = /^([a-z]+)-(dark|light)\.(.+)$/.exec(b);
@@ -147,13 +138,9 @@ export const SWITCH_ISSUES = [
   [/^site\/blog\//, "krizaka/krizaka-blog#176"],
   [/^site\/(?:products|docs|people)\/akinaza\//, "krizaka/akinaza#493"],
   [/^site\/(?:products|docs|people)\/yomizaka\//, "krizaka/yomizaka#494"],
-  [/^site\/(?:products|docs|people)\/yasakia\//, "krizaka/yasakia#182"],
-  [/^site\/(?:products|docs|people)\/kachizaka\//, "krizaka/kachizaka#121"],
-  [/^site\/(?:products|docs|people)\/yororis\//, "krizaka/yororis#136"],
-  [/^site\/(?:(?:products|docs|people)\/orochia\/|brand-films\/orochia\/)/, "krizaka/orochia#425"],
   [/^site\/(?:products|docs|people)\/orazaka\//, "krizaka/orazaka-web-client#320"],
   [/^site\/people\/ui\/|^ui\/|^maps\/|^brand\/|^site\/brand-films\//, "krizaka/krizaka-ui#817"],
-  [/^people\/personas\/ui\//, "krizaka/yororis#136"],
+  [/^people\/personas\/ui\//, "krizaka/krizaka-ui#817"],
   [/^defaults\/|^people\/defaults\//, "krizaka/krizaka-ts#200"],
   [/^site\/|^discovery\//, "krizaka/krizaka-com#450"],
 ];
@@ -177,9 +164,6 @@ LEGACY FOLDERS — still served only while a published package or a live site na
 ${Object.entries(ZONE)
   .map(([prefix, z]) => `${prefix}/  →  ${z.target}\n  ${z.what}`)
   .join("\n\n")}
-
-Orochia has its own storage zone (orochia-dev) and Stream library: its new media do not go in this zone
-(krizaka/orochia#153); sites/orochia/ holds only what is still here.
 
 Rules
   - org/ is generated from the code (@krizaka/ui, @krizaka/org): change the component, run the export, never upload by hand.
@@ -319,14 +303,13 @@ const TARGET_OF = [
   [new RegExp(`^site/docs/${PRODUCT}/(.+)$`), (m) => `sites/${m[1]}/docs/${m[2]}`],
   [/^site\/people\/ui\/(.+)$/, (m) => `sites/ui/personas/${m[1]}`],
   [new RegExp(`^site/people/${PRODUCT}/(.+)$`), (m) => `sites/${m[1]}/personas/${m[2]}`],
-  [/^site\/brand-films\/orochia\/(.+)$/, (m) => `sites/orochia/films/${m[1]}`],
   [/^site\/brand-films\/(.+)$/, (m) => `${ORG}/films/${m[1]}`],
 ];
 
 /** Why a legacy object has no target (shown by the audit). */
 export function frozenReason(path) {
   if (path.startsWith("products/") || path.startsWith("people/personas/")) return "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it";
-  if (RETIRED.some((re) => re.test(path))) return "retired: a renamed product";
+  if (RETIRED.some((re) => re.test(path))) return "retired: a departed or renamed product";
   return null;
 }
 

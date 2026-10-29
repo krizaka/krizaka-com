@@ -103,20 +103,6 @@ test("« la tournée » gives way to « le relais »: no page draws the tour any
   assert.ok(existsSync("app/[locale]/story/relay.vtt/route.ts"), "the relay's captions route");
 });
 
-test("Orochia's film « la première livraison » is kept on the CDN (the manifest names it, so prune keeps it) and drawn on no page of krizaka.com", async () => {
-  const { readdirSync, statSync } = await import("node:fs");
-  const { join } = await import("node:path");
-  const { files } = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", import.meta.url), "utf8"));
-  const base = "brand-films/orochia/orochia-la-premiere-livraison";
-  for (const cut of ["16x9.mp4", "16x9.jpg", "16x9-en.mp4", "16x9-fr.mp4", "9x16-en.mp4", "9x16-fr.mp4", "en.vtt", "fr.vtt"]) {
-    assert.match(files[`${base}-${cut}`] ?? "", /^[0-9a-f]{10}$/, cut);
-  }
-  const walk = (dir) => readdirSync(dir).flatMap((n) => (statSync(join(dir, n)).isDirectory() ? walk(join(dir, n)) : [join(dir, n)]));
-  for (const file of [...walk("app"), ...walk("lib")].filter((f) => /\.tsx?$/.test(f))) {
-    assert.doesNotMatch(readFileSync(file, "utf8"), /brand-films\/orochia/, `${file} draws Orochia's film`);
-  }
-});
-
 test("both caption routes answer through one response: same-origin WebVTT, cacheable for an hour", async () => {
   const res = vttResponse(filmVtt(messages("en").site.story.world.cues));
   assert.equal(res.headers.get("content-type"), "text/vtt; charset=utf-8");
