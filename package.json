@@ -23,7 +23,9 @@
     "lint:sg": "krizaka-sg-ratchet",
     "lint:sg:test": "ast-grep test --skip-snapshot-tests",
     "sg:ratchet:update": "krizaka-sg-ratchet --update",
-    "sg:fix": "node scripts/sg-fix.mjs"
+    "sg:fix": "node scripts/sg-fix.mjs",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,css}\""
   },
   "dependencies": {
     "@krizaka/charts": "^0.8.0",
@@ -56,6 +58,7 @@
     "path-to-regexp": "6.3.0",
     "playwright": "^1.60.0",
     "postcss": "^8.5.32",
+    "prettier": "^3.9.10",
     "tailwindcss": "^4",
     "typescript": "^5"
   },
