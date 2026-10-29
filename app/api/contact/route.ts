@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { verifyCaptcha } from "@/lib/captcha";
+import { captchaMissing, verifyCaptcha } from "@/lib/captcha";
 import { contactChannels, deliverContact, validateContact } from "@/lib/contact";
 
 export const runtime = "nodejs";
@@ -35,9 +35,13 @@ export async function POST(request: Request) {
   if (result.ok === "spam") return NextResponse.json({ ok: true });
   if (!result.ok) return NextResponse.json({ error: "invalid", field: result.field }, { status: 400 });
 
-  // Bot protection: verified before anything is sent (off when no CAPTCHA is configured).
+  // Bot protection: verified before anything is sent (off only outside production; in production a missing key refuses, #464).
+  if (captchaMissing()) {
+    console.error("contact: refused, the bot check is not configured (set ABUSE_CAPTCHA_PROVIDER=turnstile and the widget's key)");
+    return NextResponse.json({ error: "contact.captcha_unconfigured" }, { status: 503 });
+  }
   const token = (body as { captchaToken?: unknown }).captchaToken;
-  if (!(await verifyCaptcha(token, ip))) return NextResponse.json({ error: "contact.captcha_failed" }, { status: 400 });
+  if (!(await verifyCaptcha(token, ip, process.env, undefined, () => new Date()))) return NextResponse.json({ error: "contact.captcha_failed" }, { status: 400 });
 
   const channels = contactChannels();
   if (!channels.email && !channels.webhook) {
