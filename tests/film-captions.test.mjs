@@ -67,6 +67,33 @@ test("the relay (« le relais », the reference film) says its own lines, in ord
   for (const ext of ["mp4", "webm", "jpg"]) assert.match(files[`${RELAY_BASE}.${ext}`] ?? "", /^[0-9a-f]{10}$/, ext);
 });
 
+test("« The Krizaka family » (/story): one bird per product of today, its own lines in order, no departed product, on the CDN", async () => {
+  const { FAMILY_BASE, FAMILY_CUES, FAMILY_SECONDS } = await import("../lib/film-captions.ts");
+  assert.deepEqual(FAMILY_CUES.map((c) => c.id), ["title", "falcon", "flamingo", "owl", "beaver", "together"]);
+  FAMILY_CUES.forEach((c, i) => {
+    assert.ok(c.start < c.end && c.end <= FAMILY_SECONDS, c.id);
+    if (i) assert.ok(FAMILY_CUES[i - 1].end <= c.start, `${c.id} overlaps the line before`);
+  });
+  for (const lang of ["en", "fr"]) {
+    const family = messages(lang).site.story.world.family;
+    for (const k of ["title", "player", "credit"]) assert.ok(family[k].trim(), `${lang} ${k}`);
+    assert.deepEqual(Object.keys(family.cues).sort(), FAMILY_CUES.map((c) => c.id).sort(), lang);
+    for (const c of FAMILY_CUES) assert.ok(family.cues[c.id].trim(), `${lang} ${c.id}`);
+    // each product is named by the bird that stands for it, and no word of payment or of a product that left the family
+    assert.match(family.cues.falcon, /Krizaka/);
+    assert.match(family.cues.flamingo, /Orazaka/);
+    assert.match(family.cues.owl, /Yomizaka/);
+    assert.match(family.cues.beaver, /Akinaza/);
+    assert.doesNotMatch(JSON.stringify(family), /pay|paie|orochia|yasakia|yororis|kachizaka|yazakia/i, lang);
+  }
+  const vtt = filmVtt(messages("en").site.story.world.family.cues, FAMILY_CUES);
+  assert.match(vtt, /^WEBVTT\n\ntitle\n00:00:00\.600 --> 00:00:03\.600\nThe Krizaka family\.\n/);
+  assert.equal(vtt.match(/ --> /g).length, FAMILY_CUES.length);
+  const { files } = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", import.meta.url), "utf8"));
+  assert.match(FAMILY_BASE, /^brand-films\/family\//);
+  for (const ext of ["mp4", "webm", "jpg"]) assert.match(files[`${FAMILY_BASE}.${ext}`] ?? "", /^[0-9a-f]{10}$/, ext);
+});
+
 test("the home's « Watch the film » plays the relay, and the light code film under reduced motion or Save-Data", async () => {
   const { prefersLightFilm } = await import("../lib/film-captions.ts");
   const media = (reduce) => (q) => ({ matches: reduce && q.includes("reduce") });

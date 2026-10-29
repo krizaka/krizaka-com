@@ -65,6 +65,25 @@ export const RELAY_CUES = [
 
 export type RelayCueId = (typeof RELAY_CUES)[number]["id"];
 
+/* « The Krizaka family » — the film of /story (2026-10-29), rendered from the code of @krizaka/ui by krizaka-ui
+   tools/brand-films (FILM there): only the family of today, one bird per product — the falcon is Krizaka, the flamingo
+   Orazaka, the owl Yomizaka, the beaver Akinaza. Its own lines at its own times (FILM.cues): change both together. The
+   words are messages (site.story.world.family.cues.<id>). */
+export const FAMILY_BASE = "brand-films/family/la-famille-krizaka-16x9";
+// @fixed: the length of the rendered file (FILM.seconds in krizaka-ui tools/brand-films/film.mjs), a fact of the media.
+export const FAMILY_SECONDS = 44;
+
+export const FAMILY_CUES = [
+  { id: "title", start: 0.6, end: 3.6 },
+  { id: "falcon", start: 6.2, end: 10.8 },
+  { id: "flamingo", start: 13.2, end: 17.8 },
+  { id: "owl", start: 20.2, end: 24.8 },
+  { id: "beaver", start: 27.2, end: 31.8 },
+  { id: "together", start: 32.4, end: 34.8 },
+] as const;
+
+export type FamilyCueId = (typeof FAMILY_CUES)[number]["id"];
+
 interface Viewer {
   matchMedia?: (query: string) => { matches: boolean };
   /** The browser's navigator: `connection.saveData` is not in every engine nor in the DOM types, so it is read loosely. */
