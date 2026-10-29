@@ -18,13 +18,23 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { SITE_REPO, newestFirst, parseChangesets, parseReleaseBodies, releaseProblems, siteReleaseUrl } from "../lib/changelog.ts";
+import {
+  SITE_REPO,
+  newestFirst,
+  parseChangesets,
+  parseReleaseBodies,
+  releaseProblems,
+  siteReleaseUrl,
+} from "../lib/changelog.ts";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "changelog.json");
 const PACKAGES = ["ui", "tokens", "icons", "i18n", "tailwind", "charts"]; // krizaka-ui/packages/<dir>
 const REPOS_LIST = "https://raw.githubusercontent.com/krizaka/.github/main/release-repos.json";
 const MAX = 60;
-const headers = { "user-agent": "krizaka-com-build", ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}) };
+const headers = {
+  "user-agent": "krizaka-com-build",
+  ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
+};
 const get = async (url, as = "json") => {
   const res = await fetch(url, { headers, signal: AbortSignal.timeout(8000) });
   if (!res.ok) throw new Error(`${url} answered ${res.status}`);
@@ -64,19 +74,30 @@ async function repoReleases({ id, name, repo, parts }) {
 /** One task per repository of every product, from the shared list. */
 async function productTasks() {
   const { products } = await get(REPOS_LIST);
-  return products.flatMap(({ id, name, repos }) => repos.map((repo) => () => repoReleases({ id, name, repo, parts: repos.length > 1 })));
+  return products.flatMap(({ id, name, repos }) =>
+    repos.map((repo) => () => repoReleases({ id, name, repo, parts: repos.length > 1 })),
+  );
 }
 
-const tasks = [...PACKAGES.map((dir) => () => packageReleases(dir)), ...(await productTasks().catch((e) => (console.warn(`changelog: ${e.message}`), [])))];
+const tasks = [
+  ...PACKAGES.map((dir) => () => packageReleases(dir)),
+  ...(await productTasks().catch((e) => (console.warn(`changelog: ${e.message}`), []))),
+];
 const settled = await Promise.allSettled(tasks.map((run) => run()));
-const releases = settled.flatMap((s) => (s.status === "fulfilled" ? s.value : [])).sort(newestFirst).slice(0, MAX);
+const releases = settled
+  .flatMap((s) => (s.status === "fulfilled" ? s.value : []))
+  .sort(newestFirst)
+  .slice(0, MAX);
 const problems = releaseProblems(releases);
 if (problems.length) {
   console.error(`changelog: public text refused:\n- ${problems.join("\n- ")}`);
   process.exit(1);
 }
 const failed = settled.filter((s) => s.status === "rejected");
-if (failed.length) console.warn(`changelog: ${failed.length} source(s) unreachable (${failed.map((f) => f.reason?.message).join("; ")})`);
+if (failed.length)
+  console.warn(
+    `changelog: ${failed.length} source(s) unreachable (${failed.map((f) => f.reason?.message).join("; ")})`,
+  );
 
 // krizaka.com's own version only (package.json, bumped by release-please), never the packages it runs on: those belong to
 // a deployment, not to the page. The footer links its GitHub release when it is published (the releases list before).

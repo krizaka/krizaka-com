@@ -2,7 +2,14 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
-  absolutizeLinks, describeStandard, extractIntro, orderStandards, parseInline, resolveSnapshot, STANDARDS_BLOB, STANDARDS_ORDER,
+  absolutizeLinks,
+  describeStandard,
+  extractIntro,
+  orderStandards,
+  parseInline,
+  resolveSnapshot,
+  STANDARDS_BLOB,
+  STANDARDS_ORDER,
 } from "../lib/standards.ts";
 
 const doc = `# CI and deploy — one pipeline (epic [#113](https://x/113))
@@ -21,7 +28,10 @@ Second paragraph.
 `;
 
 test("the intro is what sits between the markers: paragraphs, then the list", () => {
-  assert.deepEqual(extractIntro(doc), { paragraphs: ["First paragraph with `code` on two lines.", "Second paragraph."], bullets: ["one", "two"] });
+  assert.deepEqual(extractIntro(doc), {
+    paragraphs: ["First paragraph with `code` on two lines.", "Second paragraph."],
+    bullets: ["one", "two"],
+  });
 });
 
 test("no markers, reversed markers or an empty block give null, never an empty intro", () => {
@@ -31,8 +41,16 @@ test("no markers, reversed markers or an empty block give null, never an empty i
 });
 
 test("a standard's card: first heading, then the summary marker or else the first paragraph's first sentence", () => {
-  assert.deepEqual(describeStandard("# Guards: the registry\n\nThis page lists the guards that catch each lesson. It has more.\n"), { title: "Guards: the registry", summary: "This page lists the guards that catch each lesson." });
-  assert.deepEqual(describeStandard("# A title (epic #4)\n\n<!-- summary: The marker wins. -->\n\nParagraph here that is long enough."), { title: "A title", summary: "The marker wins." });
+  assert.deepEqual(
+    describeStandard("# Guards: the registry\n\nThis page lists the guards that catch each lesson. It has more.\n"),
+    { title: "Guards: the registry", summary: "This page lists the guards that catch each lesson." },
+  );
+  assert.deepEqual(
+    describeStandard(
+      "# A title (epic #4)\n\n<!-- summary: The marker wins. -->\n\nParagraph here that is long enough.",
+    ),
+    { title: "A title", summary: "The marker wins." },
+  );
   assert.equal(describeStandard("no heading\n\ntext"), null);
 });
 
@@ -43,15 +61,25 @@ test("a quote, a table, a list or a code fence is not a summary", () => {
 
 test("order: the ordering list first, unknown standards after it, alphabetically", () => {
   const ids = ["zeta", "guards", "alpha", "ci-and-deploy", "repo-layout"].map((id) => ({ id }));
-  assert.deepEqual(orderStandards(ids).map((s) => s.id), ["ci-and-deploy", "guards", "repo-layout", "alpha", "zeta"]);
+  assert.deepEqual(
+    orderStandards(ids).map((s) => s.id),
+    ["ci-and-deploy", "guards", "repo-layout", "alpha", "zeta"],
+  );
   assert.equal(STANDARDS_ORDER[0], "ci-and-deploy");
 });
 
 test("relative links of the intro point at the file on GitHub, absolute ones stay", () => {
-  assert.equal(absolutizeLinks("[g](guards.md) [x](https://a.b/c) [h](#h)"), `[g](${STANDARDS_BLOB}/guards.md) [x](https://a.b/c) [h](#h)`);
+  assert.equal(
+    absolutizeLinks("[g](guards.md) [x](https://a.b/c) [h](#h)"),
+    `[g](${STANDARDS_BLOB}/guards.md) [x](https://a.b/c) [h](#h)`,
+  );
 });
 
-const snap = (n) => ({ fetchedAt: "t", intro: { paragraphs: ["p"], bullets: [] }, standards: Array.from({ length: n }, (_, i) => ({ id: `s${i}`, title: "t", summary: "s", url: "u" })) });
+const snap = (n) => ({
+  fetchedAt: "t",
+  intro: { paragraphs: ["p"], bullets: [] },
+  standards: Array.from({ length: n }, (_, i) => ({ id: `s${i}`, title: "t", summary: "s", url: "u" })),
+});
 
 test("fallback: fresh wins, else the last good copy, else it fails loudly", () => {
   const good = snap(2);
@@ -65,8 +93,13 @@ test("fallback: fresh wins, else the last good copy, else it fails loudly", () =
 
 test("inline markdown: code, bold, links; anything else stays text", () => {
   assert.deepEqual(parseInline("a `b` **c** [d](https://e.f) g"), [
-    { kind: "text", text: "a " }, { kind: "code", text: "b" }, { kind: "text", text: " " }, { kind: "bold", text: "c" },
-    { kind: "text", text: " " }, { kind: "link", text: "d", href: "https://e.f" }, { kind: "text", text: " g" },
+    { kind: "text", text: "a " },
+    { kind: "code", text: "b" },
+    { kind: "text", text: " " },
+    { kind: "bold", text: "c" },
+    { kind: "text", text: " " },
+    { kind: "link", text: "d", href: "https://e.f" },
+    { kind: "text", text: " g" },
   ]);
   assert.deepEqual(parseInline("[rel](x.md)"), [{ kind: "text", text: "[rel](x.md)" }]);
 });

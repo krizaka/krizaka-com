@@ -29,14 +29,22 @@ let state: State | undefined;
 /** The routes pass the system clock (`() => new Date()`): this module reads none. State lives in this process: one salt, one store, one limiter. */
 function shared(now: () => Date): State {
   state ??= {
-    verification: createEmailVerification({ store: memoryCodeStore(), secret: randomBytes(32).toString("base64url"), now }),
+    verification: createEmailVerification({
+      store: memoryCodeStore(),
+      secret: randomBytes(32).toString("base64url"),
+      now,
+    }),
     limiter: createLimiter({ store: memoryLimitStore(), limits: LIMITS, clock: { now } }),
   };
   return state;
 }
 
 /** True when this visitor address has used up the allowance of `action`. */
-export async function throttled(action: "contact.send" | "contact.verify", ip: string, now: () => Date): Promise<boolean> {
+export async function throttled(
+  action: "contact.send" | "contact.verify",
+  ip: string,
+  now: () => Date,
+): Promise<boolean> {
   return !(await shared(now).limiter.check(action, { ip })).ok;
 }
 
@@ -45,10 +53,15 @@ export function codeMailConfigured(env: NodeJS.ProcessEnv = process.env): boolea
   return env.MAIL_PROVIDER?.trim().toLowerCase() === "mailgun" && Boolean(env.MAIL_API_KEY && env.MAIL_DOMAIN);
 }
 
-export type StartResult = { ok: true; challengeId: string } | { ok: false; error: "rate_limited" | "code_mail_failed" | "unavailable" };
+export type StartResult =
+  { ok: true; challengeId: string } | { ok: false; error: "rate_limited" | "code_mail_failed" | "unavailable" };
 
 /** Holds the message and mails the code to its author. Nothing is delivered to the team here. */
-export async function startContactVerification(message: ContactMessage, now: () => Date, env: NodeJS.ProcessEnv = process.env): Promise<StartResult> {
+export async function startContactVerification(
+  message: ContactMessage,
+  now: () => Date,
+  env: NodeJS.ProcessEnv = process.env,
+): Promise<StartResult> {
   if (!codeMailConfigured(env)) return { ok: false, error: "unavailable" };
   const { limiter, verification } = shared(now);
   const allowed = await limiter.check("contact.code", { subject: message.email });
@@ -65,11 +78,22 @@ export async function startContactVerification(message: ContactMessage, now: () 
   return { ok: true, challengeId: issued.challengeId };
 }
 
-export type ConfirmResult = { ok: true; message: ContactMessage } | { ok: false; reason: "invalid" | "expired" | "locked" | "unknown"; attemptsLeft?: number };
+export type ConfirmResult =
+  | { ok: true; message: ContactMessage }
+  | { ok: false; reason: "invalid" | "expired" | "locked" | "unknown"; attemptsLeft?: number };
 
 /** Releases the held message when `code` is the one mailed to `email`; the message is the one that was held, never one the browser sends back. */
-export async function confirmContactVerification(input: { challengeId: string; email: string; code: string }, now: () => Date): Promise<ConfirmResult> {
-  const result = await shared(now).verification.confirm<ContactMessage>({ challengeId: input.challengeId, address: input.email, code: input.code });
+export async function confirmContactVerification(
+  input: { challengeId: string; email: string; code: string },
+  now: () => Date,
+): Promise<ConfirmResult> {
+  const result = await shared(now).verification.confirm<ContactMessage>({
+    challengeId: input.challengeId,
+    address: input.email,
+    code: input.code,
+  });
   if (result.ok) return { ok: true, message: result.payload };
-  return result.attemptsLeft === undefined ? { ok: false, reason: result.reason } : { ok: false, reason: result.reason, attemptsLeft: result.attemptsLeft };
+  return result.attemptsLeft === undefined
+    ? { ok: false, reason: result.reason }
+    : { ok: false, reason: result.reason, attemptsLeft: result.attemptsLeft };
 }

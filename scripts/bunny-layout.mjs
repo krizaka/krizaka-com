@@ -11,22 +11,42 @@ export const PRODUCT_KINDS = ["home", "tour", "mobile", "gallery", "studios", "d
 
 /** The LEGACY folders (before layout v2): still served while something names them, never written again. `targetOf` maps each object. */
 export const ZONE = {
-  brand: { target: "org/v1/brand/", path: "brand/<brand>/<file> · brand/{manifest,index}.json", what: "the marks of the family (export-brand)" },
-  defaults: { target: "org/v1/defaults/", path: "defaults/v1/<kind>/<id>-<size>.webp · defaults/v1/manifest.json", what: "the default pictures of the org JSON (export-defaults)" },
+  brand: {
+    target: "org/v1/brand/",
+    path: "brand/<brand>/<file> · brand/{manifest,index}.json",
+    what: "the marks of the family (export-brand)",
+  },
+  defaults: {
+    target: "org/v1/defaults/",
+    path: "defaults/v1/<kind>/<id>-<size>.webp · defaults/v1/manifest.json",
+    what: "the default pictures of the org JSON (export-defaults)",
+  },
   people: {
     target: "org/v1/defaults/tones/ (people/defaults/) · deleted when unused (people/personas/, the retired mirror)",
     path: "people/defaults/v1/<brand>/<file> · people/personas/<site>/<file>",
     what: "the generated avatar tones of @krizaka/ui, and the human-name mirror of the personas",
   },
-  maps: { target: "org/v1/maps/", path: "maps/v1/{tiles,fonts}/…", what: "the basemap of @krizaka/ui/map (map-assets)" },
-  discovery: { target: "org/v1/discovery/", path: "discovery/services.json", what: "the signed services manifest (ADR-003)" },
+  maps: {
+    target: "org/v1/maps/",
+    path: "maps/v1/{tiles,fonts}/…",
+    what: "the basemap of @krizaka/ui/map (map-assets)",
+  },
+  discovery: {
+    target: "org/v1/discovery/",
+    path: "discovery/services.json",
+    what: "the signed services manifest (ADR-003)",
+  },
   site: {
     target: "sites/<site>/<kind>/ · org/v1/films/ · apps/akinaza/defaults/",
     path: "site/<area>/<product?>/<kind>/<name>.<hash>.<ext>",
     what: "the media the pages load (cdn-assets and the product sites), hashed",
   },
   ui: { target: "sites/ui/", path: "ui/<area>/<name>.<hash>.<ext>", what: "media of ui.krizaka.com" },
-  products: { target: "none — the retired human-name mirror of site/, deleted when unused", path: "products/<product>/<kind>/<name>.<ext>", what: "a browsable copy of site/" },
+  products: {
+    target: "none — the retired human-name mirror of site/, deleted when unused",
+    path: "products/<product>/<kind>/<name>.<ext>",
+    what: "a browsable copy of site/",
+  },
 };
 
 /**
@@ -44,10 +64,19 @@ export const FOREIGN_WRITERS = [
 ];
 
 /** The same writers' folders in layout v2: prune never deletes under them either. */
-export const FOREIGN_WRITERS_V2 = ["sites/orazaka/", "sites/yomizaka/", "sites/akinaza/", "apps/akinaza/", "sites/blog/"];
+export const FOREIGN_WRITERS_V2 = [
+  "sites/orazaka/",
+  "sites/yomizaka/",
+  "sites/akinaza/",
+  "apps/akinaza/",
+  "sites/blog/",
+];
 
 /** Folders of the zone that are retired (a departed or renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
-export const RETIRED = [/^site\/(?:people|products|docs)\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//, /^site\/brand-films\/orochia\//];
+export const RETIRED = [
+  /^site\/(?:people|products|docs)\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
+  /^site\/brand-films\/orochia\//,
+];
 
 /**
  * Where a hashed file of site/ is mirrored in the browsable library, or null when it has no place there.
@@ -73,11 +102,14 @@ export function libraryPath(logical) {
 /** What `site/` is made of: the first segment of a logical path given to `cdn-assets upload --to`. */
 export const SITE_AREAS = {
   home: "home/backdrop/<product>, home/kit-native/<product>-<theme> — the home page",
-  products: "products/<product>/{tour,gallery,gallery-video,video,mobile}/<clip> — recordings, images and Orazaka-made videos (.mp4 · .webm · -poster.webp) of a product",
+  products:
+    "products/<product>/{tour,gallery,gallery-video,video,mobile}/<clip> — recordings, images and Orazaka-made videos (.mp4 · .webm · -poster.webp) of a product",
   docs: "docs/<product>/{mobile,…}/<name> — media of the documentation pages (screenshots, clips, posters)",
-  people: "people/<product>/<person>-{256,512}.webp — the demo personas' portraits, shared by the products (mirrored in people/personas/)",
+  people:
+    "people/<product>/<person>-{256,512}.webp — the demo personas' portraits, shared by the products (mirrored in people/personas/)",
   blog: "blog/<post>/<name> — the images of a post of blog.krizaka.com (cover, figures); posts name them by CDN URL, the blog repository never commits media",
-  "brand-films": "brand-films/{loops,film}/<name> — the films of the flock, rendered from the code by krizaka-ui tools/brand-films (one loop per bird, « Le monde de Krizaka »); loaded by krizaka.com /story, ui.krizaka.com's brand page and the products' sites",
+  "brand-films":
+    "brand-films/{loops,film}/<name> — the films of the flock, rendered from the code by krizaka-ui tools/brand-films (one loop per bird, « Le monde de Krizaka »); loaded by krizaka.com /story, ui.krizaka.com's brand page and the products' sites",
 };
 
 export const SITE_AREA_NAMES = Object.keys(SITE_AREAS);
@@ -98,14 +130,38 @@ export const APPS = PRODUCTS;
 /** What the org's CDN holds, one generator each. */
 export const ORG_PARTS = {
   json: "org.json · org.<hash>.json · org.schema[.<hash>].json · app.schema[.<hash>].json · apps/<app>[.<hash>].json — @krizaka/org scripts/publish.mjs (krizaka-ts)",
-  defaults: "defaults/<person|banner|shop|folder|organisation>/<id>-<size>.webp (or <id>.svg) · defaults/tones/<brand>/<file> (the generated tones of @krizaka/ui's Avatar) · defaults/manifest.json — tools/export-defaults.mjs, tools/export-brand.mjs (krizaka-ui)",
+  defaults:
+    "defaults/<person|banner|shop|folder|organisation>/<id>-<size>.webp (or <id>.svg) · defaults/tones/<brand>/<file> (the generated tones of @krizaka/ui's Avatar) · defaults/manifest.json — tools/export-defaults.mjs, tools/export-brand.mjs (krizaka-ui)",
   brand: "brand/<brand>/<file> · brand/{manifest,index}.json — tools/export-brand.mjs (krizaka-ui)",
   maps: "maps/tiles/<region>-<YYYYMMDD>.pmtiles · maps/fonts/<stack>/<a>-<b>.pbf — tools/map-assets.mjs (krizaka-ui)",
-  films: "films/<series>/<name>.<hash>.<ext> — the films of the flock (krizaka-ui tools/brand-films), uploaded by scripts/cdn-assets.mjs",
+  films:
+    "films/<series>/<name>.<hash>.<ext> — the films of the flock (krizaka-ui tools/brand-films), uploaded by scripts/cdn-assets.mjs",
   discovery: "discovery/services.json — scripts/sign-services.mjs --publish (krizaka-com), ADR-003",
 };
 /** The kinds of a site's media (`sites/<site>/<kind>/…`): what the files are for, never who wrote them. */
-export const SITE_KINDS = ["home", "tour", "gallery", "gallery-video", "video", "cinema", "compare", "showcase", "web", "mobile", "docs", "personas", "download", "demo", "demo-stories", "films", "posts", "shared", "landing", "maps", "shop"];
+export const SITE_KINDS = [
+  "home",
+  "tour",
+  "gallery",
+  "gallery-video",
+  "video",
+  "cinema",
+  "compare",
+  "showcase",
+  "web",
+  "mobile",
+  "docs",
+  "personas",
+  "download",
+  "demo",
+  "demo-stories",
+  "films",
+  "posts",
+  "shared",
+  "landing",
+  "maps",
+  "shop",
+];
 /** The kinds of an app's own media (`apps/<app>/<kind>/…`). */
 export const APP_KINDS = ["defaults", "uploads", "generated"];
 
@@ -114,10 +170,13 @@ export const TARGET = {
   org: {
     writer: "the generator of each part (listed above) — never a hand upload",
     path: `org/${ORG_VERSION}/{org.json,apps,defaults,brand,maps,films,discovery}/…`,
-    what: "THE ORG — Krizaka's own data, the values every site and app reads by default: the org JSON and each app's config (@krizaka/org), the default pictures (ADR-011) and avatar tones, the marks, the basemap, the films, the discovery manifest:\n    " + Object.values(ORG_PARTS).join("\n    "),
+    what:
+      "THE ORG — Krizaka's own data, the values every site and app reads by default: the org JSON and each app's config (@krizaka/org), the default pictures (ADR-011) and avatar tones, the marks, the basemap, the films, the discovery manifest:\n    " +
+      Object.values(ORG_PARTS).join("\n    "),
   },
   sites: {
-    writer: "scripts/cdn-assets.mjs (krizaka-com: www) and each site's own media script (its repository names its files)",
+    writer:
+      "scripts/cdn-assets.mjs (krizaka-com: www) and each site's own media script (its repository names its files)",
     path: "sites/<site>/<kind>/[<sub>/…]<name>.<hash>.<ext>",
     what: `THE SITES — what one public site shows (${SITES.join(" · ")}): home, tour, gallery, video, mobile, docs, personas, download, demo, films; the blog's posts under posts/<post>/. Hashed, immutable`,
   },
@@ -192,7 +251,8 @@ export function assertUnder(prefix, path) {
 
 /** The defaults' manifest, and a default picture: `<kind>/<id>-<size>.webp` or `<kind>/<id>.svg` (two patterns, each readable at a glance). */
 const DEFAULTS_MANIFEST = /^defaults\/v\d+\/manifest\.json$/;
-const DEFAULTS_FILE = /^defaults\/v\d+\/(person|folder|organisation|shop|banner)\/[a-z0-9]+(-[a-z0-9]+)*(\.svg|-\d+\.webp)$/;
+const DEFAULTS_FILE =
+  /^defaults\/v\d+\/(person|folder|organisation|shop|banner)\/[a-z0-9]+(-[a-z0-9]+)*(\.svg|-\d+\.webp)$/;
 const SITE_FILE = /^site\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a-f]{10}\.[a-z0-9]+$/;
 const FILE = "[A-Za-z0-9._-]+";
 const brandAlt = BRANDS.join("|");
@@ -204,9 +264,13 @@ const LEGACY_RULES = {
     return SITE_FILE.test(path) ? null : "not <name>.<hash>.<ext> under site/<area>/…";
   },
   brand: (path) =>
-    new RegExp(String.raw`^brand/((manifest|index)\.json|(${brandAlt})/${FILE})$`).test(path) ? null : `not brand/<${brandAlt}>/<file> or brand/{manifest,index}.json`,
+    new RegExp(String.raw`^brand/((manifest|index)\.json|(${brandAlt})/${FILE})$`).test(path)
+      ? null
+      : `not brand/<${brandAlt}>/<file> or brand/{manifest,index}.json`,
   people: (path) =>
-    new RegExp(String.raw`^people/(defaults/v1/(manifest\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`).test(path)
+    new RegExp(
+      String.raw`^people/(defaults/v1/(manifest\.json|(${brandAlt})/${FILE})|personas/[a-z0-9-]+/${FILE})$`,
+    ).test(path)
       ? null
       : "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>",
   defaults: (path) =>
@@ -214,12 +278,17 @@ const LEGACY_RULES = {
       ? null
       : "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json",
   products: (path) =>
-    new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path) ? null : `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`,
+    new RegExp(`^products/(${brandAlt})/(${PRODUCT_KINDS.join("|")})/(${FILE}/)*${FILE}$`).test(path)
+      ? null
+      : `not products/<${brandAlt}>/<${PRODUCT_KINDS.join("|")}>/<file>`,
   discovery: (path) => (path === "discovery/services.json" ? null : "not discovery/services.json"),
   ui: (path, parts) => (parts.length < 3 ? "not ui/<area>/<file>" : null),
   maps: (path) =>
-    /^maps\/v1\/(tiles\/[a-z0-9-]+-\d{8}\.pmtiles|fonts\/[A-Za-z0-9 ]+\/\d+-\d+\.pbf)$/.test(path) ? null : "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf",
-  "pr-assets": (path, parts) => (parts.length < 4 || !parts[1] || !parts[2] ? "not pr-assets/<repo>/<pr-or-topic>/<file>" : null),
+    /^maps\/v1\/(tiles\/[a-z0-9-]+-\d{8}\.pmtiles|fonts\/[A-Za-z0-9 ]+\/\d+-\d+\.pbf)$/.test(path)
+      ? null
+      : "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf",
+  "pr-assets": (path, parts) =>
+    parts.length < 4 || !parts[1] || !parts[2] ? "not pr-assets/<repo>/<pr-or-topic>/<file>" : null,
 };
 
 /** Why <path> does not belong in the LEGACY layout (the roots of `ZONE`, still served while they migrate), or null. */
@@ -248,7 +317,9 @@ const ORG_FILE = new RegExp(
     String.raw`maps/fonts/[A-Za-z0-9 ]+/\d+-\d+\.pbf`,
     `films/[a-z0-9-]+/(?:[a-z0-9-]+/)?${HASHED}`,
     String.raw`discovery/services\.json`,
-  ].map((p) => `(?:${p})`).join("|"),
+  ]
+    .map((p) => `(?:${p})`)
+    .join("|"),
 );
 const SITE_OBJECT = new RegExp(`^sites/(?:${SITES.join("|")})/(?:${SITE_KINDS.join("|")})/(?:[a-z0-9_-]+/)*${HASHED}$`);
 const APP_OBJECT = new RegExp(`^apps/(?:${APPS.join("|")})/(?:${APP_KINDS.join("|")})/(?:[a-z0-9_-]+/)*${HASHED}$`);
@@ -262,10 +333,13 @@ export function targetMisplaced(path) {
   if (root !== "pr-assets" && parts.length - 1 > MAX_FOLDERS) return `deeper than ${MAX_FOLDERS} folders`;
   if (root === "org") {
     const m = /^org\/v\d+\/(.+)$/.exec(path);
-    if (!m || !new RegExp(`^(?:${ORG_FILE.source})$`).test(m[1])) return `not org/v<n>/<${Object.keys(ORG_PARTS).join("|")}>/… (see ORG_PARTS)`;
+    if (!m || !new RegExp(`^(?:${ORG_FILE.source})$`).test(m[1]))
+      return `not org/v<n>/<${Object.keys(ORG_PARTS).join("|")}>/… (see ORG_PARTS)`;
   }
-  if (root === "sites" && !SITE_OBJECT.test(path)) return `not sites/<${SITES.join("|")}>/<${SITE_KINDS.join("|")}>/…/<name>.<hash>.<ext>`;
-  if (root === "apps" && !APP_OBJECT.test(path)) return `not apps/<${APPS.join("|")}>/<${APP_KINDS.join("|")}>/…/<name>.<hash>.<ext>`;
+  if (root === "sites" && !SITE_OBJECT.test(path))
+    return `not sites/<${SITES.join("|")}>/<${SITE_KINDS.join("|")}>/…/<name>.<hash>.<ext>`;
+  if (root === "apps" && !APP_OBJECT.test(path))
+    return `not apps/<${APPS.join("|")}>/<${APP_KINDS.join("|")}>/…/<name>.<hash>.<ext>`;
   if (root === "pr-assets" && parts.length < 4) return "not pr-assets/<repo>/<pr-or-topic>/<file>";
   return null;
 }
@@ -308,7 +382,8 @@ const TARGET_OF = [
 
 /** Why a legacy object has no target (shown by the audit). */
 export function frozenReason(path) {
-  if (path.startsWith("products/") || path.startsWith("people/personas/")) return "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it";
+  if (path.startsWith("products/") || path.startsWith("people/personas/"))
+    return "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it";
   if (RETIRED.some((re) => re.test(path))) return "retired: a departed or renamed product";
   return null;
 }
@@ -342,7 +417,10 @@ export function misplaced(path) {
 /** Throws unless <path> is in the TARGET layout — every writer calls it before a PUT: a new write outside v2 fails. */
 export function assertWritable(path) {
   const why = targetMisplaced(path);
-  if (why || path.split("/").includes("..")) throw new Error(`${path} is outside the Bunny layout v2 (${why ?? "'..'"}) — new files go under ${Object.keys(TARGET).join("/, ")}/ only`);
+  if (why || path.split("/").includes(".."))
+    throw new Error(
+      `${path} is outside the Bunny layout v2 (${why ?? "'..'"}) — new files go under ${Object.keys(TARGET).join("/, ")}/ only`,
+    );
   return path;
 }
 

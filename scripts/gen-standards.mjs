@@ -9,11 +9,22 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
-  absolutizeLinks, CI_STANDARD, describeStandard, extractIntro, orderStandards, resolveSnapshot, STANDARDS_BLOB, STANDARDS_DIR, STANDARDS_REPO,
+  absolutizeLinks,
+  CI_STANDARD,
+  describeStandard,
+  extractIntro,
+  orderStandards,
+  resolveSnapshot,
+  STANDARDS_BLOB,
+  STANDARDS_DIR,
+  STANDARDS_REPO,
 } from "../lib/standards.ts";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "standards.json");
-const headers = { "user-agent": "krizaka-com-build", ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}) };
+const headers = {
+  "user-agent": "krizaka-com-build",
+  ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
+};
 const get = async (url, as) => {
   const res = await fetch(url, { headers, signal: AbortSignal.timeout(10000) });
   if (!res.ok) throw new Error(`${url} answered ${res.status}`);
@@ -21,9 +32,14 @@ const get = async (url, as) => {
 };
 
 async function read() {
-  const listing = await get(`https://api.github.com/repos/${STANDARDS_REPO}/contents/${STANDARDS_DIR}?ref=main`, "json");
+  const listing = await get(
+    `https://api.github.com/repos/${STANDARDS_REPO}/contents/${STANDARDS_DIR}?ref=main`,
+    "json",
+  );
   const files = listing.filter((f) => f.type === "file" && f.name.endsWith(".md"));
-  const docs = await Promise.all(files.map(async (f) => [f.name.replace(/\.md$/, ""), await get(f.download_url, "text")]));
+  const docs = await Promise.all(
+    files.map(async (f) => [f.name.replace(/\.md$/, ""), await get(f.download_url, "text")]),
+  );
   const ci = docs.find(([id]) => id === CI_STANDARD)?.[1];
   const intro = ci ? extractIntro(ci) : null;
   if (!intro) throw new Error(`${CI_STANDARD}.md has no <!-- intro:start --> … <!-- intro:end --> block`);

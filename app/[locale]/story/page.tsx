@@ -16,7 +16,17 @@ import { asLocale, format, getDictionary, type TranslationDictionary } from "@/l
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
 import { publishedCount } from "@/lib/registry-versions";
-import { BLOG_CHAPTER, blogChapterUrl, ENGINE, OPEN_BIRD, PRODUCT_BIRD, PRODUCT_CHAPTERS, STORY_ANCHORS, WHO_BIRD, type StoryBird } from "@/lib/story";
+import {
+  BLOG_CHAPTER,
+  blogChapterUrl,
+  ENGINE,
+  OPEN_BIRD,
+  PRODUCT_BIRD,
+  PRODUCT_CHAPTERS,
+  STORY_ANCHORS,
+  WHO_BIRD,
+  type StoryBird,
+} from "@/lib/story";
 import { uiFacts } from "@/lib/ui-facts";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import SiteBar from "@/app/components/SiteBar";
@@ -58,7 +68,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const product = (id: string) => PRODUCTS.find((p) => p.id === id)!;
-const names = (locale: string, list: readonly Product[]) => new Intl.ListFormat(locale, { type: "conjunction" }).format(list.map((p) => p.name));
+const names = (locale: string, list: readonly Product[]) =>
+  new Intl.ListFormat(locale, { type: "conjunction" }).format(list.map((p) => p.name));
 
 /** A bird's promise, in the words of the family film for its four birds (Krizaka, Orazaka, Yomizaka, Akinaza), the brand reference's for the others. */
 function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
@@ -95,7 +106,10 @@ export default async function StoryPage({ params }: Props) {
     ["next", st.next.nav],
     ...PRODUCT_CHAPTERS.map((id) => [id, product(id).name] as [string, string]),
   ]);
-  const items = STORY_ANCHORS.map((id) => ({ id: id === "who" || id === "engine" || id === "open" || id === "next" ? id : `p-${id}`, label: chapterNames.get(id)! }));
+  const items = STORY_ANCHORS.map((id) => ({
+    id: id === "who" || id === "engine" || id === "open" || id === "next" ? id : `p-${id}`,
+    label: chapterNames.get(id)!,
+  }));
   const number = (anchor: (typeof STORY_ANCHORS)[number]) => STORY_ANCHORS.indexOf(anchor) + 1;
   const chapterLabel = (n: number) => format(st.chapter, { n: String(n) });
   const numbered = (anchor: (typeof STORY_ANCHORS)[number]) => ({
@@ -136,16 +150,30 @@ export default async function StoryPage({ params }: Props) {
   const lean = (anchor: (typeof STORY_ANCHORS)[number]) => (number(anchor) % 2 ? -1.4 : 1.4);
 
   /** The product's real take (a poster, played in a lightbox on click), when one is recorded; the mini-visual otherwise. */
-  const takeProof = (id: (typeof PRODUCT_CHAPTERS)[number] | typeof ENGINE, name: string, anchor: (typeof STORY_ANCHORS)[number]) => {
+  const takeProof = (
+    id: (typeof PRODUCT_CHAPTERS)[number] | typeof ENGINE,
+    name: string,
+    anchor: (typeof STORY_ANCHORS)[number],
+  ) => {
     const take = takeOf(id, locale);
-    return take ? <TakeCard take={take} name={name} id={id} other={Boolean(take.lang && take.lang !== locale)} tilt={lean(anchor)} /> : null;
+    return take ? (
+      <TakeCard
+        take={take}
+        name={name}
+        id={id}
+        other={Boolean(take.lang && take.lang !== locale)}
+        tilt={lean(anchor)}
+      />
+    ) : null;
   };
 
   const productChapter = (id: (typeof PRODUCT_CHAPTERS)[number]) => {
     const p = product(id);
     const use = ENGINE_USES.find((u) => u.id === id);
     const useLine = use
-      ? format(use.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, { use: e.uses[use.id as keyof typeof e.uses] })
+      ? format(use.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, {
+          use: e.uses[use.id as keyof typeof e.uses],
+        })
       : undefined;
     const bird = PRODUCT_BIRD[id];
     return (
@@ -168,13 +196,23 @@ export default async function StoryPage({ params }: Props) {
         }
         bird={bird}
         promise={promiseOf(t, bird)}
-        proof={takeProof(id, p.name, id) ?? (
-          <div className="st-proof">
-            <ProductVisual id={id} />
-            <p className="st-proof-note">{st.products.demo}</p>
-          </div>
-        )}
-        fold={{ summary: st.products.how, children: <><p>{st.products.proofs[id as keyof typeof st.products.proofs]}</p>{useLine && <p className="st-uses-line">{useLine}</p>}</> }}
+        proof={
+          takeProof(id, p.name, id) ?? (
+            <div className="st-proof">
+              <ProductVisual id={id} />
+              <p className="st-proof-note">{st.products.demo}</p>
+            </div>
+          )
+        }
+        fold={{
+          summary: st.products.how,
+          children: (
+            <>
+              <p>{st.products.proofs[id as keyof typeof st.products.proofs]}</p>
+              {useLine && <p className="st-uses-line">{useLine}</p>}
+            </>
+          ),
+        }}
         actions={
           <>
             <ButtonLink href={p.siteUrl} variant="primary">
@@ -232,24 +270,31 @@ export default async function StoryPage({ params }: Props) {
             promise={promiseOf(t, WHO_BIRD)}
             proof={
               <>
-              <TapedPhoto className="st-film-photo" tilt={lean("who")}>
-                <FilmLightbox
-                  film={{ mp4: film.mp4, poster: film.poster, vtt: film.vtt }}
-                  fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}
-                  trigger={
-                    <button type="button" className="st-film" aria-label={`${st.who.film} · ${st.who.filmLength}`}>
-                      <Image className="st-film-poster" src={film.poster} alt="" width={1280} height={720} sizes="(min-width: 1100px) 400px, (min-width: 640px) 50vw, 92vw" />
-                      <span className="st-film-play" aria-hidden>
-                        <PlayIcon size={22} />
-                      </span>
-                      <span className="st-film-caption">
-                        {st.who.film} <span>{st.who.filmLength}</span>
-                      </span>
-                    </button>
-                  }
-                />
-              </TapedPhoto>
-              <FilmCredits />
+                <TapedPhoto className="st-film-photo" tilt={lean("who")}>
+                  <FilmLightbox
+                    film={{ mp4: film.mp4, poster: film.poster, vtt: film.vtt }}
+                    fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}
+                    trigger={
+                      <button type="button" className="st-film" aria-label={`${st.who.film} · ${st.who.filmLength}`}>
+                        <Image
+                          className="st-film-poster"
+                          src={film.poster}
+                          alt=""
+                          width={1280}
+                          height={720}
+                          sizes="(min-width: 1100px) 400px, (min-width: 640px) 50vw, 92vw"
+                        />
+                        <span className="st-film-play" aria-hidden>
+                          <PlayIcon size={22} />
+                        </span>
+                        <span className="st-film-caption">
+                          {st.who.film} <span>{st.who.filmLength}</span>
+                        </span>
+                      </button>
+                    }
+                  />
+                </TapedPhoto>
+                <FilmCredits />
               </>
             }
             actions={readOn("who")}
@@ -323,7 +368,14 @@ export default async function StoryPage({ params }: Props) {
               <>
                 <p>{st.next.lead}</p>
                 <ul className="st-list">
-                  {planned.length > 0 && <li>{words(st.next.wire, planned.map((u) => product(u.id)))}</li>}
+                  {planned.length > 0 && (
+                    <li>
+                      {words(
+                        st.next.wire,
+                        planned.map((u) => product(u.id)),
+                      )}
+                    </li>
+                  )}
                   {developing.length > 0 && <li>{words(st.next.reach, developing)}</li>}
                 </ul>
               </>

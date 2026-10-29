@@ -1,55 +1,253 @@
 /* /open-source — what the blocks of @krizaka/ui leave to the page: the hero's figures, the stack's still visuals, the
    table cells, the architecture diagram, the contribution picker. Colours are tokens only. */
 
-.os-hero-figures { width: 100%; max-width: 900px; margin: 28px auto 0; }
-.os-hero-license { margin: 12px 0 0; text-align: center; font-size: 13px; color: var(--kz-text-secondary); }
-.os-hero-actions { display: flex; justify-content: center; margin-top: 24px; }
+.os-hero-figures {
+  width: 100%;
+  max-width: 900px;
+  margin: 28px auto 0;
+}
+.os-hero-license {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--kz-text-secondary);
+}
+.os-hero-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
 
 /* The stack: still visuals inside the cards, then the building blocks as quiet links. */
-.os-blocks { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 20px; font-size: 13px; color: var(--kz-text-secondary); }
+.os-blocks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--kz-text-secondary);
+}
 
 /* The tables. */
-.os-version { font-family: var(--font-mono); font-size: 12px; }
-.os-links { display: inline-flex; flex-wrap: wrap; gap: 4px 12px; }
-.os-links a { display: inline-flex; align-items: center; gap: 3px; font-size: 12.5px; font-weight: 600; color: var(--kz-accent-text, var(--kz-accent)); text-decoration: none; white-space: nowrap; }
-.os-links a:hover { text-decoration: underline; }
+.os-version {
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+.os-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.os-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--kz-accent-text, var(--kz-accent));
+  text-decoration: none;
+  white-space: nowrap;
+}
+.os-links a:hover {
+  text-decoration: underline;
+}
 /* `position: relative`: the sparkline's screen-reader table (@krizaka/charts `.kzc-sr`, absolute) stays inside the table's
    horizontal scroller instead of widening the page (it overflowed /fr/open-source at 768 px). */
-.os-downloads { position: relative; display: inline-flex; align-items: center; justify-content: flex-end; gap: 0.5rem; font-variant-numeric: var(--kz-figures, lining-nums tabular-nums); }
-.os-downloads > :first-child:not(:last-child) { flex: none; width: 72px; color: var(--kz-text-secondary); }
+.os-downloads {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  font-variant-numeric: var(--kz-figures, lining-nums tabular-nums);
+}
+.os-downloads > :first-child:not(:last-child) {
+  flex: none;
+  width: 72px;
+  color: var(--kz-text-secondary);
+}
 
-.os-updated { font-family: var(--font-mono); font-size: 11.5px; color: var(--kz-text-secondary); }
+.os-updated {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: var(--kz-text-secondary);
+}
 
 /* How it fits: four layers, top to bottom, joined by a hairline — one column at every width. */
-.os-fits { list-style: none; margin: 0; padding: 0; display: grid; gap: 28px; position: relative; }
-.os-fits::before { content: ""; position: absolute; left: 50%; top: 14px; bottom: 14px; width: 1px; background: var(--kz-border-default); }
-.os-fits-layer { position: relative; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; }
-.os-fits-name { position: relative; margin: 0; padding: 2px 10px; background: var(--kz-surface-0); font-family: var(--font-mono); font-size: 11px; font-weight: 600;
-  letter-spacing: 0; text-transform: none; color: var(--kz-accent-text, var(--kz-accent)); }
-.os-fits-sub { position: relative; margin: 0; padding: 0 8px; background: var(--kz-surface-0); font-size: 12px; color: var(--kz-text-secondary); }
-.os-fits-items { position: relative; list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 900px; }
-.os-fits-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 2px; font-size: 13px; font-weight: 600;
-  color: var(--kz-text-primary); background: var(--kz-surface-1); border: 1px solid var(--kz-border-subtle); }
-.os-fits-code { font-family: var(--font-mono); font-size: 11.5px; font-weight: 500; }
+.os-fits {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 28px;
+  position: relative;
+}
+.os-fits::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 14px;
+  bottom: 14px;
+  width: 1px;
+  background: var(--kz-border-default);
+}
+.os-fits-layer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+.os-fits-name {
+  position: relative;
+  margin: 0;
+  padding: 2px 10px;
+  background: var(--kz-surface-0);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--kz-accent-text, var(--kz-accent));
+}
+.os-fits-sub {
+  position: relative;
+  margin: 0;
+  padding: 0 8px;
+  background: var(--kz-surface-0);
+  font-size: 12px;
+  color: var(--kz-text-secondary);
+}
+.os-fits-items {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 900px;
+}
+.os-fits-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--kz-text-primary);
+  background: var(--kz-surface-1);
+  border: 1px solid var(--kz-border-subtle);
+}
+.os-fits-code {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+}
 
-.os-stack-product { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; }
-.os-stack-cell { display: inline-flex; align-items: center; gap: 8px; color: var(--kz-text-primary); }
-.os-stack-cell[data-state="no"] { color: var(--kz-text-muted, var(--kz-text-secondary)); }
-.os-stack-dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--kz-accent); }
-.os-stack-cell[data-state="no"] .os-stack-dot { background: transparent; border: 1.5px solid var(--kz-border-default); }
-.os-stack-cell[data-state="planned"] .os-stack-dot { background: transparent; border: 1.5px dashed var(--kz-accent); }
-.os-stack-cell[data-state="partial"] .os-stack-dot { background: linear-gradient(90deg, var(--kz-accent) 50%, transparent 50%); border: 1.5px solid var(--kz-accent); }
+.os-stack-product {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+.os-stack-cell {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--kz-text-primary);
+}
+.os-stack-cell[data-state="no"] {
+  color: var(--kz-text-muted, var(--kz-text-secondary));
+}
+.os-stack-dot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--kz-accent);
+}
+.os-stack-cell[data-state="no"] .os-stack-dot {
+  background: transparent;
+  border: 1.5px solid var(--kz-border-default);
+}
+.os-stack-cell[data-state="planned"] .os-stack-dot {
+  background: transparent;
+  border: 1.5px dashed var(--kz-accent);
+}
+.os-stack-cell[data-state="partial"] .os-stack-dot {
+  background: linear-gradient(90deg, var(--kz-accent) 50%, transparent 50%);
+  border: 1.5px solid var(--kz-accent);
+}
 
 /* Contribute: the picker, under the call. */
-.os-picker { display: grid; gap: 14px; margin-top: 20px; }
-.os-picker-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
-.os-picker-title { display: inline-flex; align-items: center; gap: 8px; min-width: 180px; margin: 0; font-weight: 700; font-size: 14px; color: var(--kz-text-primary); }
-.os-picker-repos { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.os-picker-repos a { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 12px; border-radius: 2px; font-size: 13px; font-weight: 600;
-  color: var(--kz-text-primary); text-decoration: none; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1); transition: border-color .2s; }
-.os-picker-repos a:hover { border-color: var(--kz-accent); }
-.os-picker-repos a:focus-visible, .os-picker-legal a:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; }
-.os-picker-legal { margin: 4px 0 0; font-size: 13px; color: var(--kz-text-secondary); }
-.os-picker-legal a { color: var(--kz-accent-text, var(--kz-accent)); }
+.os-picker {
+  display: grid;
+  gap: 14px;
+  margin-top: 20px;
+}
+.os-picker-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+}
+.os-picker-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 180px;
+  margin: 0;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--kz-text-primary);
+}
+.os-picker-repos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.os-picker-repos a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border-radius: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--kz-text-primary);
+  text-decoration: none;
+  border: 1px solid var(--kz-border-default);
+  background: var(--kz-surface-1);
+  transition: border-color 0.2s;
+}
+.os-picker-repos a:hover {
+  border-color: var(--kz-accent);
+}
+.os-picker-repos a:focus-visible,
+.os-picker-legal a:focus-visible {
+  outline: 2px solid var(--kz-ring, var(--kz-accent));
+  outline-offset: 2px;
+}
+.os-picker-legal {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--kz-text-secondary);
+}
+.os-picker-legal a {
+  color: var(--kz-accent-text, var(--kz-accent));
+}
 
-@media (prefers-reduced-motion: reduce) { .os-picker-repos a { transition: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .os-picker-repos a {
+    transition: none;
+  }
+}

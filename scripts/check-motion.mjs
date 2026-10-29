@@ -17,4 +17,7 @@ const problems = await visitPages(
   },
   { viewport: (c) => ({ width: c.vp.width, height: c.vp.height }), reducedMotion: (c) => c.reducedMotion },
 );
-report(problems, `check-motion: ${cases().length} page × viewport × theme × motion preference, the engine flow moves (and rests under reduced motion)`);
+report(
+  problems,
+  `check-motion: ${cases().length} page × viewport × theme × motion preference, the engine flow moves (and rests under reduced motion)`,
+);

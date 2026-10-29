@@ -16,7 +16,11 @@ export const CONTACT_EMAIL = "bonjour@krizaka.com";
  * footer and the legal pages must show. Never the head office's street (a home address), a phone or a tax account number:
  * those stay in the company's records (tests/legal-identity.test.mjs).
  */
-export const COMPANY = { legalName: "Technologies Krizaka Inc.", name: "Technologies Krizaka", neq: "1182652231" } as const;
+export const COMPANY = {
+  legalName: "Technologies Krizaka Inc.",
+  name: "Technologies Krizaka",
+  neq: "1182652231",
+} as const;
 
 export const GITHUB_ORG_URL = `https://github.com/${GITHUB_ORG}`;
 export const NPM_ORG_URL = `https://www.npmjs.com/org/${GITHUB_ORG}`;

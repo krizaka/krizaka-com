@@ -73,7 +73,11 @@ function entry(source: ChannelSource, mark: string, state: ChannelState): Channe
   };
 }
 
-export function buildPublicChannels(products: ChannelSource[], stack: ChannelSource[], state: ChannelState): ChannelGroup[] {
+export function buildPublicChannels(
+  products: ChannelSource[],
+  stack: ChannelSource[],
+  state: ChannelState,
+): ChannelGroup[] {
   return [
     { group: "products", entries: products.map((p) => entry(p, p.id, state)) },
     { group: "stack", entries: stack.map((s) => entry(s, "krizaka", state)) },

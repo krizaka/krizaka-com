@@ -281,11 +281,7 @@
             },
             "teams": {
               "label": "Team",
-              "items": [
-                "Design",
-                "Engineering",
-                "Support"
-              ]
+              "items": ["Design", "Engineering", "Support"]
             },
             "digest": "Weekly digest",
             "invite": "Invite"
@@ -445,11 +441,7 @@
           "booked": "Booked, confirmed by e-mail · demo",
           "service": "Short cut",
           "minutes": "30 min",
-          "includes": [
-            "Consultation",
-            "Wash",
-            "Styling"
-          ],
+          "includes": ["Consultation", "Wash", "Styling"],
           "choose": "Choose",
           "gst": "GST 5 %",
           "qst": "QST 9.975 %",
@@ -563,9 +555,7 @@
         "lead": "Krizaka is a studio Oussama builds in Montréal, almost alone, with AI agents he directs and reviews. A kris is a blade forged in layers; zaka is the slope you climb one step at a time.",
         "refusal": "We started from one question: where was my document read, by which model, and who can see the result? Software that cannot answer asks for trust on faith. So what we ship is tested, documented and open source under Apache-2.0.",
         "placesAria": "Where Krizaka is",
-        "places": [
-          "Montréal"
-        ],
+        "places": ["Montréal"],
         "film": "Watch the film",
         "filmLength": "44 s",
         "filmCredit": "Film rendered from our code",
@@ -1082,11 +1072,7 @@
           "text": "Scope, architecture and timeline in writing. The code stays open source either way."
         }
       ],
-      "facts": [
-        "Reply within 2 business days",
-        "English · Français",
-        "Montréal, Québec"
-      ],
+      "facts": ["Reply within 2 business days", "English · Français", "Montréal, Québec"],
       "groupProducts": "Products",
       "groupStack": "Open source",
       "viaIssue": "via an issue",

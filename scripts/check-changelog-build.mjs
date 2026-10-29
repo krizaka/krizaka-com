@@ -15,8 +15,10 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 export function changelogProblems(html, { latest, siteVersion }) {
   const problems = [];
   if (!/<h1[^>]*>/.test(html)) problems.push("no h1");
-  if (latest && !html.includes(releaseLabel(latest))) problems.push(`the latest release (${releaseLabel(latest)}) is not on the page`);
-  if (siteVersion && !html.includes(`id="${siteVersion}"`)) problems.push(`no anchor #${siteVersion} for the site's version`);
+  if (latest && !html.includes(releaseLabel(latest)))
+    problems.push(`the latest release (${releaseLabel(latest)}) is not on the page`);
+  if (siteVersion && !html.includes(`id="${siteVersion}"`))
+    problems.push(`no anchor #${siteVersion} for the site's version`);
   return problems;
 }
 
@@ -31,8 +33,10 @@ if (import.meta.url === `file://${process.argv[1]}`) {
       failures.push(`${locale}: /changelog was not prerendered`);
       continue;
     }
-    for (const p of changelogProblems(readFileSync(page, "utf8"), { latest, siteVersion: data.platform?.site })) failures.push(`${locale}: ${p}`);
-    if (!existsSync(path.join(root, ".next", "server", "app", locale, "changelog", "feed.xml.body"))) failures.push(`${locale}: the RSS feed was not generated`);
+    for (const p of changelogProblems(readFileSync(page, "utf8"), { latest, siteVersion: data.platform?.site }))
+      failures.push(`${locale}: ${p}`);
+    if (!existsSync(path.join(root, ".next", "server", "app", locale, "changelog", "feed.xml.body")))
+      failures.push(`${locale}: the RSS feed was not generated`);
   }
   if (failures.length) {
     console.error(`changelog check failed:\n- ${failures.join("\n- ")}`);

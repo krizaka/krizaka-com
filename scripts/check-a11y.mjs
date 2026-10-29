@@ -19,7 +19,9 @@ export const BASELINE = fileURLToPath(new URL("../a11y-baseline.json", import.me
 
 /** The pages to visit: every address of the sitemap (en and fr), plus the 404. */
 export function routesOf(sitemapXml) {
-  const paths = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname.replace(/\/$/, "") || "/");
+  const paths = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(
+    (m) => new URL(m[1]).pathname.replace(/\/$/, "") || "/",
+  );
   return [...new Set([...paths, ...EXTRA_PAGES])];
 }
 
@@ -39,5 +41,7 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     console.error(`${problems.length} accessibility problem(s):\n  ${problems.join("\n  ")}`);
     process.exit(1);
   }
-  console.log(`accessibility (axe-core WCAG 2.1 AA): ${routes.length} pages x ${WIDTHS.length} widths x ${THEMES.length} themes, no new violation`);
+  console.log(
+    `accessibility (axe-core WCAG 2.1 AA): ${routes.length} pages x ${WIDTHS.length} widths x ${THEMES.length} themes, no new violation`,
+  );
 }

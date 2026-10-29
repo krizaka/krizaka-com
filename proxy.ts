@@ -26,7 +26,7 @@ export function proxy(request: NextRequest) {
 
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = locales.every(
-    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`
+    (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
 
   // A /fr or /en page remembers its language, so the site's unprefixed links keep it.
@@ -43,7 +43,7 @@ export function proxy(request: NextRequest) {
     const locale = getLocale(request);
 
     const response = NextResponse.redirect(
-      new URL(`/${locale}${pathname === "/" ? "" : pathname}${request.nextUrl.search}`, request.url)
+      new URL(`/${locale}${pathname === "/" ? "" : pathname}${request.nextUrl.search}`, request.url),
     );
     response.cookies.set("NEXT_LOCALE", locale, {
       path: "/",

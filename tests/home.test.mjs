@@ -2,7 +2,19 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { HOME_SECTIONS, folioOf } from "../lib/home-sections.ts";
-import { calls, constString, cssDecls, exportedNames, hasCode, identifiers, importsOf, jsx, jsxAll, records, strings } from "./helpers/source.mjs";
+import {
+  calls,
+  constString,
+  cssDecls,
+  exportedNames,
+  hasCode,
+  identifiers,
+  importsOf,
+  jsx,
+  jsxAll,
+  records,
+  strings,
+} from "./helpers/source.mjs";
 
 // The home is one of the site's two views (Oussama, 2026-10-17; the other is Open source): the centred hero, the products
 // (Orazaka the foundation, the products it powers — the only place they are presented), the open-source stack in brief,
@@ -298,13 +310,18 @@ test("the full stack cards: one component on /open-source and /story, with Java 
     jsx(stack).some((e) => e.attrs.file === "pom.xml" && "copyLabel" in e.attrs),
     "the Java dependency can be copied",
   );
-  assert.ok(importsOf(stack).some((i) => i.sideEffect && i.from === "./stack-tiles.css"), "the tiles carry their own styles to every page");
+  assert.ok(
+    importsOf(stack).some((i) => i.sideEffect && i.from === "./stack-tiles.css"),
+    "the tiles carry their own styles to every page",
+  );
   const ids = identifiers(stack);
   assert.ok(!ids.has("LinkCard") && !ids.has("StackCards"));
   for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"])
     assert.ok(hasCode(page, "<StackTiles locale={locale} />"), page);
   assert.ok(
-    jsx(stack).some((e) => e.tag === "CardGrid" && e.attrs.as === "ul" && e.attrs.min === "{420}" && e.attrs.columns === "{2}"),
+    jsx(stack).some(
+      (e) => e.tag === "CardGrid" && e.attrs.as === "ul" && e.attrs.min === "{420}" && e.attrs.columns === "{2}",
+    ),
     "the grid is @krizaka/ui's CardGrid: the tiles of a row share one height",
   );
   assert.equal(
@@ -319,7 +336,10 @@ test("the full stack cards: one component on /open-source and /story, with Java 
 test("the stack cards: the Motion host from the data, no playground control on a calm flow", () => {
   const stack = "app/components/home/OpenStack.tsx";
   const motion = "app/components/home/playground/MotionPlayground.tsx";
-  assert.ok(jsx(stack).some((e) => e.tag === "MotionPlayground" && "w" in e.attrs), "the full card keeps the playground's settings");
+  assert.ok(
+    jsx(stack).some((e) => e.tag === "MotionPlayground" && "w" in e.attrs),
+    "the full card keeps the playground's settings",
+  );
   assert.ok(hasCode(stack, "meta={hostOf(motion.url)}"), "the full card's host is hostOf of the data's url");
   assert.ok(hasCode(stack, "href={stackActionUrl(motion)}"), "the action opens the lab's scene");
   const typed = strings(stack).join("\n");

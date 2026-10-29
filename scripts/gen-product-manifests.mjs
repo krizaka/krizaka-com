@@ -21,7 +21,14 @@ const RAW = "https://raw.githubusercontent.com/krizaka";
 const PRODUCTS = {
   orazaka: {
     npm: ["orazaka-web-client:package.json", "orazaka-mobile-client:package.json"],
-    maven: ["orazaka-edge", "orazaka-ai-engine", "orazaka-automation-service", "orazaka-conversation-service", "orazaka-job-service", "orazaka-knowledge-service"].map((r) => `${r}:pom.xml`),
+    maven: [
+      "orazaka-edge",
+      "orazaka-ai-engine",
+      "orazaka-automation-service",
+      "orazaka-conversation-service",
+      "orazaka-job-service",
+      "orazaka-knowledge-service",
+    ].map((r) => `${r}:pom.xml`),
     evidence: ["orazaka-web-client:src/core/hooks/useJobSSE.ts"],
   },
   yomizaka: { npm: ["yomizaka:apps/web/package.json"], maven: [], engineRun: "yomizaka:apps/web/lib/demo-run.ts" },
@@ -29,7 +36,8 @@ const PRODUCTS = {
 };
 
 /** The run id a recorded-run file holds (`"runId": "<uuid>"`), or null — never a guess. */
-export const runIdIn = (text) => /"runId":\s*"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"/i.exec(text ?? "")?.[1] ?? null;
+export const runIdIn = (text) =>
+  /"runId":\s*"([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"/i.exec(text ?? "")?.[1] ?? null;
 
 const read = async (spec) => {
   const [repo, file] = spec.split(":");
@@ -48,7 +56,9 @@ for (const [id, spec] of Object.entries(PRODUCTS)) {
     const text = await read(s);
     if (!text) continue;
     const pkg = JSON.parse(text);
-    const deps = Object.keys({ ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies }).filter((n) => n.startsWith("@krizaka/"));
+    const deps = Object.keys({ ...pkg.dependencies, ...pkg.devDependencies, ...pkg.peerDependencies }).filter((n) =>
+      n.startsWith("@krizaka/"),
+    );
     deps.forEach((d) => npm.add(d));
     sources.push(s);
   }

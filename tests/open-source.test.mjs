@@ -125,7 +125,10 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
   );
   assert.equal(countCode(tables, "defaultPageSize={12}"), 2, "short pages, not a wall of rows");
   assert.ok(!calls(tables).includes("fetch"), "rows come from the server, never fetched here");
-  assert.ok(importsFrom("app/[locale]/contact/ContactClient.tsx", "@/lib/public-channels"), "one list of channels for both pages");
+  assert.ok(
+    importsFrom("app/[locale]/contact/ContactClient.tsx", "@/lib/public-channels"),
+    "one list of channels for both pages",
+  );
   assert.ok(hasCode("lib/page-templates.ts", '"/open-source": "docs-hub"'));
 });
 

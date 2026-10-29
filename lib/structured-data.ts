@@ -22,11 +22,46 @@ const hreflangOf = (locale: Locale) => HREFLANG[locale];
 /** What the family owns, as schema.org nodes: the products (each on its own site) and the open-source projects.
     Words are messages (`site.structuredData.family.<id>`); here only structure — ids, urls, categories. */
 const FAMILY = [
-  { id: "orazaka", name: "Orazaka", url: wwwUrl("orazaka"), repo: "orazaka", category: "BusinessApplication", kind: "app" },
-  { id: "yomizaka", name: "Yomizaka", url: wwwUrl("yomizaka"), repo: "yomizaka", category: "BusinessApplication", kind: "app" },
-  { id: "akinaza", name: "Akinaza", url: wwwUrl("akinaza"), repo: "akinaza", category: "BusinessApplication", kind: "app" },
-  { id: "krizaka-ui", name: "Krizaka UI", url: "https://ui.krizaka.com", repo: "krizaka-ui", language: "TypeScript", kind: "code" },
-  { id: "krizaka-java", name: "Krizaka Java", url: "https://java.krizaka.com", repo: "krizaka-platform-kit", language: "Java", kind: "code" },
+  {
+    id: "orazaka",
+    name: "Orazaka",
+    url: wwwUrl("orazaka"),
+    repo: "orazaka",
+    category: "BusinessApplication",
+    kind: "app",
+  },
+  {
+    id: "yomizaka",
+    name: "Yomizaka",
+    url: wwwUrl("yomizaka"),
+    repo: "yomizaka",
+    category: "BusinessApplication",
+    kind: "app",
+  },
+  {
+    id: "akinaza",
+    name: "Akinaza",
+    url: wwwUrl("akinaza"),
+    repo: "akinaza",
+    category: "BusinessApplication",
+    kind: "app",
+  },
+  {
+    id: "krizaka-ui",
+    name: "Krizaka UI",
+    url: "https://ui.krizaka.com",
+    repo: "krizaka-ui",
+    language: "TypeScript",
+    kind: "code",
+  },
+  {
+    id: "krizaka-java",
+    name: "Krizaka Java",
+    url: "https://java.krizaka.com",
+    repo: "krizaka-platform-kit",
+    language: "Java",
+    kind: "code",
+  },
 ] as const;
 
 const familyNode = (f: (typeof FAMILY)[number], description: string) =>
@@ -109,9 +144,7 @@ export function buildSiteGraph(locale: Locale) {
 }
 
 /** Page-scoped breadcrumb trail. Emit on the page whose path it describes. */
-export function buildBreadcrumbJsonLd(
-  items: ReadonlyArray<{ name: string; url: string }>,
-) {
+export function buildBreadcrumbJsonLd(items: ReadonlyArray<{ name: string; url: string }>) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",

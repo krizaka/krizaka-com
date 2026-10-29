@@ -29,11 +29,19 @@ const ORAZAKA_GROUP: Record<string, string> = {
 export function orgRepositories(): OrgRepository[] {
   // The workspace manifest lists the Krizaka building blocks it is built on (layer "krizaka"): they belong to the
   // organisation, not to Orazaka.
-  const oz = ((orazaka as { repositories?: { name: string; url: string; description: string; layer: string }[] }).repositories ?? []).map(
-    (r): OrgRepository =>
-      r.layer === "krizaka"
-        ? { name: r.name, url: r.url, description: r.description, product: "krizaka", group: "domain" }
-        : { name: r.name, url: r.url, description: r.description, product: "orazaka", group: ORAZAKA_GROUP[r.layer] ?? "apps" },
+  const oz = (
+    (orazaka as { repositories?: { name: string; url: string; description: string; layer: string }[] }).repositories ??
+    []
+  ).map((r): OrgRepository =>
+    r.layer === "krizaka"
+      ? { name: r.name, url: r.url, description: r.description, product: "krizaka", group: "domain" }
+      : {
+          name: r.name,
+          url: r.url,
+          description: r.description,
+          product: "orazaka",
+          group: ORAZAKA_GROUP[r.layer] ?? "apps",
+        },
   );
   const workspace: OrgRepository = {
     name: "orazaka",
@@ -48,7 +56,8 @@ export function orgRepositories(): OrgRepository[] {
     {
       name: "krizaka-ui",
       url: "https://github.com/krizaka/krizaka-ui",
-      description: "@krizaka/ui — the Krizaka brand layer shared by every product: animated marks and the motion signature.",
+      description:
+        "@krizaka/ui — the Krizaka brand layer shared by every product: animated marks and the motion signature.",
       product: "krizaka",
       group: "domain",
     },

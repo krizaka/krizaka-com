@@ -40,7 +40,10 @@ interface Cue<Id extends string> {
 }
 
 /** The captions as WebVTT, one cue per line, in the words given (a locale's site.story.world.cues, or a film's own). */
-export function filmVtt<Id extends string = FilmCueId>(words: Record<Id, string>, cues: readonly Cue<Id>[] = FILM_CUES as unknown as readonly Cue<Id>[]): string {
+export function filmVtt<Id extends string = FilmCueId>(
+  words: Record<Id, string>,
+  cues: readonly Cue<Id>[] = FILM_CUES as unknown as readonly Cue<Id>[],
+): string {
   return `WEBVTT\n\n${cues.map((c) => `${c.id}\n${clock(c.start)} --> ${clock(c.end)}\n${words[c.id]}\n`).join("\n")}`;
 }
 
@@ -84,10 +87,14 @@ export interface StoryFilm {
 
 /** The slot of the reference film: the first of `films` (newest first) whose three files are all on the CDN; the last one (the oldest, always uploaded) otherwise. */
 export function pickFilm(films: readonly StoryFilm[], onCdn: (path: string) => boolean): StoryFilm {
-  return films.find((f) => ["webm", "mp4", "jpg"].every((ext) => onCdn(`${f.base}.${ext}`))) ?? films[films.length - 1]!;
+  return (
+    films.find((f) => ["webm", "mp4", "jpg"].every((ext) => onCdn(`${f.base}.${ext}`))) ?? films[films.length - 1]!
+  );
 }
 
 /** The captions as a response: same-origin and cacheable (both film routes send exactly this). */
 export function vttResponse(vtt: string): Response {
-  return new Response(vtt, { headers: { "Content-Type": "text/vtt; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+  return new Response(vtt, {
+    headers: { "Content-Type": "text/vtt; charset=utf-8", "Cache-Control": "public, max-age=3600" },
+  });
 }

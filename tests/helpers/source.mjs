@@ -41,7 +41,10 @@ export const importsOf = (file) =>
         from: d.moduleSpecifier.text,
         sideEffect: !c,
         default: c?.name?.text,
-        names: c?.namedBindings && ts.isNamedImports(c.namedBindings) ? c.namedBindings.elements.map((e) => e.name.text) : [],
+        names:
+          c?.namedBindings && ts.isNamedImports(c.namedBindings)
+            ? c.namedBindings.elements.map((e) => e.name.text)
+            : [],
       };
     });
 export const importsFrom = (file, from) => importsOf(file).some((i) => i.from === from);
@@ -66,7 +69,13 @@ export const jsx = (file) =>
         continue;
       }
       const i = a.initializer;
-      attrs[a.name.getText()] = !i ? true : ts.isStringLiteral(i) ? i.text : i.expression ? `{${text(i.expression)}}` : text(i);
+      attrs[a.name.getText()] = !i
+        ? true
+        : ts.isStringLiteral(i)
+          ? i.text
+          : i.expression
+            ? `{${text(i.expression)}}`
+            : text(i);
     }
     return { tag: n.tagName.getText(), attrs };
   });
@@ -82,7 +91,7 @@ export const hasJsx = (file, tag, want) => jsxAll(file, tag, want).length > 0;
 
 /** Every string literal and no-substitution template of the file (comments and layout excluded). */
 export const strings = (file) =>
-  collect(file, (n) => (ts.isStringLiteralLike(n) || ts.isJsxText(n) ? n.text ?? n.getText() : undefined));
+  collect(file, (n) => (ts.isStringLiteralLike(n) || ts.isJsxText(n) ? (n.text ?? n.getText()) : undefined));
 /** Identifier names used anywhere in the file. */
 export const identifiers = (file) => new Set(collect(file, (n) => (ts.isIdentifier(n) ? n.text : undefined)));
 /** Callee names of every call, e.g. `dynamic`, `window.clearInterval`. */
@@ -139,13 +148,17 @@ export function records(file, name) {
   walk(parse(file), (n) => {
     if (!ts.isVariableDeclaration(n) || n.name.getText() !== name || !n.initializer) return;
     let init = n.initializer;
-    while (ts.isAsExpression(init) || ts.isSatisfiesExpression(init) || ts.isParenthesizedExpression(init)) init = init.expression;
+    while (ts.isAsExpression(init) || ts.isSatisfiesExpression(init) || ts.isParenthesizedExpression(init))
+      init = init.expression;
     if (!ts.isArrayLiteralExpression(init)) return;
     for (const el of init.elements) {
       if (!ts.isObjectLiteralExpression(el)) continue;
       const rec = {};
       for (const p of el.properties) {
-        if (ts.isPropertyAssignment(p)) rec[p.name.getText().replace(/^["']|["']$/g, "")] = ts.isStringLiteralLike(p.initializer) ? p.initializer.text : text(p.initializer);
+        if (ts.isPropertyAssignment(p))
+          rec[p.name.getText().replace(/^["']|["']$/g, "")] = ts.isStringLiteralLike(p.initializer)
+            ? p.initializer.text
+            : text(p.initializer);
         else if (ts.isShorthandPropertyAssignment(p)) rec[p.name.text] = p.name.text;
       }
       out.push(rec);
@@ -166,7 +179,9 @@ export const constString = (file, name) => {
 export const templates = (file) =>
   Object.fromEntries(
     collect(file, (n) =>
-      ts.isVariableDeclaration(n) && n.initializer && ts.isTemplateExpression(n.initializer) ? [n.name.getText(), text(n.initializer)] : undefined,
+      ts.isVariableDeclaration(n) && n.initializer && ts.isTemplateExpression(n.initializer)
+        ? [n.name.getText(), text(n.initializer)]
+        : undefined,
     ),
   );
 
@@ -213,7 +228,8 @@ export const cssAtRules = (file, name) => {
 /** `const name = { key: value, … }` as a nested map: string literals as strings, objects as maps, the rest as layout-free text. */
 export function objectMap(file, name) {
   const conv = (node) => {
-    while (ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isParenthesizedExpression(node)) node = node.expression;
+    while (ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isParenthesizedExpression(node))
+      node = node.expression;
     if (ts.isStringLiteralLike(node)) return node.text;
     if (!ts.isObjectLiteralExpression(node)) return text(node);
     const out = {};
@@ -221,7 +237,9 @@ export function objectMap(file, name) {
       if (ts.isPropertyAssignment(p)) out[p.name.getText().replace(/^["']|["']$/g, "")] = conv(p.initializer);
     return out;
   };
-  const found = collect(file, (n) => (ts.isVariableDeclaration(n) && n.name.getText() === name && n.initializer ? conv(n.initializer) : undefined));
+  const found = collect(file, (n) =>
+    ts.isVariableDeclaration(n) && n.name.getText() === name && n.initializer ? conv(n.initializer) : undefined,
+  );
   return found[0];
 }
 

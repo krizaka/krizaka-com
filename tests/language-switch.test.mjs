@@ -26,5 +26,6 @@ test("the languages are the page at its address in each language, by their own n
 test("the switch is named in both languages, and the old pill's messages are gone", () => {
   assert.equal(messages.en.site.menu.language, "Language");
   assert.equal(messages.fr.site.menu.language, "Langue");
-  for (const m of Object.values(messages)) for (const key of ["languageShort", "otherLanguage", "switchLanguage"]) assert.equal(m.site.menu[key], undefined);
+  for (const m of Object.values(messages))
+    for (const key of ["languageShort", "otherLanguage", "switchLanguage"]) assert.equal(m.site.menu[key], undefined);
 });

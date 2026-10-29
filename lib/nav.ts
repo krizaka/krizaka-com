@@ -31,7 +31,12 @@ export interface NavProduct {
   href: string;
   status?: ProductStatus;
 }
-export const NAV_PRODUCTS: NavProduct[] = PRODUCTS.map(({ id, name, siteUrl, status }) => ({ id, name, href: siteUrl, status }));
+export const NAV_PRODUCTS: NavProduct[] = PRODUCTS.map(({ id, name, siteUrl, status }) => ({
+  id,
+  name,
+  href: siteUrl,
+  status,
+}));
 
 export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
   { href: "/story", icon: "story" },
@@ -43,7 +48,9 @@ export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
 export const PRODUCTS_ANCHOR = "/#products";
 
 /** The centre of the bar and the mobile panel's list: this site's one other view. "Our story" is in the footer (Krizaka column). */
-export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["repos"] as const).map((icon) => NAV_COMPANY.find((l) => l.icon === icon)!);
+export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["repos"] as const).map((icon) =>
+  NAV_COMPANY.find((l) => l.icon === icon)!,
+);
 
 /* While the documentation still renders here (/docs, until it has moved to ui.krizaka.com and java.krizaka.com), the
    bar under /docs names where the reader is (Docs / <section>, DocsCrumb) and keeps the search over it. Nothing outside
@@ -56,9 +63,7 @@ export interface DocsNavLink {
   match?: string[];
 }
 export const NAV_DOCS_HUB = "/docs";
-export const NAV_DOCS: DocsNavLink[] = [
-  { id: "ui", href: "https://ui.krizaka.com" },
-];
+export const NAV_DOCS: DocsNavLink[] = [{ id: "ui", href: "https://ui.krizaka.com" }];
 export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) => ({
   label: t.docs.sections[link.id].title,
   desc: t.docs.sections[link.id].description,
@@ -84,4 +89,5 @@ export function localeless(pathname: string): string {
 }
 
 /** The label and description of a company entry. */
-export const companyLinkText = (t: TranslationDictionary, link: NavLink<CompanyLinkId>) => t.site.nav.company[link.icon];
+export const companyLinkText = (t: TranslationDictionary, link: NavLink<CompanyLinkId>) =>
+  t.site.nav.company[link.icon];

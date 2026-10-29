@@ -59,7 +59,12 @@ const GITHUB = "https://github.com/krizaka/";
 /** The repository name a GitHub URL points at (`.git`, trailing slash and sub-paths dropped), or undefined. */
 export function repositoryOfUrl(url: string | undefined): string | undefined {
   if (!url?.startsWith(GITHUB)) return undefined;
-  return url.slice(GITHUB.length).split("/")[0].replace(/\.git$/, "") || undefined;
+  return (
+    url
+      .slice(GITHUB.length)
+      .split("/")[0]
+      .replace(/\.git$/, "") || undefined
+  );
 }
 
 const has = (topics: readonly string[], ...any: string[]) => any.some((t) => topics.includes(t));
@@ -68,12 +73,22 @@ type Classified = { layer: NomenclatureLayer; kind: NomenclatureKind };
 type RepoRole = ReturnType<typeof kindOfRepository>;
 
 /** The kind of a product's own repository, by its role. */
-const PRODUCT_KIND: Partial<Record<RepoRole, NomenclatureKind>> = { service: "worker", library: "package", tooling: "tooling" };
+const PRODUCT_KIND: Partial<Record<RepoRole, NomenclatureKind>> = {
+  service: "worker",
+  library: "package",
+  tooling: "tooling",
+};
 
 /** The kind of a repository of the engine, most specific first. */
 const ENGINE_KIND_BY_ROLE: Partial<Record<RepoRole, NomenclatureKind>> = { tooling: "tooling", web: "web" };
 
-function classifyEngine(repo: GithubRepository, engineId: string, publications: readonly Publication[], isService: boolean, role: RepoRole): Classified {
+function classifyEngine(
+  repo: GithubRepository,
+  engineId: string,
+  publications: readonly Publication[],
+  isService: boolean,
+  role: RepoRole,
+): Classified {
   const layer = "engine";
   if (repo.name === engineId) return { layer, kind: "engine" };
   if (isService || role === "service") return { layer, kind: "worker" };
@@ -81,7 +96,12 @@ function classifyEngine(repo: GithubRepository, engineId: string, publications: 
   return { layer, kind: ENGINE_KIND_BY_ROLE[role] ?? "package" };
 }
 
-function classifyFamily(repo: GithubRepository, publications: readonly Publication[], isService: boolean, role: RepoRole): Classified {
+function classifyFamily(
+  repo: GithubRepository,
+  publications: readonly Publication[],
+  isService: boolean,
+  role: RepoRole,
+): Classified {
   if (isService || role === "service") return { layer: "services", kind: "worker" };
   if (publications.some((p) => p.registry === "maven")) return { layer: "blocks", kind: "java" };
   if (publications.length > 0) return { layer: "blocks", kind: "package" };
@@ -107,7 +127,12 @@ export function nomenclature(input: NomenclatureInput): ModuleRow[] {
   const { repositories, snapshot, manifests, products, engineId, engineCallers } = input;
   const repoNames = repositories.map((r) => r.name);
   const packages = packageRows(snapshot, repoNames, input.javaDocs);
-  const publication = (p: PackageRow): Publication => ({ registry: p.registry, name: p.name, version: p.version, url: p.registryUrl });
+  const publication = (p: PackageRow): Publication => ({
+    registry: p.registry,
+    name: p.name,
+    version: p.version,
+    url: p.registryUrl,
+  });
 
   // A package belongs to the repository it names; failing that (Maven), to the repository of its module.
   const byRepo = new Map<string, PackageRow[]>();
@@ -129,7 +154,9 @@ export function nomenclature(input: NomenclatureInput): ModuleRow[] {
   const rows: ModuleRow[] = repositories.map((repo) => {
     const own = byRepo.get(repo.name) ?? [];
     const product = productOfRepository(repo.name, products);
-    const isService = own.some((p) => p.registry === "maven" && p.name.endsWith("-service")) || (repo.topics.includes("worker") && product === "krizaka");
+    const isService =
+      own.some((p) => p.registry === "maven" && p.name.endsWith("-service")) ||
+      (repo.topics.includes("worker") && product === "krizaka");
     const publications = own.map(publication);
     const { layer, kind } = classify(repo, product, engineId, publications, isService);
     return {
@@ -167,8 +194,14 @@ export function nomenclature(input: NomenclatureInput): ModuleRow[] {
 
 /** The build-time guard: a public repository the map does not carry fails the build (a repository created in the org
     is either mapped or the build says which one is missing). */
-export function assertNomenclature(repositories: readonly Pick<GithubRepository, "name">[], rows: readonly Pick<ModuleRow, "id">[]): void {
+export function assertNomenclature(
+  repositories: readonly Pick<GithubRepository, "name">[],
+  rows: readonly Pick<ModuleRow, "id">[],
+): void {
   const mapped = new Set(rows.map((r) => r.id));
   const missing = repositories.map((r) => r.name).filter((n) => !mapped.has(n));
-  if (missing.length) throw new Error(`The nomenclature misses ${missing.length} public repositor${missing.length === 1 ? "y" : "ies"}: ${missing.join(", ")}`);
+  if (missing.length)
+    throw new Error(
+      `The nomenclature misses ${missing.length} public repositor${missing.length === 1 ? "y" : "ies"}: ${missing.join(", ")}`,
+    );
 }

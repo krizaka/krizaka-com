@@ -165,7 +165,9 @@ export default async function RootLayout({
         <JsonLd data={buildSiteGraph(validatedLocale)} />
         {/* Without JavaScript nothing waits to be revealed (@krizaka/ui motion.css, MotionObserver). */}
         <noscript>
-          <style>{"[data-reveal],.bp-term pre>div{opacity:1!important;transform:none!important;filter:none!important}"}</style>
+          <style>
+            {"[data-reveal],.bp-term pre>div{opacity:1!important;transform:none!important;filter:none!important}"}
+          </style>
         </noscript>
       </head>
       <body className="min-h-dvh flex flex-col antialiased">

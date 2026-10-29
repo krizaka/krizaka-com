@@ -32,10 +32,45 @@ const LAB_SITE = "https://lab.krizaka.com";
 /** Krizaka Lab (krizaka/krizaka-lab) is the motion lab: experimental generative visuals played from its site. Not
     a package: what proves itself moves into Krizaka UI (the engine flow is @krizaka/ui/engine-flow). */
 export const STACK: StackPart[] = [
-  { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com", repoUrl: KRIZAKA_UI_REPO_URL, registry: "npm", coordinate: "@krizaka/ui", status: "released", action: "docs" },
-  { id: "motion", name: "Krizaka Lab", url: LAB_SITE, repoUrl: `${GITHUB_ORG_URL}/krizaka-lab`, registry: "none", status: "development", action: "lab", actionPath: "/orazaka" },
-  { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com", repoUrl: `${GITHUB_ORG_URL}/krizaka-build`, registry: "maven", coordinate: "com.krizaka:krizaka-bom", status: "released", action: "docs" },
-  { id: "ts", name: "Krizaka TypeScript", url: "https://ts.krizaka.com", repoUrl: `${GITHUB_ORG_URL}/krizaka-ts`, registry: "npm", status: "released", action: "docs" },
+  {
+    id: "ui",
+    name: "Krizaka UI",
+    url: "https://ui.krizaka.com",
+    repoUrl: KRIZAKA_UI_REPO_URL,
+    registry: "npm",
+    coordinate: "@krizaka/ui",
+    status: "released",
+    action: "docs",
+  },
+  {
+    id: "motion",
+    name: "Krizaka Lab",
+    url: LAB_SITE,
+    repoUrl: `${GITHUB_ORG_URL}/krizaka-lab`,
+    registry: "none",
+    status: "development",
+    action: "lab",
+    actionPath: "/orazaka",
+  },
+  {
+    id: "java",
+    name: "Krizaka Java",
+    url: "https://java.krizaka.com",
+    repoUrl: `${GITHUB_ORG_URL}/krizaka-build`,
+    registry: "maven",
+    coordinate: "com.krizaka:krizaka-bom",
+    status: "released",
+    action: "docs",
+  },
+  {
+    id: "ts",
+    name: "Krizaka TypeScript",
+    url: "https://ts.krizaka.com",
+    repoUrl: `${GITHUB_ORG_URL}/krizaka-ts`,
+    registry: "npm",
+    status: "released",
+    action: "docs",
+  },
 ];
 
 /** The licence of everything the stack publishes. */

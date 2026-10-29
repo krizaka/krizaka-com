@@ -8,7 +8,8 @@ import { EXTRA_PAGES, routesOf, THEMES, WIDTHS } from "../scripts/check-a11y.mjs
 const read = (name) => readFileSync(new URL(`../${name}`, import.meta.url), "utf8");
 
 test("the pages are the sitemap's (en and fr, trailing slash removed) plus the 404", () => {
-  const xml = "<urlset><url><loc>https://www.krizaka.com/en</loc></url><url><loc>https://www.krizaka.com/fr/story/</loc></url><url><loc>https://www.krizaka.com/en</loc></url></urlset>";
+  const xml =
+    "<urlset><url><loc>https://www.krizaka.com/en</loc></url><url><loc>https://www.krizaka.com/fr/story/</loc></url><url><loc>https://www.krizaka.com/en</loc></url></urlset>";
   assert.deepEqual(routesOf(xml), ["/en", "/fr/story", ...EXTRA_PAGES]);
 });
 

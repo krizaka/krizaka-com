@@ -1,6 +1,14 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { FOREIGN_WRITERS, LAYOUT_README, RETIRED, ZONE, assertUnder, libraryPath, misplaced } from "../scripts/bunny-layout.mjs";
+import {
+  FOREIGN_WRITERS,
+  LAYOUT_README,
+  RETIRED,
+  ZONE,
+  assertUnder,
+  libraryPath,
+  misplaced,
+} from "../scripts/bunny-layout.mjs";
 
 test("each writer stays under its prefix", () => {
   assert.equal(assertUnder("site", "site/home/a.1234567890.jpg"), "site/home/a.1234567890.jpg");
@@ -30,7 +38,8 @@ test("the audit accepts the layout and flags the rest", () => {
     "people/personas/ui/ada-512.webp",
     "products/orazaka/tour/tea-pour.mp4",
     "ui/maps/cluster-dark.731f2c4fa2.png",
-  ]) assert.equal(misplaced(ok), null, ok);
+  ])
+    assert.equal(misplaced(ok), null, ok);
   for (const bad of [
     "krizaka-assets/pr-assets/krizaka-com/_probe/probe.txt",
     "site/misc/a.1234567890.png",
@@ -46,7 +55,8 @@ test("the audit accepts the layout and flags the rest", () => {
     "defaults/person/a-256.webp",
     "products/akinaza/misc/a.png",
     "ui/loose.png",
-  ]) assert.ok(misplaced(bad), bad);
+  ])
+    assert.ok(misplaced(bad), bad);
 });
 
 test("the README names every prefix", () => {
@@ -60,19 +70,36 @@ test("the library maps what site/ serves to human names, and retires the folders
   assert.equal(libraryPath("people/ui/ada-256.webp"), "people/personas/ui/ada-256.webp");
   assert.equal(libraryPath("home/kit/frames/a.png"), null);
   // krizaka/.github#413: the folders of Orochia, Yasakia (Yazakia), Yororis and Kachizaka are retired, `prune --retired` deletes them.
-  for (const p of ["site/people/yazakia/hana-256.5f2982c652.webp", "site/products/yasakia/mobile/loop-dark.46dbace273.mp4", "site/docs/orochia/mobile/a.0123456789.webp", "site/brand-films/orochia/a.0123456789.mp4", "site/products/yororis/tour/a.0123456789.mp4", "site/products/kachizaka/tour/a.0123456789.mp4"]) assert.ok(RETIRED.some((re) => re.test(p)), p);
+  for (const p of [
+    "site/people/yazakia/hana-256.5f2982c652.webp",
+    "site/products/yasakia/mobile/loop-dark.46dbace273.mp4",
+    "site/docs/orochia/mobile/a.0123456789.webp",
+    "site/brand-films/orochia/a.0123456789.mp4",
+    "site/products/yororis/tour/a.0123456789.mp4",
+    "site/products/kachizaka/tour/a.0123456789.mp4",
+  ])
+    assert.ok(
+      RETIRED.some((re) => re.test(p)),
+      p,
+    );
   assert.ok(!RETIRED.some((re) => re.test("site/products/akinaza/tour/a.0123456789.mp4")));
 });
 
 test("the prefixes another writer owns are declared once, in the layout, and prune never lists them", () => {
   // Orazaka's generated clips (gallery-video, video) are written by the Orazaka GPU batch, not by this site's manifest.
   for (const prefix of ["site/products/orazaka/gallery-video/", "site/products/orazaka/video/"]) {
-    assert.ok(FOREIGN_WRITERS.some((p) => prefix.startsWith(p)), `${prefix} is owned by another writer`);
+    assert.ok(
+      FOREIGN_WRITERS.some((p) => prefix.startsWith(p)),
+      `${prefix} is owned by another writer`,
+    );
   }
   assert.ok(FOREIGN_WRITERS.includes("site/blog/"));
   // The other product sites name their landing recordings the same way (their lib/tour.ts): never pruned here either.
   for (const product of ["orazaka", "yomizaka", "akinaza"]) {
     const clip = `site/products/${product}/tour/phone-keep.abcdef1234.mp4`;
-    assert.ok(FOREIGN_WRITERS.some((p) => clip.startsWith(p)), `${clip} is owned by dev.${product}.com`);
+    assert.ok(
+      FOREIGN_WRITERS.some((p) => clip.startsWith(p)),
+      `${clip} is owned by dev.${product}.com`,
+    );
   }
 });

@@ -7,9 +7,7 @@
 import { onCdn, video } from "./cdn";
 import { FAMILY_BASE, pickFilm, type StoryFilm } from "./film-captions";
 
-export const STORY_FILMS: readonly StoryFilm[] = [
-  { id: "famille", base: FAMILY_BASE, vtt: "family.vtt" },
-];
+export const STORY_FILMS: readonly StoryFilm[] = [{ id: "famille", base: FAMILY_BASE, vtt: "family.vtt" }];
 
 export function storyFilm() {
   const film = pickFilm(STORY_FILMS, onCdn);

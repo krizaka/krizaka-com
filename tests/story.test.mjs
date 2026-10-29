@@ -37,7 +37,10 @@ test("the chapters are, in order: who we are, the engine, each product, the open
     "the first proofs, then the rest of the roster: every product but the engine",
   );
   assert.ok(
-    hasCode(lib, "ROSTER: readonly ProductId[] = PRODUCTS.map((p) => p.id).filter((id) => id !== ENGINE && !PROVES_FIRST.includes(id))"),
+    hasCode(
+      lib,
+      "ROSTER: readonly ProductId[] = PRODUCTS.map((p) => p.id).filter((id) => id !== ENGINE && !PROVES_FIRST.includes(id))",
+    ),
   );
   const pageFile = "app/[locale]/story/page.tsx";
   const ids = jsx(pageFile).map((e) => e.attrs.id);
@@ -249,7 +252,21 @@ import { takeVtt } from "../lib/take-captions.ts";
 // lib/story-takes.ts reads the CDN manifest (a JSON import): the test reads its source.
 const TAKE_PRODUCTS = Object.keys(objectMap("lib/story-takes.ts", "SPECS"));
 import { pickFilm } from "../lib/film-captions.ts";
-import { PRODUCT_RECORDS, constString, cssDecls, cssHas, cssSelectors, cssText, hasCode, identifiers, jsx, jsxAll, jsxAncestors, objectMap, strings } from "./helpers/source.mjs";
+import {
+  PRODUCT_RECORDS,
+  constString,
+  cssDecls,
+  cssHas,
+  cssSelectors,
+  cssText,
+  hasCode,
+  identifiers,
+  jsx,
+  jsxAll,
+  jsxAncestors,
+  objectMap,
+  strings,
+} from "./helpers/source.mjs";
 
 test("every take has its captions in both languages, one line per cue, cues in order inside the take", () => {
   const specs = objectMap("lib/story-takes.ts", "SPECS");
@@ -365,7 +382,10 @@ test("every picture of /story is a taped print: the film and each take sit insid
   assert.ok(hasCode(PAGE, 'tilt={lean("who")}'));
   assert.ok(hasCode(PAGE, 'takeProof(ENGINE, engine.name, "engine")'));
   assert.ok(hasCode(PAGE, "takeProof(id, p.name, id)"));
-  assert.ok(hasCode(take, '<TapedPhoto className="st-take-photo" tilt={tilt}'), "the take's print takes the chapter's tilt");
+  assert.ok(
+    hasCode(take, '<TapedPhoto className="st-take-photo" tilt={tilt}'),
+    "the take's print takes the chapter's tilt",
+  );
   // the take keeps its caption, its lightbox and its focus ring inside the print
   assert.ok(hasCode(take, "caption={<>{film ? k.watchRender : k.watch}"));
   const ring = cssDecls(CSS, ".st-take-card:focus-visible")["outline-offset"];
@@ -391,10 +411,7 @@ test("the chapters' media alternate sides: right, left, right…, with CSS only,
   );
   assert.equal(cssDecls(CSS, proof, desktop).order, "-1");
   assert.ok(!cssHas(CSS, grid) && !cssHas(CSS, proof), "a phone keeps the one column and the same order");
-  assert.ok(
-    !jsx(PAGE).some((e) => /(order|direction|gridTemplate)/.test(e.attrs.style ?? "")),
-    "no inline layout",
-  );
+  assert.ok(!jsx(PAGE).some((e) => /(order|direction|gridTemplate)/.test(e.attrs.style ?? "")), "no inline layout");
 });
 
 test("each chapter links to the blog chapter that tells it in full, in the page's language", () => {

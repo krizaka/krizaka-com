@@ -1,7 +1,23 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
-import { anchorOf, changeFromTitle, changelogRss, changesFor, cleanText, draftFromTitles, parseChangesets, parseReleaseBodies, parseReleaseBody, releaseLabel, releaseProblems, SITE_REPO, siteReleaseUrl, tagOf, textProblems } from "../lib/changelog.ts";
+import {
+  anchorOf,
+  changeFromTitle,
+  changelogRss,
+  changesFor,
+  cleanText,
+  draftFromTitles,
+  parseChangesets,
+  parseReleaseBodies,
+  parseReleaseBody,
+  releaseLabel,
+  releaseProblems,
+  SITE_REPO,
+  siteReleaseUrl,
+  tagOf,
+  textProblems,
+} from "../lib/changelog.ts";
 import { FILTER_IDS, filterHref, filterOf, visibleEntries } from "../lib/changelog-filter.ts";
 import { changelogProblems } from "../scripts/check-changelog-build.mjs";
 
@@ -39,17 +55,27 @@ const dates = { "3.22.0": "2026-10-17", "3.21.0": "2026-10-17", "3.0.0": "2026-0
 
 test("changesets: versions, dates, tags from the level, PR links, plain text, no dependency plumbing", () => {
   const releases = parseChangesets(CHANGESETS, "@krizaka/ui", (v) => dates[v]);
-  assert.deepEqual(releases.map((r) => r.version), ["3.22.0", "3.21.0"], "3.0.0 only updated dependencies");
+  assert.deepEqual(
+    releases.map((r) => r.version),
+    ["3.22.0", "3.21.0"],
+    "3.0.0 only updated dependencies",
+  );
   const [r] = releases;
   assert.equal(r.date, "2026-10-17");
-  assert.deepEqual(r.changes.map((c) => c.tag), ["feature", "fix"]);
+  assert.deepEqual(
+    r.changes.map((c) => c.tag),
+    ["feature", "fix"],
+  );
   assert.equal(r.changes[0].text, "Two blocks for product landing pages.");
   assert.deepEqual(r.changes[0].pr, { number: 293, url: "https://github.com/krizaka/krizaka-ui/pull/293" });
   assert.equal(releases[1].changes[0].tag, "breaking");
 });
 
 test("a version without a publish date is not invented", () => {
-  assert.deepEqual(parseChangesets(CHANGESETS, "x", () => undefined), []);
+  assert.deepEqual(
+    parseChangesets(CHANGESETS, "x", () => undefined),
+    [],
+  );
 });
 
 test("tags: breaking and security words win over the level", () => {
@@ -68,12 +94,27 @@ test("release bodies: conventional titles tagged, housekeeping dropped, PR from 
     "**Full Changelog**: https://github.com/krizaka/orazaka/compare/a...b",
   ].join("\n");
   const items = parseReleaseBody(body);
-  assert.deepEqual(items.map((i) => [i.tag, i.pr?.number]), [["feature", 12], ["fix", 13], ["breaking", 15]]);
+  assert.deepEqual(
+    items.map((i) => [i.tag, i.pr?.number]),
+    [
+      ["feature", 12],
+      ["fix", 13],
+      ["breaking", 15],
+    ],
+  );
   assert.equal(items[0].text, "Voice replies.");
 });
 
 test("the draft generator: plain sentences grouped by tag, housekeeping left out", () => {
-  const draft = draftFromTitles(["feat(nav): Our story leaves the top bar (#196)", "chore: bump", "fix(contact): XSS in the form (#201)", "docs: readme"], "1.1.0");
+  const draft = draftFromTitles(
+    [
+      "feat(nav): Our story leaves the top bar (#196)",
+      "chore: bump",
+      "fix(contact): XSS in the form (#201)",
+      "docs: readme",
+    ],
+    "1.1.0",
+  );
   assert.match(draft, /^## 1\.1\.0\n/);
   assert.match(draft, /### Security\n- XSS in the form\. \(#201\)/);
   assert.match(draft, /### New\n- Our story leaves the top bar\. \(#196\)/);
@@ -82,8 +123,23 @@ test("the draft generator: plain sentences grouped by tag, housekeeping left out
 });
 
 test("the feed is RSS 2.0 with one item per release, anchored on the page", () => {
-  const release = { source: "@krizaka/ui", version: "3.22.0", date: "2026-10-17", changes: [{ tag: "feature", text: "A & B" }] };
-  const xml = changelogRss({ releases: [release], title: "t", description: "d", siteUrl: "https://s", pageUrl: "https://s/en/changelog", feedUrl: "https://s/en/changelog/feed.xml", language: "en", lang: "en", tagLabel: { feature: "New", fix: "Fixed", security: "Security", breaking: "Breaking", change: "Changed" } });
+  const release = {
+    source: "@krizaka/ui",
+    version: "3.22.0",
+    date: "2026-10-17",
+    changes: [{ tag: "feature", text: "A & B" }],
+  };
+  const xml = changelogRss({
+    releases: [release],
+    title: "t",
+    description: "d",
+    siteUrl: "https://s",
+    pageUrl: "https://s/en/changelog",
+    feedUrl: "https://s/en/changelog/feed.xml",
+    language: "en",
+    lang: "en",
+    tagLabel: { feature: "New", fix: "Fixed", security: "Security", breaking: "Breaking", change: "Changed" },
+  });
   assert.match(xml, /<rss version="2\.0"/);
   assert.match(xml, /<link>https:\/\/s\/en\/changelog#krizaka-ui-3-22-0<\/link>/);
   assert.match(xml, /A &amp;amp; B/);
@@ -109,7 +165,11 @@ test("the footer shows krizaka.com's own version only, on its GitHub release; no
     assert.doesNotMatch(m.changelog.runs, /\{ui\}|Krizaka UI/, `${lang}: /changelog names no package version`);
   }
   assert.doesNotMatch(read("lib/changelog-data.ts"), /\bui:|tokens:/, "PLATFORM carries the site's version only");
-  assert.doesNotMatch(read("scripts/gen-changelog.mjs"), /node_modules\/@krizaka/, "the generator reads no installed package's version");
+  assert.doesNotMatch(
+    read("scripts/gen-changelog.mjs"),
+    /node_modules\/@krizaka/,
+    "the generator reads no installed package's version",
+  );
   assert.match(read("app/[locale]/changelog/page.tsx"), /<span id=\{PLATFORM\.site\}>/);
 });
 
@@ -164,8 +224,20 @@ Nouveautés : 1. Corrections : 1.
 
 test("a release written by the shared workflow keeps both languages, tags and PRs; any other body is English alone", () => {
   const { en, fr } = parseReleaseBodies(WORKFLOW_BODY);
-  assert.deepEqual(en.map((c) => [c.tag, c.text, c.pr?.number]), [["feature", "Reads a lease.", 12], ["fix", "Stops the crash.", 13]]);
-  assert.deepEqual(fr.map((c) => [c.tag, c.text, c.pr?.number]), [["feature", "Lit un bail.", 12], ["fix", "Corrige le plantage.", 13]]);
+  assert.deepEqual(
+    en.map((c) => [c.tag, c.text, c.pr?.number]),
+    [
+      ["feature", "Reads a lease.", 12],
+      ["fix", "Stops the crash.", 13],
+    ],
+  );
+  assert.deepEqual(
+    fr.map((c) => [c.tag, c.text, c.pr?.number]),
+    [
+      ["feature", "Lit un bail.", 12],
+      ["fix", "Corrige le plantage.", 13],
+    ],
+  );
   const plainBody = parseReleaseBodies("* feat: Hello world by @x in https://github.com/krizaka/a/pull/1");
   assert.equal(plainBody.en.length, 1);
   assert.equal(plainBody.fr, undefined);
@@ -192,14 +264,21 @@ test("public text: an aside naming a person goes, an em dash becomes a colon, an
   assert.deepEqual(textProblems("Thanks Oussama"), ["a personal name (Oussama)"]);
   assert.deepEqual(textProblems("a — b"), ["an em dash"]);
   assert.deepEqual(textProblems("Reads a lease."), []);
-  const release = { source: "Yomizaka", part: undefined, version: "1", changes: [{ tag: "fix", text: "Fixed by Abid." }], fr: [] };
+  const release = {
+    source: "Yomizaka",
+    part: undefined,
+    version: "1",
+    changes: [{ tag: "fix", text: "Fixed by Abid." }],
+    fr: [],
+  };
   assert.equal(releaseProblems([release]).length, 1);
   // the parsers clean first: nothing a source writes reaches the page with a dash or an aside
   assert.equal(changeFromTitle("feat: sign in (Oussama's QA) — faster")?.text, "Sign in: faster.");
 });
 
 test("no em dash in the changelog's words, in either language", () => {
-  for (const lang of ["en", "fr"]) assert.deepEqual(textProblems(JSON.stringify(messages(lang).site.changelog)), [], lang);
+  for (const lang of ["en", "fr"])
+    assert.deepEqual(textProblems(JSON.stringify(messages(lang).site.changelog)), [], lang);
 });
 
 test("the product filter: the address is the state, a paused product is not listed, an unknown value means everything", () => {

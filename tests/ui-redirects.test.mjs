@@ -69,15 +69,23 @@ test("the old documentation hub goes to the open-source page, in the reader's la
 });
 
 test("the redirects leave the rest of krizaka.com alone (Krizaka Java's own rules, the products page)", () => {
-  for (const path of ["/docs/java", "/fr/docs/java/build", "/en/products", "/en/docs/uikit", "/en/open-source"]) assert.equal(go(path), null, path);
+  for (const path of ["/docs/java", "/fr/docs/java/build", "/en/products", "/en/docs/uikit", "/en/open-source"])
+    assert.equal(go(path), null, path);
 });
 
 test("Fumadocs and the generated UI docs are gone from krizaka.com", () => {
-  for (const file of ["source.config.ts", "lib/docs-source.ts", "scripts/gen-ui-docs.mjs", "content/docs", "app/[locale]/docs"]) {
+  for (const file of [
+    "source.config.ts",
+    "lib/docs-source.ts",
+    "scripts/gen-ui-docs.mjs",
+    "content/docs",
+    "app/[locale]/docs",
+  ]) {
     assert.ok(!existsSync(new URL(`../${file}`, import.meta.url)), `${file} came back`);
   }
   const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));
-  for (const dep of ["fumadocs-core", "fumadocs-mdx", "fumadocs-ui"]) assert.equal(pkg.dependencies[dep], undefined, dep);
+  for (const dep of ["fumadocs-core", "fumadocs-mdx", "fumadocs-ui"])
+    assert.equal(pkg.dependencies[dep], undefined, dep);
 });
 
 test("the Krizaka UI redirects are wired in next.config", () => {

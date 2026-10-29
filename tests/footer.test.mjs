@@ -14,7 +14,10 @@ test("the family's Krizaka column links Our story to /story (both languages); ww
   assert.equal(story.url.en, "https://www.krizaka.com/story");
   assert.equal(story.url.fr, "https://www.krizaka.com/fr/story");
   assert.equal(familyLabels.en.company.story, "Our story");
-  const column = footer.slice(footer.indexOf("<FamilyFooter.Column title={f.siteColumn}>"), footer.indexOf("</FamilyFooter.Column>"));
+  const column = footer.slice(
+    footer.indexOf("<FamilyFooter.Column title={f.siteColumn}>"),
+    footer.indexOf("</FamilyFooter.Column>"),
+  );
   assert.doesNotMatch(column, /f\.story|f\.blog|f\.contact|BLOG_URL/);
 });
 
@@ -42,7 +45,9 @@ test("the locale layout renders the footer once, after the page and outside any 
 
 test("no page renders a footer of its own", () => {
   const offenders = walk("app")
-    .filter((file) => /\.tsx$/.test(file) && file !== "app/components/SiteFooter.tsx" && file !== "app/[locale]/layout.tsx")
+    .filter(
+      (file) => /\.tsx$/.test(file) && file !== "app/components/SiteFooter.tsx" && file !== "app/[locale]/layout.tsx",
+    )
     .filter((file) => /<SiteFooter\b|<FamilyFooter\b|<footer\b/.test(read(file)));
   assert.deepEqual(offenders, []);
 });

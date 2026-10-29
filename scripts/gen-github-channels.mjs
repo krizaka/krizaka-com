@@ -22,7 +22,10 @@ async function main() {
   try {
     const all = [];
     for (let page = 1; page <= 5; page++) {
-      const res = await fetch(`https://api.github.com/orgs/${ORG}/repos?type=public&per_page=100&page=${page}`, { headers, signal: AbortSignal.timeout(8000) });
+      const res = await fetch(`https://api.github.com/orgs/${ORG}/repos?type=public&per_page=100&page=${page}`, {
+        headers,
+        signal: AbortSignal.timeout(8000),
+      });
       if (!res.ok) throw new Error(`GitHub answered ${res.status}`);
       const batch = await res.json();
       all.push(...batch);
@@ -34,7 +37,9 @@ async function main() {
     const on = Object.values(repos).filter((r) => r.discussions).length;
     console.log(`github-channels: ${on} of ${Object.keys(repos).length} repositories have Discussions on`);
   } catch (error) {
-    console.warn(`github-channels: GitHub unreachable (${error.message}) — ${existsSync(OUT) ? "keeping the previous lib/github-channels.json" : "no Discussions link will be claimed"}`);
+    console.warn(
+      `github-channels: GitHub unreachable (${error.message}) — ${existsSync(OUT) ? "keeping the previous lib/github-channels.json" : "no Discussions link will be claimed"}`,
+    );
   }
 }
 

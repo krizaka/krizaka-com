@@ -22,7 +22,6 @@ function FalconMascot() {
 
 /* ─── Where each conversation happens: the products, and the building blocks they share ─── */
 
-
 /* ─── Channel data ─── */
 const CHANNELS = [
   {
@@ -106,7 +105,15 @@ export default function ContactClient({ groups }: { groups: ChannelGroup[] }) {
         </p>
 
         {/* ─── Two channels, each a grouped list: Products · Open source ─── */}
-        <div className="contact-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, minmax(0, 1fr))", gap: "20px", marginBottom: "48px" }}>
+        <div
+          className="contact-grid"
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+            gap: "20px",
+            marginBottom: "48px",
+          }}
+        >
           {channels.map((ch, index) => {
             const channelDef = CHANNELS[index];
             if (!channelDef) return null;
@@ -133,15 +140,39 @@ export default function ContactClient({ groups }: { groups: ChannelGroup[] }) {
                 <div style={{ display: "flex", alignItems: "center", gap: "14px", marginBottom: "14px" }}>
                   <Mascot />
                   <div style={{ minWidth: 0 }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontFamily: "var(--font-mono, monospace)", fontSize: "10px", fontWeight: 700, color: "var(--kz-text-secondary)" }}>
-                      <span style={{ color: accent, display: "flex" }}><Icon size={14} aria-hidden /></span> GitHub
+                    <span
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "6px",
+                        fontFamily: "var(--font-mono, monospace)",
+                        fontSize: "10px",
+                        fontWeight: 700,
+                        color: "var(--kz-text-secondary)",
+                      }}
+                    >
+                      <span style={{ color: accent, display: "flex" }}>
+                        <Icon size={14} aria-hidden />
+                      </span>{" "}
+                      GitHub
                     </span>
-                    <h3 style={{ fontFamily: "var(--font-display), system-ui, sans-serif", fontSize: "17px", fontWeight: 700, color: "var(--kz-text-primary)", margin: "2px 0 0", letterSpacing: "-0.01em" }}>
+                    <h3
+                      style={{
+                        fontFamily: "var(--font-display), system-ui, sans-serif",
+                        fontSize: "17px",
+                        fontWeight: 700,
+                        color: "var(--kz-text-primary)",
+                        margin: "2px 0 0",
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
                       {ch.title}
                     </h3>
                   </div>
                 </div>
-                <p style={{ fontSize: "13px", color: "var(--kz-text-secondary)", lineHeight: 1.6, margin: "0 0 16px" }}>{ch.desc}</p>
+                <p style={{ fontSize: "13px", color: "var(--kz-text-secondary)", lineHeight: 1.6, margin: "0 0 16px" }}>
+                  {ch.desc}
+                </p>
                 <PublicChannelList groups={groups} kind={kind} words={t.site.contactPage} />
               </div>
             );

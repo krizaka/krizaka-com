@@ -4,8 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Krizaka — Orazaka",
     short_name: "Krizaka",
-    description:
-      "Open-source sovereign AI orchestration engine — multimodal AI on your own infrastructure.",
+    description: "Open-source sovereign AI orchestration engine — multimodal AI on your own infrastructure.",
     start_url: "/",
     display: "standalone",
     background_color: "#0d0d0f",

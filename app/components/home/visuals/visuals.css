@@ -3,62 +3,276 @@
    notebook's faces. Still unless playing; nothing moves under reduced motion. No glow, no gradient, no uppercase.
    Tokens only. */
 
-.pv { position: relative; aspect-ratio: 16 / 9; width: 100%; overflow: hidden; padding: 16px 18px; background: var(--kz-surface-1);
-  box-shadow: var(--kz-shadow-md); }
-.pv > * { height: 100%; }
-.pv p { margin: 0; }
-.pv-leader { flex: 1; min-width: 12px; border-bottom: 1.5px dotted var(--kz-text-muted); transform: translateY(-4px); }
+.pv {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  overflow: hidden;
+  padding: 16px 18px;
+  background: var(--kz-surface-1);
+  box-shadow: var(--kz-shadow-md);
+}
+.pv > * {
+  height: 100%;
+}
+.pv p {
+  margin: 0;
+}
+.pv-leader {
+  flex: 1;
+  min-width: 12px;
+  border-bottom: 1.5px dotted var(--kz-text-muted);
+  transform: translateY(-4px);
+}
 
 /* Yomizaka, as the app shows it: « The lease » (its lines, the passage underlined), an arrow, « The finding » (a card with the
    rule broken, its badge, the quoted passage, the article of law). */
-.pv-lease { display: flex; flex-direction: column; justify-content: center; gap: 6px; min-height: 0; }
-.pv-label { font-family: var(--kz-font-text); font-size: 11px; font-weight: 700; line-height: 14px; color: var(--kz-text-secondary); }
-.pv-lease-lines { display: grid; gap: 1px; padding: 6px 10px; border: 1px solid var(--kz-border-subtle); border-radius: 8px; background: var(--kz-surface-0);
-  font-size: 11.5px; line-height: 16px; color: var(--kz-text-secondary); }
-.pv-lease-lines > span { transition: color .3s var(--kz-ease, ease); }
-.pv-lease-lines > span[data-read] { color: var(--kz-text-primary); }
-.pv-lease-lines mark { color: inherit; background: none; text-decoration: underline; text-decoration-color: var(--kz-accent); text-decoration-thickness: 2px; text-underline-offset: 3px; }
-.pv-lease-arrow { text-align: center; line-height: 12px; color: var(--kz-accent-text, var(--kz-accent)); }
-.pv-finding { display: grid; gap: 3px; padding: 8px 10px; border: 1px solid var(--kz-danger); border-radius: 8px; background: var(--kz-surface-0); opacity: .45; transition: opacity .3s var(--kz-ease, ease); }
-.pv-finding[data-found] { opacity: 1; }
-.pv-finding-title { font-size: 12.5px; font-weight: 700; line-height: 16px; color: var(--kz-text-primary); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.pv-finding-meta { display: flex; align-items: center; gap: 8px; font-family: var(--kz-font-mono); font-size: 10.5px; color: var(--kz-text-secondary); }
-.pv-badge { padding: 0 7px; border: 1px solid var(--kz-danger); border-radius: 9999px; background: var(--kz-danger-soft); font-family: var(--kz-font-text); font-size: 10.5px; font-weight: 700; line-height: 16px; color: var(--kz-danger-text); }
-.pv-finding-quote { padding-left: 8px; border-left: 2px solid var(--kz-accent); font-size: 11.5px; font-style: italic; line-height: 16px; color: var(--kz-text-secondary); }
-.pv-finding-law { font-size: 11.5px; font-weight: 700; line-height: 14px; color: var(--kz-accent-text, var(--kz-accent)); }
+.pv-lease {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  min-height: 0;
+}
+.pv-label {
+  font-family: var(--kz-font-text);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 14px;
+  color: var(--kz-text-secondary);
+}
+.pv-lease-lines {
+  display: grid;
+  gap: 1px;
+  padding: 6px 10px;
+  border: 1px solid var(--kz-border-subtle);
+  border-radius: 8px;
+  background: var(--kz-surface-0);
+  font-size: 11.5px;
+  line-height: 16px;
+  color: var(--kz-text-secondary);
+}
+.pv-lease-lines > span {
+  transition: color 0.3s var(--kz-ease, ease);
+}
+.pv-lease-lines > span[data-read] {
+  color: var(--kz-text-primary);
+}
+.pv-lease-lines mark {
+  color: inherit;
+  background: none;
+  text-decoration: underline;
+  text-decoration-color: var(--kz-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.pv-lease-arrow {
+  text-align: center;
+  line-height: 12px;
+  color: var(--kz-accent-text, var(--kz-accent));
+}
+.pv-finding {
+  display: grid;
+  gap: 3px;
+  padding: 8px 10px;
+  border: 1px solid var(--kz-danger);
+  border-radius: 8px;
+  background: var(--kz-surface-0);
+  opacity: 0.45;
+  transition: opacity 0.3s var(--kz-ease, ease);
+}
+.pv-finding[data-found] {
+  opacity: 1;
+}
+.pv-finding-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--kz-text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.pv-finding-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--kz-font-mono);
+  font-size: 10.5px;
+  color: var(--kz-text-secondary);
+}
+.pv-badge {
+  padding: 0 7px;
+  border: 1px solid var(--kz-danger);
+  border-radius: 9999px;
+  background: var(--kz-danger-soft);
+  font-family: var(--kz-font-text);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 16px;
+  color: var(--kz-danger-text);
+}
+.pv-finding-quote {
+  padding-left: 8px;
+  border-left: 2px solid var(--kz-accent);
+  font-size: 11.5px;
+  font-style: italic;
+  line-height: 16px;
+  color: var(--kz-text-secondary);
+}
+.pv-finding-law {
+  font-size: 11.5px;
+  font-weight: 700;
+  line-height: 14px;
+  color: var(--kz-accent-text, var(--kz-accent));
+}
 
 /* Akinaza, as the storefront shows it: a service card (name, minutes, what it includes, the price and « Choose »), beside the
    day's free slots and the receipt with GST and QST to the cent. */
-.pv-shop { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 14px; align-items: center; }
-.pv-service { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border: 1px solid var(--kz-border-subtle); border-radius: 8px; background: var(--kz-surface-0); }
-.pv-service-name { font-family: var(--kz-font-display); font-size: 15px; line-height: 20px; color: var(--kz-text-primary); }
-.pv-service-min { margin-bottom: 4px !important; font-family: var(--kz-font-mono); font-size: 10.5px; color: var(--kz-text-secondary); }
-.pv-service ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 2px; font-size: 11.5px; line-height: 16px; color: var(--kz-text-secondary); }
-.pv-service li { display: flex; align-items: center; gap: 6px; }
-.pv-service li svg { flex: none; color: var(--kz-accent-text, var(--kz-accent)); }
-.pv-service-foot { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-top: auto !important; padding-top: 6px; border-top: 1px solid var(--kz-border-subtle); }
-.pv-service-foot b { font-size: 18px; line-height: 24px; color: var(--kz-text-primary); font-variant-numeric: var(--kz-figures, lining-nums tabular-nums); }
-.pv-service-foot span { font-size: 11px; font-weight: 700; color: var(--kz-accent-text, var(--kz-accent)); }
-.pv-shop-day { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.pv-shop-head { font-family: var(--kz-font-display); font-size: 13px; line-height: 18px; color: var(--kz-text-primary); }
-.pv-shop-slots { flex-wrap: wrap; }
-.pv-shop-booked { font-family: var(--kz-font-mono); font-size: 10.5px; color: var(--kz-text-secondary); }
-.pv-receipt { margin: 8px 0 0; padding: 8px 10px; display: grid; gap: 1px; font-family: var(--kz-font-mono); font-size: 11.5px; line-height: 18px;
-  background: var(--kz-surface-0); border: 1px dashed var(--kz-border-strong); }
-.pv-receipt > div { display: flex; justify-content: space-between; gap: 8px; }
-.pv-receipt dt { color: var(--kz-text-secondary); white-space: nowrap; }
-.pv-receipt dd { margin: 0; color: var(--kz-text-primary); font-variant-numeric: var(--kz-figures, lining-nums tabular-nums); }
-.pv-receipt > div:last-child { margin-top: 3px; padding-top: 3px; border-top: 1px solid var(--kz-border-strong); font-weight: 700; }
+.pv-shop {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 14px;
+  align-items: center;
+}
+.pv-service {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--kz-border-subtle);
+  border-radius: 8px;
+  background: var(--kz-surface-0);
+}
+.pv-service-name {
+  font-family: var(--kz-font-display);
+  font-size: 15px;
+  line-height: 20px;
+  color: var(--kz-text-primary);
+}
+.pv-service-min {
+  margin-bottom: 4px !important;
+  font-family: var(--kz-font-mono);
+  font-size: 10.5px;
+  color: var(--kz-text-secondary);
+}
+.pv-service ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 2px;
+  font-size: 11.5px;
+  line-height: 16px;
+  color: var(--kz-text-secondary);
+}
+.pv-service li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.pv-service li svg {
+  flex: none;
+  color: var(--kz-accent-text, var(--kz-accent));
+}
+.pv-service-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: auto !important;
+  padding-top: 6px;
+  border-top: 1px solid var(--kz-border-subtle);
+}
+.pv-service-foot b {
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--kz-text-primary);
+  font-variant-numeric: var(--kz-figures, lining-nums tabular-nums);
+}
+.pv-service-foot span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--kz-accent-text, var(--kz-accent));
+}
+.pv-shop-day {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.pv-shop-head {
+  font-family: var(--kz-font-display);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--kz-text-primary);
+}
+.pv-shop-slots {
+  flex-wrap: wrap;
+}
+.pv-shop-booked {
+  font-family: var(--kz-font-mono);
+  font-size: 10.5px;
+  color: var(--kz-text-secondary);
+}
+.pv-receipt {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  display: grid;
+  gap: 1px;
+  font-family: var(--kz-font-mono);
+  font-size: 11.5px;
+  line-height: 18px;
+  background: var(--kz-surface-0);
+  border: 1px dashed var(--kz-border-strong);
+}
+.pv-receipt > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.pv-receipt dt {
+  color: var(--kz-text-secondary);
+  white-space: nowrap;
+}
+.pv-receipt dd {
+  margin: 0;
+  color: var(--kz-text-primary);
+  font-variant-numeric: var(--kz-figures, lining-nums tabular-nums);
+}
+.pv-receipt > div:last-child {
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: 1px solid var(--kz-border-strong);
+  font-weight: 700;
+}
 
 @media (min-width: 640px) and (max-width: 1279.98px) {
-  .pv { aspect-ratio: 4 / 3; }
+  .pv {
+    aspect-ratio: 4 / 3;
+  }
 }
 @media (max-width: 420px) {
-  .pv { aspect-ratio: 4 / 3; }
-  .pv-shop { grid-template-columns: 1fr; }
-  .pv-service, .pv-shop .pv-shop-booked { display: none; }
-  .pv-lease-lines > span:first-child { display: none; }
+  .pv {
+    aspect-ratio: 4 / 3;
+  }
+  .pv-shop {
+    grid-template-columns: 1fr;
+  }
+  .pv-service,
+  .pv-shop .pv-shop-booked {
+    display: none;
+  }
+  .pv-lease-lines > span:first-child {
+    display: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .pv *, .pv *::before, .pv *::after { animation: none !important; transition: none !important; }
+  .pv *,
+  .pv *::before,
+  .pv *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

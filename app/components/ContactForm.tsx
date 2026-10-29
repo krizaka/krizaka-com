@@ -9,7 +9,17 @@ import { useSearchParams } from "next/navigation";
 import { CheckIcon, ChatIcon, ForwardIcon, UsersIcon, WarningIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
 import { format } from "@krizaka/i18n";
-import { CONTACT_TIMELINES, CONTACT_TOPICS, CONTACT_MESSAGE_MAX, cleanSource, isValidContactField, topicForSource, type ContactField, type ContactTimeline, type ContactTopic } from "@/lib/contact";
+import {
+  CONTACT_TIMELINES,
+  CONTACT_TOPICS,
+  CONTACT_MESSAGE_MAX,
+  cleanSource,
+  isValidContactField,
+  topicForSource,
+  type ContactField,
+  type ContactTimeline,
+  type ContactTopic,
+} from "@/lib/contact";
 import { ProductLogo } from "@krizaka/ui";
 import { Button } from "@krizaka/ui/button";
 import CaptchaWidget, { CAPTCHA_SITE_KEY } from "./CaptchaWidget";
@@ -65,12 +75,24 @@ function FromUrl({ defaultTopic }: { defaultTopic: ContactTopic | null }) {
   const params = useSearchParams();
   const requested = params.get("topic");
   const source = cleanSource(params.get("source"));
-  const topic = CONTACT_TOPICS.includes(requested as ContactTopic) ? (requested as ContactTopic) : (topicForSource(source) ?? defaultTopic);
+  const topic = CONTACT_TOPICS.includes(requested as ContactTopic)
+    ? (requested as ContactTopic)
+    : (topicForSource(source) ?? defaultTopic);
   return <Form key={`${topic}-${source}`} defaultTopic={topic} source={source} />;
 }
 
 /** Step two: the code mailed to the address. A wrong code stays here (with the tries left); a destroyed or expired one sends the visitor back. */
-function CodeStep({ challengeId, email, onVerified, onBack }: { challengeId: string; email: string; onVerified: () => void; onBack: () => void }) {
+function CodeStep({
+  challengeId,
+  email,
+  onVerified,
+  onBack,
+}: {
+  challengeId: string;
+  email: string;
+  onVerified: () => void;
+  onBack: () => void;
+}) {
   const { t } = useI18n();
   const c = t.site.contactForm;
   const [code, setCode] = useState("");
@@ -88,7 +110,11 @@ function CodeStep({ challengeId, email, onVerified, onBack }: { challengeId: str
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch("/api/contact/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ challengeId, email, code }) });
+      const res = await fetch("/api/contact/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ challengeId, email, code }),
+      });
       if (res.ok) return onVerified();
       const body = (await res.json().catch(() => ({}))) as { error?: string; attemptsLeft?: number };
       setError(verifyErrorText(c.errors, body.error, body.attemptsLeft));
@@ -106,7 +132,17 @@ function CodeStep({ challengeId, email, onVerified, onBack }: { challengeId: str
       <p>{format(c.verifyBody, { email })}</p>
       <label className="kz-cf-field">
         <span>{c.codeLabel}</span>
-        <input ref={codeRef} name="code" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9 ]*" maxLength={12} value={code} onChange={(e) => setCode(e.target.value)} aria-invalid={error ? true : undefined} />
+        <input
+          ref={codeRef}
+          name="code"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          pattern="[0-9 ]*"
+          maxLength={12}
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          aria-invalid={error ? true : undefined}
+        />
       </label>
       {error && (
         <p className="kz-cf-error" role="alert">
@@ -146,7 +182,8 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
     if (status === "sent") doneRef.current?.focus();
   }, [status]);
 
-  const invalid = (field: Field) => (touched[field] && !isValidContactField(field, values[field])) || serverError?.field === field;
+  const invalid = (field: Field) =>
+    (touched[field] && !isValidContactField(field, values[field])) || serverError?.field === field;
   const set = (field: keyof typeof values) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     setValues((v) => ({ ...v, [field]: e.target.value }));
   const leave = (field: Field) => () => setTouched((x) => ({ ...x, [field]: true }));
@@ -232,7 +269,14 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
   }
 
   if (challengeId) {
-    return <CodeStep challengeId={challengeId} email={sentTo.email} onVerified={() => setStatus("sent")} onBack={backToForm} />;
+    return (
+      <CodeStep
+        challengeId={challengeId}
+        email={sentTo.email}
+        onVerified={() => setStatus("sent")}
+        onBack={backToForm}
+      />
+    );
   }
 
   const count = values.message.length;
@@ -251,10 +295,25 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
         <legend>
           <span className="kz-cf-num">1</span> {c.stepTopic}
         </legend>
-        <div className="kz-cf-topics" role="radiogroup" aria-required="true" aria-invalid={topicMissing || undefined} aria-describedby={topicMissing ? "kz-cf-topic-error" : undefined}>
+        <div
+          className="kz-cf-topics"
+          role="radiogroup"
+          aria-required="true"
+          aria-invalid={topicMissing || undefined}
+          aria-describedby={topicMissing ? "kz-cf-topic-error" : undefined}
+        >
           {listed.map((id) => (
             <label key={id} className="kz-cf-topic" data-selected={topic === id || undefined}>
-              <input type="radio" name="topic" value={id} checked={topic === id} onChange={() => { setTopic(id); setTopicMissing(false); }} />
+              <input
+                type="radio"
+                name="topic"
+                value={id}
+                checked={topic === id}
+                onChange={() => {
+                  setTopic(id);
+                  setTopicMissing(false);
+                }}
+              />
               <span className="kz-cf-topic-icon">
                 <TopicIcon topic={id} />
               </span>
@@ -293,7 +352,11 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
               aria-describedby={invalid("name") ? "cf-name-error" : undefined}
               aria-errormessage={invalid("name") ? "cf-name-error" : undefined}
             />
-            {invalid("name") && <em id="cf-name-error" role="alert">{c.fieldErrors.name}</em>}
+            {invalid("name") && (
+              <em id="cf-name-error" role="alert">
+                {c.fieldErrors.name}
+              </em>
+            )}
           </label>
           <label className="kz-cf-field">
             <span>{c.email}</span>
@@ -310,14 +373,24 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
               aria-describedby={invalid("email") ? "cf-email-error" : undefined}
               aria-errormessage={invalid("email") ? "cf-email-error" : undefined}
             />
-            {invalid("email") && <em id="cf-email-error" role="alert">{c.fieldErrors.email}</em>}
+            {invalid("email") && (
+              <em id="cf-email-error" role="alert">
+                {c.fieldErrors.email}
+              </em>
+            )}
           </label>
         </div>
         <label className="kz-cf-field">
           <span>
             {c.company} <i>— {c.optional}</i>
           </span>
-          <input name="company" value={values.company} onChange={set("company")} maxLength={160} autoComplete="organization" />
+          <input
+            name="company"
+            value={values.company}
+            onChange={set("company")}
+            maxLength={160}
+            autoComplete="organization"
+          />
         </label>
       </fieldset>
 
@@ -358,7 +431,13 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
             aria-errormessage={invalid("message") ? "cf-message-error" : undefined}
           />
           <span className="kz-cf-under">
-            {invalid("message") ? <em id="cf-message-error" role="alert">{c.fieldErrors.message}</em> : <span className="kz-cf-hint">{c.shortcut}</span>}
+            {invalid("message") ? (
+              <em id="cf-message-error" role="alert">
+                {c.fieldErrors.message}
+              </em>
+            ) : (
+              <span className="kz-cf-hint">{c.shortcut}</span>
+            )}
             <span id="cf-message-count" className="kz-cf-count" data-near={count > MESSAGE_MAX * 0.9 || undefined}>
               {format(c.counter, { count: count.toLocaleString(locale), max: MESSAGE_MAX.toLocaleString(locale) })}
             </span>
@@ -382,8 +461,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
           type="submit"
           variant="primary"
           size="lg"
-         
-         
+
           className="kz-cf-submit"
           loading={status === "sending"}
           status={serverError ? "error" : null}

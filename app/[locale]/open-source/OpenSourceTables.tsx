@@ -67,7 +67,16 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
   const labels = useTableLabels();
   const familyLabel = (f: string) => (f in w.families ? w.families[f as keyof typeof w.families] : f);
   const columns: DataTableColumn<PackageRow>[] = [
-    { id: "name", header: w.name, type: "title", card: "title", filter: "text", sortable: true, subtitle: (r) => r.line, maxWidth: 420 },
+    {
+      id: "name",
+      header: w.name,
+      type: "title",
+      card: "title",
+      filter: "text",
+      sortable: true,
+      subtitle: (r) => r.line,
+      maxWidth: 420,
+    },
     {
       id: "registry",
       header: w.registry,
@@ -89,7 +98,9 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
           "—"
         ) : (
           <span className="os-downloads">
-            {r.weeklySeries ? <Sparkline data={r.weeklySeries} variant="area" width={72} height={22} title={`${r.name} — ${w.trend}`} /> : null}
+            {r.weeklySeries ? (
+              <Sparkline data={r.weeklySeries} variant="area" width={72} height={22} title={`${r.name} — ${w.trend}`} />
+            ) : null}
             {new Intl.NumberFormat(locale).format(r.weeklyDownloads)}
           </span>
         ),
@@ -101,7 +112,11 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
       cell: (r) => (
         <Links
           links={[
-            { href: r.registryUrl, label: r.registry === "npm" ? "npm" : "Central", aria: format(w.registryAria, { name: r.name }) },
+            {
+              href: r.registryUrl,
+              label: r.registry === "npm" ? "npm" : "Central",
+              aria: format(w.registryAria, { name: r.name }),
+            },
             ...(r.repoUrl ? [{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }] : []),
             ...(r.docsUrl ? [{ href: r.docsUrl, label: w.docs, aria: format(w.docsAria, { name: r.name }) }] : []),
           ]}
@@ -130,7 +145,17 @@ export function RepositoriesTable({ rows }: { rows: readonly RepositoryRow[] }) 
   const labels = useTableLabels();
   const date = new Intl.DateTimeFormat(DATE_LOCALE[locale] ?? "en-CA", { dateStyle: "medium", timeZone: "UTC" });
   const columns: DataTableColumn<RepositoryRow>[] = [
-    { id: "name", header: w.name, type: "title", card: "title", filter: "text", sortable: true, subtitle: (r) => r.line, href: (r) => r.url, maxWidth: 440 },
+    {
+      id: "name",
+      header: w.name,
+      type: "title",
+      card: "title",
+      filter: "text",
+      sortable: true,
+      subtitle: (r) => r.line,
+      href: (r) => r.url,
+      maxWidth: 440,
+    },
     { id: "kind", header: w.kind, filter: "facet", nowrap: true },
     { id: "language", header: w.language, filter: "facet", nowrap: true },
     {
@@ -163,7 +188,17 @@ export function NomenclatureTable({ rows }: { rows: readonly ModuleRow[] }) {
   const w = t.site.openSource.nomenclature;
   const labels = useTableLabels();
   const columns: DataTableColumn<ModuleRow>[] = [
-    { id: "name", header: w.name, type: "title", card: "title", filter: "text", sortable: true, subtitle: (r) => r.line, href: (r) => r.repoUrl, maxWidth: 420 },
+    {
+      id: "name",
+      header: w.name,
+      type: "title",
+      card: "title",
+      filter: "text",
+      sortable: true,
+      subtitle: (r) => r.line,
+      href: (r) => r.repoUrl,
+      maxWidth: 420,
+    },
     { id: "layer", header: w.layer, filter: "facet", nowrap: true, value: (r) => w.layers[r.layer] },
     { id: "kind", header: w.kind, filter: "facet", nowrap: true, value: (r) => w.kinds[r.kind] },
     {
@@ -176,7 +211,13 @@ export function NomenclatureTable({ rows }: { rows: readonly ModuleRow[] }) {
         ) : (
           <span className="os-links">
             {r.publications.map((p) => (
-              <a key={p.registry + p.name} href={p.url} target="_blank" rel="noopener noreferrer" aria-label={format(w.registryAria, { name: `${p.name} ${p.version}` })}>
+              <a
+                key={p.registry + p.name}
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={format(w.registryAria, { name: `${p.name} ${p.version}` })}
+              >
                 {p.name} <code className="os-version">{p.version}</code>
               </a>
             ))}
@@ -187,7 +228,12 @@ export function NomenclatureTable({ rows }: { rows: readonly ModuleRow[] }) {
       id: "links",
       header: w.repo,
       hideable: false,
-      cell: (r) => (r.repoUrl ? <Links links={[{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }]} /> : w.none),
+      cell: (r) =>
+        r.repoUrl ? (
+          <Links links={[{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }]} />
+        ) : (
+          w.none
+        ),
     },
   ];
   return (

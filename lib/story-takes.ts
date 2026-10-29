@@ -40,9 +40,36 @@ interface Spec extends Paths {
    - orazaka: the web client on its dev site, the demo persona asking and the engine answering (2026-10-29: it replaces the Old
    Port scene, a generated clip that was not the product running); the others keep their recordings (a lease read, a shop's day). */
 const SPECS: Partial<Record<ProductId, Spec>> = {
-  orazaka: { ratio: "wide", mp4: "products/orazaka/home/take-{l}-dark.mp4", webm: "products/orazaka/home/take-{l}-dark.webm", poster: "products/orazaka/home/take-{l}-dark-poster.webp", cues: [[0, 9.5]] },
-  yomizaka: { ratio: "phone", mp4: "products/yomizaka/tour/take-{l}.mp4", webm: "products/yomizaka/tour/take-{l}.webm", poster: "products/yomizaka/tour/story-poster-{l}.jpg", cues: [[0, 6], [6, 11], [11, 18.2]] },
-  akinaza: { ratio: "phone", mp4: "products/akinaza/tour/hero-{l}.mp4", webm: "products/akinaza/tour/hero-{l}.webm", poster: "products/akinaza/tour/phone-hero-{l}.jpg", cues: [[0, 12], [12, 25], [25, 37], [37, 49.5]] },
+  orazaka: {
+    ratio: "wide",
+    mp4: "products/orazaka/home/take-{l}-dark.mp4",
+    webm: "products/orazaka/home/take-{l}-dark.webm",
+    poster: "products/orazaka/home/take-{l}-dark-poster.webp",
+    cues: [[0, 9.5]],
+  },
+  yomizaka: {
+    ratio: "phone",
+    mp4: "products/yomizaka/tour/take-{l}.mp4",
+    webm: "products/yomizaka/tour/take-{l}.webm",
+    poster: "products/yomizaka/tour/story-poster-{l}.jpg",
+    cues: [
+      [0, 6],
+      [6, 11],
+      [11, 18.2],
+    ],
+  },
+  akinaza: {
+    ratio: "phone",
+    mp4: "products/akinaza/tour/hero-{l}.mp4",
+    webm: "products/akinaza/tour/hero-{l}.webm",
+    poster: "products/akinaza/tour/phone-hero-{l}.jpg",
+    cues: [
+      [0, 12],
+      [12, 25],
+      [25, 37],
+      [37, 49.5],
+    ],
+  },
 };
 
 /** The take of a product in the page's language, or null when none is recorded on the CDN (the chapter then keeps its mini-visual). */
@@ -53,7 +80,14 @@ export function takeOf(id: ProductId, locale: Locale): Take | null {
   const path = (p: string) => p.replace("{l}", locale);
   const needed = [paths.mp4, paths.poster, ...(paths.webm ? [paths.webm] : [])].map(path);
   if (!needed.every(onCdn)) return null;
-  return { ratio: s.ratio, lang: s.lang, mp4: cdn(path(paths.mp4)), webm: paths.webm ? cdn(path(paths.webm)) : undefined, poster: cdn(path(paths.poster)), cues: s.cues };
+  return {
+    ratio: s.ratio,
+    lang: s.lang,
+    mp4: cdn(path(paths.mp4)),
+    webm: paths.webm ? cdn(path(paths.webm)) : undefined,
+    poster: cdn(path(paths.poster)),
+    cues: s.cues,
+  };
 }
 
 export const TAKE_PRODUCTS = Object.keys(SPECS) as ProductId[];

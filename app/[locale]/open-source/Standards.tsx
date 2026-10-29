@@ -19,7 +19,12 @@ function Inline({ text }: { text: string }): ReactNode {
   return parseInline(text).map((tok, i) => {
     if (tok.kind === "code") return <code key={i}>{tok.text}</code>;
     if (tok.kind === "bold") return <strong key={i}>{tok.text}</strong>;
-    if (tok.kind === "link") return <a key={i} href={tok.href} target="_blank" rel="noopener noreferrer">{tok.text}</a>;
+    if (tok.kind === "link")
+      return (
+        <a key={i} href={tok.href} target="_blank" rel="noopener noreferrer">
+          {tok.text}
+        </a>
+      );
     return tok.text;
   });
 }

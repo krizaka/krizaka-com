@@ -61,11 +61,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: "/open-source",
     en: {
       title: "Open source — every Krizaka package and repository, and how they fit",
-      description: "What Krizaka open-sources, under Apache-2.0: Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), every npm and Maven Central package and every repository we publish. Our products are operated by Krizaka.",
+      description:
+        "What Krizaka open-sources, under Apache-2.0: Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), every npm and Maven Central package and every repository we publish. Our products are operated by Krizaka.",
     },
     fr: {
       title: "Open source — chaque paquet et dépôt Krizaka, et comment tout s'emboîte",
-      description: "Ce que Krizaka publie en open source, sous Apache-2.0 : Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), chaque paquet npm et Maven Central et chaque dépôt que nous publions. Nos produits sont exploités par Krizaka.",
+      description:
+        "Ce que Krizaka publie en open source, sous Apache-2.0 : Krizaka UI (ui.krizaka.com), Krizaka Java (java.krizaka.com), chaque paquet npm et Maven Central et chaque dépôt que nous publions. Nos produits sont exploités par Krizaka.",
     },
   });
 }
@@ -95,8 +97,17 @@ export default async function OpenSourcePage({ params }: Props) {
     pushedAt: r.pushedAt ?? "",
   }));
   const javaSite = STACK.find((s) => s.id === "java")!.url;
-  const packages = packageRows(snapshot as RegistrySnapshot, allRepositories.filter((r) => !r.archived).map((r) => r.name), javaSite, PRODUCT_IDS);
-  const layers = howItFits(manifests.products, (snapshot as RegistrySnapshot).mavenMeta, (snapshot as RegistrySnapshot).maven ?? {});
+  const packages = packageRows(
+    snapshot as RegistrySnapshot,
+    allRepositories.filter((r) => !r.archived).map((r) => r.name),
+    javaSite,
+    PRODUCT_IDS,
+  );
+  const layers = howItFits(
+    manifests.products,
+    (snapshot as RegistrySnapshot).mavenMeta,
+    (snapshot as RegistrySnapshot).maven ?? {},
+  );
 
   const modules = nomenclature({
     repositories,
@@ -149,11 +160,25 @@ export default async function OpenSourcePage({ params }: Props) {
         </nav>
       </Section>
 
-      <Section id="packages" eyebrow={t.packages.eyebrow} title={t.packages.title} lead={t.packages.lead} reveal divider>
+      <Section
+        id="packages"
+        eyebrow={t.packages.eyebrow}
+        title={t.packages.title}
+        lead={t.packages.lead}
+        reveal
+        divider
+      >
         <PackagesTable rows={packages} />
       </Section>
 
-      <Section id="repositories" eyebrow={t.repositories.eyebrow} title={t.repositories.title} lead={t.repositories.lead} reveal divider>
+      <Section
+        id="repositories"
+        eyebrow={t.repositories.eyebrow}
+        title={t.repositories.title}
+        lead={t.repositories.lead}
+        reveal
+        divider
+      >
         <RepositoriesTable rows={repoRows} />
       </Section>
 
@@ -161,7 +186,14 @@ export default async function OpenSourcePage({ params }: Props) {
         <HowItFits layers={layers} w={t.fits} />
       </Section>
 
-      <Section id="nomenclature" eyebrow={t.nomenclature.eyebrow} title={t.nomenclature.title} lead={t.nomenclature.lead} reveal divider>
+      <Section
+        id="nomenclature"
+        eyebrow={t.nomenclature.eyebrow}
+        title={t.nomenclature.title}
+        lead={t.nomenclature.lead}
+        reveal
+        divider
+      >
         <NomenclatureTable rows={modules} />
       </Section>
 
@@ -181,13 +213,16 @@ export default async function OpenSourcePage({ params }: Props) {
                   <Icon size={16} aria-hidden /> {words.cta}
                 </p>
                 <ul className="os-picker-repos">
-                  {channelGroups.filter((g) => g.group === "stack").flatMap((g) => g.entries).map((e) => (
-                    <li key={e.id}>
-                      <a href={e[ch.id].href} target="_blank" rel="noopener noreferrer">
-                        <ProductLogo id={e.mark as never} size={16} animated={false} /> {e.name}
-                      </a>
-                    </li>
-                  ))}
+                  {channelGroups
+                    .filter((g) => g.group === "stack")
+                    .flatMap((g) => g.entries)
+                    .map((e) => (
+                      <li key={e.id}>
+                        <a href={e[ch.id].href} target="_blank" rel="noopener noreferrer">
+                          <ProductLogo id={e.mark as never} size={16} animated={false} /> {e.name}
+                        </a>
+                      </li>
+                    ))}
                 </ul>
               </div>
             );

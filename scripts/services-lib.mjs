@@ -28,7 +28,9 @@ export function signServices(services, { previous, seed, keyId, now = new Date()
   const next = bodyOf(services, { keyId, issuedAt });
   if (previous && dataOf(previous) === dataOf(next)) return { manifest: previous, changed: false };
   if (previous && Date.parse(issuedAt) <= Date.parse(previous.issuedAt)) {
-    throw new Error(`issuedAt ${issuedAt} is not after the committed ${previous.issuedAt}: a manifest may never go back in time`);
+    throw new Error(
+      `issuedAt ${issuedAt} is not after the committed ${previous.issuedAt}: a manifest may never go back in time`,
+    );
   }
   return { manifest: signManifest(next, seed), changed: true };
 }
@@ -38,5 +40,7 @@ export function checkSigned(raw, services, keys = KRIZAKA_PUBLIC_KEYS) {
   const verdict = verifyManifest(raw, keys);
   if (!verdict.ok) return [`the committed manifest does not verify (${verdict.reason}): run npm run services:sign`];
   const expected = bodyOf(services, { keyId: verdict.manifest.keyId, issuedAt: verdict.manifest.issuedAt });
-  return dataOf(verdict.manifest) === dataOf(expected) ? [] : ["lib/services.ts changed since the manifest was signed: run npm run services:sign"];
+  return dataOf(verdict.manifest) === dataOf(expected)
+    ? []
+    : ["lib/services.ts changed since the manifest was signed: run npm run services:sign"];
 }

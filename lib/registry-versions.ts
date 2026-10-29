@@ -10,7 +10,16 @@ import { weeklyTotalOfSnapshot } from "./package-catalogue";
 
 const versions = snapshot as {
   npm?: Record<string, string>;
-  npmMeta?: Record<string, { description?: string; keywords?: string[]; repository?: string; weeklyDownloads?: number; weeklySeries?: number[] }>;
+  npmMeta?: Record<
+    string,
+    {
+      description?: string;
+      keywords?: string[];
+      repository?: string;
+      weeklyDownloads?: number;
+      weeklySeries?: number[];
+    }
+  >;
   maven?: Record<string, string>;
 };
 
@@ -33,7 +42,8 @@ export function withVersions(code: string): string {
 
 /** How many packages and artifacts Krizaka publishes (npm @krizaka scope + com.krizaka on Maven Central); 0 when the
     registries could not be reached at build. */
-export const publishedCount = (): number => Object.keys(versions.npm ?? {}).length + Object.keys(versions.maven ?? {}).length;
+export const publishedCount = (): number =>
+  Object.keys(versions.npm ?? {}).length + Object.keys(versions.maven ?? {}).length;
 
 /** How many com.krizaka artifacts are on Maven Central; 0 when it could not be reached at build. */
 export const mavenArtifactCount = (): number => Object.keys(versions.maven ?? {}).length;
@@ -50,7 +60,9 @@ export const npmPackages = (): NpmPackageInfo[] =>
 
 /** The @krizaka packages published from one repository (its GitHub URL, as npm gave it at build): Krizaka TypeScript's count. */
 export const npmPackagesFrom = (repoUrl: string): string[] =>
-  Object.keys(versions.npm ?? {}).filter((name) => versions.npmMeta?.[name]?.repository === repoUrl).sort();
+  Object.keys(versions.npm ?? {})
+    .filter((name) => versions.npmMeta?.[name]?.repository === repoUrl)
+    .sort();
 
 /** The Java modules on Maven Central, by artifact id, without their `-api` / `-client` / `-service` companions (one name per
     building block, as the home's still picture names them); empty when Central could not be read. */

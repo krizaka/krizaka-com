@@ -10,7 +10,10 @@ const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, impo
 test("the marks under the hero: Orazaka, then Akinaza, Yomizaka, then the rest as listed", () => {
   const ids = heroMarkOrder(PRODUCTS).map((p) => p.id);
   assert.deepEqual(ids.slice(0, 3), ["orazaka", "akinaza", "yomizaka"]);
-  assert.deepEqual(ids.slice(3), PRODUCTS.map((p) => p.id).filter((id) => !ids.slice(0, 3).includes(id)));
+  assert.deepEqual(
+    ids.slice(3),
+    PRODUCTS.map((p) => p.id).filter((id) => !ids.slice(0, 3).includes(id)),
+  );
   assert.equal(ids.length, PRODUCTS.length);
 });
 

@@ -19,5 +19,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ loc
   const spec = TAKE_PRODUCTS.includes(take as ProductId) ? takeOf(take as ProductId, locale) : null;
   const words = (getDictionary(locale).site.story.products.take.captions as Record<string, readonly string[]>)[take];
   if (!spec || !words) return new Response("Not found", { status: 404 });
-  return new Response(takeVtt(spec.cues, words), { headers: { "Content-Type": "text/vtt; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+  return new Response(takeVtt(spec.cues, words), {
+    headers: { "Content-Type": "text/vtt; charset=utf-8", "Cache-Control": "public, max-age=3600" },
+  });
 }

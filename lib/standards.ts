@@ -62,7 +62,10 @@ export function extractIntro(markdown: string): Intro | null {
   const paragraphs: string[] = [];
   const bullets: string[] = [];
   for (const block of inner.split("\n\n")) {
-    const lines = block.split("\n").map((l) => l.trim()).filter(Boolean);
+    const lines = block
+      .split("\n")
+      .map((l) => l.trim())
+      .filter(Boolean);
     if (!lines.length) continue;
     const items = lines.map(bulletText);
     if (items.every((i) => i !== null)) bullets.push(...(items as string[]));
@@ -73,13 +76,23 @@ export function extractIntro(markdown: string): Intro | null {
 
 /** Plain text of a line of Markdown: links keep their label, emphasis and code marks go. */
 function stripInline(s: string): string {
-  const plain = parseInline(s).map((t) => t.text).join("");
+  const plain = parseInline(s)
+    .map((t) => t.text)
+    .join("");
   return plain.split(/\s+/).filter(Boolean).join(" ");
 }
 
 const isProse = (block: string): boolean => {
   const first = block[0];
-  return !(first === "#" || first === ">" || first === "|" || first === "-" || first === "*" || (first >= "0" && first <= "9") || block.startsWith("```"));
+  return !(
+    first === "#" ||
+    first === ">" ||
+    first === "|" ||
+    first === "-" ||
+    first === "*" ||
+    (first >= "0" && first <= "9") ||
+    block.startsWith("```")
+  );
 };
 
 /** A standard's card: its title is the first heading (a trailing « (epic #n) » dropped); its summary the
@@ -97,7 +110,10 @@ export function describeStandard(markdown: string): { title: string; summary: st
   let summary = mark !== -1 && markEnd !== -1 ? stripInline(body.slice(mark + "<!-- summary:".length, markEnd)) : "";
   if (!summary) {
     const prose = withoutBlocks(withoutBlocks(body, "<!--", "-->"), "```", "```");
-    const first = prose.split("\n\n").map((b) => b.trim()).find((b) => b && isProse(b));
+    const first = prose
+      .split("\n\n")
+      .map((b) => b.trim())
+      .find((b) => b && isProse(b));
     summary = first ? firstSentence(stripInline(first)) : "";
   }
   if (summary.length > 220) summary = `${summary.slice(0, 217).trimEnd()}…`;
@@ -126,7 +142,10 @@ function firstSentence(text: string): string {
 }
 
 /** The ordering list first, then the rest alphabetically by id. */
-export function orderStandards<T extends { id: string }>(list: readonly T[], order: readonly string[] = STANDARDS_ORDER): T[] {
+export function orderStandards<T extends { id: string }>(
+  list: readonly T[],
+  order: readonly string[] = STANDARDS_ORDER,
+): T[] {
   const rank = (id: string) => {
     const i = order.indexOf(id);
     return i === -1 ? order.length : i;
@@ -153,14 +172,19 @@ export function isUsable(s: StandardsSnapshot | null | undefined): s is Standard
 }
 
 /** The last-good-copy rule: the fresh snapshot, else the previous one, else a loud error — never an empty section. */
-export function resolveSnapshot(fresh: StandardsSnapshot | null, previous: StandardsSnapshot | null, reason = ""): StandardsSnapshot {
+export function resolveSnapshot(
+  fresh: StandardsSnapshot | null,
+  previous: StandardsSnapshot | null,
+  reason = "",
+): StandardsSnapshot {
   if (isUsable(fresh)) return fresh;
   if (isUsable(previous)) return previous;
   const why = reason ? ": " + reason : "";
   throw new Error("krizaka/.github standards could not be read and there is no earlier copy" + why);
 }
 
-export type InlineToken = { kind: "text" | "code" | "bold"; text: string } | { kind: "link"; text: string; href: string };
+export type InlineToken =
+  { kind: "text" | "code" | "bold"; text: string } | { kind: "link"; text: string; href: string };
 
 /** The inline form that starts `rest`, with the length it covers; null when none does. */
 function inlineAt(rest: string): { token: InlineToken; length: number } | null {
@@ -177,7 +201,8 @@ function inlineAt(rest: string): { token: InlineToken; length: number } | null {
     const close = label === -1 ? -1 : rest.indexOf(")", label);
     const href = close === -1 ? "" : rest.slice(label + 2, close);
     const web = href.startsWith("https://") || href.startsWith("http://");
-    if (label > 1 && web && !href.includes(" ")) return { token: { kind: "link", text: rest.slice(1, label), href }, length: close + 1 };
+    if (label > 1 && web && !href.includes(" "))
+      return { token: { kind: "link", text: rest.slice(1, label), href }, length: close + 1 };
   }
   return null;
 }
@@ -186,7 +211,7 @@ function inlineAt(rest: string): { token: InlineToken; length: number } | null {
 export function parseInline(text: string): InlineToken[] {
   const out: InlineToken[] = [];
   let plain = "";
-  for (let i = 0; i < text.length; ) {
+  for (let i = 0; i < text.length;) {
     const hit = inlineAt(text.slice(i));
     if (!hit) {
       plain += text[i];

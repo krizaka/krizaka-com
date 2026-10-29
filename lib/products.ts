@@ -28,7 +28,13 @@ export interface Product {
 }
 
 export const PRODUCTS: Product[] = [
-  { id: "orazaka", name: "Orazaka", status: "development", siteUrl: wwwUrl("orazaka"), repoUrl: "https://github.com/krizaka/orazaka" },
+  {
+    id: "orazaka",
+    name: "Orazaka",
+    status: "development",
+    siteUrl: wwwUrl("orazaka"),
+    repoUrl: "https://github.com/krizaka/orazaka",
+  },
   { id: "yomizaka", name: "Yomizaka", status: "development", siteUrl: wwwUrl("yomizaka"), repoUrl: YOMIZAKA_REPO_URL },
   { id: "akinaza", name: "Akinaza", status: "development", siteUrl: wwwUrl("akinaza"), repoUrl: AKINAZA_REPO_URL },
 ];

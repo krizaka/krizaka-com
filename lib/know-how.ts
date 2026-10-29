@@ -38,14 +38,24 @@ export interface KnowHowFigures {
 }
 
 /** The facts of a capability as `[messageKey, count]` pairs, only those whose figure was read (> 0). */
-export function knowHowFacts(id: KnowHowId, f: KnowHowFigures): [key: "components" | "native" | "maven" | "repositories" | "npm" | "downloads", count: number][] {
+export function knowHowFacts(
+  id: KnowHowId,
+  f: KnowHowFigures,
+): [key: "components" | "native" | "maven" | "repositories" | "npm" | "downloads", count: number][] {
   const all: Record<KnowHowId, [string, number | undefined][]> = {
     engine: [],
     documents: [],
     shops: [],
-    design: [["components", f.components], ["native", f.native]],
+    design: [
+      ["components", f.components],
+      ["native", f.native],
+    ],
     java: [["maven", f.maven]],
-    open: [["repositories", f.repositories], ["npm", f.npm], ["downloads", f.downloads]],
+    open: [
+      ["repositories", f.repositories],
+      ["npm", f.npm],
+      ["downloads", f.downloads],
+    ],
   };
   return all[id].filter((x): x is [never, number] => typeof x[1] === "number" && x[1] > 0);
 }

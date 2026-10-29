@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const buildEntries = (
     path: string,
     priority: number,
-    changeFrequency: "weekly" | "monthly" | "yearly" = "weekly"
+    changeFrequency: "weekly" | "monthly" | "yearly" = "weekly",
   ): MetadataRoute.Sitemap => {
     // hreflang codes must match the page-level alternates: fr-CA / en / x-default.
     const languages = {

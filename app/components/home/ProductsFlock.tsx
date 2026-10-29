@@ -63,11 +63,29 @@ export default function ProductsFlock({ set }: { set: AmbientSet }) {
           <div className="kz-band-stage">
             <AmbientLoop set={set} />
             <div className="kz-band-wide">
-              <Flock className="kz-band-flock" tone="own" ratio={WIDE.ratio} birds={WIDE.birds} tempo={1.7} scenes greet active={active(WIDE)} />
+              <Flock
+                className="kz-band-flock"
+                tone="own"
+                ratio={WIDE.ratio}
+                birds={WIDE.birds}
+                tempo={1.7}
+                scenes
+                greet
+                active={active(WIDE)}
+              />
               <Hits band={WIDE} lit={lit} />
             </div>
             <div className="kz-band-tall">
-              <Flock className="kz-band-flock" tone="own" ratio={TALL.ratio} birds={TALL.birds} tempo={1.7} scenes greet active={active(TALL)} />
+              <Flock
+                className="kz-band-flock"
+                tone="own"
+                ratio={TALL.ratio}
+                birds={TALL.birds}
+                tempo={1.7}
+                scenes
+                greet
+                active={active(TALL)}
+              />
               <Hits band={TALL} lit={lit} />
             </div>
           </div>

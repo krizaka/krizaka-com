@@ -24,5 +24,7 @@ export async function GET(_request: Request, { params }: { params: Promise<{ loc
     lang: locale,
     tagLabel: c.tags,
   });
-  return new Response(xml, { headers: { "Content-Type": "application/rss+xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });
+  return new Response(xml, {
+    headers: { "Content-Type": "application/rss+xml; charset=utf-8", "Cache-Control": "public, max-age=3600" },
+  });
 }

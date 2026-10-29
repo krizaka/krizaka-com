@@ -19,7 +19,12 @@ function changed() {
   } catch {
     /* no origin/main: diff against HEAD only */
   }
-  return [...new Set([...git("diff", "--name-only", "--diff-filter=d", base), ...git("ls-files", "--others", "--exclude-standard")])];
+  return [
+    ...new Set([
+      ...git("diff", "--name-only", "--diff-filter=d", base),
+      ...git("ls-files", "--others", "--exclude-standard"),
+    ]),
+  ];
 }
 
 const step = (label, cmd, args) => {
@@ -32,7 +37,9 @@ const step = (label, cmd, args) => {
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())) {
   const files = lintableFiles(changed());
   const ok = [
-    files.length ? step(`eslint (${files.length} changed file${files.length > 1 ? "s" : ""})`, "npx", ["eslint", ...files]) : true,
+    files.length
+      ? step(`eslint (${files.length} changed file${files.length > 1 ? "s" : ""})`, "npx", ["eslint", ...files])
+      : true,
     step("tsc --noEmit", "npx", ["tsc", "--noEmit"]),
     step("unit tests", "npm", ["test", "--silent"]),
   ].every(Boolean);
