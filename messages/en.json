@@ -521,6 +521,12 @@
       "sending": "Sending…",
       "sentTitle": "Message sent",
       "sentBody": "Thank you, {name}. We reply to {email} within two business days.",
+      "verifyTitle": "Check your inbox",
+      "verifyBody": "We sent a 6-digit code to {email}. Enter it to send your message: it is valid 15 minutes and works once.",
+      "codeLabel": "Verification code",
+      "verifyButton": "Verify and send",
+      "verifying": "Verifying…",
+      "verifyBack": "Use another address",
       "another": "Send another message",
       "fieldErrors": {
         "name": "Enter your name (2 characters at least).",
@@ -532,6 +538,11 @@
         "invalid": "Please check the highlighted field.",
         "rate_limited": "Too many messages sent. Please try again in a few minutes.",
         "captcha_failed": "Please confirm you are not a robot, then send again.",
+        "code_invalid": "That code is not right. Check it and try again ({left} left).",
+        "code_expired": "This code has expired. Send your message again to get a new one.",
+        "code_locked": "Too many wrong codes. Send your message again to get a new one.",
+        "code_unknown": "This code is no longer valid. Send your message again to get a new one.",
+        "code_mail_failed": "We could not send the code to this address. Check it, then send again.",
         "other": "Sending failed. Reach us on GitHub Discussions in the meantime."
       },
       "privacy": "Your details are used only to reply to you (Law 25 / GDPR)."
