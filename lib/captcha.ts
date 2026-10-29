@@ -2,7 +2,8 @@
  * Bot protection of the public forms — a CAPTCHA verified on the server (ABUSE context).
  * Configured by `ABUSE_CAPTCHA_PROVIDER=turnstile` + `ABUSE_CAPTCHA_SECRET_KEY` (the browser widget reads
  * `NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY`). Not configured → the check is off (local dev, tests). Configured → a missing,
- * refused or unverifiable token fails: the check fails closed.
+ * refused or unverifiable token fails: the check fails closed. In PRODUCTION an unconfigured check is not « off » but a refusal
+ * (`captchaMissing`): a widget that renders while the key is unset protects nothing and lets every bot through (#464).
  */
 export const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
@@ -15,6 +16,11 @@ type Fetch = (url: string, init: { method: string; body: string; headers: Record
 
 export function captchaConfigured(env: Record<string, string | undefined> = process.env): boolean {
   return env.ABUSE_CAPTCHA_PROVIDER?.trim().toLowerCase() === "turnstile" && Boolean(env.ABUSE_CAPTCHA_SECRET_KEY?.trim());
+}
+
+/** Production without the check configured: the form must refuse (503) rather than accept every bot. */
+export function captchaMissing(env: Record<string, string | undefined> = process.env): boolean {
+  return env.NODE_ENV === "production" && !captchaConfigured(env);
 }
 
 /** True when the check is off or the token is valid. `ip` is the visitor's address ("unknown" is not sent). */

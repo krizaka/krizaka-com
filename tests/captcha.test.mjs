@@ -53,3 +53,19 @@ test("the remote IP is left out when unknown", async () => {
   await verifyCaptcha("tok", "unknown", env, async (_u, i) => { body = i.body; return { ok: true, json: async () => ({ success: true }) }; });
   assert.equal(new URLSearchParams(body).has("remoteip"), false);
 });
+
+test("production without the check configured refuses; elsewhere it is off (#464)", async () => {
+  const { captchaMissing } = await import("../lib/captcha.ts");
+  assert.equal(captchaMissing({ NODE_ENV: "production" }), true);
+  assert.equal(captchaMissing({ NODE_ENV: "production", ABUSE_CAPTCHA_PROVIDER: "turnstile" }), true);
+  assert.equal(captchaMissing({ NODE_ENV: "production", ...env }), false);
+  assert.equal(captchaMissing({ NODE_ENV: "development" }), false);
+  assert.equal(captchaMissing({}), false);
+});
+
+test("the contact route answers 503 when production lacks the check, before reading the token (#464)", async () => {
+  const { readFileSync } = await import("node:fs");
+  const route = readFileSync(new URL("../app/api/contact/route.ts", import.meta.url), "utf8");
+  assert.match(route, /if \(captchaMissing\(\)\)[\s\S]*contact\.captcha_unconfigured[\s\S]*status: 503/);
+  assert.ok(route.indexOf("captchaMissing()") < route.indexOf("verifyCaptcha(token"));
+});
