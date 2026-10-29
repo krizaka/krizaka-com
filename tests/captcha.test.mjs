@@ -1,6 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { captchaConfigured, verifyCaptcha, SITEVERIFY_URL } from "../lib/captcha.ts";
+import { captchaConfigured, verifyCaptcha as verifyWithClock, SITEVERIFY_URL } from "../lib/captcha.ts";
+
+/** The tests run on a fixed clock (the route passes the system one). */
+const verifyCaptcha = (token, ip, env, fetchImpl) => verifyWithClock(token, ip, env, fetchImpl, () => new Date(1_800_000_000_000));
 import { ENV_VARS } from "../lib/env.ts";
 
 const env = { ABUSE_CAPTCHA_PROVIDER: "turnstile", ABUSE_CAPTCHA_SECRET_KEY: "s3cret" };

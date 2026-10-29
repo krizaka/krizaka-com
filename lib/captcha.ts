@@ -28,10 +28,10 @@ export function captchaMissing(env: Env = process.env): boolean {
 const verifiers = new Map<string, ReturnType<typeof createTurnstileVerifier>>();
 
 /** True when the check is off (not production, not configured) or the token is valid. `ip` is the visitor's address ("unknown" is not sent). */
-export async function verifyCaptcha(token: unknown, ip: string, env: Env = process.env, fetchImpl?: TurnstileFetch): Promise<boolean> {
+export async function verifyCaptcha(token: unknown, ip: string, env: Env, fetchImpl: TurnstileFetch | undefined, now: () => Date): Promise<boolean> {
   if (!captchaConfigured(env)) return !captchaMissing(env);
   const secret = env.ABUSE_CAPTCHA_SECRET_KEY!.trim();
-  const options = { secret, hostnames: env.NODE_ENV === "production" ? HOSTNAMES : [], now: () => new Date() };
+  const options = { secret, hostnames: env.NODE_ENV === "production" ? HOSTNAMES : [], now };
   let verify = fetchImpl ? createTurnstileVerifier({ ...options, fetch: fetchImpl }) : verifiers.get(secret);
   if (!verify) {
     verify = createTurnstileVerifier(options);

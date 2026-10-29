@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "contact.captcha_unconfigured" }, { status: 503 });
   }
   const token = (body as { captchaToken?: unknown }).captchaToken;
-  if (!(await verifyCaptcha(token, ip))) return NextResponse.json({ error: "contact.captcha_failed" }, { status: 400 });
+  if (!(await verifyCaptcha(token, ip, process.env, undefined, () => new Date()))) return NextResponse.json({ error: "contact.captcha_failed" }, { status: 400 });
 
   const channels = contactChannels();
   if (!channels.email && !channels.webhook) {
