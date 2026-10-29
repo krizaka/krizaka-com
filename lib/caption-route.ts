@@ -3,7 +3,7 @@ import { asLocale, getDictionary, type TranslationDictionary } from "@/lib/i18n"
 
 type Cues = Parameters<typeof filmVtt>[1];
 
-/** The two caption routes (/story/film.vtt, /story/relay.vtt) differ by their words and their cue times only: the locales and the handler are shared. */
+/** The two caption routes (/story/film.vtt, /story/family.vtt) differ by their words and their cue times only: the locales and the handler are shared. */
 export const captionLocales = () => [{ locale: "en" }, { locale: "fr" }];
 
 export function captionHandler(wordsOf: (dictionary: TranslationDictionary) => Record<string, string>, cues?: Cues) {

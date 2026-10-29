@@ -714,22 +714,6 @@
           "retry": "Try again",
           "time": "{time} of {duration}"
         },
-        "relay": {
-          "title": "The relay",
-          "lead": "One parcel, handed from bird to bird: dawn in Morocco, a café in Mile End, a storm over the Alps, a cold night in Québec, the California coast. Each bird keeps its promise.",
-          "player": "Video: the world of Krizaka, the relay",
-          "credit": "AI-generated with Orazaka: the birds rendered from @krizaka/ui, composed by FLUX.2 [klein], animated by Wan 2.2 and LTX-Video, upscaled by SeedVR2. Voice: Zonos v0.1 (Apache-2.0). Music: ACE-Step 1.5 (MIT).",
-          "cues": {
-            "falcon": "The falcon keeps watch: security comes first.",
-            "owl": "The owl reads every page and knows every face.",
-            "duck": "The duck builds, line by line, in the open.",
-            "cold": "Then the night got cold…",
-            "quebec": "In Québec, they help you… then they argue about how.",
-            "flamingo": "The flamingo answers, and the payment follows.",
-            "pigeon": "The pigeon delivers, every time.",
-            "together": "Each bird carries a promise."
-          }
-        },
         "codeTitle": "Filmed from the code",
         "family": {
           "title": "The Krizaka family",

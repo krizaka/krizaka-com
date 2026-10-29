@@ -23,7 +23,7 @@ import { format, getDictionary } from "@/lib/i18n";
 import { figureColumns } from "@/lib/figure-grid";
 import type { CSSProperties } from "react";
 import { video } from "@/lib/cdn";
-import { FILM_BASE, FILM_CAST, RELAY_BASE } from "@/lib/film-captions";
+import { FAMILY_BASE, FILM_BASE, FILM_CAST } from "@/lib/film-captions";
 import { heroMarkOrder } from "@/lib/home-sections";
 import { HERO_FLOCK } from "@/lib/products-flock";
 import { VALLEY } from "@/lib/home-ambient";
@@ -42,7 +42,7 @@ export interface HomeFigures {
   maven: number;
 }
 
-const film = video(RELAY_BASE);
+const film = video(FAMILY_BASE);
 /** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
 const DIM: readonly ProductStatus[] = ["construction", "upcoming"];
 const codeFilm = video(FILM_BASE);
@@ -90,7 +90,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           <ButtonLink href="#engine" variant="primary" size="lg">
             {t.primary} <ForwardIcon size={16} strokeWidth={2.25} />
           </ButtonLink>
-          <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "relay.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
+          <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "family.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
         </div>
 
         {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
