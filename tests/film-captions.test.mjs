@@ -42,31 +42,6 @@ test("the home's ambient loop (the valley without its birds): both cuts and them
   assert.match(readFileSync(new URL("../app/components/home/ProductsFlock.tsx", import.meta.url), "utf8"), /<AmbientLoop set=\{set\} \/>/);
 });
 
-test("the relay (« le relais », the reference film) says its own lines, in order, inside its length, and is on the CDN", async () => {
-  const { RELAY_BASE, RELAY_CUES, RELAY_SECONDS } = await import("../lib/film-captions.ts");
-  assert.deepEqual(RELAY_CUES.map((c) => c.id), ["falcon", "owl", "duck", "cold", "quebec", "flamingo", "pigeon", "together"]);
-  RELAY_CUES.forEach((c, i) => {
-    assert.ok(c.start < c.end && c.end <= RELAY_SECONDS, c.id);
-    if (i) assert.ok(RELAY_CUES[i - 1].end <= c.start, `${c.id} overlaps the line before`);
-  });
-  for (const bird of FILM_CAST) assert.ok(RELAY_CUES.some((c) => c.id === bird), `${bird} says its promise on the relay`);
-  for (const lang of ["en", "fr"]) {
-    const relay = messages(lang).site.story.world.relay;
-    for (const k of ["title", "lead", "player", "credit"]) assert.ok(relay[k].trim(), `${lang} ${k}`);
-    assert.match(relay.credit, lang === "en" ? /AI-generated/ : /Généré par IA/, "the page says the film is AI-generated");
-    for (const c of RELAY_CUES) assert.ok(relay.cues[c.id]?.trim(), `${lang} ${c.id}`);
-    // the promises are the film's own words, the same as the code film's
-    for (const bird of FILM_CAST) assert.equal(relay.cues[bird], messages(lang).site.story.world.cues[bird], `${lang} ${bird}`);
-  }
-  const vtt = filmVtt(messages("fr").site.story.world.relay.cues, RELAY_CUES);
-  assert.match(vtt, /^WEBVTT\n\nfalcon\n00:00:03\.\d{3} --> /);
-  assert.match(vtt, /Au Québec, on t’aide… pis on s’obstine sur comment\./);
-  assert.equal(vtt.match(/ --> /g).length, RELAY_CUES.length);
-  const { files } = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", import.meta.url), "utf8"));
-  assert.match(RELAY_BASE, /^brand-films\/relay\//);
-  for (const ext of ["mp4", "webm", "jpg"]) assert.match(files[`${RELAY_BASE}.${ext}`] ?? "", /^[0-9a-f]{10}$/, ext);
-});
-
 test("« The Krizaka family » (/story): one bird per product of today, its own lines in order, no departed product, on the CDN", async () => {
   const { FAMILY_BASE, FAMILY_CUES, FAMILY_SECONDS } = await import("../lib/film-captions.ts");
   assert.deepEqual(FAMILY_CUES.map((c) => c.id), ["title", "falcon", "flamingo", "owl", "beaver", "together"]);
@@ -94,7 +69,7 @@ test("« The Krizaka family » (/story): one bird per product of today, its own 
   for (const ext of ["mp4", "webm", "jpg"]) assert.match(files[`${FAMILY_BASE}.${ext}`] ?? "", /^[0-9a-f]{10}$/, ext);
 });
 
-test("the home's « Watch the film » plays the relay, and the light code film under reduced motion or Save-Data", async () => {
+test("the home's « Watch the film » plays the family film, and the light code film under reduced motion or Save-Data", async () => {
   const { prefersLightFilm } = await import("../lib/film-captions.ts");
   const media = (reduce) => (q) => ({ matches: reduce && q.includes("reduce") });
   assert.equal(prefersLightFilm({ matchMedia: media(false), navigator: {} }), false);
@@ -102,8 +77,8 @@ test("the home's « Watch the film » plays the relay, and the light code film u
   assert.equal(prefersLightFilm({ matchMedia: media(false), navigator: { connection: { saveData: true } } }), true);
   assert.equal(prefersLightFilm({}), false);
   const hero = readFileSync(new URL("../app/components/home/HomeHero.tsx", import.meta.url), "utf8");
-  assert.match(hero, /video\(RELAY_BASE\)/);
-  assert.match(hero, /vtt: "relay\.vtt"/);
+  assert.match(hero, /video\(FAMILY_BASE\)/);
+  assert.match(hero, /vtt: "family\.vtt"/);
   assert.match(hero, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/);
   const box = readFileSync(new URL("../app/components/home/FilmLightbox.tsx", import.meta.url), "utf8");
   assert.match(box, /prefersLightFilm\(window\)/);
@@ -127,7 +102,8 @@ test("« la tournée » gives way to « le relais »: no page draws the tour any
     assert.doesNotMatch(readFileSync(file, "utf8"), /TOUR_BASE|brand-films\/epic|tour\.vtt/, `${file} still draws the tour`);
   }
   assert.ok(!existsSync("app/[locale]/story/tour.vtt"), "the tour's captions route");
-  assert.ok(existsSync("app/[locale]/story/relay.vtt/route.ts"), "the relay's captions route");
+  assert.ok(!existsSync("app/[locale]/story/relay.vtt/route.ts"), "« le relais » is retired: its captions route is gone");
+  assert.ok(existsSync("app/[locale]/story/family.vtt/route.ts"), "the family film's captions route");
 });
 
 test("both caption routes answer through one response: same-origin WebVTT, cacheable for an hour", async () => {

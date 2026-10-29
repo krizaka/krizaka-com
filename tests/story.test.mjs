@@ -64,7 +64,7 @@ test("each chapter wears the right bird, with its promise from the film or the b
 
 test("the film is shown once: one poster card opening the lightbox; no inline player, no autoplay in the text", () => {
   assert.equal([...page.matchAll(/<FilmLightbox/g)].length, 1, "the reference film once");
-  assert.match(page, /storyFilm\(\)/, "the film slot: « le relais » (lib/story-film.ts)");
+  assert.match(page, /storyFilm\(\)/, "the film slot: « La famille Krizaka » (lib/story-film.ts)");
   assert.match(page, /vtt: film\.vtt/);
   assert.match(page, /fallback=\{\{ mp4: codeFilm\.mp4, poster: codeFilm\.poster, vtt: "film\.vtt" \}\}/, "the light film under reduced motion / Save-Data");
   assert.doesNotMatch(page, /VideoPlayer|<video|autoPlay|autoplay/, "no player in the reading column");
@@ -81,11 +81,11 @@ test("the film is shown once: one poster card opening the lightbox; no inline pl
 });
 
 test("the film block shows no captions list and no credits wall: one quiet line, the captions live in the <track>", () => {
-  assert.doesNotMatch(page, /RELAY_CUES|relay\.cues/, "captions are never printed as a list");
-  assert.doesNotMatch(page, /st\.world\.relay\.credit\b/, "no credits paragraph");
+  assert.doesNotMatch(page, /RELAY_CUES|FAMILY_CUES|relay\.cues/, "captions are never printed as a list");
+  assert.doesNotMatch(page, /st\.world\.family\.credit\b/, "no credits paragraph");
   assert.doesNotMatch(page, /summary: st\.who/, "no fold on the founder chapter");
   assert.match(page, /<FilmCredits \/>/);
-  assert.doesNotMatch(page, /relay\.vtt/, "« crédits » never opens a raw .vtt");
+  assert.doesNotMatch(page, /family\.vtt/, "« crédits » never opens a raw .vtt");
   const fc = read("app/components/story/FilmCredits.tsx");
   assert.match(fc, /@krizaka\/ui\/dialog/, "the credits list opens in the Krizaka UI Dialog");
   for (const l of ["en", "fr"]) assert.ok(messages(l).story.who.creditsList.length >= 5, l);
@@ -192,7 +192,7 @@ test("the own palettes of the birds are distinct (the falcon is orange, not the 
   assert.ok(p.has("#22d3ee") && !f.has("#22d3ee"), "the pigeon wears its cyan-indigo");
 });
 
-// Story peer review (2026-10-21): one strong medium per chapter, captions in both languages, a film slot ready for « le relais ».
+// Story peer review (2026-10-21): one strong medium per chapter, captions in both languages, a film slot for the reference film.
 import { takeVtt } from "../lib/take-captions.ts";
 // lib/story-takes.ts reads the CDN manifest (a JSON import): the test reads its source.
 const TAKE_PRODUCTS = [...read("lib/story-takes.ts").matchAll(/\n  (\w+): \{\s*ratio:/g)].map((m) => m[1]);
@@ -242,17 +242,16 @@ test("no take names Orazaka as the one doing a product's job", () => {
 
 test("the film slot takes the newest film whose files are on the CDN, else the one under it", () => {
   const films = [
-    { id: "relais", base: "brand-films/relay/x", vtt: "relais.vtt" },
-    { id: "tournee", base: "brand-films/epic/y", vtt: "tour.vtt" },
+    { id: "famille", base: "brand-films/family/x", vtt: "family.vtt" },
+    { id: "autre", base: "brand-films/other/y", vtt: "other.vtt" },
   ];
   const has = (...bases) => (p) => bases.some((b) => ["webm", "mp4", "jpg"].map((e) => `${b}.${e}`).includes(p));
-  assert.equal(pickFilm(films, has("brand-films/epic/y")).id, "tournee");
-  assert.equal(pickFilm(films, has("brand-films/relay/x", "brand-films/epic/y")).id, "relais");
-  assert.equal(pickFilm(films, () => false).id, "tournee", "never a dead poster: the oldest is always the fallback");
+  assert.equal(pickFilm(films, has("brand-films/other/y")).id, "autre");
+  assert.equal(pickFilm(films, has("brand-films/family/x", "brand-films/other/y")).id, "famille");
+  assert.equal(pickFilm(films, () => false).id, "autre", "never a dead poster: the oldest is always the fallback");
   const slot = read("lib/story-film.ts");
   assert.match(slot, /id: "famille", base: FAMILY_BASE, vtt: "family\.vtt"/, "the family film is at the top of the slot");
-  assert.ok(slot.indexOf('id: "famille"') < slot.indexOf('id: "relais"'), "newest first");
-  assert.match(slot, /id: "relais", base: RELAY_BASE, vtt: "relay\.vtt"/);
+  assert.doesNotMatch(slot, /RELAY_BASE|relay\.vtt|id: "relais"/, "« le relais » is retired from every slot");
 });
 
 // Taped prints (2026-10-23): every picture or video of /story sits in @krizaka/ui's TapedPhoto — the film poster, each

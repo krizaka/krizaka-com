@@ -70,7 +70,7 @@ function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
 
 /* /story (longform, with a sticky chapter contents): a short intro, then ten-second chapters in a fixed order — who we are,
    the engine, each product, the open stack, what is next — each a heading, a line or two, one proof visual and its
-   depth in a fold. The film « Le monde de Krizaka : le relais » is shown once (a poster card in chapter 1, the player
+   depth in a fold. The film « The Krizaka family » is shown once (a poster card in chapter 1, the player
    opens in a lightbox, nothing fetched before). Every figure is read at build; products and their statuses come from
    lib/products.ts, what runs on the engine from lib/engine-uses.ts — nothing is typed here. */
 export default async function StoryPage({ params }: Props) {

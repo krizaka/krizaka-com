@@ -44,27 +44,6 @@ export function filmVtt<Id extends string = FilmCueId>(words: Record<Id, string>
   return `WEBVTT\n\n${cues.map((c) => `${c.id}\n${clock(c.start)} --> ${clock(c.end)}\n${words[c.id]}\n`).join("\n")}`;
 }
 
-/* « Le monde de Krizaka : le relais » — the reference film (krizaka-ui tools/brand-films, the v2 of the cinema pack, orazaka#289): a parcel
-   handed from bird to bird, Morocco → Mile End → the Alps → Québec → California, the birds rendered from @krizaka/ui and
-   animated by models (AI-generated, said on the page and by the player). Its own lines at its own times (the finish's
-   timeline, v2/finish-report.json): change both together. The words are messages (site.story.world.relay.cues.<id>). */
-export const RELAY_BASE = "brand-films/relay/le-monde-de-krizaka-le-relais-16x9";
-// @fixed: the length of the rendered file (the finish's measured length), a fact of the media.
-export const RELAY_SECONDS = 68;
-
-export const RELAY_CUES = [
-  { id: "falcon", start: 3.235, end: 7.585 },
-  { id: "owl", start: 11.404, end: 15.244 },
-  { id: "duck", start: 20.801, end: 24.051 },
-  { id: "cold", start: 34.948, end: 38.158 },
-  { id: "quebec", start: 40.538, end: 44.938 },
-  { id: "flamingo", start: 48.142, end: 51.411 },
-  { id: "pigeon", start: 58.142, end: 60.84 },
-  { id: "together", start: 61.23, end: 64.98 },
-] as const;
-
-export type RelayCueId = (typeof RELAY_CUES)[number]["id"];
-
 /* « The Krizaka family » — the film of /story (2026-10-29), rendered from the code of @krizaka/ui by krizaka-ui
    tools/brand-films (FILM there): only the family of today, one bird per product — the falcon is Krizaka, the flamingo
    Orazaka, the owl Yomizaka, the beaver Akinaza. Its own lines at its own times (FILM.cues): change both together. The

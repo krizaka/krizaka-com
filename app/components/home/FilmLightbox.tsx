@@ -1,6 +1,6 @@
 "use client";
 
-/* « Watch the full film »: « Le monde de Krizaka : le relais » (the reference film, AI-generated) in a dialog,
+/* « Watch the full film »: « The Krizaka family » (the reference film, AI-generated) in a dialog,
    with the same captions and words as /story. Nothing is fetched before it opens: the player's code is loaded on open
    (next/dynamic), the film with preload none and its poster first. Under reduced motion or Save-Data the dialog plays
    the light, calm film instead: the 44 s « Le monde de Krizaka » rendered from the code (`fallback`). */
@@ -19,7 +19,7 @@ const VideoPlayer = dynamic(() => import("@krizaka/ui/video-player").then((m) =>
 export interface LightboxFilm {
   mp4: string;
   poster: string;
-  /** The captions route under /<locale>/story/, e.g. "relay.vtt". */
+  /** The captions route under /<locale>/story/, e.g. "family.vtt". */
   vtt: string;
 }
 
@@ -45,14 +45,14 @@ export default function FilmLightbox({ film, fallback, trigger }: { film: Lightb
         )}
       </Dialog.Trigger>
       <Dialog.Content size="lg" closeLabel={h.filmClose} className="kz-home-film">
-        <Dialog.Title className="sr-only">{light ? w.title : w.relay.player}</Dialog.Title>
+        <Dialog.Title className="sr-only">{light ? w.title : w.family.player}</Dialog.Title>
         <VideoPlayer
           key={play.mp4}
           src={play.mp4}
           poster={play.poster}
           preload="none"
           autoPlay={!light}
-          title={light ? w.player : w.relay.player}
+          title={light ? w.player : w.family.player}
           tracks={(["en", "fr"] as const).map((lang) => ({ src: `/${lang}/story/${play.vtt}`, srcLang: lang, label: w.captions[lang], default: lang === locale }))}
           labels={labels}
         />

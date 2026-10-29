@@ -714,22 +714,6 @@
           "retry": "Réessayer",
           "time": "{time} sur {duration}"
         },
-        "relay": {
-          "title": "Le relais",
-          "lead": "Un colis, passé d’oiseau en oiseau : l’aube au Maroc, un café du Mile End, un orage sur les Alpes, une nuit froide au Québec, la côte californienne. Chaque oiseau tient sa promesse.",
-          "player": "Vidéo : le monde de Krizaka, le relais",
-          "credit": "Généré par IA avec Orazaka : les oiseaux rendus depuis @krizaka/ui, composés par FLUX.2 [klein], animés par Wan 2.2 et LTX-Video, agrandis par SeedVR2. Voix : Zonos v0.1 (Apache-2.0). Musique : ACE-Step 1.5 (MIT).",
-          "cues": {
-            "falcon": "Le faucon veille : la sécurité d’abord.",
-            "owl": "Le hibou lit chaque page et reconnaît chaque visage.",
-            "duck": "Le canard construit, ligne après ligne, en open source.",
-            "cold": "Puis la nuit est devenue froide…",
-            "quebec": "Au Québec, on t’aide… pis on s’obstine sur comment.",
-            "flamingo": "Le flamant répond, et le paiement suit.",
-            "pigeon": "Le pigeon livre, à chaque fois.",
-            "together": "Chaque oiseau porte une promesse."
-          }
-        },
         "codeTitle": "Filmé depuis le code",
         "family": {
           "title": "La famille Krizaka",
