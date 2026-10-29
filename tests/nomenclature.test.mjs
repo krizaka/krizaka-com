@@ -2,15 +2,40 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { nomenclature, assertNomenclature, repositoryOfUrl } from "../lib/nomenclature.ts";
+import { calls, hasCode, hasJsx } from "./helpers/source.mjs";
 
-const repo = (name, topics = [], description = `${name} line`, archived = false) => ({ name, description, url: `https://github.com/krizaka/${name}`, topics, language: null, archived });
+const repo = (name, topics = [], description = `${name} line`, archived = false) => ({
+  name,
+  description,
+  url: `https://github.com/krizaka/${name}`,
+  topics,
+  language: null,
+  archived,
+});
 const input = {
-  repositories: [repo("orazaka"), repo("orazaka-cli", ["cli"]), repo("orazaka-edge", ["spring-boot"]), repo("orazaka-java"), repo("orazaka-web", ["nextjs"]), repo("yomizaka-mobile", ["expo"]), repo("krizaka-ui", ["npm-package"]), repo("krizaka-users", ["java"]), repo("krizaka-com", ["website"]), repo(".github", ["community-health"]), repo("krizaka-archived", [], "archived line", true)],
+  repositories: [
+    repo("orazaka"),
+    repo("orazaka-cli", ["cli"]),
+    repo("orazaka-edge", ["spring-boot"]),
+    repo("orazaka-java"),
+    repo("orazaka-web", ["nextjs"]),
+    repo("yomizaka-mobile", ["expo"]),
+    repo("krizaka-ui", ["npm-package"]),
+    repo("krizaka-users", ["java"]),
+    repo("krizaka-com", ["website"]),
+    repo(".github", ["community-health"]),
+    repo("krizaka-archived", [], "archived line", true),
+  ],
   snapshot: {
     npm: { "@krizaka/ui": "3.1.0" },
     npmMeta: { "@krizaka/ui": { description: "Components", repository: "https://github.com/krizaka/krizaka-ui" } },
     maven: { "krizaka-users-service": "0.2.0", "krizaka-security": "0.3.0", "orazaka-java": "0.1.0" },
-    mavenMeta: { "krizaka-users-service": { parent: "krizaka-users" }, "krizaka-users": { parent: "krizaka-parent" }, "krizaka-security": { parent: "krizaka-platform-kit" }, "krizaka-platform-kit": { parent: "krizaka-parent" } },
+    mavenMeta: {
+      "krizaka-users-service": { parent: "krizaka-users" },
+      "krizaka-users": { parent: "krizaka-parent" },
+      "krizaka-security": { parent: "krizaka-platform-kit" },
+      "krizaka-platform-kit": { parent: "krizaka-parent" },
+    },
   },
   manifests: { yomizaka: { npm: ["@krizaka/ui"], maven: [] }, orazaka: { npm: [], maven: ["krizaka-security"] } },
   products: ["orazaka", "yomizaka"],
@@ -22,7 +47,23 @@ const input = {
 test("the nomenclature carries every repository, grouped by layer: products → engine → blocks → services → platform", () => {
   const rows = nomenclature(input);
   const by = Object.fromEntries(rows.map((r) => [r.id, r]));
-  assert.deepEqual(rows.map((r) => r.layer), ["products", "engine", "engine", "engine", "engine", "engine", "blocks", "blocks", "services", "platform", "platform", "platform"]);
+  assert.deepEqual(
+    rows.map((r) => r.layer),
+    [
+      "products",
+      "engine",
+      "engine",
+      "engine",
+      "engine",
+      "engine",
+      "blocks",
+      "blocks",
+      "services",
+      "platform",
+      "platform",
+      "platform",
+    ],
+  );
   assert.equal(by.orazaka.kind, "engine");
   assert.equal(by["orazaka-cli"].kind, "tooling");
   assert.equal(by["orazaka-edge"].kind, "worker");
@@ -30,7 +71,9 @@ test("the nomenclature carries every repository, grouped by layer: products → 
   assert.equal(by["orazaka-web"].kind, "web");
   assert.equal(by["yomizaka-mobile"].layer, "products");
   assert.equal(by["krizaka-ui"].kind, "package");
-  assert.deepEqual(by["krizaka-ui"].publications, [{ registry: "npm", name: "@krizaka/ui", version: "3.1.0", url: "https://www.npmjs.com/package/@krizaka/ui" }]);
+  assert.deepEqual(by["krizaka-ui"].publications, [
+    { registry: "npm", name: "@krizaka/ui", version: "3.1.0", url: "https://www.npmjs.com/package/@krizaka/ui" },
+  ]);
   assert.deepEqual(by["krizaka-ui"].usedBy, ["yomizaka"]);
   assert.equal(by["krizaka-users"].layer, "services");
   assert.equal(by["krizaka-users"].publications[0].registry, "maven");
@@ -52,7 +95,10 @@ test("a published module without a repository still has its row, with no link", 
 
 test("a public repository missing from the map fails the build", () => {
   const rows = nomenclature(input);
-  assert.throws(() => assertNomenclature([...input.repositories, repo("krizaka-new")], rows), /misses 1 public repository: krizaka-new/);
+  assert.throws(
+    () => assertNomenclature([...input.repositories, repo("krizaka-new")], rows),
+    /misses 1 public repository: krizaka-new/,
+  );
   assertNomenclature(input.repositories, rows);
 });
 
@@ -63,13 +109,13 @@ test("a repository's name is read from its GitHub URL", () => {
 });
 
 test("/open-source carries « La nomenclature », generated, with no module typed in the page", () => {
-  const page = readFileSync(new URL("../app/[locale]/open-source/page.tsx", import.meta.url), "utf8");
-  assert.match(page, /<Section id="nomenclature"/);
-  assert.match(page, /<NomenclatureTable rows=\{modules\} \/>/);
-  assert.match(page, /nomenclature\(\{/);
-  assert.match(page, /const allRepositories = githubRepositories\(\);/);
-  assert.match(page, /const repositories = openSourceRepositories\(allRepositories, PRODUCT_IDS\);/);
-  assert.match(page, /nomenclature\(\{\s*repositories,/, "only the open-source repositories are mapped");
+  const page = "app/[locale]/open-source/page.tsx";
+  assert.ok(hasJsx(page, "Section", { id: "nomenclature" }));
+  assert.ok(hasCode(page, "<NomenclatureTable rows={modules} />"));
+  assert.ok(calls(page).includes("nomenclature"));
+  assert.ok(hasCode(page, "const allRepositories = githubRepositories();"));
+  assert.ok(hasCode(page, "const repositories = openSourceRepositories(allRepositories, PRODUCT_IDS);"));
+  assert.ok(hasCode(page, "nomenclature({ repositories,"), "only the open-source repositories are mapped");
 });
 
 test("registry links expose the package version in their accessible name", () => {

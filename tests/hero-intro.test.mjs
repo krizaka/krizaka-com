@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { cssDecls } from "./helpers/source.mjs";
 
 // The home hero's cinematic intro (WWW-HERO, 2026-10-17) and its ambient film: once per session, skippable, still under
 // reduced motion and Save-Data, no library, no canvas, no animation frame; the text is never part of it (LCP).
@@ -27,15 +28,22 @@ test("no animation frame, no canvas, no animation library — CSS animations onl
     assert.doesNotMatch(src, /requestAnimationFrame|<canvas|getContext\(|framer-motion|gsap|motion\/react/);
   }
   const pkg = JSON.parse(read("package.json"));
-  for (const lib of ["framer-motion", "motion", "gsap", "lottie-web"]) assert.equal(pkg.dependencies[lib], undefined, lib);
+  for (const lib of ["framer-motion", "motion", "gsap", "lottie-web"])
+    assert.equal(pkg.dependencies[lib], undefined, lib);
 });
 
 test("the choreography over the poster: the mark draws, the scene rises in with its birds, a light sweeps, then the loop fades in; everything at rest under reduced motion; nothing stays hidden without JavaScript", () => {
-  assert.match(css, /html\[data-intro="play"\] \.kz-intro-mark path\[stroke-linecap\] \{[^}]*kz-intro-draw/);
-  assert.match(css, /html\[data-intro="play"\] \.kz-intro-sweep \{[^}]*kz-intro-sweep/);
-  assert.match(css, /\.kz-intro-deco \{ animation: kz-intro-fallback [^}]*both; \}/, "without script, the decorations fade in by themselves");
-  const reduced = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce)"));
-  assert.match(reduced, /\.kz-intro-deco, html\[data-intro\] \.kz-intro-deco \{ animation: none; opacity: 1; \}/);
+  const home = "app/components/home/home.css";
+  assert.match(
+    cssDecls(home, 'html[data-intro="play"] .kz-intro-mark path[stroke-linecap]').animation ?? "",
+    /kz-intro-draw/,
+  );
+  assert.match(cssDecls(home, 'html[data-intro="play"] .kz-intro-sweep').animation ?? "", /kz-intro-sweep/);
+  const fallback = cssDecls(home, ".kz-intro-deco").animation ?? "";
+  assert.ok(/kz-intro-fallback/.test(fallback) && /\bboth\b/.test(fallback), "without script, the decorations fade in by themselves");
+  const rest = cssDecls(home, "html[data-intro] .kz-intro-deco", { within: "(prefers-reduced-motion: reduce)" });
+  assert.equal(rest.animation, "none");
+  assert.equal(rest.opacity, "1");
 });
 
 test("the ambient flock appears in the hero and the products section, each in its own taped photo", () => {
