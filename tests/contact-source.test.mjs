@@ -24,7 +24,7 @@ test("pre-selects the topic the page is about, and nothing for Krizaka as a whol
   assert.equal(topicForSource("orazaka"), "orazaka");
   assert.equal(topicForSource("akinaza"), "akinaza");
   // A paused product (2026-10-25) is no topic any more.
-  assert.equal(topicForSource("orochia"), null);
+  assert.equal(topicForSource("unknown-product"), null);
   assert.equal(topicForSource("docs-ui"), "blocks");
   assert.equal(topicForSource("open-source"), "blocks");
   assert.equal(topicForSource("story"), null);

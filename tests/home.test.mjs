@@ -51,8 +51,8 @@ test("the products come from lib/products.ts: one card each, in the product's br
   assert.match(showcase, /href: p\.siteUrl/, "a card links the product's www site (dev is exposed there; 2026-10-26)");
   for (const s of SECTIONS) {
     const src = read(`app/components/home/${s}.tsx`);
-    assert.doesNotMatch(src, /["'](orazaka|orochia|yasakia|yororis)["']/, `${s} names a product by hand`);
-    assert.doesNotMatch(src, /brand-(orazaka|orochia|yasakia|yororis)/, `${s} paints one product's brand`);
+    assert.doesNotMatch(src, /["'](orazaka|yomizaka|akinaza)["']/, `${s} names a product by hand`);
+    assert.doesNotMatch(src, /brand-(orazaka|yomizaka|akinaza)/, `${s} paints one product's brand`);
   }
 });
 
@@ -71,16 +71,9 @@ test("the old home — the product showcase, the kit gallery, the rotating title
   }
 });
 
-// 2026-10-25 (Oussama): Orochia, Kachizaka, Yasakia and Yororis are paused — no word of the site names them any more.
-test("the paused products are named nowhere in the site's words, and no FAQ comes back", () => {
-  for (const lang of ["en", "fr"]) {
-    const m = messages(lang).site;
-    assert.doesNotMatch(JSON.stringify(m), /orochia|yasakia|yororis|kachizaka|yazakia/i, `${lang}: messages`);
-    assert.equal(m.faq, undefined, `${lang}: site.faq`);
-  }
-  for (const f of ["content/llms.txt", "content/llms-full.txt", "lib/products.ts", "lib/structured-data.ts"]) {
-    assert.doesNotMatch(read(f), /\b(orochia|yasakia|yororis|kachizaka)\b/i, f);
-  }
+// krizaka/.github#413: the conformance rule `no-departed-product` proves the names are gone; the home keeps no FAQ.
+test("no FAQ comes back", () => {
+  for (const lang of ["en", "fr"]) assert.equal(messages(lang).site.faq, undefined, `${lang}: site.faq`);
 });
 
 // 2026-10-20 (the coordinator's decisions): the hero puts the products forward — a quiet row of the seven marks, each a

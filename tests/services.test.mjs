@@ -41,7 +41,6 @@ test("a product nothing is deployed for has no entry (never a dead address)", ()
   assert.equal(SERVICES.akinaza, undefined);
   assert.equal(SERVICES.yomizaka, undefined);
   // The paused products' environments are deleted (2026-10-25): their entries left with them.
-  for (const id of ["orochia", "yasakia"]) assert.equal(SERVICES[id], undefined, id);
 });
 
 test("the committed manifest is signed by a baked key and is the signature of lib/services.ts (npm run services:sign)", () => {
