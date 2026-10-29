@@ -1,5 +1,5 @@
 /* The engine and the products it powers, drawn on Orazaka's card on the home — @krizaka/ui's EngineFlow (SVG + CSS, the
-   one motion system; the generic piece of krizaka-motion's « Orazaka Neural Pipeline Flow »). Radial on desktop and
+   one motion system; the generic piece of krizaka-lab's « Orazaka Neural Pipeline Flow »). Radial on desktop and
    tablet (Orazaka at the centre: « one engine, the products it powers » in one glance), top to bottom on a phone (the
    products in a row above, flowing down into the engine).
    Only what runs is drawn (lib/engine-uses.ts): requests go in from every wired product and results come back to it;

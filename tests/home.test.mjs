@@ -114,7 +114,7 @@ test("the hero uses the shared taped flock photo and keeps all five film promise
 });
 
 // « Build with our open source » (2026-10-20): the stack put forward and playable — Krizaka UI's real components,
-// Krizaka Motion's flow with two of the lab's settings, Krizaka Java's BOM — every version and figure read at build.
+// Krizaka Lab's flow with two of the lab's settings, Krizaka Java's BOM — every version and figure read at build.
 test("the open-source section: three playable tiles, versions and downloads read at build, one primary action", () => {
   const stack = read("app/components/home/OpenStack.tsx");
   assert.match(stack, /<UiShowcase/);
@@ -216,17 +216,17 @@ test("the full stack cards: one component on /open-source and /story, with Java 
   for (const lang of ["en", "fr"]) assert.ok(messages(lang).site.home.stack.ts.line, `${lang}: stack.ts.line`);
 });
 
-// The Motion card's host is the stack data's (motion.krizaka.com), never typed in a component.
+// The Motion card's host is the stack data's (lab.krizaka.com), never typed in a component.
 test("the stack cards: the Motion host from the data, no playground control on a calm flow", () => {
   const stack = read("app/components/home/OpenStack.tsx");
   const motion = read("app/components/home/playground/MotionPlayground.tsx");
   assert.match(stack, /<MotionPlayground w=/, "the full card keeps the playground's settings");
   assert.match(stack, /meta=\{hostOf\(motion\.url\)\}/, "the full card's host is hostOf of the data's url");
   assert.match(stack, /href=\{stackActionUrl\(motion\)\}/, "the action opens the lab's scene");
-  assert.doesNotMatch(stack, /github\.io|motion\.krizaka\.com|\.replace\(/, "no host typed or rewritten in the component");
+  assert.doesNotMatch(stack, /github\.io|lab\.krizaka\.com|\.replace\(/, "no host typed or rewritten in the component");
   const data = read("lib/stack.ts");
-  assert.match(data, /const MOTION_SITE = "https:\/\/[a-z0-9.-]+";/, "one value in the data");
-  assert.match(data, /url: MOTION_SITE,[^\n]*actionPath: "\/orazaka"/, "the lab's scene derives from the site");
+  assert.match(data, /const LAB_SITE = "https:\/\/[a-z0-9.-]+";/, "one value in the data");
+  assert.match(data, /url: LAB_SITE,[^\n]*actionPath: "\/orazaka"/, "the lab's scene derives from the site");
   assert.match(motion, /hint=\{calm \? undefined : w\.hint\}/, "a calm flow has no instruction to pick anything");
 });
 
