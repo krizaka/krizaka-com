@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { FOREIGN_WRITERS, LAYOUT_README, RETIRED, ZONE, assertUnder, libraryPath, misplaced } from "../scripts/bunny-layout.mjs";
+import { FOREIGN_WRITERS, LAYOUT_README, RETIRED, ZONE, assertUnder, libraryPath, misplaced, placement } from "../scripts/bunny-layout.mjs";
 
 test("each writer stays under its prefix", () => {
   assert.equal(assertUnder("site", "site/home/a.1234567890.jpg"), "site/home/a.1234567890.jpg");
@@ -62,6 +62,14 @@ test("the library maps what site/ serves to human names, and retires the folders
   // krizaka/.github#413: the folders of Orochia, Yasakia (Yazakia), Yororis and Kachizaka are retired, `prune --retired` deletes them.
   for (const p of ["site/people/yazakia/hana-256.5f2982c652.webp", "site/products/yasakia/mobile/loop-dark.46dbace273.mp4", "site/docs/orochia/mobile/a.0123456789.webp", "site/brand-films/orochia/a.0123456789.mp4", "site/products/yororis/tour/a.0123456789.mp4", "site/products/kachizaka/tour/a.0123456789.mp4"]) assert.ok(RETIRED.some((re) => re.test(p)), p);
   assert.ok(!RETIRED.some((re) => re.test("site/products/akinaza/tour/a.0123456789.mp4")));
+});
+
+test("the departed products' folders of layout v2 are retired, not misplaced (the storage-zone audit stays green until they are deleted)", () => {
+  for (const p of ["sites/orochia/mobile/06-home-dark.79f01c0bf5.webp", "sites/kachizaka/tour/a.0123456789.mp4", "org/v1/brand/yororis/mark-dark.svg", "org/v1/defaults/tones/yasakia/plain-5-512.webp", "apps/orochia/uploads/a.png"]) {
+    assert.equal(misplaced(p), null, p);
+    assert.equal(placement(p).state, "legacy", p);
+  }
+  assert.ok(misplaced("sites/nosuch/mobile/x.png"), "an unknown site is still checked");
 });
 
 test("the prefixes another writer owns are declared once, in the layout, and prune never lists them", () => {
