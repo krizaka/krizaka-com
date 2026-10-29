@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.0](https://github.com/krizaka/krizaka-com/compare/v0.9.0...v0.10.0) (2026-10-29)
+
+
+### Features
+
+* **home:** the hero plays « La famille Krizaka »; « le relais » leaves every slot; @krizaka/{tokens,tailwind} 3.74 and charts 0.8 (no departed palettes) ([#473](https://github.com/krizaka/krizaka-com/issues/473)) ([85763df](https://github.com/krizaka/krizaka-com/commit/85763dfeed6d65ac3ea0a73ae5ffd15bc85d930c))
+* **story:** « The Krizaka family » film and the Orazaka take replace the old media ([#472](https://github.com/krizaka/krizaka-com/issues/472)) ([b924bce](https://github.com/krizaka/krizaka-com/commit/b924bce0bff1ddccff64ced1a7e9391be1cb126f))
+
 ## [0.9.0](https://github.com/krizaka/krizaka-com/compare/v0.8.0...v0.9.0) (2026-10-29)
 
 
