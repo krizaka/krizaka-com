@@ -326,7 +326,9 @@ export function frozenReason(path) {
  * on legacy with --strict.
  */
 export function placement(path) {
-  if (RETIRED.some((re) => re.test(path))) return { state: "legacy", target: null, why: frozenReason(path), issue: switchIssue(path) };
+  if (RETIRED.some((re) => re.test(path))) {
+    return { state: "legacy", target: null, why: frozenReason(path), issue: switchIssue(path) };
+  }
   if (path === README_NAME || TARGET[path.split("/")[0]]) {
     const why = targetMisplaced(path);
     return why ? { state: "misplaced", why } : { state: "ok" };
