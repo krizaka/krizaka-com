@@ -2,7 +2,7 @@
 
 import { Mascot } from "@krizaka/ui/mascots";
 import { ChatIcon, FlagIcon } from "@krizaka/icons";
-import TopNavBar from "../../components/TopNavBar";
+import SiteBar from "../../components/SiteBar";
 import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
 import { reveal } from "@/lib/motion";
@@ -51,7 +51,7 @@ export default function ContactClient({ groups }: { groups: ChannelGroup[] }) {
 
   return (
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
-      <TopNavBar />
+      <SiteBar />
 
       {/* The first screen of the page language (painted at once, no entrance: LCP); the flamingo answers. */}
       <PageHero

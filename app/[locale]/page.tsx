@@ -3,7 +3,7 @@ import { localizedMetadata } from "@/lib/seo";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { uiFacts } from "@/lib/ui-facts";
 import { mavenArtifactCount, npmPackages, npmWeeklyDownloads } from "@/lib/registry-versions";
-import TopNavBar from "../components/TopNavBar";
+import SiteBar from "../components/SiteBar";
 import HomeHero from "../components/home/HomeHero";
 import ProductShowcase, { EngineSection } from "../components/home/ProductShowcase";
 import KnowHow from "../components/home/KnowHow";
@@ -41,7 +41,7 @@ export default async function Home({ params }: Props) {
   const figures = { repositories: publicRepositoryCount(), npm: npmPackages().length, downloads: npmWeeklyDownloads(), maven: mavenArtifactCount() };
   return (
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
-      <TopNavBar />
+      <SiteBar />
       <HomeHero locale={locale} figures={figures} />
       <EngineSection locale={locale} />
       <ProductShowcase locale={locale} />

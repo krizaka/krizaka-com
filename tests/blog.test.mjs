@@ -8,7 +8,7 @@ const messages = (l) => JSON.parse(read(`messages/${l}.json`));
 
 test("the bar, the mobile panel and the footer link to the blog (a link to another site, absolute)", () => {
   assert.match(read("lib/site.ts"), /BLOG_URL = "https:\/\/blog\.krizaka\.com"/);
-  assert.match(read("app/components/TopNavBar.tsx"), /href=\{BLOG_URL\}[^>]*>\{m\.blog\}/);
+  assert.match(read("app/components/SiteBar.tsx"), /href=\{BLOG_URL\}[^>]*>\{m\.blog\}/);
   assert.match(read("app/components/MobilePanel.tsx"), /href=\{BLOG_URL\}/);
   // The footer's blog link is the family's « Krizaka » column (@krizaka/ui/sites companyLinks), not a column of www's own.
   assert.doesNotMatch(read("app/components/SiteFooter.tsx"), /BLOG_URL|f\.story|f\.contact/);

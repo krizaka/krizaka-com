@@ -203,7 +203,7 @@
   to krizaka-ui first.
 - **One shell.** `Page` (`@krizaka/ui/page`) is the frame of everything: the content is at most `--kz-page-max` (72rem)
   wide between the gutters `--kz-page-gutter` (16 → 32 px); the documentation uses `--kz-page-max-docs` (88rem). The
-  bar (`TopNavBar`, `.kz-site-bar`), every hero, section, the footer share those edges —
+  bar (`SiteBar`, `.kz-site-bar`), every hero, section, the footer share those edges —
   no page centres its own container (`maxWidth: 1100px`, `.os-section`…). Settings live in `app/globals.css` (« One
   frame for every page »): `--kz-hero-top` clears the bar, `--kz-anchor-offset` places anchors.
 - **Styles.** The blocks' stylesheet is `@krizaka/ui/blocks.css`, imported once by package path in
@@ -389,11 +389,10 @@ with a message and, where safe, a `fix:`; written for Tsx and `.ts` is parsed as
 
 - **Run**: `npm run lint` runs everything (it includes `ast-grep test` and the ratchet). `npx ast-grep scan` lists the
   violations with their message; `npm run lint:sg:test` runs the rule tests.
-- **Ratchet**: `scripts/sg-ratchet.mjs` counts the violations per rule and refuses any increase against
+- **Ratchet**: `krizaka-sg-ratchet` (the bin of `@krizaka/config`, no copy here) counts the violations per rule and refuses any increase against
   `sg-ratchet.json` (same idea as `krizaka-ratchet` / `lint-ratchet.json`: the debt only goes down). Fixed some? Lock the gain with
   `npm run sg:ratchet:update` (it never raises a count and records a new rule at its current count). A new rule is
-  added with its test in `rule-tests/` and its baseline in the same pull request. The script is identical in every
-  Krizaka TypeScript repository (keep the copies identical; its unit test is `tests/sg-ratchet.test.mjs`).
+  added with its test in `rule-tests/` and its baseline in the same pull request. The rules of the `core` and `web` sets come from `@krizaka/config` (`sgconfig.yml` `ruleDirs`); only the site's own rules live in `rules/`.
 - **Codemods**: `npm run sg:fix` applies the `fix:` of the rules (`ast-grep scan --update-all`) and adds the date-fns import;
   behaviour is identical — run `npm run lint && npm test` after, and land the result in a small pull request.
 - A rule is never silenced to get a PR green; fix the code, or (a business parameter that is a technical fact) justify it with `// @fixed:`.

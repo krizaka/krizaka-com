@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { LegalPage as LegalTemplate } from "@krizaka/ui/legal-page";
-import TopNavBar from "./TopNavBar";
+import SiteBar from "./SiteBar";
 import { format, getDictionary } from "@/lib/i18n";
 import { COMPANY } from "@/lib/site";
 
@@ -12,7 +12,7 @@ export default function LegalPage({ locale, page }: { locale: string; page: "pri
   const doc = legal[page];
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100dvh", color: "var(--kz-text-primary)" }}>
-      <TopNavBar />
+      <SiteBar />
       <LegalTemplate
         back={{ href: "/", label: legal.back }}
         linkAs={Link}
