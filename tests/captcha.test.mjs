@@ -69,3 +69,13 @@ test("the contact route answers 503 when production lacks the check, before read
   assert.match(route, /if \(captchaMissing\(\)\)[\s\S]*contact\.captcha_unconfigured[\s\S]*status: 503/);
   assert.ok(route.indexOf("captchaMissing()") < route.indexOf("verifyCaptcha(token"));
 });
+
+test("the keys are read at run time, on every call, never frozen at build (#464)", async () => {
+  const calls = [];
+  const f = async (url) => { calls.push(url); return { ok: true, json: async () => ({ success: true }) }; };
+  assert.equal(await verifyCaptcha("tok", "1.2.3.4", { NODE_ENV: "production" }, f), false);
+  assert.equal(calls.length, 0, "unconfigured production refuses without asking Cloudflare");
+  assert.equal(await verifyCaptcha("tok", "1.2.3.4", { ...env, NODE_ENV: "production" }, f), false, "a token solved on another hostname is refused");
+  assert.equal(await verifyCaptcha("tok", "1.2.3.4", env, f), true);
+  assert.equal(calls.length, 2, "the hostname refusal came after asking Cloudflare, the last call passed");
+});
