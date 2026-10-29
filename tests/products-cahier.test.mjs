@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { PRODUCT_RECORDS, hasCode, jsx } from "./helpers/source.mjs";
 
 // The home's #products as Cahier field-guide entries (ADR-004 of krizaka-ui, #417; Oussama 2026-10-20: « our showcase,
 // refined, less AI, very complete and designed »). Each product is an entry: a plate (the live visual and its numbered
@@ -12,10 +13,11 @@ const css = read("app/components/home/home.css");
 const vcss = read("app/components/home/visuals/visuals.css");
 const visuals = read("app/components/home/visuals/ProductVisuals.tsx");
 const messages = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read("messages/fr.json")) };
-const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name:/g)].map((m) => m[1]);
+const ids = PRODUCT_RECORDS().map((p) => p.id);
 
 test("built from the Cahier's blocks of @krizaka/ui, on lined paper with its margin and its number — no eyebrow", () => {
-  for (const part of ['from "@krizaka/ui/specimen-tag"', 'from "@krizaka/ui/footnote"', 'from "@krizaka/ui/mascots"']) assert.ok(showcase.includes(part), part);
+  for (const part of ['from "@krizaka/ui/specimen-tag"', 'from "@krizaka/ui/footnote"', 'from "@krizaka/ui/mascots"'])
+    assert.ok(showcase.includes(part), part);
   assert.match(showcase, /<SpecimenTag\b/);
   assert.match(showcase, /<Caption figure=/);
   assert.match(showcase, /<Footnotes\b/);
@@ -50,17 +52,25 @@ test("every entry has a numbered figure caption and a sourced note, in both lang
     assert.deepEqual(Object.keys(p.figures).sort(), [...ids].sort(), `${l}: a caption per product`);
     assert.deepEqual(Object.keys(p.notes).sort(), [...ids].sort(), `${l}: a sourced note per product`);
   }
-  assert.match(showcase, /figure=\{figNo\(s\.figureLabel, p\)\}/, "the figure is numbered in the page's order");
-  assert.match(showcase, /`\$\{label\} \$\{nOf\(p\)\}`/);
-  assert.match(showcase, /notes=\{/);
+  const f = "app/components/home/ProductShowcase.tsx";
+  assert.ok(hasCode(f, "figure={figNo(s.figureLabel, p)}"), "the figure is numbered in the page's order");
+  assert.ok(hasCode(f, "`${label} ${nOf(p)}`"));
+  assert.ok(jsx(f).some((e) => "notes" in e.attrs));
 });
 
 test("no em-dash in the showcase's words, and no uppercase, tracked caps, blur or glow in its styles (#417)", () => {
   for (const l of ["en", "fr"]) {
-    const words = JSON.stringify([messages[l].site.home.products, messages[l].site.home.visuals, Object.values(messages[l].site.products.cards).map((c) => c.line)]);
+    const words = JSON.stringify([
+      messages[l].site.home.products,
+      messages[l].site.home.visuals,
+      Object.values(messages[l].site.products.cards).map((c) => c.line),
+    ]);
     assert.doesNotMatch(words, /—/, `${l}: an em-dash in the products' words`);
   }
-  for (const [name, src] of [["home.css", css], ["visuals.css", vcss]]) {
+  for (const [name, src] of [
+    ["home.css", css],
+    ["visuals.css", vcss],
+  ]) {
     assert.doesNotMatch(src, /text-transform:\s*uppercase/, `${name}: uppercase`);
     assert.doesNotMatch(src, /letter-spacing:\s*0\.\d+em/, `${name}: tracked caps`);
     assert.doesNotMatch(src, /blur\(|radial-gradient|backdrop-filter/, `${name}: a blur or a glow`);

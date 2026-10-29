@@ -1,18 +1,23 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { PRODUCT_RECORDS, calls, cssDecls, cssSelectors, hasCode, hasJsx, identifiers, importsFrom, importsOf, strings } from "./helpers/source.mjs";
 
 // Each product card SHOWS its field (Oussama, 2026-10-17): a live mini-visual made of @krizaka/ui pieces — lazy,
 // decorative, a fixed box (no layout shift), playing only on screen (hover on a fine pointer), still under reduced motion.
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
-const frame = read("app/components/home/visuals/ProductVisual.tsx");
-const visuals = read("app/components/home/visuals/ProductVisuals.tsx");
-const css = read("app/components/home/visuals/visuals.css");
-const ids = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name:/g)].map((m) => m[1]);
+const FRAME = "app/components/home/visuals/ProductVisual.tsx";
+const VISUALS = "app/components/home/visuals/ProductVisuals.tsx";
+const CSS = "app/components/home/visuals/visuals.css";
+const frame = read(FRAME);
+const visuals = read(VISUALS);
+const css = read(CSS);
+const ids = PRODUCT_RECORDS().map((p) => p.id);
 
 // Orazaka's card draws the engine flow instead (2026-10-20: @krizaka/ui/engine-flow, tests/engine.test.mjs).
 test("every product but the engine has its visual, and every product card shows it", () => {
-  for (const id of ids.filter((id) => id !== "orazaka")) assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
+  for (const id of ids.filter((id) => id !== "orazaka"))
+    assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
   assert.doesNotMatch(visuals, /^  orazaka:/m, "the engine's old dashed-lines visual is gone");
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.match(showcase, /<EngineFlowView t=\{t\} \/>/);
@@ -20,32 +25,41 @@ test("every product but the engine has its visual, and every product card shows 
 });
 
 test("lazy, decorative and without layout shift", () => {
-  assert.match(frame, /dynamic\(\(\) => import\("\.\/ProductVisuals"\), \{ ssr: false \}\)/);
-  assert.match(frame, /IntersectionObserver/);
-  assert.match(frame, /inert aria-hidden/);
-  assert.match(css, /^\.pv \{ position: relative; aspect-ratio: 16 \/ 9;/m, "the box has its size before the visual loads");
+  assert.ok(hasCode(FRAME, 'dynamic(() => import("./ProductVisuals"), { ssr: false })'));
+  assert.ok(identifiers(FRAME).has("IntersectionObserver"));
+  assert.ok(hasJsx(FRAME, "div", { className: "pv", inert: true, "aria-hidden": true }));
+  const pv = cssDecls(CSS, ".pv");
+  assert.equal(pv.position, "relative");
+  assert.equal(pv["aspect-ratio"], "16 / 9", "the box has its size before the visual loads");
 });
 
 // 2026-10-20 (redesign): the visuals play as soon as they are on screen, on every pointer — no hover to wake them.
 test("it plays when on screen, never under reduced motion, never off screen; no rAF, no canvas", () => {
-  assert.match(frame, /REDUCE = "\(prefers-reduced-motion: reduce\)"/);
-  assert.match(frame, /const playing = !still && onScreen;/);
-  assert.doesNotMatch(frame, /pointerenter|FINE =/, "no hover gate");
-  assert.match(visuals, /window\.clearInterval/);
-  assert.match(css, /@media \(prefers-reduced-motion: reduce\) \{\s*\.pv \*, \.pv \*::before, \.pv \*::after \{ animation: none !important; transition: none !important; \}/);
-  for (const src of [frame, visuals]) assert.doesNotMatch(src, /requestAnimationFrame|<canvas|getContext\(/);
+  assert.ok(hasCode(FRAME, 'REDUCE = "(prefers-reduced-motion: reduce)"'));
+  assert.ok(hasCode(FRAME, "const playing = !still && onScreen;"));
+  const ids = identifiers(FRAME);
+  assert.ok(!ids.has("pointerenter") && !ids.has("FINE") && !strings(FRAME).includes("pointerenter"), "no hover gate");
+  assert.ok(calls(VISUALS).includes("window.clearInterval"));
+  const reduced = (sel) => cssDecls(CSS, sel, { within: "(prefers-reduced-motion: reduce)" });
+  for (const sel of [".pv *", ".pv *::before", ".pv *::after"]) {
+    assert.equal(reduced(sel).animation, "none !important", sel);
+    assert.equal(reduced(sel).transition, "none !important", sel);
+  }
+  for (const f of [FRAME, VISUALS]) {
+    assert.ok(!identifiers(f).has("requestAnimationFrame") && !hasJsx(f, "canvas") && !calls(f).some((c) => c.endsWith("getContext")), f);
+  }
 });
 
 test("built from @krizaka/ui components, specific to each field, demo data said as such", () => {
-  for (const part of ["@krizaka/ui/chip", "@krizaka/icons"]) {
-    assert.ok(visuals.includes(`from "${part}"`), part);
-  }
+  for (const part of ["@krizaka/ui/chip", "@krizaka/icons"]) assert.ok(importsFrom(VISUALS, part), part);
   // #417: no generic chart and no gradient rectangle with a play button — each visual shows what the product does.
-  assert.doesNotMatch(visuals, /Sparkline|@krizaka\/charts/, "a generic sparkline");
-  assert.doesNotMatch(visuals + css, /pv-media-play|pv-media-frame/, "a play button on a gradient rectangle");
-  assert.doesNotMatch(visuals, /SkeletonText/, "no generic skeleton lines: the lease shows its clauses");
-  assert.doesNotMatch(css, /^\.pv \{[^}]*border: 1px/m, "no box in a box: the visual has no border of its own");
-  assert.doesNotMatch(visuals, /<video|cdn\(|video\(/, "a visual is drawn, never a clip");
+  const used = identifiers(VISUALS);
+  assert.ok(!used.has("Sparkline") && !importsOf(VISUALS).some((i) => i.from.startsWith("@krizaka/charts")), "a generic sparkline");
+  const classes = [...strings(VISUALS), ...cssSelectors(CSS)].join(" ");
+  assert.doesNotMatch(classes, /pv-media-play|pv-media-frame/, "a play button on a gradient rectangle");
+  assert.ok(!used.has("SkeletonText"), "no generic skeleton lines: the lease shows its clauses");
+  assert.ok(!("border" in cssDecls(CSS, ".pv")), "no box in a box: the visual has no border of its own");
+  assert.ok(!hasJsx(VISUALS, "video") && !calls(VISUALS).some((c) => c === "cdn" || c === "video"), "a visual is drawn, never a clip");
   for (const l of ["en", "fr"]) {
     const v = JSON.parse(read(`messages/${l}.json`)).site.home.visuals;
     assert.deepEqual(Object.keys(v).sort(), [...ids].sort(), l);
@@ -63,4 +77,3 @@ test("Akinaza's receipt: GST and QST to the cent, computed, never typed", async 
   assert.deepEqual(receipt(45), { price: 45, gst: 2.25, qst: 4.49, total: 51.74 });
   assert.deepEqual(receipt(62), { price: 62, gst: 3.1, qst: 6.18, total: 71.28 });
 });
-
