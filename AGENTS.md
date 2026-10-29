@@ -28,11 +28,10 @@
   products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
   « See the dev site » → `devUrl` with its build-read version, and « Source »; 2026-10-26: production is not open); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
   `/<locale>#products`.
-- **Paused products** (Oussama, 2026-10-25): Orochia, Kachizaka, Yasakia and Yororis are paused — their environments deleted,
-  their repositories private, their CI off. krizaka.com names them nowhere (`lib/products.ts` has the three products in focus;
-  `tests/home.test.mjs` refuses their names in the messages, `llms.txt` and the JSON-LD); their old addresses answer 308 with
-  `/#products` (`lib/product-redirects.ts`). A paused product comes back as an ordinary product: its entry in `lib/products.ts`,
-  its messages, its tests.
+- **Departed products** (Oussama, 2026-10-29, krizaka/.github#413): the org holds Yomizaka, Akinaza, Orazaka and the platforms. krizaka.com names no other
+  product anywhere — code, messages, docs, configs, manifests; the org's conformance rule `no-departed-product` proves it (history is
+  allow-listed in the registry only). An old product address (`/products/<anything else>`) answers 308 with `/#products`
+  (`lib/product-redirects.ts`), never a dead site.
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
   `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
@@ -58,8 +57,7 @@
 - A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
   construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
-  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), the three clips that older published
-  `@krizaka/ui` examples reach through `/assets/orochia/tour/` (a redirect in `lib/cdn.ts`), and `brand-films/**` — the
+  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), and `brand-films/**` — the
   films of the flock, rendered from the code by krizaka-ui `tools/brand-films` (« Le monde de Krizaka » on `/story`, its
   captions from the messages through `/<locale>/story/film.vtt`; the loops of each bird, loaded by ui.krizaka.com and the
   products' sites by their hashed URL). A new render replaces them: upload, then `cdn-assets prune`.
@@ -264,7 +262,7 @@
   and/or `MAIL_CONTACT_WEBHOOK_URL`. Template: `.env.example`.
 - **Environment variables are named by bounded context** (krizaka/.github#46): `<CONTEXT>_<THING>` with CONTEXT one of
   `APP_` `DATABASE_` `AUTH_` `MEDIA_` `MAIL_` `PUSH_` `PAYMENTS_` `REALTIME_` `ABUSE_` `OBSERVABILITY_` `AI_` `OPERATOR_` —
-  never a product (`OROCHIA_…`) nor a vendor (`BUNNY_…`, `MAILGUN_…`): a vendor is a value (`MAIL_PROVIDER=mailgun`);
+  never a product (`ORAZAKA_…`) nor a vendor (`BUNNY_…`, `MAILGUN_…`): a vendor is a value (`MAIL_PROVIDER=mailgun`);
   `NEXT_PUBLIC_` only where the browser needs it, then the context. Every variable is declared once in `lib/env.ts`
   (zod); `tests/env.test.mjs` refuses an undeclared or misnamed one and keeps README's table (generated,
   `npm run docs:env`) in sync.
@@ -327,9 +325,7 @@
 - **`org/v1/brand/` and `org/v1/defaults/` are generated from the code**, never drawn or uploaded by hand (krizaka-ui
   `tools/export-brand.mjs`, `tools/export-defaults.mjs`). A mark changes in krizaka-ui, then the export is re-run; a
   changed picture gets a new id or `org/v2/`.
-- **Orochia has its own storage zone (`orochia-dev`) and Stream library**: new Orochia media go there, not in this zone;
-  `sites/orochia/` holds only what is still here (krizaka/orochia#153).
-- **Yazakia is retired (renamed Yasakia)**: its folders are in `RETIRED` (`bunny-layout.mjs`). Never write a `yazakia` path again.
+- **Departed products' folders** are in `RETIRED` (`bunny-layout.mjs`): `cdn-assets prune --retired --yes` deletes them; the CTO removes them from the zone, then this entry goes.
 - The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — are sent with
   `cdn-assets upload`; the logical path (`--to`) keeps its area (`home`, `products/<p>/<kind>`, `docs/<p>`, `people/<p>`,
   `brand-films/<series>`) and lands in layout v2:
@@ -346,7 +342,7 @@
   recorded with the same hash is skipped. `check` asks the pull zone for every recorded file; `prune` previews (and
   with `--yes` deletes) the old versions the manifest no longer names, never under another writer's prefixes (`FOREIGN_WRITERS` / `FOREIGN_WRITERS_V2` in `bunny-layout.mjs`: the product sites, the blog), and keeps the legacy `site/` copy of every current entry until the v2 release is live. Same credentials as §5.1, never printed.
 - Code never writes a media URL: `lib/cdn.ts` turns a logical path (`cdn("products/orazaka/gallery/
-  tea-pour.webp")`, `video("products/orochia/tour/alex-bid")` → `{ webm, mp4, poster }`) and fails the build on a
+  tea-pour.webp")`, `video("products/orazaka/tour/tea-pour")` → `{ webm, mp4, poster }`) and fails the build on a
   path the manifest does not know. The host is `NEXT_PUBLIC_MEDIA_CDN_URL` (read at build; default
   `https://krizaka-assets.b-cdn.net`); `next.config` allows it for `next/image` and redirects the old `/assets/…` URLs
   (still used by published `@krizaka/ui` examples) to their file on the CDN.

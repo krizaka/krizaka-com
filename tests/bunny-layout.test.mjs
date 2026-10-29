@@ -12,22 +12,22 @@ test("each writer stays under its prefix", () => {
 test("the audit accepts the layout and flags the rest", () => {
   for (const ok of [
     "README.txt",
-    "site/products/orochia/tour/alex-bid.3f2a9c1b7e.mp4",
-    "site/people/yasakia/hana-512.b0be072833.webp",
-    "site/docs/orochia/mobile/clip-watch-poster.9fc5d19c39.webp",
+    "site/products/yomizaka/tour/alex-bid.3f2a9c1b7e.mp4",
+    "site/people/akinaza/hana-512.b0be072833.webp",
+    "site/docs/orazaka/mobile/clip-watch-poster.9fc5d19c39.webp",
     "site/brand-films/loops/owl-square-dark.0123456789.mp4",
     "site/brand-films/film/le-monde-de-krizaka-en.0123456789.vtt",
     "maps/v1/tiles/quebec-20261012.pmtiles",
     "maps/v1/fonts/Noto Sans Regular/0-255.pbf",
     "pr-assets/krizaka-com/111-mobile-promo/clip.mp4",
-    "brand/orochia/logo-dark.svg",
+    "brand/akinaza/logo-dark.svg",
     "brand/manifest.json",
-    "people/defaults/v1/yasakia/person-3-256.webp",
+    "people/defaults/v1/yomizaka/person-3-256.webp",
     "defaults/v1/person/boom-bap-512.webp",
     "defaults/v1/folder/folder-2.svg",
     "defaults/v1/banner/the-neon-flamingo-1920.webp",
     "defaults/v1/manifest.json",
-    "people/personas/orochia/alex-512.webp",
+    "people/personas/ui/ada-512.webp",
     "products/orazaka/tour/tea-pour.mp4",
     "ui/maps/cluster-dark.731f2c4fa2.png",
   ]) assert.equal(misplaced(ok), null, ok);
@@ -38,13 +38,13 @@ test("the audit accepts the layout and flags the rest", () => {
     "maps/tiles/world.pmtiles",
     "pr-assets/krizaka-com/loose.png",
     "tmp/test.txt",
-    "brand/yazakia/logo-dark.svg",
-    "brand/orochia",
+    "brand/retired/logo-dark.svg",
+    "brand/unknown",
     "people/avatars/a.png",
     "defaults/v1/avatar/x-256.webp",
     "defaults/v1/person/Boom.webp",
     "defaults/person/a-256.webp",
-    "products/orochia/misc/a.png",
+    "products/akinaza/misc/a.png",
     "ui/loose.png",
   ]) assert.ok(misplaced(bad), bad);
 });
@@ -53,20 +53,15 @@ test("the README names every prefix", () => {
   for (const prefix of Object.keys(ZONE)) assert.match(LAYOUT_README, new RegExp(`^${prefix}/`, "m"));
 });
 
-test("the library maps what site/ serves to human names, and retires the old Yazakia names", () => {
-  assert.equal(libraryPath("home/backdrop/orochia.mp4"), null, "Orochia has its own zone");
-  assert.equal(libraryPath("people/orochia/alex-256.webp"), null);
-  assert.equal(libraryPath("home/kit-native/orochia-dark.webm"), null);
+test("the library maps what site/ serves to human names, and retires the folders of the departed products", () => {
   assert.equal(libraryPath("home/backdrop/orazaka.mp4"), "products/orazaka/home/backdrop.mp4");
-  assert.equal(libraryPath("home/kit-native/yororis-dark.webm"), "products/yororis/home/kit-native-dark.webm");
   assert.equal(libraryPath("products/orazaka/tour/a.mp4"), "products/orazaka/tour/a.mp4");
-  assert.equal(libraryPath("products/yazakia/mobile/loop-dark.mp4"), "products/yasakia/mobile/loop-dark.mp4");
   assert.equal(libraryPath("docs/orazaka/mobile/x.webp"), "products/orazaka/docs/mobile/x.webp");
   assert.equal(libraryPath("people/ui/ada-256.webp"), "people/personas/ui/ada-256.webp");
-  assert.equal(libraryPath("people/yazakia/hana-256.webp"), null);
   assert.equal(libraryPath("home/kit/frames/a.png"), null);
-  for (const p of ["site/people/yazakia/hana-256.5f2982c652.webp", "site/products/yazakia/mobile/loop-dark.46dbace273.mp4"]) assert.ok(RETIRED.some((re) => re.test(p)), p);
-  assert.ok(!RETIRED.some((re) => re.test("site/people/yasakia/hana-256.5f2982c652.webp")));
+  // krizaka/.github#413: the folders of Orochia, Yasakia (Yazakia), Yororis and Kachizaka are retired, `prune --retired` deletes them.
+  for (const p of ["site/people/yazakia/hana-256.5f2982c652.webp", "site/products/yasakia/mobile/loop-dark.46dbace273.mp4", "site/docs/orochia/mobile/a.0123456789.webp", "site/brand-films/orochia/a.0123456789.mp4", "site/products/yororis/tour/a.0123456789.mp4", "site/products/kachizaka/tour/a.0123456789.mp4"]) assert.ok(RETIRED.some((re) => re.test(p)), p);
+  assert.ok(!RETIRED.some((re) => re.test("site/products/akinaza/tour/a.0123456789.mp4")));
 });
 
 test("the prefixes another writer owns are declared once, in the layout, and prune never lists them", () => {
@@ -75,13 +70,9 @@ test("the prefixes another writer owns are declared once, in the layout, and pru
     assert.ok(FOREIGN_WRITERS.some((p) => prefix.startsWith(p)), `${prefix} is owned by another writer`);
   }
   assert.ok(FOREIGN_WRITERS.includes("site/blog/"));
-  // dev.yasakia.com names its own recordings (its demo page, apps/site/lib/media.ts in krizaka/yasakia): never pruned here.
-  assert.ok(FOREIGN_WRITERS.some((p) => "site/products/yasakia/tour/talk.abcdef1234.mp4".startsWith(p)), "site/products/yasakia/ is owned by dev.yasakia.com");
   // The other product sites name their landing recordings the same way (their lib/tour.ts): never pruned here either.
-  for (const product of ["yomizaka", "akinaza", "kachizaka", "yororis"]) {
+  for (const product of ["orazaka", "yomizaka", "akinaza"]) {
     const clip = `site/products/${product}/tour/phone-keep.abcdef1234.mp4`;
     assert.ok(FOREIGN_WRITERS.some((p) => clip.startsWith(p)), `${clip} is owned by dev.${product}.com`);
   }
-  // Yororis' gallery is still named by this site's manifest: only its tour/ is foreign (one writer per prefix).
-  assert.ok(!FOREIGN_WRITERS.some((p) => "site/products/yororis/gallery/home-phone.11203dcac9.webp".startsWith(p)));
 });

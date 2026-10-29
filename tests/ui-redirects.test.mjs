@@ -80,8 +80,7 @@ test("Fumadocs and the generated UI docs are gone from krizaka.com", () => {
   for (const dep of ["fumadocs-core", "fumadocs-mdx", "fumadocs-ui"]) assert.equal(pkg.dependencies[dep], undefined, dep);
 });
 
-test("the published @krizaka/ui examples' /assets/ redirect is kept", () => {
+test("the Krizaka UI redirects are wired in next.config", () => {
   const config = readFileSync(new URL("../next.config.ts", import.meta.url), "utf8");
-  assert.match(config, /legacyRedirects\(\)/);
   assert.match(config, /uiRedirects\(\)/);
 });

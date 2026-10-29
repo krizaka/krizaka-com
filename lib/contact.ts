@@ -130,6 +130,26 @@ export function contactChannels(env: NodeJS.ProcessEnv = process.env) {
   };
 }
 
+/** One message to the Mailgun HTTP API (POST /v3/{domain}/messages, Basic auth `api:<key>`); `false` when it was refused or unreachable. */
+export function postMailgun(form: FormData, env: NodeJS.ProcessEnv = process.env): Promise<boolean> {
+  const base = (env.MAIL_API_URL || "https://api.mailgun.net").replace(/\/+$/, "");
+  return fetch(`${base}/v3/${encodeURIComponent(env.MAIL_DOMAIN ?? "")}/messages`, {
+    method: "POST",
+    headers: { Authorization: `Basic ${Buffer.from(`api:${env.MAIL_API_KEY}`).toString("base64")}` },
+    body: form,
+    signal: AbortSignal.timeout(8000),
+  }).then(
+    async (r) => {
+      if (!r.ok) console.error(`contact: mailgun refused (${r.status}) ${(await r.text()).slice(0, 300)}`);
+      return r.ok;
+    },
+    (e) => {
+      console.error("contact: mailgun unreachable", e);
+      return false;
+    },
+  );
+}
+
 /** Delivers to every configured channel. Returns how many accepted it. */
 export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv = process.env): Promise<number> {
   const subject = `[krizaka.com] ${TOPIC_LABEL[m.topic]} — ${m.name}${m.company ? ` (${m.company})` : ""}`;
@@ -164,24 +184,7 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
         )
         .join("")}</table>`,
     );
-    const base = (env.MAIL_API_URL || "https://api.mailgun.net").replace(/\/+$/, "");
-    jobs.push(
-      fetch(`${base}/v3/${encodeURIComponent(env.MAIL_DOMAIN)}/messages`, {
-        method: "POST",
-        headers: { Authorization: `Basic ${Buffer.from(`api:${env.MAIL_API_KEY}`).toString("base64")}` },
-        body: form,
-        signal: AbortSignal.timeout(8000),
-      }).then(
-        async (r) => {
-          if (!r.ok) console.error(`contact: mailgun refused (${r.status}) ${(await r.text()).slice(0, 300)}`);
-          return r.ok;
-        },
-        (e) => {
-          console.error("contact: mailgun unreachable", e);
-          return false;
-        },
-      ),
-    );
+    jobs.push(postMailgun(form, env));
   }
 
   if (env.MAIL_CONTACT_WEBHOOK_URL) {

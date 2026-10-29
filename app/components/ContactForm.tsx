@@ -14,10 +14,33 @@ import { ProductLogo } from "@krizaka/ui";
 import { Button } from "@krizaka/ui/button";
 import CaptchaWidget, { CAPTCHA_SITE_KEY } from "./CaptchaWidget";
 
-type Status = "idle" | "sending" | "sent" | "error";
+type Status = "idle" | "sending" | "verify" | "sent" | "error";
 type Field = Exclude<ContactField, "company">;
 
 const MESSAGE_MAX = CONTACT_MESSAGE_MAX;
+
+/** The visible words of a refusal of POST /api/contact (an unknown answer reads « other »). */
+function startErrorText(errors: Record<string, string>, error: string | undefined): string {
+  const byCode: Record<string, string> = {
+    invalid: errors.invalid,
+    rate_limited: errors.rate_limited,
+    "contact.captcha_failed": errors.captcha_failed,
+    code_mail_failed: errors.code_mail_failed,
+  };
+  return byCode[error ?? ""] ?? errors.other;
+}
+
+/** The visible words of a refusal of POST /api/contact/verify, `{left}` filled with the tries left. */
+function verifyErrorText(errors: Record<string, string>, error: string | undefined, left: number | undefined): string {
+  const byCode: Record<string, string> = {
+    "contact.code_invalid": errors.code_invalid,
+    "contact.code_expired": errors.code_expired,
+    "contact.code_locked": errors.code_locked,
+    "contact.code_unknown": errors.code_unknown,
+    rate_limited: errors.rate_limited,
+  };
+  return format(byCode[error ?? ""] ?? errors.other, { left: String(left ?? 0) });
+}
 
 function TopicIcon({ topic }: { topic: ContactTopic }) {
   if (topic === "orazaka" || topic === "yomizaka" || topic === "akinaza" || topic === "blocks") {
@@ -46,6 +69,61 @@ function FromUrl({ defaultTopic }: { defaultTopic: ContactTopic | null }) {
   return <Form key={`${topic}-${source}`} defaultTopic={topic} source={source} />;
 }
 
+/** Step two: the code mailed to the address. A wrong code stays here (with the tries left); a destroyed or expired one sends the visitor back. */
+function CodeStep({ challengeId, email, onVerified, onBack }: { challengeId: string; email: string; onVerified: () => void; onBack: () => void }) {
+  const { t } = useI18n();
+  const c = t.site.contactForm;
+  const [code, setCode] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const codeRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    codeRef.current?.focus();
+  }, []);
+
+  async function submit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (code.replace(/\s/g, "").length < 6) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch("/api/contact/verify", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ challengeId, email, code }) });
+      if (res.ok) return onVerified();
+      const body = (await res.json().catch(() => ({}))) as { error?: string; attemptsLeft?: number };
+      setError(verifyErrorText(c.errors, body.error, body.attemptsLeft));
+      if (body.error === "contact.code_invalid") setCode("");
+    } catch {
+      setError(c.errors.other);
+    }
+    setBusy(false);
+    codeRef.current?.focus();
+  }
+
+  return (
+    <form className="kz-cf" onSubmit={submit} noValidate>
+      <h2>{c.verifyTitle}</h2>
+      <p>{format(c.verifyBody, { email })}</p>
+      <label className="kz-cf-field">
+        <span>{c.codeLabel}</span>
+        <input ref={codeRef} name="code" inputMode="numeric" autoComplete="one-time-code" pattern="[0-9 ]*" maxLength={12} value={code} onChange={(e) => setCode(e.target.value)} aria-invalid={error ? true : undefined} />
+      </label>
+      {error && (
+        <p className="kz-cf-error" role="alert">
+          {error}
+        </p>
+      )}
+      <Button type="submit" variant="primary" shape="cut" size="lg" disabled={busy}>
+        {busy ? c.verifying : c.verifyButton}
+      </Button>
+      <button type="button" className="kz-cf-ghost" onClick={onBack}>
+        {c.verifyBack}
+      </button>
+      <style>{STYLES}</style>
+    </form>
+  );
+}
+
 function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; source: string | null }) {
   const { t, locale } = useI18n();
   const c = t.site.contactForm;
@@ -60,6 +138,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
   const [sentTo, setSentTo] = useState({ name: "", email: "" });
   const [captcha, setCaptcha] = useState<string | null>(null);
   const [captchaNonce, setCaptchaNonce] = useState(0);
+  const [challengeId, setChallengeId] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const doneRef = useRef<HTMLDivElement>(null);
 
@@ -101,8 +180,12 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
         body: JSON.stringify({ ...values, topic, timeline, website, locale, source, captchaToken: captcha }),
       });
       if (res.ok) {
+        // Verify first: the message waits on the server until the code mailed to the address comes back.
+        const held = (await res.json().catch(() => ({}))) as { challengeId?: string };
         setSentTo({ name: values.name.trim().split(/\s+/)[0], email: values.email.trim() });
-        setStatus("sent");
+        setChallengeId(held.challengeId ?? null);
+        setStatus(held.challengeId ? "verify" : "error");
+        if (!held.challengeId) setServerError({ text: c.errors.other });
         return;
       }
       const body = (await res.json().catch(() => ({}))) as { error?: string; field?: string };
@@ -111,24 +194,21 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
         setCaptcha(null);
         setCaptchaNonce((n) => n + 1);
       }
-      setServerError({
-        text:
-          body.error === "invalid"
-            ? c.errors.invalid
-            : body.error === "rate_limited"
-              ? c.errors.rate_limited
-              : body.error === "contact.captcha_failed"
-                ? c.errors.captcha_failed
-                : c.errors.other,
-        field: body.field,
-      });
+      setServerError({ text: startErrorText(c.errors, body.error), field: body.field });
     } catch {
       setStatus("error");
       setServerError({ text: c.errors.other });
     }
   }
 
+  const backToForm = () => {
+    setChallengeId(null);
+    setServerError(null);
+    setStatus("idle");
+  };
+
   const reset = () => {
+    setChallengeId(null);
     setValues({ name: "", email: "", company: "", message: "" });
     setTouched({});
     setTimeline(null);
@@ -149,6 +229,10 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
         <style>{STYLES}</style>
       </div>
     );
+  }
+
+  if (challengeId) {
+    return <CodeStep challengeId={challengeId} email={sentTo.email} onVerified={() => setStatus("sent")} onBack={backToForm} />;
   }
 
   const count = values.message.length;

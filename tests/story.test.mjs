@@ -128,8 +128,6 @@ test("each product shows its real take: a poster that plays on click in a lightb
   const takes = read("lib/story-takes.ts");
   const ids = ["orazaka", "yomizaka", "akinaza"];
   for (const id of ids) assert.match(takes, new RegExp(`\\n  ${id}: \\{\\s*ratio:`), `${id} has a take`);
-  // A paused product (2026-10-25) has no take.
-  assert.doesNotMatch(takes, /\n  (orochia|yasakia|yororis|kachizaka): \{/);
   // every file a take names is on the CDN (recorded in the manifest), in the language it needs
   const { files } = JSON.parse(read("lib/cdn-manifest.json"));
   for (const m of takes.matchAll(/(mp4|webm|poster): "(products\/[^"]+)"/g)) {
@@ -232,7 +230,7 @@ test("the engine shows a scene it rendered (the Old Port)", () => {
   assert.match(takes, /orazaka: \{ ratio: "film", mp4: "products\/orazaka\/video\/old-port\.mp4"/);
   assert.doesNotMatch(takes, /take-full|moment-fr-phone/);
   assert.equal(read("lib/cdn-manifest.json").includes("take-full"), false, "the 3-minute walkthrough is out of the manifest");
-  assert.ok(TAKE_PRODUCTS.includes("orazaka") && !TAKE_PRODUCTS.includes("orochia"));
+  assert.ok(TAKE_PRODUCTS.includes("orazaka"));
 });
 
 test("no take names Orazaka as the one doing a product's job", () => {
@@ -321,17 +319,7 @@ test("each chapter links to the blog chapter that tells it in full, in the page'
   for (const l of ["en", "fr"]) assert.match(messages(l).story.products.readAria, /\{title\}/);
 });
 
-// Only Orazaka, Yomizaka and Akinaza are in focus (2026-10-26). The paused products are not on /story: no chapter, no
-// card, no link, no media; the page says at most « explored, paused », without a name.
-test("no paused product on /story: not in the chapters, the messages, the takes or the film's captions", () => {
-  const paused = /orochia|kachizaka|yasakia|yazakia|yororis/i;
+// Only Orazaka, Yomizaka and Akinaza are in focus; the rule `no-departed-product` (krizaka/.github#413) proves no other name is left.
+test("/story lists only the products in focus", () => {
   assert.deepEqual([...productIds].sort(), ["akinaza", "orazaka", "yomizaka"], "lib/products.ts lists only the products in focus");
-  assert.doesNotMatch(page, paused);
-  assert.doesNotMatch(story.replace(/Record<ProductId[^;]*;/g, ""), paused);
-  assert.doesNotMatch(read("lib/story-takes.ts").replace(/\/\*[\s\S]*?\*\//g, ""), paused);
-  assert.doesNotMatch(read("lib/story-film.ts").replace(/\/\*[\s\S]*?\*\//g, ""), paused);
-  for (const l of ["en", "fr"]) {
-    assert.doesNotMatch(JSON.stringify(messages(l).story), paused, `${l}: story messages`);
-    assert.doesNotMatch(read("lib/film-captions.ts") + JSON.stringify(messages(l).story.world), paused, `${l}: film captions`);
-  }
 });

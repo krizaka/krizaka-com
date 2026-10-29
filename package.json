@@ -1,6 +1,6 @@
 {
   "name": "krizaka-com",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
@@ -28,21 +28,23 @@
   "dependencies": {
     "@krizaka/charts": "^0.6.0",
     "@krizaka/discovery": "^0.1.0",
+    "@krizaka/email-verification": "^0.1.0",
     "@krizaka/fonts": "^0.5.1",
     "@krizaka/i18n": "^0.2.3",
     "@krizaka/icons": "^0.9.0",
     "@krizaka/query": "^0.2.2",
+    "@krizaka/rate-limit": "^0.2.0",
     "@krizaka/tailwind": "^3.60.0",
     "@krizaka/tokens": "^3.60.0",
-    "@krizaka/ui": "^3.62.0",
+    "@krizaka/ui": "^3.74.0",
     "next": "^16.4.3",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@krizaka/a11y-audit": "0.2.0",
     "@ast-grep/cli": "0.51.0",
+    "@krizaka/a11y-audit": "0.2.0",
     "@krizaka/config": "^0.12.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",

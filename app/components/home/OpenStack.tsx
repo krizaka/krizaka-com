@@ -1,4 +1,4 @@
-/* The open-source stack's full cards — Krizaka UI, Krizaka Motion, Krizaka Java, Krizaka TypeScript — on /open-source and
+/* The open-source stack's full cards — Krizaka UI, Krizaka Lab, Krizaka Java, Krizaka TypeScript — on /open-source and
    /story, in a CardGrid, with the examples, the facts and the copy buttons. The home no longer carries the libraries
    (Oussama, 2026-10-26: « merge them with the open source view, it lightens the page »): they live here, one place.
    Versions and figures are read at build (lib/registry-versions.ts); hosts come from lib/stack.ts. */
@@ -39,7 +39,7 @@ const motion = part("motion");
 const java = part("java");
 const ts = part("ts");
 
-/** The four full cards — Krizaka UI, Krizaka Motion, Krizaka Java, Krizaka TypeScript — in a CardGrid (every tile of a row as
+/** The four full cards — Krizaka UI, Krizaka Lab, Krizaka Java, Krizaka TypeScript — in a CardGrid (every tile of a row as
     tall as the tallest), with the examples, the facts and the copy buttons (/open-source, /story). */
 export function StackTiles({ locale }: { locale: string }) {
   const s = getDictionary(locale).site.home.stack;

@@ -292,7 +292,7 @@
           }
         },
         "motion": {
-          "name": "Krizaka Motion",
+          "name": "Krizaka Lab",
           "line": "Le labo du mouvement : le flux du moteur, ses dispositions, ce qui circule.",
           "lab": "Ouvrir le labo",
           "layout": "Disposition",
@@ -521,6 +521,12 @@
       "sending": "Envoi…",
       "sentTitle": "Message envoyé",
       "sentBody": "Merci, {name}. Nous répondons à {email} sous deux jours ouvrables.",
+      "verifyTitle": "Consultez votre boîte de réception",
+      "verifyBody": "Nous avons envoyé un code à 6 chiffres à {email}. Saisissez-le pour envoyer votre message : il est valable 15 minutes et ne sert qu'une fois.",
+      "codeLabel": "Code de vérification",
+      "verifyButton": "Vérifier et envoyer",
+      "verifying": "Vérification…",
+      "verifyBack": "Utiliser une autre adresse",
       "another": "Envoyer un autre message",
       "fieldErrors": {
         "name": "Indiquez votre nom (2 caractères au moins).",
@@ -532,6 +538,11 @@
         "invalid": "Vérifiez le champ indiqué.",
         "rate_limited": "Trop de messages envoyés. Réessayez dans quelques minutes.",
         "captcha_failed": "Confirmez que vous n'êtes pas un robot, puis renvoyez.",
+        "code_invalid": "Ce code n'est pas le bon. Vérifiez-le et réessayez ({left} restant(s)).",
+        "code_expired": "Ce code a expiré. Renvoyez votre message pour en recevoir un nouveau.",
+        "code_locked": "Trop de codes erronés. Renvoyez votre message pour en recevoir un nouveau.",
+        "code_unknown": "Ce code n'est plus valable. Renvoyez votre message pour en recevoir un nouveau.",
+        "code_mail_failed": "Nous n'avons pas pu envoyer le code à cette adresse. Vérifiez-la, puis renvoyez.",
         "other": "L'envoi a échoué. Écrivez-nous sur GitHub Discussions en attendant."
       },
       "privacy": "Vos coordonnées servent uniquement à vous répondre (Loi 25)."

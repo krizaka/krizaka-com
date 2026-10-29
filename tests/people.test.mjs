@@ -35,7 +35,3 @@ test("every portrait is on the CDN", () => {
   for (const p of people.people) for (const file of p.files) assert.ok(manifest.files[file], `${file} is not in lib/cdn-manifest.json`);
 });
 
-test("Yororis has no faces: its presences are drawn marks", () => {
-  assert.ok(!people.products.includes("yororis"));
-  assert.ok(people.people.every((p) => p.product !== "yororis"));
-});

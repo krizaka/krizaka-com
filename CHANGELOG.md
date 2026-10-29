@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.9.0](https://github.com/krizaka/krizaka-com/compare/v0.8.0...v0.9.0) (2026-10-29)
+
+
+### Features
+
+* **a11y:** axe-core WCAG 2.1 AA guard on every sitemap page, ratcheted ([#431](https://github.com/krizaka/krizaka-com/issues/431)) ([941f1eb](https://github.com/krizaka/krizaka-com/commit/941f1ebd6019afe9aaeedfc111102eaa08d0a418))
+* **bunny:** ADR-014 target layout — audit, migrate, bunny-tree ([#452](https://github.com/krizaka/krizaka-com/issues/452)) ([68b8373](https://github.com/krizaka/krizaka-com/commit/68b83733e89d8eaab5de0c4c1b18522a66352f13))
+* **bunny:** layout v2 — org, then sites, then apps; new writes outside v2 fail; unused objects purged ([#453](https://github.com/krizaka/krizaka-com/issues/453)) ([12f46fc](https://github.com/krizaka/krizaka-com/commit/12f46fc09a32aa2facb32c816b26ea4551ff719e))
+* **cdn:** defaults/ prefix in the Bunny layout, and the default-media rule (krizaka-ts[#134](https://github.com/krizaka/krizaka-com/issues/134)) ([#423](https://github.com/krizaka/krizaka-com/issues/423)) ([f044deb](https://github.com/krizaka/krizaka-com/commit/f044debcf4710c4a64a7d9acb695437f04a8f30a))
+* **cdn:** purge by URL right after publishing a file that changes in place (README.txt), MEDIA_ACCOUNT_API_KEY ([#429](https://github.com/krizaka/krizaka-com/issues/429)) ([dcfa8e9](https://github.com/krizaka/krizaka-com/commit/dcfa8e9cfa971ec08184e6da2caabbe137597d85))
+* **contact:** verify the address first, a 6-digit code, 15 min, single use ([#464](https://github.com/krizaka/krizaka-com/issues/464)) ([#466](https://github.com/krizaka/krizaka-com/issues/466)) ([c44bc9b](https://github.com/krizaka/krizaka-com/commit/c44bc9bd988654346d211754b21b2ebf39442ac5))
+* **home:** what we know how to do and where we are going ([#459](https://github.com/krizaka/krizaka-com/issues/459)) ([2513258](https://github.com/krizaka/krizaka-com/commit/25132588579b3c1ee3cdaf8b62325b1c78ee49ad))
+* **open-source:** the CI and deploy standard's intro, and a card per org standard, read from krizaka/.github at build ([#445](https://github.com/krizaka/krizaka-com/issues/445)) ([c857bd2](https://github.com/krizaka/krizaka-com/commit/c857bd20f4325841291c4230af062d77fa3733bd))
+
+
+### Bug Fixes
+
+* **contact:** production refuses (503) while the Turnstile check is not configured ([#464](https://github.com/krizaka/krizaka-com/issues/464)) ([#465](https://github.com/krizaka/krizaka-com/issues/465)) ([d5fc858](https://github.com/krizaka/krizaka-com/commit/d5fc85845298bab150fb22238cb7137a22ac21a4))
+* **home:** product cards link www, « See the site » — dev is exposed as www ([#427](https://github.com/krizaka/krizaka-com/issues/427)) ([b18c1ed](https://github.com/krizaka/krizaka-com/commit/b18c1edbc78d35d10ca71edf8a93c010af5c9582))
+
 ## [0.8.0](https://github.com/krizaka/krizaka-com/compare/v0.7.0...v0.8.0) (2026-10-27)
 
 

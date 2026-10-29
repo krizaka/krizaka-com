@@ -1,42 +1,41 @@
 /**
- * Bot protection of the public forms — a CAPTCHA verified on the server (ABUSE context).
- * Configured by `ABUSE_CAPTCHA_PROVIDER=turnstile` + `ABUSE_CAPTCHA_SECRET_KEY` (the browser widget reads
- * `NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY`). Not configured → the check is off (local dev, tests). Configured → a missing,
- * refused or unverifiable token fails: the check fails closed.
+ * Bot protection of the public forms — a CAPTCHA verified on the server (ABUSE context). The verification itself is
+ * `@krizaka/rate-limit/turnstile` (fail closed, single-use tokens, hostname check, timeout): nothing of it is copied here.
+ * Configured by `ABUSE_CAPTCHA_PROVIDER=turnstile` + the widget's server key (`ABUSE_CAPTCHA_SECRET_KEY`); the browser widget reads
+ * `NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY`. Both are read at run time on every call. Outside production an unconfigured check is
+ * off (local dev, tests); in PRODUCTION it is a refusal (`captchaMissing`): a widget that renders while the key is unset
+ * protects nothing and lets every bot through (#464).
  */
-export const SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+import { createTurnstileVerifier, TURNSTILE_SITEVERIFY_URL, type TurnstileFetch } from "@krizaka/rate-limit/turnstile";
 
-// @fixed: a Turnstile token is a few hundred characters; 4096 bounds what is sent upstream
-const MAX_TOKEN_LENGTH = 4096;
-// @fixed: a form submit must not hang on the verification service
-const VERIFY_TIMEOUT_MS = 8000;
+export const SITEVERIFY_URL = TURNSTILE_SITEVERIFY_URL;
 
-type Fetch = (url: string, init: { method: string; body: string; headers: Record<string, string>; signal?: AbortSignal }) => Promise<{ ok: boolean; json(): Promise<unknown> }>;
+type Env = Record<string, string | undefined>;
 
-export function captchaConfigured(env: Record<string, string | undefined> = process.env): boolean {
+// @fixed: the hostnames krizaka.com is served on; a token solved elsewhere is refused
+const HOSTNAMES = ["www.krizaka.com", "krizaka.com"] as const;
+
+export function captchaConfigured(env: Env = process.env): boolean {
   return env.ABUSE_CAPTCHA_PROVIDER?.trim().toLowerCase() === "turnstile" && Boolean(env.ABUSE_CAPTCHA_SECRET_KEY?.trim());
 }
 
-/** True when the check is off or the token is valid. `ip` is the visitor's address ("unknown" is not sent). */
-export async function verifyCaptcha(
-  token: unknown,
-  ip: string,
-  env: Record<string, string | undefined> = process.env,
-  fetchImpl: Fetch = fetch as unknown as Fetch,
-): Promise<boolean> {
-  if (!captchaConfigured(env)) return true;
-  if (typeof token !== "string" || !token.trim() || token.length > MAX_TOKEN_LENGTH) return false;
-  const body = new URLSearchParams({ secret: env.ABUSE_CAPTCHA_SECRET_KEY!.trim(), response: token });
-  if (ip && ip !== "unknown") body.set("remoteip", ip);
-  try {
-    const res = await fetchImpl(SITEVERIFY_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: body.toString(),
-      signal: AbortSignal.timeout(VERIFY_TIMEOUT_MS),
-    });
-    return res.ok && ((await res.json()) as { success?: boolean }).success === true;
-  } catch {
-    return false;
+/** Production without the check configured: the form must refuse (503) rather than accept every bot. */
+export function captchaMissing(env: Env = process.env): boolean {
+  return env.NODE_ENV === "production" && !captchaConfigured(env);
+}
+
+// One verifier per key and process: it remembers the tokens it saw, so a replayed token is refused.
+const verifiers = new Map<string, ReturnType<typeof createTurnstileVerifier>>();
+
+/** True when the check is off (not production, not configured) or the token is valid. `ip` is the visitor's address ("unknown" is not sent). */
+export async function verifyCaptcha(token: unknown, ip: string, env: Env, fetchImpl: TurnstileFetch | undefined, now: () => Date): Promise<boolean> {
+  if (!captchaConfigured(env)) return !captchaMissing(env);
+  const secret = env.ABUSE_CAPTCHA_SECRET_KEY!.trim();
+  const options = { secret, hostnames: env.NODE_ENV === "production" ? HOSTNAMES : [], now };
+  let verify = fetchImpl ? createTurnstileVerifier({ ...options, fetch: fetchImpl }) : verifiers.get(secret);
+  if (!verify) {
+    verify = createTurnstileVerifier(options);
+    verifiers.set(secret, verify);
   }
+  return (await verify({ token, remoteIp: ip })).ok;
 }

@@ -106,7 +106,7 @@ test("dry-run needs no key and sends nothing; output never contains the key", as
   const out = [];
   let sent = 0;
   try {
-    const code = await main(["upload", dir, "--repo", "orochia", "--key", "feat/x", "--dry-run"], {
+    const code = await main(["upload", dir, "--repo", "akinaza", "--key", "feat/x", "--dry-run"], {
       env: { MEDIA_CDN_HOSTNAME: "cdn.example.net", MEDIA_STORAGE_API_KEY: "secret-key" },
       fetchImpl: async () => (sent++, { ok: true }),
       log: (l) => out.push(l),
@@ -114,7 +114,7 @@ test("dry-run needs no key and sends nothing; output never contains the key", as
     assert.equal(code, 0);
     assert.equal(sent, 0);
     const text = out.join("\n");
-    assert.match(text, /\[dry-run\] https:\/\/cdn\.example\.net\/pr-assets\/orochia\/feat-x\/before-dark\.png/);
+    assert.match(text, /\[dry-run\] https:\/\/cdn\.example\.net\/pr-assets\/akinaza\/feat-x\/before-dark\.png/);
     assert.match(text, /3 file\(s\) would be sent/);
     assert.doesNotMatch(text, /secret-key/);
   } finally {

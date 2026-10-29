@@ -46,9 +46,9 @@ test("every /products/<product> address — with or without the locale, any dept
   }
 });
 
-test("the paused products' old addresses (2026-10-25) answer 308 with the home's products section, never a 404", () => {
-  for (const id of ["orochia", "yasakia", "yazakia", "yororis", "kachizaka"]) {
-    for (const path of [`/products/${id}`, `/en/products/${id}`, `/fr/products/${id}/demos`, `/docs/${id}`, `/en/docs/${id}/admin_console`]) {
+test("the old address of a product that left (krizaka/.github#413) answers 308 with the home's products section, never a 404", () => {
+  for (const id of ["former", "gone"]) {
+    for (const path of [`/products/${id}`, `/en/products/${id}`, `/fr/products/${id}/demos`]) {
       const rule = go(path);
       assert.ok(rule, path);
       assert.equal(rule.destination, "/#products", path);
@@ -87,7 +87,7 @@ test("/products merged into the home (two views, 2026-10-17): it answers 308 wit
 });
 
 test("what stays on krizaka.com is never redirected", () => {
-  for (const path of ["/", "/en", "/story", "/open-source", "/en/open-source/ui", "/contact", "/privacy", "/terms", "/docs", "/en/docs", "/en/docs/ui", "/en/docs/ui/button", "/products/orazakax"]) {
+  for (const path of ["/", "/en", "/story", "/open-source", "/en/open-source/ui", "/contact", "/privacy", "/terms", "/docs", "/en/docs", "/en/docs/ui", "/en/docs/ui/button"]) {
     assert.equal(go(path), undefined, path);
   }
 });
@@ -97,5 +97,4 @@ test("next.config.ts serves these redirects, and no product page, product docs s
   assert.ok(!existsSync(new URL("../app/[locale]/products", import.meta.url)), "the products page came back");
   const pkg = JSON.parse(read("package.json"));
   assert.equal(pkg.dependencies["@krizaka/orazaka-design-system"], undefined);
-  assert.equal(pkg.dependencies["@krizaka/orochia-design-system"], undefined);
 });

@@ -1,6 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { captchaConfigured, verifyCaptcha, SITEVERIFY_URL } from "../lib/captcha.ts";
+import { captchaConfigured, verifyCaptcha as verifyWithClock, SITEVERIFY_URL } from "../lib/captcha.ts";
+
+/** The tests run on a fixed clock (the route passes the system one). */
+const verifyCaptcha = (token, ip, env, fetchImpl) => verifyWithClock(token, ip, env, fetchImpl, () => new Date(1_800_000_000_000));
 import { ENV_VARS } from "../lib/env.ts";
 
 const env = { ABUSE_CAPTCHA_PROVIDER: "turnstile", ABUSE_CAPTCHA_SECRET_KEY: "s3cret" };
@@ -52,4 +55,30 @@ test("the remote IP is left out when unknown", async () => {
   let body;
   await verifyCaptcha("tok", "unknown", env, async (_u, i) => { body = i.body; return { ok: true, json: async () => ({ success: true }) }; });
   assert.equal(new URLSearchParams(body).has("remoteip"), false);
+});
+
+test("production without the check configured refuses; elsewhere it is off (#464)", async () => {
+  const { captchaMissing } = await import("../lib/captcha.ts");
+  assert.equal(captchaMissing({ NODE_ENV: "production" }), true);
+  assert.equal(captchaMissing({ NODE_ENV: "production", ABUSE_CAPTCHA_PROVIDER: "turnstile" }), true);
+  assert.equal(captchaMissing({ NODE_ENV: "production", ...env }), false);
+  assert.equal(captchaMissing({ NODE_ENV: "development" }), false);
+  assert.equal(captchaMissing({}), false);
+});
+
+test("the contact route answers 503 when production lacks the check, before reading the token (#464)", async () => {
+  const { readFileSync } = await import("node:fs");
+  const route = readFileSync(new URL("../app/api/contact/route.ts", import.meta.url), "utf8");
+  assert.match(route, /if \(captchaMissing\(\)\)[\s\S]*contact\.captcha_unconfigured[\s\S]*status: 503/);
+  assert.ok(route.indexOf("captchaMissing()") < route.indexOf("verifyCaptcha(token"));
+});
+
+test("the keys are read at run time, on every call, never frozen at build (#464)", async () => {
+  const calls = [];
+  const f = async (url) => { calls.push(url); return { ok: true, json: async () => ({ success: true }) }; };
+  assert.equal(await verifyCaptcha("tok", "1.2.3.4", { NODE_ENV: "production" }, f), false);
+  assert.equal(calls.length, 0, "unconfigured production refuses without asking Cloudflare");
+  assert.equal(await verifyCaptcha("tok", "1.2.3.4", { ...env, NODE_ENV: "production" }, f), false, "a token solved on another hostname is refused");
+  assert.equal(await verifyCaptcha("tok", "1.2.3.4", env, f), true);
+  assert.equal(calls.length, 2, "the hostname refusal came after asking Cloudflare, the last call passed");
 });

@@ -80,7 +80,7 @@ test("both pages use the derived list; the words are messages in both languages;
   assert.doesNotMatch(src, /PUBLIC_REPOSITORIES/);
   assert.match(read("lib/github-channels.ts"), /PRODUCTS/);
   assert.match(read("lib/github-channels.ts"), /STACK/);
-  assert.doesNotMatch(read("lib/github-channels.ts"), /MOTION_LAB/, "Krizaka Motion is in the stack list");
+  assert.doesNotMatch(read("lib/github-channels.ts"), /MOTION_LAB/, "Krizaka Lab is in the stack list");
   assert.match(read("package.json"), /gen-github-channels\.mjs/, "read at build, like the other GitHub data");
   for (const f of ["app/[locale]/contact/ContactClient.tsx", "app/[locale]/open-source/page.tsx"]) assert.doesNotMatch(read(f), /PUBLIC_REPOSITORIES/, f);
   for (const l of ["en", "fr"]) {

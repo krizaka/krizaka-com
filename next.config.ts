@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import { javaRedirects } from "./lib/java-redirects";
 import { uiRedirects } from "./lib/ui-redirects";
 import { productRedirects } from "./lib/product-redirects";
-import { CDN_URL, legacyRedirects } from "./lib/cdn";
+import { CDN_URL } from "./lib/cdn";
 
 /**
  * Security headers applied to every route. Kept deliberately CSP-free for now —
@@ -55,9 +55,6 @@ const nextConfig: NextConfig = {
       ...javaRedirects(),
       // Krizaka UI's documentation is ui.krizaka.com, built from krizaka-ui (lib/ui-redirects.ts); /docs goes to /open-source.
       ...uiRedirects(),
-      // The media left /public for Bunny: an old /assets/… URL (published @krizaka/ui examples) answers with its file on
-      // the CDN. Temporary, because the destination is versioned — a new recording gets a new URL.
-      ...legacyRedirects().map((r) => ({ ...r, permanent: false })),
     ];
   },
 

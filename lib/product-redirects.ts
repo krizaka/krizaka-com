@@ -14,10 +14,6 @@ export const PRODUCT_SITES = {
   akinaza: wwwUrl("akinaza"),
 } as const;
 
-/** The old addresses of products that are no longer presented (paused, 2026-10-25): they answer 308 with the home's
-    products section, never a 404 and never a site that is gone. */
-const RETIRED = ["orochia", "yasakia", "yazakia", "yororis", "kachizaka"] as const;
-
 export interface Redirect {
   source: string;
   destination: string;
@@ -45,8 +41,8 @@ export function productRedirects(): Redirect[] {
     // Yomizaka documents itself at /docs (yomizaka#387): a single page, in the visitor's language when the address names one.
     { source: "/:locale(fr|en)/docs/yomizaka/:path*", destination: `${yomizaka}/:locale/docs`, statusCode: 308 },
     { source: "/docs/yomizaka/:path*", destination: `${yomizaka}/docs`, statusCode: 308 },
-    // The retired products' pages and documentation → the products section.
-    ...RETIRED.flatMap((id) => [to(`/products/${id}/:path*`, "/#products"), to(`/docs/${id}/:path*`, "/#products")]),
+    // Any other old product page (a product that left, krizaka/.github#413) → the products section, never a dead site.
+    to("/products/:path*", "/#products"),
     // Old Orazaka addresses.
     ...ORAZAKA_LEGACY.map((path) => to(`${path}/:path*`, orazaka)),
   ];

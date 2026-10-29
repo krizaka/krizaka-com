@@ -16,7 +16,7 @@ export const MAX_AGE_DAYS = 60;
 
 /** Products that wore « Dev preview » before the gate existed keep it until this date while their gaps close. The test
  *  `the real waivers have not expired` fails the day it ends. */
-export const WAIVERS = {}; // none: Orazaka is `development` and Orochia is paused (2026-10-25)
+export const WAIVERS = {}; // none: Orazaka is `development`
 
 const DAY = 86_400_000;
 const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);
