@@ -60,9 +60,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const product = (id: string) => PRODUCTS.find((p) => p.id === id)!;
 const names = (locale: string, list: readonly Product[]) => new Intl.ListFormat(locale, { type: "conjunction" }).format(list.map((p) => p.name));
 
-/** A bird's promise, in the film's own words for the five of the film, the brand reference's for the four that joined. */
+/** A bird's promise, in the words of the family film for its four birds (Krizaka, Orazaka, Yomizaka, Akinaza), the brand reference's for the others. */
 function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
   const s = t.site.story;
+  const family: Record<string, string> = s.world.family.cues;
+  if (bird in family) return family[bird]!;
   return bird in s.world.cues ? s.world.cues[bird as keyof typeof s.world.cues] : s.birds[bird as keyof typeof s.birds];
 }
 

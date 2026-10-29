@@ -567,19 +567,17 @@
           "Montréal"
         ],
         "film": "Watch the film",
-        "filmLength": "1 min 8 s",
-        "filmCredit": "Film generated with Orazaka",
+        "filmLength": "44 s",
+        "filmCredit": "Film rendered from our code",
         "filmCredits": "credits",
         "creditsTitle": "Film credits",
         "creditsClose": "Close",
         "creditsList": [
-          "AI-generated with Orazaka",
-          "Birds: rendered from @krizaka/ui",
-          "Images: FLUX.2 [klein]",
-          "Animation: Wan 2.2 and LTX-Video",
-          "Upscaling: SeedVR2",
-          "Voice: Zonos v0.1 (Apache-2.0)",
-          "Music: ACE-Step 1.5 (MIT)"
+          "Rendered from the code of Krizaka UI, not generated",
+          "Birds: Mascot, from @krizaka/ui",
+          "Valley: Landscape, from @krizaka/ui",
+          "Mark: KrizakaLogo, from @krizaka/ui",
+          "Music: ACE-Step 1.5 (MIT), generated with Orazaka"
         ]
       },
       "engine": {
@@ -604,7 +602,7 @@
           "renderPlayer": "Video: a scene rendered by {name}",
           "captions": {
             "orazaka": [
-              "A scene rendered by Orazaka: the Old Port at night, a few seconds of generated video."
+              "The web client on its dev site: the demo persona asks a question and Orazaka writes the answer."
             ],
             "yomizaka": [
               "A lease is dropped into the library.",
@@ -732,7 +730,20 @@
             "together": "Each bird carries a promise."
           }
         },
-        "codeTitle": "Filmed from the code"
+        "codeTitle": "Filmed from the code",
+        "family": {
+          "title": "The Krizaka family",
+          "player": "Video: the Krizaka family",
+          "credit": "Rendered from @krizaka/ui (Mascot, Landscape, the Krizaka mark). Music: ACE-Step 1.5 (MIT), generated with Orazaka.",
+          "cues": {
+            "title": "The Krizaka family.",
+            "falcon": "The falcon is Krizaka: it keeps watch, security comes first.",
+            "flamingo": "The flamingo is Orazaka: the engine that runs the family’s AI.",
+            "owl": "The owl is Yomizaka: it reads a lease and quotes the exact passage.",
+            "beaver": "The beaver is Akinaza: bookings, invoices, a tax return to review.",
+            "together": "Four birds, one family."
+          }
+        }
       },
       "blog": {
         "who": "Why I am building Krizaka in Montréal",

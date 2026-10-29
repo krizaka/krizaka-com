@@ -225,9 +225,10 @@ test("the captions route serves each take's lines same-origin and the player lis
   assert.match(read("app/components/story/TakeCard.tsx"), /\/story\/captions\/\$\{id\}/);
 });
 
-test("the engine shows a scene it rendered (the Old Port)", () => {
+test("the engine shows its web client answering (a persona, not the Old Port scene)", () => {
   const takes = read("lib/story-takes.ts");
-  assert.match(takes, /orazaka: \{ ratio: "film", mp4: "products\/orazaka\/video\/old-port\.mp4"/);
+  assert.match(takes, /orazaka: \{ ratio: "wide", mp4: "products\/orazaka\/home\/take-\{l\}-dark\.mp4"/);
+  assert.doesNotMatch(takes, /old-port/, "the generated Old Port scene is no longer the engine's take");
   assert.doesNotMatch(takes, /take-full|moment-fr-phone/);
   assert.equal(read("lib/cdn-manifest.json").includes("take-full"), false, "the 3-minute walkthrough is out of the manifest");
   assert.ok(TAKE_PRODUCTS.includes("orazaka"));
@@ -248,7 +249,10 @@ test("the film slot takes the newest film whose files are on the CDN, else the o
   assert.equal(pickFilm(films, has("brand-films/epic/y")).id, "tournee");
   assert.equal(pickFilm(films, has("brand-films/relay/x", "brand-films/epic/y")).id, "relais");
   assert.equal(pickFilm(films, () => false).id, "tournee", "never a dead poster: the oldest is always the fallback");
-  assert.match(read("lib/story-film.ts"), /id: "relais", base: RELAY_BASE, vtt: "relay\.vtt"/);
+  const slot = read("lib/story-film.ts");
+  assert.match(slot, /id: "famille", base: FAMILY_BASE, vtt: "family\.vtt"/, "the family film is at the top of the slot");
+  assert.ok(slot.indexOf('id: "famille"') < slot.indexOf('id: "relais"'), "newest first");
+  assert.match(slot, /id: "relais", base: RELAY_BASE, vtt: "relay\.vtt"/);
 });
 
 // Taped prints (2026-10-23): every picture or video of /story sits in @krizaka/ui's TapedPhoto — the film poster, each

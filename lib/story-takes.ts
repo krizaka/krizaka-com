@@ -37,10 +37,10 @@ interface Spec extends Paths {
 }
 
 /* One take per chapter, chosen for what the chapter tells (story peer review, 2026-10-21):
-   - orazaka: a scene the engine rendered (the Old Port at night), not a thumbnail of its chat — the engine's proof is what it makes;
-   the others keep their recordings (a lease read, a shop's day). */
+   - orazaka: the web client on its dev site, the demo persona asking and the engine answering (2026-10-29: it replaces the Old
+   Port scene, a generated clip that was not the product running); the others keep their recordings (a lease read, a shop's day). */
 const SPECS: Partial<Record<ProductId, Spec>> = {
-  orazaka: { ratio: "film", mp4: "products/orazaka/video/old-port.mp4", webm: "products/orazaka/video/old-port.webm", poster: "products/orazaka/video/old-port-poster.webp", cues: [[0, 5]] },
+  orazaka: { ratio: "wide", mp4: "products/orazaka/home/take-{l}-dark.mp4", webm: "products/orazaka/home/take-{l}-dark.webm", poster: "products/orazaka/home/take-{l}-dark-poster.webp", cues: [[0, 9.5]] },
   yomizaka: { ratio: "phone", mp4: "products/yomizaka/tour/take-{l}.mp4", webm: "products/yomizaka/tour/take-{l}.webm", poster: "products/yomizaka/tour/story-poster-{l}.jpg", cues: [[0, 6], [6, 11], [11, 18.2]] },
   akinaza: { ratio: "phone", mp4: "products/akinaza/tour/hero-{l}.mp4", webm: "products/akinaza/tour/hero-{l}.webm", poster: "products/akinaza/tour/phone-hero-{l}.jpg", cues: [[0, 12], [12, 25], [25, 37], [37, 49.5]] },
 };
