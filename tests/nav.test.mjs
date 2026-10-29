@@ -9,8 +9,8 @@ const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const nav = read("lib/nav.ts");
 const products = [...read("lib/products.ts").matchAll(/\{ id: "(\w+)", name: "\w+",(?: status: "(\w+)",)? siteUrl: ([^,]+),[^\n]*/g)].map(([line, id, status, siteUrl]) => ({ id, status, siteUrl }));
-const motionSite = read("lib/stack.ts").match(/const MOTION_SITE = "([^"]+)"/)[1];
-const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)", url: (?:"([^"]+)"|(MOTION_SITE))/g)].map(([, id, name, url, site]) => ({ id, name, url: url ?? (site === "MOTION_SITE" ? motionSite : site) }));
+const motionSite = read("lib/stack.ts").match(/const LAB_SITE = "([^"]+)"/)[1];
+const stack = [...read("lib/stack.ts").matchAll(/\{ id: "(\w+)", name: "([^"]+)", url: (?:"([^"]+)"|(LAB_SITE))/g)].map(([, id, name, url, site]) => ({ id, name, url: url ?? (site === "LAB_SITE" ? motionSite : site) }));
 
 test("two views (2026-10-17): the mark and the word Krizaka lead home, the centre of the bar is Open source only; Our story is not in the bar", () => {
   assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["repos"\] as const\)/);
@@ -49,7 +49,7 @@ test("the family: every product on its own site, the stack on its subdomains, an
   }
   assert.deepEqual(stack, [
     { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com" },
-    { id: "motion", name: "Krizaka Motion", url: "https://motion.krizaka.com" },
+    { id: "motion", name: "Krizaka Lab", url: "https://lab.krizaka.com" },
     { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com" },
     { id: "ts", name: "Krizaka TypeScript", url: "https://ts.krizaka.com" },
   ]);

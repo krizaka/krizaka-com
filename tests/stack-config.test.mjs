@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { STACK, hostOf, stackActionUrl } from "../lib/stack.ts";
 
-// The open-source stack is ONE list (lib/stack.ts), Krizaka Motion included. Since 2026-10-26 the home no longer carries it:
+// The open-source stack is ONE list (lib/stack.ts), Krizaka Lab included. Since 2026-10-26 the home no longer carries it:
 // /open-source and /story draw the full cards from this list.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 
-test("the list: four publications, Krizaka Motion among them, with their registry and status", () => {
+test("the list: four publications, Krizaka Lab among them, with their registry and status", () => {
   assert.deepEqual(STACK.map((p) => p.id), ["ui", "motion", "java", "ts"]);
   for (const p of STACK) {
     assert.ok(p.name && p.url.startsWith("https://") && p.repoUrl.startsWith("https://github.com/krizaka/"), p.id);
@@ -30,15 +30,15 @@ test("every entry has its words in English and French (site.home.stack.<id>.line
 
 test("the first action goes to the site, the lab to its scene", () => {
   assert.equal(stackActionUrl(STACK[0]), "https://ui.krizaka.com");
-  assert.equal(stackActionUrl(STACK[1]), "https://motion.krizaka.com/orazaka");
-  assert.equal(hostOf(STACK[1].url), "motion.krizaka.com");
+  assert.equal(stackActionUrl(STACK[1]), "https://lab.krizaka.com/orazaka");
+  assert.equal(hostOf(STACK[1].url), "lab.krizaka.com");
 });
 
-test("Krizaka Motion is served over HTTPS at motion.krizaka.com, one value in the data (MOTION_SITE)", () => {
+test("Krizaka Lab is served over HTTPS at lab.krizaka.com, one value in the data (LAB_SITE)", () => {
   const data = read("lib/stack.ts");
-  assert.match(data, /const MOTION_SITE = "https:\/\/motion\.krizaka\.com";/);
+  assert.match(data, /const LAB_SITE = "https:\/\/lab\.krizaka\.com";/);
   assert.doesNotMatch(data, /github\.io/);
-  assert.doesNotMatch(read("app/components/home/OpenStack.tsx"), /github\.io|motion\.krizaka\.com/, "no host typed in a component");
+  assert.doesNotMatch(read("app/components/home/OpenStack.tsx"), /github\.io|lab\.krizaka\.com/, "no host typed in a component");
 });
 
 test("the tiles are the only drawing of the stack: no row, no home visual left", () => {
