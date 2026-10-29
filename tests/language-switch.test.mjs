@@ -5,7 +5,7 @@ import { readFileSync } from "node:fs";
 import { test } from "node:test";
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
-const bar = read("app/components/TopNavBar.tsx");
+const bar = read("app/components/SiteBar.tsx");
 const panel = read("app/components/MobilePanel.tsx");
 const hook = read("app/components/LanguageSwitch.tsx");
 const messages = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read("messages/fr.json")) };

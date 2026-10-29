@@ -4,7 +4,7 @@ import { ActionBar } from "@krizaka/ui/action-bar";
 import { ErrorPage } from "@krizaka/ui/error-page";
 import { Mascot } from "@krizaka/ui/mascots";
 import Link from "next/link";
-import TopNavBar from "@/app/components/TopNavBar";
+import SiteBar from "@/app/components/SiteBar";
 import { useI18n } from "@/app/components/I18nProvider";
 
 /* A page that is not there — the Error template of @krizaka/ui: the code drawn, the pigeon that lost its way, one
@@ -15,7 +15,7 @@ export default function NotFound() {
   const t = messages.site.notFound;
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100dvh", color: "var(--kz-text-primary)" }}>
-      <TopNavBar />
+      <SiteBar />
       <ErrorPage
         code="404"
         mascot={<Mascot bird="pigeon" mood="empty" size={96} />}

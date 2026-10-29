@@ -22,7 +22,7 @@ import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { STACK } from "@/lib/stack";
 import { BUILDING_BLOCKS } from "@/lib/building-blocks";
-import TopNavBar from "@/app/components/TopNavBar";
+import SiteBar from "@/app/components/SiteBar";
 import FigureTiles from "@/app/components/FigureTiles";
 import ButtonLink from "@/app/components/ButtonLink";
 import { StackTiles } from "@/app/components/home/OpenStack";
@@ -118,7 +118,7 @@ export default async function OpenSourcePage({ params }: Props) {
 
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
-      <TopNavBar />
+      <SiteBar />
 
       <PageHero eyebrow={t.eyebrow} title={t.title} lead={t.lead} align="center" linkAs={Link}>
         <div className="os-hero-figures">

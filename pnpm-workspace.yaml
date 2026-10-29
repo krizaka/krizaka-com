@@ -1,0 +1,11 @@
+minimumReleaseAgeExclude:
+  - '@krizaka/charts@0.8.0'
+  - '@krizaka/db@0.3.1'
+  - '@krizaka/email-verification@0.1.0'
+  - '@krizaka/fonts@0.5.3'
+  - '@krizaka/rate-limit@0.2.0'
+  - '@krizaka/settings@0.5.1'
+  - '@krizaka/tailwind@3.74.0'
+  - '@krizaka/tokens@3.74.0'
+  - '@krizaka/ui@3.74.0'
+  - '@krizaka/config@0.17.0'

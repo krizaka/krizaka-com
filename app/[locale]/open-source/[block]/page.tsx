@@ -12,7 +12,7 @@ import { Mascot } from "@krizaka/ui/mascots";
 import { Facts, Page, Section, Ticks } from "@krizaka/ui/page";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { Toc, TocLayout } from "@krizaka/ui/toc";
-import TopNavBar from "@/app/components/TopNavBar";
+import SiteBar from "@/app/components/SiteBar";
 import BlockIcon from "@/app/components/blocks/BlockIcon";
 import FeedbackLinks from "@/app/components/blocks/FeedbackLinks";
 import { BUILDING_BLOCKS, blockById, blockRepoUrl } from "@/lib/building-blocks";
@@ -77,7 +77,7 @@ export default async function BuildingBlockPage({ params }: Props) {
 
   return (
     <main data-hue={block.hue} style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
-      <TopNavBar />
+      <SiteBar />
 
       <PageHero
         back={{ href: "/open-source#blocks-title", label: p.back }}

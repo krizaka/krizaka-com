@@ -17,11 +17,11 @@ test("two views (2026-10-17): the mark and the word Krizaka lead home, the centr
   assert.doesNotMatch(nav, /href: "\/products"/, "no /products page: the products are a section of the home");
   assert.match(nav, /PRODUCTS_ANCHOR = "\/#products"/);
   assert.match(nav, /\{ href: "\/open-source", icon: "repos", match: \["\/open-source\/"\] \}/, "a building block lights Open source");
-  const bar = read("app/components/TopNavBar.tsx");
+  const bar = read("app/components/SiteBar.tsx");
   assert.match(bar, /<Link href="\/" aria-label=\{m\.homeAria\}[^>]*>\s*<KrizakaLogo size=\{26\} \/>\s*<span className="kz-site-brand-word">Krizaka<\/span>/);
   for (const l of ["en", "fr"]) assert.match(messages(l).site.menu.homeAria, /^Krizaka/, `${l}: the accessible name starts with the visible word`);
   // the bar and the mobile panel both read NAV_BAR_LINKS: neither names the story directly
-  for (const file of ["app/components/TopNavBar.tsx", "app/components/MobilePanel.tsx"]) {
+  for (const file of ["app/components/SiteBar.tsx", "app/components/MobilePanel.tsx"]) {
     assert.doesNotMatch(read(file), /"story"|\/story/, `${file}: no story link`);
   }
   // right: Blog (another site) · GitHub · theme · language · Contact us, the one primary action
@@ -64,7 +64,7 @@ test("the products' statuses: all three in development (Orazaka left Dev preview
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {
-  const bar = read("app/components/TopNavBar.tsx");
+  const bar = read("app/components/SiteBar.tsx");
   assert.doesNotMatch(bar, /NAV_DOCS_HUB/, "no Docs link in the bar");
   assert.match(bar, /\{docs && \(\s*<Button/, "the search button only under /docs");
   assert.doesNotMatch(read("app/components/SiteFooter.tsx"), /NAV_DOCS|f\.docs/);
@@ -72,7 +72,7 @@ test("the bar has no Docs entry and no search outside /docs; the footer has no D
 });
 
 test("no family switcher on www.krizaka.com (it duplicated Products); the footer is @krizaka/ui's SiteFooter, no copy here", () => {
-  const bar = read("app/components/TopNavBar.tsx");
+  const bar = read("app/components/SiteBar.tsx");
   assert.doesNotMatch(bar, /NavBar\.Family/);
   assert.match(bar, /<NavBar\.Repo /);
   assert.doesNotMatch(read("app/components/MobilePanel.tsx"), /NavBar\.Family/);

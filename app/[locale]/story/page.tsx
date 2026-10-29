@@ -19,7 +19,7 @@ import { publishedCount } from "@/lib/registry-versions";
 import { BLOG_CHAPTER, blogChapterUrl, ENGINE, OPEN_BIRD, PRODUCT_BIRD, PRODUCT_CHAPTERS, STORY_ANCHORS, WHO_BIRD, type StoryBird } from "@/lib/story";
 import { uiFacts } from "@/lib/ui-facts";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
-import TopNavBar from "@/app/components/TopNavBar";
+import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
 import FigureTiles from "@/app/components/FigureTiles";
 import Rich from "@/app/components/Rich";
@@ -198,7 +198,7 @@ export default async function StoryPage({ params }: Props) {
 
   return (
     <main className="st" style={{ background: "var(--kz-surface-0)", minHeight: "100vh" }}>
-      <TopNavBar />
+      <SiteBar />
       <ReadingProgress />
       <PageHero
         eyebrow={st.intro.eyebrow}

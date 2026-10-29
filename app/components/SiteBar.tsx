@@ -28,7 +28,7 @@ import { SearchCommand } from "./SearchCommand";
 import { DocsCrumb } from "./DocsCrumb";
 import { useContactHref } from "./useContactHref";
 
-export default function TopNavBar() {
+export default function SiteBar() {
   const { t } = useI18n();
   const language = useLanguageSwitch();
   const m = t.site.menu;

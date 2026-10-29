@@ -6,7 +6,7 @@ import { anchorOf, changesFor, releaseLabel, type ChangeTag } from "@/lib/change
 import { FILTER_IDS } from "@/lib/changelog-filter";
 import { PLATFORM, RELEASES } from "@/lib/changelog-data";
 import { GITHUB_ORG_URL } from "@/lib/site";
-import TopNavBar from "@/app/components/TopNavBar";
+import SiteBar from "@/app/components/SiteBar";
 import ChangelogView from "@/app/components/ChangelogView";
 
 interface Props {
@@ -62,7 +62,7 @@ export default async function ChangelogRoute({ params }: Props) {
 
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100dvh" }}>
-      <TopNavBar />
+      <SiteBar />
       <ChangelogView
         back={{ href: "/", label: c.back }}
         eyebrow={c.eyebrow}

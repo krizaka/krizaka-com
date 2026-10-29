@@ -8,7 +8,7 @@
     "dev": "node scripts/gen-org-stats.mjs && node scripts/gen-github-channels.mjs && node scripts/gen-registry-versions.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-standards.mjs && node scripts/gen-dev-versions.mjs && node scripts/gen-changelog.mjs && next dev",
     "build": "node scripts/gen-org-stats.mjs && node scripts/gen-github-channels.mjs && node scripts/gen-registry-versions.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-standards.mjs && node scripts/gen-dev-versions.mjs && node scripts/gen-changelog.mjs && node scripts/gen-dev-preview.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs --check && next build && node scripts/check-changelog-build.mjs",
     "start": "next start",
-    "lint": "eslint && krizaka-server-client-boundary && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-page-templates.mjs && krizaka-i18n check messages && krizaka-ratchet && depcruise app lib --config .dependency-cruiser.cjs && ast-grep test --skip-snapshot-tests && node scripts/sg-ratchet.mjs",
+    "lint": "eslint && krizaka-server-client-boundary && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-page-templates.mjs && krizaka-i18n check messages && krizaka-ratchet && depcruise app lib --config .dependency-cruiser.cjs && ast-grep test --skip-snapshot-tests && krizaka-sg-ratchet",
     "services:sign": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs",
     "services:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs --check",
     "ratchet": "krizaka-ratchet",
@@ -20,9 +20,9 @@
     "postinstall": "node scripts/gen-fresh.mjs",
     "changelog:draft": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/changelog-draft.mjs",
     "dev:check": "node scripts/dev-check.mjs",
-    "lint:sg": "node scripts/sg-ratchet.mjs",
+    "lint:sg": "krizaka-sg-ratchet",
     "lint:sg:test": "ast-grep test --skip-snapshot-tests",
-    "sg:ratchet:update": "node scripts/sg-ratchet.mjs --update",
+    "sg:ratchet:update": "krizaka-sg-ratchet --update",
     "sg:fix": "node scripts/sg-fix.mjs"
   },
   "dependencies": {
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@ast-grep/cli": "0.51.0",
     "@krizaka/a11y-audit": "0.2.0",
-    "@krizaka/config": "^0.12.0",
+    "@krizaka/config": "^0.17.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
