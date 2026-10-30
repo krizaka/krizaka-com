@@ -798,50 +798,12 @@
         "java": "Krizaka Java",
         "services": "The shared services"
       },
-      "nomenclature": {
-        "eyebrow": "The nomenclature",
-        "title": "One reference map of the Krizaka system.",
-        "lead": "Every module of the family, by layer: its role, its repository, its registry and version, and who uses it. Generated at build; the table is the text version.",
-        "caption": "Every module of the Krizaka system",
-        "name": "Module",
-        "layer": "Layer",
-        "kind": "Kind",
-        "registries": "Registry and version",
-        "repo": "Repository",
-        "repoAria": "{name} repository",
-        "registryAria": "{name} on its registry",
-        "none": "—",
-        "layers": {
-          "products": "Products",
-          "engine": "Orazaka",
-          "blocks": "Building blocks",
-          "services": "Shared services",
-          "platform": "Sites and tooling"
-        },
-        "kinds": {
-          "product": "Product",
-          "engine": "Engine",
-          "java": "Building block (Java)",
-          "package": "Package (TypeScript)",
-          "web": "Web client",
-          "worker": "Worker",
-          "site": "Site",
-          "tooling": "Tooling"
-        }
-      },
       "ci": {
         "eyebrow": "How we ship",
         "title": "One pipeline, one deploy tool",
         "source": "Read at every build from our CI and deploy standard in krizaka/.github, so it never goes stale.",
         "full": "Read the full document",
         "listLabel": "In short"
-      },
-      "standards": {
-        "eyebrow": "Our standards",
-        "title": "The rules we hold ourselves to",
-        "lead": "Each standard of krizaka/.github, read at every build: a new one appears here by itself. They are written in English.",
-        "open": "Read the standard",
-        "listLabel": "Krizaka standards"
       },
       "contribute": {
         "title": "Want to contribute?",

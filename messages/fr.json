@@ -798,50 +798,12 @@
         "java": "Krizaka Java",
         "services": "Les services partagés"
       },
-      "nomenclature": {
-        "eyebrow": "La nomenclature",
-        "title": "Une carte de référence du système Krizaka.",
-        "lead": "Chaque module de la famille, par couche : son rôle, son dépôt, son registre et sa version, et qui l'utilise. Générée à la construction ; le tableau en est la version texte.",
-        "caption": "Chaque module du système Krizaka",
-        "name": "Module",
-        "layer": "Couche",
-        "kind": "Nature",
-        "registries": "Registre et version",
-        "repo": "Dépôt",
-        "repoAria": "Dépôt de {name}",
-        "registryAria": "{name} sur son registre",
-        "none": "—",
-        "layers": {
-          "products": "Produits",
-          "engine": "Orazaka",
-          "blocks": "Briques",
-          "services": "Services partagés",
-          "platform": "Sites et outillage"
-        },
-        "kinds": {
-          "product": "Produit",
-          "engine": "Moteur",
-          "java": "Brique (Java)",
-          "package": "Paquet (TypeScript)",
-          "web": "Client web",
-          "worker": "Worker",
-          "site": "Site",
-          "tooling": "Outillage"
-        }
-      },
       "ci": {
         "eyebrow": "Comment nous livrons",
         "title": "Un pipeline, un outil de déploiement",
         "source": "Lu à chaque build dans notre standard CI et déploiement de krizaka/.github, il ne vieillit donc jamais (en anglais).",
         "full": "Lire le document complet",
         "listLabel": "En bref"
-      },
-      "standards": {
-        "eyebrow": "Nos standards",
-        "title": "Les règles que nous nous imposons",
-        "lead": "Chaque standard de krizaka/.github, lu à chaque build : un nouveau apparaît ici tout seul. Ils sont rédigés en anglais.",
-        "open": "Lire le standard",
-        "listLabel": "Standards de Krizaka"
       },
       "contribute": {
         "title": "Envie de contribuer ?",

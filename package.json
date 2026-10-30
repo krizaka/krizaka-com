@@ -5,8 +5,8 @@
   "private": true,
   "scripts": {
     "check:a11y": "node scripts/check-a11y.mjs",
-    "dev": "node scripts/gen-org-stats.mjs && node scripts/gen-github-channels.mjs && node scripts/gen-registry-versions.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-standards.mjs && node scripts/gen-dev-versions.mjs && node scripts/gen-changelog.mjs && next dev",
-    "build": "node scripts/gen-org-stats.mjs && node scripts/gen-github-channels.mjs && node scripts/gen-registry-versions.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/gen-standards.mjs && node scripts/gen-dev-versions.mjs && node scripts/gen-changelog.mjs && node scripts/gen-dev-preview.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs --check && next build && node scripts/check-changelog-build.mjs",
+    "dev": "node scripts/gen-org-stats.mjs && node scripts/gen-github-channels.mjs && node scripts/gen-registry-versions.mjs && node scripts/gen-dev-versions.mjs && node scripts/gen-changelog.mjs && next dev",
+    "build": "node scripts/gen-org-stats.mjs && node scripts/gen-github-channels.mjs && node scripts/gen-registry-versions.mjs && node scripts/gen-dev-versions.mjs && node scripts/gen-changelog.mjs && node scripts/gen-dev-preview.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs --check && next build && node scripts/check-changelog-build.mjs",
     "start": "next start",
     "lint": "eslint && krizaka-server-client-boundary && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-page-templates.mjs && krizaka-i18n check messages && krizaka-ratchet && depcruise app lib --config .dependency-cruiser.cjs && ast-grep test --skip-snapshot-tests && krizaka-sg-ratchet",
     "services:sign": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs",

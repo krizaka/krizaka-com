@@ -29,8 +29,6 @@ import "./open-source.css";
 
 /* /open-source — the site's second view (the home is the first; 2026-10-17): the technical view, as refined as the home
    (docs-hub template). One primary action per section, no boxes in boxes; everything read from data at build.
-   0. How we ship: the intro of krizaka/.github's CI and deploy standard, then a card per standard (lib/standards.ts,
-      read at build by scripts/gen-standards.mjs; the last good copy, or a failed build — never an empty section).
    1. The hero: one line, the live figures (repositories, npm packages, Maven artifacts, the licence), GitHub.
    2. The stack: Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com, each with a still mini-visual and its
       latest version (npm, Maven Central); the building blocks' pages, as quiet links.
@@ -40,9 +38,7 @@ import "./open-source.css";
    5. How it fits: building blocks → shared services (lib/how-it-fits.ts), an ordered list that is its own text version.
    Only what is open source is listed: the products are operated by Krizaka (lib/repository-catalogue.ts
    `openSourceRepositories`), out of every list, and the page claims nothing about their licence.
-   6. La nomenclature: every module of the family by layer (lib/nomenclature.ts), generated at build; a public
-      repository missing from it fails the build.
-   7. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
+   6. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
       conduct, the licence. */
 
 interface Props {
