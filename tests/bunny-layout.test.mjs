@@ -84,3 +84,12 @@ test("the prefixes another writer owns are declared once, in the layout, and pru
     assert.ok(FOREIGN_WRITERS.some((p) => clip.startsWith(p)), `${clip} is owned by dev.${product}.com`);
   }
 });
+
+test("Akinaza's first-client journey clips are a legitimate kind of a site's media (storage-zone audit: 37 objects)", () => {
+  for (const p of ["site/products/akinaza/first-client/phone-akinaza-books-en.8206ffd160.mp4", "site/products/akinaza/first-client/desktop-akinaza-books-fr-captions.f7b918ee3b.vtt"]) {
+    assert.equal(misplaced(p), null, p);
+    assert.equal(placement(p).state, "legacy", p);
+  }
+  assert.equal(misplaced("sites/akinaza/first-client/phone-akinaza-books-en.8206ffd160.mp4"), null);
+  assert.ok(misplaced("sites/akinaza/nosuch-kind/a.8206ffd160.mp4"), "other kinds are still checked");
+});
