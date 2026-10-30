@@ -44,7 +44,7 @@ export default async function Home({ params }: Props) {
     maven: mavenArtifactCount(),
   };
   return (
-    <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
+    <main className="kz-site-main">
       <SiteBar />
       <HomeHero locale={locale} figures={figures} />
       <EngineSection locale={locale} />

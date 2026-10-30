@@ -29,7 +29,6 @@ import { SERVICES_PAGE_ORDER, SERVICES_PROOF, stepNumber, type ServicesProofId }
 import { buildServiceJsonLd, type Locale } from "@/lib/structured-data";
 import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
-import FigureTiles from "@/app/components/FigureTiles";
 import { JsonLd } from "@/app/components/JsonLd";
 import "./services.css";
 
@@ -84,8 +83,9 @@ export default async function ServicesPage({ params }: Props) {
     { id: "downloads", value: npmWeeklyDownloads() ?? 0, label: s.proof.figures.downloads },
     { id: "repositories", value: publicRepositoryCount(), label: s.proof.figures.repositories },
   ].filter((f) => f.value > 0);
+  const fmt = new Intl.NumberFormat(locale);
   return (
-    <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
+    <main className="kz-site-main">
       <JsonLd
         data={buildServiceJsonLd(locale as Locale, {
           name: s.eyebrow,
@@ -106,7 +106,7 @@ export default async function ServicesPage({ params }: Props) {
               <ButtonLink href={enterprise} variant="primary" size="lg">
                 {s.cta}
               </ButtonLink>
-              <ButtonLink href="#how" variant="secondary" size="lg">
+              <ButtonLink href="#how" variant="ghost" size="lg">
                 {s.howLink}
               </ButtonLink>
             </div>
@@ -168,8 +168,10 @@ export default async function ServicesPage({ params }: Props) {
       />
 
       <Section id="proof" eyebrow={s.proof.eyebrow} title={s.proof.title} lead={s.proof.lead} divider reveal>
-        <div className="svc-proof-figures">
-          <FigureTiles figures={figures} label={s.proof.figuresLabel} locale={locale} columns />
+        {/* The figures as one line of facts: the home's hero already shows them as climbing tiles — a second band of
+            counters is the template look the Cahier refuses (krizaka-cahier-design, 2026-10-30). */}
+        <div className="svc-proof-figures" aria-label={s.proof.figuresLabel}>
+          <Facts items={figures.map((f) => ({ label: `${fmt.format(f.value)} ${f.label}` }))} />
         </div>
         <CardGrid as="ul" min={300} columns={3} className="svc-proof-cards" aria-label={s.proof.eyebrow}>
           {SERVICES_PROOF.map(({ id, href }) => (
