@@ -325,6 +325,10 @@
         "ts": {
           "line": "Les briques TypeScript des produits, sur npm : comptes et rôles, réglages, clés d'API, webhooks, organisation, le point de la semaine.",
           "explore": "Lire la documentation"
+        },
+        "skills": {
+          "line": "Des Agent Skills et une place de marché de plugins Claude Code : les règles de design, d'ingénierie et de produit de Krizaka, pour un assistant.",
+          "explore": "Voir le dépôt"
         }
       },
       "services": {
@@ -722,7 +726,7 @@
     },
     "openSource": {
       "eyebrow": "Open source · Apache-2.0",
-      "title": "Ce que nous publions en open source.",
+      "title": "Le code sous nos produits, ouvert.",
       "github": "Parcourir github.com/krizaka",
       "figuresLabel": "Ce que nous publions, lu sur GitHub, npm et Maven Central au build",
       "repoCount": "{count} dépôts",
@@ -740,7 +744,7 @@
         "tagline": "Les briques que partagent tous les produits : Krizaka UI, les kits Java, le site et les règles de l'organisation."
       },
       "count": "{count} dépôts publics · ",
-      "lead": "La vue technique : chaque paquet et chaque dépôt que nous publions sous Apache-2.0, et comment tout s'emboîte. Nos produits sont exploités par Krizaka.",
+      "lead": "Krizaka UI, Krizaka Java, les bibliothèques TypeScript et nos Agent Skills : chaque paquet, chaque version et chaque dépôt, lus sur npm, Maven Central et GitHub au moment de la publication du site. Sous Apache-2.0. Nos produits sont exploités par Krizaka.",
       "figures": {
         "repositories": "dépôts publics",
         "npm": "paquets sur npm",
@@ -749,8 +753,8 @@
         "license": "{license} sur chaque dépôt"
       },
       "stackEyebrow": "La pile",
-      "stackTitle": "Trois briques, chacune documentée.",
-      "stackLead": "Versions lues sur npm et Maven Central au build.",
+      "stackTitle": "La pile, en un coup d'œil.",
+      "stackLead": "Chaque brique a son site et son dépôt ; les versions sont lues sur les registres au build.",
       "blocksLabel": "Les briques, expliquées :",
       "packages": {
         "eyebrow": "Paquets",
@@ -836,7 +840,20 @@
         "issues": "Tickets ouverts",
         "releases": "Releases",
         "note": "Les notes de version sont écrites par l'outillage de publication sur GitHub ; ce site ne les copie jamais."
-      }
+      },
+      "stackFacts": {
+        "development": "En développement",
+        "notPublished": "Rien de publié pour l'instant"
+      },
+      "install": {
+        "eyebrow": "Commencer",
+        "title": "Une commande pour commencer.",
+        "lead": "Le vrai code d'installation, avec les dernières versions publiées.",
+        "copy": "Copier",
+        "copied": "Copié",
+        "tabs": "Brique à installer"
+      },
+      "githubShort": "GitHub"
     },
     "notFound": {
       "title": "Cette page a pris une autre route",

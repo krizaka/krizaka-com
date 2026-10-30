@@ -31,7 +31,7 @@ state.repos["krizaka-ui"].discussions = true;
 
 test("the sources are read: the products in the data, the stack and the lab", () => {
   assert.ok(products.length >= 3, "products read from lib/products.ts");
-  assert.deepEqual(stack.map((s) => s.id).sort(), ["java", "motion", "ts", "ui"]);
+  assert.deepEqual(stack.map((s) => s.id).sort(), ["java", "motion", "skills", "ts", "ui"]);
   for (const p of [...products, ...stack]) assert.match(p.repoUrl, /^https:\/\/github\.com\/krizaka\/[\w-]+$/, p.id);
 });
 

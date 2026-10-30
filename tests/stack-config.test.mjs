@@ -8,10 +8,10 @@ import { STACK, hostOf, stackActionUrl } from "../lib/stack.ts";
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 
-test("the list: four publications, Krizaka Lab among them, with their registry and status", () => {
+test("the list: five publications, Krizaka Lab among them, with their registry and status", () => {
   assert.deepEqual(
     STACK.map((p) => p.id),
-    ["ui", "motion", "java", "ts"],
+    ["ui", "motion", "java", "ts", "skills"],
   );
   for (const p of STACK) {
     assert.ok(p.name && p.url.startsWith("https://") && p.repoUrl.startsWith("https://github.com/krizaka/"), p.id);

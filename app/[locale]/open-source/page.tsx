@@ -11,7 +11,7 @@ import { openSourceRepositories } from "@/lib/repository-catalogue";
 import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
 import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
-import { packageRows, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
+import { packageRows, weeklySeriesTotal, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { GOOD_FIRST_URL, roadmapLinks } from "@/lib/library-links";
 import { howItFits } from "@/lib/how-it-fits";
 import { PRODUCTS } from "@/lib/products";
@@ -21,9 +21,10 @@ import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { STACK } from "@/lib/stack";
 import SiteBar from "@/app/components/SiteBar";
-import FigureTiles from "@/app/components/FigureTiles";
 import ButtonLink from "@/app/components/ButtonLink";
-import { StackTiles } from "@/app/components/home/OpenStack";
+import { StatGrid } from "@krizaka/ui/stat";
+import { Sparkline } from "@krizaka/charts/sparkline";
+import { InstallTabs, StackGlance } from "./StackGlance";
 import { PackagesTable } from "./OpenSourceTables";
 import HowItFits from "./HowItFits";
 import "./open-source.css";
@@ -98,25 +99,43 @@ export default async function OpenSourcePage({ params }: Props) {
     // Read from api.npmjs.org at build; absent (0) when the registry was unreachable. Maven Central publishes no download count.
     { id: "downloads", value: weeklyTotal(packages) ?? 0, label: t.figures.downloads },
   ].filter((f) => f.value > 0);
+  const series = weeklySeriesTotal(packages);
+  const fmt = new Intl.NumberFormat(locale);
 
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
       <SiteBar />
 
       <PageHero eyebrow={t.eyebrow} title={t.title} lead={t.lead} align="center" linkAs={Link}>
-        <div className="os-hero-figures">
-          <FigureTiles figures={figures} label={t.figuresLabel} locale={locale} columns />
-          <p className="os-hero-license">{format(t.figures.license, { license: "Apache-2.0" })}</p>
-        </div>
         <div className="os-hero-actions">
           <ButtonLink href={GITHUB_ORG_URL} variant="primary" size="lg">
             {t.github} <ExternalIcon size={14} aria-hidden />
           </ButtonLink>
+          <ButtonLink href={GOOD_FIRST_URL} variant="secondary" size="lg">
+            {t.contribute.goodFirst} <ExternalIcon size={14} aria-hidden />
+          </ButtonLink>
+        </div>
+        <div className="os-hero-figures">
+          <StatGrid
+            variant="strip"
+            aria-label={t.figuresLabel}
+            items={figures.map((f) => ({
+              id: f.id,
+              label: f.label,
+              value: fmt.format(f.value),
+              chart: f.id === "downloads" && series ? <Sparkline data={series} variant="area" width={64} /> : undefined,
+            }))}
+          />
+          <p className="os-hero-license">{format(t.figures.license, { license: "Apache-2.0" })}</p>
         </div>
       </PageHero>
 
       <Section id="stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead}>
-        <StackTiles locale={locale} />
+        <StackGlance locale={locale} />
+      </Section>
+
+      <Section id="install" eyebrow={t.install.eyebrow} title={t.install.title} lead={t.install.lead} reveal divider>
+        <InstallTabs locale={locale} />
       </Section>
 
       <Section

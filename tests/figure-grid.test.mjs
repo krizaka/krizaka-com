@@ -17,10 +17,10 @@ test("a row of figures never leaves an empty cell, wide or on a phone", () => {
   assert.deepEqual(figureColumns(4), { wide: 4, narrow: 2 }, "four figures: one row, 2 × 2 on a phone");
 });
 
-test("/open-source: four figures in the grid, the licence a caption under it, values never broken", () => {
+test("/open-source: the figures in one strip, the licence a caption under it, values never broken", () => {
   const page = read("app/[locale]/open-source/page.tsx");
   assert.doesNotMatch(page, /id: "license", value: "Apache-2\.0"/, "the licence is not a stat tile");
-  assert.match(page, /<FigureTiles figures=\{figures\}[^>]*columns/);
+  assert.match(page, /<StatGrid\s+variant="strip"/, "the hero's figures: one discreet strip (2026-10-30), not boxes");
   assert.match(page, /className="os-hero-license"/);
   const css = read("app/components/figure-tiles.css");
   assert.match(css, /white-space: nowrap/);

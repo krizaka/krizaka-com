@@ -325,6 +325,10 @@
         "ts": {
           "line": "The products' TypeScript building blocks, on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief.",
           "explore": "Read the documentation"
+        },
+        "skills": {
+          "line": "Agent Skills and a Claude Code plugin marketplace: Krizaka's design, engineering and product rules, for an assistant.",
+          "explore": "See the repository"
         }
       },
       "services": {
@@ -722,7 +726,7 @@
     },
     "openSource": {
       "eyebrow": "Open source · Apache-2.0",
-      "title": "What we open-source.",
+      "title": "The code under our products, in the open.",
       "github": "Browse github.com/krizaka",
       "figuresLabel": "What we publish, read from GitHub, npm and Maven Central at build",
       "repoCount": "{count} repositories",
@@ -740,7 +744,7 @@
         "tagline": "The building blocks every product shares: Krizaka UI, the Java kits, the site and the organisation's rules."
       },
       "count": "{count} public repositories · ",
-      "lead": "The technical view: every package and repository we publish under Apache-2.0, and how they fit. Our products are operated by Krizaka.",
+      "lead": "Krizaka UI, Krizaka Java, the TypeScript libraries and our Agent Skills: every package, every version and every repository, read from npm, Maven Central and GitHub when the site is published. Under Apache-2.0. Our products are operated by Krizaka.",
       "figures": {
         "repositories": "public repositories",
         "npm": "packages on npm",
@@ -749,8 +753,8 @@
         "license": "{license} on every repository"
       },
       "stackEyebrow": "The stack",
-      "stackTitle": "Three bricks, each documented.",
-      "stackLead": "Versions read from npm and Maven Central at build.",
+      "stackTitle": "The stack at a glance.",
+      "stackLead": "Each building block has its own site and repository; versions are read from the registries at build.",
       "blocksLabel": "The building blocks, explained:",
       "packages": {
         "eyebrow": "Packages",
@@ -836,7 +840,20 @@
         "issues": "Open issues",
         "releases": "Releases",
         "note": "Release notes are written by the release tooling on GitHub; this site never copies them."
-      }
+      },
+      "stackFacts": {
+        "development": "In development",
+        "notPublished": "Nothing published yet"
+      },
+      "install": {
+        "eyebrow": "Get started",
+        "title": "One command to start.",
+        "lead": "The real install code, with the latest published versions.",
+        "copy": "Copy",
+        "copied": "Copied",
+        "tabs": "Building block to install"
+      },
+      "githubShort": "GitHub"
     },
     "notFound": {
       "title": "This page took another road",

@@ -288,3 +288,15 @@
   outline: 2px solid var(--kz-ring, var(--kz-accent));
   outline-offset: 2px;
 }
+
+/* The stack at a glance: the published parts, then what is built in the open, under a quiet label. */
+.os-glance {
+  display: grid;
+  gap: 1rem;
+}
+.os-glance-label {
+  margin: 1rem 0 0;
+  font-family: var(--kz-font-mono);
+  font-size: 0.8125rem;
+  color: var(--kz-text-secondary);
+}

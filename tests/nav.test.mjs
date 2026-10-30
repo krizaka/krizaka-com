@@ -70,9 +70,11 @@ test("the family: every product on its own site, the stack on its subdomains, an
     { id: "motion", name: "Krizaka Lab", url: "https://lab.krizaka.com" },
     { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com" },
     { id: "ts", name: "Krizaka TypeScript", url: "https://ts.krizaka.com" },
+    // Built in the open, nothing published yet: its repository is its page (2026-10-30).
+    { id: "skills", name: "Krizaka Skills", url: "https://github.com/krizaka/krizaka-skills" },
   ]);
   // the family's own list is @krizaka/ui's: the site's stack must agree with it
-  for (const s of stack.filter((x) => siteById(x.id)))
+  for (const s of stack.filter((x) => !x.url.startsWith("https://github.com/")))
     assert.equal(siteById(s.id).url, s.url, `@krizaka/ui/sites: ${s.id}`);
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });

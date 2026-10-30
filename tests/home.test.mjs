@@ -298,7 +298,7 @@ test("the duo is named by its need: management and compliance tools", () => {
 // 2026-10-22 (Oussama): /open-source and /story show the stack as four full cards (UI, Motion, Java, TS), each with
 // something to try or to copy; Java's dependency and TS's install command have a copy button. The home no longer shows the
 // libraries (2026-10-26): /open-source is their one place.
-test("the full stack cards: one component on /open-source and /story, with Java and TS to copy", () => {
+test("the full stack cards on /story; /open-source at a glance, with Java and TS to copy", () => {
   const stack = "app/components/home/OpenStack.tsx";
   assert.ok(exportedNames(stack).includes("StackTiles"));
   assert.ok(hasCode(stack, "npmPackagesFrom(ts.repoUrl)"), "TS's packages read at build, never typed");
@@ -316,8 +316,10 @@ test("the full stack cards: one component on /open-source and /story, with Java 
   );
   const ids = identifiers(stack);
   assert.ok(!ids.has("LinkCard") && !ids.has("StackCards"));
-  for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"])
-    assert.ok(hasCode(page, "<StackTiles locale={locale} />"), page);
+  // /story keeps the full cards; /open-source draws the stack at a glance and the install code (2026-10-30).
+  assert.ok(hasCode("app/[locale]/story/page.tsx", "<StackTiles locale={locale} />"));
+  assert.ok(hasCode("app/[locale]/open-source/page.tsx", "<StackGlance locale={locale} />"));
+  assert.ok(hasCode("app/[locale]/open-source/page.tsx", "<InstallTabs locale={locale} />"));
   assert.ok(
     jsx(stack).some(
       (e) => e.tag === "CardGrid" && e.attrs.as === "ul" && e.attrs.min === "{420}" && e.attrs.columns === "{2}",

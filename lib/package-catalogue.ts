@@ -52,6 +52,14 @@ export function weeklyTotal(rows: readonly Pick<PackageRow, "weeklyDownloads">[]
   return known.length ? known.reduce((sum, r) => sum + (r.weeklyDownloads as number), 0) : undefined;
 }
 
+/** The weekly downloads of every package that reports its last twelve weeks, summed week by week (oldest first) — the
+    /open-source hero's sparkline; undefined when none does (the line is then not drawn, never drawn flat). */
+export function weeklySeriesTotal(rows: readonly Pick<PackageRow, "weeklySeries">[]): number[] | undefined {
+  const series = rows.map((r) => r.weeklySeries).filter((s): s is number[] => Array.isArray(s) && s.length === 12);
+  if (series.length === 0) return undefined;
+  return Array.from({ length: 12 }, (_, i) => series.reduce((sum, s) => sum + s[i], 0));
+}
+
 /** The same total straight from the registry snapshot (the home's hero figure): every @krizaka package's last week,
     summed over those that report it; undefined when none does — the figure is then hidden, never shown as 0. */
 export function weeklyTotalOfSnapshot(snapshot: RegistrySnapshot): number | undefined {
