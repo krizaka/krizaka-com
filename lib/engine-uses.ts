@@ -19,3 +19,12 @@ export const ENGINE_USES: readonly EngineUse[] = [
   { id: "yomizaka", back: ["results"] }, // document analyses are Orazaka runs (document-validation pack)
   { id: "akinaza", back: ["results"], planned: true }, // the tax-assistant Studio (contract and a fake Studio exist)
 ];
+
+/** Beyond our products, the engine serves the applications of a company that adopts it (Krizaka Entreprise, /services):
+ *  the same pipeline, called through its HTTP client, on the company's servers or in Canada. One node in the flow, in the
+ *  Krizaka ink, linking to the offer — drawn both ways (a run's results come back), never as a named customer. */
+export const ENGINE_OFFER = { id: "yours", href: "/services", back: ["results"] } as const satisfies {
+  id: string;
+  href: string;
+  back: readonly EngineBack[];
+};
