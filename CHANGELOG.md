@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.12.0](https://github.com/krizaka/krizaka-com/compare/v0.11.0...v0.12.0) (2026-10-30)
+
+
+### Features
+
+* **cdn:** the EPUB and PDF downloads of the blog's story (76 files, blog[#211](https://github.com/krizaka/krizaka-com/issues/211), krizaka-blog[#220](https://github.com/krizaka/krizaka-com/issues/220)) ([#501](https://github.com/krizaka/krizaka-com/issues/501)) ([79952a1](https://github.com/krizaka/krizaka-com/commit/79952a149eca6bb378c7662e4155ef20a8f6e04b))
+* **home:** Orazaka wears the specimen tag (KZ-01) like the other products ([#492](https://github.com/krizaka/krizaka-com/issues/492)) ([#493](https://github.com/krizaka/krizaka-com/issues/493)) ([0843f5a](https://github.com/krizaka/krizaka-com/commit/0843f5a4d468b6eaf64c0d2f72d2f3bd18984405))
+* **story:** the duck is Orazaka's bird everywhere; the open-source subject wears the pigeon ([#495](https://github.com/krizaka/krizaka-com/issues/495)) ([#496](https://github.com/krizaka/krizaka-com/issues/496)) ([1ac2ce3](https://github.com/krizaka/krizaka-com/commit/1ac2ce356ba1ae53f37de6a3d563340543a566db))
+* **story:** the family film re-rendered — the duck is Orazaka (krizaka-ui[#911](https://github.com/krizaka/krizaka-com/issues/911)) ([#506](https://github.com/krizaka/krizaka-com/issues/506)) ([aeb1d37](https://github.com/krizaka/krizaka-com/commit/aeb1d3722f827e5e0c9159e2a575ca394a7fb4b4))
+
 ## [0.11.0](https://github.com/krizaka/krizaka-com/compare/v0.10.0...v0.11.0) (2026-10-30)
 
 
