@@ -21,26 +21,37 @@ interface I18nValue {
   setLocale: (l: Locale) => void;
 }
 
-export function I18nProvider({ children, locale, messages }: { children: ReactNode; locale: Locale; messages: TranslationDictionary }) {
+export function I18nProvider({
+  children,
+  locale,
+  messages,
+}: {
+  children: ReactNode;
+  locale: Locale;
+  messages: TranslationDictionary;
+}) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const setLocale = useCallback((l: Locale) => {
-    if (!pathname) return;
+  const setLocale = useCallback(
+    (l: Locale) => {
+      if (!pathname) return;
 
-    const segments = pathname.split("/");
-    // segments[0] is always empty due to leading slash
-    if (isLocale(segments[1])) {
-      segments[1] = l;
-    } else {
-      segments.splice(1, 0, l);
-    }
+      const segments = pathname.split("/");
+      // segments[0] is always empty due to leading slash
+      if (isLocale(segments[1])) {
+        segments[1] = l;
+      } else {
+        segments.splice(1, 0, l);
+      }
 
-    // Remember the choice, so unprefixed URLs (/, shared links) open in this language next time.
-    document.cookie = `${LOCALE_COOKIE}=${l}; path=/; max-age=31536000; samesite=lax`;
-    const newPath = segments.join("/") || "/";
-    router.push(newPath);
-  }, [pathname, router]);
+      // Remember the choice, so unprefixed URLs (/, shared links) open in this language next time.
+      document.cookie = `${LOCALE_COOKIE}=${l}; path=/; max-age=31536000; samesite=lax`;
+      const newPath = segments.join("/") || "/";
+      router.push(newPath);
+    },
+    [pathname, router],
+  );
 
   return (
     <engine.I18nProvider locale={locale} messages={messages} setLocale={setLocale}>
@@ -53,8 +64,5 @@ export function I18nProvider({ children, locale, messages }: { children: ReactNo
 
 export function useI18n(): I18nValue {
   const { locale, messages, setLocale } = engine.useI18n();
-  return useMemo(
-    () => ({ locale, t: messages, setLocale }),
-    [locale, messages, setLocale],
-  );
+  return useMemo(() => ({ locale, t: messages, setLocale }), [locale, messages, setLocale]);
 }

@@ -19,9 +19,7 @@ function npmPackages(): string {
 /** content/<file> with the placeholders of this deployment filled: the site, the packages. */
 export async function renderLlms(file: "llms.txt" | "llms-full.txt"): Promise<string> {
   const text = await readFile(path.join(process.cwd(), "content", file), "utf8");
-  return text
-    .replaceAll("{{SITE_URL}}", SITE_URL)
-    .replace("{{NPM_PACKAGES}}", () => npmPackages());
+  return text.replaceAll("{{SITE_URL}}", SITE_URL).replace("{{NPM_PACKAGES}}", () => npmPackages());
 }
 
 export const LLMS_HEADERS = { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "public, max-age=3600" };

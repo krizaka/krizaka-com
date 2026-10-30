@@ -70,6 +70,9 @@ test("each bird is a link to its product's entry and says its name; the band and
   assert.ok(strings(link).includes("kz-products-point"));
   assert.ok(strings(link).includes("kz-products-lit"));
   assert.ok(strings(link).includes(".kz-entry[data-product]"), "only the rows follow the scroll, not the birds");
-  const hit = cssDecls("app/components/home/home.css", ".kz-band-hit:is(:hover, :focus-visible, [data-lit]) .kz-band-cap");
+  const hit = cssDecls(
+    "app/components/home/home.css",
+    ".kz-band-hit:is(:hover, :focus-visible, [data-lit]) .kz-band-cap",
+  );
   assert.equal(hit.opacity, "1");
 });

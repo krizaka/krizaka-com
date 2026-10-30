@@ -8,4 +8,5 @@ export const DIRECTION_STEPS = ["now", "next", "later"] as const;
 export type DirectionStep = (typeof DIRECTION_STEPS)[number];
 
 /** The products being built today, each with its status: what « now » says, never typed. */
-export const nowProducts = (products: readonly Product[]): Pick<Product, "id" | "name" | "status">[] => products.map(({ id, name, status }) => ({ id, name, status }));
+export const nowProducts = (products: readonly Product[]): Pick<Product, "id" | "name" | "status">[] =>
+  products.map(({ id, name, status }) => ({ id, name, status }));

@@ -27,7 +27,8 @@ export const LEGACY_BUNNY_PATH = "discovery/services.json";
 /** The paths `publish` writes: the v2 one, plus the legacy one while a published reader (KRIZAKA_MANIFEST_URLS) names it. */
 export function publishPaths(urls = KRIZAKA_MANIFEST_URLS) {
   const legacy = urls.some((u) => new URL(u).pathname === `/${LEGACY_BUNNY_PATH}`);
-  if (legacy && placement(LEGACY_BUNNY_PATH).state !== "legacy") throw new Error(`${LEGACY_BUNNY_PATH} is no longer a legacy path`);
+  if (legacy && placement(LEGACY_BUNNY_PATH).state !== "legacy")
+    throw new Error(`${LEGACY_BUNNY_PATH} is no longer a legacy path`);
   return [assertWritable(BUNNY_PATH), ...(legacy ? [LEGACY_BUNNY_PATH] : [])];
 }
 
@@ -43,7 +44,11 @@ export async function publish({ raw, cfg, fetchImpl = globalThis.fetch, log = co
   for (const path of publishPaths(urls)) {
     const res = await fetchImpl(storageUrl(cfg, path), {
       method: "PUT",
-      headers: { AccessKey: cfg.apiKey, "Content-Type": "application/json", Checksum: createHash("sha256").update(raw).digest("hex").toUpperCase() },
+      headers: {
+        AccessKey: cfg.apiKey,
+        "Content-Type": "application/json",
+        Checksum: createHash("sha256").update(raw).digest("hex").toUpperCase(),
+      },
       body: raw,
     });
     if (!res.ok) throw new Error(`upload of ${path} failed: HTTP ${res.status}`);
@@ -74,7 +79,9 @@ export async function main(argv = process.argv.slice(2), { log = console.log } =
   const { SERVICES, SERVICES_KEY_ID } = await import("../lib/services.ts");
   const previousRaw = existsSync(SIGNED_FILE) ? readFileSync(SIGNED_FILE, "utf8") : null;
   if (flags.has("check")) {
-    const problems = previousRaw ? checkSigned(previousRaw, SERVICES) : ["lib/services.signed.json is missing: run npm run services:sign"];
+    const problems = previousRaw
+      ? checkSigned(previousRaw, SERVICES)
+      : ["lib/services.signed.json is missing: run npm run services:sign"];
     for (const p of problems) log(p);
     if (problems.length) process.exitCode = 1;
     else log("services manifest: signed and in sync with lib/services.ts");
@@ -82,7 +89,10 @@ export async function main(argv = process.argv.slice(2), { log = console.log } =
   }
   if (flags.has("live")) {
     const rows = await live({ raw: previousRaw });
-    for (const r of rows) log(`${r.current ? "current" : "STALE  "}  ${r.status}  ${r.issuedAt ?? ""}  ${r.url}${r.error ? `  (${r.error})` : ""}`);
+    for (const r of rows)
+      log(
+        `${r.current ? "current" : "STALE  "}  ${r.status}  ${r.issuedAt ?? ""}  ${r.url}${r.error ? `  (${r.error})` : ""}`,
+      );
     if (rows.some((r) => !r.current)) process.exitCode = 1;
     return;
   }
@@ -93,7 +103,11 @@ export async function main(argv = process.argv.slice(2), { log = console.log } =
   });
   const raw = `${JSON.stringify(manifest, null, 2)}\n`;
   if (changed) writeFileSync(SIGNED_FILE, raw);
-  log(changed ? `signed ${manifest.issuedAt} (${SERVICES_KEY_ID})` : "unchanged: the data has not changed, the signature is kept");
+  log(
+    changed
+      ? `signed ${manifest.issuedAt} (${SERVICES_KEY_ID})`
+      : "unchanged: the data has not changed, the signature is kept",
+  );
   if (flags.has("publish")) {
     const env = envFile ? { ...process.env, ...parseEnvFile(readFileSync(envFile, "utf8")) } : process.env;
     await publish({ raw: previousRaw && !changed ? previousRaw : raw, cfg: loadConfig(env), log });

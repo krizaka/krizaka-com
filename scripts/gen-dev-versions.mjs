@@ -20,7 +20,10 @@ const fresh = {};
 await Promise.all(
   IDS.map(async (id) => {
     try {
-      const res = await fetch(healthzUrl(id), { headers: { "user-agent": "krizaka-com-build" }, signal: AbortSignal.timeout(8000) });
+      const res = await fetch(healthzUrl(id), {
+        headers: { "user-agent": "krizaka-com-build" },
+        signal: AbortSignal.timeout(8000),
+      });
       const version = res.ok ? versionOfHealthz(await res.json()) : undefined;
       if (version) fresh[id] = version;
       else console.warn(`dev-versions: ${id} answered no usable version`);
@@ -31,4 +34,10 @@ await Promise.all(
 );
 const versions = mergeVersions(IDS, fresh, previous);
 writeFileSync(OUT, JSON.stringify({ versions, fetchedAt: new Date().toISOString() }, null, 2) + "\n");
-console.log(`dev-versions: ${Object.entries(versions).map(([id, v]) => `${id} ${v}`).join(", ") || "none"}`);
+console.log(
+  `dev-versions: ${
+    Object.entries(versions)
+      .map(([id, v]) => `${id} ${v}`)
+      .join(", ") || "none"
+  }`,
+);

@@ -11,7 +11,8 @@ const msg = (l) => JSON.parse(read(`messages/${l}.json`)).site;
 test("every step of the page has its words in both languages, with no price and no invented figure", () => {
   for (const l of ["en", "fr"]) {
     const s = msg(l).services;
-    for (const id of SERVICES_PAGE_ORDER.covers) assert.ok(s.covers[id].title && s.covers[id].body, `${l}: covers.${id}`);
+    for (const id of SERVICES_PAGE_ORDER.covers)
+      assert.ok(s.covers[id].title && s.covers[id].body, `${l}: covers.${id}`);
     for (const id of SERVICES_PAGE_ORDER.steps) assert.ok(s.steps[id].title && s.steps[id].body, `${l}: steps.${id}`);
     for (const { id } of SERVICES_PROOF) assert.ok(s.proof[id].title && s.proof[id].line, `${l}: proof.${id}`);
     assert.doesNotMatch(JSON.stringify(s), /\d|\$|€|CAD/, `${l}: on quote, no figure and no price`);
@@ -19,7 +20,10 @@ test("every step of the page has its words in both languages, with no price and 
 });
 
 test("the proof links are public artefacts: the stack's sites, Orazaka's repository, the blog", () => {
-  assert.deepEqual(SERVICES_PROOF.map((p) => p.id), ["ui", "java", "orazaka", "blog"]);
+  assert.deepEqual(
+    SERVICES_PROOF.map((p) => p.id),
+    ["ui", "java", "orazaka", "blog"],
+  );
   for (const { href } of SERVICES_PROOF) assert.match(href, /^https:\/\//);
 });
 
@@ -36,7 +40,13 @@ test("the one action is the contact form with « Entreprise » preselected", () 
 });
 
 test("a message with the Entreprise topic is accepted", () => {
-  const r = validateContact({ name: "Eric", email: "eric@example.com", topic: "enterprise", message: "We need a module for our intake forms.", locale: "en" });
+  const r = validateContact({
+    name: "Eric",
+    email: "eric@example.com",
+    topic: "enterprise",
+    message: "We need a module for our intake forms.",
+    locale: "en",
+  });
   assert.equal(r.ok, true);
 });
 
@@ -50,5 +60,5 @@ test("the page is registered, in the bar, the footer, the sitemap and llms.txt, 
   assert.match(ld, /"@type": "Service"/);
   assert.match(ld, /provider: \{ "@id": ORG_ID \}/);
   assert.doesNotMatch(ld.slice(ld.indexOf("buildServiceJsonLd")), /offers|price/, "on quote: no price node");
-  assert.match(read("app/[locale]/services/page.tsx"), /<JsonLd data=\{buildServiceJsonLd/);
+  assert.match(read("app/[locale]/services/page.tsx"), /<JsonLd\s+data=\{buildServiceJsonLd/);
 });

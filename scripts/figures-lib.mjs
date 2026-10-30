@@ -22,8 +22,13 @@ export function sampleFigures(selector) {
     el.appendChild(probe);
     const baseline = probe.getBoundingClientRect().bottom + scrollY;
     probe.remove();
-    return { row: Math.round(el.parentElement.getBoundingClientRect().top + scrollY), baseline, // The digits themselves: a NumberTicker draws them in its own spans, which set their own font-variant-numeric.
-      numeric: getComputedStyle(el.querySelector(".kz-count-digit") ?? el.querySelector(".kz-count") ?? el).fontVariantNumeric, text: (el.querySelector(".sr-only") ?? el).textContent.trim() };
+    return {
+      row: Math.round(el.parentElement.getBoundingClientRect().top + scrollY),
+      baseline, // The digits themselves: a NumberTicker draws them in its own spans, which set their own font-variant-numeric.
+      numeric: getComputedStyle(el.querySelector(".kz-count-digit") ?? el.querySelector(".kz-count") ?? el)
+        .fontVariantNumeric,
+      text: (el.querySelector(".sr-only") ?? el).textContent.trim(),
+    };
   });
 }
 
@@ -33,13 +38,15 @@ export function figureProblems({ path, width, theme }, samples) {
   const out = [];
   if (!samples.length) return [`${where}: no figure found`];
   for (const s of samples) {
-    if (!/lining-nums/.test(s.numeric) || !/tabular-nums/.test(s.numeric)) out.push(`${where}: « ${s.text} » is ${s.numeric || "normal"}, not lining-nums tabular-nums`);
+    if (!/lining-nums/.test(s.numeric) || !/tabular-nums/.test(s.numeric))
+      out.push(`${where}: « ${s.text} » is ${s.numeric || "normal"}, not lining-nums tabular-nums`);
   }
   const rows = Map.groupBy(samples, (s) => s.row);
   for (const [, row] of rows) {
     const lines = row.map((s) => s.baseline);
     const spread = Math.max(...lines) - Math.min(...lines);
-    if (spread > 1) out.push(`${where}: the figures ${row.map((s) => `« ${s.text} »`).join(" ")} sit ${Math.round(spread)}px apart`);
+    if (spread > 1)
+      out.push(`${where}: the figures ${row.map((s) => `« ${s.text} »`).join(" ")} sit ${Math.round(spread)}px apart`);
   }
   return out;
 }

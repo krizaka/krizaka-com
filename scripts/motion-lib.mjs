@@ -12,7 +12,11 @@ export const PREFERENCES = ["no-preference", "reduce"];
 
 /** Every page × viewport × theme × motion preference to load. */
 export function cases(paths = PATHS, viewports = VIEWPORTS, themes = THEMES, preferences = PREFERENCES) {
-  return paths.flatMap((path) => viewports.flatMap((vp) => themes.flatMap((theme) => preferences.map((reducedMotion) => ({ path, vp, theme, reducedMotion })))));
+  return paths.flatMap((path) =>
+    viewports.flatMap((vp) =>
+      themes.flatMap((theme) => preferences.map((reducedMotion) => ({ path, vp, theme, reducedMotion }))),
+    ),
+  );
 }
 
 /** Runs in the page: each photon's own dash-offset readings over ~700 ms, and the hub's animation.
@@ -43,7 +47,8 @@ export function motionProblems({ path, vp, theme, reducedMotion }, sample) {
   if (sample.error) return [`${where}: ${sample.error}`];
   const distinct = Math.min(...sample.readings.map((r) => r.length));
   const finite = sample.readings.every((r) => r.every((v) => /^-?[\d.]+(px)?$/.test(v)));
-  if (reducedMotion === "reduce") return distinct === 1 ? [] : [`${where}: the photons move (${distinct} positions) under reduced motion`];
+  if (reducedMotion === "reduce")
+    return distinct === 1 ? [] : [`${where}: the photons move (${distinct} positions) under reduced motion`];
   const out = [];
   if (!finite) out.push(`${where}: the dash offset is not an interpolated length`);
   if (distinct < 4) out.push(`${where}: the photons do not travel (${distinct} distinct positions in 700 ms)`);

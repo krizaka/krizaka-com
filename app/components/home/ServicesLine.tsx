@@ -7,6 +7,20 @@ import { getDictionary } from "@/lib/i18n";
 export default function ServicesLine({ locale }: { locale: string }) {
   const s = getDictionary(locale).site.home.services;
   return (
-    <Section id="services" number={s.number} title={s.title} lead={s.lead} paper="lines" reveal divider margin actions={<ButtonLink href="/services" variant="secondary" size="md">{s.cta}</ButtonLink>} />
+    <Section
+      id="services"
+      number={s.number}
+      title={s.title}
+      lead={s.lead}
+      paper="lines"
+      reveal
+      divider
+      margin
+      actions={
+        <ButtonLink href="/services" variant="secondary" size="md">
+          {s.cta}
+        </ButtonLink>
+      }
+    />
   );
 }

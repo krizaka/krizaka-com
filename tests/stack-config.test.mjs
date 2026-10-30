@@ -9,7 +9,10 @@ const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 
 test("the list: four publications, Krizaka Lab among them, with their registry and status", () => {
-  assert.deepEqual(STACK.map((p) => p.id), ["ui", "motion", "java", "ts"]);
+  assert.deepEqual(
+    STACK.map((p) => p.id),
+    ["ui", "motion", "java", "ts"],
+  );
   for (const p of STACK) {
     assert.ok(p.name && p.url.startsWith("https://") && p.repoUrl.startsWith("https://github.com/krizaka/"), p.id);
     assert.ok(["npm", "maven", "none"].includes(p.registry), `${p.id}: registry`);
@@ -17,7 +20,11 @@ test("the list: four publications, Krizaka Lab among them, with their registry a
     assert.ok(["docs", "lab"].includes(p.action), `${p.id}: action`);
   }
   const motion = STACK.find((p) => p.id === "motion");
-  assert.deepEqual([motion.registry, motion.status, motion.action], ["none", "development", "lab"], "the lab is not a package and is still in development");
+  assert.deepEqual(
+    [motion.registry, motion.status, motion.action],
+    ["none", "development", "lab"],
+    "the lab is not a package and is still in development",
+  );
   assert.equal(new Set(STACK.map((p) => p.id)).size, STACK.length);
 });
 
@@ -38,7 +45,11 @@ test("Krizaka Lab is served over HTTPS at lab.krizaka.com, one value in the data
   const data = read("lib/stack.ts");
   assert.match(data, /const LAB_SITE = "https:\/\/lab\.krizaka\.com";/);
   assert.doesNotMatch(data, /github\.io/);
-  assert.doesNotMatch(read("app/components/home/OpenStack.tsx"), /github\.io|lab\.krizaka\.com/, "no host typed in a component");
+  assert.doesNotMatch(
+    read("app/components/home/OpenStack.tsx"),
+    /github\.io|lab\.krizaka\.com/,
+    "no host typed in a component",
+  );
 });
 
 test("the tiles are the only drawing of the stack: no row, no home visual left", () => {

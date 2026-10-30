@@ -92,9 +92,7 @@ const nextConfig: NextConfig = {
       {
         // AI/agent + crawl assets: short cache, always revalidate.
         source: "/:file(llms.txt|llms-full.txt)",
-        headers: [
-          { key: "Cache-Control", value: "public, max-age=3600, must-revalidate" },
-        ],
+        headers: [{ key: "Cache-Control", value: "public, max-age=3600, must-revalidate" }],
       },
     ];
   },

@@ -23,7 +23,15 @@ export interface LightboxFilm {
   vtt: string;
 }
 
-export default function FilmLightbox({ film, fallback, trigger }: { film: LightboxFilm; fallback: LightboxFilm; /** Another way to open it (/story: the poster card); the home's ghost button by default. */ trigger?: ReactNode }) {
+export default function FilmLightbox({
+  film,
+  fallback,
+  trigger,
+}: {
+  film: LightboxFilm;
+  fallback: LightboxFilm;
+  /** Another way to open it (/story: the poster card); the home's ghost button by default. */ trigger?: ReactNode;
+}) {
   const { t, locale } = useI18n();
   const [light, setLight] = useState(false);
   const h = t.site.home.hero;
@@ -53,7 +61,12 @@ export default function FilmLightbox({ film, fallback, trigger }: { film: Lightb
           preload="none"
           autoPlay={!light}
           title={light ? w.player : w.family.player}
-          tracks={(["en", "fr"] as const).map((lang) => ({ src: `/${lang}/story/${play.vtt}`, srcLang: lang, label: w.captions[lang], default: lang === locale }))}
+          tracks={(["en", "fr"] as const).map((lang) => ({
+            src: `/${lang}/story/${play.vtt}`,
+            srcLang: lang,
+            label: w.captions[lang],
+            default: lang === locale,
+          }))}
           labels={labels}
         />
       </Dialog.Content>

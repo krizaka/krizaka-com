@@ -10,7 +10,10 @@ const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, impo
 test("the marks under the hero: Orazaka, then Akinaza, Yomizaka, then the rest as listed", () => {
   const ids = heroMarkOrder(PRODUCTS).map((p) => p.id);
   assert.deepEqual(ids.slice(0, 3), ["orazaka", "akinaza", "yomizaka"]);
-  assert.deepEqual(ids.slice(3), PRODUCTS.map((p) => p.id).filter((id) => !ids.slice(0, 3).includes(id)));
+  assert.deepEqual(
+    ids.slice(3),
+    PRODUCTS.map((p) => p.id).filter((id) => !ids.slice(0, 3).includes(id)),
+  );
   assert.equal(ids.length, PRODUCTS.length);
 });
 
@@ -30,7 +33,11 @@ test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its flow
   assert.match(fn, /code=\{code\(p\)\}/, "its catalogue number is KZ-01 (first of lib/products.ts)");
   assert.match(fn, /<EngineFlowView/);
   assert.match(fn, /<Caption figure=\{figNo\(s\.figureLabel, p\)\}/, "the flow is a numbered figure like the others");
-  assert.match(fn, /className=\{cn\("kz-entry", "kz-entry-engine", "brand-" \+ p\.id\)\}/, "same entry, its brand light");
+  assert.match(
+    fn,
+    /className=\{cn\("kz-entry", "kz-entry-engine", "brand-" \+ p\.id\)\}/,
+    "same entry, its brand light",
+  );
   assert.match(fn, /<details className="kz-entry-gives"/, "what it gives is folded in the tag");
   assert.match(fn, /<Bird bird=\{ENGINE_TAG_BIRD\}/, "its mascot");
   assert.doesNotMatch(fn, /kz-foundation/, "the foundation plate is gone");
@@ -38,10 +45,18 @@ test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its flow
   assert.match(fn, /href=\{`#product-\$\{x\.id\}`\}/, "each powered product is a link to its entry");
   assert.match(src, /href="#product-orazaka"/, "each product's card links back to the engine");
   assert.doesNotMatch(fn, /webhook|run events|SSE/i, "only what runs is said (orazaka#189)");
-  assert.match(readFileSync(new URL("../lib/story.ts", import.meta.url), "utf8"), /ENGINE_TAG_BIRD: StoryBird = "duck"/, "the duck builds");
+  assert.match(
+    readFileSync(new URL("../lib/story.ts", import.meta.url), "utf8"),
+    /ENGINE_TAG_BIRD: StoryBird = "duck"/,
+    "the duck builds",
+  );
   const css = readFileSync(new URL("../app/components/home/home.css", import.meta.url), "utf8");
   assert.doesNotMatch(css, /\.kz-foundation/);
-  assert.doesNotMatch(css.slice(css.indexOf(".kz-entry-gives")), /#[0-9a-f]{3,6}\b|glow|blur\(|radial-gradient/i, "tokens only");
+  assert.doesNotMatch(
+    css.slice(css.indexOf(".kz-entry-gives")),
+    /#[0-9a-f]{3,6}\b|glow|blur\(|radial-gradient/i,
+    "tokens only",
+  );
   for (const l of ["en", "fr"]) {
     const e = msg(l).site.home.engine;
     assert.deepEqual(Object.keys(e.gives), ["models", "pipeline", "analytics"], l);

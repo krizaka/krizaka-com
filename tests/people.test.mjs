@@ -9,7 +9,8 @@ const manifest = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", imp
 test("every portrait lives under its own product's folder", () => {
   for (const p of people.people) {
     assert.ok(people.products.includes(p.product), `${p.product} is not a product with people`);
-    for (const file of p.files) assert.ok(file.startsWith(`people/${p.product}/${p.id}-`), `${file} is not under people/${p.product}/${p.id}-`);
+    for (const file of p.files)
+      assert.ok(file.startsWith(`people/${p.product}/${p.id}-`), `${file} is not under people/${p.product}/${p.id}-`);
   }
 });
 
@@ -32,6 +33,6 @@ test("no two portraits come from the same generation", () => {
 });
 
 test("every portrait is on the CDN", () => {
-  for (const p of people.people) for (const file of p.files) assert.ok(manifest.files[file], `${file} is not in lib/cdn-manifest.json`);
+  for (const p of people.people)
+    for (const file of p.files) assert.ok(manifest.files[file], `${file} is not in lib/cdn-manifest.json`);
 });
-

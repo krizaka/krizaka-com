@@ -14,7 +14,15 @@ export interface PublicChannelWords {
 
 /** A compact, scannable list — Products · Open source — one line per repository: its mark, its name, one link to the
  *  conversation of `kind`. Discussions off there: the line says « via an issue » and links the labelled new issue. */
-export default function PublicChannelList({ groups, kind, words }: { groups: ChannelGroup[]; kind: ChannelKind; words: PublicChannelWords }) {
+export default function PublicChannelList({
+  groups,
+  kind,
+  words,
+}: {
+  groups: ChannelGroup[];
+  kind: ChannelKind;
+  words: PublicChannelWords;
+}) {
   return (
     <div className="pc-list">
       {groups.map((g) => (
@@ -26,7 +34,13 @@ export default function PublicChannelList({ groups, kind, words }: { groups: Cha
               const aria = format(kind === "discussions" ? words.discussionsAria : words.issuesAria, { name: e.name });
               return (
                 <li key={e.id}>
-                  <a className="pc-row" href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.viaIssue ? `${aria} (${words.viaIssue})` : aria}>
+                  <a
+                    className="pc-row"
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={link.viaIssue ? `${aria} (${words.viaIssue})` : aria}
+                  >
                     <ProductLogo id={e.mark as never} size={22} animated={false} />
                     <span className="pc-name">{e.name}</span>
                     {link.viaIssue ? <span className="pc-via">{words.viaIssue}</span> : null}

@@ -22,7 +22,10 @@ test("the five rules are a numbered notebook list, no box in a box", () => {
   assert.match(css, /\.kz-notebook-list\b[^{]*\{/);
   assert.match(css, /counter-increment/);
   assert.match(css, /var\(--kz-paper-rule-margin\)/);
-  assert.doesNotMatch(css.match(/\.kz-notebook-list[^{]*\{[^}]*\}/g)?.join("") ?? "", /box-shadow|border-radius|radial-gradient|blur\(/);
+  assert.doesNotMatch(
+    css.match(/\.kz-notebook-list[^{]*\{[^}]*\}/g)?.join("") ?? "",
+    /box-shadow|border-radius|radial-gradient|blur\(/,
+  );
 });
 
 test("§ 4 ends on a folio, derived from the section list", () => {

@@ -22,43 +22,113 @@
    their edges line up at every width (no page drifts to one side on a wide screen). Pages build on the blocks of
    @krizaka/ui (Page, Section, PageHero…); these values are the site's settings of their contract. */
 :root {
-  --kz-page-max: 72rem;                           /* the content of a page (1152 px) */
-  --kz-page-max-docs: 88rem;                      /* the documentation: sidebar · page · table of contents */
-  --kz-hero-top: clamp(112px, 14vw, 156px);       /* a hero clears the floating bar */
-  --kz-anchor-offset: 96px;                       /* an anchor lands under the bar */
+  --kz-page-max: 72rem; /* the content of a page (1152 px) */
+  --kz-page-max-docs: 88rem; /* the documentation: sidebar · page · table of contents */
+  --kz-hero-top: clamp(112px, 14vw, 156px); /* a hero clears the floating bar */
+  --kz-anchor-offset: 96px; /* an anchor lands under the bar */
 }
 /* The bar is as wide as the page under it (the frame of the docs on /docs): its edges are the content's edges. Not
    in a layer, so it wins over NavBar's own max-width utilities; it keeps that width when it tightens on scroll. */
-.kz-site-bar-wrap { padding-inline: var(--kz-page-gutter, clamp(16px, 3.2vw, 32px)); }
-.kz-site-bar, .kz-site-bar[data-compact] { max-width: var(--kz-page-max); }
-.kz-site-bar[data-frame="docs"] { max-width: var(--kz-page-max-docs); }
+.kz-site-bar-wrap {
+  padding-inline: var(--kz-page-gutter, clamp(16px, 3.2vw, 32px));
+}
+.kz-site-bar,
+.kz-site-bar[data-compact] {
+  max-width: var(--kz-page-max);
+}
+.kz-site-bar[data-frame="docs"] {
+  max-width: var(--kz-page-max-docs);
+}
 /* The brand of the bar: the mark and the word, one link home (the products are presented there). */
-.kz-site-brand { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; }
-.kz-site-brand-word { font-family: var(--font-display), system-ui, sans-serif; font-size: 16px; font-weight: 800; letter-spacing: -.02em; color: var(--kz-text-primary); }
+.kz-site-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  text-decoration: none;
+}
+.kz-site-brand-word {
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--kz-text-primary);
+}
 /* A subject's hue (a building block…): its rail, icon tile, bird, light and numbers — the --kz-hue contract of the
    blocks. Krizaka palette only (blues and ink, never a product colour); --kz-hue is decorative (≥ 3:1 on the surfaces),
    --kz-hue-text is for small text (≥ 4.5:1 on surface-0, -1 and -2, both themes). Without a hue, blocks fall back to
    the page's accent, so a brand page stays on brand. */
-[data-hue="cobalt"] { --kz-hue: hsl(210 52% 60%); --kz-hue-2: hsl(200 45% 62%); --kz-hue-text: hsl(208 58% 74%); }
-[data-hue="sky"]    { --kz-hue: hsl(199 55% 55%); --kz-hue-2: hsl(190 50% 52%); --kz-hue-text: hsl(199 55% 70%); }
-[data-hue="cyan"]   { --kz-hue: hsl(186 72% 45%); --kz-hue-2: hsl(196 80% 52%); --kz-hue-text: hsl(186 70% 58%); }
-[data-hue="indigo"] { --kz-hue: hsl(232 50% 70%); --kz-hue-2: hsl(222 50% 66%); --kz-hue-text: hsl(232 60% 82%); }
-[data-hue="steel"]  { --kz-hue: hsl(212 32% 62%); --kz-hue-2: hsl(206 40% 70%); --kz-hue-text: hsl(212 36% 74%); }
-[data-hue="ink"]    { --kz-hue: hsl(220 16% 80%); --kz-hue-2: hsl(217 40% 70%); --kz-hue-text: hsl(220 16% 86%); }
-html.light [data-hue="cobalt"] { --kz-hue: hsl(208 54% 40%); --kz-hue-2: hsl(200 50% 36%); --kz-hue-text: hsl(208 56% 32%); }
-html.light [data-hue="sky"]    { --kz-hue: hsl(199 60% 34%); --kz-hue-2: hsl(190 55% 32%); --kz-hue-text: hsl(200 62% 27%); }
-html.light [data-hue="cyan"]   { --kz-hue: hsl(186 80% 32%); --kz-hue-2: hsl(196 80% 38%); --kz-hue-text: hsl(188 85% 24%); }
-html.light [data-hue="indigo"] { --kz-hue: hsl(232 45% 48%); --kz-hue-2: hsl(222 45% 46%); --kz-hue-text: hsl(232 45% 40%); }
-html.light [data-hue="steel"]  { --kz-hue: hsl(212 28% 46%); --kz-hue-2: hsl(206 34% 50%); --kz-hue-text: hsl(212 30% 34%); }
-html.light [data-hue="ink"]    { --kz-hue: hsl(222 30% 22%); --kz-hue-2: hsl(217 50% 40%); --kz-hue-text: hsl(222 30% 20%); }
+[data-hue="cobalt"] {
+  --kz-hue: hsl(210 52% 60%);
+  --kz-hue-2: hsl(200 45% 62%);
+  --kz-hue-text: hsl(208 58% 74%);
+}
+[data-hue="sky"] {
+  --kz-hue: hsl(199 55% 55%);
+  --kz-hue-2: hsl(190 50% 52%);
+  --kz-hue-text: hsl(199 55% 70%);
+}
+[data-hue="cyan"] {
+  --kz-hue: hsl(186 72% 45%);
+  --kz-hue-2: hsl(196 80% 52%);
+  --kz-hue-text: hsl(186 70% 58%);
+}
+[data-hue="indigo"] {
+  --kz-hue: hsl(232 50% 70%);
+  --kz-hue-2: hsl(222 50% 66%);
+  --kz-hue-text: hsl(232 60% 82%);
+}
+[data-hue="steel"] {
+  --kz-hue: hsl(212 32% 62%);
+  --kz-hue-2: hsl(206 40% 70%);
+  --kz-hue-text: hsl(212 36% 74%);
+}
+[data-hue="ink"] {
+  --kz-hue: hsl(220 16% 80%);
+  --kz-hue-2: hsl(217 40% 70%);
+  --kz-hue-text: hsl(220 16% 86%);
+}
+html.light [data-hue="cobalt"] {
+  --kz-hue: hsl(208 54% 40%);
+  --kz-hue-2: hsl(200 50% 36%);
+  --kz-hue-text: hsl(208 56% 32%);
+}
+html.light [data-hue="sky"] {
+  --kz-hue: hsl(199 60% 34%);
+  --kz-hue-2: hsl(190 55% 32%);
+  --kz-hue-text: hsl(200 62% 27%);
+}
+html.light [data-hue="cyan"] {
+  --kz-hue: hsl(186 80% 32%);
+  --kz-hue-2: hsl(196 80% 38%);
+  --kz-hue-text: hsl(188 85% 24%);
+}
+html.light [data-hue="indigo"] {
+  --kz-hue: hsl(232 45% 48%);
+  --kz-hue-2: hsl(222 45% 46%);
+  --kz-hue-text: hsl(232 45% 40%);
+}
+html.light [data-hue="steel"] {
+  --kz-hue: hsl(212 28% 46%);
+  --kz-hue-2: hsl(206 34% 50%);
+  --kz-hue-text: hsl(212 30% 34%);
+}
+html.light [data-hue="ink"] {
+  --kz-hue: hsl(222 30% 22%);
+  --kz-hue-2: hsl(217 50% 40%);
+  --kz-hue-text: hsl(222 30% 20%);
+}
 /* The bird and the icon node of a subject wear its hue. */
-[data-hue] :is(.kz-block-icon, .kz-arg-mark, .kz-quote-bird, .kz-hero-aside) { --kz-accent: var(--kz-hue); --kz-accent-2: var(--kz-hue-2); }
+[data-hue] :is(.kz-block-icon, .kz-arg-mark, .kz-quote-bird, .kz-hero-aside) {
+  --kz-accent: var(--kz-hue);
+  --kz-accent-2: var(--kz-hue-2);
+}
 
 :root {
   /* The Krizaka typography: the files of @krizaka/fonts, loaded and preloaded by next/font/local in the locale layout
      (--font-kz-*: hashed families with their own adjusted fallback), in the token roles. The site's older styles read
      --font-display / --font-mono: they follow the tokens. */
-  --kz-font-sans: var(--font-kz-text), "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --kz-font-sans:
+    var(--font-kz-text), "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --kz-font-display: var(--font-kz-display), "Young Serif", Georgia, serif;
   --kz-font-mono: var(--font-kz-mono), "Courier Prime", "Courier New", ui-monospace, Menlo, monospace;
   --font-display: var(--kz-font-display);
@@ -96,7 +166,6 @@ html.light ::selection {
   color: hsl(217, 92%, 30%);
 }
 
-
 /* ─── Base Reset ─── */
 /* Kept in @layer base so Tailwind utilities (mx-auto, px-*, pt-*, gap is unaffected)
    win over the margin/padding zeroing. Previously this reset was unlayered and beat
@@ -123,17 +192,21 @@ body {
   background: var(--kz-surface-0);
   color: var(--kz-text-primary);
   font-family: var(--kz-font-text);
-  font-feature-settings: 'cv02', 'cv03', 'cv04';
+  font-feature-settings: "cv02", "cv03", "cv04";
   letter-spacing: 0; /* Atkinson Hyperlegible Next is drawn open: no tightening (Cahier) */
   min-height: 100dvh;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 /* ─── Accessibility: Reduced Motion ─── */
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -171,46 +244,86 @@ body {
 
 /* Status dot pulse */
 @keyframes status-pulse {
-  0%, 100% { opacity: 0.3; }
-  50%      { opacity: 1; }
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
 }
 
 /* Cursor blink */
 @keyframes cursor-blink {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 /* Breathing glow — for active cards */
 @keyframes breathing-glow {
-  0%, 100% { box-shadow: 0 0 0 0 transparent; }
-  50%      { box-shadow: 0 0 0 1px hsla(217, 92%, 60%, 0.08), 0 0 16px hsla(217, 92%, 60%, 0.06); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow:
+      0 0 0 1px hsla(217, 92%, 60%, 0.08),
+      0 0 16px hsla(217, 92%, 60%, 0.06);
+  }
 }
 
 /* Stagger children fade-up */
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Shimmer — data flow particle */
 @keyframes shimmer {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(400%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
 }
 
 /* Orbit keyframe */
 @keyframes orbit-path {
-  from { offset-distance: 0%; }
-  to   { offset-distance: 100%; }
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
 }
 @keyframes radar-rotate {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @keyframes radar-pulse {
-  0%, 100% { opacity: 0.04; }
-  50%      { opacity: 0.08; }
+  0%,
+  100% {
+    opacity: 0.04;
+  }
+  50% {
+    opacity: 0.08;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -243,7 +356,6 @@ body {
 
 /* ─── Tablet (≤ 768px) ─── */
 @media (max-width: 768px) {
-
   .footer-inner {
     flex-direction: column;
     gap: 16px;
@@ -251,18 +363,27 @@ body {
   }
 }
 
-
-
 /* ─── Links of the organisation pages (sections, frame and headings come from @krizaka/ui/page) ─── */
-.kz-link-strong, .kz-link { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px; text-decoration: none; }
-.kz-link-strong { color: var(--kz-accent-text); font-weight: 700; }
-.kz-link { color: var(--kz-text-secondary); }
-.kz-link:hover { color: var(--kz-text-primary); }
+.kz-link-strong,
+.kz-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13.5px;
+  text-decoration: none;
+}
+.kz-link-strong {
+  color: var(--kz-accent-text);
+  font-weight: 700;
+}
+.kz-link {
+  color: var(--kz-text-secondary);
+}
+.kz-link:hover {
+  color: var(--kz-text-primary);
+}
 
 /* RepositoryMap */
-
-
-
 
 /* ═══════════════════════════════════════════════════════════════════
    Brand pages — the Krizaka visual language (BRAND.md §4) on the site
@@ -276,15 +397,38 @@ body {
    --kz-surface-0 (krizaka/krizaka-ui#38), so `.kz-backdrop` from @krizaka/ui needs no override here. */
 /* `glide`: rises from the page surface into the brand tint and settles back on it — consecutive sections of
    different brands (the home) meet on the surface, never on a hard band. */
-html .kz-backdrop.bp-glide { background: var(--kz-surface-0); }
-html .kz-backdrop.bp-glide > .kz-backdrop-dome { top: -10%; opacity: .7; }
+html .kz-backdrop.bp-glide {
+  background: var(--kz-surface-0);
+}
+html .kz-backdrop.bp-glide > .kz-backdrop-dome {
+  top: -10%;
+  opacity: 0.7;
+}
 
 /* Terminal (Orazaka three commands) */
-.bp-term { border-radius: 0; overflow: hidden; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1); box-shadow: var(--kz-shadow-lg); }
-.bp-term pre { margin: 0; padding: 18px; font-family: var(--font-mono); font-size: 13.5px; line-height: 2; color: var(--kz-text-primary); overflow-x: auto; }
-.bp-term pre span { color: var(--kz-accent-text); }
+.bp-term {
+  border-radius: 0;
+  overflow: hidden;
+  border: 1px solid var(--kz-border-default);
+  background: var(--kz-surface-1);
+  box-shadow: var(--kz-shadow-lg);
+}
+.bp-term pre {
+  margin: 0;
+  padding: 18px;
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  line-height: 2;
+  color: var(--kz-text-primary);
+  overflow-x: auto;
+}
+.bp-term pre span {
+  color: var(--kz-accent-text);
+}
 /* Light theme: the footage is screened onto the tint (its shadows vanish), never a grey panel. */
-html.light .kz-backdrop-media { mix-blend-mode: screen; }
+html.light .kz-backdrop-media {
+  mix-blend-mode: screen;
+}
 
 /* ═══════════════════════════════════════════════════════════════════
    SITE MOTION — what krizaka.com adds to the Krizaka motion signature
@@ -297,7 +441,9 @@ html.light .kz-backdrop-media { mix-blend-mode: screen; }
    ═══════════════════════════════════════════════════════════════════ */
 
 /* The first screen is painted still (LCP): its loops wait for the page to settle (MotionObserver sets data-motion). */
-html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type) :is(*, *::before, *::after):not(.kz-backdrop-media, [data-parallax]) {
+html:not([data-motion="ready"])
+  :is(main > header, main > section:first-of-type)
+  :is(*, *::before, *::after):not(.kz-backdrop-media, [data-parallax]) {
   animation-play-state: paused !important;
 }
 
@@ -312,7 +458,9 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
   }
 }
 @keyframes kz-parallax {
-  to { transform: translate3d(0, 14%, 0); }
+  to {
+    transform: translate3d(0, 14%, 0);
+  }
 }
 
 /* Long reads: a hairline that fills with the page (docs; scroll-driven, no JS, absent where unsupported). */
@@ -337,19 +485,32 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
   }
 }
 @keyframes kz-read {
-  to { transform: scaleX(1); }
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* The Orazaka terminal: its three commands are typed in, one after the other, when it arrives. */
 .bp-term[data-reveal] pre > div {
   opacity: 0;
   transform: translateX(-6px);
-  transition: opacity 0.45s var(--kz-ease), transform 0.45s var(--kz-ease);
+  transition:
+    opacity 0.45s var(--kz-ease),
+    transform 0.45s var(--kz-ease);
 }
-.bp-term.kz-in pre > div { opacity: 1; transform: none; }
-.bp-term.kz-in pre > div:nth-child(1) { transition-delay: 450ms; }
-.bp-term.kz-in pre > div:nth-child(2) { transition-delay: 900ms; }
-.bp-term.kz-in pre > div:nth-child(3) { transition-delay: 1350ms; }
+.bp-term.kz-in pre > div {
+  opacity: 1;
+  transform: none;
+}
+.bp-term.kz-in pre > div:nth-child(1) {
+  transition-delay: 450ms;
+}
+.bp-term.kz-in pre > div:nth-child(2) {
+  transition-delay: 900ms;
+}
+.bp-term.kz-in pre > div:nth-child(3) {
+  transition-delay: 1350ms;
+}
 
 /* Reduced motion: still, and everything readable. */
 @media (prefers-reduced-motion: reduce) {
@@ -367,31 +528,133 @@ html:not([data-motion="ready"]) :is(main > header, main > section:first-of-type)
    prose, two columns, lists that say yes or no, release lines. Frame, headings, cards, decisions, code and calls to
    act are the blocks' (AGENTS.md §4.1).
    ═══════════════════════════════════════════════════════════════════ */
-.rd-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; }
-@media (max-width: 860px) { .rd-two { grid-template-columns: minmax(0, 1fr); } }
-.rd-stack { display: grid; gap: 16px; min-width: 0; align-content: start; }
-.rd-prose { margin: 0; font-size: 15.5px; line-height: 1.75; color: var(--kz-text-secondary); }
-.rd-prose.is-small { font-size: 14.5px; }
-.rd-h2 { font-size: clamp(1.25rem, 2.6vw, 1.6rem); scroll-margin-top: var(--kz-anchor-offset); }
+.rd-two {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+}
+@media (max-width: 860px) {
+  .rd-two {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+.rd-stack {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+  align-content: start;
+}
+.rd-prose {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--kz-text-secondary);
+}
+.rd-prose.is-small {
+  font-size: 14.5px;
+}
+.rd-h2 {
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  scroll-margin-top: var(--kz-anchor-offset);
+}
 /* The problem in one sentence, large: what a reader keeps if they read nothing else. */
-.rd-hook { margin: 0 0 22px; max-width: 34ch; font-family: var(--kz-font-display); font-size: clamp(1.25rem, 2.6vw, 1.6rem);
-  font-weight: 750; line-height: 1.3; letter-spacing: -.015em; color: var(--kz-text-primary); text-wrap: balance; }
-.kz-list.rd-no li::before { width: 9px; height: 2px; top: .78em; border-radius: 1px; background: var(--kz-text-secondary); }
-.kz-list.rd-large li { font-size: 16px; color: var(--kz-text-primary); padding-left: 24px; }
-.kz-list.rd-large li::before { top: .5em; width: 10px; height: 10px; border-radius: 3px;
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--kz-hue, var(--kz-accent)) 18%, transparent); }
-.rd-links { display: flex; flex-wrap: wrap; gap: 10px; }
-.rd-status { display: grid; gap: 10px; }
-.rd-release { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding: 12px 14px;
-  border-radius: 0; background: var(--kz-surface-1); border: 1px solid var(--kz-border-default); text-decoration: none; color: inherit; }
-.rd-release:hover { border-color: var(--kz-border-strong); }
-.rd-release:focus-visible { outline: 2px solid var(--kz-accent); outline-offset: 2px; }
-.rd-release > code { font-family: var(--kz-font-mono); font-size: 12.5px; color: var(--kz-text-primary); overflow-wrap: anywhere; }
-.rd-next { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-.rd-next li { padding: 12px 14px 12px 16px; border-radius: 0; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary);
-  background: color-mix(in srgb, var(--kz-warning) 6%, var(--kz-surface-1)); border: 1px solid color-mix(in srgb, var(--kz-warning) 26%, transparent);
-  box-shadow: inset 3px 0 0 var(--kz-warning); }
-.rd-next a { display: inline-flex; align-items: center; gap: 4px; margin-left: 6px; font-family: var(--kz-font-mono); font-size: 12px; font-weight: 700;
-  color: var(--kz-accent-text); text-decoration: none; white-space: nowrap; }
-.rd-next a:hover { text-decoration: underline; }
-.rd-last { padding-bottom: 40px; }
+.rd-hook {
+  margin: 0 0 22px;
+  max-width: 34ch;
+  font-family: var(--kz-font-display);
+  font-size: clamp(1.25rem, 2.6vw, 1.6rem);
+  font-weight: 750;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--kz-text-primary);
+  text-wrap: balance;
+}
+.kz-list.rd-no li::before {
+  width: 9px;
+  height: 2px;
+  top: 0.78em;
+  border-radius: 1px;
+  background: var(--kz-text-secondary);
+}
+.kz-list.rd-large li {
+  font-size: 16px;
+  color: var(--kz-text-primary);
+  padding-left: 24px;
+}
+.kz-list.rd-large li::before {
+  top: 0.5em;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--kz-hue, var(--kz-accent)) 18%, transparent);
+}
+.rd-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.rd-status {
+  display: grid;
+  gap: 10px;
+}
+.rd-release {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding: 12px 14px;
+  border-radius: 0;
+  background: var(--kz-surface-1);
+  border: 1px solid var(--kz-border-default);
+  text-decoration: none;
+  color: inherit;
+}
+.rd-release:hover {
+  border-color: var(--kz-border-strong);
+}
+.rd-release:focus-visible {
+  outline: 2px solid var(--kz-accent);
+  outline-offset: 2px;
+}
+.rd-release > code {
+  font-family: var(--kz-font-mono);
+  font-size: 12.5px;
+  color: var(--kz-text-primary);
+  overflow-wrap: anywhere;
+}
+.rd-next {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+.rd-next li {
+  padding: 12px 14px 12px 16px;
+  border-radius: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--kz-text-secondary);
+  background: color-mix(in srgb, var(--kz-warning) 6%, var(--kz-surface-1));
+  border: 1px solid color-mix(in srgb, var(--kz-warning) 26%, transparent);
+  box-shadow: inset 3px 0 0 var(--kz-warning);
+}
+.rd-next a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  font-family: var(--kz-font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--kz-accent-text);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.rd-next a:hover {
+  text-decoration: underline;
+}
+.rd-last {
+  padding-bottom: 40px;
+}

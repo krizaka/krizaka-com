@@ -40,7 +40,11 @@ test("the home and /story render the products from PRODUCTS: the home's rows, /s
   assert.match(home, /href=\{p\.repoUrl\}/);
   assert.doesNotMatch(story, /ProfileCard|StatGauge|ChoiceGrid/, "/story draws no tile of its own");
   const os = read("app/[locale]/open-source/page.tsx");
-  assert.doesNotMatch(os, /id="repositories"/, "the repositories table is gone (2026-10-30, #487): GitHub is the source");
+  assert.doesNotMatch(
+    os,
+    /id="repositories"/,
+    "the repositories table is gone (2026-10-30, #487): GitHub is the source",
+  );
   assert.doesNotMatch(
     os,
     /id="runs-on"/,

@@ -34,12 +34,23 @@ export function uiPathOf(slug: string): string {
 export function uiRedirects(): Redirect[] {
   const named = ["", ...GET_STARTED, ...FOUNDATIONS, ...PACKAGES, "mobile", "templates", "screens"];
   const rules: Redirect[] = [];
-  for (const [prefix, target] of [["/fr", `${UI_SITE}/fr`], ["/:locale(en)?", UI_SITE]] as const) {
+  for (const [prefix, target] of [
+    ["/fr", `${UI_SITE}/fr`],
+    ["/:locale(en)?", UI_SITE],
+  ] as const) {
     for (const slug of named) {
       const path = uiPathOf(slug);
-      rules.push({ source: `${prefix}/docs/ui${slug ? `/${slug}` : ""}`, destination: `${target}${path === "/" ? "/" : `${path}/`}`, statusCode: 308 });
+      rules.push({
+        source: `${prefix}/docs/ui${slug ? `/${slug}` : ""}`,
+        destination: `${target}${path === "/" ? "/" : `${path}/`}`,
+        statusCode: 308,
+      });
     }
-    rules.push({ source: `${prefix}/docs/ui/templates-:intent`, destination: `${target}/templates/:intent/`, statusCode: 308 });
+    rules.push({
+      source: `${prefix}/docs/ui/templates-:intent`,
+      destination: `${target}/templates/:intent/`,
+      statusCode: 308,
+    });
     rules.push({ source: `${prefix}/docs/ui/:name`, destination: `${target}/components/:name/`, statusCode: 308 });
     // Deeper than one segment never existed; keep the reader on the site rather than on a 404.
     rules.push({ source: `${prefix}/docs/ui/:path+`, destination: `${target}/`, statusCode: 308 });

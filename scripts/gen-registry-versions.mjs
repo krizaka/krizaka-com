@@ -24,7 +24,10 @@ import { fileURLToPath } from "node:url";
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "registry-versions.json");
 const TIMEOUT = 8000;
 const get = async (url, as = "json") => {
-  const res = await fetch(url, { headers: { "user-agent": "krizaka-com-build" }, signal: AbortSignal.timeout(TIMEOUT) });
+  const res = await fetch(url, {
+    headers: { "user-agent": "krizaka-com-build" },
+    signal: AbortSignal.timeout(TIMEOUT),
+  });
   if (!res.ok) throw new Error(`${url} answered ${res.status}`);
   return as === "json" ? res.json() : res.text();
 };
@@ -49,29 +52,31 @@ async function npmVersions() {
   for (const name of names) {
     entries.push(
       await (async () => {
-      const [latest, downloads] = await Promise.all([
-        get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`),
-        get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch(() => null),
-      ]);
-      // npm posts its counts a day or two late: the window ends on the day `last-week` itself ends on (never on a
-      // day not yet counted, which would read as 0), so the newest bucket equals the weekly figure.
-      const endDay = /^\d{4}-\d{2}-\d{2}$/.test(downloads?.end ?? "") ? downloads.end : null;
-      const window = endDay ? rangeWindow(endDay, 12) : null;
-      const range = window ? await getPaced(`https://api.npmjs.org/downloads/range/${window.start}:${window.end}/${name}`) : null;
-      const series = window ? weeklyBuckets(range, window.end, 12) : null;
-      const repository = typeof latest.repository === "string" ? latest.repository : latest.repository?.url;
-      return [
-        name,
-        latest.version,
-        {
-          description: latest.description ?? "",
-          keywords: Array.isArray(latest.keywords) ? latest.keywords : [],
-          ...(repository ? { repository: githubUrl(repository) } : {}),
-          ...(typeof latest.homepage === "string" ? { homepage: latest.homepage } : {}),
-          ...(Number.isInteger(downloads?.downloads) ? { weeklyDownloads: downloads.downloads } : {}),
-          ...(series ? { weeklySeries: series } : {}),
-        },
-      ];
+        const [latest, downloads] = await Promise.all([
+          get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`),
+          get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch(() => null),
+        ]);
+        // npm posts its counts a day or two late: the window ends on the day `last-week` itself ends on (never on a
+        // day not yet counted, which would read as 0), so the newest bucket equals the weekly figure.
+        const endDay = /^\d{4}-\d{2}-\d{2}$/.test(downloads?.end ?? "") ? downloads.end : null;
+        const window = endDay ? rangeWindow(endDay, 12) : null;
+        const range = window
+          ? await getPaced(`https://api.npmjs.org/downloads/range/${window.start}:${window.end}/${name}`)
+          : null;
+        const series = window ? weeklyBuckets(range, window.end, 12) : null;
+        const repository = typeof latest.repository === "string" ? latest.repository : latest.repository?.url;
+        return [
+          name,
+          latest.version,
+          {
+            description: latest.description ?? "",
+            keywords: Array.isArray(latest.keywords) ? latest.keywords : [],
+            ...(repository ? { repository: githubUrl(repository) } : {}),
+            ...(typeof latest.homepage === "string" ? { homepage: latest.homepage } : {}),
+            ...(Number.isInteger(downloads?.downloads) ? { weeklyDownloads: downloads.downloads } : {}),
+            ...(series ? { weeklySeries: series } : {}),
+          },
+        ];
       })(),
     );
   }
@@ -84,14 +89,23 @@ async function npmVersions() {
 
 /** `git+https://github.com/krizaka/krizaka-ui.git` → `https://github.com/krizaka/krizaka-ui`. */
 export function githubUrl(repository) {
-  return repository.replace(/^git\+/, "").replace(/^git:\/\//, "https://").replace(/\.git$/, "").replace(/^github:/, "https://github.com/");
+  return repository
+    .replace(/^git\+/, "")
+    .replace(/^git:\/\//, "https://")
+    .replace(/\.git$/, "")
+    .replace(/^github:/, "https://github.com/");
 }
 
 /** What a released POM says about itself: its description, its com.krizaka parent, its scm url. */
 export function pomMeta(xml) {
   const own = xml.replace(/<parent>[\s\S]*?<\/parent>/, "").replace(/<dependencies>[\s\S]*$/, "");
-  const parent = xml.match(/<parent>[\s\S]*?<groupId>com\.krizaka<\/groupId>[\s\S]*?<artifactId>([^<]+)<\/artifactId>[\s\S]*?<\/parent>/)?.[1];
-  const description = own.match(/<description>([\s\S]*?)<\/description>/)?.[1]?.replace(/\s+/g, " ").trim();
+  const parent = xml.match(
+    /<parent>[\s\S]*?<groupId>com\.krizaka<\/groupId>[\s\S]*?<artifactId>([^<]+)<\/artifactId>[\s\S]*?<\/parent>/,
+  )?.[1];
+  const description = own
+    .match(/<description>([\s\S]*?)<\/description>/)?.[1]
+    ?.replace(/\s+/g, " ")
+    .trim();
   const scm = xml.match(/<scm>[\s\S]*?<url>([^<]+)<\/url>/)?.[1];
   return { ...(description ? { description } : {}), ...(parent ? { parent } : {}), ...(scm ? { scm } : {}) };
 }
@@ -109,7 +123,10 @@ async function mavenVersions() {
     }),
   );
   const found = entries.filter(([, v]) => v);
-  return { versions: Object.fromEntries(found.map(([a, v]) => [a, v])), meta: Object.fromEntries(found.map(([a, , m]) => [a, m])) };
+  return {
+    versions: Object.fromEntries(found.map(([a, v]) => [a, v])),
+    meta: Object.fromEntries(found.map(([a, , m]) => [a, m])),
+  };
 }
 
 async function main() {
@@ -124,10 +141,16 @@ async function main() {
     mavenMeta: mavenOk ? maven.value.meta : (previous.mavenMeta ?? {}),
     fetchedAt: new Date().toISOString(),
   };
-  for (const [name, r] of [["npm", npm], ["Maven Central", maven]])
-    if (r.status === "rejected") console.warn(`registry-versions: ${name} unreachable (${r.reason?.message}) — keeping what was known`);
+  for (const [name, r] of [
+    ["npm", npm],
+    ["Maven Central", maven],
+  ])
+    if (r.status === "rejected")
+      console.warn(`registry-versions: ${name} unreachable (${r.reason?.message}) — keeping what was known`);
   writeFileSync(OUT, JSON.stringify(out, null, 2) + "\n");
-  console.log(`registry-versions: ${Object.keys(out.npm).length} npm packages, ${Object.keys(out.maven).length} Maven artifacts`);
+  console.log(
+    `registry-versions: ${Object.keys(out.npm).length} npm packages, ${Object.keys(out.maven).length} Maven artifacts`,
+  );
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) await main();

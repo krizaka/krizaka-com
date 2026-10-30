@@ -40,14 +40,10 @@
         "krizaka-users-api",
         "krizaka-users-client"
       ],
-      "evidence": [
-        "orazaka-web-client:src/core/hooks/useJobSSE.ts"
-      ]
+      "evidence": ["orazaka-web-client:src/core/hooks/useJobSSE.ts"]
     },
     "yomizaka": {
-      "sources": [
-        "yomizaka:apps/web/package.json"
-      ],
+      "sources": ["yomizaka:apps/web/package.json"],
       "npm": [
         "@krizaka/api-keys",
         "@krizaka/auth",
@@ -70,10 +66,7 @@
       "evidence": []
     },
     "akinaza": {
-      "sources": [
-        "akinaza:apps/web/package.json",
-        "akinaza:apps/mobile/package.json"
-      ],
+      "sources": ["akinaza:apps/web/package.json", "akinaza:apps/mobile/package.json"],
       "npm": [
         "@krizaka/api-keys",
         "@krizaka/app-client",

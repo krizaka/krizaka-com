@@ -10,7 +10,10 @@ import { figureColumns } from "../lib/figure-grid.ts";
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 
 test("the hero's downloads are /open-source's: the sum of every package's last week, undefined when none reports", () => {
-  const snap = { npm: { "@krizaka/ui": "3.29.0", "@krizaka/icons": "0.6.0", "@krizaka/x": "1.0.0" }, npmMeta: { "@krizaka/ui": { weeklyDownloads: 4968 }, "@krizaka/icons": { weeklyDownloads: 120 }, "@krizaka/x": {} } };
+  const snap = {
+    npm: { "@krizaka/ui": "3.29.0", "@krizaka/icons": "0.6.0", "@krizaka/x": "1.0.0" },
+    npmMeta: { "@krizaka/ui": { weeklyDownloads: 4968 }, "@krizaka/icons": { weeklyDownloads: 120 }, "@krizaka/x": {} },
+  };
   assert.equal(weeklyTotalOfSnapshot(snap), 5088);
   assert.equal(weeklyTotalOfSnapshot({ npm: { a: "1" }, npmMeta: {} }), undefined, "unknown: hidden, never 0");
   assert.equal(weeklyTotalOfSnapshot({}), undefined);

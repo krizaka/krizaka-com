@@ -24,14 +24,17 @@ function Layer({ theme, set }: { theme: "dark" | "light"; set: AmbientSet }) {
     const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
     const el = box.current;
     if (reduce || saveData || typeof IntersectionObserver === "undefined" || !el) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry) return;
-      if (entry.isIntersecting) setCut((c) => c ?? (window.matchMedia(TALL).matches ? "tall" : "wide"));
-      const v = video.current;
-      if (!v) return;
-      if (entry.isIntersecting) v.play().catch(() => undefined);
-      else v.pause();
-    }, { threshold: 0.1 });
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry) return;
+        if (entry.isIntersecting) setCut((c) => c ?? (window.matchMedia(TALL).matches ? "tall" : "wide"));
+        const v = video.current;
+        if (!v) return;
+        if (entry.isIntersecting) v.play().catch(() => undefined);
+        else v.pause();
+      },
+      { threshold: 0.1 },
+    );
     // Nothing of the film before the page has loaded: the first screen's text, fonts and styles come first (LCP).
     const watch = () => observer.observe(el);
     if (document.readyState === "complete") watch();

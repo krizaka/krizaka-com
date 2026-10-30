@@ -10,4 +10,7 @@ const problems = await visitPages(baseFromArgv(), cases(), async (page, c) => {
   await page.evaluate(() => document.fonts.ready);
   return figureProblems(c, await page.evaluate(sampleFigures, FIGURES));
 });
-report(problems, `check-figures: ${cases().length} page × width × theme, every figure lining and tabular, one baseline per row`);
+report(
+  problems,
+  `check-figures: ${cases().length} page × width × theme, every figure lining and tabular, one baseline per row`,
+);

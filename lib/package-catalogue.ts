@@ -28,7 +28,17 @@ export interface PackageRow {
 
 export interface RegistrySnapshot {
   npm?: Record<string, string>;
-  npmMeta?: Record<string, { description?: string; keywords?: string[]; repository?: string; homepage?: string; weeklyDownloads?: number; weeklySeries?: number[] }>;
+  npmMeta?: Record<
+    string,
+    {
+      description?: string;
+      keywords?: string[];
+      repository?: string;
+      homepage?: string;
+      weeklyDownloads?: number;
+      weeklySeries?: number[];
+    }
+  >;
   maven?: Record<string, string>;
   mavenMeta?: Record<string, { description?: string; parent?: string; scm?: string }>;
 }
@@ -42,7 +52,9 @@ export function weeklyTotal(rows: readonly Pick<PackageRow, "weeklyDownloads">[]
 /** The same total straight from the registry snapshot (the home's hero figure): every @krizaka package's last week,
     summed over those that report it; undefined when none does — the figure is then hidden, never shown as 0. */
 export function weeklyTotalOfSnapshot(snapshot: RegistrySnapshot): number | undefined {
-  return weeklyTotal(Object.keys(snapshot.npm ?? {}).map((name) => ({ weeklyDownloads: snapshot.npmMeta?.[name]?.weeklyDownloads })));
+  return weeklyTotal(
+    Object.keys(snapshot.npm ?? {}).map((name) => ({ weeklyDownloads: snapshot.npmMeta?.[name]?.weeklyDownloads })),
+  );
 }
 
 const ROOT = "krizaka-parent";
@@ -62,39 +74,59 @@ const GITHUB = "https://github.com/krizaka/";
 
 /** The org repository a package's source URL names (`https://github.com/krizaka/krizaka-ui/tree/main/…` → `krizaka-ui`). */
 const repositoryOf = (url: string | undefined): string | undefined =>
-  url?.startsWith(GITHUB) ? url.slice(GITHUB.length).split(/[/#]/)[0]!.replace(/\.git$/, "") : undefined;
+  url?.startsWith(GITHUB)
+    ? url
+        .slice(GITHUB.length)
+        .split(/[/#]/)[0]!
+        .replace(/\.git$/, "")
+    : undefined;
 
 /** Every published package as a row, npm first, each registry sorted by name. `repositories`: the org's repository
     names (a Maven module's repository is linked only when it exists; an npm package whose source repository is no longer
     public — a paused product's — is left out). `products`: the products' ids — a package built from a product's own
     repository (`orazaka-cli`, `orazaka-ui-kit`) is part of that operated product, not of the open-source list, and is left
     out. `javaDocs`: the Krizaka Java site. */
-export function packageRows(snapshot: RegistrySnapshot, repositories: readonly string[], javaDocs: string, products: readonly string[] = []): PackageRow[] {
+export function packageRows(
+  snapshot: RegistrySnapshot,
+  repositories: readonly string[],
+  javaDocs: string,
+  products: readonly string[] = [],
+): PackageRow[] {
   const isPublic = (name: string) => {
     const repo = repositoryOf(snapshot.npmMeta?.[name]?.repository);
     if (repo && products.some((p) => repo === p || repo.startsWith(`${p}-`))) return false;
     return !repo || repositories.length === 0 || repositories.includes(repo);
   };
-  const npm = Object.entries(snapshot.npm ?? {}).filter(([name]) => isPublic(name)).map(([name, version]): PackageRow => {
-    const meta = snapshot.npmMeta?.[name] ?? {};
-    return {
-      id: `npm:${name}`,
-      name,
-      registry: "npm",
-      family: groupOfPackage(meta.keywords ?? []),
-      line: summary(meta.description ?? ""),
-      version,
-      ...(Number.isInteger(meta.weeklyDownloads) ? { weeklyDownloads: meta.weeklyDownloads } : {}),
-      ...(Array.isArray(meta.weeklySeries) && meta.weeklySeries.length === 12 && meta.weeklySeries.every(Number.isInteger) ? { weeklySeries: meta.weeklySeries } : {}),
-      registryUrl: `https://www.npmjs.com/package/${name}`,
-      ...(meta.repository?.startsWith(GITHUB) ? { repoUrl: meta.repository } : {}),
-      ...(meta.homepage ? { docsUrl: meta.homepage } : {}),
-    };
-  });
+  const npm = Object.entries(snapshot.npm ?? {})
+    .filter(([name]) => isPublic(name))
+    .map(([name, version]): PackageRow => {
+      const meta = snapshot.npmMeta?.[name] ?? {};
+      return {
+        id: `npm:${name}`,
+        name,
+        registry: "npm",
+        family: groupOfPackage(meta.keywords ?? []),
+        line: summary(meta.description ?? ""),
+        version,
+        ...(Number.isInteger(meta.weeklyDownloads) ? { weeklyDownloads: meta.weeklyDownloads } : {}),
+        ...(Array.isArray(meta.weeklySeries) &&
+        meta.weeklySeries.length === 12 &&
+        meta.weeklySeries.every(Number.isInteger)
+          ? { weeklySeries: meta.weeklySeries }
+          : {}),
+        registryUrl: `https://www.npmjs.com/package/${name}`,
+        ...(meta.repository?.startsWith(GITHUB) ? { repoUrl: meta.repository } : {}),
+        ...(meta.homepage ? { docsUrl: meta.homepage } : {}),
+      };
+    });
   const maven = Object.entries(snapshot.maven ?? {}).map(([artifact, version]): PackageRow => {
     const meta = snapshot.mavenMeta?.[artifact] ?? {};
     const family = mavenFamily(artifact, snapshot.mavenMeta);
-    const repo = meta.scm?.startsWith(GITHUB) ? meta.scm : repositories.includes(family) ? `${GITHUB}${family}` : undefined;
+    const repo = meta.scm?.startsWith(GITHUB)
+      ? meta.scm
+      : repositories.includes(family)
+        ? `${GITHUB}${family}`
+        : undefined;
     return {
       id: `maven:${artifact}`,
       name: artifact,

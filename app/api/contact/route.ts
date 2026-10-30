@@ -26,16 +26,21 @@ export async function POST(request: Request) {
 
   // Bot protection: verified before anything is sent (off only outside production; in production a missing key refuses, #464).
   if (captchaMissing()) {
-    console.error("contact: refused, the bot check is not configured (set ABUSE_CAPTCHA_PROVIDER=turnstile and the widget's key)");
+    console.error(
+      "contact: refused, the bot check is not configured (set ABUSE_CAPTCHA_PROVIDER=turnstile and the widget's key)",
+    );
     return NextResponse.json({ error: "contact.captcha_unconfigured" }, { status: 503 });
   }
   const token = (body as { captchaToken?: unknown }).captchaToken;
-  if (!(await verifyCaptcha(token, ip, process.env, undefined, now))) return NextResponse.json({ error: "contact.captcha_failed" }, { status: 400 });
+  if (!(await verifyCaptcha(token, ip, process.env, undefined, now)))
+    return NextResponse.json({ error: "contact.captcha_failed" }, { status: 400 });
 
   // Delivery must exist before a visitor is asked to verify anything.
   const channels = contactChannels();
   if (!channels.email && !channels.webhook) {
-    console.error("contact: no delivery channel configured (MAIL_PROVIDER=mailgun + MAIL_API_KEY + MAIL_DOMAIN + MAIL_CONTACT_TO, or MAIL_CONTACT_WEBHOOK_URL)");
+    console.error(
+      "contact: no delivery channel configured (MAIL_PROVIDER=mailgun + MAIL_API_KEY + MAIL_DOMAIN + MAIL_CONTACT_TO, or MAIL_CONTACT_WEBHOOK_URL)",
+    );
     return NextResponse.json({ error: "unavailable" }, { status: 503 });
   }
 
@@ -48,6 +53,7 @@ const START_STATUS = { rate_limited: 429, unavailable: 503, code_mail_failed: 50
 async function holdAndAskForCode(message: ContactMessage) {
   const started = await startContactVerification(message, now);
   if (started.ok) return NextResponse.json({ verify: true, challengeId: started.challengeId });
-  if (started.error !== "rate_limited") console.error(`contact: the verification code could not be sent (${started.error})`);
+  if (started.error !== "rate_limited")
+    console.error(`contact: the verification code could not be sent (${started.error})`);
   return NextResponse.json({ error: started.error }, { status: START_STATUS[started.error] });
 }

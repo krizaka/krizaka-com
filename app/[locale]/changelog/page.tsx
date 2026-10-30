@@ -19,13 +19,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: c.metaTitle,
     description: c.metaDescription,
-    alternates: { ...buildAlternates(locale, "/changelog"), types: { "application/rss+xml": `/${asLocale(locale)}/changelog/feed.xml` } },
+    alternates: {
+      ...buildAlternates(locale, "/changelog"),
+      types: { "application/rss+xml": `/${asLocale(locale)}/changelog/feed.xml` },
+    },
   };
 }
 
 /* The template's four kinds carry the five tags: a breaking change is « changed », a security fix « fixed » — their tag
    is said in bold at the head of the line, so nothing is lost. */
-const KIND: Record<ChangeTag, ChangeKind> = { feature: "added", change: "changed", fix: "fixed", breaking: "changed", security: "fixed" };
+const KIND: Record<ChangeTag, ChangeKind> = {
+  feature: "added",
+  change: "changed",
+  fix: "fixed",
+  breaking: "changed",
+  security: "fixed",
+};
 
 /* /changelog (changelog) — the company's: the highlights of every release of the family, read at build from the release
    data (scripts/gen-changelog.mjs → lib/changelog.json), never written for the page. */
@@ -82,14 +91,23 @@ export default async function ChangelogRoute({ params }: Props) {
         feed={{ href: `/${locale}/changelog/feed.xml`, label: c.feed }}
         filterLabel={c.filterLabel}
         allLabel={c.filters.all}
-        filterNames={Object.fromEntries(FILTER_IDS.map((id) => [id, c.filters[id]])) as Record<(typeof FILTER_IDS)[number], string>}
+        filterNames={
+          Object.fromEntries(FILTER_IDS.map((id) => [id, c.filters[id]])) as Record<(typeof FILTER_IDS)[number], string>
+        }
         none={c.noneForFilter}
         kindLabels={c.kinds}
         logLabel={c.logLabel}
         entries={entries}
       />
       {entries.length === 0 && (
-        <p style={{ margin: "0 auto", maxWidth: "var(--kz-page-max)", padding: "0 var(--kz-page-gutter) 4rem", color: "var(--kz-text-secondary)" }}>
+        <p
+          style={{
+            margin: "0 auto",
+            maxWidth: "var(--kz-page-max)",
+            padding: "0 var(--kz-page-gutter) 4rem",
+            color: "var(--kz-text-secondary)",
+          }}
+        >
           {c.empty} <a href={`${GITHUB_ORG_URL}/krizaka-ui/releases`}>{c.emptyLink}</a>
         </p>
       )}

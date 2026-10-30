@@ -17,7 +17,9 @@ if (offline) {
 } else {
   for (const id of Object.keys(statuses)) {
     try {
-      const res = await fetch(`https://raw.githubusercontent.com/krizaka/${id}/main/dev-preview.json`, { signal: AbortSignal.timeout(20_000) });
+      const res = await fetch(`https://raw.githubusercontent.com/krizaka/${id}/main/dev-preview.json`, {
+        signal: AbortSignal.timeout(20_000),
+      });
       if (res.ok) checklists[id] = await res.json();
       else warnings.push(`${id}: dev-preview.json answers ${res.status}`);
     } catch (e) {
@@ -48,7 +50,11 @@ writeFileSync(OUT, JSON.stringify({ generatedAt: new Date().toISOString(), statu
 for (const w of warnings) console.warn(`dev-preview: ${w}`);
 if (problems.length) {
   console.error("dev-preview: the status is not supported by the evidence:\n  " + problems.join("\n  "));
-  console.error("Fix the product's dev-preview.json, or change its status in lib/products.ts (krizaka/.github docs/standards/dev-preview.md).");
+  console.error(
+    "Fix the product's dev-preview.json, or change its status in lib/products.ts (krizaka/.github docs/standards/dev-preview.md).",
+  );
   process.exit(1);
 }
-console.log(`dev-preview: ${Object.values(statuses).filter((s) => s === "devPreview").length} product(s) with the status, all supported (${Object.keys(checklists).length} checklist(s) read).`);
+console.log(
+  `dev-preview: ${Object.values(statuses).filter((s) => s === "devPreview").length} product(s) with the status, all supported (${Object.keys(checklists).length} checklist(s) read).`,
+);

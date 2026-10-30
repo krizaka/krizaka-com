@@ -8,7 +8,10 @@ import { PRODUCT_SITES, productRedirects } from "../lib/product-redirects.ts";
 // answers 308 with the product's site. The sources are matched with the same path-to-regexp (6.x) Next.js compiles them with.
 const require = createRequire(import.meta.url);
 const { match } = require("path-to-regexp");
-const rules = productRedirects().map((rule) => ({ ...rule, matches: match(rule.source, { decode: decodeURIComponent }) }));
+const rules = productRedirects().map((rule) => ({
+  ...rule,
+  matches: match(rule.source, { decode: decodeURIComponent }),
+}));
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf8");
 
 /** Where an old address goes: the first rule that matches it. */
@@ -37,7 +40,14 @@ test("Yomizaka's documentation lands on its /docs page, in the language of the a
 
 test("every /products/<product> address — with or without the locale, any depth — goes to the product's site, 308", () => {
   for (const [id, site] of Object.entries(PRODUCT_SITES)) {
-    for (const path of [`/products/${id}`, `/en/products/${id}`, `/fr/products/${id}`, `/en/products/${id}/demos`, `/fr/products/${id}/usecases/some-case`, `/products/${id}/docs`]) {
+    for (const path of [
+      `/products/${id}`,
+      `/en/products/${id}`,
+      `/fr/products/${id}`,
+      `/en/products/${id}/demos`,
+      `/fr/products/${id}/usecases/some-case`,
+      `/products/${id}/docs`,
+    ]) {
       const rule = go(path);
       assert.ok(rule, path);
       assert.equal(rule.destination, site, path);
@@ -72,13 +82,29 @@ test("the products' documentation goes to the product's site", () => {
 });
 
 test("the old Orazaka addresses that redirected to /products/orazaka/… go to its site", () => {
-  for (const path of ["/orazaka", "/en/architecture", "/demos", "/fr/editions", "/get-started", "/ingenierie-cognitive", "/en/packages", "/roadmap", "/solutions", "/en/use-cases", "/fr/use-cases/some-case"]) {
+  for (const path of [
+    "/orazaka",
+    "/en/architecture",
+    "/demos",
+    "/fr/editions",
+    "/get-started",
+    "/ingenierie-cognitive",
+    "/en/packages",
+    "/roadmap",
+    "/solutions",
+    "/en/use-cases",
+    "/fr/use-cases/some-case",
+  ]) {
     assert.equal(go(path)?.destination, "https://www.orazaka.com", path);
   }
 });
 
 test("/products merged into the home (two views, 2026-10-17): it answers 308 with the home's products section, same language", () => {
-  for (const [path, destination, locale] of [["/products", "/#products"], ["/en/products", "/:locale#products", "en"], ["/fr/products", "/:locale#products", "fr"]]) {
+  for (const [path, destination, locale] of [
+    ["/products", "/#products"],
+    ["/en/products", "/:locale#products", "en"],
+    ["/fr/products", "/:locale#products", "fr"],
+  ]) {
     const rule = go(path);
     assert.equal(rule?.statusCode, 308, path);
     assert.equal(rule.destination, destination, path);
@@ -87,7 +113,20 @@ test("/products merged into the home (two views, 2026-10-17): it answers 308 wit
 });
 
 test("what stays on krizaka.com is never redirected", () => {
-  for (const path of ["/", "/en", "/story", "/open-source", "/en/open-source/ui", "/contact", "/privacy", "/terms", "/docs", "/en/docs", "/en/docs/ui", "/en/docs/ui/button"]) {
+  for (const path of [
+    "/",
+    "/en",
+    "/story",
+    "/open-source",
+    "/en/open-source/ui",
+    "/contact",
+    "/privacy",
+    "/terms",
+    "/docs",
+    "/en/docs",
+    "/en/docs/ui",
+    "/en/docs/ui/button",
+  ]) {
     assert.equal(go(path), undefined, path);
   }
 });

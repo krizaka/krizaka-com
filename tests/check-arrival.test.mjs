@@ -10,14 +10,29 @@ const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf
 // its scroll-to-top for a navigation that went through a redirect. check-arrival.mjs clicks every footer link in a real
 // browser; the judgement is pure and tested here.
 const c = { vp: "desktop", from: "/en", label: "Our story", href: "/en/story" };
-const landed = { scrollY: 0, h1: "One studio.", h1Visible: true, h1Focused: true, focus: "h1", hasFooterLink: true, current: "page" };
+const landed = {
+  scrollY: 0,
+  h1: "One studio.",
+  h1Visible: true,
+  h1Focused: true,
+  focus: "h1",
+  hasFooterLink: true,
+  current: "page",
+};
 
 test("an arrival at the top, heading in view and focused, footer link current, passes", () => {
   assert.deepEqual(arrivalProblems(c, landed), []);
 });
 
 test("the bug of 2026-10-21 fails: landing mid-page with the heading out of view", () => {
-  const lines = arrivalProblems(c, { ...landed, scrollY: 4890, h1Visible: false, h1Focused: false, focus: "a", current: null });
+  const lines = arrivalProblems(c, {
+    ...landed,
+    scrollY: 4890,
+    h1Visible: false,
+    h1Focused: false,
+    focus: "a",
+    current: null,
+  });
   assert.equal(lines.length, 4);
   assert.match(lines.join("\n"), /lands at scrollY 4890/);
   assert.match(lines.join("\n"), /h1 is not in view/);
@@ -46,7 +61,13 @@ test("the footer's internal links carry the locale, and its own page is aria-cur
   const footer = read("app/components/SiteFooter.tsx");
   assert.match(footer, /const to = \(path: string\) => `\/\$\{locale\}/);
   // The story, the blog and contact are the family's « Krizaka » column now (@krizaka/ui 3.39, one-band footer): not here.
-  for (const href of ['to("/open-source")', 'to("/changelog")', 'to("/privacy")', 'to("/terms")', "to(PRODUCTS_ANCHOR)"]) {
+  for (const href of [
+    'to("/open-source")',
+    'to("/changelog")',
+    'to("/privacy")',
+    'to("/terms")',
+    "to(PRODUCTS_ANCHOR)",
+  ]) {
     assert.ok(footer.includes(`href={${href}}`), `${href} is prefixed`);
   }
   assert.doesNotMatch(footer, /<Link href="\//, "no unprefixed footer link: it would go through proxy.ts's 307");
@@ -72,7 +93,12 @@ test("/story ends on one primary action, then the SiteFooter of the layout", () 
   assert.equal(next.match(/<ButtonLink/g).length, 1, "the closing chapter has one action");
   assert.match(next, /<ButtonLink href=\{contactHref\("story"\)\} variant="primary"/);
   assert.doesNotMatch(page, /<SiteFooter|<footer|FamilyFooter/);
-  for (const l of ["en", "fr"]) assert.equal(JSON.parse(read(`messages/${l}.json`)).site.story.next.ctaProducts, undefined, `${l}: no orphan message`);
+  for (const l of ["en", "fr"])
+    assert.equal(
+      JSON.parse(read(`messages/${l}.json`)).site.story.next.ctaProducts,
+      undefined,
+      `${l}: no orphan message`,
+    );
 });
 
 test("no page renders a footer of its own, whatever its folder", () => {
@@ -81,12 +107,20 @@ test("no page renders a footer of its own, whatever its folder", () => {
       const rel = `${dir}/${name}`;
       return statSync(new URL(`../${rel}`, import.meta.url)).isDirectory() ? walk(rel) : [rel];
     });
-  const offenders = walk("app").filter((f) => f.endsWith(".tsx") && !["app/components/SiteFooter.tsx", "app/[locale]/layout.tsx"].includes(f) && /<footer\b|<SiteFooter\b/.test(read(f)));
+  const offenders = walk("app").filter(
+    (f) =>
+      f.endsWith(".tsx") &&
+      !["app/components/SiteFooter.tsx", "app/[locale]/layout.tsx"].includes(f) &&
+      /<footer\b|<SiteFooter\b/.test(read(f)),
+  );
   assert.deepEqual(offenders, []);
 });
 
 test("CI runs the arrival check against the container", () => {
   // The pipeline is the org's node-ci.yml; the container job runs this repository's smoke script against the image.
   assert.match(read(".github/workflows/ci.yml"), /container-smoke: scripts\/ci-container-smoke\.sh/);
-  assert.match(read("scripts/ci-container-smoke.sh"), /node scripts\/check-arrival\.mjs --base http:\/\/localhost:3000/);
+  assert.match(
+    read("scripts/ci-container-smoke.sh"),
+    /node scripts\/check-arrival\.mjs --base http:\/\/localhost:3000/,
+  );
 });

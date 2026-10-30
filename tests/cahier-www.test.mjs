@@ -24,24 +24,54 @@ test("the first page is asymmetric: the words on the left, the taped film flock 
 
 test("every section of the home is numbered in the margin (§ n), none carries an eyebrow", () => {
   const sections = ["HomeHero", "ProductShowcase", "ServicesLine", "Direction", "Principles"];
-  for (const s of sections) assert.doesNotMatch(read(`app/components/home/${s}.tsx`), /eyebrow=/, `${s} still has an eyebrow`);
-  for (const s of ["ServicesLine", "Direction", "Principles"]) assert.match(read(`app/components/home/${s}.tsx`), /\.number\}/, `${s} has no number`);
+  for (const s of sections)
+    assert.doesNotMatch(read(`app/components/home/${s}.tsx`), /eyebrow=/, `${s} still has an eyebrow`);
+  for (const s of ["ServicesLine", "Direction", "Principles"])
+    assert.match(read(`app/components/home/${s}.tsx`), /\.number\}/, `${s} has no number`);
   for (const l of ["en", "fr"]) {
     const h = msgs[l].site.home;
-    assert.deepEqual([h.hero.number, h.engine.number, h.products.number, h.services.number, h.direction.number, h.principles.number], ["§ 1", "§ 2", "§ 3", "§ 4", "§ 5", "§ 6"], l);
+    assert.deepEqual(
+      [h.hero.number, h.engine.number, h.products.number, h.services.number, h.direction.number, h.principles.number],
+      ["§ 1", "§ 2", "§ 3", "§ 4", "§ 5", "§ 6"],
+      l,
+    );
   }
 });
 
 test("the site's own styles carry no template tell", () => {
-  const files = ["app/globals.css", "app/components/home/home.css", "app/[locale]/open-source/open-source.css", "app/[locale]/contact/ContactClient.tsx", "app/components/SearchCommand.tsx", "app/components/DocsCrumb.tsx", "app/components/ProductStatus.tsx"];
+  const files = [
+    "app/globals.css",
+    "app/components/home/home.css",
+    "app/[locale]/open-source/open-source.css",
+    "app/[locale]/contact/ContactClient.tsx",
+    "app/components/SearchCommand.tsx",
+    "app/components/DocsCrumb.tsx",
+    "app/components/ProductStatus.tsx",
+  ];
   for (const f of files) {
     const src = read(f).replace(/\/\*[\s\S]*?\*\//g, "");
-    assert.doesNotMatch(src, /text-transform:\s*uppercase|textTransform: "uppercase"|["'\s]uppercase["'\s]/, `${f}: uppercase`);
-    assert.doesNotMatch(src, /letter-spacing:\s*\.?0?\.[1-9]\d*em|tracking-(wide|wider|widest|\[0\.)/, `${f}: tracked caps`);
-    assert.doesNotMatch(src, /blur\(|backdropFilter|backdrop-blur|radial-gradient|drop-shadow\(/, `${f}: a blur or a glow`);
+    assert.doesNotMatch(
+      src,
+      /text-transform:\s*uppercase|textTransform: "uppercase"|["'\s]uppercase["'\s]/,
+      `${f}: uppercase`,
+    );
+    assert.doesNotMatch(
+      src,
+      /letter-spacing:\s*\.?0?\.[1-9]\d*em|tracking-(wide|wider|widest|\[0\.)/,
+      `${f}: tracked caps`,
+    );
+    assert.doesNotMatch(
+      src,
+      /blur\(|backdropFilter|backdrop-blur|radial-gradient|drop-shadow\(/,
+      `${f}: a blur or a glow`,
+    );
     assert.doesNotMatch(src, /border-radius:\s*(1[0-9]|[2-9][0-9]|999)px|rounded-full/, `${f}: a round card or a pill`);
   }
-  assert.doesNotMatch(read("app/globals.css"), /bp-glide \{ background: linear-gradient/, "the brand wash between sections");
+  assert.doesNotMatch(
+    read("app/globals.css"),
+    /bp-glide \{ background: linear-gradient/,
+    "the brand wash between sections",
+  );
 });
 
 test("the hero keeps its contract: one primary action, server-rendered, with its first-paint text before the scene", () => {
