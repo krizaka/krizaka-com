@@ -35,7 +35,7 @@ const INITIAL_PROGRESS = 64;
 
 export default function ComponentBench({ w }: { w: BenchWords }) {
   const [variant, setVariant] = useState<BenchVariant>("primary");
-  const [shape, setShape] = useState<BenchShape>("cut");
+  const [shape, setShape] = useState<BenchShape>("rounded");
   const [progress, setProgress] = useState(INITIAL_PROGRESS);
   const [disabled, setDisabled] = useState(false);
   const code = benchCode({ variant, shape, progress, disabled, action: w.action, meter: w.meter });

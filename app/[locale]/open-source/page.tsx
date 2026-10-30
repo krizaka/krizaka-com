@@ -21,7 +21,7 @@ import { PUBLIC_CHANNELS } from "@/lib/public-channels";
 import { publicChannels } from "@/lib/github-channels";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
-import { STACK, hostOf, stackActionUrl } from "@/lib/stack";
+import { STACK, STACK_LICENCE, hostOf, stackActionUrl } from "@/lib/stack";
 import { uiCatalogue } from "@/lib/ui-catalogue";
 import { cataloguePageUrl } from "@/lib/catalogue-match";
 import { SKILLS_PLUGINS, skillUrl, skillsInstall } from "@/lib/skills-plugins";
@@ -172,7 +172,7 @@ export default async function OpenSourcePage({ params }: Props) {
             description: (
               <>
                 <span className="os-collection-host">{hostOf(p.url)}</span> {site.home.stack[p.id].line}
-                <Facts items={factsOf(p, site)} />
+                <Facts items={factsOf(p, site).filter((f) => f.label !== STACK_LICENCE)} />
               </>
             ),
             links: [
@@ -215,7 +215,7 @@ export default async function OpenSourcePage({ params }: Props) {
                   <li>
                     <p className="os-step-title">{h.quickstart.use}</p>
                     <CodeBlock
-                      code={`import { Button } from "@krizaka/ui/button";\n\n<Button variant="primary" shape="cut">${h.quickstart.sample}</Button>`}
+                      code={`import { Button } from "@krizaka/ui/button";\n\n<Button variant="primary">${h.quickstart.sample}</Button>`}
                       language="tsx"
                       file="app/page.tsx"
                       copyLabel={t.install.copy}
@@ -225,7 +225,7 @@ export default async function OpenSourcePage({ params }: Props) {
                 </ol>
               ) : null}
               <p className="os-step-title">{h.quickstart.other}</p>
-              <InstallTabs locale={locale} />
+              <InstallTabs locale={locale} skip={uiVersion ? ["ui"] : []} />
             </div>
           ),
         }}
@@ -309,10 +309,10 @@ export default async function OpenSourcePage({ params }: Props) {
 
       <Section id="contribute" divider aria-labelledby="os-contribute">
         <CtaPanel id="os-contribute" title={t.contribute.title} body={t.contribute.body} reveal>
-          <ButtonLink href={CONTRIBUTING_URL} variant="primary" size="lg" shape="cut">
+          <ButtonLink href={CONTRIBUTING_URL} variant="primary" size="lg">
             {t.contribute.guide} <ExternalIcon size={13} aria-hidden />
           </ButtonLink>
-          <ButtonLink href={GOOD_FIRST_URL} variant="secondary" size="lg" shape="cut">
+          <ButtonLink href={GOOD_FIRST_URL} variant="secondary" size="lg">
             {t.contribute.goodFirst} <ExternalIcon size={13} aria-hidden />
           </ButtonLink>
         </CtaPanel>

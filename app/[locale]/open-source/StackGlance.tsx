@@ -31,7 +31,8 @@ export function factsOf(p: StackPart, w: ReturnType<typeof getDictionary>["site"
     : [{ label: s.notPublished, tone: "wip" }];
 }
 
-export function InstallTabs({ locale }: { locale: string }) {
+/** `skip`: the parts a page already shows step by step (the quick start of the hub draws Krizaka UI in three steps). */
+export function InstallTabs({ locale, skip = [] }: { locale: string; skip?: readonly string[] }) {
   const w = getDictionary(locale).site.openSource.install;
   const ui = part("ui");
   const ts = part("ts");
@@ -74,6 +75,8 @@ export function InstallTabs({ locale }: { locale: string }) {
       label: ts.name,
       content: block(["npm install", ...tsPackages.map((name) => `  ${name}`)].join(" \\\n"), "bash", "terminal"),
     },
-  ].filter((t): t is { id: string; label: string; content: React.JSX.Element } => Boolean(t));
+  ]
+    .filter((t): t is { id: string; label: string; content: React.JSX.Element } => Boolean(t))
+    .filter((t) => !skip.includes(t.id));
   return tabs.length ? <CodeTabs label={w.tabs} tabs={tabs} /> : null;
 }

@@ -319,7 +319,9 @@ test("the full stack cards on /story; /open-source at a glance, with Java and TS
   // /story keeps the full cards; /open-source draws the stack as the hub's collections and the install code (2026-10-30).
   assert.ok(hasCode("app/[locale]/story/page.tsx", "<StackTiles locale={locale} />"));
   assert.ok(hasCode("app/[locale]/open-source/page.tsx", "collections={STACK.map("));
-  assert.ok(hasCode("app/[locale]/open-source/page.tsx", "<InstallTabs locale={locale} />"));
+  assert.ok(
+    hasCode("app/[locale]/open-source/page.tsx", '<InstallTabs locale={locale} skip={uiVersion ? ["ui"] : []} />'),
+  );
   assert.ok(
     jsx(stack).some(
       (e) => e.tag === "CardGrid" && e.attrs.as === "ul" && e.attrs.min === "{420}" && e.attrs.columns === "{2}",

@@ -8,6 +8,11 @@
   color: var(--kz-text-primary);
 }
 
+/* The collections of the hub: the five parts of the stack in one row on a wide screen (no orphan card). */
+.os-page .kz-tpl-collections {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
 /* The hub: the search's hints, each collection's host, the quick start. */
 .os-search {
   width: 100%;
