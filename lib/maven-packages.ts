@@ -151,7 +151,7 @@ export const MAVEN_ARTIFACTS: readonly MavenArtifact[] = [
     id: "notificationsApi",
     groupId: MAVEN_GROUP_ID,
     artifactId: "krizaka-notifications-api",
-    repo: "krizaka-notifications",
+    repo: "krizaka-platform-kit",
     dir: "krizaka-notifications-api",
     version: v("krizaka-notifications-api"),
   },
