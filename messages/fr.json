@@ -1485,52 +1485,91 @@
       "langTag": "fr-CA"
     },
     "services": {
-      "eyebrow": "Nos services",
-      "title": "Krizaka Entreprise : une offre pour les entreprises.",
-      "lead": "Nous construisons sur les mêmes briques ouvertes que nos produits. Les entreprises peuvent nous confier de bâtir dessus, d'adopter une IA souveraine et de la garder en marche. Une offre, sur devis, sans grille de prix.",
-      "cta": "Parlez-nous d'Entreprise",
-      "quote": "Sur devis : nous cadrons avec vous, puis nous écrivons le prix avant de commencer.",
-      "coversLabel": "Ce que couvre Entreprise",
-      "coversTitle": "Trois choses, et rien d'autre.",
-      "covers": {
+      "eyebrow": "Krizaka Entreprise",
+      "title": "Le logiciel de votre entreprise, bâti sur ce qui tourne déjà.",
+      "lead": "Des modules sur mesure, une IA souveraine adoptée à vos conditions, et la maintenance qui garde le tout en marche. Construits par l'équipe qui bâtit nos produits, sur les mêmes briques ouvertes.",
+      "cta": "Parlez-nous de votre projet",
+      "howLink": "Voir comment se déroule un mandat",
+      "quote": "Sur devis : le périmètre et le prix sont écrits avant de commencer.",
+      "facts": {
+        "quote": "Sur devis, prix écrit d'avance",
+        "repo": "Le code dans un dépôt que vous lisez",
+        "place": "Équipe à Montréal"
+      },
+      "offersLabel": "Les trois volets de Krizaka Entreprise",
+      "price": "Sur devis",
+      "offerCta": "Discuter de ce volet",
+      "offers": {
         "modules": {
-          "title": "Modules sur mesure",
-          "body": "Un module conçu pour votre cas sur nos briques ouvertes (Krizaka UI, Krizaka Java), avec ses tests, dans un dépôt que vous pouvez lire."
+          "name": "Modules sur mesure",
+          "unit": "Sur nos briques ouvertes",
+          "features": [
+            "Un module conçu pour votre cas, sur Krizaka UI et Krizaka Java",
+            "Des tests à chaque changement, dans un dépôt que vous suivez",
+            "Une documentation lisible par votre équipe",
+            "Le code reste à vous à la livraison"
+          ]
         },
         "ai": {
-          "title": "Adopter une IA souveraine",
-          "body": "Orazaka, notre moteur d'IA, chez vous ou au Canada, avec les modèles que vous choisissez et chaque exécution tracée."
+          "name": "Adopter une IA souveraine",
+          "unit": "Orazaka, chez vous ou au Canada",
+          "features": [
+            "Orazaka installé sur vos serveurs ou hébergé au Canada",
+            "Les modèles que vous choisissez, sans dépendre d'un seul fournisseur",
+            "Chaque exécution tracée et relisible",
+            "Vos données restent où vous l'avez décidé"
+          ]
         },
         "maintenance": {
-          "title": "Maintenance et soutien",
-          "body": "Mises à jour, correctifs et réponses une fois en production : ceux qui l'ont construit le gardent en bonne santé."
+          "name": "Maintenance et soutien",
+          "unit": "Après la mise en production",
+          "features": [
+            "Mises à jour des dépendances et correctifs de sécurité",
+            "Réponses de l'équipe qui a construit le module",
+            "Un contrat écrit : ce qui est couvert, et ce qui ne l'est pas",
+            "Une sortie propre si vous reprenez le module en interne"
+          ]
         }
       },
-      "howLabel": "Comment se déroule un mandat",
-      "howTitle": "D'un premier appel à un module en production.",
-      "howLead": "Quatre étapes, chacune avec quelque chose à lire à la fin.",
+      "how": {
+        "eyebrow": "Comment se déroule un mandat",
+        "title": "Du premier appel à la maintenance.",
+        "lead": "Quatre étapes, chacune se termine par quelque chose d'écrit.",
+        "step": "Étape",
+        "stepLabel": "Ce que vous obtenez"
+      },
       "steps": {
         "discovery": {
-          "title": "Appel de découverte",
-          "body": "Vous nous dites le problème ; nous disons franchement si nous sommes les bonnes personnes."
+          "title": "Cadrage",
+          "body": "Vous décrivez le problème ; nous disons franchement si nous sommes les bonnes personnes."
         },
         "proposal": {
-          "title": "Proposition cadrée",
-          "body": "Un périmètre écrit, un devis et ce qui est hors périmètre, avant de construire quoi que ce soit."
+          "title": "Devis",
+          "body": "Un périmètre écrit, un prix, et ce qui est hors périmètre, avant d'écrire une ligne."
         },
         "build": {
-          "title": "Construire à découvert",
-          "body": "Le travail arrive dans un dépôt que vous suivez, avec des tests à chaque changement."
+          "title": "Livraison",
+          "body": "Le travail arrive dans un dépôt que vous suivez, testé à chaque changement."
         },
         "maintain": {
           "title": "Maintenance",
-          "body": "Après la livraison, un contrat de maintenance garde le module et ses dépendances à jour."
+          "body": "Après la livraison, le module et ses dépendances restent à jour."
         }
       },
-      "proofLabel": "Sur quoi cela repose",
-      "proofTitle": "De vrais ouvrages, pas des promesses.",
-      "proofLead": "Tout ce qui suit existe et est public. Nos produits sont en développement, et ils sont indiqués comme tels.",
       "proof": {
+        "eyebrow": "Sur quoi cela repose",
+        "title": "De vrais ouvrages, publics et mesurés.",
+        "lead": "Tout ce qui suit est public et lu au moment de la publication du site. Nos produits sont en développement, et ils sont indiqués comme tels.",
+        "figuresLabel": "Ce que nous publions, en chiffres",
+        "figures": {
+          "npm": "paquets npm publiés",
+          "maven": "artefacts sur Maven Central",
+          "downloads": "téléchargements npm par semaine",
+          "repositories": "dépôts publics"
+        },
+        "cta": "Ouvrir"
+      },
+      "proofCards": {
         "ui": {
           "title": "Krizaka UI",
           "line": "Le système de design sous chaque produit Krizaka, sur npm, documenté sur son propre site."
@@ -1548,9 +1587,33 @@
           "line": "Comment nous construisons, en mots simples."
         }
       },
+      "faq": {
+        "title": "Questions fréquentes",
+        "items": {
+          "price": {
+            "q": "Combien cela coûte-t-il ?",
+            "a": "Chaque mandat est sur devis. Après le cadrage, nous écrivons le périmètre et le prix ; rien ne commence avant votre accord."
+          },
+          "code": {
+            "q": "À qui appartient le code ?",
+            "a": "Le code écrit pour vous est livré dans un dépôt que vous contrôlez. Les briques ouvertes sur lesquelles il repose restent sous leur licence {license}."
+          },
+          "data": {
+            "q": "Où vont nos données avec l'IA ?",
+            "a": "Là où vous le décidez : sur vos serveurs ou chez un hébergeur au Canada. Orazaka trace chaque exécution pour que vous puissiez la relire."
+          },
+          "stack": {
+            "q": "Faut-il déjà utiliser vos produits ?",
+            "a": "Non. Nous construisons sur nos briques ouvertes, qui s'intègrent à un système existant. Le cadrage dit honnêtement si c'est le bon choix pour vous."
+          },
+          "start": {
+            "q": "Comment commencer ?",
+            "a": "Écrivez-nous en quelques lignes ce que vous voulez construire ou adopter. Nous répondons sous deux jours ouvrables."
+          }
+        }
+      },
       "contactTitle": "Dites-nous ce que vous voulez construire ou adopter.",
-      "contactBody": "Un message suffit pour commencer. Nous répondons sous deux jours ouvrables.",
-      "proofCta": "Ouvrir"
+      "contactBody": "Un message suffit pour commencer. Nous répondons sous deux jours ouvrables."
     }
   },
   "docs": {

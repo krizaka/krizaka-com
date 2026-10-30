@@ -1485,52 +1485,91 @@
       "langTag": "en"
     },
     "services": {
-      "eyebrow": "Our services",
-      "title": "Krizaka Entreprise: one offer for companies.",
-      "lead": "We build on the same open blocks as our products. Companies can hire us to build on them, to adopt a sovereign AI, and to keep it running. One offer, on quote, no price list.",
-      "cta": "Talk to us about Entreprise",
-      "quote": "On quote: we scope it with you, then write the price down before we start.",
-      "coversLabel": "What Entreprise covers",
-      "coversTitle": "Three things, and nothing else.",
-      "covers": {
+      "eyebrow": "Krizaka Entreprise",
+      "title": "Your company's software, built on what already runs.",
+      "lead": "Custom modules, a sovereign AI adopted on your terms, and the maintenance that keeps it all running. Built by the team that builds our products, on the same open building blocks.",
+      "cta": "Tell us about your project",
+      "howLink": "See how an engagement works",
+      "quote": "On quote: the scope and the price are written down before we start.",
+      "facts": {
+        "quote": "On quote, price written up front",
+        "repo": "The code in a repository you can read",
+        "place": "Team in Montréal"
+      },
+      "offersLabel": "The three parts of Krizaka Entreprise",
+      "price": "On quote",
+      "offerCta": "Discuss this part",
+      "offers": {
         "modules": {
-          "title": "Custom modules",
-          "body": "A module built for your case on our open building blocks (Krizaka UI, Krizaka Java), with its tests, in a repository you can read."
+          "name": "Custom modules",
+          "unit": "On our open building blocks",
+          "features": [
+            "A module designed for your case, on Krizaka UI and Krizaka Java",
+            "Tests with every change, in a repository you follow",
+            "Documentation your team can read",
+            "The code is yours on delivery"
+          ]
         },
         "ai": {
-          "title": "Adopting a sovereign AI",
-          "body": "Orazaka, our AI engine, running on your servers or in Canada, with the models you choose and every run traced."
+          "name": "Adopt a sovereign AI",
+          "unit": "Orazaka, on your servers or in Canada",
+          "features": [
+            "Orazaka installed on your servers or hosted in Canada",
+            "The models you choose, without depending on one vendor",
+            "Every run traced and reviewable",
+            "Your data stays where you decided"
+          ]
         },
         "maintenance": {
-          "title": "Maintenance and support",
-          "body": "Updates, fixes and answers once it runs: the same people who built it keep it healthy."
+          "name": "Maintenance and support",
+          "unit": "Once in production",
+          "features": [
+            "Dependency updates and security fixes",
+            "Answers from the team that built the module",
+            "A written contract: what is covered, and what is not",
+            "A clean handover if you take the module in-house"
+          ]
         }
       },
-      "howLabel": "How an engagement works",
-      "howTitle": "From a first call to a module in production.",
-      "howLead": "Four steps, each with something you can read at the end of it.",
+      "how": {
+        "eyebrow": "How an engagement works",
+        "title": "From the first call to maintenance.",
+        "lead": "Four steps, each ending with something in writing.",
+        "step": "Step",
+        "stepLabel": "What you get"
+      },
       "steps": {
         "discovery": {
-          "title": "Discovery call",
-          "body": "You tell us the problem; we say plainly whether we are the right people for it."
+          "title": "Scoping",
+          "body": "You describe the problem; we say frankly whether we are the right people."
         },
         "proposal": {
-          "title": "Scoped proposal",
-          "body": "A written scope, a quote and what is out of scope, before anything is built."
+          "title": "Quote",
+          "body": "A written scope, a price, and what is out of scope, before a line is written."
         },
         "build": {
-          "title": "Build in the open",
-          "body": "The work lands in a repository you can follow, with tests on every change."
+          "title": "Delivery",
+          "body": "The work lands in a repository you follow, tested with every change."
         },
         "maintain": {
           "title": "Maintenance",
-          "body": "After delivery, a maintenance agreement keeps the module and its dependencies up to date."
+          "body": "After delivery, the module and its dependencies stay up to date."
         }
       },
-      "proofLabel": "What it stands on",
-      "proofTitle": "Real artefacts, not promises.",
-      "proofLead": "Everything below exists and is public. Our products are in development, and they are labelled so.",
       "proof": {
+        "eyebrow": "What it stands on",
+        "title": "Real work, public and measured.",
+        "lead": "Everything below is public and read when the site is published. Our products are in development, and they say so.",
+        "figuresLabel": "What we publish, in figures",
+        "figures": {
+          "npm": "npm packages published",
+          "maven": "artifacts on Maven Central",
+          "downloads": "npm downloads a week",
+          "repositories": "public repositories"
+        },
+        "cta": "Open"
+      },
+      "proofCards": {
         "ui": {
           "title": "Krizaka UI",
           "line": "The design system under every Krizaka product, on npm, documented on its own site."
@@ -1541,16 +1580,40 @@
         },
         "orazaka": {
           "title": "Orazaka",
-          "line": "The AI engine behind our products, with its source on GitHub."
+          "line": "The AI engine behind our products, with its source code on GitHub."
         },
         "blog": {
           "title": "The blog",
           "line": "How we build, in plain words."
         }
       },
-      "contactTitle": "Tell us what you need built or adopted.",
-      "contactBody": "One message is enough to start. We reply within two business days.",
-      "proofCta": "Open"
+      "faq": {
+        "title": "Frequent questions",
+        "items": {
+          "price": {
+            "q": "How much does it cost?",
+            "a": "Every engagement is on quote. After scoping, we write down the scope and the price; nothing starts before you agree."
+          },
+          "code": {
+            "q": "Who owns the code?",
+            "a": "The code written for you is delivered in a repository you control. The open building blocks it stands on stay under their {license} licence."
+          },
+          "data": {
+            "q": "Where does our data go with the AI?",
+            "a": "Where you decide: on your servers or with a host in Canada. Orazaka traces every run so you can review it."
+          },
+          "stack": {
+            "q": "Do we need to use your products already?",
+            "a": "No. We build on our open building blocks, which fit into an existing system. Scoping says honestly whether they are the right choice for you."
+          },
+          "start": {
+            "q": "How do we start?",
+            "a": "Write us a few lines about what you want to build or adopt. We answer within two business days."
+          }
+        }
+      },
+      "contactTitle": "Tell us what you want to build or adopt.",
+      "contactBody": "One message is enough to start. We answer within two business days."
     }
   },
   "docs": {
