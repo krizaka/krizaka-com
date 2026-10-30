@@ -33,7 +33,7 @@ test("the stamp says the status honestly, from the data", () => {
   assert.match(showcase, /development: "wip"/);
   assert.match(showcase, /construction: "construction"/);
   assert.match(showcase, /upcoming: "neutral"/);
-  assert.match(showcase, /status=\{\{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}\}/);
+  assert.match(showcase, /status: \{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}/);
 });
 
 test("each product wears its bird; the five birds of the film say their promise word for word, the family birds their name", () => {

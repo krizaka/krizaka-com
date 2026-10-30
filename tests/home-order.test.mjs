@@ -30,7 +30,8 @@ test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its flow
   const src = readFileSync(new URL("../app/components/home/ProductShowcase.tsx", import.meta.url), "utf8");
   const fn = src.slice(src.indexOf("function EngineEntry"), src.indexOf("function ProductEntry"));
   assert.match(fn, /<SpecimenTag/, "the same tag as the products");
-  assert.match(fn, /code=\{code\(p\)\}/, "its catalogue number is KZ-01 (first of lib/products.ts)");
+  assert.match(fn, /\{\.\.\.tagProps\(p, t\)\}/, "it wears the tag props the products wear");
+  assert.match(src, /code: code\(p\)/, "its catalogue number is KZ-01 (first of lib/products.ts)");
   assert.match(fn, /<EngineFlowView/);
   assert.match(fn, /<Caption figure=\{figNo\(s\.figureLabel, p\)\}/, "the flow is a numbered figure like the others");
   assert.match(

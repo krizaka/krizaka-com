@@ -84,7 +84,7 @@ test("the home leads with the engine and its flow, then the products it powers â
     /id: "orazaka",\s+name: "Orazaka",\s+status: "development"/,
     "Orazaka is in development too: its tag stamps it so, like the others",
   );
-  assert.match(home, /status=\{\{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}\}/);
+  assert.match(home, /status: \{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}/);
 });
 
 test("each product is tied to its node in the flow: in view or pointed at, both ways, from the data", () => {

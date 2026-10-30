@@ -83,7 +83,7 @@ test("the products come from lib/products.ts: one card each, in the product's br
   assert.doesNotMatch(showcase, /knowhow|kz-pc-meta/, "one label per product: no mono eyebrow beside the status");
   assert.match(
     showcase,
-    /mark=\{<ProductLogo id=\{p\.id\} size=\{\d+\} animated=\{false\} \/>\}/,
+    /mark: <ProductLogo id=\{p\.id\} size=\{\d+\} animated=\{false\} \/>/,
     "the mark sits beside the name on the tag, never over the visual",
   );
   assert.match(showcase, /href: p\.siteUrl/, "a card links the product's www site (dev is exposed there; 2026-10-26)");

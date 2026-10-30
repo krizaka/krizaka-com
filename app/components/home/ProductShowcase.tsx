@@ -97,6 +97,22 @@ function Foot({ p, t }: Readonly<{ p: Product; t: TranslationDictionary }>) {
 /** Orazaka, the engine: entry KZ-01, in the same form as the products it powers (2026-10-30): its figure (the flow, fig. 1) and
  *  its specimen tag in its orange, wearing the duck that builds. What it gives, what comes back and the products it powers are
  *  folded in the tag. Only what runs is said (results, analytics; run events and webhooks are orazaka#189). */
+/** What both kinds of entry (the engine, a product) put on their specimen tag: code, name, mark, status, dev fields, footer. */
+function tagProps(p: Product, t: TranslationDictionary) {
+  return {
+    code: code(p),
+    title: (
+      <a {...external(p)} className="kz-entry-name">
+        {p.name}
+      </a>
+    ),
+    mark: <ProductLogo id={p.id} size={30} animated={false} />,
+    status: { label: t.site.nav.status[p.status].label, tone: STAMP[p.status] },
+    fields: devFields(p, t.site.home.products),
+    footer: <Foot p={p} t={t} />,
+  };
+}
+
 function EngineEntry({ t }: Readonly<{ t: TranslationDictionary }>) {
   const p = PRODUCTS.find((x) => x.id === ENGINE)!;
   const s = t.site.home.products;
@@ -111,19 +127,7 @@ function EngineEntry({ t }: Readonly<{ t: TranslationDictionary }>) {
           <EngineFlowView t={t} />
           <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
         </figure>
-        <SpecimenTag
-          className="kz-entry-tag"
-          code={code(p)}
-          title={
-            <a {...external(p)} className="kz-entry-name">
-              {p.name}
-            </a>
-          }
-          mark={<ProductLogo id={p.id} size={30} animated={false} />}
-          status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
-          fields={devFields(p, s)}
-          footer={<Foot p={p} t={t} />}
-        >
+        <SpecimenTag className="kz-entry-tag" {...tagProps(p, t)}>
           <p>
             {e.line}
             {fnRef(p)}
@@ -168,19 +172,7 @@ function ProductEntry({ product: p, t }: Readonly<{ product: Product; t: Transla
         <ProductVisual id={p.id} />
         <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
       </figure>
-      <SpecimenTag
-        className="kz-entry-tag"
-        code={code(p)}
-        title={
-          <a {...external(p)} className="kz-entry-name">
-            {p.name}
-          </a>
-        }
-        mark={<ProductLogo id={p.id} size={30} animated={false} />}
-        status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
-        fields={devFields(p, s)}
-        footer={<Foot p={p} t={t} />}
-      >
+      <SpecimenTag className="kz-entry-tag" {...tagProps(p, t)}>
         <p>
           {t.site.products.cards[p.id].line}
           {fnRef(p)}
