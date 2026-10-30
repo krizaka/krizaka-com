@@ -23,10 +23,25 @@ export interface Redirect {
 /** Optional locale prefix of every source. */
 const L = "/:locale(fr|en)?";
 
-const to = (source: string, destination: string): Redirect => ({ source: `${L}${source}`, destination, statusCode: 308 });
+const to = (source: string, destination: string): Redirect => ({
+  source: `${L}${source}`,
+  destination,
+  statusCode: 308,
+});
 
 /** The addresses an old Orazaka link may carry (the pages that redirected to /products/orazaka/…, before it left). */
-const ORAZAKA_LEGACY = ["/orazaka", "/architecture", "/demos", "/editions", "/get-started", "/ingenierie-cognitive", "/packages", "/roadmap", "/solutions", "/use-cases"];
+const ORAZAKA_LEGACY = [
+  "/orazaka",
+  "/architecture",
+  "/demos",
+  "/editions",
+  "/get-started",
+  "/ingenierie-cognitive",
+  "/packages",
+  "/roadmap",
+  "/solutions",
+  "/use-cases",
+];
 
 export function productRedirects(): Redirect[] {
   const { orazaka, yomizaka } = PRODUCT_SITES;

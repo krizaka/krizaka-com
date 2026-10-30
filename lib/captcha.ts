@@ -16,7 +16,9 @@ type Env = Record<string, string | undefined>;
 const HOSTNAMES = ["www.krizaka.com", "krizaka.com"] as const;
 
 export function captchaConfigured(env: Env = process.env): boolean {
-  return env.ABUSE_CAPTCHA_PROVIDER?.trim().toLowerCase() === "turnstile" && Boolean(env.ABUSE_CAPTCHA_SECRET_KEY?.trim());
+  return (
+    env.ABUSE_CAPTCHA_PROVIDER?.trim().toLowerCase() === "turnstile" && Boolean(env.ABUSE_CAPTCHA_SECRET_KEY?.trim())
+  );
 }
 
 /** Production without the check configured: the form must refuse (503) rather than accept every bot. */
@@ -28,7 +30,13 @@ export function captchaMissing(env: Env = process.env): boolean {
 const verifiers = new Map<string, ReturnType<typeof createTurnstileVerifier>>();
 
 /** True when the check is off (not production, not configured) or the token is valid. `ip` is the visitor's address ("unknown" is not sent). */
-export async function verifyCaptcha(token: unknown, ip: string, env: Env, fetchImpl: TurnstileFetch | undefined, now: () => Date): Promise<boolean> {
+export async function verifyCaptcha(
+  token: unknown,
+  ip: string,
+  env: Env,
+  fetchImpl: TurnstileFetch | undefined,
+  now: () => Date,
+): Promise<boolean> {
   if (!captchaConfigured(env)) return !captchaMissing(env);
   const secret = env.ABUSE_CAPTCHA_SECRET_KEY!.trim();
   const options = { secret, hostnames: env.NODE_ENV === "production" ? HOSTNAMES : [], now };

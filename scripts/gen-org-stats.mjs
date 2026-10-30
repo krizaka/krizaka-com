@@ -51,17 +51,32 @@ export async function fetchRepositories(org = ORG) {
 }
 
 /** A value from the network, as one log line (no line break can forge a log entry). */
-export const oneLine = (v) => String(v).replace(/[\r\n\t]+/g, " ").slice(0, 200);
+export const oneLine = (v) =>
+  String(v)
+    .replace(/[\r\n\t]+/g, " ")
+    .slice(0, 200);
 
 async function main() {
   try {
-    const [{ public_repos: publicRepositories }, repositories] = await Promise.all([get(`https://api.github.com/orgs/${ORG}`), fetchRepositories()]);
-    if (!Number.isInteger(publicRepositories) || publicRepositories <= 0) throw new Error("no public_repos in the answer");
+    const [{ public_repos: publicRepositories }, repositories] = await Promise.all([
+      get(`https://api.github.com/orgs/${ORG}`),
+      fetchRepositories(),
+    ]);
+    if (!Number.isInteger(publicRepositories) || publicRepositories <= 0)
+      throw new Error("no public_repos in the answer");
     if (repositories.length === 0) throw new Error("no repository in the answer");
-    writeFileSync(OUT, JSON.stringify({ org: ORG, publicRepositories, repositories, fetchedAt: new Date().toISOString() }, null, 2) + "\n");
-    console.log(`org-stats: ${oneLine(publicRepositories)} public repositories in ${ORG} (${repositories.length} listed)`);
+    writeFileSync(
+      OUT,
+      JSON.stringify({ org: ORG, publicRepositories, repositories, fetchedAt: new Date().toISOString() }, null, 2) +
+        "\n",
+    );
+    console.log(
+      `org-stats: ${oneLine(publicRepositories)} public repositories in ${ORG} (${repositories.length} listed)`,
+    );
   } catch (error) {
-    const kept = existsSync(OUT) ? "keeping the previous lib/org-stats.json" : "falling back to the generated repository list";
+    const kept = existsSync(OUT)
+      ? "keeping the previous lib/org-stats.json"
+      : "falling back to the generated repository list";
     console.warn(`org-stats: GitHub unreachable (${oneLine(error.message)}) — ${kept}`);
   }
 }

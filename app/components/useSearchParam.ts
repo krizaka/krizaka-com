@@ -17,7 +17,11 @@ function subscribe(onChange: () => void) {
 }
 
 export function useSearchParam(name: string): string | null {
-  return useSyncExternalStore(subscribe, () => new URLSearchParams(window.location.search).get(name), () => null);
+  return useSyncExternalStore(
+    subscribe,
+    () => new URLSearchParams(window.location.search).get(name),
+    () => null,
+  );
 }
 
 /** Points the address at `search` (`?produit=x`), keeping the path and the hash, and tells every reader. */

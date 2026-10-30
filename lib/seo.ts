@@ -16,10 +16,7 @@ const normalize = (locale: string): Locale => (locale === "en" ? "en" : "fr");
  * @param locale active locale ("fr" | "en")
  * @param path   route path WITHOUT locale prefix, "" for home, else "/contact"
  */
-export function buildAlternates(
-  locale: string,
-  path: string,
-): NonNullable<Metadata["alternates"]> {
+export function buildAlternates(locale: string, path: string): NonNullable<Metadata["alternates"]> {
   const loc = normalize(locale);
   const p = path === "/" ? "" : path; // home is "/{loc}", never "/{loc}/"
   return {

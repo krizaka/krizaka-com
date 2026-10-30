@@ -18,7 +18,9 @@ test("the locale layout renders the footer exactly once", () => {
 });
 
 test("no other file draws a <footer> or imports the family footer", () => {
-  const offenders = sources.filter((f) => f !== "app/components/SiteFooter.tsx").filter((f) => /<footer\b|@krizaka\/ui\/site-footer/.test(read(f)));
+  const offenders = sources
+    .filter((f) => f !== "app/components/SiteFooter.tsx")
+    .filter((f) => /<footer\b|@krizaka\/ui\/site-footer/.test(read(f)));
   assert.deepEqual(offenders, []);
 });
 
@@ -32,7 +34,9 @@ test("the footer is the family's: no site block, no second strip, the page is to
 
 test("the installed footer has one rule only: its own top edge (no bottom bar under the columns)", () => {
   const dir = new URL("../node_modules/@krizaka/ui/dist/", import.meta.url);
-  const file = readdirSync(dir).find((f) => /^site-footer.*\.js$/.test(f) && /border-t/.test(readFileSync(new URL(f, dir), "utf8")));
+  const file = readdirSync(dir).find(
+    (f) => /^site-footer.*\.js$/.test(f) && /border-t/.test(readFileSync(new URL(f, dir), "utf8")),
+  );
   assert.ok(file, "the footer's styles are in the installed package");
   const rules = readFileSync(new URL(file, dir), "utf8").match(/border-t(?!-)/g) ?? [];
   assert.equal(rules.length, 1);

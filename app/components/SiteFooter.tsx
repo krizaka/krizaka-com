@@ -32,7 +32,10 @@ export default function SiteFooter() {
       variant="site"
       // The signature names the company as it is registered (Technologies Krizaka, lib/site.ts COMPANY), not « Krizaka »:
       // the words are this site's, the component only places them (krizaka-ui: the host provides them).
-      labels={{ ...familyLabels[locale], signature: { ...familyLabels[locale].signature, company: format(f.signature, COMPANY) } }}
+      labels={{
+        ...familyLabels[locale],
+        signature: { ...familyLabels[locale].signature, company: format(f.signature, COMPANY) },
+      }}
       aria-label={t.site.menu.footerAria}
       legal={
         <>
@@ -46,26 +49,38 @@ export default function SiteFooter() {
             </FamilyFooter.Link>
           )}
           <FamilyFooter.Link asChild>
-            <Link href={to("/privacy")} prefetch={false} aria-current={here("/privacy")}>{f.privacy}</Link>
+            <Link href={to("/privacy")} prefetch={false} aria-current={here("/privacy")}>
+              {f.privacy}
+            </Link>
           </FamilyFooter.Link>
           <FamilyFooter.Link asChild>
-            <Link href={to("/terms")} prefetch={false} aria-current={here("/terms")}>{f.terms}</Link>
+            <Link href={to("/terms")} prefetch={false} aria-current={here("/terms")}>
+              {f.terms}
+            </Link>
           </FamilyFooter.Link>
         </>
       }
     >
       <FamilyFooter.Column title={f.siteColumn}>
         <FamilyFooter.Link asChild>
-          <Link href={to(PRODUCTS_ANCHOR)} prefetch={false}>{f.allProducts}</Link>
+          <Link href={to(PRODUCTS_ANCHOR)} prefetch={false}>
+            {f.allProducts}
+          </Link>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
-          <Link href={to("/open-source")} prefetch={false} aria-current={here("/open-source")}>{f.openSource}</Link>
+          <Link href={to("/open-source")} prefetch={false} aria-current={here("/open-source")}>
+            {f.openSource}
+          </Link>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
-          <Link href={to("/services")} prefetch={false} aria-current={here("/services")}>{f.services}</Link>
+          <Link href={to("/services")} prefetch={false} aria-current={here("/services")}>
+            {f.services}
+          </Link>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
-          <Link href={to("/changelog")} prefetch={false} aria-current={here("/changelog")}>{f.changelog}</Link>
+          <Link href={to("/changelog")} prefetch={false} aria-current={here("/changelog")}>
+            {f.changelog}
+          </Link>
         </FamilyFooter.Link>
       </FamilyFooter.Column>
     </FamilyFooter>

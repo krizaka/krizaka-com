@@ -11,7 +11,9 @@ import { STACK } from "./stack";
 
 function snapshot(): ChannelState {
   try {
-    return parseChannelState(JSON.parse(readFileSync(path.join(process.cwd(), "lib", "github-channels.json"), "utf8"))) as ChannelState;
+    return parseChannelState(
+      JSON.parse(readFileSync(path.join(process.cwd(), "lib", "github-channels.json"), "utf8")),
+    ) as ChannelState;
   } catch {
     return parseChannelState(undefined) as ChannelState;
   }

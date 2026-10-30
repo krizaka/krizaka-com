@@ -285,11 +285,7 @@
             },
             "teams": {
               "label": "Équipe",
-              "items": [
-                "Design",
-                "Ingénierie",
-                "Soutien"
-              ]
+              "items": ["Design", "Ingénierie", "Soutien"]
             },
             "digest": "Résumé de la semaine",
             "invite": "Inviter"
@@ -409,11 +405,7 @@
           "booked": "Réservé, confirmé par courriel · démo",
           "service": "Coupe courte",
           "minutes": "30 min",
-          "includes": [
-            "Consultation",
-            "Lavage",
-            "Coiffage"
-          ],
+          "includes": ["Consultation", "Lavage", "Coiffage"],
           "choose": "Choisir",
           "gst": "TPS 5 %",
           "qst": "TVQ 9,975 %",
@@ -531,9 +523,7 @@
         "lead": "Krizaka est un studio qu'Oussama construit à Montréal, presque seul, avec des agents d'IA qu'il dirige et relit. Un kris est une lame forgée en couches ; zaka, la pente qu'on gravit un pas à la fois.",
         "refusal": "Tout est parti d'une question : où mon document a-t-il été lu, par quel modèle, et qui voit le résultat ? Un logiciel qui ne sait pas répondre demande qu'on le croie sur parole. Alors ce que nous livrons est testé, documenté et open source sous Apache-2.0.",
         "placesAria": "Où est Krizaka",
-        "places": [
-          "Montréal"
-        ],
+        "places": ["Montréal"],
         "film": "Voir le film",
         "filmLength": "44 s",
         "filmCredit": "Film rendu depuis notre code",
@@ -1012,11 +1002,7 @@
           "text": "Périmètre, architecture et échéancier par écrit. Le code reste open source dans tous les cas."
         }
       ],
-      "facts": [
-        "Réponse sous 2 jours ouvrables",
-        "Français · English",
-        "Montréal, Québec"
-      ],
+      "facts": ["Réponse sous 2 jours ouvrables", "Français · English", "Montréal, Québec"],
       "groupProducts": "Produits",
       "groupStack": "Open source",
       "viaIssue": "via une issue",

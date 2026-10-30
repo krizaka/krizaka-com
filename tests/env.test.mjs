@@ -8,8 +8,10 @@ import { contactChannels } from "../lib/contact.ts";
 
 // Environment variables named by bounded context (krizaka/.github#46).
 const ROOT = path.resolve(import.meta.dirname, "..");
-const CONTEXT = /^(NEXT_PUBLIC_)?(APP|DATABASE|AUTH|MEDIA|MAIL|PUSH|PAYMENTS|REALTIME|ABUSE|OBSERVABILITY|AI|OPERATOR)_[A-Z0-9_]+$/;
-const VENDOR_OR_PRODUCT = /^(NEXT_PUBLIC_)?(ORAZAKA|YOMIZAKA|AKINAZA|KRIZAKA|BUNNY|MAILGUN|RESEND|VERCEL|GITHUB|GH|CONTACT|DO|DIGITALOCEAN)_/;
+const CONTEXT =
+  /^(NEXT_PUBLIC_)?(APP|DATABASE|AUTH|MEDIA|MAIL|PUSH|PAYMENTS|REALTIME|ABUSE|OBSERVABILITY|AI|OPERATOR)_[A-Z0-9_]+$/;
+const VENDOR_OR_PRODUCT =
+  /^(NEXT_PUBLIC_)?(ORAZAKA|YOMIZAKA|AKINAZA|KRIZAKA|BUNNY|MAILGUN|RESEND|VERCEL|GITHUB|GH|CONTACT|DO|DIGITALOCEAN)_/;
 // The runtime's and the platforms' own names, read but not ours to name.
 const PLATFORM = new Set(["NODE_ENV", "PORT", "HOSTNAME", "NEXT_PHASE", "NEXT_RUNTIME", "CI", "GITHUB_TOKEN"]);
 
@@ -23,7 +25,10 @@ test("every variable is <CONTEXT>_<THING>, never a product or a vendor", () => {
 
 test("every variable the site, its scripts, .env.example and the App Platform spec use is declared", () => {
   const declared = new Set(ENV_VARS.map((e) => e.name));
-  const files = execSync("git ls-files app lib scripts proxy.ts next.config.ts Dockerfile", { cwd: ROOT, encoding: "utf8" })
+  const files = execSync("git ls-files app lib scripts proxy.ts next.config.ts Dockerfile", {
+    cwd: ROOT,
+    encoding: "utf8",
+  })
     .split("\n")
     .filter((f) => /\.(ts|tsx|mjs|js)$|Dockerfile$/.test(f));
   const used = new Map();
@@ -32,9 +37,15 @@ test("every variable the site, its scripts, .env.example and the App Platform sp
     for (const m of src.matchAll(/\b(?:process\.env|env)(?:\.|\[["'])([A-Z][A-Z0-9_]*[A-Z0-9])\b/g)) used.set(m[1], f);
     for (const m of src.matchAll(/^(?:ARG|ENV) ([A-Z][A-Z0-9_]+)/gm)) used.set(m[1], f);
   }
-  for (const m of fs.readFileSync(path.join(ROOT, ".env.example"), "utf8").matchAll(/^#?\s?([A-Z][A-Z0-9_]+)=/gm)) used.set(m[1], ".env.example");
-  for (const m of fs.readFileSync(path.join(ROOT, "deploy/digitalocean/app.yaml"), "utf8").matchAll(/key: ([A-Z][A-Z0-9_]+)/g)) used.set(m[1], "app.yaml");
-  const undeclared = [...used].filter(([n]) => !declared.has(n) && !PLATFORM.has(n) && !/^NEXT_TELEMETRY/.test(n)).map(([n, f]) => `${n} (${f})`);
+  for (const m of fs.readFileSync(path.join(ROOT, ".env.example"), "utf8").matchAll(/^#?\s?([A-Z][A-Z0-9_]+)=/gm))
+    used.set(m[1], ".env.example");
+  for (const m of fs
+    .readFileSync(path.join(ROOT, "deploy/digitalocean/app.yaml"), "utf8")
+    .matchAll(/key: ([A-Z][A-Z0-9_]+)/g))
+    used.set(m[1], "app.yaml");
+  const undeclared = [...used]
+    .filter(([n]) => !declared.has(n) && !PLATFORM.has(n) && !/^NEXT_TELEMETRY/.test(n))
+    .map(([n, f]) => `${n} (${f})`);
   assert.equal(undeclared.join(", "), "");
 });
 

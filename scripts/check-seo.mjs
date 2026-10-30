@@ -13,29 +13,39 @@ export const CANONICAL_HOST = "https://www.krizaka.com";
 const AI_CRAWLERS = ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "CCBot"];
 
 const attr = (tag, name) => new RegExp(`${name}="([^"]*)"`, "i").exec(tag)?.[1];
-const decode = (s) => s.replace(/&#x27;/g, "'").replace(/&quot;/g, '"').replace(/&amp;/g, "&");
+const decode = (s) =>
+  s
+    .replace(/&#x27;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, "&");
 
 /** Everything wrong with one page's HTML; `path` is its route ("/en/products"). */
 export function auditHtml(html, path) {
   const problems = [];
   const titles = [...html.matchAll(/<title>([^<]*)<\/title>/g)].map((m) => decode(m[1]));
   if (titles.length !== 1) problems.push(`${titles.length} <title> (expected 1)`);
-  else if (/Krizaka[^|]*\| Krizaka \| Krizaka|\| Krizaka \| Krizaka/.test(titles[0])) problems.push(`brand repeated in title: ${titles[0]}`);
+  else if (/Krizaka[^|]*\| Krizaka \| Krizaka|\| Krizaka \| Krizaka/.test(titles[0]))
+    problems.push(`brand repeated in title: ${titles[0]}`);
   const desc = [...html.matchAll(/<meta\s[^>]*name="description"[^>]*>/g)].map((m) => attr(m[0], "content"));
   if (desc.length !== 1) problems.push(`${desc.length} meta description (expected 1)`);
-  else if (decode(desc[0]).length < 30 || decode(desc[0]).length > 400) problems.push(`description length ${decode(desc[0]).length}`);
+  else if (decode(desc[0]).length < 30 || decode(desc[0]).length > 400)
+    problems.push(`description length ${decode(desc[0]).length}`);
 
   const links = [...html.matchAll(/<link\s[^>]*>/g)].map((m) => m[0]);
   const canonical = links.filter((l) => /rel="canonical"/.test(l)).map((l) => attr(l, "href"));
   if (canonical.length !== 1) problems.push(`${canonical.length} canonical (expected 1)`);
-  else if (canonical[0] !== `${CANONICAL_HOST}${path}`) problems.push(`canonical ${canonical[0]} is not ${CANONICAL_HOST}${path}`);
+  else if (canonical[0] !== `${CANONICAL_HOST}${path}`)
+    problems.push(`canonical ${canonical[0]} is not ${CANONICAL_HOST}${path}`);
 
   const alternates = Object.fromEntries(
-    links.filter((l) => /rel="alternate"/.test(l) && /hreflang/i.test(l)).map((l) => [attr(l, "hreflang"), attr(l, "href")]),
+    links
+      .filter((l) => /rel="alternate"/.test(l) && /hreflang/i.test(l))
+      .map((l) => [attr(l, "hreflang"), attr(l, "href")]),
   );
   for (const lang of ["fr-CA", "en", "x-default"]) {
     if (!alternates[lang]) problems.push(`hreflang ${lang} missing`);
-    else if (!alternates[lang].startsWith(`${CANONICAL_HOST}/`)) problems.push(`hreflang ${lang} off www: ${alternates[lang]}`);
+    else if (!alternates[lang].startsWith(`${CANONICAL_HOST}/`))
+      problems.push(`hreflang ${lang} off www: ${alternates[lang]}`);
   }
 
   const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
@@ -54,7 +64,8 @@ export function auditHtml(html, path) {
     for (const t of ["Organization", "WebSite"]) if (!types.includes(t)) problems.push(`home: ${t} JSON-LD missing`);
   }
   if (/^\/(en|fr)\/docs\/[^/]+\/.+/.test(path)) {
-    for (const t of ["TechArticle", "BreadcrumbList"]) if (!types.includes(t)) problems.push(`docs page: ${t} JSON-LD missing`);
+    for (const t of ["TechArticle", "BreadcrumbList"])
+      if (!types.includes(t)) problems.push(`docs page: ${t} JSON-LD missing`);
   }
   // What the page declares to machines (links, meta tags, JSON-LD) — a documentation sample may quote the apex in its text.
   const declared = [...links, ...[...html.matchAll(/<meta\s[^>]*>/g)].map((m) => m[0]), ...blocks].join("\n");
@@ -65,7 +76,8 @@ export function auditHtml(html, path) {
 /** robots.txt: the AI crawlers are welcome, the sitemap is on www. */
 export function auditRobots(text) {
   const problems = [];
-  for (const bot of AI_CRAWLERS) if (!new RegExp(`User-Agent: ${bot}\\s+Allow: /`, "i").test(text)) problems.push(`robots.txt: ${bot} not allowed`);
+  for (const bot of AI_CRAWLERS)
+    if (!new RegExp(`User-Agent: ${bot}\\s+Allow: /`, "i").test(text)) problems.push(`robots.txt: ${bot} not allowed`);
   if (!text.includes(`Sitemap: ${CANONICAL_HOST}/sitemap.xml`)) problems.push("robots.txt: Sitemap is not on www");
   return problems;
 }

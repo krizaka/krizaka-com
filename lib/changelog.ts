@@ -41,7 +41,11 @@ const NAME = PERSONAL_NAMES.join("|");
 const NAME_ASIDE = new RegExp(`\\s*\\([^)]*\\b(?:${NAME})\\b[^)]*\\)`, "gi");
 
 /** A colon says what an em dash says; an aside that names a person is dropped. */
-export const cleanText = (s: string): string => s.replace(NAME_ASIDE, "").replace(/\s+—\s+/g, ": ").replace(/—/g, "-");
+export const cleanText = (s: string): string =>
+  s
+    .replace(NAME_ASIDE, "")
+    .replace(/\s+—\s+/g, ": ")
+    .replace(/—/g, "-");
 
 /** What is still wrong with a public line after `cleanText` (empty = fine): the lint of the generator. */
 export function textProblems(text: string): string[] {
@@ -55,7 +59,9 @@ export function textProblems(text: string): string[] {
 /** Every problem of every public line of the releases, as `<release>: <line> has <problem>` (empty = fine). */
 export function releaseProblems(releases: readonly Release[]): string[] {
   return releases.flatMap((r) =>
-    [...r.changes, ...(r.fr ?? [])].flatMap((c) => textProblems(c.text).map((p) => `${releaseLabel(r)}: "${c.text.slice(0, 60)}" has ${p}`)),
+    [...r.changes, ...(r.fr ?? [])].flatMap((c) =>
+      textProblems(c.text).map((p) => `${releaseLabel(r)}: "${c.text.slice(0, 60)}" has ${p}`),
+    ),
   );
 }
 
@@ -92,7 +98,12 @@ export function prOf(line: string): ChangeItem["pr"] {
 const CHANGESET_TAG: Record<string, ChangeTag> = { major: "breaking", minor: "feature", patch: "fix" };
 
 /** The releases of a changesets CHANGELOG.md, newest first as written. Dates are not in the file: `dateOf(version)`. */
-export function parseChangesets(md: string, source: string, dateOf: (version: string) => string | undefined, product = "ui"): Release[] {
+export function parseChangesets(
+  md: string,
+  source: string,
+  dateOf: (version: string) => string | undefined,
+  product = "ui",
+): Release[] {
   const releases: Release[] = [];
   let current: Release | undefined;
   let level: ChangeTag = "change";
@@ -114,13 +125,25 @@ export function parseChangesets(md: string, source: string, dateOf: (version: st
     if (!current || !bullet || /^Updated dependencies/.test(bullet[1])) continue;
     const text = plain(bullet[1].replace(/^(\[[^\]]*\]\([^)]*\)\s*)+(Thanks \[[^\]]*\]\([^)]*\)!\s*)?-\s*/, ""));
     if (!text) continue;
-    current.changes.push({ tag: tagOf(text, level === "feature" ? "feature" : level), text: clip(text), pr: prOf(bullet[1]) });
+    current.changes.push({
+      tag: tagOf(text, level === "feature" ? "feature" : level),
+      text: clip(text),
+      pr: prOf(bullet[1]),
+    });
   }
   return releases.filter((r) => r.changes.length > 0);
 }
 
-const CONVENTIONAL = /^(feat|fix|perf|security|sec|revert|refactor|docs|chore|ci|test|build|style|deps)(\([^)]*\))?(!)?:\s*(.+)$/i;
-const TAG_OF_TYPE: Record<string, ChangeTag> = { feat: "feature", fix: "fix", perf: "change", security: "security", sec: "security", revert: "change" };
+const CONVENTIONAL =
+  /^(feat|fix|perf|security|sec|revert|refactor|docs|chore|ci|test|build|style|deps)(\([^)]*\))?(!)?:\s*(.+)$/i;
+const TAG_OF_TYPE: Record<string, ChangeTag> = {
+  feat: "feature",
+  fix: "fix",
+  perf: "change",
+  security: "security",
+  sec: "security",
+  revert: "change",
+};
 /** Types that are the team's housekeeping, not news for a reader. */
 const QUIET_TYPES = new Set(["refactor", "docs", "chore", "ci", "test", "build", "style", "deps"]);
 
@@ -165,7 +188,10 @@ export function parseReleaseBodies(body: string): { en: ChangeItem[]; fr?: Chang
   };
   const en = part("English");
   const fr = part("Français");
-  return { en: parseReleaseBody(en ?? fr ?? ""), fr: fr === undefined || en === undefined ? undefined : parseReleaseBody(fr) };
+  return {
+    en: parseReleaseBody(en ?? fr ?? ""),
+    fr: fr === undefined || en === undefined ? undefined : parseReleaseBody(fr),
+  };
 }
 
 /** The draft generator: conventional PR titles → a plain-language draft entry (Markdown) for a human or an agent to polish. */
@@ -174,9 +200,18 @@ export function draftFromTitles(titles: readonly string[], heading: string): str
   for (const title of titles) {
     const item = changeFromTitle(title);
     if (!item) continue;
-    groups.set(item.tag, [...(groups.get(item.tag) ?? []), item.pr?.number ? `${item.text} (#${item.pr.number})` : item.text]);
+    groups.set(item.tag, [
+      ...(groups.get(item.tag) ?? []),
+      item.pr?.number ? `${item.text} (#${item.pr.number})` : item.text,
+    ]);
   }
-  const names: Record<ChangeTag, string> = { breaking: "Breaking", security: "Security", feature: "New", fix: "Fixed", change: "Changed" };
+  const names: Record<ChangeTag, string> = {
+    breaking: "Breaking",
+    security: "Security",
+    feature: "New",
+    fix: "Fixed",
+    change: "Changed",
+  };
   const out = [`## ${heading}`];
   for (const tag of CHANGE_TAGS) {
     const lines = groups.get(tag);
@@ -191,14 +226,19 @@ export function newestFirst(a: Release, b: Release): number {
 }
 
 /** The changes of a release in a language: French when the release wrote it, else the English lines. */
-export const changesFor = (r: Pick<Release, "changes" | "fr">, lang: "en" | "fr"): ChangeItem[] => ({ en: r.changes, fr: r.fr ?? r.changes })[lang];
+export const changesFor = (r: Pick<Release, "changes" | "fr">, lang: "en" | "fr"): ChangeItem[] =>
+  ({ en: r.changes, fr: r.fr ?? r.changes })[lang];
 
 /** What a release is called: `@krizaka/ui 3.22.0`, `Orazaka edge 2026.10.22.1`. */
-export const releaseLabel = (r: Pick<Release, "source" | "part" | "version">): string => [r.source, r.part, r.version].filter(Boolean).join(" ");
+export const releaseLabel = (r: Pick<Release, "source" | "part" | "version">): string =>
+  [r.source, r.part, r.version].filter(Boolean).join(" ");
 
 /** A stable anchor: `krizaka-ui-3-22-0`; the bare version is the anchor of the site's own entry. */
 export const anchorOf = (r: Pick<Release, "source" | "part" | "version">): string =>
-  releaseLabel(r).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  releaseLabel(r)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
@@ -216,7 +256,9 @@ export function changelogRss(opts: {
 }): string {
   const items = opts.releases
     .map((r) => {
-      const list = changesFor(r, opts.lang).map((c) => `<li><b>${esc(opts.tagLabel[c.tag])}</b> ${esc(c.text)}</li>`).join("");
+      const list = changesFor(r, opts.lang)
+        .map((c) => `<li><b>${esc(opts.tagLabel[c.tag])}</b> ${esc(c.text)}</li>`)
+        .join("");
       const link = `${opts.pageUrl}#${anchorOf(r)}`;
       return `<item><title>${esc(releaseLabel(r))}</title><link>${esc(link)}</link><guid isPermaLink="true">${esc(link)}</guid><pubDate>${new Date(`${r.date}T12:00:00Z`).toUTCString()}</pubDate><description>${esc(`<ul>${list}</ul>`)}</description></item>`;
     })
@@ -230,4 +272,6 @@ export const SITE_REPO = "krizaka/krizaka-com";
 
 /** The page of the site's release `v<version>` when it is published, else the releases list (never a dead link). */
 export const siteReleaseUrl = (version: string, published: boolean): string =>
-  version && published ? `https://github.com/${SITE_REPO}/releases/tag/v${version}` : `https://github.com/${SITE_REPO}/releases`;
+  version && published
+    ? `https://github.com/${SITE_REPO}/releases/tag/v${version}`
+    : `https://github.com/${SITE_REPO}/releases`;

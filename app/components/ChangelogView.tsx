@@ -24,7 +24,10 @@ type Props = Omit<React.ComponentProps<typeof ChangelogPage>, "entries" | "linkA
 export default function ChangelogView({ entries, feed, filterLabel, allLabel, filterNames, none, ...page }: Props) {
   const selected = filterOf(useSearchParam(FILTER_PARAM));
   const shown = visibleEntries(entries, selected);
-  const chips: { id: FilterId | undefined; label: string }[] = [{ id: undefined, label: allLabel }, ...FILTER_IDS.map((id) => ({ id, label: filterNames[id] }))];
+  const chips: { id: FilterId | undefined; label: string }[] = [
+    { id: undefined, label: allLabel },
+    ...FILTER_IDS.map((id) => ({ id, label: filterNames[id] })),
+  ];
 
   const choose = (id: FilterId | undefined) => (e: MouseEvent) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
@@ -60,7 +63,16 @@ export default function ChangelogView({ entries, feed, filterLabel, allLabel, fi
         }
       />
       {shown.length === 0 && entries.length > 0 && (
-        <p style={{ margin: "0 auto", maxWidth: "var(--kz-page-max)", padding: "0 var(--kz-page-gutter) 4rem", color: "var(--kz-text-secondary)" }}>{none}</p>
+        <p
+          style={{
+            margin: "0 auto",
+            maxWidth: "var(--kz-page-max)",
+            padding: "0 var(--kz-page-gutter) 4rem",
+            color: "var(--kz-text-secondary)",
+          }}
+        >
+          {none}
+        </p>
       )}
     </>
   );

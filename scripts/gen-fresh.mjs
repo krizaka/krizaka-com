@@ -28,11 +28,21 @@ const mtime = (f) => {
 const jobs = GENERATORS.map(
   ([script, out]) =>
     new Promise((resolve) => {
-      if (isFresh({ mtimeMs: mtime(out), now: Date.now(), maxAgeMin, ci: Boolean(e.CI), force: Boolean(e.KRIZAKA_GEN_FORCE) })) {
+      if (
+        isFresh({
+          mtimeMs: mtime(out),
+          now: Date.now(),
+          maxAgeMin,
+          ci: Boolean(e.CI),
+          force: Boolean(e.KRIZAKA_GEN_FORCE),
+        })
+      ) {
         console.log(`${script}: ${out} is fresh, not fetched`);
         return resolve(0);
       }
-      spawn(process.execPath, [path.join(root, "scripts", script)], { stdio: "inherit" }).on("close", (code) => resolve(code ?? 1));
+      spawn(process.execPath, [path.join(root, "scripts", script)], { stdio: "inherit" }).on("close", (code) =>
+        resolve(code ?? 1),
+      );
     }),
 );
 const codes = await Promise.all(jobs);

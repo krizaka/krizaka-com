@@ -34,7 +34,20 @@ import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { execFileSync } from "node:child_process";
-import { FOREIGN_WRITERS, FOREIGN_WRITERS_V2, LAYOUT_README, README_NAME, RETIRED, SITE_AREA_NAMES, assertWritable, layoutHelp, libraryPath, manifestObject, placement, targetOf } from "./bunny-layout.mjs";
+import {
+  FOREIGN_WRITERS,
+  FOREIGN_WRITERS_V2,
+  LAYOUT_README,
+  README_NAME,
+  RETIRED,
+  SITE_AREA_NAMES,
+  assertWritable,
+  layoutHelp,
+  libraryPath,
+  manifestObject,
+  placement,
+  targetOf,
+} from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 
 /** The manifest root of layout v2 (ADR-014): entries resolve under sites/, org/v1/films/ and apps/ (manifestObject). "site" is the legacy root. */
@@ -55,10 +68,14 @@ export function versioned(path, hash) {
 
 /** A logical path: lower-case segments of letters, digits, `-` and `_`, an extension. */
 export function logicalPath(value, name = "to") {
-  const p = String(value ?? "").trim().replace(/^\/+|\/+$/g, "");
-  if (!/^[a-z0-9_-]+(\/[a-z0-9_-]+)*(\.[a-z0-9]+)?$/.test(p)) throw new Error(`--${name} "${value}" is not a path like products/akinaza/tour`);
+  const p = String(value ?? "")
+    .trim()
+    .replace(/^\/+|\/+$/g, "");
+  if (!/^[a-z0-9_-]+(\/[a-z0-9_-]+)*(\.[a-z0-9]+)?$/.test(p))
+    throw new Error(`--${name} "${value}" is not a path like products/akinaza/tour`);
   const area = p.split("/")[0];
-  if (!SITE_AREA_NAMES.includes(area)) throw new Error(`--${name} "${value}": "${area}" is not an area of site/ (${SITE_AREA_NAMES.join(", ")})`);
+  if (!SITE_AREA_NAMES.includes(area))
+    throw new Error(`--${name} "${value}": "${area}" is not an area of site/ (${SITE_AREA_NAMES.join(", ")})`);
   return p;
 }
 
@@ -94,7 +111,15 @@ export function plan(src, to) {
   return files;
 }
 
-export async function upload({ src, to, cfg, manifest, dryRun = false, fetchImpl = globalThis.fetch, log = console.log }) {
+export async function upload({
+  src,
+  to,
+  cfg,
+  manifest,
+  dryRun = false,
+  fetchImpl = globalThis.fetch,
+  log = console.log,
+}) {
   const out = [];
   for (const f of plan(src, to)) {
     const body = readFileSync(f.path);
@@ -141,14 +166,17 @@ export async function check({ cfg, manifest, fetchImpl = globalThis.fetch, log =
 
 /** Every object under <dir> on the storage zone (Bunny's listing API: a JSON array per directory). */
 async function listObjects(cfg, dir, fetchImpl) {
-  const res = await fetchImpl(`${storageUrl(cfg, dir)}/`, { headers: { AccessKey: cfg.apiKey, Accept: "application/json" } });
+  const res = await fetchImpl(`${storageUrl(cfg, dir)}/`, {
+    headers: { AccessKey: cfg.apiKey, Accept: "application/json" },
+  });
   if (res.status === 404) return [];
   if (!res.ok) throw new Error(`listing of ${dir}/ failed: HTTP ${res.status}`);
   const out = [];
   for (const item of await res.json()) {
     const p = `${dir}/${item.ObjectName}`;
     if (item.IsDirectory) out.push(...(await listObjects(cfg, p, fetchImpl)));
-    else out.push({ path: p, changed: item.LastChanged ? Date.parse(`${item.LastChanged}Z`) : 0, size: item.Length ?? 0 });
+    else
+      out.push({ path: p, changed: item.LastChanged ? Date.parse(`${item.LastChanged}Z`) : 0, size: item.Length ?? 0 });
   }
   return out;
 }
@@ -166,7 +194,9 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
     const git = (...args) => run("git", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] });
     const rel = git("ls-files", "--full-name", manifestFile).trim() || "lib/cdn-manifest.json";
     const base = "origin/main";
-    const unmerged = git("for-each-ref", `--no-merged=${base}`, "--format=%(refname)", "refs/heads", "refs/remotes").split("\n").filter(Boolean);
+    const unmerged = git("for-each-ref", `--no-merged=${base}`, "--format=%(refname)", "refs/heads", "refs/remotes")
+      .split("\n")
+      .filter(Boolean);
     for (const ref of [base, ...unmerged]) {
       try {
         add(JSON.parse(git("show", `${ref}:${rel}`)));
@@ -196,7 +226,17 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
 /** Objects younger than this are left alone: another session may have uploaded them and not yet committed its manifest. */
 export const MIN_AGE_MS = 24 * 3600 * 1000;
 
-export async function prune({ cfg, manifest, yes = false, retired = false, extraKeep = new Set(), minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log }) {
+export async function prune({
+  cfg,
+  manifest,
+  yes = false,
+  retired = false,
+  extraKeep = new Set(),
+  minAgeMs = MIN_AGE_MS,
+  now = Date.now(),
+  fetchImpl = globalThis.fetch,
+  log = console.log,
+}) {
   const entries = Object.entries(manifest.files);
   const named = entries.map(([l, h]) => objectPath(manifest.root, l, h));
   // Until the release that reads layout v2 is live (krizaka-com#450), the legacy copy of every current entry serves too.
@@ -207,7 +247,14 @@ export async function prune({ cfg, manifest, yes = false, retired = false, extra
     if (t) keep.add(t);
   }
   // The folders this manifest writes: site/ (legacy) and the v2 folders its entries land in.
-  const v2 = named.filter((p) => !p.startsWith(`${LEGACY_ROOT}/`)).map((p) => p.split("/").slice(0, p.startsWith("org/") ? 3 : 2).join("/"));
+  const v2 = named
+    .filter((p) => !p.startsWith(`${LEGACY_ROOT}/`))
+    .map((p) =>
+      p
+        .split("/")
+        .slice(0, p.startsWith("org/") ? 3 : 2)
+        .join("/"),
+    );
   const dirs = [...new Set([LEGACY_ROOT, ...v2])].sort((a, b) => a.localeCompare(b));
   const all = [];
   for (const d of dirs) all.push(...(await listObjects(cfg, d, fetchImpl)));
@@ -218,7 +265,10 @@ export async function prune({ cfg, manifest, yes = false, retired = false, extra
     : all.filter((o) => !keep.has(o.path) && !foreign(o.path));
   const stale = unnamed.filter((o) => !o.changed || now - o.changed >= minAgeMs).map((o) => o.path);
   const recent = unnamed.length - stale.length;
-  if (recent) log(`kept ${recent} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be committing its manifest)`);
+  if (recent)
+    log(
+      `kept ${recent} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be committing its manifest)`,
+    );
   for (const p of stale) {
     if (!dirs.some((d) => p.startsWith(`${d}/`))) throw new Error(`${p} is outside the folders this manifest writes`);
     if (yes) await remove(cfg, p, fetchImpl);
@@ -242,13 +292,20 @@ async function remove(cfg, p, fetchImpl) {
 export function readRefs(dir) {
   const lines = (f) => {
     try {
-      return readFileSync(join(dir, f), "utf8").split("\n").map((l) => l.trim()).filter(Boolean);
+      return readFileSync(join(dir, f), "utf8")
+        .split("\n")
+        .map((l) => l.trim())
+        .filter(Boolean);
     } catch (err) {
       if (err.code === "ENOENT") return [];
       throw err;
     }
   };
-  return { urls: new Set(lines("ref-urls.txt")), hex: new Set(lines("ref-hex10.txt")), prefixes: lines("ref-prefixes.txt") };
+  return {
+    urls: new Set(lines("ref-urls.txt")),
+    hex: new Set(lines("ref-hex10.txt")),
+    prefixes: lines("ref-prefixes.txt"),
+  };
 }
 
 /** True when something still names <path>: its URL, a folder URL above it, a built prefix, or its content hash. */
@@ -256,13 +313,20 @@ export function isNamed(path, refs) {
   if (refs.urls.has(path) || refs.prefixes.some((p) => path.startsWith(p))) return true;
   const hash = /\.([0-9a-f]{10})\.[a-z0-9]+$/.exec(path)?.[1];
   if (hash && refs.hex.has(hash)) return true;
-  for (let i = path.lastIndexOf("/"); i > 0; i = path.lastIndexOf("/", i - 1)) if (refs.urls.has(path.slice(0, i + 1))) return true;
+  for (let i = path.lastIndexOf("/"); i > 0; i = path.lastIndexOf("/", i - 1))
+    if (refs.urls.has(path.slice(0, i + 1))) return true;
   return false;
 }
 
 /** The objects outside layout v2 (legacy or misplaced) that nothing names and are older than `minAgeMs`: what purge-unused deletes. */
 export function unusedLegacy(objects, refs, { now = Date.now(), minAgeMs = MIN_AGE_MS } = {}) {
-  return objects.filter((o) => placement(o.path).state !== "ok" && o.path !== README_NAME && !isNamed(o.path, refs) && (!o.changed || now - o.changed >= minAgeMs));
+  return objects.filter(
+    (o) =>
+      placement(o.path).state !== "ok" &&
+      o.path !== README_NAME &&
+      !isNamed(o.path, refs) &&
+      (!o.changed || now - o.changed >= minAgeMs),
+  );
 }
 
 /**
@@ -270,11 +334,23 @@ export function unusedLegacy(objects, refs, { now = Date.now(), minAgeMs = MIN_A
  * non-empty object is downloaded there first (same relative path) and the deletion stops if a download fails. A target
  * object (org/, sites/, apps/, pr-assets/) is never deleted by this command.
  */
-export async function purgeUnused({ cfg, refs, yes = false, backup, minAgeMs = MIN_AGE_MS, now = Date.now(), fetchImpl = globalThis.fetch, log = console.log, objects }) {
+export async function purgeUnused({
+  cfg,
+  refs,
+  yes = false,
+  backup,
+  minAgeMs = MIN_AGE_MS,
+  now = Date.now(),
+  fetchImpl = globalThis.fetch,
+  log = console.log,
+  objects,
+}) {
   objects ??= await listZone(cfg, fetchImpl);
   const unused = unusedLegacy(objects, refs, { now, minAgeMs });
   const bytes = unused.reduce((a, o) => a + o.size, 0);
-  log(`${unused.length} unused object(s) outside layout v2, ${(bytes / 1048576).toFixed(1)} MB${yes ? "" : " — a preview: run again with --yes"}`);
+  log(
+    `${unused.length} unused object(s) outside layout v2, ${(bytes / 1048576).toFixed(1)} MB${yes ? "" : " — a preview: run again with --yes"}`,
+  );
   for (const o of unused) {
     if (placement(o.path).state === "ok") throw new Error(`${o.path} is in the target layout: never purged`);
     if (yes && backup && o.size > 0) {
@@ -306,7 +382,8 @@ export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetc
     if (!prev || o.changed > prev.changed) newest.set(target, o);
   }
   const existing = new Map();
-  for (const top of ["products", "people/personas"]) for (const o of await listObjects(cfg, top, fetchImpl)) existing.set(o.path, o.size);
+  for (const top of ["products", "people/personas"])
+    for (const o of await listObjects(cfg, top, fetchImpl)) existing.set(o.path, o.size);
   let sent = 0;
   for (const [target, o] of [...newest].sort(([a], [b]) => a.localeCompare(b))) {
     if (existing.get(target) === o.size) continue;
@@ -315,11 +392,17 @@ export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetc
     const src = await fetchImpl(cdnUrl(cfg, o.path));
     if (!src.ok) throw new Error(`download of ${o.path} failed: HTTP ${src.status}`);
     const body = Buffer.from(await src.arrayBuffer());
-    const res = await fetchImpl(storageUrl(cfg, target), { method: "PUT", headers: { AccessKey: cfg.apiKey, "Content-Type": contentTypeFor(target) }, body });
+    const res = await fetchImpl(storageUrl(cfg, target), {
+      method: "PUT",
+      headers: { AccessKey: cfg.apiKey, "Content-Type": contentTypeFor(target) },
+      body,
+    });
     if (!res.ok) throw new Error(`upload of ${target} failed: HTTP ${res.status}`);
     sent++;
   }
-  log(`${newest.size} library file(s), ${dryRun ? "to copy" : "copied"}: ${dryRun ? [...newest].filter(([t, o]) => existing.get(t) !== o.size).length : sent}`);
+  log(
+    `${newest.size} library file(s), ${dryRun ? "to copy" : "copied"}: ${dryRun ? [...newest].filter(([t, o]) => existing.get(t) !== o.size).length : sent}`,
+  );
   return newest;
 }
 
@@ -327,12 +410,19 @@ export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetc
 export async function listZone(cfg, fetchImpl = globalThis.fetch, from = "") {
   const out = [];
   const walk = async (dir) => {
-    const res = await fetchImpl(`${storageUrl(cfg, dir).replace(/\/$/, "")}/`, { headers: { AccessKey: cfg.apiKey, Accept: "application/json" } });
+    const res = await fetchImpl(`${storageUrl(cfg, dir).replace(/\/$/, "")}/`, {
+      headers: { AccessKey: cfg.apiKey, Accept: "application/json" },
+    });
     if (!res.ok) throw new Error(`listing of ${dir || "/"} failed: HTTP ${res.status}`);
     for (const item of await res.json()) {
       const p = `${dir}${item.ObjectName}`;
       if (item.IsDirectory) await walk(`${p}/`);
-      else out.push({ path: p, size: item.Length ?? 0, changed: item.LastChanged ? Date.parse(`${item.LastChanged}Z`) : 0 });
+      else
+        out.push({
+          path: p,
+          size: item.Length ?? 0,
+          changed: item.LastChanged ? Date.parse(`${item.LastChanged}Z`) : 0,
+        });
     }
   };
   await walk(from);
@@ -372,7 +462,8 @@ function logFolders(objects, log) {
     r.bytes += o.size;
     rows.set(key, r);
   }
-  for (const [key, r] of [...rows].sort(([a], [b]) => a.localeCompare(b))) log(`${key.padEnd(64)} ${String(r.n).padStart(5)}  ${(r.bytes / 1048576).toFixed(1).padStart(8)} MB`);
+  for (const [key, r] of [...rows].sort(([a], [b]) => a.localeCompare(b)))
+    log(`${key.padEnd(64)} ${String(r.n).padStart(5)}  ${(r.bytes / 1048576).toFixed(1).padStart(8)} MB`);
   const total = objects.reduce((a, o) => a + o.size, 0);
   log(`\n${objects.length} object(s), ${(total / 1048576).toFixed(0)} MB`);
 }
@@ -407,7 +498,8 @@ async function migrationPlan({ cfg, only, objects, fetchImpl }) {
     const p = placement(o.path);
     if (!o.path.startsWith(only) || p.state !== "legacy" || !p.target) continue;
     await known(p.target);
-    if (sizes.get(p.target) !== o.size) todo.push({ from: o.path, to: p.target, size: o.size, replaced: sizes.has(p.target) });
+    if (sizes.get(p.target) !== o.size)
+      todo.push({ from: o.path, to: p.target, size: o.size, replaced: sizes.has(p.target) });
   }
   return todo;
 }
@@ -417,11 +509,21 @@ async function migrationPlan({ cfg, only, objects, fetchImpl }) {
  * skipped when the target already holds a file of the same size. Old paths are never touched (they keep serving). A
  * re-copied file that changes in place (not hashed) is purged on the pull zone. A preview without `yes`.
  */
-export async function migrate({ cfg, only = "", yes = false, accountKey, fetchImpl = globalThis.fetch, log = console.log, objects }) {
+export async function migrate({
+  cfg,
+  only = "",
+  yes = false,
+  accountKey,
+  fetchImpl = globalThis.fetch,
+  log = console.log,
+  objects,
+}) {
   objects ??= await listZone(cfg, fetchImpl, only);
   const todo = await migrationPlan({ cfg, only, objects, fetchImpl });
   const bytes = todo.reduce((a, t) => a + t.size, 0);
-  log(`${todo.length} object(s) to copy, ${(bytes / 1048576).toFixed(1)} MB${yes ? "" : " — a preview: run again with --yes"}`);
+  log(
+    `${todo.length} object(s) to copy, ${(bytes / 1048576).toFixed(1)} MB${yes ? "" : " — a preview: run again with --yes"}`,
+  );
   if (!yes) {
     for (const t of todo.slice(0, 20)) log(`  would copy  ${t.from}  →  ${t.to}`);
     if (todo.length > 20) log(`  … and ${todo.length - 20} more`);
@@ -436,7 +538,11 @@ export async function migrate({ cfg, only = "", yes = false, accountKey, fetchIm
         const body = Buffer.from(await src.arrayBuffer());
         const res = await fetchImpl(storageUrl(cfg, t.to), {
           method: "PUT",
-          headers: { AccessKey: cfg.apiKey, "Content-Type": contentTypeFor(t.to), Checksum: createHash("sha256").update(body).digest("hex").toUpperCase() },
+          headers: {
+            AccessKey: cfg.apiKey,
+            "Content-Type": contentTypeFor(t.to),
+            Checksum: createHash("sha256").update(body).digest("hex").toUpperCase(),
+          },
           body,
         });
         if (!res.ok) throw new Error(`upload of ${t.to} failed: HTTP ${res.status}`);
@@ -451,7 +557,11 @@ export async function migrate({ cfg, only = "", yes = false, accountKey, fetchIm
 
 /** Publishes the layout as README.txt at the root of the zone — the only file allowed there. */
 export async function publishReadme({ cfg, accountKey, fetchImpl = globalThis.fetch, log = console.log }) {
-  const res = await fetchImpl(storageUrl(cfg, README_NAME), { method: "PUT", headers: { AccessKey: cfg.apiKey, "Content-Type": "text/plain; charset=utf-8" }, body: LAYOUT_README });
+  const res = await fetchImpl(storageUrl(cfg, README_NAME), {
+    method: "PUT",
+    headers: { AccessKey: cfg.apiKey, "Content-Type": "text/plain; charset=utf-8" },
+    body: LAYOUT_README,
+  });
   if (!res.ok) throw new Error(`upload of ${README_NAME} failed: HTTP ${res.status}`);
   log(`${cdnUrl(cfg, README_NAME)} published`);
   await purgeUnhashed({ cfg, paths: [README_NAME], accountKey, fetchImpl, log });
@@ -467,7 +577,10 @@ export async function purgeUnhashed({ cfg, paths, accountKey, fetchImpl = global
   let ok = true;
   for (const p of paths) {
     const url = cdnUrl(cfg, p);
-    const res = await fetchImpl(`https://api.bunny.net/purge?${new URLSearchParams({ url, async: "false" })}`, { method: "POST", headers: { AccessKey: accountKey } });
+    const res = await fetchImpl(`https://api.bunny.net/purge?${new URLSearchParams({ url, async: "false" })}`, {
+      method: "POST",
+      headers: { AccessKey: accountKey },
+    });
     log(res.ok ? `${url} purged` : `${url} NOT purged: HTTP ${res.status}`);
     ok &&= res.ok;
   }
@@ -494,7 +607,11 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     return args.help ? 0 : 1;
   }
   const fileEnv = args.envFile ? parseEnvFile(readFileSync(args.envFile, "utf8")) : {};
-  const merged = { MEDIA_CDN_HOSTNAME: DEFAULT_PULL_ZONE, ...fileEnv, ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)) };
+  const merged = {
+    MEDIA_CDN_HOSTNAME: DEFAULT_PULL_ZONE,
+    ...fileEnv,
+    ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)),
+  };
   const manifest = readManifest(manifestFile);
   if (command === "upload") {
     if (!target) throw new Error("upload needs a file or a directory");
@@ -509,7 +626,9 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
       writeManifest(manifest, manifestFile);
     }
     const sentCount = entries.filter((e) => e.changed).length;
-    log(`\n${entries.length} file(s), ${sentCount} ${args.dryRun ? "to send" : "sent"}${args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`}`);
+    log(
+      `\n${entries.length} file(s), ${sentCount} ${args.dryRun ? "to send" : "sent"}${args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`}`,
+    );
     return 0;
   }
   if (command === "check") {
@@ -517,11 +636,22 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     return failed.length ? 1 : 0;
   }
   if (command === "prune") {
-    await prune({ cfg: loadConfig(merged), manifest, yes, retired: argv.includes("--retired"), minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000, extraKeep: otherBranchPaths(manifestFile), fetchImpl, log });
+    await prune({
+      cfg: loadConfig(merged),
+      manifest,
+      yes,
+      retired: argv.includes("--retired"),
+      minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000,
+      extraKeep: otherBranchPaths(manifestFile),
+      fetchImpl,
+      log,
+    });
     return 0;
   }
   if (command === "library") {
-    log("library is retired (ADR-014): the human-name mirror (products/, people/personas/) is no longer written; browse the tree (scripts/bunny-tree.mjs)");
+    log(
+      "library is retired (ADR-014): the human-name mirror (products/, people/personas/) is no longer written; browse the tree (scripts/bunny-tree.mjs)",
+    );
     return 1;
   }
   if (command === "tree") {
@@ -529,14 +659,29 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     return bad.length || (argv.includes("--strict") && legacy.length) ? 1 : 0;
   }
   if (command === "migrate") {
-    await migrate({ cfg: loadConfig(merged), only: args.only ?? "", yes, accountKey: merged.MEDIA_ACCOUNT_API_KEY, fetchImpl, log });
+    await migrate({
+      cfg: loadConfig(merged),
+      only: args.only ?? "",
+      yes,
+      accountKey: merged.MEDIA_ACCOUNT_API_KEY,
+      fetchImpl,
+      log,
+    });
     return 0;
   }
   if (command === "purge-unused") {
     if (!args.refs) throw new Error("purge-unused needs --refs <dir> (ref-urls.txt, ref-hex10.txt, ref-prefixes.txt)");
     const refs = readRefs(args.refs);
     if (!refs.urls.size) throw new Error(`${args.refs}/ref-urls.txt is empty: refusing to purge without references`);
-    await purgeUnused({ cfg: loadConfig(merged), refs, yes, backup: args.backup, minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000, fetchImpl, log });
+    await purgeUnused({
+      cfg: loadConfig(merged),
+      refs,
+      yes,
+      backup: args.backup,
+      minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000,
+      fetchImpl,
+      log,
+    });
     return 0;
   }
   if (command === "readme") {

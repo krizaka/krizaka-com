@@ -53,7 +53,14 @@ function main(argv) {
     }
   };
 
-  let facts = { tag, onMain: false, productionSha: null, tagSha: "", productionIsAncestor: false, tagIsAncestor: false };
+  let facts = {
+    tag,
+    onMain: false,
+    productionSha: null,
+    tagSha: "",
+    productionIsAncestor: false,
+    tagIsAncestor: false,
+  };
   if (RELEASE_TAG.test(tag)) {
     git("fetch", "--quiet", "--tags", remote, `+refs/heads/main:refs/remotes/${remote}/main`);
     const remoteProduction = git("ls-remote", "--heads", remote, BRANCH).split(/\s+/)[0] || null;

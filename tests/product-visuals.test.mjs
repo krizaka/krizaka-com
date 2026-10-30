@@ -1,7 +1,18 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { PRODUCT_RECORDS, calls, cssDecls, cssSelectors, hasCode, hasJsx, identifiers, importsFrom, importsOf, strings } from "./helpers/source.mjs";
+import {
+  PRODUCT_RECORDS,
+  calls,
+  cssDecls,
+  cssSelectors,
+  hasCode,
+  hasJsx,
+  identifiers,
+  importsFrom,
+  importsOf,
+  strings,
+} from "./helpers/source.mjs";
 
 // Each product card SHOWS its field (Oussama, 2026-10-17): a live mini-visual made of @krizaka/ui pieces — lazy,
 // decorative, a fixed box (no layout shift), playing only on screen (hover on a fine pointer), still under reduced motion.
@@ -46,7 +57,12 @@ test("it plays when on screen, never under reduced motion, never off screen; no 
     assert.equal(reduced(sel).transition, "none !important", sel);
   }
   for (const f of [FRAME, VISUALS]) {
-    assert.ok(!identifiers(f).has("requestAnimationFrame") && !hasJsx(f, "canvas") && !calls(f).some((c) => c.endsWith("getContext")), f);
+    assert.ok(
+      !identifiers(f).has("requestAnimationFrame") &&
+        !hasJsx(f, "canvas") &&
+        !calls(f).some((c) => c.endsWith("getContext")),
+      f,
+    );
   }
 });
 
@@ -54,12 +70,18 @@ test("built from @krizaka/ui components, specific to each field, demo data said 
   for (const part of ["@krizaka/ui/chip", "@krizaka/icons"]) assert.ok(importsFrom(VISUALS, part), part);
   // #417: no generic chart and no gradient rectangle with a play button — each visual shows what the product does.
   const used = identifiers(VISUALS);
-  assert.ok(!used.has("Sparkline") && !importsOf(VISUALS).some((i) => i.from.startsWith("@krizaka/charts")), "a generic sparkline");
+  assert.ok(
+    !used.has("Sparkline") && !importsOf(VISUALS).some((i) => i.from.startsWith("@krizaka/charts")),
+    "a generic sparkline",
+  );
   const classes = [...strings(VISUALS), ...cssSelectors(CSS)].join(" ");
   assert.doesNotMatch(classes, /pv-media-play|pv-media-frame/, "a play button on a gradient rectangle");
   assert.ok(!used.has("SkeletonText"), "no generic skeleton lines: the lease shows its clauses");
   assert.ok(!("border" in cssDecls(CSS, ".pv")), "no box in a box: the visual has no border of its own");
-  assert.ok(!hasJsx(VISUALS, "video") && !calls(VISUALS).some((c) => c === "cdn" || c === "video"), "a visual is drawn, never a clip");
+  assert.ok(
+    !hasJsx(VISUALS, "video") && !calls(VISUALS).some((c) => c === "cdn" || c === "video"),
+    "a visual is drawn, never a clip",
+  );
   for (const l of ["en", "fr"]) {
     const v = JSON.parse(read(`messages/${l}.json`)).site.home.visuals;
     assert.deepEqual(Object.keys(v).sort(), [...ids].sort(), l);

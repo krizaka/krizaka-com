@@ -10,7 +10,10 @@
 import { manifestObject } from "../scripts/bunny-layout.mjs";
 import manifest from "./cdn-manifest.json";
 
-export const CDN_URL = (process.env.NEXT_PUBLIC_MEDIA_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(/\/+$/, "");
+export const CDN_URL = (process.env.NEXT_PUBLIC_MEDIA_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(
+  /\/+$/,
+  "",
+);
 
 const FILES: Record<string, string> = manifest.files;
 
@@ -22,7 +25,10 @@ const versioned = (path: string, hash: string): string => {
 /** `products/orazaka/tour/tea-pour.mp4` → `https://…/sites/orazaka/tour/tea-pour.<hash>.mp4`. */
 export function cdn(path: string): string {
   const hash = FILES[path];
-  if (!hash) throw new Error(`${path} is not on the CDN — upload it: node scripts/cdn-assets.mjs upload <file> --to ${path.replace(/\/[^/]+$/, "")}`);
+  if (!hash)
+    throw new Error(
+      `${path} is not on the CDN — upload it: node scripts/cdn-assets.mjs upload <file> --to ${path.replace(/\/[^/]+$/, "")}`,
+    );
   // Layout v2 (ADR-014): `home/…` → sites/www/home/…, `products/<p>/…` → sites/<p>/…, `brand-films/…` → org/v1/films/….
   return `${CDN_URL}/${manifestObject(manifest.root, path, hash, versioned)}`;
 }
@@ -37,4 +43,8 @@ export interface Video {
   poster: string;
 }
 
-export const video = (base: string): Video => ({ webm: cdn(`${base}.webm`), mp4: cdn(`${base}.mp4`), poster: cdn(`${base}.jpg`) });
+export const video = (base: string): Video => ({
+  webm: cdn(`${base}.webm`),
+  mp4: cdn(`${base}.mp4`),
+  poster: cdn(`${base}.jpg`),
+});

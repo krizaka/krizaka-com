@@ -14,7 +14,8 @@ const browser = await chromium.launch();
 const problems = [];
 let arrivals = 0;
 
-const toBottom = (page) => page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }));
+const toBottom = (page) =>
+  page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "instant" }));
 
 try {
   for (const vp of VIEWPORTS) {
@@ -39,7 +40,10 @@ try {
     for (const from of ["/en", "/en/story"]) {
       await page.goto(base + from, { waitUntil: "load", timeout: 60_000 });
       const links = await page.evaluate(() =>
-        [...document.querySelectorAll("footer a[href^='/']")].map((a) => ({ href: a.getAttribute("href"), label: (a.textContent || "").trim() })),
+        [...document.querySelectorAll("footer a[href^='/']")].map((a) => ({
+          href: a.getAttribute("href"),
+          label: (a.textContent || "").trim(),
+        })),
       );
       for (const link of links) {
         await page.goto(base + from, { waitUntil: "load", timeout: 60_000 });
@@ -47,16 +51,27 @@ try {
         await page.waitForTimeout(400);
         const c = { vp: vp.name, from, ...link };
         const target = new URL(link.href, base);
-        if (target.pathname.replace(/^\/(en|fr)(?=\/|$)/, "") === from.replace(/^\/(en|fr)(?=\/|$)/, "") && !isAnchor(link.href)) continue; // the page's own link: nowhere to arrive
+        if (
+          target.pathname.replace(/^\/(en|fr)(?=\/|$)/, "") === from.replace(/^\/(en|fr)(?=\/|$)/, "") &&
+          !isAnchor(link.href)
+        )
+          continue; // the page's own link: nowhere to arrive
         await page.locator(`footer a[href="${link.href}"]`).first().click();
         try {
-          if (!isAnchor(link.href)) await page.waitForFunction((p) => location.pathname.replace(/^\/(en|fr)(?=\/|$)/, "") === p.replace(/^\/(en|fr)(?=\/|$)/, ""), target.pathname, { timeout: 30_000 });
+          if (!isAnchor(link.href))
+            await page.waitForFunction(
+              (p) => location.pathname.replace(/^\/(en|fr)(?=\/|$)/, "") === p.replace(/^\/(en|fr)(?=\/|$)/, ""),
+              target.pathname,
+              { timeout: 30_000 },
+            );
           await page.waitForTimeout(1500);
           const r = await page.evaluate(
             ({ hash }) => {
               const h1 = document.querySelector("h1");
               const rect = h1?.getBoundingClientRect();
-              const mine = [...document.querySelectorAll("footer a")].find((a) => new URL(a.href).pathname === location.pathname && !new URL(a.href).hash);
+              const mine = [...document.querySelectorAll("footer a")].find(
+                (a) => new URL(a.href).pathname === location.pathname && !new URL(a.href).hash,
+              );
               const section = hash ? document.getElementById(hash) : null;
               const s = section?.getBoundingClientRect();
               return {
@@ -88,4 +103,6 @@ if (problems.length) {
   console.error(problems.join("\n"));
   process.exit(1);
 }
-console.log(`check-arrival: ${arrivals} footer arrivals at the top with the heading focused, one footer on ${PAGES.length} pages, phone and desktop`);
+console.log(
+  `check-arrival: ${arrivals} footer arrivals at the top with the heading focused, one footer on ${PAGES.length} pages, phone and desktop`,
+);

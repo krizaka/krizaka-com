@@ -1,7 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { CRITERIA, WAIVERS, assertStatuses, readProductStatuses, validateChecklist } from "../scripts/dev-preview-lib.mjs";
+import {
+  CRITERIA,
+  WAIVERS,
+  assertStatuses,
+  readProductStatuses,
+  validateChecklist,
+} from "../scripts/dev-preview-lib.mjs";
 
 // « Dev preview » is data, not words (krizaka/.github docs/standards/dev-preview.md, ADR-002): a product may wear the
 // status only when its dev-preview.json is complete and fresh. The build (scripts/gen-dev-preview.mjs) refuses the rest.
@@ -20,7 +26,11 @@ test("a complete, fresh checklist is complete", () => {
 
 test("an evidence set to null is a gap: the checklist is incomplete and says which criterion", () => {
   const c = complete();
-  c.criteria["journey.core"] = { evidence: null, gap: "no recorded run", issue: "https://github.com/krizaka/yomizaka/issues/1" };
+  c.criteria["journey.core"] = {
+    evidence: null,
+    gap: "no recorded run",
+    issue: "https://github.com/krizaka/yomizaka/issues/1",
+  };
   const r = validateChecklist(c, { today: TODAY });
   assert.equal(r.complete, false);
   assert.match(r.problems.join("\n"), /journey\.core/);
@@ -61,30 +71,41 @@ test("a product wearing devPreview needs a complete checklist; any other status 
   assert.match(assertStatuses(statuses, {}, { today: TODAY }).join("\n"), /yomizaka.*no checklist/);
   const incomplete = complete();
   incomplete.criteria["docs.current"] = { evidence: null, gap: "not audited" };
-  assert.match(assertStatuses(statuses, { yomizaka: incomplete }, { today: TODAY }).join("\n"), /yomizaka.*docs\.current/);
+  assert.match(
+    assertStatuses(statuses, { yomizaka: incomplete }, { today: TODAY }).join("\n"),
+    /yomizaka.*docs\.current/,
+  );
   assert.deepEqual(assertStatuses(statuses, { yomizaka: complete() }, { today: TODAY }), []);
   assert.deepEqual(assertStatuses({ akinaza: "development" }, {}, { today: TODAY }), []);
 });
 
 test("a checklist whose product does not match the repository it was read from is refused", () => {
-  assert.match(assertStatuses({ yomizaka: "devPreview" }, { yomizaka: complete("akinaza") }, { today: TODAY }).join("\n"), /yomizaka.*product/);
+  assert.match(
+    assertStatuses({ yomizaka: "devPreview" }, { yomizaka: complete("akinaza") }, { today: TODAY }).join("\n"),
+    /yomizaka.*product/,
+  );
 });
 
 test("a time-boxed waiver lets a product keep the badge it had before the gate, and ends on its date", () => {
   const statuses = { akinaza: "devPreview" };
   assert.deepEqual(assertStatuses(statuses, {}, { today: "2026-10-20", waivers: { akinaza: "2026-11-01" } }), []);
-  assert.match(assertStatuses(statuses, {}, { today: "2026-11-02", waivers: { akinaza: "2026-11-01" } }).join("\n"), /akinaza.*waiver ended/);
+  assert.match(
+    assertStatuses(statuses, {}, { today: "2026-11-02", waivers: { akinaza: "2026-11-01" } }).join("\n"),
+    /akinaza.*waiver ended/,
+  );
 });
 
 test("the real waivers have not expired (the gate becomes strict on the day they end)", () => {
   const today = new Date().toISOString().slice(0, 10);
-  for (const [id, until] of Object.entries(WAIVERS)) assert.ok(until >= today, `${id}: the Dev preview waiver ended ${until}: close the gaps or change the status`);
+  for (const [id, until] of Object.entries(WAIVERS))
+    assert.ok(until >= today, `${id}: the Dev preview waiver ended ${until}: close the gaps or change the status`);
 });
 
 test("lib/products.ts gives every product an explicit status, and the cards and chips know devPreview", () => {
   const statuses = readProductStatuses(read("lib/products.ts"));
   assert.deepEqual(Object.keys(statuses).sort(), ["akinaza", "orazaka", "yomizaka"]);
-  for (const s of Object.values(statuses)) assert.ok(["devPreview", "development", "construction", "upcoming"].includes(s));
+  for (const s of Object.values(statuses))
+    assert.ok(["devPreview", "development", "construction", "upcoming"].includes(s));
   for (const l of ["en", "fr"]) assert.ok(JSON.parse(read(`messages/${l}.json`)).site.nav.status.devPreview.label);
   assert.match(read("app/components/ProductStatus.tsx"), /devPreview/);
 });

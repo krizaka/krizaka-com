@@ -18,12 +18,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid_json" }, { status: 400 });
   }
   const { challengeId, email, code } = body;
-  if (typeof challengeId !== "string" || typeof email !== "string" || typeof code !== "string" || challengeId.length > 200 || email.length > 320 || code.length > 20) {
+  if (
+    typeof challengeId !== "string" ||
+    typeof email !== "string" ||
+    typeof code !== "string" ||
+    challengeId.length > 200 ||
+    email.length > 320 ||
+    code.length > 20
+  ) {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
   const confirmed = await confirmContactVerification({ challengeId, email, code }, now);
-  if (!confirmed.ok) return NextResponse.json({ error: `contact.code_${confirmed.reason}`, attemptsLeft: confirmed.attemptsLeft }, { status: 400 });
+  if (!confirmed.ok)
+    return NextResponse.json(
+      { error: `contact.code_${confirmed.reason}`, attemptsLeft: confirmed.attemptsLeft },
+      { status: 400 },
+    );
 
   const delivered = await deliverContact(confirmed.message);
   if (delivered === 0) {

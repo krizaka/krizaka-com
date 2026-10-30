@@ -15,7 +15,10 @@ test("a well-formed product page has no problem", () => {
 });
 
 test("the apex canonical, a repeated brand and broken JSON-LD are caught", () => {
-  const bad = auditHtml(page({ canonical: "https://krizaka.com/en/products", title: "X | Krizaka | Krizaka", ld: "{nope" }), "/en/products");
+  const bad = auditHtml(
+    page({ canonical: "https://krizaka.com/en/products", title: "X | Krizaka | Krizaka", ld: "{nope" }),
+    "/en/products",
+  );
   assert.ok(bad.some((p) => p.includes("canonical")));
   assert.ok(bad.some((p) => p.includes("brand repeated")));
   assert.ok(bad.some((p) => p.includes("does not parse")));
@@ -23,11 +26,18 @@ test("the apex canonical, a repeated brand and broken JSON-LD are caught", () =>
 });
 
 test("the home without its WebSite JSON-LD is refused", () => {
-  assert.ok(auditHtml(page({ ld: '{"@context":"https://schema.org","@type":"Organization"}' }), "/en").some((p) => p.includes("WebSite")));
+  assert.ok(
+    auditHtml(page({ ld: '{"@context":"https://schema.org","@type":"Organization"}' }), "/en").some((p) =>
+      p.includes("WebSite"),
+    ),
+  );
 });
 
 test("robots.txt must welcome the AI crawlers", () => {
-  const ok = ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "CCBot"].map((b) => `User-Agent: ${b}\nAllow: /\n`).join("\n") + "Sitemap: https://www.krizaka.com/sitemap.xml";
+  const ok =
+    ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "CCBot"]
+      .map((b) => `User-Agent: ${b}\nAllow: /\n`)
+      .join("\n") + "Sitemap: https://www.krizaka.com/sitemap.xml";
   assert.deepEqual(auditRobots(ok), []);
   assert.ok(auditRobots("User-Agent: *\nAllow: /").length > 1);
 });

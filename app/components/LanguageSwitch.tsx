@@ -24,5 +24,10 @@ function RememberedLink({ onClick, ...props }: ComponentProps<typeof Link>) {
 export function useLanguageSwitch() {
   const { t, locale } = useI18n();
   const pathname = usePathname() || "/";
-  return { label: t.site.menu.language, current: locale, languages: languagesFor(pathname, LOCALES), linkAs: RememberedLink };
+  return {
+    label: t.site.menu.language,
+    current: locale,
+    languages: languagesFor(pathname, LOCALES),
+    linkAs: RememberedLink,
+  };
 }

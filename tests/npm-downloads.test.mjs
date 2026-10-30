@@ -3,7 +3,10 @@ import assert from "node:assert/strict";
 import { rangeWindow, weeklyBuckets, sumKnown } from "../scripts/npm-downloads-lib.mjs";
 
 const days = (start, counts) =>
-  counts.map((downloads, i) => ({ day: new Date(Date.parse(start) + i * 864e5).toISOString().slice(0, 10), downloads }));
+  counts.map((downloads, i) => ({
+    day: new Date(Date.parse(start) + i * 864e5).toISOString().slice(0, 10),
+    downloads,
+  }));
 
 test("the window is the 84 days that end on the given day, inclusive", () => {
   assert.deepEqual(rangeWindow("2026-10-18", 12), { start: "2026-07-27", end: "2026-10-18" });
@@ -30,8 +33,14 @@ test("fail soft: a gap, a malformed payload or a non-integer gives null, never a
   assert.equal(weeklyBuckets(null, "2026-10-18", 12), null);
   assert.equal(weeklyBuckets({ error: "not found" }, "2026-10-18", 12), null);
   assert.equal(weeklyBuckets({ downloads: ok.slice(1) }, "2026-10-18", 12), null, "a missing day");
-  assert.equal(weeklyBuckets({ downloads: [...ok.slice(0, 83), { day: ok[83].day, downloads: "12" }] }, "2026-10-18", 12), null);
-  assert.equal(weeklyBuckets({ downloads: [...ok.slice(0, 83), { day: ok[83].day, downloads: -1 }] }, "2026-10-18", 12), null);
+  assert.equal(
+    weeklyBuckets({ downloads: [...ok.slice(0, 83), { day: ok[83].day, downloads: "12" }] }, "2026-10-18", 12),
+    null,
+  );
+  assert.equal(
+    weeklyBuckets({ downloads: [...ok.slice(0, 83), { day: ok[83].day, downloads: -1 }] }, "2026-10-18", 12),
+    null,
+  );
 });
 
 test("sumKnown adds the figures that exist and says nothing when none does", () => {

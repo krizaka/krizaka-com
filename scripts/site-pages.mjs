@@ -14,13 +14,22 @@ export function baseFromArgv(argv = process.argv) {
  * array). `viewport(c)` and `reducedMotion(c)` shape the context per case: a 900 px tall viewport of the case's width,
  * and reduced motion on, unless the check says otherwise.
  */
-export async function visitPages(base, cases, visit, { viewport = (c) => ({ width: c.width, height: 900 }), reducedMotion = () => "reduce" } = {}) {
+export async function visitPages(
+  base,
+  cases,
+  visit,
+  { viewport = (c) => ({ width: c.width, height: 900 }), reducedMotion = () => "reduce" } = {},
+) {
   const { chromium } = await import("playwright");
   const browser = await chromium.launch();
   const problems = [];
   try {
     for (const c of cases) {
-      const context = await browser.newContext({ viewport: viewport(c), colorScheme: c.theme, reducedMotion: reducedMotion(c) });
+      const context = await browser.newContext({
+        viewport: viewport(c),
+        colorScheme: c.theme,
+        reducedMotion: reducedMotion(c),
+      });
       await context.addInitScript((theme) => {
         try {
           localStorage.setItem("kz-theme", theme);

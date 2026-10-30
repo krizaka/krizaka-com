@@ -10,12 +10,20 @@ import { BRANCH, RELEASE_TAG, decide } from "../scripts/promote-production.mjs";
 const SCRIPT = fileURLToPath(new URL("../scripts/promote-production.mjs", import.meta.url));
 const SWITCH = fileURLToPath(new URL("../scripts/do-app-production-branch.sh", import.meta.url));
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
-const base = { tag: "v0.2.0", onMain: true, productionSha: "a", tagSha: "b", productionIsAncestor: true, tagIsAncestor: false };
+const base = {
+  tag: "v0.2.0",
+  onMain: true,
+  productionSha: "a",
+  tagSha: "b",
+  productionIsAncestor: true,
+  tagIsAncestor: false,
+};
 
 test("the decision: create, fast-forward, never backwards, refuse a stray tag or a diverged branch", () => {
   assert.equal(BRANCH, "production");
   assert.ok(RELEASE_TAG.test("v1.2.3"));
-  for (const t of ["1.2.3", "v1.2", "v1.2.3-rc.1", "main", "krizaka-com-v1.2.3"]) assert.equal(decide({ ...base, tag: t }).action, "refuse", t);
+  for (const t of ["1.2.3", "v1.2", "v1.2.3-rc.1", "main", "krizaka-com-v1.2.3"])
+    assert.equal(decide({ ...base, tag: t }).action, "refuse", t);
   assert.equal(decide({ ...base, onMain: false }).action, "refuse");
   assert.equal(decide({ ...base, productionSha: null }).action, "create");
   assert.equal(decide(base).action, "forward");
@@ -29,10 +37,17 @@ function fixture() {
   const dir = mkdtempSync(path.join(tmpdir(), "promote-"));
   const origin = path.join(dir, "origin.git");
   const work = path.join(dir, "work");
-  const git = (cwd, ...a) => execFileSync("git", a, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+  const git = (cwd, ...a) =>
+    execFileSync("git", a, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
   git(dir, "init", "--quiet", "--bare", "--initial-branch=main", origin);
   git(dir, "clone", "--quiet", origin, work);
-  for (const [k, v] of [["user.name", "t"], ["user.email", "t@t"], ["commit.gpgsign", "false"], ["tag.gpgsign", "false"]]) git(work, "config", k, v);
+  for (const [k, v] of [
+    ["user.name", "t"],
+    ["user.email", "t@t"],
+    ["commit.gpgsign", "false"],
+    ["tag.gpgsign", "false"],
+  ])
+    git(work, "config", k, v);
   git(work, "checkout", "--quiet", "-b", "main");
   const commit = (msg) => {
     writeFileSync(path.join(work, "f.txt"), msg);
@@ -118,7 +133,8 @@ test("the workflows: release-please pinned, production on release published, nev
   assert.match(prod, /release:\n\s+types: \[published\]/);
   assert.match(prod, /node scripts\/promote-production\.mjs "\$TAG"/);
   assert.match(prod, /create-github-app-token@[0-9a-f]{40} /);
-  for (const f of [rp, prod, read("scripts/promote-production.mjs")]) assert.doesNotMatch(f.replace(/Never --force\./, ""), /--force\b|push -f\b|\+refs\/heads\/production/);
+  for (const f of [rp, prod, read("scripts/promote-production.mjs")])
+    assert.doesNotMatch(f.replace(/Never --force\./, ""), /--force\b|push -f\b|\+refs\/heads\/production/);
 });
 
 /** The switch script with a fake doctl (serves the spec, records `update`) and a fake git (production branch or not). */
@@ -142,7 +158,10 @@ function doSwitch(spec, { productionExists = true, args = [] } = {}) {
   );
   writeFileSync(path.join(bin, "git"), `#!/usr/bin/env bash\nexit ${productionExists ? 0 : 2}\n`);
   for (const f of ["doctl", "git"]) chmodSync(path.join(bin, f), 0o755);
-  const out = spawnSync("bash", [SWITCH, ...args], { encoding: "utf8", env: { ...process.env, PATH: `${bin}:${process.env.PATH}` } });
+  const out = spawnSync("bash", [SWITCH, ...args], {
+    encoding: "utf8",
+    env: { ...process.env, PATH: `${bin}:${process.env.PATH}` },
+  });
   const appliedFile = path.join(dir, "applied.yaml");
   const applied = existsSync(appliedFile) ? readFileSync(appliedFile, "utf8") : null;
   rmSync(dir, { recursive: true, force: true });
@@ -173,7 +192,10 @@ test("the DigitalOcean switch: main → production for this repository only, dry
 
   const done = doSwitch(LIVE);
   assert.equal(done.status, 0, done.stderr);
-  assert.equal(done.applied, LIVE.replace("    branch: main\n    deploy_on_push", "    branch: production\n    deploy_on_push"));
+  assert.equal(
+    done.applied,
+    LIVE.replace("    branch: main\n    deploy_on_push", "    branch: production\n    deploy_on_push"),
+  );
   assert.match(done.applied, /branch: main\n    repo: krizaka\/elsewhere/);
 
   const again = doSwitch(done.applied);

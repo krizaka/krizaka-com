@@ -26,7 +26,9 @@ export default function BlockCard({ block, w }: { block: BuildingBlock; w: Words
       mark={<Mascot bird={block.bird} mood={block.mood} size={40} animated={false} />}
       facts={[
         { label: `${w[block.registry]} ${release.version}`, tone: "ok", href: release.url },
-        ...(block.next.length > 0 ? [{ label: format(w.inProgress, { count: block.next.length }), tone: "wip" as const }] : []),
+        ...(block.next.length > 0
+          ? [{ label: format(w.inProgress, { count: block.next.length }), tone: "wip" as const }]
+          : []),
       ]}
       hook={{ label: w.trap, text: <Ticks>{item.headline}</Ticks> }}
       more={{ href: `/open-source/${block.id}`, label: w.details }}

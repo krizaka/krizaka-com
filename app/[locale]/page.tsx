@@ -37,7 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
    section. Every figure is read at build: GitHub (lib/org-stats.ts), npm and Maven Central (lib/registry-versions.ts). */
 export default async function Home({ params }: Props) {
   const { locale } = await params;
-  const figures = { repositories: publicRepositoryCount(), npm: npmPackages().length, downloads: npmWeeklyDownloads(), maven: mavenArtifactCount() };
+  const figures = {
+    repositories: publicRepositoryCount(),
+    npm: npmPackages().length,
+    downloads: npmWeeklyDownloads(),
+    maven: mavenArtifactCount(),
+  };
   return (
     <main className="min-h-screen" style={{ background: "var(--kz-surface-0)" }}>
       <SiteBar />

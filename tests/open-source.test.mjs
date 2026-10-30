@@ -98,8 +98,7 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
   const page = "app/[locale]/open-source/page.tsx";
   for (const read of ["repositories.length", "npmPackages().length", "mavenArtifactCount()", '"Apache-2.0"'])
     assert.ok(hasCode(page, read), read);
-  for (const id of ["stack", "packages", "how-it-fits", "contribute"])
-    assert.ok(hasJsx(page, "Section", { id }), id);
+  for (const id of ["stack", "packages", "how-it-fits", "contribute"]) assert.ok(hasJsx(page, "Section", { id }), id);
   assert.ok(hasCode(page, "<PackagesTable rows={packages} />"));
   assert.ok(!hasCode(page, "<RepositoriesTable"), "the repositories table is gone");
   assert.ok(hasCode(page, "packageRows(snapshot as RegistrySnapshot"), "packages from the registries at build");
@@ -121,7 +120,10 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
   );
   assert.equal(countCode(tables, "defaultPageSize={12}"), 1, "short pages, not a wall of rows");
   assert.ok(!calls(tables).includes("fetch"), "rows come from the server, never fetched here");
-  assert.ok(importsFrom("app/[locale]/contact/ContactClient.tsx", "@/lib/public-channels"), "one list of channels for both pages");
+  assert.ok(
+    importsFrom("app/[locale]/contact/ContactClient.tsx", "@/lib/public-channels"),
+    "one list of channels for both pages",
+  );
   assert.ok(hasCode("lib/page-templates.ts", '"/open-source": "docs-hub"'));
 });
 

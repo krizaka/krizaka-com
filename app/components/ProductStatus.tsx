@@ -19,7 +19,11 @@ function Dot({ status, className }: { status: Status; className?: string }) {
       aria-hidden
       className={cn(
         "inline-block size-1.5 shrink-0 rotate-45",
-        status === "upcoming" || status === "devPreview" ? "bg-accent" : status === "development" ? "border-[1.5px] border-accent bg-accent/40" : "border-[1.5px] border-accent bg-transparent",
+        status === "upcoming" || status === "devPreview"
+          ? "bg-accent"
+          : status === "development"
+            ? "border-[1.5px] border-accent bg-accent/40"
+            : "border-[1.5px] border-accent bg-transparent",
         className,
       )}
     />

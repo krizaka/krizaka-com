@@ -14,7 +14,9 @@ export default function FilmCredits() {
       {w.filmCredit} ·{" "}
       <Dialog.Root>
         <Dialog.Trigger asChild>
-          <button type="button" className="st-film-credits">{w.filmCredits}</button>
+          <button type="button" className="st-film-credits">
+            {w.filmCredits}
+          </button>
         </Dialog.Trigger>
         <Dialog.Content size="sm" closeLabel={w.creditsClose}>
           <Dialog.Title>{w.creditsTitle}</Dialog.Title>
