@@ -48,7 +48,7 @@ export function filmVtt<Id extends string = FilmCueId>(
 }
 
 /* « The Krizaka family » — the film of /story (2026-10-29), rendered from the code of @krizaka/ui by krizaka-ui
-   tools/brand-films (FILM there): only the family of today, one bird per product — the falcon is Krizaka, the flamingo
+   tools/brand-films (FILM there): only the family of today, one bird per product — the falcon is Krizaka, the duck
    Orazaka, the owl Yomizaka, the beaver Akinaza. Its own lines at its own times (FILM.cues): change both together. The
    words are messages (site.story.world.family.cues.<id>). */
 export const FAMILY_BASE = "brand-films/family/la-famille-krizaka-16x9";
@@ -58,7 +58,7 @@ export const FAMILY_SECONDS = 44;
 export const FAMILY_CUES = [
   { id: "title", start: 0.6, end: 3.6 },
   { id: "falcon", start: 6.2, end: 10.8 },
-  { id: "flamingo", start: 13.2, end: 17.8 },
+  { id: "duck", start: 13.2, end: 17.8 },
   { id: "owl", start: 20.2, end: 24.8 },
   { id: "beaver", start: 27.2, end: 31.8 },
   { id: "together", start: 32.4, end: 34.8 },

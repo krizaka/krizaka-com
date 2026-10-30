@@ -63,8 +63,10 @@ test("« The Krizaka family » (/story): one bird per product of today, its own 
   const { FAMILY_BASE, FAMILY_CUES, FAMILY_SECONDS } = await import("../lib/film-captions.ts");
   assert.deepEqual(
     FAMILY_CUES.map((c) => c.id),
-    ["title", "falcon", "flamingo", "owl", "beaver", "together"],
+    ["title", "falcon", "duck", "owl", "beaver", "together"],
   );
+  // The duck is Orazaka (krizaka-ui#911): the flamingo answers and is paid, it does not carry the engine.
+  assert.ok(!FAMILY_CUES.some((c) => c.id === "flamingo"));
   FAMILY_CUES.forEach((c, i) => {
     assert.ok(c.start < c.end && c.end <= FAMILY_SECONDS, c.id);
     if (i) assert.ok(FAMILY_CUES[i - 1].end <= c.start, `${c.id} overlaps the line before`);
@@ -76,7 +78,8 @@ test("« The Krizaka family » (/story): one bird per product of today, its own 
     for (const c of FAMILY_CUES) assert.ok(family.cues[c.id].trim(), `${lang} ${c.id}`);
     // each product is named by the bird that stands for it, and no word of payment or of a product that left the family
     assert.match(family.cues.falcon, /Krizaka/);
-    assert.match(family.cues.flamingo, /Orazaka/);
+    assert.match(family.cues.duck, /Orazaka/);
+    assert.doesNotMatch(JSON.stringify(family.cues), /flamingo|flamant/i, `${lang}: the flamingo is not the engine`);
     assert.match(family.cues.owl, /Yomizaka/);
     assert.match(family.cues.beaver, /Akinaza/);
     assert.doesNotMatch(JSON.stringify(family), /pay|paie|orochia|yasakia|yororis|kachizaka|yazakia/i, lang);
