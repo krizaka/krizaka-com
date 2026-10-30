@@ -33,7 +33,7 @@ export function kindOfRepository(repo: Pick<GithubRepository, "name" | "topics">
   if (has(topics, "expo", "react-native", "android", "ios") && !has(topics, "design-system", "npm-package"))
     return "mobile";
   if (has(topics, "design-system", "npm-package", "maven-central", "contracts", "design-tokens")) return "library";
-  if (has(topics, "cli", "bom", "archunit", "community-health", "packs", "website")) return "tooling";
+  if (has(topics, "cli", "bom", "archunit", "community-health", "packs", "website", "agent-skills")) return "tooling";
   if (has(topics, "spring-boot", "worker", "rabbitmq", "spring-ai")) return "service";
   if (has(topics, "nextjs", "react")) return "web";
   return "other";
