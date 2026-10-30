@@ -14,7 +14,7 @@ const PRODUCT_BIRD = Object.fromEntries(
   [...read("lib/story.ts").matchAll(/^\s+(\w+): "(\w+)",$/gm)].map((m) => [m[1], m[2]]),
 );
 
-test("every product has its bird on the band, in both cuts, inside the frame, the engine's flamingo in the middle and larger", () => {
+test("every product has its bird on the band, in both cuts, inside the frame, the engine's duck in the middle and larger", () => {
   for (const band of [BAND_WIDE, BAND_TALL]) {
     assert.deepEqual(band.birds.map((b) => b.product).sort(), [...ids].sort());
     for (const b of band.birds) {
@@ -27,7 +27,7 @@ test("every product has its bird on the band, in both cuts, inside the frame, th
   }
 });
 
-test("the wide band holds the three products, the engine's flamingo between the two it powers", () => {
+test("the wide band holds the three products, the engine's duck between the two it powers", () => {
   assert.deepEqual(
     BAND_WIDE.birds.map((b) => b.product),
     ["akinaza", "orazaka", "yomizaka"],

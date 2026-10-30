@@ -225,7 +225,7 @@
     go one step up — it never lifts and no light follows the pointer (`PointerLight` is a deprecated no-op).
   - `MascotQuote` — a rule told by a bird (`inline` in an unfolded card or a detail page, `callout` in a section, at
     most one per section). The bird carries a promise, never decoration: the falcon watches (security), the owl reads
-    and knows every face (documents, identity), the duck builds (code), the flamingo answers or gets paid, the pigeon
+    and knows every face (documents, identity), the duck builds (code) — and is Orazaka's bird everywhere on this site (decision 2026-10-30; the open-source subject of /story wears the pigeon, which delivers) —, the flamingo answers or gets paid, the pigeon
     delivers. On one page no two subjects wear the same bird in the same mood and hue.
   - `DecisionList` — chose (✓) · refused (✕) · because (→) · what it costs (!). `CodeBlock` / `CodeTabs` — file name,
     highlighted code on the tokens, copy (Maven · Gradle). `TocLayout` + `Toc` — a reading page's sticky contents.
