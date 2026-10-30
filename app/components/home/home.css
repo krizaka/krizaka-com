@@ -194,33 +194,15 @@ html[data-intro="play"] .kz-intro-sweep { animation: kz-intro-sweep 1.3s cubic-b
 .kz-folio { margin: clamp(28px, 4vw, 44px) 0 0; text-align: right; font-family: var(--kz-font-mono); font-size: 12.5px; line-height: 16px;
   color: var(--kz-text-secondary); }
 
-/* Orazaka, the provider: a wide foundation plate in its orange, not a product tag. A heavy top rule, the plate the products
-   are pinned to (the list of what it powers hangs under it by a stem). Paper and ink: no glow. Tokens only. */
-.kz-foundation { position: relative; display: grid; gap: 20px; padding: clamp(20px, 3vw, 36px); border: 1px solid var(--kz-border); border-top: 6px solid var(--kz-accent); background: var(--kz-surface-1); min-width: 0; }
-.kz-foundation-head { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-.kz-foundation-head h3 { margin: 0; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.1; }
-.kz-foundation-role { margin: 0 0 4px; font-family: var(--kz-font-mono); font-size: 12.5px; color: var(--kz-accent-text, var(--kz-accent)); }
-.kz-foundation-status { margin-left: auto; font-family: var(--kz-font-mono); font-size: 12.5px; border: 1px solid var(--kz-accent); padding: 2px 10px; }
-.kz-foundation-line { margin: 0; max-width: 46rem; }
-.kz-foundation-dev { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 0; font-family: var(--kz-font-mono); font-size: 12.5px; color: var(--kz-text-secondary); }
-.kz-foundation-dev b { font-weight: 600; color: var(--kz-text-primary); }
-.kz-foundation-gives { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
-.kz-foundation-gives li { display: grid; gap: 2px; padding-left: 12px; border-left: 2px solid var(--kz-accent); }
-.kz-foundation-gives span, .kz-foundation-back { color: var(--kz-text-muted); font-size: 14px; }
-.kz-foundation-back { margin: 0; font-family: var(--kz-font-mono); }
-.kz-foundation-powers { display: grid; gap: 10px; padding-top: 16px; border-top: 1px dashed var(--kz-accent); }
-.kz-foundation-powers > p { margin: 0; font-family: var(--kz-font-mono); font-size: 12.5px; }
-.kz-foundation-powers ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 16px; }
-.kz-foundation-powers a { display: inline-flex; align-items: center; gap: 8px; color: inherit; text-decoration: none; padding: 4px 0; border-bottom: 2px solid var(--kz-accent); }
-.kz-foundation-powers a:hover { background: color-mix(in oklab, var(--kz-accent) 12%, transparent); }
-.kz-foundation-powers em { font-style: normal; font-family: var(--kz-font-mono); font-size: 11.5px; opacity: .78; }
-.kz-foundation-links { display: flex; flex-wrap: wrap; gap: 16px; }
-.kz-foundation-links a { display: inline-flex; align-items: center; gap: 6px; }
+/* Orazaka's entry (KZ-01): the same plate + specimen tag as the products; what it gives is folded in the tag. Tokens only. */
+.kz-entry-gives { margin: 10px 0 0; font-size: 14px; }
+.kz-entry-gives summary { cursor: pointer; font-family: var(--kz-font-mono); font-size: 12.5px; color: var(--kz-accent-text, var(--kz-accent)); }
+.kz-entry-gives ul { list-style: none; margin: 8px 0; padding: 0; display: grid; gap: 6px; }
+.kz-entry-gives li { padding-left: 10px; border-left: 2px solid var(--kz-accent); }
+.kz-entry-gives span, .kz-entry-gives p { color: var(--kz-text-muted); }
+.kz-entry-gives p { margin: 6px 0 0; }
+.kz-entry-powers { display: flex; flex-wrap: wrap; gap: 4px 12px; font-family: var(--kz-font-mono); font-size: 12.5px; }
+.kz-entry-powers a { color: inherit; text-decoration: underline; text-decoration-color: var(--kz-accent); text-underline-offset: 4px; }
+.kz-entry-powers em { font-style: normal; opacity: .78; }
 .kz-entry-uses a { color: inherit; text-decoration: underline; text-decoration-color: var(--kz-accent); text-underline-offset: 4px; }
-@media (min-width: 1024px) {
-  .kz-foundation { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(32px, 4vw, 56px); }
-  .kz-foundation-head, .kz-foundation-dev, .kz-foundation-line, .kz-foundation-gives, .kz-foundation-links { grid-column: 1; }
-  .kz-foundation .kz-entry-flow { grid-column: 2; grid-row: 1 / span 4; align-self: center; }
-  .kz-foundation-back, .kz-foundation-powers { grid-column: 1 / -1; }
-  .kz-foundation-gives { grid-template-columns: 1fr; }
-}
+

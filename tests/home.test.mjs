@@ -65,8 +65,8 @@ test("the products come from lib/products.ts: one card each, in the product's br
   );
   assert.equal(
     showcase.match(/<SpecimenTag\b/g)?.length,
-    1,
-    "the products wear the specimen tag; the engine is a foundation plate, another form",
+    2,
+    "the products wear the specimen tag, and so does the engine (KZ-01): one language",
   );
   assert.doesNotMatch(showcase, /knowhow|kz-pc-meta/, "one label per product: no mono eyebrow beside the status");
   assert.match(

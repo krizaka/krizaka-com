@@ -1,7 +1,7 @@
 /* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Cahier (krizaka-ui
    ADR-004, #417; Oussama 2026-10-20: « our showcase: refined, less AI, very complete and designed »): the section is a page
-   of the field notebook, on lined paper with its red margin and its number (§ 2). The engine leads — its specimen tag,
-   its flow (@krizaka/ui's EngineFlow, EngineFlowView) sticky beside the entries on a wide screen, the figure's caption.
+   of the field notebook, on lined paper with its red margin and its number (§ 2). The engine leads as entry KZ-01, in the
+   same form as the products: its figure (@krizaka/ui's EngineFlow, EngineFlowView, fig. 1) and its specimen tag, with the duck.
    Each product is an entry of the field guide, in its own brand light (`.brand-<id>`):
    - a plate: a live visual of what it does, made of @krizaka/ui pieces (visuals/, lazy, decorative, still under reduced
      motion), and its numbered caption (`fig. n`);
@@ -28,7 +28,7 @@ import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { heroMarkOrder } from "@/lib/home-sections";
 import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
-import { ENGINE, PRODUCT_BIRD } from "@/lib/story";
+import { ENGINE, ENGINE_TAG_BIRD, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
 import { GitHubMark } from "../brand/GitHubMark";
 import EngineFlowView from "./EngineFlowView";
 import ProductsFlock from "./ProductsFlock";
@@ -52,8 +52,7 @@ const fnRef = (p: Product) => <FootnoteRef n={nOf(p)} prefix="kz-note" />;
 const figNo = (label: string, p: Product) => `${label} ${nOf(p)}`;
 
 /** The bird of a product and what it says: the film's promise for the five birds of the film, its name for the family. */
-function Bird({ p, t }: { p: Product; t: TranslationDictionary }) {
-  const bird = PRODUCT_BIRD[p.id];
+function Bird({ bird, t }: { bird: StoryBird; t: TranslationDictionary }) {
   const film = (FILM_BIRDS as readonly string[]).includes(bird);
   const words = film ? t.site.story.world.cues[bird as (typeof FILM_BIRDS)[number]] : t.site.home.products.birds[bird as keyof TranslationDictionary["site"]["home"]["products"]["birds"]];
   return (
@@ -85,10 +84,10 @@ function Foot({ p, t }: { p: Product; t: TranslationDictionary }) {
   );
 }
 
-/** Orazaka, the provider: a wide foundation plate (not a product tag) in its orange, what it gives, its flow, and the products
- *  it powers pinned under it, each one a link to its entry. Only what runs is said (results, analytics; run events and
- *  webhooks are orazaka#189). */
-function EngineFoundation({ t }: { t: TranslationDictionary }) {
+/** Orazaka, the engine: entry KZ-01, in the same form as the products it powers (2026-10-30): its figure (the flow, fig. 1) and
+ *  its specimen tag in its orange, wearing the duck that builds. What it gives, what comes back and the products it powers are
+ *  folded in the tag. Only what runs is said (results, analytics; run events and webhooks are orazaka#189). */
+function EngineEntry({ t }: { t: TranslationDictionary }) {
   const p = PRODUCTS.find((x) => x.id === ENGINE)!;
   const s = t.site.home.products;
   const e = t.site.home.engine;
@@ -96,62 +95,56 @@ function EngineFoundation({ t }: { t: TranslationDictionary }) {
   const powered = heroMarkOrder(PRODUCTS).filter((x) => x.id !== ENGINE);
   const back = [...new Set(ENGINE_USES.flatMap((u) => u.back))].map((k) => eng.back[k]).join(", ");
   return (
-    <div id={"product-" + p.id} className={cn("kz-foundation", "brand-" + p.id)} data-kind="engine">
-      <header className="kz-foundation-head">
-        <ProductLogo id={p.id} size={44} animated={false} />
-        <div>
-          <p className="kz-foundation-role">{s.fields.engineRole}</p>
-          <h3>
-            <a {...external(p)} className="kz-entry-name">{p.name}</a>
-          </h3>
-        </div>
-        <span className="kz-foundation-status">{t.site.nav.status[p.status].label}</span>
-      </header>
-      <p className="kz-foundation-dev">
-        {devFields(p, s).map((f) => (
-          <span key={f.label}>
-            {f.label} <b>{f.value}</b>
-          </span>
-        ))}
-      </p>
-      <p className="kz-foundation-line">
-        {e.line}
-        {fnRef(p)}
-      </p>
-      <ul className="kz-foundation-gives" aria-label={e.givesLabel}>
-        {(["models", "pipeline", "analytics"] as const).map((k) => (
-          <li key={k}>
-            <b>{e.gives[k].name}</b>
-            <span>{e.gives[k].line}</span>
-          </li>
-        ))}
-      </ul>
-      <figure className="kz-entry-flow">
-        <EngineFlowView t={t} />
-        <Caption figure={`${s.figureLabel} 1`}>{s.figures[p.id]}</Caption>
-      </figure>
-      <p className="kz-foundation-back">{format(eng.gets, { list: back })}</p>
-      <div className="kz-foundation-powers">
-        <p>{e.powers}</p>
-        <ul>
-          {powered.map((x) => {
-            const use = ENGINE_USES.find((u) => u.id === x.id);
-            return (
-              <li key={x.id} className={"brand-" + x.id} data-planned={use?.planned ? "" : undefined}>
-                <a href={`#product-${x.id}`}>
-                  <ProductLogo id={x.id} size={24} animated={false} />
-                  <span>{x.name}</span>
-                  {use?.planned && <em>{eng.planned}</em>}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-      <div className="kz-foundation-links">
-        <Foot p={p} t={t} />
-      </div>
-    </div>
+    <ol className="kz-prod-list" aria-label={e.title}>
+      <li id={"product-" + p.id} className={cn("kz-entry", "kz-entry-engine", "brand-" + p.id)} data-product={p.id}>
+        <figure className="kz-entry-plate kz-entry-flow">
+          <EngineFlowView t={t} />
+          <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
+        </figure>
+        <SpecimenTag
+          className="kz-entry-tag"
+          code={code(p)}
+          title={
+            <a {...external(p)} className="kz-entry-name">
+              {p.name}
+            </a>
+          }
+          mark={<ProductLogo id={p.id} size={30} animated={false} />}
+          status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
+          fields={devFields(p, s)}
+          footer={<Foot p={p} t={t} />}
+        >
+          <p>
+            {e.line}
+            {fnRef(p)}
+          </p>
+          <details className="kz-entry-gives">
+            <summary>{e.givesLabel}</summary>
+            <ul>
+              {(["models", "pipeline", "analytics"] as const).map((k) => (
+                <li key={k}>
+                  <b>{e.gives[k].name}</b> <span>{e.gives[k].line}</span>
+                </li>
+              ))}
+            </ul>
+            <p>{format(eng.gets, { list: back })}</p>
+            <p className="kz-entry-powers">
+              {e.powers}{" "}
+              {powered.map((x) => {
+                const use = ENGINE_USES.find((u) => u.id === x.id);
+                return (
+                  <a key={x.id} href={`#product-${x.id}`} data-planned={use?.planned ? "" : undefined}>
+                    {x.name}
+                    {use?.planned && <em> ({eng.planned})</em>}
+                  </a>
+                );
+              })}
+            </p>
+          </details>
+          <Bird bird={ENGINE_TAG_BIRD} t={t} />
+        </SpecimenTag>
+      </li>
+    </ol>
   );
 }
 
@@ -187,7 +180,7 @@ function ProductEntry({ product: p, t }: { product: Product; t: TranslationDicti
             <a href="#product-orazaka">{format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, { use: useText })}</a>
           </p>
         )}
-        <Bird p={p} t={t} />
+        <Bird bird={PRODUCT_BIRD[p.id]} t={t} />
       </SpecimenTag>
     </li>
   );
@@ -200,7 +193,7 @@ export function EngineSection({ locale }: { locale: string }) {
   return (
     <div id="engine" className="kz-products">
       <Section id="engine-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
-        <EngineFoundation t={t} />
+        <EngineEntry t={t} />
       </Section>
     </div>
   );
