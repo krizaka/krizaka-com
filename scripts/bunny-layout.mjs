@@ -112,7 +112,7 @@ export const ORG_PARTS = {
   discovery: "discovery/services.json — scripts/sign-services.mjs --publish (krizaka-com), ADR-003",
 };
 /** The kinds of a site's media (`sites/<site>/<kind>/…`): what the files are for, never who wrote them. */
-export const SITE_KINDS = ["home", "tour", "gallery", "gallery-video", "video", "cinema", "compare", "showcase", "web", "mobile", "docs", "personas", "download", "demo", "demo-stories", "films", "posts", "shared", "landing", "maps", "shop"];
+export const SITE_KINDS = ["home", "tour", "gallery", "gallery-video", "video", "cinema", "compare", "showcase", "web", "mobile", "docs", "personas", "download", "demo", "demo-stories", "films", "posts", "shared", "landing", "maps", "shop", "first-client"];
 /** The kinds of an app's own media (`apps/<app>/<kind>/…`). */
 export const APP_KINDS = ["defaults", "uploads", "generated"];
 
