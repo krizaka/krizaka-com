@@ -70,7 +70,7 @@ test("each chapter is readable in ten seconds: heading, a line or two, one proof
 
 test("each chapter wears the right bird, with its promise from the film or the brand reference; no bird twice", () => {
   const map = objectMap("lib/story.ts", "PRODUCT_BIRD");
-  assert.deepEqual(map, { orazaka: "flamingo", yomizaka: "owl", akinaza: "beaver" });
+  assert.deepEqual(map, { orazaka: "duck", yomizaka: "owl", akinaza: "beaver" });
   assert.deepEqual(Object.keys(map).sort(), [...productIds].sort(), "a bird for every product");
   const who = constString("lib/story.ts", "WHO_BIRD");
   const open = constString("lib/story.ts", "OPEN_BIRD");
@@ -211,14 +211,14 @@ test("each of the five birds of the film says its own promise, in both languages
   }
 });
 
-test("the chapters cast the right birds: falcon for who we are, duck for open source, one bird per subject", () => {
+test("the chapters cast the right birds: falcon for who we are, pigeon for open source (it delivers: releases to npm and Maven Central), one bird per subject", () => {
   assert.match(story, /WHO_BIRD: StoryBird = "falcon"/);
-  assert.match(story, /OPEN_BIRD: StoryBird = "duck"/);
+  assert.match(story, /OPEN_BIRD: StoryBird = "pigeon"/);
   const cast = Object.fromEntries([...story.matchAll(/^\s+(\w+): "(\w+)",$/gm)].map((m) => [m[1], m[2]]));
-  assert.equal(cast.orazaka, "flamingo", "the engine answers, and the payment follows");
+  assert.equal(cast.orazaka, "duck", "the engine builds (2026-10-30: the duck is Orazaka's everywhere)");
   assert.equal(cast.yomizaka, "owl", "Yomizaka reads documents");
   assert.equal(cast.akinaza, "beaver", "Akinaza builds the shop's books");
-  const birds = [...Object.values(cast), "falcon", "duck"];
+  const birds = [...Object.values(cast), "falcon", "pigeon"];
   assert.equal(new Set(birds).size, birds.length, "never the same bird twice on the page");
   assert.match(
     page,

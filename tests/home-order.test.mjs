@@ -40,7 +40,7 @@ test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its flow
     "same entry, its brand light",
   );
   assert.match(fn, /<details className="kz-entry-gives"/, "what it gives is folded in the tag");
-  assert.match(fn, /<Bird bird=\{ENGINE_TAG_BIRD\}/, "its mascot");
+  assert.match(fn, /<Bird bird=\{PRODUCT_BIRD\[p\.id\]\}/, "its mascot, the data's");
   assert.doesNotMatch(fn, /kz-foundation/, "the foundation plate is gone");
   assert.match(fn, /ENGINE_USES/, "what it powers is read from lib/engine-uses.ts");
   assert.match(fn, /href=\{`#product-\$\{x\.id\}`\}/, "each powered product is a link to its entry");
@@ -48,8 +48,8 @@ test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its flow
   assert.doesNotMatch(fn, /webhook|run events|SSE/i, "only what runs is said (orazaka#189)");
   assert.match(
     readFileSync(new URL("../lib/story.ts", import.meta.url), "utf8"),
-    /ENGINE_TAG_BIRD: StoryBird = "duck"/,
-    "the duck builds",
+    /orazaka: "duck"/,
+    "the duck builds: Orazaka's bird everywhere",
   );
   const css = readFileSync(new URL("../app/components/home/home.css", import.meta.url), "utf8");
   assert.doesNotMatch(css, /\.kz-foundation/);

@@ -28,7 +28,7 @@ import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { heroMarkOrder } from "@/lib/home-sections";
 import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
-import { ENGINE, ENGINE_TAG_BIRD, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
+import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
 import { GitHubMark } from "../brand/GitHubMark";
 import EngineFlowView from "./EngineFlowView";
 import ProductsFlock from "./ProductsFlock";
@@ -95,7 +95,7 @@ function Foot({ p, t }: Readonly<{ p: Product; t: TranslationDictionary }>) {
 }
 
 /** Orazaka, the engine: entry KZ-01, in the same form as the products it powers (2026-10-30): its figure (the flow, fig. 1) and
- *  its specimen tag in its orange, wearing the duck that builds. What it gives, what comes back and the products it powers are
+ *  its specimen tag in its orange, wearing its bird (the duck builds). What it gives, what comes back and the products it powers are
  *  folded in the tag. Only what runs is said (results, analytics; run events and webhooks are orazaka#189). */
 /** What both kinds of entry (the engine, a product) put on their specimen tag: code, name, mark, status, dev fields, footer. */
 function tagProps(p: Product, t: TranslationDictionary) {
@@ -155,7 +155,7 @@ function EngineEntry({ t }: Readonly<{ t: TranslationDictionary }>) {
               })}
             </p>
           </details>
-          <Bird bird={ENGINE_TAG_BIRD} t={t} />
+          <Bird bird={PRODUCT_BIRD[p.id]} t={t} />
         </SpecimenTag>
       </li>
     </ol>
