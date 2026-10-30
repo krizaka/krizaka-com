@@ -32,6 +32,9 @@ ARG NEXT_PUBLIC_MEDIA_CDN_URL
 ARG NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY
 ENV NEXT_PUBLIC_MEDIA_CDN_URL=$NEXT_PUBLIC_MEDIA_CDN_URL
 ENV NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY=$NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY
+# - the commit being built, served at /build.json for the post-deploy workflow (scripts/build-info.mjs);
+ARG APP_COMMIT
+ENV APP_COMMIT=$APP_COMMIT
 ENV NODE_ENV=production
 RUN npm run postinstall && npm run build
 

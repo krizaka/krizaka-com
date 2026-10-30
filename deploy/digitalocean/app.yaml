@@ -62,6 +62,10 @@ services:
         value: 2
         window: FIVE_MINUTES
     envs:
+      # The commit being deployed: /build.json serves it, the post-deploy workflow waits for it (scripts/build-info.mjs).
+      - key: APP_COMMIT
+        scope: BUILD_TIME
+        value: ${_self.COMMIT_HASH}
       # Where the media (tours, gallery, home backdrop) are served from — Bunny, under site/ (lib/cdn.ts).
       - key: NEXT_PUBLIC_MEDIA_CDN_URL
         scope: RUN_AND_BUILD_TIME

@@ -35,6 +35,14 @@ const url = z.string().url();
 
 export const ENV_VARS: readonly EnvVar[] = [
   {
+    name: "APP_COMMIT",
+    context: "APP",
+    need: "optional",
+    build: true,
+    schema: z.string().regex(/^[0-9a-f]{40}$/i),
+    doc: "The commit being built (DigitalOcean binds it to `${_self.COMMIT_HASH}`), served at `/build.json` so the post-deploy workflow knows when the new build is live; a local build says `local`.",
+  },
+  {
     name: "APP_GITHUB_TOKEN",
     context: "APP",
     need: "optional",
