@@ -3,7 +3,7 @@
    messages (site.services.*); here only ids and links. */
 
 import { BLOG_URL } from "./site.ts";
-import { STACK } from "./stack.ts";
+import { STACK, type StackId } from "./stack.ts";
 import { PRODUCTS } from "./products.ts";
 
 export const SERVICES_PAGE_ORDER = {
@@ -12,13 +12,12 @@ export const SERVICES_PAGE_ORDER = {
   faq: ["price", "code", "data", "stack", "start"],
 } as const;
 
-export type ServicesProofId = "ui" | "java" | "orazaka" | "blog";
+export type ServicesProofId = StackId | "orazaka" | "blog";
 
-const stackUrl = (id: string) => STACK.find((s) => s.id === id)!.url;
-
+/* Everything the stack publishes (lib/stack.ts, in its order), then the engine's source and the blog: a new part of
+   the stack appears here by itself. */
 export const SERVICES_PROOF: ReadonlyArray<{ id: ServicesProofId; href: string }> = [
-  { id: "ui", href: stackUrl("ui") },
-  { id: "java", href: stackUrl("java") },
+  ...STACK.map((part) => ({ id: part.id, href: part.url })),
   { id: "orazaka", href: PRODUCTS.find((p) => p.id === "orazaka")!.repoUrl },
   { id: "blog", href: BLOG_URL },
 ];
