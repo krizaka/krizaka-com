@@ -7,8 +7,11 @@
    chore / ci / test / docs / refactor lines are housekeeping and left out; `feat!:` and security words are surfaced. */
 
 import { execFileSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { draftFromTitles } from "../lib/changelog.ts";
+
+/** `gh` by its absolute path in a fixed, root-owned directory (never looked up in a writable PATH). */
+const GH = ["/opt/homebrew/bin/gh", "/usr/local/bin/gh", "/usr/bin/gh"].find((candidate) => existsSync(candidate)) ?? "/usr/bin/gh";
 
 const args = process.argv.slice(2);
 const opt = (name) => (args.includes(name) ? args[args.indexOf(name) + 1] : undefined);
@@ -19,7 +22,7 @@ let titles;
 if (repo) {
   const since = opt("--since") ?? "1970-01-01";
   const out = execFileSync(
-    "gh",
+    GH,
     [
       "pr",
       "list",

@@ -62,7 +62,7 @@ export const npmPackages = (): NpmPackageInfo[] =>
 export const npmPackagesFrom = (repoUrl: string): string[] =>
   Object.keys(versions.npm ?? {})
     .filter((name) => versions.npmMeta?.[name]?.repository === repoUrl)
-    .sort();
+    .sort((a, b) => a.localeCompare(b));
 
 /** The Java modules on Maven Central, by artifact id, without their `-api` / `-client` / `-service` companions (one name per
     building block, as the home's still picture names them); empty when Central could not be read. */

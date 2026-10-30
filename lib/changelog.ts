@@ -97,6 +97,14 @@ export function prOf(line: string): ChangeItem["pr"] {
 
 const CHANGESET_TAG: Record<string, ChangeTag> = { major: "breaking", minor: "feature", patch: "fix" };
 
+/** A top-level bullet of a changesets CHANGELOG.md as plain text; `undefined` for anything else ("Updated dependencies" and its
+    nested list are plumbing, not news). */
+function changesetBulletText(raw: string): string | undefined {
+  const bullet = /^- (.+)$/.exec(raw);
+  if (!bullet || /^Updated dependencies/.test(bullet[1])) return undefined;
+  return plain(bullet[1].replace(/^(\[[^\]]*\]\([^)]*\)\s*)+(Thanks \[[^\]]*\]\([^)]*\)!\s*)?-\s*/, "")) || undefined;
+}
+
 /** The releases of a changesets CHANGELOG.md, newest first as written. Dates are not in the file: `dateOf(version)`. */
 export function parseChangesets(
   md: string,
@@ -120,15 +128,12 @@ export function parseChangesets(
       level = CHANGESET_TAG[h3[1].toLowerCase()] ?? "change";
       continue;
     }
-    // top-level bullets only: "Updated dependencies" and its nested list are plumbing, not news
-    const bullet = /^- (.+)$/.exec(raw);
-    if (!current || !bullet || /^Updated dependencies/.test(bullet[1])) continue;
-    const text = plain(bullet[1].replace(/^(\[[^\]]*\]\([^)]*\)\s*)+(Thanks \[[^\]]*\]\([^)]*\)!\s*)?-\s*/, ""));
-    if (!text) continue;
+    const text = changesetBulletText(raw);
+    if (!current || !text) continue;
     current.changes.push({
       tag: tagOf(text, level === "feature" ? "feature" : level),
       text: clip(text),
-      pr: prOf(bullet[1]),
+      pr: prOf(raw.slice(2)),
     });
   }
   return releases.filter((r) => r.changes.length > 0);

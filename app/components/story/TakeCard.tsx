@@ -59,7 +59,7 @@ export default function TakeCard({
                 className="st-take-poster"
                 src={take.poster}
                 alt=""
-                width={take.ratio === "phone" ? 360 : film ? 640 : 640}
+                width={take.ratio === "phone" ? 360 : 640}
                 height={take.ratio === "phone" ? 640 : film ? 360 : 540}
                 sizes="(min-width: 900px) 200px, 50vw"
                 unoptimized={take.poster.endsWith(".webp")}
