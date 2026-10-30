@@ -78,3 +78,23 @@ test("licence words are true to the repositories: the products are FSL-1.1, neve
     assert.match(text, /Functional Source License/, `${l}: the products' licence is named`);
   }
 });
+
+test("§ 4 and § 5 carry content, not ruled paper (founder, 2026-10-30): the offer's three parts, the order as a stepper", () => {
+  const services = read("app/components/home/ServicesLine.tsx");
+  const direction = read("app/components/home/Direction.tsx");
+  for (const [name, src] of [
+    ["ServicesLine", services],
+    ["Direction", direction],
+  ])
+    assert.doesNotMatch(src, /paper="lines"|kz-notebook-list/, name);
+  assert.match(services, /<LinkCard/);
+  assert.match(services, /href="\/services"/);
+  assert.match(direction, /<Stepper/);
+  for (const l of ["en", "fr"]) {
+    const h = msg(l).home;
+    for (const id of ["modules", "ai", "maintenance"])
+      assert.ok(h.services.parts[id].title && h.services.parts[id].line.length <= 90, `${l}: parts.${id}`);
+    assert.deepEqual(Object.keys(h.direction.labels).sort(), ["current", "done", "error", "upcoming"], l);
+    assert.doesNotMatch(JSON.stringify(h.services), FORBIDDEN, l);
+  }
+});

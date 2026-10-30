@@ -177,3 +177,17 @@ test("the home's engine card draws @krizaka/ui's EngineFlow from the data, with 
     assert.notEqual(f.uses, f.usesPlanned, `${l}: a planned use reads as the future`);
   }
 });
+
+test("the engine's figure is the Lab's: the hub with everything around it — the products and the applications of a company that adopts it (Krizaka Entreprise)", async () => {
+  const { ENGINE_OFFER } = await import("../lib/engine-uses.ts");
+  assert.equal(ENGINE_OFFER.href, "/services");
+  const view = readFileSync(new URL("../app/components/home/EngineFlowView.tsx", import.meta.url), "utf8");
+  assert.match(view, /nodes\.push\(\{\s*id: ENGINE_OFFER\.id/);
+  assert.match(view, /layout="radial"/);
+  for (const l of ["en", "fr"]) {
+    const f = JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8")).site.home.products
+      .flow;
+    assert.ok(f.yours && f.yoursUse && f.yoursLink, l);
+    assert.match(f.yoursUse, /Krizaka Entreprise/, `${l}: the node says it is the offer, never a named customer`);
+  }
+});

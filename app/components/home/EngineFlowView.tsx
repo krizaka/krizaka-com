@@ -9,7 +9,7 @@
 
 import { ProductLogo } from "@krizaka/ui";
 import { EngineFlow, type EngineFlowNode } from "@krizaka/ui/engine-flow";
-import { ENGINE_USES } from "@/lib/engine-uses";
+import { ENGINE_OFFER, ENGINE_USES } from "@/lib/engine-uses";
 import { format, type TranslationDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/products";
 import { hostOf } from "@/lib/stack";
@@ -35,6 +35,18 @@ export default function EngineFlowView({ t }: { t: TranslationDictionary }) {
       external: true,
       linkLabel: format(f.visit, { host: hostOf(p.siteUrl) }),
     };
+  });
+  // The engine also serves the applications of a company that adopts it (Krizaka Entreprise): the radial reads as « one
+  // engine, everything around it », the Lab's figure, rather than a line between two products.
+  nodes.push({
+    id: ENGINE_OFFER.id,
+    label: f.yours,
+    className: "brand-krizaka kz-home-n-" + ENGINE_OFFER.id,
+    mark: <ProductLogo id="krizaka" size={28} animated={false} />,
+    flow: "both",
+    description: f.yoursUse,
+    href: ENGINE_OFFER.href,
+    linkLabel: f.yoursLink,
   });
   return (
     <EngineFlow

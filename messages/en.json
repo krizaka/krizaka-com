@@ -235,7 +235,10 @@
           "hint": "Point at a product, or tab to it, to see what it runs on Orazaka.",
           "uses": "runs {use} on Orazaka.",
           "usesPlanned": "will run {use} on Orazaka.",
-          "visit": "Visit {host}"
+          "visit": "Visit {host}",
+          "yours": "Your applications",
+          "yoursUse": "Your applications call the same engine, on your servers or in Canada: Krizaka Entreprise.",
+          "yoursLink": "See Krizaka Entreprise"
         },
         "figureLabel": "fig.",
         "notesLabel": "Notes on the products",
@@ -326,28 +329,49 @@
       },
       "services": {
         "number": "§ 4",
-        "title": "For companies: one offer, Krizaka Entreprise.",
-        "lead": "Custom modules on our open building blocks, a sovereign AI adopted on your terms, and the maintenance that keeps it running. On quote, scoped with you.",
-        "cta": "See Our services"
+        "title": "For companies: Krizaka Entreprise.",
+        "lead": "What we build for our products, we can build for you. On quote, with the price written down before we start.",
+        "cta": "Discover Krizaka Entreprise",
+        "parts": {
+          "modules": {
+            "title": "Custom modules",
+            "line": "A module for your case, on our open building blocks, in a repository you can read."
+          },
+          "ai": {
+            "title": "Sovereign AI",
+            "line": "Orazaka on your servers or in Canada, with your models and every run traced."
+          },
+          "maintenance": {
+            "title": "Maintenance",
+            "line": "Updates and fixes, by the team that built it."
+          }
+        },
+        "partCta": "Learn more"
       },
       "direction": {
         "number": "§ 5",
-        "title": "Where we are going, in order.",
-        "lead": "No dates and no promises: we say a thing when it runs.",
+        "title": "Where we are going.",
+        "lead": "In order and without dates: we announce a thing when it runs.",
         "story": "Read our story",
         "steps": {
           "now": {
             "title": "Now",
-            "body": "{names} are built in the open: the code is public and sign-up is closed."
+            "body": "{names} are built in the open: public code, sign-up closed."
           },
           "next": {
             "title": "Next",
-            "body": "The first customers: Yomizaka's checks for businesses, Akinaza's shops, and one offer for companies, Entreprise: custom modules, sovereign AI adoption and maintenance."
+            "body": "The first customers: Yomizaka's verification for companies, Akinaza's shops and Krizaka Entreprise."
           },
           "later": {
             "title": "Later",
-            "body": "Useful, efficient products for everyone, on the same open stack."
+            "body": "More useful products, on the same open stack."
           }
+        },
+        "labels": {
+          "done": "done",
+          "current": "in progress",
+          "upcoming": "next",
+          "error": "stopped"
         }
       },
       "principles": {

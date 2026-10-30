@@ -235,7 +235,10 @@
           "hint": "Pointez un produit, ou atteignez-le au clavier, pour voir ce qu'il fait tourner sur Orazaka.",
           "uses": "fait tourner {use} sur Orazaka.",
           "usesPlanned": "fera tourner {use} sur Orazaka.",
-          "visit": "Visiter {host}"
+          "visit": "Visiter {host}",
+          "yours": "Vos applications",
+          "yoursUse": "Vos applications appellent le même moteur, chez vous ou au Canada : Krizaka Entreprise.",
+          "yoursLink": "Voir Krizaka Entreprise"
         },
         "figureLabel": "fig.",
         "notesLabel": "Notes sur les produits",
@@ -326,28 +329,49 @@
       },
       "services": {
         "number": "§ 4",
-        "title": "Pour les entreprises : une offre, Krizaka Entreprise.",
-        "lead": "Des modules sur mesure bâtis sur nos briques ouvertes, une IA souveraine adoptée à vos conditions, et la maintenance qui la garde en marche. Sur devis, cadrée avec vous.",
-        "cta": "Voir Nos services"
+        "title": "Pour les entreprises : Krizaka Entreprise.",
+        "lead": "Ce que nous bâtissons pour nos produits, nous pouvons le bâtir pour vous. Sur devis, avec un prix écrit avant de commencer.",
+        "cta": "Découvrir Krizaka Entreprise",
+        "parts": {
+          "modules": {
+            "title": "Modules sur mesure",
+            "line": "Un module pour votre cas, sur nos briques ouvertes, dans un dépôt que vous lisez."
+          },
+          "ai": {
+            "title": "IA souveraine",
+            "line": "Orazaka chez vous ou au Canada, avec vos modèles et chaque exécution tracée."
+          },
+          "maintenance": {
+            "title": "Maintenance",
+            "line": "Mises à jour et correctifs, par l'équipe qui l'a construit."
+          }
+        },
+        "partCta": "En savoir plus"
       },
       "direction": {
         "number": "§ 5",
-        "title": "Où nous allons, dans l'ordre.",
-        "lead": "Pas de dates et pas de promesses : nous disons une chose quand elle tourne.",
+        "title": "Où nous allons.",
+        "lead": "Dans l'ordre et sans dates : nous annonçons une chose quand elle tourne.",
         "story": "Lire notre histoire",
         "steps": {
           "now": {
             "title": "Maintenant",
-            "body": "{names} sont construits au grand jour : le code est public et les inscriptions sont fermées."
+            "body": "{names} se construisent au grand jour : code public, inscriptions fermées."
           },
           "next": {
             "title": "Ensuite",
-            "body": "Les premiers clients : les vérifications de Yomizaka pour les entreprises, les boutiques d'Akinaza, et une offre pour les sociétés, Entreprise : modules sur mesure, adoption d'une IA souveraine et maintenance."
+            "body": "Les premiers clients : la vérification de Yomizaka pour les entreprises, les boutiques d'Akinaza et Krizaka Entreprise."
           },
           "later": {
             "title": "Plus tard",
-            "body": "Des produits utiles et efficaces pour tout le monde, sur la même pile ouverte."
+            "body": "D'autres produits utiles, sur la même pile ouverte."
           }
+        },
+        "labels": {
+          "done": "fait",
+          "current": "en cours",
+          "upcoming": "ensuite",
+          "error": "interrompu"
         }
       },
       "principles": {
