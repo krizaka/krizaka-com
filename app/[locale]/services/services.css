@@ -1,0 +1,39 @@
+/* /services — only what the pricing template leaves to the page: the hero's actions and facts in one column, the
+   offer's icon beside its name, the lead of the steps. Tokens only (both themes). */
+.svc-hero-extra {
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+.svc-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+.svc-offer-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.svc-offer-name svg {
+  color: var(--kz-hue-text, var(--kz-accent));
+  flex: none;
+}
+.svc-how {
+  display: grid;
+  gap: 1.5rem;
+  scroll-margin-top: var(--kz-anchor-offset, 6rem);
+}
+.svc-how-lead {
+  margin: 0;
+  color: var(--kz-text-secondary);
+  max-width: 40rem;
+}
+.svc-proof-figures {
+  margin-bottom: 2rem;
+}
+.svc-hero-extra > :last-child {
+  justify-content: center;
+}
