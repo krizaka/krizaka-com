@@ -17,6 +17,14 @@
    Only what belongs to the site lives here.
    ═══════════════════════════════════════════════════════════════════ */
 
+/* The page's paper: every page's <main> — the surface, the ink, the full height. One class instead of an inline
+   style per page (quality gate of the design skills, 2026-10-30; tests/page-frame.test.mjs). */
+.kz-site-main {
+  min-height: 100vh;
+  background: var(--kz-surface-0);
+  color: var(--kz-text-primary);
+}
+
 /* ─── One frame for every page (@krizaka/ui/page, blocks.css) ───
    The navigation bar, the heroes, every section and the documentation share one width and one pair of gutters, so
    their edges line up at every width (no page drifts to one side on a wide screen). Pages build on the blocks of
