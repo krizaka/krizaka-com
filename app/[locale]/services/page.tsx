@@ -1,5 +1,18 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { AutomationIcon, ChatIcon, CheckIcon, EditIcon, LockIcon, PackIcon, ShieldIcon } from "@krizaka/icons";
+import {
+  AutomationIcon,
+  ChatIcon,
+  CheckIcon,
+  EditIcon,
+  LockIcon,
+  PackIcon,
+  PlayIcon,
+  ServerIcon,
+  ShieldIcon,
+  StudioIcon,
+  StoryIcon,
+} from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
 import { ArgumentCard } from "@krizaka/ui/argument-card";
 import { CardGrid } from "@krizaka/ui/card-grid";
@@ -12,7 +25,7 @@ import { contactHref } from "@/lib/contact";
 import { format, getDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { mavenArtifactCount, npmPackages, npmWeeklyDownloads } from "@/lib/registry-versions";
-import { SERVICES_PAGE_ORDER, SERVICES_PROOF, stepNumber } from "@/lib/services-page";
+import { SERVICES_PAGE_ORDER, SERVICES_PROOF, stepNumber, type ServicesProofId } from "@/lib/services-page";
 import { buildServiceJsonLd, type Locale } from "@/lib/structured-data";
 import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
@@ -50,7 +63,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const OFFER_ICON = { modules: PackIcon, ai: LockIcon, maintenance: AutomationIcon } as const;
 const STEP_ICON = { discovery: ChatIcon, proposal: EditIcon, build: CheckIcon, maintain: ShieldIcon } as const;
-const PROOF_MARK = { ui: "krizaka", java: "krizaka", orazaka: "orazaka", blog: "krizaka" } as const;
+/* One meaningful icon each: the design system (studio), the motion lab (play), the Java and TypeScript building
+   blocks (server, package), the engine wears its own mark, the blog (story). */
+const PROOF_ICON: Record<ServicesProofId, ReactNode> = {
+  ui: <StudioIcon size={22} />,
+  motion: <PlayIcon size={22} />,
+  java: <ServerIcon size={22} />,
+  ts: <PackIcon size={22} />,
+  orazaka: <ProductLogo id="orazaka" size={22} animated={false} />,
+  blog: <StoryIcon size={22} />,
+};
 
 export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
@@ -149,14 +171,14 @@ export default async function ServicesPage({ params }: Props) {
         <div className="svc-proof-figures">
           <FigureTiles figures={figures} label={s.proof.figuresLabel} locale={locale} columns />
         </div>
-        <CardGrid as="ul" min={240} columns={4} aria-label={s.proof.eyebrow}>
+        <CardGrid as="ul" min={300} columns={3} className="svc-proof-cards" aria-label={s.proof.eyebrow}>
           {SERVICES_PROOF.map(({ id, href }) => (
             <LinkCard
               key={id}
               href={href}
               title={s.proofCards[id].title}
               description={s.proofCards[id].line}
-              icon={<ProductLogo id={PROOF_MARK[id]} size={22} animated={false} />}
+              icon={PROOF_ICON[id]}
               cta={s.proof.cta}
             />
           ))}

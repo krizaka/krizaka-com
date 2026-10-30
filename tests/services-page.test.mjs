@@ -30,10 +30,10 @@ test("every step of the page has its words in both languages, with no price and 
   }
 });
 
-test("the proof links are public artefacts: the stack's sites, Orazaka's repository, the blog", () => {
+test("the proof links are public artefacts: the stack's sites (UI, Lab, Java, TypeScript), Orazaka's repository, the blog", () => {
   assert.deepEqual(
     SERVICES_PROOF.map((p) => p.id),
-    ["ui", "java", "orazaka", "blog"],
+    ["ui", "motion", "java", "ts", "orazaka", "blog"],
   );
   for (const { href } of SERVICES_PROOF) assert.match(href, /^https:\/\//);
 });

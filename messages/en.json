@@ -1602,6 +1602,14 @@
           "title": "Krizaka Java",
           "line": "Spring Boot building blocks on Maven Central, versioned together."
         },
+        "motion": {
+          "title": "Krizaka Lab",
+          "line": "Our motion lab: experiments played on its own site, in development."
+        },
+        "ts": {
+          "title": "Krizaka TypeScript",
+          "line": "Backend building blocks on npm, each package documented on its own site."
+        },
         "orazaka": {
           "title": "Orazaka",
           "line": "The AI engine behind our products, with its source code on GitHub."

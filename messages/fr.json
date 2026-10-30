@@ -1602,6 +1602,14 @@
           "title": "Krizaka Java",
           "line": "Des briques Spring Boot sur Maven Central, versionnées ensemble."
         },
+        "motion": {
+          "title": "Krizaka Lab",
+          "line": "Notre laboratoire de mouvement : des essais joués sur son propre site, en développement."
+        },
+        "ts": {
+          "title": "Krizaka TypeScript",
+          "line": "Des briques TypeScript pour le serveur, sur npm, chaque paquet documenté sur son site."
+        },
         "orazaka": {
           "title": "Orazaka",
           "line": "Le moteur d'IA derrière nos produits, avec son code source sur GitHub."
