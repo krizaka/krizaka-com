@@ -39,7 +39,15 @@ function loadScript(): Promise<void> {
 
 const currentTheme = () => (document.documentElement.classList.contains("light") ? "light" : "dark");
 
-export default function CaptchaWidget({ onToken, label, language }: { onToken: (token: string | null) => void; label: string; language: string }) {
+export default function CaptchaWidget({
+  onToken,
+  label,
+  language,
+}: {
+  onToken: (token: string | null) => void;
+  label: string;
+  language: string;
+}) {
   const host = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

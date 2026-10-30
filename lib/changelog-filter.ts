@@ -9,11 +9,15 @@ export const FILTER_IDS = [...PRODUCT_IDS, "ui", "java"] as const;
 export type FilterId = (typeof FILTER_IDS)[number];
 
 /** The filter an address asks for, `undefined` (everything) when it is absent or unknown. */
-export const filterOf = (value: string | null | undefined): FilterId | undefined => FILTER_IDS.find((id) => id === value);
+export const filterOf = (value: string | null | undefined): FilterId | undefined =>
+  FILTER_IDS.find((id) => id === value);
 
 /** The entries to show for a filter: the product's, or every entry of a product still presented (paused products' old
     releases are not shown). */
-export const visibleEntries = <T extends { product: string }>(entries: readonly T[], selected: FilterId | undefined): T[] =>
+export const visibleEntries = <T extends { product: string }>(
+  entries: readonly T[],
+  selected: FilterId | undefined,
+): T[] =>
   entries.filter((e) => (selected ? e.product === selected : (FILTER_IDS as readonly string[]).includes(e.product)));
 
 /** The address of a chip: the same page with `?produit=` set (or removed for everything). */

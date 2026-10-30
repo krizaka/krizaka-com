@@ -2,7 +2,16 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { HERO_FLOCK } from "../lib/products-flock.ts";
-import { cssAtRules, cssDecls, cssSelectors, hasCode, hasJsx, importsFrom, jsxAll, strings } from "./helpers/source.mjs";
+import {
+  cssAtRules,
+  cssDecls,
+  cssSelectors,
+  hasCode,
+  hasJsx,
+  importsFrom,
+  jsxAll,
+  strings,
+} from "./helpers/source.mjs";
 
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 const css = read("app/components/home/home.css");

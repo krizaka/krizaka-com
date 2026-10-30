@@ -40,7 +40,10 @@ test("the choreography over the poster: the mark draws, the scene rises in with 
   );
   assert.match(cssDecls(home, 'html[data-intro="play"] .kz-intro-sweep').animation ?? "", /kz-intro-sweep/);
   const fallback = cssDecls(home, ".kz-intro-deco").animation ?? "";
-  assert.ok(/kz-intro-fallback/.test(fallback) && /\bboth\b/.test(fallback), "without script, the decorations fade in by themselves");
+  assert.ok(
+    /kz-intro-fallback/.test(fallback) && /\bboth\b/.test(fallback),
+    "without script, the decorations fade in by themselves",
+  );
   const rest = cssDecls(home, "html[data-intro] .kz-intro-deco", { within: "(prefers-reduced-motion: reduce)" });
   assert.equal(rest.animation, "none");
   assert.equal(rest.opacity, "1");

@@ -20,13 +20,7 @@ const SEARCH_TARGETS = [
   { id: "contact", url: "/contact" },
 ] as const;
 
-export function SearchCommand({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
-}) {
+export function SearchCommand({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }) {
   const { t } = useI18n();
   const s = t.site.search;
   const router = useRouter();

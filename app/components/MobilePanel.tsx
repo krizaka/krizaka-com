@@ -18,7 +18,8 @@ import { BLOG_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isNavActive } from "@/lib/nav";
 
 const ICONS: Record<string, ComponentType<IconProps>> = { repos: PackIcon };
-const row = "gap-3 [&>svg]:shrink-0 [&>svg]:text-fg-secondary aria-[current=page]:bg-surface-2 aria-[current=page]:font-semibold";
+const row =
+  "gap-3 [&>svg]:shrink-0 [&>svg]:text-fg-secondary aria-[current=page]:bg-surface-2 aria-[current=page]:font-semibold";
 
 export function MobilePanel({ path }: { path: string }) {
   const { t } = useI18n();
@@ -27,7 +28,11 @@ export function MobilePanel({ path }: { path: string }) {
   const contact = useContactHref();
 
   return (
-    <NavBar.Mobile openLabel={t.nav.menu} closeLabel={t.nav.close} className="max-h-[calc(100dvh-6rem)] gap-5 overflow-y-auto overscroll-contain p-3">
+    <NavBar.Mobile
+      openLabel={t.nav.menu}
+      closeLabel={t.nav.close}
+      className="max-h-[calc(100dvh-6rem)] gap-5 overflow-y-auto overscroll-contain p-3"
+    >
       <section aria-label="Krizaka" className="flex flex-col gap-0.5">
         {NAV_BAR_LINKS.map((l) => {
           const Icon = ICONS[l.icon] ?? StudioIcon;
@@ -62,7 +67,6 @@ export function MobilePanel({ path }: { path: string }) {
           <NavBar.Language {...language} />
         </div>
       </div>
-
     </NavBar.Mobile>
   );
 }

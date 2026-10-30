@@ -15,9 +15,13 @@ const BOM_V = ver("com.krizaka:krizaka-bom");
 /** While the BOM names a version of a kit module that is not published yet, the samples declare the published one and
     say why; once both agree, the note disappears. */
 const pinXml = (artifact: string) =>
-  ver(artifact) === BOM_V ? "" : `<!-- BOM ${BOM_V} names an unpublished ${BOM_V} of this block: declare ${ver(artifact)} until it is published -->\n`;
+  ver(artifact) === BOM_V
+    ? ""
+    : `<!-- BOM ${BOM_V} names an unpublished ${BOM_V} of this block: declare ${ver(artifact)} until it is published -->\n`;
 const pinKts = (artifact: string) =>
-  ver(artifact) === BOM_V ? "" : `  // BOM ${BOM_V} names an unpublished ${BOM_V} of this block: declare ${ver(artifact)} until it is published\n`;
+  ver(artifact) === BOM_V
+    ? ""
+    : `  // BOM ${BOM_V} names an unpublished ${BOM_V} of this block: declare ${ver(artifact)} until it is published\n`;
 
 export type BlockId =
   | "krizaka-build"
@@ -89,7 +93,8 @@ export const blockRepoUrl = (b: BuildingBlock) => `https://github.com/krizaka/${
 /** A new idea in the block's forum (category Ideas). */
 export const proposeUrl = (b: BuildingBlock) => `${FORUMS[b.forum].url}/new?category=ideas`;
 /** A bug report on the block's own repository (the organisation's template). */
-export const reportUrl = (b: BuildingBlock) => `https://github.com/krizaka/${b.repo}/issues/new?template=bug_report.yml`;
+export const reportUrl = (b: BuildingBlock) =>
+  `https://github.com/krizaka/${b.repo}/issues/new?template=bug_report.yml`;
 
 const BOM = `<dependencyManagement>
   <dependencies>
@@ -116,8 +121,16 @@ export const BUILDING_BLOCKS: readonly BuildingBlock[] = [
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/14",
     docs: "https://java.krizaka.com",
     releases: [
-      { coordinate: "com.krizaka:krizaka-spring-boot-starter-*", version: ver("com.krizaka:krizaka-spring-boot-starter-web"), url: central("krizaka-spring-boot-starter-web") },
-      { coordinate: "com.krizaka:krizaka-web · -security · -messaging · -observability", version: ver("com.krizaka:krizaka-messaging"), url: central("krizaka-messaging") },
+      {
+        coordinate: "com.krizaka:krizaka-spring-boot-starter-*",
+        version: ver("com.krizaka:krizaka-spring-boot-starter-web"),
+        url: central("krizaka-spring-boot-starter-web"),
+      },
+      {
+        coordinate: "com.krizaka:krizaka-web · -security · -messaging · -observability",
+        version: ver("com.krizaka:krizaka-messaging"),
+        url: central("krizaka-messaging"),
+      },
     ],
     next: [
       { key: "processOnce", url: "https://github.com/krizaka/krizaka-platform-kit/pull/12" },
@@ -186,7 +199,11 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/15",
     docs: "https://github.com/krizaka/krizaka-users#readme",
     releases: [
-      { coordinate: "com.krizaka:krizaka-users-api · -client · -core", version: ver("com.krizaka:krizaka-users-client"), url: central("krizaka-users-client") },
+      {
+        coordinate: "com.krizaka:krizaka-users-api · -client · -core",
+        version: ver("com.krizaka:krizaka-users-client"),
+        url: central("krizaka-users-client"),
+      },
     ],
     next: [
       { key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" },
@@ -249,7 +266,13 @@ ${pinKts("com.krizaka:krizaka-users-client")}  implementation("com.krizaka:kriza
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/16",
     docs: "https://github.com/krizaka/krizaka-notifications#readme",
-    releases: [{ coordinate: "com.krizaka:krizaka-notifications-api", version: ver("com.krizaka:krizaka-notifications-api"), url: central("krizaka-notifications-api") }],
+    releases: [
+      {
+        coordinate: "com.krizaka:krizaka-notifications-api",
+        version: ver("com.krizaka:krizaka-notifications-api"),
+        url: central("krizaka-notifications-api"),
+      },
+    ],
     next: [{ key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" }],
     sample: {
       file: "OrderService.java",
@@ -301,7 +324,13 @@ public Order confirm(Order order) {
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/17",
     docs: "https://github.com/krizaka/krizaka-billing#readme",
-    releases: [{ coordinate: "com.krizaka:krizaka-billing-api · -client", version: ver("com.krizaka:krizaka-billing-client"), url: central("krizaka-billing-client") }],
+    releases: [
+      {
+        coordinate: "com.krizaka:krizaka-billing-api · -client",
+        version: ver("com.krizaka:krizaka-billing-client"),
+        url: central("krizaka-billing-client"),
+      },
+    ],
     next: [
       { key: "vocabulary", url: "https://github.com/krizaka/krizaka-billing/issues/7" },
       { key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" },
@@ -358,8 +387,16 @@ try {
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/13",
     docs: "https://java.krizaka.com/build/",
     releases: [
-      { coordinate: "com.krizaka:krizaka-bom · krizaka-parent", version: ver("com.krizaka:krizaka-bom"), url: central("krizaka-bom") },
-      { coordinate: "com.krizaka:krizaka-test-support", version: ver("com.krizaka:krizaka-test-support"), url: central("krizaka-test-support") },
+      {
+        coordinate: "com.krizaka:krizaka-bom · krizaka-parent",
+        version: ver("com.krizaka:krizaka-bom"),
+        url: central("krizaka-bom"),
+      },
+      {
+        coordinate: "com.krizaka:krizaka-test-support",
+        version: ver("com.krizaka:krizaka-test-support"),
+        url: central("krizaka-test-support"),
+      },
     ],
     next: [{ key: "bom", url: "https://github.com/krizaka/krizaka-build/issues/11" }],
     sample: {
@@ -415,8 +452,16 @@ class NotificationRequestContractTest extends EventContractTest {
     thread: "https://github.com/krizaka/krizaka-ui/discussions/55",
     docs: "https://ui.krizaka.com",
     releases: [
-      { coordinate: "@krizaka/ui · @krizaka/tokens · @krizaka/tailwind", version: ver("@krizaka/ui"), url: npm("@krizaka/ui") },
-      { coordinate: "@krizaka/icons · i18n · intl · config", version: ver("@krizaka/icons"), url: npm("@krizaka/icons") },
+      {
+        coordinate: "@krizaka/ui · @krizaka/tokens · @krizaka/tailwind",
+        version: ver("@krizaka/ui"),
+        url: npm("@krizaka/ui"),
+      },
+      {
+        coordinate: "@krizaka/icons · i18n · intl · config",
+        version: ver("@krizaka/icons"),
+        url: npm("@krizaka/icons"),
+      },
     ],
     next: [{ key: "charts", url: "https://github.com/krizaka/krizaka-ui/issues/49" }],
     sample: {

@@ -4,13 +4,24 @@
    decided, the quality gates, the open code. Its figures are read at build. Short on purpose: a title and one sentence. */
 
 import type { ComponentType } from "react";
-import { AutomationIcon, KnowledgeIcon, LockIcon, SearchIcon, TrashIcon, WalletIcon, type IconProps } from "@krizaka/icons";
+import {
+  AutomationIcon,
+  KnowledgeIcon,
+  LockIcon,
+  SearchIcon,
+  TrashIcon,
+  WalletIcon,
+  type IconProps,
+} from "@krizaka/icons";
 import { Section } from "@krizaka/ui/page";
 import { format, getDictionary } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import { folioOf } from "@/lib/home-sections";
 
-const PRINCIPLES: { id: "forgotten" | "books" | "facts" | "sovereign" | "quality" | "open"; icon: ComponentType<IconProps> }[] = [
+const PRINCIPLES: {
+  id: "forgotten" | "books" | "facts" | "sovereign" | "quality" | "open";
+  icon: ComponentType<IconProps>;
+}[] = [
   { id: "forgotten", icon: TrashIcon },
   { id: "books", icon: WalletIcon },
   { id: "facts", icon: SearchIcon },
@@ -19,7 +30,13 @@ const PRINCIPLES: { id: "forgotten" | "books" | "facts" | "sovereign" | "quality
   { id: "open", icon: KnowledgeIcon },
 ];
 
-export default function Principles({ locale, figures }: { locale: string; figures: { repositories: number; npm: number; maven: number } }) {
+export default function Principles({
+  locale,
+  figures,
+}: {
+  locale: string;
+  figures: { repositories: number; npm: number; maven: number };
+}) {
   const p = getDictionary(locale).site.home.principles;
   return (
     <Section id="principles" number={p.number} title={p.title} paper="lines" reveal divider margin>
@@ -32,9 +49,7 @@ export default function Principles({ locale, figures }: { locale: string; figure
           </li>
         ))}
       </ol>
-      <p className="kz-folio">
-        {format(p.folio, folioOf("principles"))}
-      </p>
+      <p className="kz-folio">{format(p.folio, folioOf("principles"))}</p>
     </Section>
   );
 }

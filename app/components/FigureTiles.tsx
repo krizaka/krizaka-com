@@ -29,11 +29,17 @@ export default function FigureTiles({
   columns?: boolean;
 }) {
   const cols = columns ? figureColumns(figures.length) : undefined;
-  const style = cols ? ({ "--kz-fig-cols": cols.wide, "--kz-fig-cols-narrow": cols.narrow } as CSSProperties) : undefined;
+  const style = cols
+    ? ({ "--kz-fig-cols": cols.wide, "--kz-fig-cols-narrow": cols.narrow } as CSSProperties)
+    : undefined;
   return (
     <StatGrid role="group" aria-label={label} minWidth={10} className={cols ? "kz-fig-grid" : undefined} style={style}>
       {figures.map((f) => (
-        <Stat key={f.id} label={f.label} value={typeof f.value === "number" ? <NumberTicker value={f.value} locale={locale} /> : f.value} />
+        <Stat
+          key={f.id}
+          label={f.label}
+          value={typeof f.value === "number" ? <NumberTicker value={f.value} locale={locale} /> : f.value}
+        />
       ))}
     </StatGrid>
   );

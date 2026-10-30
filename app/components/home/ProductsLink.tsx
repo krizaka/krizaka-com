@@ -27,8 +27,10 @@ export default function ProductsLink({ className, children }: { className?: stri
       const id = pointed ?? current;
       if (id) el.dataset.lit = id;
       else delete el.dataset.lit;
-      for (const n of el.querySelectorAll(".kz-flow-node, .kz-flow-link")) n.toggleAttribute("data-lit", nodeId(n) === id);
-      for (const r of el.querySelectorAll<HTMLElement>("[data-product]")) r.toggleAttribute("data-lit", r.dataset.product === id);
+      for (const n of el.querySelectorAll(".kz-flow-node, .kz-flow-link"))
+        n.toggleAttribute("data-lit", nodeId(n) === id);
+      for (const r of el.querySelectorAll<HTMLElement>("[data-product]"))
+        r.toggleAttribute("data-lit", r.dataset.product === id);
       // The flock above the section (ProductsFlock) shows the same product: its bird looks up.
       window.dispatchEvent(new CustomEvent("kz-products-lit", { detail: id ?? null }));
     };

@@ -51,7 +51,13 @@ export default function StoryChapter({
   actions?: ReactNode;
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={"st-ch" + (brand ? " brand-" + brand : "")} data-chapter={id} data-side={sideOf(number)}>
+    <section
+      id={id}
+      aria-labelledby={`${id}-title`}
+      className={"st-ch" + (brand ? " brand-" + brand : "")}
+      data-chapter={id}
+      data-side={sideOf(number)}
+    >
       <div className="st-ch-grid">
         <div className="st-ch-text">
           <p className="st-ch-meta">

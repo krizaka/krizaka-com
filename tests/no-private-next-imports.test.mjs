@@ -5,10 +5,14 @@ import { readdirSync, readFileSync } from "node:fs";
 // The redirect tests match sources with path-to-regexp, the matcher Next.js uses. They import it as a declared
 // devDependency, never by reaching into Next.js' private compiled bundle (next/dist/compiled/...), which can move
 // in any minor release and break CI for a reason that has nothing to do with the redirects (krizaka-com#211).
-const tests = readdirSync(new URL(".", import.meta.url)).filter((f) => f.endsWith(".mjs") && f !== "no-private-next-imports.test.mjs");
+const tests = readdirSync(new URL(".", import.meta.url)).filter(
+  (f) => f.endsWith(".mjs") && f !== "no-private-next-imports.test.mjs",
+);
 
 test("no test imports a private next/dist module", () => {
-  const offenders = tests.filter((f) => /next\/dist\//.test(readFileSync(new URL(f, import.meta.url), "utf8").replace(/^\s*\/\/.*$/gm, "")));
+  const offenders = tests.filter((f) =>
+    /next\/dist\//.test(readFileSync(new URL(f, import.meta.url), "utf8").replace(/^\s*\/\/.*$/gm, "")),
+  );
   assert.deepEqual(offenders, []);
 });
 

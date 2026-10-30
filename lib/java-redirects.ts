@@ -5,7 +5,28 @@
 export const JAVA_SITE = "https://java.krizaka.com";
 
 /** The guides of java.krizaka.com (their slug is the one /docs/java/<slug> had). The home is `index`. */
-export const JAVA_PAGES = ["start", "app-config", "map", "build", "web", "security", "messaging", "observability", "architecture", "users", "billing", "notifications", "events", "openapi", "configuration", "features", "idempotency", "persistence", "webhooks", "ratelimit"] as const;
+export const JAVA_PAGES = [
+  "start",
+  "app-config",
+  "map",
+  "build",
+  "web",
+  "security",
+  "messaging",
+  "observability",
+  "architecture",
+  "users",
+  "billing",
+  "notifications",
+  "events",
+  "openapi",
+  "configuration",
+  "features",
+  "idempotency",
+  "persistence",
+  "webhooks",
+  "ratelimit",
+] as const;
 
 /** The Java building blocks' pages (/open-source/<block>) and the page of java.krizaka.com that now tells their story. */
 export const JAVA_BLOCK_PAGES = {

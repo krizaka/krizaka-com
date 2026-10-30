@@ -38,7 +38,7 @@ export const ENGINE = "orazaka";
 /** Decided, tracked, not shipped: shown as "Planned", never as "Yes". Each line names its issue.
  */
 export const PLANNED: Record<string, readonly KitId[]> = {
-    // Yomizaka: every analysis is an Orazaka run by design; "Yes" once a run is recorded on dev (lib/demo-run.ts of krizaka/yomizaka).
+  // Yomizaka: every analysis is an Orazaka run by design; "Yes" once a run is recorded on dev (lib/demo-run.ts of krizaka/yomizaka).
   yomizaka: ["engine"],
   // Akinaza: the tax-assistant Studio on Orazaka (the contract is in packages/mcp; "Yes" once a real run on dev).
   akinaza: ["engine"],

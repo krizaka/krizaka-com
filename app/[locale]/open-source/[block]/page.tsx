@@ -34,7 +34,9 @@ interface Props {
 
 export function generateStaticParams() {
   // The Java blocks' pages are on java.krizaka.com (lib/java-redirects.ts answers 308 for their old address).
-  return LOCALES.flatMap((locale) => BUILDING_BLOCKS.filter((b) => b.forum === "ui").map((b) => ({ locale, block: b.id })));
+  return LOCALES.flatMap((locale) =>
+    BUILDING_BLOCKS.filter((b) => b.forum === "ui").map((b) => ({ locale, block: b.id })),
+  );
 }
 
 export const dynamicParams = false;
@@ -76,7 +78,10 @@ export default async function BuildingBlockPage({ params }: Props) {
   const release = block.releases[0];
 
   return (
-    <main data-hue={block.hue} style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
+    <main
+      data-hue={block.hue}
+      style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}
+    >
       <SiteBar />
 
       <PageHero
@@ -94,7 +99,9 @@ export default async function BuildingBlockPage({ params }: Props) {
         <Facts
           items={[
             { label: `${w[block.registry]} ${release.version}`, tone: "ok", href: release.url },
-            ...(block.next.length > 0 ? [{ label: format(w.inProgress, { count: block.next.length }), tone: "wip" as const }] : []),
+            ...(block.next.length > 0
+              ? [{ label: format(w.inProgress, { count: block.next.length }), tone: "wip" as const }]
+              : []),
           ]}
         />
       </PageHero>
@@ -132,7 +139,12 @@ export default async function BuildingBlockPage({ params }: Props) {
               <p className="rd-prose">
                 <Ticks>{item.answer}</Ticks>
               </p>
-              <MascotQuote variant="callout" bird={block.bird} mood={block.mood} label={format(w.birdSays, { bird: w.birds[block.bird] })}>
+              <MascotQuote
+                variant="callout"
+                bird={block.bird}
+                mood={block.mood}
+                label={format(w.birdSays, { bird: w.birds[block.bird] })}
+              >
                 <Ticks>{item.rule}</Ticks>
               </MascotQuote>
             </div>
@@ -153,14 +165,22 @@ export default async function BuildingBlockPage({ params }: Props) {
 
           <Section id="code" title={p.code} headingSize="sm" spacing="sm" divider>
             <div {...reveal(0, "soft")}>
-              <CodeBlock code={block.sample.code} language={block.sample.lang} file={block.sample.file} copyLabel={w.copy} copiedLabel={w.copied} />
+              <CodeBlock
+                code={block.sample.code}
+                language={block.sample.lang}
+                file={block.sample.file}
+                copyLabel={w.copy}
+                copiedLabel={w.copied}
+              />
             </div>
           </Section>
 
           <Section spacing="sm" divider aria-label={`${p.notFor} · ${p.status}`}>
             <div className="rd-two">
               <div className="rd-stack" {...reveal()}>
-                <h2 id="not-for" className="kz-heading-title rd-h2">{p.notFor}</h2>
+                <h2 id="not-for" className="kz-heading-title rd-h2">
+                  {p.notFor}
+                </h2>
                 <ul className="kz-list rd-no" aria-labelledby="not-for">
                   {item.notFor.map((line) => (
                     <li key={line}>
@@ -170,7 +190,9 @@ export default async function BuildingBlockPage({ params }: Props) {
                 </ul>
               </div>
               <div className="rd-stack" {...reveal(1)}>
-                <h2 id="status" className="kz-heading-title rd-h2">{p.status}</h2>
+                <h2 id="status" className="kz-heading-title rd-h2">
+                  {p.status}
+                </h2>
                 <p className="rd-prose is-small">
                   <Ticks>{item.status}</Ticks>
                 </p>
@@ -212,15 +234,34 @@ export default async function BuildingBlockPage({ params }: Props) {
                   tabs={block.install.map((s, i) => ({
                     id: s.tab ?? String(i),
                     label: s.tab ?? s.file,
-                    content: <CodeBlock code={s.code} language={s.lang} file={s.file} copyLabel={w.copy} copiedLabel={w.copied} />,
+                    content: (
+                      <CodeBlock
+                        code={s.code}
+                        language={s.lang}
+                        file={s.file}
+                        copyLabel={w.copy}
+                        copiedLabel={w.copied}
+                      />
+                    ),
                   }))}
                 />
               ) : (
-                <CodeBlock code={block.install[0].code} language={block.install[0].lang} file={block.install[0].file} copyLabel={w.copy} copiedLabel={w.copied} />
+                <CodeBlock
+                  code={block.install[0].code}
+                  language={block.install[0].lang}
+                  file={block.install[0].file}
+                  copyLabel={w.copy}
+                  copiedLabel={w.copied}
+                />
               )}
               <div className="rd-links">
                 <ButtonLink href={block.docs} variant="primary" size="lg">
-                  {p.docs} {block.docs.startsWith("/") ? <ForwardIcon size={14} aria-hidden /> : <ExternalIcon size={13} aria-hidden />}
+                  {p.docs}{" "}
+                  {block.docs.startsWith("/") ? (
+                    <ForwardIcon size={14} aria-hidden />
+                  ) : (
+                    <ExternalIcon size={13} aria-hidden />
+                  )}
                 </ButtonLink>
                 <ButtonLink href={blockRepoUrl(block)} size="lg">
                   {p.repo} <ExternalIcon size={13} aria-hidden />

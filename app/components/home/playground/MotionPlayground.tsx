@@ -40,27 +40,46 @@ export default function MotionPlayground({ w, calm }: { w: MotionPlaygroundWords
         compactLayout={false}
         calm={calm}
         hub={{ label: w.hub, mark: <KrizakaLogo size={30} animated={false} /> }}
-        nodes={APPS.map((id) => ({ id, label: w.app.replace("{id}", id), flow: mode, mark: <span className="kz-play-dot">{id}</span> }))}
+        nodes={APPS.map((id) => ({
+          id,
+          label: w.app.replace("{id}", id),
+          flow: mode,
+          mark: <span className="kz-play-dot">{id}</span>,
+        }))}
         hint={calm ? undefined : w.hint}
       />
       {calm ? null : (
         <>
-      {/* @ephemeral: the home's motion playground: a control of a live demo, never an address */}
-      <Chip.Group type="single" required size="sm" label={w.layout} value={layout} onValueChange={(v) => v && setLayout(v as FlowLayout)}>
-        {FLOW_LAYOUTS.map((l) => (
-          <Chip key={l} value={l}>
-            {w.layouts[l]}
-          </Chip>
-        ))}
-      </Chip.Group>
-      {/* @ephemeral: the home's motion playground: a control of a live demo, never an address */}
-      <Chip.Group type="single" required size="sm" label={w.mode} value={mode} onValueChange={(v) => v && setMode(v as FlowMode)}>
-        {FLOW_MODES.map((m) => (
-          <Chip key={m} value={m}>
-            {w.modes[m]}
-          </Chip>
-        ))}
-      </Chip.Group>
+          {/* @ephemeral: the home's motion playground: a control of a live demo, never an address */}
+          <Chip.Group
+            type="single"
+            required
+            size="sm"
+            label={w.layout}
+            value={layout}
+            onValueChange={(v) => v && setLayout(v as FlowLayout)}
+          >
+            {FLOW_LAYOUTS.map((l) => (
+              <Chip key={l} value={l}>
+                {w.layouts[l]}
+              </Chip>
+            ))}
+          </Chip.Group>
+          {/* @ephemeral: the home's motion playground: a control of a live demo, never an address */}
+          <Chip.Group
+            type="single"
+            required
+            size="sm"
+            label={w.mode}
+            value={mode}
+            onValueChange={(v) => v && setMode(v as FlowMode)}
+          >
+            {FLOW_MODES.map((m) => (
+              <Chip key={m} value={m}>
+                {w.modes[m]}
+              </Chip>
+            ))}
+          </Chip.Group>
         </>
       )}
     </div>

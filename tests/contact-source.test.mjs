@@ -39,7 +39,12 @@ test("builds the link", () => {
 });
 
 test("keeps a clean slug as source and drops anything else", () => {
-  const base = { name: "Ada Lovelace", email: "ada@example.com", topic: "yomizaka", message: "Hello there, a real message." };
+  const base = {
+    name: "Ada Lovelace",
+    email: "ada@example.com",
+    topic: "yomizaka",
+    message: "Hello there, a real message.",
+  };
   const ok = validateContact({ ...base, source: "yomizaka" });
   assert.equal(ok.ok === true && ok.value.source, "yomizaka");
   const bad = validateContact({ ...base, source: "<script>alert(1)</script>" });

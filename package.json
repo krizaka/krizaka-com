@@ -8,7 +8,7 @@
     "dev": "node scripts/gen-org-stats.mjs && node scripts/gen-github-channels.mjs && node scripts/gen-registry-versions.mjs && node scripts/gen-dev-versions.mjs && node scripts/gen-changelog.mjs && next dev",
     "build": "node scripts/gen-org-stats.mjs && node scripts/gen-github-channels.mjs && node scripts/gen-registry-versions.mjs && node scripts/gen-dev-versions.mjs && node scripts/gen-changelog.mjs && node scripts/gen-dev-preview.mjs && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs --check && next build && node scripts/check-changelog-build.mjs",
     "start": "next start",
-    "lint": "eslint && krizaka-server-client-boundary && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-page-templates.mjs && krizaka-i18n check messages && krizaka-ratchet && depcruise app lib --config .dependency-cruiser.cjs && ast-grep test --skip-snapshot-tests && krizaka-sg-ratchet",
+    "lint": "eslint && krizaka-server-client-boundary && node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/check-page-templates.mjs && krizaka-i18n check messages && krizaka-ratchet && depcruise app lib --config .dependency-cruiser.cjs && ast-grep test --skip-snapshot-tests && krizaka-sg-ratchet && npm run format:check",
     "services:sign": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs",
     "services:check": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/sign-services.mjs --check",
     "ratchet": "krizaka-ratchet",
@@ -23,7 +23,9 @@
     "lint:sg": "krizaka-sg-ratchet",
     "lint:sg:test": "ast-grep test --skip-snapshot-tests",
     "sg:ratchet:update": "krizaka-sg-ratchet --update",
-    "sg:fix": "node scripts/sg-fix.mjs"
+    "sg:fix": "node scripts/sg-fix.mjs",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,css}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,css}\""
   },
   "dependencies": {
     "@krizaka/charts": "^0.8.0",
@@ -56,6 +58,7 @@
     "path-to-regexp": "6.3.0",
     "playwright": "^1.64.1",
     "postcss": "^8.5.32",
+    "prettier": "^3.9.10",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

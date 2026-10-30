@@ -20,7 +20,16 @@ export const DEFAULT_OUT = join(homedir(), "Documents/krizaka/tools/cockpit-next
 const mb = (bytes) => Math.round((bytes / 1048576) * 100) / 100;
 
 /** A folder of the tree, before serialisation. */
-const node = (name, path) => ({ name, path, count: 0, bytes: 0, legacy: 0, misplacedCount: 0, issues: new Set(), children: new Map() });
+const node = (name, path) => ({
+  name,
+  path,
+  count: 0,
+  bytes: 0,
+  legacy: 0,
+  misplacedCount: 0,
+  issues: new Set(),
+  children: new Map(),
+});
 
 /** The folders of <path> under <root>, `depth` at most, created on the way: [root, …, deepest]. */
 function chainOf(root, path, depth) {
@@ -92,13 +101,19 @@ export function buildTree(objects, { depth = MAX_FOLDERS, now = new Date() } = {
 export async function main(argv, { env = process.env, fetchImpl = globalThis.fetch, log = console.log } = {}) {
   const args = parseArgs(argv);
   const fileEnv = args.envFile ? parseEnvFile(readFileSync(args.envFile, "utf8")) : {};
-  const merged = { MEDIA_CDN_HOSTNAME: DEFAULT_PULL_ZONE, ...fileEnv, ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)) };
+  const merged = {
+    MEDIA_CDN_HOSTNAME: DEFAULT_PULL_ZONE,
+    ...fileEnv,
+    ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)),
+  };
   const objects = await listZone(loadConfig(merged), fetchImpl);
   const result = buildTree(objects, { depth: args.depth ? Number(args.depth) : MAX_FOLDERS });
   const out = args.out ?? DEFAULT_OUT;
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, `${JSON.stringify(result, null, 2)}\n`);
-  log(`${out}: ${result.totals.count} object(s), ${result.totals.mb} MB, ${result.totals.legacy} legacy in ${result.totals.legacyRoots} legacy root(s), ${result.totals.misplaced} misplaced`);
+  log(
+    `${out}: ${result.totals.count} object(s), ${result.totals.mb} MB, ${result.totals.legacy} legacy in ${result.totals.legacyRoots} legacy root(s), ${result.totals.misplaced} misplaced`,
+  );
   return result.totals.misplaced ? 1 : 0;
 }
 

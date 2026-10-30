@@ -23,7 +23,13 @@ export const HERO_FLOCK: { ratio: number; birds: FlockBird[] } = {
 
 /** Each product's bird — the same as lib/story.ts PRODUCT_BIRD (a test keeps them equal; this module stays importable by node:test). */
 const BIRD: Record<ProductId, FlockBird["bird"]> = { orazaka: "flamingo", yomizaka: "owl", akinaza: "beaver" };
-const at = (product: ProductId, x: number, y: number, size: number): PlacedBird => ({ product, bird: BIRD[product], x, y, size });
+const at = (product: ProductId, x: number, y: number, size: number): PlacedBird => ({
+  product,
+  bird: BIRD[product],
+  x,
+  y,
+  size,
+});
 
 /** Wide (16:9): one row on the ridge, the engine's flamingo in the middle and larger, the two products it powers beside it. */
 export const BAND_WIDE: { ratio: number; birds: PlacedBird[] } = {

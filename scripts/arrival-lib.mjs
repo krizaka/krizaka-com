@@ -8,7 +8,17 @@ export const VIEWPORTS = [
 ];
 
 /** The pages whose footer is read: exactly one contentinfo landmark each (never a page's own closing footer under the layout's). */
-export const PAGES = ["/en", "/fr", "/en/story", "/fr/story", "/en/open-source", "/en/changelog", "/en/contact", "/en/privacy", "/en/terms"];
+export const PAGES = [
+  "/en",
+  "/fr",
+  "/en/story",
+  "/fr/story",
+  "/en/open-source",
+  "/en/changelog",
+  "/en/contact",
+  "/en/privacy",
+  "/en/terms",
+];
 
 /** A link to an anchor of a page (`/en#products`) lands on that section, not at the top. */
 export const isAnchor = (href) => href.includes("#");
@@ -19,13 +29,15 @@ export function arrivalProblems(c, r) {
   const out = [];
   if (r.error) return [`${where}: ${r.error}`];
   if (isAnchor(c.href)) {
-    if (!r.targetInView) out.push(`${where}: the section #${c.href.split("#")[1]} is not in view (scrollY ${r.scrollY})`);
+    if (!r.targetInView)
+      out.push(`${where}: the section #${c.href.split("#")[1]} is not in view (scrollY ${r.scrollY})`);
     return out;
   }
   if (r.scrollY > 2) out.push(`${where}: lands at scrollY ${r.scrollY}, not at the top`);
   if (!r.h1Visible) out.push(`${where}: the page's h1 is not in view${r.h1 ? ` (« ${r.h1} »)` : ""}`);
   if (!r.h1Focused) out.push(`${where}: focus is not on the h1 (it is on ${r.focus})`);
-  if (r.hasFooterLink && r.current !== "page") out.push(`${where}: the footer link is not aria-current="page" on its own page`);
+  if (r.hasFooterLink && r.current !== "page")
+    out.push(`${where}: the footer link is not aria-current="page" on its own page`);
   return out;
 }
 

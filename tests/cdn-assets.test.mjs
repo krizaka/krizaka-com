@@ -4,10 +4,25 @@ import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync } from 
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { FOREIGN_WRITERS } from "../scripts/bunny-layout.mjs";
-import { check, hashOf, logicalPath, main, plan, prune, publishReadme, purgeUnhashed, readManifest, versioned } from "../scripts/cdn-assets.mjs";
+import {
+  check,
+  hashOf,
+  logicalPath,
+  main,
+  plan,
+  prune,
+  publishReadme,
+  purgeUnhashed,
+  readManifest,
+  versioned,
+} from "../scripts/cdn-assets.mjs";
 
 const cfg = { apiKey: "secret-key", zone: "kz-zone", endpoint: "storage.bunnycdn.com", pullZone: "cdn.example.net" };
-const env = { MEDIA_STORAGE_API_KEY: "secret-key", MEDIA_STORAGE_ZONE: "kz-zone", MEDIA_CDN_HOSTNAME: "cdn.example.net" };
+const env = {
+  MEDIA_STORAGE_API_KEY: "secret-key",
+  MEDIA_STORAGE_ZONE: "kz-zone",
+  MEDIA_CDN_HOSTNAME: "cdn.example.net",
+};
 
 function fixture() {
   const dir = mkdtempSync(join(tmpdir(), "cdn-assets-"));
@@ -42,7 +57,10 @@ test("plan maps a directory under --to, hidden files left out", () => {
     plan(join(dir, "tour"), "products/yomizaka/tour").map((f) => f.logical),
     ["products/yomizaka/tour/alex-bid.jpg", "products/yomizaka/tour/alex-bid.mp4"],
   );
-  assert.deepEqual(plan(join(dir, "tour", "alex-bid.mp4"), "home/backdrop").map((f) => f.logical), ["home/backdrop/alex-bid.mp4"]);
+  assert.deepEqual(
+    plan(join(dir, "tour", "alex-bid.mp4"), "home/backdrop").map((f) => f.logical),
+    ["home/backdrop/alex-bid.mp4"],
+  );
 });
 
 test("upload sends versioned files, records them, and skips what is already there", async () => {
@@ -50,17 +68,37 @@ test("upload sends versioned files, records them, and skips what is already ther
   const manifestFile = join(dir, "cdn-manifest.json");
   const logs = [];
   const { calls, fetchImpl } = recorder();
-  await main(["upload", join(dir, "tour"), "--to", "products/yomizaka/tour"], { env, fetchImpl, log: (l) => logs.push(l), manifestFile });
+  await main(["upload", join(dir, "tour"), "--to", "products/yomizaka/tour"], {
+    env,
+    fetchImpl,
+    log: (l) => logs.push(l),
+    manifestFile,
+  });
   const puts = calls.filter((c) => c.method === "PUT");
   assert.equal(puts.length, 2);
-  assert.equal(puts[1].url, `https://storage.bunnycdn.com/kz-zone/sites/yomizaka/tour/alex-bid.${hashOf("mp4")}.mp4`, "layout v2: sites/<site>/<kind>/");
+  assert.equal(
+    puts[1].url,
+    `https://storage.bunnycdn.com/kz-zone/sites/yomizaka/tour/alex-bid.${hashOf("mp4")}.mp4`,
+    "layout v2: sites/<site>/<kind>/",
+  );
   assert.equal(puts[1].headers["Content-Type"], "video/mp4");
   const manifest = JSON.parse(readFileSync(manifestFile, "utf8"));
-  assert.deepEqual(manifest, { root: "sites", files: { "products/yomizaka/tour/alex-bid.jpg": hashOf("jpg"), "products/yomizaka/tour/alex-bid.mp4": hashOf("mp4") } });
+  assert.deepEqual(manifest, {
+    root: "sites",
+    files: {
+      "products/yomizaka/tour/alex-bid.jpg": hashOf("jpg"),
+      "products/yomizaka/tour/alex-bid.mp4": hashOf("mp4"),
+    },
+  });
   assert.ok(!logs.join("\n").includes("secret-key"), "the key is never printed");
 
   const again = recorder();
-  await main(["upload", join(dir, "tour"), "--to", "products/yomizaka/tour"], { env, fetchImpl: again.fetchImpl, log: () => {}, manifestFile });
+  await main(["upload", join(dir, "tour"), "--to", "products/yomizaka/tour"], {
+    env,
+    fetchImpl: again.fetchImpl,
+    log: () => {},
+    manifestFile,
+  });
   assert.equal(again.calls.filter((c) => c.method === "PUT").length, 0, "idempotent by hash");
 });
 
@@ -68,7 +106,12 @@ test("a dry run sends nothing and writes nothing", async () => {
   const dir = fixture();
   const manifestFile = join(dir, "cdn-manifest.json");
   const { calls, fetchImpl } = recorder();
-  await main(["upload", join(dir, "tour"), "--to", "products/yomizaka/tour", "--dry-run"], { env: {}, fetchImpl, log: () => {}, manifestFile });
+  await main(["upload", join(dir, "tour"), "--to", "products/yomizaka/tour", "--dry-run"], {
+    env: {},
+    fetchImpl,
+    log: () => {},
+    manifestFile,
+  });
   assert.equal(calls.length, 0);
   assert.ok(!existsSync(manifestFile));
 });
@@ -111,7 +154,11 @@ test("the committed manifest names every media the site draws", () => {
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
   // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left —
   // but the recordings www.orazaka.com plays (its home take and web steps: orazaka-web-client reads this manifest) and the real takes /story plays in its lightbox (lib/story-takes.ts: the engine's Old Port render) and the phone clips of Orazaka's mobile app as the demo persona (products/orazaka/mobile/, orazaka-web-client#245).
-  const gone = Object.keys(files).filter((path) => /^(docs\/orazaka\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/orazaka\/(?!home\/take-|web\/step-|mobile\/|video\/old-port))/.test(path));
+  const gone = Object.keys(files).filter((path) =>
+    /^(docs\/orazaka\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/orazaka\/(?!home\/take-|web\/step-|mobile\/|video\/old-port))/.test(
+      path,
+    ),
+  );
   assert.deepEqual(gone, []);
   // Only the products krizaka.com presents keep media here; the departed products' folders are gone (krizaka/.github#413).
   assert.deepEqual(
@@ -124,9 +171,16 @@ test("prune never deletes what the product sites carry themselves", async () => 
   const manifest = { root: "site", files: { "home/backdrop/orazaka.jpg": "newnewnew1" } };
   const listing = {
     "https://storage.bunnycdn.com/kz-zone/site/": [{ ObjectName: "products", IsDirectory: true }],
-    "https://storage.bunnycdn.com/kz-zone/site/products/": [{ ObjectName: "orazaka", IsDirectory: true }, { ObjectName: "yomizaka", IsDirectory: true }],
-    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/": [{ ObjectName: "clip.abcdef1234.mp4", IsDirectory: false }],
-    "https://storage.bunnycdn.com/kz-zone/site/products/yomizaka/": [{ ObjectName: "clip.abcdef1234.mp4", IsDirectory: false }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/": [
+      { ObjectName: "orazaka", IsDirectory: true },
+      { ObjectName: "yomizaka", IsDirectory: true },
+    ],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/": [
+      { ObjectName: "clip.abcdef1234.mp4", IsDirectory: false },
+    ],
+    "https://storage.bunnycdn.com/kz-zone/site/products/yomizaka/": [
+      { ObjectName: "clip.abcdef1234.mp4", IsDirectory: false },
+    ],
   };
   const fetchImpl = async (url) => ({ ok: true, status: 200, json: async () => listing[url] ?? [] });
   assert.deepEqual(await prune({ cfg, manifest, fetchImpl, log: () => {} }), []);
@@ -135,7 +189,8 @@ test("prune never deletes what the product sites carry themselves", async () => 
 test("uploads are refused outside the areas of site/", () => {
   assert.throws(() => logicalPath("pr-assets/x/y.png"), /not an area/);
   assert.throws(() => logicalPath("krizaka-assets/home"), /not an area/);
-  for (const area of ["home", "products/yomizaka/tour", "docs/yomizaka/mobile", "people/ui"]) assert.equal(logicalPath(area), area);
+  for (const area of ["home", "products/yomizaka/tour", "docs/yomizaka/mobile", "people/ui"])
+    assert.equal(logicalPath(area), area);
 });
 
 test("prune never touches what other sites own: the products' media and the blog's (site/blog/, named by krizaka-blog)", async () => {
@@ -143,7 +198,11 @@ test("prune never touches what other sites own: the products' media and the blog
   const calls = [];
   const fetchImpl = async (url, init = {}) => {
     calls.push({ url, method: init.method ?? "GET" });
-    const tree = { "/site/": [{ ObjectName: "blog", IsDirectory: true }], "/site/blog/": [{ ObjectName: "shared", IsDirectory: true }], "/site/blog/shared/": [{ ObjectName: "a.abc.webp", IsDirectory: false, LastChanged: "2020-01-01T00:00:00" }] };
+    const tree = {
+      "/site/": [{ ObjectName: "blog", IsDirectory: true }],
+      "/site/blog/": [{ ObjectName: "shared", IsDirectory: true }],
+      "/site/blog/shared/": [{ ObjectName: "a.abc.webp", IsDirectory: false, LastChanged: "2020-01-01T00:00:00" }],
+    };
     const key = Object.keys(tree).find((k) => url.endsWith(k));
     return { ok: true, status: 200, json: async () => (key ? tree[key] : []) };
   };
@@ -156,9 +215,16 @@ test("prune lists nothing under Orazaka's own clips (gallery-video/, video/), wh
   const listing = {
     "https://storage.bunnycdn.com/kz-zone/site/": [{ ObjectName: "products", IsDirectory: true }],
     "https://storage.bunnycdn.com/kz-zone/site/products/": [{ ObjectName: "orazaka", IsDirectory: true }],
-    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/": [{ ObjectName: "gallery-video", IsDirectory: true }, { ObjectName: "video", IsDirectory: true }],
-    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/gallery-video/": [{ ObjectName: "scene.0123456789.mp4", IsDirectory: false }],
-    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/video/": [{ ObjectName: "clip.0123456789-poster.webp", IsDirectory: false }],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/": [
+      { ObjectName: "gallery-video", IsDirectory: true },
+      { ObjectName: "video", IsDirectory: true },
+    ],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/gallery-video/": [
+      { ObjectName: "scene.0123456789.mp4", IsDirectory: false },
+    ],
+    "https://storage.bunnycdn.com/kz-zone/site/products/orazaka/video/": [
+      { ObjectName: "clip.0123456789-poster.webp", IsDirectory: false },
+    ],
   };
   const fetchImpl = async (url) => ({ ok: true, status: 200, json: async () => listing[url] ?? [] });
   assert.deepEqual(await prune({ cfg, manifest, fetchImpl, log: () => {} }), []);
@@ -166,24 +232,53 @@ test("prune lists nothing under Orazaka's own clips (gallery-video/, video/), wh
 
 test("purgeUnhashed: POSTs the Bunny purge of the file's URL with the account key (not the storage key)", async () => {
   const calls = [];
-  const fetchImpl = async (url, init) => { calls.push({ url, init }); return { ok: true, status: 200 }; };
-  assert.equal(await purgeUnhashed({ cfg, paths: ["org/v1/org.json"], accountKey: "acct", fetchImpl, log: () => {} }), true);
-  assert.equal(calls[0].url, "https://api.bunny.net/purge?url=https%3A%2F%2Fcdn.example.net%2Forg%2Fv1%2Forg.json&async=false");
+  const fetchImpl = async (url, init) => {
+    calls.push({ url, init });
+    return { ok: true, status: 200 };
+  };
+  assert.equal(
+    await purgeUnhashed({ cfg, paths: ["org/v1/org.json"], accountKey: "acct", fetchImpl, log: () => {} }),
+    true,
+  );
+  assert.equal(
+    calls[0].url,
+    "https://api.bunny.net/purge?url=https%3A%2F%2Fcdn.example.net%2Forg%2Fv1%2Forg.json&async=false",
+  );
   assert.equal(calls[0].init.method, "POST");
   assert.equal(calls[0].init.headers.AccessKey, "acct");
 });
 test("purgeUnhashed: without the account key it says so and calls nothing; a refusal is reported", async () => {
   const lines = [];
-  assert.equal(await purgeUnhashed({ cfg, paths: ["README.txt"], fetchImpl: () => assert.fail("no call"), log: (l) => lines.push(l) }), false);
+  assert.equal(
+    await purgeUnhashed({
+      cfg,
+      paths: ["README.txt"],
+      fetchImpl: () => assert.fail("no call"),
+      log: (l) => lines.push(l),
+    }),
+    false,
+  );
   assert.match(lines[0], /MEDIA_ACCOUNT_API_KEY is not set/);
-  const refused = await purgeUnhashed({ cfg, paths: ["README.txt"], accountKey: "a", fetchImpl: async () => ({ ok: false, status: 401 }), log: (l) => lines.push(l) });
+  const refused = await purgeUnhashed({
+    cfg,
+    paths: ["README.txt"],
+    accountKey: "a",
+    fetchImpl: async () => ({ ok: false, status: 401 }),
+    log: (l) => lines.push(l),
+  });
   assert.equal(refused, false);
   assert.match(lines[1], /NOT purged: HTTP 401/);
 });
 test("publishReadme: uploads README.txt, then purges it", async () => {
   const calls = [];
-  const fetchImpl = async (url, init) => { calls.push({ url, method: init.method }); return { ok: true, status: 200 }; };
+  const fetchImpl = async (url, init) => {
+    calls.push({ url, method: init.method });
+    return { ok: true, status: 200 };
+  };
   await publishReadme({ cfg, accountKey: "acct", fetchImpl, log: () => {} });
-  assert.deepEqual(calls.map((c) => c.method), ["PUT", "POST"]);
+  assert.deepEqual(
+    calls.map((c) => c.method),
+    ["PUT", "POST"],
+  );
   assert.match(calls[1].url, /api\.bunny\.net\/purge\?url=.*README\.txt/);
 });

@@ -15,7 +15,8 @@ const orgRepo = (expr) => expr.match(/^`\$\{GITHUB_ORG_URL\}\/([\w-]+)`$/)?.[1];
 const consts = Object.fromEntries(
   Object.entries(templates("lib/site.ts")).map(([name, tpl]) => [name, `https://github.com/krizaka/${orgRepo(tpl)}`]),
 );
-const resolve = (expr) => (/^https:/.test(expr) ? expr : orgRepo(expr) ? `https://github.com/krizaka/${orgRepo(expr)}` : consts[expr]);
+const resolve = (expr) =>
+  /^https:/.test(expr) ? expr : orgRepo(expr) ? `https://github.com/krizaka/${orgRepo(expr)}` : consts[expr];
 const products = PRODUCT_RECORDS().map((p) => ({ id: p.id, name: p.name, repoUrl: resolve(p.repoUrl) }));
 const stack = records("lib/stack.ts", "STACK").map((p) => ({ id: p.id, name: p.name, repoUrl: resolve(p.repoUrl) }));
 

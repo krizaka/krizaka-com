@@ -25,5 +25,6 @@ test("/open-source: four figures in the grid, the licence a caption under it, va
   const css = read("app/components/figure-tiles.css");
   assert.match(css, /white-space: nowrap/);
   assert.match(css, /--kz-fig-cols-narrow/);
-  for (const l of ["en", "fr"]) assert.match(JSON.parse(read(`messages/${l}.json`)).site.openSource.figures.license, /\{license\}/);
+  for (const l of ["en", "fr"])
+    assert.match(JSON.parse(read(`messages/${l}.json`)).site.openSource.figures.license, /\{license\}/);
 });

@@ -94,14 +94,21 @@ test("the cards are pinned tags: tilted one way then the other, straight under r
   const sel = (s) => cssSelectors(css).find((x) => x.endsWith(s)) ?? s;
   assert.equal(cssDecls(css, sel(":nth-child(odd) .kz-entry-tag")).transform, "rotate(-0.6deg)");
   assert.equal(cssDecls(css, sel(":nth-child(even) .kz-entry-tag")).transform, "rotate(0.5deg)");
-  assert.equal(cssDecls(css, sel(".kz-entry-tag:focus-within")).transform, "none", "the focus ring is never drawn tilted");
+  assert.equal(
+    cssDecls(css, sel(".kz-entry-tag:focus-within")).transform,
+    "none",
+    "the focus ring is never drawn tilted",
+  );
   const reduced = { within: "(prefers-reduced-motion: reduce)" };
   const rule = (s) => cssDecls(css, s, reduced);
   const flat = cssSelectors(css).filter((s) => s.endsWith(".kz-entry-tag") && cssHas(css, s, reduced));
   assert.ok(flat.length > 0 && flat.every((s) => rule(s).transform === "none" && rule(s).transition === "none"));
   // The reduced-motion rule must be at least as specific as the tilt rules (:nth-child(n) matches the pseudo-class weight).
   assert.ok(flat.some((s) => s.includes(":nth-child(n)")));
-  assert.ok(!jsx("app/components/home/ProductShowcase.tsx").some((e) => /rotate/.test(e.attrs.style ?? "")), "no inline style");
+  assert.ok(
+    !jsx("app/components/home/ProductShowcase.tsx").some((e) => /rotate/.test(e.attrs.style ?? "")),
+    "no inline style",
+  );
 });
 
 test("the visuals show what the apps show: the finding with its law, the service card with its receipt, said as demo", () => {

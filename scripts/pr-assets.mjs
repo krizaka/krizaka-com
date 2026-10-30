@@ -56,7 +56,10 @@ const kind = (file) => contentTypeFor(file).split("/")[0];
 
 /** A path segment safe for a storage key: `feat/x y` → `feat-x-y`. */
 export function slug(value, name) {
-  const s = String(value ?? "").trim().replace(/[^A-Za-z0-9._-]+/g, "-").replace(/^-+|-+$/g, "");
+  const s = String(value ?? "")
+    .trim()
+    .replace(/[^A-Za-z0-9._-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
   if (!s || s === "." || s === "..") throw new Error(`--${name} is required (letters, digits, . _ -)`);
   return s;
 }
@@ -92,7 +95,11 @@ export function parseEnvFile(text) {
   return env;
 }
 
-const host = (v) => String(v ?? "").trim().replace(/^https?:\/\//, "").replace(/\/+$/, "");
+const host = (v) =>
+  String(v ?? "")
+    .trim()
+    .replace(/^https?:\/\//, "")
+    .replace(/\/+$/, "");
 
 export function loadConfig(env, { requireKey = true } = {}) {
   const cfg = {
@@ -127,15 +134,14 @@ export function listFiles(dir) {
 
 const encodePath = (p) => p.split("/").map(encodeURIComponent).join("/");
 
-export const objectPath = (repo, key, rel) => assertUnder(PREFIX, `${PREFIX}/${slug(repo, "repo")}/${slug(key, "key")}/${rel}`);
+export const objectPath = (repo, key, rel) =>
+  assertUnder(PREFIX, `${PREFIX}/${slug(repo, "repo")}/${slug(key, "key")}/${rel}`);
 export const cdnUrl = (cfg, path) => `https://${cfg.pullZone}/${encodePath(path)}`;
 export const storageUrl = (cfg, path) => `https://${cfg.endpoint}/${encodeURIComponent(cfg.zone)}/${encodePath(path)}`;
 
 /** A Markdown block for a PR body: images inline, videos and data as links, grouped as listed. */
 export function markdownBlock(entries) {
-  const lines = entries.map(({ rel, url }) =>
-    kind(rel) === "image" ? `![${rel}](${url})` : `- [${rel}](${url})`,
-  );
+  const lines = entries.map(({ rel, url }) => (kind(rel) === "image" ? `![${rel}](${url})` : `- [${rel}](${url})`));
   return lines.join("\n");
 }
 
@@ -177,7 +183,10 @@ export async function upload({ dir, repo, key, cfg, dryRun = false, fetchImpl = 
 export function rewriteLinks(text, { repo, from = "docs/screenshots", cfg, owner = "krizaka" }) {
   const dir = from.replace(/^\.?\/+|\/+$/g, "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   const gh = `https://(?:github\\.com/${owner}/${repo}/(?:blob|raw)/[^/\\s]+|raw\\.githubusercontent\\.com/${owner}/${repo}/[^/\\s]+)/`;
-  const re = new RegExp(`(?:${gh}|(?<![\\w/.-])(?:\\.{1,2}/)*)${dir}/([^\\s)"'\`<>]+?)(\\?raw=true)?(?=[\\s)"'\`<>]|$)`, "g");
+  const re = new RegExp(
+    `(?:${gh}|(?<![\\w/.-])(?:\\.{1,2}/)*)${dir}/([^\\s)"'\`<>]+?)(\\?raw=true)?(?=[\\s)"'\`<>]|$)`,
+    "g",
+  );
   let count = 0;
   const out = text.replace(re, (_m, rest) => {
     count++;
@@ -203,15 +212,29 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
   if (command === "upload") {
     if (!target) throw new Error("upload needs a directory");
     const cfg = loadConfig(merged, { requireKey: !args.dryRun });
-    const entries = await upload({ dir: target, repo: args.repo, key: args.key, cfg, dryRun: args.dryRun, fetchImpl, log });
-    log(`\n${entries.length} file(s) ${args.dryRun ? "would be sent" : "sent"} to ${PREFIX}/${slug(args.repo, "repo")}/${slug(args.key, "key")}/ — paste in the PR:\n`);
+    const entries = await upload({
+      dir: target,
+      repo: args.repo,
+      key: args.key,
+      cfg,
+      dryRun: args.dryRun,
+      fetchImpl,
+      log,
+    });
+    log(
+      `\n${entries.length} file(s) ${args.dryRun ? "would be sent" : "sent"} to ${PREFIX}/${slug(args.repo, "repo")}/${slug(args.key, "key")}/ — paste in the PR:\n`,
+    );
     log(markdownBlock(entries));
     return 0;
   }
   if (command === "rewrite") {
     if (!target) throw new Error("rewrite needs a file");
     const cfg = loadConfig(merged, { requireKey: false });
-    const { text, count } = rewriteLinks(readFileSync(target, "utf8"), { repo: slug(args.repo, "repo"), from: args.from, cfg });
+    const { text, count } = rewriteLinks(readFileSync(target, "utf8"), {
+      repo: slug(args.repo, "repo"),
+      from: args.from,
+      cfg,
+    });
     if (args.write) {
       if (count) writeFileSync(target, text);
       log(`${count} link(s) rewritten in ${target}`);

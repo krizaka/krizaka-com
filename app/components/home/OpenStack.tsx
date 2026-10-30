@@ -18,7 +18,23 @@ import "./stack-tiles.css";
 
 /** One tile of the grid (/open-source, /story): its host, its name, one line, the thing to try or to copy, its facts, the
     way to its site. The grid cell stretches it to the row's height; the action sits at the foot. */
-function Tile({ name, meta, line, children, facts, href, cta }: { name: string; meta: string; line: string; children: ReactNode; facts: Fact[]; href: string; cta: string }) {
+function Tile({
+  name,
+  meta,
+  line,
+  children,
+  facts,
+  href,
+  cta,
+}: {
+  name: string;
+  meta: string;
+  line: string;
+  children: ReactNode;
+  facts: Fact[];
+  href: string;
+  cta: string;
+}) {
   return (
     <div className="kz-build-tile">
       <p className="kz-build-meta">{meta}</p>
@@ -69,29 +85,106 @@ export function StackTiles({ locale }: { locale: string }) {
         line={s.ui.line}
         href={ui.url}
         cta={s.ui.explore}
-        facts={[uiVersion ? { label: `@krizaka/ui ${uiVersion}`, tone: "ok" } : false, { label: s.facts.platforms }].filter((f): f is Fact => Boolean(f))}
+        facts={[
+          uiVersion ? { label: `@krizaka/ui ${uiVersion}`, tone: "ok" } : false,
+          { label: s.facts.platforms },
+        ].filter((f): f is Fact => Boolean(f))}
       >
         <UiShowcase
           w={{
             ...s.ui.showcase,
-            downloads: downloads.weekly !== undefined ? format(s.ui.downloads, { count: fmt.format(downloads.weekly) }) : undefined,
+            downloads:
+              downloads.weekly !== undefined
+                ? format(s.ui.downloads, { count: fmt.format(downloads.weekly) })
+                : undefined,
           }}
         />
       </Tile>
-      <Tile key="motion" name={motion.name} meta={hostOf(motion.url)} line={s.motion.line} href={stackActionUrl(motion)} cta={s.motion.lab} facts={uiVersion ? [{ label: `@krizaka/ui/engine-flow ${uiVersion}`, tone: "ok" }] : []}>
-        <MotionPlayground w={{ label: s.motion.label, hint: s.motion.hint, hub: s.motion.hub, app: s.motion.app, layout: s.motion.layout, layouts: s.motion.layouts, mode: s.motion.mode, modes: s.motion.modes }} />
+      <Tile
+        key="motion"
+        name={motion.name}
+        meta={hostOf(motion.url)}
+        line={s.motion.line}
+        href={stackActionUrl(motion)}
+        cta={s.motion.lab}
+        facts={uiVersion ? [{ label: `@krizaka/ui/engine-flow ${uiVersion}`, tone: "ok" }] : []}
+      >
+        <MotionPlayground
+          w={{
+            label: s.motion.label,
+            hint: s.motion.hint,
+            hub: s.motion.hub,
+            app: s.motion.app,
+            layout: s.motion.layout,
+            layouts: s.motion.layouts,
+            mode: s.motion.mode,
+            modes: s.motion.modes,
+          }}
+        />
       </Tile>
-      <Tile key="java" name={java.name} meta={hostOf(java.url)} line={s.java.line} href={java.url} cta={s.java.explore} facts={bom ? [{ label: `krizaka-bom ${bom}`, tone: "ok" }] : []}>
+      <Tile
+        key="java"
+        name={java.name}
+        meta={hostOf(java.url)}
+        line={s.java.line}
+        href={java.url}
+        cta={s.java.explore}
+        facts={bom ? [{ label: `krizaka-bom ${bom}`, tone: "ok" }] : []}
+      >
         <CodeTabs
           label={s.java.tool}
           tabs={[
-            { id: "maven", label: "Maven", content: <CodeBlock code={maven} language="xml" file="pom.xml" copyLabel={s.java.copy} copiedLabel={s.java.copied} /> },
-            { id: "gradle", label: "Gradle", content: <CodeBlock code={gradle} language="kotlin" file="build.gradle.kts" copyLabel={s.java.copy} copiedLabel={s.java.copied} /> },
+            {
+              id: "maven",
+              label: "Maven",
+              content: (
+                <CodeBlock
+                  code={maven}
+                  language="xml"
+                  file="pom.xml"
+                  copyLabel={s.java.copy}
+                  copiedLabel={s.java.copied}
+                />
+              ),
+            },
+            {
+              id: "gradle",
+              label: "Gradle",
+              content: (
+                <CodeBlock
+                  code={gradle}
+                  language="kotlin"
+                  file="build.gradle.kts"
+                  copyLabel={s.java.copy}
+                  copiedLabel={s.java.copied}
+                />
+              ),
+            },
           ]}
         />
       </Tile>
-      <Tile key="ts" name={ts.name} meta={hostOf(ts.url)} line={s.ts.line} href={ts.url} cta={s.ts.explore} facts={tsPackages.length ? [{ label: format(s.facts.npm, { count: tsPackages.length }), tone: "ok" }, { label: STACK_LICENCE }] : []}>
-        {tsPackages.length ? <CodeBlock code={install} language="bash" file="terminal" copyLabel={s.java.copy} copiedLabel={s.java.copied} /> : null}
+      <Tile
+        key="ts"
+        name={ts.name}
+        meta={hostOf(ts.url)}
+        line={s.ts.line}
+        href={ts.url}
+        cta={s.ts.explore}
+        facts={
+          tsPackages.length
+            ? [{ label: format(s.facts.npm, { count: tsPackages.length }), tone: "ok" }, { label: STACK_LICENCE }]
+            : []
+        }
+      >
+        {tsPackages.length ? (
+          <CodeBlock
+            code={install}
+            language="bash"
+            file="terminal"
+            copyLabel={s.java.copy}
+            copiedLabel={s.java.copied}
+          />
+        ) : null}
       </Tile>
     </CardGrid>
   );

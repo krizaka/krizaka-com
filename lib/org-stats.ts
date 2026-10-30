@@ -32,5 +32,12 @@ export function publicRepositoryCount(): number {
 export function githubRepositories(): GithubRepository[] {
   const { repositories } = snapshot();
   if (Array.isArray(repositories) && repositories.length > 0) return repositories;
-  return orgRepositories().map((r) => ({ name: r.name, description: r.description, url: r.url, topics: [], language: null, archived: false }));
+  return orgRepositories().map((r) => ({
+    name: r.name,
+    description: r.description,
+    url: r.url,
+    topics: [],
+    language: null,
+    archived: false,
+  }));
 }

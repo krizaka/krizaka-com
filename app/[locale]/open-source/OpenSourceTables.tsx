@@ -53,7 +53,16 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
   const labels = useTableLabels();
   const familyLabel = (f: string) => (f in w.families ? w.families[f as keyof typeof w.families] : f);
   const columns: DataTableColumn<PackageRow>[] = [
-    { id: "name", header: w.name, type: "title", card: "title", filter: "text", sortable: true, subtitle: (r) => r.line, maxWidth: 420 },
+    {
+      id: "name",
+      header: w.name,
+      type: "title",
+      card: "title",
+      filter: "text",
+      sortable: true,
+      subtitle: (r) => r.line,
+      maxWidth: 420,
+    },
     {
       id: "registry",
       header: w.registry,
@@ -75,7 +84,9 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
           "—"
         ) : (
           <span className="os-downloads">
-            {r.weeklySeries ? <Sparkline data={r.weeklySeries} variant="area" width={72} height={22} title={`${r.name} — ${w.trend}`} /> : null}
+            {r.weeklySeries ? (
+              <Sparkline data={r.weeklySeries} variant="area" width={72} height={22} title={`${r.name} — ${w.trend}`} />
+            ) : null}
             {new Intl.NumberFormat(locale).format(r.weeklyDownloads)}
           </span>
         ),
@@ -87,7 +98,11 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
       cell: (r) => (
         <Links
           links={[
-            { href: r.registryUrl, label: r.registry === "npm" ? "npm" : "Central", aria: format(w.registryAria, { name: r.name }) },
+            {
+              href: r.registryUrl,
+              label: r.registry === "npm" ? "npm" : "Central",
+              aria: format(w.registryAria, { name: r.name }),
+            },
             ...(r.repoUrl ? [{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }] : []),
             ...(r.docsUrl ? [{ href: r.docsUrl, label: w.docs, aria: format(w.docsAria, { name: r.name }) }] : []),
           ]}

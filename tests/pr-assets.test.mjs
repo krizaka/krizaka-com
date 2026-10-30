@@ -38,9 +38,19 @@ test("content types follow the extension", () => {
 
 test("arguments, env files and slugs", () => {
   assert.deepEqual(parseArgs(["upload", "d", "--repo", "r", "--key=43", "--dry-run", "--env-file", "x"]), {
-    _: ["upload", "d"], dryRun: true, write: false, repo: "r", key: "43", envFile: "x",
+    _: ["upload", "d"],
+    dryRun: true,
+    write: false,
+    repo: "r",
+    key: "43",
+    envFile: "x",
   });
-  assert.deepEqual(parseEnvFile('A=1\n# c\nexport B="two words"\nC=3 # note\nD=\n'), { A: "1", B: "two words", C: "3", D: "" });
+  assert.deepEqual(parseEnvFile('A=1\n# c\nexport B="two words"\nC=3 # note\nD=\n'), {
+    A: "1",
+    B: "two words",
+    C: "3",
+    D: "",
+  });
   assert.equal(slug("feat/menu story", "key"), "feat-menu-story");
   assert.throws(() => slug("", "repo"), /--repo is required/);
 });
@@ -48,14 +58,20 @@ test("arguments, env files and slugs", () => {
 test("configuration names what is missing, never the key", () => {
   assert.throws(() => loadConfig({ MEDIA_STORAGE_API_KEY: "s" }), /MEDIA_STORAGE_ZONE, MEDIA_CDN_HOSTNAME/);
   assert.deepEqual(loadConfig({ MEDIA_CDN_HOSTNAME: "https://cdn.example.net/" }, { requireKey: false }), {
-    apiKey: "", zone: "", endpoint: "storage.bunnycdn.com", pullZone: "cdn.example.net",
+    apiKey: "",
+    zone: "",
+    endpoint: "storage.bunnycdn.com",
+    pullZone: "cdn.example.net",
   });
 });
 
 test("files are listed recursively, hidden files skipped", () => {
   const dir = fixture();
   try {
-    assert.deepEqual(listFiles(dir).map((f) => f.rel), ["after/home mobile.webm", "before-dark.png", "metrics.json"]);
+    assert.deepEqual(
+      listFiles(dir).map((f) => f.rel),
+      ["after/home mobile.webm", "before-dark.png", "metrics.json"],
+    );
   } finally {
     rmSync(dir, { recursive: true });
   }
@@ -95,7 +111,10 @@ test("a pull zone that refuses public reads fails the upload", async () => {
   const dir = fixture();
   const fetchImpl = async (_url, init) => ({ ok: init.method === "PUT", status: init.method === "PUT" ? 201 : 403 });
   try {
-    await assert.rejects(upload({ dir, repo: "r", key: "k", cfg, fetchImpl, log: () => {} }), /HTTP 403: check the pull zone/);
+    await assert.rejects(
+      upload({ dir, repo: "r", key: "k", cfg, fetchImpl, log: () => {} }),
+      /HTTP 403: check the pull zone/,
+    );
   } finally {
     rmSync(dir, { recursive: true });
   }
@@ -142,7 +161,10 @@ test("rewrite turns committed capture links into CDN URLs", async () => {
   const file = join(dir, "body.md");
   writeFileSync(file, body);
   try {
-    await main(["rewrite", file, "--repo", "krizaka-com", "--write"], { env: { MEDIA_CDN_HOSTNAME: "cdn.example.net" }, log: () => {} });
+    await main(["rewrite", file, "--repo", "krizaka-com", "--write"], {
+      env: { MEDIA_CDN_HOSTNAME: "cdn.example.net" },
+      log: () => {},
+    });
     assert.equal(readFileSync(file, "utf8"), text);
   } finally {
     rmSync(dir, { recursive: true });

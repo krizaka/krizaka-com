@@ -30,7 +30,8 @@ const has = (topics: readonly string[], ...any: string[]) => any.some((t) => top
 export function kindOfRepository(repo: Pick<GithubRepository, "name" | "topics">, product: string): RepositoryKind {
   const { name, topics } = repo;
   if (name === product) return "main";
-  if (has(topics, "expo", "react-native", "android", "ios") && !has(topics, "design-system", "npm-package")) return "mobile";
+  if (has(topics, "expo", "react-native", "android", "ios") && !has(topics, "design-system", "npm-package"))
+    return "mobile";
   if (has(topics, "design-system", "npm-package", "maven-central", "contracts", "design-tokens")) return "library";
   if (has(topics, "cli", "bom", "archunit", "community-health", "packs", "website")) return "tooling";
   if (has(topics, "spring-boot", "worker", "rabbitmq", "spring-ai")) return "service";
@@ -39,16 +40,25 @@ export function kindOfRepository(repo: Pick<GithubRepository, "name" | "topics">
 }
 
 /** The repositories of one product, archived ones left out: the main repository first, then by kind, then by name. */
-export function repositoriesOf<P extends string>(repositories: readonly GithubRepository[], product: P | "krizaka", products: readonly P[]) {
+export function repositoriesOf<P extends string>(
+  repositories: readonly GithubRepository[],
+  product: P | "krizaka",
+  products: readonly P[],
+) {
   return repositories
     .filter((r) => !r.archived && productOfRepository(r.name, products) === product)
     .map((r) => ({ ...r, kind: kindOfRepository(r, product) }))
-    .sort((a, b) => REPOSITORY_KINDS.indexOf(a.kind) - REPOSITORY_KINDS.indexOf(b.kind) || a.name.localeCompare(b.name));
+    .sort(
+      (a, b) => REPOSITORY_KINDS.indexOf(a.kind) - REPOSITORY_KINDS.indexOf(b.kind) || a.name.localeCompare(b.name),
+    );
 }
 
 /** What Krizaka open-sources, as /open-source lists it: the platform's repositories (libraries, kits, tooling, sites), never a
     product's. The products are operated by Krizaka (2026-10-26): their repositories are not offered here as open source, and
     nothing on /open-source says anything about their licence. */
-export function openSourceRepositories<R extends Pick<GithubRepository, "name" | "archived">>(repositories: readonly R[], products: readonly string[]): R[] {
+export function openSourceRepositories<R extends Pick<GithubRepository, "name" | "archived">>(
+  repositories: readonly R[],
+  products: readonly string[],
+): R[] {
   return repositories.filter((r) => !r.archived && productOfRepository(r.name, products) === "krizaka");
 }

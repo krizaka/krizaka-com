@@ -1,10 +1,28 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { codeMailConfigured, confirmContactVerification, startContactVerification } from "../lib/contact-verification.ts";
+import {
+  codeMailConfigured,
+  confirmContactVerification,
+  startContactVerification,
+} from "../lib/contact-verification.ts";
 
 const NOW = () => new Date();
-const env = { MAIL_PROVIDER: "mailgun", MAIL_API_KEY: "k", MAIL_DOMAIN: "mg.example.test", MAIL_CONTACT_TO: "team@example.test" };
-const message = (email = "ada@example.com", locale = "en") => ({ name: "Ada", email, company: "", topic: "other", timeline: null, message: "Hello, a real question here.", locale, source: null });
+const env = {
+  MAIL_PROVIDER: "mailgun",
+  MAIL_API_KEY: "k",
+  MAIL_DOMAIN: "mg.example.test",
+  MAIL_CONTACT_TO: "team@example.test",
+};
+const message = (email = "ada@example.com", locale = "en") => ({
+  name: "Ada",
+  email,
+  company: "",
+  topic: "other",
+  timeline: null,
+  message: "Hello, a real question here.",
+  locale,
+  source: null,
+});
 
 /** Mailgun is replaced for the test: the code mail is read from the form that would be posted. */
 function withMailgun(answer, run) {
@@ -42,15 +60,30 @@ test("the message is released once, only with the right code, and it is the held
     const started = await startContactVerification(message("ada2@example.com"), NOW, env);
     const code = codeOf(sent[0].form);
     const wrong = code === "000000" ? "111111" : "000000";
-    assert.deepEqual(await confirmContactVerification({ challengeId: started.challengeId, email: "ada2@example.com", code: wrong }, NOW), { ok: false, reason: "invalid", attemptsLeft: 4 });
+    assert.deepEqual(
+      await confirmContactVerification(
+        { challengeId: started.challengeId, email: "ada2@example.com", code: wrong },
+        NOW,
+      ),
+      { ok: false, reason: "invalid", attemptsLeft: 4 },
+    );
     // another address cannot use the code
-    assert.equal((await confirmContactVerification({ challengeId: started.challengeId, email: "eve@example.com", code }, NOW)).ok, false);
-    const ok = await confirmContactVerification({ challengeId: started.challengeId, email: "ada2@example.com", code }, NOW);
+    assert.equal(
+      (await confirmContactVerification({ challengeId: started.challengeId, email: "eve@example.com", code }, NOW)).ok,
+      false,
+    );
+    const ok = await confirmContactVerification(
+      { challengeId: started.challengeId, email: "ada2@example.com", code },
+      NOW,
+    );
     assert.equal(ok.ok, true);
     assert.equal(ok.message.email, "ada2@example.com");
     assert.equal(ok.message.message, "Hello, a real question here.");
     // single use
-    assert.deepEqual(await confirmContactVerification({ challengeId: started.challengeId, email: "ada2@example.com", code }, NOW), { ok: false, reason: "unknown" });
+    assert.deepEqual(
+      await confirmContactVerification({ challengeId: started.challengeId, email: "ada2@example.com", code }, NOW),
+      { ok: false, reason: "unknown" },
+    );
   });
 });
 
@@ -60,17 +93,32 @@ test("five wrong codes destroy the challenge", async () => {
     const code = codeOf(sent[0].form);
     const wrong = code === "000000" ? "111111" : "000000";
     let last;
-    for (let i = 0; i < 5; i += 1) last = await confirmContactVerification({ challengeId: started.challengeId, email: "ada3@example.com", code: wrong }, NOW);
+    for (let i = 0; i < 5; i += 1)
+      last = await confirmContactVerification(
+        { challengeId: started.challengeId, email: "ada3@example.com", code: wrong },
+        NOW,
+      );
     assert.deepEqual(last, { ok: false, reason: "locked" });
-    assert.equal((await confirmContactVerification({ challengeId: started.challengeId, email: "ada3@example.com", code }, NOW)).ok, false);
+    assert.equal(
+      (await confirmContactVerification({ challengeId: started.challengeId, email: "ada3@example.com", code }, NOW)).ok,
+      false,
+    );
   });
 });
 
 test("an address gets at most three codes per window (a mailbox cannot be flooded)", async () => {
   await withMailgun(true, async () => {
-    for (let i = 0; i < 3; i += 1) assert.equal((await startContactVerification(message("flood@example.com"), NOW, env)).ok, true);
-    assert.deepEqual(await startContactVerification(message("flood@example.com"), NOW, env), { ok: false, error: "rate_limited" });
-    assert.equal((await startContactVerification(message("Flood@Example.com"), NOW, env)).ok, false, "case does not dodge the limit");
+    for (let i = 0; i < 3; i += 1)
+      assert.equal((await startContactVerification(message("flood@example.com"), NOW, env)).ok, true);
+    assert.deepEqual(await startContactVerification(message("flood@example.com"), NOW, env), {
+      ok: false,
+      error: "rate_limited",
+    });
+    assert.equal(
+      (await startContactVerification(message("Flood@Example.com"), NOW, env)).ok,
+      false,
+      "case does not dodge the limit",
+    );
   });
 });
 
@@ -79,7 +127,10 @@ test("a refused code mail is reported, not hidden", async () => {
     const realError = console.error;
     console.error = () => {};
     try {
-      assert.deepEqual(await startContactVerification(message("down@example.com"), NOW, env), { ok: false, error: "code_mail_failed" });
+      assert.deepEqual(await startContactVerification(message("down@example.com"), NOW, env), {
+        ok: false,
+        error: "code_mail_failed",
+      });
     } finally {
       console.error = realError;
     }
@@ -100,7 +151,9 @@ test("the form and the messages carry the code step in both languages", async ()
   const { readFileSync } = await import("node:fs");
   for (const locale of ["en", "fr"]) {
     const c = JSON.parse(readFileSync(new URL(`../messages/${locale}.json`, import.meta.url), "utf8")).site.contactForm;
-    for (const key of ["verifyTitle", "verifyBody", "codeLabel", "verifyButton", "verifying", "verifyBack"]) assert.ok(c[key], `${locale}: ${key}`);
-    for (const key of ["code_invalid", "code_expired", "code_locked", "code_unknown", "code_mail_failed"]) assert.ok(c.errors[key], `${locale}: errors.${key}`);
+    for (const key of ["verifyTitle", "verifyBody", "codeLabel", "verifyButton", "verifying", "verifyBack"])
+      assert.ok(c[key], `${locale}: ${key}`);
+    for (const key of ["code_invalid", "code_expired", "code_locked", "code_unknown", "code_mail_failed"])
+      assert.ok(c.errors[key], `${locale}: errors.${key}`);
   }
 });

@@ -19,7 +19,11 @@ export function DocsCrumb({ pathname }: { pathname: string }) {
     <nav aria-label={t.site.menu.breadcrumb} className="hidden min-w-0 md:block">
       <ol className="m-0 flex list-none items-center gap-1 p-0">
         <li>
-          <Link href={NAV_DOCS_HUB} aria-current={section ? undefined : "page"} className={cn(crumb, !section && "font-semibold text-fg")}>
+          <Link
+            href={NAV_DOCS_HUB}
+            aria-current={section ? undefined : "page"}
+            className={cn(crumb, !section && "font-semibold text-fg")}
+          >
             {t.site.menu.docs}
           </Link>
         </li>
@@ -28,7 +32,11 @@ export function DocsCrumb({ pathname }: { pathname: string }) {
             <span aria-hidden className="text-fg-muted">
               /
             </span>
-            <Link href={section.href} aria-current={pathname === section.href ? "page" : undefined} className={cn(crumb, "font-semibold text-fg")}>
+            <Link
+              href={section.href}
+              aria-current={pathname === section.href ? "page" : undefined}
+              className={cn(crumb, "font-semibold text-fg")}
+            >
               <ProductLogo id="krizaka" size={16} animated={false} />
               {docsLinkText(t, section).label}
             </Link>

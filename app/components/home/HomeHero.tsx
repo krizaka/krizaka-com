@@ -73,80 +73,99 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
 
       <Page className="kz-home-hero-inner" margin>
         <div className="kz-home-hero-grid">
-        <div className="kz-home-hero-words">
-        <p className="kz-home-eyebrow">
-          <span className="kz-home-number">{t.number}</span>
-          <span className="kz-intro-mark kz-intro-deco" aria-hidden>
-            <KrizakaLogo size={28} />
-          </span>
-          {t.eyebrow}
-        </p>
-        <h1 id="hero-title" className="kz-home-title">
-          {t.title}
-        </h1>
-        <p className="kz-home-lead">{t.lead}</p>
+          <div className="kz-home-hero-words">
+            <p className="kz-home-eyebrow">
+              <span className="kz-home-number">{t.number}</span>
+              <span className="kz-intro-mark kz-intro-deco" aria-hidden>
+                <KrizakaLogo size={28} />
+              </span>
+              {t.eyebrow}
+            </p>
+            <h1 id="hero-title" className="kz-home-title">
+              {t.title}
+            </h1>
+            <p className="kz-home-lead">{t.lead}</p>
 
-        <div className="kz-home-actions">
-          <ButtonLink href="#engine" variant="primary" size="lg">
-            {t.primary} <ForwardIcon size={16} strokeWidth={2.25} />
-          </ButtonLink>
-          <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, vtt: "family.vtt" }} fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }} />
-        </div>
-
-        {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
-        <ul className="kz-home-marks" aria-label={t.marksLabel}>
-          {heroMarkOrder(PRODUCTS).map((p) => (
-            <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined}>
-              <a href={`#product-${p.id}`}>
-                <ProductLogo id={p.id} size={30} animated={false} />
-                <span>{p.name}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <dl className="kz-home-proofs" aria-label={t.proofsLabel} style={cols}>
-          {counted.map((p) => (
-            <div key={p.id}>
-              <dt>{p.label}</dt>
-              <dd>
-                <NumberTicker value={p.value} locale={locale} align="start" />
-              </dd>
+            <div className="kz-home-actions">
+              <ButtonLink href="#engine" variant="primary" size="lg">
+                {t.primary} <ForwardIcon size={16} strokeWidth={2.25} />
+              </ButtonLink>
+              <FilmLightbox
+                film={{ mp4: film.mp4, poster: film.poster, vtt: "family.vtt" }}
+                fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}
+              />
             </div>
-          ))}
-        </dl>
-        <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
-        </div>
-        <TapedPhoto className="kz-home-plate" caption={t.plate.title}>
-          <div className="kz-home-flock">
-            <AmbientLoop set={VALLEY} />
-            <Flock className="kz-home-flock-stage" birds={HERO_FLOCK.birds} ratio={HERO_FLOCK.ratio} tone="own" tempo={1.7} scenes greet />
-            <div className="kz-home-flock-links">
-              {cueBirds.map(({ bird, x, y, size, label, promise }) => (
-                <Link
-                  key={bird}
-                  href="/story#who"
-                  className="kz-home-flock-hit"
-                  aria-label={`${label}: ${promise}`}
-                  style={{ left: `${x - size / 2}%`, width: `${size}%`, top: `calc(${y}% - ${size * 0.9}cqw)`, "--flock-x": `${x}cqw` } as CSSProperties}
-                >
-                  <span className="kz-home-flock-caption" aria-hidden>
-                    {promise}
-                  </span>
-                </Link>
+
+            {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
+            <ul className="kz-home-marks" aria-label={t.marksLabel}>
+              {heroMarkOrder(PRODUCTS).map((p) => (
+                <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined}>
+                  <a href={`#product-${p.id}`}>
+                    <ProductLogo id={p.id} size={30} animated={false} />
+                    <span>{p.name}</span>
+                  </a>
+                </li>
               ))}
-            </div>
+            </ul>
+
+            <dl className="kz-home-proofs" aria-label={t.proofsLabel} style={cols}>
+              {counted.map((p) => (
+                <div key={p.id}>
+                  <dt>{p.label}</dt>
+                  <dd>
+                    <NumberTicker value={p.value} locale={locale} align="start" />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
           </div>
-          <ul className="sr-only" aria-label={t.plate.title}>
-            <li>{t.plate.subtitle}</li>
-            {cueBirds.map(({ bird, label, promise }) => (
-              <li key={bird}>{label}: {promise}</li>
-            ))}
-          </ul>
-        </TapedPhoto>
+          <TapedPhoto className="kz-home-plate" caption={t.plate.title}>
+            <div className="kz-home-flock">
+              <AmbientLoop set={VALLEY} />
+              <Flock
+                className="kz-home-flock-stage"
+                birds={HERO_FLOCK.birds}
+                ratio={HERO_FLOCK.ratio}
+                tone="own"
+                tempo={1.7}
+                scenes
+                greet
+              />
+              <div className="kz-home-flock-links">
+                {cueBirds.map(({ bird, x, y, size, label, promise }) => (
+                  <Link
+                    key={bird}
+                    href="/story#who"
+                    className="kz-home-flock-hit"
+                    aria-label={`${label}: ${promise}`}
+                    style={
+                      {
+                        left: `${x - size / 2}%`,
+                        width: `${size}%`,
+                        top: `calc(${y}% - ${size * 0.9}cqw)`,
+                        "--flock-x": `${x}cqw`,
+                      } as CSSProperties
+                    }
+                  >
+                    <span className="kz-home-flock-caption" aria-hidden>
+                      {promise}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+            <ul className="sr-only" aria-label={t.plate.title}>
+              <li>{t.plate.subtitle}</li>
+              {cueBirds.map(({ bird, label, promise }) => (
+                <li key={bird}>
+                  {label}: {promise}
+                </li>
+              ))}
+            </ul>
+          </TapedPhoto>
         </div>
       </Page>
-
     </SectionBackdrop>
   );
 }

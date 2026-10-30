@@ -31,11 +31,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: "/services",
     en: {
       title: "Our services — Krizaka Entreprise: custom modules, sovereign AI, maintenance",
-      description: "One offer for companies, on quote: custom modules built on Krizaka's open building blocks, the adoption of a sovereign AI (Orazaka, on your servers or in Canada), and maintenance.",
+      description:
+        "One offer for companies, on quote: custom modules built on Krizaka's open building blocks, the adoption of a sovereign AI (Orazaka, on your servers or in Canada), and maintenance.",
     },
     fr: {
       title: "Nos services — Krizaka Entreprise : modules sur mesure, IA souveraine, maintenance",
-      description: "Une offre pour les entreprises, sur devis : des modules sur mesure bâtis sur les briques ouvertes de Krizaka, l'adoption d'une IA souveraine (Orazaka, chez vous ou au Canada) et la maintenance.",
+      description:
+        "Une offre pour les entreprises, sur devis : des modules sur mesure bâtis sur les briques ouvertes de Krizaka, l'adoption d'une IA souveraine (Orazaka, chez vous ou au Canada) et la maintenance.",
     },
   });
 }
@@ -47,7 +49,13 @@ export default async function ServicesPage({ params }: Props) {
   const s = getDictionary(locale).site.services;
   return (
     <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
-      <JsonLd data={buildServiceJsonLd(locale as Locale, { name: s.title, description: s.lead, covers: SERVICES_PAGE_ORDER.covers.map((id) => s.covers[id].title) })} />
+      <JsonLd
+        data={buildServiceJsonLd(locale as Locale, {
+          name: s.title,
+          description: s.lead,
+          covers: SERVICES_PAGE_ORDER.covers.map((id) => s.covers[id].title),
+        })}
+      />
       <SiteBar />
 
       <PageHero eyebrow={s.eyebrow} title={s.title} lead={s.lead} align="center" linkAs={Link}>
@@ -86,7 +94,14 @@ export default async function ServicesPage({ params }: Props) {
       <Section id="proof" eyebrow={s.proofLabel} title={s.proofTitle} lead={s.proofLead} divider reveal>
         <CardGrid as="ul" min={240} columns={4} aria-label={s.proofLabel}>
           {SERVICES_PROOF.map(({ id, href }) => (
-            <LinkCard key={id} href={href} title={s.proof[id].title} description={s.proof[id].line} icon={<ChatIcon size={20} aria-hidden />} cta={s.proofCta} />
+            <LinkCard
+              key={id}
+              href={href}
+              title={s.proof[id].title}
+              description={s.proof[id].line}
+              icon={<ChatIcon size={20} aria-hidden />}
+              cta={s.proofCta}
+            />
           ))}
         </CardGrid>
       </Section>

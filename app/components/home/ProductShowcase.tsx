@@ -37,7 +37,12 @@ import ProductVisual from "./visuals/ProductVisual";
 import "./visuals/visuals.css";
 
 /** The stamp of a status: `ok` only for what is out, `wip` in development, `construction` not open yet. */
-const STAMP: Record<ProductStatus, StampTone> = { devPreview: "ok", development: "wip", construction: "construction", upcoming: "neutral" };
+const STAMP: Record<ProductStatus, StampTone> = {
+  devPreview: "ok",
+  development: "wip",
+  construction: "construction",
+  upcoming: "neutral",
+};
 const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 
 const external = (p: Product) => ({ href: p.siteUrl, target: "_blank", rel: "noopener" });
@@ -55,7 +60,9 @@ const figNo = (label: string, p: Product) => `${label} ${nOf(p)}`;
 function Bird({ p, t }: { p: Product; t: TranslationDictionary }) {
   const bird = PRODUCT_BIRD[p.id];
   const film = (FILM_BIRDS as readonly string[]).includes(bird);
-  const words = film ? t.site.story.world.cues[bird as (typeof FILM_BIRDS)[number]] : t.site.home.products.birds[bird as keyof TranslationDictionary["site"]["home"]["products"]["birds"]];
+  const words = film
+    ? t.site.story.world.cues[bird as (typeof FILM_BIRDS)[number]]
+    : t.site.home.products.birds[bird as keyof TranslationDictionary["site"]["home"]["products"]["birds"]];
   return (
     <p className="kz-entry-bird">
       <Mascot bird={bird} mood="welcome" tone="own" size={48} animated={false} aria-hidden />
@@ -68,7 +75,10 @@ function Bird({ p, t }: { p: Product; t: TranslationDictionary }) {
  *  is in development. The version is left out when the site could not be read — never typed. */
 function devFields(p: Product, s: TranslationDictionary["site"]["home"]["products"]) {
   const version = devVersion(p.id);
-  return [{ label: s.fields.site, value: host(p.siteUrl) }, ...(version ? [{ label: s.fields.version, value: version }] : [])];
+  return [
+    { label: s.fields.site, value: host(p.siteUrl) },
+    ...(version ? [{ label: s.fields.version, value: version }] : []),
+  ];
 }
 
 function Foot({ p, t }: { p: Product; t: TranslationDictionary }) {
@@ -102,7 +112,9 @@ function EngineFoundation({ t }: { t: TranslationDictionary }) {
         <div>
           <p className="kz-foundation-role">{s.fields.engineRole}</p>
           <h3>
-            <a {...external(p)} className="kz-entry-name">{p.name}</a>
+            <a {...external(p)} className="kz-entry-name">
+              {p.name}
+            </a>
           </h3>
         </div>
         <span className="kz-foundation-status">{t.site.nav.status[p.status].label}</span>
@@ -184,7 +196,11 @@ function ProductEntry({ product: p, t }: { product: Product; t: TranslationDicti
         </p>
         {useText && (
           <p className="kz-entry-uses" data-planned={use?.planned ? "" : undefined}>
-            <a href="#product-orazaka">{format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, { use: useText })}</a>
+            <a href="#product-orazaka">
+              {format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, {
+                use: useText,
+              })}
+            </a>
           </p>
         )}
         <Bird p={p} t={t} />
@@ -223,7 +239,13 @@ export default function ProductShowcase({ locale }: { locale: string }) {
             ))}
           </ol>
         </ProductsLink>
-        <Footnotes className="kz-prod-notes" prefix="kz-note" label={s.notesLabel} backLabel={s.backLabel} notes={SHOWN.map((p) => `${p.name}. ${s.notes[p.id]}`)} />
+        <Footnotes
+          className="kz-prod-notes"
+          prefix="kz-note"
+          label={s.notesLabel}
+          backLabel={s.backLabel}
+          notes={SHOWN.map((p) => `${p.name}. ${s.notes[p.id]}`)}
+        />
       </Section>
     </div>
   );

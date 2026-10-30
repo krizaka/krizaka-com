@@ -41,7 +41,11 @@ export default function SiteBar() {
   return (
     <>
       <div className="kz-site-bar-wrap pointer-events-none fixed inset-x-0 top-3 z-50">
-        <NavBar.Root label={m.mainAria} className="kz-site-bar pointer-events-auto" data-frame={path.startsWith("/docs/") ? "docs" : undefined}>
+        <NavBar.Root
+          label={m.mainAria}
+          className="kz-site-bar pointer-events-auto"
+          data-frame={path.startsWith("/docs/") ? "docs" : undefined}
+        >
           <NavBar.Brand asChild>
             <Link href="/" aria-label={m.homeAria} className="kz-site-brand">
               <KrizakaLogo size={26} />

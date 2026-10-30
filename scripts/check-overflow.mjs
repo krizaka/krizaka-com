@@ -14,7 +14,13 @@ const problems = await visitPages(baseFromArgv(), cases(), async (page, c) => {
     const wide = [...document.querySelectorAll("body *")]
       .filter((el) => el.getBoundingClientRect().right > w + 0.5)
       .slice(0, 3)
-      .map((el) => el.tagName.toLowerCase() + (el.className && typeof el.className === "string" ? "." + el.className.trim().split(/\s+/).slice(0, 2).join(".") : ""));
+      .map(
+        (el) =>
+          el.tagName.toLowerCase() +
+          (el.className && typeof el.className === "string"
+            ? "." + el.className.trim().split(/\s+/).slice(0, 2).join(".")
+            : ""),
+      );
     return { scrollWidth: document.documentElement.scrollWidth, culprits: wide };
   });
   const problem = overflowProblem(c, scrollWidth, culprits);

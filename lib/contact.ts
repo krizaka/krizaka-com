@@ -10,7 +10,15 @@ import { z } from "zod";
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
-export const CONTACT_TOPICS = ["orazaka", "yomizaka", "akinaza", "blocks", "enterprise", "partnership", "other"] as const;
+export const CONTACT_TOPICS = [
+  "orazaka",
+  "yomizaka",
+  "akinaza",
+  "blocks",
+  "enterprise",
+  "partnership",
+  "other",
+] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
 /* Where a visitor came from (`/contact?source=<slug>`): pre-selects the topic and travels with the message, so the
@@ -81,7 +89,8 @@ export const ContactFormSchema = z.object({
 export type ContactField = keyof typeof ContactFormSchema.shape;
 
 /** Whether one field's value passes the schema (the client checks fields as they are left). */
-export const isValidContactField = (field: ContactField, value: string): boolean => ContactFormSchema.shape[field].safeParse(value).success;
+export const isValidContactField = (field: ContactField, value: string): boolean =>
+  ContactFormSchema.shape[field].safeParse(value).success;
 const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");
 
 /** Validates an untrusted JSON body. `website` is a honeypot: humans never fill it. */
@@ -98,9 +107,22 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
   if (!isValidContactField("company", company)) return { ok: false, field: "company" };
   if (!topic) return { ok: false, field: "topic" };
   const timeline = CONTACT_TIMELINES.includes(b.timeline as ContactTimeline) ? (b.timeline as ContactTimeline) : null;
-  if (b.timeline !== undefined && b.timeline !== null && b.timeline !== "" && !timeline) return { ok: false, field: "timeline" };
+  if (b.timeline !== undefined && b.timeline !== null && b.timeline !== "" && !timeline)
+    return { ok: false, field: "timeline" };
   if (!isValidContactField("message", message)) return { ok: false, field: "message" };
-  return { ok: true, value: { name, email, company, topic, timeline, message, locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en", source: cleanSource(b.source) } };
+  return {
+    ok: true,
+    value: {
+      name,
+      email,
+      company,
+      topic,
+      timeline,
+      message,
+      locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en",
+      source: cleanSource(b.source),
+    },
+  };
 }
 
 const TOPIC_LABEL: Record<ContactTopic, string> = {
@@ -124,7 +146,10 @@ const escapeHtml = (s: string) =>
 
 /** The e-mail channel: the provider named (only `mailgun` exists), its key, the domain and a recipient. */
 function mailConfigured(env: NodeJS.ProcessEnv): boolean {
-  return env.MAIL_PROVIDER?.trim().toLowerCase() === "mailgun" && Boolean(env.MAIL_API_KEY && env.MAIL_DOMAIN && env.MAIL_CONTACT_TO);
+  return (
+    env.MAIL_PROVIDER?.trim().toLowerCase() === "mailgun" &&
+    Boolean(env.MAIL_API_KEY && env.MAIL_DOMAIN && env.MAIL_CONTACT_TO)
+  );
 }
 
 export function contactChannels(env: NodeJS.ProcessEnv = process.env) {
@@ -164,7 +189,10 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
     // https://documentation.mailgun.com — POST /v3/{domain}/messages, Basic auth `api:<key>`, form fields.
     const form = new FormData();
     form.append("from", env.MAIL_FROM || `Krizaka <contact@${env.MAIL_DOMAIN}>`);
-    for (const to of env.MAIL_CONTACT_TO.split(",").map((s) => s.trim()).filter(Boolean)) form.append("to", to);
+    for (const to of env.MAIL_CONTACT_TO.split(",")
+      .map((s) => s.trim())
+      .filter(Boolean))
+      form.append("to", to);
     form.append("h:Reply-To", m.email);
     form.append("subject", subject);
     // Every field of the form, as filled in.
@@ -197,9 +225,16 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
         method: "POST",
         headers: { "Content-Type": "application/json" },
         // `text` for Slack, `content` for Discord; the structured fields for any other relay.
-        body: JSON.stringify({ text: `*${subject}*\n${text}`, content: `**${subject}**\n${text}`.slice(0, 2000), contact: m }),
+        body: JSON.stringify({
+          text: `*${subject}*\n${text}`,
+          content: `**${subject}**\n${text}`.slice(0, 2000),
+          contact: m,
+        }),
         signal: AbortSignal.timeout(8000),
-      }).then((r) => r.ok, () => false),
+      }).then(
+        (r) => r.ok,
+        () => false,
+      ),
     );
   }
 
