@@ -12,6 +12,7 @@ import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
 import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
 import { packageRows, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
+import { GOOD_FIRST_URL, roadmapLinks } from "@/lib/library-links";
 import { howItFits } from "@/lib/how-it-fits";
 import { PRODUCTS } from "@/lib/products";
 import { PUBLIC_CHANNELS } from "@/lib/public-channels";
@@ -138,10 +139,30 @@ export default async function OpenSourcePage({ params }: Props) {
         <HowItFits layers={layers} w={t.fits} />
       </Section>
 
+      <Section id="roadmap" eyebrow={t.roadmap.eyebrow} title={t.roadmap.title} lead={t.roadmap.lead} reveal divider>
+        <ul className="os-roadmap">
+          {roadmapLinks(STACK).map((r) => (
+            <li key={r.id} className="os-roadmap-row">
+              <span className="os-roadmap-name">{r.name}</span>
+              <a href={r.issues} target="_blank" rel="noopener noreferrer">
+                {t.roadmap.issues} <ExternalIcon size={11} aria-hidden />
+              </a>
+              <a href={r.releases} target="_blank" rel="noopener noreferrer">
+                {t.roadmap.releases} <ExternalIcon size={11} aria-hidden />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p className="os-hero-license">{t.roadmap.note}</p>
+      </Section>
+
       <Section id="contribute" divider aria-labelledby="os-contribute">
         <CtaPanel id="os-contribute" title={t.contribute.title} body={t.contribute.body} reveal>
           <ButtonLink href={CONTRIBUTING_URL} variant="primary" size="lg">
             {t.contribute.guide} <ExternalIcon size={13} aria-hidden />
+          </ButtonLink>
+          <ButtonLink href={GOOD_FIRST_URL} variant="secondary" size="lg">
+            {t.contribute.goodFirst} <ExternalIcon size={13} aria-hidden />
           </ButtonLink>
         </CtaPanel>
         <div className="os-picker">

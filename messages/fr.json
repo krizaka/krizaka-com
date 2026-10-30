@@ -774,7 +774,9 @@
           "data": "Données et i18n",
           "realtime": "Temps réel",
           "tooling": "Outillage"
-        }
+        },
+        "releases": "Versions",
+        "releasesAria": "Notes de version de {name}"
       },
       "repositories": {
         "eyebrow": "Dépôts",
@@ -824,7 +826,16 @@
         "body": "Une question ou une idée : une discussion. Un bogue : un ticket. Choisissez le dépôt.",
         "guide": "Guide de contribution",
         "conduct": "Code de conduite",
-        "license": "Licence : Apache-2.0"
+        "license": "Licence : Apache-2.0",
+        "goodFirst": "Premiers tickets accessibles"
+      },
+      "roadmap": {
+        "eyebrow": "Feuille de route",
+        "title": "Où va chaque bibliothèque.",
+        "lead": "Les tickets ouverts sont la feuille de route ; les Releases sont le journal des changements. Les deux vivent sur GitHub.",
+        "issues": "Tickets ouverts",
+        "releases": "Releases",
+        "note": "Les notes de version sont écrites par l'outillage de publication sur GitHub ; ce site ne les copie jamais."
       }
     },
     "notFound": {

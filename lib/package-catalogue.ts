@@ -3,6 +3,7 @@
    lib/registry-versions.json) and the organisation's repositories (lib/org-stats.json): no package, version, count or
    link typed here. Tested by tests/package-catalogue.test.mjs (no import alias: Node strips the types and runs it). */
 
+import { releasesUrl } from "./library-links.ts";
 import { groupOfPackage, summary, type NpmGroup } from "./npm-catalogue.ts";
 
 export type Registry = "npm" | "maven";
@@ -23,6 +24,8 @@ export interface PackageRow {
   weeklySeries?: number[];
   registryUrl: string;
   repoUrl?: string;
+  /** The repository's GitHub Releases page — the only place release notes are told. */
+  releasesUrl?: string;
   docsUrl?: string;
 }
 
@@ -115,7 +118,9 @@ export function packageRows(
           ? { weeklySeries: meta.weeklySeries }
           : {}),
         registryUrl: `https://www.npmjs.com/package/${name}`,
-        ...(meta.repository?.startsWith(GITHUB) ? { repoUrl: meta.repository } : {}),
+        ...(meta.repository?.startsWith(GITHUB)
+          ? { repoUrl: meta.repository, releasesUrl: releasesUrl(meta.repository) }
+          : {}),
         ...(meta.homepage ? { docsUrl: meta.homepage } : {}),
       };
     });
@@ -135,7 +140,7 @@ export function packageRows(
       line: summary(meta.description ?? ""),
       version,
       registryUrl: `https://central.sonatype.com/artifact/com.krizaka/${artifact}`,
-      ...(repo ? { repoUrl: repo } : {}),
+      ...(repo ? { repoUrl: repo, releasesUrl: releasesUrl(repo) } : {}),
       docsUrl: javaDocs,
     };
   });
