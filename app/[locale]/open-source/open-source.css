@@ -53,3 +53,12 @@
 .os-picker-legal a { color: var(--kz-accent-text, var(--kz-accent)); }
 
 @media (prefers-reduced-motion: reduce) { .os-picker-repos a { transition: none; } }
+
+/* Roadmap: one row per library — its name, its open issues, its Releases (GitHub is the source). */
+.os-roadmap { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.os-roadmap-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 24px; padding: 12px 0; border-top: 1px solid var(--kz-border); }
+.os-roadmap-row:first-child { border-top: 0; }
+.os-roadmap-name { flex: 1 1 12rem; font-weight: 600; color: var(--kz-text-primary); }
+.os-roadmap-row a { color: var(--kz-accent); font-size: 14px; text-decoration: none; }
+.os-roadmap-row a:hover { text-decoration: underline; }
+.os-roadmap-row a:focus-visible { outline: 2px solid var(--kz-ring, var(--kz-accent)); outline-offset: 2px; }

@@ -89,6 +89,7 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
           links={[
             { href: r.registryUrl, label: r.registry === "npm" ? "npm" : "Central", aria: format(w.registryAria, { name: r.name }) },
             ...(r.repoUrl ? [{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }] : []),
+            ...(r.releasesUrl ? [{ href: r.releasesUrl, label: w.releases, aria: format(w.releasesAria, { name: r.name }) }] : []),
             ...(r.docsUrl ? [{ href: r.docsUrl, label: w.docs, aria: format(w.docsAria, { name: r.name }) }] : []),
           ]}
         />

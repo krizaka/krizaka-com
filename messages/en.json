@@ -760,7 +760,9 @@
           "data": "Data & i18n",
           "realtime": "Realtime",
           "tooling": "Tooling"
-        }
+        },
+        "releases": "Releases",
+        "releasesAria": "Release notes of {name}"
       },
       "repositories": {
         "eyebrow": "Repositories",
@@ -810,7 +812,16 @@
         "body": "A question or an idea: a discussion. A bug: an issue. Pick the repository.",
         "guide": "Contribution guide",
         "conduct": "Code of conduct",
-        "license": "Licence: Apache-2.0"
+        "license": "Licence: Apache-2.0",
+        "goodFirst": "Good first issues"
+      },
+      "roadmap": {
+        "eyebrow": "Roadmap",
+        "title": "Where each library is going.",
+        "lead": "Open issues are the roadmap; Releases are the changelog. Both live on GitHub.",
+        "issues": "Open issues",
+        "releases": "Releases",
+        "note": "Release notes are written by the release tooling on GitHub; this site never copies them."
       }
     },
     "notFound": {
