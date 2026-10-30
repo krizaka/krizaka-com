@@ -171,7 +171,7 @@ export default async function ServicesPage({ params }: Props) {
         <div className="svc-proof-figures">
           <FigureTiles figures={figures} label={s.proof.figuresLabel} locale={locale} columns />
         </div>
-        <CardGrid as="ul" min={300} columns={3} aria-label={s.proof.eyebrow}>
+        <CardGrid as="ul" min={300} columns={3} className="svc-proof-cards" aria-label={s.proof.eyebrow}>
           {SERVICES_PROOF.map(({ id, href }) => (
             <LinkCard
               key={id}
