@@ -8,6 +8,7 @@ import {
   assertUnder,
   libraryPath,
   misplaced,
+  placement,
 } from "../scripts/bunny-layout.mjs";
 
 test("each writer stays under its prefix", () => {
@@ -83,6 +84,20 @@ test("the library maps what site/ serves to human names, and retires the folders
       p,
     );
   assert.ok(!RETIRED.some((re) => re.test("site/products/akinaza/tour/a.0123456789.mp4")));
+});
+
+test("the departed products' folders of layout v2 are retired, not misplaced (the storage-zone audit stays green until they are deleted)", () => {
+  for (const p of [
+    "sites/orochia/mobile/06-home-dark.79f01c0bf5.webp",
+    "sites/kachizaka/tour/a.0123456789.mp4",
+    "org/v1/brand/yororis/mark-dark.svg",
+    "org/v1/defaults/tones/yasakia/plain-5-512.webp",
+    "apps/orochia/uploads/a.png",
+  ]) {
+    assert.equal(misplaced(p), null, p);
+    assert.equal(placement(p).state, "legacy", p);
+  }
+  assert.ok(misplaced("sites/nosuch/mobile/x.png"), "an unknown site is still checked");
 });
 
 test("the prefixes another writer owns are declared once, in the layout, and prune never lists them", () => {

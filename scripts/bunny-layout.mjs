@@ -76,6 +76,10 @@ export const FOREIGN_WRITERS_V2 = [
 export const RETIRED = [
   /^site\/(?:people|products|docs)\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
   /^site\/brand-films\/orochia\//,
+  // The same departed products in layout v2 (their marks, avatar tones, site and app folders): not misplaced, not served, kept until the founder's deletion (krizaka/.github#413).
+  /^sites\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
+  /^apps\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
+  /^org\/v\d+\/(?:brand|defaults\/tones)\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
 ];
 
 /**
@@ -394,6 +398,9 @@ export function frozenReason(path) {
  * on legacy with --strict.
  */
 export function placement(path) {
+  if (RETIRED.some((re) => re.test(path))) {
+    return { state: "legacy", target: null, why: frozenReason(path), issue: switchIssue(path) };
+  }
   if (path === README_NAME || TARGET[path.split("/")[0]]) {
     const why = targetMisplaced(path);
     return why ? { state: "misplaced", why } : { state: "ok" };
