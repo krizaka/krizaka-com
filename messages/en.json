@@ -757,7 +757,7 @@
       "stackLead": "Each building block has its own site and repository; versions are read from the registries at build.",
       "blocksLabel": "The building blocks, explained:",
       "packages": {
-        "eyebrow": "Packages",
+        "eyebrow": "packages",
         "title": "Every published package.",
         "lead": "npm and Maven Central, read at build. Search, or filter by registry and family.",
         "caption": "Every Krizaka package on npm and Maven Central",
@@ -810,7 +810,7 @@
         "pageSize": "Rows per page"
       },
       "fits": {
-        "eyebrow": "How it fits",
+        "eyebrow": "how it fits",
         "title": "Building blocks → shared services.",
         "lead": "Read from the manifests of what we run — the list is the diagram's text version.",
         "blocks": "The building blocks",
@@ -853,7 +853,78 @@
         "copied": "Copied",
         "tabs": "Building block to install"
       },
-      "githubShort": "GitHub"
+      "githubShort": "GitHub",
+      "hub": {
+        "eyebrow": "open source · apache-2.0",
+        "title": "Build with what we build on.",
+        "lead": "Krizaka UI, Krizaka Java, the TypeScript libraries and our Agent Skills — the code under our products, published, versioned and documented on their own sites.",
+        "search": {
+          "label": "Search the {count} components and templates of Krizaka UI",
+          "placeholder": "Search Krizaka UI — button, data table, page hero…",
+          "results": "Components and templates",
+          "clear": "Clear the search",
+          "hints": "Start with"
+        },
+        "collections": "The stack",
+        "links": {
+          "source": "Source"
+        },
+        "quickstart": {
+          "title": "Quick start, in three steps",
+          "install": "1 · Install the kit",
+          "styles": "2 · Import its styles",
+          "use": "3 · Use a component",
+          "sample": "Get started",
+          "other": "Or start from another part of the stack"
+        },
+        "popular": "Most downloaded this week",
+        "perWeek": "{count} / week",
+        "promise": {
+          "label": "The owl's promise",
+          "text": "Every version, count and download on this page is read from npm, Maven Central and GitHub when the site is built. Nothing here is typed by hand."
+        },
+        "facts": {
+          "repositories": "{count} public repositories",
+          "npm": "{count} packages on npm",
+          "maven": "{count} artifacts on Maven Central",
+          "downloads": "{count} npm downloads last week"
+        },
+        "play": {
+          "eyebrow": "play with it",
+          "title": "Real components, on this page.",
+          "lead": "Not a picture: the published @krizaka/ui, driven by its own controls. The code under it is written as you play.",
+          "fig1": "Fig. 1 — a Button and a Meter of @krizaka/ui {version}, set by Chips, a Slider and a Switch of the same kit.",
+          "fig1Bare": "Fig. 1 — a Button and a Meter of @krizaka/ui, set by Chips, a Slider and a Switch of the same kit.",
+          "fig2": "Fig. 2 — the engine flow of Krizaka Lab (@krizaka/ui/engine-flow): pick how it is laid out and what travels."
+        },
+        "bench": {
+          "label": "The bench: a button and a meter you can set",
+          "variant": "Variant",
+          "shape": "Shape",
+          "shapes": {
+            "rounded": "Rounded",
+            "cut": "Cut",
+            "pill": "Pill"
+          },
+          "progress": "Progress",
+          "disabled": "Disabled",
+          "action": "Get started",
+          "meter": "Setup",
+          "code": "what you see.tsx"
+        },
+        "skills": {
+          "eyebrow": "krizaka skills",
+          "title": "Our rules, for your assistant.",
+          "lead": "Krizaka Skills is a Claude Code plugin marketplace: the design, engineering and growth rules we work by, as Agent Skills. Add it, then install one plugin.",
+          "tabs": "Plugin to install",
+          "list": "The skills of {plugin}",
+          "plugins": {
+            "design": "The Cahier look of our sites, plain Krizaka UI for products, and 3D showroom pages.",
+            "engineering": "How we run coding agents: lanes, lean orchestration, context hygiene and the quality gate.",
+            "growth": "Honest growth on social networks: what to post, what never to claim."
+          }
+        }
+      }
     },
     "notFound": {
       "title": "This page took another road",

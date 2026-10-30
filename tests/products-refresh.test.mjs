@@ -19,7 +19,7 @@ test("the home has no library block: the stack rows are gone, /open-source carri
     "OpenStack keeps only the cards of /open-source and /story",
   );
   assert.ok(!existsSync(new URL("../app/components/home/stack", import.meta.url)), "the rows' visuals are gone");
-  assert.match(read("app/[locale]/open-source/page.tsx"), /<StackGlance locale=\{locale\} \/>/);
+  assert.match(read("app/[locale]/open-source/page.tsx"), /<InstallTabs locale=\{locale\} \/>/);
   assert.doesNotMatch(read("lib/home-sections.ts"), /"stack"/);
 });
 

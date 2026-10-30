@@ -100,7 +100,10 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
   const page = "app/[locale]/open-source/page.tsx";
   for (const read of ["repositories.length", "npmPackages().length", "mavenArtifactCount()", '"Apache-2.0"'])
     assert.ok(hasCode(page, read), read);
-  for (const id of ["stack", "packages", "how-it-fits", "contribute"]) assert.ok(hasJsx(page, "Section", { id }), id);
+  // The stack is the hub's collections (DocsHubPage, 2026-10-30); the sections under it, each its own id.
+  assert.ok(hasCode(page, "collections={STACK.map("), "stack");
+  for (const id of ["play", "skills", "packages", "how-it-fits", "contribute"])
+    assert.ok(hasJsx(page, "Section", { id }), id);
   assert.ok(hasCode(page, "<PackagesTable rows={packages} />"));
   assert.ok(!hasCode(page, "<RepositoriesTable"), "the repositories table is gone");
   assert.ok(hasCode(page, "packageRows(snapshot as RegistrySnapshot"), "packages from the registries at build");
@@ -111,8 +114,8 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
   assert.ok(!hasJsx(page, "style"), "no inline stylesheet: open-source.css");
   assert.equal(
     jsx(page).filter((e) => e.attrs.variant === "primary").length,
-    2,
-    "one primary action in the hero, one in contribute",
+    1,
+    "the hero's action is the search (DocsHubPage); one primary button, in contribute",
   );
   const tables = "app/[locale]/open-source/OpenSourceTables.tsx";
   assert.ok(importsFrom(tables, "@krizaka/ui/data-table"));

@@ -37,15 +37,17 @@ test("a package row carries its release notes link when its repository is known"
   assert.equal(rows[0].releasesUrl, `${REPO}/releases`);
 });
 
-test("/open-source: the packages table links the releases, the page has a roadmap and the good-first-issue entry", () => {
+test("/open-source: the packages table links the releases, every collection carries its roadmap (issues, releases) and the good-first-issue entry", () => {
   const page = read("app/[locale]/open-source/page.tsx");
   const table = read("app/[locale]/open-source/OpenSourceTables.tsx");
-  assert.match(page, /id="roadmap"/);
+  assert.match(page, /roadmapLinks\(STACK\)/);
+  assert.match(page, /r\.releases/);
+  assert.match(page, /r\.issues/);
   assert.match(page, /GOOD_FIRST_URL/);
   assert.match(table, /releasesUrl/);
   for (const lang of ["en", "fr"]) {
     const m = JSON.parse(read(`messages/${lang}.json`)).site.openSource;
-    for (const k of ["title", "lead", "issues", "releases", "note"]) assert.ok(m.roadmap[k], `${lang} roadmap.${k}`);
+    for (const k of ["issues", "releases", "note"]) assert.ok(m.roadmap[k], `${lang} roadmap.${k}`);
     assert.ok(m.contribute.goodFirst && m.packages.releases && m.packages.releasesAria, lang);
   }
 });

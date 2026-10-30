@@ -316,9 +316,9 @@ test("the full stack cards on /story; /open-source at a glance, with Java and TS
   );
   const ids = identifiers(stack);
   assert.ok(!ids.has("LinkCard") && !ids.has("StackCards"));
-  // /story keeps the full cards; /open-source draws the stack at a glance and the install code (2026-10-30).
+  // /story keeps the full cards; /open-source draws the stack as the hub's collections and the install code (2026-10-30).
   assert.ok(hasCode("app/[locale]/story/page.tsx", "<StackTiles locale={locale} />"));
-  assert.ok(hasCode("app/[locale]/open-source/page.tsx", "<StackGlance locale={locale} />"));
+  assert.ok(hasCode("app/[locale]/open-source/page.tsx", "collections={STACK.map("));
   assert.ok(hasCode("app/[locale]/open-source/page.tsx", "<InstallTabs locale={locale} />"));
   assert.ok(
     jsx(stack).some(

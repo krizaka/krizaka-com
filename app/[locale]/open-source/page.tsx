@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChatIcon, ExternalIcon, FlagIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
+import { CodeBlock, CodeTabs } from "@krizaka/ui/code-block";
 import { CtaPanel } from "@krizaka/ui/cta-panel";
-import { Section } from "@krizaka/ui/page";
-import { PageHero } from "@krizaka/ui/page-hero";
+import { DocsHubPage } from "@krizaka/ui/docs-hub-page";
+import { Facts, Section, type Fact } from "@krizaka/ui/page";
+import { Sparkline } from "@krizaka/charts/sparkline";
 import { localizedMetadata } from "@/lib/seo";
 import { githubRepositories } from "@/lib/org-stats";
 import { openSourceRepositories } from "@/lib/repository-catalogue";
 import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
-import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
+import { mavenArtifactCount, npmPackages, publishedVersion } from "@/lib/registry-versions";
 import { packageRows, weeklySeriesTotal, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { GOOD_FIRST_URL, roadmapLinks } from "@/lib/library-links";
 import { howItFits } from "@/lib/how-it-fits";
@@ -19,29 +21,34 @@ import { PUBLIC_CHANNELS } from "@/lib/public-channels";
 import { publicChannels } from "@/lib/github-channels";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
-import { STACK } from "@/lib/stack";
+import { STACK, hostOf, stackActionUrl } from "@/lib/stack";
+import { uiCatalogue } from "@/lib/ui-catalogue";
+import { cataloguePageUrl } from "@/lib/catalogue-match";
+import { SKILLS_PLUGINS, skillUrl, skillsInstall } from "@/lib/skills-plugins";
 import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
-import { StatGrid } from "@krizaka/ui/stat";
-import { Sparkline } from "@krizaka/charts/sparkline";
-import { InstallTabs, StackGlance } from "./StackGlance";
+import MotionPlayground from "@/app/components/home/playground/MotionPlayground";
+import { InstallTabs, factsOf } from "./StackGlance";
 import { PackagesTable } from "./OpenSourceTables";
+import ComponentBench from "./ComponentBench";
+import CatalogueSearch from "./CatalogueSearch";
 import HowItFits from "./HowItFits";
+import "@/app/components/home/stack-tiles.css";
 import "./open-source.css";
 
-/* /open-source — the site's second view (the home is the first; 2026-10-17): the technical view, as refined as the home
-   (docs-hub template). One primary action per section, no boxes in boxes; everything read from data at build.
-   1. The hero: one line, the live figures (repositories, npm packages, Maven artifacts, the licence), GitHub.
-   2. The stack: Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com, each with a still mini-visual and its
-      latest version (npm, Maven Central); the building blocks' pages, as quiet links.
-   3. Packages: a searchable DataTable of every published package (lib/package-catalogue.ts) — registry and family
-      facets, the latest version, the weekly downloads (npm), the links.
-   4. Repositories: every open-source repository with its platform, language and last push (GitHub at build).
-   5. How it fits: building blocks → shared services (lib/how-it-fits.ts), an ordered list that is its own text version.
-   Only what is open source is listed: the products are operated by Krizaka (lib/repository-catalogue.ts
-   `openSourceRepositories`), out of every list, and the page claims nothing about their licence.
-   6. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
-      conduct, the licence. */
+/* /open-source — the technical view, on its declared template (docs-hub: @krizaka/ui DocsHubPage), redesigned with
+   Krizaka's design skills (krizaka-cahier-design; 2026-10-30, the CTO's direction « a living showcase »). Read in five
+   seconds, then deeper on demand; everything read from data at build; one primary action per section.
+   1. The hub (DocsHubPage): the search of the Krizaka UI catalogue first (the registries' live entries →
+      ui.krizaka.com), the stack as collections (each with its source, releases and issues — the roadmap lives on
+      GitHub, #467), the quick start in three steps with the live versions, the most downloaded packages, the owl's
+      promise that nothing here is typed by hand.
+   2. Play with it: real @krizaka/ui components the visitor drives, the code written as they play (Fig. 1), and the
+      Lab's engine flow with two of its settings (Fig. 2). Each figure framed and captioned.
+   3. Krizaka Skills: the marketplace command and the three plugins, each with its skills.
+   4. Packages: the figures as one line of facts (no counter band), then the searchable table.
+   5. How it fits, 6. Contribute (the contact page's picker, the guide, the code of conduct, the licence).
+   Only what is open source is listed: the products are operated by Krizaka (openSourceRepositories). */
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -68,15 +75,17 @@ const PRODUCT_IDS = PRODUCTS.map((p) => p.id);
 const CONDUCT_URL = "https://github.com/krizaka/.github/blob/main/CODE_OF_CONDUCT.md";
 const CONTRIBUTING_URL = "https://github.com/krizaka/.github/blob/main/CONTRIBUTING.md";
 const LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0";
+/** The search's way in when nothing is typed: four entries of the catalogue a developer opens first. */
+const SEARCH_HINTS = ["page-hero", "data-table", "engine-flow", "code-block"] as const;
+const POPULAR_COUNT = 5;
 
 export default async function OpenSourcePage({ params }: Props) {
   const { locale } = await params;
   const dict = getDictionary(locale);
   const site = dict.site;
-  const channelGroups = publicChannels();
   const t = site.openSource;
-  // What is open source: the platform's repositories and packages. The products are operated by Krizaka (2026-10-26) —
-  // out of every list and table here, and nothing on this page says anything about their licence.
+  const h = t.hub;
+  const channelGroups = publicChannels();
   const allRepositories = githubRepositories();
   const repositories = openSourceRepositories(allRepositories, PRODUCT_IDS);
   const javaSite = STACK.find((s) => s.id === "java")!.url;
@@ -91,51 +100,187 @@ export default async function OpenSourcePage({ params }: Props) {
     (snapshot as RegistrySnapshot).mavenMeta,
     (snapshot as RegistrySnapshot).maven ?? {},
   );
-
-  const figures = [
-    { id: "repositories", value: repositories.length, label: t.figures.repositories },
-    { id: "npm", value: npmPackages().length, label: t.figures.npm },
-    { id: "maven", value: mavenArtifactCount(), label: t.figures.maven },
-    // Read from api.npmjs.org at build; absent (0) when the registry was unreachable. Maven Central publishes no download count.
-    { id: "downloads", value: weeklyTotal(packages) ?? 0, label: t.figures.downloads },
-  ].filter((f) => f.value > 0);
-  const series = weeklySeriesTotal(packages);
+  const catalogue = await uiCatalogue();
   const fmt = new Intl.NumberFormat(locale);
+  const weekly = weeklyTotal(packages);
+  const series = weeklySeriesTotal(packages);
+  const uiVersion = publishedVersion("@krizaka/ui");
+  const roadmap = new Map(roadmapLinks(STACK).map((r) => [r.id, r]));
+
+  const figures: Fact[] = [
+    { label: format(h.facts.repositories, { count: fmt.format(repositories.length) }) },
+    { label: format(h.facts.npm, { count: fmt.format(npmPackages().length) }), tone: "ok" },
+    { label: format(h.facts.maven, { count: fmt.format(mavenArtifactCount()) }), tone: "ok" },
+    ...(weekly ? [{ label: format(h.facts.downloads, { count: fmt.format(weekly) }) }] : []),
+    { label: "Apache-2.0" },
+  ];
+  const popular = packages
+    .filter((p) => p.registry === "npm" && p.weeklyDownloads)
+    .sort((a, b) => (b.weeklyDownloads ?? 0) - (a.weeklyDownloads ?? 0))
+    .slice(0, POPULAR_COUNT)
+    .map((p) => ({
+      href: p.registryUrl,
+      title: p.name,
+      meta: format(h.perWeek, { count: fmt.format(p.weeklyDownloads ?? 0) }),
+    }));
+  const hints = SEARCH_HINTS.map((name) => catalogue.find((e) => e.name === name)).filter((e) => e !== undefined);
 
   return (
-    <main style={{ background: "var(--kz-surface-0)", minHeight: "100vh", color: "var(--kz-text-primary)" }}>
+    <main className="os-page">
       <SiteBar />
 
-      <PageHero eyebrow={t.eyebrow} title={t.title} lead={t.lead} align="center" linkAs={Link}>
-        <div className="os-hero-actions">
-          <ButtonLink href={GITHUB_ORG_URL} variant="primary" size="lg">
-            {t.github} <ExternalIcon size={14} aria-hidden />
-          </ButtonLink>
-          <ButtonLink href={GOOD_FIRST_URL} variant="secondary" size="lg">
-            {t.contribute.goodFirst} <ExternalIcon size={14} aria-hidden />
-          </ButtonLink>
-        </div>
-        <div className="os-hero-figures">
-          <StatGrid
-            variant="strip"
-            aria-label={t.figuresLabel}
-            items={figures.map((f) => ({
-              id: f.id,
-              label: f.label,
-              value: fmt.format(f.value),
-              chart: f.id === "downloads" && series ? <Sparkline data={series} variant="area" width={64} /> : undefined,
-            }))}
-          />
-          <p className="os-hero-license">{format(t.figures.license, { license: "Apache-2.0" })}</p>
-        </div>
-      </PageHero>
+      <DocsHubPage
+        eyebrow={h.eyebrow}
+        title={h.title}
+        lead={h.lead}
+        linkAs={Link}
+        linksLayout="wrap"
+        search={
+          catalogue.length > 0 ? (
+            <CatalogueSearch
+              entries={catalogue}
+              locale={locale}
+              w={{
+                label: format(h.search.label, { count: fmt.format(catalogue.length) }),
+                placeholder: h.search.placeholder,
+                results: h.search.results,
+                clear: h.search.clear,
+              }}
+            />
+          ) : undefined
+        }
+        searchHints={
+          hints.length > 0 ? (
+            <p className="os-hints">
+              <span>{h.search.hints}</span>
+              {hints.map((e) => (
+                <a key={e.name} href={cataloguePageUrl(e.name, locale)}>
+                  {e.title}
+                </a>
+              ))}
+            </p>
+          ) : undefined
+        }
+        collectionsTitle={h.collections}
+        collections={STACK.map((p) => {
+          const r = roadmap.get(p.id);
+          return {
+            id: p.id,
+            mark: <ProductLogo id="krizaka" size={20} animated={false} />,
+            title: p.name,
+            href: stackActionUrl(p),
+            description: (
+              <>
+                <span className="os-collection-host">{hostOf(p.url)}</span> {site.home.stack[p.id].line}
+                <Facts items={factsOf(p, site)} />
+              </>
+            ),
+            links: [
+              { href: p.repoUrl, label: h.links.source },
+              ...(r
+                ? [
+                    { href: r.releases, label: t.roadmap.releases },
+                    { href: r.issues, label: t.roadmap.issues },
+                  ]
+                : []),
+            ],
+          };
+        })}
+        quickstarts={{
+          title: h.quickstart.title,
+          children: (
+            <div className="os-quickstart">
+              {uiVersion ? (
+                <ol className="os-steps">
+                  <li>
+                    <p className="os-step-title">{h.quickstart.install}</p>
+                    <CodeBlock
+                      code={`npm install @krizaka/ui@${uiVersion} @krizaka/tailwind`}
+                      language="bash"
+                      file="terminal"
+                      copyLabel={t.install.copy}
+                      copiedLabel={t.install.copied}
+                    />
+                  </li>
+                  <li>
+                    <p className="os-step-title">{h.quickstart.styles}</p>
+                    <CodeBlock
+                      code={`@import "tailwindcss";\n@import "@krizaka/tailwind";\n@import "@krizaka/ui/tailwind.css";`}
+                      language="css"
+                      file="app/globals.css"
+                      copyLabel={t.install.copy}
+                      copiedLabel={t.install.copied}
+                    />
+                  </li>
+                  <li>
+                    <p className="os-step-title">{h.quickstart.use}</p>
+                    <CodeBlock
+                      code={`import { Button } from "@krizaka/ui/button";\n\n<Button variant="primary" shape="cut">${h.quickstart.sample}</Button>`}
+                      language="tsx"
+                      file="app/page.tsx"
+                      copyLabel={t.install.copy}
+                      copiedLabel={t.install.copied}
+                    />
+                  </li>
+                </ol>
+              ) : null}
+              <p className="os-step-title">{h.quickstart.other}</p>
+              <InstallTabs locale={locale} />
+            </div>
+          ),
+        }}
+        popular={popular.length > 0 ? { title: h.popular, items: popular } : undefined}
+        promise={{ label: h.promise.label, text: h.promise.text }}
+      />
 
-      <Section id="stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead}>
-        <StackGlance locale={locale} />
+      <Section id="play" eyebrow={h.play.eyebrow} title={h.play.title} lead={h.play.lead} reveal divider>
+        <div className="os-figures">
+          <figure className="os-figure">
+            <ComponentBench
+              w={{
+                ...h.bench,
+                copy: t.install.copy,
+                copied: t.install.copied,
+              }}
+            />
+            <figcaption>{uiVersion ? format(h.play.fig1, { version: uiVersion }) : h.play.fig1Bare}</figcaption>
+          </figure>
+          <figure className="os-figure">
+            <MotionPlayground w={site.home.stack.motion} />
+            <figcaption>{h.play.fig2}</figcaption>
+          </figure>
+        </div>
       </Section>
 
-      <Section id="install" eyebrow={t.install.eyebrow} title={t.install.title} lead={t.install.lead} reveal divider>
-        <InstallTabs locale={locale} />
+      <Section id="skills" eyebrow={h.skills.eyebrow} title={h.skills.title} lead={h.skills.lead} reveal divider>
+        <CodeTabs
+          label={h.skills.tabs}
+          tabs={SKILLS_PLUGINS.map((plugin) => ({
+            id: plugin.id,
+            label: plugin.name,
+            content: (
+              <div className="os-skills">
+                <p>{h.skills.plugins[plugin.id]}</p>
+                <CodeBlock
+                  code={skillsInstall(plugin)}
+                  language="bash"
+                  file="Claude Code"
+                  copyLabel={t.install.copy}
+                  copiedLabel={t.install.copied}
+                />
+                <ul aria-label={format(h.skills.list, { plugin: plugin.name })}>
+                  {plugin.skills.map((skill) => (
+                    <li key={skill}>
+                      <a href={skillUrl(skill)} target="_blank" rel="noopener noreferrer">
+                        {skill}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ),
+          }))}
+        />
       </Section>
 
       <Section
@@ -146,10 +291,14 @@ export default async function OpenSourcePage({ params }: Props) {
         reveal
         divider
       >
+        <div className="os-facts" aria-label={t.figuresLabel}>
+          <Facts items={figures} />
+          {series ? <Sparkline data={series} variant="area" width={96} aria-label={t.packages.trend} /> : null}
+        </div>
         <PackagesTable rows={packages} />
-        <p className="os-hero-license">
+        <p className="os-note">
           <a href={`${GITHUB_ORG_URL}?type=source`} target="_blank" rel="noopener noreferrer">
-            {t.repositories.title}
+            {t.repositories.title} <ExternalIcon size={11} aria-hidden />
           </a>
         </p>
       </Section>
@@ -158,29 +307,12 @@ export default async function OpenSourcePage({ params }: Props) {
         <HowItFits layers={layers} w={t.fits} />
       </Section>
 
-      <Section id="roadmap" eyebrow={t.roadmap.eyebrow} title={t.roadmap.title} lead={t.roadmap.lead} reveal divider>
-        <ul className="os-roadmap">
-          {roadmapLinks(STACK).map((r) => (
-            <li key={r.id} className="os-roadmap-row">
-              <span className="os-roadmap-name">{r.name}</span>
-              <a href={r.issues} target="_blank" rel="noopener noreferrer">
-                {t.roadmap.issues} <ExternalIcon size={11} aria-hidden />
-              </a>
-              <a href={r.releases} target="_blank" rel="noopener noreferrer">
-                {t.roadmap.releases} <ExternalIcon size={11} aria-hidden />
-              </a>
-            </li>
-          ))}
-        </ul>
-        <p className="os-hero-license">{t.roadmap.note}</p>
-      </Section>
-
       <Section id="contribute" divider aria-labelledby="os-contribute">
         <CtaPanel id="os-contribute" title={t.contribute.title} body={t.contribute.body} reveal>
-          <ButtonLink href={CONTRIBUTING_URL} variant="primary" size="lg">
+          <ButtonLink href={CONTRIBUTING_URL} variant="primary" size="lg" shape="cut">
             {t.contribute.guide} <ExternalIcon size={13} aria-hidden />
           </ButtonLink>
-          <ButtonLink href={GOOD_FIRST_URL} variant="secondary" size="lg">
+          <ButtonLink href={GOOD_FIRST_URL} variant="secondary" size="lg" shape="cut">
             {t.contribute.goodFirst} <ExternalIcon size={13} aria-hidden />
           </ButtonLink>
         </CtaPanel>
@@ -209,7 +341,8 @@ export default async function OpenSourcePage({ params }: Props) {
             );
           })}
           <p className="os-picker-legal">
-            <a href={CONDUCT_URL}>{t.contribute.conduct}</a> · <a href={LICENSE_URL}>{t.contribute.license}</a>
+            {t.roadmap.note} <a href={CONDUCT_URL}>{t.contribute.conduct}</a> ·{" "}
+            <a href={LICENSE_URL}>{t.contribute.license}</a>
           </p>
         </div>
       </Section>
