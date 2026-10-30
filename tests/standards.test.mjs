@@ -71,16 +71,9 @@ test("inline markdown: code, bold, links; anything else stays text", () => {
   assert.deepEqual(parseInline("[rel](x.md)"), [{ kind: "text", text: "[rel](x.md)" }]);
 });
 
-test("/open-source opens with the CI intro, then the standards, before the stack; both are read from the snapshot", () => {
+test("/open-source no longer opens with the CI intro and the standards (2026-10-30, #487: lighter page)", () => {
   const page = readFileSync(new URL("../app/[locale]/open-source/page.tsx", import.meta.url), "utf8");
-  const at = (s) => page.indexOf(s);
-  assert.ok(at("<CiIntroSection") > at("</PageHero>"));
-  assert.ok(at("<CiIntroSection") < at("<StandardsSection"));
-  assert.ok(at("<StandardsSection") < at('<Section id="stack"'));
-  assert.match(page, /@\/lib\/standards\.json/);
-  const view = readFileSync(new URL("../app/[locale]/open-source/Standards.tsx", import.meta.url), "utf8");
-  assert.match(view, /LinkCard/);
-  assert.match(view, /CI_STANDARD/);
+  assert.doesNotMatch(page, /CiIntroSection|StandardsSection/);
 });
 
 test("the build generates the snapshot, git-ignores it and the words exist in both languages", () => {

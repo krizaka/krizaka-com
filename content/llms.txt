@@ -16,6 +16,7 @@
 
 - Home — who Krizaka is and its products, one card each with its site and source: {{SITE_URL}}/en#products
 - Open source (Krizaka UI, Krizaka Java and every repository): {{SITE_URL}}/en/open-source
+- Our services (Krizaka Entreprise: custom modules, sovereign AI adoption, maintenance, on quote): {{SITE_URL}}/en/services
 - Our story (where the names come from): {{SITE_URL}}/en/story
 - Contact the team: {{SITE_URL}}/en/contact
 

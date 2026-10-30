@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { localizedMetadata } from "@/lib/seo";
 import { publicRepositoryCount } from "@/lib/org-stats";
-import { uiFacts } from "@/lib/ui-facts";
 import { mavenArtifactCount, npmPackages, npmWeeklyDownloads } from "@/lib/registry-versions";
 import SiteBar from "../components/SiteBar";
 import HomeHero from "../components/home/HomeHero";
 import ProductShowcase, { EngineSection } from "../components/home/ProductShowcase";
-import KnowHow from "../components/home/KnowHow";
+import ServicesLine from "../components/home/ServicesLine";
 import Direction from "../components/home/Direction";
 import Principles from "../components/home/Principles";
 
@@ -34,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /* HOME — one of the site's two views (the other is Open source; 2026-10-17), on the landing template, in this order:
    the hero (once-per-session intro, the film), the honest chronology: Orazaka, our first build (EngineSection), the
    products built on it (the only place they are presented: /products answers 308 to #products; the libraries live on
-   /open-source, not here), what we know how to do (proof, figures read at build), where we are going (now / next / later), the principles in brief, and it stops there (no Montréal, no contact panel, no FAQ; 2026-10-22). One primary action per
+   /open-source, not here), one line to Our services (Krizaka Entreprise, /services), where we are going (now / next / later), the principles in brief, and it stops there (no Montréal, no contact panel, no FAQ; 2026-10-22). One primary action per
    section. Every figure is read at build: GitHub (lib/org-stats.ts), npm and Maven Central (lib/registry-versions.ts). */
 export default async function Home({ params }: Props) {
   const { locale } = await params;
@@ -45,7 +44,7 @@ export default async function Home({ params }: Props) {
       <HomeHero locale={locale} figures={figures} />
       <EngineSection locale={locale} />
       <ProductShowcase locale={locale} />
-      <KnowHow locale={locale} figures={{ ...figures, ...uiFacts(), downloads: figures.downloads }} />
+      <ServicesLine locale={locale} />
       <Direction locale={locale} />
       <Principles locale={locale} figures={figures} />
     </main>
