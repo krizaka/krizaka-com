@@ -62,6 +62,9 @@ export default function SiteFooter() {
           <Link href={to("/open-source")} prefetch={false} aria-current={here("/open-source")}>{f.openSource}</Link>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
+          <Link href={to("/services")} prefetch={false} aria-current={here("/services")}>{f.services}</Link>
+        </FamilyFooter.Link>
+        <FamilyFooter.Link asChild>
           <Link href={to("/changelog")} prefetch={false} aria-current={here("/changelog")}>{f.changelog}</Link>
         </FamilyFooter.Link>
       </FamilyFooter.Column>

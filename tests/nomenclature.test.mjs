@@ -108,17 +108,13 @@ test("a repository's name is read from its GitHub URL", () => {
   assert.equal(repositoryOfUrl("https://example.com/x"), undefined);
 });
 
-test("/open-source carries « La nomenclature », generated, with no module typed in the page", () => {
+test("/open-source no longer carries « La nomenclature » (2026-10-30, #487: lighter page; GitHub is the source)", () => {
   const page = "app/[locale]/open-source/page.tsx";
-  assert.ok(hasJsx(page, "Section", { id: "nomenclature" }));
-  assert.ok(hasCode(page, "<NomenclatureTable rows={modules} />"));
-  assert.ok(calls(page).includes("nomenclature"));
-  assert.ok(hasCode(page, "const allRepositories = githubRepositories();"));
-  assert.ok(hasCode(page, "const repositories = openSourceRepositories(allRepositories, PRODUCT_IDS);"));
-  assert.ok(hasCode(page, "nomenclature({ repositories,"), "only the open-source repositories are mapped");
+  assert.ok(!hasJsx(page, "Section", { id: "nomenclature" }));
+  assert.ok(!calls(page).includes("nomenclature"));
 });
 
-test("registry links expose the package version in their accessible name", () => {
+test("the packages table's registry links name their package in the accessible name", () => {
   const table = readFileSync(new URL("../app/[locale]/open-source/OpenSourceTables.tsx", import.meta.url), "utf8");
-  assert.match(table, /aria-label=\{format\(w\.registryAria, \{ name: `\$\{p\.name\} \$\{p\.version\}` \}\)\}/);
+  assert.match(table, /aria: format\(w\.registryAria, \{ name: r\.name \}\)/);
 });

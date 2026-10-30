@@ -4,10 +4,10 @@
    recording or documentation (next.config.ts redirects the old addresses). Structure only: the words are messages.
    Four products are paused (2026-10-25): they are not presented here, and their repositories are private. */
 
-import { AKINAZA_REPO_URL, YOMIZAKA_REPO_URL } from "./site";
-import { wwwUrl, type ProductId } from "./product-hosts";
+import { AKINAZA_REPO_URL, YOMIZAKA_REPO_URL } from "./site.ts";
+import { wwwUrl, type ProductId } from "./product-hosts.ts";
 
-export type { ProductId } from "./product-hosts";
+export type { ProductId } from "./product-hosts.ts";
 
 /** Where a product stands. `devPreview`: runs on its dev site for QA, and its dev-preview.json checklist is complete
  *  (the build refuses it otherwise: scripts/gen-dev-preview.mjs, krizaka/.github docs/standards/dev-preview.md). `upcoming`: announced, coming soon. `construction`: being built, nothing
