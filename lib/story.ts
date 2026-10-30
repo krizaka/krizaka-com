@@ -35,6 +35,9 @@ export const PRODUCT_BIRD: Record<ProductId, StoryBird> = {
   yomizaka: "owl",
   akinaza: "beaver",
 };
+/** The bird Orazaka wears on its tag on the home (2026-10-30): the duck builds. The story page and the flock keep the flamingo
+ *  (PRODUCT_BIRD): there the duck is the open-source subject's. */
+export const ENGINE_TAG_BIRD: StoryBird = "duck";
 export const WHO_BIRD: StoryBird = "falcon";
 export const OPEN_BIRD: StoryBird = "duck";
 
