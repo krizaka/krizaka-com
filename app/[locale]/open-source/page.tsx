@@ -2,41 +2,33 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ChatIcon, ExternalIcon, FlagIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
-import { ChipLink } from "@krizaka/ui/chip-link";
 import { CtaPanel } from "@krizaka/ui/cta-panel";
 import { Section } from "@krizaka/ui/page";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { localizedMetadata } from "@/lib/seo";
 import { githubRepositories } from "@/lib/org-stats";
-import { kindOfRepository, openSourceRepositories } from "@/lib/repository-catalogue";
+import { openSourceRepositories } from "@/lib/repository-catalogue";
 import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
 import { mavenArtifactCount, npmPackages } from "@/lib/registry-versions";
 import { packageRows, weeklyTotal, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { howItFits } from "@/lib/how-it-fits";
-import { nomenclature } from "@/lib/nomenclature";
 import { PRODUCTS } from "@/lib/products";
 import { PUBLIC_CHANNELS } from "@/lib/public-channels";
 import { publicChannels } from "@/lib/github-channels";
 import { format, getDictionary } from "@/lib/i18n";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import { STACK } from "@/lib/stack";
-import { BUILDING_BLOCKS } from "@/lib/building-blocks";
 import SiteBar from "@/app/components/SiteBar";
 import FigureTiles from "@/app/components/FigureTiles";
 import ButtonLink from "@/app/components/ButtonLink";
 import { StackTiles } from "@/app/components/home/OpenStack";
-import { NomenclatureTable, PackagesTable, RepositoriesTable, type RepositoryRow } from "./OpenSourceTables";
+import { PackagesTable } from "./OpenSourceTables";
 import HowItFits from "./HowItFits";
-import { CiIntroSection, StandardsSection } from "./Standards";
-import standards from "@/lib/standards.json";
-import type { StandardsSnapshot } from "@/lib/standards";
 import "./open-source.css";
 
 /* /open-source — the site's second view (the home is the first; 2026-10-17): the technical view, as refined as the home
    (docs-hub template). One primary action per section, no boxes in boxes; everything read from data at build.
-   0. How we ship: the intro of krizaka/.github's CI and deploy standard, then a card per standard (lib/standards.ts,
-      read at build by scripts/gen-standards.mjs; the last good copy, or a failed build — never an empty section).
    1. The hero: one line, the live figures (repositories, npm packages, Maven artifacts, the licence), GitHub.
    2. The stack: Krizaka UI → ui.krizaka.com, Krizaka Java → java.krizaka.com, each with a still mini-visual and its
       latest version (npm, Maven Central); the building blocks' pages, as quiet links.
@@ -46,9 +38,7 @@ import "./open-source.css";
    5. How it fits: building blocks → shared services (lib/how-it-fits.ts), an ordered list that is its own text version.
    Only what is open source is listed: the products are operated by Krizaka (lib/repository-catalogue.ts
    `openSourceRepositories`), out of every list, and the page claims nothing about their licence.
-   6. La nomenclature: every module of the family by layer (lib/nomenclature.ts), generated at build; a public
-      repository missing from it fails the build.
-   7. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
+   6. Contribute: the contact page's picker (a discussion or an issue, on the right repository), the guide, the code of
       conduct, the licence. */
 
 interface Props {
@@ -87,15 +77,6 @@ export default async function OpenSourcePage({ params }: Props) {
   // out of every list and table here, and nothing on this page says anything about their licence.
   const allRepositories = githubRepositories();
   const repositories = openSourceRepositories(allRepositories, PRODUCT_IDS);
-  const repoRows: RepositoryRow[] = repositories.map((r) => ({
-    id: r.name,
-    name: r.name,
-    url: r.url,
-    line: r.description,
-    kind: t.kinds[kindOfRepository(r, "krizaka")],
-    language: r.language ?? "—",
-    pushedAt: r.pushedAt ?? "",
-  }));
   const javaSite = STACK.find((s) => s.id === "java")!.url;
   const packages = packageRows(
     snapshot as RegistrySnapshot,
@@ -108,16 +89,6 @@ export default async function OpenSourcePage({ params }: Props) {
     (snapshot as RegistrySnapshot).mavenMeta,
     (snapshot as RegistrySnapshot).maven ?? {},
   );
-
-  const modules = nomenclature({
-    repositories,
-    snapshot: snapshot as RegistrySnapshot,
-    manifests: {},
-    products: [],
-    engineId: "",
-    engineCallers: [],
-    javaDocs: javaSite,
-  });
 
   const figures = [
     { id: "repositories", value: repositories.length, label: t.figures.repositories },
@@ -143,21 +114,8 @@ export default async function OpenSourcePage({ params }: Props) {
         </div>
       </PageHero>
 
-      <CiIntroSection data={standards as StandardsSnapshot} w={t.ci} />
-      <StandardsSection data={standards as StandardsSnapshot} w={t.standards} />
-
       <Section id="stack" eyebrow={t.stackEyebrow} title={t.stackTitle} lead={t.stackLead}>
         <StackTiles locale={locale} />
-        <nav aria-label={t.blocksLabel} className="os-blocks">
-          <span>{t.blocksLabel}</span>
-          {BUILDING_BLOCKS.map((b) => (
-            <ChipLink key={b.id} asChild size="sm">
-              <Link href={`/open-source/${b.id}`} prefetch={false}>
-                {site.blocks.items[b.id].name}
-              </Link>
-            </ChipLink>
-          ))}
-        </nav>
       </Section>
 
       <Section
@@ -169,32 +127,15 @@ export default async function OpenSourcePage({ params }: Props) {
         divider
       >
         <PackagesTable rows={packages} />
-      </Section>
-
-      <Section
-        id="repositories"
-        eyebrow={t.repositories.eyebrow}
-        title={t.repositories.title}
-        lead={t.repositories.lead}
-        reveal
-        divider
-      >
-        <RepositoriesTable rows={repoRows} />
+        <p className="os-hero-license">
+          <a href={`${GITHUB_ORG_URL}?type=source`} target="_blank" rel="noopener noreferrer">
+            {t.repositories.title}
+          </a>
+        </p>
       </Section>
 
       <Section id="how-it-fits" eyebrow={t.fits.eyebrow} title={t.fits.title} lead={t.fits.lead} reveal divider>
         <HowItFits layers={layers} w={t.fits} />
-      </Section>
-
-      <Section
-        id="nomenclature"
-        eyebrow={t.nomenclature.eyebrow}
-        title={t.nomenclature.title}
-        lead={t.nomenclature.lead}
-        reveal
-        divider
-      >
-        <NomenclatureTable rows={modules} />
       </Section>
 
       <Section id="contribute" divider aria-labelledby="os-contribute">

@@ -110,6 +110,10 @@
         "contact": {
           "label": "Contact",
           "desc": "Écrire à l'équipe"
+        },
+        "services": {
+          "label": "Services",
+          "desc": "Krizaka Entreprise, sur devis"
         }
       }
     },
@@ -320,51 +324,11 @@
           "explore": "Lire la documentation"
         }
       },
-      "knowhow": {
+      "services": {
         "number": "§ 4",
-        "title": "Ce que nous savons faire, montré par du code qui tourne.",
-        "lead": "Chaque carte mène à sa preuve : un dépôt ou un site. Les chiffres sont lus à la construction depuis les registres et GitHub, jamais saisis.",
-        "listLabel": "Savoir-faire et leurs preuves",
-        "facts": {
-          "components": "{count} composants",
-          "native": "{count} tournent aussi sur iOS et Android",
-          "maven": "{count} artefacts sur Maven Central",
-          "repositories": "{count} dépôts publics",
-          "npm": "{count} paquets npm",
-          "downloads": "{count} téléchargements par semaine"
-        },
-        "items": {
-          "engine": {
-            "title": "Un moteur d'IA sur vos propres serveurs",
-            "line": "Chaque requête est une exécution tracée derrière un seul pipeline, avec les modèles que vous choisissez. Les produits appellent le moteur, jamais un modèle directement.",
-            "cta": "Voir le code"
-          },
-          "documents": {
-            "title": "Des documents lus et vérifiés",
-            "line": "Chaque constat cite le passage dont il vient. Le rapport d'authenticité lit des faits dans le fichier : pas de modèle, pas de score, jamais un verdict sur une personne.",
-            "cta": "Voir le code"
-          },
-          "shops": {
-            "title": "Les livres d'une petite entreprise",
-            "line": "Rendez-vous, factures et registre de la TPS et de la TVQ tenu à chaque facture émise. Akinaza prépare votre déclaration ; vous la produisez.",
-            "cta": "Voir le code"
-          },
-          "design": {
-            "title": "Un système de design, publié",
-            "line": "Krizaka UI est sur npm et se trouve sous chaque produit et chaque site de Krizaka.",
-            "cta": "Explorer Krizaka UI"
-          },
-          "java": {
-            "title": "Des briques Java",
-            "line": "Des starters Spring Boot et des services partagés publiés sur Maven Central, versionnés ensemble par une seule nomenclature (BOM).",
-            "cta": "Explorer Krizaka Java"
-          },
-          "open": {
-            "title": "Du code ouvert",
-            "line": "Les briques sont sous Apache-2.0 ; le code des produits est public aussi, sous la Functional Source License, chaque version passant sous Apache-2.0 deux ans après sa sortie.",
-            "cta": "Voir l'open source"
-          }
-        }
+        "title": "Pour les entreprises : une offre, Krizaka Entreprise.",
+        "lead": "Des modules sur mesure bâtis sur nos briques ouvertes, une IA souveraine adoptée à vos conditions, et la maintenance qui la garde en marche. Sur devis, cadrée avec vous.",
+        "cta": "Voir Nos services"
       },
       "direction": {
         "number": "§ 5",
@@ -465,7 +429,8 @@
       "version": "v{version}",
       "siteColumn": "Sur krizaka.com",
       "company": "{legalName} · NEQ {neq} · Montréal (Québec)",
-      "signature": "Une entreprise de {name}"
+      "signature": "Une entreprise de {name}",
+      "services": "Nos services"
     },
     "contactForm": {
       "captchaLabel": "Vérification humaine",
@@ -482,7 +447,8 @@
         "partnership": "Partenariat",
         "other": "Autre chose",
         "yomizaka": "Yomizaka",
-        "akinaza": "Akinaza"
+        "akinaza": "Akinaza",
+        "enterprise": "Entreprise"
       },
       "topicHints": {
         "orazaka": "Déployer ou auditer la passerelle d'IA souveraine",
@@ -490,7 +456,8 @@
         "partnership": "Intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe",
         "yomizaka": "Parler de Yomizaka — en développement, inscription fermée",
-        "akinaza": "Parlez-nous d'Akinaza — en développement, inscriptions fermées"
+        "akinaza": "Parlez-nous d'Akinaza — en développement, inscriptions fermées",
+        "enterprise": "Modules sur mesure, adoption d'une IA souveraine ou maintenance, sur devis"
       },
       "timeline": "Pour quand ?",
       "timelines": {
@@ -505,7 +472,8 @@
         "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
         "other": "Comment pouvons-nous vous aider ?",
         "yomizaka": "Quels documents vous avez à lire : baux, factures fournisseurs, un inventaire Loi 25…",
-        "akinaza": "Votre boutique : ce que vous vendez, comment vous réservez et facturez aujourd'hui, ce que vos outils vous coûtent…"
+        "akinaza": "Votre boutique : ce que vous vendez, comment vous réservez et facturez aujourd'hui, ce que vos outils vous coûtent…",
+        "enterprise": "Votre entreprise, ce que vous voulez construire ou adopter, où cela doit tourner (vos serveurs, le Canada) et pour quand…"
       },
       "counter": "{count} / {max}",
       "shortcut": "⌘ / Ctrl + Entrée pour envoyer",
@@ -820,50 +788,12 @@
         "java": "Krizaka Java",
         "services": "Les services partagés"
       },
-      "nomenclature": {
-        "eyebrow": "La nomenclature",
-        "title": "Une carte de référence du système Krizaka.",
-        "lead": "Chaque module de la famille, par couche : son rôle, son dépôt, son registre et sa version, et qui l'utilise. Générée à la construction ; le tableau en est la version texte.",
-        "caption": "Chaque module du système Krizaka",
-        "name": "Module",
-        "layer": "Couche",
-        "kind": "Nature",
-        "registries": "Registre et version",
-        "repo": "Dépôt",
-        "repoAria": "Dépôt de {name}",
-        "registryAria": "{name} sur son registre",
-        "none": "—",
-        "layers": {
-          "products": "Produits",
-          "engine": "Orazaka",
-          "blocks": "Briques",
-          "services": "Services partagés",
-          "platform": "Sites et outillage"
-        },
-        "kinds": {
-          "product": "Produit",
-          "engine": "Moteur",
-          "java": "Brique (Java)",
-          "package": "Paquet (TypeScript)",
-          "web": "Client web",
-          "worker": "Worker",
-          "site": "Site",
-          "tooling": "Outillage"
-        }
-      },
       "ci": {
         "eyebrow": "Comment nous livrons",
         "title": "Un pipeline, un outil de déploiement",
         "source": "Lu à chaque build dans notre standard CI et déploiement de krizaka/.github, il ne vieillit donc jamais (en anglais).",
         "full": "Lire le document complet",
         "listLabel": "En bref"
-      },
-      "standards": {
-        "eyebrow": "Nos standards",
-        "title": "Les règles que nous nous imposons",
-        "lead": "Chaque standard de krizaka/.github, lu à chaque build : un nouveau apparaît ici tout seul. Ils sont rédigés en anglais.",
-        "open": "Lire le standard",
-        "listLabel": "Standards de Krizaka"
       },
       "contribute": {
         "title": "Envie de contribuer ?",
@@ -1553,6 +1483,74 @@
       "feedTitle": "Krizaka, journal des changements",
       "feedDescription": "Ce que Krizaka a livré, version par version.",
       "langTag": "fr-CA"
+    },
+    "services": {
+      "eyebrow": "Nos services",
+      "title": "Krizaka Entreprise : une offre pour les entreprises.",
+      "lead": "Nous construisons sur les mêmes briques ouvertes que nos produits. Les entreprises peuvent nous confier de bâtir dessus, d'adopter une IA souveraine et de la garder en marche. Une offre, sur devis, sans grille de prix.",
+      "cta": "Parlez-nous d'Entreprise",
+      "quote": "Sur devis : nous cadrons avec vous, puis nous écrivons le prix avant de commencer.",
+      "coversLabel": "Ce que couvre Entreprise",
+      "coversTitle": "Trois choses, et rien d'autre.",
+      "covers": {
+        "modules": {
+          "title": "Modules sur mesure",
+          "body": "Un module conçu pour votre cas sur nos briques ouvertes (Krizaka UI, Krizaka Java), avec ses tests, dans un dépôt que vous pouvez lire."
+        },
+        "ai": {
+          "title": "Adopter une IA souveraine",
+          "body": "Orazaka, notre moteur d'IA, chez vous ou au Canada, avec les modèles que vous choisissez et chaque exécution tracée."
+        },
+        "maintenance": {
+          "title": "Maintenance et soutien",
+          "body": "Mises à jour, correctifs et réponses une fois en production : ceux qui l'ont construit le gardent en bonne santé."
+        }
+      },
+      "howLabel": "Comment se déroule un mandat",
+      "howTitle": "D'un premier appel à un module en production.",
+      "howLead": "Quatre étapes, chacune avec quelque chose à lire à la fin.",
+      "steps": {
+        "discovery": {
+          "title": "Appel de découverte",
+          "body": "Vous nous dites le problème ; nous disons franchement si nous sommes les bonnes personnes."
+        },
+        "proposal": {
+          "title": "Proposition cadrée",
+          "body": "Un périmètre écrit, un devis et ce qui est hors périmètre, avant de construire quoi que ce soit."
+        },
+        "build": {
+          "title": "Construire à découvert",
+          "body": "Le travail arrive dans un dépôt que vous suivez, avec des tests à chaque changement."
+        },
+        "maintain": {
+          "title": "Maintenance",
+          "body": "Après la livraison, un contrat de maintenance garde le module et ses dépendances à jour."
+        }
+      },
+      "proofLabel": "Sur quoi cela repose",
+      "proofTitle": "De vrais ouvrages, pas des promesses.",
+      "proofLead": "Tout ce qui suit existe et est public. Nos produits sont en développement, et ils sont indiqués comme tels.",
+      "proof": {
+        "ui": {
+          "title": "Krizaka UI",
+          "line": "Le système de design sous chaque produit Krizaka, sur npm, documenté sur son propre site."
+        },
+        "java": {
+          "title": "Krizaka Java",
+          "line": "Des briques Spring Boot sur Maven Central, versionnées ensemble."
+        },
+        "orazaka": {
+          "title": "Orazaka",
+          "line": "Le moteur d'IA derrière nos produits, avec son code source sur GitHub."
+        },
+        "blog": {
+          "title": "Le blogue",
+          "line": "Comment nous construisons, en mots simples."
+        }
+      },
+      "contactTitle": "Dites-nous ce que vous voulez construire ou adopter.",
+      "contactBody": "Un message suffit pour commencer. Nous répondons sous deux jours ouvrables.",
+      "proofCta": "Ouvrir"
     }
   },
   "docs": {

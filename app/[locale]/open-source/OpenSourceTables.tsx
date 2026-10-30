@@ -10,21 +10,7 @@ import { ExternalIcon } from "@krizaka/icons";
 import { Sparkline } from "@krizaka/charts/sparkline";
 import { DataTable, DataTableFilters, type DataTableColumn, type DataTableLabels } from "@krizaka/ui/data-table";
 import type { PackageRow } from "@/lib/package-catalogue";
-import type { ModuleRow } from "@/lib/nomenclature";
 import { useI18n } from "@/app/components/I18nProvider";
-
-const DATE_LOCALE: Record<string, string> = { en: "en-CA", fr: "fr-CA" };
-
-export interface RepositoryRow {
-  id: string;
-  name: string;
-  url: string;
-  line: string;
-  kind: string;
-  language: string;
-  /** ISO date of the last push, or "" when unknown. */
-  pushedAt: string;
-}
 
 function useTableLabels(): Partial<DataTableLabels> {
   const w = useI18n().t.site.openSource.table;
@@ -132,118 +118,6 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
       getRowId={(r) => r.id}
       rowLabel={(r) => r.name}
       defaultPageSize={12}
-      density="compact"
-      toolbar={<DataTableFilters />}
-      labels={labels}
-    />
-  );
-}
-
-export function RepositoriesTable({ rows }: { rows: readonly RepositoryRow[] }) {
-  const { t, locale } = useI18n();
-  const w = t.site.openSource.repositories;
-  const labels = useTableLabels();
-  const date = new Intl.DateTimeFormat(DATE_LOCALE[locale] ?? "en-CA", { dateStyle: "medium", timeZone: "UTC" });
-  const columns: DataTableColumn<RepositoryRow>[] = [
-    {
-      id: "name",
-      header: w.name,
-      type: "title",
-      card: "title",
-      filter: "text",
-      sortable: true,
-      subtitle: (r) => r.line,
-      href: (r) => r.url,
-      maxWidth: 440,
-    },
-    { id: "kind", header: w.kind, filter: "facet", nowrap: true },
-    { id: "language", header: w.language, filter: "facet", nowrap: true },
-    {
-      id: "pushedAt",
-      header: w.updated,
-      sortable: true,
-      nowrap: true,
-      value: (r) => r.pushedAt || null,
-      cell: (r) => (r.pushedAt ? <span className="os-updated">{date.format(new Date(r.pushedAt))}</span> : "—"),
-    },
-  ];
-  return (
-    <DataTable
-      caption={w.caption}
-      rows={rows}
-      columns={columns}
-      getRowId={(r) => r.id}
-      rowLabel={(r) => r.name}
-      defaultSort={{ column: "pushedAt", direction: "descending" }}
-      defaultPageSize={12}
-      density="compact"
-      toolbar={<DataTableFilters />}
-      labels={labels}
-    />
-  );
-}
-
-export function NomenclatureTable({ rows }: { rows: readonly ModuleRow[] }) {
-  const { t } = useI18n();
-  const w = t.site.openSource.nomenclature;
-  const labels = useTableLabels();
-  const columns: DataTableColumn<ModuleRow>[] = [
-    {
-      id: "name",
-      header: w.name,
-      type: "title",
-      card: "title",
-      filter: "text",
-      sortable: true,
-      subtitle: (r) => r.line,
-      href: (r) => r.repoUrl,
-      maxWidth: 420,
-    },
-    { id: "layer", header: w.layer, filter: "facet", nowrap: true, value: (r) => w.layers[r.layer] },
-    { id: "kind", header: w.kind, filter: "facet", nowrap: true, value: (r) => w.kinds[r.kind] },
-    {
-      id: "registries",
-      header: w.registries,
-      value: (r) => r.publications.map((p) => `${p.name} ${p.version}`).join(" "),
-      cell: (r) =>
-        r.publications.length === 0 ? (
-          w.none
-        ) : (
-          <span className="os-links">
-            {r.publications.map((p) => (
-              <a
-                key={p.registry + p.name}
-                href={p.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={format(w.registryAria, { name: `${p.name} ${p.version}` })}
-              >
-                {p.name} <code className="os-version">{p.version}</code>
-              </a>
-            ))}
-          </span>
-        ),
-    },
-    {
-      id: "links",
-      header: w.repo,
-      hideable: false,
-      cell: (r) =>
-        r.repoUrl ? (
-          <Links links={[{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }]} />
-        ) : (
-          w.none
-        ),
-    },
-  ];
-  return (
-    <DataTable
-      caption={w.caption}
-      rows={rows}
-      columns={columns}
-      getRowId={(r) => r.id}
-      rowLabel={(r) => r.name}
-      defaultPageSize={20}
       density="compact"
       toolbar={<DataTableFilters />}
       labels={labels}

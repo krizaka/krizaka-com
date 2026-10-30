@@ -56,7 +56,7 @@ function TopicIcon({ topic }: { topic: ContactTopic }) {
   if (topic === "orazaka" || topic === "yomizaka" || topic === "akinaza" || topic === "blocks") {
     return <ProductLogo id={topic === "blocks" ? "krizaka" : topic} size={26} animated={false} />;
   }
-  const Icon = topic === "partnership" ? UsersIcon : ChatIcon;
+  const Icon = topic === "partnership" || topic === "enterprise" ? UsersIcon : ChatIcon;
   return <Icon size={22} aria-hidden />;
 }
 

@@ -165,6 +165,7 @@ export const SITE_KINDS = [
   "landing",
   "maps",
   "shop",
+  "first-client",
 ];
 /** The kinds of an app's own media (`apps/<app>/<kind>/…`). */
 export const APP_KINDS = ["defaults", "uploads", "generated"];

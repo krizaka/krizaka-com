@@ -110,6 +110,10 @@
         "contact": {
           "label": "Contact",
           "desc": "Write to the team"
+        },
+        "services": {
+          "label": "Services",
+          "desc": "Krizaka Entreprise, on quote"
         }
       }
     },
@@ -320,51 +324,11 @@
           "explore": "Read the documentation"
         }
       },
-      "knowhow": {
+      "services": {
         "number": "§ 4",
-        "title": "What we can do, shown by code that runs.",
-        "lead": "Each card leads to its proof: a repository or a site. Figures are read at build from the registries and GitHub, never typed.",
-        "listLabel": "Capabilities and their evidence",
-        "facts": {
-          "components": "{count} components",
-          "native": "{count} also run on iOS and Android",
-          "maven": "{count} artifacts on Maven Central",
-          "repositories": "{count} public repositories",
-          "npm": "{count} npm packages",
-          "downloads": "{count} downloads a week"
-        },
-        "items": {
-          "engine": {
-            "title": "An AI engine on your own servers",
-            "line": "Every request is a traced run behind one pipeline, with the models you choose. The products call the engine, never a model directly.",
-            "cta": "See the source"
-          },
-          "documents": {
-            "title": "Documents read and checked",
-            "line": "Each finding quotes the passage it comes from. The authenticity report reads facts off the file: no model, no score, never a verdict on a person.",
-            "cta": "See the source"
-          },
-          "shops": {
-            "title": "The books of a small business",
-            "line": "Appointments, invoices and a GST and QST ledger kept as each invoice is issued. Akinaza prepares your return; you file it.",
-            "cta": "See the source"
-          },
-          "design": {
-            "title": "A design system, published",
-            "line": "Krizaka UI is on npm and sits under every product and every Krizaka site.",
-            "cta": "Explore Krizaka UI"
-          },
-          "java": {
-            "title": "Java building blocks",
-            "line": "Spring Boot starters and shared services published on Maven Central, versioned together by one bill of materials.",
-            "cta": "Explore Krizaka Java"
-          },
-          "open": {
-            "title": "Code in the open",
-            "line": "The building blocks are under Apache-2.0; the products' code is public too, under the Functional Source License, each version becoming Apache-2.0 two years after its release.",
-            "cta": "See the open source"
-          }
-        }
+        "title": "For companies: one offer, Krizaka Entreprise.",
+        "lead": "Custom modules on our open building blocks, a sovereign AI adopted on your terms, and the maintenance that keeps it running. On quote, scoped with you.",
+        "cta": "See Our services"
       },
       "direction": {
         "number": "§ 5",
@@ -465,7 +429,8 @@
       "version": "v{version}",
       "siteColumn": "On krizaka.com",
       "company": "{legalName} · NEQ {neq} · Montréal, Quebec",
-      "signature": "A {name} company"
+      "signature": "A {name} company",
+      "services": "Our services"
     },
     "contactForm": {
       "captchaLabel": "Human check",
@@ -482,7 +447,8 @@
         "partnership": "Partnership",
         "other": "Something else",
         "yomizaka": "Yomizaka",
-        "akinaza": "Akinaza"
+        "akinaza": "Akinaza",
+        "enterprise": "Entreprise"
       },
       "topicHints": {
         "orazaka": "Deploy or audit the sovereign-AI gateway",
@@ -490,7 +456,8 @@
         "partnership": "Integration, reseller or research partnership",
         "other": "Press, careers, a question for the team",
         "yomizaka": "Talk to us about Yomizaka — in development, sign-up closed",
-        "akinaza": "Talk to us about Akinaza — in development, sign-up closed"
+        "akinaza": "Talk to us about Akinaza — in development, sign-up closed",
+        "enterprise": "Custom modules, sovereign AI adoption or maintenance, on quote"
       },
       "timeline": "When do you need it?",
       "timelines": {
@@ -505,7 +472,8 @@
         "partnership": "Who you are, what you would build together, the markets you serve…",
         "other": "How can we help?",
         "yomizaka": "What you need to read: leases, supplier invoices, a Law 25 inventory…",
-        "akinaza": "Your shop: what you sell, how you book and invoice today, what your tools cost you…"
+        "akinaza": "Your shop: what you sell, how you book and invoice today, what your tools cost you…",
+        "enterprise": "Your company, what you want built or adopted, where it must run (your servers, Canada) and when…"
       },
       "counter": "{count} / {max}",
       "shortcut": "⌘ / Ctrl + Enter to send",
@@ -820,50 +788,12 @@
         "java": "Krizaka Java",
         "services": "The shared services"
       },
-      "nomenclature": {
-        "eyebrow": "The nomenclature",
-        "title": "One reference map of the Krizaka system.",
-        "lead": "Every module of the family, by layer: its role, its repository, its registry and version, and who uses it. Generated at build; the table is the text version.",
-        "caption": "Every module of the Krizaka system",
-        "name": "Module",
-        "layer": "Layer",
-        "kind": "Kind",
-        "registries": "Registry and version",
-        "repo": "Repository",
-        "repoAria": "{name} repository",
-        "registryAria": "{name} on its registry",
-        "none": "—",
-        "layers": {
-          "products": "Products",
-          "engine": "Orazaka",
-          "blocks": "Building blocks",
-          "services": "Shared services",
-          "platform": "Sites and tooling"
-        },
-        "kinds": {
-          "product": "Product",
-          "engine": "Engine",
-          "java": "Building block (Java)",
-          "package": "Package (TypeScript)",
-          "web": "Web client",
-          "worker": "Worker",
-          "site": "Site",
-          "tooling": "Tooling"
-        }
-      },
       "ci": {
         "eyebrow": "How we ship",
         "title": "One pipeline, one deploy tool",
         "source": "Read at every build from our CI and deploy standard in krizaka/.github, so it never goes stale.",
         "full": "Read the full document",
         "listLabel": "In short"
-      },
-      "standards": {
-        "eyebrow": "Our standards",
-        "title": "The rules we hold ourselves to",
-        "lead": "Each standard of krizaka/.github, read at every build: a new one appears here by itself. They are written in English.",
-        "open": "Read the standard",
-        "listLabel": "Krizaka standards"
       },
       "contribute": {
         "title": "Want to contribute?",
@@ -1553,6 +1483,74 @@
       "feedTitle": "Krizaka changelog",
       "feedDescription": "What shipped at Krizaka, release by release.",
       "langTag": "en"
+    },
+    "services": {
+      "eyebrow": "Our services",
+      "title": "Krizaka Entreprise: one offer for companies.",
+      "lead": "We build on the same open blocks as our products. Companies can hire us to build on them, to adopt a sovereign AI, and to keep it running. One offer, on quote, no price list.",
+      "cta": "Talk to us about Entreprise",
+      "quote": "On quote: we scope it with you, then write the price down before we start.",
+      "coversLabel": "What Entreprise covers",
+      "coversTitle": "Three things, and nothing else.",
+      "covers": {
+        "modules": {
+          "title": "Custom modules",
+          "body": "A module built for your case on our open building blocks (Krizaka UI, Krizaka Java), with its tests, in a repository you can read."
+        },
+        "ai": {
+          "title": "Adopting a sovereign AI",
+          "body": "Orazaka, our AI engine, running on your servers or in Canada, with the models you choose and every run traced."
+        },
+        "maintenance": {
+          "title": "Maintenance and support",
+          "body": "Updates, fixes and answers once it runs: the same people who built it keep it healthy."
+        }
+      },
+      "howLabel": "How an engagement works",
+      "howTitle": "From a first call to a module in production.",
+      "howLead": "Four steps, each with something you can read at the end of it.",
+      "steps": {
+        "discovery": {
+          "title": "Discovery call",
+          "body": "You tell us the problem; we say plainly whether we are the right people for it."
+        },
+        "proposal": {
+          "title": "Scoped proposal",
+          "body": "A written scope, a quote and what is out of scope, before anything is built."
+        },
+        "build": {
+          "title": "Build in the open",
+          "body": "The work lands in a repository you can follow, with tests on every change."
+        },
+        "maintain": {
+          "title": "Maintenance",
+          "body": "After delivery, a maintenance agreement keeps the module and its dependencies up to date."
+        }
+      },
+      "proofLabel": "What it stands on",
+      "proofTitle": "Real artefacts, not promises.",
+      "proofLead": "Everything below exists and is public. Our products are in development, and they are labelled so.",
+      "proof": {
+        "ui": {
+          "title": "Krizaka UI",
+          "line": "The design system under every Krizaka product, on npm, documented on its own site."
+        },
+        "java": {
+          "title": "Krizaka Java",
+          "line": "Spring Boot building blocks on Maven Central, versioned together."
+        },
+        "orazaka": {
+          "title": "Orazaka",
+          "line": "The AI engine behind our products, with its source on GitHub."
+        },
+        "blog": {
+          "title": "The blog",
+          "line": "How we build, in plain words."
+        }
+      },
+      "contactTitle": "Tell us what you need built or adopted.",
+      "contactBody": "One message is enough to start. We reply within two business days.",
+      "proofCta": "Open"
     }
   },
   "docs": {

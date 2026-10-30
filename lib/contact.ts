@@ -10,7 +10,15 @@ import { z } from "zod";
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
-export const CONTACT_TOPICS = ["orazaka", "yomizaka", "akinaza", "blocks", "partnership", "other"] as const;
+export const CONTACT_TOPICS = [
+  "orazaka",
+  "yomizaka",
+  "akinaza",
+  "blocks",
+  "enterprise",
+  "partnership",
+  "other",
+] as const;
 export type ContactTopic = (typeof CONTACT_TOPICS)[number];
 
 /* Where a visitor came from (`/contact?source=<slug>`): pre-selects the topic and travels with the message, so the
@@ -32,6 +40,9 @@ export function contactSourceFromPath(pathname: string): string {
 /** The topic a source implies — none when the page is about Krizaka as a whole (home, story…). */
 export function topicForSource(source: string | null): ContactTopic | null {
   if (source === "orazaka" || source === "yomizaka" || source === "akinaza") return source;
+  if (source === "services") {
+    return "enterprise";
+  }
   if (source === "open-source" || source === "docs-ui" || source === "docs-java") return "blocks";
   return null;
 }
@@ -119,6 +130,7 @@ const TOPIC_LABEL: Record<ContactTopic, string> = {
   yomizaka: "Yomizaka",
   akinaza: "Akinaza",
   blocks: "Building blocks",
+  enterprise: "Entreprise",
   partnership: "Partnership",
   other: "Other",
 };

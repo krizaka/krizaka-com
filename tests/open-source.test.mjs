@@ -94,14 +94,13 @@ test("groups keep their order and drop when empty", () => {
   );
 });
 
-test("/open-source is the technical view (2026-10-17): live figures, the stack, packages, repositories, how it fits, contribute", () => {
+test("/open-source is the technical view (2026-10-17): live figures, the stack, packages, how it fits, contribute (no repositories table: GitHub is the source, #487)", () => {
   const page = "app/[locale]/open-source/page.tsx";
   for (const read of ["repositories.length", "npmPackages().length", "mavenArtifactCount()", '"Apache-2.0"'])
     assert.ok(hasCode(page, read), read);
-  for (const id of ["stack", "packages", "repositories", "how-it-fits", "contribute"])
-    assert.ok(hasJsx(page, "Section", { id }), id);
+  for (const id of ["stack", "packages", "how-it-fits", "contribute"]) assert.ok(hasJsx(page, "Section", { id }), id);
   assert.ok(hasCode(page, "<PackagesTable rows={packages} />"));
-  assert.ok(hasCode(page, "<RepositoriesTable rows={repoRows} />"));
+  assert.ok(!hasCode(page, "<RepositoriesTable"), "the repositories table is gone");
   assert.ok(hasCode(page, "packageRows(snapshot as RegistrySnapshot"), "packages from the registries at build");
   assert.ok(hasCode(page, "PUBLIC_CHANNELS.map"), "the contact page's discussions/issues picker");
   const words = strings(page).join("\n");
@@ -116,14 +115,10 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
   const tables = "app/[locale]/open-source/OpenSourceTables.tsx";
   assert.ok(importsFrom(tables, "@krizaka/ui/data-table"));
   assert.ok(
-    hasCode(tables, 'defaultSort={{ column: "pushedAt", direction: "descending" }}'),
-    "repositories read by last push, newest first",
-  );
-  assert.ok(
     !hasCode(tables, 'column: "weeklyDownloads", direction: "descending"'),
     "unknown downloads never sort first",
   );
-  assert.equal(countCode(tables, "defaultPageSize={12}"), 2, "short pages, not a wall of rows");
+  assert.equal(countCode(tables, "defaultPageSize={12}"), 1, "short pages, not a wall of rows");
   assert.ok(!calls(tables).includes("fetch"), "rows come from the server, never fetched here");
   assert.ok(
     importsFrom("app/[locale]/contact/ContactClient.tsx", "@/lib/public-channels"),

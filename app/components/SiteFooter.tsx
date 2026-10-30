@@ -73,6 +73,11 @@ export default function SiteFooter() {
           </Link>
         </FamilyFooter.Link>
         <FamilyFooter.Link asChild>
+          <Link href={to("/services")} prefetch={false} aria-current={here("/services")}>
+            {f.services}
+          </Link>
+        </FamilyFooter.Link>
+        <FamilyFooter.Link asChild>
           <Link href={to("/changelog")} prefetch={false} aria-current={here("/changelog")}>
             {f.changelog}
           </Link>

@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.11.0](https://github.com/krizaka/krizaka-com/compare/v0.10.0...v0.11.0) (2026-10-30)
+
+
+### Features
+
+* **services:** Nos services (Krizaka Entreprise), a shorter home, a lighter /open-source ([#487](https://github.com/krizaka/krizaka-com/issues/487)) ([#488](https://github.com/krizaka/krizaka-com/issues/488)) ([1818252](https://github.com/krizaka/krizaka-com/commit/18182529b36efbce8634ab3fb1cde8901619f410))
+
+
+### Bug Fixes
+
+* **cdn:** departed products' v2 folders are retired, not misplaced (storage-zone audit) ([#480](https://github.com/krizaka/krizaka-com/issues/480)) ([3237e79](https://github.com/krizaka/krizaka-com/commit/3237e79c1b5a5bdc5213c2688ef92fb20ae007e2))
+* **cdn:** first-client is a kind of a site's media (Akinaza's first-client clips, storage-zone audit) ([#485](https://github.com/krizaka/krizaka-com/issues/485)) ([8fe095e](https://github.com/krizaka/krizaka-com/commit/8fe095e7f8ed7d313a074bdcebd0c70d6e7a60ad))
+
 ## [0.10.0](https://github.com/krizaka/krizaka-com/compare/v0.9.0...v0.10.0) (2026-10-29)
 
 

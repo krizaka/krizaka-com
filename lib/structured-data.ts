@@ -143,6 +143,25 @@ export function buildSiteGraph(locale: Locale) {
   };
 }
 
+/** /services: the one offer, a schema.org Service provided by the Organization (on quote: no price node). */
+export function buildServiceJsonLd(
+  locale: Locale,
+  s: { name: string; description: string; covers: readonly string[] },
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${SITE_URL}/#entreprise`,
+    name: s.name,
+    description: s.description,
+    serviceType: s.covers,
+    inLanguage: hreflangOf(locale),
+    url: `${SITE_URL}/${locale}/services`,
+    provider: { "@id": ORG_ID },
+    areaServed: [{ "@type": "Country", name: "Canada" }],
+  };
+}
+
 /** Page-scoped breadcrumb trail. Emit on the page whose path it describes. */
 export function buildBreadcrumbJsonLd(items: ReadonlyArray<{ name: string; url: string }>) {
   return {

@@ -1,7 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
-import { KNOW_HOW, knowHowFacts } from "../lib/know-how.ts";
+import { existsSync, readFileSync } from "node:fs";
 import { DIRECTION_STEPS, nowProducts } from "../lib/direction.ts";
 import { PRODUCT_RECORDS, hasCode } from "./helpers/source.mjs";
 
@@ -11,40 +10,21 @@ const FORBIDDEN =
   /revolution|game-?chang|best-in-class|world-class|cutting-edge|state-of-the-art|unparalleled|seamless|next-gen|r[eé]volutionnaire|r[eé]volutionne|r[eé]volution|r[eé]f[eé]rence mondiale|de pointe|in[eé]gal[eé]|sans pr[eé]c[eé]dent|le meilleur|la meilleure|the best/i;
 const figures = { components: 10, native: 4, maven: 27, repositories: 35, npm: 45, downloads: 100 };
 
-test("every capability has its words in both languages, and a proof that opens", () => {
+test("the services line has its words in both languages, one action to /services, no digit, no price", () => {
   for (const l of ["en", "fr"]) {
-    const k = msg(l).home.knowhow;
-    assert.deepEqual(Object.keys(k.items).sort(), KNOW_HOW.map((c) => c.id).sort(), l);
-    for (const c of KNOW_HOW) {
-      for (const key of ["title", "line", "cta"]) assert.ok(k.items[c.id][key].length > 3, `${l}: ${c.id}.${key}`);
-      assert.match(c.href, /^(https:\/\/|\/open-source)/);
-    }
+    const k = msg(l).home.services;
+    for (const key of ["number", "title", "lead", "cta"]) assert.ok(k[key].length > 2, `${l}: ${key}`);
+    assert.doesNotMatch(JSON.stringify(k), /\d{2,}|\$|€/, `${l}: no figure, no price`);
   }
+  const src = read("app/components/home/ServicesLine.tsx");
+  assert.match(src, /href="\/services"/);
+  assert.doesNotMatch(src, /variant="primary"/);
 });
 
-test("figures are read, never typed: no digit in the capability words, facts dropped when unread", () => {
-  for (const l of ["en", "fr"]) {
-    const k = msg(l).home;
-    assert.doesNotMatch(
-      JSON.stringify(k.knowhow.items).replaceAll("Apache-2.0", ""),
-      /\d/,
-      `${l}: no digit in the capabilities' words`,
-    );
-    assert.doesNotMatch(JSON.stringify(k.direction.steps), /\d/, `${l}: no digit in the direction`);
-    for (const f of Object.values(k.knowhow.facts)) assert.match(f, /\{count\}/);
-  }
-  const zero = { components: 0, native: 0, maven: 0, repositories: 0, npm: 0 };
-  for (const c of KNOW_HOW) assert.deepEqual(knowHowFacts(c.id, zero), [], c.id);
-  assert.deepEqual(knowHowFacts("design", figures), [
-    ["components", 10],
-    ["native", 4],
-  ]);
-  assert.deepEqual(
-    knowHowFacts("open", { ...figures, downloads: undefined }).map(([k]) => k),
-    ["repositories", "npm"],
-  );
-  const src = read("app/components/home/KnowHow.tsx");
-  assert.match(src, /knowHowFacts\(id, figures\)/, "the facts come from the figures read at build");
+test("the « what we can do » section is gone from the home (2026-10-30, #487): the home stays short", () => {
+  assert.ok(!existsSync(new URL("../app/components/home/KnowHow.tsx", import.meta.url)));
+  assert.ok(!existsSync(new URL("../lib/know-how.ts", import.meta.url)));
+  for (const l of ["en", "fr"]) assert.equal(msg(l).home.knowhow, undefined, l);
 });
 
 test("« now » is the products' statuses from lib/products.ts; the steps are now, next, later, without dates", () => {
@@ -77,7 +57,7 @@ test("the tone is restrained: no hype word in the new sections, in either langua
 });
 
 test("one primary action per section: no primary button in the two sections", () => {
-  for (const f of ["KnowHow", "Direction"])
+  for (const f of ["ServicesLine", "Direction"])
     assert.doesNotMatch(read(`app/components/home/${f}.tsx`), /variant="primary"/, f);
 });
 

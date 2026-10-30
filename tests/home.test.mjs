@@ -114,7 +114,7 @@ test("the old home — the product showcase, the kit gallery, the rotating title
     const m = messages(lang).site;
     assert.deepEqual(
       Object.keys(m.home),
-      ["hero", "engine", "products", "stack", "knowhow", "direction", "principles", "visuals"],
+      ["hero", "engine", "products", "stack", "services", "direction", "principles", "visuals"],
       `${lang}: site.home`,
     );
     assert.equal(m.expertise, undefined, `${lang}: site.expertise`);
@@ -270,7 +270,7 @@ test("Akinaza is for studios, salons and the self-employed, one short human line
 
 // The numbers in the margin and the folios come from the section list, never typed (2026-10-22: § 5 and § 6 removed).
 test("the section list is the home's six sections, in the honest order; the numbers and the folio are derived from it", () => {
-  assert.deepEqual([...HOME_SECTIONS], ["hero", "engine", "products", "knowhow", "direction", "principles"]);
+  assert.deepEqual([...HOME_SECTIONS], ["hero", "engine", "products", "services", "direction", "principles"]);
   assert.deepEqual(folioOf("principles"), { page: 6, total: 6 });
   assert.deepEqual(folioOf("hero"), { page: 1, total: 6 });
   for (const lang of ["en", "fr"]) {
