@@ -119,6 +119,7 @@ Every variable of the site is named by its bounded context (krizaka/.github#46) 
 
 | Variable | Production | Secret | Default | What it does |
 | :--- | :---: | :---: | :--- | :--- |
+| `APP_COMMIT` *(build)* | — |  |  | The commit being built (DigitalOcean binds it to `${_self.COMMIT_HASH}`), served at `/build.json` so the post-deploy workflow knows when the new build is live; a local build says `local`. |
 | `APP_GITHUB_TOKEN` *(build)* | — | ✓ |  | A read-only token so the organisation figures (`scripts/gen-org-stats.mjs`) are not rate-limited at build; the build never fails without it. |
 
 #### Media — `MEDIA_`
