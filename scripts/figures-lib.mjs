@@ -5,8 +5,8 @@
 
 export const WIDTHS = [360, 768, 1440];
 export const THEMES = ["dark", "light"];
-export const PATHS = ["/en", "/fr", "/en/docs", "/fr/docs"];
-/** The figures of a row: the home's proofs, the figure tiles (Stat values) of /open-source and /story. */
+export const PATHS = ["/en", "/fr"];
+/** The figures of a row: the home's proofs, the figure tiles (Stat values) of /story. */
 export const FIGURES = ".kz-home-proofs dd, .kz-fig-grid > * > p:nth-child(2)";
 
 export function cases(paths = PATHS, widths = WIDTHS, themes = THEMES) {
