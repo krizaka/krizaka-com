@@ -25,7 +25,9 @@ export const DELETABLE = ["pr-assets/", "site/renders/"];
 /** `pr-assets/<repo>/<key>/…` → { repo, key, pr } (pr: the leading number of the key, else null); null for any other path. */
 export function prKeyOf(path) {
   const m = /^pr-assets\/([^/]+)\/([^/]+)\//.exec(path);
-  if (!m) return null;
+  if (!m) {
+    return null;
+  }
   const n = /^(\d+)(?:$|[-_.])/.exec(m[2]);
   return { repo: m[1], key: m[2], pr: n ? Number(n[1]) : null };
 }
@@ -40,12 +42,18 @@ export const isChosen = (path) => /(^|\/)chosen\//.test(path) || /chosen/i.test(
 export function plan(objects, prs, now = Date.now()) {
   const folderOf = (path) => path.split("/").slice(0, 3).join("/");
   const newest = new Map();
-  for (const o of objects) newest.set(folderOf(o.path), Math.max(newest.get(folderOf(o.path)) ?? 0, o.changed));
+  for (const o of objects) {
+    newest.set(folderOf(o.path), Math.max(newest.get(folderOf(o.path)) ?? 0, o.changed));
+  }
   const out = [];
   for (const o of objects) {
-    if (!DELETABLE.some((p) => o.path.startsWith(p))) continue;
+    if (!DELETABLE.some((p) => o.path.startsWith(p))) {
+      continue;
+    }
     const why = reasonToDelete(o, newest.get(folderOf(o.path)) ?? o.changed, prs, now);
-    if (why) out.push({ path: o.path, size: o.size, why });
+    if (why) {
+      out.push({ path: o.path, size: o.size, why });
+    }
   }
   return out;
 }
@@ -53,11 +61,19 @@ export function plan(objects, prs, now = Date.now()) {
 /** Why one object goes (its folder last changed at `last`), or null when it stays. */
 function reasonToDelete(o, last, prs, now) {
   const pr = prKeyOf(o.path);
-  if (!pr) return renderReason(o.path, last, now);
+  if (!pr) {
+    return renderReason(o.path, last, now);
+  }
   const known = pr.pr === null ? undefined : prs.get(`${pr.repo}#${pr.pr}`);
-  if (known?.closedAt === null) return null;
-  if (known) return now - known.closedAt > PR_ASSETS_DAYS * DAY ? `PR closed more than ${PR_ASSETS_DAYS} days ago` : null;
-  return last && now - last > PR_ASSETS_DAYS * DAY ? `no PR to read, untouched for more than ${PR_ASSETS_DAYS} days` : null;
+  if (known?.closedAt === null) {
+    return null;
+  }
+  if (known) {
+    return now - known.closedAt > PR_ASSETS_DAYS * DAY ? `PR closed more than ${PR_ASSETS_DAYS} days ago` : null;
+  }
+  return last && now - last > PR_ASSETS_DAYS * DAY
+    ? `no PR to read, untouched for more than ${PR_ASSETS_DAYS} days`
+    : null;
 }
 
 function renderReason(path, last, now) {
@@ -97,12 +113,16 @@ export async function readPrs(objects, { token, org = "krizaka", fetchImpl = glo
   const seen = new Set();
   for (const o of objects) {
     const k = prKeyOf(o.path);
-    if (!k || k.pr === null || seen.has(`${k.repo}#${k.pr}`)) continue;
+    if (!k || k.pr === null || seen.has(`${k.repo}#${k.pr}`)) {
+      continue;
+    }
     seen.add(`${k.repo}#${k.pr}`);
     const res = await fetchImpl(`https://api.github.com/repos/${org}/${k.repo}/pulls/${k.pr}`, {
       headers: { Accept: "application/vnd.github+json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     });
-    if (!res.ok) continue;
+    if (!res.ok) {
+      continue;
+    }
     const pr = await res.json();
     out.set(`${k.repo}#${k.pr}`, { closedAt: pr.closed_at ? Date.parse(pr.closed_at) : null });
   }
@@ -110,11 +130,20 @@ export async function readPrs(objects, { token, org = "krizaka", fetchImpl = glo
 }
 
 async function remove(cfg, path) {
-  if (!DELETABLE.some((p) => path.startsWith(p)) || path.includes(".."))
+  if (!DELETABLE.some((p) => path.startsWith(p)) || path.includes("..")) {
     throw new Error(`${path} is outside ${DELETABLE.join(", ")}`);
+  }
   const url = `https://${cfg.endpoint}/${encodeURIComponent(cfg.zone)}/${path.split("/").map(encodeURIComponent).join("/")}`;
   const res = await fetch(url, { method: "DELETE", headers: { AccessKey: cfg.apiKey } });
-  if (!res.ok) throw new Error(`deletion of ${path} failed: HTTP ${res.status}`);
+  if (!res.ok) {
+    throw new Error(`deletion of ${path} failed: HTTP ${res.status}`);
+  }
+}
+
+async function removeAll(cfg, items) {
+  for (const i of items) {
+    await remove(cfg, i.path);
+  }
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
@@ -128,6 +157,10 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
   const items = plan(objects, await readPrs(objects, { token: env.GITHUB_TOKEN }));
   const text = summary(items, Boolean(args.yes));
   console.log(text);
-  if (args.summary) appendFileSync(args.summary, `${text}\n`);
-  if (args.yes) for (const i of items) await remove(cfg, i.path);
+  if (args.summary) {
+    appendFileSync(args.summary, `${text}\n`);
+  }
+  if (args.yes) {
+    await removeAll(cfg, items);
+  }
 }
