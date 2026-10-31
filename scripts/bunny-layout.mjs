@@ -70,6 +70,8 @@ export const FOREIGN_WRITERS_V2 = [
   "sites/akinaza/",
   "apps/akinaza/",
   "sites/blog/",
+  // krizaka-ui writes its own examples, maps and demo shop here; its published packages name them by hashed URL (krizaka-internal#1953).
+  "sites/ui/",
 ];
 
 /** Folders of the zone that are retired (a departed or renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */

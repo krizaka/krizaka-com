@@ -1,0 +1,51 @@
+name: Bunny retention
+
+# Every Monday: list what the retention policy would delete (pr-assets of PRs closed more than 90 days ago, render
+# candidates untouched for 30 days, the chosen ones kept - scripts/bunny-retention.mjs), print that list in the run
+# summary, then delete it. A manual run with `delete: false` only lists.
+on:
+  schedule:
+    - cron: "41 7 * * 1"
+  workflow_dispatch:
+    inputs:
+      delete:
+        description: Delete after the listing
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bunny-retention
+  cancel-in-progress: false
+
+jobs:
+  retention:
+    name: List, then delete
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+      - name: Dry run (the listing is the run summary)
+        env:
+          MEDIA_STORAGE_API_KEY: ${{ secrets.MEDIA_STORAGE_API_KEY }}
+          MEDIA_STORAGE_ZONE: ${{ secrets.MEDIA_STORAGE_ZONE }}
+          MEDIA_STORAGE_ENDPOINT: ${{ secrets.MEDIA_STORAGE_ENDPOINT }}
+          MEDIA_CDN_HOSTNAME: ${{ secrets.MEDIA_CDN_HOSTNAME }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/bunny-retention.mjs --summary "$GITHUB_STEP_SUMMARY"
+      - name: Delete
+        if: github.event_name == 'schedule' || inputs.delete
+        env:
+          MEDIA_STORAGE_API_KEY: ${{ secrets.MEDIA_STORAGE_API_KEY }}
+          MEDIA_STORAGE_ZONE: ${{ secrets.MEDIA_STORAGE_ZONE }}
+          MEDIA_STORAGE_ENDPOINT: ${{ secrets.MEDIA_STORAGE_ENDPOINT }}
+          MEDIA_CDN_HOSTNAME: ${{ secrets.MEDIA_CDN_HOSTNAME }}
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/bunny-retention.mjs --yes
