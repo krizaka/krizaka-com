@@ -82,7 +82,7 @@ test("« The Krizaka family » (/story): one bird per product of today, its own 
     assert.doesNotMatch(JSON.stringify(family.cues), /flamingo|flamant/i, `${lang}: the flamingo is not the engine`);
     assert.match(family.cues.owl, /Yomizaka/);
     assert.match(family.cues.beaver, /Akinaza/);
-    assert.doesNotMatch(JSON.stringify(family), /pay|paie|orochia|yasakia|yororis|kachizaka|yazakia/i, lang);
+    assert.doesNotMatch(JSON.stringify(family), /pay|paie/i, lang);
   }
   const vtt = filmVtt(messages("en").site.story.world.family.cues, FAMILY_CUES);
   assert.match(vtt, /^WEBVTT\n\ntitle\n00:00:00\.600 --> 00:00:03\.600\nThe Krizaka family\.\n/);

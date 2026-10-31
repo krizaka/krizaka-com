@@ -126,14 +126,14 @@
 
 ### Bug Fixes
 
-* **cdn:** keep every clip the published @krizaka/ui examples reach through /assets/orochia/tour (404 since [#399](https://github.com/krizaka/krizaka-com/issues/399)) ([#402](https://github.com/krizaka/krizaka-com/issues/402)) ([364407e](https://github.com/krizaka/krizaka-com/commit/364407e98fa7980b64de00349b94e6aced586193))
+* **cdn:** keep every clip the published @krizaka/ui examples reach through /assets/a former product/tour (404 since [#399](https://github.com/krizaka/krizaka-com/issues/399)) ([#402](https://github.com/krizaka/krizaka-com/issues/402)) ([364407e](https://github.com/krizaka/krizaka-com/commit/364407e98fa7980b64de00349b94e6aced586193))
 
 ## [0.4.0](https://github.com/krizaka/krizaka-com/compare/v0.3.0...v0.4.0) (2026-10-26)
 
 
 ### Features
 
-* **products:** krizaka.com presents Orazaka, Yomizaka and Akinaza; Orochia, Kachizaka, Yasakia and Yororis are paused ([#399](https://github.com/krizaka/krizaka-com/issues/399)) ([f619ed9](https://github.com/krizaka/krizaka-com/commit/f619ed994fd70e4c64df6e59c907d6cab9f5e341))
+* **products:** krizaka.com presents Orazaka, Yomizaka and Akinaza; the former products are paused ([#399](https://github.com/krizaka/krizaka-com/issues/399)) ([f619ed9](https://github.com/krizaka/krizaka-com/commit/f619ed994fd70e4c64df6e59c907d6cab9f5e341))
 
 ## [0.3.0](https://github.com/krizaka/krizaka-com/compare/v0.2.0...v0.3.0) (2026-10-25)
 

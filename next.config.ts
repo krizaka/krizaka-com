@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 import { javaRedirects } from "./lib/java-redirects";
 import { uiRedirects } from "./lib/ui-redirects";
-import { productRedirects } from "./lib/product-redirects";
+import { lastResortRedirects, productRedirects } from "./lib/product-redirects";
 import { CDN_URL } from "./lib/cdn";
 
 /**
@@ -55,6 +55,8 @@ const nextConfig: NextConfig = {
       ...javaRedirects(),
       // Krizaka UI's documentation is ui.krizaka.com, built from krizaka-ui (lib/ui-redirects.ts); /open-source goes to /docs.
       ...uiRedirects(),
+      // Last: any other old /docs/… address (a product that left) → the products section (lib/product-redirects.ts).
+      ...lastResortRedirects(),
     ];
   },
 
