@@ -1,0 +1,69 @@
+# The site follows reality (krizaka-internal#1888). Weekly, and after each release (a push to production): compare what krizaka.com claims with its
+# true sources (scripts/check-drift.mjs: product status vs dev-preview.json, repositories, every video / poster / image of
+# lib/cdn-manifest.json answers), refresh the committed snapshot of the products' manifests and, when something moved, open
+# ONE pull request. A source that cannot be read fails the run (red = the Actions tab and the issue below).
+name: drift
+
+on:
+  schedule:
+    - cron: "41 5 * * 1"
+  push:
+    branches: [production]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: drift
+  cancel-in-progress: false
+
+jobs:
+  media:
+    name: Every video and poster answers
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts
+      - run: node scripts/check-drift.mjs --media-only
+
+  drift:
+    name: Claims against sources
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: 22
+      - run: npm ci --ignore-scripts
+      - name: Refresh the snapshot of the products' manifests
+        run: node scripts/gen-product-manifests.mjs
+      - name: Open the update pull request when something moved
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- lib/product-manifests.json; then echo "nothing moved"; exit 0; fi
+          branch="chore/drift-$(date +%Y-%m-%d)"
+          git config user.name "krizaka-agents[bot]"
+          git config user.email "krizaka-agents@users.noreply.github.com"
+          git checkout -b "$branch"
+          git commit -am "chore(drift): the products' manifests are read again (krizaka-internal#1888)"
+          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$branch"
+          gh pr create --title "chore(drift): the products' manifests are read again" \
+            --body "Weekly drift check (.github/workflows/drift.yml): lib/product-manifests.json moved against its sources. Part of krizaka-internal#1888."
+      - name: Claims against sources (fails when a source is missing)
+        run: node scripts/check-drift.mjs
