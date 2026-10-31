@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.13.0](https://github.com/krizaka/krizaka-com/compare/v0.12.0...v0.13.0) (2026-10-31)
+
+
+### Features
+
+* **docs:** the documentation hub people can follow — Services then Docs, /open-source answers 308 to /docs ([#511](https://github.com/krizaka/krizaka-com/issues/511)) ([ff18344](https://github.com/krizaka/krizaka-com/commit/ff1834416cbfa871eec7f727ba501188a328935b))
+* **home:** the engine as the Lab's hub with everything around it; § 4 and § 5 tighter, as cards and a stepper ([#512](https://github.com/krizaka/krizaka-com/issues/512)) ([4b24842](https://github.com/krizaka/krizaka-com/commit/4b248428c7c7f0e1bff9735be5d45f2a13ab7efb))
+* **open-source:** Agent Skills repositories read as tooling (the agent-skills topic) ([#510](https://github.com/krizaka/krizaka-com/issues/510)) ([4a4d07e](https://github.com/krizaka/krizaka-com/commit/4a4d07ec0143b03edf91a5085cffc75499e788c4))
+* **services:** a professional services page on the pricing template — three parts with what you get, the steps, proof read at build, FAQ ([#509](https://github.com/krizaka/krizaka-com/issues/509)) ([fa1d836](https://github.com/krizaka/krizaka-com/commit/fa1d836461b8646200002bbc7d618203087b2c12))
+* **services:** proof cards list the whole stack (Lab, TypeScript) with their own icons ([#514](https://github.com/krizaka/krizaka-com/issues/514)) ([8331b51](https://github.com/krizaka/krizaka-com/commit/8331b5172f61a664cc8bcb9425fe04b20ffdd282))
+
+
+### Bug Fixes
+
+* **services, home:** the design skills' quality gate — one paper class, no second counter band, one primary action in the hero ([#515](https://github.com/krizaka/krizaka-com/issues/515)) ([4e90b6f](https://github.com/krizaka/krizaka-com/commit/4e90b6f153e7a95ee4425cfa18b6ecc930ede736))
+
 ## [0.12.0](https://github.com/krizaka/krizaka-com/compare/v0.11.0...v0.12.0) (2026-10-30)
 
 
