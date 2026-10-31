@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.14.0](https://github.com/krizaka/krizaka-com/compare/v0.13.0...v0.14.0) (2026-10-31)
+
+
+### Features
+
+* **content:** weekly drift check - claims against sources, media answer, update PR (krizaka-internal[#1888](https://github.com/krizaka/krizaka-com/issues/1888)) ([#527](https://github.com/krizaka/krizaka-com/issues/527)) ([2fbd422](https://github.com/krizaka/krizaka-com/commit/2fbd4222ebbc913fc4c8fcfcf80f1140cc905e3b))
+
 ## [0.13.0](https://github.com/krizaka/krizaka-com/compare/v0.12.0...v0.13.0) (2026-10-31)
 
 
