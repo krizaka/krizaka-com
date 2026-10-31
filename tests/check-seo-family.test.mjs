@@ -2,6 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   auditDevRedirect,
+  auditSitemapEntry,
+  auditFamilyLinks,
+  familyHrefs,
   auditRobots,
   auditSitemap,
   auditLlms,
@@ -95,4 +98,22 @@ test("a development host: robots closed and noindex, pages 308 to www", () => {
   assert.match(auditDevRedirect({ ...ok, rootStatus: 200, rootLocation: null }, { www }).join(), /expected 308/);
   assert.match(auditDevRedirect({ ...ok, rootLocation: "https://evil.test/" }, { www }).join(), /expected/);
   assert.match(auditDevRedirect({ ...ok, rootHeaders: new Headers() }, { www }).join(), /noindex/);
+});
+
+const h = (o) => ({ get: (k) => o[k.toLowerCase()] ?? null });
+test("a sitemap URL that redirects, is noindex, is disallowed or canonicals elsewhere fails", () => {
+  const ok = { url: `${HOST}/a`, status: 200, headers: h({}), html: page({ canonical: `${HOST}/a` }), robotsText: "User-agent: *\nDisallow: /api/\n" };
+  assert.deepEqual(auditSitemapEntry(ok), []);
+  assert.match(auditSitemapEntry({ ...ok, status: 308, location: "/b" })[0], /answers 308/);
+  assert.match(auditSitemapEntry({ ...ok, headers: h({ "x-robots-tag": "noindex" }) })[0], /X-Robots-Tag/);
+  assert.match(auditSitemapEntry({ ...ok, html: page({ canonical: `${HOST}/a`, robotsMeta: "noindex" }) })[0], /robots meta/);
+  assert.match(auditSitemapEntry({ ...ok, robotsText: "User-agent: *\nDisallow: /\n" })[0], /disallows/);
+  assert.match(auditSitemapEntry({ ...ok, html: page({ canonical: `${HOST}/z` }) })[0], /canonical/);
+});
+
+test("a link to a family site that redirects fails; hrefs are found with their query", () => {
+  const html = '<a href="https://www.krizaka.com/contact?topic=x&amp;source=y">c</a><a href="https://example.org/">e</a>';
+  assert.deepEqual(familyHrefs(html), ["https://www.krizaka.com/contact?topic=x&source=y"]);
+  assert.equal(auditFamilyLinks([{ href: "https://www.krizaka.com/contact", status: 308, location: "/en/contact" }]).length, 1);
+  assert.deepEqual(auditFamilyLinks([{ href: "https://www.krizaka.com/en/contact", status: 200 }]), []);
 });

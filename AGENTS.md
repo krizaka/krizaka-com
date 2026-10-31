@@ -120,6 +120,7 @@
   `lastmod`; `llms.txt` (llmstxt.org) that links back to the family; a canonical that is the page itself on the site's
   host; Open Graph + Twitter card **with an image**; JSON-LD whose every node leads back to the Organization
   `https://www.krizaka.com/#organization` (this site defines it, and says it `owns` the products and open-source sites).
+- **The guard meets a page as a crawler does** (2026-10-30: Search Console reported redirects, noindex and robots-blocked URLs the old check let through): every `sitemap.xml` URL is fetched *without following redirects* and must answer 200, carry no noindex (header or meta), be allowed by `robots.txt` and be its own canonical; `--family-links` (post-deploy) fails on a link to a family site that answers a redirect — link the final URL (`/<locale>/contact?topic=…`, never `/contact?…`). Tests: `tests/check-seo-family.test.mjs`.
 - Indexing policy (epic krizaka/.github#119, 2026-10-21): **indexed** — www.krizaka.com, ui., java. and the products' public
   addresses `www.<product>.com` (sign-up closed; the apex answers 308 with www); **`noindex`** — every `dev.<product>.com`
   (robots `Disallow: /`, `X-Robots-Tag: noindex`; its pages answer 308 to www, its API keeps serving — checked by

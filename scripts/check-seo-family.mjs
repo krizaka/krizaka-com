@@ -11,9 +11,11 @@
 
    Usage: node scripts/check-seo-family.mjs --base <origin served> --host <https://public-host> [--index on|off]
             [--types SoftwareApplication,WebSite] [--no-llms] [--no-sitemap] [--limit N] [--console]
-                                                  [--redirects-to <https://www.public-host>]
+                                                  [--redirects-to <https://www.public-host>] [--family-links]
    A development host (dev.<product>.com): `--redirects-to https://www.<product>.com --index off` checks that robots.txt shuts
    the door (Disallow: /, X-Robots-Tag noindex) and that a page answers 308 to the same path on www — the API stays served there.
+   Every sitemap URL is fetched WITHOUT following redirects: it must answer 200, carry no noindex (header or meta), be
+   allowed by robots.txt and be its own canonical. `--family-links` also fails on a link to a family site that redirects.
    An operator console (admin.*): `--console --index off` checks only that robots.txt shuts the door and that every
    response says noindex (header and meta); it has no sitemap and no llms.txt.
    `--base` is where the pages are fetched (http://localhost:3000 in CI); `--host` is the public origin they must declare. */
@@ -237,6 +239,44 @@ export function auditDevRedirect(seen, { www }) {
   return problems;
 }
 
+/** One sitemap URL as a crawler meets it (no redirect followed): the sitemap lists only pages that answer 200 on the
+ * canonical host, without noindex (header or meta), allowed by robots.txt, and whose canonical is the URL itself.
+ * Root cause of Search Console's « page with redirect », « excluded by noindex » and « blocked by robots.txt » reports
+ * (2026-10-30): the check followed redirects, read the first pages only, and never crossed sitemap x robots.txt.
+ * @param {{ url: string, status: number, location?: string|null, headers?: {get?: Function}, html?: string, robotsText?: string }} seen
+ * @returns {string[]} */
+export function auditSitemapEntry({ url, status, location = null, headers = {}, html = "", robotsText = "" }) {
+  const problems = [];
+  if (status >= 300 && status < 400) return [`sitemap lists ${url} but it answers ${status} to ${location ?? "?"} — list the final URL`];
+  if (status !== 200) return [`sitemap lists ${url} but it answers HTTP ${status}`];
+  if (/noindex/i.test(headers.get?.("x-robots-tag") ?? "")) problems.push(`sitemap lists ${url} but X-Robots-Tag says noindex`);
+  const meta = html.match(/<meta[^>]+name=["']robots["'][^>]*>/i)?.[0] ?? "";
+  if (/noindex/i.test(meta)) problems.push(`sitemap lists ${url} but its robots meta says noindex`);
+  const path = new URL(url).pathname;
+  const blocked = [...robotsText.matchAll(/user-agent:\s*\*\s*\n((?:\s*(?:allow|disallow|crawl-delay)[^\n]*\n?)*)/gi)]
+    .flatMap((m) => [...m[1].matchAll(/^\s*disallow:\s*(\S+)/gim)].map((d) => d[1]))
+    .filter((d) => path.startsWith(d.replace(/\*$/, "")));
+  if (blocked.length) problems.push(`sitemap lists ${url} but robots.txt disallows ${blocked[0]}`);
+  const canonical = html.match(/<link[^>]+rel=["']canonical["'][^>]*href=["']([^"']+)["']/i)?.[1];
+  if (canonical && canonical.replace(/\/$/, "") !== url.replace(/\/$/, "")) problems.push(`sitemap lists ${url} but its canonical is ${canonical}`);
+  return problems;
+}
+
+/** Links a page makes to the family's own sites must be the final URL: the hrefs that answered a redirect.
+ * @param {{ href: string, status: number, location?: string|null }[]} answers
+ * @returns {string[]} */
+export function auditFamilyLinks(answers) {
+  return answers
+    .filter((a) => a.status >= 300 && a.status < 400)
+    .map((a) => `links to ${a.href} which answers ${a.status} to ${a.location ?? "?"} — link the final URL`);
+}
+
+/** The hrefs of a page that point to a family site (krizaka.com and the product domains).
+ * @param {string} html @returns {string[]} */
+export function familyHrefs(html) {
+  return [...new Set([...html.matchAll(/href=["'](https:\/\/(?:[\w-]+\.)?(?:krizaka|orazaka|yomizaka|akinaza)\.(?:com|shop)[^"']*)["']/gi)].map((m) => m[1].replace(/&amp;/g, "&")))];
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const opt = (n, d) => (args.includes(n) ? args[args.indexOf(n) + 1] : d);
@@ -291,11 +331,25 @@ async function main() {
     report("/sitemap.xml", auditSitemap(xml, { host }));
     paths = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname).slice(0, limit);
   }
+  const robotsText = await (await get("/robots.txt")).text();
+  const familyAnswers = new Map();
   for (const p of paths) {
+    if (index) {
+      const raw = await fetch(`${base}${p}`, { redirect: "manual" });
+      const body = raw.status === 200 ? await raw.text() : "";
+      report(p, auditSitemapEntry({ url: `${host}${p === "/" ? "" : p}` || host, status: raw.status, location: raw.headers.get("location"), headers: raw.headers, html: body, robotsText }));
+      if (args.includes("--family-links"))
+        for (const href of familyHrefs(body)) {
+          if (familyAnswers.has(href)) continue;
+          const r = await fetch(href, { redirect: "manual", method: "HEAD" }).catch(() => null);
+          if (r) familyAnswers.set(href, { href, status: r.status, location: r.headers.get("location") });
+        }
+    }
     const res = await get(p);
     report(p, auditHeaders(res.headers, { index }));
     report(p, auditHtml(await res.text(), p, { host, index, types, home: p === "/", organizationHome }));
   }
+  if (familyAnswers.size) report("family links", auditFamilyLinks([...familyAnswers.values()]));
   done(paths.length);
 
   function done(pages) {

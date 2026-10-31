@@ -26,4 +26,4 @@ jobs:
       version-url: https://www.krizaka.com/build.json
       expect: ${{ github.sha }}
       indexnow-key: 618a944a62de7ebaf79cc9b96ed57c0c # gitleaks:allow — the IndexNow key is public by design (served at /<key>.txt)
-      seo-args: "--organization"
+      seo-args: "--organization --family-links"
