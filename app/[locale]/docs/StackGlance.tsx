@@ -1,6 +1,6 @@
 /* /docs — the one command to start each part of the stack.
    InstallTabs: the real install code of each published part, with the latest versions (CodeTabs, copy). A part that
-      publishes nothing (the Lab, the Skills) has no tab — no command is ever shown that would not work.
+      publishes nothing (the Lab) has no tab — no command is ever shown that would not work.
    Words: site.home.stack (each part's line) and site.openSource (the rest). */
 
 import { CodeBlock, CodeTabs } from "@krizaka/ui/code-block";
