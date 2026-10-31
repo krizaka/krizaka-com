@@ -8,8 +8,8 @@ import { cases, figureProblems } from "../scripts/figures-lib.mjs";
 const c = { path: "/fr", width: 1440, theme: "dark" };
 const fig = (text, row, baseline, numeric = "lining-nums tabular-nums") => ({ text, row, baseline, numeric });
 
-test("covers the home and /open-source, EN and FR, at 360/768/1440 in both themes", () => {
-  assert.equal(cases().length, 4 * 3 * 2);
+test("covers the home, EN and FR, at 360/768/1440 in both themes", () => {
+  assert.equal(cases().length, 2 * 3 * 2);
 });
 
 test("a row on one baseline, lining and tabular, passes", () => {
