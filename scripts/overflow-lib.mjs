@@ -5,7 +5,7 @@
 export const WIDTHS = [360, 768, 1024, 1440];
 export const THEMES = ["dark", "light"];
 /** The pages that carry the site's richest blocks. */
-export const PATHS = ["/en", "/fr", "/en/open-source", "/fr/open-source", "/en/story", "/en/contact"];
+export const PATHS = ["/en", "/fr", "/en/docs", "/fr/docs", "/en/story", "/en/contact"];
 
 /** Every page × width × theme to load. */
 export function cases(paths = PATHS, widths = WIDTHS, themes = THEMES) {
