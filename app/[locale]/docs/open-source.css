@@ -124,28 +124,6 @@
   font-size: 14px;
 }
 
-/* Krizaka Skills: one plugin per tab — its line, its two commands, its skills. */
-.os-skills {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-top: 12px;
-}
-.os-skills > p {
-  margin: 0;
-  color: var(--kz-text-secondary);
-}
-.os-skills ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 16px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--font-mono);
-  font-size: 13px;
-}
-
 /* Packages: the figures as one line of facts (never a band of counters), the trend beside them. */
 .os-facts {
   display: flex;

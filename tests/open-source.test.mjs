@@ -35,8 +35,11 @@ test("the kind of a repository comes from its topics", () => {
   assert.equal(kindOfRepository(repo("orazaka-ui-kit", ["react-native", "npm-package"]), "orazaka"), "library");
   assert.equal(kindOfRepository(repo("orazaka-edge", ["java", "spring-boot"]), "orazaka"), "service");
   assert.equal(kindOfRepository(repo("orazaka-cli", ["cli", "typescript"]), "orazaka"), "tooling");
-  // Agent Skills (krizaka-skills): tooling for coding agents, read from the `agent-skills` topic.
-  assert.equal(kindOfRepository(repo("krizaka-skills", ["agent-skills", "claude-code-plugin"]), "krizaka"), "tooling");
+  // Agent Skills: tooling for coding agents, read from the `agent-skills` topic.
+  assert.equal(
+    kindOfRepository(repo("agent-skills-example", ["agent-skills", "claude-code-plugin"]), "krizaka"),
+    "tooling",
+  );
   assert.equal(kindOfRepository(repo("yomizaka-console", ["nextjs", "bff"]), "yomizaka"), "web");
   assert.equal(kindOfRepository(repo("x-y", []), "x"), "other");
 });
