@@ -70,6 +70,8 @@ export const FOREIGN_WRITERS_V2 = [
   "sites/akinaza/",
   "apps/akinaza/",
   "sites/blog/",
+  // krizaka-ui writes its own examples, maps and demo shop here; its published packages name them by hashed URL (krizaka-internal#1953).
+  "sites/ui/",
 ];
 
 /** Folders of the zone that are retired (a departed or renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
@@ -265,6 +267,8 @@ const brandAlt = BRANDS.join("|");
 /** Per legacy root: why <path> does not fit it, or null. */
 const LEGACY_RULES = {
   site: (path, [, area]) => {
+    // Render candidates are transient and named by their run, not hashed: scripts/bunny-retention.mjs deletes them after 30 days.
+    if (area === "renders") return path.split("/").length >= 4 ? null : "not site/renders/<run>/<file>";
     if (!SITE_AREA_NAMES.includes(area)) return `site/${area}/ is not an area (${SITE_AREA_NAMES.join(", ")})`;
     return SITE_FILE.test(path) ? null : "not <name>.<hash>.<ext> under site/<area>/…";
   },
