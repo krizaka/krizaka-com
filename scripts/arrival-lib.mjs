@@ -13,7 +13,7 @@ export const PAGES = [
   "/fr",
   "/en/story",
   "/fr/story",
-  "/en/open-source",
+  "/en/docs",
   "/en/changelog",
   "/en/contact",
   "/en/privacy",

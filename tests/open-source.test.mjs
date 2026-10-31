@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { kindOfRepository, productOfRepository, repositoriesOf } from "../lib/repository-catalogue.ts";
 import { groupOfPackage, groupPackages, summary } from "../lib/npm-catalogue.ts";
 import { calls, countCode, hasCode, hasJsx, importsFrom, jsx, records, strings } from "./helpers/source.mjs";
@@ -96,25 +96,23 @@ test("groups keep their order and drop when empty", () => {
   );
 });
 
-test("/open-source is the technical view (2026-10-17): live figures, the stack, packages, how it fits, contribute (no repositories table: GitHub is the source, #487)", () => {
-  const page = "app/[locale]/open-source/page.tsx";
-  for (const read of ["repositories.length", "npmPackages().length", "mavenArtifactCount()", '"Apache-2.0"'])
+test("/docs is the documentation hub (2026-10-30): paths by reader, a quiet line of figures, how it fits, the folded reference, contribute", () => {
+  const page = "app/[locale]/docs/page.tsx";
+  for (const read of ["repositories.length", "npmPackages().length", "mavenArtifactCount()"])
     assert.ok(hasCode(page, read), read);
-  for (const id of ["stack", "packages", "how-it-fits", "contribute"]) assert.ok(hasJsx(page, "Section", { id }), id);
+  // The hub's collections are the reader's paths (lib/docs-start.ts), not the stack's cards.
+  assert.ok(hasCode(page, "collections={START_PATHS.map("), "paths by reader");
+  for (const id of ["how-it-fits", "reference", "contribute"]) assert.ok(hasJsx(page, "Section", { id }), id);
+  assert.ok(!hasJsx(page, "Section", { id: "packages" }), "the packages are not a headline");
+  assert.ok(hasJsx(page, "details"), "the reference tables are folded");
   assert.ok(hasCode(page, "<PackagesTable rows={packages} />"));
   assert.ok(!hasCode(page, "<RepositoriesTable"), "the repositories table is gone");
   assert.ok(hasCode(page, "packageRows(snapshot as RegistrySnapshot"), "packages from the registries at build");
   assert.ok(hasCode(page, "PUBLIC_CHANNELS.map"), "the contact page's discussions/issues picker");
-  const words = strings(page).join("\n");
-  assert.match(words, /CODE_OF_CONDUCT\.md/);
-  assert.match(words, /LICENSE-2\.0/);
+  assert.ok(!hasJsx(page, "Facts"), "figures are a quiet line, never a band of facts");
   assert.ok(!hasJsx(page, "style"), "no inline stylesheet: open-source.css");
-  assert.equal(
-    jsx(page).filter((e) => e.attrs.variant === "primary").length,
-    2,
-    "one primary action in the hero, one in contribute",
-  );
-  const tables = "app/[locale]/open-source/OpenSourceTables.tsx";
+  assert.equal(jsx(page).filter((e) => e.attrs.variant === "primary").length, 1, "one primary button, in contribute");
+  const tables = "app/[locale]/docs/OpenSourceTables.tsx";
   assert.ok(importsFrom(tables, "@krizaka/ui/data-table"));
   assert.ok(
     !hasCode(tables, 'column: "weeklyDownloads", direction: "descending"'),
@@ -126,7 +124,11 @@ test("/open-source is the technical view (2026-10-17): live figures, the stack, 
     importsFrom("app/[locale]/contact/ContactClient.tsx", "@/lib/public-channels"),
     "one list of channels for both pages",
   );
-  assert.ok(hasCode("lib/page-templates.ts", '"/open-source": "docs-hub"'));
+  assert.ok(hasCode("lib/page-templates.ts", '"/docs": "docs-hub"'));
+  assert.ok(
+    !existsSync(new URL("../app/[locale]/open-source/page.tsx", import.meta.url)),
+    "/open-source has no page: it redirects",
+  );
 });
 
 test("the packages: every npm and Maven artifact, its family, its repository only when it exists", async () => {

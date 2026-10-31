@@ -104,8 +104,8 @@
           "desc": "Where our names come from"
         },
         "repos": {
-          "label": "Open source",
-          "desc": "Every Krizaka repository"
+          "label": "Docs",
+          "desc": "Start here: every guide"
         },
         "contact": {
           "label": "Contact",
@@ -325,6 +325,10 @@
         "ts": {
           "line": "The products' TypeScript building blocks, on npm: accounts and roles, settings, API keys, webhooks, organizing, the weekly brief.",
           "explore": "Read the documentation"
+        },
+        "skills": {
+          "line": "Agent Skills and a Claude Code plugin marketplace: Krizaka's design, engineering and product rules, for an assistant.",
+          "explore": "See the repository"
         }
       },
       "services": {
@@ -441,7 +445,7 @@
       "tagline": "A software studio in Montréal, building open-source products and the stack under them.",
       "products": "Products",
       "story": "Our story",
-      "openSource": "Open source",
+      "openSource": "Docs",
       "contact": "Contact",
       "privacy": "Privacy",
       "terms": "Terms",
@@ -722,7 +726,7 @@
     },
     "openSource": {
       "eyebrow": "Open source · Apache-2.0",
-      "title": "What we open-source.",
+      "title": "The code under our products, in the open.",
       "github": "Browse github.com/krizaka",
       "figuresLabel": "What we publish, read from GitHub, npm and Maven Central at build",
       "repoCount": "{count} repositories",
@@ -740,7 +744,7 @@
         "tagline": "The building blocks every product shares: Krizaka UI, the Java kits, the site and the organisation's rules."
       },
       "count": "{count} public repositories · ",
-      "lead": "The technical view: every package and repository we publish under Apache-2.0, and how they fit. Our products are operated by Krizaka.",
+      "lead": "Krizaka UI, Krizaka Java, the TypeScript libraries and our Agent Skills: every package, every version and every repository, read from npm, Maven Central and GitHub when the site is published. Under Apache-2.0. Our products are operated by Krizaka.",
       "figures": {
         "repositories": "public repositories",
         "npm": "packages on npm",
@@ -749,11 +753,11 @@
         "license": "{license} on every repository"
       },
       "stackEyebrow": "The stack",
-      "stackTitle": "Three bricks, each documented.",
-      "stackLead": "Versions read from npm and Maven Central at build.",
+      "stackTitle": "The stack at a glance.",
+      "stackLead": "Each building block has its own site and repository; versions are read from the registries at build.",
       "blocksLabel": "The building blocks, explained:",
       "packages": {
-        "eyebrow": "Packages",
+        "eyebrow": "packages",
         "title": "Every published package.",
         "lead": "npm and Maven Central, read at build. Search, or filter by registry and family.",
         "caption": "Every Krizaka package on npm and Maven Central",
@@ -774,7 +778,9 @@
           "data": "Data & i18n",
           "realtime": "Realtime",
           "tooling": "Tooling"
-        }
+        },
+        "releases": "Releases",
+        "releasesAria": "Release notes of {name}"
       },
       "repositories": {
         "eyebrow": "Repositories",
@@ -804,7 +810,7 @@
         "pageSize": "Rows per page"
       },
       "fits": {
-        "eyebrow": "How it fits",
+        "eyebrow": "how it fits",
         "title": "Building blocks → shared services.",
         "lead": "Read from the manifests of what we run — the list is the diagram's text version.",
         "blocks": "The building blocks",
@@ -824,7 +830,86 @@
         "body": "A question or an idea: a discussion. A bug: an issue. Pick the repository.",
         "guide": "Contribution guide",
         "conduct": "Code of conduct",
-        "license": "Licence: Apache-2.0"
+        "license": "Licence: Apache-2.0",
+        "goodFirst": "Good first issues"
+      },
+      "roadmap": {
+        "eyebrow": "Roadmap",
+        "title": "Where each library is going.",
+        "lead": "Open issues are the roadmap; Releases are the changelog. Both live on GitHub.",
+        "issues": "Open issues",
+        "releases": "Releases",
+        "note": "Release notes are written by the release tooling on GitHub; this site never copies them."
+      },
+      "stackFacts": {
+        "development": "In development",
+        "notPublished": "Nothing published yet"
+      },
+      "install": {
+        "eyebrow": "Get started",
+        "title": "One command to start.",
+        "lead": "The real install code, with the latest published versions.",
+        "copy": "Copy",
+        "copied": "Copied",
+        "tabs": "Building block to install"
+      },
+      "githubShort": "GitHub",
+      "hub": {
+        "quickstart": {
+          "title": "Quick start, in three steps",
+          "install": "1 · Install the kit",
+          "styles": "2 · Import its styles",
+          "use": "3 · Use a component",
+          "sample": "Get started",
+          "other": "Or start from another part of the stack"
+        },
+        "eyebrow": "documentation",
+        "title": "Where do you want to start?",
+        "lead": "Pick what you are here to do. Each path opens the documentation on its own site, with the first pages to read.",
+        "startLabel": "Start here",
+        "open": "Open the documentation",
+        "stats": "{repositories} public repositories · {npm} npm packages · {maven} Maven artifacts · Apache-2.0",
+        "paths": {
+          "ui": {
+            "title": "Build an interface",
+            "text": "Krizaka UI: the components, templates and design tokens for React that our sites and products are made of.",
+            "links": {
+              "start": "Getting started",
+              "templates": "Templates",
+              "tokens": "Design tokens"
+            }
+          },
+          "java": {
+            "title": "Build a Java service",
+            "text": "Krizaka Java: the Maven building blocks under our products, from users and billing to events and webhooks.",
+            "links": {
+              "start": "Start a service",
+              "map": "The building blocks map",
+              "build": "Build and release"
+            }
+          },
+          "products": {
+            "title": "Use our products",
+            "text": "Each product documents itself on its own site.",
+            "links": {
+              "site": "{name}"
+            }
+          },
+          "contribute": {
+            "title": "Contribute",
+            "text": "A question, a bug, a first pull request: everything is on GitHub, under Apache-2.0.",
+            "links": {
+              "guide": "Contribution guide",
+              "goodFirst": "Good first issues",
+              "conduct": "Code of conduct"
+            }
+          }
+        },
+        "fitsNote": "Read it top to bottom: our products stand on the same building blocks as yours would, and those on shared services.",
+        "reference": {
+          "title": "Reference: every package and repository",
+          "lead": "The registries, read when the site is built. Search, or filter by registry and family."
+        }
       }
     },
     "notFound": {
@@ -1046,9 +1131,9 @@
           "desc": "Where the names come from."
         },
         "openSource": {
-          "title": "Open source",
+          "title": "Docs",
           "category": "Krizaka",
-          "desc": "Build with our pieces — every repository."
+          "desc": "Where to start: Krizaka UI, Krizaka Java, our products, contributing."
         },
         "contact": {
           "title": "Contact",

@@ -3,6 +3,7 @@
    lib/registry-versions.json) and the organisation's repositories (lib/org-stats.json): no package, version, count or
    link typed here. Tested by tests/package-catalogue.test.mjs (no import alias: Node strips the types and runs it). */
 
+import { releasesUrl } from "./library-links.ts";
 import { groupOfPackage, summary, type NpmGroup } from "./npm-catalogue.ts";
 
 export type Registry = "npm" | "maven";
@@ -23,6 +24,8 @@ export interface PackageRow {
   weeklySeries?: number[];
   registryUrl: string;
   repoUrl?: string;
+  /** The repository's GitHub Releases page — the only place release notes are told. */
+  releasesUrl?: string;
   docsUrl?: string;
 }
 
@@ -47,6 +50,14 @@ export interface RegistrySnapshot {
 export function weeklyTotal(rows: readonly Pick<PackageRow, "weeklyDownloads">[]): number | undefined {
   const known = rows.filter((r) => Number.isInteger(r.weeklyDownloads));
   return known.length ? known.reduce((sum, r) => sum + (r.weeklyDownloads as number), 0) : undefined;
+}
+
+/** The weekly downloads of every package that reports its last twelve weeks, summed week by week (oldest first) — the
+    /open-source hero's sparkline; undefined when none does (the line is then not drawn, never drawn flat). */
+export function weeklySeriesTotal(rows: readonly Pick<PackageRow, "weeklySeries">[]): number[] | undefined {
+  const series = rows.map((r) => r.weeklySeries).filter((s): s is number[] => Array.isArray(s) && s.length === 12);
+  if (series.length === 0) return undefined;
+  return Array.from({ length: 12 }, (_, i) => series.reduce((sum, s) => sum + s[i], 0));
 }
 
 /** The same total straight from the registry snapshot (the home's hero figure): every @krizaka package's last week,
@@ -115,7 +126,9 @@ export function packageRows(
           ? { weeklySeries: meta.weeklySeries }
           : {}),
         registryUrl: `https://www.npmjs.com/package/${name}`,
-        ...(meta.repository?.startsWith(GITHUB) ? { repoUrl: meta.repository } : {}),
+        ...(meta.repository?.startsWith(GITHUB)
+          ? { repoUrl: meta.repository, releasesUrl: releasesUrl(meta.repository) }
+          : {}),
         ...(meta.homepage ? { docsUrl: meta.homepage } : {}),
       };
     });
@@ -135,7 +148,7 @@ export function packageRows(
       line: summary(meta.description ?? ""),
       version,
       registryUrl: `https://central.sonatype.com/artifact/com.krizaka/${artifact}`,
-      ...(repo ? { repoUrl: repo } : {}),
+      ...(repo ? { repoUrl: repo, releasesUrl: releasesUrl(repo) } : {}),
       docsUrl: javaDocs,
     };
   });

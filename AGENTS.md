@@ -72,6 +72,13 @@
   in the bar. **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live on `/open-source` only (`StackTiles`, from `lib/stack.ts`). **`/open-source` lists only what is open source** — the platform's libraries, kits and tooling (`openSourceRepositories`, `packageRows(…, products)`); the products (Orazaka, Yomizaka, Akinaza) are *operated by Krizaka*, out of every list and table there, and no page here claims a licence for them (a legal session decides). The section numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed
   (`tests/home.test.mjs`, `tests/home-order.test.mjs`).
 
+- **Docs (founder, 2026-10-30; overrides every « Open source » line above).** The bar's centre is **Services then Docs**
+  (`NAV_BAR_LINKS`); « Docs » (FR « Documentation ») is `/docs`, the old `/open-source` page renamed because it read as « une page de stats ».
+  It is **a documentation hub people can follow** (docs-hub template): « where do I start? » by who you are
+  (`lib/docs-start.ts`: build an interface → ui.krizaka.com, a Java service → java.krizaka.com, our products, contribute),
+  2-3 first pages each, the Krizaka UI quick start, **one quiet line of figures** (never the hero), how it fits, then the
+  packages table folded as reference. The documentation itself stays on its own sites; `tests/docs-hub.test.mjs`.
+
 ## 2.2 Text & languages — nothing hard-coded
 
 - **Every user-facing string lives in `messages/en.json` and `messages/fr.json`** (`lib/i18n.ts`).
@@ -100,7 +107,7 @@
 - Every old address answers **308** with its page there: `/docs/ui/*` and `/{en,fr}/docs/ui/*` through
   `lib/ui-redirects.ts` (the same map as krizaka-ui `apps/site/lib/urls.ts`; tested by `tests/ui-redirects.test.mjs`),
   `/docs/java/*` through `lib/java-redirects.ts`, the products' docs through `lib/product-redirects.ts`; `/docs` itself
-  goes to `/open-source`, the hub towards ui. and java.
+  is the hub towards ui., java. and the products; `/open-source` and `/<locale>/open-source` answer 308 to it (`lib/ui-redirects.ts`).
 - A link to the documentation is an absolute URL on its site (`https://ui.krizaka.com/components/button`), never a
   relative `/docs/…`. The only figures read from Krizaka UI here are `lib/ui-facts.ts` (the installed registries' counts).
 - The documentation of the components is **only** on ui.krizaka.com: there is no public Storybook (krizaka-ui's is an

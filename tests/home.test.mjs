@@ -316,8 +316,7 @@ test("the full stack cards: one component on /open-source and /story, with Java 
   );
   const ids = identifiers(stack);
   assert.ok(!ids.has("LinkCard") && !ids.has("StackCards"));
-  for (const page of ["app/[locale]/open-source/page.tsx", "app/[locale]/story/page.tsx"])
-    assert.ok(hasCode(page, "<StackTiles locale={locale} />"), page);
+  for (const page of ["app/[locale]/story/page.tsx"]) assert.ok(hasCode(page, "<StackTiles locale={locale} />"), page);
   assert.ok(
     jsx(stack).some(
       (e) => e.tag === "CardGrid" && e.attrs.as === "ul" && e.attrs.min === "{420}" && e.attrs.columns === "{2}",

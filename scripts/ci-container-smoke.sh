@@ -10,7 +10,8 @@ check() { code=$(curl -s -o /dev/null -w '%{http_code}' "$@"); echo "$code $*"; 
 EXPECT=200 check http://localhost:3000/en
 EXPECT=308 check http://localhost:3000/fr/docs/ui
 EXPECT=308 check http://localhost:3000/docs/ui/button
-EXPECT=200 check http://localhost:3000/en/open-source
+EXPECT=200 check http://localhost:3000/en/docs
+EXPECT=308 check http://localhost:3000/en/open-source
 # Two views (2026-10-17): /products merged into the home, 308 to its products section.
 EXPECT=308 check http://localhost:3000/en/products
 # The products live on their own sites: their old addresses answer 308 (lib/product-redirects.ts).

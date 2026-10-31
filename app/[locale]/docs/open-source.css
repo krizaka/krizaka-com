@@ -1,33 +1,165 @@
-/* /open-source — what the blocks of @krizaka/ui leave to the page: the hero's figures, the stack's still visuals, the
-   table cells, the architecture diagram, the contribution picker. Colours are tokens only. */
+/* /open-source — what the blocks of @krizaka/ui leave to the page (Cahier, krizaka-cahier-design): the search's hints,
+   the quick start's steps, the framed figures of « Play with it » and the bench, the skills, the line of facts, the
+   table cells, the architecture diagram, the contribution picker. Colours are tokens only; square, matt, no blur. */
 
-.os-hero-figures {
-  width: 100%;
-  max-width: 900px;
-  margin: 28px auto 0;
+.os-page {
+  min-height: 100vh;
+  background: var(--kz-surface-0);
+  color: var(--kz-text-primary);
 }
-.os-hero-license {
-  margin: 12px 0 0;
-  text-align: center;
+
+/* The collections of the hub: the five parts of the stack in one row on a wide screen (no orphan card). */
+.os-page .kz-tpl-collections {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+}
+
+/* The hub: the search's hints, each collection's host, the quick start. */
+.os-search {
+  width: 100%;
+}
+.os-hints {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 14px;
+  margin: 0;
   font-size: 13px;
   color: var(--kz-text-secondary);
 }
-.os-hero-actions {
+.os-hints > span {
+  font-family: var(--font-mono);
+}
+.os-hints a,
+.os-skills a,
+.os-note a {
+  color: var(--kz-accent-text, var(--kz-accent));
+  text-underline-offset: 3px;
+}
+.os-collection-host {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--kz-text-muted);
+}
+.os-quickstart {
   display: flex;
-  justify-content: center;
-  margin-top: 24px;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.os-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.os-steps > li {
+  min-width: 0;
+}
+.os-step-title {
+  margin: 0 0 6px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--kz-text-secondary);
 }
 
-/* The stack: still visuals inside the cards, then the building blocks as quiet links. */
-.os-blocks {
+/* Play with it: two framed figures, side by side on a wide screen, one column on a phone. */
+.os-figures {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.os-figure {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+}
+.os-figure > figcaption {
+  padding-top: 8px;
+  border-top: 1px solid var(--kz-border-subtle);
+  font-size: 13px;
+  color: var(--kz-text-secondary);
+}
+.os-bench {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+.os-bench-stage {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--kz-border-subtle);
+  background: var(--kz-surface-0);
+}
+.os-bench-specimen {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+  min-height: 7.5rem;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--kz-border-subtle);
+}
+.os-bench-meter {
+  width: 100%;
+}
+.os-bench-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.os-bench-switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 14px;
+}
+
+/* Krizaka Skills: one plugin per tab — its line, its two commands, its skills. */
+.os-skills {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 12px;
+}
+.os-skills > p {
+  margin: 0;
+  color: var(--kz-text-secondary);
+}
+.os-skills ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+}
+
+/* Packages: the figures as one line of facts (never a band of counters), the trend beside them. */
+.os-facts {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
-  margin-top: 20px;
-  font-size: 13px;
-  color: var(--kz-text-secondary);
+  gap: 8px 16px;
+  margin-bottom: 20px;
 }
+.os-note {
+  margin: 12px 0 0;
+  font-size: 13px;
+}
+
+/* The stack: still visuals inside the cards, then the building blocks as quiet links. */
 
 /* The tables. */
 .os-version {
@@ -250,4 +382,28 @@
   .os-picker-repos a {
     transition: none;
   }
+}
+
+/* Roadmap: one row per library — its name, its open issues, its Releases (GitHub is the source). */
+
+/* The stack at a glance: the published parts, then what is built in the open, under a quiet label. */
+
+/* The figures: one quiet line under the hub, never a headline. */
+.os-stats {
+  margin: 0 auto;
+  padding: 0 var(--kz-page-gutter);
+  max-width: var(--kz-page-max);
+  color: var(--kz-text-muted);
+  font-size: 0.8125rem;
+}
+
+/* The reference tables are folded: the way in is the paths above, the tables are for whoever looks something up. */
+.os-reference > summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--kz-text-primary);
+  padding: 0.5rem 0;
+}
+.os-reference[open] > summary {
+  margin-bottom: 0.5rem;
 }

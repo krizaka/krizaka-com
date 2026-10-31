@@ -61,13 +61,7 @@ test("the footer's internal links carry the locale, and its own page is aria-cur
   const footer = read("app/components/SiteFooter.tsx");
   assert.match(footer, /const to = \(path: string\) => `\/\$\{locale\}/);
   // The story, the blog and contact are the family's « Krizaka » column now (@krizaka/ui 3.39, one-band footer): not here.
-  for (const href of [
-    'to("/open-source")',
-    'to("/changelog")',
-    'to("/privacy")',
-    'to("/terms")',
-    "to(PRODUCTS_ANCHOR)",
-  ]) {
+  for (const href of ['to("/docs")', 'to("/changelog")', 'to("/privacy")', 'to("/terms")', "to(PRODUCTS_ANCHOR)"]) {
     assert.ok(footer.includes(`href={${href}}`), `${href} is prefixed`);
   }
   assert.doesNotMatch(footer, /<Link href="\//, "no unprefixed footer link: it would go through proxy.ts's 307");

@@ -3,10 +3,10 @@
    krizaka.com is the company; everything else Krizaka makes has its own site (NAV-SYS, 2026-10-14): the products on
    dev.<product>.com (lib/products.ts), the open-source stack on ui.krizaka.com, java.krizaka.com and ts.krizaka.com (lib/stack.ts).
    Two views only (Oussama, 2026-10-17): the home — reached through the mark, it presents the products (#products) —
-   and Open source. The bar, in three zones:
+   and Docs (the hub people follow: where do I start?). The bar, in three zones:
    - left, who we are: the Krizaka mark and the word "Krizaka" (home);
-   - centre, this site: Open source · Services (NAV_BAR_LINKS) — never a link to another site; the story lives in the footer;
-   - right, tools: Blog (blog.krizaka.com) · Repo · theme · language · Contact us. No "Docs": the documentation lives on its own sites. */
+   - centre, this site: Services · Docs (NAV_BAR_LINKS, 2026-10-30) — never a link to another site; the story lives in the footer;
+   - right, tools: Blog (blog.krizaka.com) · Repo · theme · language · Contact us. "Docs" is the hub that points to the documentation, which lives on its own sites. */
 
 import type { TranslationDictionary } from "./i18n";
 import { PRODUCTS, type ProductId, type ProductStatus } from "./products";
@@ -40,7 +40,7 @@ export const NAV_PRODUCTS: NavProduct[] = PRODUCTS.map(({ id, name, siteUrl, sta
 
 export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
   { href: "/story", icon: "story" },
-  { href: "/open-source", icon: "repos", match: ["/open-source/"] },
+  { href: "/docs", icon: "repos", match: ["/open-source/"] },
   { href: "/services", icon: "services" },
   { href: "/contact", icon: "contact" },
 ];
@@ -49,7 +49,7 @@ export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
 export const PRODUCTS_ANCHOR = "/#products";
 
 /** The centre of the bar and the mobile panel's list: this site's one other view. "Our story" is in the footer (Krizaka column). */
-export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["repos", "services"] as const).map((icon) =>
+export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["services", "repos"] as const).map((icon) =>
   NAV_COMPANY.find((l) => l.icon === icon)!,
 );
 
@@ -71,8 +71,8 @@ export const docsLinkText = (t: TranslationDictionary, link: DocsNavLink) => ({
 });
 const docsLinkMatches = (link: DocsNavLink, pathname: string) =>
   pathname.startsWith(link.href) || (link.match ?? []).some((p) => pathname.startsWith(p));
-/** True anywhere under /docs. */
-export const isDocsSection = (pathname: string) => pathname === NAV_DOCS_HUB || pathname.startsWith(`${NAV_DOCS_HUB}/`);
+/** True under /docs/… (the hub itself is a plain page: its bar entry is lit, no breadcrumb). */
+export const isDocsSection = (pathname: string) => pathname.startsWith(`${NAV_DOCS_HUB}/`);
 
 /** The documentation entry `pathname` (locale-less) belongs to. */
 export const docsSectionOf = (pathname: string) => NAV_DOCS.find((d) => docsLinkMatches(d, pathname));
