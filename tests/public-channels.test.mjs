@@ -31,7 +31,7 @@ state.repos["krizaka-ui"].discussions = true;
 
 test("the sources are read: the products in the data, the stack and the lab", () => {
   assert.ok(products.length >= 3, "products read from lib/products.ts");
-  assert.deepEqual(stack.map((s) => s.id).sort(), ["java", "motion", "skills", "ts", "ui"]);
+  assert.deepEqual(stack.map((s) => s.id).sort(), ["java", "motion", "ts", "ui"]);
   for (const p of [...products, ...stack]) assert.match(p.repoUrl, /^https:\/\/github\.com\/krizaka\/[\w-]+$/, p.id);
 });
 
@@ -109,7 +109,7 @@ test("both pages use the derived list; the words are messages in both languages;
   assert.match(read("lib/github-channels.ts"), /STACK/);
   assert.doesNotMatch(read("lib/github-channels.ts"), /MOTION_LAB/, "Krizaka Lab is in the stack list");
   assert.match(read("package.json"), /gen-github-channels\.mjs/, "read at build, like the other GitHub data");
-  for (const f of ["app/[locale]/contact/ContactClient.tsx", "app/[locale]/open-source/page.tsx"])
+  for (const f of ["app/[locale]/contact/ContactClient.tsx", "app/[locale]/docs/page.tsx"])
     assert.doesNotMatch(read(f), /PUBLIC_REPOSITORIES/, f);
   for (const l of ["en", "fr"]) {
     const m = JSON.parse(read(`messages/${l}.json`)).site.contactPage;

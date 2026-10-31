@@ -104,8 +104,8 @@
           "desc": "D'où viennent nos noms"
         },
         "repos": {
-          "label": "Open source",
-          "desc": "Tous les dépôts Krizaka"
+          "label": "Documentation",
+          "desc": "Par où commencer : tous les guides"
         },
         "contact": {
           "label": "Contact",
@@ -445,7 +445,7 @@
       "tagline": "Un studio logiciel à Montréal, qui construit des produits open source et tout ce qui les porte.",
       "products": "Produits",
       "story": "Notre histoire",
-      "openSource": "Open source",
+      "openSource": "Documentation",
       "contact": "Contact",
       "privacy": "Confidentialité",
       "terms": "Conditions",
@@ -855,20 +855,6 @@
       },
       "githubShort": "GitHub",
       "hub": {
-        "eyebrow": "open source · apache-2.0",
-        "title": "Construisez avec ce sur quoi nous construisons.",
-        "lead": "Krizaka UI, Krizaka Java, les bibliothèques TypeScript et nos Agent Skills — le code sous nos produits, publié, versionné et documenté sur leurs propres sites.",
-        "search": {
-          "label": "Chercher parmi les {count} composants et gabarits de Krizaka UI",
-          "placeholder": "Chercher dans Krizaka UI — bouton, tableau, en-tête de page…",
-          "results": "Composants et gabarits",
-          "clear": "Effacer la recherche",
-          "hints": "Pour commencer"
-        },
-        "collections": "La pile",
-        "links": {
-          "source": "Code source"
-        },
         "quickstart": {
           "title": "Démarrage rapide, en trois étapes",
           "install": "1 · Installer la trousse",
@@ -877,52 +863,52 @@
           "sample": "Commencer",
           "other": "Ou partir d'une autre pièce de la pile"
         },
-        "popular": "Les plus téléchargés cette semaine",
-        "perWeek": "{count} / semaine",
-        "promise": {
-          "label": "La promesse du hibou",
-          "text": "Chaque version, chaque compte et chaque téléchargement de cette page est lu sur npm, Maven Central et GitHub quand le site est construit. Rien n'y est tapé à la main."
-        },
-        "facts": {
-          "repositories": "{count} dépôts publics",
-          "npm": "{count} paquets sur npm",
-          "maven": "{count} artefacts sur Maven Central",
-          "downloads": "{count} téléchargements npm la semaine dernière"
-        },
-        "play": {
-          "eyebrow": "à essayer",
-          "title": "De vrais composants, sur cette page.",
-          "lead": "Pas une image : le @krizaka/ui publié, piloté par ses propres contrôles. Le code dessous s'écrit pendant que vous jouez.",
-          "fig1": "Fig. 1 — un Button et un Meter de @krizaka/ui {version}, réglés par des Chips, un Slider et un Switch de la même trousse.",
-          "fig1Bare": "Fig. 1 — un Button et un Meter de @krizaka/ui, réglés par des Chips, un Slider et un Switch de la même trousse.",
-          "fig2": "Fig. 2 — le flux du moteur de Krizaka Lab (@krizaka/ui/engine-flow) : choisissez sa disposition et ce qui circule."
-        },
-        "bench": {
-          "label": "L'établi : un bouton et une jauge à régler",
-          "variant": "Variante",
-          "shape": "Forme",
-          "shapes": {
-            "rounded": "Arrondie",
-            "cut": "Biseautée",
-            "pill": "Pilule"
+        "eyebrow": "documentation",
+        "title": "Par où voulez-vous commencer ?",
+        "lead": "Choisissez ce que vous venez faire. Chaque chemin ouvre la documentation sur son propre site, avec les premières pages à lire.",
+        "startLabel": "Commencer ici",
+        "open": "Ouvrir la documentation",
+        "stats": "{repositories} dépôts publics · {npm} paquets npm · {maven} artefacts Maven · Apache-2.0",
+        "paths": {
+          "ui": {
+            "title": "Construire une interface",
+            "text": "Krizaka UI : les composants, gabarits et jetons de design pour React dont sont faits nos sites et nos produits.",
+            "links": {
+              "start": "Prise en main",
+              "templates": "Gabarits",
+              "tokens": "Jetons de design"
+            }
           },
-          "progress": "Progression",
-          "disabled": "Désactivé",
-          "action": "Commencer",
-          "meter": "Installation",
-          "code": "ce que vous voyez.tsx"
-        },
-        "skills": {
-          "eyebrow": "krizaka skills",
-          "title": "Nos règles, pour votre assistant.",
-          "lead": "Krizaka Skills est une place de marché de plugins Claude Code : les règles de design, d'ingénierie et de croissance avec lesquelles nous travaillons, en Agent Skills. Ajoutez-la, puis installez un plugin.",
-          "tabs": "Plugin à installer",
-          "list": "Les compétences de {plugin}",
-          "plugins": {
-            "design": "Le style Cahier de nos sites, Krizaka UI sobre pour les produits, et les pages vitrines en 3D.",
-            "engineering": "Comment nous menons les agents de code : voies, orchestration sobre, hygiène du contexte et barrière qualité.",
-            "growth": "Une croissance honnête sur les réseaux : quoi publier, quoi ne jamais prétendre."
+          "java": {
+            "title": "Construire un service Java",
+            "text": "Krizaka Java : les briques Maven sous nos produits, des utilisateurs et de la facturation aux événements et aux webhooks.",
+            "links": {
+              "start": "Démarrer un service",
+              "map": "La carte des briques",
+              "build": "Construire et publier"
+            }
+          },
+          "products": {
+            "title": "Utiliser nos produits",
+            "text": "Chaque produit se documente sur son propre site.",
+            "links": {
+              "site": "{name}"
+            }
+          },
+          "contribute": {
+            "title": "Contribuer",
+            "text": "Une question, un bogue, une première pull request : tout est sur GitHub, sous Apache-2.0.",
+            "links": {
+              "guide": "Guide de contribution",
+              "goodFirst": "Premières issues",
+              "conduct": "Code de conduite"
+            }
           }
+        },
+        "fitsNote": "À lire de haut en bas : nos produits reposent sur les mêmes briques que les vôtres, et celles-ci sur des services partagés.",
+        "reference": {
+          "title": "Référence : chaque paquet et chaque dépôt",
+          "lead": "Les registres, lus à la construction du site. Cherchez, ou filtrez par registre et par famille."
         }
       }
     },
@@ -1145,9 +1131,9 @@
           "desc": "D'où viennent nos noms."
         },
         "openSource": {
-          "title": "Open source",
+          "title": "Documentation",
           "category": "Krizaka",
-          "desc": "Construisez avec nos briques — tous les dépôts."
+          "desc": "Par où commencer : Krizaka UI, Krizaka Java, nos produits, contribuer."
         },
         "contact": {
           "title": "Contact",

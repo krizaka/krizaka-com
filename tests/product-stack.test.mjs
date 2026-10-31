@@ -68,9 +68,9 @@ test("the table, product by product", () => {
 });
 
 test("the table is not on /open-source (the products are operated, not open source; 2026-10-26) and /story only points to it", () => {
-  assert.doesNotMatch(read("app/[locale]/open-source/page.tsx"), /ProductStackTable/);
+  assert.doesNotMatch(read("app/[locale]/docs/page.tsx"), /ProductStackTable/);
   assert.doesNotMatch(read("app/[locale]/story/page.tsx"), /<table/);
-  assert.match(read("app/[locale]/story/page.tsx"), /href="\/open-source"/);
+  assert.match(read("app/[locale]/story/page.tsx"), /href="\/docs"/);
 });
 
 test("no message says a product runs on Orazaka while its cell is Planned", () => {

@@ -15,14 +15,14 @@ const stack = records("lib/stack.ts", "STACK")
   .filter((p) => p.url)
   .map(({ id, name, url }) => ({ id, name, url: url === "LAB_SITE" ? motionSite : url }));
 
-test("two views (2026-10-17): the mark and the word Krizaka lead home, the centre of the bar is Open source and Services (2026-10-30, #487); Our story is not in the bar", () => {
-  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["repos", "services"\] as const\)/);
+test("two views (2026-10-17): the mark and the word Krizaka lead home, the centre of the bar is Services then Docs (2026-10-30); Our story is not in the bar", () => {
+  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["services", "repos"\] as const\)/);
   assert.doesNotMatch(nav, /href: "\/products"/, "no /products page: the products are a section of the home");
   assert.match(nav, /PRODUCTS_ANCHOR = "\/#products"/);
   assert.match(
     nav,
-    /\{ href: "\/open-source", icon: "repos", match: \["\/open-source\/"\] \}/,
-    "a building block lights Open source",
+    /\{ href: "\/docs", icon: "repos", match: \["\/open-source\/"\] \}/,
+    "a building block lights Docs",
   );
   const bar = read("app/components/SiteBar.tsx");
   assert.match(
@@ -70,11 +70,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
     { id: "motion", name: "Krizaka Lab", url: "https://lab.krizaka.com" },
     { id: "java", name: "Krizaka Java", url: "https://java.krizaka.com" },
     { id: "ts", name: "Krizaka TypeScript", url: "https://ts.krizaka.com" },
-    // Built in the open, nothing published yet: its repository is its page (2026-10-30).
-    { id: "skills", name: "Krizaka Skills", url: "https://github.com/krizaka/krizaka-skills" },
   ]);
   // the family's own list is @krizaka/ui's: the site's stack must agree with it
-  for (const s of stack.filter((x) => !x.url.startsWith("https://github.com/")))
+  for (const s of stack.filter((x) => siteById(x.id)))
     assert.equal(siteById(s.id).url, s.url, `@krizaka/ui/sites: ${s.id}`);
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });

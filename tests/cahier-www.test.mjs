@@ -42,7 +42,7 @@ test("the site's own styles carry no template tell", () => {
   const files = [
     "app/globals.css",
     "app/components/home/home.css",
-    "app/[locale]/open-source/open-source.css",
+    "app/[locale]/docs/open-source.css",
     "app/[locale]/contact/ContactClient.tsx",
     "app/components/SearchCommand.tsx",
     "app/components/DocsCrumb.tsx",

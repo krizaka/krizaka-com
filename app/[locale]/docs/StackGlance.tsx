@@ -1,35 +1,14 @@
-/* /open-source — the facts of each part of the stack and the one command to start each.
-   1. factsOf: what a collection of the hub says under its line (the version read from npm / Maven Central at build,
-      « In development » said honestly).
-   2. InstallTabs: the real install code of each published part, with the latest versions (CodeTabs, copy). A part that
+/* /docs — the one command to start each part of the stack.
+   InstallTabs: the real install code of each published part, with the latest versions (CodeTabs, copy). A part that
       publishes nothing (the Lab, the Skills) has no tab — no command is ever shown that would not work.
    Words: site.home.stack (each part's line) and site.openSource (the rest). */
 
 import { CodeBlock, CodeTabs } from "@krizaka/ui/code-block";
-import { Facts, type Fact } from "@krizaka/ui/page";
-import { format, getDictionary } from "@/lib/i18n";
+import { getDictionary } from "@/lib/i18n";
 import { mavenVersion, npmPackagesFrom, publishedVersion } from "@/lib/registry-versions";
-import { STACK, STACK_LICENCE, type StackPart } from "@/lib/stack";
+import { STACK, type StackPart } from "@/lib/stack";
 
 const part = (id: StackPart["id"]) => STACK.find((p) => p.id === id)!;
-
-/** What a card says under its line: the published version (or the package count), else « In development ». */
-export function factsOf(p: StackPart, w: ReturnType<typeof getDictionary>["site"]): Fact[] {
-  const s = w.openSource.stackFacts;
-  if (p.status === "development") return [{ label: s.development, tone: "wip" }];
-  if (p.registry === "maven" && p.coordinate) {
-    const v = mavenVersion(p.coordinate.split(":")[1]);
-    return v ? [{ label: `${p.coordinate.split(":")[1]} ${v}`, tone: "ok" }, { label: STACK_LICENCE }] : [];
-  }
-  if (p.coordinate) {
-    const v = publishedVersion(p.coordinate);
-    return v ? [{ label: `${p.coordinate} ${v}`, tone: "ok" }, { label: STACK_LICENCE }] : [];
-  }
-  const count = npmPackagesFrom(p.repoUrl).length;
-  return count
-    ? [{ label: format(w.home.stack.facts.npm, { count }), tone: "ok" }, { label: STACK_LICENCE }]
-    : [{ label: s.notPublished, tone: "wip" }];
-}
 
 /** `skip`: the parts a page already shows step by step (the quick start of the hub draws Krizaka UI in three steps). */
 export function InstallTabs({ locale, skip = [] }: { locale: string; skip?: readonly string[] }) {

@@ -62,25 +62,20 @@ test("every old /docs/ui page goes to its page on ui.krizaka.com — English at 
   }
 });
 
-test("the old documentation hub goes to the open-source page, in the reader's language", () => {
-  assert.deepEqual(go("/docs"), { status: 308, to: "/en/open-source" });
-  assert.deepEqual(go("/en/docs"), { status: 308, to: "/en/open-source" });
-  assert.deepEqual(go("/fr/docs"), { status: 308, to: "/fr/open-source" });
+test("the documentation hub is /docs: it is not redirected (the old open-source page redirects to it)", () => {
+  assert.equal(go("/docs"), null);
+  assert.equal(go("/fr/docs"), null);
+  assert.deepEqual(go("/open-source"), { status: 308, to: "/en/docs" });
+  assert.deepEqual(go("/fr/open-source"), { status: 308, to: "/fr/docs" });
 });
 
 test("the redirects leave the rest of krizaka.com alone (Krizaka Java's own rules, the products page)", () => {
-  for (const path of ["/docs/java", "/fr/docs/java/build", "/en/products", "/en/docs/uikit", "/en/open-source"])
+  for (const path of ["/docs/java", "/fr/docs/java/build", "/en/products", "/en/docs/uikit"])
     assert.equal(go(path), null, path);
 });
 
 test("Fumadocs and the generated UI docs are gone from krizaka.com", () => {
-  for (const file of [
-    "source.config.ts",
-    "lib/docs-source.ts",
-    "scripts/gen-ui-docs.mjs",
-    "content/docs",
-    "app/[locale]/docs",
-  ]) {
+  for (const file of ["source.config.ts", "lib/docs-source.ts", "scripts/gen-ui-docs.mjs", "content/docs"]) {
     assert.ok(!existsSync(new URL(`../${file}`, import.meta.url)), `${file} came back`);
   }
   const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8"));

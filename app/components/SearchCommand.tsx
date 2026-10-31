@@ -14,9 +14,8 @@ import { NAV_DOCS, NAV_DOCS_HUB, PRODUCTS_ANCHOR, docsLinkText } from "@/lib/nav
 
 const SEARCH_TARGETS = [
   { id: "products", url: PRODUCTS_ANCHOR },
-  { id: "docs", url: NAV_DOCS_HUB },
   { id: "story", url: "/story" },
-  { id: "openSource", url: "/open-source" },
+  { id: "openSource", url: NAV_DOCS_HUB },
   { id: "contact", url: "/contact" },
 ] as const;
 

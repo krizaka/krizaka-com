@@ -55,8 +55,8 @@ export function uiRedirects(): Redirect[] {
     // Deeper than one segment never existed; keep the reader on the site rather than on a 404.
     rules.push({ source: `${prefix}/docs/ui/:path+`, destination: `${target}/`, statusCode: 308 });
   }
-  // The documentation hub (/docs) is gone with its last set: the open-source page is the way to ui. and java.
-  rules.push({ source: "/fr/docs", destination: "/fr/open-source", statusCode: 308 });
-  rules.push({ source: "/:locale(en)?/docs", destination: "/en/open-source", statusCode: 308 });
+  // The old open-source page is the documentation hub (/docs, 2026-10-30): same language.
+  rules.push({ source: "/fr/open-source", destination: "/fr/docs", statusCode: 308 });
+  rules.push({ source: "/:locale(en)?/open-source", destination: "/en/docs", statusCode: 308 });
   return rules;
 }

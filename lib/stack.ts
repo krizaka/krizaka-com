@@ -5,7 +5,7 @@
 
 import { GITHUB_ORG_URL, KRIZAKA_UI_REPO_URL } from "./site.ts";
 
-export type StackId = "ui" | "motion" | "java" | "ts" | "skills";
+export type StackId = "ui" | "motion" | "java" | "ts";
 
 export interface StackPart {
   id: StackId;
@@ -69,17 +69,6 @@ export const STACK: StackPart[] = [
     repoUrl: `${GITHUB_ORG_URL}/krizaka-ts`,
     registry: "npm",
     status: "released",
-    action: "docs",
-  },
-  {
-    /* Agent Skills (Anthropic's format) and a Claude Code plugin marketplace: the design, engineering and product rules
-       of Krizaka, for an assistant. Public, built in the open, nothing published yet — its repository is its page. */
-    id: "skills",
-    name: "Krizaka Skills",
-    url: "https://github.com/krizaka/krizaka-skills",
-    repoUrl: `${GITHUB_ORG_URL}/krizaka-skills`,
-    registry: "none",
-    status: "development",
     action: "docs",
   },
 ];

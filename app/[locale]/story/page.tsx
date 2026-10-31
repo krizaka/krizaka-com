@@ -352,7 +352,7 @@ export default async function StoryPage({ params }: Props) {
             fold={{ summary: st.open.more, children: <StackTiles locale={locale} /> }}
             actions={
               <>
-                <ButtonLink href="/open-source" variant="primary">
+                <ButtonLink href="/docs" variant="primary">
                   {st.open.cta} <ForwardIcon size={14} />
                 </ButtonLink>
                 {readOn("open")}

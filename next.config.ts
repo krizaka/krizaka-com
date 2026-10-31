@@ -53,7 +53,7 @@ const nextConfig: NextConfig = {
       ...productRedirects(),
       // Krizaka Java's documentation is java.krizaka.com (lib/java-redirects.ts).
       ...javaRedirects(),
-      // Krizaka UI's documentation is ui.krizaka.com, built from krizaka-ui (lib/ui-redirects.ts); /docs goes to /open-source.
+      // Krizaka UI's documentation is ui.krizaka.com, built from krizaka-ui (lib/ui-redirects.ts); /open-source goes to /docs.
       ...uiRedirects(),
     ];
   },

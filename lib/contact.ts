@@ -32,8 +32,8 @@ export function contactSourceFromPath(pathname: string): string {
   if (/^\/(products|docs)\/orazaka(\/|$)/.test(path)) return "orazaka";
   if (/^\/(products|docs)\/yomizaka(\/|$)/.test(path)) return "yomizaka";
   if (/^\/products\/akinaza(\/|$)/.test(path)) return "akinaza";
-  if (/^\/open-source(\/|$)/.test(path)) return "open-source";
   if (/^\/docs\/(ui|java)(\/|$)/.test(path)) return `docs-${path.split("/")[2]}`;
+  if (/^\/(open-source|docs)(\/|$)/.test(path)) return "open-source";
   return cleanSource(path.split("/")[1]) ?? "home";
 }
 

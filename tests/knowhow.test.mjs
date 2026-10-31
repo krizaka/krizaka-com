@@ -39,7 +39,7 @@ test("the home and /story render the products from PRODUCTS: the home's rows, /s
   assert.match(home, /<ProductVisual id=\{p\.id\} \/>/, "the know-how is shown by the row's visual");
   assert.match(home, /href=\{p\.repoUrl\}/);
   assert.doesNotMatch(story, /ProfileCard|StatGauge|ChoiceGrid/, "/story draws no tile of its own");
-  const os = read("app/[locale]/open-source/page.tsx");
+  const os = read("app/[locale]/docs/page.tsx");
   assert.doesNotMatch(
     os,
     /id="repositories"/,

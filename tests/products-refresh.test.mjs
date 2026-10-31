@@ -19,7 +19,7 @@ test("the home has no library block: the stack rows are gone, /open-source carri
     "OpenStack keeps only the cards of /open-source and /story",
   );
   assert.ok(!existsSync(new URL("../app/components/home/stack", import.meta.url)), "the rows' visuals are gone");
-  assert.match(read("app/[locale]/open-source/page.tsx"), /<InstallTabs locale=\{locale\}/);
+  assert.match(read("app/[locale]/story/page.tsx"), /<StackTiles locale=\{locale\} \/>/);
   assert.doesNotMatch(read("lib/home-sections.ts"), /"stack"/);
 });
 
@@ -68,15 +68,15 @@ test("no product package in the open-source packages", () => {
 test("how it fits has no product and no engine layer", () => {
   const layers = howItFits({ orazaka: { npm: ["@krizaka/ui"], maven: ["krizaka-bom"] } }, {}, {});
   assert.deepEqual(Object.keys(layers), ["blocks", "services"]);
-  assert.match(read("app/[locale]/open-source/HowItFits.tsx"), /os-fits/);
-  assert.doesNotMatch(read("app/[locale]/open-source/HowItFits.tsx"), /ProductLogo|brand-/);
+  assert.match(read("app/[locale]/docs/HowItFits.tsx"), /os-fits/);
+  assert.doesNotMatch(read("app/[locale]/docs/HowItFits.tsx"), /ProductLogo|brand-/);
 });
 
 test("the open-source page and its tables name no product, claim no licence for one", () => {
-  const page = read("app/[locale]/open-source/page.tsx");
+  const page = read("app/[locale]/docs/page.tsx");
   assert.match(page, /openSourceRepositories\(allRepositories, PRODUCT_IDS\)/);
   assert.doesNotMatch(page, /ProductStackTable|ENGINE_USES|runs-on/);
-  const tables = read("app/[locale]/open-source/OpenSourceTables.tsx");
+  const tables = read("app/[locale]/docs/OpenSourceTables.tsx");
   assert.doesNotMatch(tables, /id: "product"|usedBy/);
   for (const lang of ["en", "fr"]) {
     const o = JSON.parse(read(`messages/${lang}.json`)).site.openSource;
