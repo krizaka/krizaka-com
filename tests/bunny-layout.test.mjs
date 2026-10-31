@@ -130,3 +130,9 @@ test("Akinaza's first-client journey clips are a legitimate kind of a site's med
   assert.equal(misplaced("sites/akinaza/first-client/phone-akinaza-books-en.8206ffd160.mp4"), null);
   assert.ok(misplaced("sites/akinaza/nosuch-kind/a.8206ffd160.mp4"), "other kinds are still checked");
 });
+
+test("render candidates under site/renders/<run>/ are transient, not misplaced (krizaka-internal#1953)", async () => {
+  const { misplaced } = await import("../scripts/bunny-layout.mjs");
+  assert.equal(misplaced("site/renders/2026-10-30-blog-v2/r01.png"), null);
+  assert.notEqual(misplaced("site/renders/r01.png"), null);
+});

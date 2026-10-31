@@ -38,28 +38,31 @@ export const isChosen = (path) => /(^|\/)chosen\//.test(path) || /chosen/i.test(
  * (null: still open). Returns [{ path, size, why }].
  */
 export function plan(objects, prs, now = Date.now()) {
-  const newest = new Map();
   const folderOf = (path) => path.split("/").slice(0, 3).join("/");
+  const newest = new Map();
   for (const o of objects) newest.set(folderOf(o.path), Math.max(newest.get(folderOf(o.path)) ?? 0, o.changed));
   const out = [];
   for (const o of objects) {
     if (!DELETABLE.some((p) => o.path.startsWith(p))) continue;
-    const last = newest.get(folderOf(o.path)) ?? o.changed;
-    const pr = prKeyOf(o.path);
-    if (pr) {
-      const known = pr.pr === null ? undefined : prs.get(`${pr.repo}#${pr.pr}`);
-      if (known?.closedAt === null) continue;
-      if (known) {
-        if (now - known.closedAt > PR_ASSETS_DAYS * DAY)
-          out.push({ path: o.path, size: o.size, why: `PR closed more than ${PR_ASSETS_DAYS} days ago` });
-      } else if (last && now - last > PR_ASSETS_DAYS * DAY) {
-        out.push({ path: o.path, size: o.size, why: `no PR to read, untouched for more than ${PR_ASSETS_DAYS} days` });
-      }
-    } else if (o.path.startsWith("site/renders/") && !isChosen(o.path) && last && now - last > RENDER_DAYS * DAY) {
-      out.push({ path: o.path, size: o.size, why: `render candidate untouched for more than ${RENDER_DAYS} days` });
-    }
+    const why = reasonToDelete(o, newest.get(folderOf(o.path)) ?? o.changed, prs, now);
+    if (why) out.push({ path: o.path, size: o.size, why });
   }
   return out;
+}
+
+/** Why one object goes (its folder last changed at `last`), or null when it stays. */
+function reasonToDelete(o, last, prs, now) {
+  const pr = prKeyOf(o.path);
+  if (!pr) return renderReason(o.path, last, now);
+  const known = pr.pr === null ? undefined : prs.get(`${pr.repo}#${pr.pr}`);
+  if (known?.closedAt === null) return null;
+  if (known) return now - known.closedAt > PR_ASSETS_DAYS * DAY ? `PR closed more than ${PR_ASSETS_DAYS} days ago` : null;
+  return last && now - last > PR_ASSETS_DAYS * DAY ? `no PR to read, untouched for more than ${PR_ASSETS_DAYS} days` : null;
+}
+
+function renderReason(path, last, now) {
+  const old = path.startsWith("site/renders/") && !isChosen(path) && last && now - last > RENDER_DAYS * DAY;
+  return old ? `render candidate untouched for more than ${RENDER_DAYS} days` : null;
 }
 
 /** The markdown listing of a plan, by folder (the run summary). */
