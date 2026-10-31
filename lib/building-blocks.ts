@@ -257,7 +257,7 @@ ${pinKts("com.krizaka:krizaka-users-client")}  implementation("com.krizaka:kriza
   },
   {
     id: "krizaka-notifications",
-    repo: "krizaka-notifications",
+    repo: "krizaka-platform-kit",
     bird: "pigeon",
     mood: "success",
     hue: "cyan",
@@ -265,7 +265,7 @@ ${pinKts("com.krizaka:krizaka-users-client")}  implementation("com.krizaka:kriza
     registry: "maven",
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/16",
-    docs: "https://github.com/krizaka/krizaka-notifications#readme",
+    docs: "https://github.com/krizaka/krizaka-platform-kit/blob/main/docs/notifications.md",
     releases: [
       {
         coordinate: "com.krizaka:krizaka-notifications-api",
