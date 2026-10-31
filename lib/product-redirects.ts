@@ -62,3 +62,10 @@ export function productRedirects(): Redirect[] {
     ...ORAZAKA_LEGACY.map((path) => to(`${path}/:path*`, orazaka)),
   ];
 }
+
+/** Served after every other redirect (next.config.ts): an old documentation address no rule claims (the docs of a
+    product that left, krizaka/.github#413) goes to the products section, never a 404 and never a dead site. It names no
+    product: whatever is under /docs/ and is not Krizaka UI, Krizaka Java or a presented product lands there. */
+export function lastResortRedirects(): Redirect[] {
+  return [to("/docs/:path+", "/#products")];
+}

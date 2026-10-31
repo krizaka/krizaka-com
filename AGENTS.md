@@ -333,7 +333,7 @@
 - **`org/v1/brand/` and `org/v1/defaults/` are generated from the code**, never drawn or uploaded by hand (krizaka-ui
   `tools/export-brand.mjs`, `tools/export-defaults.mjs`). A mark changes in krizaka-ui, then the export is re-run; a
   changed picture gets a new id or `org/v2/`.
-- **Departed products' folders** are in `RETIRED` (`bunny-layout.mjs`): `cdn-assets prune --retired --yes` deletes them; the CTO removes them from the zone, then this entry goes.
+- **Departed products' folders** are deleted from the zone by the CTO (krizaka/.github#413); `RETIRED` (`bunny-layout.mjs`) names none of them.
 - The site's media — product tours, posters, the gallery, the home backdrop, any heavy image or video — are sent with
   `cdn-assets upload`; the logical path (`--to`) keeps its area (`home`, `products/<p>/<kind>`, `docs/<p>`, `people/<p>`,
   `brand-films/<series>`) and lands in layout v2:

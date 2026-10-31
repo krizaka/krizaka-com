@@ -75,14 +75,14 @@ export const FOREIGN_WRITERS_V2 = [
 ];
 
 /** Folders of the zone that are retired (a departed or renamed product): `cdn-assets prune --retired` deletes them once main no longer names them. */
-export const RETIRED = [
-  /^site\/(?:people|products|docs)\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
-  /^site\/brand-films\/orochia\//,
-  // The same departed products in layout v2 (their marks, avatar tones, site and app folders): not misplaced, not served, kept until the founder's deletion (krizaka/.github#413).
-  /^sites\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
-  /^apps\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
-  /^org\/v\d+\/(?:brand|defaults\/tones)\/(?:yazakia|yasakia|orochia|yororis|kachizaka)\//,
-];
+export const RETIRED = Object.freeze(
+  /** @type {RegExp[]} */ (
+    [
+      // Empty: the folders of the products that left the org are deleted from the zone by the CTO (krizaka/.github#413), and no
+      // file of this repository names them. A renamed product's old folder is listed here, as a pattern, until it is pruned.
+    ]
+  ),
+);
 
 /**
  * Where a hashed file of site/ is mirrored in the browsable library, or null when it has no place there.
