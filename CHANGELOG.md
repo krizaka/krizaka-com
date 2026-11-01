@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.14.1](https://github.com/krizaka/krizaka-com/compare/v0.14.0...v0.14.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* **content:** no product licence claim, no typed repo count, Blog only in the footer (krizaka-internal[#2069](https://github.com/krizaka/krizaka-com/issues/2069)) ([#540](https://github.com/krizaka/krizaka-com/issues/540)) ([96a7ceb](https://github.com/krizaka/krizaka-com/commit/96a7ceb8a98a6cce031813f1f4868670ce311ea2))
+* **seo:** one-hop redirects, old /blog address, a watch page per film with VideoObject (krizaka-internal[#1881](https://github.com/krizaka/krizaka-com/issues/1881)) ([#547](https://github.com/krizaka/krizaka-com/issues/547)) ([ce9fb68](https://github.com/krizaka/krizaka-com/commit/ce9fb684c3d6b269bd101895a3582015d1f7b2fd))
+* **services:** remove the how-it-works section and the stale Maven Central figure (krizaka-com[#231](https://github.com/krizaka/krizaka-com/issues/231)) ([#541](https://github.com/krizaka/krizaka-com/issues/541)) ([d0448ee](https://github.com/krizaka/krizaka-com/commit/d0448ee1815d1ab6afcca5ee7d2c36802733cf54))
+* **sonar:** sorts name their compare function (S2871) ([#539](https://github.com/krizaka/krizaka-com/issues/539)) ([10d3dbe](https://github.com/krizaka/krizaka-com/commit/10d3dbe0668b90e3eb73a3cb0b9886894613425b))
+
 ## [0.14.0](https://github.com/krizaka/krizaka-com/compare/v0.13.0...v0.14.0) (2026-10-31)
 
 
