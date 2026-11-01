@@ -3,18 +3,21 @@
    the step. Steps: under 10 → 5; 100 → 10; 1 000 → 50; 10 000 → 500; 100 000 → 5 000; then 50 000. Below 5 nothing is said (0 hides the
    figure). Pure; tested by tests/figure-floor.test.mjs. Never round up. */
 
+const STEPS: readonly (readonly [below: number, step: number])[] = [
+  [10, 5],
+  [100, 10],
+  [1000, 50],
+  [10000, 500],
+  [100000, 5000],
+];
+
+const LAST_STEP = 50000;
+
 export function figureStep(count: number): number {
-  if (count < 10) return 5;
-  if (count < 100) return 10;
-  if (count < 1000) return 50;
-  if (count < 10000) return 500;
-  if (count < 100000) return 5000;
-  return 50000;
+  return STEPS.find(([below]) => count < below)?.[1] ?? LAST_STEP;
 }
 
 export function floorFigure(count: number): number {
-  if (!Number.isFinite(count) || count < 1) return 0;
-  const n = Math.floor(count);
-  const step = figureStep(n);
-  return Math.floor((n - 1) / step) * step;
+  const n = Number.isFinite(count) ? Math.max(0, Math.floor(count)) : 0;
+  return n < 1 ? 0 : Math.floor((n - 1) / figureStep(n)) * figureStep(n);
 }
