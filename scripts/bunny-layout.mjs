@@ -6,6 +6,9 @@
 export const README_NAME = "README.txt";
 
 export const BRANDS = ["krizaka", "orazaka", "yomizaka", "akinaza"];
+/** The brand folders: the company, the products, and Kachizaka — the code name of the managed storage, sold as Kridoc
+    (krizaka-internal#2033). It has marks, no site and no app, so it is not a product folder. */
+export const BRAND_FOLDERS = [...BRANDS, "kachizaka"];
 /** The kinds of media under products/<product>/. */
 export const PRODUCT_KINDS = ["home", "tour", "mobile", "gallery", "studios", "docs"];
 
@@ -222,7 +225,7 @@ ${Object.entries(TARGET)
   .map(([prefix, z]) => `${prefix}/\n  ${z.what}\n  ${z.path}\n  written by ${z.writer}`)
   .join("\n\n")}
 
-Sites: ${SITES.join(" · ")}. Apps: ${APPS.join(" · ")}. Brands: ${BRANDS.join(" · ")}.
+Sites: ${SITES.join(" · ")}. Apps: ${APPS.join(" · ")}. Brands: ${BRAND_FOLDERS.join(" · ")}.
 
 LEGACY FOLDERS — still served only while a published package or a live site names them; copied to the target by
 \`node scripts/cdn-assets.mjs migrate\`, never written again, deleted (\`cdn-assets purge-unused\`) once nothing names them.
@@ -262,7 +265,7 @@ const DEFAULTS_FILE =
   /^defaults\/v\d+\/(person|folder|organisation|shop|banner)\/[a-z0-9]+(-[a-z0-9]+)*(\.svg|-\d+\.webp)$/;
 const SITE_FILE = /^site\/(?:[a-z0-9_-]+\/)+[a-z0-9_-]+(?:\.[a-z0-9_-]+)*\.[0-9a-f]{10}\.[a-z0-9]+$/;
 const FILE = "[A-Za-z0-9._-]+";
-const brandAlt = BRANDS.join("|");
+const brandAlt = BRAND_FOLDERS.join("|");
 
 /** Per legacy root: why <path> does not fit it, or null. */
 const LEGACY_RULES = {
