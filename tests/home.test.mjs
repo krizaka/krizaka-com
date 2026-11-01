@@ -359,7 +359,7 @@ test("§ 5 puts the right to be forgotten first, says the books are kept, and re
     assert.deepEqual(Object.keys(items), ["forgotten", "books", "facts", "sovereign", "quality", "open"]);
     assert.match(
       items.open.body,
-      /\{count\}.*\{npm\}.*\{maven\}/,
+      /\{count\}.*\{npm\}/,
       `${lang}: the figures are placeholders, never typed`,
     );
     assert.match(

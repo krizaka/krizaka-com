@@ -4,6 +4,7 @@
    decided, the quality gates, the open code. Its figures are read at build. Short on purpose: a title and one sentence. */
 
 import type { ComponentType } from "react";
+import { floorFigure } from "@/lib/figure-floor";
 import {
   AutomationIcon,
   KnowledgeIcon,
@@ -35,7 +36,7 @@ export default function Principles({
   figures,
 }: {
   locale: string;
-  figures: { repositories: number; npm: number; maven: number };
+  figures: { repositories: number; npm: number };
 }) {
   const p = getDictionary(locale).site.home.principles;
   return (
@@ -45,7 +46,7 @@ export default function Principles({
           <li key={id} {...reveal(i % 3)}>
             <Icon size={20} aria-hidden />
             <h3>{p.items[id].title}</h3>
-            <p>{format(p.items[id].body, { count: figures.repositories, npm: figures.npm, maven: figures.maven })}</p>
+            <p>{format(p.items[id].body, { count: floorFigure(figures.repositories), npm: floorFigure(figures.npm) })}</p>
           </li>
         ))}
       </ol>

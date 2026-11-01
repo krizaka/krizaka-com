@@ -183,11 +183,12 @@
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "marksLabel": "Les produits, chacun mène à sa fiche",
         "proofs": {
+          "groups": { "published": "Ce que nous publions", "used": "Ce qui est utilisé" },
+          "more": "plus de",
           "repositories": "dépôts publics",
           "npm": "paquets sur npm",
           "downloads": "téléchargements npm la semaine dernière",
-          "maven": "artefacts sur Maven Central",
-          "license": "{license} sur chaque dépôt"
+          "license": "{license} sur chaque bibliothèque open source"
         },
         "filmClose": "Fermer le film",
         "plate": {
@@ -268,13 +269,12 @@
       "stack": {
         "facts": {
           "platforms": "Web · iOS · Android",
-          "npm": "{count} paquets sur npm",
-          "maven": "{count} artefacts sur Maven Central"
+          "npm": "{count} paquets sur npm"
         },
         "ui": {
           "line": "Les composants de chaque écran Krizaka — web, iOS et Android.",
           "explore": "Explorer ui.krizaka.com",
-          "downloads": "{count} téléchargements de @krizaka/ui la semaine dernière",
+          "downloads": "plus de {count} téléchargements de @krizaka/ui la semaine dernière",
           "showcase": {
             "label": "Un aperçu de Krizaka UI : une carte de profil avec avatar, jauge, rangée de puces, interrupteur et bouton.",
             "person": {
@@ -401,7 +401,7 @@
           },
           "open": {
             "title": "Ouvert par défaut",
-            "body": "{count} dépôts publics, {npm} paquets npm et {maven} artefacts Maven, lisibles ligne à ligne : les briques sous Apache-2.0."
+            "body": "Plus de {count} dépôts publics et plus de {npm} paquets npm, lisibles ligne à ligne : les bibliothèques open source sous Apache-2.0."
           }
         }
       },
@@ -743,7 +743,7 @@
       "eyebrow": "Open source · Apache-2.0",
       "title": "Le code sous nos produits, ouvert.",
       "github": "Parcourir github.com/krizaka",
-      "figuresLabel": "Ce que nous publions, lu sur GitHub, npm et Maven Central au build",
+      "figuresLabel": "Ce que nous publions, lu sur GitHub et npm au build",
       "repoCount": "{count} dépôts",
       "kinds": {
         "main": "Principal",
@@ -763,9 +763,8 @@
       "figures": {
         "repositories": "dépôts publics",
         "npm": "paquets sur npm",
-        "maven": "artefacts sur Maven Central",
         "downloads": "téléchargements npm la semaine dernière",
-        "license": "{license} sur chaque dépôt"
+        "license": "{license} sur chaque bibliothèque open source"
       },
       "stackEyebrow": "La pile",
       "stackTitle": "La pile, en un coup d'œil.",
@@ -883,7 +882,7 @@
         "lead": "Choisissez ce que vous venez faire. Chaque chemin ouvre la documentation sur son propre site, avec les premières pages à lire.",
         "startLabel": "Commencer ici",
         "open": "Ouvrir la documentation",
-        "stats": "{repositories} dépôts open source · {npm} paquets npm · {maven} artefacts Maven · Apache-2.0",
+        "stats": "plus de {repositories} dépôts open source · plus de {npm} paquets npm · Apache-2.0",
         "paths": {
           "ui": {
             "title": "Construire une interface",
@@ -1655,6 +1654,8 @@
         }
       },
       "proof": {
+        "groups": { "published": "Ce que nous publions", "used": "Ce qui est utilisé" },
+        "more": "plus de",
         "eyebrow": "Sur quoi cela repose",
         "title": "De vrais ouvrages, publics et mesurés.",
         "lead": "Tout ce qui suit est public et lu au moment de la publication du site. Nos produits sont en développement, et ils sont indiqués comme tels.",

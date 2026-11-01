@@ -783,3 +783,35 @@ html[data-intro="play"] .kz-intro-sweep {
   text-decoration-color: var(--kz-accent);
   text-underline-offset: 4px;
 }
+
+.kz-home-proofs dd .kz-home-more {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--kz-text-secondary);
+}
+
+.kz-home-proof-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+}
+.kz-home-proof-group + .kz-home-proof-group {
+  padding-inline-start: 32px;
+  border-inline-start: 1px solid var(--kz-border);
+}
+@media (max-width: 639px) {
+  .kz-home-proof-group + .kz-home-proof-group {
+    padding-inline-start: 0;
+    border-inline-start: 0;
+    padding-block-start: 16px;
+    border-block-start: 1px solid var(--kz-border);
+    width: 100%;
+  }
+}
+.kz-home-proof-label {
+  margin: 0 0 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--kz-text-secondary);
+}
