@@ -57,13 +57,14 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           if git diff --quiet -- lib/product-manifests.json; then echo "nothing moved"; exit 0; fi
-          branch="chore/drift-$(date +%Y-%m-%d)"
+          branch="chore/drift-$(date +%Y-%m-%d)-${GITHUB_RUN_ID}"
           git config user.name "krizaka-agents[bot]"
           git config user.email "krizaka-agents@users.noreply.github.com"
           git checkout -b "$branch"
           git commit -am "chore(drift): the products' manifests are read again (krizaka-internal#1888)"
           git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$branch"
-          gh pr create --title "chore(drift): the products' manifests are read again" \
+          # persist-credentials is off, so gh cannot infer the pushed branch: name it (run 41329286394 aborted without it).
+          gh pr create --head "$branch" --base main --title "chore(drift): the products' manifests are read again" \
             --body "Weekly drift check (.github/workflows/drift.yml): lib/product-manifests.json moved against its sources. Part of krizaka-internal#1888."
       - name: Claims against sources (fails when a source is missing)
         run: node scripts/check-drift.mjs
