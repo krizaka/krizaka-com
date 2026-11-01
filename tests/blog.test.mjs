@@ -6,15 +6,16 @@ import { misplaced, SITE_AREA_NAMES } from "../scripts/bunny-layout.mjs";
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 const messages = (l) => JSON.parse(read(`messages/${l}.json`));
 
-test("the bar, the mobile panel and the footer link to the blog (a link to another site, absolute)", () => {
+test("only the footer links to the blog (founder, 2026-11-01): not the bar, not the mobile panel", () => {
   assert.match(read("lib/site.ts"), /BLOG_URL = "https:\/\/blog\.krizaka\.com"/);
-  assert.match(read("app/components/SiteBar.tsx"), /href=\{BLOG_URL\}[^>]*>\{m\.blog\}/);
-  assert.match(read("app/components/MobilePanel.tsx"), /href=\{BLOG_URL\}/);
+  for (const f of ["app/components/SiteBar.tsx", "app/components/MobilePanel.tsx", "lib/nav.ts"])
+    assert.doesNotMatch(read(f).replace(/\/\*[\s\S]*?\*\//g, ""), /BLOG_URL|m\.blog|menu\.blog/, f);
   // The footer's blog link is the family's « Krizaka » column (@krizaka/ui/sites companyLinks), not a column of www's own.
   assert.doesNotMatch(read("app/components/SiteFooter.tsx"), /BLOG_URL|f\.story|f\.contact/);
   for (const l of ["en", "fr"]) {
     const m = messages(l).site;
-    assert.ok(m.menu.blog && m.footer.blog, l);
+    assert.equal(m.menu.blog, undefined, `${l}: menu.blog`);
+    assert.ok(m.footer.blog, l);
   }
 });
 
