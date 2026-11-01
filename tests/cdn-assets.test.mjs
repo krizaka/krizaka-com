@@ -282,3 +282,14 @@ test("publishReadme: uploads README.txt, then purges it", async () => {
   );
   assert.match(calls[1].url, /api\.bunny\.net\/purge\?url=.*README\.txt/);
 });
+
+test("every manifest key resolves to a layout path without a doubled segment", async () => {
+  const { readManifest, objectPath, ROOT } = await import("../scripts/cdn-assets.mjs");
+  const manifest = readManifest();
+  const bad = [];
+  for (const [path, hash] of Object.entries(manifest.files ?? manifest.sites ?? {})) {
+    const object = objectPath(ROOT, path, hash);
+    if (/(^|\/)([^/]+)\/\2(\/|$)/.test(object)) bad.push(`${path} -> ${object}`);
+  }
+  assert.deepEqual(bad, []);
+});
