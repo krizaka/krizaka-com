@@ -8,9 +8,9 @@
 
 ## Products (each has its own page, coming soon)
 
-- Orazaka — sovereign, on-premise AI orchestration engine. Site: https://www.orazaka.com · source: https://github.com/krizaka/orazaka
-- Yomizaka (in development) — your documents, read and checked by Orazaka. Site: https://www.yomizaka.com · source: https://github.com/krizaka/yomizaka
-- Akinaza (in development) — bookings, invoices and a GST/QST ledger for independent Québec shops; it prepares tax returns, the merchant files them. Site: https://www.akinaza.com · source: https://github.com/krizaka/akinaza
+- Sovkora — sovereign, on-premise AI orchestration engine. Site: https://www.orazaka.com · source: https://github.com/krizaka/orazaka
+- Verikora (in development) — your documents, read and checked by Sovkora. Site: https://www.yomizaka.com · source: https://github.com/krizaka/yomizaka
+- Folioviv (in development) — bookings, invoices and a GST/QST ledger for independent Québec shops; it prepares tax returns, the merchant files them. Site: https://www.akinaza.com · source: https://github.com/krizaka/akinaza
 
 ## Key pages
 

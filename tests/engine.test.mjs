@@ -81,7 +81,7 @@ test("the home leads with the engine and its flow, then the products it powers â
   assert.doesNotMatch(css, /\.kz-foundation/, "the engine wears the products' tag (KZ-01), not a foundation plate");
   assert.match(
     read("lib/products.ts"),
-    /id: "orazaka",\s+name: "Orazaka",\s+status: "development"/,
+    /id: "orazaka",\s+name: displayName\("orazaka"\),\s+status: "development"/,
     "Orazaka is in development too: its tag stamps it so, like the others",
   );
   assert.match(home, /status: \{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}/);

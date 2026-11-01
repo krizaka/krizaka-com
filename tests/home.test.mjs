@@ -288,8 +288,8 @@ test("the duo is named by its need: management and compliance tools", () => {
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home;
     assert.match(h.hero.lead, want[lang], `${lang}: hero.lead`);
-    assert.match(h.hero.lead, /Akinaza/);
-    assert.match(h.hero.lead, /Yomizaka/);
+    assert.match(h.hero.lead, /Folioviv/);
+    assert.match(h.hero.lead, /Verikora/);
     assert.match(h.products.title, want[lang], `${lang}: products.title`);
     assert.doesNotMatch(`${h.products.title} ${h.products.lead}`, /intelligen/i);
   }

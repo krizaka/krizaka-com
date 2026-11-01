@@ -20,18 +20,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Krizaka — open-source software studio in Montréal",
       description:
-        "Krizaka is a Montréal software studio building open-source products — Orazaka, Yomizaka and Akinaza — and the stack under them: Krizaka UI and Krizaka Java.",
+        "Krizaka is a Montréal software studio building open-source products — Sovkora, Verikora and Folioviv — and the stack under them: Krizaka UI and Krizaka Java.",
     },
     fr: {
       title: "Krizaka — studio logiciel open source à Montréal",
       description:
-        "Krizaka est un studio logiciel montréalais qui construit des produits open source — Orazaka, Yomizaka et Akinaza — et la pile qui les porte : Krizaka UI et Krizaka Java.",
+        "Krizaka est un studio logiciel montréalais qui construit des produits open source — Sovkora, Verikora et Folioviv — et la pile qui les porte : Krizaka UI et Krizaka Java.",
     },
   });
 }
 
 /* HOME — one of the site's two views (the other is Open source; 2026-10-17), on the landing template, in this order:
-   the hero (once-per-session intro, the film), the honest chronology: Orazaka, our first build (EngineSection), the
+   the hero (once-per-session intro, the film), the honest chronology: Sovkora, our first build (EngineSection), the
    products built on it (the only place they are presented: /products answers 308 to #products; the libraries live on
    /open-source, not here), one line to Our services (Krizaka Entreprise, /services), where we are going (now / next / later), the principles in brief, and it stops there (no Montréal, no contact panel, no FAQ; 2026-10-22). One primary action per
    section. Every figure is read at build: GitHub (lib/org-stats.ts), npm and Maven Central (lib/registry-versions.ts). */

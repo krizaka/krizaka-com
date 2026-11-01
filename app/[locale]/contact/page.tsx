@@ -14,12 +14,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Contact & Partnerships — Krizaka Montreal",
       description:
-        "Reach out to Krizaka in Montreal for custom integrations, sovereign AI audits, partnerships, or Orazaka support.",
+        "Reach out to Krizaka in Montreal for custom integrations, sovereign AI audits, partnerships, or Sovkora support.",
     },
     fr: {
       title: "Contact & Partenariats — Krizaka Montréal",
       description:
-        "Contactez Krizaka à Montréal pour des audits d'IA souveraine, des intégrations sur mesure ou le support d'Orazaka.",
+        "Contactez Krizaka à Montréal pour des audits d'IA souveraine, des intégrations sur mesure ou le support de Sovkora.",
     },
   });
 }

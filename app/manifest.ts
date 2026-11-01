@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Krizaka — Orazaka",
+    name: "Krizaka — Sovkora",
     short_name: "Krizaka",
     description: "Open-source sovereign AI orchestration engine — multimodal AI on your own infrastructure.",
     start_url: "/",

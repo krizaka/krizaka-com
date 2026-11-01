@@ -21,7 +21,7 @@
   "contact": {
     "pageTitle": "Contact & partenariats",
     "heading": "Contact & partenariats",
-    "intro": "Orazaka est un projet open source : la plupart des échanges se font en public. Choisis le canal qui correspond à ton besoin.",
+    "intro": "Sovkora est un projet open source : la plupart des échanges se font en public. Choisis le canal qui correspond à ton besoin.",
     "channels": [
       {
         "title": "Questions & entraide",
@@ -120,7 +120,7 @@
       "eyebrow": "Savoir-faire, prouvé par les produits",
       "title": "Un moteur, les produits qu'il propulse",
       "pageTitle": "Un moteur, et les produits qu'il propulse",
-      "lead": "Orazaka est le moteur sur lequel tourne l'IA de chaque produit Krizaka : c'est notre savoir-faire central. Chaque produit le prouve dans son domaine, sur son propre site, avec son code source sur GitHub.",
+      "lead": "Sovkora est le moteur sur lequel tourne l'IA de chaque produit Krizaka : c'est notre savoir-faire central. Chaque produit le prouve dans son domaine, sur son propre site, avec son code source sur GitHub.",
       "visit": "Voir le site",
       "visitAria": "{name} — voir le site",
       "source": "Code source",
@@ -144,7 +144,7 @@
         },
         "yomizaka": {
           "name": "La lecture des documents",
-          "proof": "Un bail vérifié règle par règle au regard de la loi en vigueur à une date, un PDF examiné à la recherche de retouches : chaque constat cite son passage, chaque vérification est un run Orazaka tracé."
+          "proof": "Un bail vérifié règle par règle au regard de la loi en vigueur à une date, un PDF examiné à la recherche de retouches : chaque constat cite son passage, chaque vérification est un run Sovkora tracé."
         },
         "akinaza": {
           "name": "Tenir une boutique, pour moins cher",
@@ -155,7 +155,7 @@
       "engine": {
         "meta": "La fondation",
         "line": "Un pipeline, vos modèles, votre réseau. Chaque produit ci-dessous l'appelle pour son IA, jamais un modèle en direct.",
-        "label": "Propulsé par Orazaka",
+        "label": "Propulsé par Sovkora",
         "planned": "prévu",
         "uses": {
           "yomizaka": "vérifications de documents, chacune une exécution tracée",
@@ -176,7 +176,7 @@
         "number": "§ 1",
         "eyebrow": "Carnet d'un studio logiciel · Montréal, Québec",
         "title": "Nous construisons du logiciel open source, et tout ce qui le porte.",
-        "lead": "Nous avons commencé par Orazaka, un moteur d'IA, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TypeScript, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour le Québec : Akinaza et Yomizaka.",
+        "lead": "Nous avons commencé par Sovkora, un moteur d'IA, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TypeScript, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour le Québec : Folioviv et Verikora.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
         "filmLength": "31 s",
@@ -202,9 +202,9 @@
       },
       "engine": {
         "number": "§ 2",
-        "title": "Orazaka, notre première construction.",
+        "title": "Sovkora, notre première construction.",
         "lead": "Le moteur d'IA, d'où tout est parti. Chaque produit tourne dessus.",
-        "givesLabel": "Ce que fournit Orazaka",
+        "givesLabel": "Ce que fournit Sovkora",
         "powers": "Il propulse",
         "gives": {
           "models": {
@@ -225,15 +225,15 @@
       "products": {
         "number": "§ 3",
         "title": "Puis les produits : des outils de gestion et de conformité.",
-        "lead": "Akinaza fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Yomizaka vérifie les papiers : baux, contrats, factures. Chacun vit sur son propre site, avec son code sur GitHub.",
-        "engineUse": "Sur Orazaka · {use}",
-        "enginePlanned": "Sur Orazaka, prévu · {use}",
+        "lead": "Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Verikora vérifie les papiers : baux, contrats, factures. Chacun vit sur son propre site, avec son code sur GitHub.",
+        "engineUse": "Sur Sovkora · {use}",
+        "enginePlanned": "Sur Sovkora, prévu · {use}",
         "flow": {
-          "label": "Orazaka et les produits qu'il fait tourner",
+          "label": "Sovkora et les produits qu'il fait tourner",
           "caption": "le moteur",
-          "hint": "Pointez un produit, ou atteignez-le au clavier, pour voir ce qu'il fait tourner sur Orazaka.",
-          "uses": "fait tourner {use} sur Orazaka.",
-          "usesPlanned": "fera tourner {use} sur Orazaka.",
+          "hint": "Pointez un produit, ou atteignez-le au clavier, pour voir ce qu'il fait tourner sur Sovkora.",
+          "uses": "fait tourner {use} sur Sovkora.",
+          "usesPlanned": "fera tourner {use} sur Sovkora.",
           "visit": "Visiter {host}",
           "yours": "Vos applications",
           "yoursUse": "Vos applications appellent le même moteur, chez vous ou au Canada : Krizaka Entreprise.",
@@ -243,7 +243,7 @@
         "notesLabel": "Notes sur les produits",
         "backLabel": "Retour à la fiche",
         "fields": {
-          "runs": "sur Orazaka",
+          "runs": "sur Sovkora",
           "planned": "prévu",
           "role": "rôle",
           "engineRole": "le moteur",
@@ -258,7 +258,7 @@
         },
         "notes": {
           "orazaka": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
-          "yomizaka": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Orazaka tracée.",
+          "yomizaka": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Sovkora tracée.",
           "akinaza": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise."
         },
         "birds": {
@@ -338,7 +338,7 @@
           },
           "ai": {
             "title": "IA souveraine",
-            "line": "Orazaka chez vous ou au Canada, avec vos modèles et chaque exécution tracée."
+            "line": "Sovkora chez vous ou au Canada, avec vos modèles et chaque exécution tracée."
           },
           "maintenance": {
             "title": "Maintenance",
@@ -359,7 +359,7 @@
           },
           "next": {
             "title": "Ensuite",
-            "body": "Les premiers clients : la vérification de Yomizaka pour les entreprises, les boutiques d'Akinaza et Krizaka Entreprise."
+            "body": "Les premiers clients : la vérification de Verikora pour les entreprises, les boutiques de Folioviv et Krizaka Entreprise."
           },
           "later": {
             "title": "Plus tard",
@@ -381,19 +381,19 @@
         "items": {
           "forgotten": {
             "title": "Oublié veut dire effacé",
-            "body": "Le droit à l'oubli est un geste, pas une demande : un client effacé dans Akinaza part avec sa fiche, ses notes et ses pièces jointes ; un document que Yomizaka ne garde pas est purgé après sa vérification ; Orazaka supprime les données d'une exécution au terme de sa rétention. Les factures restent le temps que la loi exige, pas plus."
+            "body": "Le droit à l'oubli est un geste, pas une demande : un client effacé dans Folioviv part avec sa fiche, ses notes et ses pièces jointes ; un document que Verikora ne garde pas est purgé après sa vérification ; Sovkora supprime les données d'une exécution au terme de sa rétention. Les factures restent le temps que la loi exige, pas plus."
           },
           "books": {
             "title": "Factures, taxes et compta, on s'en charge",
-            "body": "Chaque facture sait ce qui a été reçu et ce qui reste dû ; la TPS et la TVQ vont au registre à l'émission de chaque facture, et Akinaza prépare votre déclaration. Vous la produisez : nous ne la produisons jamais à votre place."
+            "body": "Chaque facture sait ce qui a été reçu et ce qui reste dû ; la TPS et la TVQ vont au registre à l'émission de chaque facture, et Folioviv prépare votre déclaration. Vous la produisez : nous ne la produisons jamais à votre place."
           },
           "facts": {
             "title": "Une vérification dit ce qu'elle a vu",
-            "body": "Le rapport d'authenticité de Yomizaka lit des faits dans le fichier, sans modèle, sans score et jamais de verdict sur une personne : trois niveaux, chacun défini par écrit, et ce qu'il n'a pas examiné."
+            "body": "Le rapport d'authenticité de Verikora lit des faits dans le fichier, sans modèle, sans score et jamais de verdict sur une personne : trois niveaux, chacun défini par écrit, et ce qu'il n'a pas examiné."
           },
           "sovereign": {
             "title": "Vos données restent où vous le décidez",
-            "body": "Orazaka tourne sur vos propres serveurs. Ce site n'a ni mesure d'audience ni traceur."
+            "body": "Sovkora tourne sur vos propres serveurs. Ce site n'a ni mesure d'audience ni traceur."
           },
           "quality": {
             "title": "Testé, bilingue, accessible",
@@ -465,12 +465,12 @@
       "company": "Organisation",
       "optional": "facultatif",
       "topics": {
-        "orazaka": "Orazaka",
+        "orazaka": "Sovkora",
         "blocks": "Briques Krizaka",
         "partnership": "Partenariat",
         "other": "Autre chose",
-        "yomizaka": "Yomizaka",
-        "akinaza": "Akinaza",
+        "yomizaka": "Verikora",
+        "akinaza": "Folioviv",
         "enterprise": "Entreprise"
       },
       "topicHints": {
@@ -478,8 +478,8 @@
         "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
         "partnership": "Intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe",
-        "yomizaka": "Parler de Yomizaka — en développement, inscription fermée",
-        "akinaza": "Parlez-nous d'Akinaza — en développement, inscriptions fermées",
+        "yomizaka": "Parler de Verikora — en développement, inscription fermée",
+        "akinaza": "Parlez-nous de Folioviv — en développement, inscriptions fermées",
         "enterprise": "Modules sur mesure, adoption d'une IA souveraine ou maintenance, sur devis"
       },
       "timeline": "Pour quand ?",
@@ -534,7 +534,7 @@
       "intro": {
         "eyebrow": "Notre histoire",
         "title": "Une entreprise de Montréal. Un moteur. <b>Des produits construits dessus.</b>",
-        "lead": "Krizaka est une entreprise de Montréal. Elle a d'abord construit Orazaka, un moteur d'IA qui montre son travail : chaque réponse garde la trace du modèle qui l'a produite et des règles qu'il a suivies. Puis elle a construit ses produits dessus, Yomizaka et Akinaza. Les trois sont en développement, à découvert, inscriptions fermées.",
+        "lead": "Krizaka est une entreprise de Montréal. Elle a d'abord construit Sovkora, un moteur d'IA qui montre son travail : chaque réponse garde la trace du modèle qui l'a produite et des règles qu'il a suivies. Puis elle a construit ses produits dessus, Verikora et Folioviv. Les trois sont en développement, à découvert, inscriptions fermées.",
         "start": "Commencer la lecture",
         "products": "Découvrir les produits"
       },
@@ -549,22 +549,22 @@
         "places": ["Montréal"],
         "film": "Voir le film",
         "filmLength": "31 s",
-        "filmCredit": "Film réalisé avec Orazaka",
+        "filmCredit": "Film réalisé avec Sovkora",
         "filmCredits": "crédits",
         "creditsTitle": "Crédits du film",
         "creditsClose": "Fermer",
         "creditsList": [
-          "Images clés générées avec Orazaka",
-          "Plans vidéo générés avec Orazaka",
+          "Images clés générées avec Sovkora",
+          "Plans vidéo générés avec Sovkora",
           "Sept plans, un seul étalonnage",
-          "Musique : ACE-Step 1.5, générée avec Orazaka",
+          "Musique : ACE-Step 1.5, générée avec Sovkora",
           "Titres composés en code, avec les polices de @krizaka/fonts",
           "Sans voix, donc sans sous-titres : la page du film décrit chaque plan"
         ]
       },
       "engine": {
         "nav": "Le moteur",
-        "title": "Orazaka, le moteur",
+        "title": "Sovkora, le moteur",
         "lead": "Au départ, un projet sur un portable, pour voir ce que des modèles chez soi savent faire. C'est devenu le premier produit de Krizaka : le moteur que nos produits appellent pour leur IA. Chaque requête garde son id, sa version et ses règles.",
         "more": "Ce que chaque produit en fait"
       },
@@ -584,11 +584,11 @@
           "renderPlayer": "Vidéo : une scène rendue par {name}",
           "captions": {
             "orazaka": [
-              "Le client web sur son site de dev : la persona de démo pose une question et Orazaka écrit la réponse."
+              "Le client web sur son site de dev : la persona de démo pose une question et Sovkora écrit la réponse."
             ],
             "yomizaka": [
               "Un bail est déposé dans la bibliothèque.",
-              "Yomizaka le lit et garde son texte.",
+              "Verikora le lit et garde son texte.",
               "Une recherche sur « dépôt » trouve la clause dans chaque bail."
             ],
             "akinaza": [
@@ -600,8 +600,8 @@
           }
         },
         "lines": {
-          "yomizaka": "Lisez avant de signer. Déposez un bail, un contrat ou une facture : Yomizaka le vérifie règle par règle et cite le passage exact derrière chaque constat.",
-          "akinaza": "La journée d'une petite boutique au même endroit : rendez-vous, factures bilingues et une déclaration de taxes préparée, que le commerçant relit. Akinaza la prépare, jamais il ne la dépose."
+          "yomizaka": "Lisez avant de signer. Déposez un bail, un contrat ou une facture : Verikora le vérifie règle par règle et cite le passage exact derrière chaque constat.",
+          "akinaza": "La journée d'une petite boutique au même endroit : rendez-vous, factures bilingues et une déclaration de taxes préparée, que le commerçant relit. Folioviv la prépare, jamais il ne la dépose."
         },
         "proofs": {
           "yomizaka": "Chaque règle cite son article de loi. Les règles québécoises attendent encore la relecture d'un avocat, et l'écran le dit : il trie, il ne donne pas d'avis juridique. Inscriptions fermées pendant nos essais sur de vrais baux.",
@@ -628,7 +628,7 @@
         "nav": "La suite",
         "title": "La suite",
         "lead": "Trois produits sont en développement, à découvert, inscriptions fermées. D'autres idées ont été explorées et sont en pause pour finir celles-ci. Aucune date promise : un produit dit ce qu'il est aujourd'hui.",
-        "wire": "Brancher Orazaka à {products}, où son usage est encore prévu.",
+        "wire": "Brancher Sovkora à {products}, où son usage est encore prévu.",
         "reach": "Amener {products} en préversion de développement, chacun prouvé sur sa propre liste de contrôle.",
         "boardAria": "Où en est chaque produit",
         "cta": "Écrivez-nous"
@@ -651,7 +651,7 @@
           "line": "Utilisateurs, facturation et notifications sur Spring"
         },
         "engine": {
-          "name": "Orazaka",
+          "name": "Sovkora",
           "line": "Le moteur d'IA souverain"
         }
       },
@@ -692,9 +692,9 @@
           "cues": {
             "title": "La famille Krizaka.",
             "falcon": "Le faucon, c’est Krizaka : il veille, la sécurité d’abord.",
-            "duck": "Le canard, c’est Orazaka : le moteur qui fait tourner l’IA de la famille.",
-            "owl": "Le hibou, c’est Yomizaka : il lit un bail et cite le passage exact.",
-            "beaver": "Le castor, c’est Akinaza : réservations, factures, une déclaration à relire.",
+            "duck": "Le canard, c’est Sovkora : le moteur qui fait tourner l’IA de la famille.",
+            "owl": "Le hibou, c’est Verikora : il lit un bail et cite le passage exact.",
+            "beaver": "Le castor, c’est Folioviv : réservations, factures, une déclaration à relire.",
             "together": "Quatre oiseaux, une famille."
           }
         },
@@ -712,8 +712,8 @@
         "shotsLead": "Le film n'a pas de voix. Voici ce qu'il montre, dans l'ordre.",
         "film": {
           "title": "Montrer son travail, le film de Krizaka",
-          "description": "Un film de {seconds} secondes réalisé avec Orazaka : un cahier, une goutte d'encre, puis Montréal, où les oiseaux de la famille se mettent au travail.",
-          "credit": "Images, plans et musique générés avec Orazaka. Titres composés en code.",
+          "description": "Un film de {seconds} secondes réalisé avec Sovkora : un cahier, une goutte d'encre, puis Montréal, où les oiseaux de la famille se mettent au travail.",
+          "credit": "Images, plans et musique générés avec Sovkora. Titres composés en code.",
           "shots": {
             "notebook": "Un cahier ouvert sous une lampe. Une goutte d'encre se forme au bout de la plume.",
             "drop": "La goutte tombe et frappe une flaque, dans une rue de Montréal.",
@@ -987,7 +987,7 @@
             "title": "Comptes Krizaka (blog.krizaka.com)",
             "paragraphs": [
               "Pas encore ouvert : la connexion du blogue n'est activée qu'une fois ce service en marche, et d'ici là aucune des données ci-dessous n'est collectée. Cette section dit dès maintenant ce qui se passera alors.",
-              "Le blogue permet de se connecter avec GitHub, Google, Apple ou Facebook pour commenter, recevoir les réponses et retrouver ses billets enregistrés sur tous ses appareils. La connexion crée un compte Krizaka, tenu par accounts.krizaka.com. Ce n'est le compte d'aucun de nos produits : Orazaka, Yomizaka et les autres gardent leurs propres utilisateurs, et un compte Krizaka n'y donne aucun accès.",
+              "Le blogue permet de se connecter avec GitHub, Google, Apple ou Facebook pour commenter, recevoir les réponses et retrouver ses billets enregistrés sur tous ses appareils. La connexion crée un compte Krizaka, tenu par accounts.krizaka.com. Ce n'est le compte d'aucun de nos produits : Sovkora, Verikora et les autres gardent leurs propres utilisateurs, et un compte Krizaka n'y donne aucun accès.",
               "Nous gardons le fournisseur utilisé et l'identifiant qu'il vous donne, l'adresse courriel qu'il a vérifiée, votre nom affiché, vos commentaires, les billets enregistrés, et votre choix de recevoir ou non les réponses par courriel. Nous les utilisons seulement pour faire fonctionner votre compte : afficher votre nom à côté de vos commentaires, garder vos billets enregistrés et — seulement si vous l'activez — vous écrire quand quelqu'un vous répond. Aucun mot de passe, aucune adresse IP conservée, aucun profilage, aucune publicité.",
               "Votre premier commentaire attend une personne de l'équipe avant de paraître ; un commentaire peut être signalé et masqué en attendant sa relecture. Les commentaires sont protégés contre les abus par Cloudflare Turnstile. Les courriels de réponse passent par notre fournisseur de courriel, Mailgun, et chacun contient un lien de désabonnement en un clic.",
               "Les données sont stockées dans la base de données de Krizaka chez DigitalOcean (Toronto). Depuis la page de votre compte, vous pouvez télécharger tout ce que contient votre compte dans un fichier, retirer un fournisseur de connexion, arrêter les courriels de réponse ou supprimer le compte : le compte, ses billets enregistrés et ses réglages sont supprimés, ses commentaires aussi (un commentaire supprimé qui a des réponses garde sa place, sans texte ni nom). Les billets enregistrés sans compte restent seulement dans votre navigateur."
@@ -997,7 +997,7 @@
             "id": "software",
             "title": "Nos logiciels",
             "paragraphs": [
-              "Orazaka et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Yomizaka et Akinaza sont en développement et ne collectent rien par ce site.",
+              "Sovkora et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Verikora et Folioviv sont en développement et ne collectent rien par ce site.",
               "Si vous y branchez des services externes (fournisseurs d'IA, passerelles de paiement, CDN vidéo), les données que vous envoyez vont directement à ces fournisseurs, selon leurs propres politiques."
             ]
           },
@@ -1062,7 +1062,7 @@
           {
             "title": "Produits pas encore disponibles",
             "paragraphs": [
-              "Yomizaka et Akinaza sont en développement : l’inscription est fermée et rien n’est encore offert, et ce que le site en dit décrit des intentions, pas un service."
+              "Verikora et Folioviv sont en développement : l’inscription est fermée et rien n’est encore offert, et ce que le site en dit décrit des intentions, pas un service."
             ]
           },
           {
@@ -1095,7 +1095,7 @@
     "contactPage": {
       "eyebrow": "Contact",
       "title": "Parlons de votre projet",
-      "lead": "Déploiement d'Orazaka, projet bâti sur une brique Krizaka, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
+      "lead": "Déploiement de Sovkora, projet bâti sur une brique Krizaka, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
       "publicTitle": "Ou échangeons en public",
       "publicLead": "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub.",
       "nextTitle": "La suite",
@@ -1150,7 +1150,7 @@
         "products": {
           "title": "Produits",
           "category": "Krizaka",
-          "desc": "Orazaka, Yomizaka et Akinaza — chacun sur son propre site."
+          "desc": "Sovkora, Verikora et Folioviv — chacun sur son propre site."
         }
       },
       "label": "Rechercher sur le site",
@@ -1158,17 +1158,17 @@
       "docsCategory": "Documentation"
     },
     "structuredData": {
-      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Orazaka, Yomizaka et Akinaza, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com).",
+      "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Sovkora, Verikora et Folioviv, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com).",
       "family": {
         "orazaka": "Moteur d'orchestration d'IA souverain et sur site : conversation, connaissances, tâches et automatisation chez vous.",
         "krizaka-ui": "Le design system de Krizaka : composants React et React Native, tokens, icônes, polices et graphiques.",
         "krizaka-java": "Les briques Spring Boot de chaque service Krizaka, publiées sur Maven Central sous com.krizaka.",
-        "yomizaka": "Des baux, contrats et factures lus et vérifiés par Orazaka. En développement.",
+        "yomizaka": "Des baux, contrats et factures lus et vérifiés par Sovkora. En développement.",
         "akinaza": "Vos rendez-vous, vos factures et vos taxes, réglés, pour les salons, studios et travailleurs autonomes du Québec. En développement."
       },
       "socialImage": {
         "tagline": "Des logiciels open source, faits à Montréal.",
-        "line": "Krizaka UI · Krizaka Java · Orazaka · Yomizaka · Akinaza"
+        "line": "Krizaka UI · Krizaka Java · Sovkora · Verikora · Folioviv"
       }
     },
     "blocks": {
@@ -1228,14 +1228,14 @@
         "krizaka-platform-kit": {
           "name": "Platform kit",
           "tagline": "Le code transverse que chaque service Spring Boot écrit — écrit une fois, avec ses invariants testés.",
-          "trap": "Publier un événement juste après l'écriture en base : un crash entre les deux et l'événement est perdu ; l'envoyer avant, et un rollback a déjà prévenu tout le monde. Un `@RabbitListener` en échec remis en file à l'infini bloque sa file. Chaque service invente son JSON d'erreur. Dans les services d'Orazaka, ce code existait cinq à sept fois — avec trois bugs actifs entre les copies.",
+          "trap": "Publier un événement juste après l'écriture en base : un crash entre les deux et l'événement est perdu ; l'envoyer avant, et un rollback a déjà prévenu tout le monde. Un `@RabbitListener` en échec remis en file à l'infini bloque sa file. Chaque service invente son JSON d'erreur. Dans les services de Sovkora, ce code existait cinq à sept fois — avec trois bugs actifs entre les copies.",
           "answer": "Quatre modules et quatre starters : une base de sécurité pour chaque chaîne de filtres, des événements par outbox transactionnel, des files consommatrices qui réessaient puis passent en dead-letter, une consommation idempotente, des erreurs RFC 9457 avec un identifiant de requête, et des noms de service obligatoires sur chaque métrique.",
           "rule": "Rien n'est ouvert par oubli. `SecurityBaseline` termine chaque chaîne par `anyRequest().authenticated()` : le chemin que vous avez oublié de lister est fermé, pas public.",
           "problem": [
             "Double écriture : un service qui écrit sa ligne puis appelle `rabbitTemplate.convertAndSend` perd l'événement s'il plante entre les deux, et celui qui envoie d'abord annonce des changements annulés.",
             "Messages empoisonnés : un listener qui lève une exception sur un message malformé le reçoit de nouveau, aussitôt, pour toujours, et plus rien ne passe dans la file.",
             "Déduplication à la main : un « existe-t-il ? alors j'insère » laisse passer deux livraisons qui se chevauchent — exactement quand le broker relivre une première tentative lente — et une réservation gardée après un échec perd la relivraison en silence.",
-            "Chaînes de sécurité copiées par service : deux sur six avaient dérivé dans Orazaka ; l'une répondait 401 à un preflight CORS."
+            "Chaînes de sécurité copiées par service : deux sur six avaient dérivé dans Sovkora ; l'une répondait 401 à un preflight CORS."
           ],
           "decisions": [
             {
@@ -1308,7 +1308,7 @@
             {
               "chose": "Un profil = un thème plus des attributs définis par votre application — les réponses d'un formulaire d'onboarding dont vous fournissez le JSON Schema — stockés tels quels, jamais interprétés.",
               "refused": "Un modèle de profil figé avec des champs produit.",
-              "because": "Le service connaît des utilisateurs, pas votre produit ; les champs propres à Orazaka en sont sortis pour devenir ses réponses d'onboarding.",
+              "because": "Le service connaît des utilisateurs, pas votre produit ; les champs propres à Sovkora en sont sortis pour devenir ses réponses d'onboarding.",
               "cost": "Votre code lit ses attributs avec ses propres valeurs par défaut."
             },
             {
@@ -1421,11 +1421,11 @@
           ],
           "notFor": [
             "Il vous faut des factures, des taxes ou des paiements par carte : billing compte des crédits ; encaisser reste à vous (une recharge crédite un portefeuille).",
-            "Vos capacités ne sont pas du travail d'IA — aujourd'hui. Le contrat nomme encore celles d'Orazaka (CHAT, IMAGE, AUDIO, VIDEO, AGENT) et ses mesures (jetons, secondes GPU…) ; voir plus bas."
+            "Vos capacités ne sont pas du travail d'IA — aujourd'hui. Le contrat nomme encore celles de Sovkora (CHAT, IMAGE, AUDIO, VIDEO, AGENT) et ses mesures (jetons, secondes GPU…) ; voir plus bas."
           ],
           "status": "0.1.0 sur Maven Central (api, client). La 0.2.0 — l'outbox implémente `OutboxStore.append`, chaque événement a son JSON Schema — est fusionnée et sort en novembre.",
           "next": {
-            "vocabulary": "Décidé : capacités et unités deviennent des clés déclarées dans la grille tarifaire, les mesures une table de quantités ; Orazaka garde ses enums chez Orazaka. Une brique de facturation réutilisable ne peut pas parler le vocabulaire d'un seul produit.",
+            "vocabulary": "Décidé : capacités et unités deviennent des clés déclarées dans la grille tarifaire, les mesures une table de quantités ; Sovkora garde ses enums chez Sovkora. Une brique de facturation réutilisable ne peut pas parler le vocabulaire d'un seul produit.",
             "release": "Le BOM 0.2.0 gère cette brique en 0.2.0, non publiée : déclarez 0.1.0 explicitement jusqu'au BOM 0.3.0."
           },
           "headline": "Débiter après, et le travail tourne à crédit. Débiter avant, et les échecs sont facturés.",
@@ -1496,7 +1496,7 @@
             {
               "chose": "Un seul vocabulaire de jetons ; le sombre sur `:root`, le clair sur `html.light` ; une marque surcharge des valeurs (`brands/scoped.css`).",
               "refused": "Des variantes `light:/dark:` dans les composants, et un jeu de jetons par produit.",
-              "because": "Un thème ou une marque est un jeu de valeurs : l’orange d’Orazaka et le vert d’Akinaza utilisent les mêmes composants que ce site.",
+              "because": "Un thème ou une marque est un jeu de valeurs : l’orange d’Sovkora et le vert d’Folioviv utilisent les mêmes composants que ce site.",
               "cost": "Les composants ne lisent que `var(--kz-*)` ; les couleurs de palette brutes sont refusées par les règles de lint."
             },
             {
@@ -1583,9 +1583,9 @@
       "filterLabel": "Filtrer par produit",
       "filters": {
         "all": "Tout",
-        "orazaka": "Orazaka",
-        "akinaza": "Akinaza",
-        "yomizaka": "Yomizaka",
+        "orazaka": "Sovkora",
+        "akinaza": "Folioviv",
+        "yomizaka": "Verikora",
         "ui": "Krizaka UI",
         "java": "Krizaka Java"
       },
@@ -1622,9 +1622,9 @@
         },
         "ai": {
           "name": "Adopter une IA souveraine",
-          "unit": "Orazaka, chez vous ou au Canada",
+          "unit": "Sovkora, chez vous ou au Canada",
           "features": [
-            "Orazaka installé sur vos serveurs ou hébergé au Canada",
+            "Sovkora installé sur vos serveurs ou hébergé au Canada",
             "Les modèles que vous choisissez, sans dépendre d'un seul fournisseur",
             "Chaque exécution tracée et relisible",
             "Vos données restent où vous l'avez décidé"
@@ -1671,7 +1671,7 @@
           "line": "Des briques TypeScript pour le serveur, sur npm, chaque paquet documenté sur son site."
         },
         "orazaka": {
-          "title": "Orazaka",
+          "title": "Sovkora",
           "line": "Le moteur d'IA derrière nos produits, avec son code source sur GitHub."
         },
         "blog": {
@@ -1692,7 +1692,7 @@
           },
           "data": {
             "q": "Où vont nos données avec l'IA ?",
-            "a": "Là où vous le décidez : sur vos serveurs ou chez un hébergeur au Canada. Orazaka trace chaque exécution pour que vous puissiez la relire."
+            "a": "Là où vous le décidez : sur vos serveurs ou chez un hébergeur au Canada. Sovkora trace chaque exécution pour que vous puissiez la relire."
           },
           "stack": {
             "q": "Faut-il déjà utiliser vos produits ?",

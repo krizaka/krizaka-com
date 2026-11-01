@@ -26,6 +26,7 @@ import {
   releaseProblems,
   siteReleaseUrl,
 } from "../lib/changelog.ts";
+import { commercialWords } from "../lib/commercial-words.ts";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "changelog.json");
 const PACKAGES = ["ui", "tokens", "icons", "i18n", "tailwind", "charts"]; // krizaka-ui/packages/<dir>
@@ -109,8 +110,19 @@ const published = await get(`https://api.github.com/repos/${SITE_REPO}/releases/
 );
 const platform = { site, release: siteReleaseUrl(site, published) };
 
+const say = (lines) => lines?.map((c) => ({ ...c, text: commercialWords(c.text) }));
+const commercial = releases.map((r) => ({
+  ...r,
+  source: commercialWords(r.source),
+  changes: say(r.changes),
+  ...(r.fr ? { fr: say(r.fr) } : {}),
+}));
+
 if (releases.length || !existsSync(OUT)) {
-  writeFileSync(OUT, `${JSON.stringify({ releases, platform, fetchedAt: new Date().toISOString() }, null, 1)}\n`);
+  writeFileSync(
+    OUT,
+    `${JSON.stringify({ releases: commercial, platform, fetchedAt: new Date().toISOString() }, null, 1)}\n`,
+  );
   console.log(`changelog: ${releases.length} releases`);
 } else {
   // Sources unreachable: keep the releases, refresh the platform line.

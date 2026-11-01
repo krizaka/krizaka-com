@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SiteFooter as FamilyFooter } from "@krizaka/ui/site-footer";
+import { FOOTER_ORG } from "@/lib/footer-org";
 import { familyLabels } from "@krizaka/ui/sites";
 import { useI18n } from "./I18nProvider";
 import { PRODUCTS_ANCHOR } from "@/lib/nav";
@@ -28,6 +29,7 @@ export default function SiteFooter() {
     <FamilyFooter
       current="krizaka"
       products={PRODUCT_IDS}
+      org={FOOTER_ORG}
       path={pathname}
       variant="site"
       // The signature names the company as it is registered (Technologies Krizaka, lib/site.ts COMPANY), not « Krizaka »:

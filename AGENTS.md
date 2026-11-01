@@ -32,6 +32,7 @@
   product anywhere — code, messages, docs, configs, manifests; the org's conformance rule `no-departed-product` proves it (history is
   allow-listed in the registry only). An old product address (`/products/<anything else>`) answers 308 with `/#products`
   (`lib/product-redirects.ts`), never a dead site.
+- **Commercial names** (Oussama, 2026-11-01, krizaka-internal#2103): the site shows **Verikora** (code name yomizaka), **Folioviv** (akinaza) and **Sovkora** (orazaka, the engine: « Powered by Sovkora »); only the words change. Ids, `siteUrl`/`devUrl` (www.yomizaka.com…), repositories, redirects and Bunny paths keep the code names. The display name is data (`brandOf(code).commercialName` of `@krizaka/org`, read by `lib/products.ts`), messages say the commercial name or take `{product}`, and `krizaka-code-names messages content` (in `npm run lint`) refuses a code name in a message or in `content/`; the built HTML is checked by the same bin in CI (`scripts/ci-container-smoke.sh`).
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
   `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
