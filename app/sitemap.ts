@@ -68,7 +68,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       buildEntries(watchPath(f.id), 0.6, "monthly")
         .filter((e) => e.url === `${baseUrl}/${loc}${watchPath(f.id)}`)
         .map((e) => {
-          const t = getDictionary(loc).site.story.watch[f.id];
+          const t = getDictionary(loc).site.story.watch.film;
           return {
             ...e,
             videos: [

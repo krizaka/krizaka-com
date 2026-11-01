@@ -8,7 +8,6 @@
 
 export { KITS, KIT_PACKAGES, type KitId } from "./product-stack";
 import { PRODUCTS, type ProductId } from "./products";
-import { BLOG_URL } from "./site";
 
 /** The engine: the product the others are powered by (stage 03). */
 export const ENGINE: ProductId = "orazaka";
@@ -37,21 +36,3 @@ export const PRODUCT_BIRD: Record<ProductId, StoryBird> = {
 };
 export const WHO_BIRD: StoryBird = "falcon";
 export const OPEN_BIRD: StoryBird = "pigeon";
-
-/** The blog chapter that tells each part of the story in full (blog.krizaka.com/story/<slug>, in each language). The words
- *  are messages (site.story.blog.<anchor>, the chapter's own title). */
-export const BLOG_CHAPTER = {
-  who: "why-krizaka",
-  engine: "an-engine-on-a-laptop",
-  yomizaka: "the-first-products",
-  akinaza: "the-first-products",
-  open: "one-interface-everywhere",
-  next: "building-with-agents",
-} as const;
-
-const BLOG_PREFIX = { en: "", fr: "/fr" } as const;
-
-/** The address of a blog chapter in the page's language. */
-export function blogChapterUrl(slug: string, locale: keyof typeof BLOG_PREFIX): string {
-  return `${BLOG_URL}${BLOG_PREFIX[locale]}/story/${slug}/`;
-}

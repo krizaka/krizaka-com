@@ -57,11 +57,11 @@ test("the ambient flock appears in the hero and the products section, each in it
   assert.match(read("app/components/home/ProductsFlock.tsx"), /<TapedPhoto/);
 });
 
-test("« Le monde de Krizaka » opens in a lightbox from the hero; the player's code loads only when it opens", () => {
+test("the brand film « Montrer son travail » opens in a lightbox from the hero; the player's code loads only when it opens", () => {
   const box = read("app/components/home/FilmLightbox.tsx");
   assert.match(box, /dynamic\(\(\) => import\("@krizaka\/ui\/video-player"\)/);
   assert.match(box, /<Dialog\.Root>/);
   assert.match(box, /preload="none"/);
-  assert.match(read("app/components/home/HomeHero.tsx"), /video\(FILM_BASE\)/);
+  assert.match(read("app/components/home/HomeHero.tsx"), /const film = brandFilm\(\);/);
   for (const l of ["en", "fr"]) assert.ok(JSON.parse(read(`messages/${l}.json`)).site.home.hero.film, l);
 });

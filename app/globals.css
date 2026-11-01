@@ -561,6 +561,11 @@ html:not([data-motion="ready"])
 .rd-prose.is-small {
   font-size: 14.5px;
 }
+/* A film's shots, in order (its text version on the watch page). */
+.rd-shots {
+  padding-left: 1.4em;
+  list-style: decimal;
+}
 .rd-h2 {
   font-size: clamp(1.25rem, 2.6vw, 1.6rem);
   scroll-margin-top: var(--kz-anchor-offset);

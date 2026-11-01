@@ -85,12 +85,8 @@ test("each chapter wears the right bird, with its promise from the film or the b
 test("the film is shown once: one poster card opening the lightbox; no inline player, no autoplay in the text", () => {
   const p = "app/[locale]/story/page.tsx";
   assert.equal(jsxAll(p, "FilmLightbox").length, 1, "the reference film once");
-  assert.ok(hasCode(p, "storyFilm()"), "the film slot: « La famille Krizaka » (lib/story-film.ts)");
-  assert.ok(hasCode(p, "vtt: film.vtt"));
-  assert.ok(
-    hasCode(p, 'fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}'),
-    "the light film under reduced motion / Save-Data",
-  );
+  assert.ok(hasCode(p, "brandFilm()"), "the film slot: « Montrer son travail » (lib/story-film.ts)");
+  assert.ok(hasCode(p, "tall: film.tall"), "the vertical cut, when it is on the CDN");
   const tags = jsx(p).map((e) => e.tag);
   assert.ok(!tags.includes("VideoPlayer") && !tags.includes("video"), "no player in the reading column");
   assert.ok(!identifiers(p).has("autoPlay") && !identifiers(p).has("autoplay"), "no autoplay");
@@ -106,7 +102,7 @@ test("the film is shown once: one poster card opening the lightbox; no inline pl
   }
 });
 
-test("the film block shows no captions list and no credits wall: one quiet line, the captions live in the <track>", () => {
+test("the film block shows no captions list and no credits wall: one quiet line, the credits in a dialog", () => {
   assert.doesNotMatch(page, /RELAY_CUES|FAMILY_CUES|relay\.cues/, "captions are never printed as a list");
   assert.doesNotMatch(page, /st\.world\.family\.credit\b/, "no credits paragraph");
   assert.doesNotMatch(page, /summary: st\.who/, "no fold on the founder chapter");
@@ -251,7 +247,7 @@ test("the own palettes of the birds are distinct (the falcon is orange, not the 
 import { takeVtt } from "../lib/take-captions.ts";
 // lib/story-takes.ts reads the CDN manifest (a JSON import): the test reads its source.
 const TAKE_PRODUCTS = Object.keys(objectMap("lib/story-takes.ts", "SPECS"));
-import { pickFilm } from "../lib/film-captions.ts";
+import { BRAND_FILM, hasTallCut, prefersStill } from "../lib/brand-film.ts";
 import {
   PRODUCT_RECORDS,
   constString,
@@ -325,25 +321,61 @@ test("no take names Orazaka as the one doing a product's job", () => {
   assert.doesNotMatch(JSON.stringify(caps), /\bQA\b/);
 });
 
-test("the film slot takes the newest film whose files are on the CDN, else the one under it", () => {
-  const films = [
-    { id: "famille", base: "brand-films/family/x", vtt: "family.vtt" },
-    { id: "autre", base: "brand-films/other/y", vtt: "other.vtt" },
-  ];
-  const has =
-    (...bases) =>
-    (p) =>
-      bases.some((b) => ["webm", "mp4", "jpg"].map((e) => `${b}.${e}`).includes(p));
-  assert.equal(pickFilm(films, has("brand-films/other/y")).id, "autre");
-  assert.equal(pickFilm(films, has("brand-films/family/x", "brand-films/other/y")).id, "famille");
-  assert.equal(pickFilm(films, () => false).id, "autre", "never a dead poster: the oldest is always the fallback");
+// The founder approved « Montrer son travail » on 2026-11-01 (krizaka-internal#138): it replaces every other film.
+test("the brand film slot reads « Montrer son travail » from the CDN manifest; the vertical cut joins once its files are there", () => {
+  const { files } = JSON.parse(read("lib/cdn-manifest.json"));
+  assert.match(BRAND_FILM.base, /^brand-films\/montrer-son-travail\//);
+  for (const ext of ["webm", "mp4", "jpg"])
+    assert.match(
+      files[`${BRAND_FILM.base}.${ext}`] ?? "",
+      /^[0-9a-f]{10}$/,
+      `${BRAND_FILM.base}.${ext} is in the manifest`,
+    );
   const slot = read("lib/story-film.ts");
-  assert.match(
-    slot,
-    /id: "famille", base: FAMILY_BASE, vtt: "family\.vtt"/,
-    "the family film is at the top of the slot",
+  assert.match(slot, /video\(BRAND_FILM\.base\)/, "the slot resolves the manifest entry through lib/cdn.ts");
+  assert.match(slot, /hasTallCut\(onCdn\) \? video\(BRAND_FILM\.tall\) : undefined/);
+  assert.doesNotMatch(slot, /FAMILY_BASE|FILM_BASE|RELAY_BASE|family\.vtt|relay\.vtt/, "no retired film in the slot");
+  // the vertical cut: absent until both its files are recorded
+  assert.equal(
+    hasTallCut(() => false),
+    false,
   );
-  assert.doesNotMatch(slot, /RELAY_BASE|relay\.vtt|id: "relais"/, "« le relais » is retired from every slot");
+  assert.equal(
+    hasTallCut((p) => p === `${BRAND_FILM.tall}.mp4`),
+    false,
+    "a cut without its poster waits",
+  );
+  assert.equal(
+    hasTallCut((p) => [`${BRAND_FILM.tall}.mp4`, `${BRAND_FILM.tall}.jpg`].includes(p)),
+    true,
+  );
+  assert.equal(
+    hasTallCut((p) => Boolean(files[p])),
+    Boolean(files[`${BRAND_FILM.tall}.mp4`] && files[`${BRAND_FILM.tall}.jpg`]),
+  );
+  // every slot plays it: the home's « Watch the film », /story, the watch page
+  assert.match(read("app/components/home/HomeHero.tsx"), /const film = brandFilm\(\);/);
+  assert.match(page, /const film = brandFilm\(\);/);
+  assert.match(read("lib/watch-films.ts"), /base: BRAND_FILM\.base/);
+  for (const file of [
+    "app/components/home/HomeHero.tsx",
+    "app/[locale]/story/page.tsx",
+    "app/components/home/FilmLightbox.tsx",
+  ])
+    assert.doesNotMatch(read(file), /FAMILY_BASE|FILM_BASE|codeFilm|fallback=/, `${file}: no other film`);
+});
+
+test("reduced motion or Save-Data: the film waits on its poster (no autoplay)", () => {
+  const media = (reduce) => (q) => ({ matches: reduce && q.includes("reduce") });
+  assert.equal(prefersStill({ matchMedia: media(false), navigator: {} }), false);
+  assert.equal(prefersStill({ matchMedia: media(true), navigator: {} }), true);
+  assert.equal(prefersStill({ matchMedia: media(false), navigator: { connection: { saveData: true } } }), true);
+  assert.equal(prefersStill({}), false);
+  const box = read("app/components/home/FilmLightbox.tsx");
+  assert.match(box, /setStill\(prefersStill\(window\)\)/);
+  assert.match(box, /autoPlay=\{!still\}/);
+  assert.match(box, /poster=\{play\.poster\}/);
+  assert.doesNotMatch(box, /pauseWhenHidden=\{false\}/, "the player pauses off screen (its default)");
 });
 
 // Taped prints (2026-10-23): every picture or video of /story sits in @krizaka/ui's TapedPhoto — the film poster, each
@@ -414,16 +446,26 @@ test("the chapters' media alternate sides: right, left, right…, with CSS only,
   assert.ok(!jsx(PAGE).some((e) => /(order|direction|gridTemplate)/.test(e.attrs.style ?? "")), "no inline layout");
 });
 
-test("each chapter links to the blog chapter that tells it in full, in the page's language", () => {
-  assert.match(story, /BLOG_CHAPTER[^=]*= \{/);
-  for (const a of ["who", "engine", "yomizaka", "akinaza", "open", "next"]) {
-    assert.match(story, new RegExp(`${a}: "[a-z-]+"`), a);
-    for (const l of ["en", "fr"]) assert.ok(messages(l).story.blog[a], `${l}: blog.${a}`);
+// Founder, 2026-11-01 (krizaka-internal#138): /story is Krizaka's story, the company's. The blog is the founder's personal
+// blog about how he builds: /story never links to it, in any language.
+test("/story never links to the founder's blog (blog.krizaka.com)", () => {
+  assert.doesNotMatch(page, /BLOG_URL|blogChapterUrl|BLOG_CHAPTER|readOn\(/, "no blog link on the page");
+  assert.doesNotMatch(story, /BLOG_URL|blogChapterUrl|BLOG_CHAPTER/, "lib/story.ts maps no blog chapter");
+  for (const l of ["en", "fr"]) {
+    const st = messages(l).story;
+    assert.equal(st.blog, undefined, `${l}: no blog chapter titles`);
+    assert.doesNotMatch(
+      JSON.stringify(st),
+      /blog\.krizaka\.com|blogue|\bblog\b/i,
+      `${l}: the story's words name no blog`,
+    );
   }
-  assert.match(story, /BLOG_PREFIX = \{ en: "", fr: "\/fr" \}/);
-  for (const a of ['"who"', '"engine"', "id as keyof typeof BLOG_CHAPTER", '"open"', '"next"'])
-    assert.ok(page.includes(`{readOn(${a})}`) || page.includes(`actions={readOn(${a})}`), `readOn(${a})`);
-  for (const l of ["en", "fr"]) assert.match(messages(l).story.products.readAria, /\{title\}/);
+  for (const file of [
+    "app/[locale]/story/page.tsx",
+    "app/components/story/StoryChapter.tsx",
+    "app/components/story/FilmCredits.tsx",
+  ])
+    assert.doesNotMatch(read(file), /blog\.krizaka\.com|BLOG_URL/, file);
 });
 
 // Only Orazaka, Yomizaka and Akinaza are in focus; the rule `no-departed-product` (krizaka/.github#413) proves no other name is left.

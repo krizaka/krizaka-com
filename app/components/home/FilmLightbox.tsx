@@ -1,9 +1,9 @@
 "use client";
 
-/* « Watch the full film »: « The Krizaka family » (the reference film, AI-generated) in a dialog,
-   with the same captions and words as /story. Nothing is fetched before it opens: the player's code is loaded on open
-   (next/dynamic), the film with preload none and its poster first. Under reduced motion or Save-Data the dialog plays
-   the light, calm film instead: the 44 s « Le monde de Krizaka » rendered from the code (`fallback`). */
+/* « Watch the film »: the brand film « Montrer son travail » (lib/brand-film.ts) in a dialog. Nothing is fetched before it
+   opens: the player's code is loaded on open (next/dynamic), the film with preload none and its poster first. Under
+   reduced motion or Save-Data it waits on its poster (no autoplay). On a phone held upright it plays the vertical cut
+   once that cut is on the CDN. No speech, so no captions track. */
 
 import { useState, type ReactNode } from "react";
 import dynamic from "next/dynamic";
@@ -12,40 +12,46 @@ import { PlayIcon } from "@krizaka/icons";
 import { Button } from "@krizaka/ui/button";
 import { Dialog } from "@krizaka/ui/dialog";
 import { useI18n } from "@/app/components/I18nProvider";
-import { prefersLightFilm } from "@/lib/film-captions";
+import { prefersStill } from "@/lib/brand-film";
 
 const VideoPlayer = dynamic(() => import("@krizaka/ui/video-player").then((m) => m.VideoPlayer), { ssr: false });
 
-export interface LightboxFilm {
+export interface LightboxCut {
   mp4: string;
   poster: string;
-  /** The captions route under /<locale>/story/, e.g. "family.vtt". */
-  vtt: string;
+}
+
+export interface LightboxFilm extends LightboxCut {
+  /** The 9:16 cut, when it is on the CDN. */
+  tall?: LightboxCut;
 }
 
 export default function FilmLightbox({
   film,
-  fallback,
   trigger,
 }: {
   film: LightboxFilm;
-  fallback: LightboxFilm;
   /** Another way to open it (/story: the poster card); the home's ghost button by default. */ trigger?: ReactNode;
 }) {
-  const { t, locale } = useI18n();
-  const [light, setLight] = useState(false);
+  const { t } = useI18n();
+  const [still, setStill] = useState(true);
+  const [upright, setUpright] = useState(false);
   const h = t.site.home.hero;
   const w = t.site.story.world;
-  const play = light ? fallback : film;
+  const play = upright && film.tall ? film.tall : film;
   const labels = {
     ...w.labels,
     speed: (rate: number) => format(w.labels.speed, { rate: String(rate) }),
     captions: (track: string | null) => format(w.labels.captions, { track: track ?? w.labels.captionsOff }),
     time: (time: string, duration: string) => format(w.labels.time, { time, duration }),
   };
+  const open = () => {
+    setStill(prefersStill(window));
+    setUpright(window.matchMedia("(orientation: portrait) and (max-width: 640px)").matches);
+  };
   return (
     <Dialog.Root>
-      <Dialog.Trigger asChild onClick={() => setLight(prefersLightFilm(window))}>
+      <Dialog.Trigger asChild onClick={open}>
         {trigger ?? (
           <Button type="button" variant="ghost" size="lg" className="kz-home-film-trigger">
             <PlayIcon size={15} aria-hidden /> {h.film} <span className="kz-home-film-length">{h.filmLength}</span>
@@ -53,20 +59,14 @@ export default function FilmLightbox({
         )}
       </Dialog.Trigger>
       <Dialog.Content size="lg" closeLabel={h.filmClose} className="kz-home-film">
-        <Dialog.Title className="sr-only">{light ? w.title : w.family.player}</Dialog.Title>
+        <Dialog.Title className="sr-only">{w.brand.player}</Dialog.Title>
         <VideoPlayer
           key={play.mp4}
           src={play.mp4}
           poster={play.poster}
           preload="none"
-          autoPlay={!light}
-          title={light ? w.player : w.family.player}
-          tracks={(["en", "fr"] as const).map((lang) => ({
-            src: `/${lang}/story/${play.vtt}`,
-            srcLang: lang,
-            label: w.captions[lang],
-            default: lang === locale,
-          }))}
+          autoPlay={!still}
+          title={w.brand.player}
           labels={labels}
         />
       </Dialog.Content>
