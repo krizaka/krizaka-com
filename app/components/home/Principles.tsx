@@ -46,7 +46,9 @@ export default function Principles({
           <li key={id} {...reveal(i % 3)}>
             <Icon size={20} aria-hidden />
             <h3>{p.items[id].title}</h3>
-            <p>{format(p.items[id].body, { count: floorFigure(figures.repositories), npm: floorFigure(figures.npm) })}</p>
+            <p>
+              {format(p.items[id].body, { count: floorFigure(figures.repositories), npm: floorFigure(figures.npm) })}
+            </p>
           </li>
         ))}
       </ol>

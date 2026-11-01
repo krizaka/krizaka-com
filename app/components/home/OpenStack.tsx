@@ -173,7 +173,10 @@ export function StackTiles({ locale }: { locale: string }) {
         cta={s.ts.explore}
         facts={
           floorFigure(tsPackages.length) > 0
-            ? [{ label: format(s.facts.npm, { count: floorFigure(tsPackages.length) }), tone: "ok" }, { label: STACK_LICENCE }]
+            ? [
+                { label: format(s.facts.npm, { count: floorFigure(tsPackages.length) }), tone: "ok" },
+                { label: STACK_LICENCE },
+              ]
             : []
         }
       >

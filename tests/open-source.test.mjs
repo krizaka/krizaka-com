@@ -101,8 +101,7 @@ test("groups keep their order and drop when empty", () => {
 
 test("/docs is the documentation hub (2026-10-30): paths by reader, a quiet line of figures, how it fits, the folded reference, contribute", () => {
   const page = "app/[locale]/docs/page.tsx";
-  for (const read of ["repositories.length", "npmPackages().length"])
-    assert.ok(hasCode(page, read), read);
+  for (const read of ["repositories.length", "npmPackages().length"]) assert.ok(hasCode(page, read), read);
   // The hub's collections are the reader's paths (lib/docs-start.ts), not the stack's cards.
   assert.ok(hasCode(page, "collections={START_PATHS.map("), "paths by reader");
   for (const id of ["how-it-fits", "reference", "contribute"]) assert.ok(hasJsx(page, "Section", { id }), id);

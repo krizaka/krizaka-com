@@ -15,7 +15,8 @@ test("floorFigure rounds down to a clean step, strictly below the real count", (
 });
 
 test("floorFigure never exceeds the real count and hides what it cannot say", () => {
-  for (let n = 0; n < 3000; n++) assert.ok(floorFigure(n) <= n && (n === 0 || floorFigure(n) < n || floorFigure(n) === 0), String(n));
+  for (let n = 0; n < 3000; n++)
+    assert.ok(floorFigure(n) <= n && (n === 0 || floorFigure(n) < n || floorFigure(n) === 0), String(n));
   assert.equal(floorFigure(5), 0);
   assert.equal(floorFigure(0), 0);
   assert.equal(floorFigure(Number.NaN), 0);
