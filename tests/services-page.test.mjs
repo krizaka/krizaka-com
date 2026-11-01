@@ -62,7 +62,7 @@ test("a message with the Entreprise topic is accepted", () => {
 test("the page is registered, in the bar, the footer, the sitemap and llms.txt, with a Service node under the Organization", () => {
   assert.match(read("lib/page-templates.ts"), /"\/services": "pricing"/);
   assert.match(read("lib/nav.ts"), /\{ href: "\/services", icon: "services" \}/);
-  assert.match(read("app/components/SiteFooter.tsx"), /to\("\/services"\)/);
+  assert.match(read("lib/footer.ts"), /href: "\/services"/);
   assert.match(read("app/sitemap.ts"), /"\/services"/);
   assert.match(read("content/llms.txt"), /\{\{SITE_URL\}\}\/en\/services/);
   const ld = read("lib/structured-data.ts");

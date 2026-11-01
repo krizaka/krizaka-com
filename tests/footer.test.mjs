@@ -8,17 +8,36 @@ const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const footer = read("app/components/SiteFooter.tsx");
 
-test("the family's Krizaka column links Our story to /story (both languages); www's own column does not repeat it", async () => {
-  const { companyLinks, familyLabels } = await import("@krizaka/ui/sites");
-  const story = companyLinks.find((l) => l.id === "story");
-  assert.equal(story.url.en, "https://www.krizaka.com/story");
-  assert.equal(story.url.fr, "https://www.krizaka.com/fr/story");
-  assert.equal(familyLabels.en.company.story, "Our story");
-  const column = footer.slice(
-    footer.indexOf("<FamilyFooter.Column title={f.siteColumn}>"),
-    footer.indexOf("</FamilyFooter.Column>"),
+// The footer as the admin configures it (founder, 2026-11-01): lib/footer.ts in the settings shape of the apps
+// (@krizaka/ui FooterSettings), valid by the same rules the admin form applies; three columns, the company named once.
+test("the footer's settings pass the admin's validation: products, open source, Krizaka, then the legal line", async () => {
+  const { footerSettingsProblems } = await import("@krizaka/ui/site-footer");
+  const { footerSettings } = await import("../lib/footer.ts");
+  assert.deepEqual(footerSettingsProblems(footerSettings), []);
+  assert.deepEqual(
+    footerSettings.columns.map((c) => c.id),
+    ["products", "open-source", "company"],
   );
-  assert.doesNotMatch(column, /f\.story|f\.blog|f\.contact|BLOG_URL/);
+  // The legal identity, once: the registered name and the NEQ, as the law asks (lib/site.ts COMPANY), never an address.
+  assert.equal(footerSettings.legal.legalName, "Technologies Krizaka Inc.");
+  assert.match(footerSettings.legal.neq, /^\d{10}$/);
+  // Products by their commercial name (@krizaka/org displayName), on their www address, never a dev host.
+  const products = footerSettings.columns[0];
+  assert.equal(products.status, "development");
+  for (const l of products.links) assert.match(l.href, /^https:\/\/www\./);
+});
+
+test("every message key of the footer's settings exists in both languages, the company is named once", () => {
+  const keys = [...read("lib/footer.ts").matchAll(/(?:labelKey|titleKey): "([\w.]+)"/g)].map((m) => m[1]);
+  assert.ok(keys.length >= 8);
+  for (const l of ["en", "fr"]) {
+    const m = messages(l);
+    for (const key of keys) assert.equal(typeof key.split(".").reduce((n, p) => n?.[p], m), "string", `${l}: ${key}`);
+    // No « A Technologies Krizaka company » line beside the legal identity: the company is named once.
+    assert.equal(m.site.footer.signature, undefined, `${l}: site.footer.signature`);
+    assert.equal(m.site.footer.company, undefined, `${l}: site.footer.company`);
+  }
+  assert.doesNotMatch(footer, /signature|org\.footer\.line|COMPANY/);
 });
 
 test("the footer's story label exists in both languages", () => {
@@ -52,11 +71,10 @@ test("no page renders a footer of its own", () => {
   assert.deepEqual(offenders, []);
 });
 
-// One SiteFooter, the « site » variant, never two bands that say the same thing (2026-10-20, Oussama: « le footer a l'air
-// doublé »): the site's own column is titled for what it is (« On krizaka.com »), not « Krizaka » like the family's first.
-test("the footer is @krizaka/ui's one SiteFooter, the site variant, its own column not named like the family's", () => {
+// One SiteFooter, the « site » variant, drawn from the settings (never columns typed in the component).
+test("the footer is @krizaka/ui's one SiteFooter, the site variant, drawn from lib/footer.ts", () => {
   assert.match(footer, /variant="site"/);
   assert.equal(footer.match(/<FamilyFooter(?=[\s>])/g)?.length, 1);
-  assert.doesNotMatch(footer, /<FamilyFooter\.Column title="Krizaka"/);
-  for (const l of ["en", "fr"]) assert.ok(messages(l).site.footer.siteColumn, `${l}: site.footer.siteColumn`);
+  assert.match(footer, /config=\{config\}/);
+  assert.doesNotMatch(footer, /<FamilyFooter\.Column/);
 });
