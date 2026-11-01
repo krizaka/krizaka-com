@@ -6,7 +6,7 @@
    and Docs (the hub people follow: where do I start?). The bar, in three zones:
    - left, who we are: the Krizaka mark and the word "Krizaka" (home);
    - centre, this site: Services · Docs (NAV_BAR_LINKS, 2026-10-30) — never a link to another site; the story lives in the footer;
-   - right, tools: Blog (blog.krizaka.com) · Repo · theme · language · Contact us. "Docs" is the hub that points to the documentation, which lives on its own sites. */
+   - right, tools: Repo · theme · language · Contact us. "Docs" is the hub that points to the documentation, which lives on its own sites. */
 
 import type { TranslationDictionary } from "./i18n";
 import { PRODUCTS, type ProductId, type ProductStatus } from "./products";

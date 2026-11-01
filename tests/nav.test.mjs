@@ -35,8 +35,8 @@ test("two views (2026-10-17): the mark and the word Krizaka lead home, the centr
   for (const file of ["app/components/SiteBar.tsx", "app/components/MobilePanel.tsx"]) {
     assert.doesNotMatch(read(file), /"story"|\/story/, `${file}: no story link`);
   }
-  // right: Blog (another site) · GitHub · theme · language · Contact us, the one primary action
-  assert.match(bar, /href=\{BLOG_URL\}/);
+  // right: GitHub (the blog is in the footer only, 2026-11-01) · · theme · language · Contact us, the one primary action
+  assert.doesNotMatch(bar, /BLOG_URL/);
   assert.equal(bar.match(/variant="primary"/g)?.length, 1);
   assert.match(bar, /variant="primary"[^>]*>\s*<Link href=\{contactHref\}>/);
 });

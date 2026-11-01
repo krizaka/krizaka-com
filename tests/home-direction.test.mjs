@@ -61,7 +61,7 @@ test("one primary action per section: no primary button in the two sections", ()
     assert.doesNotMatch(read(`app/components/home/${f}.tsx`), /variant="primary"/, f);
 });
 
-test("licence words are true to the repositories: the products are FSL-1.1, never said to be Apache-2.0", async () => {
+test("licence words are true to the repositories: the products are never said to be Apache-2.0 (and no licence is claimed for them: tests/claims-guard.test.mjs)", async () => {
   const { readFileSync } = await import("node:fs");
   for (const l of ["en", "fr"]) {
     const text = readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8");
@@ -75,7 +75,6 @@ test("licence words are true to the repositories: the products are FSL-1.1, neve
       /(dépôts et (les )?paquets sont publics, sous licence Apache|repositories and packages are public, under the Apache)/,
       `${l}: « everything is Apache-2.0 »`,
     );
-    assert.match(text, /Functional Source License/, `${l}: the products' licence is named`);
   }
 });
 

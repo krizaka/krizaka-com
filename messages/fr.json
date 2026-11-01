@@ -76,7 +76,6 @@
       "preferences": "Préférences",
       "mainAria": "Navigation principale",
       "homeAria": "Krizaka — accueil",
-      "blog": "Blogue",
       "language": "Langue"
     },
     "nav": {
@@ -402,7 +401,7 @@
           },
           "open": {
             "title": "Ouvert par défaut",
-            "body": "{count} dépôts publics, {npm} paquets npm et {maven} artefacts Maven, lisibles ligne à ligne : les briques sous Apache-2.0, les produits sous la Functional Source License."
+            "body": "{count} dépôts publics, {npm} paquets npm et {maven} artefacts Maven, lisibles ligne à ligne : les briques sous Apache-2.0."
           }
         }
       },
@@ -864,7 +863,7 @@
         "lead": "Choisissez ce que vous venez faire. Chaque chemin ouvre la documentation sur son propre site, avec les premières pages à lire.",
         "startLabel": "Commencer ici",
         "open": "Ouvrir la documentation",
-        "stats": "{repositories} dépôts publics · {npm} paquets npm · {maven} artefacts Maven · Apache-2.0",
+        "stats": "{repositories} dépôts open source · {npm} paquets npm · {maven} artefacts Maven · Apache-2.0",
         "paths": {
           "ui": {
             "title": "Construire une interface",
@@ -1043,7 +1042,7 @@
           {
             "title": "Licence des logiciels",
             "paragraphs": [
-              "Les briques que nous publions sont ouvertes, sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les paquets @krizaka/* sur npm, les artefacts com.krizaka sur Maven et leurs dépôts sur github.com/krizaka. Les dépôts des produits (Yomizaka, Akinaza et les applications Orazaka) sont publics sous la Functional Source License 1.1 (FSL-1.1-ALv2) : vous pouvez les lire, les exécuter et les modifier pour tout usage autre qu'un produit concurrent, et chaque version passe sous Apache 2.0 deux ans après sa sortie. Chaque dépôt porte sa licence, qui prévaut.",
+              "Les briques que nous publions sont ouvertes, sous la licence Apache 2.0 — vous pouvez les utiliser, les modifier et les distribuer, y compris commercialement, selon cette licence : les paquets @krizaka/* sur npm, les artefacts com.krizaka sur Maven et leurs dépôts sur github.com/krizaka. Chaque dépôt porte sa licence, qui prévaut.",
               "La licence couvre le code. Elle ne donne pas le droit d'utiliser comme les vôtres les noms, logos et marques de produits de Krizaka."
             ]
           },

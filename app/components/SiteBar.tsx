@@ -5,7 +5,7 @@
    - left, who we are: the Krizaka mark and the word "Krizaka" — the home, where the products are presented (two views
      only, 2026-10-17); no family switcher on the company's own site (ui.krizaka.com and java.krizaka.com carry it);
    - centre, this site: Open source (the story is in the footer);
-   - right, tools: Blog (blog.krizaka.com) · Repo · theme · language · Contact us, the one primary action.
+   - right, tools: Repo · theme · language · Contact us, the one primary action.
    No search and no "Docs": the documentation lives on ui.krizaka.com and java.krizaka.com.
    While /docs still renders here, its pages keep their breadcrumb and the search over them (DocsCrumb, SearchCommand).
    Below md: the mark and the mobile panel's toggle. */
@@ -21,7 +21,7 @@ import { KrizakaLogo } from "@krizaka/ui";
 import { useI18n } from "./I18nProvider";
 import { useLanguageSwitch } from "./LanguageSwitch";
 import { useSiteTheme } from "./SiteTheme";
-import { BLOG_URL, SITE_REPO_URL } from "@/lib/site";
+import { SITE_REPO_URL } from "@/lib/site";
 import { NAV_BAR_LINKS, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
@@ -80,10 +80,6 @@ export default function SiteBar() {
                 <Kbd className="hidden lg:inline-flex">⌘K</Kbd>
               </Button>
             )}
-
-            <Button asChild variant="ghost" size="sm" shape="pill" className="hidden font-semibold md:inline-flex">
-              <a href={BLOG_URL}>{m.blog}</a>
-            </Button>
 
             <NavBar.Repo href={SITE_REPO_URL} label={m.githubAria} className="hidden lg:inline-flex" />
 

@@ -76,7 +76,6 @@
       "preferences": "Preferences",
       "mainAria": "Main navigation",
       "homeAria": "Krizaka — home",
-      "blog": "Blog",
       "language": "Language"
     },
     "nav": {
@@ -402,7 +401,7 @@
           },
           "open": {
             "title": "Open by default",
-            "body": "{count} public repositories, {npm} npm packages and {maven} Maven artifacts, readable line by line: the building blocks under Apache-2.0, the products under the Functional Source License."
+            "body": "{count} public repositories, {npm} npm packages and {maven} Maven artifacts, readable line by line: the building blocks under Apache-2.0."
           }
         }
       },
@@ -864,7 +863,7 @@
         "lead": "Pick what you are here to do. Each path opens the documentation on its own site, with the first pages to read.",
         "startLabel": "Start here",
         "open": "Open the documentation",
-        "stats": "{repositories} public repositories · {npm} npm packages · {maven} Maven artifacts · Apache-2.0",
+        "stats": "{repositories} open-source repositories · {npm} npm packages · {maven} Maven artifacts · Apache-2.0",
         "paths": {
           "ui": {
             "title": "Build an interface",
@@ -1043,7 +1042,7 @@
           {
             "title": "Software license",
             "paragraphs": [
-              "The building blocks we publish are open source under the Apache License 2.0 — you may use, modify and distribute them, commercially too, under that license: the @krizaka/* packages on npm, the com.krizaka artifacts on Maven and their repositories on github.com/krizaka. The products' repositories (Yomizaka, Akinaza and the Orazaka applications) are public under the Functional Source License 1.1 (FSL-1.1-ALv2): you may read, run and modify them for any purpose other than a competing product, and each version becomes Apache 2.0 two years after its release. Each repository carries its license, which prevails.",
+              "The building blocks we publish are open source under the Apache License 2.0 — you may use, modify and distribute them, commercially too, under that license: the @krizaka/* packages on npm, the com.krizaka artifacts on Maven and their repositories on github.com/krizaka. Each repository carries its license, which prevails.",
               "The license covers the code. It does not grant the right to use the Krizaka names, logos and product marks as your own."
             ]
           },
