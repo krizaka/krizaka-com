@@ -183,11 +183,12 @@
         "proofsLabel": "Krizaka in figures, read at build",
         "marksLabel": "The products, each to its entry",
         "proofs": {
+          "groups": { "published": "What we publish", "used": "What gets used" },
+          "more": "more than",
           "repositories": "public repositories",
           "npm": "packages on npm",
           "downloads": "npm downloads last week",
-          "maven": "artifacts on Maven Central",
-          "license": "{license} on every repository"
+          "license": "{license} on every open-source library"
         },
         "filmClose": "Close the film",
         "plate": {
@@ -268,13 +269,12 @@
       "stack": {
         "facts": {
           "platforms": "Web · iOS · Android",
-          "npm": "{count} packages on npm",
-          "maven": "{count} artifacts on Maven Central"
+          "npm": "more than {count} packages on npm"
         },
         "ui": {
           "line": "The components of every Krizaka screen — web, iOS and Android.",
           "explore": "Explore ui.krizaka.com",
-          "downloads": "{count} downloads of @krizaka/ui last week",
+          "downloads": "more than {count} downloads of @krizaka/ui last week",
           "showcase": {
             "label": "A sample of Krizaka UI: a profile card with an avatar, a meter, a row of chips, a switch and a button.",
             "person": {
@@ -401,7 +401,7 @@
           },
           "open": {
             "title": "Open by default",
-            "body": "{count} public repositories, {npm} npm packages and {maven} Maven artifacts, readable line by line: the building blocks under Apache-2.0."
+            "body": "More than {count} public repositories and more than {npm} npm packages, readable line by line: the open-source libraries under Apache-2.0."
           }
         }
       },
@@ -743,7 +743,7 @@
       "eyebrow": "Open source · Apache-2.0",
       "title": "The code under our products, in the open.",
       "github": "Browse github.com/krizaka",
-      "figuresLabel": "What we publish, read from GitHub, npm and Maven Central at build",
+      "figuresLabel": "What we publish, read from GitHub and npm at build",
       "repoCount": "{count} repositories",
       "kinds": {
         "main": "Main",
@@ -763,9 +763,8 @@
       "figures": {
         "repositories": "public repositories",
         "npm": "packages on npm",
-        "maven": "artifacts on Maven Central",
         "downloads": "npm downloads last week",
-        "license": "{license} on every repository"
+        "license": "{license} on every open-source library"
       },
       "stackEyebrow": "The stack",
       "stackTitle": "The stack at a glance.",
@@ -883,7 +882,7 @@
         "lead": "Pick what you are here to do. Each path opens the documentation on its own site, with the first pages to read.",
         "startLabel": "Start here",
         "open": "Open the documentation",
-        "stats": "{repositories} open-source repositories · {npm} npm packages · {maven} Maven artifacts · Apache-2.0",
+        "stats": "more than {repositories} open-source repositories · more than {npm} npm packages · Apache-2.0",
         "paths": {
           "ui": {
             "title": "Build an interface",
@@ -1655,6 +1654,8 @@
         }
       },
       "proof": {
+        "groups": { "published": "What we publish", "used": "What gets used" },
+        "more": "more than",
         "eyebrow": "What it stands on",
         "title": "Real work, public and measured.",
         "lead": "Everything below is public and read when the site is published. Our products are in development, and they say so.",

@@ -18,7 +18,7 @@ test("the home and /services wear the site's paper class, no inline style on <ma
 test("/services: the figures are one line of facts, its hero has one primary action", () => {
   const src = read("app/[locale]/services/page.tsx");
   assert.doesNotMatch(src, /FigureTiles/, "the home's hero already carries the climbing figures");
-  assert.match(src, /<Facts items=\{figures\.map/);
+  assert.match(src, /<Facts items=\{g\.items\.map/);
   const hero = src.slice(src.indexOf("<PricingPage"), src.indexOf("plansLabel="));
   assert.equal((hero.match(/variant="primary"/g) ?? []).length, 1);
   assert.doesNotMatch(hero, /variant="secondary"/, "the second way in is a quiet ghost link");

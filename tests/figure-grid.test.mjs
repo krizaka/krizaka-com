@@ -22,8 +22,5 @@ test("/docs: the figures are one quiet line, never a band of tiles (2026-10-30)"
   assert.doesNotMatch(page, /FigureTiles|StatTile/);
   assert.match(page, /<p className="os-stats">/);
   for (const l of ["en", "fr"])
-    assert.match(
-      JSON.parse(read(`messages/${l}.json`)).site.openSource.hub.stats,
-      /\{repositories\}.*\{npm\}.*\{maven\}/,
-    );
+    assert.match(JSON.parse(read(`messages/${l}.json`)).site.openSource.hub.stats, /\{repositories\}.*\{npm\}/);
 });

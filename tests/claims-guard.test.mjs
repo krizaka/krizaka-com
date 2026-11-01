@@ -58,3 +58,41 @@ test("the docs hub counts the open-source list and says so; 'public' labels read
   }
   assert.match(read("app/[locale]/docs/page.tsx"), /repositories\.length/);
 });
+
+test("no Maven Central count, no « every repository » licence claim (founder, 2026-11-01)", () => {
+  const bad = [
+    [
+      /mavenArtifactCount|"[^"]*\{maven\}[^"]*"|(?:artifacts|artefacts) (?:on|sur) Maven Central/i,
+      "a Maven Central count",
+    ],
+    [
+      /(?:Apache|licen[cs]e|\{license\})[^\n]*(?:every repositor|chaque dépôt(?! porte))|(?:on|sur) every repositor|sur chaque dépôt(?! porte)/i,
+      "a licence claim on every repository",
+    ],
+  ];
+  for (const f of [...sources, "messages/en.json", "messages/fr.json"])
+    for (const [i, line] of read(f).split("\n").entries())
+      for (const [re, what] of bad) assert.doesNotMatch(line, re, `${f}:${i + 1} shows ${what}`);
+});
+
+test("public figures and the downloads total are « more than N », read at build, rounded down, never typed, in two groups", async () => {
+  const { floorFigure } = await import("../lib/figure-floor.ts");
+  for (const real of [36, 47, 40, 7, 100, 999, 170578])
+    assert.ok(floorFigure(real) < real, `${real}: never rounded up`);
+  for (const l of ["en", "fr"]) {
+    const m = JSON.parse(read(`messages/${l}.json`));
+    assert.match(m.site.openSource.hub.stats, /^(?:more than|plus de)/, `${l}: hub stats say « more than »`);
+    for (const p of [m.site.home.hero.proofs, m.site.services.proof]) {
+      assert.ok(p.more && p.groups.published && p.groups.used, `${l}: « more than » and the two group labels`);
+    }
+    assert.doesNotMatch(
+      JSON.stringify(m),
+      /\b1[0-9]{2}[  ,]?[0-9]{3}\b.{0,40}(?:downloads|téléchargements)/i,
+      `${l}: no typed downloads figure`,
+    );
+  }
+  const hero = read("app/components/home/HomeHero.tsx");
+  for (const k of ["repositories", "npm", "downloads"])
+    assert.match(hero, new RegExp(`floorFigure\\(figures\\.${k}`), k);
+  assert.match(read("app/[locale]/services/page.tsx"), /floorFigure\(npmWeeklyDownloads\(\) \?\? 0\)/);
+});

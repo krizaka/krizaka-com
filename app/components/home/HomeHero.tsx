@@ -29,6 +29,7 @@ import { HERO_FLOCK } from "@/lib/products-flock";
 import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
+import { floorFigure } from "@/lib/figure-floor";
 import FilmLightbox from "./FilmLightbox";
 import HeroIntro from "./HeroIntro";
 import AmbientLoop from "./AmbientLoop";
@@ -39,7 +40,6 @@ export interface HomeFigures {
   npm: number;
   /** npm downloads of last week (api.npmjs.org at build); absent when unknown. */
   downloads?: number;
-  maven: number;
 }
 
 const film = brandFilm();
@@ -55,15 +55,24 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
     label: t.plate[bird],
     promise: cues[bird],
   }));
-  const counted = [
-    { id: "repositories", value: figures.repositories, label: t.proofs.repositories },
-    { id: "npm", value: figures.npm, label: t.proofs.npm },
-    { id: "downloads", value: figures.downloads ?? 0, label: t.proofs.downloads },
-    { id: "maven", value: figures.maven, label: t.proofs.maven },
-  ].filter((p) => p.value > 0);
-  // Full rows on a phone and wide (lib/figure-grid.ts): 4 figures → 2 × 2, then one row; never a lone cell.
-  const grid = figureColumns(counted.length);
-  const cols = { "--kz-fig-cols": grid.wide, "--kz-fig-cols-narrow": grid.narrow } as CSSProperties;
+  // Two kinds of figures, said apart (founder, 2026-11-01): what we publish, and what gets used. Each reads « more than N ».
+  const groups = [
+    {
+      id: "published",
+      label: t.proofs.groups.published,
+      items: [
+        { id: "repositories", value: floorFigure(figures.repositories), label: t.proofs.repositories },
+        { id: "npm", value: floorFigure(figures.npm), label: t.proofs.npm },
+      ],
+    },
+    {
+      id: "used",
+      label: t.proofs.groups.used,
+      items: [{ id: "downloads", value: floorFigure(figures.downloads ?? 0), label: t.proofs.downloads }],
+    },
+  ]
+    .map((g) => ({ ...g, items: g.items.filter((p) => p.value > 0) }))
+    .filter((g) => g.items.length > 0);
 
   return (
     <SectionBackdrop as="section" id="hero" className="kz-home-hero" aria-labelledby="hero-title">
@@ -104,16 +113,32 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
               ))}
             </ul>
 
-            <dl className="kz-home-proofs" aria-label={t.proofsLabel} style={cols}>
-              {counted.map((p) => (
-                <div key={p.id}>
-                  <dt>{p.label}</dt>
-                  <dd>
-                    <NumberTicker value={p.value} locale={locale} align="start" />
-                  </dd>
-                </div>
+            <div className="kz-home-proof-groups" aria-label={t.proofsLabel}>
+              {groups.map((g) => (
+                <section key={g.id} className="kz-home-proof-group" data-group={g.id}>
+                  <p className="kz-home-proof-label">{g.label}</p>
+                  <dl
+                    className="kz-home-proofs"
+                    style={
+                      {
+                        "--kz-fig-cols": figureColumns(g.items.length).wide,
+                        "--kz-fig-cols-narrow": figureColumns(g.items.length).narrow,
+                      } as CSSProperties
+                    }
+                  >
+                    {g.items.map((p) => (
+                      <div key={p.id}>
+                        <dt>{p.label}</dt>
+                        <dd>
+                          <span className="kz-home-more">{t.proofs.more} </span>
+                          <NumberTicker value={p.value} locale={locale} align="start" />
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
               ))}
-            </dl>
+            </div>
             <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
           </div>
           <TapedPhoto className="kz-home-plate" caption={t.plate.title}>

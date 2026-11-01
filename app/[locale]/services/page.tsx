@@ -11,6 +11,7 @@ import { localizedMetadata } from "@/lib/seo";
 import { contactHref } from "@/lib/contact";
 import { format, getDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
+import { floorFigure } from "@/lib/figure-floor";
 import { npmPackages, npmWeeklyDownloads } from "@/lib/registry-versions";
 import { SERVICES_PAGE_ORDER, SERVICES_PROOF, type ServicesProofId } from "@/lib/services-page";
 import { buildServiceJsonLd, type Locale } from "@/lib/structured-data";
@@ -63,11 +64,23 @@ export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   const s = getDictionary(locale).site.services;
   const enterprise = contactHref("services", "enterprise");
-  const figures = [
-    { id: "npm", value: npmPackages().length, label: s.proof.figures.npm },
-    { id: "downloads", value: npmWeeklyDownloads() ?? 0, label: s.proof.figures.downloads },
-    { id: "repositories", value: publicRepositoryCount(), label: s.proof.figures.repositories },
-  ].filter((f) => f.value > 0);
+  const figureGroups = [
+    {
+      id: "published",
+      label: s.proof.groups.published,
+      items: [
+        { id: "npm", value: floorFigure(npmPackages().length), label: s.proof.figures.npm },
+        { id: "repositories", value: floorFigure(publicRepositoryCount()), label: s.proof.figures.repositories },
+      ],
+    },
+    {
+      id: "used",
+      label: s.proof.groups.used,
+      items: [{ id: "downloads", value: floorFigure(npmWeeklyDownloads() ?? 0), label: s.proof.figures.downloads }],
+    },
+  ]
+    .map((g) => ({ ...g, items: g.items.filter((f) => f.value > 0) }))
+    .filter((g) => g.items.length > 0);
   const fmt = new Intl.NumberFormat(locale);
   return (
     <main className="kz-site-main">
@@ -129,7 +142,12 @@ export default async function ServicesPage({ params }: Props) {
         {/* The figures as one line of facts: the home's hero already shows them as climbing tiles — a second band of
             counters is the template look the Cahier refuses (krizaka-cahier-design, 2026-10-30). */}
         <div className="svc-proof-figures" aria-label={s.proof.figuresLabel}>
-          <Facts items={figures.map((f) => ({ label: `${fmt.format(f.value)} ${f.label}` }))} />
+          {figureGroups.map((g) => (
+            <div key={g.id} className="svc-proof-group" data-group={g.id}>
+              <h3 className="kz-home-proof-label">{g.label}</h3>
+              <Facts items={g.items.map((f) => ({ label: `${s.proof.more} ${fmt.format(f.value)} ${f.label}` }))} />
+            </div>
+          ))}
         </div>
         <CardGrid as="ul" min={300} columns={3} className="svc-proof-cards" aria-label={s.proof.eyebrow}>
           {SERVICES_PROOF.map(({ id, href }) => (

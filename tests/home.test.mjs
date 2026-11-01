@@ -357,11 +357,7 @@ test("§ 5 puts the right to be forgotten first, says the books are kept, and re
   for (const lang of ["en", "fr"]) {
     const items = messages(lang).site.home.principles.items;
     assert.deepEqual(Object.keys(items), ["forgotten", "books", "facts", "sovereign", "quality", "open"]);
-    assert.match(
-      items.open.body,
-      /\{count\}.*\{npm\}.*\{maven\}/,
-      `${lang}: the figures are placeholders, never typed`,
-    );
+    assert.match(items.open.body, /\{count\}.*\{npm\}/, `${lang}: the figures are placeholders, never typed`);
     assert.match(
       items.books.body,
       /(never file|jamais à votre place)/,
