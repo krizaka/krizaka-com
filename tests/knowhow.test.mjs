@@ -36,7 +36,7 @@ test("the home and /story render the products from PRODUCTS: the home's rows, /s
   // 2026-10-20 (home redesign, « one label instead of three »): on the home the know-how is SHOWN by each row's live
   // visual, not said again as a mono eyebrow beside the status; /story's chapters keep naming it (above).
   assert.doesNotMatch(home, /h\.knowhow/, "one label per row on the home: the status");
-  assert.match(home, /<ProductVisual id=\{p\.id\} \/>/, "the know-how is shown by the row's visual");
+  assert.match(home, /<ProductVisual id=\{p\.id\} name=\{p\.name\} \/>/, "the know-how is shown by the row's visual");
   assert.match(home, /href=\{p\.repoUrl\}/);
   assert.doesNotMatch(story, /ProfileCard|StatGauge|ChoiceGrid/, "/story draws no tile of its own");
   const os = read("app/[locale]/docs/page.tsx");

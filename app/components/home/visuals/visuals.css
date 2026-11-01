@@ -1,271 +1,270 @@
-/* The plates of the products' field-guide entries (ProductVisual / ProductVisuals, Cahier — krizaka-ui ADR-004): a fixed
-   box per entry (no layout shift), a sheet of paper laid on the lined page, @krizaka/ui pieces inside, set in the
-   notebook's faces. Still unless playing; nothing moves under reduced motion. No glow, no gradient, no uppercase.
-   Tokens only. */
+/* The plates of the home's entries (ProductVisual / ProductVisuals, krizaka-internal#683): a small screen of the app, in its
+   own register — a plain surface, the product's colour from the entry's `.brand-<id>`, @krizaka/ui's Badge — laid on the
+   notebook page like a photograph: a fixed box (no layout shift), the paper's solid shadow. One moment per plate: the input,
+   a thin run line, the result. The result arrives as ink does (opacity only, no travel, no blur); nothing moves under the
+   pointer, nothing moves under reduced motion, where the plate shows its last step. Tokens only, no uppercase. */
 
 .pv {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 4 / 5;
   width: 100%;
   overflow: hidden;
-  padding: 16px 18px;
   background: var(--kz-surface-1);
+  border-radius: var(--kz-radius-md);
   box-shadow: var(--kz-shadow-md);
+  font-family: var(--kz-font-sans);
+  color: var(--kz-text-primary);
 }
-.pv > * {
-  height: 100%;
+@media (min-width: 640px) {
+  .pv {
+    aspect-ratio: 16 / 9;
+  }
+}
+/* Two columns, the plate at its narrowest: a little taller so the invoice keeps its total. */
+@media (min-width: 1024px) and (max-width: 1279.98px) {
+  .pv {
+    aspect-ratio: 3 / 2;
+  }
 }
 .pv p {
   margin: 0;
 }
-.pv-leader {
-  flex: 1;
-  min-width: 12px;
-  border-bottom: 1.5px dotted var(--kz-text-muted);
-  transform: translateY(-4px);
-}
 
-/* Yomizaka, as the app shows it: « The lease » (its lines, the passage underlined), an arrow, « The finding » (a card with the
-   rule broken, its badge, the quoted passage, the article of law). */
-.pv-lease {
+/* The screen: the app's bar, then the input, the run, the result, top to bottom. */
+.pv-app {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 6px;
-  min-height: 0;
-}
-.pv-label {
-  font-family: var(--kz-font-text);
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 14px;
-  color: var(--kz-text-secondary);
-}
-.pv-lease-lines {
-  display: grid;
-  gap: 1px;
-  padding: 6px 10px;
-  border: 1px solid var(--kz-border-subtle);
-  border-radius: 8px;
-  background: var(--kz-surface-0);
-  font-size: 11.5px;
-  line-height: 16px;
-  color: var(--kz-text-secondary);
-}
-.pv-lease-lines > span {
-  transition: color 0.3s var(--kz-ease, ease);
-}
-.pv-lease-lines > span[data-read] {
-  color: var(--kz-text-primary);
-}
-.pv-lease-lines mark {
-  color: inherit;
-  background: none;
-  text-decoration: underline;
-  text-decoration-color: var(--kz-accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 3px;
-}
-.pv-lease-arrow {
-  text-align: center;
-  line-height: 12px;
-  color: var(--kz-accent-text, var(--kz-accent));
-}
-.pv-finding {
-  display: grid;
-  gap: 3px;
-  padding: 8px 10px;
-  border: 1px solid var(--kz-danger);
-  border-radius: 8px;
-  background: var(--kz-surface-0);
-  opacity: 0.45;
-  transition: opacity 0.3s var(--kz-ease, ease);
-}
-.pv-finding[data-found] {
-  opacity: 1;
-}
-.pv-finding-title {
-  font-size: 12.5px;
-  font-weight: 700;
-  line-height: 16px;
-  color: var(--kz-text-primary);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.pv-finding-meta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--kz-font-mono);
-  font-size: 10.5px;
-  color: var(--kz-text-secondary);
-}
-.pv-badge {
-  padding: 0 7px;
-  border: 1px solid var(--kz-danger);
-  border-radius: 9999px;
-  background: var(--kz-danger-soft);
-  font-family: var(--kz-font-text);
-  font-size: 10.5px;
-  font-weight: 700;
-  line-height: 16px;
-  color: var(--kz-danger-text);
-}
-.pv-finding-quote {
-  padding-left: 8px;
-  border-left: 2px solid var(--kz-accent);
-  font-size: 11.5px;
-  font-style: italic;
-  line-height: 16px;
-  color: var(--kz-text-secondary);
-}
-.pv-finding-law {
-  font-size: 11.5px;
-  font-weight: 700;
-  line-height: 14px;
-  color: var(--kz-accent-text, var(--kz-accent));
-}
-
-/* Akinaza, as the storefront shows it: a service card (name, minutes, what it includes, the price and « Choose »), beside the
-   day's free slots and the receipt with GST and QST to the cent. */
-.pv-shop {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-  gap: 14px;
-  align-items: center;
-}
-.pv-service {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 12px 14px;
-  border: 1px solid var(--kz-border-subtle);
-  border-radius: 8px;
-  background: var(--kz-surface-0);
-}
-.pv-service-name {
-  font-family: var(--kz-font-display);
-  font-size: 15px;
-  line-height: 20px;
-  color: var(--kz-text-primary);
-}
-.pv-service-min {
-  margin-bottom: 4px !important;
-  font-family: var(--kz-font-mono);
-  font-size: 10.5px;
-  color: var(--kz-text-secondary);
-}
-.pv-service ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  gap: 2px;
-  font-size: 11.5px;
-  line-height: 16px;
-  color: var(--kz-text-secondary);
-}
-.pv-service li {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-.pv-service li svg {
-  flex: none;
-  color: var(--kz-accent-text, var(--kz-accent));
-}
-.pv-service-foot {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  margin-top: auto !important;
-  padding-top: 6px;
-  border-top: 1px solid var(--kz-border-subtle);
-}
-.pv-service-foot b {
-  font-size: 18px;
-  line-height: 24px;
-  color: var(--kz-text-primary);
-  font-variant-numeric: var(--kz-figures, lining-nums tabular-nums);
-}
-.pv-service-foot span {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--kz-accent-text, var(--kz-accent));
-}
-.pv-shop-day {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-}
-.pv-shop-head {
-  font-family: var(--kz-font-display);
+  gap: 12px;
+  height: 100%;
+  padding: 0 18px 16px;
   font-size: 13px;
   line-height: 18px;
-  color: var(--kz-text-primary);
 }
-.pv-shop-slots {
-  flex-wrap: wrap;
-}
-.pv-shop-booked {
-  font-family: var(--kz-font-mono);
-  font-size: 10.5px;
-  color: var(--kz-text-secondary);
-}
-.pv-receipt {
-  margin: 8px 0 0;
-  padding: 8px 10px;
-  display: grid;
-  gap: 1px;
-  font-family: var(--kz-font-mono);
-  font-size: 11.5px;
-  line-height: 18px;
-  background: var(--kz-surface-0);
-  border: 1px dashed var(--kz-border-strong);
-}
-.pv-receipt > div {
+.pv-app-bar {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
   gap: 8px;
+  margin: 0 -18px !important;
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--kz-border-subtle);
+  background: var(--kz-surface-0);
 }
-.pv-receipt dt {
+.pv-app-name {
+  flex: 1;
+  font-weight: 600;
+}
+.pv-label {
   color: var(--kz-text-secondary);
-  white-space: nowrap;
+  font-weight: 600;
 }
-.pv-receipt dd {
-  margin: 0;
-  color: var(--kz-text-primary);
-  font-variant-numeric: var(--kz-figures, lining-nums tabular-nums);
+.pv-meta {
+  color: var(--kz-text-secondary);
+  font-size: 12px;
 }
-.pv-receipt > div:last-child {
-  margin-top: 3px;
-  padding-top: 3px;
-  border-top: 1px solid var(--kz-border-strong);
-  font-weight: 700;
+.pv-caption {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto !important;
+  color: var(--kz-text-muted);
+  font-family: var(--kz-font-mono);
+  font-size: 11px;
+  line-height: 14px;
 }
 
-@media (min-width: 640px) and (max-width: 1279.98px) {
-  .pv {
-    aspect-ratio: 4 / 3;
+/* The input: one row, the way the app lists it. */
+.pv-in > p {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--kz-border-default);
+  border-radius: var(--kz-radius-sm);
+  background: var(--kz-surface-0);
+}
+.pv-in svg {
+  flex: none;
+  color: var(--kz-accent);
+}
+.pv-prompt {
+  align-items: flex-start !important;
+}
+.pv-prompt svg {
+  margin-top: 2px;
+}
+.pv-file-name,
+.pv-booking > span:first-of-type {
+  flex: 1;
+  min-width: 0;
+}
+.pv-file-name,
+.pv-booking-service,
+.pv-finding-title,
+.pv-invoice-title {
+  font-weight: 600;
+}
+.pv-file-meta {
+  color: var(--kz-text-secondary);
+  font-size: 12px;
+}
+.pv-booking > span:first-of-type {
+  display: grid;
+}
+
+/* The run: a hairline that fills in the product's colour, and what it is doing, while it runs. */
+.pv-run {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 14px;
+}
+.pv-run-track {
+  flex: 1;
+  height: 2px;
+  background: var(--kz-border-subtle);
+}
+.pv-run-bar {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--kz-accent);
+}
+.pv-app[data-step="1"] .pv-run-bar {
+  width: 60%;
+}
+.pv-run[data-done] .pv-run-bar {
+  width: 100%;
+}
+.pv-run-label {
+  color: var(--kz-text-secondary);
+  font-size: 12px;
+}
+.pv-run[data-done] .pv-run-label {
+  display: none;
+}
+
+/* The result: what the person gets. */
+.pv-out {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+  opacity: 0;
+}
+.pv-out[data-in] {
+  opacity: 1;
+}
+.pv-points {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 18px;
+  list-style: disc;
+}
+.pv-points li::marker {
+  color: var(--kz-accent);
+}
+.pv-answer,
+.pv-finding,
+.pv-invoice {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--kz-border-default);
+  border-left: 3px solid var(--kz-accent);
+  border-radius: var(--kz-radius-sm);
+  background: var(--kz-surface-0);
+}
+.pv-finding {
+  border-left-color: var(--kz-danger);
+}
+.pv-answer.pv-points {
+  padding-left: 30px;
+}
+.pv-finding-head,
+.pv-invoice-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pv-finding-head svg {
+  flex: none;
+  color: var(--kz-danger-text);
+}
+.pv-invoice-head svg {
+  flex: none;
+  color: var(--kz-accent);
+}
+.pv-finding-title,
+.pv-invoice-title {
+  flex: 1;
+  min-width: 0;
+}
+.pv-finding-detail {
+  color: var(--kz-text-secondary);
+}
+.pv-proof {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+.pv-proof q {
+  quotes: none;
+  background: var(--kz-warning-soft);
+  padding: 0 4px;
+}
+.pv-invoice-lines {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+.pv-invoice-lines > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.pv-invoice-lines dt {
+  color: var(--kz-text-secondary);
+}
+.pv-invoice-lines dd {
+  margin: 0;
+}
+.pv-invoice-lines > div:last-child {
+  margin-top: 4px;
+  padding-top: 4px;
+  border-top: 1px solid var(--kz-border-subtle);
+  font-weight: 600;
+}
+.pv-invoice-lines > div:last-child dt {
+  color: var(--kz-text-primary);
+}
+
+/* A phone: the secondary lines step aside so the input and the result keep their room. */
+@media (max-width: 420px) {
+  .pv-app {
+    gap: 10px;
+    padding: 0 14px 12px;
+  }
+  .pv-app-bar {
+    margin: 0 -14px !important;
+    padding: 8px 14px;
+  }
+  .pv-finding-detail,
+  .pv-file-meta {
+    display: none;
   }
 }
-@media (max-width: 420px) {
-  .pv {
-    aspect-ratio: 4 / 3;
+
+/* The run fills and the result arrives only where motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  .pv-run-bar {
+    transition: width 1.1s var(--kz-ease, ease);
   }
-  .pv-shop {
-    grid-template-columns: 1fr;
-  }
-  .pv-service,
-  .pv-shop .pv-shop-booked {
-    display: none;
-  }
-  .pv-lease-lines > span:first-child {
-    display: none;
+  .pv-out {
+    transition: opacity 0.5s var(--kz-ease, ease);
   }
 }
 @media (prefers-reduced-motion: reduce) {

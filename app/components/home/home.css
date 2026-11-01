@@ -605,11 +605,6 @@ html[data-intro="play"] .kz-intro-sweep {
 .kz-entry[data-lit] .kz-entry-plate .pv {
   box-shadow: var(--kz-shadow-lg);
 }
-@media (min-width: 640px) {
-  .kz-entry {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-}
 @media (min-width: 1024px) {
   .kz-prod {
     grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
@@ -619,8 +614,16 @@ html[data-intro="play"] .kz-intro-sweep {
     position: sticky;
     top: var(--kz-anchor-offset);
   }
+  /* The timeline (krizaka-internal#683): the tag and the plate swap sides from one entry to the next (lib/home-sections.ts
+     entrySide). Below 1024 px the entry is one column, the plate above its tag. */
   .kz-entry {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+  .kz-entry[data-side="card-left"] {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+  .kz-entry[data-side="card-left"] .kz-entry-tag {
+    order: -1;
   }
 }
 .kz-prod-notes {

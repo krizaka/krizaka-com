@@ -3,7 +3,8 @@
 /* The frame of a product row's mini-visual: a fixed box (no layout shift), decorative (`inert`, aria-hidden), filled
    only when the row comes near the viewport — the visuals' code (ProductVisuals, @krizaka/ui + @krizaka/charts pieces)
    is a separate chunk, never on the first screen's path. It plays while it is on screen, on every pointer (2026-10-20:
-   no hover to wake it), and never under reduced motion: then it shows its still final frame. */
+   no hover to wake it), and never under reduced motion: then it shows its still final frame, the result in. The
+   product's display name comes from the caller (lib/products.ts), so a renamed product renames its plate. */
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
@@ -19,7 +20,7 @@ const subscribe = (change: () => void) => {
   return () => q.removeEventListener("change", change);
 };
 
-export default function ProductVisual({ id }: { id: ProductId }) {
+export default function ProductVisual({ id, name }: Readonly<{ id: ProductId; name: string }>) {
   const box = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
   const [onScreen, setOnScreen] = useState(false);
@@ -43,7 +44,7 @@ export default function ProductVisual({ id }: { id: ProductId }) {
   const playing = !still && onScreen;
   return (
     <div ref={box} className="pv" data-visual={id} inert aria-hidden>
-      {near && <ProductVisuals id={id} playing={playing} />}
+      {near && <ProductVisuals id={id} name={name} playing={playing} />}
     </div>
   );
 }

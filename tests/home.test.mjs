@@ -67,7 +67,7 @@ test("the products come from lib/products.ts: one card each, in the product's br
   assert.match(showcase, /PRODUCTS\.filter|heroMarkOrder\(PRODUCTS\)/);
   assert.match(
     showcase,
-    /<li id=\{"product-" \+ p\.id\} className=\{cn\("kz-entry", "brand-" \+ p\.id\)\}/,
+    /<li\s+id=\{"product-" \+ p\.id\}\s+className=\{cn\("kz-entry", "brand-" \+ p\.id\)\}/,
     "each product is an anchor the hero's marks reach, in its brand",
   );
   assert.match(

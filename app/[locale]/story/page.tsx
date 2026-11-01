@@ -185,7 +185,7 @@ export default async function StoryPage({ params }: Props) {
         proof={
           takeProof(id, p.name, id) ?? (
             <div className="st-proof">
-              <ProductVisual id={id} />
+              <ProductVisual id={id} name={p.name} />
               <p className="st-proof-note">{st.products.demo}</p>
             </div>
           )

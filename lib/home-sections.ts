@@ -18,3 +18,12 @@ export function heroMarkOrder<T extends { id: string }>(products: readonly T[]):
   };
   return [...products].sort((a, b) => rank(a.id) - rank(b.id));
 }
+
+/** Where an entry's specimen tag stands beside its plate on a wide screen (founder, 2026-11-01, krizaka-internal#683): the
+ *  timeline alternates from the engine on, in the story's order, so the engine opens with its tag on the left, the next
+ *  entry puts its plate there, and so on. One column on a phone and a tablet, where there is no side. */
+export type EntrySide = "card-left" | "plate-left";
+export function entrySide<T extends { id: string }>(products: readonly T[], id: string): EntrySide {
+  const i = heroMarkOrder(products).findIndex((p) => p.id === id);
+  return i % 2 === 0 ? "card-left" : "plate-left";
+}
