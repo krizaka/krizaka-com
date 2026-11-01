@@ -58,9 +58,11 @@
   construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
   only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), and `brand-films/**` — the
-  films of the flock, rendered from the code by krizaka-ui `tools/brand-films` (« Le monde de Krizaka » on `/story`, its
-  captions from the messages through `/<locale>/story/film.vtt`; the loops of each bird, loaded by ui.krizaka.com and the
-  products' sites by their hashed URL). A new render replaces them: upload, then `cdn-assets prune`.
+  brand film « Montrer son travail » (`lib/brand-film.ts`, made with Orazaka, approved 2026-11-01: the home's « Watch the
+  film », `/story` and its watch page `/films/montrer-son-travail`; no speech, so its text version is the list of its
+  shots; its 9:16 cut plays upright on a phone once uploaded) and the loops of each bird, loaded by ui.krizaka.com and the
+  products' sites by their hashed URL. A new film replaces it: upload, then `cdn-assets prune`. **/story is Krizaka's
+  story, the company's: it never links to the founder's blog** (krizaka-internal#138, `tests/story.test.mjs`).
 - **French is the default language** (Loi 96, `lib/locale-negotiation.ts`): an unprefixed URL goes to the cookie `NEXT_LOCALE` if set, else English only when the browser asks for English and never French, else French; hreflang `x-default` → `/fr`.
 
 - **Services and a short home** (founder, 2026-10-30, #487): the home's « what we know how to do » section is gone; in its slot (§ 4) one line leads to **`/services`** (« Nos services », longform): Krizaka Entreprise, the one offer for companies — custom modules, adoption of a sovereign AI, maintenance — on quote, no price, claims backed by public artefacts (`lib/services-page.ts`), one action (the contact form, topic `enterprise`), words in `site.services`, a `Service` JSON-LD node under the Organization, in the bar (Open source · Services), the footer, the sitemap and `llms.txt`. **`/open-source` is lighter**: hero, stack, packages, how it fits, contribute — no CI intro, standards, repositories table or nomenclature (GitHub is the source of the repository list).

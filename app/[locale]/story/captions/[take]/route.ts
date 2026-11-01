@@ -4,8 +4,8 @@ import { asLocale, getDictionary } from "@/lib/i18n";
 import type { ProductId } from "@/lib/products";
 
 // The captions of a take on /story (a recording of a product, a scene the engine rendered), in the page's language:
-// same-origin (a <track> from the CDN would need CORS), built once per deployment from the messages — the same
-// mechanism as film.vtt, one route for every take: /<locale>/story/captions/<product>.
+// same-origin (a <track> from the CDN would need CORS), built once per deployment from the messages: one route for
+// every take, /<locale>/story/captions/<product>.
 export const dynamic = "force-static";
 export const dynamicParams = false;
 

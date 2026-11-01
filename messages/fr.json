@@ -179,7 +179,7 @@
         "lead": "Nous avons commencé par Orazaka, un moteur d'IA, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TypeScript, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour le Québec : Akinaza et Yomizaka.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
-        "filmLength": "1 min 08",
+        "filmLength": "31 s",
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "marksLabel": "Les produits, chacun mène à sa fiche",
         "proofs": {
@@ -533,8 +533,8 @@
     "story": {
       "intro": {
         "eyebrow": "Notre histoire",
-        "title": "Un studio. Un moteur. <b>Chaque produit sur les mêmes briques.</b>",
-        "lead": "Un studio à Montréal, parti d'une idée simple : un logiciel devrait montrer son travail. Voici comment ça s'est passé, d'un portable à bout de souffle à trois produits construits à découvert.",
+        "title": "Une entreprise de Montréal. Un moteur. <b>Des produits construits dessus.</b>",
+        "lead": "Krizaka est une entreprise de Montréal. Elle a d'abord construit Orazaka, un moteur d'IA qui montre son travail : chaque réponse garde la trace du modèle qui l'a produite et des règles qu'il a suivies. Puis elle a construit ses produits dessus, Yomizaka et Akinaza. Les trois sont en développement, à découvert, inscriptions fermées.",
         "start": "Commencer la lecture",
         "products": "Découvrir les produits"
       },
@@ -543,28 +543,29 @@
       "who": {
         "nav": "Qui nous sommes",
         "title": "Ça a commencé à Montréal",
-        "lead": "Krizaka est un studio qu'Oussama construit à Montréal, presque seul, avec des agents d'IA qu'il dirige et relit. Un kris est une lame forgée en couches ; zaka, la pente qu'on gravit un pas à la fois.",
-        "refusal": "Tout est parti d'une question : où mon document a-t-il été lu, par quel modèle, et qui voit le résultat ? Un logiciel qui ne sait pas répondre demande qu'on le croie sur parole. Alors ce que nous livrons est testé, documenté et open source sous Apache-2.0.",
+        "lead": "Krizaka est une entreprise de Montréal, fondée par Oussama. Elle construit ses logiciels avec des agents d'IA qu'elle dirige et relit. Un kris est une lame forgée en couches ; zaka, la pente qu'on gravit un pas à la fois.",
+        "refusal": "Tout est parti d'une question : où mon document a-t-il été lu, par quel modèle, et qui voit le résultat ? Un logiciel qui ne sait pas répondre demande qu'on le croie sur parole. Alors ce que nous livrons est testé et documenté, et les briques sur lesquelles il repose sont publiques.",
         "placesAria": "Où est Krizaka",
         "places": ["Montréal"],
         "film": "Voir le film",
-        "filmLength": "44 s",
-        "filmCredit": "Film rendu depuis notre code",
+        "filmLength": "31 s",
+        "filmCredit": "Film réalisé avec Orazaka",
         "filmCredits": "crédits",
         "creditsTitle": "Crédits du film",
         "creditsClose": "Fermer",
         "creditsList": [
-          "Rendu depuis le code de Krizaka UI, pas généré",
-          "Oiseaux : Mascot, de @krizaka/ui",
-          "Vallée : Landscape, de @krizaka/ui",
-          "Marque : KrizakaLogo, de @krizaka/ui",
-          "Musique : ACE-Step 1.5 (MIT), générée avec Orazaka"
+          "Images clés générées avec Orazaka",
+          "Plans vidéo générés avec Orazaka",
+          "Sept plans, un seul étalonnage",
+          "Musique : ACE-Step 1.5, générée avec Orazaka",
+          "Titres composés en code, avec les polices de @krizaka/fonts",
+          "Sans voix, donc sans sous-titres : la page du film décrit chaque plan"
         ]
       },
       "engine": {
         "nav": "Le moteur",
         "title": "Orazaka, le moteur",
-        "lead": "Au départ, un projet perso sur un portable, pour voir ce que des modèles chez soi savent faire. Aujourd'hui, c'est le moteur que nos produits appellent pour leur IA : chaque requête garde son id, sa version et ses règles.",
+        "lead": "Au départ, un projet sur un portable, pour voir ce que des modèles chez soi savent faire. C'est devenu le premier produit de Krizaka : le moteur que nos produits appellent pour leur IA. Chaque requête garde son id, sa version et ses règles.",
         "more": "Ce que chaque produit en fait"
       },
       "products": {
@@ -598,8 +599,6 @@
             ]
           }
         },
-        "read": "Lire le chapitre complet",
-        "readAria": "Lire le chapitre complet sur le blogue : {title}",
         "lines": {
           "yomizaka": "Lisez avant de signer. Déposez un bail, un contrat ou une facture : Yomizaka le vérifie règle par règle et cite le passage exact derrière chaque constat.",
           "akinaza": "La journée d'une petite boutique au même endroit : rendez-vous, factures bilingues et une déclaration de taxes préparée, que le commerçant relit. Akinaza la prépare, jamais il ne la dépose."
@@ -615,7 +614,7 @@
       "open": {
         "nav": "Les briques ouvertes",
         "title": "Ce qui nous porte est ouvert",
-        "lead": "Les briques sous chaque produit sont publiques : un kit de composants et des briques Java, publiés et versionnés, Apache-2.0. Nous les utilisons d'abord, donc un correctif fait une fois profite à tous les produits.",
+        "lead": "Les briques sous chaque produit sont publiques : un kit de composants et des briques Java, publiés et versionnés. Nous les utilisons d'abord, donc un correctif fait une fois profite à tous les produits.",
         "figuresAria": "Les briques ouvertes en chiffres",
         "figures": {
           "repos": "dépôts publics",
@@ -657,16 +656,6 @@
         }
       },
       "world": {
-        "eyebrow": "La volée",
-        "title": "Le monde de Krizaka",
-        "lead": "Nos oiseaux sont là depuis la première page : chacun porte une promesse. Les voici qui se passent un colis du Maroc à la Californie, en photoréaliste, et plus bas, le film d’origine, rendu depuis le code de Krizaka UI.",
-        "player": "Vidéo : le monde de Krizaka",
-        "textVersion": "Ce que disent les oiseaux",
-        "captions": {
-          "en": "English",
-          "fr": "Français"
-        },
-        "credit": "Rendu depuis @krizaka/ui (Mascot, Landscape, la marque Krizaka). Musique : ACE-Step 1.5 (MIT), générée avec Orazaka.",
         "cues": {
           "title": "Le monde de Krizaka.",
           "falcon": "Le faucon veille : la sécurité d’abord.",
@@ -676,6 +665,10 @@
           "pigeon": "Le pigeon livre, à chaque fois.",
           "together": "Chaque oiseau porte une promesse.",
           "family": "Et la famille s’agrandit."
+        },
+        "captions": {
+          "en": "English",
+          "fr": "Français"
         },
         "labels": {
           "play": "Lecture",
@@ -695,11 +688,7 @@
           "retry": "Réessayer",
           "time": "{time} sur {duration}"
         },
-        "codeTitle": "Filmé depuis le code",
         "family": {
-          "title": "La famille Krizaka",
-          "player": "Vidéo : la famille Krizaka",
-          "credit": "Rendu depuis @krizaka/ui (Mascot, Landscape, la marque Krizaka). Musique : ACE-Step 1.5 (MIT), générée avec Orazaka.",
           "cues": {
             "title": "La famille Krizaka.",
             "falcon": "Le faucon, c’est Krizaka : il veille, la sécurité d’abord.",
@@ -708,30 +697,33 @@
             "beaver": "Le castor, c’est Akinaza : réservations, factures, une déclaration à relire.",
             "together": "Quatre oiseaux, une famille."
           }
+        },
+        "brand": {
+          "player": "Vidéo : Montrer son travail, le film de Krizaka"
         }
       },
       "watch": {
         "eyebrow": "Film",
         "back": "Retour à l'histoire",
-        "transcript": "Transcription",
-        "transcriptLead": "Ce que dit le film, ligne par ligne.",
         "length": "{seconds} secondes",
         "published": "Publié",
-        "captionEn": "English",
-        "captionFr": "Français",
         "watchPage": "Le voir sur sa propre page",
-        "family": {
-          "title": "La famille Krizaka : le film",
-          "description": "Un film de {seconds} secondes rendu à partir du code de Krizaka UI : le faucon est Krizaka, le canard Orazaka, la chouette Yomizaka et le castor Akinaza. Quatre oiseaux, une famille."
+        "shots": "Plan par plan",
+        "shotsLead": "Le film n'a pas de voix. Voici ce qu'il montre, dans l'ordre.",
+        "film": {
+          "title": "Montrer son travail, le film de Krizaka",
+          "description": "Un film de {seconds} secondes réalisé avec Orazaka : un cahier, une goutte d'encre, puis Montréal, où les oiseaux de la famille se mettent au travail.",
+          "credit": "Images, plans et musique générés avec Orazaka. Titres composés en code.",
+          "shots": {
+            "notebook": "Un cahier ouvert sous une lampe. Une goutte d'encre se forme au bout de la plume.",
+            "drop": "La goutte tombe et frappe une flaque, dans une rue de Montréal.",
+            "owl": "Une chouette sur une rambarde, près d'une note dessinée à l'encre bleue.",
+            "beaver": "Un castor dans un salon de barbier, au milieu de la journée d'un petit commerce.",
+            "duck": "Un canard devant un portable se retourne, puis s'envole.",
+            "canal": "L'oiseau file au ras d'un canal, à l'heure bleue.",
+            "night": "La nuit tombe. Carte de fin : Krizaka, une entreprise de Montréal."
+          }
         }
-      },
-      "blog": {
-        "who": "Pourquoi je construis Krizaka à Montréal",
-        "engine": "Un moteur d'IA sur un portable",
-        "yomizaka": "Les premiers produits : Yomizaka et Akinaza",
-        "akinaza": "Les premiers produits : Yomizaka et Akinaza",
-        "open": "Une seule interface, du web au Mac",
-        "next": "Construire presque seul, avec des agents"
       }
     },
     "openSource": {

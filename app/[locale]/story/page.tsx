@@ -7,19 +7,15 @@ import { PageHero } from "@krizaka/ui/page-hero";
 import { Toc, TocLayout } from "@krizaka/ui/toc";
 import { TapedPhoto } from "@krizaka/ui/taped-photo";
 import { localizedMetadata } from "@/lib/seo";
-import { video } from "@/lib/cdn";
 import { contactHref } from "@/lib/contact";
 import { ENGINE_USES } from "@/lib/engine-uses";
-import { FILM_BASE } from "@/lib/film-captions";
-import { storyFilm } from "@/lib/story-film";
+import { brandFilm } from "@/lib/story-film";
 import { watchPath } from "@/lib/watch-films";
 import { asLocale, format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
 import { publishedCount } from "@/lib/registry-versions";
 import {
-  BLOG_CHAPTER,
-  blogChapterUrl,
   ENGINE,
   OPEN_BIRD,
   PRODUCT_BIRD,
@@ -56,14 +52,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/story",
     en: {
-      title: "Our story — one studio, one engine, every product on the same blocks",
+      title: "Our story — a Montréal company, one engine, products built on it",
       description:
-        "Krizaka forges open building blocks, builds a sovereign AI engine on them — Orazaka — and ships its products on both. The studio in Montréal, the engine, each product, the open stack and what comes next.",
+        "Krizaka, a Montréal company, built Orazaka first, an AI engine that shows its work, then its products on it: Yomizaka and Akinaza, in development. The engine, each product, the open stack and what comes next.",
     },
     fr: {
-      title: "Notre histoire — un studio, un moteur, tous les produits sur les mêmes briques",
+      title: "Notre histoire — une entreprise de Montréal, un moteur, des produits construits dessus",
       description:
-        "Krizaka forge des briques ouvertes, construit dessus un moteur d'IA souverain — Orazaka — et livre ses produits sur les deux. Le studio à Montréal, le moteur, chaque produit, la pile ouverte et la suite.",
+        "Krizaka, une entreprise de Montréal, a d'abord construit Orazaka, un moteur d'IA qui montre son travail, puis ses produits dessus : Yomizaka et Akinaza, en développement. Le moteur, chaque produit, la pile ouverte et la suite.",
     },
   });
 }
@@ -82,8 +78,9 @@ function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
 
 /* /story (longform, with a sticky chapter contents): a short intro, then ten-second chapters in a fixed order — who we are,
    the engine, each product, the open stack, what is next — each a heading, a line or two, one proof visual and its
-   depth in a fold. The film « The Krizaka family » is shown once (a poster card in chapter 1, the player
-   opens in a lightbox, nothing fetched before). Every figure is read at build; products and their statuses come from
+   depth in a fold. It is Krizaka's story, the company's: no chapter links to the founder's blog (krizaka-internal#138).
+   The brand film « Montrer son travail » is shown once (a poster card in chapter 1, the player opens in a lightbox,
+   nothing fetched before; its watch page is one link away). Every figure is read at build; products and their statuses come from
    lib/products.ts, what runs on the engine from lib/engine-uses.ts — nothing is typed here. */
 export default async function StoryPage({ params }: Props) {
   const locale = asLocale((await params).locale);
@@ -92,8 +89,7 @@ export default async function StoryPage({ params }: Props) {
   const h = t.site.products;
   const e = h.engine;
   const engine = product(ENGINE);
-  const film = storyFilm();
-  const codeFilm = video(FILM_BASE);
+  const film = brandFilm();
   const figures = [
     { id: "repos", label: st.open.figures.repos, value: publicRepositoryCount() },
     { id: "components", label: st.open.figures.components, value: uiFacts().components },
@@ -117,17 +113,6 @@ export default async function StoryPage({ params }: Props) {
     number: number(anchor),
     chapterLabel: chapterLabel(number(anchor)),
   });
-
-  /** The blog chapter that tells this part in full: a quiet link beside the chapter's main action. */
-  const readOn = (anchor: keyof typeof BLOG_CHAPTER) => (
-    <ButtonLink
-      href={blogChapterUrl(BLOG_CHAPTER[anchor], locale)}
-      variant="ghost"
-      ariaLabel={format(st.products.readAria, { title: st.blog[anchor] })}
-    >
-      {st.products.read}
-    </ButtonLink>
-  );
 
   const usesList = (
     <ul className="st-uses">
@@ -222,7 +207,6 @@ export default async function StoryPage({ params }: Props) {
             <ButtonLink href={p.repoUrl} variant="ghost" ariaLabel={format(h.sourceAria, { name: p.name })}>
               {h.source}
             </ButtonLink>
-            {readOn(id as keyof typeof BLOG_CHAPTER)}
           </>
         }
       />
@@ -273,8 +257,7 @@ export default async function StoryPage({ params }: Props) {
               <>
                 <TapedPhoto className="st-film-photo" tilt={lean("who")}>
                   <FilmLightbox
-                    film={{ mp4: film.mp4, poster: film.poster, vtt: film.vtt }}
-                    fallback={{ mp4: codeFilm.mp4, poster: codeFilm.poster, vtt: "film.vtt" }}
+                    film={{ mp4: film.mp4, poster: film.poster, tall: film.tall }}
                     trigger={
                       <button type="button" className="st-film" aria-label={`${st.who.film} · ${st.who.filmLength}`}>
                         <Image
@@ -296,12 +279,11 @@ export default async function StoryPage({ params }: Props) {
                   />
                 </TapedPhoto>
                 <FilmCredits />
-                <ButtonLink href={`/${locale}${watchPath("family")}`} variant="ghost" size="md">
+                <ButtonLink href={`/${locale}${watchPath(film.id)}`} variant="ghost" size="md">
                   {st.watch.watchPage}
                 </ButtonLink>
               </>
             }
-            actions={readOn("who")}
           />
 
           <StoryChapter
@@ -334,12 +316,9 @@ export default async function StoryPage({ params }: Props) {
               ),
             }}
             actions={
-              <>
-                <ButtonLink href={engine.siteUrl} variant="primary">
-                  {h.visit} <ForwardIcon size={14} />
-                </ButtonLink>
-                {readOn("engine")}
-              </>
+              <ButtonLink href={engine.siteUrl} variant="primary">
+                {h.visit} <ForwardIcon size={14} />
+              </ButtonLink>
             }
           />
 
@@ -355,12 +334,9 @@ export default async function StoryPage({ params }: Props) {
             proof={<FigureTiles figures={figures} label={st.open.figuresAria} locale={locale} columns />}
             fold={{ summary: st.open.more, children: <StackTiles locale={locale} /> }}
             actions={
-              <>
-                <ButtonLink href="/docs" variant="primary">
-                  {st.open.cta} <ForwardIcon size={14} />
-                </ButtonLink>
-                {readOn("open")}
-              </>
+              <ButtonLink href="/docs" variant="primary">
+                {st.open.cta} <ForwardIcon size={14} />
+              </ButtonLink>
             }
           />
 
@@ -406,12 +382,9 @@ export default async function StoryPage({ params }: Props) {
               </div>
             }
             actions={
-              <>
-                <ButtonLink href={contactHref("story")} variant="primary" size="lg">
-                  {st.next.cta} <ForwardIcon size={15} />
-                </ButtonLink>
-                {readOn("next")}
-              </>
+              <ButtonLink href={contactHref("story")} variant="primary" size="lg">
+                {st.next.cta} <ForwardIcon size={15} />
+              </ButtonLink>
             }
           />
         </TocLayout>

@@ -201,7 +201,8 @@ export function buildVideoJsonLd(v: {
   contentUrl: string;
   uploadDate: string;
   duration: string;
-  transcript: string;
+  /** What is said, when the film speaks; a silent film carries none (its shots are in the description). */
+  transcript?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -215,7 +216,7 @@ export function buildVideoJsonLd(v: {
     embedUrl: v.url,
     url: v.url,
     inLanguage: hreflangOf(v.locale),
-    transcript: v.transcript,
+    ...(v.transcript ? { transcript: v.transcript } : {}),
     publisher: { "@id": ORG_ID },
     isPartOf: { "@id": WEBSITE_ID },
   };

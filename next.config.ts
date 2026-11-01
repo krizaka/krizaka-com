@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { javaRedirects } from "./lib/java-redirects";
 import { uiRedirects } from "./lib/ui-redirects";
+import { filmRedirects } from "./lib/watch-films";
 import { lastResortRedirects, productRedirects } from "./lib/product-redirects";
 import { CDN_URL } from "./lib/cdn";
 
@@ -51,6 +52,8 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...productRedirects(),
+      // A retired film's watch page → the film that replaced it (lib/watch-films.ts).
+      ...filmRedirects(),
       // Krizaka Java's documentation is java.krizaka.com (lib/java-redirects.ts).
       ...javaRedirects(),
       // Krizaka UI's documentation is ui.krizaka.com, built from krizaka-ui (lib/ui-redirects.ts); /open-source goes to /docs.

@@ -45,7 +45,8 @@ records them.
 
 | Media | Where it is served from |
 | :--- | :--- |
-| The brand film « La famille Krizaka » (the reference film: the home's « Watch the film » and /story), its poster and captions | `site/brand-films/family/` |
+| The brand film « Montrer son travail » (the home's « Watch the film », /story and its watch page `/films/montrer-son-travail`; `lib/brand-film.ts`), its poster, the 9:16 cut once rendered | `org/v1/films/montrer-son-travail/` |
+| The earlier brand film « La famille Krizaka » (retired 2026-11-01; `/films/family` answers 308 with the new film) | `org/v1/films/family/` |
 | The earlier brand film « Le monde de Krizaka : le relais » (retired from every slot; to prune from the CDN) | `site/brand-films/relay/` |
 | The earlier brand film « Le monde de Krizaka : la tournée », its 9:16 cuts and captions (no longer drawn) | `site/brand-films/epic/` |
 | The images and clips of the blog post on what image and video generation costs | `site/blog/what-image-and-video-generation-costs/` |
