@@ -19,7 +19,11 @@ export interface LoopSources {
   poster: string;
 }
 
-export default function FilmFrame({ loop, film, length }: { loop: LoopSources; film: LightboxFilm; length: string }) {
+export default function FilmFrame({
+  loop,
+  film,
+  length,
+}: Readonly<{ loop: LoopSources; film: LightboxFilm; length: string }>) {
   const { t } = useI18n();
   const fig = t.site.home.hero.fig;
   const box = useRef<HTMLDivElement>(null);
@@ -91,10 +95,13 @@ export default function FilmFrame({ loop, film, length }: { loop: LoopSources; f
       {/* eslint-disable-next-line @next/next/no-img-element -- a CDN poster at its fixed ratio, painted under the loop */}
       <img src={loop.poster} alt="" width={1280} height={720} decoding="async" fetchPriority="low" />
       {armed ? (
-        <video ref={video} muted loop playsInline autoPlay preload="auto" poster={loop.poster} aria-hidden>
-          <source src={loop.webm} type="video/webm" />
-          <source src={loop.mp4} type="video/mp4" />
-        </video>
+        // The loop is decoration over its poster: hidden from assistive tech on a wrapper, and out of the tab order.
+        <div className="kz-fig-loop" aria-hidden>
+          <video ref={video} muted loop playsInline autoPlay preload="auto" poster={loop.poster} tabIndex={-1}>
+            <source src={loop.webm} type="video/webm" />
+            <source src={loop.mp4} type="video/mp4" />
+          </video>
+        </div>
       ) : null}
       <FilmLightbox
         film={film}

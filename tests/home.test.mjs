@@ -186,7 +186,8 @@ test("the loop: muted, 10 s cut, on the CDN, never autoplays under reduced motio
   const frame = read("app/components/home/FilmFrame.tsx");
   assert.match(frame, /prefersStill\(window\)/, "reduced motion and Save-Data leave the poster");
   assert.match(frame, /<video[^>]* muted loop playsInline/);
-  assert.match(frame, /aria-hidden>\s*<source/, "the loop is decorative");
+  assert.match(frame, /aria-hidden>\s*<video[^>]*tabIndex=\{-1\}/, "the loop is decorative: hidden on its wrapper, never focusable (Sonar S6825)");
+  assert.doesNotMatch(frame, /<video[^>]*aria-hidden/, "aria-hidden never sits on the focusable video itself");
   assert.match(frame, /aria-pressed=\{paused\}/, "a visible pause control (WCAG 2.2.2)");
   assert.match(frame, /document\.readyState === "complete"/, "nothing before the page has loaded (LCP)");
   assert.match(frame, /v\.pause\(\)/, "paused off screen");
