@@ -1593,7 +1593,6 @@
       "title": "Le logiciel de votre entreprise, bâti sur ce qui tourne déjà.",
       "lead": "Des modules sur mesure, une IA souveraine adoptée à vos conditions, et la maintenance qui garde le tout en marche. Construits par l'équipe qui bâtit nos produits, sur les mêmes briques ouvertes.",
       "cta": "Parlez-nous de votre projet",
-      "howLink": "Voir comment se déroule un mandat",
       "quote": "Sur devis : le périmètre et le prix sont écrits avant de commencer.",
       "facts": {
         "quote": "Sur devis, prix écrit d'avance",
@@ -1635,31 +1634,6 @@
           ]
         }
       },
-      "how": {
-        "eyebrow": "Comment se déroule un mandat",
-        "title": "Du premier appel à la maintenance.",
-        "lead": "Quatre étapes, chacune se termine par quelque chose d'écrit.",
-        "step": "Étape",
-        "stepLabel": "Ce que vous obtenez"
-      },
-      "steps": {
-        "discovery": {
-          "title": "Cadrage",
-          "body": "Vous décrivez le problème ; nous disons franchement si nous sommes les bonnes personnes."
-        },
-        "proposal": {
-          "title": "Devis",
-          "body": "Un périmètre écrit, un prix, et ce qui est hors périmètre, avant d'écrire une ligne."
-        },
-        "build": {
-          "title": "Livraison",
-          "body": "Le travail arrive dans un dépôt que vous suivez, testé à chaque changement."
-        },
-        "maintain": {
-          "title": "Maintenance",
-          "body": "Après la livraison, le module et ses dépendances restent à jour."
-        }
-      },
       "proof": {
         "eyebrow": "Sur quoi cela repose",
         "title": "De vrais ouvrages, publics et mesurés.",
@@ -1667,7 +1641,6 @@
         "figuresLabel": "Ce que nous publions, en chiffres",
         "figures": {
           "npm": "paquets npm publiés",
-          "maven": "artefacts sur Maven Central",
           "downloads": "téléchargements npm par semaine",
           "repositories": "dépôts publics"
         },
@@ -1680,7 +1653,7 @@
         },
         "java": {
           "title": "Krizaka Java",
-          "line": "Des briques Spring Boot sur Maven Central, versionnées ensemble."
+          "line": "Des briques Spring Boot sur GitHub Packages, versionnées ensemble."
         },
         "motion": {
           "title": "Krizaka Lab",
