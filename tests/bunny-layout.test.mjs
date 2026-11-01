@@ -114,3 +114,9 @@ test("render candidates under site/renders/<run>/ are transient, not misplaced (
   assert.equal(misplaced("site/renders/2026-10-30-blog-v2/r01.png"), null);
   assert.notEqual(misplaced("site/renders/r01.png"), null);
 });
+
+test("Kachizaka (the managed storage, sold as Kridoc) has its brand folder, and is neither retired nor a product site (krizaka-internal#2033)", () => {
+  assert.equal(misplaced("brand/kachizaka/mark-dark.svg"), null);
+  assert.ok(!RETIRED.some((re) => re.test("brand/kachizaka/mark-dark.svg")));
+  assert.notEqual(misplaced("brand/kridoc/mark-dark.svg"), null);
+});
