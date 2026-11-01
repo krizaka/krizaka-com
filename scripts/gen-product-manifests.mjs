@@ -71,7 +71,13 @@ for (const [id, spec] of Object.entries(PRODUCTS)) {
   const evidence = [];
   for (const e of spec.evidence ?? []) if (await read(e)) evidence.push(e);
   const engineRun = spec.engineRun ? runIdIn(await read(spec.engineRun)) : null;
-  out[id] = { sources, npm: [...npm].sort((a, b) => a.localeCompare(b)), maven: [...maven].sort((a, b) => a.localeCompare(b)), evidence, ...(engineRun ? { engineRun } : {}) };
+  out[id] = {
+    sources,
+    npm: [...npm].sort((a, b) => a.localeCompare(b)),
+    maven: [...maven].sort((a, b) => a.localeCompare(b)),
+    evidence,
+    ...(engineRun ? { engineRun } : {}),
+  };
 }
 writeFileSync(OUT, JSON.stringify({ readAt: new Date().toISOString().slice(0, 10), products: out }, null, 2) + "\n");
 console.log(JSON.stringify(out, null, 1));
