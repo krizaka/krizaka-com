@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.15.0](https://github.com/krizaka/krizaka-com/compare/v0.14.1...v0.15.0) (2026-11-01)
+
+
+### Features
+
+* **brand:** the site says Verikora, Folioviv and Sovkora (names from @krizaka/org, guard krizaka-code-names) ([#555](https://github.com/krizaka/krizaka-com/issues/555)) ([b024d68](https://github.com/krizaka/krizaka-com/commit/b024d68e88643f601c93a7658fd2ba7d3f389326))
+* **story:** the brand film « Montrer son travail » in every slot, /story told as Krizaka's own story (krizaka-internal[#138](https://github.com/krizaka/krizaka-com/issues/138)) ([#549](https://github.com/krizaka/krizaka-com/issues/549)) ([c4898af](https://github.com/krizaka/krizaka-com/commit/c4898af1e04460d935bc73478d96db5221a31134))
+
 ## [0.14.1](https://github.com/krizaka/krizaka-com/compare/v0.14.0...v0.14.1) (2026-11-01)
 
 
