@@ -153,9 +153,9 @@ test("the committed manifest names every media the site draws", () => {
   ];
   for (const path of need) assert.match(files[path] ?? "", /^[0-9a-f]{10}$/, path);
   // The products carry their own media on their own sites: no product page recording, gallery or doc screenshot is left —
-  // but the recordings www.orazaka.com plays (its home take and web steps: orazaka-web-client reads this manifest) and the real takes /story plays in its lightbox (lib/story-takes.ts: the engine's Old Port render) and the phone clips of Orazaka's mobile app as the demo persona (products/orazaka/mobile/, orazaka-web-client#245).
+  // but the recordings www.orazaka.com plays (its home take and web steps: orazaka-web-client reads this manifest) and the real takes /story plays in its lightbox (lib/story-takes.ts: the engine's Old Port render) the film and clips www.orazaka.com plays (products/orazaka/films/) and the phone clips of Orazaka's mobile app as the demo persona (products/orazaka/mobile/, orazaka-web-client#245).
   const gone = Object.keys(files).filter((path) =>
-    /^(docs\/orazaka\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/orazaka\/(?!home\/take-|web\/step-|mobile\/|video\/old-port))/.test(
+    /^(docs\/orazaka\/|home\/backdrop\/|home\/kit-native\/|home\/kit\/(frames|reel)|products\/orazaka\/(?!home\/take-|web\/step-|mobile\/|films\/|video\/old-port))/.test(
       path,
     ),
   );
