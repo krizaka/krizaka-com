@@ -111,9 +111,9 @@ test("the cards are pinned tags: tilted one way then the other, straight under r
   );
 });
 
-test("the visuals show what the apps show: the finding with its law, the service card with its receipt, said as demo", () => {
+test("the visuals show what the apps do: the finding with its passage and law, the booking's paid invoice, said as demo", () => {
   const visuals = read("app/components/home/visuals/ProductVisuals.tsx");
-  for (const k of ["v.finding", "v.badge", "v.law", "v.includes", "v.choose", "receipt("])
+  for (const k of ["v.title", "v.badge", "v.passage", "v.law", "v.paid", "v.gst", "v.qst", "receipt("])
     assert.ok(visuals.includes(k), k);
   const css = read("app/components/home/visuals/visuals.css");
   assert.match(css, /aspect-ratio: 16 \/ 9/, "a fixed box");
@@ -121,6 +121,6 @@ test("the visuals show what the apps show: the finding with its law, the service
   for (const lang of ["en", "fr"]) {
     const v = JSON.parse(read(`messages/${lang}.json`)).site.home.visuals;
     assert.match(v.yomizaka.demo, /demo|démo/i, lang);
-    assert.match(v.akinaza.booked, /demo|démo/i, lang);
+    assert.match(v.akinaza.demo, /demo|démo/i, lang);
   }
 });

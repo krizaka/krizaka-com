@@ -167,7 +167,6 @@ test("the home's engine card draws @krizaka/ui's EngineFlow from the data, with 
   assert.match(view, /href: p\.siteUrl/);
   assert.doesNotMatch(view, /Chip|Slider|Switch|useState/, "the lab's parameters panel is not a home feature");
   assert.doesNotMatch(view, /requestAnimationFrame|<canvas/);
-  assert.match(read("app/components/home/ProductShowcase.tsx"), /<EngineFlowView t=\{t\} \/>/);
   assert.ok(!/ENGINE_FLOW/.test(read("lib/product-visuals.ts")), "the old dashed-lines engine visual is gone");
   for (const l of ["en", "fr"]) {
     const f = messages[l].site.home.products.flow;

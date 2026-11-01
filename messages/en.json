@@ -252,9 +252,9 @@
           "version": "version"
         },
         "figures": {
-          "orazaka": "the flow, both ways: requests in, results back",
-          "yomizaka": "a lease read line by line, the clause to review marked",
-          "akinaza": "a salon’s Tuesday, and its receipt with GST and QST"
+          "orazaka": "a request goes in, the answer comes back, ready to use",
+          "yomizaka": "a lease read in full, the forbidden clause flagged with its passage",
+          "akinaza": "a booked appointment becomes a paid invoice, GST and QST included"
         },
         "notes": {
           "orazaka": "Every request crosses one deterministic pipeline to a local model: your documents, your models, your network. Nothing leaves.",
@@ -407,32 +407,45 @@
       },
       "visuals": {
         "orazaka": {
-          "label": "Requests from every product, into one engine"
+          "demo": "demo",
+          "promptLabel": "Request",
+          "prompt": "Summarize this service contract in three points.",
+          "running": "Running…",
+          "points": [
+            "Term: 12 months, renewable.",
+            "Price: $120 a month, plus taxes.",
+            "Cancellation: 30 days’ notice."
+          ],
+          "model": "Local model, on your server",
+          "run": "run {run}"
         },
         "yomizaka": {
-          "document": "The lease",
-          "term": "Term: 12 months, from July 1, 2026 to June 30, 2027.",
-          "rent": "Monthly rent: $1,450, payable on the 1st of the month.",
-          "before": "The tenant pays a ",
-          "quote": "security deposit of $1,450",
-          "after": " at signing.",
-          "finding": "The finding",
-          "title": "Security deposit not allowed: only the first month may be asked in advance",
+          "demo": "demo",
+          "file": "Residential lease.pdf",
+          "pages": "3 pages",
+          "running": "Reading rule by rule…",
           "badge": "Not met",
+          "title": "Security deposit not allowed",
+          "detail": "Only the first month’s rent may be asked in advance.",
+          "proofLabel": "Proof",
           "passage": "« security deposit of $1,450 »",
+          "where": "page 1, line 3",
           "law": "C.c.Q., art. 1904, para. 1",
-          "demo": "line 3 · demo"
+          "run": "run {run}"
         },
         "akinaza": {
-          "day": "Tuesday, the salon's day",
-          "booked": "Booked, confirmed by e-mail · demo",
+          "demo": "demo",
+          "bookingLabel": "Booking",
           "service": "Short cut",
-          "minutes": "30 min",
-          "includes": ["Consultation", "Wash", "Styling"],
-          "choose": "Choose",
+          "when": "Tuesday, 10:30 a.m. · 30 min",
+          "confirmed": "Confirmed",
+          "running": "Preparing the invoice…",
+          "invoice": "Invoice {no}",
           "gst": "GST 5 %",
           "qst": "QST 9.975 %",
-          "total": "Total"
+          "total": "Total",
+          "paid": "Paid",
+          "run": "run {run}"
         }
       }
     },

@@ -17,9 +17,9 @@ const moving = {
 };
 const reduced = { ...c, reducedMotion: "reduce" };
 
-test("the home and the story's engine chapter are sampled on desktop and phone, in both themes, with motion on and off", () => {
-  assert.deepEqual(PATHS, ["/en", "/en/story"]);
-  assert.equal(cases().length, 2 * 2 * 2 * 2);
+test("the story's engine chapter, the one page that draws the flow, is sampled on desktop and phone, in both themes, with motion on and off", () => {
+  assert.deepEqual(PATHS, ["/en/story"]);
+  assert.equal(cases().length, 1 * 2 * 2 * 2);
 });
 
 test("a figure whose dots travel and whose engine breathes passes", () => {

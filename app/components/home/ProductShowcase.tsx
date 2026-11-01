@@ -1,10 +1,11 @@
 /* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Cahier (krizaka-ui
    ADR-004, #417; Oussama 2026-10-20: « our showcase: refined, less AI, very complete and designed »): the section is a page
    of the field notebook, on lined paper with its red margin and its number (§ 2). The engine leads as entry KZ-01, in the
-   same form as the products: its figure (@krizaka/ui's EngineFlow, EngineFlowView, fig. 1) and its specimen tag, with the duck.
-   Each product is an entry of the field guide, in its own brand light (`.brand-<id>`):
-   - a plate: a live visual of what it does, made of @krizaka/ui pieces (visuals/, lazy, decorative, still under reduced
-     motion), and its numbered caption (`fig. n`);
+   same form as the products: its plate (a request and its result, fig. 1) and its specimen tag, with the duck.
+   Each product is an entry of the field guide, in its own brand light (`.brand-<id>`), its tag and plate swapping sides
+   from one entry to the next (lib/home-sections.ts entrySide, krizaka-internal#683):
+   - a plate: one product moment, input then result, drawn like the app (visuals/, lazy, decorative, demo data said as
+     demo, still under reduced motion), and its numbered caption (`fig. n`); the engine's too (a request, its result);
    - a specimen tag: its catalogue number, its name (the link to its dev site), its mark, its dev address and the version it
      runs (read at build, lib/dev-versions.ts),
      the stamp of its honest status (lib/products.ts, gated by the dev-preview checklists), its line, its bird (the film's
@@ -25,12 +26,11 @@ import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
 import { devVersion } from "@/lib/dev-versions";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { heroMarkOrder } from "@/lib/home-sections";
+import { entrySide, heroMarkOrder } from "@/lib/home-sections";
 import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
 import { GitHubMark } from "../brand/GitHubMark";
-import EngineFlowView from "./EngineFlowView";
 import ProductsFlock from "./ProductsFlock";
 import ProductsLink from "./ProductsLink";
 import ProductVisual from "./visuals/ProductVisual";
@@ -122,9 +122,14 @@ function EngineEntry({ t }: Readonly<{ t: TranslationDictionary }>) {
   const back = [...new Set(ENGINE_USES.flatMap((u) => u.back))].map((k) => eng.back[k]).join(", ");
   return (
     <ol className="kz-prod-list" aria-label={e.title}>
-      <li id={"product-" + p.id} className={cn("kz-entry", "kz-entry-engine", "brand-" + p.id)} data-product={p.id}>
-        <figure className="kz-entry-plate kz-entry-flow">
-          <EngineFlowView t={t} />
+      <li
+        id={"product-" + p.id}
+        className={cn("kz-entry", "kz-entry-engine", "brand-" + p.id)}
+        data-product={p.id}
+        data-side={entrySide(PRODUCTS, p.id)}
+      >
+        <figure className="kz-entry-plate">
+          <ProductVisual id={p.id} name={p.name} />
           <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
         </figure>
         <SpecimenTag className="kz-entry-tag" {...tagProps(p, t)}>
@@ -167,9 +172,14 @@ function ProductEntry({ product: p, t }: Readonly<{ product: Product; t: Transla
   const use = ENGINE_USES.find((u) => u.id === p.id);
   const useText = use ? t.site.products.engine.uses[use.id as keyof typeof t.site.products.engine.uses] : undefined;
   return (
-    <li id={"product-" + p.id} className={cn("kz-entry", "brand-" + p.id)} data-product={p.id}>
+    <li
+      id={"product-" + p.id}
+      className={cn("kz-entry", "brand-" + p.id)}
+      data-product={p.id}
+      data-side={entrySide(PRODUCTS, p.id)}
+    >
       <figure className="kz-entry-plate">
-        <ProductVisual id={p.id} />
+        <ProductVisual id={p.id} name={p.name} />
         <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
       </figure>
       <SpecimenTag className="kz-entry-tag" {...tagProps(p, t)}>

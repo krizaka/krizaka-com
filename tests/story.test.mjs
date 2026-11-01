@@ -115,7 +115,7 @@ test("the film block shows no captions list and no credits wall: one quiet line,
 });
 
 test("a product chapter shows its field's mini-visual (demo data, said so), claims only what runs, and links its site and its source", () => {
-  assert.match(page, /<ProductVisual id=\{id\} \/>/);
+  assert.match(page, /<ProductVisual id=\{id\} name=\{p\.name\} \/>/);
   // The visual plays as soon as it is on screen (2026-10-20): no hover host to wire any more.
   assert.match(read("app/components/home/visuals/ProductVisual.tsx"), /const playing = !still && onScreen;/);
   assert.doesNotMatch(page, /data-pv-host/);

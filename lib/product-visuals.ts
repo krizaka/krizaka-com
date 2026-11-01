@@ -1,8 +1,21 @@
 /* The demo data of the products' field-guide entries (app/components/home/visuals) — structure only, said as demo data on
    the page; the words are messages (site.home.visuals.<id>). Nothing here claims a real user, figure or result. */
 
-/** Akinaza: the free slots of a salon's day (demo); the visual books them one by one. */
-export const AKINAZA_SLOTS = ["9:00", "10:30", "13:00", "15:30"] as const;
+/** The run ids the plates show (demo): every result of the products is an Orazaka run, and the plate says which. */
+export const DEMO_RUNS = { orazaka: "7f3a2c", yomizaka: "b91e04", akinaza: "c4d218" } as const;
+
+/** Akinaza: the number of the demo invoice the booking becomes. */
+export const AKINAZA_INVOICE = "F-0042";
+
+/** The steps of a plate: the input alone, the run under way, the result in. */
+// @fixed: the shape of a decorative plate (three moments), not a business setting.
+export const PLATE_STEPS = 3;
+/** How long each step stays on screen (ms): the result is held longest, it is what the plate is about. */
+// @fixed: the pace of a decorative plate, not a business setting.
+export const PLATE_STEP_MS = [900, 1300, 4800] as const;
+/** The step a plate shows at rest and under reduced motion: everything, the result in. */
+// @fixed: derived from PLATE_STEPS, the last step.
+export const PLATE_REST = PLATE_STEPS - 1;
 
 /** Akinaza: the price of the service on the demo receipt (CAD). */
 // @fixed: demo data of a decorative plate, said as demo on the page; no business behaviour reads it.

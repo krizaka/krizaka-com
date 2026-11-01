@@ -25,14 +25,17 @@ const visuals = read(VISUALS);
 const css = read(CSS);
 const ids = PRODUCT_RECORDS().map((p) => p.id);
 
-// Orazaka's card draws the engine flow instead (2026-10-20: @krizaka/ui/engine-flow, tests/engine.test.mjs).
-test("every product but the engine has its visual, and every product card shows it", () => {
-  for (const id of ids.filter((id) => id !== "orazaka"))
-    assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
-  assert.doesNotMatch(visuals, /^  orazaka:/m, "the engine's old dashed-lines visual is gone");
+// 2026-11-01 (krizaka-internal#683): the engine's entry shows a product moment too (a request, its answer), like the others;
+// its flow stays on /story (tests/engine.test.mjs).
+test("every product has its plate, the engine included, and each entry shows it with the name of lib/products.ts", () => {
+  for (const id of ids) assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
   const showcase = read("app/components/home/ProductShowcase.tsx");
-  assert.match(showcase, /<EngineFlowView t=\{t\} \/>/);
-  assert.match(showcase, /<ProductVisual id=\{p\.id\} \/>/);
+  assert.equal(
+    showcase.match(/<ProductVisual id=\{p\.id\} name=\{p\.name\} \/>/g)?.length,
+    2,
+    "the engine's and each product's",
+  );
+  assert.doesNotMatch(showcase, /<EngineFlowView/);
 });
 
 test("lazy, decorative and without layout shift", () => {
@@ -41,7 +44,8 @@ test("lazy, decorative and without layout shift", () => {
   assert.ok(hasJsx(FRAME, "div", { className: "pv", inert: true, "aria-hidden": true }));
   const pv = cssDecls(CSS, ".pv");
   assert.equal(pv.position, "relative");
-  assert.equal(pv["aspect-ratio"], "16 / 9", "the box has its size before the visual loads");
+  assert.equal(pv["aspect-ratio"], "4 / 5", "the box has its size before the visual loads, tall on a phone");
+  assert.equal(cssDecls(CSS, ".pv", { within: "(min-width: 640px)" })["aspect-ratio"], "16 / 9");
 });
 
 // 2026-10-20 (redesign): the visuals play as soon as they are on screen, on every pointer — no hover to wake them.
@@ -50,7 +54,7 @@ test("it plays when on screen, never under reduced motion, never off screen; no 
   assert.ok(hasCode(FRAME, "const playing = !still && onScreen;"));
   const ids = identifiers(FRAME);
   assert.ok(!ids.has("pointerenter") && !ids.has("FINE") && !strings(FRAME).includes("pointerenter"), "no hover gate");
-  assert.ok(calls(VISUALS).includes("window.clearInterval"));
+  assert.ok(calls(VISUALS).includes("window.clearTimeout"));
   const reduced = (sel) => cssDecls(CSS, sel, { within: "(prefers-reduced-motion: reduce)" });
   for (const sel of [".pv *", ".pv *::before", ".pv *::after"]) {
     assert.equal(reduced(sel).animation, "none !important", sel);
@@ -67,7 +71,7 @@ test("it plays when on screen, never under reduced motion, never off screen; no 
 });
 
 test("built from @krizaka/ui components, specific to each field, demo data said as such", () => {
-  for (const part of ["@krizaka/ui/chip", "@krizaka/icons"]) assert.ok(importsFrom(VISUALS, part), part);
+  for (const part of ["@krizaka/ui/badge", "@krizaka/icons"]) assert.ok(importsFrom(VISUALS, part), part);
   // #417: no generic chart and no gradient rectangle with a play button — each visual shows what the product does.
   const used = identifiers(VISUALS);
   assert.ok(
@@ -85,8 +89,7 @@ test("built from @krizaka/ui components, specific to each field, demo data said 
   for (const l of ["en", "fr"]) {
     const v = JSON.parse(read(`messages/${l}.json`)).site.home.visuals;
     assert.deepEqual(Object.keys(v).sort(), [...ids].sort(), l);
-    assert.match(v.yomizaka.source + v.akinaza.booked, /d[ée]mo/, `${l}: the demo data says it is demo`);
-    for (const k of ["before", "after"]) assert.ok(v.yomizaka[k], `${l}: visuals.yomizaka.${k}`);
+    for (const id of ids) assert.match(v[id].demo, /^d[ée]mo$/, `${l}: ${id}'s plate says its data is demo`);
   }
 });
 

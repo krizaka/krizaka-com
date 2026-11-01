@@ -1,8 +1,8 @@
 /* The pure part of scripts/check-motion.mjs: what is sampled and how a reading is judged. Tested by
    tests/check-motion.test.mjs. */
 
-/** The pages that draw the engine flow (the home's engine section, /story's engine chapter). */
-export const PATHS = ["/en", "/en/story"];
+/** The pages that draw the engine flow: /story's engine chapter (the home's engine entry now draws a plate, not the flow). */
+export const PATHS = ["/en/story"];
 export const VIEWPORTS = [
   { name: "desktop", width: 1280, height: 900 },
   { name: "phone", width: 390, height: 844 },

@@ -252,9 +252,9 @@
           "version": "version"
         },
         "figures": {
-          "orazaka": "le flux, dans les deux sens : les requêtes entrent, les résultats reviennent",
-          "yomizaka": "un bail lu ligne par ligne, la clause à revoir marquée",
-          "akinaza": "le mardi d’un salon, et son reçu avec TPS et TVQ"
+          "orazaka": "une demande entre, la réponse revient, prête à servir",
+          "yomizaka": "un bail lu en entier, la clause interdite signalée avec son passage",
+          "akinaza": "un rendez-vous réservé devient une facture payée, TPS et TVQ comprises"
         },
         "notes": {
           "orazaka": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
@@ -407,32 +407,45 @@
       },
       "visuals": {
         "orazaka": {
-          "label": "Les requêtes de chaque produit, dans un même moteur"
+          "demo": "démo",
+          "promptLabel": "Demande",
+          "prompt": "Résume ce contrat de service en trois points.",
+          "running": "Exécution en cours…",
+          "points": [
+            "Durée : 12 mois, renouvelable.",
+            "Prix : 120 $ par mois, taxes en sus.",
+            "Résiliation : préavis de 30 jours."
+          ],
+          "model": "Modèle local, sur votre serveur",
+          "run": "exécution {run}"
         },
         "yomizaka": {
-          "document": "Le bail",
-          "term": "Durée : 12 mois, du 1er juillet 2026 au 30 juin 2027.",
-          "rent": "Loyer mensuel : 1 450 $, payable le premier jour du mois.",
-          "before": "La locataire verse un ",
-          "quote": "dépôt de sécurité de 1 450 $",
-          "after": " à la signature.",
-          "finding": "Le constat",
-          "title": "Dépôt de garantie interdit : seul le premier mois peut être exigé d'avance",
+          "demo": "démo",
+          "file": "Bail résidentiel.pdf",
+          "pages": "3 pages",
+          "running": "Lecture règle par règle…",
           "badge": "Point non respecté",
+          "title": "Dépôt de garantie interdit",
+          "detail": "Seul le premier mois de loyer peut être exigé d’avance.",
+          "proofLabel": "Preuve",
           "passage": "« dépôt de sécurité de 1 450 $ »",
+          "where": "page 1, ligne 3",
           "law": "C.c.Q., art. 1904, al. 1",
-          "demo": "ligne 3 · démo"
+          "run": "exécution {run}"
         },
         "akinaza": {
-          "day": "Mardi, la journée du salon",
-          "booked": "Réservé, confirmé par courriel · démo",
+          "demo": "démo",
+          "bookingLabel": "Réservation",
           "service": "Coupe courte",
-          "minutes": "30 min",
-          "includes": ["Consultation", "Lavage", "Coiffage"],
-          "choose": "Choisir",
+          "when": "Mardi, 10 h 30 · 30 min",
+          "confirmed": "Confirmée",
+          "running": "Facture en préparation…",
+          "invoice": "Facture {no}",
           "gst": "TPS 5 %",
           "qst": "TVQ 9,975 %",
-          "total": "Total"
+          "total": "Total",
+          "paid": "Payée",
+          "run": "exécution {run}"
         }
       }
     },
