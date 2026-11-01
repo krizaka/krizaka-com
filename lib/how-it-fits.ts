@@ -22,11 +22,11 @@ export function howItFits(
   published: Readonly<Record<string, string>>,
 ): Layers {
   const all = Object.values(manifests);
-  const npm = [...new Set(all.flatMap((m) => m.npm))].sort();
-  const artifacts = [...new Set(all.flatMap((m) => m.maven))].sort();
+  const npm = [...new Set(all.flatMap((m) => m.npm))].sort((a, b) => a.localeCompare(b));
+  const artifacts = [...new Set(all.flatMap((m) => m.maven))].sort((a, b) => a.localeCompare(b));
   const families = new Set(artifacts.map((a) => mavenFamily(a, maven)));
   // A shared service: a module that publishes a `<module>-service` artifact.
-  const services = [...families].filter((f) => `${f}-service` in published).sort();
+  const services = [...families].filter((f) => `${f}-service` in published).sort((a, b) => a.localeCompare(b));
   const java = artifacts.filter((a) => !services.includes(mavenFamily(a, maven)));
   return { blocks: { npm, java }, services };
 }

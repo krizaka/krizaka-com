@@ -15,6 +15,7 @@
     "no-hand-written-validation-regex": 6,
     "no-hardcoded-default-media": 0,
     "no-raw-inner-html": 0,
+    "no-sort-without-compare": 0,
     "no-sync-fs-in-runtime": 4,
     "no-ts-enum": 0,
     "no-types-at-package-root": 0,

@@ -1,0 +1,11 @@
+id: no-sort-without-compare
+valid:
+  - |
+    const a = names.sort((x, y) => x.localeCompare(y));
+  - |
+    const b = [...ids].toSorted((x, y) => x - y);
+invalid:
+  - |
+    const a = names.sort();
+  - |
+    const b = [...new Set(ids)].toSorted();

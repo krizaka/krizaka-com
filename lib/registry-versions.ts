@@ -69,7 +69,7 @@ export const npmPackagesFrom = (repoUrl: string): string[] =>
 export const mavenModuleIds = (): string[] =>
   Object.keys(versions.maven ?? {})
     .filter((id) => !/-(api|client|service)$/.test(id))
-    .sort();
+    .sort((a, b) => a.localeCompare(b));
 
 /** An npm package's downloads as api.npmjs.org gave them at build: last week's, and the last 12 weekly sums (oldest
     first, only when complete). Each is absent when unknown — never a typed number. */

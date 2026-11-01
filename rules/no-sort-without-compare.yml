@@ -1,0 +1,22 @@
+id: no-sort-without-compare
+language: Tsx
+severity: error
+message: "`.sort()` / `.toSorted()` without a compare function orders by UTF-16 code units (Sonar S2871). Name the comparison: `.sort((a, b) => a.localeCompare(b))` for strings, `(a, b) => a - b` for numbers."
+rule:
+  kind: call_expression
+  all:
+    - has:
+        field: function
+        kind: member_expression
+        has:
+          field: property
+          kind: property_identifier
+          regex: ^(sort|toSorted)$
+    - has:
+        field: arguments
+        kind: arguments
+        regex: ^\(\s*\)$
+ignores:
+  - "**/node_modules/**"
+  - "**/.next/**"
+  - "**/dist/**"
