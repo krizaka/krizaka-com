@@ -21,16 +21,6 @@
   color: var(--kz-hue-text, var(--kz-accent));
   flex: none;
 }
-.svc-how {
-  display: grid;
-  gap: 1.5rem;
-  scroll-margin-top: var(--kz-anchor-offset, 6rem);
-}
-.svc-how-lead {
-  margin: 0;
-  color: var(--kz-text-secondary);
-  max-width: 40rem;
-}
 .svc-proof-figures {
   margin-bottom: 1.5rem;
 }

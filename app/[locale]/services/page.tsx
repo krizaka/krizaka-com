@@ -1,20 +1,7 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import {
-  AutomationIcon,
-  ChatIcon,
-  CheckIcon,
-  EditIcon,
-  LockIcon,
-  PackIcon,
-  PlayIcon,
-  ServerIcon,
-  ShieldIcon,
-  StudioIcon,
-  StoryIcon,
-} from "@krizaka/icons";
+import { AutomationIcon, LockIcon, PackIcon, PlayIcon, ServerIcon, StudioIcon, StoryIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
-import { ArgumentCard } from "@krizaka/ui/argument-card";
 import { CardGrid } from "@krizaka/ui/card-grid";
 import { CtaPanel } from "@krizaka/ui/cta-panel";
 import { LinkCard } from "@krizaka/ui/link-card";
@@ -24,8 +11,8 @@ import { localizedMetadata } from "@/lib/seo";
 import { contactHref } from "@/lib/contact";
 import { format, getDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
-import { mavenArtifactCount, npmPackages, npmWeeklyDownloads } from "@/lib/registry-versions";
-import { SERVICES_PAGE_ORDER, SERVICES_PROOF, stepNumber, type ServicesProofId } from "@/lib/services-page";
+import { npmPackages, npmWeeklyDownloads } from "@/lib/registry-versions";
+import { SERVICES_PAGE_ORDER, SERVICES_PROOF, type ServicesProofId } from "@/lib/services-page";
 import { buildServiceJsonLd, type Locale } from "@/lib/structured-data";
 import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
@@ -61,7 +48,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const OFFER_ICON = { modules: PackIcon, ai: LockIcon, maintenance: AutomationIcon } as const;
-const STEP_ICON = { discovery: ChatIcon, proposal: EditIcon, build: CheckIcon, maintain: ShieldIcon } as const;
 /* One meaningful icon each: the design system (studio), the motion lab (play), the Java and TypeScript building
    blocks (server, package), the engine wears its own mark, the blog (story). */
 const PROOF_ICON: Record<ServicesProofId, ReactNode> = {
@@ -79,7 +65,6 @@ export default async function ServicesPage({ params }: Props) {
   const enterprise = contactHref("services", "enterprise");
   const figures = [
     { id: "npm", value: npmPackages().length, label: s.proof.figures.npm },
-    { id: "maven", value: mavenArtifactCount(), label: s.proof.figures.maven },
     { id: "downloads", value: npmWeeklyDownloads() ?? 0, label: s.proof.figures.downloads },
     { id: "repositories", value: publicRepositoryCount(), label: s.proof.figures.repositories },
   ].filter((f) => f.value > 0);
@@ -106,9 +91,6 @@ export default async function ServicesPage({ params }: Props) {
               <ButtonLink href={enterprise} variant="primary" size="lg">
                 {s.cta}
               </ButtonLink>
-              <ButtonLink href="#how" variant="ghost" size="lg">
-                {s.howLink}
-              </ButtonLink>
             </div>
             <Facts items={[{ label: s.facts.quote }, { label: s.facts.repo }, { label: s.facts.place }]} />
           </div>
@@ -134,30 +116,6 @@ export default async function ServicesPage({ params }: Props) {
             ),
           };
         })}
-        credits={{
-          title: s.how.title,
-          children: (
-            <div id="how" className="svc-how">
-              <p className="svc-how-lead">{s.how.lead}</p>
-              <CardGrid min={220} columns={4} aria-label={s.how.eyebrow}>
-                {SERVICES_PAGE_ORDER.steps.map((id, i) => {
-                  const Icon = STEP_ICON[id];
-                  return (
-                    <ArgumentCard
-                      key={id}
-                      id={`step-${id}`}
-                      level={3}
-                      icon={<Icon size={20} aria-hidden />}
-                      title={s.steps[id].title}
-                      meta={`${s.how.step} ${stepNumber(i)}`}
-                      hook={{ label: s.how.stepLabel, text: s.steps[id].body }}
-                    />
-                  );
-                })}
-              </CardGrid>
-            </div>
-          ),
-        }}
         faq={{
           title: s.faq.title,
           items: SERVICES_PAGE_ORDER.faq.map((id) => ({

@@ -1593,7 +1593,6 @@
       "title": "Your company's software, built on what already runs.",
       "lead": "Custom modules, a sovereign AI adopted on your terms, and the maintenance that keeps it all running. Built by the team that builds our products, on the same open building blocks.",
       "cta": "Tell us about your project",
-      "howLink": "See how an engagement works",
       "quote": "On quote: the scope and the price are written down before we start.",
       "facts": {
         "quote": "On quote, price written up front",
@@ -1635,31 +1634,6 @@
           ]
         }
       },
-      "how": {
-        "eyebrow": "How an engagement works",
-        "title": "From the first call to maintenance.",
-        "lead": "Four steps, each ending with something in writing.",
-        "step": "Step",
-        "stepLabel": "What you get"
-      },
-      "steps": {
-        "discovery": {
-          "title": "Scoping",
-          "body": "You describe the problem; we say frankly whether we are the right people."
-        },
-        "proposal": {
-          "title": "Quote",
-          "body": "A written scope, a price, and what is out of scope, before a line is written."
-        },
-        "build": {
-          "title": "Delivery",
-          "body": "The work lands in a repository you follow, tested with every change."
-        },
-        "maintain": {
-          "title": "Maintenance",
-          "body": "After delivery, the module and its dependencies stay up to date."
-        }
-      },
       "proof": {
         "eyebrow": "What it stands on",
         "title": "Real work, public and measured.",
@@ -1667,7 +1641,6 @@
         "figuresLabel": "What we publish, in figures",
         "figures": {
           "npm": "npm packages published",
-          "maven": "artifacts on Maven Central",
           "downloads": "npm downloads a week",
           "repositories": "public repositories"
         },
@@ -1680,7 +1653,7 @@
         },
         "java": {
           "title": "Krizaka Java",
-          "line": "Spring Boot building blocks on Maven Central, versioned together."
+          "line": "Spring Boot building blocks on GitHub Packages, versioned together."
         },
         "motion": {
           "title": "Krizaka Lab",

@@ -19,10 +19,6 @@ test("every step of the page has its words in both languages, with no price and 
         `${l}: offers.${id} says what you get, in a few lines`,
       );
     }
-    for (const id of SERVICES_PAGE_ORDER.steps) {
-      assert.ok(s.steps[id].title, `${l}: steps.${id}`);
-      assert.ok(s.steps[id].body.length <= 90, `${l}: steps.${id} is a card's hook (90 characters at most)`);
-    }
     for (const id of SERVICES_PAGE_ORDER.faq) assert.ok(s.faq.items[id].q && s.faq.items[id].a, `${l}: faq.${id}`);
     for (const { id } of SERVICES_PROOF)
       assert.ok(s.proofCards[id].title && s.proofCards[id].line, `${l}: proof.${id}`);
@@ -76,10 +72,12 @@ test("the page is registered, in the bar, the footer, the sitemap and llms.txt, 
   assert.match(read("app/[locale]/services/page.tsx"), /<JsonLd\s+data=\{buildServiceJsonLd/);
 });
 
-test("the page is built on the pricing template: the parts as its plans, the steps, the proof read at build, the folded questions", () => {
+test("the page is built on the pricing template: the parts as its plans, the proof read at build, the folded questions", () => {
   const page = read("app/[locale]/services/page.tsx");
   assert.match(page, /<PricingPage/);
   assert.match(page, /faq=\{/);
   assert.match(page, /npmPackages\(\)|mavenArtifactCount\(\)/, "figures from the registries, never typed");
+  assert.doesNotMatch(page, /credits=|svc-how|STEP_ICON/, "no how-it-works section (founder, 2026-11-01)");
+  assert.doesNotMatch(page, /mavenArtifactCount/, "Java blocks are on GitHub Packages, not Central (ADR-019)");
   assert.doesNotMatch(page, /kz-notebook-list|paper="lines"/, "no ruled-paper list (founder, 2026-10-30)");
 });
