@@ -710,6 +710,21 @@
           }
         }
       },
+      "watch": {
+        "eyebrow": "Film",
+        "back": "Back to the story",
+        "transcript": "Transcript",
+        "transcriptLead": "What the film says, line by line.",
+        "length": "{seconds} seconds",
+        "published": "Published",
+        "captionEn": "English",
+        "captionFr": "Français",
+        "watchPage": "Watch it on its own page",
+        "family": {
+          "title": "The Krizaka family: the film",
+          "description": "A {seconds}-second film rendered from the code of Krizaka UI: the falcon is Krizaka, the duck Orazaka, the owl Yomizaka and the beaver Akinaza. Four birds, one family."
+        }
+      },
       "blog": {
         "who": "Why I am building Krizaka in Montréal",
         "engine": "An AI engine on a laptop",

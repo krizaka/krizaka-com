@@ -710,6 +710,21 @@
           }
         }
       },
+      "watch": {
+        "eyebrow": "Film",
+        "back": "Retour à l'histoire",
+        "transcript": "Transcription",
+        "transcriptLead": "Ce que dit le film, ligne par ligne.",
+        "length": "{seconds} secondes",
+        "published": "Publié",
+        "captionEn": "English",
+        "captionFr": "Français",
+        "watchPage": "Le voir sur sa propre page",
+        "family": {
+          "title": "La famille Krizaka : le film",
+          "description": "Un film de {seconds} secondes rendu à partir du code de Krizaka UI : le faucon est Krizaka, le canard Orazaka, la chouette Yomizaka et le castor Akinaza. Quatre oiseaux, une famille."
+        }
+      },
       "blog": {
         "who": "Pourquoi je construis Krizaka à Montréal",
         "engine": "Un moteur d'IA sur un portable",

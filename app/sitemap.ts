@@ -2,6 +2,9 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { BUILDING_BLOCKS } from "@/lib/building-blocks";
 import { lastModified } from "@/lib/lastmod";
+import { video } from "@/lib/cdn";
+import { format, getDictionary } from "@/lib/i18n";
+import { watchPath, WATCH_FILMS } from "@/lib/watch-films";
 
 // A single sitemap is correct here: the protocol limit is 50k URLs / 50 MB, and
 // this site has ~50. A sitemap index buys nothing until we blow past that.
@@ -58,6 +61,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return buildEntries(path, priority, freq);
   });
 
+  // The watch page of each film: the video is the page's main content, so the sitemap says so (video tags).
+  const filmPages = WATCH_FILMS.flatMap((f) => {
+    const media = video(f.base);
+    return locales.flatMap((loc) =>
+      buildEntries(watchPath(f.id), 0.6, "monthly")
+        .filter((e) => e.url === `${baseUrl}/${loc}${watchPath(f.id)}`)
+        .map((e) => {
+          const t = getDictionary(loc).site.story.watch[f.id];
+          return {
+            ...e,
+            videos: [
+              {
+                title: t.title,
+                description: format(t.description, { seconds: f.seconds }),
+                thumbnail_loc: media.poster,
+                content_loc: media.mp4,
+                duration: f.seconds,
+                publication_date: f.uploadDate,
+              },
+            ],
+          };
+        }),
+    );
+  });
+
   // The documentation lives on its own sites (ui.krizaka.com, java.krizaka.com), each with its sitemap.
-  return staticPages;
+  return [...staticPages, ...filmPages];
 }

@@ -18,7 +18,18 @@ export interface Redirect {
   source: string;
   destination: string;
   statusCode: 308;
+  /** Next's `has` condition: lets a locale-less address reach its page in one hop, in the visitor's language. */
+  has?: { type: "header"; key: string; value: string }[];
 }
+
+/** A browser that asks for English and never French (the rule of lib/locale-negotiation.ts, as a header regex). */
+const ENGLISH_ONLY = [{ type: "header", key: "accept-language", value: "^(?!.*\\bfr).*\\ben" }] as Redirect["has"];
+
+/** An address without a locale goes to its final page in ONE hop: the locale proxy would add a second one (`/` → `/fr`). */
+const homeSection = (source: string, section: string): Redirect[] => [
+  { source, destination: `/en${section}`, statusCode: 308, has: ENGLISH_ONLY },
+  { source, destination: `/fr${section}`, statusCode: 308 },
+];
 
 /** Optional locale prefix of every source. */
 const L = "/:locale(fr|en)?";
@@ -47,7 +58,7 @@ export function productRedirects(): Redirect[] {
   const { orazaka, yomizaka } = PRODUCT_SITES;
   return [
     // The products' page merged into the home: /products → the home's products section (same language).
-    { source: "/products", destination: "/#products", statusCode: 308 },
+    ...homeSection("/products", "#products"),
     { source: "/:locale(fr|en)/products", destination: "/:locale#products", statusCode: 308 },
     // The product pages, their demos, galleries, journeys and use cases.
     ...(Object.entries(PRODUCT_SITES) as [string, string][]).map(([id, site]) => to(`/products/${id}/:path*`, site)),
@@ -57,7 +68,13 @@ export function productRedirects(): Redirect[] {
     { source: "/:locale(fr|en)/docs/yomizaka/:path*", destination: `${yomizaka}/:locale/docs`, statusCode: 308 },
     { source: "/docs/yomizaka/:path*", destination: `${yomizaka}/docs`, statusCode: 308 },
     // Any other old product page (a product that left, krizaka/.github#413) → the products section, never a dead site.
-    to("/products/:path*", "/#products"),
+    ...homeSection("/products/:path*", "#products"),
+    { source: "/:locale(fr|en)/products/:path*", destination: "/:locale#products", statusCode: 308 },
+    // The blog is blog.krizaka.com (English at the root, French under /fr): its old krizaka.com address, never a 404.
+    { source: "/fr/blog", destination: "https://blog.krizaka.com/fr/", statusCode: 308 },
+    { source: "/fr/blog/:path+", destination: "https://blog.krizaka.com/fr/:path+/", statusCode: 308 },
+    { source: "/:locale(en)?/blog", destination: "https://blog.krizaka.com/", statusCode: 308 },
+    { source: "/:locale(en)?/blog/:path+", destination: "https://blog.krizaka.com/:path+/", statusCode: 308 },
     // Old Orazaka addresses.
     ...ORAZAKA_LEGACY.map((path) => to(`${path}/:path*`, orazaka)),
   ];
@@ -67,5 +84,8 @@ export function productRedirects(): Redirect[] {
     product that left, krizaka/.github#413) goes to the products section, never a 404 and never a dead site. It names no
     product: whatever is under /docs/ and is not Krizaka UI, Krizaka Java or a presented product lands there. */
 export function lastResortRedirects(): Redirect[] {
-  return [to("/docs/:path+", "/#products")];
+  return [
+    ...homeSection("/docs/:path+", "#products"),
+    { source: "/:locale(fr|en)/docs/:path+", destination: "/:locale#products", statusCode: 308 },
+  ];
 }

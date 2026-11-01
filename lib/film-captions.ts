@@ -1,5 +1,5 @@
 /* « Le monde de Krizaka » — the film of the flock (rendered from the code of @krizaka/ui by krizaka-ui
-   tools/brand-films, on the CDN under site/brand-films/). This module holds the structure the page needs: the film's
+   tools/brand-films, on the CDN under org/v1/films/). This module holds the structure the page needs: the film's
    logical path, its length, and when each line is said. The words are messages (site.story.world.cues.<id>): the
    page lists them as the film's text version, and app/[locale]/story/film.vtt renders them as WebVTT.
    The times are the film's own (FILM.cues in krizaka-ui tools/brand-films/film.mjs): change both together. */
