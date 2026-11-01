@@ -20,7 +20,7 @@ test("the marks under the hero: Orazaka, then Akinaza, Yomizaka, then the rest a
 test("the hero lead tells the order in short sentences, no em dash", () => {
   for (const l of ["en", "fr"]) {
     const { lead } = msg(l).site.home.hero;
-    assert.match(lead, /Orazaka.*Krizaka UI.*Krizaka Java/s, l);
+    assert.match(lead, /Sovkora.*Krizaka UI.*Krizaka Java/s, l);
     assert.doesNotMatch(lead, /[\u2014\u2013]/, l);
     assert.ok(lead.split(/[.]\s/).length <= 3, `${l}: two or three sentences`);
   }

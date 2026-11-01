@@ -16,12 +16,12 @@
 
 Each product has its own public page (www.<product>.com, coming soon); krizaka.com carries one card per product on its home ({{SITE_URL}}/en#products) and nothing else.
 
-- Orazaka: an open-source, sovereign AI orchestration engine that runs on the operator's own infrastructure
+- Sovkora: an open-source, sovereign AI orchestration engine that runs on the operator's own infrastructure
   (data stays on the operator's machines; it holds no certification and has no Law 25 pack). Site https://www.orazaka.com — source https://github.com/krizaka/orazaka
-- Yomizaka (in development): your documents, read and checked by Orazaka — leases checked against the law in force on a date,
+- Verikora (in development): your documents, read and checked by Sovkora — leases checked against the law in force on a date,
   PDFs examined for signs of editing, every finding quoted and every run traced. Site https://www.yomizaka.com — source
   https://github.com/krizaka/yomizaka
-- Akinaza (in development): bookings, bilingual invoices with GST/QST and a tax ledger for independent Québec
+- Folioviv (in development): bookings, bilingual invoices with GST/QST and a tax ledger for independent Québec
   shops. It prepares the GST/QST return; the merchant reviews and files it. Not for restaurants and bars. Site
   https://www.akinaza.com — source https://github.com/krizaka/akinaza
 

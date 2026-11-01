@@ -4,6 +4,7 @@
    recording or documentation (next.config.ts redirects the old addresses). Structure only: the words are messages.
    Four products are paused (2026-10-25): they are not presented here, and their repositories are private. */
 
+import { displayName } from "@krizaka/org";
 import { AKINAZA_REPO_URL, YOMIZAKA_REPO_URL } from "./site.ts";
 import { wwwUrl, type ProductId } from "./product-hosts.ts";
 
@@ -30,11 +31,23 @@ export interface Product {
 export const PRODUCTS: Product[] = [
   {
     id: "orazaka",
-    name: "Orazaka",
+    name: displayName("orazaka"),
     status: "development",
     siteUrl: wwwUrl("orazaka"),
     repoUrl: "https://github.com/krizaka/orazaka",
   },
-  { id: "yomizaka", name: "Yomizaka", status: "development", siteUrl: wwwUrl("yomizaka"), repoUrl: YOMIZAKA_REPO_URL },
-  { id: "akinaza", name: "Akinaza", status: "development", siteUrl: wwwUrl("akinaza"), repoUrl: AKINAZA_REPO_URL },
+  {
+    id: "yomizaka",
+    name: displayName("yomizaka"),
+    status: "development",
+    siteUrl: wwwUrl("yomizaka"),
+    repoUrl: YOMIZAKA_REPO_URL,
+  },
+  {
+    id: "akinaza",
+    name: displayName("akinaza"),
+    status: "development",
+    siteUrl: wwwUrl("akinaza"),
+    repoUrl: AKINAZA_REPO_URL,
+  },
 ];

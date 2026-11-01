@@ -37,12 +37,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Our services — Krizaka Entreprise: custom modules, sovereign AI, maintenance",
       description:
-        "One offer for companies, on quote: custom modules built on Krizaka's open building blocks, the adoption of a sovereign AI (Orazaka, on your servers or in Canada), and maintenance.",
+        "One offer for companies, on quote: custom modules built on Krizaka's open building blocks, the adoption of a sovereign AI (Sovkora, on your servers or in Canada), and maintenance.",
     },
     fr: {
       title: "Nos services — Krizaka Entreprise : modules sur mesure, IA souveraine, maintenance",
       description:
-        "Une offre pour les entreprises, sur devis : des modules sur mesure bâtis sur les briques ouvertes de Krizaka, l'adoption d'une IA souveraine (Orazaka, chez vous ou au Canada) et la maintenance.",
+        "Une offre pour les entreprises, sur devis : des modules sur mesure bâtis sur les briques ouvertes de Krizaka, l'adoption d'une IA souveraine (Sovkora, chez vous ou au Canada) et la maintenance.",
     },
   });
 }

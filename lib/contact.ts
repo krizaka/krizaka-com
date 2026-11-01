@@ -6,6 +6,7 @@
    Every variable is declared in lib/env.ts (krizaka/.github#46).
    Both may be set; the message is accepted when at least one channel delivers it. */
 
+import { displayName } from "@krizaka/org";
 import { z } from "zod";
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
@@ -126,9 +127,9 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
 }
 
 const TOPIC_LABEL: Record<ContactTopic, string> = {
-  orazaka: "Orazaka",
-  yomizaka: "Yomizaka",
-  akinaza: "Akinaza",
+  orazaka: displayName("orazaka"),
+  yomizaka: displayName("yomizaka"),
+  akinaza: displayName("akinaza"),
   blocks: "Building blocks",
   enterprise: "Entreprise",
   partnership: "Partnership",

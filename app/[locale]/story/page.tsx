@@ -54,12 +54,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Our story — a Montréal company, one engine, products built on it",
       description:
-        "Krizaka, a Montréal company, built Orazaka first, an AI engine that shows its work, then its products on it: Yomizaka and Akinaza, in development. The engine, each product, the open stack and what comes next.",
+        "Krizaka, a Montréal company, built Sovkora first, an AI engine that shows its work, then its products on it: Verikora and Folioviv, in development. The engine, each product, the open stack and what comes next.",
     },
     fr: {
       title: "Notre histoire — une entreprise de Montréal, un moteur, des produits construits dessus",
       description:
-        "Krizaka, une entreprise de Montréal, a d'abord construit Orazaka, un moteur d'IA qui montre son travail, puis ses produits dessus : Yomizaka et Akinaza, en développement. Le moteur, chaque produit, la pile ouverte et la suite.",
+        "Krizaka, une entreprise de Montréal, a d'abord construit Sovkora, un moteur d'IA qui montre son travail, puis ses produits dessus : Verikora et Folioviv, en développement. Le moteur, chaque produit, la pile ouverte et la suite.",
     },
   });
 }
@@ -68,7 +68,7 @@ const product = (id: string) => PRODUCTS.find((p) => p.id === id)!;
 const names = (locale: string, list: readonly Product[]) =>
   new Intl.ListFormat(locale, { type: "conjunction" }).format(list.map((p) => p.name));
 
-/** A bird's promise, in the words of the family film for its four birds (Krizaka, Orazaka, Yomizaka, Akinaza), the brand reference's for the others. */
+/** A bird's promise, in the words of the family film for its four birds (Krizaka, Sovkora, Verikora, Folioviv), the brand reference's for the others. */
 function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
   const s = t.site.story;
   const family: Record<string, string> = s.world.family.cues;

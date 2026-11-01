@@ -9,6 +9,7 @@ import { getDictionary } from "@/lib/i18n";
    application (krizaka.com carries no product page, so no application node).
    ═══════════════════════════════════════════════════════════════════ */
 
+import { displayName } from "@krizaka/org";
 import { SITE_URL, GITHUB_ORG_URL, CONTACT_EMAIL, NPM_ORG_URL } from "@/lib/site";
 import { wwwUrl } from "@/lib/product-hosts";
 
@@ -24,7 +25,7 @@ const hreflangOf = (locale: Locale) => HREFLANG[locale];
 const FAMILY = [
   {
     id: "orazaka",
-    name: "Orazaka",
+    name: displayName("orazaka"),
     url: wwwUrl("orazaka"),
     repo: "orazaka",
     category: "BusinessApplication",
@@ -32,7 +33,7 @@ const FAMILY = [
   },
   {
     id: "yomizaka",
-    name: "Yomizaka",
+    name: displayName("yomizaka"),
     url: wwwUrl("yomizaka"),
     repo: "yomizaka",
     category: "BusinessApplication",
@@ -40,7 +41,7 @@ const FAMILY = [
   },
   {
     id: "akinaza",
-    name: "Akinaza",
+    name: displayName("akinaza"),
     url: wwwUrl("akinaza"),
     repo: "akinaza",
     category: "BusinessApplication",
