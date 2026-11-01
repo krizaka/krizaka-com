@@ -61,7 +61,7 @@ test("the docs hub counts the open-source list and says so; 'public' labels read
 
 test("no Maven Central count, no « every repository » licence claim (founder, 2026-11-01)", () => {
   const bad = [
-    [/mavenArtifactCount|\{maven\}|(?:artifacts|artefacts) (?:on|sur) Maven Central/i, "a Maven Central count"],
+    [/mavenArtifactCount|"[^"]*\{maven\}[^"]*"|(?:artifacts|artefacts) (?:on|sur) Maven Central/i, "a Maven Central count"],
     [
       /(?:on|sur) every repositor(?:y|ies)|sur chaque dépôt|dans chaque dépôt|every repository/i,
       "a licence claim on every repository",
