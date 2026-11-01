@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { CRITERIA } from "../scripts/dev-preview-lib.mjs";
 import { staleSnapshot, statusFindings, urlFindings, verdict } from "../scripts/drift-lib.mjs";
 
@@ -56,4 +57,11 @@ test("drift alone passes (the update PR fixes it) unless strict", () => {
   const f = staleSnapshot("2026-10-01", { today: TODAY });
   assert.equal(verdict(f).ok, true);
   assert.equal(verdict(f, { strict: true }).ok, false);
+});
+
+test("the update PR names its branch: persist-credentials is off, so gh cannot infer it", () => {
+  const wf = readFileSync(new URL("../.github/workflows/drift.yml", import.meta.url), "utf8");
+  const create = wf.split("\n").find((l) => l.includes("gh pr create"));
+  assert.match(create, /--head "\$branch"/);
+  assert.match(wf, /branch="chore\/drift-[^"]*\$\{GITHUB_RUN_ID\}"/, "one branch per run, so a rerun never collides");
 });
