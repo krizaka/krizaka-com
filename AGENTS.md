@@ -329,6 +329,10 @@
   live pages, unmerged manifests), each with its switch issue (`SWITCH_ISSUES`); what nothing names is deleted
   (`cdn-assets purge-unused --refs <dir> --backup <vault> --yes`). `cdn-assets tree` reports `ok` / `legacy` / `misplaced`
   (`--strict`: fails on legacy too); `node scripts/bunny-tree.mjs` feeds the cockpit (`status`, `issues`, `totals.legacyRoots`).
+- **Another zone, not a root: `krizaka-gpu-out`** (2026-11-01, krizaka-internal#2121). Rented GPU pods write their outputs there directly and hold
+  only that zone's key (`MEDIA_GPU_STORAGE_API_KEY`), never `MEDIA_STORAGE_API_KEY`; a compromised pod cannot touch the sites. It has no pull
+  zone and no layout; objects live under `<day>/<run>/<pod>/` and are deleted after 7 days. The server promotes a validated clip to
+  `krizaka-assets` with `cdn-assets upload` (orazaka `scripts/gpu-out/cli.mjs promote`). The provider and zone are Orazaka admin settings.
 - **Default media URLs (avatars, banners, logos) come from the Krizaka org JSON** (`https://krizaka-assets.b-cdn.net/org/v1/org.json`,
   `@krizaka/org`: `listDefaults(kind)`, `defaultFor(kind, seed)`) — **never hard-coded or bundled in an app**; ast-grep's
   `no-hard-coded-default-media` refuses a `people/defaults`, `defaults/v<n>/` or `krizaka-defaults` path
