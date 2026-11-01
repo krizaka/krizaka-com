@@ -116,7 +116,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
             <div className="kz-home-proof-groups" aria-label={t.proofsLabel}>
               {groups.map((g) => (
                 <section key={g.id} className="kz-home-proof-group" data-group={g.id}>
-                  <h3 className="kz-home-proof-label">{g.label}</h3>
+                  <p className="kz-home-proof-label">{g.label}</p>
                   <dl
                     className="kz-home-proofs"
                     style={
