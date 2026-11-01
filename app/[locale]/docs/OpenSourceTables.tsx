@@ -1,7 +1,7 @@
 "use client";
 
 /* /open-source's two searchable tables, on @krizaka/ui's DataTable (cards on a phone, filters and facets, announced
-   counts): every published package (npm and Maven Central) and every repository. The rows are built on the server
+   counts): every published package (npm and Maven Central) and the repositories. The rows are built on the server
    from what the registries and GitHub said at build (lib/package-catalogue.ts, lib/repository-catalogue.ts) and handed
    down as props — never fetched here. Words: messages → site.openSource.table / packages / repositories. */
 
