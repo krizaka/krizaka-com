@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.16.1](https://github.com/krizaka/krizaka-com/compare/v0.16.0...v0.16.1) (2026-11-01)
+
+
+### Bug Fixes
+
+* **home:** honest figures, more than N, published vs used ([#548](https://github.com/krizaka/krizaka-com/issues/548)) ([cbbc32a](https://github.com/krizaka/krizaka-com/commit/cbbc32a80e97aaadf35b1d4b6b825cfec0262b30))
+
 ## [0.16.0](https://github.com/krizaka/krizaka-com/compare/v0.15.0...v0.16.0) (2026-11-01)
 
 
