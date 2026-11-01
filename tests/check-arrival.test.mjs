@@ -59,14 +59,13 @@ test("one footer landmark per page; two or none fail", () => {
 
 test("the footer's internal links carry the locale, and its own page is aria-current", () => {
   const footer = read("app/components/SiteFooter.tsx");
-  assert.match(footer, /const to = \(path: string\) => `\/\$\{locale\}/);
-  // The story, the blog and contact are the family's « Krizaka » column now (@krizaka/ui 3.39, one-band footer): not here.
-  for (const href of ['to("/docs")', 'to("/changelog")', 'to("/privacy")', 'to("/terms")', "to(PRODUCTS_ANCHOR)"]) {
-    assert.ok(footer.includes(`href={${href}}`), `${href} is prefixed`);
-  }
-  assert.doesNotMatch(footer, /<Link href="\//, "no unprefixed footer link: it would go through proxy.ts's 307");
-  // the version links off-site (its GitHub release, #389): the four pages of the site are aria-current
-  assert.equal(footer.match(/aria-current=\{here\(/g).length >= 4, true);
+  // The settings keep unprefixed paths (as an app's admin stores them); the component prefixes every one of them, columns
+  // and legal links, before SiteFooter draws them — an unprefixed link would go through proxy.ts's 307.
+  assert.equal(footer.match(/href: localized\(l\.href, locale\)/g)?.length, 2);
+  for (const href of ["/services", "/story", "/changelog", "/contact", "/privacy", "/terms", "/open-source"])
+    assert.ok(read("lib/footer.ts").includes(`href: "${href}"`), href);
+  // SiteFooter marks the link to the page being read (aria-current="page") from the path.
+  assert.match(footer, /path=\{pathname\}/);
 });
 
 test("the locale layout mounts RouteArrival: scroll to 0 and focus on the h1, when the page (not the language, not an anchor) changes", () => {

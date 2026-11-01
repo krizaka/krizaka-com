@@ -157,7 +157,10 @@ test("the changelog route, its feed and its template exist; the page is in the s
 
 test("the footer shows krizaka.com's own version only, on its GitHub release; no package version on the page", () => {
   const footer = read("app/components/SiteFooter.tsx");
-  assert.match(footer, /<a href=\{PLATFORM\.release\}>\{format\(f\.version, \{ version: PLATFORM\.site \}\)\}<\/a>/);
+  // The configured footer (lib/footer.ts, showVersion) draws vX.Y.Z, linked to its release by versionHref.
+  assert.match(footer, /version=\{PLATFORM\.site \|\| undefined\}/);
+  assert.match(footer, /versionHref: PLATFORM\.release/);
+  assert.match(read("lib/footer.ts"), /showVersion: true/);
   assert.doesNotMatch(footer, /PLATFORM\.(ui|tokens)|Krizaka UI|@krizaka\/ui \$/);
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;

@@ -11,11 +11,11 @@ test("the company is data: its legal name and its NEQ, as the REQ publishes them
 });
 
 test("the footer and both legal pages name the company with its NEQ, in both languages", () => {
-  assert.match(read("app/components/SiteFooter.tsx"), /format\(f\.company, COMPANY\)/);
+  // The footer's legal line is the settings' legal identity (lib/footer.ts): `legalName · NEQ … · Montréal (Québec)`.
+  assert.match(read("lib/footer.ts"), /legalName: COMPANY\.legalName,\s+neq: COMPANY\.neq,/);
   assert.match(read("app/components/LegalPage.tsx"), /format\(p, COMPANY\)/);
   for (const l of ["en", "fr"]) {
     const s = JSON.parse(read(`messages/${l}.json`)).site;
-    assert.match(s.footer.company, /\{legalName\}.*NEQ \{neq\}/, `${l}: footer`);
     for (const page of ["privacy", "terms"])
       assert.match(s.legal[page].sections[0].paragraphs[0], /\{legalName\}.*\{neq\}/, `${l}: ${page}`);
   }
@@ -33,8 +33,9 @@ test("nothing private reaches the site: no street, postal code, phone or tax acc
   assert.doesNotMatch(site, /Sainte-Marguerite|H4C/);
 });
 
-test("the footer signs with the registered name — « A Technologies Krizaka company », never « A Krizaka company »", () => {
-  assert.match(read("app/components/SiteFooter.tsx"), /company: format\(f\.signature, COMPANY\)/);
-  for (const l of ["en", "fr"]) assert.match(JSON.parse(read(`messages/${l}.json`)).site.footer.signature, /\{name\}/);
+// Founder, 2026-11-01: the company was named twice (« Une entreprise de Technologies Krizaka » and the legal line).
+test("the footer names the company once, by its registered name — no signature line beside the legal identity", () => {
+  assert.doesNotMatch(read("app/components/SiteFooter.tsx"), /signature|COMPANY/);
+  for (const l of ["en", "fr"]) assert.equal(JSON.parse(read(`messages/${l}.json`)).site.footer.signature, undefined);
   assert.match(site, /name: "Technologies Krizaka"/);
 });

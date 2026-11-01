@@ -10,8 +10,9 @@ test("only the footer links to the blog (founder, 2026-11-01): not the bar, not 
   assert.match(read("lib/site.ts"), /BLOG_URL = "https:\/\/blog\.krizaka\.com"/);
   for (const f of ["app/components/SiteBar.tsx", "app/components/MobilePanel.tsx", "lib/nav.ts"])
     assert.doesNotMatch(read(f).replace(/\/\*[\s\S]*?\*\//g, ""), /BLOG_URL|m\.blog|menu\.blog/, f);
-  // The footer's blog link is the family's « Krizaka » column (@krizaka/ui/sites companyLinks), not a column of www's own.
+  // The footer's blog link is its « Krizaka » column, in the footer's settings (lib/footer.ts), never in the component.
   assert.doesNotMatch(read("app/components/SiteFooter.tsx"), /BLOG_URL|f\.story|f\.contact/);
+  assert.match(read("lib/footer.ts"), /href: BLOG_URL/);
   for (const l of ["en", "fr"]) {
     const m = messages(l).site;
     assert.equal(m.menu.blog, undefined, `${l}: menu.blog`);
