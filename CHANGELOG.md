@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.16.0](https://github.com/krizaka/krizaka-com/compare/v0.15.0...v0.16.0) (2026-11-01)
+
+
+### Features
+
+* **home:** products timeline and product-moment plates ([#554](https://github.com/krizaka/krizaka-com/issues/554)) ([5d9c493](https://github.com/krizaka/krizaka-com/commit/5d9c4938e00fb047a8fad0b31921aefb511610c2))
+
+
+### Bug Fixes
+
+* **cdn:** the 6 blog/posts/series manifest keys resolved to posts/posts and 404ed; sites/blog is a foreign prefix, prune never touches it ([#556](https://github.com/krizaka/krizaka-com/issues/556)) ([506259d](https://github.com/krizaka/krizaka-com/commit/506259d06b6d22987875bb50dd8253ca43384c8b))
+* **drift:** the update PR names its branch, one branch per run (krizaka-internal[#2144](https://github.com/krizaka/krizaka-com/issues/2144)) ([#558](https://github.com/krizaka/krizaka-com/issues/558)) ([90329f7](https://github.com/krizaka/krizaka-com/commit/90329f783ca99b7a10ed13ce3bee45ad107b3948))
+* **site-bar:** a strip of the page surface covers the gap above the floating bar (krizaka-internal[#2145](https://github.com/krizaka/krizaka-com/issues/2145)) ([#560](https://github.com/krizaka/krizaka-com/issues/560)) ([500ba9a](https://github.com/krizaka/krizaka-com/commit/500ba9a623bb4a3105bca50737c2ee6f027a7925))
+
 ## [0.15.0](https://github.com/krizaka/krizaka-com/compare/v0.14.1...v0.15.0) (2026-11-01)
 
 
