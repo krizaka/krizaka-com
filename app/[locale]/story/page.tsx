@@ -12,6 +12,7 @@ import { contactHref } from "@/lib/contact";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { FILM_BASE } from "@/lib/film-captions";
 import { storyFilm } from "@/lib/story-film";
+import { watchPath } from "@/lib/watch-films";
 import { asLocale, format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
@@ -295,6 +296,9 @@ export default async function StoryPage({ params }: Props) {
                   />
                 </TapedPhoto>
                 <FilmCredits />
+                <ButtonLink href={`/${locale}${watchPath("family")}`} variant="ghost" size="md">
+                  {st.watch.watchPage}
+                </ButtonLink>
               </>
             }
             actions={readOn("who")}

@@ -190,3 +190,33 @@ export function buildTechArticleJsonLd(a: { locale: Locale; title: string; descr
     isPartOf: { "@id": WEBSITE_ID },
   };
 }
+
+/** A film worth ranking: emitted ONLY on its watch page (tests/video-structured-data.test.mjs), never for an illustrative clip. */
+export function buildVideoJsonLd(v: {
+  locale: Locale;
+  name: string;
+  description: string;
+  url: string;
+  thumbnailUrl: string;
+  contentUrl: string;
+  uploadDate: string;
+  duration: string;
+  transcript: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: v.name,
+    description: v.description,
+    thumbnailUrl: [v.thumbnailUrl],
+    uploadDate: v.uploadDate,
+    duration: v.duration,
+    contentUrl: v.contentUrl,
+    embedUrl: v.url,
+    url: v.url,
+    inLanguage: hreflangOf(v.locale),
+    transcript: v.transcript,
+    publisher: { "@id": ORG_ID },
+    isPartOf: { "@id": WEBSITE_ID },
+  };
+}

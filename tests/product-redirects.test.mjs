@@ -61,7 +61,7 @@ test("the old address of a product that left (krizaka/.github#413) answers 308 w
     for (const path of [`/products/${id}`, `/en/products/${id}`, `/fr/products/${id}/demos`]) {
       const rule = go(path);
       assert.ok(rule, path);
-      assert.equal(rule.destination, "/#products", path);
+      assert.match(rule.destination, /^\/(fr|en|:locale)#products$/, path);
       assert.equal(rule.statusCode, 308, path);
     }
   }
@@ -101,7 +101,7 @@ test("the old Orazaka addresses that redirected to /products/orazaka/… go to i
 
 test("/products merged into the home (two views, 2026-10-17): it answers 308 with the home's products section, same language", () => {
   for (const [path, destination, locale] of [
-    ["/products", "/#products"],
+    ["/products", "/en#products"],
     ["/en/products", "/:locale#products", "en"],
     ["/fr/products", "/:locale#products", "fr"],
   ]) {
@@ -150,7 +150,7 @@ test("an old documentation address no rule claims goes to the products section, 
     "/en/docs/a/b/c",
   ]) {
     const rule = last.find((r) => r.matches(path));
-    assert.equal(rule?.destination, "/#products", path);
+    assert.match(rule?.destination, /^\/(fr|en|:locale)#products$/, path);
     assert.equal(rule?.statusCode, 308, path);
   }
   for (const path of ["/docs", "/en/docs", "/fr/docs"])
@@ -167,4 +167,38 @@ test("an old documentation address no rule claims goes to the products section, 
       at("javaRedirects") > at("productRedirects"),
     "the last resort is served after the product, Java and UI rules",
   );
+});
+
+test("one hop, never a chain: a same-site destination always carries its locale (the locale proxy would add a second redirect)", () => {
+  for (const rule of [...productRedirects(), ...lastResortRedirects()]) {
+    if (rule.destination.startsWith("http")) {
+      continue;
+    }
+    assert.match(rule.destination, /^\/(fr|en|:locale)(#|\/|$)/, `${rule.source} → ${rule.destination}`);
+  }
+});
+
+test("a locale-less /products answers in the visitor's language: English only for a browser that asks English and never French", () => {
+  const [english, french] = productRedirects().filter((r) => r.source === "/products");
+  assert.equal(french.destination, "/fr#products");
+  assert.equal(french.has, undefined);
+  assert.equal(english.destination, "/en#products");
+  const re = new RegExp(english.has[0].value);
+  assert.ok(re.test("en-US,en;q=0.9"));
+  assert.ok(!re.test("fr-CA,fr;q=0.9,en;q=0.8"));
+  assert.ok(!re.test(""));
+});
+
+test("the old /blog addresses go to blog.krizaka.com (not a 404 under /fr/blog), French under /fr", () => {
+  for (const [path, destination] of [
+    ["/blog", "https://blog.krizaka.com/"],
+    ["/en/blog", "https://blog.krizaka.com/"],
+    ["/fr/blog", "https://blog.krizaka.com/fr/"],
+    ["/blog/posts/x", "https://blog.krizaka.com/:path+/"],
+    ["/fr/blog/posts/x", "https://blog.krizaka.com/fr/:path+/"],
+  ]) {
+    const rule = go(path);
+    assert.equal(rule?.destination, destination, path);
+    assert.equal(rule.statusCode, 308, path);
+  }
 });
