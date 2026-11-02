@@ -10,6 +10,8 @@ import { PRODUCTS } from "./products.ts";
 import { BLOG_URL, COMPANY, GITHUB_ORG_URL } from "./site.ts";
 import { STACK } from "./stack.ts";
 
+const DEVELOPMENT = "development" as const;
+
 export const footerSettings = {
   labelKey: "site.footer.label",
   columns: [
@@ -17,7 +19,7 @@ export const footerSettings = {
       id: "products",
       titleKey: "site.footer.products",
       // Every product is in development: said once, on the heading (krizaka-ui#931).
-      ...(PRODUCTS.every((p) => p.status === "development") ? { status: "development" as const } : {}),
+      ...(PRODUCTS.every((p) => p.status === DEVELOPMENT) ? { status: DEVELOPMENT } : {}),
       links: PRODUCTS.map((p) => ({ label: p.name, href: p.siteUrl, external: true })),
     },
     {
