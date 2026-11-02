@@ -62,7 +62,7 @@ test("the footer's internal links carry the locale, and its own page is aria-cur
   // The settings keep unprefixed paths (as an app's admin stores them); the component prefixes every one of them, columns
   // and legal links, before SiteFooter draws them — an unprefixed link would go through proxy.ts's 307.
   assert.equal(footer.match(/href: localized\(l\.href, locale\)/g)?.length, 2);
-  for (const href of ["/services", "/story", "/changelog", "/contact", "/privacy", "/terms", "/open-source"])
+  for (const href of ["/services", "/story", "/changelog", "/contact", "/privacy", "/terms", "/docs"])
     assert.ok(read("lib/footer.ts").includes(`href: "${href}"`), href);
   // SiteFooter marks the link to the page being read (aria-current="page") from the path.
   assert.match(footer, /path=\{pathname\}/);

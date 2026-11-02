@@ -26,7 +26,7 @@ export const footerSettings = {
       id: "open-source",
       titleKey: "site.footer.openSourceColumn",
       links: [
-        { labelKey: "site.footer.allOpenSource", href: "/open-source" },
+        { labelKey: "site.footer.allOpenSource", href: "/docs" },
         ...STACK.map((part) => ({ label: part.name, href: part.url, external: true })),
         { label: "GitHub", href: GITHUB_ORG_URL, external: true },
       ],

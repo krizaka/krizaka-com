@@ -78,3 +78,23 @@ test("the footer is @krizaka/ui's one SiteFooter, the site variant, drawn from l
   assert.match(footer, /config=\{config\}/);
   assert.doesNotMatch(footer, /<FamilyFooter\.Column/);
 });
+
+// check-arrival.mjs clicks every internal footer link and waits for its path: a link whose address answers 308 never
+// arrives (com#561: « All of open source » pointed at /open-source, which goes to /docs).
+test("no internal footer link is the source of a redirect", async () => {
+  const { footerSettings } = await import("../lib/footer.ts");
+  const { uiRedirects } = await import("../lib/ui-redirects.ts");
+  const sources = new Set(uiRedirects().map((r) => r.source.replace(":locale(en)?", "en")));
+  const internal = footerSettings.columns
+    .flatMap((c) => c.links)
+    .filter((l) => !l.external)
+    .map((l) => l.href);
+  internal.push(
+    ...[footerSettings.legal.links ?? []]
+      .flat()
+      .map((l) => l.href)
+      .filter((h) => h?.startsWith("/")),
+  );
+  assert.ok(internal.includes("/docs"));
+  for (const href of internal) assert.ok(!sources.has(`/en${href}`) && !sources.has(`/fr${href}`), `${href} redirects`);
+});
