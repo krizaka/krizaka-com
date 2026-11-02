@@ -96,3 +96,9 @@ test("a development host: robots closed and noindex, pages 308 to www", () => {
   assert.match(auditDevRedirect({ ...ok, rootLocation: "https://evil.test/" }, { www }).join(), /expected/);
   assert.match(auditDevRedirect({ ...ok, rootHeaders: new Headers() }, { www }).join(), /noindex/);
 });
+
+test("check-seo-family.mjs has no nested template literal (S4624)", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../scripts/check-seo-family.mjs", import.meta.url), "utf8");
+  assert.doesNotMatch(source, /\$\{`/, "a template literal sits inside a ${…} of another one");
+});
