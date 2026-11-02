@@ -11,8 +11,12 @@ export const BRAND_FILM = {
   id: "montrer-son-travail",
   /** The 16:9 cut (`<base>.webm|.mp4|.jpg`). */
   base: "brand-films/montrer-son-travail/montrer-son-travail-16x9",
+  /** The silent 10 s loop of the home's « Fig. 1 » (`<loop>.webm|.mp4|.jpg`): the owl, the beaver and the duck at work, cut from the 16:9 film (9.5 s to 19.5 s), no audio. */
+  loop: "brand-films/montrer-son-travail/montrer-son-travail-loop",
   /** The 9:16 cut, played upright on a phone once its files are on the CDN (`<tall>.mp4|.jpg`). */
   tall: "brand-films/montrer-son-travail/montrer-son-travail-9x16",
+  /** The light web encode of the 9:16 cut (720x1280, `<tallWeb>.mp4|.webm`): what a phone plays; `<tall>.jpg` is its poster. */
+  tallWeb: "brand-films/montrer-son-travail/montrer-son-travail-9x16-web",
   // @fixed: the length of the rendered file (ffprobe: 31.5 s), a fact of the media.
   seconds: 31,
   /** ISO date the film was published. */
@@ -25,7 +29,7 @@ export type BrandFilmShot = (typeof BRAND_FILM.shots)[number];
 
 /** True when every file of the vertical cut is on the CDN (`has` is lib/cdn.ts's onCdn). */
 export const hasTallCut = (has: (path: string) => boolean): boolean =>
-  ["mp4", "jpg"].every((ext) => has(`${BRAND_FILM.tall}.${ext}`));
+  has(`${BRAND_FILM.tallWeb}.mp4`) && has(`${BRAND_FILM.tall}.jpg`);
 
 /** True when the visitor asked for less (reduced motion, or Save-Data): the film then waits on its poster, never autoplays. */
 export function prefersStill(viewer: {

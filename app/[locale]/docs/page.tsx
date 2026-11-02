@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { floorFigure } from "@/lib/figure-floor";
 import Link from "next/link";
 import { ChatIcon, ExternalIcon, FlagIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
@@ -11,7 +12,7 @@ import { githubRepositories } from "@/lib/org-stats";
 import { openSourceRepositories } from "@/lib/repository-catalogue";
 import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
-import { mavenArtifactCount, npmPackages, publishedVersion } from "@/lib/registry-versions";
+import { npmPackages, publishedVersion } from "@/lib/registry-versions";
 import { packageRows, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { GOOD_FIRST_URL } from "@/lib/library-links";
 import { CONDUCT_URL, CONTRIBUTING_URL, START_PATHS } from "@/lib/docs-start";
@@ -162,9 +163,8 @@ export default async function DocsPage({ params }: Props) {
 
       <p className="os-stats">
         {format(h.stats, {
-          repositories: fmt.format(repositories.length),
-          npm: fmt.format(npmPackages().length),
-          maven: fmt.format(mavenArtifactCount()),
+          repositories: fmt.format(floorFigure(repositories.length)),
+          npm: fmt.format(floorFigure(npmPackages().length)),
         })}
       </p>
 

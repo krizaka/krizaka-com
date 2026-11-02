@@ -24,10 +24,12 @@ test("the hero reads it at build, climbs with NumberTicker, drops it when missin
   const page = read("app/[locale]/page.tsx");
   assert.match(page, /downloads: npmWeeklyDownloads\(\)/);
   const hero = read("app/components/home/HomeHero.tsx");
-  assert.match(hero, /\{ id: "downloads", value: figures\.downloads \?\? 0, label: t\.proofs\.downloads \}/);
-  assert.match(hero, /\.filter\(\(p\) => p\.value > 0\)/, "a figure the registries did not give is not shown");
+  assert.match(hero, /id: "downloads", value: floorFigure\(figures\.downloads \?\? 0\), label: t\.proofs\.downloads/);
+  assert.match(hero, /g\.items\.filter\(\(p\) => p\.value > 0\)/, "a figure the registries did not give is not shown");
   assert.match(hero, /<NumberTicker value=\{p\.value\}/);
-  assert.match(hero, /figureColumns\(counted\.length\)/);
+  assert.match(hero, /groups\.published/);
+  assert.match(hero, /groups\.used/);
+  assert.match(hero, /figureColumns\(g\.items\.length\)/);
   assert.match(hero, /className="kz-home-license"/, "the licence is a caption, not a fifth cell");
   assert.match(read("app/components/home/home.css"), /\.kz-home-proofs \{[^}]*repeat\(var\(--kz-fig-cols-narrow/);
   for (const n of [3, 4]) assert.equal(n % figureColumns(n).narrow, 0);

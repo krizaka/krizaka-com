@@ -40,6 +40,15 @@
 .kz-site-bar-wrap {
   padding-inline: var(--kz-page-gutter, clamp(16px, 3.2vw, 32px));
 }
+/* The bar floats 0.75rem under the top edge (SiteBar: top-3). Under that gap the page scrolls: this strip paints the
+   page's surface over it, so no line of text shows above the bar (tests/site-bar-flush.test.mjs). */
+.kz-site-bar-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -0.75rem 0 auto 0; /* from the viewport top down to the bar */
+  height: 0.75rem;
+  background: var(--kz-surface-0);
+}
 .kz-site-bar,
 .kz-site-bar[data-compact] {
   max-width: var(--kz-page-max);

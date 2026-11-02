@@ -5,6 +5,7 @@
 
 import type { ReactNode } from "react";
 import { ForwardIcon } from "@krizaka/icons";
+import { floorFigure } from "@/lib/figure-floor";
 import { CardGrid } from "@krizaka/ui/card-grid";
 import { CodeBlock, CodeTabs } from "@krizaka/ui/code-block";
 import { Facts, type Fact } from "@krizaka/ui/page";
@@ -95,7 +96,7 @@ export function StackTiles({ locale }: { locale: string }) {
             ...s.ui.showcase,
             downloads:
               downloads.weekly !== undefined
-                ? format(s.ui.downloads, { count: fmt.format(downloads.weekly) })
+                ? format(s.ui.downloads, { count: fmt.format(floorFigure(downloads.weekly)) })
                 : undefined,
           }}
         />
@@ -171,8 +172,11 @@ export function StackTiles({ locale }: { locale: string }) {
         href={ts.url}
         cta={s.ts.explore}
         facts={
-          tsPackages.length
-            ? [{ label: format(s.facts.npm, { count: tsPackages.length }), tone: "ok" }, { label: STACK_LICENCE }]
+          floorFigure(tsPackages.length) > 0
+            ? [
+                { label: format(s.facts.npm, { count: floorFigure(tsPackages.length) }), tone: "ok" },
+                { label: STACK_LICENCE },
+              ]
             : []
         }
       >

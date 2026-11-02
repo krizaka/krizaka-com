@@ -1,37 +1,34 @@
 /* Home hero — the first page of the field notebook (Cahier, krizaka-ui ADR-004, #417): asymmetric, never centred. On the
    left, the date line of the notes, who Krizaka is, one promise, one action (and the film, quietly), the products' marks
-   and the figures that back them; on the right, the taped scene of the five birds, each with its promise from the film.
+   and the figures that back them; on the right, « Fig. 1 — Montrer son travail »: a silent loop of the film in a thin frame, the
+   five birds standing under it, each with a short tag of what it does (no polaroid, no tape).
    The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first
    paint (LCP) — never revealed, never part of the intro.
 
    Under the actions, the products put forward: a quiet row of their seven marks (from @krizaka/ui), each one a link to
    its card in #products, the ones not offered yet dimmed.
 
-   Once per session, HeroIntro plays the cinematic intro over the poster (home.css): the mark draws itself, the scene
-   rises in with its birds, a light sweeps the backdrop, the figures climb (NumberTicker) — then the loop fades in.
-   Skippable, still under reduced motion and Save-Data. Every figure is read at build and dropped when unknown. */
+   Once per session, HeroIntro plays the cinematic intro (home.css): the mark draws itself, a light sweeps the backdrop, the
+   figures climb (NumberTicker). Skippable, still under reduced motion and Save-Data. Every figure is read at build and dropped when unknown. */
 
 import { ForwardIcon } from "@krizaka/icons";
 import Link from "next/link";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
-import { Flock } from "@krizaka/ui/flock";
-import { TapedPhoto } from "@krizaka/ui/taped-photo";
+import { Mascot } from "@krizaka/ui/mascots";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { format, getDictionary } from "@/lib/i18n";
 import { figureColumns } from "@/lib/figure-grid";
 import type { CSSProperties } from "react";
-import { FILM_CAST } from "@/lib/film-captions";
 import { brandFilm } from "@/lib/story-film";
 import { heroMarkOrder } from "@/lib/home-sections";
-import { HERO_FLOCK } from "@/lib/products-flock";
-import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
+import { floorFigure } from "@/lib/figure-floor";
 import FilmLightbox from "./FilmLightbox";
 import HeroIntro from "./HeroIntro";
-import AmbientLoop from "./AmbientLoop";
+import FilmFrame from "./FilmFrame";
 import "./home.css";
 
 export interface HomeFigures {
@@ -39,31 +36,35 @@ export interface HomeFigures {
   npm: number;
   /** npm downloads of last week (api.npmjs.org at build); absent when unknown. */
   downloads?: number;
-  maven: number;
 }
 
 const film = brandFilm();
+/** The five birds, left to right as the film introduces them; each one a promise (messages site.home.hero.fig.birds). */
+const BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 /** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
 const DIM: readonly ProductStatus[] = ["construction", "upcoming"];
 
 export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
   const dict = getDictionary(locale);
   const t = dict.site.home.hero;
-  const cues = dict.site.story.world.cues;
-  const cueBirds = FILM_CAST.map((bird) => ({
-    ...HERO_FLOCK.birds.find((placed) => placed.bird === bird)!,
-    label: t.plate[bird],
-    promise: cues[bird],
-  }));
-  const counted = [
-    { id: "repositories", value: figures.repositories, label: t.proofs.repositories },
-    { id: "npm", value: figures.npm, label: t.proofs.npm },
-    { id: "downloads", value: figures.downloads ?? 0, label: t.proofs.downloads },
-    { id: "maven", value: figures.maven, label: t.proofs.maven },
-  ].filter((p) => p.value > 0);
-  // Full rows on a phone and wide (lib/figure-grid.ts): 4 figures → 2 × 2, then one row; never a lone cell.
-  const grid = figureColumns(counted.length);
-  const cols = { "--kz-fig-cols": grid.wide, "--kz-fig-cols-narrow": grid.narrow } as CSSProperties;
+  // Two kinds of figures, said apart (founder, 2026-11-01): what we publish, and what gets used. Each reads « more than N ».
+  const groups = [
+    {
+      id: "published",
+      label: t.proofs.groups.published,
+      items: [
+        { id: "repositories", value: floorFigure(figures.repositories), label: t.proofs.repositories },
+        { id: "npm", value: floorFigure(figures.npm), label: t.proofs.npm },
+      ],
+    },
+    {
+      id: "used",
+      label: t.proofs.groups.used,
+      items: [{ id: "downloads", value: floorFigure(figures.downloads ?? 0), label: t.proofs.downloads }],
+    },
+  ]
+    .map((g) => ({ ...g, items: g.items.filter((p) => p.value > 0) }))
+    .filter((g) => g.items.length > 0);
 
   return (
     <SectionBackdrop as="section" id="hero" className="kz-home-hero" aria-labelledby="hero-title">
@@ -91,7 +92,8 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
               </ButtonLink>
               <FilmLightbox film={{ mp4: film.mp4, poster: film.poster, tall: film.tall }} />
             </div>
-
+          </div>
+          <div className="kz-home-hero-proof">
             {/* The products, put forward: a quiet row of their marks, each to its card in #products. Inline SVG, no media (LCP). */}
             <ul className="kz-home-marks" aria-label={t.marksLabel}>
               {heroMarkOrder(PRODUCTS).map((p) => (
@@ -104,62 +106,57 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
               ))}
             </ul>
 
-            <dl className="kz-home-proofs" aria-label={t.proofsLabel} style={cols}>
-              {counted.map((p) => (
-                <div key={p.id}>
-                  <dt>{p.label}</dt>
-                  <dd>
-                    <NumberTicker value={p.value} locale={locale} align="start" />
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
-          </div>
-          <TapedPhoto className="kz-home-plate" caption={t.plate.title}>
-            <div className="kz-home-flock">
-              <AmbientLoop set={VALLEY} />
-              <Flock
-                className="kz-home-flock-stage"
-                birds={HERO_FLOCK.birds}
-                ratio={HERO_FLOCK.ratio}
-                tone="own"
-                tempo={1.7}
-                scenes
-                greet
-              />
-              <div className="kz-home-flock-links">
-                {cueBirds.map(({ bird, x, y, size, label, promise }) => (
-                  <Link
-                    key={bird}
-                    href="/story#who"
-                    className="kz-home-flock-hit"
-                    aria-label={`${label}: ${promise}`}
+            <div className="kz-home-proof-groups" aria-label={t.proofsLabel}>
+              {groups.map((g) => (
+                <section key={g.id} className="kz-home-proof-group" data-group={g.id}>
+                  <p className="kz-home-proof-label">{g.label}</p>
+                  <dl
+                    className="kz-home-proofs"
                     style={
                       {
-                        left: `${x - size / 2}%`,
-                        width: `${size}%`,
-                        top: `calc(${y}% - ${size * 0.9}cqw)`,
-                        "--flock-x": `${x}cqw`,
+                        "--kz-fig-cols": figureColumns(g.items.length).wide,
+                        "--kz-fig-cols-narrow": figureColumns(g.items.length).narrow,
                       } as CSSProperties
                     }
                   >
-                    <span className="kz-home-flock-caption" aria-hidden>
-                      {promise}
+                    {g.items.map((p) => (
+                      <div key={p.id}>
+                        <dt>{p.label}</dt>
+                        <dd>
+                          <span className="kz-home-more">{t.proofs.more} </span>
+                          <NumberTicker value={p.value} locale={locale} align="start" />
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </section>
+              ))}
+            </div>
+            <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
+          </div>
+          <figure className="kz-fig" aria-label={t.fig.figLabel}>
+            <FilmFrame
+              loop={film.loop}
+              film={{ mp4: film.mp4, poster: film.poster, tall: film.tall }}
+              length={t.filmLength}
+            />
+            <ul className="kz-fig-birds" aria-label={t.fig.birdsLabel}>
+              {BIRDS.map((bird) => (
+                <li key={bird}>
+                  <Link href="/story#who" className="kz-fig-bird">
+                    <Mascot bird={bird} mood="welcome" tone="own" size={44} animated={false} life={false} />
+                    <span className="kz-fig-tag">
+                      <b>{t.fig.birds[bird].does}</b>
+                      {t.fig.birds[bird].about.split(" · ").map((part) => (
+                        <span key={part}>{part}</span>
+                      ))}
                     </span>
                   </Link>
-                ))}
-              </div>
-            </div>
-            <ul className="sr-only" aria-label={t.plate.title}>
-              <li>{t.plate.subtitle}</li>
-              {cueBirds.map(({ bird, label, promise }) => (
-                <li key={bird}>
-                  {label}: {promise}
                 </li>
               ))}
             </ul>
-          </TapedPhoto>
+            <figcaption className="kz-fig-caption">{t.fig.caption}</figcaption>
+          </figure>
         </div>
       </Page>
     </SectionBackdrop>

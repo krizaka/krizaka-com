@@ -333,7 +333,10 @@ test("the brand film slot reads « Montrer son travail » from the CDN manifest;
     );
   const slot = read("lib/story-film.ts");
   assert.match(slot, /video\(BRAND_FILM\.base\)/, "the slot resolves the manifest entry through lib/cdn.ts");
-  assert.match(slot, /hasTallCut\(onCdn\) \? video\(BRAND_FILM\.tall\) : undefined/);
+  assert.match(
+    slot,
+    /hasTallCut\(onCdn\)\s*\? \{ mp4: cdn\(`\$\{BRAND_FILM\.tallWeb\}\.mp4`\), poster: cdn\(`\$\{BRAND_FILM\.tall\}\.jpg`\) \}\s*: undefined/,
+  );
   assert.doesNotMatch(slot, /FAMILY_BASE|FILM_BASE|RELAY_BASE|family\.vtt|relay\.vtt/, "no retired film in the slot");
   // the vertical cut: absent until both its files are recorded
   assert.equal(
@@ -341,17 +344,17 @@ test("the brand film slot reads « Montrer son travail » from the CDN manifest;
     false,
   );
   assert.equal(
-    hasTallCut((p) => p === `${BRAND_FILM.tall}.mp4`),
+    hasTallCut((p) => p === `${BRAND_FILM.tallWeb}.mp4`),
     false,
     "a cut without its poster waits",
   );
   assert.equal(
-    hasTallCut((p) => [`${BRAND_FILM.tall}.mp4`, `${BRAND_FILM.tall}.jpg`].includes(p)),
+    hasTallCut((p) => [`${BRAND_FILM.tallWeb}.mp4`, `${BRAND_FILM.tall}.jpg`].includes(p)),
     true,
   );
   assert.equal(
     hasTallCut((p) => Boolean(files[p])),
-    Boolean(files[`${BRAND_FILM.tall}.mp4`] && files[`${BRAND_FILM.tall}.jpg`]),
+    Boolean(files[`${BRAND_FILM.tallWeb}.mp4`] && files[`${BRAND_FILM.tall}.jpg`]),
   );
   // every slot plays it: the home's « Watch the film », /story, the watch page
   assert.match(read("app/components/home/HomeHero.tsx"), /const film = brandFilm\(\);/);
