@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.18.0](https://github.com/krizaka/krizaka-com/compare/v0.17.0...v0.18.0) (2026-11-02)
+
+
+### Features
+
+* **footer:** the footer drawn from its settings, as an admin configures it ([#561](https://github.com/krizaka/krizaka-com/issues/561)) ([22b1a4f](https://github.com/krizaka/krizaka-com/commit/22b1a4fdd3f57b2d1177f539ebc80edd559d72d6))
+
 ## [0.17.0](https://github.com/krizaka/krizaka-com/compare/v0.16.1...v0.17.0) (2026-11-02)
 
 

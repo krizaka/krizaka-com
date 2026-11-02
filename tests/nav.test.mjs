@@ -49,7 +49,11 @@ test("every link to the products leads to the home's section, never to /products
   ]) {
     assert.doesNotMatch(read(file), /["']\/products["']/, file);
   }
-  assert.match(read("app/components/SiteFooter.tsx"), /href=\{to\(PRODUCTS_ANCHOR\)\}/);
+  // The footer's Products column links each product's own www address (lib/products.ts siteUrl), never /products.
+  assert.match(
+    read("lib/footer.ts"),
+    /PRODUCTS\.map\(\(p\) => \(\{ label: p\.name, href: p\.siteUrl, external: true \}\)\)/,
+  );
   const sitemap = read("app/sitemap.ts");
   assert.doesNotMatch(sitemap, /"\/products"/);
   assert.doesNotMatch(read("lib/page-templates.ts"), /"\/products"/);

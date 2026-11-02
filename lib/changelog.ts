@@ -65,11 +65,11 @@ export function releaseProblems(releases: readonly Release[]): string[] {
   );
 }
 
-/** A line of markdown as a reader reads it: links keep their words, backticks and emphasis go. */
+/** A line of markdown as a reader reads it: links keep their words, emphasis goes. Code spans stay: the page and the feed
+   draw them as code, so an identifier that carries a code name (`.brand-orazaka`) reads as code, not as a name. */
 export function plain(md: string): string {
   return cleanText(md)
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
-    .replace(/`([^`]*)`/g, "$1")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/\s+/g, " ")
     .trim();
@@ -246,6 +246,8 @@ export const anchorOf = (r: Pick<Release, "source" | "part" | "version">): strin
     .replace(/^-|-$/g, "");
 
 const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+/** A line of the feed as HTML: escaped, its code spans as `<code>`. */
+const lineHtml = (s: string) => esc(s).replace(/`([^`\n]+)`/g, "<code>$1</code>");
 
 /** The changelog as an RSS 2.0 feed. `tagLabel` words the tags in the feed's language. */
 export function changelogRss(opts: {
@@ -262,7 +264,7 @@ export function changelogRss(opts: {
   const items = opts.releases
     .map((r) => {
       const list = changesFor(r, opts.lang)
-        .map((c) => `<li><b>${esc(opts.tagLabel[c.tag])}</b> ${esc(c.text)}</li>`)
+        .map((c) => `<li><b>${esc(opts.tagLabel[c.tag])}</b> ${lineHtml(c.text)}</li>`)
         .join("");
       const link = `${opts.pageUrl}#${anchorOf(r)}`;
       return `<item><title>${esc(releaseLabel(r))}</title><link>${esc(link)}</link><guid isPermaLink="true">${esc(link)}</guid><pubDate>${new Date(`${r.date}T12:00:00Z`).toUTCString()}</pubDate><description>${esc(`<ul>${list}</ul>`)}</description></item>`;
