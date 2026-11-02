@@ -18,6 +18,8 @@ import {
   tagOf,
   textProblems,
 } from "../lib/changelog.ts";
+import { findCodeNames } from "@krizaka/org";
+import { commercialWords } from "../lib/commercial-words.ts";
 import { FILTER_IDS, filterHref, filterOf, visibleEntries } from "../lib/changelog-filter.ts";
 import { changelogProblems } from "../scripts/check-changelog-build.mjs";
 
@@ -69,6 +71,44 @@ test("changesets: versions, dates, tags from the level, PR links, plain text, no
   assert.equal(r.changes[0].text, "Two blocks for product landing pages.");
   assert.deepEqual(r.changes[0].pr, { number: 293, url: "https://github.com/krizaka/krizaka-ui/pull/293" });
   assert.equal(releases[1].changes[0].tag, "breaking");
+});
+
+test("an identifier in backticks stays code: the page shows it as code, never as a code name in the words", () => {
+  // krizaka-com#561: a krizaka-ui note named `.brand-orazaka`; stripped of its backticks it read as a code name on /changelog.
+  const md = `# @krizaka/ui
+
+## 3.82.0
+
+### Minor Changes
+
+- [#492](https://github.com/krizaka/krizaka-ui/pull/492) [\`f032b3b\`](https://github.com/x) Thanks [@x](https://github.com/x)! - Under a product brand (\`.brand-orazaka\`, \`-yomizaka\`) the margin ink is the accent of Orazaka.
+`;
+  const [r] = parseChangesets(md, "@krizaka/ui", () => "2026-11-01");
+  const text = commercialWords(r.changes[0].text);
+  assert.equal(text, "Under a product brand (`.brand-orazaka`, `-yomizaka`) the margin ink is the accent of Sovkora.");
+  assert.deepEqual(findCodeNames(text), [], "a code span is code, the guard's own rule");
+  assert.match(
+    read("app/[locale]/changelog/page.tsx"),
+    /<Ticks>\{ch\.text\}<\/Ticks>/,
+    "the page draws the backticks as code",
+  );
+});
+
+test("the feed draws a code span as code", () => {
+  const xml = changelogRss({
+    releases: [
+      { source: "@krizaka/ui", version: "1.0.0", date: "2026-11-01", changes: [{ tag: "fix", text: "A `<b>` tag" }] },
+    ],
+    title: "t",
+    description: "d",
+    siteUrl: "https://s",
+    pageUrl: "https://s/en/changelog",
+    feedUrl: "https://s/en/changelog/feed.xml",
+    language: "en",
+    lang: "en",
+    tagLabel: { feature: "New", fix: "Fixed", security: "Security", breaking: "Breaking", change: "Changed" },
+  });
+  assert.match(xml, /A &lt;code&gt;&amp;lt;b&amp;gt;&lt;\/code&gt; tag/);
 });
 
 test("a version without a publish date is not invented", () => {
@@ -157,7 +197,10 @@ test("the changelog route, its feed and its template exist; the page is in the s
 
 test("the footer shows krizaka.com's own version only, on its GitHub release; no package version on the page", () => {
   const footer = read("app/components/SiteFooter.tsx");
-  assert.match(footer, /<a href=\{PLATFORM\.release\}>\{format\(f\.version, \{ version: PLATFORM\.site \}\)\}<\/a>/);
+  // The configured footer (lib/footer.ts, showVersion) draws vX.Y.Z, linked to its release by versionHref.
+  assert.match(footer, /version=\{PLATFORM\.site \|\| undefined\}/);
+  assert.match(footer, /versionHref: PLATFORM\.release/);
+  assert.match(read("lib/footer.ts"), /showVersion: true/);
   assert.doesNotMatch(footer, /PLATFORM\.(ui|tokens)|Krizaka UI|@krizaka\/ui \$/);
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;
