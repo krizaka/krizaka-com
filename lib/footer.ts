@@ -60,12 +60,16 @@ export function messageAt(dictionary: unknown, key: string): string {
   const value = key
     .split(".")
     .reduce<unknown>((node, part) => (node as Record<string, unknown> | undefined)?.[part], dictionary);
-  if (typeof value !== "string") throw new Error(`footer: no message at ${key}`);
+  if (typeof value !== "string") {
+    throw new Error(`footer: no message at ${key}`);
+  }
   return value;
 }
 
 /** An internal href with the locale in front (`/story` → `/fr/story`); an absolute address unchanged. */
 export function localized(href: string, locale: string): string {
-  if (/^[a-z][a-z0-9+.-]*:/i.test(href)) return href;
+  if (/^[a-z][a-z0-9+.-]*:/i.test(href)) {
+    return href;
+  }
   return href === "/" ? `/${locale}` : `/${locale}${href}`;
 }
