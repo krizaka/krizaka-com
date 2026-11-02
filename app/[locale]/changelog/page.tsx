@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { ChangeKind, ChangelogEntry } from "@krizaka/ui/changelog-page";
+import { Ticks } from "@krizaka/ui/page";
 import { buildAlternates } from "@/lib/seo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
 import { anchorOf, changesFor, releaseLabel, type ChangeTag } from "@/lib/changelog";
@@ -55,7 +56,7 @@ export default async function ChangelogRoute({ params }: Props) {
       text: (
         <>
           {(ch.tag === "breaking" || ch.tag === "security") && <b>{c.tags[ch.tag]} · </b>}
-          {ch.text}
+          <Ticks>{ch.text}</Ticks>
           {ch.pr && (
             <>
               {" "}
