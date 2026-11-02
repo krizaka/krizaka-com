@@ -333,7 +333,10 @@ test("the brand film slot reads « Montrer son travail » from the CDN manifest;
     );
   const slot = read("lib/story-film.ts");
   assert.match(slot, /video\(BRAND_FILM\.base\)/, "the slot resolves the manifest entry through lib/cdn.ts");
-  assert.match(slot, /hasTallCut\(onCdn\)\s*\? \{ mp4: cdn\(`\$\{BRAND_FILM\.tallWeb\}\.mp4`\), poster: cdn\(`\$\{BRAND_FILM\.tall\}\.jpg`\) \}\s*: undefined/);
+  assert.match(
+    slot,
+    /hasTallCut\(onCdn\)\s*\? \{ mp4: cdn\(`\$\{BRAND_FILM\.tallWeb\}\.mp4`\), poster: cdn\(`\$\{BRAND_FILM\.tall\}\.jpg`\) \}\s*: undefined/,
+  );
   assert.doesNotMatch(slot, /FAMILY_BASE|FILM_BASE|RELAY_BASE|family\.vtt|relay\.vtt/, "no retired film in the slot");
   // the vertical cut: absent until both its files are recorded
   assert.equal(
