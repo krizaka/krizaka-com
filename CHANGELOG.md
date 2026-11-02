@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.17.0](https://github.com/krizaka/krizaka-com/compare/v0.16.1...v0.17.0) (2026-11-02)
+
+
+### Features
+
+* **home:** the hero shows the film, Fig. 1 — a muted loop framed by the five birds ([#563](https://github.com/krizaka/krizaka-com/issues/563)) ([da841fd](https://github.com/krizaka/krizaka-com/commit/da841fdc12d8c0ca8d1132fc52182c4f794b771f))
+
 ## [0.16.1](https://github.com/krizaka/krizaka-com/compare/v0.16.0...v0.16.1) (2026-11-01)
 
 
