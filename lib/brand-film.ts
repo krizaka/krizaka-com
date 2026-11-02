@@ -11,6 +11,8 @@ export const BRAND_FILM = {
   id: "montrer-son-travail",
   /** The 16:9 cut (`<base>.webm|.mp4|.jpg`). */
   base: "brand-films/montrer-son-travail/montrer-son-travail-16x9",
+  /** The silent 10 s loop of the home's « Fig. 1 » (`<loop>.webm|.mp4|.jpg`): the owl, the beaver and the duck at work, cut from the 16:9 film (9.5 s to 19.5 s), no audio. */
+  loop: "brand-films/montrer-son-travail/montrer-son-travail-loop",
   /** The 9:16 cut, played upright on a phone once its files are on the CDN (`<tall>.mp4|.jpg`). */
   tall: "brand-films/montrer-son-travail/montrer-son-travail-9x16",
   // @fixed: the length of the rendered file (ffprobe: 31.5 s), a fact of the media.

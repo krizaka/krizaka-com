@@ -191,14 +191,40 @@
           "license": "{license} sur chaque bibliothèque open source"
         },
         "filmClose": "Fermer le film",
-        "plate": {
-          "title": "Planche I · La volée",
-          "subtitle": "cinq promesses, telles que le film les dit",
-          "falcon": "le faucon",
-          "owl": "le hibou",
-          "duck": "le canard",
-          "flamingo": "le flamant",
-          "pigeon": "le pigeon"
+        "fig": {
+          "caption": "Fig. 1 — Montrer son travail",
+          "figLabel": "Fig. 1, Montrer son travail : une boucle muette du film",
+          "open": "Voir le film en entier, avec le son",
+          "pause": "Mettre la boucle en pause",
+          "play": "Lancer la boucle",
+          "birdsLabel": "Les cinq oiseaux, et ce que chacun fait",
+          "birds": {
+            "falcon": {
+              "name": "le faucon",
+              "does": "veille",
+              "about": "sécurité"
+            },
+            "owl": {
+              "name": "le hibou",
+              "does": "lit",
+              "about": "documents · Verikora"
+            },
+            "duck": {
+              "name": "le canard",
+              "does": "bâtit",
+              "about": "code · Sovkora"
+            },
+            "flamingo": {
+              "name": "le flamant",
+              "does": "répond",
+              "about": "paiement · Folioviv"
+            },
+            "pigeon": {
+              "name": "le pigeon",
+              "does": "livre",
+              "about": "open source"
+            }
+          }
         }
       },
       "engine": {

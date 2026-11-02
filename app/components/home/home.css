@@ -1,7 +1,7 @@
 /* The home (app/[locale]/page.tsx): the centred hero and its once-per-session intro, the product glow cards, the
    principles list. Colours are tokens only (the brand light of a card is its `.brand-<id>` accent). */
 
-/* ─── The hero: the first page of the notebook (Cahier) — the words on the left, the taped flock on the right, then the
+/* ─── The hero: the first page of the notebook (Cahier) — the words on the left, « Fig. 1 » (the film's loop and the five birds) on the right, then the
    figures, then the scene (in the flow: the birds never cover a figure). Never centred. ─── */
 .kz-home-hero {
   position: relative;
@@ -18,73 +18,152 @@
   gap: 40px;
   align-items: start;
 }
+.kz-home-hero-proof {
+  min-width: 0;
+  order: 2; /* below the figure on a phone: title, lead, action, film, specimens, then the marks and figures */
+}
 @media (min-width: 1024px) {
   .kz-home-hero-grid {
     grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-    gap: 56px;
+    grid-template-areas: "words fig" "proof fig";
+    column-gap: 56px;
+    row-gap: 40px;
+  }
+  .kz-home-hero-words {
+    grid-area: words;
+  }
+  .kz-fig {
+    grid-area: fig;
+  }
+  .kz-home-hero-proof {
+    grid-area: proof;
   }
 }
 .kz-home-hero-words {
   min-width: 0;
 }
-.kz-home-plate {
+/* « Fig. 1 — Montrer son travail » (krizaka-internal#2147): the figure of the hero. A thin ink rule, square corners, the
+   paper's solid offset shadow; the loop inside, the five birds under it on a ground rule, each with a tag, then the
+   caption. Nothing moves under the pointer: a hover changes a colour only. */
+.kz-fig {
   min-width: 0;
+  margin: 0;
 }
-.kz-home-flock {
+.kz-fig-frame {
   position: relative;
-  width: 100%;
-  aspect-ratio: 4 / 5;
-  container-type: inline-size;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
+  background: var(--kz-surface-1);
+  border: 1px solid var(--kz-border-strong);
+  box-shadow: 4px 4px 0 var(--kz-border-strong);
 }
-.kz-home-flock-stage {
+.kz-fig-frame :is(img, video) {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
 }
-.kz-home-flock-links {
+.kz-fig-open {
   position: absolute;
   inset: 0;
-  z-index: 3;
-  container-type: inline-size;
-}
-.kz-home-flock-hit {
-  position: absolute;
+  z-index: 1;
   display: block;
-  aspect-ratio: 1;
-  color: var(--kz-text-primary);
-  text-decoration: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
-.kz-home-flock-hit:focus-visible {
+.kz-fig-open:focus-visible,
+.kz-fig-pause:focus-visible,
+.kz-fig-bird:focus-visible {
   outline: 2px solid var(--kz-ring, var(--kz-accent));
-  outline-offset: 2px;
+  outline-offset: -4px;
 }
-.kz-home-flock-caption {
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  transform: translate(clamp(calc(8px - var(--flock-x)), -50%, calc(100cqw - 8px - var(--flock-x) - 100%)), -2px);
-  width: max-content;
-  max-width: min(260px, calc(100cqw - 16px));
-  padding: 4px 8px;
+.kz-fig-chip,
+.kz-fig-pause {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--font-mono);
   font-size: 12.5px;
   line-height: 16px;
-  text-align: center;
   color: var(--kz-text-primary);
   background: var(--kz-surface-1);
   border: 1px solid var(--kz-border-strong);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s var(--kz-ease, ease);
 }
-.kz-home-flock-hit:is(:hover, :focus-visible) .kz-home-flock-caption {
-  opacity: 1;
+.kz-fig-chip {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 4px 8px;
 }
-@media (prefers-reduced-motion: reduce) {
-  .kz-home-flock-caption {
-    transition: none;
+.kz-fig-open:hover .kz-fig-chip,
+.kz-fig-pause:hover {
+  background: var(--kz-surface-2, var(--kz-surface-1));
+  border-color: var(--kz-text-secondary);
+}
+.kz-fig-pause {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  z-index: 2;
+  min-width: 32px;
+  min-height: 32px;
+  justify-content: center;
+  padding: 0 8px;
+  cursor: pointer;
+}
+.kz-fig-birds {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+  border-bottom: 1px solid var(--kz-border-strong);
+}
+.kz-fig-bird {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 0 2px 8px;
+  color: var(--kz-text-primary);
+  text-decoration: none;
+}
+.kz-fig-tag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--kz-text-secondary);
+  overflow-wrap: anywhere;
+}
+.kz-fig-tag b {
+  font-weight: 600;
+  color: var(--kz-text-primary);
+}
+.kz-fig-bird:hover .kz-fig-tag b {
+  color: var(--kz-accent);
+}
+.kz-fig-caption {
+  margin: 10px 0 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--kz-text-secondary);
+}
+@media (max-width: 480px) {
+  .kz-fig-tag {
+    font-size: 10.5px;
+    line-height: 14px;
+  }
+  .kz-fig-bird {
+    padding-inline: 0;
   }
 }
 

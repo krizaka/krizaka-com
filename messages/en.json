@@ -191,14 +191,40 @@
           "license": "{license} on every open-source library"
         },
         "filmClose": "Close the film",
-        "plate": {
-          "title": "Plate I · The flock",
-          "subtitle": "five promises, as the film says them",
-          "falcon": "the falcon",
-          "owl": "the owl",
-          "duck": "the duck",
-          "flamingo": "the flamingo",
-          "pigeon": "the pigeon"
+        "fig": {
+          "caption": "Fig. 1 — Showing our work",
+          "figLabel": "Fig. 1, Showing our work: a silent loop of the film",
+          "open": "Watch the full film, with sound",
+          "pause": "Pause the loop",
+          "play": "Play the loop",
+          "birdsLabel": "The five birds, and what each one does",
+          "birds": {
+            "falcon": {
+              "name": "the falcon",
+              "does": "watches",
+              "about": "security"
+            },
+            "owl": {
+              "name": "the owl",
+              "does": "reads",
+              "about": "documents · Verikora"
+            },
+            "duck": {
+              "name": "the duck",
+              "does": "builds",
+              "about": "code · Sovkora"
+            },
+            "flamingo": {
+              "name": "the flamingo",
+              "does": "answers",
+              "about": "payment · Folioviv"
+            },
+            "pigeon": {
+              "name": "the pigeon",
+              "does": "delivers",
+              "about": "open source"
+            }
+          }
         }
       },
       "engine": {
