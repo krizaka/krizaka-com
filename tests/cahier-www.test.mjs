@@ -10,13 +10,9 @@ const hero = read("app/components/home/HomeHero.tsx");
 const home = read("app/components/home/home.css");
 const msgs = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read("messages/fr.json")) };
 
-test("the first page is asymmetric: the words on the left, the taped film flock on the right, never centred", () => {
-  assert.match(hero, /from "@krizaka\/ui\/taped-photo"/);
-  assert.match(hero, /<TapedPhoto\b/);
-  assert.match(hero, /<Flock[^>]*birds=\{HERO_FLOCK\.birds\}/);
-  assert.match(hero, /from "@krizaka\/ui\/flock"/);
-  assert.match(hero, /t\.plate\.title/);
-  assert.doesNotMatch(hero, /BirdPlate/);
+test("the first page is asymmetric: the words on the left, « Fig. 1 » on the right, never centred", () => {
+  assert.match(hero, /<figure className="kz-fig"/);
+  assert.doesNotMatch(hero, /taped-photo|<TapedPhoto|<Flock|BirdPlate/);
   const inner = home.match(/\.kz-home-hero-inner \{([^}]*)\}/)?.[1] ?? "";
   assert.doesNotMatch(inner, /text-align: center|align-items: center/, "a centred hero");
   assert.match(home, /\.kz-home-hero-grid \{[^}]*grid-template-columns/);
@@ -77,6 +73,5 @@ test("the site's own styles carry no template tell", () => {
 test("the hero keeps its contract: one primary action, server-rendered, with its first-paint text before the scene", () => {
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
   assert.doesNotMatch(hero, /"use client"|data-reveal/);
-  assert.match(hero, /<AmbientLoop set=\{VALLEY\} \/>/);
-  assert.ok(hero.indexOf("kz-home-actions") < hero.indexOf("<TapedPhoto"), "the scene follows the first-paint text");
+  assert.ok(hero.indexOf("kz-home-actions") < hero.indexOf("<figure"), "the figure follows the first-paint text");
 });

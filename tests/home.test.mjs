@@ -135,8 +135,11 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
   assert.match(hero, /href=\{`#product-\$\{p\.id\}`\}/);
   assert.match(hero, /<ProductLogo id=\{p\.id\} size=\{30\} animated=\{false\} \/>/);
   assert.match(hero, /DIM: readonly ProductStatus\[\] = \["construction", "upcoming"\]/);
-  assert.doesNotMatch(hero, /<video|<img/, "the ambient scene remains lazy and does not add eagerly loaded media");
-  assert.match(hero, /<AmbientLoop set=\{VALLEY\} \/>/);
+  assert.doesNotMatch(
+    hero,
+    /<video|<img/,
+    "the hero's server markup holds no media: the loop is a client island (FilmFrame)",
+  );
   assert.ok(
     hero.indexOf("kz-home-actions") < hero.indexOf("kz-home-marks") &&
       hero.indexOf("kz-home-marks") < hero.indexOf("kz-home-proofs"),
@@ -149,26 +152,58 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
   }
 });
 
-test("the hero uses the shared taped flock photo and keeps all five film promises accessible", () => {
+// « Fig. 1 — Montrer son travail » (krizaka-internal#2147): no polaroid, no tape; the film's loop in a framed figure,
+// the five birds standing outside it, each with a tag of what it does.
+test("the hero is « Fig. 1 »: a framed silent loop and the five birds outside it, each with a tag", () => {
   const hero = read("app/components/home/HomeHero.tsx");
-  assert.match(hero, /from "@krizaka\/ui\/taped-photo"/);
-  assert.match(hero, /<TapedPhoto[^>]*caption=\{t\.plate\.title\}/);
-  assert.doesNotMatch(hero, /BirdPlate/);
-  assert.match(hero, /<Flock[^>]*scenes/);
-  assert.match(hero, /FILM_CAST\.map/);
-  assert.match(hero, /promise: cues\[bird\]/);
-  assert.match(hero, /className="sr-only"/);
-  assert.match(hero, /cueBirds\.map/);
-  assert.match(hero, /HERO_FLOCK/);
-  assert.ok(
-    hero.indexOf("kz-home-actions") < hero.indexOf("<TapedPhoto"),
-    "the photo follows the first-paint text and actions",
+  assert.doesNotMatch(
+    hero,
+    /TapedPhoto|taped-photo|<Flock|AmbientLoop|HERO_FLOCK/,
+    "no polaroid, tape, live flock or valley loop",
   );
+  assert.match(hero, /<figure className="kz-fig"/);
+  assert.match(hero, /<FilmFrame\s+loop=\{film\.loop\}/);
+  assert.match(hero, /animated=\{false\} life=\{false\}/, "static poses: nothing moves under the pointer");
+  assert.match(hero, /href="\/story#who"/);
+  assert.ok(hero.indexOf("<FilmFrame") < hero.indexOf("kz-fig-birds"), "the birds stand under the frame, not in it");
+  assert.ok(hero.indexOf("kz-fig-birds") < hero.indexOf("kz-fig-caption"));
+  assert.ok(
+    hero.indexOf("kz-home-actions") < hero.indexOf("<figure"),
+    "the figure follows the first-paint text and actions",
+  );
+  assert.deepEqual(hero.match(/\["falcon", "owl", "duck", "flamingo", "pigeon"\]/)?.length, 1);
   for (const lang of ["en", "fr"]) {
-    const cues = messages(lang).site.story.world.cues;
+    const fig = messages(lang).site.home.hero.fig;
+    assert.match(fig.caption, /^Fig\. 1 — /, `${lang}: the caption is « Fig. 1 — … »`);
+    for (const k of ["figLabel", "open", "pause", "play", "birdsLabel"]) assert.ok(fig[k], `${lang}: fig.${k}`);
     for (const bird of ["falcon", "owl", "duck", "flamingo", "pigeon"])
-      assert.ok(cues[bird], `${lang}: ${bird} promise`);
+      for (const k of ["name", "does", "about"]) assert.ok(fig.birds[bird][k], `${lang}: ${bird}.${k}`);
   }
+  assert.equal(messages("fr").site.home.hero.fig.caption, "Fig. 1 — Montrer son travail");
+});
+
+test("the loop: muted, 10 s cut, on the CDN, never autoplays under reduced motion or Save-Data, pausable", () => {
+  const frame = read("app/components/home/FilmFrame.tsx");
+  assert.match(frame, /prefersStill\(window\)/, "reduced motion and Save-Data leave the poster");
+  assert.match(frame, /<video[^>]* muted loop playsInline/);
+  assert.match(
+    frame,
+    /aria-hidden>\s*<video[^>]*tabIndex=\{-1\}/,
+    "the loop is decorative: hidden on its wrapper, never focusable (Sonar S6825)",
+  );
+  assert.doesNotMatch(frame, /<video[^>]*aria-hidden/, "aria-hidden never sits on the focusable video itself");
+  assert.match(frame, /aria-pressed=\{paused\}/, "a visible pause control (WCAG 2.2.2)");
+  assert.match(frame, /document\.readyState === "complete"/, "nothing before the page has loaded (LCP)");
+  assert.match(frame, /v\.pause\(\)/, "paused off screen");
+  assert.match(frame, /<FilmLightbox/, "one press opens the full film");
+  const manifest = JSON.parse(read("lib/cdn-manifest.json"));
+  const files = manifest.files ?? manifest;
+  for (const ext of ["webm", "mp4", "jpg"])
+    assert.ok(
+      files[`brand-films/montrer-son-travail/montrer-son-travail-loop.${ext}`],
+      `loop.${ext} is in the manifest`,
+    );
+  assert.match(read("lib/brand-film.ts"), /loop: "brand-films\/montrer-son-travail\/montrer-son-travail-loop"/);
 });
 
 // « Build with our open source » (2026-10-20): the stack put forward and playable — Krizaka UI's real components,

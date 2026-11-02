@@ -49,10 +49,8 @@ test("the choreography over the poster: the mark draws, the scene rises in with 
   assert.equal(rest.opacity, "1");
 });
 
-test("the ambient flock appears in the hero and the products section, each in its own taped photo", () => {
-  const hero = read("app/components/home/HomeHero.tsx");
-  assert.match(hero, /<AmbientLoop set=\{VALLEY\} \/>/);
-  assert.match(hero, /<TapedPhoto/);
+test("the ambient flock stands in the products section's taped photo; the hero holds « Fig. 1 » instead", () => {
+  assert.doesNotMatch(read("app/components/home/HomeHero.tsx"), /AmbientLoop|<TapedPhoto/);
   assert.match(read("app/components/home/ProductShowcase.tsx"), /<ProductsFlock set=\{VALLEY\} \/>/);
   assert.match(read("app/components/home/ProductsFlock.tsx"), /<TapedPhoto/);
 });

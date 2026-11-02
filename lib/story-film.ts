@@ -7,5 +7,10 @@ import { BRAND_FILM, hasTallCut } from "./brand-film";
 
 export function brandFilm() {
   const wide = video(BRAND_FILM.base);
-  return { ...BRAND_FILM, ...wide, tall: hasTallCut(onCdn) ? video(BRAND_FILM.tall) : undefined };
+  return {
+    ...BRAND_FILM,
+    ...wide,
+    loop: video(BRAND_FILM.loop),
+    tall: hasTallCut(onCdn) ? video(BRAND_FILM.tall) : undefined,
+  };
 }
