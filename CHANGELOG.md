@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.21.0](https://github.com/krizaka/krizaka-com/compare/v0.20.0...v0.21.0) (2026-11-03)
+
+
+### Features
+
+* **cdn:** weekly Bunny retention listing, list-only ([#584](https://github.com/krizaka/krizaka-com/issues/584)) ([6ec26b1](https://github.com/krizaka/krizaka-com/commit/6ec26b111b0d256c7cb3a9e9711cdd7c318090dc))
+
 ## [0.20.0](https://github.com/krizaka/krizaka-com/compare/v0.19.0...v0.20.0) (2026-11-03)
 
 
