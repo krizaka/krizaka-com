@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.20.0](https://github.com/krizaka/krizaka-com/compare/v0.19.0...v0.20.0) (2026-11-03)
+
+
+### Features
+
+* **products:** Kridoc on the home as a product in design ([#587](https://github.com/krizaka/krizaka-com/issues/587)) ([745ad08](https://github.com/krizaka/krizaka-com/commit/745ad080825deb41eda66c646b0e57365407a6d8))
+
 ## [0.19.0](https://github.com/krizaka/krizaka-com/compare/v0.18.0...v0.19.0) (2026-11-03)
 
 
