@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.19.0](https://github.com/krizaka/krizaka-com/compare/v0.18.0...v0.19.0) (2026-11-03)
+
+
+### Features
+
+* **content:** the contract names what the card links; the drift check fetches every shop address (krizaka-internal[#1888](https://github.com/krizaka/krizaka-com/issues/1888)) ([#585](https://github.com/krizaka/krizaka-com/issues/585)) ([e058619](https://github.com/krizaka/krizaka-com/commit/e05861924b522cde73190ae1951550aca57540e1))
+
+
+### Bug Fixes
+
+* **ci:** post-deploy red is filed in krizaka-internal, not here ([#582](https://github.com/krizaka/krizaka-com/issues/582)) ([1b044f8](https://github.com/krizaka/krizaka-com/commit/1b044f87c6fc57134a5ac411c6d7b6d15909143b))
+
 ## [0.18.0](https://github.com/krizaka/krizaka-com/compare/v0.17.0...v0.18.0) (2026-11-02)
 
 
