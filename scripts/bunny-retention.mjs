@@ -7,7 +7,8 @@
 //
 //   node scripts/bunny-retention.mjs [--yes] [--summary <file>] [--env-file <path>]
 //
-// Without --yes it only lists (the weekly Action writes that list to the run summary, then deletes in a second step).
+// Without --yes it only lists. The weekly Action runs LIST-ONLY (it never passes --yes): the deletion is switched on by the
+// CTO, after reading a real listing (krizaka-internal#1953).
 // It deletes under pr-assets/ and site/renders/ only. Credentials as scripts/cdn-assets.mjs, GitHub reads with GITHUB_TOKEN.
 
 import { appendFileSync, readFileSync } from "node:fs";
@@ -35,12 +36,36 @@ export function prKeyOf(path) {
 /** The chosen render: kept whatever its age. */
 export const isChosen = (path) => /(^|\/)chosen\//.test(path) || /chosen/i.test(path.split("/").at(-1));
 
+const folderOf = (path) => path.split("/").slice(0, 3).join("/");
+const olderThan = (at, days, now) => Boolean(at) && now - at > days * DAY;
+
+/** The reason a pr-assets object goes, or null: `known` is the PR GitHub shows ({ closedAt }), undefined when it shows none. */
+function prAssetsVerdict(known, last, now) {
+  if (known?.closedAt === null) {
+    return null;
+  }
+  if (known) {
+    return olderThan(known.closedAt, PR_ASSETS_DAYS, now) ? `PR closed more than ${PR_ASSETS_DAYS} days ago` : null;
+  }
+  return olderThan(last, PR_ASSETS_DAYS, now) ? `no PR to read, untouched for more than ${PR_ASSETS_DAYS} days` : null;
+}
+
+/** The reason an object goes, or null (kept). */
+function verdict(o, last, prs, now) {
+  const pr = prKeyOf(o.path);
+  if (pr) {
+    const known = pr.pr === null ? undefined : prs.get(`${pr.repo}#${pr.pr}`);
+    return prAssetsVerdict(known, last, now);
+  }
+  const stale = o.path.startsWith("site/renders/") && !isChosen(o.path) && olderThan(last, RENDER_DAYS, now);
+  return stale ? `render candidate untouched for more than ${RENDER_DAYS} days` : null;
+}
+
 /**
  * What to delete. `objects`: [{ path, size, changed }]; `prs`: Map "repo#pr" → { closedAt: ms | null } for the PRs GitHub shows
  * (null: still open). Returns [{ path, size, why }].
  */
 export function plan(objects, prs, now = Date.now()) {
-  const folderOf = (path) => path.split("/").slice(0, 3).join("/");
   const newest = new Map();
   for (const o of objects) {
     newest.set(folderOf(o.path), Math.max(newest.get(folderOf(o.path)) ?? 0, o.changed));
@@ -50,7 +75,7 @@ export function plan(objects, prs, now = Date.now()) {
     if (!DELETABLE.some((p) => o.path.startsWith(p))) {
       continue;
     }
-    const why = reasonToDelete(o, newest.get(folderOf(o.path)) ?? o.changed, prs, now);
+    const why = verdict(o, newest.get(folderOf(o.path)) ?? o.changed, prs, now);
     if (why) {
       out.push({ path: o.path, size: o.size, why });
     }
@@ -58,34 +83,11 @@ export function plan(objects, prs, now = Date.now()) {
   return out;
 }
 
-/** Why one object goes (its folder last changed at `last`), or null when it stays. */
-function reasonToDelete(o, last, prs, now) {
-  const pr = prKeyOf(o.path);
-  if (!pr) {
-    return renderReason(o.path, last, now);
-  }
-  const known = pr.pr === null ? undefined : prs.get(`${pr.repo}#${pr.pr}`);
-  if (known?.closedAt === null) {
-    return null;
-  }
-  if (known) {
-    return now - known.closedAt > PR_ASSETS_DAYS * DAY ? `PR closed more than ${PR_ASSETS_DAYS} days ago` : null;
-  }
-  return last && now - last > PR_ASSETS_DAYS * DAY
-    ? `no PR to read, untouched for more than ${PR_ASSETS_DAYS} days`
-    : null;
-}
-
-function renderReason(path, last, now) {
-  const old = path.startsWith("site/renders/") && !isChosen(path) && last && now - last > RENDER_DAYS * DAY;
-  return old ? `render candidate untouched for more than ${RENDER_DAYS} days` : null;
-}
-
 /** The markdown listing of a plan, by folder (the run summary). */
 export function summary(items, yes) {
   const groups = new Map();
   for (const i of items) {
-    const g = i.path.split("/").slice(0, 3).join("/");
+    const g = folderOf(i.path);
     const cur = groups.get(g) ?? { count: 0, size: 0, why: i.why };
     cur.count++;
     cur.size += i.size;
@@ -120,8 +122,12 @@ export async function readPrs(objects, { token, org = "krizaka", fetchImpl = glo
     const res = await fetchImpl(`https://api.github.com/repos/${org}/${k.repo}/pulls/${k.pr}`, {
       headers: { Accept: "application/vnd.github+json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
     });
-    if (!res.ok) {
+    if (res.status === 404) {
       continue;
+    }
+    // Any other failure (rate limit, 5xx) must not read as « no PR »: that would judge an open PR's captures by age.
+    if (!res.ok) {
+      throw new Error(`reading ${k.repo}#${k.pr} failed: HTTP ${res.status}`);
     }
     const pr = await res.json();
     out.set(`${k.repo}#${k.pr}`, { closedAt: pr.closed_at ? Date.parse(pr.closed_at) : null });
@@ -140,14 +146,11 @@ async function remove(cfg, path) {
   }
 }
 
-async function removeAll(cfg, items) {
-  for (const i of items) {
-    await remove(cfg, i.path);
-  }
-}
-
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  const args = parseArgs(process.argv.slice(2));
+async function main() {
+  // parseArgs wants a value after every --flag; --yes is a switch.
+  const argv = process.argv.slice(2);
+  const yes = argv.includes("--yes");
+  const args = parseArgs(argv.filter((a) => a !== "--yes"));
   const env = { ...(args.envFile ? parseEnvFile(readFileSync(args.envFile, "utf8")) : {}), ...process.env };
   const cfg = loadConfig(env);
   const objects = [
@@ -155,12 +158,18 @@ if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
     ...(await listZone(cfg, undefined, "site/renders/")),
   ];
   const items = plan(objects, await readPrs(objects, { token: env.GITHUB_TOKEN }));
-  const text = summary(items, Boolean(args.yes));
+  const text = summary(items, yes);
   console.log(text);
   if (args.summary) {
     appendFileSync(args.summary, `${text}\n`);
   }
-  if (args.yes) {
-    await removeAll(cfg, items);
+  if (yes) {
+    for (const i of items) {
+      await remove(cfg, i.path);
+    }
   }
+}
+
+if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
+  await main();
 }

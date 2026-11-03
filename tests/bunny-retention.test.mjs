@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { test } from "node:test";
 import { FOREIGN_WRITERS_V2 } from "../scripts/bunny-layout.mjs";
 import { isChosen, plan, prKeyOf, readPrs, summary } from "../scripts/bunny-retention.mjs";
@@ -79,7 +80,9 @@ test("the dry-run listing groups by folder with the weight", () => {
 
 test("PRs are read from GitHub; one it does not show is left out", async () => {
   const fetchImpl = async (url) =>
-    url.endsWith("/pulls/1") ? { ok: true, json: async () => ({ closed_at: "2026-01-01T00:00:00Z" }) } : { ok: false };
+    url.endsWith("/pulls/1")
+      ? { ok: true, json: async () => ({ closed_at: "2026-01-01T00:00:00Z" }) }
+      : { ok: false, status: 404 };
   const prs = await readPrs(
     [obj("pr-assets/r/1/a.png", 1), obj("pr-assets/r/1/b.png", 1), obj("pr-assets/r/2/a.png", 1)],
     { fetchImpl },
@@ -89,4 +92,20 @@ test("PRs are read from GitHub; one it does not show is left out", async () => {
 
 test("the ui site's folder is a foreign writer: prune never names it from this manifest", () => {
   assert.ok(FOREIGN_WRITERS_V2.includes("sites/ui/"));
+});
+
+test("a GitHub failure other than 404 stops the run: it never reads as « no PR »", async () => {
+  const fetchImpl = async () => ({ ok: false, status: 403 });
+  await assert.rejects(readPrs([obj("pr-assets/r/1/a.png", 500)], { fetchImpl }), /HTTP 403/);
+});
+
+test("the weekly workflow lists only: it never passes --yes nor offers a delete input", () => {
+  const wf = readFileSync(new URL("../.github/workflows/bunny-retention.yml", import.meta.url), "utf8");
+  assert.doesNotMatch(wf.replace(/^\s*#.*$/gm, ""), /--yes|delete:/);
+  assert.match(wf, /bunny-retention\.mjs --summary/);
+});
+
+test("--yes is a switch: the script run without it deletes nothing, with it parses", () => {
+  const src = readFileSync(new URL("../scripts/bunny-retention.mjs", import.meta.url), "utf8");
+  assert.match(src, /argv\.filter\(\(a\) => a !== "--yes"\)/);
 });
