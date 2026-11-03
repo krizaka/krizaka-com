@@ -5,7 +5,7 @@
    - `dot`: the dot alone, for the tightest places (the panel's product column), its long label read by screen readers.
 
    `upcoming` and `devPreview` light a full dot in the brand accent; `development` a half-lit ring (built in the open, in development);
-   `construction` an open ring (being built, nothing to offer yet).
+   `construction` and `design` an open ring (being built, or being designed: nothing to offer yet).
    Words: site.nav.status.<status> — `label` on screen, `long` for assistive technology. Server or client: the
    caller passes the dictionary. */
 

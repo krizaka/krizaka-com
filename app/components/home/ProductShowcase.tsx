@@ -11,13 +11,15 @@
      the stamp of its honest status (lib/products.ts, gated by the dev-preview checklists), its line, its bird (the film's
      promise for the five birds of the film, the name for the family), what it runs on Orazaka (lib/engine-uses.ts,
      « planned » where the call is not wired yet) and a note number;
-   - the notes at the foot of the section: what each product really does, sourced.
+   - the notes at the foot of the section: what each product really does, sourced;
+   - after the products, the ones in conception (lib/products-in-design.ts): a tag alone — number, mark, name, the stamp
+     « In design » and one line; no plate, no site, no version, no source, no bird and no note, since nothing is built.
    Each entry is tied to its node in the flow (ProductsLink): in the middle of the screen or pointed at, its node lights,
    and the reverse. Data: lib/products.ts, lib/engine-uses.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words:
    site.home.products.*, site.products.*, site.story.world.cues. */
 
 import { ForwardIcon } from "@krizaka/icons";
-import { ProductLogo } from "@krizaka/ui";
+import { KridocLogo, ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
 import { Caption, FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
 import { Mascot } from "@krizaka/ui/mascots";
@@ -29,6 +31,7 @@ import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { entrySide, heroMarkOrder } from "@/lib/home-sections";
 import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
+import { IN_DESIGN, type ProductInDesign } from "@/lib/products-in-design";
 import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
 import { GitHubMark } from "../brand/GitHubMark";
 import ProductsFlock from "./ProductsFlock";
@@ -42,6 +45,7 @@ const STAMP: Record<ProductStatus, StampTone> = {
   development: "wip",
   construction: "construction",
   upcoming: "neutral",
+  design: "neutral",
 };
 const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 
@@ -202,6 +206,31 @@ function ProductEntry({ product: p, t }: Readonly<{ product: Product; t: Transla
   );
 }
 
+/** The marks of the products in conception: Kridoc has a mark and no palette (@krizaka/ui ProductLogo leaves it out). */
+const DESIGN_MARK = { kachizaka: KridocLogo } as const;
+
+/** A product in conception: its tag alone, numbered after the products. */
+function DesignEntry({
+  product: p,
+  n,
+  t,
+}: Readonly<{ product: ProductInDesign; n: number; t: TranslationDictionary }>) {
+  const Mark = DESIGN_MARK[p.id];
+  return (
+    <li id={"product-" + p.id} className="kz-entry kz-entry-design" data-product={p.id}>
+      <SpecimenTag
+        className="kz-entry-tag"
+        code={`KZ-${String(n).padStart(2, "0")}`}
+        title={p.name}
+        mark={<Mark size={30} animated={false} />}
+        status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
+      >
+        <p>{t.site.home.products.inDesign.lines[p.id]}</p>
+      </SpecimenTag>
+    </li>
+  );
+}
+
 /** « Orazaka, our first build »: the engine, its specimen tag beside its flow. The first chapter after the hero (§ 2). */
 export function EngineSection({ locale }: Readonly<{ locale: string }>) {
   const t = getDictionary(locale);
@@ -232,6 +261,11 @@ export default function ProductShowcase({ locale }: Readonly<{ locale: string }>
             ))}
           </ol>
         </ProductsLink>
+        <ol className="kz-prod-list kz-prod-design" aria-label={s.inDesign.label}>
+          {IN_DESIGN.map((p, i) => (
+            <DesignEntry key={p.id} product={p} n={PRODUCTS.length + i + 1} t={t} />
+          ))}
+        </ol>
         <Footnotes
           className="kz-prod-notes"
           prefix="kz-note"

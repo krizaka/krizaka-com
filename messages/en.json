@@ -80,6 +80,10 @@
     },
     "nav": {
       "status": {
+        "design": {
+          "label": "In design",
+          "long": "In design"
+        },
         "upcoming": {
           "label": "Soon",
           "long": "Coming soon"
@@ -290,6 +294,12 @@
         },
         "birds": {
           "beaver": "the beaver"
+        },
+        "inDesign": {
+          "label": "Being designed",
+          "lines": {
+            "kachizaka": "Krizaka's document storage. We are settling what it needs to do before we build it."
+          }
         }
       },
       "stack": {
