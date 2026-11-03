@@ -12,6 +12,7 @@
 import { writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { formatSnapshot } from "./drift-lib.mjs";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "product-manifests.json");
 const RAW = "https://raw.githubusercontent.com/krizaka";
@@ -79,5 +80,5 @@ for (const [id, spec] of Object.entries(PRODUCTS)) {
     ...(engineRun ? { engineRun } : {}),
   };
 }
-writeFileSync(OUT, JSON.stringify({ readAt: new Date().toISOString().slice(0, 10), products: out }, null, 2) + "\n");
+writeFileSync(OUT, await formatSnapshot({ readAt: new Date().toISOString().slice(0, 10), products: out }, OUT));
 console.log(JSON.stringify(out, null, 1));

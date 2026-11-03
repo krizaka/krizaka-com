@@ -2,7 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { CRITERIA } from "../scripts/dev-preview-lib.mjs";
-import { staleSnapshot, statusFindings, urlFindings, verdict } from "../scripts/drift-lib.mjs";
+import * as prettier from "prettier";
+import { formatSnapshot, staleSnapshot, statusFindings, urlFindings, verdict } from "../scripts/drift-lib.mjs";
 
 // The weekly drift check (scripts/check-drift.mjs): a changed source changes the finding; a missing source fails.
 const TODAY = "2026-10-31";
@@ -64,4 +65,14 @@ test("the update PR names its branch: persist-credentials is off, so gh cannot i
   const create = wf.split("\n").find((l) => l.includes("gh pr create"));
   assert.match(create, /--head "\$branch"/);
   assert.match(wf, /branch="chore\/drift-[^"]*\$\{GITHUB_RUN_ID\}"/, "one branch per run, so a rerun never collides");
+});
+
+test("the products' manifests snapshot is written the way prettier formats it (format:check never fails on a drift PR)", async () => {
+  const snapshot = {
+    readAt: "2026-11-02",
+    products: { akinaza: { sources: ["a:package.json"], npm: ["@krizaka/ui"], maven: [], evidence: [] } },
+  };
+  const text = await formatSnapshot(snapshot);
+  assert.equal(await prettier.check(text, { parser: "json" }), true);
+  assert.deepEqual(JSON.parse(text), snapshot);
 });
