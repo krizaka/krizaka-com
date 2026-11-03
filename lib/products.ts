@@ -1,6 +1,6 @@
 /* The Krizaka products, as krizaka.com shows them: one card each on the home — the mark, the name, one line, the
-   status, a link to the product's dev site (dev.<product>.com, with the version it runs) and a link to its source;
-   the public address (www.<product>.com) stays for the nav, the sitemap and the JSON-LD. This site carries no product demo,
+   status, a link to the product's site (www.<product>.com, with the version it runs) and a link to its source;
+   the same address serves the nav, the sitemap and the JSON-LD. This site carries no product demo,
    recording or documentation (next.config.ts redirects the old addresses). Structure only: the words are messages.
    Four products are paused (2026-10-25): they are not presented here, and their repositories are private. */
 

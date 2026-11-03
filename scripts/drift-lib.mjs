@@ -70,6 +70,13 @@ export function urlFindings(claim, answers) {
     }));
 }
 
+/** Every demo-shop address (`https://<shop>.akinaza.shop/…`) a text links, once, in order. The weekly check fetches each one:
+    a shop that does not answer (krizaka-internal#1907) must not stay linked from a public page. */
+export function shopUrls(text) {
+  const found = text.match(/https:\/\/[a-z0-9-]+\.akinaza\.shop[^\s"'<>)\]`\\]*/g) ?? [];
+  return [...new Set(found)];
+}
+
 /** The report and the exit code: any `missing` fails; a `drift` is fixed by the update PR, so it only fails with `strict`. */
 export function verdict(findings, { strict = false } = {}) {
   const missing = findings.filter((f) => f.kind === "missing");

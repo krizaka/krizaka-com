@@ -4,12 +4,14 @@
    - product status (lib/products.ts) against each product's dev-preview.json on GitHub;
    - the committed snapshot of the products' manifests (lib/product-manifests.json) against its age;
    - every product's repository answers;
+   - every demo-shop address (*.akinaza.shop) a public source links answers;
    - every media file of lib/cdn-manifest.json (videos, posters) answers on the pull zone.
    A source that cannot be read fails loudly (exit 1). Drift alone exits 0 unless --strict: the workflow's update PR fixes it. */
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { readProductStatuses } from "./dev-preview-lib.mjs";
 import { objectPath } from "./cdn-assets.mjs";
-import { staleSnapshot, statusFindings, urlFindings, verdict } from "./drift-lib.mjs";
+import { shopUrls, staleSnapshot, statusFindings, urlFindings, verdict } from "./drift-lib.mjs";
 
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 const status = async (url) => {
@@ -66,6 +68,13 @@ if (!process.argv.includes("--media-only")) {
   findings.push(...staleSnapshot(JSON.parse(read("lib/product-manifests.json")).readAt, { today }));
   const repos = new Set([...src.matchAll(/https:\/\/github\.com\/krizaka\/[\w.-]+/g)].map((m) => m[0]));
   findings.push(...urlFindings("product repositories", await answersOf([...repos])));
+  const published = ["lib", "app", "messages", "content"].flatMap((d) =>
+    readdirSync(new URL(`../${d}/`, import.meta.url), { recursive: true, withFileTypes: true })
+      .filter((e) => e.isFile())
+      .map((e) => join(e.parentPath, e.name)),
+  );
+  const shops = [...new Set(published.flatMap((f) => shopUrls(readFileSync(f, "utf8"))))];
+  findings.push(...urlFindings("shop addresses", await answersOf(shops)));
 }
 
 const cdn = process.env.NEXT_PUBLIC_MEDIA_CDN_URL ?? "https://krizaka-assets.b-cdn.net";
