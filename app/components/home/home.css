@@ -705,6 +705,14 @@ html[data-intro="play"] .kz-intro-sweep {
     order: -1;
   }
 }
+/* The products in conception: a tag alone, no plate — one column, the width of a tag. */
+.kz-prod-design {
+  margin-top: clamp(40px, 5vw, 56px);
+}
+.kz-prod-list > .kz-entry-design {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 34rem;
+}
 .kz-prod-notes {
   max-width: 62rem;
   margin-top: clamp(40px, 5vw, 64px);

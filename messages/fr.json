@@ -80,6 +80,10 @@
     },
     "nav": {
       "status": {
+        "design": {
+          "label": "En conception",
+          "long": "En conception"
+        },
         "upcoming": {
           "label": "Bientôt",
           "long": "Bientôt disponible"
@@ -290,6 +294,12 @@
         },
         "birds": {
           "beaver": "le castor"
+        },
+        "inDesign": {
+          "label": "En conception",
+          "lines": {
+            "kachizaka": "Le stockage documentaire de Krizaka. Nous précisons le besoin avant de le construire."
+          }
         }
       },
       "stack": {
