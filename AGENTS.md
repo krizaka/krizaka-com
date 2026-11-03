@@ -57,6 +57,11 @@
   Other statuses are never gated.
 - A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
   construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
+- A product **in conception** (`status: "design"`, « En conception » / « In design »; founder, 2026-11-03, krizaka-internal#2143)
+  lives in `lib/products-in-design.ts`, not in `PRODUCTS`: the home's #products shows its tag alone after the products (mark,
+  name from `@krizaka/org`, the stamp, one neutral line) — no site, version, source, plate, bird or note, and nothing in the
+  nav, the hero's marks, the sitemap, `llms.txt` or the JSON-LD (`tests/products-in-design.test.mjs`). Kridoc (code name
+  `kachizaka`) is the one today; it moves to `PRODUCTS` when its repository builds something real.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
   only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), and `brand-films/**` — the
   brand film « Montrer son travail » (`lib/brand-film.ts`, made with Orazaka, approved 2026-11-01: the home's « Watch the
