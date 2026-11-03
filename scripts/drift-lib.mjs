@@ -2,9 +2,17 @@
    A claim of the site is compared with its true source; a finding is either `drift` (the source moved: the update PR
    fixes it) or `missing` (the source cannot be read: the check fails loudly, nothing is guessed). */
 
+import * as prettier from "prettier";
 import { validateChecklist } from "./dev-preview-lib.mjs";
 
 const DAY = 86_400_000;
+
+/** A committed JSON snapshot as prettier formats it (the repository's own config), so `format:check` never fails on the
+    pull request that refreshes it. `filepath` picks up the repository's prettier config. */
+export async function formatSnapshot(snapshot, filepath) {
+  const config = filepath ? await prettier.resolveConfig(filepath) : null;
+  return prettier.format(JSON.stringify(snapshot), { ...config, parser: "json" });
+}
 
 /** A snapshot committed to the repository (lib/product-manifests.json) older than `maxDays` is a drift to refresh. */
 export function staleSnapshot(readAt, { today, maxDays = 8 }) {
