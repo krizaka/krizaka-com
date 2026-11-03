@@ -26,13 +26,13 @@
   `/.well-known/*`, `/healthz` — the mobile builds and the services' server-to-server calls), with `X-Robots-Tag: noindex`.
   This repo carries **no product page, demo, gallery, journey, recording or documentation** of the products: the home's
   products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
-  « See the dev site » → `devUrl` with its build-read version, and « Source »; 2026-10-26: production is not open); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
+  « See the site » → `siteUrl` (www) with its build-read version, and « Source »; sign-up is closed everywhere); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
   `/<locale>#products`.
 - **Departed products** (Oussama, 2026-10-29, krizaka/.github#413): the org holds Yomizaka, Akinaza, Orazaka and the platforms. krizaka.com names no other
   product anywhere — code, messages, docs, configs, manifests; the org's conformance rule `no-departed-product` proves it (history is
   allow-listed in the registry only). An old product address (`/products/<anything else>`) answers 308 with `/#products`
   (`lib/product-redirects.ts`), never a dead site.
-- **Commercial names** (Oussama, 2026-11-01, krizaka-internal#2103): the site shows **Verikora** (code name yomizaka), **Folioviv** (akinaza) and **Sovkora** (orazaka, the engine: « Powered by Sovkora »); only the words change. Ids, `siteUrl`/`devUrl` (www.yomizaka.com…), repositories, redirects and Bunny paths keep the code names. The display name is data (`brandOf(code).commercialName` of `@krizaka/org`, read by `lib/products.ts`), messages say the commercial name or take `{product}`, and `krizaka-code-names messages content` (in `npm run lint`) refuses a code name in a message or in `content/`; the built HTML is checked by the same bin in CI (`scripts/ci-container-smoke.sh`).
+- **Commercial names** (Oussama, 2026-11-01, krizaka-internal#2103): the site shows **Verikora** (code name yomizaka), **Folioviv** (akinaza) and **Sovkora** (orazaka, the engine: « Powered by Sovkora »); only the words change. Ids, `siteUrl` (www.yomizaka.com…), repositories, redirects and Bunny paths keep the code names. The display name is data (`brandOf(code).commercialName` of `@krizaka/org`, read by `lib/products.ts`), messages say the commercial name or take `{product}`, and `krizaka-code-names messages content` (in `npm run lint`) refuses a code name in a message or in `content/`; the built HTML is checked by the same bin in CI (`scripts/ci-container-smoke.sh`).
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
   `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
@@ -45,7 +45,7 @@
   text has no personal name and no em dash: `cleanText` (lib/changelog.ts) cleans, `releaseProblems` fails the build.
 - **Product first, Orazaka as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Yomizaka reads your lease »); Orazaka appears only as the engine — one discreet « Powered by Orazaka » line and the proof sections (run ids) — never as the one doing the product's job (« Orazaka reads your lease »). Each product repository tests that its hero and steps do not name Orazaka. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are orazaka#189).
 - A product **in development** (`status: "development"`: Orazaka, Yomizaka, Akinaza) is built in the open: its repository is
-  public, sign-up is closed, and it says « In development ». Each card links its dev site (« See the dev site », 2026-10-26); the www address stays for the nav, sitemap and JSON-LD.
+  public, sign-up is closed, and it says « In development ». Each card links the product's www address (« See the site »), as do the nav, sitemap and JSON-LD; the card never links a `dev.<product>.com` host (it answers 308 to www).
   Akinaza prepares tax returns and never files them, and is not for restaurants and bars — the card words say so, no more.
 - **« Dev preview » is data, not words** ([krizaka/.github `docs/standards/dev-preview.md`](https://github.com/krizaka/.github/blob/main/docs/standards/dev-preview.md), ADR-002).
   `ProductStatus` has `devPreview`; every product has an explicit `status` (no status no longer means a badge). A product may wear
@@ -73,7 +73,7 @@
   (`Technologies Krizaka Inc. · NEQ … · Montréal (Québec)`), the site's version and the legal links. `SiteFooter.tsx` only
   resolves the words and prefixes the locale; never a column typed in the component (`tests/footer.test.mjs`).
 - **The home's order** (2026-10-22, the honest chronology, #337): the hero (`HomeHero`, whose lead tells it in two or three
-  short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the products built on it** (`ProductShowcase`, § 3: each card names its dev address and the version its dev site runs — read at build from `/api/healthz`, `scripts/gen-dev-versions.mjs` → git-ignored `lib/dev-versions.json`, `tests/dev-versions.test.mjs` — and links « See the dev site » while production is not open; the tags hang slightly off the square, -0.6° then +0.5°, straight under reduced motion and on focus; the plates redraw what the apps show, demo data said as demo), then the principles (`Principles`, § 4), and it stops there: no Montréal (`Company`) section, no closing contact panel
+  short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the products built on it** (`ProductShowcase`, § 3: each card names its www address and the version the product's site runs — read at build from `/api/healthz`, `scripts/gen-dev-versions.mjs` → git-ignored `lib/dev-versions.json`, `tests/dev-versions.test.mjs` — and links « See the site »; the tags hang slightly off the square, -0.6° then +0.5°, straight under reduced motion and on focus; the plates redraw what the apps show, demo data said as demo), then the principles (`Principles`, § 4), and it stops there: no Montréal (`Company`) section, no closing contact panel
   and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). Krizaka, the company,
   was born from that work: the Organization `owns` the products and sites, its `foundingDate` is unchanged. The marks row under the hero
   follows the story: Orazaka, Akinaza, Yomizaka, then the rest (`heroMarkOrder`). `/story` is in the footer, « Contact us »
@@ -271,7 +271,7 @@
   extending `@krizaka/config/dependency-cruiser`) fails the lint on a forbidden import or a cycle.
 
 - A product's public address is `siteUrl` in `lib/products.ts` (`www.<product>.com`, `lib/product-hosts.ts`): never hard-code a
-  product's address, and a `dev.<product>.com` host is linked only by the home's product cards (`devUrl`, 2026-10-26: the products are in development), never by the nav, sitemap or JSON-LD. `llms.txt` and `llms-full.txt` are rendered from `content/`.
+  product's address, and a `dev.<product>.com` host is linked by no page here (it answers 308 to www; only the mobile builds and server-to-server calls use it). `llms.txt` and `llms-full.txt` are rendered from `content/`.
 - The contact form posts to `app/api/contact` (validation in `lib/contact.ts`). Delivery is
   configured by environment and fails closed (503) when nothing is set:
   `MAIL_PROVIDER=mailgun` + `MAIL_API_KEY` + `MAIL_DOMAIN` + `MAIL_CONTACT_TO` (+ `MAIL_API_URL`, `MAIL_FROM`)

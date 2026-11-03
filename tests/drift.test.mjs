@@ -1,9 +1,17 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
 import { CRITERIA } from "../scripts/dev-preview-lib.mjs";
 import * as prettier from "prettier";
-import { formatSnapshot, staleSnapshot, statusFindings, urlFindings, verdict } from "../scripts/drift-lib.mjs";
+import {
+  formatSnapshot,
+  shopUrls,
+  staleSnapshot,
+  statusFindings,
+  urlFindings,
+  verdict,
+} from "../scripts/drift-lib.mjs";
 
 // The weekly drift check (scripts/check-drift.mjs): a changed source changes the finding; a missing source fails.
 const TODAY = "2026-10-31";
@@ -75,4 +83,27 @@ test("the products' manifests snapshot is written the way prettier formats it (f
   const text = await formatSnapshot(snapshot);
   assert.equal(await prettier.check(text, { parser: "json" }), true);
   assert.deepEqual(JSON.parse(text), snapshot);
+});
+
+test("every demo-shop address a public page links is found, once, so the weekly check can fetch it (A4)", () => {
+  const text =
+    'a href="https://pattes-saint-henri.akinaza.shop/" and https://pattes-saint-henri.akinaza.shop/ again, https://www.akinaza.com, https://x.akinaza.shop/menu?a=1)';
+  assert.deepEqual(shopUrls(text), ["https://pattes-saint-henri.akinaza.shop/", "https://x.akinaza.shop/menu?a=1"]);
+  assert.deepEqual(shopUrls("nothing here"), []);
+});
+
+test("a shop address that does not answer fails the check (TLS error = unreachable)", () => {
+  const f = urlFindings("shop addresses", { "https://pattes-saint-henri.akinaza.shop/": null });
+  assert.equal(verdict(f).ok, false);
+  assert.match(verdict(f).lines[0], /unreachable/);
+});
+
+test("no public source links a *.akinaza.shop address today (its TLS handshake fails, krizaka-internal#1907)", () => {
+  const files = ["lib", "app", "messages", "content"].flatMap((d) =>
+    readdirSync(new URL(`../${d}/`, import.meta.url), { recursive: true, withFileTypes: true })
+      .filter((e) => e.isFile())
+      .map((e) => join(e.parentPath, e.name)),
+  );
+  const found = files.flatMap((f) => shopUrls(readFileSync(f, "utf8")));
+  assert.deepEqual(found, []);
 });

@@ -5,7 +5,7 @@ import { healthzUrl, mergeVersions, versionOfHealthz } from "../scripts/dev-vers
 import { wwwHost, wwwUrl } from "../lib/product-hosts.ts";
 import { PRODUCT_RECORDS, hasCode, importsOf, strings } from "./helpers/source.mjs";
 
-// 2026-10-26: each product's card shows its dev address and the version its dev site runs — read at build from /api/healthz
+// 2026-10-26: each product's card shows its www address and the version its site runs — read at build from /api/healthz
 // (scripts/gen-dev-versions.mjs, like the registries' versions), never typed.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const IDS = ["orazaka", "yomizaka", "akinaza"];
@@ -61,4 +61,12 @@ test("the words: « See the site » / « Voir le site » exist in both languages
   }
   assert.equal(JSON.parse(read("messages/fr.json")).site.products.visitSite, "Voir le site");
   assert.equal(JSON.parse(read("messages/en.json")).site.products.visitSite, "See the site");
+});
+
+test("the contract names what the card does: it links the www address, no dev host and no `devUrl` (krizaka-internal#1888)", () => {
+  const contract = read("AGENTS.md");
+  const code = PRODUCT_RECORDS();
+  assert.ok(!code.some((p) => "devUrl" in p), "lib/products.ts carries no devUrl");
+  assert.doesNotMatch(contract, /devUrl/, "AGENTS.md describes a field the code no longer has");
+  assert.doesNotMatch(contract, /See the dev site/, "the card says « See the site » and goes to www");
 });
