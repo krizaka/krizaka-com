@@ -578,6 +578,12 @@ html[data-intro="play"] .kz-intro-sweep {
   align-items: center;
   gap: 6px;
 }
+/* The tag's foot draws its links as ink and underlined (@krizaka/ui blocks.css); its one action is a Button, so it gets the
+   Button's label colour back on the brand fill (contrast ≥ 4.5:1 on every brand, both themes). */
+.kz-tag-foot a.kz-tag-action {
+  color: var(--kz-on-accent);
+  text-decoration: none;
+}
 
 .kz-prod-list {
   list-style: none;

@@ -1,17 +1,17 @@
-/* The products have their own public pages (www.<product>.com, « coming soon»): krizaka.com presents them on its home (#products) — /products
+/* The products have their own public pages (their commercial www domains, « coming soon » until they open): krizaka.com presents them on its home (#products) — /products
    itself answers 308 there (two views only, 2026-10-17: the home and Open source). Every old
    address of a product page, demo or documentation answers 308 with the product's site — the same address under the
    locale prefix or without it (a config redirect runs before the locale proxy). Read by next.config.ts, tested by
    tests/product-redirects.test.mjs. */
 
-import { wwwUrl } from "./product-hosts.ts";
+import { siteUrlOf } from "./product-hosts.ts";
 
-/** The product's public address (www.<product>.com). The old
-    addresses never lead to a dev host: it is not indexed (AGENTS.md §2.4). */
+/** The product's public address (its commercial www domain, lib/product-hosts.ts). The old addresses never lead to a
+    code-name or dev host (AGENTS.md §2.4). */
 export const PRODUCT_SITES = {
-  orazaka: wwwUrl("orazaka"),
-  yomizaka: wwwUrl("yomizaka"),
-  akinaza: wwwUrl("akinaza"),
+  orazaka: siteUrlOf("orazaka"),
+  yomizaka: siteUrlOf("yomizaka"),
+  akinaza: siteUrlOf("akinaza"),
 } as const;
 
 export interface Redirect {
@@ -64,9 +64,9 @@ export function productRedirects(): Redirect[] {
     ...(Object.entries(PRODUCT_SITES) as [string, string][]).map(([id, site]) => to(`/products/${id}/:path*`, site)),
     // The products' documentation (Krizaka UI and Krizaka Java stay here).
     to("/docs/orazaka/:path*", orazaka),
-    // Yomizaka documents itself at /docs (yomizaka#387): a single page, in the visitor's language when the address names one.
-    { source: "/:locale(fr|en)/docs/yomizaka/:path*", destination: `${yomizaka}/:locale/docs`, statusCode: 308 },
-    { source: "/docs/yomizaka/:path*", destination: `${yomizaka}/docs`, statusCode: 308 },
+    // Its old documentation → its site, in the visitor's language when the address names one (the coming-soon face has no /docs).
+    { source: "/:locale(fr|en)/docs/yomizaka/:path*", destination: `${yomizaka}/:locale/`, statusCode: 308 },
+    { source: "/docs/yomizaka/:path*", destination: `${yomizaka}/`, statusCode: 308 },
     // Any other old product page (a product that left, krizaka/.github#413) → the products section, never a dead site.
     ...homeSection("/products/:path*", "#products"),
     { source: "/:locale(fr|en)/products/:path*", destination: "/:locale#products", statusCode: 308 },

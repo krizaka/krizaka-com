@@ -65,9 +65,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
     products.map((p) => p.id),
     ["orazaka", "yomizaka", "akinaza"],
   );
-  // A product is reached at its public address, www.<product>.com — never at its dev host (not indexed, it sends its pages to www).
+  // A product is reached at its public address, its commercial www domain (@krizaka/org) — never a code-name or dev host.
   for (const p of products) {
-    assert.equal(p.siteUrl, `wwwUrl("${p.id}")`, p.id);
+    assert.equal(p.siteUrl, `siteUrlOf("${p.id}")`, p.id);
   }
   assert.deepEqual(stack, [
     { id: "ui", name: "Krizaka UI", url: "https://ui.krizaka.com" },

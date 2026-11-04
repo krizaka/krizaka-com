@@ -18,21 +18,23 @@
 
 ## 2. What is generated, what is written
 
-- **krizaka.com is the company's lightweight showcase.** Each product has **its public address at `www.<product>.com`**
-  (orazaka, yomizaka, akinaza; epic krizaka/.github#119, 2026-10-21): the product's real app on its own deployment, sign-up closed everywhere; the apex
-  `<product>.com` answers 308 with www. `lib/products.ts` carries `siteUrl` (www) — **every public link, sitemap, llms.txt and JSON-LD
-  uses it, never a `dev.<product>.com` host**. `dev.<product>.com` is the development host of the same deployment: `noindex`, robots `Disallow: /`, every HTML page
+- **krizaka.com is the company's lightweight showcase.** Each product's **public address is its commercial www domain**
+  (founder, 2026-11-04, krizaka-internal#2373; overrides the code-name addresses of krizaka/.github#119): **www.verikora.com**,
+  **www.folioviv.com**, **www.sovkora.com**, read from `@krizaka/org` (`brandOf(id).domains.site`, `lib/product-hosts.ts`
+  `siteUrlOf`). Until a product opens there, the domain shows its « coming soon » face (krizaka/krizaka-coming-soon, team
+  krizaka-prod); the apex answers 308 with www. `lib/products.ts` carries `siteUrl` — **every public link, sitemap, llms.txt and
+  JSON-LD uses it, never a code-name host** (`www.<code>.com`, `dev.<code>.com`: the products' development addresses). `dev.<code>.com` is the development host of the code-name deployment: `noindex`, robots `Disallow: /`, every HTML page
   answers 308 to the same path on www, and only what is called keeps serving there (`/api/*`, auth callbacks, webhooks,
   `/.well-known/*`, `/healthz` — the mobile builds and the services' server-to-server calls), with `X-Robots-Tag: noindex`.
   This repo carries **no product page, demo, gallery, journey, recording or documentation** of the products: the home's
   products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
-  « See the site » → `siteUrl` (www) with its build-read version, and « Source »; sign-up is closed everywhere); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
+  « See the site » → `siteUrl` with « Coming soon » as what it shows today (no app version: a coming-soon page runs none), and « Source »; sign-up is closed everywhere); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
   `/<locale>#products`.
 - **Departed products** (Oussama, 2026-10-29, krizaka/.github#413): the org holds Yomizaka, Akinaza, Orazaka and the platforms. krizaka.com names no other
   product anywhere — code, messages, docs, configs, manifests; the org's conformance rule `no-departed-product` proves it (history is
   allow-listed in the registry only). An old product address (`/products/<anything else>`) answers 308 with `/#products`
   (`lib/product-redirects.ts`), never a dead site.
-- **Commercial names** (Oussama, 2026-11-01, krizaka-internal#2103): the site shows **Verikora** (code name yomizaka), **Folioviv** (akinaza) and **Sovkora** (orazaka, the engine: « Powered by Sovkora »); only the words change. Ids, `siteUrl` (www.yomizaka.com…), repositories, redirects and Bunny paths keep the code names. The display name is data (`brandOf(code).commercialName` of `@krizaka/org`, read by `lib/products.ts`), messages say the commercial name or take `{product}`, and `krizaka-code-names messages content` (in `npm run lint`) refuses a code name in a message or in `content/`; the built HTML is checked by the same bin in CI (`scripts/ci-container-smoke.sh`).
+- **Commercial names** (Oussama, 2026-11-01, krizaka-internal#2103): the site shows **Verikora** (code name yomizaka), **Folioviv** (akinaza) and **Sovkora** (orazaka, the engine: « Powered by Sovkora »); Ids, repositories and Bunny paths keep the code names; since 2026-11-04 the public addresses (`siteUrl`, redirects) are the commercial domains too. The display name is data (`brandOf(code).commercialName` of `@krizaka/org`, read by `lib/products.ts`), messages say the commercial name or take `{product}`, and `krizaka-code-names messages content` (in `npm run lint`) refuses a code name in a message or in `content/`; the built HTML is checked by the same bin in CI (`scripts/ci-container-smoke.sh`).
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
   `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
   `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
@@ -81,7 +83,7 @@
   (`Technologies Krizaka Inc. · NEQ … · Montréal (Québec)`), the site's version and the legal links. `SiteFooter.tsx` only
   resolves the words and prefixes the locale; never a column typed in the component (`tests/footer.test.mjs`).
 - **The home's order** (2026-10-22, the honest chronology, #337): the hero (`HomeHero`, whose lead tells it in two or three
-  short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the products built on it** (`ProductShowcase`, § 3: each card names its www address and the version the product's site runs — read at build from `/api/healthz`, `scripts/gen-dev-versions.mjs` → git-ignored `lib/dev-versions.json`, `tests/dev-versions.test.mjs` — and links « See the site »; the tags hang slightly off the square, -0.6° then +0.5°, straight under reduced motion and on focus; the plates redraw what the apps show, demo data said as demo), then the principles (`Principles`, § 4), and it stops there: no Montréal (`Company`) section, no closing contact panel
+  short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the products built on it** (`ProductShowcase`, § 3: each card names its commercial www address and « Coming soon » (no version: the domain holds a coming-soon page until the product opens, 2026-11-04) and links « See the site »; the tags hang slightly off the square, -0.6° then +0.5°, straight under reduced motion and on focus; the plates redraw what the apps show, demo data said as demo), then the principles (`Principles`, § 4), and it stops there: no Montréal (`Company`) section, no closing contact panel
   and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). Krizaka, the company,
   was born from that work: the Organization `owns` the products and sites, its `foundingDate` is unchanged. The marks row under the hero
   follows the story: Orazaka, Akinaza, Yomizaka, then the rest (`heroMarkOrder`). `/story` is in the footer, « Contact us »
@@ -133,7 +135,7 @@
 
 ## 2.4 Search engines & AI assistants — one contract for the whole family
 
-- Every Krizaka site (www · ui. · java. · www.<product>.com · the dev.<product>.com hosts · the admin consoles) owes
+- Every Krizaka site (www · ui. · java. · the products' commercial www domains · the dev.<code>.com hosts · the admin consoles) owes
   the same files, checked by **`scripts/check-seo-family.mjs`** — one dependency-free file, copied unchanged into each
   site's repository (keep the copies identical; its unit test is `tests/check-seo-family.test.mjs`). CI runs it against the
   container: `node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization`.
@@ -143,13 +145,13 @@
   `lastmod`; `llms.txt` (llmstxt.org) that links back to the family; a canonical that is the page itself on the site's
   host; Open Graph + Twitter card **with an image**; JSON-LD whose every node leads back to the Organization
   `https://www.krizaka.com/#organization` (this site defines it, and says it `owns` the products and open-source sites).
-- Indexing policy (epic krizaka/.github#119, 2026-10-21): **indexed** — www.krizaka.com, ui., java. and the products' public
-  addresses `www.<product>.com` (sign-up closed; the apex answers 308 with www); **`noindex`** — every `dev.<product>.com`
-  (robots `Disallow: /`, `X-Robots-Tag: noindex`; its pages answer 308 to www, its API keeps serving — checked by
-  `check-seo-family.mjs --redirects-to https://www.<product>.com`) and both `admin.*` consoles — but they still serve
+- Indexing policy (epic krizaka/.github#119, 2026-10-21; public addresses 2026-11-04): **indexed** — www.krizaka.com, ui., java.
+  and the products' public addresses, their commercial www domains (www.verikora.com…; the apex answers 308 with www);
+  **`noindex`** — every `dev.<code>.com` (robots `Disallow: /`, `X-Robots-Tag: noindex`; its pages answer 308 to its www, its
+  API keeps serving — checked by `check-seo-family.mjs --redirects-to https://www.<code>.com`) and both `admin.*` consoles — but they still serve
   correct files for the day they open. Providers (Stripe, Google…) are given the www URLs, never a dev host.
   Search Console / Bing verification is by DNS TXT record, never a file or a token in the repository; the sitemap to submit
-  is `https://www.<product>.com/sitemap.xml`.
+  is the commercial domain's (`https://www.verikora.com/sitemap.xml`…).
 
 ## 2.5 Service discovery — the mobile apps' backend addresses are data
 
@@ -278,8 +280,8 @@
   down; `retire` lists the dependencies on their way out — none left), and `depcruise` (`.dependency-cruiser.cjs`,
   extending `@krizaka/config/dependency-cruiser`) fails the lint on a forbidden import or a cycle.
 
-- A product's public address is `siteUrl` in `lib/products.ts` (`www.<product>.com`, `lib/product-hosts.ts`): never hard-code a
-  product's address, and a `dev.<product>.com` host is linked by no page here (it answers 308 to www; only the mobile builds and server-to-server calls use it). `llms.txt` and `llms-full.txt` are rendered from `content/`.
+- A product's public address is `siteUrl` in `lib/products.ts` (its commercial www domain, `siteUrlOf` of `lib/product-hosts.ts`,
+  from `@krizaka/org`): never hard-code a product's address, and a code-name host (`www.<code>.com`, `dev.<code>.com`) is linked by no page here (it answers 308 to www; only the mobile builds and server-to-server calls use it). `llms.txt` and `llms-full.txt` are rendered from `content/`.
 - The contact form posts to `app/api/contact` (validation in `lib/contact.ts`). Delivery is
   configured by environment and fails closed (503) when nothing is set:
   `MAIL_PROVIDER=mailgun` + `MAIL_API_KEY` + `MAIL_DOMAIN` + `MAIL_CONTACT_TO` (+ `MAIL_API_URL`, `MAIL_FROM`)
