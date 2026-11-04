@@ -129,6 +129,8 @@
       "visitAria": "{name} — voir le site",
       "source": "Code source",
       "sourceAria": "{name} — code source sur GitHub",
+      "releaseNotes": "Journal des versions",
+      "releaseNotesAria": "{name} : journal des versions",
       "cards": {
         "orazaka": {
           "line": "Une IA souveraine sur votre infrastructure : vos données ne quittent jamais la maison."
@@ -173,7 +175,7 @@
         }
       },
       "visitSite": "Voir le site",
-      "visitSiteAria": "{name} — voir le site"
+      "visitSiteAria": "{name} : voir le site (nouvel onglet)"
     },
     "home": {
       "hero": {
@@ -297,7 +299,7 @@
           "engineRole": "le moteur",
           "back": "reçoit",
           "site": "site",
-          "siteState": "aujourd'hui"
+          "latest": "dernière version"
         },
         "figures": {
           "orazaka": "une demande entre, la réponse revient, prête à servir",
@@ -324,7 +326,7 @@
             "figure": "Un document d’exemple, tel que Kridoc le rangera. Données de démo."
           }
         },
-        "comingSoon": "Arrive bientôt"
+        "latestValue": "{version} · {date}"
       },
       "stack": {
         "facts": {

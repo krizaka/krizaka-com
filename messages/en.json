@@ -129,6 +129,8 @@
       "visitAria": "{name} — visit the site",
       "source": "Source",
       "sourceAria": "{name} — source on GitHub",
+      "releaseNotes": "Release notes",
+      "releaseNotesAria": "{name}: release notes",
       "cards": {
         "orazaka": {
           "line": "Sovereign AI that runs on your own infrastructure: your data never leaves home."
@@ -173,7 +175,7 @@
         }
       },
       "visitSite": "See the site",
-      "visitSiteAria": "{name} — see the site"
+      "visitSiteAria": "{name}: see the site (new tab)"
     },
     "home": {
       "hero": {
@@ -297,7 +299,7 @@
           "engineRole": "the engine",
           "back": "gets back",
           "site": "site",
-          "siteState": "today"
+          "latest": "latest release"
         },
         "figures": {
           "orazaka": "a request goes in, the answer comes back, ready to use",
@@ -324,7 +326,7 @@
             "figure": "A sample document, as Kridoc will keep it. Demo data."
           }
         },
-        "comingSoon": "Coming soon"
+        "latestValue": "{version} · {date}"
       },
       "stack": {
         "facts": {

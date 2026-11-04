@@ -6,8 +6,9 @@
    from one entry to the next (lib/home-sections.ts entrySide, krizaka-internal#683):
    - a plate: one product moment, input then result, drawn like the app (visuals/, lazy, decorative, demo data said as
      demo, still under reduced motion), and its numbered caption (`fig. n`); the engine's too (a request, its result);
-   - a specimen tag: its catalogue number, its name (the link to its site, the commercial www domain), its mark, that
-     address and what it shows today (« Coming soon »: the domain holds the product's coming-soon face until it opens),
+   - a specimen tag: its catalogue number, its name (plain text), its mark, its site (the commercial www domain) and its latest
+     published release (read at build from the changelog data, lib/latest-release.ts), one action « See the site » (new tab) and
+     two quiet links, « Source » and « Release notes » (the changelog filtered on the product),
      the stamp of its honest status (lib/products.ts, gated by the dev-preview checklists), its line, its bird (the film's
      promise for the five birds of the film, the name for the family), what it runs on Orazaka (lib/engine-uses.ts,
      « planned » where the call is not wired yet) and a note number;
@@ -28,13 +29,16 @@ import { Caption, FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
 import { Mascot } from "@krizaka/ui/mascots";
 import { Section } from "@krizaka/ui/page";
 import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
+import { RELEASES } from "@/lib/changelog-data";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { entrySide, heroMarkOrder } from "@/lib/home-sections";
 import { VALLEY } from "@/lib/home-ambient";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { IN_DESIGN, type ProductInDesign } from "@/lib/products-in-design";
+import { latestRelease } from "@/lib/latest-release";
 import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
+import ButtonLink from "../ButtonLink";
 import { GitHubMark } from "../brand/GitHubMark";
 import ProductsFlock from "./ProductsFlock";
 import ProductsLink from "./ProductsLink";
@@ -51,7 +55,6 @@ const STAMP: Record<ProductStatus, StampTone> = {
 };
 const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 
-const external = (p: Product) => ({ href: p.siteUrl, target: "_blank", rel: "noopener" });
 const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
 /** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
@@ -76,24 +79,38 @@ function Bird({ bird, t }: Readonly<{ bird: StoryBird; t: TranslationDictionary 
   );
 }
 
-/** The site of a product and what it shows today: its commercial www domain holds its « coming soon » face until the product
- *  opens there (founder, 2026-11-04), so there is no app version to read — the card says so instead of inventing one. */
+/** The site of a product and its latest published release, read at build (lib/latest-release.ts): the card's two facts. The
+ *  release is left out when the data holds none — never typed, never read from a dev host. */
 function siteFields(p: Product, s: TranslationDictionary["site"]["home"]["products"]) {
+  const latest = latestRelease(p.id, RELEASES);
   return [
     { label: s.fields.site, value: host(p.siteUrl) },
-    { label: s.fields.siteState, value: s.comingSoon },
+    ...(latest
+      ? [{ label: s.fields.latest, value: format(s.latestValue, { version: latest.version, date: latest.date }) }]
+      : []),
   ];
 }
 
-function Foot({ p, t }: Readonly<{ p: Product; t: TranslationDictionary }>) {
+/** One action per card, « See the site » (its commercial www domain, a new tab), then two quiet links: the source and the
+ *  release notes (the changelog filtered on the product). One link per destination; each accessible name names the product. */
+function Foot({ p, t, locale }: Readonly<{ p: Product; t: TranslationDictionary; locale: string }>) {
   const h = t.site.products;
   return (
     <>
-      <a {...external(p)} aria-label={format(h.visitSiteAria, { name: p.name })}>
+      <ButtonLink
+        href={p.siteUrl}
+        variant="primary"
+        size="sm"
+        rel="noopener"
+        ariaLabel={format(h.visitSiteAria, { name: p.name })}
+      >
         {h.visitSite} <ForwardIcon size={13} aria-hidden />
-      </a>
+      </ButtonLink>
       <a href={p.repoUrl} aria-label={format(h.sourceAria, { name: p.name })}>
         <GitHubMark size={14} /> {h.source}
+      </a>
+      <a href={`/${locale}/changelog?produit=${p.id}`} aria-label={format(h.releaseNotesAria, { name: p.name })}>
+        {h.releaseNotes}
       </a>
     </>
   );
@@ -103,22 +120,18 @@ function Foot({ p, t }: Readonly<{ p: Product; t: TranslationDictionary }>) {
  *  its specimen tag in its orange, wearing its bird (the duck builds). What it gives, what comes back and the products it powers are
  *  folded in the tag. Only what runs is said (results, analytics; run events and webhooks are orazaka#189). */
 /** What both kinds of entry (the engine, a product) put on their specimen tag: code, name, mark, status, dev fields, footer. */
-function tagProps(p: Product, t: TranslationDictionary) {
+function tagProps(p: Product, t: TranslationDictionary, locale: string) {
   return {
     code: code(p),
-    title: (
-      <a {...external(p)} className="kz-entry-name">
-        {p.name}
-      </a>
-    ),
+    title: <span className="kz-entry-name">{p.name}</span>,
     mark: <ProductLogo id={p.id} size={30} animated={false} />,
     status: { label: t.site.nav.status[p.status].label, tone: STAMP[p.status] },
     fields: siteFields(p, t.site.home.products),
-    footer: <Foot p={p} t={t} />,
+    footer: <Foot p={p} t={t} locale={locale} />,
   };
 }
 
-function EngineEntry({ t }: Readonly<{ t: TranslationDictionary }>) {
+function EngineEntry({ t, locale }: Readonly<{ t: TranslationDictionary; locale: string }>) {
   const p = PRODUCTS.find((x) => x.id === ENGINE)!;
   const s = t.site.home.products;
   const e = t.site.home.engine;
@@ -137,7 +150,7 @@ function EngineEntry({ t }: Readonly<{ t: TranslationDictionary }>) {
           <ProductVisual id={p.id} name={p.name} />
           <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
         </figure>
-        <SpecimenTag className="kz-entry-tag" {...tagProps(p, t)}>
+        <SpecimenTag className="kz-entry-tag" {...tagProps(p, t, locale)}>
           <p>
             {e.line}
             {fnRef(p)}
@@ -172,7 +185,11 @@ function EngineEntry({ t }: Readonly<{ t: TranslationDictionary }>) {
   );
 }
 
-function ProductEntry({ product: p, t }: Readonly<{ product: Product; t: TranslationDictionary }>) {
+function ProductEntry({
+  product: p,
+  t,
+  locale,
+}: Readonly<{ product: Product; t: TranslationDictionary; locale: string }>) {
   const s = t.site.home.products;
   const use = ENGINE_USES.find((u) => u.id === p.id);
   const useText = use ? t.site.products.engine.uses[use.id as keyof typeof t.site.products.engine.uses] : undefined;
@@ -187,7 +204,7 @@ function ProductEntry({ product: p, t }: Readonly<{ product: Product; t: Transla
         <ProductVisual id={p.id} name={p.name} />
         <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
       </figure>
-      <SpecimenTag className="kz-entry-tag" {...tagProps(p, t)}>
+      <SpecimenTag className="kz-entry-tag" {...tagProps(p, t, locale)}>
         <p>
           {t.site.products.cards[p.id].line}
           {fnRef(p)}
@@ -287,7 +304,7 @@ export function EngineSection({ locale }: Readonly<{ locale: string }>) {
   return (
     <div id="engine" className="kz-products">
       <Section id="engine-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
-        <EngineEntry t={t} />
+        <EngineEntry t={t} locale={locale} />
       </Section>
     </div>
   );
@@ -306,7 +323,7 @@ export default function ProductShowcase({ locale }: Readonly<{ locale: string }>
         <ProductsLink className="kz-prod-solo">
           <ol className="kz-prod-list" aria-label={s.title}>
             {others.map((p) => (
-              <ProductEntry key={p.id} product={p} t={t} />
+              <ProductEntry key={p.id} product={p} t={t} locale={locale} />
             ))}
           </ol>
         </ProductsLink>
