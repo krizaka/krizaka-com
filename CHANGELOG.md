@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.0](https://github.com/krizaka/krizaka-com/compare/v0.22.0...v0.23.0) (2026-11-04)
+
+
+### Features
+
+* **home:** Kridoc joins the products' rhythm: its mark, its coming-soon site and a Demo soon plate ([#600](https://github.com/krizaka/krizaka-com/issues/600)) ([0375c31](https://github.com/krizaka/krizaka-com/commit/0375c31741497851f424b280c13b2a1b04d35694))
+
 ## [0.22.0](https://github.com/krizaka/krizaka-com/compare/v0.21.0...v0.22.0) (2026-11-04)
 
 
