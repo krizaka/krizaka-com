@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { PRODUCT_SITES, lastResortRedirects, productRedirects } from "../lib/product-redirects.ts";
 
-// The products live on their own sites (www.<product>.com): every old address of a product page, demo or documentation
+// The products live on their own sites (their commercial www domains): every old address of a product page, demo or documentation
 // answers 308 with the product's site. The sources are matched with the same path-to-regexp (6.x) Next.js compiles them with.
 const require = createRequire(import.meta.url);
 const { match } = require("path-to-regexp");
@@ -17,20 +17,20 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf
 /** Where an old address goes: the first rule that matches it. */
 const go = (path) => rules.find((rule) => rule.matches(path));
 
-test("the products' sites: the three presented products, each at www.<product>.com", () => {
+test("the products' sites: the three presented products, each at its commercial www domain (founder, 2026-11-04)", () => {
   assert.deepEqual(PRODUCT_SITES, {
-    orazaka: "https://www.orazaka.com",
-    yomizaka: "https://www.yomizaka.com",
-    akinaza: "https://www.akinaza.com",
+    orazaka: "https://www.sovkora.com",
+    yomizaka: "https://www.verikora.com",
+    akinaza: "https://www.folioviv.com",
   });
 });
 
-test("Yomizaka's documentation lands on its /docs page, in the language of the address (#171, yomizaka#387)", () => {
+test("Verikora's old documentation lands on its site, in the language of the address (the coming-soon face has no /docs)", () => {
   for (const [path, destination] of [
-    ["/fr/docs/yomizaka/getting-started", "https://www.yomizaka.com/:locale/docs"],
-    ["/en/docs/yomizaka", "https://www.yomizaka.com/:locale/docs"],
-    ["/docs/yomizaka", "https://www.yomizaka.com/docs"],
-    ["/docs/yomizaka/api", "https://www.yomizaka.com/docs"],
+    ["/fr/docs/yomizaka/getting-started", "https://www.verikora.com/:locale/"],
+    ["/en/docs/yomizaka", "https://www.verikora.com/:locale/"],
+    ["/docs/yomizaka", "https://www.verikora.com/"],
+    ["/docs/yomizaka/api", "https://www.verikora.com/"],
   ]) {
     const rule = go(path);
     assert.equal(rule?.destination, destination, path);
@@ -69,10 +69,10 @@ test("the old address of a product that left (krizaka/.github#413) answers 308 w
 
 test("the products' documentation goes to the product's site", () => {
   for (const [path, destination] of [
-    ["/docs/orazaka", "https://www.orazaka.com"],
-    ["/en/docs/orazaka/cli", "https://www.orazaka.com"],
-    ["/fr/docs/orazaka/ui/button", "https://www.orazaka.com"],
-    ["/docs/yomizaka", "https://www.yomizaka.com/docs"],
+    ["/docs/orazaka", "https://www.sovkora.com"],
+    ["/en/docs/orazaka/cli", "https://www.sovkora.com"],
+    ["/fr/docs/orazaka/ui/button", "https://www.sovkora.com"],
+    ["/docs/yomizaka", "https://www.verikora.com/"],
   ]) {
     const rule = go(path);
     assert.ok(rule, path);
@@ -95,7 +95,7 @@ test("the old Orazaka addresses that redirected to /products/orazaka/… go to i
     "/en/use-cases",
     "/fr/use-cases/some-case",
   ]) {
-    assert.equal(go(path)?.destination, "https://www.orazaka.com", path);
+    assert.equal(go(path)?.destination, "https://www.sovkora.com", path);
   }
 });
 

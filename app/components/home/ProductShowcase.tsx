@@ -6,8 +6,8 @@
    from one entry to the next (lib/home-sections.ts entrySide, krizaka-internal#683):
    - a plate: one product moment, input then result, drawn like the app (visuals/, lazy, decorative, demo data said as
      demo, still under reduced motion), and its numbered caption (`fig. n`); the engine's too (a request, its result);
-   - a specimen tag: its catalogue number, its name (the link to its dev site), its mark, its dev address and the version it
-     runs (read at build, lib/dev-versions.ts),
+   - a specimen tag: its catalogue number, its name (the link to its site, the commercial www domain), its mark, that
+     address and what it shows today (« Coming soon »: the domain holds the product's coming-soon face until it opens),
      the stamp of its honest status (lib/products.ts, gated by the dev-preview checklists), its line, its bird (the film's
      promise for the five birds of the film, the name for the family), what it runs on Orazaka (lib/engine-uses.ts,
      « planned » where the call is not wired yet) and a note number;
@@ -28,7 +28,6 @@ import { Caption, FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
 import { Mascot } from "@krizaka/ui/mascots";
 import { Section } from "@krizaka/ui/page";
 import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
-import { devVersion } from "@/lib/dev-versions";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { entrySide, heroMarkOrder } from "@/lib/home-sections";
@@ -77,13 +76,12 @@ function Bird({ bird, t }: Readonly<{ bird: StoryBird; t: TranslationDictionary 
   );
 }
 
-/** The site of a product and the version it runs, read at build (lib/dev-versions.ts): the card's two facts while the product
- *  is in development. The version is left out when the site could not be read — never typed. */
-function devFields(p: Product, s: TranslationDictionary["site"]["home"]["products"]) {
-  const version = devVersion(p.id);
+/** The site of a product and what it shows today: its commercial www domain holds its « coming soon » face until the product
+ *  opens there (founder, 2026-11-04), so there is no app version to read — the card says so instead of inventing one. */
+function siteFields(p: Product, s: TranslationDictionary["site"]["home"]["products"]) {
   return [
     { label: s.fields.site, value: host(p.siteUrl) },
-    ...(version ? [{ label: s.fields.version, value: version }] : []),
+    { label: s.fields.siteState, value: s.comingSoon },
   ];
 }
 
@@ -115,7 +113,7 @@ function tagProps(p: Product, t: TranslationDictionary) {
     ),
     mark: <ProductLogo id={p.id} size={30} animated={false} />,
     status: { label: t.site.nav.status[p.status].label, tone: STAMP[p.status] },
-    fields: devFields(p, t.site.home.products),
+    fields: siteFields(p, t.site.home.products),
     footer: <Foot p={p} t={t} />,
   };
 }

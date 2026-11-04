@@ -297,7 +297,7 @@
           "engineRole": "the engine",
           "back": "gets back",
           "site": "site",
-          "version": "version"
+          "siteState": "today"
         },
         "figures": {
           "orazaka": "a request goes in, the answer comes back, ready to use",
@@ -323,7 +323,8 @@
             "docMeta": "PDF · 4 pages · demo data",
             "figure": "A sample document, as Kridoc will keep it. Demo data."
           }
-        }
+        },
+        "comingSoon": "Coming soon"
       },
       "stack": {
         "facts": {
