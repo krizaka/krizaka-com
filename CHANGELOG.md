@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.22.0](https://github.com/krizaka/krizaka-com/compare/v0.21.0...v0.22.0) (2026-11-04)
+
+
+### Features
+
+* **media:** the Verikora and Folioviv reels, edited, on the CDN (manifest) ([#597](https://github.com/krizaka/krizaka-com/issues/597)) ([671d4ca](https://github.com/krizaka/krizaka-com/commit/671d4ca9f0e1ac11c244da2ed083fd1875a6c765))
+
 ## [0.21.0](https://github.com/krizaka/krizaka-com/compare/v0.20.0...v0.21.0) (2026-11-03)
 
 
