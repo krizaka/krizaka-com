@@ -299,6 +299,12 @@
           "label": "Being designed",
           "lines": {
             "kachizaka": "Krizaka's document storage. We are settling what it needs to do before we build it."
+          },
+          "plate": {
+            "demoSoon": "Demo soon",
+            "docTitle": "Residential lease",
+            "docMeta": "PDF · 4 pages · demo data",
+            "figure": "A sample document, as Kridoc will keep it. Demo data."
           }
         }
       },
