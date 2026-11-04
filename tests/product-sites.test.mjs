@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { siteHostOf, siteUrlOf, PRODUCT_IDS } from "../lib/product-hosts.ts";
-import { strings } from "./helpers/source.mjs";
+import { cssDecls, strings } from "./helpers/source.mjs";
 import { latestRelease } from "../lib/latest-release.ts";
 import { PRODUCTS } from "../lib/products.ts";
 
@@ -82,6 +82,18 @@ test("a product card: the name is plain text, one link per destination, each acc
   }
   assert.equal(JSON.parse(read("messages/fr.json")).site.products.releaseNotes, "Journal des versions");
   assert.equal(JSON.parse(read("messages/en.json")).site.products.releaseNotes, "Release notes");
+});
+
+// The tag's foot styles its links as ink (@krizaka/ui blocks.css `.kz-tag-foot a { color: inherit }`, unlayered), which beat the
+// Button's `text-on-accent`: the « See the site » label drew the tag's ink on the brand fill, under 4.5:1 on Orazaka's orange
+// (ci / Container image, a11y color-contrast, #606). The action wears `kz-tag-action`, whose colours are the Button's again.
+test("the card's action keeps the Button's colours inside the tag's foot (contrast on every brand fill)", () => {
+  const foot = read("app/components/home/ProductShowcase.tsx");
+  const action = foot.slice(foot.indexOf("<ButtonLink"), foot.indexOf("</ButtonLink>"));
+  assert.match(action, /className="kz-tag-action"/, "the action carries its class");
+  const decls = cssDecls("app/components/home/home.css", ".kz-tag-foot a.kz-tag-action");
+  assert.equal(decls.color, "var(--kz-on-accent)", "the label is the Button's on-accent colour");
+  assert.equal(decls["text-decoration"], "none", "a button is not underlined like the quiet links");
 });
 
 test("no page, message or llms file links a code-name host of a product (www.<code>.com, dev.<code>.com)", () => {

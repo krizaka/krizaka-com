@@ -102,6 +102,7 @@ function Foot({ p, t, locale }: Readonly<{ p: Product; t: TranslationDictionary;
         variant="primary"
         size="sm"
         rel="noopener"
+        className="kz-tag-action"
         ariaLabel={format(h.visitSiteAria, { name: p.name })}
       >
         {h.visitSite} <ForwardIcon size={13} aria-hidden />
