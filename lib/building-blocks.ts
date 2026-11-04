@@ -189,7 +189,7 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
   },
   {
     id: "krizaka-users",
-    repo: "krizaka-users",
+    repo: "krizaka-build",
     bird: "owl",
     mood: "welcome",
     hue: "sky",
@@ -197,7 +197,7 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
     registry: "maven",
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/15",
-    docs: "https://github.com/krizaka/krizaka-users#readme",
+    docs: "https://java.krizaka.com/users/",
     releases: [
       {
         coordinate: "com.krizaka:krizaka-users-api · -client · -core",
