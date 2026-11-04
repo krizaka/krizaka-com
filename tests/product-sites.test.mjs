@@ -10,6 +10,16 @@ import { PRODUCTS } from "../lib/products.ts";
 // « coming soon » page until each product opens there. A coming-soon page runs no app: the card reads no version from it.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 
+test("lib/product-sites.json equals @krizaka/org (run scripts/gen-product-sites.mjs when the package changes)", async () => {
+  const { productSites } = await import("../scripts/gen-product-sites.mjs");
+  assert.deepEqual(JSON.parse(read("lib/product-sites.json")), productSites());
+  assert.doesNotMatch(
+    read("lib/product-hosts.ts"),
+    /from "@krizaka\/org"/,
+    "next.config.ts loads it: no ESM-only import",
+  );
+});
+
 test("each product's public address is its commercial www domain, from @krizaka/org", () => {
   assert.deepEqual(
     PRODUCT_IDS.map((id) => [id, siteUrlOf(id), siteHostOf(id)]),
