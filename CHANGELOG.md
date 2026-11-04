@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.23.1](https://github.com/krizaka/krizaka-com/compare/v0.23.0...v0.23.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* **services:** no price on /services, offers as compact cards, and a frame guard ([#601](https://github.com/krizaka/krizaka-com/issues/601)) ([d779b8b](https://github.com/krizaka/krizaka-com/commit/d779b8b0a1f16d4ba6f910c15b99c7dffbb080df))
+
 ## [0.23.0](https://github.com/krizaka/krizaka-com/compare/v0.22.0...v0.23.0) (2026-11-04)
 
 
