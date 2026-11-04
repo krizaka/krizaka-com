@@ -16,7 +16,7 @@ test("the users block and its artefacts point at krizaka-build, never the old sp
 
 test("the users artefacts are read in their krizaka-build folder", () => {
   const source = readFileSync(new URL("../lib/maven-packages.ts", import.meta.url), "utf8");
-  for (const module of ["api", "client", "core"]) {
-    assert.match(source, new RegExp(`dir: "krizaka-users/krizaka-users-${module}"`));
+  for (const part of ["api", "client", "core"]) {
+    assert.match(source, new RegExp(`dir: "krizaka-users/krizaka-users-${part}"`));
   }
 });
