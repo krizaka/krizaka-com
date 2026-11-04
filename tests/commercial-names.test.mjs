@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync } from "node:fs";
-import { catalogueValues, findCodeNames } from "@krizaka/org";
+import { brandOf, catalogueValues, findCodeNames } from "@krizaka/org";
 import { PRODUCTS } from "../lib/products.ts";
 
 // Commercial names (Oussama, 2026-11-01, krizaka-internal#2103): the site shows Verikora, Folioviv and Sovkora; the code names
@@ -18,8 +18,13 @@ test("the home's product cards carry the commercial names, read from @krizaka/or
   );
 });
 
-test("the addresses keep the code names: only the words change", () => {
-  for (const p of PRODUCTS) assert.match(p.siteUrl, new RegExp(`^https://www\\.${p.id}\\.com`), p.id);
+test("the public addresses are the commercial www domains (founder, 2026-11-04): no code-name host is linked", () => {
+  assert.deepEqual(Object.fromEntries(PRODUCTS.map((p) => [p.id, p.siteUrl])), {
+    orazaka: "https://www.sovkora.com",
+    yomizaka: "https://www.verikora.com",
+    akinaza: "https://www.folioviv.com",
+  });
+  for (const p of PRODUCTS) assert.equal(p.siteUrl, new URL(brandOf(p.id).domains.site).origin, p.id);
 });
 
 test("no code name in a message or in the llms files", () => {

@@ -1,10 +1,16 @@
-/* The products' public domains. Each product owns <product>.com: www.<product>.com is its public address (the real app
-   of the product's own deployment, sign-up closed), the apex answers 308 with www. dev.<product>.com is the development
-   environment, exposed as production on www and only redirecting there (Oussama, 2026-10-26): every link, the healthz
-   read at build and the sitemap use www (krizaka-com AGENTS.md §2.4, epic krizaka/.github#119). Pure: tests and scripts share it. */
+/* The products' public addresses (founder, 2026-11-04, krizaka-internal#2373): each product's commercial www domain
+   (www.verikora.com, www.folioviv.com, www.sovkora.com), from @krizaka/org (`brandOf(id).domains.site`) through
+   lib/product-sites.json (scripts/gen-product-sites.mjs; next.config.ts's CommonJS loader cannot import the ESM-only package),
+   kept equal to the package by tests/product-sites.test.mjs. Until a product opens there, its www address is its
+   « coming soon » face (krizaka/krizaka-coming-soon). Every link, the sitemap, llms.txt and the JSON-LD use it — never a
+   code-name host (www.<code>.com, dev.<code>.com stay the products' development addresses). Pure: tests and scripts share it. */
+
+import sites from "./product-sites.json" with { type: "json" };
 
 export const PRODUCT_IDS = ["orazaka", "yomizaka", "akinaza"] as const;
 export type ProductId = (typeof PRODUCT_IDS)[number];
 
-export const wwwHost = (id: ProductId) => `www.${id}.com`;
-export const wwwUrl = (id: ProductId) => `https://${wwwHost(id)}`;
+/** The public origin of a product (`https://www.verikora.com`). */
+export const siteUrlOf = (id: ProductId): string => (sites as Record<ProductId, string>)[id];
+/** Its host, as a card shows it (`www.verikora.com`). */
+export const siteHostOf = (id: ProductId) => new URL(siteUrlOf(id)).hostname;

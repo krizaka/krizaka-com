@@ -25,7 +25,12 @@ test("the Organization is in Montréal and points to GitHub", () => {
 test("the Organization owns the products and the open-source sites, each published by it", () => {
   const sd = read("lib/structured-data.ts");
   assert.match(sd, /owns: owned\.map/);
-  for (const url of ['wwwUrl("orazaka")', 'wwwUrl("yomizaka")', 'wwwUrl("akinaza")', "https://java.krizaka.com"]) {
+  for (const url of [
+    'siteUrlOf("orazaka")',
+    'siteUrlOf("yomizaka")',
+    'siteUrlOf("akinaza")',
+    "https://java.krizaka.com",
+  ]) {
     assert.ok(sd.includes(url), `${url} is owned by the Organization`);
   }
   assert.ok((sd.match(/publisher: \{ "@id": ORG_ID \}/g) ?? []).length >= 3);

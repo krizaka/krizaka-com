@@ -53,7 +53,7 @@ test("a planned use is said planned: the products not wired yet are flagged, the
 // each product is tied to its node in the flow (in view or pointed at, both ways). /story's engine chapter draws the same flow.
 test("the home leads with the engine and its flow, then the products it powers — no foundation frame, no card in a card", () => {
   const home = read("app/components/home/ProductShowcase.tsx");
-  assert.match(home, /<EngineEntry t=\{t\} \/>/);
+  assert.match(home, /<EngineEntry t=\{t\} locale=\{locale\} \/>/);
   assert.ok(
     home.indexOf("<EngineEntry t") < home.lastIndexOf('className="kz-prod-list"'),
     "the engine comes first, the products after",

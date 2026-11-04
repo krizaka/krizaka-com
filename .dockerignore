@@ -21,6 +21,5 @@ PLAN_DEPLOIEMENT.md
 # Generated at build (scripts/gen-*.mjs)
 lib/org-stats.json
 lib/registry-versions.json
-lib/dev-versions.json
 Dockerfile
 .dockerignore

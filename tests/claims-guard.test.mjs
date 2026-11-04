@@ -23,10 +23,7 @@ const sources = ["app", "lib", "content"]
     }
   })
   .filter(
-    (f) =>
-      !/^lib\/.*(registry-versions|dev-versions|dev-preview-checklists|github-org|org-stats|cdn-manifest)[^/]*\.json$/.test(
-        f,
-      ),
+    (f) => !/^lib\/.*(registry-versions|dev-preview-checklists|github-org|org-stats|cdn-manifest)[^/]*\.json$/.test(f),
   );
 
 const LICENCE = /\b(FSL|BSL)\b|Functional Source|Business Source|Source License/i;

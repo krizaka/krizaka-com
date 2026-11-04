@@ -11,7 +11,7 @@ import { getDictionary } from "@/lib/i18n";
 
 import { displayName } from "@krizaka/org";
 import { SITE_URL, GITHUB_ORG_URL, CONTACT_EMAIL, NPM_ORG_URL } from "@/lib/site";
-import { wwwUrl } from "@/lib/product-hosts";
+import { siteUrlOf } from "@/lib/product-hosts";
 
 export type Locale = "fr" | "en";
 
@@ -26,7 +26,7 @@ const FAMILY = [
   {
     id: "orazaka",
     name: displayName("orazaka"),
-    url: wwwUrl("orazaka"),
+    url: siteUrlOf("orazaka"),
     repo: "orazaka",
     category: "BusinessApplication",
     kind: "app",
@@ -34,7 +34,7 @@ const FAMILY = [
   {
     id: "yomizaka",
     name: displayName("yomizaka"),
-    url: wwwUrl("yomizaka"),
+    url: siteUrlOf("yomizaka"),
     repo: "yomizaka",
     category: "BusinessApplication",
     kind: "app",
@@ -42,7 +42,7 @@ const FAMILY = [
   {
     id: "akinaza",
     name: displayName("akinaza"),
-    url: wwwUrl("akinaza"),
+    url: siteUrlOf("akinaza"),
     repo: "akinaza",
     category: "BusinessApplication",
     kind: "app",

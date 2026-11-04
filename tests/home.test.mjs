@@ -85,7 +85,11 @@ test("the products come from lib/products.ts: one card each, in the product's br
     /mark: <ProductLogo id=\{p\.id\} size=\{\d+\} animated=\{false\} \/>/,
     "the mark sits beside the name on the tag, never over the visual",
   );
-  assert.match(showcase, /href: p\.siteUrl/, "a card links the product's www site (dev is exposed there; 2026-10-26)");
+  assert.match(
+    showcase,
+    /<ButtonLink\s+href=\{p\.siteUrl\}/,
+    "a card's one action goes to the product's commercial www site (2026-11-04)",
+  );
   for (const s of SECTIONS) {
     const src = read(`app/components/home/${s}.tsx`);
     assert.doesNotMatch(src, /["'](orazaka|yomizaka|akinaza)["']/, `${s} names a product by hand`);
