@@ -4,6 +4,7 @@
 
 import { cdn, onCdn, video } from "./cdn";
 import { BRAND_FILM, hasTallCut } from "./brand-film";
+import { HERO_SLIDES, heroSlideProblems } from "./hero-slides";
 
 export function brandFilm() {
   const wide = video(BRAND_FILM.base);
@@ -15,4 +16,13 @@ export function brandFilm() {
       ? { mp4: cdn(`${BRAND_FILM.tallWeb}.mp4`), poster: cdn(`${BRAND_FILM.tall}.jpg`) }
       : undefined,
   };
+}
+
+/** The hero's slides, resolved on the CDN: an unknown clip throws here, so the build fails (lib/hero-slides.ts). */
+export function heroSlides() {
+  const problems = heroSlideProblems(HERO_SLIDES, onCdn);
+  if (problems.length > 0) {
+    throw new Error(`hero slides: ${problems.join("; ")}`);
+  }
+  return HERO_SLIDES.map((s) => ({ ...s, ...video(s.base) }));
 }

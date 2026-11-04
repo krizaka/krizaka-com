@@ -232,6 +232,19 @@
               "about": "open source"
             }
           }
+        },
+        "slides": {
+          "film": {
+            "title": "Video: Showing our work, the Krizaka film",
+            "alt": "The Krizaka film: an owl, a beaver and a duck at work, with a notebook."
+          }
+        },
+        "carousel": {
+          "label": "Fig. 1, realisations by Krizaka",
+          "figure": "Fig. {fig}",
+          "previous": "Previous figure",
+          "next": "Next figure",
+          "slide": "Figure {n} of {total}"
         }
       },
       "engine": {

@@ -232,6 +232,19 @@
               "about": "open source"
             }
           }
+        },
+        "slides": {
+          "film": {
+            "title": "Vidéo : Montrer son travail, le film de Krizaka",
+            "alt": "Le film de Krizaka : un hibou, un castor et un canard au travail, avec un cahier."
+          }
+        },
+        "carousel": {
+          "label": "Fig. 1, réalisations de Krizaka",
+          "figure": "Fig. {fig}",
+          "previous": "Figure précédente",
+          "next": "Figure suivante",
+          "slide": "Figure {n} sur {total}"
         }
       },
       "engine": {

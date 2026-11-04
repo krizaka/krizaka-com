@@ -43,7 +43,7 @@
   min-width: 0;
 }
 /* « Fig. 1 — Montrer son travail » (krizaka-internal#2147): the figure of the hero. A thin ink rule, square corners, the
-   paper's solid offset shadow; the loop inside, the five birds under it on a ground rule, each with a tag, then the
+   paper's solid offset shadow; the film's poster inside, the five birds under it on a ground rule, each with a tag, then the
    caption. Nothing moves under the pointer: a hover changes a colour only. */
 .kz-fig {
   min-width: 0;
@@ -57,62 +57,10 @@
   border: 1px solid var(--kz-border-strong);
   box-shadow: 4px 4px 0 var(--kz-border-strong);
 }
-.kz-fig-frame :is(img, video) {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.kz-fig-open {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  display: block;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-.kz-fig-open:focus-visible,
-.kz-fig-pause:focus-visible,
+.kz-fig-frame button:focus-visible,
 .kz-fig-bird:focus-visible {
   outline: 2px solid var(--kz-ring, var(--kz-accent));
   outline-offset: -4px;
-}
-.kz-fig-chip,
-.kz-fig-pause {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  line-height: 16px;
-  color: var(--kz-text-primary);
-  background: var(--kz-surface-1);
-  border: 1px solid var(--kz-border-strong);
-}
-.kz-fig-chip {
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  padding: 4px 8px;
-}
-.kz-fig-open:hover .kz-fig-chip,
-.kz-fig-pause:hover {
-  background: var(--kz-surface-2, var(--kz-surface-1));
-  border-color: var(--kz-text-secondary);
-}
-.kz-fig-pause {
-  position: absolute;
-  left: 10px;
-  bottom: 10px;
-  z-index: 2;
-  min-width: 32px;
-  min-height: 32px;
-  justify-content: center;
-  padding: 0 8px;
-  cursor: pointer;
 }
 .kz-fig-birds {
   display: grid;

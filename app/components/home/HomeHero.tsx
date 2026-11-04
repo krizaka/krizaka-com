@@ -1,6 +1,6 @@
 /* Home hero — the first page of the field notebook (Cahier, krizaka-ui ADR-004, #417): asymmetric, never centred. On the
    left, the date line of the notes, who Krizaka is, one promise, one action (and the film, quietly), the products' marks
-   and the figures that back them; on the right, « Fig. 1 — Montrer son travail »: a silent loop of the film in a thin frame, the
+   and the figures that back them; on the right, « Fig. 1 — Montrer son travail »: the realisations (lib/hero-slides.ts: the film, poster first) in a thin frame, the
    five birds standing under it, each with a short tag of what it does (no polaroid, no tape).
    The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first
    paint (LCP) — never revealed, never part of the intro.
@@ -21,14 +21,14 @@ import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { format, getDictionary } from "@/lib/i18n";
 import { figureColumns } from "@/lib/figure-grid";
 import type { CSSProperties } from "react";
-import { brandFilm } from "@/lib/story-film";
+import { brandFilm, heroSlides } from "@/lib/story-film";
 import { heroMarkOrder } from "@/lib/home-sections";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
 import { floorFigure } from "@/lib/figure-floor";
 import FilmLightbox from "./FilmLightbox";
 import HeroIntro from "./HeroIntro";
-import FilmFrame from "./FilmFrame";
+import HeroFigure from "./HeroFigure";
 import "./home.css";
 
 export interface HomeFigures {
@@ -39,6 +39,7 @@ export interface HomeFigures {
 }
 
 const film = brandFilm();
+const slides = heroSlides().map(({ id, fig, mp4, poster }) => ({ id, fig, mp4, poster }));
 /** The five birds, left to right as the film introduces them; each one a promise (messages site.home.hero.fig.birds). */
 const BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 /** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
@@ -135,11 +136,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
             <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
           </div>
           <figure className="kz-fig" aria-label={t.fig.figLabel}>
-            <FilmFrame
-              loop={film.loop}
-              film={{ mp4: film.mp4, poster: film.poster, tall: film.tall }}
-              length={t.filmLength}
-            />
+            <HeroFigure slides={slides} />
             <ul className="kz-fig-birds" aria-label={t.fig.birdsLabel}>
               {BIRDS.map((bird) => (
                 <li key={bird}>

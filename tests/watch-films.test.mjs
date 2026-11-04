@@ -31,8 +31,13 @@ test("a watch page carries everything Google asks for a video that is the main c
   for (const field of ["name", "description", "thumbnailUrl", "uploadDate", "duration", "contentUrl"]) {
     assert.match(page, new RegExp(`\\b${field}\\b`), field);
   }
-  assert.match(page, /<video\s+controls/);
-  assert.match(page, /poster=/);
+  assert.match(
+    page,
+    /<WatchPlayer src=\{media\.mp4\} poster=\{media\.poster\}/,
+    "@krizaka/ui's MediaPlayer, not a hand-made video",
+  );
+  assert.doesNotMatch(page, /<video\b/);
+  assert.match(read("app/components/WatchPlayer.tsx"), /<MediaPlayer\b[^>]*poster=/);
   assert.doesNotMatch(page, /autoPlay|autoplay/, "nothing plays by itself (reduced motion: the poster waits)");
   // The brand film has no speech: no captions track, its text version is the list of its shots, in both languages.
   assert.doesNotMatch(page, /<track/);
