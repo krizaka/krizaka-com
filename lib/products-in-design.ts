@@ -6,7 +6,7 @@
    `kachizaka` is a code name (the ids of @krizaka/org): it never appears in a rendered word; the name comes from
    `displayName`. Words: site.home.products.inDesign.lines.<id>. */
 
-import { displayName } from "@krizaka/org";
+import { brandOf, displayName } from "@krizaka/org";
 import type { ProductStatus } from "./products.ts";
 
 export const IN_DESIGN_IDS = ["kachizaka"] as const;
@@ -16,6 +16,8 @@ export interface ProductInDesign {
   /** The code name: the mark and the messages use it. */
   id: InDesignId;
   name: string;
+  /** Its live coming-soon site (www.<commercial>.com, from the org brand's `domains.site`): the one link it carries. */
+  siteUrl: string;
   status: Extract<ProductStatus, "design">;
 }
 
@@ -23,6 +25,7 @@ export const IN_DESIGN: readonly ProductInDesign[] = [
   {
     id: "kachizaka",
     name: displayName("kachizaka"),
+    siteUrl: brandOf("kachizaka").domains.site ?? "",
     status: "design",
   },
 ];

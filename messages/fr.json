@@ -299,6 +299,12 @@
           "label": "En conception",
           "lines": {
             "kachizaka": "Le stockage documentaire de Krizaka. Nous précisons le besoin avant de le construire."
+          },
+          "plate": {
+            "demoSoon": "Démo bientôt",
+            "docTitle": "Bail résidentiel",
+            "docMeta": "PDF · 4 pages · données de démo",
+            "figure": "Un document d’exemple, tel que Kridoc le rangera. Données de démo."
           }
         }
       },

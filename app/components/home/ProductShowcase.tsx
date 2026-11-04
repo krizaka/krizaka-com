@@ -12,8 +12,10 @@
      promise for the five birds of the film, the name for the family), what it runs on Orazaka (lib/engine-uses.ts,
      « planned » where the call is not wired yet) and a note number;
    - the notes at the foot of the section: what each product really does, sourced;
-   - after the products, the ones in conception (lib/products-in-design.ts): a tag alone — number, mark, name, the stamp
-     « In design » and one line; no plate, no site, no version, no source, no bird and no note, since nothing is built.
+   - after the products, the ones in conception (lib/products-in-design.ts): an entry like the others, the tag on the right —
+     number, mark, name and « See the site » (its live coming-soon site), the stamp « In design », one line — beside a plate
+     that shows a sample document in demo data and the chip « Demo soon »; no version, no source, no bird, no note, no date,
+     no sign-up, since nothing is built.
    Each entry is tied to its node in the flow (ProductsLink): in the middle of the screen or pointed at, its node lights,
    and the reverse. Data: lib/products.ts, lib/engine-uses.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words:
    site.home.products.*, site.products.*, site.story.world.cues. */
@@ -21,6 +23,7 @@
 import { ForwardIcon } from "@krizaka/icons";
 import { KridocLogo, ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
+import { Badge } from "@krizaka/ui/badge";
 import { Caption, FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
 import { Mascot } from "@krizaka/ui/mascots";
 import { Section } from "@krizaka/ui/page";
@@ -209,21 +212,69 @@ function ProductEntry({ product: p, t }: Readonly<{ product: Product; t: Transla
 /** The marks of the products in conception: Kridoc has a mark and no palette (@krizaka/ui ProductLogo leaves it out). */
 const DESIGN_MARK = { kachizaka: KridocLogo } as const;
 
-/** A product in conception: its tag alone, numbered after the products. */
+/** The plate of a product in conception: a sample document in demo data, said as demo, and the chip « Demo soon ». Drawn from
+ *  tokens and @krizaka/ui's Badge and mark — no invented app UI, no date, no sign-up. */
+function DesignPlate({
+  product: p,
+  n,
+  t,
+}: Readonly<{ product: ProductInDesign; n: number; t: TranslationDictionary }>) {
+  const v = t.site.home.products.inDesign.plate;
+  const Mark = DESIGN_MARK[p.id];
+  return (
+    <figure className="kz-entry-plate">
+      <div className="pv kz-doc-plate" aria-hidden>
+        <div className="pv-app">
+          <p className="pv-app-bar">
+            <Mark size={18} animated={false} />
+            <span className="pv-app-name">{p.name}</span>
+            <Badge size="sm" tone="accent">
+              {v.demoSoon}
+            </Badge>
+          </p>
+          <div className="kz-doc-sheet">
+            <p className="kz-doc-title">{v.docTitle}</p>
+            <p className="kz-doc-meta">{v.docMeta}</p>
+            <span className="kz-doc-line" />
+            <span className="kz-doc-line" />
+            <span className="kz-doc-line kz-doc-short" />
+            <span className="kz-doc-line" />
+            <span className="kz-doc-line kz-doc-short" />
+          </div>
+        </div>
+      </div>
+      <Caption figure={`${t.site.home.products.figureLabel} ${n}`}>{v.figure}</Caption>
+    </figure>
+  );
+}
+
+/** A product in conception: its plate (a sample document, « Demo soon ») and its tag, numbered after the products, the tag on
+ *  the right (the rhythm of the entries before it). It links its live coming-soon site, nothing else. */
 function DesignEntry({
   product: p,
   n,
   t,
 }: Readonly<{ product: ProductInDesign; n: number; t: TranslationDictionary }>) {
   const Mark = DESIGN_MARK[p.id];
+  const h = t.site.products;
   return (
-    <li id={"product-" + p.id} className="kz-entry kz-entry-design" data-product={p.id}>
+    <li id={"product-" + p.id} className="kz-entry kz-entry-design" data-product={p.id} data-side="plate-left">
+      <DesignPlate product={p} n={SHOWN.length + 1} t={t} />
       <SpecimenTag
         className="kz-entry-tag"
         code={`KZ-${String(n).padStart(2, "0")}`}
-        title={p.name}
-        mark={<Mark size={30} animated={false} />}
+        title={
+          <a href={p.siteUrl} target="_blank" rel="noopener" className="kz-entry-name">
+            {p.name}
+          </a>
+        }
+        mark={<Mark size={48} animated={false} />}
         status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
+        footer={
+          <a href={p.siteUrl} target="_blank" rel="noopener" aria-label={format(h.visitSiteAria, { name: p.name })}>
+            {h.visitSite} <ForwardIcon size={13} aria-hidden />
+          </a>
+        }
       >
         <p>{t.site.home.products.inDesign.lines[p.id]}</p>
       </SpecimenTag>
