@@ -11,7 +11,6 @@ import {
   identifiers,
   importsOf,
   jsx,
-  jsxAll,
   records,
   strings,
 } from "./helpers/source.mjs";
@@ -138,7 +137,7 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
   assert.doesNotMatch(
     hero,
     /<video|<img/,
-    "the hero's server markup holds no media: the loop is a client island (FilmFrame)",
+    "the hero's server markup holds no media: the figure is a client island (HeroFigure)",
   );
   assert.ok(
     hero.indexOf("kz-home-actions") < hero.indexOf("kz-home-marks") &&
@@ -162,10 +161,10 @@ test("the hero is « Fig. 1 »: a framed silent loop and the five birds outside 
     "no polaroid, tape, live flock or valley loop",
   );
   assert.match(hero, /<figure className="kz-fig"/);
-  assert.match(hero, /<FilmFrame\s+loop=\{film\.loop\}/);
+  assert.match(hero, /<HeroFigure slides=\{slides\} \/>/);
   assert.match(hero, /animated=\{false\} life=\{false\}/, "static poses: nothing moves under the pointer");
   assert.match(hero, /href="\/story#who"/);
-  assert.ok(hero.indexOf("<FilmFrame") < hero.indexOf("kz-fig-birds"), "the birds stand under the frame, not in it");
+  assert.ok(hero.indexOf("<HeroFigure") < hero.indexOf("kz-fig-birds"), "the birds stand under the frame, not in it");
   assert.ok(hero.indexOf("kz-fig-birds") < hero.indexOf("kz-fig-caption"));
   assert.ok(
     hero.indexOf("kz-home-actions") < hero.indexOf("<figure"),
@@ -182,20 +181,30 @@ test("the hero is « Fig. 1 »: a framed silent loop and the five birds outside 
   assert.equal(messages("fr").site.home.hero.fig.caption, "Fig. 1 — Montrer son travail");
 });
 
-test("the loop: muted, 10 s cut, on the CDN, never autoplays under reduced motion or Save-Data, pausable", () => {
-  const frame = read("app/components/home/FilmFrame.tsx");
-  assert.match(frame, /prefersStill\(window\)/, "reduced motion and Save-Data leave the poster");
-  assert.match(frame, /<video[^>]* muted loop playsInline/);
-  assert.match(
-    frame,
-    /aria-hidden>\s*<video[^>]*tabIndex=\{-1\}/,
-    "the loop is decorative: hidden on its wrapper, never focusable (Sonar S6825)",
+test("Fig. 1 is @krizaka/ui's MediaCarousel / MediaPlayer: poster first, nothing before a press, one slide has no chrome", () => {
+  const fig = "app/components/home/HeroFigure.tsx";
+  assert.ok(hasCode(fig, "<MediaCarousel"), "from two slides on, the carousel");
+  assert.ok(hasCode(fig, 'mode="lightbox"'), "one slide: the film alone, opened in the lightbox with sound");
+  assert.ok(hasCode(fig, "slides.length === 1"), "no « 1 / 1 » for a single slide");
+  assert.doesNotMatch(read(fig), /<video|autoPlay|useEffect|IntersectionObserver/, "no video byte before a press");
+  assert.doesNotMatch(
+    read("app/components/home/HomeHero.tsx"),
+    /FilmFrame|film\.loop/,
+    "the hand-made loop player is gone",
   );
-  assert.doesNotMatch(frame, /<video[^>]*aria-hidden/, "aria-hidden never sits on the focusable video itself");
-  assert.match(frame, /aria-pressed=\{paused\}/, "a visible pause control (WCAG 2.2.2)");
-  assert.match(frame, /document\.readyState === "complete"/, "nothing before the page has loaded (LCP)");
-  assert.match(frame, /v\.pause\(\)/, "paused off screen");
-  assert.match(frame, /<FilmLightbox/, "one press opens the full film");
+  assert.ok(!existsSync(new URL("../app/components/home/FilmFrame.tsx", import.meta.url)), "FilmFrame is deleted");
+  for (const l of ["en", "fr"]) {
+    const hero = messages(l).site.home.hero;
+    for (const k of ["label", "figure", "previous", "next", "slide"])
+      assert.ok(hero.carousel[k], `${l}: carousel.${k}`);
+    assert.match(hero.carousel.slide, /\{n\}.*\{total\}/, `${l}: the slide label takes {n} and {total}`);
+    assert.match(
+      hero.carousel.figure,
+      /\{fig\}.*\{caption\}/,
+      `${l}: the figure caption takes {fig} and the slide's {caption}`,
+    );
+  }
+  // The silent 10 s loop stays recorded on the CDN (it returns as a slide's loop once the carousel pauses it, WCAG 2.2.2).
   const manifest = JSON.parse(read("lib/cdn-manifest.json"));
   const files = manifest.files ?? manifest;
   for (const ext of ["webm", "mp4", "jpg"])

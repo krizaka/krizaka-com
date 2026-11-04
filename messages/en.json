@@ -232,6 +232,20 @@
               "about": "open source"
             }
           }
+        },
+        "slides": {
+          "film": {
+            "title": "Video: Showing our work, the Krizaka film",
+            "alt": "The Krizaka film: an owl, a beaver and a duck at work, with a notebook.",
+            "caption": "Showing our work: the brand film, made with Sovkora, our engine"
+          }
+        },
+        "carousel": {
+          "label": "Fig. 1, realisations by Krizaka",
+          "figure": "Fig. {fig} — {caption}",
+          "previous": "Previous figure",
+          "next": "Next figure",
+          "slide": "Figure {n} of {total}"
         }
       },
       "engine": {

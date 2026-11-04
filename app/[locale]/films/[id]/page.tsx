@@ -11,6 +11,7 @@ import { isoDuration, watchFilm, watchPath, WATCH_FILMS } from "@/lib/watch-film
 import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
 import { JsonLd } from "@/app/components/JsonLd";
+import WatchPlayer from "@/app/components/WatchPlayer";
 
 /* /films/<id> — the watch page of one film (template: gallery). The video is the main content of the page, which is
    what Google asks of a page it indexes a video from: title, description, poster, the player, a text version, and the
@@ -87,16 +88,7 @@ export default async function FilmPage({ params }: Props) {
       </PageHero>
       <Page>
         <div className="rd-stack">
-          <video
-            controls
-            playsInline
-            preload="metadata"
-            poster={media.poster}
-            style={{ width: "100%", height: "auto" }}
-          >
-            <source src={media.webm} type="video/webm" />
-            <source src={media.mp4} type="video/mp4" />
-          </video>
+          <WatchPlayer src={media.mp4} poster={media.poster} title={film.title} />
           <p className="rd-prose is-small">{format(watch.length, { seconds: f.seconds })}</p>
           <section aria-labelledby="film-shots" className="rd-stack">
             <h2 id="film-shots" className="rd-h2">
