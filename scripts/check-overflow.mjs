@@ -4,7 +4,7 @@
      node scripts/check-overflow.mjs --base http://localhost:3000
    Exits 1 with one line per page, width and theme that scrolls sideways, naming the elements that pass the edge. */
 
-import { cases, overflowProblem } from "./overflow-lib.mjs";
+import { cases, FRAMED, frameProblem, overflowProblem } from "./overflow-lib.mjs";
 import { baseFromArgv, report, visitPages } from "./site-pages.mjs";
 
 const problems = await visitPages(baseFromArgv(), cases(), async (page, c) => {
@@ -23,7 +23,19 @@ const problems = await visitPages(baseFromArgv(), cases(), async (page, c) => {
       );
     return { scrollWidth: document.documentElement.scrollWidth, culprits: wide };
   });
-  const problem = overflowProblem(c, scrollWidth, culprits);
-  return problem ? [problem] : [];
+  // The frame: the headings and cards stay between the edges of the bar (the one shell of every page).
+  const { frame, boxes } = await page.evaluate((selector) => {
+    const bar = document.querySelector(".kz-site-bar")?.getBoundingClientRect();
+    return {
+      frame: bar ? { left: bar.left, right: bar.right } : undefined,
+      boxes: [...document.querySelectorAll(selector)]
+        .map((el) => ({
+          name: el.tagName.toLowerCase() + "." + String(el.className).split(/\s+/)[0],
+          ...el.getBoundingClientRect().toJSON(),
+        }))
+        .filter((b) => b.width > 0),
+    };
+  }, FRAMED);
+  return [overflowProblem(c, scrollWidth, culprits), frame && frameProblem(c, frame, boxes)].filter(Boolean);
 });
 report(problems, `check-overflow: ${cases().length} page × width × theme, no horizontal scroll`);

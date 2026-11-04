@@ -116,7 +116,7 @@
         },
         "services": {
           "label": "Services",
-          "desc": "Krizaka Entreprise, sur devis"
+          "desc": "Krizaka Entreprise"
         }
       }
     },
@@ -187,7 +187,10 @@
         "proofsLabel": "Krizaka en chiffres, lus au build",
         "marksLabel": "Les produits, chacun mène à sa fiche",
         "proofs": {
-          "groups": { "published": "Ce que nous publions", "used": "Ce qui est utilisé" },
+          "groups": {
+            "published": "Ce que nous publions",
+            "used": "Ce qui est utilisé"
+          },
           "more": "plus de",
           "repositories": "dépôts publics",
           "npm": "paquets sur npm",
@@ -371,7 +374,7 @@
       "services": {
         "number": "§ 4",
         "title": "Pour les entreprises : Krizaka Entreprise.",
-        "lead": "Ce que nous bâtissons pour nos produits, nous pouvons le bâtir pour vous. Sur devis, avec un prix écrit avant de commencer.",
+        "lead": "Ce que nous bâtissons pour nos produits, nous pouvons le bâtir pour vous. Parlez-nous de votre projet.",
         "cta": "Découvrir Krizaka Entreprise",
         "parts": {
           "modules": {
@@ -534,7 +537,7 @@
         "other": "Presse, carrières, une question pour l'équipe",
         "yomizaka": "Parler de Verikora — en développement, inscription fermée",
         "akinaza": "Parlez-nous de Folioviv — en développement, inscriptions fermées",
-        "enterprise": "Modules sur mesure, adoption d'une IA souveraine ou maintenance, sur devis"
+        "enterprise": "Modules sur mesure, adoption d'une IA souveraine ou maintenance"
       },
       "timeline": "Pour quand ?",
       "timelines": {
@@ -866,7 +869,7 @@
       },
       "fits": {
         "eyebrow": "comment ça s'emboîte",
-        "title": "Briques → services partagés.",
+        "title": "Ce qui repose sur quoi",
         "lead": "Lu dans les manifestes de ce que nous exploitons — la liste est la version texte du schéma.",
         "blocks": "Les briques",
         "npm": "npm",
@@ -911,8 +914,8 @@
       "githubShort": "GitHub",
       "hub": {
         "quickstart": {
-          "title": "Démarrage rapide, en trois étapes",
-          "install": "1 · Installer la trousse",
+          "title": "Installer Krizaka UI",
+          "install": "1 · Installer les paquets",
           "styles": "2 · Importer ses styles",
           "use": "3 · Utiliser un composant",
           "sample": "Commencer",
@@ -1653,15 +1656,11 @@
       "title": "Le logiciel de votre entreprise, bâti sur ce qui tourne déjà.",
       "lead": "Des modules sur mesure, une IA souveraine adoptée à vos conditions, et la maintenance qui garde le tout en marche. Construits par l'équipe qui bâtit nos produits, sur les mêmes briques ouvertes.",
       "cta": "Parlez-nous de votre projet",
-      "quote": "Sur devis : le périmètre et le prix sont écrits avant de commencer.",
       "facts": {
-        "quote": "Sur devis, prix écrit d'avance",
         "repo": "Le code dans un dépôt que vous lisez",
         "place": "Équipe à Montréal"
       },
       "offersLabel": "Les trois volets de Krizaka Entreprise",
-      "price": "Sur devis",
-      "offerCta": "Discuter de ce volet",
       "offers": {
         "modules": {
           "name": "Modules sur mesure",
@@ -1669,9 +1668,9 @@
           "features": [
             "Un module conçu pour votre cas, sur Krizaka UI et Krizaka Java",
             "Des tests à chaque changement, dans un dépôt que vous suivez",
-            "Une documentation lisible par votre équipe",
-            "Le code reste à vous à la livraison"
-          ]
+            "Une documentation lisible par votre équipe"
+          ],
+          "hook": "Un logiciel bâti pour votre cas, sur nos briques ouvertes."
         },
         "ai": {
           "name": "Adopter une IA souveraine",
@@ -1679,9 +1678,9 @@
           "features": [
             "Sovkora installé sur vos serveurs ou hébergé au Canada",
             "Les modèles que vous choisissez, sans dépendre d'un seul fournisseur",
-            "Chaque exécution tracée et relisible",
-            "Vos données restent où vous l'avez décidé"
-          ]
+            "Chaque exécution tracée et relisible"
+          ],
+          "hook": "Une IA qui tourne où vous le décidez, chaque exécution relisible."
         },
         "maintenance": {
           "name": "Maintenance et soutien",
@@ -1689,13 +1688,16 @@
           "features": [
             "Mises à jour des dépendances et correctifs de sécurité",
             "Réponses de l'équipe qui a construit le module",
-            "Un contrat écrit : ce qui est couvert, et ce qui ne l'est pas",
-            "Une sortie propre si vous reprenez le module en interne"
-          ]
+            "Un contrat écrit : ce qui est couvert, et ce qui ne l'est pas"
+          ],
+          "hook": "L'équipe qui l'a bâti le garde en marche."
         }
       },
       "proof": {
-        "groups": { "published": "Ce que nous publions", "used": "Ce qui est utilisé" },
+        "groups": {
+          "published": "Ce que nous publions",
+          "used": "Ce qui est utilisé"
+        },
         "more": "plus de",
         "eyebrow": "Sur quoi cela repose",
         "title": "De vrais ouvrages, publics et mesurés.",
@@ -1737,9 +1739,9 @@
       "faq": {
         "title": "Questions fréquentes",
         "items": {
-          "price": {
-            "q": "Combien cela coûte-t-il ?",
-            "a": "Chaque mandat est sur devis. Après le cadrage, nous écrivons le périmètre et le prix ; rien ne commence avant votre accord."
+          "scope": {
+            "q": "Comment un projet est-il cadré ?",
+            "a": "On en parle ensemble. Dites-nous ce que vous voulez bâtir ou adopter ; nous cadrons le périmètre avec vous avant de commencer, et rien ne commence sans votre accord."
           },
           "code": {
             "q": "À qui appartient le code ?",
@@ -1760,7 +1762,8 @@
         }
       },
       "contactTitle": "Dites-nous ce que vous voulez construire ou adopter.",
-      "contactBody": "Un message suffit pour commencer. Nous répondons sous deux jours ouvrables."
+      "contactBody": "Un message suffit pour commencer. Nous répondons sous deux jours ouvrables.",
+      "coverLabel": "Ce que cela couvre"
     }
   },
   "docs": {

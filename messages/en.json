@@ -116,7 +116,7 @@
         },
         "services": {
           "label": "Services",
-          "desc": "Krizaka Entreprise, on quote"
+          "desc": "Krizaka Entreprise"
         }
       }
     },
@@ -187,7 +187,10 @@
         "proofsLabel": "Krizaka in figures, read at build",
         "marksLabel": "The products, each to its entry",
         "proofs": {
-          "groups": { "published": "What we publish", "used": "What gets used" },
+          "groups": {
+            "published": "What we publish",
+            "used": "What gets used"
+          },
           "more": "more than",
           "repositories": "public repositories",
           "npm": "packages on npm",
@@ -371,7 +374,7 @@
       "services": {
         "number": "§ 4",
         "title": "For companies: Krizaka Entreprise.",
-        "lead": "What we build for our products, we can build for you. On quote, with the price written down before we start.",
+        "lead": "What we build for our products, we can build for you. Tell us about your project.",
         "cta": "Discover Krizaka Entreprise",
         "parts": {
           "modules": {
@@ -534,7 +537,7 @@
         "other": "Press, careers, a question for the team",
         "yomizaka": "Talk to us about Verikora — in development, sign-up closed",
         "akinaza": "Talk to us about Folioviv — in development, sign-up closed",
-        "enterprise": "Custom modules, sovereign AI adoption or maintenance, on quote"
+        "enterprise": "Custom modules, sovereign AI adoption or maintenance"
       },
       "timeline": "When do you need it?",
       "timelines": {
@@ -866,7 +869,7 @@
       },
       "fits": {
         "eyebrow": "how it fits",
-        "title": "Building blocks → shared services.",
+        "title": "What stands on what",
         "lead": "Read from the manifests of what we run — the list is the diagram's text version.",
         "blocks": "The building blocks",
         "npm": "npm",
@@ -911,8 +914,8 @@
       "githubShort": "GitHub",
       "hub": {
         "quickstart": {
-          "title": "Quick start, in three steps",
-          "install": "1 · Install the kit",
+          "title": "Install Krizaka UI",
+          "install": "1 · Install the packages",
           "styles": "2 · Import its styles",
           "use": "3 · Use a component",
           "sample": "Get started",
@@ -1653,15 +1656,11 @@
       "title": "Your company's software, built on what already runs.",
       "lead": "Custom modules, a sovereign AI adopted on your terms, and the maintenance that keeps it all running. Built by the team that builds our products, on the same open building blocks.",
       "cta": "Tell us about your project",
-      "quote": "On quote: the scope and the price are written down before we start.",
       "facts": {
-        "quote": "On quote, price written up front",
         "repo": "The code in a repository you can read",
         "place": "Team in Montréal"
       },
       "offersLabel": "The three parts of Krizaka Entreprise",
-      "price": "On quote",
-      "offerCta": "Discuss this part",
       "offers": {
         "modules": {
           "name": "Custom modules",
@@ -1669,9 +1668,9 @@
           "features": [
             "A module designed for your case, on Krizaka UI and Krizaka Java",
             "Tests with every change, in a repository you follow",
-            "Documentation your team can read",
-            "The code is yours on delivery"
-          ]
+            "Documentation your team can read"
+          ],
+          "hook": "Software built for your case, on our open blocks."
         },
         "ai": {
           "name": "Adopt a sovereign AI",
@@ -1679,9 +1678,9 @@
           "features": [
             "Sovkora installed on your servers or hosted in Canada",
             "The models you choose, without depending on one vendor",
-            "Every run traced and reviewable",
-            "Your data stays where you decided"
-          ]
+            "Every run traced and reviewable"
+          ],
+          "hook": "An AI that runs where you decide, every run traceable."
         },
         "maintenance": {
           "name": "Maintenance and support",
@@ -1689,13 +1688,16 @@
           "features": [
             "Dependency updates and security fixes",
             "Answers from the team that built the module",
-            "A written contract: what is covered, and what is not",
-            "A clean handover if you take the module in-house"
-          ]
+            "A written contract: what is covered, and what is not"
+          ],
+          "hook": "The team that built it keeps it running."
         }
       },
       "proof": {
-        "groups": { "published": "What we publish", "used": "What gets used" },
+        "groups": {
+          "published": "What we publish",
+          "used": "What gets used"
+        },
         "more": "more than",
         "eyebrow": "What it stands on",
         "title": "Real work, public and measured.",
@@ -1737,9 +1739,9 @@
       "faq": {
         "title": "Frequent questions",
         "items": {
-          "price": {
-            "q": "How much does it cost?",
-            "a": "Every engagement is on quote. After scoping, we write down the scope and the price; nothing starts before you agree."
+          "scope": {
+            "q": "How is a project framed?",
+            "a": "We talk it through together. Tell us what you want to build or adopt; we frame the scope with you before anything starts, and nothing starts without your agreement."
           },
           "code": {
             "q": "Who owns the code?",
@@ -1760,7 +1762,8 @@
         }
       },
       "contactTitle": "Tell us what you want to build or adopt.",
-      "contactBody": "One message is enough to start. We answer within two business days."
+      "contactBody": "One message is enough to start. We answer within two business days.",
+      "coverLabel": "What it covers"
     }
   },
   "docs": {

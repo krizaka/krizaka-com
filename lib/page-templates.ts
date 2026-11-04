@@ -26,7 +26,7 @@ export const PAGE_TEMPLATES = {
   "/": "landing",
   "/docs": "docs-hub",
   "/open-source/[block]": "longform",
-  "/services": "pricing",
+  "/services": "longform",
   "/changelog": "changelog",
   "/contact": "contact",
   "/privacy": "legal",

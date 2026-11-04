@@ -6,7 +6,8 @@ import { CardGrid } from "@krizaka/ui/card-grid";
 import { CtaPanel } from "@krizaka/ui/cta-panel";
 import { LinkCard } from "@krizaka/ui/link-card";
 import { Facts, Section } from "@krizaka/ui/page";
-import { PricingPage } from "@krizaka/ui/pricing-page";
+import { ArgumentCard } from "@krizaka/ui/argument-card";
+import { PageHero } from "@krizaka/ui/page-hero";
 import { localizedMetadata } from "@/lib/seo";
 import { contactHref } from "@/lib/contact";
 import { format, getDictionary } from "@/lib/i18n";
@@ -20,12 +21,12 @@ import ButtonLink from "@/app/components/ButtonLink";
 import { JsonLd } from "@/app/components/JsonLd";
 import "./services.css";
 
-/* /services — « Nos services » on the pricing template (founder, 2026-10-30: « ça ne fait pas pro »): Krizaka Entreprise,
-   the one offer for companies, on quote. The hero says it with one action; the three parts are the template's plans —
-   « On quote » in place of a price, what you get, one way in each; how an engagement goes (scoping → quote → delivery →
-   maintenance) as numbered cards; the proof is public and measured (registries and GitHub, read at build) and links to
-   the artefacts; the questions are folded (the template's FAQ); one closing call. Every action is the contact form with
-   « Entreprise » preselected. Words: site.services; structure: lib/services-page.ts. */
+/* /services — « Nos services » (longform): Krizaka Entreprise, the one offer for companies. No price of any kind, no « sur devis »
+   (founder, 2026-11-03: « les gens ont besoin de nous, on les laisse venir ») — restrained, few words: what we do and the proof,
+   then « Parlez-nous de votre projet ». The hero says it with one action; the three parts are compact cards (what, three points
+   folded) whose one way in is the contact form with « Entreprise » preselected; the proof is public and measured (registries
+   and GitHub, read at build) and links to the artefacts; the questions are folded; one closing call. Words: site.services;
+   structure: lib/services-page.ts. */
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -38,12 +39,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     en: {
       title: "Our services — Krizaka Entreprise: custom modules, sovereign AI, maintenance",
       description:
-        "One offer for companies, on quote: custom modules built on Krizaka's open building blocks, the adoption of a sovereign AI (Sovkora, on your servers or in Canada), and maintenance.",
+        "One offer for companies: custom modules built on Krizaka's open building blocks, the adoption of a sovereign AI (Sovkora, on your servers or in Canada), and maintenance.",
     },
     fr: {
       title: "Nos services — Krizaka Entreprise : modules sur mesure, IA souveraine, maintenance",
       description:
-        "Une offre pour les entreprises, sur devis : des modules sur mesure bâtis sur les briques ouvertes de Krizaka, l'adoption d'une IA souveraine (Sovkora, chez vous ou au Canada) et la maintenance.",
+        "Une offre pour les entreprises : des modules sur mesure bâtis sur les briques ouvertes de Krizaka, l'adoption d'une IA souveraine (Sovkora, chez vous ou au Canada) et la maintenance.",
     },
   });
 }
@@ -93,50 +94,44 @@ export default async function ServicesPage({ params }: Props) {
       />
       <SiteBar />
 
-      <PricingPage
-        className="svc-page"
-        eyebrow={s.eyebrow}
-        title={s.title}
-        lead={s.lead}
-        toolbar={
-          <div className="svc-hero-extra">
-            <div className="svc-hero-actions">
-              <ButtonLink href={enterprise} variant="primary" size="lg">
-                {s.cta}
-              </ButtonLink>
-            </div>
-            <Facts items={[{ label: s.facts.quote }, { label: s.facts.repo }, { label: s.facts.place }]} />
+      <PageHero eyebrow={s.eyebrow} title={s.title} lead={s.lead} align="center" className="svc-page">
+        <div className="svc-hero-extra">
+          <div className="svc-hero-actions">
+            <ButtonLink href={enterprise} variant="primary" size="lg">
+              {s.cta}
+            </ButtonLink>
           </div>
-        }
-        plansLabel={s.offersLabel}
-        plans={SERVICES_PAGE_ORDER.offers.map((id) => {
-          const o = s.offers[id];
-          const Icon = OFFER_ICON[id];
-          return {
-            id,
-            name: (
-              <span className="svc-offer-name">
-                <Icon size={20} aria-hidden /> {o.name}
-              </span>
-            ),
-            price: s.price,
-            unit: o.unit,
-            features: o.features,
-            action: (
-              <ButtonLink href={enterprise} variant="secondary" size="md">
-                {s.offerCta}
-              </ButtonLink>
-            ),
-          };
-        })}
-        faq={{
-          title: s.faq.title,
-          items: SERVICES_PAGE_ORDER.faq.map((id) => ({
-            question: s.faq.items[id].q,
-            answer: format(s.faq.items[id].a, { license: "Apache-2.0" }),
-          })),
-        }}
-      />
+          <Facts items={[{ label: s.facts.repo }, { label: s.facts.place }]} />
+        </div>
+      </PageHero>
+
+      <Section id="offers" aria-label={s.offersLabel}>
+        {/* The section's h2, for the outline only: the cards' h3 must not follow the hero's h1 directly (axe heading-order). */}
+        <h2 className="sr-only">{s.offersLabel}</h2>
+        <CardGrid as="ul" min={300} columns={3} className="svc-offers" aria-label={s.offersLabel}>
+          {SERVICES_PAGE_ORDER.offers.map((id) => {
+            const o = s.offers[id];
+            const Icon = OFFER_ICON[id];
+            return (
+              <ArgumentCard
+                key={id}
+                id={`offer-${id}`}
+                title={o.name}
+                icon={<Icon size={20} aria-hidden />}
+                meta={o.unit}
+                hook={{ label: o.name, text: o.hook }}
+                panelLabel={s.coverLabel}
+                points={{ label: s.coverLabel, items: o.features }}
+                actions={
+                  <ButtonLink href={enterprise} variant="ghost" size="sm">
+                    {s.cta}
+                  </ButtonLink>
+                }
+              />
+            );
+          })}
+        </CardGrid>
+      </Section>
 
       <Section id="proof" eyebrow={s.proof.eyebrow} title={s.proof.title} lead={s.proof.lead} divider reveal>
         {/* The figures as one line of facts: the home's hero already shows them as climbing tiles — a second band of
@@ -161,6 +156,17 @@ export default async function ServicesPage({ params }: Props) {
             />
           ))}
         </CardGrid>
+      </Section>
+
+      <Section id="faq" title={s.faq.title} headingSize="sm" spacing="sm" divider>
+        <div className="kz-tpl-faq">
+          {SERVICES_PAGE_ORDER.faq.map((id) => (
+            <details key={id}>
+              <summary>{s.faq.items[id].q}</summary>
+              <div>{format(s.faq.items[id].a, { license: "Apache-2.0" })}</div>
+            </details>
+          ))}
+        </div>
       </Section>
 
       <Section id="contact" divider aria-labelledby="services-contact">

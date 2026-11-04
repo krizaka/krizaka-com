@@ -19,7 +19,7 @@ test("/services: the figures are one line of facts, its hero has one primary act
   const src = read("app/[locale]/services/page.tsx");
   assert.doesNotMatch(src, /FigureTiles/, "the home's hero already carries the climbing figures");
   assert.match(src, /<Facts items=\{g\.items\.map/);
-  const hero = src.slice(src.indexOf("<PricingPage"), src.indexOf("plansLabel="));
+  const hero = src.slice(src.indexOf("<PageHero"), src.indexOf("</PageHero>"));
   assert.equal((hero.match(/variant="primary"/g) ?? []).length, 1);
   assert.doesNotMatch(hero, /variant="secondary"/, "the second way in is a quiet ghost link");
 });
