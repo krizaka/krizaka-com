@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.24.0](https://github.com/krizaka/krizaka-com/compare/v0.23.1...v0.24.0) (2026-11-04)
+
+
+### Features
+
+* **home:** Fig. 1 is a MediaCarousel of realisations, the watch page a MediaPlayer ([#604](https://github.com/krizaka/krizaka-com/issues/604)) ([bce088f](https://github.com/krizaka/krizaka-com/commit/bce088f605b74da392fd8a973abe0b5b306744d5))
+* **products:** the products' links go to their commercial domains ([#606](https://github.com/krizaka/krizaka-com/issues/606)) ([51b703f](https://github.com/krizaka/krizaka-com/commit/51b703f05f103a0d027473be926cd82917786d17))
+
 ## [0.23.1](https://github.com/krizaka/krizaka-com/compare/v0.23.0...v0.23.1) (2026-11-04)
 
 
