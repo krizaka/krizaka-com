@@ -106,6 +106,8 @@ export default async function ServicesPage({ params }: Props) {
       </PageHero>
 
       <Section id="offers" aria-label={s.offersLabel}>
+        {/* The section's h2, for the outline only: the cards' h3 must not follow the hero's h1 directly (axe heading-order). */}
+        <h2 className="sr-only">{s.offersLabel}</h2>
         <CardGrid as="ul" min={300} columns={3} className="svc-offers" aria-label={s.offersLabel}>
           {SERVICES_PAGE_ORDER.offers.map((id) => {
             const o = s.offers[id];
