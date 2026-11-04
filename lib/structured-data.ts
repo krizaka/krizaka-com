@@ -144,7 +144,7 @@ export function buildSiteGraph(locale: Locale) {
   };
 }
 
-/** /services: the one offer, a schema.org Service provided by the Organization (on quote: no price node). */
+/** /services: the one offer, a schema.org Service provided by the Organization (no price node). */
 export function buildServiceJsonLd(
   locale: Locale,
   s: { name: string; description: string; covers: readonly string[] },
