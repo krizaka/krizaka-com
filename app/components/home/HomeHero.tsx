@@ -39,7 +39,13 @@ export interface HomeFigures {
 }
 
 const film = brandFilm();
-const slides = heroSlides().map(({ id, fig, mp4, poster }) => ({ id, fig, mp4, poster }));
+const slides = heroSlides().map(({ id, fig, mp4, poster, loop }) => ({
+  id,
+  fig,
+  mp4,
+  poster,
+  loop: loop && { webm: loop.webm, mp4: loop.mp4 },
+}));
 /** The five birds, left to right as the film introduces them; each one a promise (messages site.home.hero.fig.birds). */
 const BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 /** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */

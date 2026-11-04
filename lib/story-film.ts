@@ -24,5 +24,5 @@ export function heroSlides() {
   if (problems.length > 0) {
     throw new Error(`hero slides: ${problems.join("; ")}`);
   }
-  return HERO_SLIDES.map((s) => ({ ...s, ...video(s.base) }));
+  return HERO_SLIDES.map((s) => ({ ...s, ...video(s.base), loop: "loop" in s ? video(s.loop) : undefined }));
 }

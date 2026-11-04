@@ -236,12 +236,13 @@
         "slides": {
           "film": {
             "title": "Vidéo : Montrer son travail, le film de Krizaka",
-            "alt": "Le film de Krizaka : un hibou, un castor et un canard au travail, avec un cahier."
+            "alt": "Le film de Krizaka : un hibou, un castor et un canard au travail, avec un cahier.",
+            "caption": "Montrer son travail : le film de la marque, fait avec Sovkora, notre moteur"
           }
         },
         "carousel": {
           "label": "Fig. 1, réalisations de Krizaka",
-          "figure": "Fig. {fig}",
+          "figure": "Fig. {fig} — {caption}",
           "previous": "Figure précédente",
           "next": "Figure suivante",
           "slide": "Figure {n} sur {total}"

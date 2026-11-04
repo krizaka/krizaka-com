@@ -198,7 +198,11 @@ test("Fig. 1 is @krizaka/ui's MediaCarousel / MediaPlayer: poster first, nothing
     for (const k of ["label", "figure", "previous", "next", "slide"])
       assert.ok(hero.carousel[k], `${l}: carousel.${k}`);
     assert.match(hero.carousel.slide, /\{n\}.*\{total\}/, `${l}: the slide label takes {n} and {total}`);
-    assert.match(hero.carousel.figure, /\{fig\}/, `${l}: the figure caption takes {fig}`);
+    assert.match(
+      hero.carousel.figure,
+      /\{fig\}.*\{caption\}/,
+      `${l}: the figure caption takes {fig} and the slide's {caption}`,
+    );
   }
   // The silent 10 s loop stays recorded on the CDN (it returns as a slide's loop once the carousel pauses it, WCAG 2.2.2).
   const manifest = JSON.parse(read("lib/cdn-manifest.json"));

@@ -8,6 +8,10 @@
 
 import { BRAND_FILM } from "./brand-film.ts";
 
+/** What a slide plays: the brand film, or a product's journey recorded by its own e2e. */
+export const SlideKind = { Film: "film", Recording: "recording" } as const;
+export type SlideKind = (typeof SlideKind)[keyof typeof SlideKind];
+
 /** The files a clip is recorded under, one of three kinds. */
 export interface HeroSlideSpec {
   /** The slide's id, also the key of its words (site.home.hero.slides.<id>). */
@@ -15,24 +19,28 @@ export interface HeroSlideSpec {
   /** « 1a »: the figure's number, the slide's caption starts « Fig. 1a ». */
   fig: string;
   /** `film`: the brand film. `recording`: a product's journey recorded by its own e2e. */
-  kind: "film" | "recording";
+  kind: SlideKind;
   /** The logical path of the clip's files on the CDN. */
   base: string;
   /** The journey that records a `recording` (its id in the product repository's e2e). */
   journey?: string;
+  /** The logical path of a silent loop (`<loop>.webm|.mp4|.jpg`) that previews the slide, muted, poster first. */
+  loop?: string;
 }
 
 export const HERO_SLIDES = [
-  { id: "film", fig: "1a", kind: "film", base: BRAND_FILM.base },
+  { id: "film", fig: "1a", kind: SlideKind.Film, base: BRAND_FILM.base, loop: BRAND_FILM.loop },
 ] as const satisfies readonly HeroSlideSpec[];
 
 const EXTENSIONS = ["webm", "mp4", "jpg"] as const;
 
 const slideProblems = (s: HeroSlideSpec, has: (path: string) => boolean): string[] => {
-  const missing = EXTENSIONS.map((ext) => `${s.base}.${ext}`)
+  const missing = [s.base, ...(s.loop ? [s.loop] : [])]
+    .flatMap((base) => EXTENSIONS.map((ext) => `${base}.${ext}`))
     .filter((path) => !has(path))
     .map((path) => `${s.id}: ${path} is not in the CDN manifest`);
-  const unjourneyed = s.kind === "recording" && !s.journey?.trim() ? [`${s.id}: a recording names its journey`] : [];
+  const unjourneyed =
+    s.kind === SlideKind.Recording && !s.journey?.trim() ? [`${s.id}: a recording names its journey`] : [];
   return [...missing, ...unjourneyed];
 };
 
