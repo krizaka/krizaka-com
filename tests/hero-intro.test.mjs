@@ -24,7 +24,7 @@ test("any input skips it, and it ends by itself", () => {
 });
 
 test("no animation frame, no canvas, no animation library — CSS animations only", () => {
-  for (const src of [intro, read("app/components/home/AmbientLoop.tsx"), read("app/components/home/HomeHero.tsx")]) {
+  for (const src of [intro, read("app/components/home/HomeHero.tsx")]) {
     assert.doesNotMatch(src, /requestAnimationFrame|<canvas|getContext\(|framer-motion|gsap|motion\/react/);
   }
   const pkg = JSON.parse(read("package.json"));
@@ -49,10 +49,9 @@ test("the choreography over the poster: the mark draws, the scene rises in with 
   assert.equal(rest.opacity, "1");
 });
 
-test("the ambient flock stands in the products section's taped photo; the hero holds « Fig. 1 » instead", () => {
+test("the hero holds « Fig. 1 », with no ambient flock or taped photo (the valley left the home, 2026-11-04)", () => {
   assert.doesNotMatch(read("app/components/home/HomeHero.tsx"), /AmbientLoop|<TapedPhoto/);
-  assert.match(read("app/components/home/ProductShowcase.tsx"), /<ProductsFlock set=\{VALLEY\} \/>/);
-  assert.match(read("app/components/home/ProductsFlock.tsx"), /<TapedPhoto/);
+  assert.doesNotMatch(read("app/components/home/ProductShowcase.tsx"), /ProductsFlock|VALLEY/);
 });
 
 test("the brand film « Montrer son travail » opens in a lightbox from the hero; the player's code loads only when it opens", () => {

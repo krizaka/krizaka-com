@@ -1,7 +1,8 @@
 /* Home hero — the first page of the field notebook (Cahier, krizaka-ui ADR-004, #417): asymmetric, never centred. On the
    left, the date line of the notes, who Krizaka is, one promise, one action (and the film, quietly), the products' marks
-   and the figures that back them; on the right, « Fig. 1 — Montrer son travail »: the realisations (lib/hero-slides.ts: the film, poster first) in a thin frame, the
-   five birds standing under it, each with a short tag of what it does (no polaroid, no tape).
+   and the figures that back them; on the right, « Fig. 1 — Montrer son travail »: the realisations (lib/hero-slides.ts: the film, poster first) in a thin frame, its caption,
+   then the figures' text version: a server-rendered <details> that says what each slide shows, the film's shot list on its
+   watch page (no polaroid, no tape; the five birds' legend left on 2026-11-04: the birds and their promises live on /story).
    The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first
    paint (LCP) — never revealed, never part of the intro.
 
@@ -15,14 +16,15 @@ import { ForwardIcon } from "@krizaka/icons";
 import Link from "next/link";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
-import { Mascot } from "@krizaka/ui/mascots";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
 import { format, getDictionary } from "@/lib/i18n";
 import { figureColumns } from "@/lib/figure-grid";
 import type { CSSProperties } from "react";
 import { brandFilm, heroSlides } from "@/lib/story-film";
-import { heroMarkOrder } from "@/lib/home-sections";
+import { HERO_FIGURE, heroMarkOrder } from "@/lib/home-sections";
+import { BRAND_FILM } from "@/lib/brand-film";
+import { SlideKind } from "@/lib/hero-slides";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
 import ButtonLink from "@/app/components/ButtonLink";
 import { floorFigure } from "@/lib/figure-floor";
@@ -39,17 +41,44 @@ export interface HomeFigures {
 }
 
 const film = brandFilm();
-const slides = heroSlides().map(({ id, fig, mp4, poster, loop }) => ({
+const resolved = heroSlides();
+const slides = resolved.map(({ id, fig, mp4, poster, loop }) => ({
   id,
   fig,
   mp4,
   poster,
   loop: loop && { webm: loop.webm, mp4: loop.mp4 },
 }));
-/** The five birds, left to right as the film introduces them; each one a promise (messages site.home.hero.fig.birds). */
-const BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 /** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
 const DIM: readonly ProductStatus[] = ["construction", "upcoming"];
+
+/** The text version of Fig. 1, rendered on the server: each slide's number and caption, what it shows step by step, and for
+ *  the film the list of its shots on its watch page. A single slide is « Fig. 1 »; from two on, each is « Fig. 1a », « 1b »… */
+function FigureText({ locale }: Readonly<{ locale: string }>) {
+  const t = getDictionary(locale).site.home.hero;
+  const words = (id: string) => t.slides[id as keyof typeof t.slides];
+  const fig = (s: (typeof resolved)[number]) => (resolved.length === 1 ? String(HERO_FIGURE) : s.fig);
+  return (
+    <details className="kz-fig-text">
+      <summary>{t.figText.summary}</summary>
+      <ol>
+        {resolved.map((s) => (
+          <li key={s.id}>
+            <b>{format(t.carousel.figure, { fig: fig(s), caption: words(s.id).caption })}</b>
+            <ol>
+              {words(s.id).steps.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+            {s.kind === SlideKind.Film && (
+              <Link href={`/${locale}/films/${BRAND_FILM.id}#film-shots`}>{t.figText.filmShots}</Link>
+            )}
+          </li>
+        ))}
+      </ol>
+    </details>
+  );
+}
 
 export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
   const dict = getDictionary(locale);
@@ -143,22 +172,9 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
           </div>
           <figure className="kz-fig" aria-label={t.fig.figLabel}>
             <HeroFigure slides={slides} />
-            <ul className="kz-fig-birds" aria-label={t.fig.birdsLabel}>
-              {BIRDS.map((bird) => (
-                <li key={bird}>
-                  <Link href="/story#who" className="kz-fig-bird">
-                    <Mascot bird={bird} mood="welcome" tone="own" size={44} animated={false} life={false} />
-                    <span className="kz-fig-tag">
-                      <b>{t.fig.birds[bird].does}</b>
-                      {t.fig.birds[bird].about.split(" · ").map((part) => (
-                        <span key={part}>{part}</span>
-                      ))}
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <figcaption className="kz-fig-caption">{t.fig.caption}</figcaption>
+            {/* One slide: the figure's own caption. From two on, each slide carries its own (« Fig. 1a — … »). */}
+            {slides.length === 1 && <figcaption className="kz-fig-caption">{t.fig.caption}</figcaption>}
+            <FigureText locale={locale} />
           </figure>
         </div>
       </Page>

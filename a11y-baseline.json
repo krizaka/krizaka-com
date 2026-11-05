@@ -1,13 +1,9 @@
 {
   "app": "krizaka-com",
   "rules": {
-    "landmark-complementary-is-top-level": {
-      "impact": "moderate",
-      "count": 4
-    },
     "landmark-unique": {
       "impact": "moderate",
-      "count": 12
+      "count": 8
     }
   }
 }
