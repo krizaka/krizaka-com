@@ -395,8 +395,7 @@
             "title": "Maintenance",
             "line": "Mises à jour et correctifs, par l'équipe qui l'a construit."
           }
-        },
-        "partCta": "En savoir plus"
+        }
       },
       "direction": {
         "number": "§ 5",
@@ -410,19 +409,24 @@
           },
           "next": {
             "title": "Ensuite",
-            "body": "Les premiers clients : la vérification de Verikora pour les entreprises, les boutiques de Folioviv et Krizaka Entreprise."
+            "body": "Les premiers clients.",
+            "points": [
+              "La vérification de Verikora pour les entreprises",
+              "Les boutiques de Folioviv",
+              "Krizaka Entreprise : modules sur mesure, IA souveraine, maintenance"
+            ]
           },
           "later": {
             "title": "Plus tard",
-            "body": "D'autres produits utiles, sur la même pile ouverte."
+            "body": "D'autres produits utiles, sur la même pile ouverte.",
+            "points": [
+              "Kridoc, le stockage documentaire, en conception",
+              "Chaque nouveau produit sur Sovkora et Krizaka UI"
+            ]
           }
         },
-        "labels": {
-          "done": "fait",
-          "current": "en cours",
-          "upcoming": "ensuite",
-          "error": "interrompu"
-        }
+        "pause": "Arrêter le défilement des étapes",
+        "play": "Relancer le défilement des étapes"
       },
       "principles": {
         "number": "§ 6",

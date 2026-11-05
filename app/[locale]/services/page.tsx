@@ -1,12 +1,9 @@
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { AutomationIcon, LockIcon, PackIcon, PlayIcon, ServerIcon, StudioIcon, StoryIcon } from "@krizaka/icons";
+import { PackIcon, PlayIcon, ServerIcon, StudioIcon, StoryIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
-import { CardGrid } from "@krizaka/ui/card-grid";
 import { CtaPanel } from "@krizaka/ui/cta-panel";
-import { LinkCard } from "@krizaka/ui/link-card";
 import { Facts, Section } from "@krizaka/ui/page";
-import { ArgumentCard } from "@krizaka/ui/argument-card";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { localizedMetadata } from "@/lib/seo";
 import { contactHref } from "@/lib/contact";
@@ -19,13 +16,15 @@ import { buildServiceJsonLd, type Locale } from "@/lib/structured-data";
 import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
 import { JsonLd } from "@/app/components/JsonLd";
+import { OfferList } from "@/app/components/lists/OfferList";
+import { WorkLedger } from "@/app/components/lists/WorkLedger";
 import "./services.css";
 
 /* /services — « Nos services » (longform): Krizaka Entreprise, the one offer for companies. No price of any kind, no « sur devis »
    (founder, 2026-11-03: « les gens ont besoin de nous, on les laisse venir ») — restrained, few words: what we do and the proof,
-   then « Parlez-nous de votre projet ». The hero says it with one action; the three parts are compact cards (what, three points
-   folded) whose one way in is the contact form with « Entreprise » preselected; the proof is public and measured (registries
-   and GitHub, read at build) and links to the artefacts; the questions are folded; one closing call. Words: site.services;
+   then « Parlez-nous de votre projet ». The hero says it with one action; the three parts are a numbered list (founder,
+   2026-11-05, krizaka-internal#2450: « a list, not three squares »), each with what it covers; the proof is public and
+   measured (registries and GitHub, read at build) and its artefacts are a ledger of links (WorkLedger), not boxes; the questions are folded; one closing call. Words: site.services;
    structure: lib/services-page.ts. */
 
 interface Props {
@@ -49,7 +48,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-const OFFER_ICON = { modules: PackIcon, ai: LockIcon, maintenance: AutomationIcon } as const;
 /* One meaningful icon each: the design system (studio), the motion lab (play), the Java and TypeScript building
    blocks (server, package), the engine wears its own mark, the blog (story). */
 const PROOF_ICON: Record<ServicesProofId, ReactNode> = {
@@ -108,29 +106,17 @@ export default async function ServicesPage({ params }: Props) {
       <Section id="offers" aria-label={s.offersLabel}>
         {/* The section's h2, for the outline only: the cards' h3 must not follow the hero's h1 directly (axe heading-order). */}
         <h2 className="sr-only">{s.offersLabel}</h2>
-        <CardGrid as="ul" min={300} columns={3} className="svc-offers" aria-label={s.offersLabel}>
-          {SERVICES_PAGE_ORDER.offers.map((id) => {
-            const o = s.offers[id];
-            const Icon = OFFER_ICON[id];
-            return (
-              <ArgumentCard
-                key={id}
-                id={`offer-${id}`}
-                title={o.name}
-                icon={<Icon size={20} aria-hidden />}
-                meta={o.unit}
-                hook={{ label: o.name, text: o.hook }}
-                panelLabel={s.coverLabel}
-                points={{ label: s.coverLabel, items: o.features }}
-                actions={
-                  <ButtonLink href={enterprise} variant="ghost" size="sm">
-                    {s.cta}
-                  </ButtonLink>
-                }
-              />
-            );
-          })}
-        </CardGrid>
+        <OfferList
+          label={s.offersLabel}
+          pointsLabel={s.coverLabel}
+          items={SERVICES_PAGE_ORDER.offers.map((id) => ({
+            id,
+            name: s.offers[id].name,
+            meta: s.offers[id].unit,
+            hook: s.offers[id].hook,
+            points: s.offers[id].features,
+          }))}
+        />
       </Section>
 
       <Section id="proof" eyebrow={s.proof.eyebrow} title={s.proof.title} lead={s.proof.lead} divider reveal>
@@ -144,18 +130,17 @@ export default async function ServicesPage({ params }: Props) {
             </div>
           ))}
         </div>
-        <CardGrid as="ul" min={300} columns={3} className="svc-proof-cards" aria-label={s.proof.eyebrow}>
-          {SERVICES_PROOF.map(({ id, href }) => (
-            <LinkCard
-              key={id}
-              href={href}
-              title={s.proofCards[id].title}
-              description={s.proofCards[id].line}
-              icon={PROOF_ICON[id]}
-              cta={s.proof.cta}
-            />
-          ))}
-        </CardGrid>
+        <WorkLedger
+          label={s.proof.eyebrow}
+          cta={s.proof.cta}
+          items={SERVICES_PROOF.map(({ id, href }) => ({
+            id,
+            href,
+            icon: PROOF_ICON[id],
+            title: s.proofCards[id].title,
+            line: s.proofCards[id].line,
+          }))}
+        />
       </Section>
 
       <Section id="faq" title={s.faq.title} headingSize="sm" spacing="sm" divider>
