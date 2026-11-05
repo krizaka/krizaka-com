@@ -223,7 +223,7 @@
             "alt": "Un gestionnaire d'immeuble ouvre le dossier d'une candidate, puis le rapport sur un talon de paie du dossier. Données de démonstration.",
             "caption": "Un talon de paie du dossier, lu et vérifié. Données de démonstration.",
             "steps": [
-              "Le gestionnaire ouvre le dossier de Camille Fictif, une candidate.",
+              "Le gestionnaire ouvre le dossier d'une candidate.",
               "Il ouvre un talon de paie du dossier.",
               "Le rapport montre ce que Verikora a observé : le salaire brut moins les retenues ne donne pas le net indiqué."
             ]
