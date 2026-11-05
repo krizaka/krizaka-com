@@ -1,6 +1,8 @@
 /* The home's sections, in order. The numbers in the margin (§ n) and the folios (« page n of N ») are read from this
    list, never typed: removing or adding a section renumbers the rest. */
 
+import type { ContactTopic } from "./contact.ts";
+
 export const HOME_SECTIONS = ["hero", "engine", "products", "services", "direction", "principles"] as const;
 export type HomeSection = (typeof HOME_SECTIONS)[number];
 
@@ -12,6 +14,10 @@ export function folioOf(section: HomeSection): { page: number; total: number } {
 /** The marks under the hero, in the story's order: the engine first, then the products in the order they go to market
  *  (founder, 2026-11-04: Verikora first, Folioviv is paused), then the rest as listed. */
 export const HERO_MARK_PRIORITY = ["orazaka", "yomizaka", "akinaza"] as const;
+
+/** The one product the home serves (krizaka-internal#2445): its reader is the property manager, so the hero's primary
+ *  action writes to us on this product's topic of the contact form (lib/contact.ts), and its figure shows this product first. */
+export const HOME_PRODUCT = "yomizaka" satisfies ContactTopic;
 
 /** The hero's figure is Fig. 1 (its slides 1a, 1b…, lib/hero-slides.ts). */
 // @fixed: the hero is the page's first figure, a fact of the page's order.

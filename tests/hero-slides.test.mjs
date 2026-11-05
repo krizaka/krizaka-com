@@ -30,13 +30,19 @@ test("the film's slide previews it with its silent loop, and a loop the manifest
   assert.match(problems[0], /film: brand-films\/montrer-son-travail\/nothing\.webm is not in the CDN manifest/);
 });
 
-test("the hero hands the loop to MediaPlayer's preview and MediaCarousel's renderLoop, in the site's words", () => {
+test("the hero hands the loop to MediaPlayer's preview, in the site's words", () => {
   const src = read("app/components/home/HeroFigure.tsx");
   assert.match(src, /from "@krizaka\/ui\/pausable-loop"/);
   assert.match(src, /preview=\{/);
-  assert.match(src, /renderLoop=\{/);
-  assert.match(src, /playerLabels=\{/);
+  assert.match(src, /labels=\{labels\}/);
   assert.doesNotMatch(src, /defaultOpen/);
+});
+
+test("the property manager's figure comes first: Fig. 1a is the checked pay stub, Fig. 1b the film (krizaka-internal#2445)", () => {
+  assert.deepEqual(
+    HERO_SLIDES.map((s) => s.id),
+    ["applicant-file", "film"],
+  );
 });
 
 test("a recording names its journey, and an id is used once", () => {
@@ -89,9 +95,9 @@ test("each slide's words exist in both languages, with the commercial names only
   }
 });
 
-test("Fig. 1b is the applicant-file recording of the product, its words in both languages say demo data and no code name", () => {
+test("Fig. 1a is the applicant-file recording of the product, its words in both languages say demo data and no code name", () => {
   const slide = HERO_SLIDES.find((s) => s.id === "applicant-file");
-  assert.equal(slide?.fig, "1b");
+  assert.equal(slide?.fig, "1a");
   assert.equal(slide?.kind, "recording");
   assert.equal(slide?.journey, "applicant-file-open");
   for (const lang of ["en", "fr"]) {

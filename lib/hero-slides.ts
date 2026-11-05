@@ -4,7 +4,8 @@
    clip the manifest does not know fails the build (lib/story-film.ts → cdn() throws, tests/hero-slides.test.mjs). A
    product's recording also names the journey that records it, so a clip nobody can re-run never ships. Never a placeholder
    and never an invented screen. The words (caption, what it shows, the play label) are messages:
-   site.home.hero.slides.<id>. Founder, 2026-11-04: the hero after the turn is the brand film, then Verikora. */
+   site.home.hero.slides.<id>. Since 2026-11-05 (krizaka-internal#2445) the home speaks to the property manager: Verikora's
+   checked pay stub first, the brand film second. The hero shows them as two named tabs, never advancing by themselves. */
 
 import { BRAND_FILM } from "./brand-film.ts";
 
@@ -16,7 +17,7 @@ export type SlideKind = (typeof SlideKind)[keyof typeof SlideKind];
 export interface HeroSlideSpec {
   /** The slide's id, also the key of its words (site.home.hero.slides.<id>). */
   id: string;
-  /** « 1a »: the figure's number, the slide's caption starts « Fig. 1a ». */
+  /** « 1a »: the figure's number, its caption starts « Fig. 1a ». */
   fig: string;
   /** `film`: the brand film. `recording`: a product's journey recorded by its own e2e. */
   kind: SlideKind;
@@ -29,14 +30,14 @@ export interface HeroSlideSpec {
 }
 
 export const HERO_SLIDES = [
-  { id: "film", fig: "1a", kind: SlideKind.Film, base: BRAND_FILM.base, loop: BRAND_FILM.loop },
   {
     id: "applicant-file",
-    fig: "1b",
+    fig: "1a",
     kind: SlideKind.Recording,
     base: "products/yomizaka/tour/applicant-file",
     journey: "applicant-file-open",
   },
+  { id: "film", fig: "1b", kind: SlideKind.Film, base: BRAND_FILM.base, loop: BRAND_FILM.loop },
 ] as const satisfies readonly HeroSlideSpec[];
 
 const EXTENSIONS = ["webm", "mp4", "jpg"] as const;

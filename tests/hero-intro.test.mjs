@@ -54,11 +54,12 @@ test("the hero holds « Fig. 1 », with no ambient flock or taped photo (the val
   assert.doesNotMatch(read("app/components/home/ProductShowcase.tsx"), /ProductsFlock|VALLEY/);
 });
 
-test("the brand film « Montrer son travail » opens in a lightbox from the hero; the player's code loads only when it opens", () => {
+test("the brand film « Montrer son travail » opens in a lightbox (/story); the player's code loads only when it opens", () => {
   const box = read("app/components/home/FilmLightbox.tsx");
   assert.match(box, /dynamic\(\(\) => import\("@krizaka\/ui\/video-player"\)/);
   assert.match(box, /<Dialog\.Root>/);
   assert.match(box, /preload="none"/);
-  assert.match(read("app/components/home/HomeHero.tsx"), /const film = brandFilm\(\);/);
+  // The hero has no film button of its own any more (krizaka-internal#2445): the film opens from its figure, Fig. 1b.
+  assert.doesNotMatch(read("app/components/home/HomeHero.tsx"), /FilmLightbox|brandFilm\(\)/);
   for (const l of ["en", "fr"]) assert.ok(JSON.parse(read(`messages/${l}.json`)).site.home.hero.film, l);
 });

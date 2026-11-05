@@ -18,11 +18,13 @@ test("the marks under the hero: Orazaka, then Yomizaka, Akinaza, then the rest a
   assert.equal(ids.length, PRODUCTS.length);
 });
 
-test("the hero lead tells the order in short sentences, no em dash, Verikora before Folioviv, « our engine »", () => {
+// krizaka-internal#2445: the hero speaks to the property manager, so its lead opens on Verikora and runs on Sovkora; the
+// libraries leave it (they are under Docs) and the chronology is told on /story.
+test("the hero lead opens on Verikora, in short sentences, no em dash, Sovkora « our engine »", () => {
   for (const l of ["en", "fr"]) {
     const { lead } = msg(l).site.home.hero;
-    assert.match(lead, /Sovkora.*Krizaka UI.*Krizaka Java/s, l);
-    assert.match(lead, /Verikora.*Folioviv/s, `${l}: Verikora goes to market first`);
+    assert.match(lead, /^Verikora .*Sovkora/s, `${l}: Verikora first, on Sovkora`);
+    assert.doesNotMatch(lead, /Krizaka UI|Krizaka Java/, `${l}: the libraries live under Docs`);
     assert.doesNotMatch(lead, /moteur d'IA|AI engine/, `${l}: the engine is « ours », the word AI is not the pitch`);
     assert.doesNotMatch(msg(l).site.home.engine.lead, /moteur d'IA|AI engine/, `${l}: § 2's lead`);
     assert.match(msg(l).site.home.products.lead, /Verikora.*Folioviv/s, `${l}: § 3's lead, Verikora first`);

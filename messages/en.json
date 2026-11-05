@@ -180,10 +180,10 @@
     "home": {
       "hero": {
         "number": "§ 1",
-        "eyebrow": "Field notes of a software studio · Montréal, Québec",
-        "title": "We build open-source software, and the stack under it.",
-        "lead": "We started with Sovkora, our engine, which gave us Krizaka UI, Krizaka Java and Krizaka TypeScript, all open source. On them we build management and compliance tools for Québec businesses: Verikora and Folioviv.",
-        "primary": "See what we build",
+        "eyebrow": "Software studio · Montréal, Québec",
+        "title": "Compliance software, built in the open.",
+        "lead": "Verikora checks the papers in a rental file: pay stubs, leases, statements. Every finding cites its page. It all runs on Sovkora, our engine, and our code is public.",
+        "primary": "Talk to us about your files",
         "film": "Watch the full film",
         "filmLength": "31 s",
         "proofsLabel": "Krizaka in figures, read at build",
@@ -201,41 +201,39 @@
         },
         "filmClose": "Close the film",
         "fig": {
-          "caption": "Fig. 1 — Showing our work",
-          "figLabel": "Fig. 1, Showing our work: a silent loop of the film",
-          "open": "Watch the full film, with sound",
+          "figLabel": "Fig. 1, a checked file and Krizaka's film",
           "pause": "Pause the loop",
-          "play": "Play the loop"
+          "play": "Play the loop",
+          "tabs": "Choose the figure",
+          "textVersion": "Text version"
         },
         "figText": {
-          "summary": "What the figures show",
           "filmShots": "The film's list of shots"
         },
         "slides": {
-          "film": {
-            "title": "Video: Showing our work, the Krizaka film",
-            "alt": "The Krizaka film: an owl, a beaver and a duck at work, with a notebook.",
-            "caption": "Showing our work: the brand film, made with Sovkora, our engine",
-            "steps": ["The brand film, without speech: its text version is the list of its shots, on its page."]
-          },
           "applicant-file": {
             "title": "Video: a pay stub from the file, read and checked",
             "alt": "A property manager opens an applicant's file, then the report on a pay stub in it. Demo data.",
-            "caption": "A pay stub from the file, read and checked. Demo data.",
+            "caption": "Verikora reads a pay stub and flags a mismatch. Demo data.",
             "steps": [
               "The property manager opens an applicant's file.",
               "He opens a pay stub from the file.",
               "The report shows what Verikora observed: gross pay minus deductions does not give the net on the stub."
-            ]
+            ],
+            "tab": "A checked pay stub",
+            "open": "Watch the whole journey"
+          },
+          "film": {
+            "title": "Video: Showing our work, the Krizaka film",
+            "alt": "The Krizaka film: an owl, a beaver and a duck at work, with a notebook.",
+            "caption": "Showing our work, Krizaka's film. Made with Sovkora.",
+            "steps": ["The brand film, without speech: its text version is the list of its shots, on its page."],
+            "tab": "The film",
+            "open": "Watch with sound"
           }
         },
-        "carousel": {
-          "label": "Fig. 1, realisations by Krizaka",
-          "figure": "Fig. {fig} — {caption}",
-          "previous": "Previous figure",
-          "next": "Next figure",
-          "slide": "Figure {n} of {total}"
-        }
+        "secondary": "See a checked file",
+        "figure": "Fig. {fig} — {caption}"
       },
       "engine": {
         "number": "§ 2",
@@ -539,7 +537,7 @@
         "blocks": "Use or integrate a Krizaka component from Maven Central or npm",
         "partnership": "Integration, reseller or research partnership",
         "other": "Press, careers, a question for the team",
-        "yomizaka": "Talk to us about Verikora — in development, sign-up closed",
+        "yomizaka": "You rent out homes: tell us about the rental files you check. In development, sign-up closed.",
         "akinaza": "Talk to us about Folioviv — in development, sign-up closed",
         "enterprise": "Custom modules, sovereign AI adoption or maintenance"
       },
@@ -555,7 +553,7 @@
         "blocks": "The component (security, messaging, users, notifications, billing, UI…), your stack and what you want to build with it…",
         "partnership": "Who you are, what you would build together, the markets you serve…",
         "other": "How can we help?",
-        "yomizaka": "What you need to read: leases, supplier invoices, a Law 25 inventory…",
+        "yomizaka": "Your buildings, how many files you receive a month, what you check today and how…",
         "akinaza": "Your shop: what you sell, how you book and invoice today, what your tools cost you…",
         "enterprise": "Your company, what you want built or adopted, where it must run (your servers, Canada) and when…"
       },
