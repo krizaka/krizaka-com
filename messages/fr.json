@@ -431,32 +431,24 @@
       "principles": {
         "number": "§ 6",
         "eyebrow": "Notre façon de travailler",
-        "title": "Six règles, vérifiées plutôt que promises.",
+        "title": "Quatre règles, vérifiées plutôt que promises.",
         "folio": "page {page} sur {total}",
         "items": {
-          "forgotten": {
-            "title": "Oublié veut dire effacé",
-            "body": "Le droit à l'oubli est un geste, pas une demande : un client effacé dans Folioviv part avec sa fiche, ses notes et ses pièces jointes ; un document que Verikora ne garde pas est purgé après sa vérification ; Sovkora supprime les données d'une exécution au terme de sa rétention. Les factures restent le temps que la loi exige, pas plus."
-          },
-          "books": {
-            "title": "Factures, taxes et compta, on s'en charge",
-            "body": "Chaque facture sait ce qui a été reçu et ce qui reste dû ; la TPS et la TVQ vont au registre à l'émission de chaque facture, et Folioviv prépare votre déclaration. Vous la produisez : nous ne la produisons jamais à votre place."
-          },
           "facts": {
             "title": "Une vérification dit ce qu'elle a vu",
-            "body": "Le rapport d'authenticité de Verikora lit des faits dans le fichier, sans modèle, sans score et jamais de verdict sur une personne : trois niveaux, chacun défini par écrit, et ce qu'il n'a pas examiné."
+            "body": "Verikora lit des faits dans le fichier, sans score et sans verdict sur une personne. Chaque rapport dit aussi ce qu'il n'a pas examiné, et la décision reste la vôtre."
           },
-          "sovereign": {
-            "title": "Vos données restent où vous le décidez",
-            "body": "Sovkora tourne sur vos propres serveurs. Ce site n'a ni mesure d'audience ni traceur."
+          "kept": {
+            "title": "Un document ne reste que si vous le choisissez",
+            "body": "Verikora purge le fichier et son texte une fois vérifié ; seul le rapport reste. Fermer un dossier purge tous ses documents, et leurs copies chiffrées de sauvegarde s'effacent au bout de 30 jours."
           },
-          "quality": {
-            "title": "Testé, bilingue, accessible",
-            "body": "Chaque changement arrive avec ses tests et rien n'est fusionné avant que la CI soit verte ; chaque mot existe en français et en anglais, vérifié par la CI ; nous visons le WCAG 2.2 AA en sombre et en clair."
+          "canada": {
+            "title": "Fait à Montréal, en français d'abord, hébergé au Canada",
+            "body": "Krizaka est une entreprise montréalaise, soumise à la Loi 25. Chaque mot existe en français et en anglais. Ce site et Verikora tournent sur des serveurs au Canada, et ce site n'a ni mesure d'audience ni traceur."
           },
           "open": {
-            "title": "Ouvert par défaut",
-            "body": "Plus de {count} dépôts publics et plus de {npm} paquets npm, lisibles ligne à ligne : les bibliothèques open source sous Apache-2.0."
+            "title": "Construit au grand jour",
+            "body": "Plus de {count} dépôts publics et plus de {npm} paquets npm, lisibles ligne à ligne. Nos bibliothèques sont sous Apache-2.0."
           }
         }
       },
@@ -937,6 +929,7 @@
         "startLabel": "Commencer ici",
         "open": "Ouvrir la documentation",
         "stats": "plus de {repositories} dépôts open source · plus de {npm} paquets npm · Apache-2.0",
+        "quality": "Chaque changement arrive avec ses tests et rien n'est fusionné avant que la CI soit verte ; chaque page est auditée pour l'accessibilité (WCAG 2.1 AA, en sombre et en clair) avant de paraître.",
         "paths": {
           "ui": {
             "title": "Construire une interface",

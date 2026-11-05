@@ -1,33 +1,22 @@
-/* "How we work" — six rules, each one something the code, the CI or this site shows: erasure that erases (Akinaza's
-   client erasure, Yomizaka's purge, Orazaka's retention), the books kept (payments against invoices, the GST/QST
-   ledger, a return prepared and never filed), checks that report facts (no model, no score), the data where it is
-   decided, the quality gates, the open code. Its figures are read at build. Short on purpose: a title and one sentence. */
+/* "How we work" — four rules, each one something the code, the CI or this site shows (krizaka-internal#2553): a check that
+   reports facts (no score), the document that leaves after its check, Montréal and Canada (Law 25, French first, hosted
+   in tor, no tracker), the open code. Tests and accessibility live on /docs. Its figures are read at build. Short on purpose. */
 
 import type { ComponentType } from "react";
 import { floorFigure } from "@/lib/figure-floor";
-import {
-  AutomationIcon,
-  KnowledgeIcon,
-  LockIcon,
-  SearchIcon,
-  TrashIcon,
-  WalletIcon,
-  type IconProps,
-} from "@krizaka/icons";
+import { KnowledgeIcon, LockIcon, SearchIcon, TrashIcon, type IconProps } from "@krizaka/icons";
 import { Section } from "@krizaka/ui/page";
 import { format, getDictionary } from "@/lib/i18n";
 import { reveal } from "@/lib/motion";
 import { folioOf } from "@/lib/home-sections";
 
 const PRINCIPLES: {
-  id: "forgotten" | "books" | "facts" | "sovereign" | "quality" | "open";
+  id: "facts" | "kept" | "canada" | "open";
   icon: ComponentType<IconProps>;
 }[] = [
-  { id: "forgotten", icon: TrashIcon },
-  { id: "books", icon: WalletIcon },
   { id: "facts", icon: SearchIcon },
-  { id: "sovereign", icon: LockIcon },
-  { id: "quality", icon: AutomationIcon },
+  { id: "kept", icon: TrashIcon },
+  { id: "canada", icon: LockIcon },
   { id: "open", icon: KnowledgeIcon },
 ];
 

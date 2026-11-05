@@ -469,18 +469,78 @@ test("the stack cards: the Motion host from the data, no playground control on a
   assert.ok(hasCode(motion, "hint={calm ? undefined : w.hint}"), "a calm flow has no instruction to pick anything");
 });
 
-test("§ 5 puts the right to be forgotten first, says the books are kept, and reads its figures at build (Oussama, 2026-10-23)", () => {
-  const src = readFileSync(new URL("../app/components/home/Principles.tsx", import.meta.url), "utf8");
-  assert.match(src, /\{ id: "forgotten", icon: TrashIcon \}/);
-  assert.ok(src.indexOf('"forgotten"') < src.indexOf('"books"'), "the right to be forgotten comes first");
+test("§ 5 reads its figures at build: placeholders in the open rule, never typed numbers", () => {
   for (const lang of ["en", "fr"]) {
     const items = messages(lang).site.home.principles.items;
-    assert.deepEqual(Object.keys(items), ["forgotten", "books", "facts", "sovereign", "quality", "open"]);
     assert.match(items.open.body, /\{count\}.*\{npm\}/, `${lang}: the figures are placeholders, never typed`);
-    assert.match(
-      items.books.body,
-      /(never file|jamais à votre place)/,
-      `${lang}: Akinaza prepares the return, never files it`,
+  }
+});
+
+// Four rules, true for a Montréal studio (krizaka-internal#2553, meeting 4 of 2026-11-05): the check, the document that
+// leaves, Montréal and Canada, built in the open. Folioviv is paused and Sovkora on your own servers is no offer today.
+test("the home's principles are the four rules, in order, with their icons and both languages; « Six » is nowhere", () => {
+  const src = read("app/components/home/Principles.tsx");
+  const ids = [...src.matchAll(/\{ id: "(\w+)", icon: (\w+) \}/g)].map((m) => [m[1], m[2]]);
+  assert.deepEqual(ids, [
+    ["facts", "SearchIcon"],
+    ["kept", "TrashIcon"],
+    ["canada", "LockIcon"],
+    ["open", "KnowledgeIcon"],
+  ]);
+  const titles = {
+    en: [
+      "Four rules, checked rather than promised.",
+      "A check reports what it saw",
+      "A document stays only if you choose",
+      "Made in Montréal, French first, hosted in Canada",
+      "Built in the open",
+    ],
+    fr: [
+      "Quatre règles, vérifiées plutôt que promises.",
+      "Une vérification dit ce qu'elle a vu",
+      "Un document ne reste que si vous le choisissez",
+      "Fait à Montréal, en français d'abord, hébergé au Canada",
+      "Construit au grand jour",
+    ],
+  };
+  for (const l of ["en", "fr"]) {
+    const p = messages(l).site.home.principles;
+    assert.deepEqual(Object.keys(p.items), ["facts", "kept", "canada", "open"], `${l}: no other rule`);
+    assert.deepEqual([p.title, ...ids.map(([id]) => p.items[id].title)], titles[l], l);
+    assert.doesNotMatch(JSON.stringify(p), /\bSix\b|\bsix\b/, `${l}: « six » is nowhere`);
+    assert.doesNotMatch(
+      JSON.stringify(p),
+      /Folioviv|Sovkora|propres serveurs|your own servers/,
+      `${l}: paused or not offered`,
     );
   }
+  assert.match(messages("en").site.home.principles.items.kept.body, /erased after 30 days/);
+  assert.match(messages("fr").site.home.principles.items.kept.body, /au bout de 30 jours/);
+});
+
+test("the home's meta description does not call the products open source (AGENTS.md § 2: no licence for a product)", () => {
+  const page = read(HOME);
+  const descriptions = [...page.matchAll(/description:\s*\n?\s*"([^"]+)"/g)].map((m) => m[1]);
+  assert.ok(descriptions.length >= 2, "FR and EN descriptions");
+  for (const d of descriptions)
+    assert.doesNotMatch(d, /open[- ]source (products|software products)|produits open source/i, d);
+});
+
+// Rule 3 says « hosted in Canada »: the DigitalOcean region of this site and of Verikora's app stays Toronto (`tor`).
+test("rule 3 stays true: krizaka-com and yomizaka are deployed in the DigitalOcean region tor (Canada)", async () => {
+  const region = (yaml) => yaml.match(/^region:\s*(\S+)/m)?.[1];
+  assert.equal(region(read("deploy/digitalocean/app.yaml")), "tor", "krizaka-com leaves Canada");
+  const url = "https://raw.githubusercontent.com/krizaka/yomizaka/main/deploy/digitalocean/dev.app.yaml";
+  const res = await fetch(url);
+  assert.ok(res.ok, `${url}: ${res.status}`);
+  assert.equal(region(await res.text()), "tor", "yomizaka leaves Canada");
+});
+
+test("the accessibility claim is WCAG 2.1 AA, what the guard checks, never 2.2 (home and /docs)", () => {
+  for (const l of ["en", "fr"]) {
+    const all = JSON.stringify(messages(l));
+    assert.doesNotMatch(all, /WCAG 2\.2(?![.\d])/, `${l}: WCAG 2.2 is claimed`);
+    assert.match(messages(l).site.openSource.hub.quality, /WCAG 2\.1 AA/, `${l}: /docs carries the line`);
+  }
+  assert.match(read("app/[locale]/docs/page.tsx"), /h\.quality/, "/docs renders the line");
 });
