@@ -45,6 +45,14 @@ export const KIT_PREVIOUS_VERSION = mavenVersion("krizaka-users-client") ?? "";
 export const MAVEN_GROUP_ID = "com.krizaka";
 const v = (artifactId: string) => mavenVersion(artifactId) ?? "";
 
+/** The users service's artefacts live in krizaka-build, under krizaka-users/ (ADR-021), not in the old krizaka-users split. */
+export const USERS_SOURCE = { repo: "krizaka-build", folder: "krizaka-users" } as const;
+
+function usersArtifact(id: MavenArtifactId, part: "api" | "client" | "core"): MavenArtifact {
+  const artifactId = `krizaka-users-${part}`;
+  return { id, groupId: MAVEN_GROUP_ID, artifactId, repo: USERS_SOURCE.repo, dir: `${USERS_SOURCE.folder}/${artifactId}`, version: v(artifactId) };
+}
+
 export const MAVEN_ARTIFACTS: readonly MavenArtifact[] = [
   {
     id: "bom",
@@ -123,30 +131,9 @@ export const MAVEN_ARTIFACTS: readonly MavenArtifact[] = [
     dir: "krizaka-observability",
     version: v("krizaka-observability"),
   },
-  {
-    id: "usersClient",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-users-client",
-    repo: "krizaka-build",
-    dir: "krizaka-users/krizaka-users-client",
-    version: v("krizaka-users-client"),
-  },
-  {
-    id: "usersApi",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-users-api",
-    repo: "krizaka-build",
-    dir: "krizaka-users/krizaka-users-api",
-    version: v("krizaka-users-api"),
-  },
-  {
-    id: "usersCore",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-users-core",
-    repo: "krizaka-build",
-    dir: "krizaka-users/krizaka-users-core",
-    version: v("krizaka-users-core"),
-  },
+  usersArtifact("usersClient", "client"),
+  usersArtifact("usersApi", "api"),
+  usersArtifact("usersCore", "core"),
   {
     id: "notificationsApi",
     groupId: MAVEN_GROUP_ID,
