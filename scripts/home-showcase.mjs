@@ -330,7 +330,7 @@ function encodeClip(board, clip, out) {
   const [lib, file] = clip.src.split(/:(?!\/\/)/);
   if (file && board.libraries[lib]) {
     source = path.join(expand(board.libraries[lib]), file);
-  } else if (/^https:/.test(clip.src)) {
+  } else if (clip.src.startsWith("https:")) {
     source = path.join(out, "src", path.basename(new URL(clip.src).pathname));
     if (!fs.existsSync(source)) {
       fs.mkdirSync(path.dirname(source), { recursive: true });

@@ -123,3 +123,6 @@
     animation: none;
   }
 }
+
+/* The controls are a fieldset (a named group without the generic role); no browser chrome around it. */
+fieldset.kz-show-controls { border: 0; margin: 0; padding: 0; min-inline-size: 0; }

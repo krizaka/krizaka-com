@@ -42,7 +42,7 @@ const DWELL_MS = 6500;
 const WIDE_QUERY = "(min-width: 640px)";
 
 const subscribeMedia = (query: string) => (notify: () => void) => {
-  const list = window.matchMedia(query);
+  const list = globalThis.matchMedia(query);
   list.addEventListener("change", notify);
   return () => list.removeEventListener("change", notify);
 };
@@ -50,7 +50,7 @@ const subscribeMedia = (query: string) => (notify: () => void) => {
 function useRendition(): "wide" | "tall" | null {
   return useSyncExternalStore(
     subscribeMedia(WIDE_QUERY),
-    () => (window.matchMedia(WIDE_QUERY).matches ? "wide" : "tall"),
+    () => (globalThis.matchMedia(WIDE_QUERY).matches ? "wide" : "tall"),
     () => null,
   );
 }
@@ -59,13 +59,13 @@ const subscribeCalm = subscribeMedia("(prefers-reduced-motion: reduce)");
 function useStill(): boolean {
   return useSyncExternalStore(
     subscribeCalm,
-    () => prefersStill(window),
+    () => prefersStill(globalThis),
     () => true,
   );
 }
 const subscribeLoad = (notify: () => void) => {
-  window.addEventListener("load", notify);
-  return () => window.removeEventListener("load", notify);
+  globalThis.addEventListener("load", notify);
+  return () => globalThis.removeEventListener("load", notify);
 };
 const usePageLoaded = () =>
   useSyncExternalStore(
@@ -191,12 +191,12 @@ export default function ShowcaseCarousel({
     if (!advancing) {
       return;
     }
-    const timer = window.setTimeout(() => {
+    const timer = globalThis.setTimeout(() => {
       const next = (active + 1) % total;
       setActive(next);
       remember(next);
     }, DWELL_MS);
-    return () => window.clearTimeout(timer);
+    return () => globalThis.clearTimeout(timer);
   }, [advancing, active, total]);
 
   const onKey = (e: React.KeyboardEvent) => {
@@ -235,7 +235,6 @@ export default function ShowcaseCarousel({
             <figure
               key={s.id}
               className="kz-show-slide"
-              role="group"
               aria-roledescription={w.slide}
               aria-label={format(w.slideOf, { n: String(i + 1), total: String(total) })}
               aria-hidden={here ? undefined : true}
@@ -280,8 +279,9 @@ export default function ShowcaseCarousel({
           </span>
           {format(w.figure, { fig: current.fig, caption: current.caption })}
         </p>
-        <div className="kz-show-controls" role="group" aria-label={format(w.controls, { label })} onKeyDown={onKey}>
-          <IconButton variant="secondary" size="sm" label={w.previous} onClick={() => go(active - 1)}>
+        <fieldset className="kz-show-controls">
+          <legend className="sr-only">{format(w.controls, { label })}</legend>
+          <IconButton variant="secondary" size="sm" label={w.previous} onClick={() => go(active - 1)} onKeyDown={onKey}>
             <Chevron back />
           </IconButton>
           {!still && (
@@ -290,14 +290,15 @@ export default function ShowcaseCarousel({
               size="sm"
               label={stopped ? w.play : w.pause}
               onClick={() => setStopped((v) => !v)}
+              onKeyDown={onKey}
             >
               {stopped ? <PlayGlyph /> : <PauseGlyph />}
             </IconButton>
           )}
-          <IconButton variant="secondary" size="sm" label={w.next} onClick={() => go(active + 1)}>
+          <IconButton variant="secondary" size="sm" label={w.next} onClick={() => go(active + 1)} onKeyDown={onKey}>
             <Chevron />
           </IconButton>
-        </div>
+        </fieldset>
       </div>
       {children}
     </section>

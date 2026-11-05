@@ -76,7 +76,7 @@ test("every slide has its caption and its text alternative in both languages, an
 
 test("it advances on its own, with WCAG 2.2.2's controls: pause / play, paused on hover, focus and off screen", () => {
   assert.match(carousel, /const advancing = !still && !stopped && !hovered && !focused && onScreen && total > 1;/);
-  assert.match(carousel, /window\.setTimeout\(\(\) => \{\s*const next = \(active \+ 1\) % total;/);
+  assert.match(carousel, /globalThis\.setTimeout\(\(\) => \{\s*const next = \(active \+ 1\) % total;/);
   assert.match(carousel, /\}, DWELL_MS\);/);
   assert.match(carousel, /onPointerEnter=\{\(\) => setHovered\(true\)\}/);
   assert.match(carousel, /onFocus=\{\(\) => setFocused\(true\)\}/);
@@ -89,7 +89,7 @@ test("it advances on its own, with WCAG 2.2.2's controls: pause / play, paused o
 });
 
 test("still under reduced motion or Save-Data: no timer, no clip, no pause button, no fade", () => {
-  assert.match(carousel, /prefersStill\(window\)/);
+  assert.match(carousel, /prefersStill\(globalThis\)/);
   assert.match(carousel, /\{!still && \(/, "no pause / play when nothing moves");
   assert.match(carousel, /here && loaded && !still && rendition && \(\s*<Clip/);
   const css = read("app/components/home/showcase.css").replace(/\/\*[\s\S]*?\*\//g, "");
