@@ -6,11 +6,12 @@ const PRODUCTS = ["orazaka", "yomizaka", "akinaza"].map((id) => ({ id }));
 
 const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"));
 
-// Oussama, 2026-10-22: the honest chronology. Orazaka first, then the products; 2026-11-04: in the order they go to market,
-// Verikora (yomizaka) first, Folioviv (akinaza) is paused.
-test("the marks under the hero: Orazaka, then Yomizaka, Akinaza, then the rest as listed", () => {
+// krizaka-internal#2445 (founder, 2026-11-05): the home serves the property manager, so the products lead in the order they go
+// to market (2026-11-04: Verikora first, Folioviv is paused) and the engine follows them. Replaces the « honest chronology »
+// of 2026-10-22 (#337), which /story still tells.
+test("the marks under the hero: Verikora, Folioviv, then the engine, then the rest as listed", () => {
   const ids = heroMarkOrder(PRODUCTS).map((p) => p.id);
-  assert.deepEqual(ids.slice(0, 3), ["orazaka", "yomizaka", "akinaza"]);
+  assert.deepEqual(ids.slice(0, 3), ["yomizaka", "akinaza", "orazaka"]);
   assert.deepEqual(
     ids.slice(3),
     PRODUCTS.map((p) => p.id).filter((id) => !ids.slice(0, 3).includes(id)),
@@ -27,47 +28,37 @@ test("the hero lead opens on Verikora, in short sentences, no em dash, Sovkora �
     assert.doesNotMatch(lead, /Krizaka UI|Krizaka Java/, `${l}: the libraries live under Docs`);
     assert.doesNotMatch(lead, /moteur d'IA|AI engine/, `${l}: the engine is « ours », the word AI is not the pitch`);
     assert.doesNotMatch(msg(l).site.home.engine.lead, /moteur d'IA|AI engine/, `${l}: § 2's lead`);
-    assert.match(msg(l).site.home.products.lead, /Verikora.*Folioviv/s, `${l}: § 3's lead, Verikora first`);
+    assert.match(
+      msg(l).site.home.products.title,
+      /^(How Verikora|Comment Verikora)/,
+      `${l}: § 2 is how Verikora checks`,
+    );
+    assert.match(msg(l).site.home.products.lead, /Folioviv/, `${l}: § 2's lead names the other tools after`);
     assert.doesNotMatch(lead, /[\u2014\u2013]/, l);
     assert.ok(lead.split(/[.]\s/).length <= 3, `${l}: two or three sentences`);
   }
 });
 
-test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its request and answer as fig. 2, the duck, what it gives folded in", () => {
+test("§ 2 opens on how Verikora checks a file: three real steps, in both languages, before the entries", () => {
   const src = readFileSync(new URL("../app/components/home/ProductShowcase.tsx", import.meta.url), "utf8");
-  const fn = src.slice(src.indexOf("function EngineEntry"), src.indexOf("function ProductEntry"));
-  assert.match(fn, /<SpecimenTag/, "the same tag as the products");
-  assert.match(fn, /\{\.\.\.tagProps\(p, t, locale\)\}/, "it wears the tag props the products wear");
-  assert.match(src, /code: code\(p\)/, "its catalogue number is KZ-01 (first of lib/products.ts)");
-  assert.match(fn, /<ProductVisual id=\{p\.id\} name=\{p\.name\} \/>/, "a product moment, like the others (#683)");
-  assert.match(fn, /<Caption figure=\{figNo\(s\.figureLabel, p\)\}/, "the flow is a numbered figure like the others");
-  assert.match(
-    fn,
-    /className=\{cn\("kz-entry", "kz-entry-engine", "brand-" \+ p\.id\)\}/,
-    "same entry, its brand light",
+  assert.match(src, /const CHECK_STEPS = \["drop", "read", "report"\] as const;/);
+  assert.ok(
+    src.indexOf("CHECK_STEPS.map") < src.indexOf('<ol className="kz-prod-list"'),
+    "the steps, then the entries",
   );
-  assert.match(fn, /<details className="kz-entry-gives"/, "what it gives is folded in the tag");
-  assert.match(fn, /<Bird bird=\{PRODUCT_BIRD\[p\.id\]\}/, "its mascot, the data's");
-  assert.doesNotMatch(fn, /kz-foundation/, "the foundation plate is gone");
-  assert.match(fn, /ENGINE_USES/, "what it powers is read from lib/engine-uses.ts");
-  assert.match(fn, /href=\{`#product-\$\{x\.id\}`\}/, "each powered product is a link to its entry");
-  assert.match(src, /href="#product-orazaka"/, "each product's card links back to the engine");
-  assert.doesNotMatch(fn, /webhook|run events|SSE/i, "only what runs is said (orazaka#189)");
+  assert.match(src, /href="#engine"/, "each product's card links to the engine's line");
+  assert.doesNotMatch(src, /href="#product-orazaka"/, "the engine has no entry any more");
   assert.match(
     readFileSync(new URL("../lib/story.ts", import.meta.url), "utf8"),
     /orazaka: "duck"/,
-    "the duck builds: Orazaka's bird everywhere",
-  );
-  const css = readFileSync(new URL("../app/components/home/home.css", import.meta.url), "utf8");
-  assert.doesNotMatch(css, /\.kz-foundation/);
-  assert.doesNotMatch(
-    css.slice(css.indexOf(".kz-entry-gives")),
-    /#[0-9a-f]{3,6}\b|glow|blur\(|radial-gradient/i,
-    "tokens only",
+    "the duck builds: the engine's bird everywhere",
   );
   for (const l of ["en", "fr"]) {
-    const e = msg(l).site.home.engine;
-    assert.deepEqual(Object.keys(e.gives), ["models", "pipeline", "analytics"], l);
-    assert.doesNotMatch(JSON.stringify(e), /[\u2014\u2013]/, l);
+    const p = msg(l).site.home.products;
+    assert.deepEqual(Object.keys(p.steps), ["drop", "read", "report"], l);
+    for (const id of Object.keys(p.steps))
+      assert.ok(p.steps[id].title.trim() && p.steps[id].body.trim(), `${l}: ${id}`);
+    assert.match(p.steps.report.body, /page/, `${l}: every finding cites its page`);
+    assert.doesNotMatch(JSON.stringify(p.steps), /[\u2014\u2013]/, l);
   }
 });

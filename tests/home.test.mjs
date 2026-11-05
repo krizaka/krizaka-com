@@ -15,18 +15,31 @@ import {
   strings,
 } from "./helpers/source.mjs";
 
-// The home is one of the site's two views (Oussama, 2026-10-17; the other is Open source): the centred hero, the products
-// (Orazaka the foundation, the products it powers — the only place they are presented), the open-source stack in brief,
-// the principles in brief (Montréal and the closing contact left on 2026-10-22: /story is in the footer, Contact us in the bar). No product is pitched, nothing links to the old /docs.
+// The home serves one reader, the Montréal property manager (founder, 2026-11-05, krizaka-internal#2445): the hero, how
+// Verikora checks a file (#products, the only place the products are presented), the principles, the engine in one line,
+// who we are, the Entreprise line, then contact. Nothing links to the old /docs.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const HOME = "app/[locale]/page.tsx";
-const SECTIONS = ["HomeHero", "ProductShowcase", "Principles"]; // the files
-const ORDER = ["HomeHero", "EngineSection", "ProductShowcase", "Principles"]; // the tags, in the story's order
+const SECTIONS = ["HomeHero", "ProductShowcase", "Principles", "ServicesLine", "HomeAbout", "HomeContact"]; // the files
+// the tags, in the founder's order (2026-11-05): replaces the « honest chronology » of 2026-10-22 (#337)
+const ORDER = [
+  "HomeHero",
+  "ProductShowcase",
+  "Principles",
+  "EngineSection",
+  "HomeAbout",
+  "ServicesLine",
+  "HomeContact",
+];
 
-test("the home is made of its four sections, in Oussama's order: no Company, no closing contact panel, no FAQ", () => {
+test("the home is made of its seven sections, in the founder's order (2026-11-05): no FAQ, no roadmap, no figures", () => {
   const home = read(HOME);
-  assert.doesNotMatch(home, /<Company\b|<ContactCta\b|<ProductFaq\b|section-backdrop/, "§ 5, § 6 and the FAQ are gone");
+  assert.doesNotMatch(
+    home,
+    /<Company\b|<ContactCta\b|<ProductFaq\b|<Direction\b|section-backdrop/,
+    "no FAQ, no roadmap",
+  );
   assert.ok(!existsSync(new URL("../app/components/ProductFaq.tsx", import.meta.url)), "ProductFaq came back");
   for (const f of ["Company", "ContactCta"])
     assert.ok(!existsSync(new URL(`../app/components/home/${f}.tsx`, import.meta.url)), `${f} came back`);
@@ -38,7 +51,7 @@ test("the home is made of its four sections, in Oussama's order: no Company, no 
   assert.deepEqual(
     order,
     [...order].sort((a, b) => a - b),
-    "hero → engine → products → principles (the libraries live on /open-source)",
+    "hero → how Verikora checks → principles → engine → who we are → Entreprise → contact",
   );
 });
 
@@ -80,16 +93,11 @@ test("the hero's h1 is the founder's, and the lead opens on Verikora", () => {
   }
 });
 
-test("the hero: text painted at once, the figures read at build and climbing", () => {
+test("the hero: text painted at once; Krizaka's figures left it for /docs (krizaka-internal#2445)", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.doesNotMatch(hero, /"use client"/, "the hero's text is server-rendered (LCP)");
   assert.doesNotMatch(hero, /data-reveal|reveal\(/, "nothing on the first screen is revealed");
-  assert.match(hero, /<NumberTicker value=\{p\.value\}/);
-  assert.doesNotMatch(
-    hero.slice(hero.indexOf("kz-home-proofs"), hero.indexOf("</dl>")),
-    /kz-intro-deco/,
-    "the figures are never hidden by the intro",
-  );
+  assert.doesNotMatch(hero, /NumberTicker|kz-home-proofs|kz-home-license/, "no figures, no licence strip in the hero");
 });
 
 test("the products come from lib/products.ts: one card each, in the product's brand", () => {
@@ -107,8 +115,8 @@ test("the products come from lib/products.ts: one card each, in the product's br
   );
   assert.equal(
     showcase.match(/<SpecimenTag\b/g)?.length,
-    3,
-    "the products wear the specimen tag, and so do the engine (KZ-01) and the products in design: one language",
+    2,
+    "the products wear the specimen tag, and so do the products in design: one language (the engine is a line, #2445)",
   );
   assert.doesNotMatch(showcase, /knowhow|kz-pc-meta/, "one label per product: no mono eyebrow beside the status");
   assert.match(
@@ -147,8 +155,8 @@ test("the old home — the product showcase, the kit gallery, the rotating title
   for (const lang of ["en", "fr"]) {
     const m = messages(lang).site;
     assert.deepEqual(
-      Object.keys(m.home),
-      ["hero", "engine", "products", "stack", "services", "direction", "principles", "visuals"],
+      Object.keys(m.home).sort(),
+      ["about", "contact", "engine", "hero", "principles", "products", "services", "stack", "visuals"],
       `${lang}: site.home`,
     );
     assert.equal(m.expertise, undefined, `${lang}: site.expertise`);
@@ -166,7 +174,11 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
   const hero = read("app/components/home/HomeHero.tsx");
   assert.match(hero, /<ul className="kz-home-marks" aria-label=\{t\.marksLabel\}>/);
   assert.match(hero, /heroMarkOrder\(PRODUCTS\)\.map\(\(p\) =>/);
-  assert.match(hero, /href=\{`#product-\$\{p\.id\}`\}/);
+  assert.match(
+    hero,
+    /href=\{p\.id === ENGINE \? "#engine" : `#product-\$\{p\.id\}`\}/,
+    "the engine's mark to its line",
+  );
   assert.match(hero, /<ProductLogo id=\{p\.id\} size=\{30\} animated=\{false\} \/>/);
   assert.match(hero, /DIM: readonly ProductStatus\[\] = \["construction", "upcoming"\]/);
   assert.doesNotMatch(
@@ -174,11 +186,7 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
     /<video|<img/,
     "the hero's server markup holds no media: the figure is a client island (HeroFigure)",
   );
-  assert.ok(
-    hero.indexOf("kz-home-actions") < hero.indexOf("kz-home-marks") &&
-      hero.indexOf("kz-home-marks") < hero.indexOf("kz-home-proofs"),
-    "under the actions, above the figures",
-  );
+  assert.ok(hero.indexOf("kz-home-actions") < hero.indexOf("kz-home-marks"), "under the actions");
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home.hero;
     assert.ok(h.marksLabel, `${lang}: hero.marksLabel`);
@@ -389,10 +397,10 @@ test("Akinaza is for studios, salons and the self-employed, one short human line
 });
 
 // The numbers in the margin and the folios come from the section list, never typed (2026-10-22: § 5 and § 6 removed).
-test("the section list is the home's six sections, in the honest order; the numbers and the folio are derived from it", () => {
-  assert.deepEqual([...HOME_SECTIONS], ["hero", "engine", "products", "services", "direction", "principles"]);
-  assert.deepEqual(folioOf("principles"), { page: 6, total: 6 });
-  assert.deepEqual(folioOf("hero"), { page: 1, total: 6 });
+test("the section list is the home's seven sections, in the founder's order; the numbers and the folio are derived from it", () => {
+  assert.deepEqual([...HOME_SECTIONS], ["hero", "products", "principles", "engine", "about", "services", "contact"]);
+  assert.deepEqual(folioOf("principles"), { page: 3, total: 7 });
+  assert.deepEqual(folioOf("hero"), { page: 1, total: 7 });
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home;
     assert.match(h.principles.folio, /\{page\}.*\{total\}/, `${lang}: the folio is a template, not typed digits`);
@@ -407,9 +415,10 @@ test("the duo is named by its need: management and compliance tools", () => {
   const want = { en: /management and compliance tools/, fr: /outils de gestion et de conformité/ };
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home;
-    // The hero's lead names Verikora alone since krizaka-internal#2445: the duo is named by its need in #products.
+    // Since krizaka-internal#2445 the hero's lead names Verikora alone and § 2 is how Verikora checks a file: the other
+    // tools are named by their need in § 2's lead.
     assert.match(h.hero.lead, /Verikora/);
-    assert.match(h.products.title, want[lang], `${lang}: products.title`);
+    assert.match(h.products.lead, want[lang], `${lang}: products.lead`);
     assert.doesNotMatch(`${h.products.title} ${h.products.lead}`, /intelligen/i);
   }
 });

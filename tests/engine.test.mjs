@@ -48,35 +48,36 @@ test("a planned use is said planned: the products not wired yet are flagged, the
   assert.match(story, /u\.planned \? ` \(\$\{e\.planned\}\)` : ""/);
 });
 
-// 2026-10-20 (home products redesign): no frame around the products and no box in a box — the engine leads the section
-// (its words and its EngineFlow, sticky beside the list on a wide screen), the products are a quiet list it powers, and
-// each product is tied to its node in the flow (in view or pointed at, both ways). /story's engine chapter draws the same flow.
-test("the home leads with the engine and its flow, then the products it powers — no foundation frame, no card in a card", () => {
+// krizaka-internal#2445 (2026-11-05): the home speaks to the property manager. The products come right after the hero; the
+// engine is one line further down (« Powered by Sovkora »: your documents stay in Canada, every check is traced), with no
+// demo and no specimen entry of its own. /story's engine chapter still draws the flow.
+test("the products come first, the engine is one line after the principles — no engine entry, no demo, no card in a card", () => {
   const home = read("app/components/home/ProductShowcase.tsx");
-  assert.match(home, /<EngineEntry t=\{t\} locale=\{locale\} \/>/);
-  assert.ok(
-    home.indexOf("<EngineEntry t") < home.lastIndexOf('className="kz-prod-list"'),
-    "the engine comes first, the products after",
-  );
+  assert.doesNotMatch(home, /EngineEntry|kz-entry-engine|givesLabel/, "the engine's specimen entry left the home");
   assert.match(
     home,
-    /heroMarkOrder\(PRODUCTS\)\.filter\(\(p\) => p\.id !== ENGINE\)/,
-    "the engine is the hub, never a row among the others",
+    /const SHOWN = heroMarkOrder\(PRODUCTS\)\.filter\(\(p\) => p\.id !== ENGINE\);/,
+    "the engine is never a row among the products",
   );
   assert.doesNotMatch(home, /foundation=|CardGrid|GlowCard/, "the frame and the boxes are gone");
+  const engine = home.slice(home.indexOf("export function EngineSection"), home.indexOf("export default"));
+  assert.match(engine, /href=\{engine\.siteUrl\} variant="secondary"/, "one quiet action, to the engine's own site");
+  assert.doesNotMatch(engine, /ProductVisual|variant="primary"/, "no demo, no primary action");
+  for (const l of ["en", "fr"]) {
+    const e = JSON.parse(read(`messages/${l}.json`)).site.home.engine;
+    assert.deepEqual(Object.keys(e).sort(), ["lead", "number", "site", "title"], l);
+    assert.match(e.lead, /Sovkora/, `${l}: powered by Sovkora`);
+    assert.match(e.title, /Canada/, `${l}: the documents stay in Canada`);
+  }
   const page = read("app/[locale]/page.tsx");
   const at = (s) => page.indexOf(s);
   assert.ok(
-    at("<HomeHero") < at("<EngineSection") &&
-      at("<EngineSection") < at("<ProductShowcase") &&
-      at("<ProductShowcase") < at("<Principles"),
-    "the page tells the story: engine, products, principles (the libraries live on /open-source)",
+    at("<HomeHero") < at("<ProductShowcase") &&
+      at("<ProductShowcase") < at("<Principles") &&
+      at("<Principles") < at("<EngineSection"),
+    "hero, the products, the principles, then the engine line",
   );
-  assert.match(
-    read("app/[locale]/story/page.tsx"),
-    /<EngineFlowView t=\{t\} \/>/,
-    "/story draws the home's engine flow — the same component",
-  );
+  assert.match(read("app/[locale]/story/page.tsx"), /<EngineFlowView t=\{t\} \/>/, "/story draws the engine flow");
   const css = read("app/components/home/home.css");
   assert.doesNotMatch(css, /\.kz-foundation/, "the engine wears the products' tag (KZ-01), not a foundation plate");
   assert.match(

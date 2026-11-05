@@ -1,9 +1,11 @@
 /* The home's sections, in order. The numbers in the margin (§ n) and the folios (« page n of N ») are read from this
-   list, never typed: removing or adding a section renumbers the rest. */
+   list, never typed: removing or adding a section renumbers the rest. The order serves one reader, the property manager
+   (founder, 2026-11-05, krizaka-internal#2445; replaces the « honest chronology » of #337): the hero, how Verikora checks
+   a file (#products), the principles, the engine in one line, who we are, the Entreprise line, then contact. */
 
 import type { ContactTopic } from "./contact.ts";
 
-export const HOME_SECTIONS = ["hero", "engine", "products", "services", "direction", "principles"] as const;
+export const HOME_SECTIONS = ["hero", "products", "principles", "engine", "about", "services", "contact"] as const;
 export type HomeSection = (typeof HOME_SECTIONS)[number];
 
 /** The values of a section's folio: its page (1-based) and the total of pages. */
@@ -11,9 +13,9 @@ export function folioOf(section: HomeSection): { page: number; total: number } {
   return { page: HOME_SECTIONS.indexOf(section) + 1, total: HOME_SECTIONS.length };
 }
 
-/** The marks under the hero, in the story's order: the engine first, then the products in the order they go to market
- *  (founder, 2026-11-04: Verikora first, Folioviv is paused), then the rest as listed. */
-export const HERO_MARK_PRIORITY = ["orazaka", "yomizaka", "akinaza"] as const;
+/** The marks under the hero and the products' entries, in the order they go to market (founder, 2026-11-04: Verikora first,
+ *  Folioviv is paused), the engine after them (krizaka-internal#2445: the product is the subject), then the rest as listed. */
+export const HERO_MARK_PRIORITY = ["yomizaka", "akinaza", "orazaka"] as const;
 
 /** The one product the home serves (krizaka-internal#2445): its reader is the property manager, so the hero's primary
  *  action writes to us on this product's topic of the contact form (lib/contact.ts), and its figure shows this product first. */

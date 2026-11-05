@@ -7,39 +7,30 @@
    The section is numbered in the margin (§ 1). A server component: the title, the lead and the actions are the first
    paint (LCP) — never revealed, never part of the intro.
 
-   Under the actions, the products put forward: a quiet row of their seven marks (from @krizaka/ui), each one a link to
-   its card in #products, the ones not offered yet dimmed.
+   Under the actions, the products put forward: a quiet row of their marks (from @krizaka/ui), Verikora first, each one a
+   link to its card in #products, the ones not offered yet dimmed. Krizaka's figures (repositories, packages, downloads) and
+   the licence left the hero for /docs (krizaka-internal#2445): they speak to developers, not to this reader.
 
-   Once per session, HeroIntro plays the cinematic intro (home.css): the mark draws itself, a light sweeps the backdrop, the
-   figures climb (NumberTicker). Skippable, still under reduced motion and Save-Data. Every figure is read at build and dropped when unknown. */
+   Once per session, HeroIntro plays the cinematic intro (home.css): the mark draws itself, a light sweeps the backdrop.
+   Skippable, still under reduced motion and Save-Data. */
 
 import { ForwardIcon } from "@krizaka/icons";
 import Link from "next/link";
 import { KrizakaLogo, ProductLogo } from "@krizaka/ui";
-import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
-import { format, getDictionary } from "@/lib/i18n";
-import { figureColumns } from "@/lib/figure-grid";
-import type { CSSProperties } from "react";
+import { getDictionary } from "@/lib/i18n";
 import { heroSlides } from "@/lib/story-film";
 import { HOME_PRODUCT, heroMarkOrder } from "@/lib/home-sections";
 import { BRAND_FILM } from "@/lib/brand-film";
 import { SlideKind } from "@/lib/hero-slides";
 import { PRODUCTS, type ProductStatus } from "@/lib/products";
+import { ENGINE } from "@/lib/story";
 import ButtonLink from "@/app/components/ButtonLink";
-import { floorFigure } from "@/lib/figure-floor";
 import { contactHref } from "@/lib/contact";
 import HeroIntro from "./HeroIntro";
 import HeroFigure from "./HeroFigure";
 import "./home.css";
-
-export interface HomeFigures {
-  repositories: number;
-  npm: number;
-  /** npm downloads of last week (api.npmjs.org at build); absent when unknown. */
-  downloads?: number;
-}
 
 const resolved = heroSlides();
 /** A product nothing is offered of yet wears its mark dimmed in the hero's row (the status is the data's). */
@@ -65,7 +56,7 @@ function FigureText({ locale, slide }: Readonly<{ locale: string; slide: (typeof
   );
 }
 
-export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
+export default function HomeHero({ locale }: { locale: string }) {
   const dict = getDictionary(locale);
   const t = dict.site.home.hero;
   const slides = resolved.map(({ id, fig, kind, mp4, poster, loop }) => ({
@@ -77,25 +68,6 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
     length: kind === SlideKind.Film ? t.filmLength : undefined,
   }));
   const texts = Object.fromEntries(resolved.map((s) => [s.id, <FigureText key={s.id} locale={locale} slide={s} />]));
-  // Two kinds of figures, said apart (founder, 2026-11-01): what we publish, and what gets used. Each reads « more than N ».
-  const groups = [
-    {
-      id: "published",
-      label: t.proofs.groups.published,
-      items: [
-        { id: "repositories", value: floorFigure(figures.repositories), label: t.proofs.repositories },
-        { id: "npm", value: floorFigure(figures.npm), label: t.proofs.npm },
-      ],
-    },
-    {
-      id: "used",
-      label: t.proofs.groups.used,
-      items: [{ id: "downloads", value: floorFigure(figures.downloads ?? 0), label: t.proofs.downloads }],
-    },
-  ]
-    .map((g) => ({ ...g, items: g.items.filter((p) => p.value > 0) }))
-    .filter((g) => g.items.length > 0);
-
   return (
     <SectionBackdrop as="section" id="hero" className="kz-home-hero" aria-labelledby="hero-title">
       <HeroIntro />
@@ -130,41 +102,13 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
             <ul className="kz-home-marks" aria-label={t.marksLabel}>
               {heroMarkOrder(PRODUCTS).map((p) => (
                 <li key={p.id} className={"brand-" + p.id} data-dim={DIM.includes(p.status) ? "" : undefined}>
-                  <a href={`#product-${p.id}`}>
+                  <a href={p.id === ENGINE ? "#engine" : `#product-${p.id}`}>
                     <ProductLogo id={p.id} size={30} animated={false} />
                     <span>{p.name}</span>
                   </a>
                 </li>
               ))}
             </ul>
-
-            <div className="kz-home-proof-groups" aria-label={t.proofsLabel}>
-              {groups.map((g) => (
-                <section key={g.id} className="kz-home-proof-group" data-group={g.id}>
-                  <p className="kz-home-proof-label">{g.label}</p>
-                  <dl
-                    className="kz-home-proofs"
-                    style={
-                      {
-                        "--kz-fig-cols": figureColumns(g.items.length).wide,
-                        "--kz-fig-cols-narrow": figureColumns(g.items.length).narrow,
-                      } as CSSProperties
-                    }
-                  >
-                    {g.items.map((p) => (
-                      <div key={p.id}>
-                        <dt>{p.label}</dt>
-                        <dd>
-                          <span className="kz-home-more">{t.proofs.more} </span>
-                          <NumberTicker value={p.value} locale={locale} align="start" />
-                        </dd>
-                      </div>
-                    ))}
-                  </dl>
-                </section>
-              ))}
-            </div>
-            <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
           </div>
           <figure id="fig-1" className="kz-fig" aria-label={t.fig.figLabel}>
             <HeroFigure slides={slides} texts={texts} />

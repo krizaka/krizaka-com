@@ -1,4 +1,4 @@
-/* « Where we are going » (§ 5): now / next / later, no dates, as @krizaka/ui's Stepper (horizontal): « now » is the
+/* « Where we are going » on /docs (moved from the home, krizaka-internal#2445): now / next / later, no dates, as @krizaka/ui's Stepper (horizontal): « now » is the
    current step and carries the products with their honest statuses, read from lib/products.ts; the rest is the stated
    order (lib/direction.ts). One action: our story. No ruled paper (founder, 2026-10-30). */
 
@@ -11,7 +11,7 @@ import { PRODUCTS } from "@/lib/products";
 
 export default function Direction({ locale }: { locale: string }) {
   const t = getDictionary(locale);
-  const d = t.site.home.direction;
+  const d = t.site.openSource.hub.direction;
   const names = new Intl.ListFormat(locale, { style: "long", type: "conjunction" }).format(
     nowProducts(PRODUCTS).map((p) => p.name),
   );
@@ -26,12 +26,10 @@ export default function Direction({ locale }: { locale: string }) {
   return (
     <Section
       id="direction"
-      number={d.number}
       title={d.title}
       lead={d.lead}
       reveal
       divider
-      margin
       actions={
         <ButtonLink href="/story" variant="secondary" size="md">
           {d.story}

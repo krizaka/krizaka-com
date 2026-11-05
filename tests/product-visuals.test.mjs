@@ -27,13 +27,13 @@ const ids = PRODUCT_RECORDS().map((p) => p.id);
 
 // 2026-11-01 (krizaka-internal#683): the engine's entry shows a product moment too (a request, its answer), like the others;
 // its flow stays on /story (tests/engine.test.mjs).
-test("every product has its plate, the engine included, and each entry shows it with the name of lib/products.ts", () => {
+test("every product has its plate, and each entry shows it with the name of lib/products.ts (the engine has no entry on the home)", () => {
   for (const id of ids) assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.equal(
     showcase.match(/<ProductVisual id=\{p\.id\} name=\{p\.name\} \/>/g)?.length,
-    2,
-    "the engine's and each product's",
+    1,
+    "each product's (the engine's demo left the home, krizaka-internal#2445)",
   );
   assert.doesNotMatch(showcase, /<EngineFlowView/);
 });

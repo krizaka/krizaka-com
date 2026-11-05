@@ -37,18 +37,18 @@ test("« now » is the products' statuses from lib/products.ts; the steps are no
   );
   assert.ok(ids.length >= 3);
   for (const l of ["en", "fr"]) {
-    const d = msg(l).home.direction;
+    const d = msg(l).openSource.hub.direction;
     assert.deepEqual(Object.keys(d.steps), ["now", "next", "later"], l);
     assert.match(d.steps.now.body, /\{names\}/);
     assert.doesNotMatch(JSON.stringify(d), /20\d\d|\b(Q[1-4]|janvier|january|demain|tomorrow)\b/i, `${l}: no date`);
   }
-  assert.ok(hasCode("app/components/home/Direction.tsx", "nowProducts(PRODUCTS)"));
+  assert.ok(hasCode("app/[locale]/docs/Direction.tsx", "nowProducts(PRODUCTS)"));
 });
 
 test("the tone is restrained: no hype word in the new sections, in either language", () => {
   for (const l of ["en", "fr"]) {
     const h = msg(l).home;
-    const text = JSON.stringify({ k: h.knowhow, d: h.direction });
+    const text = JSON.stringify({ k: h.knowhow, d: msg(l).openSource.hub.direction, a: h.about, c: h.contact });
     assert.doesNotMatch(text, FORBIDDEN, l);
     assert.doesNotMatch(text, /!/, `${l}: no exclamation`);
   }
@@ -56,9 +56,13 @@ test("the tone is restrained: no hype word in the new sections, in either langua
     assert.match(sample, FORBIDDEN);
 });
 
-test("one primary action per section: no primary button in the two sections", () => {
-  for (const f of ["ServicesLine", "Direction"])
-    assert.doesNotMatch(read(`app/components/home/${f}.tsx`), /variant="primary"/, f);
+test("one primary action per section: no primary button in the Entreprise line, who we are or the roadmap", () => {
+  for (const f of [
+    "app/components/home/ServicesLine.tsx",
+    "app/components/home/HomeAbout.tsx",
+    "app/[locale]/docs/Direction.tsx",
+  ])
+    assert.doesNotMatch(read(f), /variant="primary"/, f);
 });
 
 test("licence words are true to the repositories: the products are never said to be Apache-2.0 (and no licence is claimed for them: tests/claims-guard.test.mjs)", async () => {
@@ -78,22 +82,31 @@ test("licence words are true to the repositories: the products are never said to
   }
 });
 
-test("§ 4 and § 5 carry content, not ruled paper (founder, 2026-10-30): the offer's three parts, the order as a stepper", () => {
+// krizaka-internal#2445 (2026-11-05): back to the 2026-10-30 decision, the Entreprise offer is one sentence and one
+// secondary action at the foot of the home, no cards; the roadmap (now / next / later) moved to /docs, still a stepper.
+test("the Entreprise line is one sentence and one secondary action to /services, no cards; the roadmap is a stepper on /docs", () => {
   const services = read("app/components/home/ServicesLine.tsx");
-  const direction = read("app/components/home/Direction.tsx");
-  for (const [name, src] of [
-    ["ServicesLine", services],
-    ["Direction", direction],
-  ])
-    assert.doesNotMatch(src, /paper="lines"|kz-notebook-list/, name);
-  assert.match(services, /<LinkCard/);
-  assert.match(services, /href="\/services"/);
+  const direction = read("app/[locale]/docs/Direction.tsx");
+  assert.doesNotMatch(services, /LinkCard|CardGrid|paper="lines"/, "no cards on the home");
+  assert.match(services, /<ButtonLink href="\/services" variant="secondary"/);
   assert.match(direction, /<Stepper/);
+  assert.match(read("app/[locale]/docs/page.tsx"), /<Direction locale=\{locale\} \/>/);
+  assert.ok(!existsSync(new URL("../app/components/home/Direction.tsx", import.meta.url)), "the roadmap left the home");
   for (const l of ["en", "fr"]) {
     const h = msg(l).home;
-    for (const id of ["modules", "ai", "maintenance"])
-      assert.ok(h.services.parts[id].title && h.services.parts[id].line.length <= 90, `${l}: parts.${id}`);
-    assert.deepEqual(Object.keys(h.direction.labels).sort(), ["current", "done", "error", "upcoming"], l);
+    assert.deepEqual(
+      Object.keys(h.services).sort(),
+      ["cta", "lead", "number", "title"],
+      `${l}: one sentence, one action`,
+    );
+    assert.equal(h.direction, undefined, `${l}: the roadmap's words moved to openSource.hub.direction`);
+    assert.deepEqual(
+      Object.keys(msg(l).openSource.hub.direction.labels).sort(),
+      ["current", "done", "error", "upcoming"],
+      l,
+    );
     assert.doesNotMatch(JSON.stringify(h.services), FORBIDDEN, l);
   }
+  assert.equal(msg("fr").home.services.title, "Votre projet, sur nos briques.");
+  assert.equal(msg("en").home.services.title, "Your project, on our building blocks.");
 });

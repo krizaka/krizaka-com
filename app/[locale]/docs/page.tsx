@@ -12,7 +12,7 @@ import { githubRepositories } from "@/lib/org-stats";
 import { openSourceRepositories } from "@/lib/repository-catalogue";
 import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
-import { npmPackages, publishedVersion } from "@/lib/registry-versions";
+import { npmPackages, npmWeeklyDownloads, publishedVersion } from "@/lib/registry-versions";
 import { packageRows, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { GOOD_FIRST_URL } from "@/lib/library-links";
 import { CONDUCT_URL, CONTRIBUTING_URL, START_PATHS } from "@/lib/docs-start";
@@ -27,6 +27,7 @@ import ButtonLink from "@/app/components/ButtonLink";
 import { InstallTabs } from "./StackGlance";
 import { PackagesTable } from "./OpenSourceTables";
 import HowItFits from "./HowItFits";
+import Direction from "./Direction";
 import "./open-source.css";
 
 /* /docs — the documentation hub people can follow, on its declared template (docs-hub: @krizaka/ui DocsHubPage).
@@ -87,6 +88,7 @@ export default async function DocsPage({ params }: Props) {
   );
   const fmt = new Intl.NumberFormat(locale);
   const uiVersion = publishedVersion("@krizaka/ui");
+  const downloads = npmWeeklyDownloads();
 
   return (
     <main className="os-page">
@@ -161,10 +163,13 @@ export default async function DocsPage({ params }: Props) {
         }
       />
 
+      {/* Krizaka's figures (moved from the home's hero, krizaka-internal#2445): published, and used last week when the
+          registries say it; a figure they did not give is not shown, never 0. */}
       <p className="os-stats">
-        {format(h.stats, {
+        {format(downloads ? h.statsDownloads : h.stats, {
           repositories: fmt.format(floorFigure(repositories.length)),
           npm: fmt.format(floorFigure(npmPackages().length)),
+          downloads: fmt.format(floorFigure(downloads ?? 0)),
         })}
       </p>
 
@@ -179,6 +184,8 @@ export default async function DocsPage({ params }: Props) {
           <PackagesTable rows={packages} />
         </details>
       </Section>
+
+      <Direction locale={locale} />
 
       <Section id="contribute" divider aria-labelledby="os-contribute">
         <CtaPanel id="os-contribute" title={t.contribute.title} body={t.contribute.body} reveal>

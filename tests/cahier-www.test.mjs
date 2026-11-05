@@ -19,16 +19,24 @@ test("the first page is asymmetric: the words on the left, « Fig. 1 » on the r
 });
 
 test("every section of the home is numbered in the margin (§ n), none carries an eyebrow", () => {
-  const sections = ["HomeHero", "ProductShowcase", "ServicesLine", "Direction", "Principles"];
+  const sections = ["HomeHero", "ProductShowcase", "ServicesLine", "HomeAbout", "HomeContact", "Principles"];
   for (const s of sections)
     assert.doesNotMatch(read(`app/components/home/${s}.tsx`), /eyebrow=/, `${s} still has an eyebrow`);
-  for (const s of ["ServicesLine", "Direction", "Principles"])
+  for (const s of ["ServicesLine", "HomeAbout", "HomeContact", "Principles"])
     assert.match(read(`app/components/home/${s}.tsx`), /\.number\}/, `${s} has no number`);
   for (const l of ["en", "fr"]) {
     const h = msgs[l].site.home;
     assert.deepEqual(
-      [h.hero.number, h.engine.number, h.products.number, h.services.number, h.direction.number, h.principles.number],
-      ["§ 1", "§ 2", "§ 3", "§ 4", "§ 5", "§ 6"],
+      [
+        h.hero.number,
+        h.products.number,
+        h.principles.number,
+        h.engine.number,
+        h.about.number,
+        h.services.number,
+        h.contact.number,
+      ],
+      ["§ 1", "§ 2", "§ 3", "§ 4", "§ 5", "§ 6", "§ 7"],
       l,
     );
   }

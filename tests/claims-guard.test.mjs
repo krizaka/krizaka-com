@@ -79,17 +79,18 @@ test("public figures and the downloads total are « more than N », read at buil
   for (const l of ["en", "fr"]) {
     const m = JSON.parse(read(`messages/${l}.json`));
     assert.match(m.site.openSource.hub.stats, /^(?:more than|plus de)/, `${l}: hub stats say « more than »`);
-    for (const p of [m.site.home.hero.proofs, m.site.services.proof]) {
-      assert.ok(p.more && p.groups.published && p.groups.used, `${l}: « more than » and the two group labels`);
-    }
+    assert.match(m.site.openSource.hub.statsDownloads, /^(?:more than|plus de)/, `${l}: hub stats with downloads`);
+    const p = m.site.services.proof;
+    assert.ok(p.more && p.groups.published && p.groups.used, `${l}: « more than » and the two group labels`);
+    assert.equal(m.site.home.hero.proofs, undefined, `${l}: the hero's figures moved to /docs (krizaka-internal#2445)`);
     assert.doesNotMatch(
       JSON.stringify(m),
       /\b1[0-9]{2}[  ,]?[0-9]{3}\b.{0,40}(?:downloads|téléchargements)/i,
       `${l}: no typed downloads figure`,
     );
   }
-  const hero = read("app/components/home/HomeHero.tsx");
-  for (const k of ["repositories", "npm", "downloads"])
-    assert.match(hero, new RegExp(`floorFigure\\(figures\\.${k}`), k);
+  const docs = read("app/[locale]/docs/page.tsx");
+  for (const k of ["repositories.length", "npmPackages().length", "downloads ?? 0"])
+    assert.ok(docs.includes(`floorFigure(${k})`), k);
   assert.match(read("app/[locale]/services/page.tsx"), /floorFigure\(npmWeeklyDownloads\(\) \?\? 0\)/);
 });

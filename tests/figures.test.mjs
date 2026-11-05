@@ -25,11 +25,12 @@ test("old-style or proportional digits fail", () => {
   assert.match(figureProblems(c, [fig("39", 100, 140, "tabular-nums")])[0], /not lining-nums/);
 });
 
-test("the home's proofs: the number on top, every number lining and tabular (the --kz-figures token)", () => {
+// krizaka-internal#2445: Krizaka's figures left the home's hero for /docs, one quiet line there.
+test("the home's hero shows no figures any more: they are /docs' quiet line", () => {
   const css = readFileSync(new URL("../app/components/home/home.css", import.meta.url), "utf8");
-  const cell = css.match(/\.kz-home-proofs > div \{([^}]*)\}/)[1];
-  // column-reverse puts the number (dd, last) on top; flex-end packs the cell from the top, so a wrapped label flows below.
-  assert.match(cell, /flex-direction: column-reverse/);
-  assert.match(cell, /justify-content: flex-end/);
-  assert.match(css.match(/\.kz-home-proofs dd \{([^}]*)\}/)[1], /font-variant-numeric: var\(--kz-figures/);
+  assert.doesNotMatch(css, /\.kz-home-proofs|\.kz-home-proof-group|\.kz-home-license/);
+  const hero = readFileSync(new URL("../app/components/home/HomeHero.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(hero, /NumberTicker|floorFigure|kz-home-proofs/);
+  const docs = readFileSync(new URL("../app/[locale]/docs/page.tsx", import.meta.url), "utf8");
+  assert.match(docs, /<p className="os-stats">/);
 });

@@ -190,19 +190,7 @@
         "primary": "Talk to us about your files",
         "film": "Watch the full film",
         "filmLength": "31 s",
-        "proofsLabel": "Krizaka in figures, read at build",
         "marksLabel": "The products, each to its entry",
-        "proofs": {
-          "groups": {
-            "published": "What we publish",
-            "used": "What gets used"
-          },
-          "more": "more than",
-          "repositories": "public repositories",
-          "npm": "packages on npm",
-          "downloads": "npm downloads last week",
-          "license": "{license} on every open-source library"
-        },
         "filmClose": "Close the film",
         "fig": {
           "figLabel": "Fig. 1, a checked file and Krizaka's film",
@@ -240,31 +228,15 @@
         "figure": "Fig. {fig} — {caption}"
       },
       "engine": {
-        "number": "§ 2",
-        "title": "Sovkora, our first build.",
-        "lead": "The engine everything started from. Every product runs on it.",
-        "givesLabel": "What Sovkora provides",
-        "powers": "It powers",
-        "gives": {
-          "models": {
-            "name": "Models",
-            "line": "Yours, behind one pipeline."
-          },
-          "pipeline": {
-            "name": "Pipeline",
-            "line": "Every request is a traced run."
-          },
-          "analytics": {
-            "name": "Analytics",
-            "line": "Results and usage analytics come back to the product."
-          }
-        },
-        "line": "One pipeline, your models, your network. Each product calls it for its AI and never a model directly."
+        "number": "§ 4",
+        "title": "Your documents stay in Canada, every check is traced.",
+        "lead": "Powered by Sovkora, our engine: it runs our products' AI and keeps a trace of every run.",
+        "site": "See Sovkora's site"
       },
       "products": {
-        "number": "§ 3",
-        "title": "Then the products: management and compliance tools.",
-        "lead": "Verikora checks the paperwork: leases, contracts, invoices. Folioviv runs a service business: bookings, invoices, GST and QST. Each one lives on its own site, with its source on GitHub.",
+        "number": "§ 2",
+        "title": "How Verikora checks a file.",
+        "lead": "Three steps, and a person always decides. Our other management and compliance tools follow: Folioviv, then Kridoc.",
         "engineUse": "On Sovkora · {use}",
         "enginePlanned": "On Sovkora, planned · {use}",
         "flow": {
@@ -315,7 +287,22 @@
             "figure": "A sample document, as Kridoc will keep it. Demo data."
           }
         },
-        "latestValue": "{version} · {date}"
+        "latestValue": "{version} · {date}",
+        "stepsLabel": "The three steps of a Verikora check",
+        "steps": {
+          "drop": {
+            "title": "You drop in the papers",
+            "body": "Pay stubs, lease, statements: the papers of the file, as you receive them."
+          },
+          "read": {
+            "title": "Verikora reads every page",
+            "body": "It redoes the sums and compares the papers with each other: gross pay minus deductions must give the net."
+          },
+          "report": {
+            "title": "The report cites its pages",
+            "body": "Every finding shows the page it comes from. Verikora decides nothing: you decide."
+          }
+        }
       },
       "stack": {
         "facts": {
@@ -378,54 +365,13 @@
         }
       },
       "services": {
-        "number": "§ 4",
-        "title": "For companies: Krizaka Entreprise.",
-        "lead": "What we build for our products, we can build for you. Tell us about your project.",
-        "cta": "Discover Krizaka Entreprise",
-        "parts": {
-          "modules": {
-            "title": "Custom modules",
-            "line": "A module for your case, on our open building blocks, in a repository you can read."
-          },
-          "ai": {
-            "title": "Sovereign AI",
-            "line": "Sovkora on your servers or in Canada, with your models and every run traced."
-          },
-          "maintenance": {
-            "title": "Maintenance",
-            "line": "Updates and fixes, by the team that built it."
-          }
-        },
-        "partCta": "Learn more"
-      },
-      "direction": {
-        "number": "§ 5",
-        "title": "Where we are going.",
-        "lead": "In order and without dates: we announce a thing when it runs.",
-        "story": "Read our story",
-        "steps": {
-          "now": {
-            "title": "Now",
-            "body": "{names} are built in the open: public code, sign-up closed."
-          },
-          "next": {
-            "title": "Next",
-            "body": "The first customers: Verikora's verification for companies, Folioviv's shops and Krizaka Entreprise."
-          },
-          "later": {
-            "title": "Later",
-            "body": "More useful products, on the same open stack."
-          }
-        },
-        "labels": {
-          "done": "done",
-          "current": "in progress",
-          "upcoming": "next",
-          "error": "stopped"
-        }
+        "number": "§ 6",
+        "title": "Your project, on our building blocks.",
+        "lead": "Custom modules, AI on your servers or in Canada, maintenance: one offer, Krizaka Entreprise.",
+        "cta": "Discover Krizaka Entreprise"
       },
       "principles": {
-        "number": "§ 6",
+        "number": "§ 3",
         "eyebrow": "How we work",
         "title": "Six rules, checked rather than promised.",
         "folio": "page {page} of {total}",
@@ -498,6 +444,18 @@
           "paid": "Paid",
           "run": "run {run}"
         }
+      },
+      "about": {
+        "number": "§ 5",
+        "title": "Who we are.",
+        "lead": "A company in Montréal, Québec. We build our software in the open: the code is public, every release is dated in the release notes.",
+        "story": "Read our story",
+        "changelog": "The release notes"
+      },
+      "contact": {
+        "number": "§ 7",
+        "title": "A file to check? Write to us.",
+        "lead": "Tell us what you receive and what you check today. We reply within two business days."
       }
     },
     "footer": {
@@ -973,7 +931,33 @@
         "reference": {
           "title": "Reference: every package and repository",
           "lead": "The registries, read when the site is built. Search, or filter by registry and family."
-        }
+        },
+        "direction": {
+          "title": "Where we are going.",
+          "lead": "In order and without dates: we announce a thing when it runs.",
+          "story": "Read our story",
+          "steps": {
+            "now": {
+              "title": "Now",
+              "body": "{names} are built in the open: public code, sign-up closed."
+            },
+            "next": {
+              "title": "Next",
+              "body": "The first customers: Verikora's verification for companies, Folioviv's shops and Krizaka Entreprise."
+            },
+            "later": {
+              "title": "Later",
+              "body": "More useful products, on the same open stack."
+            }
+          },
+          "labels": {
+            "done": "done",
+            "current": "in progress",
+            "upcoming": "next",
+            "error": "stopped"
+          }
+        },
+        "statsDownloads": "more than {repositories} open-source repositories · more than {npm} npm packages · more than {downloads} npm downloads last week · Apache-2.0"
       }
     },
     "notFound": {
