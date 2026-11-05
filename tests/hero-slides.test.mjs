@@ -78,3 +78,16 @@ test("each slide's words exist in both languages, with the commercial names only
     assert.deepEqual(Object.keys(slides).sort(), HERO_SLIDES.map((s) => s.id).sort(), `${l}: no word without a slide`);
   }
 });
+
+test("Fig. 1b is the applicant-file recording of the product, its words in both languages say demo data and no code name", () => {
+  const slide = HERO_SLIDES.find((s) => s.id === "applicant-file");
+  assert.equal(slide?.fig, "1b");
+  assert.equal(slide?.kind, "recording");
+  assert.equal(slide?.journey, "applicant-file-open");
+  for (const lang of ["en", "fr"]) {
+    const words = JSON.parse(read(`messages/${lang}.json`)).site.home.hero.slides["applicant-file"];
+    assert.match(words.caption, /Camille Fictif/);
+    assert.match(words.caption, /Demo data|Données de démonstration/);
+    assert.doesNotMatch(JSON.stringify(words), /yomizaka/i);
+  }
+});
