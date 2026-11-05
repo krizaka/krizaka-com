@@ -167,6 +167,7 @@ export default async function DocsPage({ params }: Props) {
           npm: fmt.format(floorFigure(npmPackages().length)),
         })}
       </p>
+      <p className="os-stats">{h.quality}</p>
 
       <Section id="how-it-fits" eyebrow={t.fits.eyebrow} title={t.fits.title} lead={h.fitsNote} reveal divider>
         <HowItFits layers={layers} w={t.fits} />
