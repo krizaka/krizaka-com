@@ -1,0 +1,595 @@
+{
+  "runs": [
+    {
+      "shot": "sovkora/neon",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 5,
+      "credits": 140,
+      "usd": 1.4,
+      "wallSeconds": 135,
+      "task": "608e9e23-080a-4ef0-add5-e885909353a4",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:20:00.000Z",
+      "note": "pilot, seed 7; the segment crossed two takes and only the continuous take (0.6 s to 3.9 s) was expanded, hence one take per shot from here on",
+      "balanceDelta": 140
+    },
+    {
+      "shot": "hero/ink",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2,
+      "credits": 56,
+      "usd": 0.56,
+      "wallSeconds": 92,
+      "task": "c6a1f79c-8f16-48be-aac7-1dc50a0983f3",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:15:15.028Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "hero/notebook",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.2,
+      "credits": 62,
+      "usd": 0.62,
+      "wallSeconds": 84,
+      "task": "2a2ccc38-f031-46a8-a14a-35364a4a689f",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:16:48.517Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "hero/entreprise",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.3,
+      "credits": 65,
+      "usd": 0.65,
+      "wallSeconds": 87,
+      "task": "857611cd-94e3-491d-8659-748a48b8b864",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:18:14.800Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "hero/signature",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2,
+      "credits": 56,
+      "usd": 0.56,
+      "wallSeconds": 78,
+      "task": "23dee38d-bb2d-4990-94cb-00364fb937a0",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:19:43.351Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "hero/bridge",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.8,
+      "credits": 79,
+      "usd": 0.79,
+      "wallSeconds": 129,
+      "task": "99f907d5-0681-409d-a3db-0c842a4a0942",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:21:03.666Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "sovkora/duck",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 3.4,
+      "credits": 96,
+      "usd": 0.96,
+      "wallSeconds": 101,
+      "task": "fec6d3af-cb6d-49c0-afb6-6042fc5bbc4f",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:23:14.624Z",
+      "balanceDelta": 84
+    },
+    {
+      "shot": "sovkora/rails",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2,
+      "credits": 56,
+      "usd": 0.56,
+      "wallSeconds": 67,
+      "task": "8dd934fd-eff6-490d-ba21-bd5061566d61",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:24:56.805Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "sovkora/pigeon",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 5.4,
+      "credits": 152,
+      "usd": 1.52,
+      "wallSeconds": 189,
+      "task": "d10151b4-2134-4027-a699-384f19438277",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:26:43.676Z",
+      "balanceDelta": 140
+    },
+    {
+      "shot": "verikora/rag",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.1,
+      "credits": 59,
+      "usd": 0.59,
+      "wallSeconds": 122,
+      "task": "522d4b2c-5275-4b23-9b15-3b0bf3acc5ec",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:30:18.318Z",
+      "balanceDelta": 65
+    },
+    {
+      "shot": "verikora/owl",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2,
+      "credits": 56,
+      "usd": 0.56,
+      "wallSeconds": 75,
+      "task": "eb0500e5-0385-426b-b70b-411693aee924",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:32:22.439Z",
+      "balanceDelta": 62
+    },
+    {
+      "shot": "verikora/loupe",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.6,
+      "credits": 73,
+      "usd": 0.73,
+      "wallSeconds": 173,
+      "task": "c65365b8-74b1-496e-8221-75f6bbe4d527",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:33:39.240Z",
+      "balanceDelta": 92
+    },
+    {
+      "shot": "verikora/sign",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.8,
+      "credits": 79,
+      "usd": 0.79,
+      "wallSeconds": 265,
+      "task": "4035fd82-c48b-405c-bb89-0178efd8314a",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:36:34.424Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "verikora/read-first",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.4,
+      "credits": 68,
+      "usd": 0.68,
+      "wallSeconds": 304,
+      "task": "094f3ee0-da0c-42d6-926b-218a050b3c44",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:41:00.989Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "hero/ink",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2,
+      "credits": 56,
+      "usd": 0.56,
+      "wallSeconds": 100,
+      "task": "6ab02680-81a1-4230-84fc-40d246138aaa",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:50:12.656Z",
+      "balanceDelta": 196
+    },
+    {
+      "shot": "sovkora/neon",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 5,
+      "credits": 140,
+      "usd": 1.4,
+      "wallSeconds": 132,
+      "task": "78e3653c-ad37-4fb6-8f0a-52f5f4de59ee",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:50:17.745Z",
+      "balanceDelta": 196
+    },
+    {
+      "shot": "hero/notebook",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.2,
+      "credits": 62,
+      "usd": 0.62,
+      "wallSeconds": 88,
+      "task": "b0537601-01f0-464f-8efe-5d34d4a032a5",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:51:54.598Z",
+      "balanceDelta": 140
+    },
+    {
+      "shot": "sovkora/duck",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 3.4,
+      "credits": 96,
+      "usd": 0.96,
+      "wallSeconds": 95,
+      "task": "fd79dbc2-946e-4e6f-8eba-a70100ce0c38",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:52:32.349Z",
+      "balanceDelta": 140
+    },
+    {
+      "shot": "hero/entreprise",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.3,
+      "credits": 65,
+      "usd": 0.65,
+      "wallSeconds": 76,
+      "task": "835ea7c7-0f68-4e13-8885-89a41cc968f1",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:53:24.111Z",
+      "balanceDelta": 112
+    },
+    {
+      "shot": "sovkora/rails",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2,
+      "credits": 56,
+      "usd": 0.56,
+      "wallSeconds": 67,
+      "task": "1566fa0c-8649-4bd9-af3f-b7afe39f5ad9",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:54:08.898Z",
+      "balanceDelta": 112
+    },
+    {
+      "shot": "hero/signature",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.2,
+      "credits": 62,
+      "usd": 0.62,
+      "wallSeconds": 107,
+      "task": "887953e4-34aa-4232-b873-d097ed329c19",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:54:41.708Z",
+      "balanceDelta": 196
+    },
+    {
+      "shot": "hero/bridge",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.8,
+      "credits": 79,
+      "usd": 0.79,
+      "wallSeconds": 230,
+      "task": "b89c58e3-edd1-44d3-9e29-60a95939d4af",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:56:31.065Z",
+      "balanceDelta": 56
+    },
+    {
+      "shot": "sovkora/pigeon",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 5.4,
+      "credits": 152,
+      "usd": 1.52,
+      "wallSeconds": 311,
+      "task": "038866db-2823-473f-9903-5d0d49c9bddf",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T21:55:21.902Z",
+      "balanceDelta": 252
+    },
+    {
+      "shot": "verikora/rag",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.1,
+      "credits": 59,
+      "usd": 0.59,
+      "balanceDelta": 56,
+      "wallSeconds": 118,
+      "task": "1a1603b7-ba56-4aba-b1c4-dbc11ecee0bf",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:00:24.633Z"
+    },
+    {
+      "shot": "verikora/owl",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2,
+      "credits": 56,
+      "usd": 0.56,
+      "balanceDelta": 56,
+      "wallSeconds": 92,
+      "task": "652d7829-fd3a-4eab-bced-41847047c435",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:02:24.395Z"
+    },
+    {
+      "shot": "verikora/loupe",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.2,
+      "credits": 62,
+      "usd": 0.62,
+      "balanceDelta": 56,
+      "wallSeconds": 108,
+      "task": "29494c51-de08-4a87-a197-271de965d1e9",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:03:58.267Z"
+    },
+    {
+      "shot": "verikora/sign",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.8,
+      "credits": 79,
+      "usd": 0.79,
+      "balanceDelta": 56,
+      "wallSeconds": 100,
+      "task": "988705f5-830d-43e8-a64c-e27e476f757e",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:05:49.258Z"
+    },
+    {
+      "shot": "verikora/read-first",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.4,
+      "credits": 68,
+      "usd": 0.68,
+      "balanceDelta": 689,
+      "wallSeconds": 288,
+      "task": "63a66f4c-b7df-4027-aef9-645b3151033a",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:07:32.439Z"
+    },
+    {
+      "shot": "folioviv/first-client",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.4,
+      "credits": 68,
+      "usd": 0.68,
+      "balanceDelta": 758,
+      "wallSeconds": 84,
+      "task": "9c02bce9-6fca-4ad9-9762-c9339eddc1df",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:13:15.934Z"
+    },
+    {
+      "shot": "folioviv/sign",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.9,
+      "credits": 82,
+      "usd": 0.82,
+      "balanceDelta": 468,
+      "wallSeconds": 84,
+      "task": "f9906bec-e37f-440c-a17c-24ecb3193a15",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:13:26.287Z"
+    },
+    {
+      "shot": "folioviv/evening",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 3.4,
+      "credits": 96,
+      "usd": 0.96,
+      "balanceDelta": 702,
+      "wallSeconds": 92,
+      "task": "624cad1e-12a6-44c1-b42c-82389c379bc9",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:13:19.496Z"
+    },
+    {
+      "shot": "folioviv/morning",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 2.2,
+      "credits": 62,
+      "usd": 0.62,
+      "balanceDelta": 964,
+      "wallSeconds": 124,
+      "task": "87386b3c-e76a-4a89-a2d9-e88cd5baf74f",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:13:12.433Z"
+    },
+    {
+      "shot": "folioviv/home",
+      "take": 1,
+      "model": "aleph2",
+      "secondsSent": 4.4,
+      "credits": 124,
+      "usd": 1.24,
+      "balanceDelta": 768,
+      "wallSeconds": 198,
+      "task": "6ab42766-4f57-4e6a-9dc7-a10bb453cd0f",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:13:27.155Z"
+    },
+    {
+      "shot": "folioviv/evening",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 3.4,
+      "credits": 96,
+      "usd": 0.96,
+      "balanceDelta": 252,
+      "wallSeconds": 83,
+      "task": "f1328e9e-4aba-4270-9024-34a510e362ef",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:17:46.229Z"
+    },
+    {
+      "shot": "folioviv/sign",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.9,
+      "credits": 82,
+      "usd": 0.82,
+      "balanceDelta": 168,
+      "wallSeconds": 83,
+      "task": "64be51b1-256e-49da-9e6a-b18cb68b394b",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:17:51.406Z"
+    },
+    {
+      "shot": "folioviv/first-client",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.4,
+      "credits": 68,
+      "usd": 0.68,
+      "balanceDelta": 308,
+      "wallSeconds": 92,
+      "task": "bba0484a-6594-4685-85ae-8a722dccef25",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:17:43.054Z"
+    },
+    {
+      "shot": "folioviv/morning",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 2.2,
+      "credits": 62,
+      "usd": 0.62,
+      "balanceDelta": 364,
+      "wallSeconds": 108,
+      "task": "3789cd92-d388-4c75-92c5-e1cf88339b68",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:17:40.860Z"
+    },
+    {
+      "shot": "folioviv/home",
+      "take": 2,
+      "model": "aleph2",
+      "secondsSent": 4.4,
+      "credits": 124,
+      "usd": 1.24,
+      "balanceDelta": 112,
+      "wallSeconds": 181,
+      "task": "1791d3cd-956b-49a9-b472-bb823b55c1ee",
+      "status": "SUCCEEDED",
+      "at": "2026-11-05T22:17:55.144Z"
+    }
+  ],
+  "chosen": {
+    "hero/ink": {
+      "take": 2,
+      "why": "take 1 rewrote the title « bleue » as « bluee »; take 2 keeps it letter for letter (the prompt now says so)"
+    },
+    "hero/notebook": {
+      "take": 1,
+      "why": "warmer lamp light, coherent with the reels; take 2 turned the window blue"
+    },
+    "hero/entreprise": {
+      "take": 2,
+      "why": "the server racks fill the left side; take 1 left it dark"
+    },
+    "hero/signature": {
+      "take": 2,
+      "why": "re-cut from 15.4 s: take 1 opened on the crossfade of the previous take"
+    },
+    "hero/bridge": {
+      "take": 1,
+      "why": "the bridge spans the whole frame"
+    },
+    "sovkora/neon": {
+      "take": 1,
+      "why": "night throughout; take 2 added a blue-hour sky that breaks the look"
+    },
+    "sovkora/duck": {
+      "take": 2,
+      "why": "the window opens on the river at blue hour, the duck and the lamp intact"
+    },
+    "sovkora/rails": {
+      "take": 1,
+      "why": "darker, the city lights blurred like the reel; take 2 nearly the same"
+    },
+    "sovkora/pigeon": {
+      "take": 1,
+      "why": "the city lit and wider; take 2 hid half the skyline behind a shed"
+    },
+    "verikora/rag": {
+      "take": 1,
+      "why": "warm desk light, coherent with the owl's room"
+    },
+    "verikora/owl": {
+      "take": 2,
+      "why": "the shelves are lit around the owl; take 1 kept them dark"
+    },
+    "verikora/loupe": {
+      "take": 1,
+      "why": "keeps the title VERIKORA (trimmed after its opening crossfade); take 2, re-cut from 14 s, lost the title"
+    },
+    "verikora/sign": {
+      "take": 1,
+      "why": "the violet lamp of the reel; take 2 drifted to pink"
+    },
+    "folioviv/morning": {
+      "take": 1,
+      "why": "warmer morning light"
+    },
+    "folioviv/first-client": {
+      "take": 2,
+      "why": "the client is in the chair on the right; take 1 left the right side empty"
+    },
+    "folioviv/evening": {
+      "take": 1,
+      "why": "golden light only; take 2 added a blue window that breaks the hour"
+    },
+    "folioviv/home": {
+      "take": 1,
+      "why": "one canal; take 2 invented a second one"
+    },
+    "folioviv/sign": {
+      "take": 1,
+      "why": "the real mark only; take 2 invented a « FOLIOVIV » logo and lettering"
+    }
+  },
+  "rejected": [
+    {
+      "shot": "verikora/read-first",
+      "takes": [1, 2],
+      "why": "the take crossed the owl-eye shot (« Dépôt de garantie interdit », a legal claim we do not put on the home) and the hand shot was widened with visible seams: dropped from the carousel"
+    },
+    {
+      "shot": "folioviv/morning",
+      "task": "unlogged, 2026-11-05 ~21:46Z",
+      "why": "a first attempt stayed THROTTLED for 27 minutes; the script was stopped and now reports a take after 15 minutes. Its charge, if any, is in the balance check below, not in a run line"
+    }
+  ],
+  "checkpoint": {
+    "capCredits": 5000,
+    "note": "`credits` per run = the published rate for the seconds sent (an estimate); `balanceDelta` = the balance moved during the run, which counts the parallel runs of the same key; the real total is `balance`.",
+    "balance": {
+      "before": 5232,
+      "after": 781,
+      "at": "2026-11-05T22:40Z",
+      "note": "The key's balance moved by 4451 credits (5232 after the founder's top-up, 781 after the last take). Runway's own counter shows 39 Aleph 2.0 generations on the key that day and no other model: the 38 runs below plus the throttled attempt. So the real charge is 4451 credits (about 44.5 USD), more than the 3053 credits of the published rate (28 credits/s, 56 minimum) summed in `credits`: about 114 credits per generation. Generation stopped here, under the 5,000-credit checkpoint."
+    }
+  }
+}

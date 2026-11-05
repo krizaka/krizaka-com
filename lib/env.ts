@@ -61,6 +61,15 @@ export const ENV_VARS: readonly EnvVar[] = [
     doc: "Where the media (tours, gallery, home backdrop) are served from (`lib/cdn.ts`).",
   },
   {
+    name: "AI_VIDEO_API_KEY",
+    context: "AI",
+    need: "optional",
+    secret: true,
+    tooling: true,
+    schema: text,
+    doc: "Key of the company's video generation provider — renders the home's carousels (`scripts/home-showcase.mjs`). Never on the host.",
+  },
+  {
     name: "MEDIA_STORAGE_API_KEY",
     context: "MEDIA",
     need: "optional",

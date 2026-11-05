@@ -1,0 +1,125 @@
+/* The home's carousels (Showcase, ShowcaseCarousel; krizaka-internal#2450). Cahier: a framed plate with a thin rule and a
+   solid paper shadow, square corners, the caption under it in the typewriter face, the controls as quiet buttons. A phone
+   frame is 4:5, a wider screen's 16:9: each loads its own rendition. Slides change by a short fade of the ink; nothing
+   travels, and nothing moves under reduced motion. Tokens only. */
+
+.kz-show {
+  min-width: 0;
+  margin: 0;
+}
+.kz-show-stage {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--kz-surface-1);
+  border: 1px solid var(--kz-border-strong);
+  box-shadow: 4px 4px 0 var(--kz-border-strong);
+}
+@media (min-width: 640px) {
+  .kz-show-stage {
+    aspect-ratio: 16 / 9;
+  }
+}
+.kz-show-slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 600ms var(--kz-ease);
+}
+.kz-show-slide[data-active] {
+  opacity: 1;
+}
+.kz-show-media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The progress: one hairline per slide at the foot of the plate; the current one fills over its time on screen, and
+   stops with the carousel. Decorative: the counter says where we are. */
+.kz-show-ticks {
+  position: absolute;
+  inset: auto 12px 10px;
+  display: flex;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  pointer-events: none;
+}
+.kz-show-ticks li {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--kz-text-on-media) 30%, transparent);
+}
+.kz-show-ticks li[data-state="done"] {
+  background: var(--kz-text-on-media);
+}
+.kz-show-ticks li span {
+  position: absolute;
+  inset: 0;
+  background: var(--kz-text-on-media);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+.kz-show[data-advancing] .kz-show-ticks li span {
+  animation: kz-show-fill 6500ms linear forwards;
+}
+
+@keyframes kz-show-fill {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.kz-show-bar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+}
+.kz-show-caption {
+  margin: 0;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--kz-text-secondary);
+  overflow-wrap: anywhere;
+}
+.kz-show-count {
+  display: inline-block;
+  margin-right: 10px;
+  color: var(--kz-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.kz-show-controls {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+.kz-show-text {
+  margin-top: 10px;
+}
+.kz-show-text li {
+  margin: 4px 0;
+}
+.kz-show-text p {
+  margin: 8px 0 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kz-show-slide {
+    transition: none;
+  }
+  .kz-show-ticks li span {
+    animation: none;
+  }
+}

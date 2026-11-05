@@ -1,0 +1,256 @@
+{
+  "$comment": "The home's four carousels as a small film production (krizaka-internal#2450): one look across every shot (night or golden-hour Montréal, warm lamp light, brick, blue ink, the feather pen, film grain, the birds as the brand's characters), the founder's published reels as the source. Each shot is cut from its reel on one continuous take (a cut inside a take is not expanded by the model), then expanded to 16:9 by Runway Aleph 2.0 (video to video, targetAspectRatio 16:9) with the shared look prompt plus the shot's own. The phone plays the original vertical cut, so nothing is invented there. Re-run: node scripts/home-showcase.mjs render <shot|carousel> --env-file <env>; then upload with scripts/cdn-assets.mjs. Takes and costs: content/films/home-showcase.log.json. Titles on the image are the reels' own words, already published on @krizakahq; no new claim is written on a picture. Besides the reels' shots, each carousel holds clips already in 16:9 (« clips »): the brand film, what Sovkora generated for the blog, and the company media library (public use waits on the founder's annex B, flagged « library »). Their phone rendition is a 4:5 crop placed on the subject (« focus », 0 = left, 0.5 = centre).",
+  "look": "Expand the frame to a wide cinematic 16:9 shot. Continue the scene naturally on both sides with the same light, palette, lens, depth of field and 35 mm film grain: Montréal, dark and warm, lamp light or blue hour, real textures. Keep everything already in the frame exactly as it is, including the centred title text and the small mono line at the top. Add no new text, no logo, no sign, no screen, no face, no person.",
+  "model": "aleph2",
+  "sources": "~/Documents/krizaka/data/reels",
+  "carousels": {
+    "hero": {
+      "idea": "Krizaka shows its work: the pen, the blue ink, the brick and the river of Montréal.",
+      "order": ["film", "ink", "notebook", "river", "entreprise", "signature", "bridge"],
+      "shots": [
+        {
+          "id": "ink",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_05_l-encre-bleue.mp4",
+          "from": 3.6,
+          "to": 5.6,
+          "idea": "a fountain pen lays blue ink on paper",
+          "prompt": "Extend the paper desk and the soft window light; keep the pen and the hand. The blue title on the paper reads exactly « à l'encre bleue. » and must stay letter for letter as in the source, unchanged."
+        },
+        {
+          "id": "notebook",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_05_l-encre-bleue.mp4",
+          "from": 18.6,
+          "to": 20.8,
+          "idea": "the feather on the blue notebook, KRIZAKA",
+          "prompt": "Extend the dark wooden desk by the window, blue hour light, a steaming cup far on one side."
+        },
+        {
+          "id": "entreprise",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_06_dans-vos-murs.mp4",
+          "from": 8.9,
+          "to": 11.2,
+          "idea": "servers in a brick room, KRIZAKA ENTREPRISE",
+          "prompt": "Extend the dim brick server room, cables and small blue status lights, a warm lamp in the back."
+        },
+        {
+          "id": "signature",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_06_dans-vos-murs.mp4",
+          "from": 15.4,
+          "to": 17.6,
+          "idea": "a hand signs at the lamp, parlons-en",
+          "prompt": "Extend the wooden desk under the brass lamp, papers and an old key."
+        },
+        {
+          "id": "bridge",
+          "reel": "serie3_le_bleu_voyage/KRIZAKA_BLEU_04_montreal.mp4",
+          "from": 19.6,
+          "to": 22.4,
+          "idea": "the Jacques-Cartier bridge in blue at night, ice on the river",
+          "prompt": "Extend the river with floating ice and the blue-lit bridge spanning the whole frame, light snow."
+        }
+      ],
+      "clips": [
+        {
+          "id": "film",
+          "src": "https://krizaka-assets.b-cdn.net/org/v1/films/montrer-son-travail/montrer-son-travail-loop.4ee62e9a85.mp4",
+          "from": 0,
+          "to": 10,
+          "focus": 0.5,
+          "idea": "the brand film « Montrer son travail », made with Sovkora: the owl, the beaver and the duck at work",
+          "film": true
+        },
+        {
+          "id": "river",
+          "src": "media-library:montreal-fleuve-aube-oiseaux-01.mp4",
+          "from": 0,
+          "to": 8,
+          "focus": 0.5,
+          "idea": "dawn over the river and Mont Royal, a flight of birds",
+          "library": true
+        }
+      ]
+    },
+    "sovkora": {
+      "idea": "The engine stays with you: the duck builds, the pigeon delivers, the neon says the name.",
+      "order": ["neon", "duck", "tea", "rails", "pigeon", "snow", "blue", "cable"],
+      "shots": [
+        {
+          "id": "neon",
+          "reel": "KRIZAKA_REEL2_souverain.mp4",
+          "from": 12.3,
+          "to": 17.3,
+          "trim": [0.6, 3.9],
+          "idea": "the orange SOVKORA neon in a wet brick alley",
+          "prompt": "Continue the dark rainy brick alley on both sides, wet cobblestones reflecting the orange neon sign, steam."
+        },
+        {
+          "id": "duck",
+          "reel": "KRIZAKA_REEL2_souverain.mp4",
+          "from": 21.6,
+          "to": 25.0,
+          "idea": "the duck at the laptop by the lamp: your data stays with you",
+          "prompt": "Extend the wooden desk by the rainy window, the warm lamp, the city lights outside."
+        },
+        {
+          "id": "rails",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_03_le-protocole.mp4",
+          "from": 4.6,
+          "to": 6.6,
+          "idea": "two rails cross at night, M·C·P",
+          "prompt": "Extend the wet railway tracks and the crossing at night, cold blue light."
+        },
+        {
+          "id": "pigeon",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_03_le-protocole.mp4",
+          "from": 15.6,
+          "to": 21.0,
+          "idea": "the pigeon delivers, every time",
+          "prompt": "Extend the misty rail yard and the blue-hour Montréal skyline on both sides."
+        }
+      ],
+      "clips": [
+        {
+          "id": "tea",
+          "src": "https://krizaka-assets.b-cdn.net/site/blog/shared/clip-tea-pour.8e75296dbd.mp4",
+          "from": 0,
+          "to": 5,
+          "focus": 0.3,
+          "idea": "mint tea poured from high, generated with Sovkora (Wan 2.2)"
+        },
+        {
+          "id": "snow",
+          "src": "https://krizaka-assets.b-cdn.net/site/blog/shared/clip-montreal.b4afdc844b.mp4",
+          "from": 0,
+          "to": 5,
+          "focus": 0.5,
+          "idea": "a snowy Montréal lane at night, generated with Sovkora (Wan 2.2)"
+        },
+        {
+          "id": "blue",
+          "src": "https://krizaka-assets.b-cdn.net/site/blog/shared/clip-maroc.9a0d086504.mp4",
+          "from": 0,
+          "to": 5,
+          "focus": 0.5,
+          "idea": "a blue street at dusk, generated with Sovkora (Wan 2.2)"
+        },
+        {
+          "id": "cable",
+          "src": "https://krizaka-assets.b-cdn.net/site/blog/shared/clip-grenoble.351464f2cb.mp4",
+          "from": 0,
+          "to": 5,
+          "focus": 0.5,
+          "idea": "cable cars over the Alps at dusk, generated with Sovkora (Wan 2.2)"
+        }
+      ]
+    },
+    "verikora": {
+      "idea": "Read before you sign: the owl reads, every finding cites its page.",
+      "order": ["owl", "rag", "loupe", "signature", "sign", "files"],
+      "shots": [
+        {
+          "id": "rag",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_02_la-memoire.mp4",
+          "from": 5.0,
+          "to": 7.1,
+          "idea": "a printed page close up, R·A·G",
+          "prompt": "Extend the printed page and the desk under soft light."
+        },
+        {
+          "id": "owl",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_02_la-memoire.mp4",
+          "from": 11.1,
+          "to": 13.1,
+          "idea": "the owl at the window: every finding cites its passage",
+          "prompt": "Extend the dark room and the blue window around the owl, shelves of old books."
+        },
+        {
+          "id": "loupe",
+          "reel": "serie2_sous_le_capot/KRIZAKA_S2_02_la-memoire.mp4",
+          "from": 13.4,
+          "to": 16.0,
+          "idea": "a magnifier over papers at a rainy window, VERIKORA",
+          "prompt": "Extend the desk with papers and the rainy window with city lights.",
+          "trim": [0.5, 2.6]
+        },
+        {
+          "id": "sign",
+          "reel": "KRIZAKA_REEL4_lis-avant-de-signer.mp4",
+          "from": 15.6,
+          "to": 18.4,
+          "idea": "a lease on the desk under the lamp: signer ?",
+          "prompt": "Extend the dark desk, the violet lamp light and the window."
+        }
+      ],
+      "clips": [
+        {
+          "id": "signature",
+          "src": "media-library:signature-plume-papier-01.mp4",
+          "from": 0,
+          "to": 4,
+          "focus": 0.55,
+          "idea": "a feather pen signs a sheet",
+          "library": true
+        },
+        {
+          "id": "files",
+          "src": "media-library:bureau-dossiers-lampe-nuit-01.mp4",
+          "from": 0,
+          "to": 6,
+          "focus": 0.5,
+          "idea": "the papers of a file on the desk at night",
+          "library": true
+        }
+      ]
+    },
+    "folioviv": {
+      "idea": "A small shop's day, from the first client to going home on time.",
+      "order": ["morning", "first-client", "evening", "home", "sign"],
+      "shots": [
+        {
+          "id": "morning",
+          "reel": "KRIZAKA_REEL3_le-castor.mp4",
+          "from": 0.1,
+          "to": 2.3,
+          "idea": "9:00, the beaver opens the barber shop",
+          "prompt": "Extend the sunny barber shop, chairs and the brick street through the window."
+        },
+        {
+          "id": "first-client",
+          "reel": "KRIZAKA_REEL3_le-castor.mp4",
+          "from": 2.6,
+          "to": 5.0,
+          "idea": "the first client",
+          "prompt": "Extend the warm wooden barber shop with its lamps and shelves."
+        },
+        {
+          "id": "evening",
+          "reel": "KRIZAKA_REEL3_le-castor.mp4",
+          "from": 14.6,
+          "to": 18.0,
+          "idea": "18:00, the floor is swept",
+          "prompt": "Extend the barber shop at the end of the day, chairs, arched windows, golden light."
+        },
+        {
+          "id": "home",
+          "reel": "KRIZAKA_REEL3_le-castor.mp4",
+          "from": 18.6,
+          "to": 23.0,
+          "idea": "you get home on time",
+          "prompt": "Extend the canal path at golden hour, brick factories and cyclists."
+        },
+        {
+          "id": "sign",
+          "reel": "KRIZAKA_REEL3_le-castor.mp4",
+          "from": 24.1,
+          "to": 27.0,
+          "idea": "the green mark by the barber pole, FOLIOVIV",
+          "prompt": "Extend the shop wall with the barber pole and the warm light."
+        }
+      ],
+      "clips": []
+    }
+  },
+  "libraries": {
+    "media-library": "~/Documents/krizaka/data/media-library/generated-2026-11"
+  }
+}

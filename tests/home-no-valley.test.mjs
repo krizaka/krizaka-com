@@ -11,7 +11,8 @@ const HOME = [
   "app/[locale]/page.tsx",
   "app/components/home/HomeHero.tsx",
   "app/components/home/ProductShowcase.tsx",
-  "app/components/home/ProductsLink.tsx",
+  "app/components/home/Showcase.tsx",
+  "app/components/home/ShowcaseCarousel.tsx",
 ];
 
 test("the home shows no decorative valley: no flock, no ambient loop, no taped photo", () => {
@@ -32,13 +33,18 @@ test("the valley's code is deleted, and nothing listens for its birds", () => {
     "lib/products-flock.ts",
   ])
     assert.ok(!existsSync(new URL(`../${file}`, import.meta.url)), `${file} is deleted`);
-  const link = strings("app/components/home/ProductsLink.tsx");
-  assert.ok(!link.includes("kz-products-point") && !link.includes("kz-products-lit"), "no event from a flock");
+  for (const file of HOME.slice(1)) {
+    const words = strings(file);
+    assert.ok(
+      !words.includes("kz-products-point") && !words.includes("kz-products-lit"),
+      `${file}: no event from a flock`,
+    );
+  }
   const css = cssSelectors("app/components/home/home.css");
   assert.ok(!css.some((s) => /\.kz-(band|ambient)/.test(s)), "no rule of the band left");
 });
 
-test("§ 3 opens on its heading: the products section starts with its Section", () => {
+test("§ 2 opens on its heading: the products section starts with its Section", () => {
   const src = read("app/components/home/ProductShowcase.tsx");
   assert.match(src, /<div id="products" className="kz-products">\s*<Section id="products-guide"/);
 });

@@ -25,7 +25,7 @@ test("built from the Cahier's blocks of @krizaka/ui, on lined paper with its mar
   assert.match(showcase, /<Section id="products-guide" number=\{s\.number\}[^>]*paper="lines"[^>]*margin/);
   assert.doesNotMatch(showcase, /eyebrow=/, "no overline above the heading");
   assert.doesNotMatch(showcase, /<ProductStatus status=/, "the status is a stamp, not an uppercase mono chip");
-  for (const l of ["en", "fr"]) assert.equal(messages[l].site.home.products.number, "§ 3", l);
+  for (const l of ["en", "fr"]) assert.equal(messages[l].site.home.products.number, "§ 2", l);
 });
 
 test("the stamp says the status honestly, from the data", () => {
@@ -46,15 +46,16 @@ test("each product wears its bird; the five birds of the film say their promise 
   }
 });
 
-test("every entry has a numbered figure caption and a sourced note, in both languages", () => {
+test("every entry has a numbered figure (its carousel) and a sourced note, in both languages", () => {
   for (const l of ["en", "fr"]) {
     const p = messages[l].site.home.products;
-    assert.deepEqual(Object.keys(p.figures).sort(), [...ids].sort(), `${l}: a caption per product`);
     assert.deepEqual(Object.keys(p.notes).sort(), [...ids].sort(), `${l}: a sourced note per product`);
   }
   const f = "app/components/home/ProductShowcase.tsx";
-  assert.ok(hasCode(f, "figure={figNo(s.figureLabel, p)}"), "the figure is numbered in the page's order");
-  assert.ok(hasCode(f, "`${label} ${sectionFigure(nOf(p))}`"), "after the hero's Fig. 1");
+  assert.ok(
+    hasCode(f, "fig={sectionFigure(nOf(p))}"),
+    "the carousel is numbered in the page's order, after the hero's Fig. 1",
+  );
   assert.ok(jsx(f).some((e) => "notes" in e.attrs));
 });
 

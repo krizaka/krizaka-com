@@ -1,21 +1,16 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { heroMarkOrder } from "../lib/home-sections.ts";
-const PRODUCTS = ["orazaka", "yomizaka", "akinaza"].map((id) => ({ id }));
+import { productOrder } from "../lib/home-sections.ts";
+const PRODUCTS = ["orazaka", "yomizaka", "akinaza", "kachizaka"].map((id) => ({ id }));
 
 const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"));
 
-// Oussama, 2026-10-22: the honest chronology. Orazaka first, then the products; 2026-11-04: in the order they go to market,
-// Verikora (yomizaka) first, Folioviv (akinaza) is paused.
-test("the marks under the hero: Orazaka, then Yomizaka, Akinaza, then the rest as listed", () => {
-  const ids = heroMarkOrder(PRODUCTS).map((p) => p.id);
-  assert.deepEqual(ids.slice(0, 3), ["orazaka", "yomizaka", "akinaza"]);
-  assert.deepEqual(
-    ids.slice(3),
-    PRODUCTS.map((p) => p.id).filter((id) => !ids.slice(0, 3).includes(id)),
-  );
-  assert.equal(ids.length, PRODUCTS.length);
+// Founder, 2026-11-05 (krizaka-internal#2450): the products in one row, Verikora, Sovkora in the centre, Folioviv, then the
+// rest as listed.
+test("the products' row: Verikora, Sovkora in the centre, Folioviv, then the rest as listed", () => {
+  const ids = productOrder(PRODUCTS).map((p) => p.id);
+  assert.deepEqual(ids, ["yomizaka", "orazaka", "akinaza", "kachizaka"]);
 });
 
 // krizaka-internal#2445: the hero speaks to the property manager, so its lead opens on Verikora and runs on Sovkora; the
@@ -26,33 +21,36 @@ test("the hero lead opens on Verikora, in short sentences, no em dash, Sovkora �
     assert.match(lead, /^Verikora .*Sovkora/s, `${l}: Verikora first, on Sovkora`);
     assert.doesNotMatch(lead, /Krizaka UI|Krizaka Java/, `${l}: the libraries live under Docs`);
     assert.doesNotMatch(lead, /moteur d'IA|AI engine/, `${l}: the engine is « ours », the word AI is not the pitch`);
-    assert.doesNotMatch(msg(l).site.home.engine.lead, /moteur d'IA|AI engine/, `${l}: § 2's lead`);
-    assert.match(msg(l).site.home.products.lead, /Verikora.*Folioviv/s, `${l}: § 3's lead, Verikora first`);
+    assert.match(
+      msg(l).site.home.products.lead,
+      /Verikora.*Sovkora.*Folioviv/s,
+      `${l}: § 2's lead, in the row's order`,
+    );
+    assert.doesNotMatch(msg(l).site.home.products.lead, /moteur d'IA|AI engine/, `${l}: § 2's lead`);
     assert.doesNotMatch(lead, /[\u2014\u2013]/, l);
     assert.ok(lead.split(/[.]\s/).length <= 3, `${l}: two or three sentences`);
   }
 });
 
-test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its request and answer as fig. 2, the duck, what it gives folded in", () => {
+test("Sovkora is an entry like the products: its specimen tag, its carousel as a numbered figure, the duck, what it gives folded in", () => {
   const src = readFileSync(new URL("../app/components/home/ProductShowcase.tsx", import.meta.url), "utf8");
-  const fn = src.slice(src.indexOf("function EngineEntry"), src.indexOf("function ProductEntry"));
-  assert.match(fn, /<SpecimenTag/, "the same tag as the products");
-  assert.match(fn, /\{\.\.\.tagProps\(p, t, locale\)\}/, "it wears the tag props the products wear");
+  const fn = src.slice(
+    src.indexOf("function ProductEntry"),
+    src.indexOf("/** The marks of the products in conception"),
+  );
+  assert.match(fn, /<SpecimenTag className="kz-entry-tag" \{\.\.\.tagProps\(p, t, locale\)\}>/, "the same tag for all");
   assert.match(src, /code: code\(p\)/, "its catalogue number is KZ-01 (first of lib/products.ts)");
-  assert.match(fn, /<ProductVisual id=\{p\.id\} name=\{p\.name\} \/>/, "a product moment, like the others (#683)");
-  assert.match(fn, /<Caption figure=\{figNo\(s\.figureLabel, p\)\}/, "the flow is a numbered figure like the others");
   assert.match(
     fn,
-    /className=\{cn\("kz-entry", "kz-entry-engine", "brand-" \+ p\.id\)\}/,
-    "same entry, its brand light",
+    /<Showcase carousel=\{carousel\} fig=\{sectionFigure\(nOf\(p\)\)\}/,
+    "a numbered carousel, like the others",
   );
-  assert.match(fn, /<details className="kz-entry-gives"/, "what it gives is folded in the tag");
+  assert.match(fn, /className=\{cn\("kz-entry", engine && "kz-entry-engine", "brand-" \+ p\.id\)\}/, "its brand light");
+  const gives = src.slice(src.indexOf("function EngineGives"), src.indexOf("function ProductEntry"));
+  assert.match(gives, /<details className="kz-entry-gives"/, "what it gives is folded in the tag");
   assert.match(fn, /<Bird bird=\{PRODUCT_BIRD\[p\.id\]\}/, "its mascot, the data's");
-  assert.doesNotMatch(fn, /kz-foundation/, "the foundation plate is gone");
-  assert.match(fn, /ENGINE_USES/, "what it powers is read from lib/engine-uses.ts");
-  assert.match(fn, /href=\{`#product-\$\{x\.id\}`\}/, "each powered product is a link to its entry");
-  assert.match(src, /href="#product-orazaka"/, "each product's card links back to the engine");
-  assert.doesNotMatch(fn, /webhook|run events|SSE/i, "only what runs is said (orazaka#189)");
+  assert.match(gives, /ENGINE_USES/, "what it powers is read from lib/engine-uses.ts");
+  assert.doesNotMatch(gives, /webhook|run events|SSE/i, "only what runs is said (orazaka#189)");
   assert.match(
     readFileSync(new URL("../lib/story.ts", import.meta.url), "utf8"),
     /orazaka: "duck"/,

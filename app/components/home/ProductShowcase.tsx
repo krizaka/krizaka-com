@@ -1,27 +1,21 @@
 /* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Cahier (krizaka-ui
-   ADR-004, #417; Oussama 2026-10-20: « our showcase: refined, less AI, very complete and designed »): the section is a page
-   of the field notebook, on lined paper with its red margin and its number (§ 2). The engine leads as entry KZ-01, in the
-   same form as the products: its plate (a request and its result, fig. 2: the hero's figure is fig. 1) and its specimen tag,
-   with the duck.
-   Each product is an entry of the field guide, in its own brand light (`.brand-<id>`), its tag and plate swapping sides
-   from one entry to the next (lib/home-sections.ts entrySide, krizaka-internal#683):
-   - a plate: one product moment, input then result, drawn like the app (visuals/, lazy, decorative, demo data said as
-     demo, still under reduced motion), and its numbered caption (`fig. n`, after the hero's: lib/home-sections.ts
-     sectionFigure); the engine's too (a request, its result);
+   ADR-004, #417): the section is a page of the field notebook, on lined paper with its red margin and its number (§ 2).
+   Since 2026-11-05 (founder, krizaka-internal#2450) the products stand in one row, Verikora · Sovkora · Folioviv, the
+   engine in the centre (lib/home-sections.ts PRODUCT_ORDER), and each entry pairs its specimen tag with a carousel of what
+   was made for it (Showcase, lib/home-showcase.ts: the reels' shots widened to 16:9, the clips Sovkora generated, the
+   brand film; a 4:5 rendition on phones). The tag and the carousel swap sides from one entry to the next, so Sovkora's
+   carousel is on the right (entrySide).
+   - a carousel: numbered figure (« Fig. 3b », after the hero's Fig. 1: lib/home-sections.ts sectionFigure), which advances
+     on its own with a visible pause, still under reduced motion, its text version on the server;
    - a specimen tag: its catalogue number, its name (plain text), its mark, its site (the commercial www domain) and its latest
      published release (read at build from the changelog data, lib/latest-release.ts), one action « See the site » (new tab) and
-     two quiet links, « Source » and « Release notes » (the changelog filtered on the product),
-     the stamp of its honest status (lib/products.ts, gated by the dev-preview checklists), its line, its bird (the film's
-     promise for the five birds of the film, the name for the family), what it runs on Orazaka (lib/engine-uses.ts,
-     « planned » where the call is not wired yet) and a note number;
+     two quiet links, « Source » and « Release notes », the stamp of its honest status (lib/products.ts), its line, its bird,
+     what it runs on Sovkora (lib/engine-uses.ts) — and for the engine, what it gives and the products it powers, folded;
    - the notes at the foot of the section: what each product really does, sourced;
-   - after the products, the ones in conception (lib/products-in-design.ts): an entry like the others, the tag on the right —
-     number, mark, name and « See the site » (its live coming-soon site), the stamp « In design », one line — beside a plate
-     that shows a sample document in demo data and the chip « Demo soon »; no version, no source, no bird, no note, no date,
-     no sign-up, since nothing is built.
-   Each entry is tied to its node in the flow (ProductsLink): in the middle of the screen or pointed at, its node lights,
-   and the reverse. Data: lib/products.ts, lib/engine-uses.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words:
-   site.home.products.*, site.products.*, site.story.world.cues. */
+   - after the products, the ones in conception (lib/products-in-design.ts): their tag and a sample document in demo
+     data, « Demo soon »; no version, no source, no bird, no note, no date, no sign-up, since nothing is built.
+   Data: lib/products.ts, lib/engine-uses.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words: site.home.products.*,
+   site.home.engine.*, site.products.*, site.story.world.cues. */
 
 import { ForwardIcon } from "@krizaka/icons";
 import { KridocLogo, ProductLogo } from "@krizaka/ui";
@@ -34,15 +28,15 @@ import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
 import { RELEASES } from "@/lib/changelog-data";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { entrySide, heroMarkOrder, sectionFigure } from "@/lib/home-sections";
+import { entrySide, productOrder, sectionFigure } from "@/lib/home-sections";
+import { showcaseOf } from "@/lib/home-showcase";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { IN_DESIGN, type ProductInDesign } from "@/lib/products-in-design";
 import { latestRelease } from "@/lib/latest-release";
 import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
 import ButtonLink from "../ButtonLink";
 import { GitHubMark } from "../brand/GitHubMark";
-import ProductsLink from "./ProductsLink";
-import ProductVisual from "./visuals/ProductVisual";
+import Showcase from "./Showcase";
 import "./visuals/visuals.css";
 
 /** The stamp of a status: `ok` only for what is out, `wip` in development, `construction` not open yet. */
@@ -60,10 +54,9 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
 
 /** The numbers of the notes follow the order of the page (1, 2, 3), never a gap; the figures follow the hero's Fig. 1 (2, 3, 4). */
-const SHOWN = heroMarkOrder(PRODUCTS);
+const SHOWN = productOrder(PRODUCTS);
 const nOf = (p: Product) => SHOWN.findIndex((x) => x.id === p.id) + 1;
 const fnRef = (p: Product) => <FootnoteRef n={nOf(p)} prefix="kz-note" />;
-const figNo = (label: string, p: Product) => `${label} ${sectionFigure(nOf(p))}`;
 
 /** The bird of a product and what it says: the film's promise for the five birds of the film, its name for the family. */
 function Bird({ bird, t }: Readonly<{ bird: StoryBird; t: TranslationDictionary }>) {
@@ -117,9 +110,6 @@ function Foot({ p, t, locale }: Readonly<{ p: Product; t: TranslationDictionary;
   );
 }
 
-/** Orazaka, the engine: entry KZ-01, in the same form as the products it powers (2026-10-30): its figure (the flow, fig. 2) and
- *  its specimen tag in its orange, wearing its bird (the duck builds). What it gives, what comes back and the products it powers are
- *  folded in the tag. Only what runs is said (results, analytics; run events and webhooks are orazaka#189). */
 /** What both kinds of entry (the engine, a product) put on their specimen tag: code, name, mark, status, dev fields, footer. */
 function tagProps(p: Product, t: TranslationDictionary, locale: string) {
   return {
@@ -132,57 +122,37 @@ function tagProps(p: Product, t: TranslationDictionary, locale: string) {
   };
 }
 
-function EngineEntry({ t, locale }: Readonly<{ t: TranslationDictionary; locale: string }>) {
-  const p = PRODUCTS.find((x) => x.id === ENGINE)!;
-  const s = t.site.home.products;
+/** What the engine gives and the products it powers, folded in its tag. Only what runs is said (results, analytics; run
+ *  events and webhooks are orazaka#189). */
+function EngineGives({ t }: Readonly<{ t: TranslationDictionary }>) {
   const e = t.site.home.engine;
   const eng = t.site.products.engine;
-  const powered = heroMarkOrder(PRODUCTS).filter((x) => x.id !== ENGINE);
+  const powered = SHOWN.filter((x) => x.id !== ENGINE);
   const back = [...new Set(ENGINE_USES.flatMap((u) => u.back))].map((k) => eng.back[k]).join(", ");
   return (
-    <ol className="kz-prod-list" aria-label={e.title}>
-      <li
-        id={"product-" + p.id}
-        className={cn("kz-entry", "kz-entry-engine", "brand-" + p.id)}
-        data-product={p.id}
-        data-side={entrySide(PRODUCTS, p.id)}
-      >
-        <figure className="kz-entry-plate">
-          <ProductVisual id={p.id} name={p.name} />
-          <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
-        </figure>
-        <SpecimenTag className="kz-entry-tag" {...tagProps(p, t, locale)}>
-          <p>
-            {e.line}
-            {fnRef(p)}
-          </p>
-          <details className="kz-entry-gives">
-            <summary>{e.givesLabel}</summary>
-            <ul>
-              {(["models", "pipeline", "analytics"] as const).map((k) => (
-                <li key={k}>
-                  <b>{e.gives[k].name}</b> <span>{e.gives[k].line}</span>
-                </li>
-              ))}
-            </ul>
-            <p>{format(eng.gets, { list: back })}</p>
-            <p className="kz-entry-powers">
-              {e.powers}{" "}
-              {powered.map((x) => {
-                const use = ENGINE_USES.find((u) => u.id === x.id);
-                return (
-                  <a key={x.id} href={`#product-${x.id}`} data-planned={use?.planned ? "" : undefined}>
-                    {x.name}
-                    {use?.planned && <em> ({eng.planned})</em>}
-                  </a>
-                );
-              })}
-            </p>
-          </details>
-          <Bird bird={PRODUCT_BIRD[p.id]} t={t} />
-        </SpecimenTag>
-      </li>
-    </ol>
+    <details className="kz-entry-gives">
+      <summary>{e.givesLabel}</summary>
+      <ul>
+        {(["models", "pipeline", "analytics"] as const).map((k) => (
+          <li key={k}>
+            <b>{e.gives[k].name}</b> <span>{e.gives[k].line}</span>
+          </li>
+        ))}
+      </ul>
+      <p>{format(eng.gets, { list: back })}</p>
+      <p className="kz-entry-powers">
+        {e.powers}{" "}
+        {powered.map((x) => {
+          const use = ENGINE_USES.find((u) => u.id === x.id);
+          return (
+            <a key={x.id} href={`#product-${x.id}`} data-planned={use?.planned ? "" : undefined}>
+              {x.name}
+              {use?.planned && <em> ({eng.planned})</em>}
+            </a>
+          );
+        })}
+      </p>
+    </details>
   );
 }
 
@@ -191,28 +161,31 @@ function ProductEntry({
   t,
   locale,
 }: Readonly<{ product: Product; t: TranslationDictionary; locale: string }>) {
-  const s = t.site.home.products;
+  const engine = p.id === ENGINE;
   const use = ENGINE_USES.find((u) => u.id === p.id);
   const useText = use ? t.site.products.engine.uses[use.id as keyof typeof t.site.products.engine.uses] : undefined;
+  const carousel = showcaseOf(p.name);
   return (
     <li
       id={"product-" + p.id}
-      className={cn("kz-entry", "brand-" + p.id)}
+      className={cn("kz-entry", engine && "kz-entry-engine", "brand-" + p.id)}
       data-product={p.id}
       data-side={entrySide(PRODUCTS, p.id)}
     >
-      <figure className="kz-entry-plate">
-        <ProductVisual id={p.id} name={p.name} />
-        <Caption figure={figNo(s.figureLabel, p)}>{s.figures[p.id]}</Caption>
-      </figure>
+      {carousel && (
+        <div className="kz-entry-plate">
+          <Showcase carousel={carousel} fig={sectionFigure(nOf(p))} locale={locale} />
+        </div>
+      )}
       <SpecimenTag className="kz-entry-tag" {...tagProps(p, t, locale)}>
         <p>
-          {t.site.products.cards[p.id].line}
+          {engine ? t.site.home.engine.line : t.site.products.cards[p.id].line}
           {fnRef(p)}
         </p>
+        {engine && <EngineGives t={t} />}
         {useText && (
           <p className="kz-entry-uses" data-planned={use?.planned ? "" : undefined}>
-            <a href="#product-orazaka">
+            <a href={`#product-${ENGINE}`}>
               {format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, {
                 use: useText,
               })}
@@ -298,35 +271,29 @@ function DesignEntry({
   );
 }
 
-/** « Orazaka, our first build »: the engine, its specimen tag beside its flow. The first chapter after the hero (§ 2). */
-export function EngineSection({ locale }: Readonly<{ locale: string }>) {
-  const t = getDictionary(locale);
-  const s = t.site.home.engine;
-  return (
-    <div id="engine" className="kz-products">
-      <Section id="engine-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
-        <EngineEntry t={t} locale={locale} />
-      </Section>
-    </div>
-  );
-}
-
-/** The products built on the engine (§ 3): one entry each, then the ones in conception. The valley plate left the home
- *  (2026-11-04, krizaka-internal#2229): it showed no action and no result, and gave the products other birds. */
+/** The products (§ 2): one row, Verikora · Sovkora · Folioviv, each with its carousel, then the ones in conception. */
 export default function ProductShowcase({ locale }: Readonly<{ locale: string }>) {
   const t = getDictionary(locale);
   const s = t.site.home.products;
-  const others = heroMarkOrder(PRODUCTS).filter((p) => p.id !== ENGINE);
   return (
     <div id="products" className="kz-products">
       <Section id="products-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
-        <ProductsLink className="kz-prod-solo">
-          <ol className="kz-prod-list" aria-label={s.title}>
-            {others.map((p) => (
-              <ProductEntry key={p.id} product={p} t={t} locale={locale} />
-            ))}
-          </ol>
-        </ProductsLink>
+        <ol className="kz-prod-row" aria-label={s.rowLabel}>
+          {SHOWN.map((p) => (
+            <li key={p.id} className={"brand-" + p.id} data-engine={p.id === ENGINE ? "" : undefined}>
+              <a href={`#product-${p.id}`}>
+                <ProductLogo id={p.id} size={28} animated={false} />
+                <span>{p.name}</span>
+                <small>{s.roles[p.id]}</small>
+              </a>
+            </li>
+          ))}
+        </ol>
+        <ol className="kz-prod-list" aria-label={s.title}>
+          {SHOWN.map((p) => (
+            <ProductEntry key={p.id} product={p} t={t} locale={locale} />
+          ))}
+        </ol>
         <ol className="kz-prod-list kz-prod-design" aria-label={s.inDesign.label}>
           {IN_DESIGN.map((p, i) => (
             <DesignEntry key={p.id} product={p} n={PRODUCTS.length + i + 1} t={t} />
