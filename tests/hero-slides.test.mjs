@@ -86,7 +86,9 @@ test("Fig. 1b is the applicant-file recording of the product, its words in both 
   assert.equal(slide?.journey, "applicant-file-open");
   for (const lang of ["en", "fr"]) {
     const words = JSON.parse(read(`messages/${lang}.json`)).site.home.hero.slides["applicant-file"];
-    assert.match(words.caption, /Camille Fictif/);
+    assert.match(words.caption, /pay stub|talon de paie/);
+    // The recording shows the pay stub of a co-applicant, not the applicant's own: the words name no person.
+    assert.doesNotMatch(JSON.stringify(words), /Camille|Thierry/);
     assert.match(words.caption, /Demo data|Données de démonstration/);
     assert.doesNotMatch(JSON.stringify(words), /yomizaka/i);
   }

@@ -242,9 +242,9 @@
             "caption": "Montrer son travail : le film de la marque, fait avec Sovkora, notre moteur"
           },
           "applicant-file": {
-            "title": "Vidéo : le talon de paie de Camille Fictif, lu et vérifié",
-            "alt": "Un gestionnaire d'immeuble ouvre le dossier d'une candidate, puis le rapport sur son talon de paie. Données de démonstration.",
-            "caption": "Le talon de paie de Camille Fictif, lu et vérifié. Données de démonstration."
+            "title": "Vidéo : un talon de paie du dossier, lu et vérifié",
+            "alt": "Un gestionnaire d'immeuble ouvre le dossier d'une candidate, puis le rapport sur un talon de paie du dossier. Données de démonstration.",
+            "caption": "Un talon de paie du dossier, lu et vérifié. Données de démonstration."
           }
         },
         "carousel": {
