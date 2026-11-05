@@ -195,7 +195,7 @@ test("the hero is « Fig. 1 »: each figure framed, captioned and followed by it
     /TapedPhoto|taped-photo|<Flock|AmbientLoop|HERO_FLOCK|<Mascot|kz-fig-bird/,
     "no polaroid, tape, live flock, valley loop or bird legend",
   );
-  assert.match(hero, /<div id="fig-1" className="kz-fig" role="group" aria-label=\{t\.fig\.figLabel\}>/);
+  assert.match(hero, /<figure id="fig-1" className="kz-fig" aria-label=\{t\.fig\.figLabel\}>/);
   assert.match(hero, /<HeroFigure slides=\{slides\} texts=\{texts\} \/>/);
   assert.ok(
     hero.indexOf("kz-home-actions") < hero.indexOf('id="fig-1"'),

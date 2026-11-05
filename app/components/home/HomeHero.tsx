@@ -166,9 +166,9 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
             </div>
             <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
           </div>
-          <div id="fig-1" className="kz-fig" role="group" aria-label={t.fig.figLabel}>
+          <figure id="fig-1" className="kz-fig" aria-label={t.fig.figLabel}>
             <HeroFigure slides={slides} texts={texts} />
-          </div>
+          </figure>
         </div>
       </Page>
     </SectionBackdrop>

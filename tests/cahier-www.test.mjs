@@ -11,7 +11,7 @@ const home = read("app/components/home/home.css");
 const msgs = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read("messages/fr.json")) };
 
 test("the first page is asymmetric: the words on the left, « Fig. 1 » on the right, never centred", () => {
-  assert.match(hero, /<div id="fig-1" className="kz-fig"/);
+  assert.match(hero, /<figure id="fig-1" className="kz-fig"/);
   assert.doesNotMatch(hero, /taped-photo|<TapedPhoto|<Flock|BirdPlate/);
   const inner = home.match(/\.kz-home-hero-inner \{([^}]*)\}/)?.[1] ?? "";
   assert.doesNotMatch(inner, /text-align: center|align-items: center/, "a centred hero");
