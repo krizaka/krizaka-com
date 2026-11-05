@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.0](https://github.com/krizaka/krizaka-com/compare/v0.25.0...v0.26.0) (2026-11-05)
+
+
+### Features
+
+* **home:** the showcase shows the film and its text version, the valley leaves the home ([#612](https://github.com/krizaka/krizaka-com/issues/612)) ([c5078a2](https://github.com/krizaka/krizaka-com/commit/c5078a2ab65e2a379b36d9be90559aadff293feb))
+
 ## [0.25.0](https://github.com/krizaka/krizaka-com/compare/v0.24.0...v0.25.0) (2026-11-05)
 
 
