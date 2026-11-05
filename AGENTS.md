@@ -87,7 +87,7 @@
   and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). Krizaka, the company,
   was born from that work: the Organization `owns` the products and sites, its `foundingDate` is unchanged. The marks row under the hero
   follows the story: Orazaka, Akinaza, Yomizaka, then the rest (`heroMarkOrder`). `/story` is in the footer, « Contact us »
-  in the bar. **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live on `/open-source` only (`StackTiles`, from `lib/stack.ts`). **`/open-source` lists only what is open source** — the platform's libraries, kits and tooling (`openSourceRepositories`, `packageRows(…, products)`); the products (Orazaka, Yomizaka, Akinaza) are *operated by Krizaka*, out of every list and table there, and no page here claims a licence for them (a legal session decides). The section numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed
+  in the bar. **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live on `/open-source` only (`StackTiles`, from `lib/stack.ts`). **`/open-source` lists only what is open source** — the platform's libraries, kits and tooling (`openSourceRepositories`, `packageRows(…, products)`); the products (Orazaka, Yomizaka, Akinaza) are _operated by Krizaka_, out of every list and table there, and no page here claims a licence for them (a legal session decides). The section numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed
   (`tests/home.test.mjs`, `tests/home-order.test.mjs`).
 
 - **Docs (founder, 2026-10-30; overrides every « Open source » line above).** The bar's centre is **Services then Docs**
@@ -221,13 +221,14 @@
   **one shape, the Button's default** (an 8 px radius, the radius of a field; never `shape="cut"` — the chamfer is retired,
   krizaka-ui#393 — and never `shimmer` or `magnetic`, deprecated no-ops); `lg` on a hero or a closing call, `md` in a
   section. No page-local button class (`.bp-btn`, `.org-btn`, `.st-btn`…).
+
 ## 4.1 The Krizaka page language — from `@krizaka/ui` blocks
 
-- **Every page is made of the page blocks of [`@krizaka/ui`](https://ui.krizaka.com) (category *Blocks*),
+- **Every page is made of the page blocks of [`@krizaka/ui`](https://ui.krizaka.com) (category _Blocks_),
   never of a copy here.** There is no `app/components/sections` any more: a missing block or variant is added to
   krizaka-ui (meta, examples, stories, tests), released, then used here. The rule of the language: **read in five
   seconds, then go deeper on demand.**
-- **Every page declares its template** — one of the page templates of `@krizaka/ui` (category *Templates* of ui.krizaka.com:
+- **Every page declares its template** — one of the page templates of `@krizaka/ui` (category _Templates_ of ui.krizaka.com:
   landing, product, how-it-works, gallery, docs-hub, docs-article, component, catalogue, longform, changelog, contact,
   legal, status, error, pricing) or `redirect` — in `lib/page-templates.ts`. `npm run lint` fails on a page missing
   from the map (`scripts/check-page-templates.mjs`). A page is rebuilt on its template's component (the legal pages on `LegalPage`, the 404 on `ErrorPage`); a composition the catalogue lacks is added
@@ -300,7 +301,7 @@
 - **Commit attribution & AI co-authors**: Commits or pull request descriptions authored with AI assistants must attribute their co-author using GitHub-recognized Git trailers:
   - **Claude**: `Co-authored-by: Claude <81847+claude@users.noreply.github.com>`
   - **Antigravity (Gemini)**: `Co-authored-by: Antigravity (Gemini) <200291788+gemini-code-assist@users.noreply.github.com>`
-  Both map to verified GitHub user accounts ([`claude`](https://github.com/claude) and [`gemini-code-assist`](https://github.com/gemini-code-assist)), ensuring their official avatars appear on commits and in the repository's Contributors list.
+    Both map to verified GitHub user accounts ([`claude`](https://github.com/claude) and [`gemini-code-assist`](https://github.com/gemini-code-assist)), ensuring their official avatars appear on commits and in the repository's Contributors list.
 
 - **Deploys: a release train** (#389). release-please (`release-type: node`) keeps one « chore: release X.Y.Z » pull
   request from the Conventional Commits on `main` (`package.json`, `CHANGELOG.md`); merging it tags `vX.Y.Z` and publishes
@@ -323,6 +324,7 @@
   environment or `--env-file`: `MEDIA_STORAGE_API_KEY`, `MEDIA_STORAGE_ZONE`,
   `MEDIA_STORAGE_ENDPOINT` (default `storage.bunnycdn.com`), `MEDIA_CDN_HOSTNAME` — never
   printed, never committed. The upload fails if the pull zone does not serve the first file publicly.
+
 - `node scripts/pr-assets.mjs rewrite <file> --repo <repo> [--write]` turns links to a committed
   `docs/screenshots/<key>/…` folder into the CDN URLs of the same key (migration of old PR bodies).
 - `docs/screenshots/`, `.github/pr-assets/` and `.github/screenshots/` are git-ignored (the old committed captures
@@ -349,6 +351,7 @@
   live pages, unmerged manifests), each with its switch issue (`SWITCH_ISSUES`); what nothing names is deleted
   (`cdn-assets purge-unused --refs <dir> --backup <vault> --yes`). `cdn-assets tree` reports `ok` / `legacy` / `misplaced`
   (`--strict`: fails on legacy too); `node scripts/bunny-tree.mjs` feeds the cockpit (`status`, `issues`, `totals.legacyRoots`).
+
 - **Another zone, not a root: `krizaka-gpu-out`** (2026-11-01, krizaka-internal#2121). Rented GPU pods write their outputs there directly and hold
   only that zone's key (`MEDIA_GPU_STORAGE_API_KEY`), never `MEDIA_STORAGE_API_KEY`; a compromised pod cannot touch the sites. It has no pull
   zone and no layout; objects live under `<day>/<run>/<pod>/` and are deleted after 7 days. The server promotes a validated clip to
@@ -376,8 +379,9 @@
   for good) and records its hash in `lib/cdn-manifest.json` — commit that file, never the media. A file already
   recorded with the same hash is skipped. `check` asks the pull zone for every recorded file; `prune` previews (and
   with `--yes` deletes) the old versions the manifest no longer names, never under another writer's prefixes (`FOREIGN_WRITERS` / `FOREIGN_WRITERS_V2` in `bunny-layout.mjs`: the product sites, the blog), and keeps the legacy `site/` copy of every current entry until the v2 release is live. Same credentials as §5.1, never printed.
+
 - Code never writes a media URL: `lib/cdn.ts` turns a logical path (`cdn("products/orazaka/gallery/
-  tea-pour.webp")`, `video("products/orazaka/tour/tea-pour")` → `{ webm, mp4, poster }`) and fails the build on a
+tea-pour.webp")`, `video("products/orazaka/tour/tea-pour")` → `{ webm, mp4, poster }`) and fails the build on a
   path the manifest does not know. The host is `NEXT_PUBLIC_MEDIA_CDN_URL` (read at build; default
   `https://krizaka-assets.b-cdn.net`); `next.config` allows it for `next/image` and redirects the old `/assets/…` URLs
   (still used by published `@krizaka/ui` examples) to their file on the CDN.
@@ -410,17 +414,17 @@ The org code rules (addendum 2026-10-15) are lint rules, not review comments. [`
 is a **pinned devDependency** (no global install, CI reproduces local): `sgconfig.yml` + `rules/*.yml` (one rule per file,
 with a message and, where safe, a `fix:`; written for Tsx and `.ts` is parsed as Tsx too, so each rule covers `.ts` and `.tsx`), `rule-tests/` (valid/invalid cases of each rule).
 
-| Rule | What it refuses |
-| :--- | :--- |
-| `no-hand-ms-*`, `no-get-time-difference`, `no-get-time-arithmetic` | hand-written time arithmetic (`n * 60 * 1000`, `a.getTime() - b.getTime()`): date-fns, or a duration read from the settings |
-| `no-env-in-domain` | an `env` import in domain code (`packages/*/src`, `src/`): the value arrives as a parameter |
-| `no-db-in-service-or-rules` | a db client / schema import in `*.service.ts`, `*-service.ts`, `*.rules.ts`, `*-rules.ts` |
-| `no-ts-enum` | the TypeScript `enum` keyword (`as const` object + derived type, or a Postgres enum) |
-| `no-enum-string-compare` | `x.status === "OPEN"` (field named status/kind/role/reason/state/direction compared to a string literal) |
-| `no-ambient-clock` | `new Date()` / `Date.now()` in domain code: the clock is injected |
-| `no-types-at-package-root` | `types.ts` at a package root (`<feature>/<feature>.types.ts`) |
-| `no-unjustified-numeric-export` | a numeric (or `…ToMilliseconds(n)`) `export const` in feature code without `// @fixed: <reason>` just above |
-| `no-hand-made-nav`, `no-hand-made-language-switch` | a navigation bar that is not `NavBar` of @krizaka/ui (own Radix NavigationMenu, a local `NavBar`/`TopNav`), a hand-made language switch (`hrefLang` in a component, a row of `aria-pressed={locale === …}` buttons): use `NavBar` and `NavBar.Language` (« Navigation in the family », ui.krizaka.com) |
+| Rule                                                               | What it refuses                                                                                                                                                                                                                                                                                        |
+| :----------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `no-hand-ms-*`, `no-get-time-difference`, `no-get-time-arithmetic` | hand-written time arithmetic (`n * 60 * 1000`, `a.getTime() - b.getTime()`): date-fns, or a duration read from the settings                                                                                                                                                                            |
+| `no-env-in-domain`                                                 | an `env` import in domain code (`packages/*/src`, `src/`): the value arrives as a parameter                                                                                                                                                                                                            |
+| `no-db-in-service-or-rules`                                        | a db client / schema import in `*.service.ts`, `*-service.ts`, `*.rules.ts`, `*-rules.ts`                                                                                                                                                                                                              |
+| `no-ts-enum`                                                       | the TypeScript `enum` keyword (`as const` object + derived type, or a Postgres enum)                                                                                                                                                                                                                   |
+| `no-enum-string-compare`                                           | `x.status === "OPEN"` (field named status/kind/role/reason/state/direction compared to a string literal)                                                                                                                                                                                               |
+| `no-ambient-clock`                                                 | `new Date()` / `Date.now()` in domain code: the clock is injected                                                                                                                                                                                                                                      |
+| `no-types-at-package-root`                                         | `types.ts` at a package root (`<feature>/<feature>.types.ts`)                                                                                                                                                                                                                                          |
+| `no-unjustified-numeric-export`                                    | a numeric (or `…ToMilliseconds(n)`) `export const` in feature code without `// @fixed: <reason>` just above                                                                                                                                                                                            |
+| `no-hand-made-nav`, `no-hand-made-language-switch`                 | a navigation bar that is not `NavBar` of @krizaka/ui (own Radix NavigationMenu, a local `NavBar`/`TopNav`), a hand-made language switch (`hrefLang` in a component, a row of `aria-pressed={locale === …}` buttons): use `NavBar` and `NavBar.Language` (« Navigation in the family », ui.krizaka.com) |
 
 - **Run**: `npm run lint` runs everything (it includes `ast-grep test` and the ratchet). `npx ast-grep scan` lists the
   violations with their message; `npm run lint:sg:test` runs the rule tests.
@@ -441,8 +445,8 @@ with a message and, where safe, a `fix:`; written for Tsx and `.ts` is parsed as
 3. The change reads correctly in **dark and light** mode.
 4. No hand-edited generated content; no hard-coded colors.
 
-*Agent-neutral contract for `krizaka-com`. The Orazaka engine contract lives at
-`products/orazaka/AGENTS.md`.*
+_Agent-neutral contract for `krizaka-com`. The Orazaka engine contract lives at
+`products/orazaka/AGENTS.md`._
 
 <!-- BEGIN:nextjs-agent-rules -->
 
@@ -457,6 +461,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Before you open or update a pull request (coding agents)
 
 These are the defects code review found most often on 2026-10-23. Check them yourself before you open or update a pull request:
+
 1. **Checks:** run the repository's full check (lint, typecheck, tests, build) and fix it. Never push a red check.
 2. **Concurrency:** any « count then insert » or « check then write » runs in one transaction with a lock, and has a concurrency test.
 3. **One gate:** a rule (limit, permission, validation) is enforced in the service, so no route can skip it. Test every route.
