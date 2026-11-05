@@ -395,8 +395,7 @@
             "title": "Maintenance",
             "line": "Updates and fixes, by the team that built it."
           }
-        },
-        "partCta": "Learn more"
+        }
       },
       "direction": {
         "number": "§ 5",
@@ -410,19 +409,21 @@
           },
           "next": {
             "title": "Next",
-            "body": "The first customers: Verikora's verification for companies, Folioviv's shops and Krizaka Entreprise."
+            "body": "The first clients.",
+            "points": [
+              "Verikora's checks for companies",
+              "Folioviv's shops",
+              "Krizaka Entreprise: custom modules, sovereign AI, maintenance"
+            ]
           },
           "later": {
             "title": "Later",
-            "body": "More useful products, on the same open stack."
+            "body": "More useful products, on the same open stack.",
+            "points": ["Kridoc, document storage, in design", "Every new product on Sovkora and Krizaka UI"]
           }
         },
-        "labels": {
-          "done": "done",
-          "current": "in progress",
-          "upcoming": "next",
-          "error": "stopped"
-        }
+        "pause": "Stop the steps from turning",
+        "play": "Turn the steps again"
       },
       "principles": {
         "number": "§ 6",

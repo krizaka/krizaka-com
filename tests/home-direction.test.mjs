@@ -78,7 +78,7 @@ test("licence words are true to the repositories: the products are never said to
   }
 });
 
-test("§ 4 and § 5 carry content, not ruled paper (founder, 2026-10-30): the offer's three parts, the order as a stepper", () => {
+test("the services and the direction carry content, not ruled paper: the offer as a list, the order as a loop of stations", () => {
   const services = read("app/components/home/ServicesLine.tsx");
   const direction = read("app/components/home/Direction.tsx");
   for (const [name, src] of [
@@ -86,14 +86,37 @@ test("§ 4 and § 5 carry content, not ruled paper (founder, 2026-10-30): the of
     ["Direction", direction],
   ])
     assert.doesNotMatch(src, /paper="lines"|kz-notebook-list/, name);
-  assert.match(services, /<LinkCard/);
-  assert.match(services, /href="\/services"/);
-  assert.match(direction, /<Stepper/);
+  assert.match(services, /<OfferList\s+compact/, "a list, not three squares (founder, 2026-11-05)");
+  assert.match(
+    services,
+    /href: `\/\$\{locale\}\/services#offer-\$\{id\}`/,
+    "each part leads to its entry on /services",
+  );
+  assert.match(read("app/components/lists/OfferList.tsx"), /id=\{compact \? undefined : `offer-\$\{o\.id\}`\}/);
+  assert.match(direction, /<DirectionLoop/);
+  assert.doesNotMatch(direction, /<Stepper/, "the Stepper broke on a phone (krizaka-internal#2450)");
   for (const l of ["en", "fr"]) {
     const h = msg(l).home;
     for (const id of ["modules", "ai", "maintenance"])
       assert.ok(h.services.parts[id].title && h.services.parts[id].line.length <= 90, `${l}: parts.${id}`);
-    assert.deepEqual(Object.keys(h.direction.labels).sort(), ["current", "done", "error", "upcoming"], l);
+    for (const id of ["next", "later"])
+      assert.ok(h.direction.steps[id].points.length >= 2, `${l}: steps.${id}.points, the details the loop opens`);
+    for (const k of ["pause", "play"]) assert.ok(h.direction[k]?.trim(), `${l}: direction.${k}`);
     assert.doesNotMatch(JSON.stringify(h.services), FORBIDDEN, l);
   }
+});
+
+test("the direction loop: rests on one station at a time, a visible pause, paused on hover, focus and off screen, still under reduced motion", () => {
+  const loop = read("app/components/home/DirectionLoop.tsx");
+  assert.match(loop, /const moving = !calm && !stopped && !held && onScreen;/);
+  assert.match(loop, /label=\{stopped \? labels\.play : labels\.pause\}/);
+  assert.match(loop, /\{!calm && \(/, "no pause button when nothing moves");
+  assert.match(loop, /const lit = calm \|\| i === on;/, "under reduced motion every station is open");
+  assert.match(loop, /aria-expanded=\{lit\}/);
+  assert.match(loop, /IntersectionObserver/);
+  assert.doesNotMatch(loop, /setInterval|requestAnimationFrame/);
+  const css = read("app/components/home/direction.css").replace(/\/\*[\s\S]*?\*\//g, "");
+  assert.match(css, /@media \(min-width: 900px\)/, "one line on a wide screen, down the page on a phone");
+  assert.match(css.slice(css.indexOf("prefers-reduced-motion")), /animation: none;/);
+  assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b|rgb\(|translate/, "tokens only, nothing travels");
 });
