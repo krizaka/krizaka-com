@@ -19,23 +19,6 @@
   justify-content: center;
 }
 
-/* The offers and the six proof cards read 3 × 2 on a desktop, 2 × 3 on a tablet, one column on a phone — never 4 + 2. */
-.kz-cards.svc-proof-cards,
-.kz-cards.svc-offers {
-  grid-template-columns: 1fr;
-}
-@media (min-width: 640px) {
-  .kz-cards.svc-proof-cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (min-width: 1024px) {
-  .kz-cards.svc-offers,
-  .kz-cards.svc-proof-cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 /* A phone: a fact is a chip that wraps inside the frame instead of running past it (check-overflow, krizaka-internal#231). */
 .svc-hero-extra {
   max-width: 100%;

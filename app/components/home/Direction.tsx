@@ -1,13 +1,16 @@
-/* « Where we are going » (§ 5): now / next / later, no dates, as @krizaka/ui's Stepper (horizontal): « now » is the
-   current step and carries the products with their honest statuses, read from lib/products.ts; the rest is the stated
-   order (lib/direction.ts). One action: our story. No ruled paper (founder, 2026-10-30). */
+/* « Where we are going »: now / next / later, no dates (founder, 2026-10-30), redrawn on 2026-11-05 (krizaka-internal#2450:
+   the Stepper broke on a phone; « smarter, more ergonomic, a looping animation that gives more detail of each target »).
+   DirectionLoop draws the three stations and rests on one at a time, opening what it holds; still under reduced motion,
+   with every station open. « Now » carries the products with their honest statuses, read from lib/products.ts; the rest is
+   the stated order (lib/direction.ts), its details are messages. One action: our story. No ruled paper. */
 
 import { Facts, Section } from "@krizaka/ui/page";
-import { Stepper } from "@krizaka/ui/stepper";
 import ButtonLink from "@/app/components/ButtonLink";
 import { DIRECTION_STEPS, nowProducts } from "@/lib/direction";
 import { format, getDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/products";
+import DirectionLoop from "./DirectionLoop";
+import "./direction.css";
 
 export default function Direction({ locale }: { locale: string }) {
   const t = getDictionary(locale);
@@ -22,6 +25,13 @@ export default function Direction({ locale }: { locale: string }) {
         tone: p.status === "devPreview" ? ("ok" as const) : ("wip" as const),
       }))}
     />
+  );
+  const points = (items: readonly string[]) => (
+    <ul className="kz-dir-points">
+      {items.map((p) => (
+        <li key={p}>{p}</li>
+      ))}
+    </ul>
   );
   return (
     <Section
@@ -38,15 +48,13 @@ export default function Direction({ locale }: { locale: string }) {
         </ButtonLink>
       }
     >
-      <Stepper
-        className="kz-direction"
-        orientation="horizontal"
-        current={0}
-        labels={d.labels}
-        steps={DIRECTION_STEPS.map((id) => ({
+      <DirectionLoop
+        labels={{ pause: d.pause, play: d.play, list: d.title }}
+        stations={DIRECTION_STEPS.map((id) => ({
+          id,
           title: d.steps[id].title,
-          description: format(d.steps[id].body, { names }),
-          content: id === "now" ? now : undefined,
+          body: format(d.steps[id].body, { names }),
+          details: id === "now" ? now : points(d.steps[id].points),
         }))}
       />
     </Section>
