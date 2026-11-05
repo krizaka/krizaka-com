@@ -7,6 +7,8 @@
    a sample that no longer compiles against the version shown here is a bug of this page. */
 
 import type { MascotBird, MascotMood } from "@krizaka/ui/mascots";
+import { JAVA_SITE } from "./java-redirects";
+import { USERS_SOURCE } from "./maven-packages";
 import { publishedVersion } from "./registry-versions";
 
 /** Every version on this page is read from the registries at build (lib/registry-versions.ts) — none is typed here. */
@@ -189,7 +191,7 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
   },
   {
     id: "krizaka-users",
-    repo: "krizaka-users",
+    repo: USERS_SOURCE.repo,
     bird: "owl",
     mood: "welcome",
     hue: "sky",
@@ -197,7 +199,7 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
     registry: "maven",
     forum: "java",
     thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/15",
-    docs: "https://github.com/krizaka/krizaka-users#readme",
+    docs: `${JAVA_SITE}/users/`,
     releases: [
       {
         coordinate: "com.krizaka:krizaka-users-api · -client · -core",
