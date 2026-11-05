@@ -6,7 +6,7 @@
 
    A product appears here when it has a client that reads it (a mobile app today): Orazaka. Yomizaka and Akinaza have no
    mobile app reading it yet — their entry arrives with it (one edit).
-   The values are what is LIVE: APIs, auth, webhooks and /.well-known stay on the dev sites (dev.<product>.com); `webBase`
+   The values are what is LIVE: Orazaka answers on www.orazaka.com (dev.orazaka.com was removed on 2026-11-05, krizaka-internal#2600); the other products' APIs, auth and webhooks stay on the dev sites (dev.<product>.com); `webBase`
    moves to www.<product>.com product by product, the day the #119 session posts that product's www live in
    orchestration.md (www serves the real app, never a coming-soon page) — one edit here, then `npm run services:sign`. */
 
@@ -42,8 +42,8 @@ export const SERVICES_KEY_ID = "k1";
 export const SERVICES: Partial<Record<ProductId, Partial<Record<ServiceEnvironment, ServiceEntry>>>> = {
   orazaka: {
     dev: {
-      apiBase: "https://dev.orazaka.com/edge",
-      webBase: "https://dev.orazaka.com",
+      apiBase: "https://www.orazaka.com/edge",
+      webBase: "https://www.orazaka.com",
       minAppVersion: "1.0.0",
       latestAppVersion: "1.0.0",
       status: "ok",
