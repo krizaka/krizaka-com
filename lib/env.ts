@@ -13,6 +13,7 @@ export const ENV_CONTEXTS = {
   MEDIA: "Media — the CDN, the storage zone of the asset scripts",
   MAIL: "E-mail — the contact form",
   ABUSE: "Abuse — bot protection of the public forms",
+  AI: "AI — the generation provider of the tooling scripts (never the site at runtime)",
 } as const;
 export type EnvContext = keyof typeof ENV_CONTEXTS;
 export type EnvNeed = "required" | "recommended" | "optional";
