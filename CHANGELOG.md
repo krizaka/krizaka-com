@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.26.1](https://github.com/krizaka/krizaka-com/compare/v0.26.0...v0.26.1) (2026-11-05)
+
+
+### Bug Fixes
+
+* **home:** the engine demo shows no amount, and a guard keeps money amounts out of our words ([#617](https://github.com/krizaka/krizaka-com/issues/617)) ([432159f](https://github.com/krizaka/krizaka-com/commit/432159ffcc9e86beb948715b8f391ca8223d88e1))
+
 ## [0.26.0](https://github.com/krizaka/krizaka-com/compare/v0.25.0...v0.26.0) (2026-11-05)
 
 
