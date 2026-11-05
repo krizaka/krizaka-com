@@ -18,6 +18,10 @@ test("the users artefacts are read in their krizaka-build folder", () => {
   const source = readFileSync(new URL("../lib/maven-packages.ts", import.meta.url), "utf8");
   assert.match(source, /USERS_SOURCE = \{ repo: "krizaka-build", folder: "krizaka-users" \}/);
   for (const part of ["api", "client", "core"]) {
-    assert.match(source, new RegExp(`usersArtifact\\("users\\w+", "${part}"\\)`), `the ${part} artefact is built from USERS_SOURCE`);
+    assert.match(
+      source,
+      new RegExp(`usersArtifact\\("users\\w+", "${part}"\\)`),
+      `the ${part} artefact is built from USERS_SOURCE`,
+    );
   }
 });

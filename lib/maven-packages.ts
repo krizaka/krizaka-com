@@ -50,7 +50,14 @@ export const USERS_SOURCE = { repo: "krizaka-build", folder: "krizaka-users" } a
 
 function usersArtifact(id: MavenArtifactId, part: "api" | "client" | "core"): MavenArtifact {
   const artifactId = `krizaka-users-${part}`;
-  return { id, groupId: MAVEN_GROUP_ID, artifactId, repo: USERS_SOURCE.repo, dir: `${USERS_SOURCE.folder}/${artifactId}`, version: v(artifactId) };
+  return {
+    id,
+    groupId: MAVEN_GROUP_ID,
+    artifactId,
+    repo: USERS_SOURCE.repo,
+    dir: `${USERS_SOURCE.folder}/${artifactId}`,
+    version: v(artifactId),
+  };
 }
 
 export const MAVEN_ARTIFACTS: readonly MavenArtifact[] = [
