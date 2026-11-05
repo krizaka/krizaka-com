@@ -9,9 +9,9 @@ import { uiRedirects } from "../lib/ui-redirects.ts";
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 const messages = (l) => JSON.parse(read(`messages/${l}.json`));
 
-test("the bar: Services first, then Docs (served at /docs); Open source is no entry any more", () => {
+test("the bar ends on Docs (served at /docs), after Products and Enterprise; Open source is no entry any more", () => {
   const nav = read("lib/nav.ts");
-  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["services", "repos"\] as const\)/);
+  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["products", "services", "repos"\] as const\)/);
   assert.match(nav, /\{ href: "\/docs", icon: "repos", match: \["\/open-source\/"\] \}/);
   assert.equal(messages("en").site.nav.company.repos.label, "Docs");
   assert.equal(messages("fr").site.nav.company.repos.label, "Documentation");
