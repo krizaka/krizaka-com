@@ -15,10 +15,18 @@ const stack = records("lib/stack.ts", "STACK")
   .filter((p) => p.url)
   .map(({ id, name, url }) => ({ id, name, url: url === "LAB_SITE" ? motionSite : url }));
 
-test("two views (2026-10-17): the mark and the word Krizaka lead home, the centre of the bar is Services then Docs (2026-10-30); Our story is not in the bar", () => {
-  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["services", "repos"\] as const\)/);
+test("the mark and the word Krizaka lead home, the centre of the bar is Products · Enterprise · Docs (krizaka-internal#2445); Our story is not in the bar", () => {
+  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["products", "services", "repos"\] as const\)/);
   assert.doesNotMatch(nav, /href: "\/products"/, "no /products page: the products are a section of the home");
   assert.match(nav, /PRODUCTS_ANCHOR = "\/#products"/);
+  assert.match(nav, /\{ href: PRODUCTS_ANCHOR, icon: "products" \}/, "Products is the home's section, no page");
+  assert.deepEqual(
+    ["fr", "en"].map((l) => ["products", "services", "repos"].map((k) => messages(l).site.nav.company[k].label)),
+    [
+      ["Produits", "Entreprise", "Documentation"],
+      ["Products", "Enterprise", "Docs"],
+    ],
+  );
   assert.match(
     nav,
     /\{ href: "\/docs", icon: "repos", match: \["\/open-source\/"\] \}/,

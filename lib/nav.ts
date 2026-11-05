@@ -5,14 +5,16 @@
    Two views only (Oussama, 2026-10-17): the home — reached through the mark, it presents the products (#products) —
    and Docs (the hub people follow: where do I start?). The bar, in three zones:
    - left, who we are: the Krizaka mark and the word "Krizaka" (home);
-   - centre, this site: Services · Docs (NAV_BAR_LINKS, 2026-10-30) — never a link to another site; the story lives in the footer;
+   - centre, this site: Products · Enterprise · Docs (NAV_BAR_LINKS, krizaka-internal#2445, 2026-11-05: « Produits » was
+     missing, « Services » promised a catalogue; the one offer is Krizaka Entreprise) — never a link to another site; the
+     story lives in the footer;
    - right, tools: Repo · theme · language · Contact us. "Docs" is the hub that points to the documentation, which lives on its own sites. */
 
 import type { TranslationDictionary } from "./i18n";
 import { PRODUCTS, type ProductId, type ProductStatus } from "./products";
 
 export type { ProductStatus } from "./products";
-export type CompanyLinkId = "story" | "repos" | "services" | "contact";
+export type CompanyLinkId = "products" | "story" | "repos" | "services" | "contact";
 export type NavIcon = CompanyLinkId;
 
 /** Texts: messages → site.nav.company.<icon> (label, desc). */
@@ -38,18 +40,20 @@ export const NAV_PRODUCTS: NavProduct[] = PRODUCTS.map(({ id, name, siteUrl, sta
   status,
 }));
 
+/** The products' place: a section of the home, no page of its own (/products answers 308 there, lib/product-redirects.ts). */
+export const PRODUCTS_ANCHOR = "/#products";
+
 export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
+  { href: PRODUCTS_ANCHOR, icon: "products" },
   { href: "/story", icon: "story" },
   { href: "/docs", icon: "repos", match: ["/open-source/"] },
   { href: "/services", icon: "services" },
   { href: "/contact", icon: "contact" },
 ];
 
-/** The products' place: a section of the home, no page of its own (/products answers 308 there, lib/product-redirects.ts). */
-export const PRODUCTS_ANCHOR = "/#products";
-
-/** The centre of the bar and the mobile panel's list: this site's one other view. "Our story" is in the footer (Krizaka column). */
-export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["services", "repos"] as const).map((icon) =>
+/** The centre of the bar and the mobile panel's list: the products (a section of the home), the Enterprise offer, the docs.
+ *  "Our story" is in the footer (Krizaka column). */
+export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["products", "services", "repos"] as const).map((icon) =>
   NAV_COMPANY.find((l) => l.icon === icon)!,
 );
 

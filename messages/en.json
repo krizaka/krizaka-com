@@ -102,6 +102,10 @@
         }
       },
       "company": {
+        "products": {
+          "label": "Products",
+          "desc": "Verikora, Folioviv and what comes next"
+        },
         "story": {
           "label": "Our story",
           "desc": "Where our names come from"
@@ -115,7 +119,7 @@
           "desc": "Write to the team"
         },
         "services": {
-          "label": "Services",
+          "label": "Enterprise",
           "desc": "Krizaka Entreprise"
         }
       }
