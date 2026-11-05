@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.27.0](https://github.com/krizaka/krizaka-com/compare/v0.26.1...v0.27.0) (2026-11-05)
+
+
+### Features
+
+* **home:** the hero speaks to the property manager: Verikora first, one action, two named figures ([#618](https://github.com/krizaka/krizaka-com/issues/618)) ([4f5e6b6](https://github.com/krizaka/krizaka-com/commit/4f5e6b67457e4ce7f9c8b273d124d7b9e9deeddb))
+* **nav:** the bar reads Produits · Entreprise · Documentation ([#619](https://github.com/krizaka/krizaka-com/issues/619)) ([3bdf679](https://github.com/krizaka/krizaka-com/commit/3bdf6797a467fe4bc42bcbd1e6b25896a50e7c04))
+
 ## [0.26.1](https://github.com/krizaka/krizaka-com/compare/v0.26.0...v0.26.1) (2026-11-05)
 
 
