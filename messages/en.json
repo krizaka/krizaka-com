@@ -702,7 +702,7 @@
       "who": {
         "nav": "Who we are",
         "title": "It started in Montréal",
-        "lead": "Krizaka is a Montréal company, founded by Oussama. It builds its software with AI agents it directs and reviews. A kris is a blade forged in layers; zaka is the slope you climb one step at a time.",
+        "lead": "Krizaka is a company founded in Montréal. It builds its software with AI agents it directs and reviews. A kris is a blade forged in layers; zaka is the slope you climb one step at a time.",
         "refusal": "We started from one question: where was my document read, by which model, and who can see the result? Software that cannot answer asks for trust on faith. So what we ship is tested and documented, and the blocks it stands on are public.",
         "placesAria": "Where Krizaka is",
         "places": ["Montréal"],
@@ -1083,7 +1083,7 @@
     },
     "legal": {
       "back": "Back to home",
-      "updated": "Last updated: October 13, 2026",
+      "updated": "Last updated: November 5, 2026",
       "toc": "On this page",
       "privacy": {
         "metaTitle": "Privacy Policy — Krizaka",
@@ -1095,7 +1095,7 @@
             "title": "Who is responsible",
             "paragraphs": [
               "This site is published by {legalName} (Québec enterprise number, NEQ, {neq}), a business corporation incorporated on October 8, 2026 under Quebec's Business Corporations Act, operating as Krizaka (Montréal, Quebec, Canada).",
-              "The person in charge of the protection of personal information is the founder and president of the company; their title and contact are published in the next section."
+              "The person in charge of the protection of personal information is the president of the company; their title and contact are published in the next section."
             ]
           },
           {
@@ -1103,8 +1103,8 @@
             "title": "Privacy officer",
             "paragraphs": [
               "Under Québec’s Law 25, the person in charge of the protection of personal information is published here.",
-              "Title: Privacy Officer (« Responsable de la protection des renseignements personnels »), Technologies Krizaka Inc., Montréal, Québec, Canada.",
-              "Contact: contact@krizaka.com. Write to this address to access, correct or delete your information, withdraw a consent or file a complaint; we answer within 30 days."
+              "Person in charge of the protection of personal information: the president of Technologies Krizaka Inc. — confidentialite@krizaka.com",
+              "Write to this address to access, correct or delete your information, withdraw a consent or file a complaint; we answer within 30 days."
             ]
           },
           {

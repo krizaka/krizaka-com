@@ -705,7 +705,7 @@
       "who": {
         "nav": "Qui nous sommes",
         "title": "Ça a commencé à Montréal",
-        "lead": "Krizaka est une entreprise de Montréal, fondée par Oussama. Elle construit ses logiciels avec des agents d'IA qu'elle dirige et relit. Un kris est une lame forgée en couches ; zaka, la pente qu'on gravit un pas à la fois.",
+        "lead": "Krizaka est une entreprise fondée à Montréal. Elle construit ses logiciels avec des agents d'IA qu'elle dirige et relit. Un kris est une lame forgée en couches ; zaka, la pente qu'on gravit un pas à la fois.",
         "refusal": "Tout est parti d'une question : où mon document a-t-il été lu, par quel modèle, et qui voit le résultat ? Un logiciel qui ne sait pas répondre demande qu'on le croie sur parole. Alors ce que nous livrons est testé et documenté, et les briques sur lesquelles il repose sont publiques.",
         "placesAria": "Où est Krizaka",
         "places": ["Montréal"],
@@ -1086,7 +1086,7 @@
     },
     "legal": {
       "back": "Retour à l'accueil",
-      "updated": "Dernière mise à jour : 13 octobre 2026",
+      "updated": "Dernière mise à jour : 5 novembre 2026",
       "toc": "Sur cette page",
       "privacy": {
         "metaTitle": "Politique de confidentialité — Krizaka",
@@ -1098,7 +1098,7 @@
             "title": "Qui est responsable",
             "paragraphs": [
               "Ce site est publié par {legalName} (NEQ {neq}), société par actions constituée le 8 octobre 2026 selon la Loi sur les sociétés par actions du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada).",
-              "La personne responsable de la protection des renseignements personnels est le fondateur et président de la société ; son titre et son contact sont publiés dans la section suivante."
+              "La personne responsable de la protection des renseignements personnels est le président de la société ; son titre et son contact sont publiés dans la section suivante."
             ]
           },
           {
@@ -1106,8 +1106,8 @@
             "title": "Responsable de la protection des renseignements personnels",
             "paragraphs": [
               "En vertu de la Loi 25 du Québec, la personne responsable de la protection des renseignements personnels est publiée ici.",
-              "Titre : Responsable de la protection des renseignements personnels, Technologies Krizaka Inc., Montréal (Québec), Canada.",
-              "Courriel : contact@krizaka.com. Écrivez à cette adresse pour accéder à vos renseignements, les corriger ou les supprimer, retirer un consentement ou déposer une plainte ; nous répondons dans un délai de 30 jours."
+              "Responsable de la protection des renseignements personnels : le président de Technologies Krizaka Inc. — confidentialite@krizaka.com",
+              "Écrivez à cette adresse pour accéder à vos renseignements, les corriger ou les supprimer, retirer un consentement ou déposer une plainte ; nous répondons dans un délai de 30 jours."
             ]
           },
           {
