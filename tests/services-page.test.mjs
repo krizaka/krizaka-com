@@ -40,10 +40,10 @@ test("the one action is the contact form with « Entreprise » preselected", () 
   assert.equal((page.match(/contactHref\(/g) ?? []).length, 1, "one destination for every action");
   assert.match(page, /const enterprise = contactHref\("services", "enterprise"\)/);
   assert.equal((page.match(/href=\{enterprise\} variant="primary"/g) ?? []).length, 2, "hero and closing call");
-  assert.equal(
-    (page.match(/href=\{enterprise\} variant="ghost"/g) ?? []).length,
-    1,
-    "each offer ends with the way to contact us",
+  assert.doesNotMatch(
+    page,
+    /variant="ghost"/,
+    "the offers are a list: no button repeated under each (krizaka-internal#2450)",
   );
   for (const l of ["en", "fr"]) {
     const c = JSON.parse(read(`messages/${l}.json`));
@@ -75,10 +75,12 @@ test("the page is registered, in the bar, the footer, the sitemap and llms.txt, 
   assert.match(read("app/[locale]/services/page.tsx"), /<JsonLd\s+data=\{buildServiceJsonLd/);
 });
 
-test("the page is a longform of blocks: the offers as compact cards, the proof read at build, the folded questions", () => {
+test("the page is a longform of blocks: the offers as a numbered list, the proof as a ledger read at build, the folded questions", () => {
   const page = read("app/[locale]/services/page.tsx");
   assert.match(page, /<PageHero/);
-  assert.match(page, /<ArgumentCard/);
+  assert.match(page, /<OfferList\b/, "a list, not three squares (founder, 2026-11-05)");
+  assert.match(page, /<WorkLedger\b/, "the public work as a ledger of links, not plain boxes");
+  assert.doesNotMatch(page, /<ArgumentCard|<LinkCard|<CardGrid/);
   assert.doesNotMatch(page, /PricingPage|price=|plans=/, "no price block: the pricing template is gone");
   assert.match(page, /className="kz-tpl-faq"/);
   assert.match(page, /npmPackages\(\)/, "figures from the registries, never typed");
@@ -99,7 +101,7 @@ test("/services shows no price of any kind, no « sur devis » and no « on quot
   }
   const page = read("app/[locale]/services/page.tsx");
   assert.doesNotMatch(
-    page.slice(page.indexOf("generateMetadata"), page.indexOf("const OFFER_ICON")),
+    page.slice(page.indexOf("generateMetadata"), page.indexOf("const PROOF_ICON")),
     PRICE_WORDS,
     "metadata",
   );

@@ -395,8 +395,7 @@
             "title": "Maintenance",
             "line": "Updates and fixes, by the team that built it."
           }
-        },
-        "partCta": "Learn more"
+        }
       },
       "direction": {
         "number": "§ 5",
@@ -410,49 +409,43 @@
           },
           "next": {
             "title": "Next",
-            "body": "The first customers: Verikora's verification for companies, Folioviv's shops and Krizaka Entreprise."
+            "body": "The first clients.",
+            "points": [
+              "Verikora's checks for companies",
+              "Folioviv's shops",
+              "Krizaka Entreprise: custom modules, sovereign AI, maintenance"
+            ]
           },
           "later": {
             "title": "Later",
-            "body": "More useful products, on the same open stack."
+            "body": "More useful products, on the same open stack.",
+            "points": ["Kridoc, document storage, in design", "Every new product on Sovkora and Krizaka UI"]
           }
         },
-        "labels": {
-          "done": "done",
-          "current": "in progress",
-          "upcoming": "next",
-          "error": "stopped"
-        }
+        "pause": "Stop the steps from turning",
+        "play": "Turn the steps again"
       },
       "principles": {
         "number": "§ 6",
         "eyebrow": "How we work",
-        "title": "Six rules, checked rather than promised.",
+        "title": "Four rules, checked rather than promised.",
         "folio": "page {page} of {total}",
         "items": {
-          "forgotten": {
-            "title": "Forgotten means erased",
-            "body": "The right to be forgotten is one action, not a request: a Folioviv client erased takes their file, notes and attachments with them; a document Verikora does not keep is purged after its check; Sovkora deletes a run's data at the end of its retention. Invoices stay only as long as the law requires."
-          },
-          "books": {
-            "title": "Invoices, taxes and the books, handled",
-            "body": "Every invoice knows what was received and what is still owed; GST and QST go to a ledger as each invoice is issued, and Folioviv prepares your return. You file it: we never file for you."
-          },
           "facts": {
             "title": "A check reports what it saw",
-            "body": "Verikora's authenticity report reads facts off the file, with no model, no score and never a verdict on a person: three levels, each defined in writing, and what it did not examine."
+            "body": "Verikora reads facts off the file, with no score and no verdict on a person. Every report also says what it did not examine, and the decision stays yours."
           },
-          "sovereign": {
-            "title": "Your data stays where you decide",
-            "body": "Sovkora runs on your own servers. This site has no analytics and no tracker."
+          "kept": {
+            "title": "A document stays only if you choose",
+            "body": "Verikora purges the file and its text once checked; only the report stays. Closing a file purges all its documents, and their encrypted backup copies are erased after 30 days."
           },
-          "quality": {
-            "title": "Tested, bilingual, accessible",
-            "body": "Every change ships with its tests and nothing merges until CI is green; every word exists in English and French, checked by CI; we aim for WCAG 2.2 AA in dark and light."
+          "canada": {
+            "title": "Made in Montréal, French first, hosted in Canada",
+            "body": "Krizaka is a Montréal company, subject to Québec's Law 25. Every word exists in French and English. This site and Verikora run on servers in Canada, and this site has no analytics and no tracker."
           },
           "open": {
-            "title": "Open by default",
-            "body": "More than {count} public repositories and more than {npm} npm packages, readable line by line: the open-source libraries under Apache-2.0."
+            "title": "Built in the open",
+            "body": "More than {count} public repositories and more than {npm} npm packages, readable line by line. Our libraries are under Apache-2.0."
           }
         }
       },
@@ -933,6 +926,7 @@
         "startLabel": "Start here",
         "open": "Open the documentation",
         "stats": "more than {repositories} open-source repositories · more than {npm} npm packages · Apache-2.0",
+        "quality": "Every change ships with its tests and nothing merges until CI is green; every page is audited for accessibility (WCAG 2.1 AA, dark and light) before it ships.",
         "paths": {
           "ui": {
             "title": "Build an interface",
