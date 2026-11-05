@@ -24,7 +24,8 @@
 }
 @media (min-width: 1024px) {
   .kz-home-hero-grid {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    /* The figure takes half the width (krizaka-internal#2445): the checked file reads at a glance. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas: "words fig" "proof fig";
     column-gap: 56px;
     row-gap: 40px;
@@ -47,6 +48,15 @@
    the pointer: a hover changes a colour only. */
 .kz-fig {
   min-width: 0;
+  margin: 0;
+  scroll-margin-top: var(--kz-anchor-offset, 96px);
+}
+/* The two named tabs over the figures, then the figure chosen: no slide, no fade, no timer. */
+.kz-fig-tabs > [role="tablist"] {
+  margin-bottom: 14px;
+  max-width: 100%;
+}
+.kz-fig-one {
   margin: 0;
 }
 .kz-fig-frame {
@@ -88,15 +98,7 @@
   outline-offset: 2px;
 }
 .kz-fig-text > ol {
-  margin: 10px 0 0;
-  padding: 0;
-  list-style: none;
-}
-.kz-fig-text > ol > li + li {
-  margin-top: 10px;
-}
-.kz-fig-text ol ol {
-  margin: 4px 0;
+  margin: 8px 0 6px;
   padding-left: 1.4em;
   list-style: decimal;
 }

@@ -39,9 +39,11 @@ test("« Le monde de Krizaka » and « La famille Krizaka » are retired (2026-1
   }
 });
 
-test("the home's ambient loop is gone with the valley plate (2026-11-04); the hero keeps the film's lightbox", () => {
+test("the home's ambient loop is gone with the valley plate (2026-11-04); the film opens from its figure, /story keeps the lightbox", () => {
   assert.ok(!existsSync("app/components/home/AmbientLoop.tsx"), "AmbientLoop is deleted");
-  assert.ok(hasJsx("app/components/home/HomeHero.tsx", "FilmLightbox"));
+  // krizaka-internal#2445: « Watch the full film » left the hero; the film is Fig. 1b, opened by its own play button.
+  assert.ok(!hasJsx("app/components/home/HomeHero.tsx", "FilmLightbox"));
+  assert.ok(hasJsx("app/[locale]/story/page.tsx", "FilmLightbox"));
 });
 
 test("« l'aube » is withdrawn from the site (Oussama, 2026-10-20): no page draws it, the manifest names none of its files", async () => {

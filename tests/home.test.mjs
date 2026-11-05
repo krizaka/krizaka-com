@@ -42,11 +42,42 @@ test("the home is made of its four sections, in Oussama's order: no Company, no 
   );
 });
 
-test("one primary action per section: the hero's goes to #engine", () => {
+// The hero speaks to one reader, the property manager (krizaka-internal#2445): one primary action, write to us about your
+// files (the contact form, Verikora's topic), and one secondary, see a checked file (Fig. 1, the pay stub first).
+test("one primary action per section: the hero's writes to us on Verikora's topic, its secondary shows a checked file", async () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
-  assert.match(hero, /href="#engine" variant="primary"/);
-  assert.doesNotMatch(hero, /href="\/contact"/, "the bar has Contact us: no duplicate in the hero");
+  assert.match(hero, /href=\{`\/\$\{locale\}\$\{contactHref\("home", HOME_PRODUCT\)\}`\} variant="primary"/);
+  assert.match(hero, /href="#fig-1" variant="secondary"/);
+  assert.match(hero, /id="fig-1"/, "the secondary action's anchor is the figure");
+  assert.doesNotMatch(hero, /FilmLightbox/, "the film leaves the hero's actions: it opens from its own figure");
+  const { HOME_PRODUCT } = await import("../lib/home-sections.ts");
+  assert.equal(HOME_PRODUCT, "yomizaka", "the home serves Verikora (its code name is the contact topic's id)");
+  for (const l of ["en", "fr"]) {
+    const h = messages(l).site.home.hero;
+    for (const k of ["primary", "secondary"]) assert.ok(h[k]?.trim(), `${l}: hero.${k}`);
+    assert.match(messages(l).site.contactForm.topics.yomizaka, /^Verikora$/, `${l}: the topic is Verikora's`);
+  }
+  assert.equal(messages("fr").site.home.hero.primary, "Parlez-nous de vos dossiers");
+  assert.equal(messages("en").site.home.hero.primary, "Talk to us about your files");
+  assert.equal(messages("fr").site.home.hero.secondary, "Voir un dossier vérifié");
+  assert.equal(messages("en").site.home.hero.secondary, "See a checked file");
+});
+
+// The founder's h1 (2026-11-05, krizaka-internal#2445, supersedes #2424), and a lead that names Verikora first.
+test("the hero's h1 is the founder's, and the lead opens on Verikora", () => {
+  assert.equal(messages("fr").site.home.hero.title, "Des logiciels de conformité, construits au grand jour.");
+  assert.equal(messages("en").site.home.hero.title, "Compliance software, built in the open.");
+  for (const l of ["en", "fr"]) {
+    const h = messages(l).site.home.hero;
+    assert.match(h.lead, /^Verikora /, `${l}: the lead starts with Verikora`);
+    assert.doesNotMatch(
+      h.lead,
+      /Krizaka UI|Krizaka Java|Krizaka TypeScript|Folioviv/,
+      `${l}: the libraries leave the lead`,
+    );
+    assert.match(h.eyebrow, /Montréal/, `${l}: where we are`);
+  }
 });
 
 test("the hero: text painted at once, the figures read at build and climbing", () => {
@@ -155,54 +186,48 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
   }
 });
 
-// « Fig. 1 — Montrer son travail » (krizaka-internal#2147): no polaroid, no tape; the film's loop in a framed figure, its
-// caption, then its text version. The five birds' legend left on 2026-11-04 (krizaka-internal#2229): it gave the products
-// other birds than the rest of the page, and put a paused product forward.
-test("the hero is « Fig. 1 »: the framed carousel, its caption, its text version, no bird legend", () => {
+// « Fig. 1 » (krizaka-internal#2147, #2445): no polaroid, no tape, no bird legend; each figure in its frame, its caption
+// under it, then its own text version (the shared fold « What the figures show » is gone).
+test("the hero is « Fig. 1 »: each figure framed, captioned and followed by its own text version, no bird legend", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.doesNotMatch(
     hero,
     /TapedPhoto|taped-photo|<Flock|AmbientLoop|HERO_FLOCK|<Mascot|kz-fig-bird/,
     "no polaroid, tape, live flock, valley loop or bird legend",
   );
-  assert.match(hero, /<figure className="kz-fig"/);
-  assert.match(hero, /<HeroFigure slides=\{slides\} \/>/);
-  assert.ok(hero.indexOf("<HeroFigure") < hero.indexOf("kz-fig-caption"));
-  assert.ok(hero.indexOf("kz-fig-caption") < hero.indexOf("<FigureText"), "the caption, then the text version");
-  assert.match(
-    hero,
-    /\{slides\.length === 1 && <figcaption className="kz-fig-caption">/,
-    "from two slides on, each slide carries its own caption: never captioned twice",
-  );
+  assert.match(hero, /<figure id="fig-1" className="kz-fig" aria-label=\{t\.fig\.figLabel\}>/);
+  assert.match(hero, /<HeroFigure slides=\{slides\} texts=\{texts\} \/>/);
   assert.ok(
-    hero.indexOf("kz-home-actions") < hero.indexOf("<figure"),
+    hero.indexOf("kz-home-actions") < hero.indexOf('id="fig-1"'),
     "the figure follows the first-paint text and actions",
   );
-  assert.doesNotMatch(hero, /^"use client"/, "the text version is rendered on the server");
+  const fig = read("app/components/home/HeroFigure.tsx");
+  assert.ok(fig.indexOf("kz-fig-frame") < fig.indexOf("<figcaption"), "the frame, then its caption");
+  assert.ok(fig.indexOf("<figcaption") < fig.indexOf("{texts[s.id]}"), "the caption, then its own text version");
   const css = read("app/components/home/home.css");
   assert.doesNotMatch(css, /\.kz-fig-(bird|tag)/, "no rule of the legend left");
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home.hero;
-    assert.match(h.fig.caption, /^Fig\. 1 — /, `${lang}: the caption is « Fig. 1 — … »`);
-    for (const k of ["figLabel", "open", "pause", "play"]) assert.ok(h.fig[k], `${lang}: fig.${k}`);
-    assert.equal(h.fig.birds, undefined, `${lang}: fig.birds is gone`);
-    assert.equal(h.fig.birdsLabel, undefined, `${lang}: fig.birdsLabel is gone`);
-    for (const k of ["summary", "filmShots"]) assert.ok(h.figText[k]?.trim(), `${lang}: figText.${k}`);
+    for (const k of ["figLabel", "tabs", "textVersion", "pause", "play"])
+      assert.ok(h.fig[k]?.trim(), `${lang}: fig.${k}`);
+    assert.equal(h.fig.caption, undefined, `${lang}: one caption per figure, none for the whole`);
+    assert.equal(h.figText.summary, undefined, `${lang}: the shared fold is gone`);
+    assert.ok(h.figText.filmShots?.trim(), `${lang}: figText.filmShots`);
+    assert.match(h.figure, /\{fig\}.*\{caption\}/, `${lang}: the caption takes {fig} and the figure's {caption}`);
   }
-  assert.equal(messages("fr").site.home.hero.fig.caption, "Fig. 1 — Montrer son travail");
-  assert.equal(messages("fr").site.home.hero.figText.summary, "Ce que montrent les figures");
-  assert.equal(messages("en").site.home.hero.figText.summary, "What the figures show");
+  assert.equal(messages("fr").site.home.hero.fig.textVersion, "Version texte");
+  assert.equal(messages("en").site.home.hero.fig.textVersion, "Text version");
 });
 
-test("the text version of Fig. 1 is a native <details>: each slide, its steps, the film's shots on its watch page", () => {
+test("each figure's text version is a native <details> rendered on the server: its steps, the film's shots on its watch page", () => {
   const hero = "app/components/home/HomeHero.tsx";
   const fn = read(hero).slice(read(hero).indexOf("function FigureText"), read(hero).indexOf("export default"));
-  assert.match(fn, /<details className="kz-fig-text">\s*<summary>\{t\.figText\.summary\}<\/summary>/);
-  assert.match(fn, /resolved\.map\(\(s\) =>/, "one entry per slide of lib/hero-slides.ts, never a hand list");
-  assert.match(fn, /words\(s\.id\)\.steps\.map/, "what it shows, step by step");
+  assert.match(fn, /<details className="kz-fig-text">\s*<summary>\{t\.fig\.textVersion\}<\/summary>/);
+  assert.match(fn, /words\.steps\.map/, "what it shows, step by step");
   assert.match(fn, /href=\{`\/\$\{locale\}\/films\/\$\{BRAND_FILM\.id\}#film-shots`\}/, "the film's shot list");
   assert.match(read("app/[locale]/films/[id]/page.tsx"), /id="film-shots"/, "the anchor exists on the watch page");
-  assert.match(fn, /HERO_FIGURE/, "its number is the data's");
+  assert.match(read(hero), /resolved\.map\(\(s\) => \[s\.id, <FigureText/, "one per figure of lib/hero-slides.ts");
+  assert.doesNotMatch(read(hero), /^"use client"/, "the text version is rendered on the server");
 });
 
 test("no two figures of the home share a number: the hero is Fig. 1, the sections' figures follow it", async () => {
@@ -230,12 +255,16 @@ test("no two figures of the home share a number: the hero is Fig. 1, the section
   assert.match(showcase, /<FootnoteRef n=\{nOf\(p\)\}/, "the notes keep their own numbers");
 });
 
-test("Fig. 1 is @krizaka/ui's MediaCarousel / MediaPlayer: poster first, nothing before a press, one slide has no chrome", () => {
+// WCAG 2.2.2 and « nothing moves on its own » (krizaka-internal#2445): two named tabs, the visitor picks; no carousel, no
+// count, no arrows, no timer.
+test("Fig. 1 is two named tabs of @krizaka/ui over MediaPlayer figures: poster first, nothing before a press, nothing advances", () => {
   const fig = "app/components/home/HeroFigure.tsx";
-  assert.ok(hasCode(fig, "<MediaCarousel"), "from two slides on, the carousel");
-  assert.ok(hasCode(fig, 'mode="lightbox"'), "one slide: the film alone, opened in the lightbox with sound");
-  assert.ok(hasCode(fig, "slides.length === 1"), "no « 1 / 1 » for a single slide");
-  assert.doesNotMatch(read(fig), /<video|autoPlay|useEffect|IntersectionObserver/, "no video byte before a press");
+  assert.match(read(fig), /from "@krizaka\/ui\/tabs"/);
+  assert.ok(hasCode(fig, "<Tabs.Root"), "the figures are tabs");
+  assert.ok(hasCode(fig, "{words(s.id).tab}"), "each tab is named by what it shows");
+  assert.ok(hasCode(fig, 'mode="lightbox"'), "each clip opens in the lightbox, with sound, on a press");
+  assert.ok(hasCode(fig, "slides.length === 1"), "one figure: no tabs");
+  assert.doesNotMatch(read(fig), /MediaCarousel|setInterval|setTimeout|autoPlay|<video|useEffect|IntersectionObserver/);
   assert.doesNotMatch(
     read("app/components/home/HomeHero.tsx"),
     /FilmFrame|film\.loop/,
@@ -244,15 +273,13 @@ test("Fig. 1 is @krizaka/ui's MediaCarousel / MediaPlayer: poster first, nothing
   assert.ok(!existsSync(new URL("../app/components/home/FilmFrame.tsx", import.meta.url)), "FilmFrame is deleted");
   for (const l of ["en", "fr"]) {
     const hero = messages(l).site.home.hero;
-    for (const k of ["label", "figure", "previous", "next", "slide"])
-      assert.ok(hero.carousel[k], `${l}: carousel.${k}`);
-    assert.match(hero.carousel.slide, /\{n\}.*\{total\}/, `${l}: the slide label takes {n} and {total}`);
-    assert.match(
-      hero.carousel.figure,
-      /\{fig\}.*\{caption\}/,
-      `${l}: the figure caption takes {fig} and the slide's {caption}`,
-    );
+    assert.equal(hero.carousel, undefined, `${l}: the carousel's words are gone`);
+    for (const id of Object.keys(hero.slides)) {
+      for (const k of ["tab", "open"]) assert.ok(hero.slides[id][k]?.trim(), `${l}: slides.${id}.${k}`);
+    }
   }
+  assert.equal(messages("fr").site.home.hero.slides["applicant-file"].tab, "Un talon de paie vérifié");
+  assert.equal(messages("en").site.home.hero.slides["applicant-file"].tab, "A checked pay stub");
   // The silent 10 s loop stays recorded on the CDN (it returns as a slide's loop once the carousel pauses it, WCAG 2.2.2).
   const manifest = JSON.parse(read("lib/cdn-manifest.json"));
   const files = manifest.files ?? manifest;
@@ -380,8 +407,7 @@ test("the duo is named by its need: management and compliance tools", () => {
   const want = { en: /management and compliance tools/, fr: /outils de gestion et de conformité/ };
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home;
-    assert.match(h.hero.lead, want[lang], `${lang}: hero.lead`);
-    assert.match(h.hero.lead, /Folioviv/);
+    // The hero's lead names Verikora alone since krizaka-internal#2445: the duo is named by its need in #products.
     assert.match(h.hero.lead, /Verikora/);
     assert.match(h.products.title, want[lang], `${lang}: products.title`);
     assert.doesNotMatch(`${h.products.title} ${h.products.lead}`, /intelligen/i);

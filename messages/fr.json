@@ -180,10 +180,10 @@
     "home": {
       "hero": {
         "number": "§ 1",
-        "eyebrow": "Carnet d'un studio logiciel · Montréal, Québec",
-        "title": "Nous construisons du logiciel open source, et tout ce qui le porte.",
-        "lead": "Nous avons commencé par Sovkora, notre moteur, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TypeScript, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour le Québec : Verikora et Folioviv.",
-        "primary": "Voir ce que nous construisons",
+        "eyebrow": "Studio logiciel · Montréal, Québec",
+        "title": "Des logiciels de conformité, construits au grand jour.",
+        "lead": "Verikora vérifie les papiers d'un dossier de location : talons de paie, baux, relevés. Chaque constat cite sa page. Tout tourne sur Sovkora, notre moteur, et notre code est public.",
+        "primary": "Parlez-nous de vos dossiers",
         "film": "Voir le film en entier",
         "filmLength": "31 s",
         "proofsLabel": "Krizaka en chiffres, lus au build",
@@ -201,41 +201,39 @@
         },
         "filmClose": "Fermer le film",
         "fig": {
-          "caption": "Fig. 1 — Montrer son travail",
-          "figLabel": "Fig. 1, Montrer son travail : une boucle muette du film",
-          "open": "Voir le film en entier, avec le son",
+          "figLabel": "Fig. 1, un dossier vérifié et le film de Krizaka",
           "pause": "Mettre la boucle en pause",
-          "play": "Lancer la boucle"
+          "play": "Lancer la boucle",
+          "tabs": "Choisir la figure",
+          "textVersion": "Version texte"
         },
         "figText": {
-          "summary": "Ce que montrent les figures",
           "filmShots": "La liste des plans du film"
         },
         "slides": {
-          "film": {
-            "title": "Vidéo : Montrer son travail, le film de Krizaka",
-            "alt": "Le film de Krizaka : un hibou, un castor et un canard au travail, avec un cahier.",
-            "caption": "Montrer son travail : le film de la marque, fait avec Sovkora, notre moteur",
-            "steps": ["Le film de la marque, sans parole : sa version texte est la liste de ses plans, sur sa page."]
-          },
           "applicant-file": {
             "title": "Vidéo : un talon de paie du dossier, lu et vérifié",
             "alt": "Un gestionnaire d'immeuble ouvre le dossier d'une candidate, puis le rapport sur un talon de paie du dossier. Données de démonstration.",
-            "caption": "Un talon de paie du dossier, lu et vérifié. Données de démonstration.",
+            "caption": "Verikora lit un talon de paie et signale un écart. Données de démonstration.",
             "steps": [
               "Le gestionnaire ouvre le dossier d'une candidate.",
               "Il ouvre un talon de paie du dossier.",
               "Le rapport montre ce que Verikora a observé : le salaire brut moins les retenues ne donne pas le net indiqué."
-            ]
+            ],
+            "tab": "Un talon de paie vérifié",
+            "open": "Voir le parcours en entier"
+          },
+          "film": {
+            "title": "Vidéo : Montrer son travail, le film de Krizaka",
+            "alt": "Le film de Krizaka : un hibou, un castor et un canard au travail, avec un cahier.",
+            "caption": "Montrer son travail, le film de Krizaka. Fait avec Sovkora.",
+            "steps": ["Le film de la marque, sans parole : sa version texte est la liste de ses plans, sur sa page."],
+            "tab": "Le film",
+            "open": "Regarder avec le son"
           }
         },
-        "carousel": {
-          "label": "Fig. 1, réalisations de Krizaka",
-          "figure": "Fig. {fig} — {caption}",
-          "previous": "Figure précédente",
-          "next": "Figure suivante",
-          "slide": "Figure {n} sur {total}"
-        }
+        "secondary": "Voir un dossier vérifié",
+        "figure": "Fig. {fig} — {caption}"
       },
       "engine": {
         "number": "§ 2",
@@ -539,7 +537,7 @@
         "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
         "partnership": "Intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe",
-        "yomizaka": "Parler de Verikora — en développement, inscription fermée",
+        "yomizaka": "Vous louez des logements : parlez-nous des dossiers de location que vous vérifiez. En développement, inscription fermée.",
         "akinaza": "Parlez-nous de Folioviv — en développement, inscriptions fermées",
         "enterprise": "Modules sur mesure, adoption d'une IA souveraine ou maintenance"
       },
@@ -555,7 +553,7 @@
         "blocks": "Le composant (sécurité, messagerie, utilisateurs, notifications, facturation, UI…), votre stack et ce que vous voulez construire…",
         "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
         "other": "Comment pouvons-nous vous aider ?",
-        "yomizaka": "Quels documents vous avez à lire : baux, factures fournisseurs, un inventaire Loi 25…",
+        "yomizaka": "Vos immeubles, le nombre de dossiers reçus par mois, ce que vous vérifiez aujourd'hui et comment…",
         "akinaza": "Votre boutique : ce que vous vendez, comment vous réservez et facturez aujourd'hui, ce que vos outils vous coûtent…",
         "enterprise": "Votre entreprise, ce que vous voulez construire ou adopter, où cela doit tourner (vos serveurs, le Canada) et pour quand…"
       },
