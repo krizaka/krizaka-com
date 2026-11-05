@@ -240,6 +240,11 @@
             "title": "Vidéo : Montrer son travail, le film de Krizaka",
             "alt": "Le film de Krizaka : un hibou, un castor et un canard au travail, avec un cahier.",
             "caption": "Montrer son travail : le film de la marque, fait avec Sovkora, notre moteur"
+          },
+          "applicant-file": {
+            "title": "Vidéo : le talon de paie de Camille Fictif, lu et vérifié",
+            "alt": "Un gestionnaire d'immeuble ouvre le dossier d'une candidate, puis le rapport sur son talon de paie. Données de démonstration.",
+            "caption": "Le talon de paie de Camille Fictif, lu et vérifié. Données de démonstration."
           }
         },
         "carousel": {

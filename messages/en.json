@@ -240,6 +240,11 @@
             "title": "Video: Showing our work, the Krizaka film",
             "alt": "The Krizaka film: an owl, a beaver and a duck at work, with a notebook.",
             "caption": "Showing our work: the brand film, made with Sovkora, our engine"
+          },
+          "applicant-file": {
+            "title": "Video: Camille Fictif's pay stub, read and checked",
+            "alt": "A property manager opens an applicant's file, then the report on her pay stub. Demo data.",
+            "caption": "Camille Fictif's pay stub, read and checked. Demo data."
           }
         },
         "carousel": {
