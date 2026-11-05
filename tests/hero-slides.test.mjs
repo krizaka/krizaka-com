@@ -52,10 +52,11 @@ test("a recording names its journey, and an id is used once", () => {
   assert.match(heroSlideProblems([...HERO_SLIDES, ...HERO_SLIDES], has)[0], /the id is used twice/);
 });
 
-test("the slides' figure numbers follow their order, 1a, 1b, 1c", () => {
+test("the slides' figure numbers follow their order, 1a, 1b, 1c, under the hero's figure number", async () => {
+  const { HERO_FIGURE } = await import("../lib/home-sections.ts");
   assert.deepEqual(
     HERO_SLIDES.map((s) => s.fig),
-    ["1a", "1b", "1c", "1d"].slice(0, HERO_SLIDES.length),
+    ["a", "b", "c", "d"].slice(0, HERO_SLIDES.length).map((x) => `${HERO_FIGURE}${x}`),
   );
 });
 
@@ -69,6 +70,15 @@ test("each slide's words exist in both languages, with the commercial names only
         assert.ok(text?.trim(), `${l}: slides.${s.id}.${k}`);
         assert.doesNotMatch(text, code, `${l}: slides.${s.id}.${k} names a code name`);
         assert.doesNotMatch(text, /dev\./, `${l}: slides.${s.id}.${k} names a dev host`);
+      }
+    }
+    for (const s of HERO_SLIDES) {
+      // The text version (the hero's <details>): what the slide shows, step by step, never empty.
+      const steps = slides[s.id].steps;
+      assert.ok(Array.isArray(steps) && steps.length > 0, `${l}: slides.${s.id}.steps`);
+      for (const step of steps) {
+        assert.ok(step.trim(), `${l}: slides.${s.id}.steps has an empty line`);
+        assert.doesNotMatch(step, code, `${l}: slides.${s.id}.steps names a code name`);
       }
     }
     for (const s of HERO_SLIDES) {

@@ -43,8 +43,8 @@
   min-width: 0;
 }
 /* « Fig. 1 — Montrer son travail » (krizaka-internal#2147): the figure of the hero. A thin ink rule, square corners, the
-   paper's solid offset shadow; the film's poster inside, the five birds under it on a ground rule, each with a tag, then the
-   caption. Nothing moves under the pointer: a hover changes a colour only. */
+   paper's solid offset shadow; the film's poster inside, then the caption and the figures' text version. Nothing moves under
+   the pointer: a hover changes a colour only. */
 .kz-fig {
   min-width: 0;
   margin: 0;
@@ -57,46 +57,9 @@
   border: 1px solid var(--kz-border-strong);
   box-shadow: 4px 4px 0 var(--kz-border-strong);
 }
-.kz-fig-frame button:focus-visible,
-.kz-fig-bird:focus-visible {
+.kz-fig-frame button:focus-visible {
   outline: 2px solid var(--kz-ring, var(--kz-accent));
   outline-offset: -4px;
-}
-.kz-fig-birds {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 2px;
-  margin: 18px 0 0;
-  padding: 0;
-  list-style: none;
-  border-bottom: 1px solid var(--kz-border-strong);
-}
-.kz-fig-bird {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  padding: 0 2px 8px;
-  color: var(--kz-text-primary);
-  text-decoration: none;
-}
-.kz-fig-tag {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 12px;
-  line-height: 16px;
-  color: var(--kz-text-secondary);
-  overflow-wrap: anywhere;
-}
-.kz-fig-tag b {
-  font-weight: 600;
-  color: var(--kz-text-primary);
-}
-.kz-fig-bird:hover .kz-fig-tag b {
-  color: var(--kz-accent);
 }
 .kz-fig-caption {
   margin: 10px 0 0;
@@ -105,14 +68,44 @@
   line-height: 18px;
   color: var(--kz-text-secondary);
 }
-@media (max-width: 480px) {
-  .kz-fig-tag {
-    font-size: 10.5px;
-    line-height: 14px;
-  }
-  .kz-fig-bird {
-    padding-inline: 0;
-  }
+/* The text version of the figures (a native <details>, server-rendered): what each slide shows, in order. */
+.kz-fig-text {
+  margin: 14px 0 0;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--kz-text-secondary);
+  overflow-wrap: anywhere;
+}
+.kz-fig-text summary {
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--kz-text-primary);
+}
+.kz-fig-text summary:focus-visible,
+.kz-fig-text a:focus-visible {
+  outline: 2px solid var(--kz-ring, var(--kz-accent));
+  outline-offset: 2px;
+}
+.kz-fig-text > ol {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.kz-fig-text > ol > li + li {
+  margin-top: 10px;
+}
+.kz-fig-text ol ol {
+  margin: 4px 0;
+  padding-left: 1.4em;
+  list-style: decimal;
+}
+.kz-fig-text b {
+  color: var(--kz-text-primary);
+  font-weight: 600;
+}
+.kz-fig-text a {
+  color: var(--kz-accent-text);
 }
 
 .kz-intro-mark {
@@ -263,140 +256,6 @@
   font-variant-numeric: var(--kz-figures, lining-nums tabular-nums);
 }
 
-/* The page gutters and overflow boundary belong outside the transformed print; @krizaka/ui owns the print and tape. */
-.kz-band-photo-wrap {
-  margin: clamp(8px, 2vw, 32px) auto 0;
-  max-width: var(--kz-page-max);
-  padding: clamp(14px, 2.4vw, 28px) var(--kz-page-gutter) clamp(18px, 3vw, 36px);
-  overflow-x: clip;
-}
-
-/* ─── The flock inside the photo: a full-width band, no frame of its own. The valley film (the
-   backdrop, 16:9 or 4:5 on a phone) is cropped at its ground — the ridge is the band's last line — and the live birds
-   stand on it, each one a product. The stage keeps the film's ratio, so the birds keep
-   their places; the band's own ratio reserves its height (no layout shift). ─── */
-.kz-band {
-  position: relative;
-  width: 100%;
-  container-type: inline-size;
-  overflow: hidden;
-  aspect-ratio: 16 / 6.1;
-  max-height: 560px;
-  margin: 0;
-}
-.kz-band-photo .kz-band::before {
-  display: none;
-}
-/* The ground is at 87 % of the film's height: the stage hangs 13 % of it below the band. */
-.kz-band-stage {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  bottom: calc(-0.13 * 56.25cqw);
-}
-.kz-ambient,
-.kz-ambient-layer {
-  position: absolute;
-  inset: 0;
-}
-.kz-ambient-layer :is(img, video) {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-html.light .kz-ambient-layer[data-theme-only="dark"],
-html:not(.light) .kz-ambient-layer[data-theme-only="light"] {
-  display: none;
-}
-.kz-ambient-layer video {
-  transition: opacity 1s var(--kz-ease, ease);
-}
-.kz-band::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto 0;
-  height: 22%;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(to bottom, var(--kz-surface-0), transparent);
-}
-.kz-band-wide,
-.kz-band-tall {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-}
-.kz-band-tall {
-  display: none;
-}
-.kz-band .kz-band-flock {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.kz-band-hits {
-  position: absolute;
-  inset: 0;
-  container-type: inline-size;
-}
-.kz-band-hit {
-  position: absolute;
-  display: block;
-  aspect-ratio: 1;
-  border-radius: 2px;
-  color: var(--kz-text-primary);
-  text-decoration: none;
-}
-.kz-band-hit:focus-visible {
-  outline: 2px solid var(--kz-ring, var(--kz-accent));
-  outline-offset: 2px;
-}
-/* The bird says whose it is, on hover, focus or when its product is lit below. */
-.kz-band-cap {
-  position: absolute;
-  left: 50%;
-  bottom: 100%;
-  transform: translate(-50%, -2px);
-  padding: 3px 9px;
-  white-space: nowrap;
-  pointer-events: none;
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  line-height: 16px;
-  color: var(--kz-text-primary);
-  background: var(--kz-surface-1);
-  border: 1px solid var(--kz-border-strong);
-  opacity: 0;
-  transition: opacity 0.2s var(--kz-ease, ease);
-}
-.kz-band-hit:is(:hover, :focus-visible, [data-lit]) .kz-band-cap {
-  opacity: 1;
-}
-@media (max-width: 640px) {
-  .kz-band {
-    aspect-ratio: 100 / 78;
-    max-height: none;
-  }
-  .kz-band-stage {
-    aspect-ratio: 4 / 5;
-    bottom: calc(-0.11 * 125cqw);
-  }
-  .kz-band-wide {
-    display: none;
-  }
-  .kz-band-tall {
-    display: block;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .kz-band-cap {
-    transition: none;
-  }
-}
 #products {
   scroll-margin-top: var(--kz-anchor-offset, 96px);
 }

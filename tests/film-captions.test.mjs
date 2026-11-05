@@ -1,10 +1,10 @@
-// The flock's promises (site.story.world.cues), the home's ambient loop, and the films retired from the site. The brand
+// The flock's promises (site.story.world.cues), the home's retired ambient loop, and the films retired from the site. The brand
 // film « Montrer son travail » (lib/brand-film.ts) is tested in story.test.mjs and watch-films.test.mjs.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { FILM_CAST } from "../lib/film-captions.ts";
-import { hasCode, hasJsx, identifiers, strings } from "./helpers/source.mjs";
+import { hasJsx } from "./helpers/source.mjs";
 
 const messages = (lang) => JSON.parse(readFileSync(new URL(`../messages/${lang}.json`, import.meta.url), "utf8"));
 
@@ -39,27 +39,9 @@ test("« Le monde de Krizaka » and « La famille Krizaka » are retired (2026-1
   }
 });
 
-test("the home's ambient loop (the valley without its birds): both cuts and themes on the CDN, still under reduced motion and Save-Data, only on screen", () => {
-  const { files } = JSON.parse(readFileSync(new URL("../lib/cdn-manifest.json", import.meta.url), "utf8"));
-  for (const cut of ["16x9", "4x5"])
-    for (const theme of ["dark", "light"])
-      for (const ext of ["webm", "mp4", "jpg"])
-        assert.match(
-          files[`brand-films/ambient/home-valley-${cut}-${theme}.${ext}`] ?? "",
-          /^[0-9a-f]{10}$/,
-          `${cut} ${theme} ${ext}`,
-        );
-  const loop = "app/components/home/AmbientLoop.tsx";
-  const words = strings(loop).join("\n");
-  for (const guard of ["prefers-reduced-motion: reduce", "saveData", "IntersectionObserver", "muted", "load"])
-    assert.ok(words.includes(guard) || identifiers(loop).has(guard), guard);
-  assert.ok(hasCode(loop, "v.pause()"), "paused off screen");
-  assert.ok(hasCode(loop, "<picture>"));
-  assert.ok(hasCode(loop, 'loading="lazy"'));
-  assert.ok(hasCode(loop, 'addEventListener("load"'));
-  assert.ok(!identifiers(loop).has("controls") && !hasCode(loop, "controls"), "no controls on the backdrop");
+test("the home's ambient loop is gone with the valley plate (2026-11-04); the hero keeps the film's lightbox", () => {
+  assert.ok(!existsSync("app/components/home/AmbientLoop.tsx"), "AmbientLoop is deleted");
   assert.ok(hasJsx("app/components/home/HomeHero.tsx", "FilmLightbox"));
-  assert.ok(hasCode("app/components/home/ProductsFlock.tsx", "<AmbientLoop set={set} />"));
 });
 
 test("« l'aube » is withdrawn from the site (Oussama, 2026-10-20): no page draws it, the manifest names none of its files", async () => {

@@ -31,8 +31,6 @@ export default function ProductsLink({ className, children }: { className?: stri
         n.toggleAttribute("data-lit", nodeId(n) === id);
       for (const r of el.querySelectorAll<HTMLElement>("[data-product]"))
         r.toggleAttribute("data-lit", r.dataset.product === id);
-      // The flock above the section (ProductsFlock) shows the same product: its bird looks up.
-      window.dispatchEvent(new CustomEvent("kz-products-lit", { detail: id ?? null }));
     };
 
     const target = (e: Event) => {
@@ -51,12 +49,6 @@ export default function ProductsLink({ className, children }: { className?: stri
       pointed = undefined;
       light();
     };
-    // …and the reverse: a bird of the flock pointed at or focused lights its row and its node.
-    const fromFlock = (e: Event) => {
-      pointed = (e as CustomEvent<string | null>).detail ?? undefined;
-      light();
-    };
-    window.addEventListener("kz-products-point", fromFlock);
     el.addEventListener("pointerover", enter);
     el.addEventListener("focusin", enter);
     el.addEventListener("pointerleave", leave);
@@ -89,7 +81,6 @@ export default function ProductsLink({ className, children }: { className?: stri
     return () => {
       io?.disconnect();
       wide.removeEventListener("change", observe);
-      window.removeEventListener("kz-products-point", fromFlock);
       el.removeEventListener("pointerover", enter);
       el.removeEventListener("focusin", enter);
       el.removeEventListener("pointerleave", leave);

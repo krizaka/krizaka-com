@@ -182,7 +182,7 @@
         "number": "§ 1",
         "eyebrow": "Field notes of a software studio · Montréal, Québec",
         "title": "We build open-source software, and the stack under it.",
-        "lead": "We started with Sovkora, an AI engine, which gave us Krizaka UI, Krizaka Java and Krizaka TypeScript, all open source. On them we build management and compliance tools for Québec businesses: Folioviv and Verikora.",
+        "lead": "We started with Sovkora, our engine, which gave us Krizaka UI, Krizaka Java and Krizaka TypeScript, all open source. On them we build management and compliance tools for Québec businesses: Verikora and Folioviv.",
         "primary": "See what we build",
         "film": "Watch the full film",
         "filmLength": "31 s",
@@ -205,46 +205,28 @@
           "figLabel": "Fig. 1, Showing our work: a silent loop of the film",
           "open": "Watch the full film, with sound",
           "pause": "Pause the loop",
-          "play": "Play the loop",
-          "birdsLabel": "The five birds, and what each one does",
-          "birds": {
-            "falcon": {
-              "name": "the falcon",
-              "does": "watches",
-              "about": "security"
-            },
-            "owl": {
-              "name": "the owl",
-              "does": "reads",
-              "about": "documents · Verikora"
-            },
-            "duck": {
-              "name": "the duck",
-              "does": "builds",
-              "about": "code · Sovkora"
-            },
-            "flamingo": {
-              "name": "the flamingo",
-              "does": "answers",
-              "about": "payment · Folioviv"
-            },
-            "pigeon": {
-              "name": "the pigeon",
-              "does": "delivers",
-              "about": "open source"
-            }
-          }
+          "play": "Play the loop"
+        },
+        "figText": {
+          "summary": "What the figures show",
+          "filmShots": "The film's list of shots"
         },
         "slides": {
           "film": {
             "title": "Video: Showing our work, the Krizaka film",
             "alt": "The Krizaka film: an owl, a beaver and a duck at work, with a notebook.",
-            "caption": "Showing our work: the brand film, made with Sovkora, our engine"
+            "caption": "Showing our work: the brand film, made with Sovkora, our engine",
+            "steps": ["The brand film, without speech: its text version is the list of its shots, on its page."]
           },
           "applicant-file": {
             "title": "Video: a pay stub from the file, read and checked",
             "alt": "A property manager opens an applicant's file, then the report on a pay stub in it. Demo data.",
-            "caption": "A pay stub from the file, read and checked. Demo data."
+            "caption": "A pay stub from the file, read and checked. Demo data.",
+            "steps": [
+              "The property manager opens the file of Camille Fictif, an applicant.",
+              "He opens a pay stub from the file.",
+              "The report shows what Verikora observed: gross pay minus deductions does not give the net on the stub."
+            ]
           }
         },
         "carousel": {
@@ -258,7 +240,7 @@
       "engine": {
         "number": "§ 2",
         "title": "Sovkora, our first build.",
-        "lead": "The AI engine everything started from. Every product runs on it.",
+        "lead": "The engine everything started from. Every product runs on it.",
         "givesLabel": "What Sovkora provides",
         "powers": "It powers",
         "gives": {
@@ -280,7 +262,7 @@
       "products": {
         "number": "§ 3",
         "title": "Then the products: management and compliance tools.",
-        "lead": "Folioviv runs a service business: bookings, invoices, GST and QST. Verikora checks the paperwork: leases, contracts, invoices. Each one lives on its own site, with its source on GitHub.",
+        "lead": "Verikora checks the paperwork: leases, contracts, invoices. Folioviv runs a service business: bookings, invoices, GST and QST. Each one lives on its own site, with its source on GitHub.",
         "engineUse": "On Sovkora · {use}",
         "enginePlanned": "On Sovkora, planned · {use}",
         "flow": {

@@ -6,10 +6,11 @@ const PRODUCTS = ["orazaka", "yomizaka", "akinaza"].map((id) => ({ id }));
 
 const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"));
 
-// Oussama, 2026-10-22: the honest chronology. Orazaka first, then the open stack, then the products, then the company.
-test("the marks under the hero: Orazaka, then Akinaza, Yomizaka, then the rest as listed", () => {
+// Oussama, 2026-10-22: the honest chronology. Orazaka first, then the products; 2026-11-04: in the order they go to market,
+// Verikora (yomizaka) first, Folioviv (akinaza) is paused.
+test("the marks under the hero: Orazaka, then Yomizaka, Akinaza, then the rest as listed", () => {
   const ids = heroMarkOrder(PRODUCTS).map((p) => p.id);
-  assert.deepEqual(ids.slice(0, 3), ["orazaka", "akinaza", "yomizaka"]);
+  assert.deepEqual(ids.slice(0, 3), ["orazaka", "yomizaka", "akinaza"]);
   assert.deepEqual(
     ids.slice(3),
     PRODUCTS.map((p) => p.id).filter((id) => !ids.slice(0, 3).includes(id)),
@@ -17,16 +18,20 @@ test("the marks under the hero: Orazaka, then Akinaza, Yomizaka, then the rest a
   assert.equal(ids.length, PRODUCTS.length);
 });
 
-test("the hero lead tells the order in short sentences, no em dash", () => {
+test("the hero lead tells the order in short sentences, no em dash, Verikora before Folioviv, « our engine »", () => {
   for (const l of ["en", "fr"]) {
     const { lead } = msg(l).site.home.hero;
     assert.match(lead, /Sovkora.*Krizaka UI.*Krizaka Java/s, l);
+    assert.match(lead, /Verikora.*Folioviv/s, `${l}: Verikora goes to market first`);
+    assert.doesNotMatch(lead, /moteur d'IA|AI engine/, `${l}: the engine is « ours », the word AI is not the pitch`);
+    assert.doesNotMatch(msg(l).site.home.engine.lead, /moteur d'IA|AI engine/, `${l}: § 2's lead`);
+    assert.match(msg(l).site.home.products.lead, /Verikora.*Folioviv/s, `${l}: § 3's lead, Verikora first`);
     assert.doesNotMatch(lead, /[\u2014\u2013]/, l);
     assert.ok(lead.split(/[.]\s/).length <= 3, `${l}: two or three sentences`);
   }
 });
 
-test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its request and answer as fig. 1, the duck, what it gives folded in", () => {
+test("Orazaka is entry KZ-01: the products' own plate and specimen tag, its request and answer as fig. 2, the duck, what it gives folded in", () => {
   const src = readFileSync(new URL("../app/components/home/ProductShowcase.tsx", import.meta.url), "utf8");
   const fn = src.slice(src.indexOf("function EngineEntry"), src.indexOf("function ProductEntry"));
   assert.match(fn, /<SpecimenTag/, "the same tag as the products");
