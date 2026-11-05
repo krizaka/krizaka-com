@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "keyId": "k1",
-  "issuedAt": "2026-10-26T02:06:07Z",
+  "issuedAt": "2026-11-05T22:44:44Z",
   "services": {
     "orazaka": {
       "dev": {
-        "apiBase": "https://dev.orazaka.com/edge",
-        "webBase": "https://dev.orazaka.com",
+        "apiBase": "https://www.orazaka.com/edge",
+        "webBase": "https://www.orazaka.com",
         "minAppVersion": "1.0.0",
         "latestAppVersion": "1.0.0",
         "status": "ok"
       }
     }
   },
-  "signature": "BVhf5lyajwKoNP6s4jZ9Ea36OgGPxRSnFBXae2Kcx/eVSypGxMnSWsnNN17R+VrMRAlzWX6Nc7N34PAvnJu0CA=="
+  "signature": "NOBvMiX2q0GuCx10kmkWF/OleBMU+xmTz2+xuISsX8luQjoLF81L78I+JvPEJh0NlGMHNnmGgBQaMoNdnRayAQ=="
 }
