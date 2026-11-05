@@ -182,7 +182,7 @@
         "number": "§ 1",
         "eyebrow": "Carnet d'un studio logiciel · Montréal, Québec",
         "title": "Nous construisons du logiciel open source, et tout ce qui le porte.",
-        "lead": "Nous avons commencé par Sovkora, un moteur d'IA, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TypeScript, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour le Québec : Folioviv et Verikora.",
+        "lead": "Nous avons commencé par Sovkora, notre moteur, qui nous a donné Krizaka UI, Krizaka Java et Krizaka TypeScript, en open source. Dessus, nous bâtissons des outils de gestion et de conformité pour le Québec : Verikora et Folioviv.",
         "primary": "Voir ce que nous construisons",
         "film": "Voir le film en entier",
         "filmLength": "31 s",
@@ -205,41 +205,28 @@
           "figLabel": "Fig. 1, Montrer son travail : une boucle muette du film",
           "open": "Voir le film en entier, avec le son",
           "pause": "Mettre la boucle en pause",
-          "play": "Lancer la boucle",
-          "birdsLabel": "Les cinq oiseaux, et ce que chacun fait",
-          "birds": {
-            "falcon": {
-              "name": "le faucon",
-              "does": "veille",
-              "about": "sécurité"
-            },
-            "owl": {
-              "name": "le hibou",
-              "does": "lit",
-              "about": "documents · Verikora"
-            },
-            "duck": {
-              "name": "le canard",
-              "does": "bâtit",
-              "about": "code · Sovkora"
-            },
-            "flamingo": {
-              "name": "le flamant",
-              "does": "répond",
-              "about": "paiement · Folioviv"
-            },
-            "pigeon": {
-              "name": "le pigeon",
-              "does": "livre",
-              "about": "open source"
-            }
-          }
+          "play": "Lancer la boucle"
+        },
+        "figText": {
+          "summary": "Ce que montrent les figures",
+          "filmShots": "La liste des plans du film"
         },
         "slides": {
           "film": {
             "title": "Vidéo : Montrer son travail, le film de Krizaka",
             "alt": "Le film de Krizaka : un hibou, un castor et un canard au travail, avec un cahier.",
-            "caption": "Montrer son travail : le film de la marque, fait avec Sovkora, notre moteur"
+            "caption": "Montrer son travail : le film de la marque, fait avec Sovkora, notre moteur",
+            "steps": ["Le film de la marque, sans parole : sa version texte est la liste de ses plans, sur sa page."]
+          },
+          "applicant-file": {
+            "title": "Vidéo : un talon de paie du dossier, lu et vérifié",
+            "alt": "Un gestionnaire d'immeuble ouvre le dossier d'une candidate, puis le rapport sur un talon de paie du dossier. Données de démonstration.",
+            "caption": "Un talon de paie du dossier, lu et vérifié. Données de démonstration.",
+            "steps": [
+              "Le gestionnaire ouvre le dossier d'une candidate.",
+              "Il ouvre un talon de paie du dossier.",
+              "Le rapport montre ce que Verikora a observé : le salaire brut moins les retenues ne donne pas le net indiqué."
+            ]
           }
         },
         "carousel": {
@@ -253,7 +240,7 @@
       "engine": {
         "number": "§ 2",
         "title": "Sovkora, notre première construction.",
-        "lead": "Le moteur d'IA, d'où tout est parti. Chaque produit tourne dessus.",
+        "lead": "Le moteur, d'où tout est parti. Chaque produit tourne dessus.",
         "givesLabel": "Ce que fournit Sovkora",
         "powers": "Il propulse",
         "gives": {
@@ -275,7 +262,7 @@
       "products": {
         "number": "§ 3",
         "title": "Puis les produits : des outils de gestion et de conformité.",
-        "lead": "Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Verikora vérifie les papiers : baux, contrats, factures. Chacun vit sur son propre site, avec son code sur GitHub.",
+        "lead": "Verikora vérifie les papiers : baux, contrats, factures. Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Chacun vit sur son propre site, avec son code sur GitHub.",
         "engineUse": "Sur Sovkora · {use}",
         "enginePlanned": "Sur Sovkora, prévu · {use}",
         "flow": {

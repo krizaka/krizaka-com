@@ -52,10 +52,11 @@ test("a recording names its journey, and an id is used once", () => {
   assert.match(heroSlideProblems([...HERO_SLIDES, ...HERO_SLIDES], has)[0], /the id is used twice/);
 });
 
-test("the slides' figure numbers follow their order, 1a, 1b, 1c", () => {
+test("the slides' figure numbers follow their order, 1a, 1b, 1c, under the hero's figure number", async () => {
+  const { HERO_FIGURE } = await import("../lib/home-sections.ts");
   assert.deepEqual(
     HERO_SLIDES.map((s) => s.fig),
-    ["1a", "1b", "1c", "1d"].slice(0, HERO_SLIDES.length),
+    ["a", "b", "c", "d"].slice(0, HERO_SLIDES.length).map((x) => `${HERO_FIGURE}${x}`),
   );
 });
 
@@ -72,9 +73,33 @@ test("each slide's words exist in both languages, with the commercial names only
       }
     }
     for (const s of HERO_SLIDES) {
+      // The text version (the hero's <details>): what the slide shows, step by step, never empty.
+      const steps = slides[s.id].steps;
+      assert.ok(Array.isArray(steps) && steps.length > 0, `${l}: slides.${s.id}.steps`);
+      for (const step of steps) {
+        assert.ok(step.trim(), `${l}: slides.${s.id}.steps has an empty line`);
+        assert.doesNotMatch(step, code, `${l}: slides.${s.id}.steps names a code name`);
+      }
+    }
+    for (const s of HERO_SLIDES) {
       // One slide model (« media show what it does »): one clip or poster, one short caption that says what it does and its result.
       assert.ok(slides[s.id].caption.length <= 90, `${l}: slides.${s.id}.caption is one short line`);
     }
     assert.deepEqual(Object.keys(slides).sort(), HERO_SLIDES.map((s) => s.id).sort(), `${l}: no word without a slide`);
+  }
+});
+
+test("Fig. 1b is the applicant-file recording of the product, its words in both languages say demo data and no code name", () => {
+  const slide = HERO_SLIDES.find((s) => s.id === "applicant-file");
+  assert.equal(slide?.fig, "1b");
+  assert.equal(slide?.kind, "recording");
+  assert.equal(slide?.journey, "applicant-file-open");
+  for (const lang of ["en", "fr"]) {
+    const words = JSON.parse(read(`messages/${lang}.json`)).site.home.hero.slides["applicant-file"];
+    assert.match(words.caption, /pay stub|talon de paie/);
+    // The recording shows the pay stub of a co-applicant, not the applicant's own: the words name no person.
+    assert.doesNotMatch(JSON.stringify(words), /Camille|Thierry/);
+    assert.match(words.caption, /Demo data|Données de démonstration/);
+    assert.doesNotMatch(JSON.stringify(words), /yomizaka/i);
   }
 });

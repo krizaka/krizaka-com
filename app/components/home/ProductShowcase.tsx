@@ -1,11 +1,13 @@
 /* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Cahier (krizaka-ui
    ADR-004, #417; Oussama 2026-10-20: « our showcase: refined, less AI, very complete and designed »): the section is a page
    of the field notebook, on lined paper with its red margin and its number (§ 2). The engine leads as entry KZ-01, in the
-   same form as the products: its plate (a request and its result, fig. 1) and its specimen tag, with the duck.
+   same form as the products: its plate (a request and its result, fig. 2: the hero's figure is fig. 1) and its specimen tag,
+   with the duck.
    Each product is an entry of the field guide, in its own brand light (`.brand-<id>`), its tag and plate swapping sides
    from one entry to the next (lib/home-sections.ts entrySide, krizaka-internal#683):
    - a plate: one product moment, input then result, drawn like the app (visuals/, lazy, decorative, demo data said as
-     demo, still under reduced motion), and its numbered caption (`fig. n`); the engine's too (a request, its result);
+     demo, still under reduced motion), and its numbered caption (`fig. n`, after the hero's: lib/home-sections.ts
+     sectionFigure); the engine's too (a request, its result);
    - a specimen tag: its catalogue number, its name (plain text), its mark, its site (the commercial www domain) and its latest
      published release (read at build from the changelog data, lib/latest-release.ts), one action « See the site » (new tab) and
      two quiet links, « Source » and « Release notes » (the changelog filtered on the product),
@@ -32,15 +34,13 @@ import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
 import { RELEASES } from "@/lib/changelog-data";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { entrySide, heroMarkOrder } from "@/lib/home-sections";
-import { VALLEY } from "@/lib/home-ambient";
+import { entrySide, heroMarkOrder, sectionFigure } from "@/lib/home-sections";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { IN_DESIGN, type ProductInDesign } from "@/lib/products-in-design";
 import { latestRelease } from "@/lib/latest-release";
 import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
 import ButtonLink from "../ButtonLink";
 import { GitHubMark } from "../brand/GitHubMark";
-import ProductsFlock from "./ProductsFlock";
 import ProductsLink from "./ProductsLink";
 import ProductVisual from "./visuals/ProductVisual";
 import "./visuals/visuals.css";
@@ -59,11 +59,11 @@ const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "")
 /** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
 
-/** The numbers of the figures and the notes: the order of the page (1, 2, 3) — never a gap in the notes. */
+/** The numbers of the notes follow the order of the page (1, 2, 3), never a gap; the figures follow the hero's Fig. 1 (2, 3, 4). */
 const SHOWN = heroMarkOrder(PRODUCTS);
 const nOf = (p: Product) => SHOWN.findIndex((x) => x.id === p.id) + 1;
 const fnRef = (p: Product) => <FootnoteRef n={nOf(p)} prefix="kz-note" />;
-const figNo = (label: string, p: Product) => `${label} ${nOf(p)}`;
+const figNo = (label: string, p: Product) => `${label} ${sectionFigure(nOf(p))}`;
 
 /** The bird of a product and what it says: the film's promise for the five birds of the film, its name for the family. */
 function Bird({ bird, t }: Readonly<{ bird: StoryBird; t: TranslationDictionary }>) {
@@ -117,7 +117,7 @@ function Foot({ p, t, locale }: Readonly<{ p: Product; t: TranslationDictionary;
   );
 }
 
-/** Orazaka, the engine: entry KZ-01, in the same form as the products it powers (2026-10-30): its figure (the flow, fig. 1) and
+/** Orazaka, the engine: entry KZ-01, in the same form as the products it powers (2026-10-30): its figure (the flow, fig. 2) and
  *  its specimen tag in its orange, wearing its bird (the duck builds). What it gives, what comes back and the products it powers are
  *  folded in the tag. Only what runs is said (results, analytics; run events and webhooks are orazaka#189). */
 /** What both kinds of entry (the engine, a product) put on their specimen tag: code, name, mark, status, dev fields, footer. */
@@ -275,7 +275,7 @@ function DesignEntry({
   const h = t.site.products;
   return (
     <li id={"product-" + p.id} className="kz-entry kz-entry-design" data-product={p.id} data-side="plate-left">
-      <DesignPlate product={p} n={SHOWN.length + 1} t={t} />
+      <DesignPlate product={p} n={sectionFigure(SHOWN.length + 1)} t={t} />
       <SpecimenTag
         className="kz-entry-tag"
         code={`KZ-${String(n).padStart(2, "0")}`}
@@ -311,15 +311,14 @@ export function EngineSection({ locale }: Readonly<{ locale: string }>) {
   );
 }
 
-/** The products built on the engine and the open stack (§ 4): the flock, then one entry each. */
+/** The products built on the engine (§ 3): one entry each, then the ones in conception. The valley plate left the home
+ *  (2026-11-04, krizaka-internal#2229): it showed no action and no result, and gave the products other birds. */
 export default function ProductShowcase({ locale }: Readonly<{ locale: string }>) {
   const t = getDictionary(locale);
   const s = t.site.home.products;
   const others = heroMarkOrder(PRODUCTS).filter((p) => p.id !== ENGINE);
   return (
     <div id="products" className="kz-products">
-      {/* The flock opens the section: each bird is a product (ProductsFlock), its ground running into the section below. */}
-      <ProductsFlock set={VALLEY} />
       <Section id="products-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
         <ProductsLink className="kz-prod-solo">
           <ol className="kz-prod-list" aria-label={s.title}>

@@ -12,8 +12,8 @@ test("the sides alternate in the story's order: the engine's tag left, then the 
   const order = heroMarkOrder(PRODUCTS).map((p) => [p.id, entrySide(PRODUCTS, p.id)]);
   assert.deepEqual(order.slice(0, 3), [
     ["orazaka", "card-left"],
-    ["akinaza", "plate-left"],
-    ["yomizaka", "card-left"],
+    ["yomizaka", "plate-left"],
+    ["akinaza", "card-left"],
   ]);
   for (let i = 1; i < order.length; i++) assert.notEqual(order[i][1], order[i - 1][1], `${order[i][0]} swaps sides`);
 });

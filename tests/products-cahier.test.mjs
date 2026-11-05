@@ -54,7 +54,7 @@ test("every entry has a numbered figure caption and a sourced note, in both lang
   }
   const f = "app/components/home/ProductShowcase.tsx";
   assert.ok(hasCode(f, "figure={figNo(s.figureLabel, p)}"), "the figure is numbered in the page's order");
-  assert.ok(hasCode(f, "`${label} ${nOf(p)}`"));
+  assert.ok(hasCode(f, "`${label} ${sectionFigure(nOf(p))}`"), "after the hero's Fig. 1");
   assert.ok(jsx(f).some((e) => "notes" in e.attrs));
 });
 

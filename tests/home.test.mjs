@@ -155,34 +155,79 @@ test("the hero's row of product marks: from lib/products.ts, each to its card, d
   }
 });
 
-// « Fig. 1 — Montrer son travail » (krizaka-internal#2147): no polaroid, no tape; the film's loop in a framed figure,
-// the five birds standing outside it, each with a tag of what it does.
-test("the hero is « Fig. 1 »: a framed silent loop and the five birds outside it, each with a tag", () => {
+// « Fig. 1 — Montrer son travail » (krizaka-internal#2147): no polaroid, no tape; the film's loop in a framed figure, its
+// caption, then its text version. The five birds' legend left on 2026-11-04 (krizaka-internal#2229): it gave the products
+// other birds than the rest of the page, and put a paused product forward.
+test("the hero is « Fig. 1 »: the framed carousel, its caption, its text version, no bird legend", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.doesNotMatch(
     hero,
-    /TapedPhoto|taped-photo|<Flock|AmbientLoop|HERO_FLOCK/,
-    "no polaroid, tape, live flock or valley loop",
+    /TapedPhoto|taped-photo|<Flock|AmbientLoop|HERO_FLOCK|<Mascot|kz-fig-bird/,
+    "no polaroid, tape, live flock, valley loop or bird legend",
   );
   assert.match(hero, /<figure className="kz-fig"/);
   assert.match(hero, /<HeroFigure slides=\{slides\} \/>/);
-  assert.match(hero, /animated=\{false\} life=\{false\}/, "static poses: nothing moves under the pointer");
-  assert.match(hero, /href="\/story#who"/);
-  assert.ok(hero.indexOf("<HeroFigure") < hero.indexOf("kz-fig-birds"), "the birds stand under the frame, not in it");
-  assert.ok(hero.indexOf("kz-fig-birds") < hero.indexOf("kz-fig-caption"));
+  assert.ok(hero.indexOf("<HeroFigure") < hero.indexOf("kz-fig-caption"));
+  assert.ok(hero.indexOf("kz-fig-caption") < hero.indexOf("<FigureText"), "the caption, then the text version");
+  assert.match(
+    hero,
+    /\{slides\.length === 1 && <figcaption className="kz-fig-caption">/,
+    "from two slides on, each slide carries its own caption: never captioned twice",
+  );
   assert.ok(
     hero.indexOf("kz-home-actions") < hero.indexOf("<figure"),
     "the figure follows the first-paint text and actions",
   );
-  assert.deepEqual(hero.match(/\["falcon", "owl", "duck", "flamingo", "pigeon"\]/)?.length, 1);
+  assert.doesNotMatch(hero, /^"use client"/, "the text version is rendered on the server");
+  const css = read("app/components/home/home.css");
+  assert.doesNotMatch(css, /\.kz-fig-(bird|tag)/, "no rule of the legend left");
   for (const lang of ["en", "fr"]) {
-    const fig = messages(lang).site.home.hero.fig;
-    assert.match(fig.caption, /^Fig\. 1 — /, `${lang}: the caption is « Fig. 1 — … »`);
-    for (const k of ["figLabel", "open", "pause", "play", "birdsLabel"]) assert.ok(fig[k], `${lang}: fig.${k}`);
-    for (const bird of ["falcon", "owl", "duck", "flamingo", "pigeon"])
-      for (const k of ["name", "does", "about"]) assert.ok(fig.birds[bird][k], `${lang}: ${bird}.${k}`);
+    const h = messages(lang).site.home.hero;
+    assert.match(h.fig.caption, /^Fig\. 1 — /, `${lang}: the caption is « Fig. 1 — … »`);
+    for (const k of ["figLabel", "open", "pause", "play"]) assert.ok(h.fig[k], `${lang}: fig.${k}`);
+    assert.equal(h.fig.birds, undefined, `${lang}: fig.birds is gone`);
+    assert.equal(h.fig.birdsLabel, undefined, `${lang}: fig.birdsLabel is gone`);
+    for (const k of ["summary", "filmShots"]) assert.ok(h.figText[k]?.trim(), `${lang}: figText.${k}`);
   }
   assert.equal(messages("fr").site.home.hero.fig.caption, "Fig. 1 — Montrer son travail");
+  assert.equal(messages("fr").site.home.hero.figText.summary, "Ce que montrent les figures");
+  assert.equal(messages("en").site.home.hero.figText.summary, "What the figures show");
+});
+
+test("the text version of Fig. 1 is a native <details>: each slide, its steps, the film's shots on its watch page", () => {
+  const hero = "app/components/home/HomeHero.tsx";
+  const fn = read(hero).slice(read(hero).indexOf("function FigureText"), read(hero).indexOf("export default"));
+  assert.match(fn, /<details className="kz-fig-text">\s*<summary>\{t\.figText\.summary\}<\/summary>/);
+  assert.match(fn, /resolved\.map\(\(s\) =>/, "one entry per slide of lib/hero-slides.ts, never a hand list");
+  assert.match(fn, /words\(s\.id\)\.steps\.map/, "what it shows, step by step");
+  assert.match(fn, /href=\{`\/\$\{locale\}\/films\/\$\{BRAND_FILM\.id\}#film-shots`\}/, "the film's shot list");
+  assert.match(read("app/[locale]/films/[id]/page.tsx"), /id="film-shots"/, "the anchor exists on the watch page");
+  assert.match(fn, /HERO_FIGURE/, "its number is the data's");
+});
+
+test("no two figures of the home share a number: the hero is Fig. 1, the sections' figures follow it", async () => {
+  const { HERO_FIGURE, heroMarkOrder, sectionFigure } = await import("../lib/home-sections.ts");
+  const { PRODUCTS } = await import("../lib/products.ts");
+  const { IN_DESIGN } = await import("../lib/products-in-design.ts");
+  const shown = heroMarkOrder(PRODUCTS);
+  const numbers = [
+    HERO_FIGURE,
+    ...shown.map((_, i) => sectionFigure(i + 1)),
+    ...IN_DESIGN.map(() => sectionFigure(shown.length + 1)),
+  ];
+  assert.equal(HERO_FIGURE, 1);
+  assert.equal(new Set(numbers).size, numbers.length, `figures ${numbers.join(", ")}`);
+  assert.ok(
+    numbers.slice(1).every((n) => n >= 2),
+    "the sections' figures start at 2",
+  );
+  const showcase = read("app/components/home/ProductShowcase.tsx");
+  assert.match(
+    showcase,
+    /const figNo = \(label: string, p: Product\) => `\$\{label\} \$\{sectionFigure\(nOf\(p\)\)\}`;/,
+  );
+  assert.match(showcase, /<DesignPlate product=\{p\} n=\{sectionFigure\(SHOWN\.length \+ 1\)\}/);
+  assert.match(showcase, /<FootnoteRef n=\{nOf\(p\)\}/, "the notes keep their own numbers");
 });
 
 test("Fig. 1 is @krizaka/ui's MediaCarousel / MediaPlayer: poster first, nothing before a press, one slide has no chrome", () => {

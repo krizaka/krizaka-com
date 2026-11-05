@@ -9,8 +9,15 @@ export function folioOf(section: HomeSection): { page: number; total: number } {
   return { page: HOME_SECTIONS.indexOf(section) + 1, total: HOME_SECTIONS.length };
 }
 
-/** The marks under the hero, in the story's order: the engine first, then the products by priority (Akinaza, Yomizaka), then the rest as listed. */
-export const HERO_MARK_PRIORITY = ["orazaka", "akinaza", "yomizaka"] as const;
+/** The marks under the hero, in the story's order: the engine first, then the products in the order they go to market
+ *  (founder, 2026-11-04: Verikora first, Folioviv is paused), then the rest as listed. */
+export const HERO_MARK_PRIORITY = ["orazaka", "yomizaka", "akinaza"] as const;
+
+/** The hero's figure is Fig. 1 (its slides 1a, 1b…, lib/hero-slides.ts). */
+// @fixed: the hero is the page's first figure, a fact of the page's order.
+export const HERO_FIGURE = 1;
+/** The number of the n-th figure of the sections (1-based): they follow the hero's, so no two figures share a number. */
+export const sectionFigure = (n: number): number => HERO_FIGURE + n;
 export function heroMarkOrder<T extends { id: string }>(products: readonly T[]): T[] {
   const rank = (id: string) => {
     const i = (HERO_MARK_PRIORITY as readonly string[]).indexOf(id);

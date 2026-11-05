@@ -30,6 +30,13 @@ export interface HeroSlideSpec {
 
 export const HERO_SLIDES = [
   { id: "film", fig: "1a", kind: SlideKind.Film, base: BRAND_FILM.base, loop: BRAND_FILM.loop },
+  {
+    id: "applicant-file",
+    fig: "1b",
+    kind: SlideKind.Recording,
+    base: "products/yomizaka/tour/applicant-file",
+    journey: "applicant-file-open",
+  },
 ] as const satisfies readonly HeroSlideSpec[];
 
 const EXTENSIONS = ["webm", "mp4", "jpg"] as const;
