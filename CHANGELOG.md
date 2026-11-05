@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.25.0](https://github.com/krizaka/krizaka-com/compare/v0.24.0...v0.25.0) (2026-11-05)
+
+
+### Features
+
+* **home:** Fig. 1b, the pay stub of Camille Fictif, read and checked (recording of the applicant-file-open journey) ([#611](https://github.com/krizaka/krizaka-com/issues/611)) ([f12b7aa](https://github.com/krizaka/krizaka-com/commit/f12b7aa95ade9595a4e98e71e02a7d6249b81f38))
+
+
+### Bug Fixes
+
+* **home:** Fig. 1b's caption says what the clip shows — a pay stub from the file, no person named ([#614](https://github.com/krizaka/krizaka-com/issues/614)) ([4f4409a](https://github.com/krizaka/krizaka-com/commit/4f4409ac1a7e29cb6662454a0104abcc4c10f76b))
+
 ## [0.24.0](https://github.com/krizaka/krizaka-com/compare/v0.23.1...v0.24.0) (2026-11-04)
 
 
