@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { topicForProductSite, topicFromQuery } from "../lib/contact-products.ts";
 import { contactHref, contactSourceFromPath, topicForSource, validateContact } from "../lib/contact.ts";
 
 test("names the page a visitor comes from", () => {
@@ -49,4 +50,21 @@ test("keeps a clean slug as source and drops anything else", () => {
   assert.equal(ok.ok === true && ok.value.source, "yomizaka");
   const bad = validateContact({ ...base, source: "<script>alert(1)</script>" });
   assert.equal(bad.ok === true && bad.value.source, null);
+});
+
+// Réunion 6 (2026-11-05, krizaka-internal#2629): the waiting pages write « Nous écrire » with the product's commercial name
+// (`?topic=verikora&source=verikora-com`); the form takes it, and the old code-name topics still work.
+test("takes a product by its commercial name as a topic or a source, and still by its old name", () => {
+  assert.equal(topicFromQuery("verikora"), "yomizaka");
+  assert.equal(topicFromQuery("sovkora"), "orazaka");
+  assert.equal(topicFromQuery("folioviv"), "akinaza");
+  assert.equal(topicFromQuery("yomizaka"), "yomizaka");
+  assert.equal(topicFromQuery("blocks"), "blocks");
+  assert.equal(topicFromQuery("kridoc"), "other");
+  assert.equal(topicFromQuery("nope"), null);
+  assert.equal(topicFromQuery(null), null);
+  assert.equal(topicForProductSite("verikora-com"), "yomizaka");
+  assert.equal(topicForProductSite("sovkora-com"), "orazaka");
+  assert.equal(topicForProductSite("folioviv-com"), "akinaza");
+  assert.equal(topicForProductSite("kridoc-com"), null);
 });

@@ -89,9 +89,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
-test("the products' statuses: all three in development (Orazaka left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
+test("the products' statuses: Verikora and Sovkora in development, Folioviv paused (Orazaka left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
   const status = Object.fromEntries(products.map((p) => [p.id, p.status]));
-  assert.deepEqual(status, { orazaka: "development", yomizaka: "development", akinaza: "development" });
+  assert.deepEqual(status, { orazaka: "development", yomizaka: "development", akinaza: "paused" });
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {

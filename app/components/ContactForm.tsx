@@ -8,6 +8,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { CheckIcon, ChatIcon, ForwardIcon, UsersIcon, WarningIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
+import { topicForProductSite, topicFromQuery } from "@/lib/contact-products";
 import { format } from "@krizaka/i18n";
 import {
   CONTACT_TIMELINES,
@@ -75,9 +76,7 @@ function FromUrl({ defaultTopic }: { defaultTopic: ContactTopic | null }) {
   const params = useSearchParams();
   const requested = params.get("topic");
   const source = cleanSource(params.get("source"));
-  const topic = CONTACT_TOPICS.includes(requested as ContactTopic)
-    ? (requested as ContactTopic)
-    : (topicForSource(source) ?? defaultTopic);
+  const topic = topicFromQuery(requested) ?? topicForProductSite(source) ?? topicForSource(source) ?? defaultTopic;
   return <Form key={`${topic}-${source}`} defaultTopic={topic} source={source} />;
 }
 

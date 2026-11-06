@@ -105,7 +105,7 @@ test("lib/products.ts gives every product an explicit status, and the cards and 
   const statuses = readProductStatuses(read("lib/products.ts"));
   assert.deepEqual(Object.keys(statuses).sort(), ["akinaza", "orazaka", "yomizaka"]);
   for (const s of Object.values(statuses))
-    assert.ok(["devPreview", "development", "construction", "upcoming"].includes(s));
+    assert.ok(["devPreview", "development", "paused", "construction", "upcoming"].includes(s));
   for (const l of ["en", "fr"]) assert.ok(JSON.parse(read(`messages/${l}.json`)).site.nav.status.devPreview.label);
   assert.match(read("app/components/ProductStatus.tsx"), /devPreview/);
 });

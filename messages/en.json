@@ -96,6 +96,10 @@
           "label": "In development",
           "long": "In development"
         },
+        "paused": {
+          "label": "Paused",
+          "long": "Paused"
+        },
         "devPreview": {
           "label": "Dev preview",
           "long": "Dev preview"
@@ -129,21 +133,21 @@
       "title": "One engine, the products it powers",
       "pageTitle": "One engine, and the products it powers",
       "lead": "Sovkora is the engine every Krizaka product's AI runs on: that is our core know-how. Each product proves it in its own field, on its own site, with its source on GitHub.",
-      "visit": "Visit the site",
-      "visitAria": "{name} — visit the site",
+      "visit": "See the page (opening soon)",
+      "visitAria": "{name}: see the waiting page",
       "source": "Source",
       "sourceAria": "{name} — source on GitHub",
       "releaseNotes": "Release notes",
       "releaseNotesAria": "{name}: release notes",
       "cards": {
         "orazaka": {
-          "line": "Sovereign AI that runs on your own infrastructure: your data never leaves home."
+          "line": "The AI that stays home. Your models, your machines: your data stays in."
         },
         "yomizaka": {
-          "line": "Leases, contracts and invoices, read and checked. Every finding quotes its passage."
+          "line": "Read before you sign. Verikora checks the papers of a rental file and quotes every passage."
         },
         "akinaza": {
-          "line": "Your appointments, invoices and taxes, sorted."
+          "line": "Your bookings and invoices sorted, your taxes prepared."
         }
       },
       "proofBy": "Proved by {name}",
@@ -178,8 +182,8 @@
           "analytics": "usage analytics"
         }
       },
-      "visitSite": "See the site",
-      "visitSiteAria": "{name}: see the site (new tab)"
+      "visitSite": "See the page (opening soon)",
+      "visitSiteAria": "{name}: see the waiting page (new tab)"
     },
     "home": {
       "hero": {
@@ -221,7 +225,7 @@
             "line": "Results and usage analytics come back to the product."
           }
         },
-        "line": "One pipeline, your models, your network. Each product calls it for its AI and never a model directly."
+        "line": "The AI that stays home. Your models, your machines: your data stays in."
       },
       "products": {
         "number": "§ 2",
@@ -249,8 +253,7 @@
           "role": "role",
           "engineRole": "the engine",
           "back": "gets back",
-          "site": "site",
-          "latest": "latest release"
+          "site": "site"
         },
         "notes": {
           "orazaka": "Every request crosses one deterministic pipeline to a local model: your documents, your models, your network. Nothing leaves.",
@@ -263,7 +266,7 @@
         "inDesign": {
           "label": "Being designed",
           "lines": {
-            "kachizaka": "Krizaka's document storage. We are settling what it needs to do before we build it."
+            "kachizaka": "Your company documents, filed and found."
           },
           "plate": {
             "demoSoon": "Demo soon",
@@ -272,13 +275,13 @@
             "figure": "A sample document, as Kridoc will keep it. Demo data."
           }
         },
-        "latestValue": "{version} · {date}",
         "rowLabel": "Our three products, the engine in the centre",
         "roles": {
           "yomizaka": "checks the papers",
           "orazaka": "the engine",
           "akinaza": "runs the shop"
-        }
+        },
+        "siteValue": "{host} · not open yet"
       },
       "stack": {
         "facts": {
@@ -818,7 +821,7 @@
         "cues": {
           "title": "The world of Krizaka.",
           "falcon": "The falcon keeps watch: security comes first.",
-          "owl": "The owl reads every page and knows every face.",
+          "owl": "The owl reads every page and quotes every passage.",
           "duck": "The duck builds, line by line, in the open.",
           "flamingo": "The flamingo answers, and the payment follows.",
           "pigeon": "The pigeon delivers, every time.",
@@ -1451,7 +1454,7 @@
           "tagline": "Sign-up, login, profiles, API keys and roles as a service — with a typed client for the others.",
           "trap": "Sign-up looks like a weekend. Then come e-mail verification, reset tokens that must expire and be single-use, Google and GitHub accounts to link, API keys, roles in a JWT — and every other service validating that JWT its own way.",
           "answer": "A Spring Boot service (or the `-core` you embed) that registers, verifies, logs in with a password or Google/GitHub, resets passwords, issues API keys and session JWTs carrying roles — and a client that every other service calls with a `SERVICE` token.",
-          "rule": "The owl knows every face and keeps no secret in clear: a reset token is single-use, stored as a SHA-256 hash and dead after 15 minutes; a password is a BCrypt hash; a provider key is encrypted with AES-256 before it touches the disk.",
+          "rule": "The owl keeps no secret in clear: a reset token is single-use, stored as a SHA-256 hash and dead after 15 minutes; a password is a BCrypt hash; a provider key is encrypted with AES-256 before it touches the disk.",
           "problem": [
             "Reset links that work twice, never expire, or sit in the database in clear text — readable by anyone with a backup.",
             "A users table that grows a column per product feature until another product cannot reuse it.",
