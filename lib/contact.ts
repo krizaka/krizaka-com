@@ -38,9 +38,27 @@ export function contactSourceFromPath(pathname: string): string {
   return cleanSource(path.split("/")[1]) ?? "home";
 }
 
+/* A product by its commercial name (Verikora, Sovkora, Folioviv, Kridoc): what the products' waiting pages write in
+   `/contact?topic=…&source=…-com` (réunion 6, 2026-11-05). The topics keep their code names, which the form still takes. */
+const COMMERCIAL_TOPIC: Record<string, ContactTopic> = {
+  verikora: "yomizaka",
+  sovkora: "orazaka",
+  folioviv: "akinaza",
+  kridoc: "other",
+};
+
+/** The topic of `?topic=`: a listed topic, or a product's commercial name; none when it is neither. */
+export function topicFromQuery(requested: string | null): ContactTopic | null {
+  if (!requested) return null;
+  if ((CONTACT_TOPICS as readonly string[]).includes(requested)) return requested as ContactTopic;
+  return COMMERCIAL_TOPIC[requested] ?? null;
+}
+
 /** The topic a source implies — none when the page is about Krizaka as a whole (home, story…). */
 export function topicForSource(source: string | null): ContactTopic | null {
   if (source === "orazaka" || source === "yomizaka" || source === "akinaza") return source;
+  const site = source?.replace(/-com$/, "") ?? "";
+  if (site !== "kridoc" && COMMERCIAL_TOPIC[site]) return COMMERCIAL_TOPIC[site];
   if (source === "services") {
     return "enterprise";
   }
