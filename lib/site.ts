@@ -42,5 +42,4 @@ export const AKINAZA_REPO_URL = `${GITHUB_ORG_URL}/akinaza`;
 
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;
-export const PLATFORM_KIT_REPO_URL = `${GITHUB_ORG_URL}/krizaka-platform-kit`;
 export const KRIZAKA_BUILD_REPO_URL = `${GITHUB_ORG_URL}/krizaka-build`;

@@ -33,6 +33,6 @@
 
 - Organisation: https://github.com/krizaka
 - Krizaka UI: https://github.com/krizaka/krizaka-ui
-- Krizaka Java: https://github.com/krizaka/krizaka-platform-kit
+- Krizaka Java: https://github.com/krizaka/krizaka-build
 
 Languages: English and French (Québec). Detailed version: {{SITE_URL}}/llms-full.txt · Sitemap: {{SITE_URL}}/sitemap.xml

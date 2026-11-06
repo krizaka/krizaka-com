@@ -8,7 +8,7 @@
 
 import type { MascotBird, MascotMood } from "@krizaka/ui/mascots";
 import { JAVA_SITE } from "./java-redirects";
-import { USERS_SOURCE } from "./maven-packages";
+import { PLATFORM_KIT_SOURCE, USERS_SOURCE } from "./maven-packages";
 import { publishedVersion } from "./registry-versions";
 
 /** Every version on this page is read from the registries at build (lib/registry-versions.ts) — none is typed here. */
@@ -43,7 +43,7 @@ export type BlockHue = "cobalt" | "sky" | "cyan" | "indigo" | "steel" | "ink";
 export type Forum = "java" | "ui";
 
 export const FORUMS: Record<Forum, { repo: string; url: string }> = {
-  java: { repo: "krizaka-platform-kit", url: "https://github.com/krizaka/krizaka-platform-kit/discussions" },
+  java: { repo: "krizaka-build", url: "https://github.com/krizaka/krizaka-build/discussions" },
   ui: { repo: "krizaka-ui", url: "https://github.com/krizaka/krizaka-ui/discussions" },
 };
 
@@ -113,14 +113,14 @@ const BOM = `<dependencyManagement>
 export const BUILDING_BLOCKS: readonly BuildingBlock[] = [
   {
     id: "krizaka-platform-kit",
-    repo: "krizaka-platform-kit",
+    repo: PLATFORM_KIT_SOURCE.repo,
     bird: "falcon",
     mood: "thinking",
     hue: "cobalt",
     icon: "shield",
     registry: "maven",
     forum: "java",
-    thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/14",
+    thread: FORUMS.java.url,
     docs: "https://java.krizaka.com",
     releases: [
       {
@@ -134,10 +134,7 @@ export const BUILDING_BLOCKS: readonly BuildingBlock[] = [
         url: central("krizaka-messaging"),
       },
     ],
-    next: [
-      { key: "processOnce", url: "https://github.com/krizaka/krizaka-platform-kit/pull/12" },
-      { key: "keys", url: "https://github.com/krizaka/krizaka-platform-kit/issues/11" },
-    ],
+    next: [],
     sample: {
       file: "UserService.java · UserEventsListener.java",
       lang: "java",
@@ -198,7 +195,7 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
     icon: "users",
     registry: "maven",
     forum: "java",
-    thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/15",
+    thread: FORUMS.java.url,
     docs: `${JAVA_SITE}/users/`,
     releases: [
       {
@@ -207,10 +204,7 @@ void onRegistered(UserRegistered event, @Header(AmqpHeaders.MESSAGE_ID) String m
         url: central("krizaka-users-client"),
       },
     ],
-    next: [
-      { key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" },
-      { key: "keys", url: "https://github.com/krizaka/krizaka-platform-kit/issues/11" },
-    ],
+    next: [{ key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" }],
     sample: {
       file: "InvoiceService.java · application.yml",
       lang: "java",
@@ -259,15 +253,15 @@ ${pinKts("com.krizaka:krizaka-users-client")}  implementation("com.krizaka:kriza
   },
   {
     id: "krizaka-notifications",
-    repo: "krizaka-platform-kit",
+    repo: PLATFORM_KIT_SOURCE.repo,
     bird: "pigeon",
     mood: "success",
     hue: "cyan",
     icon: "notification",
     registry: "maven",
     forum: "java",
-    thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/16",
-    docs: "https://github.com/krizaka/krizaka-platform-kit/blob/main/docs/notifications.md",
+    thread: FORUMS.java.url,
+    docs: `https://github.com/krizaka/${PLATFORM_KIT_SOURCE.repo}/blob/main/${PLATFORM_KIT_SOURCE.folder}/docs/notifications.md`,
     releases: [
       {
         coordinate: "com.krizaka:krizaka-notifications-api",
@@ -324,7 +318,7 @@ public Order confirm(Order order) {
     icon: "credits",
     registry: "maven",
     forum: "java",
-    thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/17",
+    thread: FORUMS.java.url,
     docs: "https://github.com/krizaka/krizaka-billing#readme",
     releases: [
       {
@@ -386,7 +380,7 @@ try {
     icon: "build",
     registry: "maven",
     forum: "java",
-    thread: "https://github.com/krizaka/krizaka-platform-kit/discussions/13",
+    thread: FORUMS.java.url,
     docs: "https://java.krizaka.com/build/",
     releases: [
       {

@@ -1359,7 +1359,7 @@
       },
       "forums": {
         "title": "Questions go to two forums, not six.",
-        "body": "The five Java blocks ship as one BOM to one audience, and the useful questions cross them (users + billing + the service token): they share the Discussions of krizaka-platform-kit, one thread per block. Krizaka UI has its own — another ecosystem, another release cadence. Bugs stay on the repository they belong to.",
+        "body": "The five Java blocks ship as one BOM to one audience, and the useful questions cross them (users + billing + the service token): they share the Discussions of krizaka-build, one thread per block. Krizaka UI has its own — another ecosystem, another release cadence. Bugs stay on the repository they belong to.",
         "java": "Java blocks — Discussions",
         "ui": "Krizaka UI — Discussions"
       },
@@ -1439,8 +1439,6 @@
           ],
           "status": "0.2.0 on Maven Central (2026-10-10): the four modules and the four starters, built and tested on real PostgreSQL and RabbitMQ in CI.",
           "next": {
-            "processOnce": "`MessageDedup.processOnce` — claim, run, give the claim back on failure. Five listeners in notifications and billing repeat those eight lines today; one of them documents the forgotten release as \"the settlement is lost forever\". Lands in 0.3.0.",
-            "keys": "One shared HS256 secret signs and verifies: a service that can verify can mint. Decided: issuer-signed session tokens (JWKS) and per-caller service tokens, HS256 deprecated over one minor."
           },
           "headline": "An event published after the commit is lost on the next crash.",
           "does": [
@@ -1487,8 +1485,7 @@
           ],
           "status": "0.1.0 on Maven Central (api, client, core). 0.2.0 — event schemas checked against their producers — is merged and ships in November.",
           "next": {
-            "release": "BOM 0.2.0 manages this block at an unpublished 0.2.0: declare 0.1.0 explicitly until BOM 0.3.0.",
-            "keys": "Session tokens signed by this service only, verified with its JWKS by the others — no shared secret."
+            "release": "BOM 0.2.0 manages this block at an unpublished 0.2.0: declare 0.1.0 explicitly until BOM 0.3.0."
           },
           "headline": "Sign-up looks like a weekend. Reset tokens, OAuth and JWTs make it a quarter.",
           "does": [

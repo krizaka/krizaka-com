@@ -59,7 +59,7 @@ const FAMILY = [
     id: "krizaka-java",
     name: "Krizaka Java",
     url: "https://java.krizaka.com",
-    repo: "krizaka-platform-kit",
+    repo: "krizaka-build",
     language: "Java",
     kind: "code",
   },

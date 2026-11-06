@@ -1362,7 +1362,7 @@
       },
       "forums": {
         "title": "Les questions vont dans deux forums, pas six.",
-        "body": "Les cinq briques Java sortent en un seul BOM pour un même public, et les questions utiles les traversent (utilisateurs + facturation + jeton de service) : elles partagent les Discussions de krizaka-platform-kit, un fil par brique. Krizaka UI a les siennes — un autre écosystème, un autre rythme de version. Les bugs restent sur le dépôt concerné.",
+        "body": "Les cinq briques Java sortent en un seul BOM pour un même public, et les questions utiles les traversent (utilisateurs + facturation + jeton de service) : elles partagent les Discussions de krizaka-build, un fil par brique. Krizaka UI a les siennes — un autre écosystème, un autre rythme de version. Les bugs restent sur le dépôt concerné.",
         "java": "Briques Java — Discussions",
         "ui": "Krizaka UI — Discussions"
       },
@@ -1442,8 +1442,6 @@
           ],
           "status": "0.2.0 sur Maven Central (2026-10-10) : les quatre modules et les quatre starters, construits et testés sur un vrai PostgreSQL et un vrai RabbitMQ en CI.",
           "next": {
-            "processOnce": "`MessageDedup.processOnce` — réserver, exécuter, rendre la réservation en cas d'échec. Cinq listeners de notifications et de billing répètent ces huit lignes aujourd'hui ; l'un d'eux décrit l'oubli du release comme « le règlement perdu pour toujours ». Arrive en 0.3.0.",
-            "keys": "Un seul secret HS256 signe et vérifie : un service qui peut vérifier peut émettre. Décidé : des jetons de session signés par leur émetteur (JWKS) et des jetons de service par appelant, HS256 déprécié sur une mineure."
           },
           "headline": "Un événement publié après le commit se perd au prochain crash.",
           "does": [
@@ -1490,8 +1488,7 @@
           ],
           "status": "0.1.0 sur Maven Central (api, client, core). La 0.2.0 — schémas d'événements vérifiés contre leurs producteurs — est fusionnée et sort en novembre.",
           "next": {
-            "release": "Le BOM 0.2.0 gère cette brique en 0.2.0, non publiée : déclarez 0.1.0 explicitement jusqu'au BOM 0.3.0.",
-            "keys": "Des jetons de session signés par ce service seul, vérifiés par les autres via son JWKS — plus de secret partagé."
+            "release": "Le BOM 0.2.0 gère cette brique en 0.2.0, non publiée : déclarez 0.1.0 explicitement jusqu'au BOM 0.3.0."
           },
           "headline": "L'inscription ressemble à un week-end. Jetons de reset, OAuth et JWT en font un trimestre.",
           "does": [
