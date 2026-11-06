@@ -473,7 +473,8 @@
           "play": "Relancer le carrousel",
           "figure": "Fig. {fig} — {caption}",
           "textVersion": "Version texte",
-          "film": "Regarder le film en entier, avec le son"
+          "film": "Regarder le film en entier, avec le son",
+          "soundOn": "Activer le son"
         },
         "carousels": {
           "hero": "Ce que nous faisons, en images",
@@ -492,14 +493,6 @@
               "caption": "« Montrer son travail », le film de Krizaka, fait avec Sovkora",
               "alt": "Extrait du film de Krizaka : le hibou, le castor et le canard au travail, un cahier ouvert sur la table."
             },
-            "ink": {
-              "caption": "À l'encre bleue : la plume pose son trait",
-              "alt": "Gros plan sur une plume qui trace un trait d'encre bleue sur du papier ; le titre « à l'encre bleue. » s'inscrit."
-            },
-            "notebook": {
-              "caption": "Le carnet bleu et la plume",
-              "alt": "Une plume posée sur un carnet bleu, sur un bureau près d'une fenêtre à l'heure bleue ; le titre « KRIZAKA » s'inscrit."
-            },
             "river": {
               "caption": "Montréal à l'aube, le fleuve et le mont Royal",
               "alt": "Vue aérienne du fleuve et de la ville à l'aube ; un vol d'oiseaux traverse l'image."
@@ -511,21 +504,9 @@
             "signature": {
               "caption": "Un contrat, une signature : parlons-en",
               "alt": "Une main signe une feuille sous une lampe de laiton, une clé ancienne sur le bureau ; le titre « parlons-en. » s'inscrit."
-            },
-            "bridge": {
-              "caption": "Le bleu voyage : le pont Jacques-Cartier en hiver",
-              "alt": "Le pont Jacques-Cartier éclairé en bleu, la nuit, des glaces sur le fleuve et de la neige ; le titre « le bleu voyage. » s'inscrit."
             }
           },
           "sovkora": {
-            "neon": {
-              "caption": "Sovkora, l'IA qui reste chez toi",
-              "alt": "La marque de Sovkora en néon orange dans une ruelle de brique mouillée ; les titres « SOVKORA » et « l'IA qui reste chez toi. » s'inscrivent."
-            },
-            "duck": {
-              "caption": "Le canard construit : tes données restent chez toi",
-              "alt": "Un canard devant un ordinateur portable, près d'une lampe et d'une fenêtre sous la pluie ; le titre « tes données restent chez toi. » s'inscrit."
-            },
             "tea": {
               "caption": "Un thé à la menthe versé de haut, généré avec Sovkora",
               "alt": "Une théière d'argent verse un long filet de thé dans un petit verre, dans la lumière dorée d'une tente ; plan généré avec Sovkora (Wan 2.2)."
@@ -556,10 +537,6 @@
               "caption": "Le hibou lit : chaque constat cite son passage",
               "alt": "Un hibou devant une fenêtre bleue, la nuit ; les titres « chaque constat » puis « cite son passage. » s'inscrivent."
             },
-            "rag": {
-              "caption": "R·A·G : il cherche, il lit, il cite sa source",
-              "alt": "Gros plan sur une page imprimée, sous une lumière douce ; le titre « R·A·G » s'inscrit."
-            },
             "loupe": {
               "caption": "Verikora, à la loupe",
               "alt": "Une loupe au-dessus de papiers, sur un bureau devant une fenêtre sous la pluie ; le titre « VERIKORA » s'inscrit."
@@ -578,14 +555,6 @@
             }
           },
           "folioviv": {
-            "morning": {
-              "caption": "9 h : la boutique ouvre",
-              "alt": "Un salon de barbier ensoleillé, un castor dans un fauteuil près de la fenêtre ; le titre « 9:00 » s'inscrit."
-            },
-            "first-client": {
-              "caption": "Le premier client",
-              "alt": "Une barbière au travail dans un salon chaleureux, lampes et étagères de bois ; le titre « le premier client. » s'inscrit."
-            },
             "evening": {
               "caption": "18 h : le plancher est balayé",
               "alt": "Un barbier balaie le plancher en fin de journée, fauteuils vides, fenêtres en arc ; le titre « 18:00 » s'inscrit."

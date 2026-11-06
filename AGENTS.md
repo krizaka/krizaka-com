@@ -94,8 +94,10 @@
   to 16:9 by Runway Aleph, the 16:9 clips Sovkora generated, the brand film, the company media library — whose public use
   waits on the founder's annex B: a PR that adds a `library` clip says so), rendered by `scripts/home-showcase.mjs` (every
   run, model and credits in `content/films/home-showcase.log.json`), uploaded under `home/showcase/<carousel>/` with
-  `cdn-assets`, read by `lib/home-showcase.ts`: each slide has a 16:9 rendition for ≥ 640 px and a lighter 4:5 one for
-  phones, the browser loads one; a slide missing a file fails the build. The products are reached one way, the bar's
+  `cdn-assets`, read by `lib/home-showcase.ts`: each slide has one 16:9 rendition on every screen, the phone included (object-fit: cover; no vertical, founder 2026-11-05);
+  a slide missing a file fails the build, and `scripts/check-showcase-media.mjs` reads the real files (HTTP 200 and type, ffprobe 16:9, codecs, no pillarbox,
+  no black end card; a slide that fails is `retired` in the storyboard until remade). Sound is an option: clips are muted, a toggle (« Sound on ») exists only for a clip
+  with an audio track (none today: Runway's outputs are silent), and after a click hover or focus unmutes, for the session only. The products are reached one way, the bar's
   « Products » (`barHref`: the bare anchor on the home, so it scrolls). `/story` is in the footer, « Contact us » in the bar.
   **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live under Docs (`StackTiles`,
   from `lib/stack.ts`); the products are _operated by Krizaka_, out of every open-source list, and no page here claims a

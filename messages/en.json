@@ -470,7 +470,8 @@
           "play": "Play the carousel",
           "figure": "Fig. {fig} — {caption}",
           "textVersion": "Text version",
-          "film": "Watch the whole film, with sound"
+          "film": "Watch the whole film, with sound",
+          "soundOn": "Sound on"
         },
         "carousels": {
           "hero": "What we make, in pictures",
@@ -489,14 +490,6 @@
               "caption": "« Montrer son travail » (Showing our work), Krizaka's film, made with Sovkora",
               "alt": "From Krizaka's film: the owl, the beaver and the duck at work, a notebook open on the table."
             },
-            "ink": {
-              "caption": "In blue ink: the pen lays its stroke",
-              "alt": "Close-up of a fountain pen drawing a line of blue ink on paper; the French title « à l'encre bleue. » (in blue ink) appears."
-            },
-            "notebook": {
-              "caption": "The blue notebook and the feather",
-              "alt": "A feather on a blue notebook, on a desk by a window at blue hour; the title « KRIZAKA » appears."
-            },
             "river": {
               "caption": "Montréal at dawn, the river and Mont Royal",
               "alt": "Aerial view of the river and the city at dawn; a flight of birds crosses the frame."
@@ -508,21 +501,9 @@
             "signature": {
               "caption": "A contract, a signature: let's talk",
               "alt": "A hand signs a sheet under a brass lamp, an old key on the desk; the French title « parlons-en. » (let's talk) appears."
-            },
-            "bridge": {
-              "caption": "The travelling blue: the Jacques-Cartier bridge in winter",
-              "alt": "The Jacques-Cartier bridge lit in blue at night, ice on the river and snow; the French title « le bleu voyage. » appears."
             }
           },
           "sovkora": {
-            "neon": {
-              "caption": "Sovkora, the AI that stays with you",
-              "alt": "Sovkora's mark in orange neon in a wet brick alley; the titles « SOVKORA » and, in French, « l'IA qui reste chez toi. » (the AI that stays with you) appear."
-            },
-            "duck": {
-              "caption": "The duck builds: your data stays with you",
-              "alt": "A duck at a laptop, by a lamp and a rainy window; the French title « tes données restent chez toi. » (your data stays with you) appears."
-            },
             "tea": {
               "caption": "Mint tea poured from high, generated with Sovkora",
               "alt": "A silver teapot pours a long stream of tea into a small glass, in the golden light of a tent; a shot generated with Sovkora (Wan 2.2)."
@@ -553,10 +534,6 @@
               "caption": "The owl reads: every finding cites its passage",
               "alt": "An owl before a blue window at night; the French titles « chaque constat » then « cite son passage. » (every finding cites its passage) appear."
             },
-            "rag": {
-              "caption": "R·A·G: it searches, it reads, it cites its source",
-              "alt": "Close-up of a printed page under soft light; the title « R·A·G » appears."
-            },
             "loupe": {
               "caption": "Verikora, under the magnifier",
               "alt": "A magnifier over papers, on a desk before a rainy window; the title « VERIKORA » appears."
@@ -575,14 +552,6 @@
             }
           },
           "folioviv": {
-            "morning": {
-              "caption": "9 a.m.: the shop opens",
-              "alt": "A sunny barber shop, a beaver in a chair by the window; the title « 9:00 » appears."
-            },
-            "first-client": {
-              "caption": "The first client",
-              "alt": "A barber at work in a warm shop, lamps and wooden shelves; the French title « le premier client. » (the first client) appears."
-            },
             "evening": {
               "caption": "6 p.m.: the floor is swept",
               "alt": "A barber sweeps the floor at the end of the day, empty chairs, arched windows; the title « 18:00 » appears."

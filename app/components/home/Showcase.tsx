@@ -37,7 +37,7 @@ export default function Showcase({
     caption: words[s.id].caption,
     alt: words[s.id].alt,
     wide: rendition(s.wide),
-    tall: rendition(s.tall),
+    audio: s.audio,
   }));
   const sources = [...new Set(specs.map((s) => s.source))];
   const film = specs.some((s) => s.film);

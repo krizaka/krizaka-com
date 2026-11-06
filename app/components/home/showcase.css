@@ -1,6 +1,6 @@
 /* The home's carousels (Showcase, ShowcaseCarousel; krizaka-internal#2450). Cahier: a framed plate with a thin rule and a
    solid paper shadow, square corners, the caption under it in the typewriter face, the controls as quiet buttons. A phone
-   frame is 4:5, a wider screen's 16:9: each loads its own rendition. Slides change by a short fade of the ink; nothing
+   frame is 16:9 on every screen, the phone's too (no vertical: founder, 2026-11-05). Slides change by a short fade of the ink; nothing
    travels, and nothing moves under reduced motion. Tokens only. */
 
 .kz-show {
@@ -9,16 +9,11 @@
 }
 .kz-show-stage {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background: var(--kz-surface-1);
   border: 1px solid var(--kz-border-strong);
   box-shadow: 4px 4px 0 var(--kz-border-strong);
-}
-@media (min-width: 640px) {
-  .kz-show-stage {
-    aspect-ratio: 16 / 9;
-  }
 }
 .kz-show-slide {
   position: absolute;
