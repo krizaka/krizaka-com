@@ -20,11 +20,17 @@ export const ROSTER: readonly ProductId[] = PRODUCTS.map((p) => p.id).filter(
   (id) => id !== ENGINE && !PROVES_FIRST.includes(id),
 );
 
-/** The chapters of /story, in reading order (anchors and the sticky contents): who we are, the engine, each product
- *  (the first proofs, then the rest of the roster), the open stack, what is next. A product added to lib/products.ts
- *  gets its chapter by itself. */
+/** The chapters of /story, in reading order (anchors and the sticky contents): who we are, where the name comes from,
+ *  how we work (founder, 2026-11-06), the engine, each product (the first proofs, then the rest of the roster), the
+ *  open stack, what is next. A product added to lib/products.ts gets its chapter by itself. */
 export const PRODUCT_CHAPTERS: readonly ProductId[] = [...PROVES_FIRST, ...ROSTER];
-export const STORY_ANCHORS = ["who", "engine", ...PRODUCT_CHAPTERS, "open", "next"] as const;
+/** The company's own chapters, before the engine: not a product, no brand. */
+export const COMPANY_CHAPTERS = ["who", "name", "work"] as const;
+export const STORY_ANCHORS = [...COMPANY_CHAPTERS, "engine", ...PRODUCT_CHAPTERS, "open", "next"] as const;
+
+/** How a change travels, in order (the « how we work » chapter's text version and its drawing): the board, a lane per
+ *  product, the pull request, the train, the matrix. Words: site.story.work.steps.<id>. Facts from krizaka-agents' README. */
+export const WORK_STEPS = ["board", "lane", "pr", "train", "matrix"] as const;
 
 /** The bird each chapter wears, from the cast of the film (the brand reference, « Référence : les personnages et le
  *  discours »): one promise per subject, never the same bird twice on the page. */

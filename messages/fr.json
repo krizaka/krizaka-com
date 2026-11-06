@@ -667,8 +667,8 @@
     "story": {
       "intro": {
         "eyebrow": "Notre histoire",
-        "title": "Une entreprise de Montréal. Un moteur. <b>Des produits construits dessus.</b>",
-        "lead": "Krizaka est une entreprise de Montréal. Elle a d'abord construit Sovkora, un moteur d'IA qui montre son travail : chaque réponse garde la trace du modèle qui l'a produite et des règles qu'il a suivies. Puis elle a construit ses produits dessus, Verikora et Folioviv. Les trois sont en développement, à découvert, inscriptions fermées.",
+        "title": "Un petit studio de Montréal. <b>Il construit à découvert, avec des agents.</b>",
+        "lead": "Krizaka est un petit studio fondé à Montréal. Nous construisons nos logiciels avec des agents d'IA, à découvert, et nous mesurons notre façon de travailler. D'abord Sovkora, le moteur d'IA qui reste chez vous. Puis les produits qui tournent dessus, Verikora en tête.",
         "start": "Commencer la lecture",
         "products": "Découvrir les produits"
       },
@@ -677,7 +677,7 @@
       "who": {
         "nav": "Qui nous sommes",
         "title": "Ça a commencé à Montréal",
-        "lead": "Krizaka est une entreprise fondée à Montréal. Elle construit ses logiciels avec des agents d'IA qu'elle dirige et relit. Un kris est une lame forgée en couches ; zaka, la pente qu'on gravit un pas à la fois.",
+        "lead": "Krizaka est une entreprise fondée à Montréal, un petit studio. Elle construit ses logiciels avec des agents d'IA qu'elle dirige et relit, et elle montre son travail : le code, les tickets et le chemin de chaque changement.",
         "refusal": "Tout est parti d'une question : où mon document a-t-il été lu, par quel modèle, et qui voit le résultat ? Un logiciel qui ne sait pas répondre demande qu'on le croie sur parole. Alors ce que nous livrons est testé et documenté, et les briques sur lesquelles il repose sont publiques.",
         "placesAria": "Où est Krizaka",
         "places": ["Montréal"],
@@ -694,6 +694,54 @@
           "Musique : ACE-Step 1.5, générée avec Sovkora",
           "Titres composés en code, avec les polices de @krizaka/fonts",
           "Sans voix, donc sans sous-titres : la page du film décrit chaque plan"
+        ]
+      },
+      "name": {
+        "nav": "D'où vient le nom",
+        "title": "Un nom qui sonne comme deux souvenirs",
+        "passage": [
+          "Krizaka n'est pas un mot du dictionnaire. Aux oreilles des fondateurs, il sonne d'abord comme The King of Fighters et les salles d'arcade de leur jeunesse : la pièce glissée dans la fente, les manches serrées, la revanche demandée tout de suite.",
+          "Il sonne aussi comme korassa, <b>كراسة</b>, le mot arabe pour le cahier. Celui de l'école, qu'on remplit à l'encre bleue en laissant une marge pour la correction. Ce cahier est devenu notre identité : le papier, l'encre bleue, la marge.",
+          "Deux souvenirs, un seul nom : jouer sérieusement, et tout noter."
+        ],
+        "card": {
+          "arabic": "كراسة",
+          "gloss": "korassa : le cahier",
+          "caption": "Le nom, et le mot qu'on y entend."
+        }
+      },
+      "work": {
+        "nav": "Comment nous travaillons",
+        "title": "Un studio qui travaille avec des agents",
+        "lead": "Nos logiciels sont écrits par des agents d'IA, une voie par produit, à partir d'un même tableau. Rien ne fusionne à la main : un train porte chaque changement jusqu'au code principal, contrôles au vert.",
+        "stepsTitle": "Le chemin d'un changement",
+        "steps": {
+          "board": {
+            "name": "Le tableau",
+            "line": "Chaque travail part d'un ticket, qui dit ce qui prouvera qu'il est fait."
+          },
+          "lane": {
+            "name": "Une voie par produit",
+            "line": "Une session d'agent à la fois par voie, sur un seul ticket."
+          },
+          "pr": {
+            "name": "La pull request",
+            "line": "Le test d'abord, puis le code, à découvert sur GitHub."
+          },
+          "train": {
+            "name": "Le train",
+            "line": "Il fusionne quand vient son tour, jamais à la main."
+          },
+          "matrix": {
+            "name": "La matrice",
+            "line": "Un contrôle déterministe, sans IA : la référence de nos règles, dépôt par dépôt."
+          }
+        },
+        "more": "Le crack, et notre vitesse",
+        "depth": [
+          "Quand un dépôt se bloque sur un changement au rouge, le crack est appelé. Il part du but : chaque changement ouvert a-t-il encore du sens ? Il ferme, regroupe ou met de côté, et seulement ensuite il répare. Il a remplacé le pompier, qui réparait d'abord.",
+          "Nous mesurons notre vitesse. Début novembre, elle a baissé : les portes ajoutées une à une s'empilaient. Nous avons gardé ce qui protège, comme la sécurité, les secrets, l'accessibilité et l'honnêteté des pages, et assoupli ou retiré ce qui ralentissait sans protéger.",
+          "Chaque règle dit maintenant ce qu'elle doit améliorer, et elle compte ce qu'elle refuse. La première mesure de cette nouvelle façon de travailler est prévue le 8 novembre 2026."
         ]
       },
       "engine": {
@@ -733,13 +781,9 @@
             ]
           }
         },
-        "lines": {
-          "yomizaka": "Lisez avant de signer. Déposez un bail, un contrat ou une facture : Verikora le vérifie règle par règle et cite le passage exact derrière chaque constat.",
-          "akinaza": "La journée d'une petite boutique au même endroit : rendez-vous, factures bilingues et une déclaration de taxes préparée, que le commerçant relit. Folioviv la prépare, jamais il ne la dépose."
-        },
         "proofs": {
           "yomizaka": "Chaque règle cite son article de loi. Les règles québécoises attendent encore la relecture d'un avocat, et l'écran le dit : il trie, il ne donne pas d'avis juridique. Inscriptions fermées pendant nos essais sur de vrais baux.",
-          "akinaza": "Rendez-vous, factures avec TPS et TVQ, un grand livre que la base de données garde équilibré, et un rapport de taxes que le commerçant relit et dépose lui-même. En développement : inscriptions fermées."
+          "akinaza": "Rendez-vous, factures avec TPS et TVQ, un grand livre que la base de données garde équilibré, et un rapport de taxes que le commerçant relit et dépose lui-même. Le travail est en pause pendant que nous menons Verikora."
         }
       },
       "birds": {
@@ -761,7 +805,7 @@
       "next": {
         "nav": "La suite",
         "title": "La suite",
-        "lead": "Trois produits sont en développement, à découvert, inscriptions fermées. D'autres idées ont été explorées et sont en pause pour finir celles-ci. Aucune date promise : un produit dit ce qu'il est aujourd'hui.",
+        "lead": "Verikora passe en premier : c'est le produit que nous menons jusqu'à ses premiers utilisateurs, et Sovkora le fait tourner. Folioviv attend son tour. Kridoc se précise avant d'être construit. Aucune date promise.",
         "wire": "Brancher Sovkora à {products}, où son usage est encore prévu.",
         "reach": "Amener {products} en préversion de développement, chacun prouvé sur sa propre liste de contrôle.",
         "boardAria": "Où en est chaque produit",

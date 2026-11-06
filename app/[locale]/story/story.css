@@ -415,6 +415,12 @@
   font-weight: 600;
 }
 
+.st-board-note {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: var(--kz-text-secondary);
+}
+
 /* ═══ A PRODUCT'S TAKE — a poster, the recording plays on click in a lightbox ═══ */
 .st-take {
   display: grid;
@@ -496,4 +502,98 @@
   .st-ch[data-side="left"] .st-ch-proof:has(.st-take[data-ratio="phone"]) {
     justify-self: start;
   }
+}
+
+/* ═══ WHERE THE NAME COMES FROM — a notebook card: the ruled page, the margin, the word in blue ink ═══
+   The Cahier register on tokens only: the ruling and the margin are the paper tokens, the ink is the accent text. */
+.st-name-card {
+  margin: 0;
+  max-width: 380px;
+  padding: 20px 22px 18px 44px;
+  border: 1px solid var(--kz-border-subtle);
+  background-color: var(--kz-surface-1);
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 31px,
+      var(--kz-paper-rule-margin) 31px,
+      var(--kz-paper-rule-margin) 32px,
+      transparent 32px
+    ),
+    repeating-linear-gradient(180deg, transparent 0 31px, var(--kz-paper-rule-minor) 31px 32px);
+  box-shadow: 6px 6px 0 var(--kz-border-subtle);
+}
+.st-name-card p {
+  margin: 0;
+}
+.st-name-word {
+  font-family: var(--kz-font-display);
+  font-size: clamp(28px, 4vw, 36px);
+  line-height: 1.3;
+  color: var(--kz-accent-text);
+}
+.st-name-ar {
+  font-size: clamp(26px, 3.6vw, 32px);
+  line-height: 1.4;
+  color: var(--kz-accent-text);
+  text-align: right;
+}
+.st-name-gloss {
+  font-family: var(--kz-font-mono);
+  font-size: 14px;
+  color: var(--kz-text-primary);
+}
+.st-name-note {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--kz-text-secondary);
+}
+.st-ar {
+  font-weight: 600;
+  color: var(--kz-accent-text);
+}
+
+/* ═══ HOW WE WORK — the path of a change, as an ordered list (its own text version) ═══ */
+.st-work {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid var(--kz-border-subtle);
+  border-radius: 12px;
+  background: var(--kz-surface-1);
+}
+.st-work-title {
+  margin: 0 0 10px;
+  font-family: var(--kz-font-mono);
+  font-size: 13px;
+  color: var(--kz-accent-text);
+}
+.st-work-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: st-step;
+  display: grid;
+  gap: 10px;
+}
+.st-work-steps li {
+  counter-increment: st-step;
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  column-gap: 8px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--kz-text-secondary);
+}
+.st-work-steps li::before {
+  content: counter(st-step, decimal-leading-zero);
+  grid-row: span 2;
+  font-family: var(--kz-font-mono);
+  color: var(--kz-accent-text);
+}
+.st-work-steps strong {
+  color: var(--kz-text-primary);
+}
+.st-line {
+  font-weight: 600;
+  color: var(--kz-text-primary) !important;
 }

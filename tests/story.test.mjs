@@ -29,9 +29,12 @@ test("the page is the longform template with a sticky contents (Toc + TocLayout)
 const story = read("lib/story.ts");
 const productIds = PRODUCT_RECORDS().map((p) => p.id);
 
-test("the chapters are, in order: who we are, the engine, each product, the open stack, what is next — products from PRODUCTS", () => {
+test("the chapters are, in order: who we are, the name, how we work, the engine, each product, the open stack, what is next — products from PRODUCTS", () => {
   const lib = "lib/story.ts";
-  assert.ok(hasCode(lib, 'STORY_ANCHORS = ["who", "engine", ...PRODUCT_CHAPTERS, "open", "next"] as const'));
+  assert.ok(hasCode(lib, 'COMPANY_CHAPTERS = ["who", "name", "work"] as const'));
+  assert.ok(
+    hasCode(lib, 'STORY_ANCHORS = [...COMPANY_CHAPTERS, "engine", ...PRODUCT_CHAPTERS, "open", "next"] as const'),
+  );
   assert.ok(
     hasCode(lib, "= [...PROVES_FIRST, ...ROSTER]"),
     "the first proofs, then the rest of the roster: every product but the engine",
@@ -44,9 +47,10 @@ test("the chapters are, in order: who we are, the engine, each product, the open
   );
   const pageFile = "app/[locale]/story/page.tsx";
   const ids = jsx(pageFile).map((e) => e.attrs.id);
-  for (const id of ["who", "engine", "open", "next"]) assert.ok(ids.includes(id), id);
+  for (const id of ["who", "name", "work", "engine", "open", "next"]) assert.ok(ids.includes(id), id);
   assert.ok(ids.includes("{`p-${id}`}"));
-  assert.ok(hasCode(pageFile, 'id === "who" || id === "engine" || id === "open" || id === "next" ? id : `p-${id}`'));
+  assert.ok(hasCode(pageFile, 'const plain = new Set<string>([...COMPANY_CHAPTERS, "engine", "open", "next"]);'));
+  assert.ok(hasCode(pageFile, "plain.has(id) ? id : `p-${id}`"));
 });
 
 test("each chapter is readable in ten seconds: heading, a line or two, one proof, depth in a native fold", () => {
@@ -58,6 +62,7 @@ test("each chapter is readable in ten seconds: heading, a line or two, one proof
     const st = messages(l).story;
     for (const [k, v] of Object.entries({
       who: st.who.lead,
+      work: st.work.lead,
       engine: st.engine.lead,
       open: st.open.lead,
       next: st.next.lead,
@@ -480,4 +485,98 @@ test("/story lists only the products in focus", () => {
     ["akinaza", "orazaka", "yomizaka"],
     "lib/products.ts lists only the products in focus",
   );
+});
+
+// Founder, 2026-11-06 (krizaka-internal#2648): the story tells where the name comes from, in the founders' plural, with no
+// first or last name (tests/no-founder-name.test.mjs): The King of Fighters and the arcade halls as a memory, never a
+// brand claim (no logo, no character, no image from the game), and « korassa » (كراسة), the notebook behind the Cahier.
+test("the name chapter tells The King of Fighters and « korassa » (كراسة), in the founders' plural, in both languages", () => {
+  const plural = { fr: /\bdes fondateurs\b/, en: /\bthe founders\b/ };
+  const notebook = { fr: /cahier/, en: /notebook/ };
+  for (const l of ["en", "fr"]) {
+    const n = messages(l).story.name;
+    const text = n.passage.join(" ");
+    assert.match(text, /The King of Fighters/, `${l}: the arcade memory`);
+    assert.match(text, /arcade/, `${l}: the arcade halls`);
+    assert.match(text, /korassa/, `${l}: the word heard in the name`);
+    assert.match(text, /<b>كراسة<\/b>/, `${l}: the Arabic word, marked for its language`);
+    assert.match(text, notebook[l], `${l}: the notebook`);
+    assert.match(text, plural[l], `${l}: the founders, in the plural`);
+    assert.doesNotMatch(text, /\b(je|j'|mon|ma|I|my)\b/, `${l}: never a first person singular`);
+    assert.equal(n.card.arabic, "كراسة");
+    assert.ok(n.passage.length <= 3, `${l}: a short passage`);
+  }
+  const arabic = jsx(PAGE).filter((e) => e.attrs.lang === "ar");
+  assert.deepEqual(
+    arabic.map((e) => [e.tag, e.attrs.dir, e.attrs.className]),
+    [
+      ["span", "rtl", "st-ar"],
+      ["p", "rtl", "st-name-ar"],
+    ],
+    "the Arabic, in the passage and on the card, is read as Arabic, right to left",
+  );
+  assert.ok(
+    !jsx(PAGE).some((e) => e.tag === "Image" && /king|kof|arcade/i.test(JSON.stringify(e.attrs))),
+    "no image of the game",
+  );
+});
+
+test("the work chapter says how we work from the facts: lanes, the board, the trains, the matrix, the crack, the speed measured", () => {
+  assert.ok(hasCode("lib/story.ts", 'WORK_STEPS = ["board", "lane", "pr", "train", "matrix"] as const'));
+  assert.match(page, /<ol className="st-work-steps">/, "the path is an ordered list: its own text version");
+  const words = {
+    fr: [
+      /une voie par produit/i,
+      /tableau/,
+      /train/,
+      /matrice/i,
+      /déterministe/,
+      /crack/,
+      /pompier/,
+      /vitesse/,
+      /8 novembre 2026/,
+    ],
+    en: [
+      /one lane per product/i,
+      /board/,
+      /train/,
+      /matrix/i,
+      /deterministic/,
+      /crack/,
+      /firefighter/,
+      /speed/,
+      /November 8, 2026/,
+    ],
+  };
+  for (const l of ["en", "fr"]) {
+    const w = messages(l).story.work;
+    assert.deepEqual(Object.keys(w.steps), ["board", "lane", "pr", "train", "matrix"], l);
+    const text = JSON.stringify(w);
+    for (const rx of words[l]) assert.match(text, rx, `${l}: ${rx}`);
+    assert.doesNotMatch(text, /\d+ ?%/, `${l}: no percentage on the page (the first measure is on 2026-11-08)`);
+  }
+});
+
+test("each product says the home's line and status: the same messages and data, Kridoc from the products in conception", () => {
+  assert.match(page, /<p>\{h\.cards\[id\]\.line\}<\/p>/, "a product chapter's line is the home card's");
+  assert.match(page, /\{t\.site\.home\.engine\.line\}/, "the engine says the home's line");
+  assert.match(page, /<ProductStatus status=\{p\.status\} t=\{t\} \/>/, "the status is the product's data");
+  assert.match(page, /const board: Status\[\] = \["devPreview", "development", "construction", "paused"\];/);
+  assert.match(page, /IN_DESIGN\.map\(\(p\) =>/, "Kridoc is read from lib/products-in-design.ts");
+  assert.match(page, /t\.site\.home\.products\.inDesign\.lines\[p\.id\]/);
+  assert.match(
+    page,
+    /\.filter\(\(u\) => product\(u\.id\)\.status !== "paused"\)/,
+    "no planned use promised to a paused product",
+  );
+  for (const l of ["en", "fr"])
+    assert.equal(messages(l).story.products.lines, undefined, `${l}: no second product line`);
+});
+
+test("the new words of /story carry no em dash or en dash", () => {
+  for (const l of ["en", "fr"]) {
+    const st = messages(l).story;
+    for (const [k, v] of Object.entries({ intro: st.intro, who: st.who, name: st.name, work: st.work, next: st.next }))
+      assert.doesNotMatch(JSON.stringify(v), /[\u2014\u2013]/, `${l}: ${k}`);
+  }
 });
