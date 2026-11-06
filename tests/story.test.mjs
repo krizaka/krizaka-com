@@ -64,7 +64,7 @@ test("each chapter is readable in ten seconds: heading, a line or two, one proof
     }))
       assert.ok(v.length <= 240, `${l}: ${k} lead is ${v.length} characters`);
     for (const id of ["yomizaka", "akinaza"])
-      assert.ok(messages(l).products.cards[id].line.length <= 90, `${l}: ${id}`);
+      assert.ok(messages(l).products.cards[id].line.length <= 110, `${l}: ${id}`);
   }
 });
 

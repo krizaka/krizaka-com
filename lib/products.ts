@@ -13,9 +13,10 @@ export type { ProductId } from "./product-hosts.ts";
 /** Where a product stands. `devPreview`: runs on its dev site for QA, and its dev-preview.json checklist is complete
  *  (the build refuses it otherwise: scripts/gen-dev-preview.mjs, krizaka/.github docs/standards/dev-preview.md). `upcoming`: announced, coming soon. `construction`: being built, nothing
  *  offered yet. `development`: built in the open, in development (its repository is public; a dev site when it has one).
+ *  `paused`: built in the open, work paused for now (Folioviv, 2026-11-05: « En pause »).
  *  `design`: in conception — its need and scope are being settled, nothing is built or offered (lib/products-in-design.ts).
  *  Only `devPreview` is gated. Words: site.nav.status.<status>. */
-export type ProductStatus = "design" | "upcoming" | "construction" | "development" | "devPreview";
+export type ProductStatus = "design" | "upcoming" | "construction" | "development" | "paused" | "devPreview";
 
 export interface Product {
   /** The id the mark, the brand and the messages use. */
@@ -47,7 +48,7 @@ export const PRODUCTS: Product[] = [
   {
     id: "akinaza",
     name: displayName("akinaza"),
-    status: "development",
+    status: "paused",
     siteUrl: siteUrlOf("akinaza"),
     repoUrl: AKINAZA_REPO_URL,
   },

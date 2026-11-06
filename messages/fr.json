@@ -96,6 +96,10 @@
           "label": "En développement",
           "long": "En développement"
         },
+        "paused": {
+          "label": "En pause",
+          "long": "En pause"
+        },
         "devPreview": {
           "label": "Préversion dev",
           "long": "Préversion de développement"
@@ -129,21 +133,21 @@
       "title": "Un moteur, les produits qu'il propulse",
       "pageTitle": "Un moteur, et les produits qu'il propulse",
       "lead": "Sovkora est le moteur sur lequel tourne l'IA de chaque produit Krizaka : c'est notre savoir-faire central. Chaque produit le prouve dans son domaine, sur son propre site, avec son code source sur GitHub.",
-      "visit": "Voir le site",
-      "visitAria": "{name} — voir le site",
+      "visit": "Voir la page (bientôt ouverte)",
+      "visitAria": "{name} : voir la page d'attente",
       "source": "Code source",
       "sourceAria": "{name} — code source sur GitHub",
       "releaseNotes": "Journal des versions",
       "releaseNotesAria": "{name} : journal des versions",
       "cards": {
         "orazaka": {
-          "line": "Une IA souveraine sur votre infrastructure : vos données ne quittent jamais la maison."
+          "line": "L'IA qui reste chez vous. Vos modèles, vos machines : vos données ne sortent pas."
         },
         "yomizaka": {
-          "line": "Baux, contrats et factures lus et vérifiés. Chaque constat cite son passage."
+          "line": "Lisez avant de signer. Verikora vérifie les papiers d'un dossier de location et cite chaque passage."
         },
         "akinaza": {
-          "line": "Vos rendez-vous, vos factures et vos taxes, réglés."
+          "line": "Vos rendez-vous et vos factures réglés, vos taxes préparées."
         }
       },
       "proofBy": "Prouvé par {name}",
@@ -178,8 +182,8 @@
           "analytics": "analyses d'usage"
         }
       },
-      "visitSite": "Voir le site",
-      "visitSiteAria": "{name} : voir le site (nouvel onglet)"
+      "visitSite": "Voir la page (bientôt ouverte)",
+      "visitSiteAria": "{name} : voir la page d'attente (nouvel onglet)"
     },
     "home": {
       "hero": {
@@ -249,8 +253,7 @@
           "role": "rôle",
           "engineRole": "le moteur",
           "back": "reçoit",
-          "site": "site",
-          "latest": "dernière version"
+          "site": "site"
         },
         "notes": {
           "orazaka": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
@@ -263,7 +266,7 @@
         "inDesign": {
           "label": "En conception",
           "lines": {
-            "kachizaka": "Le stockage documentaire de Krizaka. Nous précisons le besoin avant de le construire."
+            "kachizaka": "Vos documents d'entreprise, rangés et retrouvés."
           },
           "plate": {
             "demoSoon": "Démo bientôt",
@@ -272,13 +275,13 @@
             "figure": "Un document d’exemple, tel que Kridoc le rangera. Données de démo."
           }
         },
-        "latestValue": "{version} · {date}",
         "rowLabel": "Nos trois produits, le moteur au centre",
         "roles": {
           "yomizaka": "vérifie les papiers",
           "orazaka": "le moteur",
           "akinaza": "fait tourner la boutique"
-        }
+        },
+        "siteValue": "{host} · pas encore ouvert"
       },
       "stack": {
         "facts": {
@@ -821,7 +824,7 @@
         "cues": {
           "title": "Le monde de Krizaka.",
           "falcon": "Le faucon veille : la sécurité d’abord.",
-          "owl": "Le hibou lit chaque page et reconnaît chaque visage.",
+          "owl": "Le hibou lit chaque page et cite chaque passage.",
           "duck": "Le canard construit, ligne après ligne, en open source.",
           "flamingo": "Le flamant répond, et le paiement suit.",
           "pigeon": "Le pigeon livre, à chaque fois.",
@@ -1454,7 +1457,7 @@
           "tagline": "Inscription, connexion, profils, clés d'API et rôles en service — avec un client typé pour les autres.",
           "trap": "L'inscription ressemble à un week-end. Viennent ensuite la vérification d'e-mail, les jetons de réinitialisation qui doivent expirer et ne servir qu'une fois, les comptes Google et GitHub à lier, les clés d'API, les rôles dans un JWT — et chaque autre service qui valide ce JWT à sa façon.",
           "answer": "Un service Spring Boot (ou le `-core` que vous embarquez) qui inscrit, vérifie, connecte par mot de passe ou Google/GitHub, réinitialise les mots de passe, émet des clés d'API et des JWT de session porteurs des rôles — et un client que chaque autre service appelle avec un jeton `SERVICE`.",
-          "rule": "Le hibou connaît chaque visage et ne garde aucun secret en clair : un jeton de réinitialisation sert une fois, est stocké en empreinte SHA-256 et meurt après 15 minutes ; un mot de passe est une empreinte BCrypt ; une clé de fournisseur est chiffrée en AES-256 avant de toucher le disque.",
+          "rule": "Le hibou ne garde aucun secret en clair : un jeton de réinitialisation sert une fois, est stocké en empreinte SHA-256 et meurt après 15 minutes ; un mot de passe est une empreinte BCrypt ; une clé de fournisseur est chiffrée en AES-256 avant de toucher le disque.",
           "problem": [
             "Des liens de réinitialisation qui marchent deux fois, n'expirent jamais, ou dorment en clair dans la base — lisibles par quiconque a une sauvegarde.",
             "Une table d'utilisateurs qui gagne une colonne par fonctionnalité produit, jusqu'à ce qu'aucun autre produit ne puisse la réutiliser.",

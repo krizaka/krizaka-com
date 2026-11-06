@@ -56,10 +56,10 @@ test("the home and /story render the products from PRODUCTS: the home's rows, /s
   );
 });
 
-test("a product card's one line is a hook: 90 characters at most, in both languages", () => {
+test("a product card's one line is the canonical line: 110 characters at most (réunion 6, 2026-11-05), in both languages", () => {
   for (const lang of ["en", "fr"]) {
     for (const [id, c] of Object.entries(messages(lang).products.cards))
-      assert.ok(c.line.length <= 90, `${lang}: products.cards.${id}.line (${c.line.length})`);
+      assert.ok(c.line.length <= 110, `${lang}: products.cards.${id}.line (${c.line.length})`);
   }
 });
 

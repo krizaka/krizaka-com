@@ -7,8 +7,8 @@
    carousel is on the right (entrySide).
    - a carousel: numbered figure (« Fig. 3b », after the hero's Fig. 1: lib/home-sections.ts sectionFigure), which advances
      on its own with a visible pause, still under reduced motion, its text version on the server;
-   - a specimen tag: its catalogue number, its name (plain text), its mark, its site (the commercial www domain) and its latest
-     published release (read at build from the changelog data, lib/latest-release.ts), one action « See the site » (new tab) and
+   - a specimen tag: its catalogue number, its name (plain text), its mark, its site (the commercial www domain) and its
+     « not open yet » (no version: a coming-soon page runs no app), one action « See the page (opening soon) » (the waiting page, new tab) and
      two quiet links, « Source » and « Release notes », the stamp of its honest status (lib/products.ts), its line, its bird,
      what it runs on Sovkora (lib/engine-uses.ts) — and for the engine, what it gives and the products it powers, folded;
    - the notes at the foot of the section: what each product really does, sourced;
@@ -25,14 +25,12 @@ import { Caption, FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
 import { Mascot } from "@krizaka/ui/mascots";
 import { Section } from "@krizaka/ui/page";
 import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
-import { RELEASES } from "@/lib/changelog-data";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { entrySide, productOrder, sectionFigure } from "@/lib/home-sections";
 import { showcaseOf } from "@/lib/home-showcase";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { IN_DESIGN, type ProductInDesign } from "@/lib/products-in-design";
-import { latestRelease } from "@/lib/latest-release";
 import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
 import ButtonLink from "../ButtonLink";
 import { GitHubMark } from "../brand/GitHubMark";
@@ -43,6 +41,7 @@ import "./visuals/visuals.css";
 const STAMP: Record<ProductStatus, StampTone> = {
   devPreview: "ok",
   development: "wip",
+  paused: "neutral",
   construction: "construction",
   upcoming: "neutral",
   design: "neutral",
@@ -72,16 +71,10 @@ function Bird({ bird, t }: Readonly<{ bird: StoryBird; t: TranslationDictionary 
   );
 }
 
-/** The site of a product and its latest published release, read at build (lib/latest-release.ts): the card's two facts. The
- *  release is left out when the data holds none — never typed, never read from a dev host. */
+/** The site of a product: its commercial www domain, and that it is not open yet (a coming-soon page runs no app, so the card
+ *  shows no version: AGENTS §2). Never typed, never read from a dev host. */
 function siteFields(p: Product, s: TranslationDictionary["site"]["home"]["products"]) {
-  const latest = latestRelease(p.id, RELEASES);
-  return [
-    { label: s.fields.site, value: host(p.siteUrl) },
-    ...(latest
-      ? [{ label: s.fields.latest, value: format(s.latestValue, { version: latest.version, date: latest.date }) }]
-      : []),
-  ];
+  return [{ label: s.fields.site, value: format(s.siteValue, { host: host(p.siteUrl) }) }];
 }
 
 /** One action per card, « See the site » (its commercial www domain, a new tab), then two quiet links: the source and the

@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { siteHostOf, siteUrlOf, PRODUCT_IDS } from "../lib/product-hosts.ts";
 import { cssDecls, strings } from "./helpers/source.mjs";
-import { latestRelease } from "../lib/latest-release.ts";
 import { PRODUCTS } from "../lib/products.ts";
 
 // Founder, 2026-11-04 (krizaka-internal#2373): the products' public addresses are their commercial www domains, which show a
@@ -38,25 +37,6 @@ test("the card reads no version from a product's host (no healthz at build): the
     assert.ok(!existsSync(new URL(`../${gone}`, import.meta.url)), gone);
   const scripts = JSON.parse(read("package.json")).scripts;
   for (const s of ["dev", "build"]) assert.doesNotMatch(scripts[s], /gen-dev-versions/);
-});
-
-test("the latest release comes from the changelog data: the newest of the product, none when it has none", () => {
-  const r = (product, version, date) => ({ product, version, date });
-  const releases = [
-    r("yomizaka", "2026.11.03.7", "2026-11-03"),
-    r("yomizaka", "2026.11.03.10", "2026-11-03"),
-    r("yomizaka", "2026.11.02.1", "2026-11-02"),
-    r("orazaka", "2026.11.04.1", "2026-11-04"),
-  ];
-  assert.deepEqual(latestRelease("yomizaka", releases), { version: "2026.11.03.10", date: "2026-11-03" });
-  assert.equal(latestRelease("akinaza", releases), undefined);
-  const showcase = read("app/components/home/ProductShowcase.tsx");
-  assert.match(showcase, /latestRelease\(p\.id, RELEASES\)/, "the card reads it from the build's changelog data");
-  assert.doesNotMatch(
-    strings("app/components/home/ProductShowcase.tsx").join("\n"),
-    /\d{4}\.\d{2}\.\d{2}\.\d+/,
-    "no version typed",
-  );
 });
 
 test("a product card: the name is plain text, one link per destination, each accessible name unique and naming the product", () => {
