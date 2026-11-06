@@ -6,9 +6,10 @@
 
    A product appears here when it has a client that reads it (a mobile app today): Orazaka. Yomizaka and Akinaza have no
    mobile app reading it yet — their entry arrives with it (one edit).
-   The values are what is LIVE: Orazaka answers on www.orazaka.com (dev.orazaka.com was removed on 2026-11-05, krizaka-internal#2600); the other products' APIs, auth and webhooks stay on the dev sites (dev.<product>.com); `webBase`
-   moves to www.<product>.com product by product, the day the #119 session posts that product's www live in
-   orchestration.md (www serves the real app, never a coming-soon page) — one edit here, then `npm run services:sign`. */
+   The values are what is LIVE: no code-name host serves anything since the org standardisation (2026-11-06,
+   krizaka-internal#2660); each product's development app answers on dev.<commercial name>.com (Sovkora on
+   dev.sovkora.com). `webBase` moves to www.<commercial name>.com product by product, the day that www serves the real
+   app (never a coming-soon page) — one edit here, then `npm run services:sign`. */
 
 import type { ProductId } from "./products";
 
@@ -42,8 +43,8 @@ export const SERVICES_KEY_ID = "k1";
 export const SERVICES: Partial<Record<ProductId, Partial<Record<ServiceEnvironment, ServiceEntry>>>> = {
   orazaka: {
     dev: {
-      apiBase: "https://www.orazaka.com/edge",
-      webBase: "https://www.orazaka.com",
+      apiBase: "https://dev.sovkora.com/edge",
+      webBase: "https://dev.sovkora.com",
       minAppVersion: "1.0.0",
       latestAppVersion: "1.0.0",
       status: "ok",
@@ -51,9 +52,9 @@ export const SERVICES: Partial<Record<ProductId, Partial<Record<ServiceEnvironme
   },
 };
 
-/** The domains a product's addresses may live on, besides krizaka.com: its own (`orazaka.com`). */
+/** The domains a product's addresses may live on, besides krizaka.com: its own commercial domain (`sovkora.com`). */
 export const PRODUCT_DOMAINS: Record<ProductId, string> = {
-  orazaka: "orazaka.com",
-  yomizaka: "yomizaka.com",
-  akinaza: "akinaza.com",
+  orazaka: "sovkora.com",
+  yomizaka: "verikora.com",
+  akinaza: "folioviv.com",
 };

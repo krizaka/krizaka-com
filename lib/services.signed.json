@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
   "keyId": "k1",
-  "issuedAt": "2026-11-05T22:44:44Z",
+  "issuedAt": "2026-11-06T04:47:13Z",
   "services": {
     "orazaka": {
       "dev": {
-        "apiBase": "https://www.orazaka.com/edge",
-        "webBase": "https://www.orazaka.com",
+        "apiBase": "https://dev.sovkora.com/edge",
+        "webBase": "https://dev.sovkora.com",
         "minAppVersion": "1.0.0",
         "latestAppVersion": "1.0.0",
         "status": "ok"
       }
     }
   },
-  "signature": "NOBvMiX2q0GuCx10kmkWF/OleBMU+xmTz2+xuISsX8luQjoLF81L78I+JvPEJh0NlGMHNnmGgBQaMoNdnRayAQ=="
+  "signature": "BwEKY+Sol7srK0KANw5aFl0/1Hg9AzgrVugGl5Y1Vy4zik5Vpap7Okiq3SoBhrZPK7w6HHy0uljGCMhFkzLKBQ=="
 }
