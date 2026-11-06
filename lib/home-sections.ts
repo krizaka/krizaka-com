@@ -11,9 +11,9 @@ export function folioOf(section: HomeSection): { page: number; total: number } {
   return { page: HOME_SECTIONS.indexOf(section) + 1, total: HOME_SECTIONS.length };
 }
 
-/** The products' row on the home (founder, 2026-11-05, krizaka-internal#2450): Verikora, Sovkora in the centre, Folioviv,
- *  then any other product as listed. */
-export const PRODUCT_ORDER = ["yomizaka", "orazaka", "akinaza"] as const;
+/** The products' row on the home (founder, 2026-11-06, krizaka-internal#2714; was Verikora, Sovkora, Folioviv in #2450):
+ *  Sovkora, the engine the products run on, first, then Verikora, then Folioviv, then any other product as listed. */
+export const PRODUCT_ORDER = ["orazaka", "yomizaka", "akinaza"] as const;
 
 /** The one product the home serves (krizaka-internal#2445): its reader is the property manager, so the hero's primary
  *  action writes to us on this product's topic of the contact form (lib/contact.ts), and its figure shows this product first. */
@@ -33,8 +33,8 @@ export function productOrder<T extends { id: string }>(products: readonly T[]): 
 }
 
 /** Where an entry's specimen tag stands beside its carousel on a wide screen: the entries alternate in the row's order,
- *  so Verikora puts its carousel on the left, Sovkora its tag on the left and its carousel on the right (founder,
- *  2026-11-05), Folioviv its carousel on the left again. One column on a phone and a tablet, where there is no side. */
+ *  so Sovkora puts its carousel on the left, Verikora its tag on the left and its carousel on the right, Folioviv its
+ *  carousel on the left again (krizaka-internal#2714). One column on a phone and a tablet, where there is no side. */
 export type EntrySide = "card-left" | "plate-left";
 export function entrySide<T extends { id: string }>(products: readonly T[], id: string): EntrySide {
   const i = productOrder(products).findIndex((p) => p.id === id);

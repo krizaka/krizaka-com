@@ -230,7 +230,7 @@
       "products": {
         "number": "§ 2",
         "title": "Our products: management and compliance tools, and the engine that runs them.",
-        "lead": "Verikora checks the paperwork: leases, contracts, invoices. Sovkora, our engine, runs their AI. Folioviv runs a service business: bookings, invoices, GST and QST. Each one lives on its own site, with its source on GitHub.",
+        "lead": "Sovkora, our engine, runs the AI of our products. Verikora checks the paperwork: leases, contracts, invoices. Folioviv runs a service business: bookings, invoices, GST and QST. Each one lives on its own site, with its source on GitHub.",
         "engineUse": "On Sovkora · {use}",
         "enginePlanned": "On Sovkora, planned · {use}",
         "flow": {

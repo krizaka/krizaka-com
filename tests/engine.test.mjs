@@ -48,16 +48,16 @@ test("a planned use is said planned: the products not wired yet are flagged, the
   assert.match(story, /u\.planned \? ` \(\$\{e\.planned\}\)` : ""/);
 });
 
-// 2026-11-05 (founder, krizaka-internal#2450; supersedes the 2026-10-20 engine-first layout): the products stand in one row,
-// Verikora · Sovkora in the centre · Folioviv, each entry a specimen tag beside its carousel; the engine's tag folds what
-// it gives and the products it powers. No frame around the products and no box in a box. /story keeps the engine's flow.
-test("the products stand in one row with the engine in the centre — no foundation frame, no card in a card", async () => {
+// 2026-11-05 (founder, krizaka-internal#2450; supersedes the 2026-10-20 engine-first layout), order of 2026-11-06 (#2714): the
+// products stand in one row, Sovkora · Verikora · Folioviv, each entry a specimen tag beside its carousel; the engine's tag
+// folds what it gives and the products it powers. No frame around the products and no box in a box. /story keeps the engine's flow.
+test("the products stand in one row, the engine first — no foundation frame, no card in a card", async () => {
   const home = read("app/components/home/ProductShowcase.tsx");
   const { PRODUCT_ORDER, productOrder } = await import("../lib/home-sections.ts");
-  assert.deepEqual(PRODUCT_ORDER, ["yomizaka", "orazaka", "akinaza"], "Verikora, Sovkora in the centre, Folioviv");
+  assert.deepEqual(PRODUCT_ORDER, ["orazaka", "yomizaka", "akinaza"], "Sovkora, Verikora, Folioviv");
   assert.deepEqual(
-    productOrder([{ id: "orazaka" }, { id: "akinaza" }, { id: "yomizaka" }]).map((p) => p.id),
-    ["yomizaka", "orazaka", "akinaza"],
+    productOrder([{ id: "akinaza" }, { id: "yomizaka" }, { id: "orazaka" }]).map((p) => p.id),
+    ["orazaka", "yomizaka", "akinaza"],
   );
   assert.match(home, /const SHOWN = productOrder\(PRODUCTS\);/);
   assert.match(home, /<ol className="kz-prod-row"/, "the row of the three, each to its entry");

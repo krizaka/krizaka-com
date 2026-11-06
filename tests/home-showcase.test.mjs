@@ -173,6 +173,6 @@ test("the bar's « Products » scrolls on the home and leads to the home's secti
 
 test("AGENTS.md says the new rules: the home's order (§ 2) and the carousels' exception (§ 4)", () => {
   const agents = read("AGENTS.md");
-  assert.match(agents, /Verikora · Sovkora in the centre · Folioviv/);
+  assert.match(agents, /Sovkora · Verikora · Folioviv/);
   assert.match(agents, /Two blocks of the home move on their own\. The carousels/);
 });
