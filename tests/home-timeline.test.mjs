@@ -1,6 +1,6 @@
-// The home's products alternate (founder, 2026-11-01, krizaka-internal#683), in the row's order since 2026-11-05
-// (krizaka-internal#2450): Verikora, Sovkora in the centre with its carousel on the right, Folioviv; the tag and the
-// carousel swap sides from one entry to the next; one column below 1024 px.
+// The home's products alternate (founder, 2026-11-01, krizaka-internal#683), in the row's order (krizaka-internal#2450),
+// Sovkora first since 2026-11-06 (#2714): Sovkora with its carousel on the left, Verikora with its tag on the left, Folioviv;
+// the tag and the carousel swap sides from one entry to the next; one column below 1024 px.
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -9,11 +9,11 @@ import { PRODUCTS } from "../lib/products.ts";
 
 const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), "utf8");
 
-test("the sides alternate in the row's order: Sovkora's tag left and its carousel on the right, between the others", () => {
+test("the sides alternate in the row's order: Sovkora's carousel left, Verikora's tag left, Folioviv's carousel left", () => {
   const order = productOrder(PRODUCTS).map((p) => [p.id, entrySide(PRODUCTS, p.id)]);
   assert.deepEqual(order.slice(0, 3), [
-    ["yomizaka", "plate-left"],
-    ["orazaka", "card-left"],
+    ["orazaka", "plate-left"],
+    ["yomizaka", "card-left"],
     ["akinaza", "plate-left"],
   ]);
   for (let i = 1; i < order.length; i++) assert.notEqual(order[i][1], order[i - 1][1], `${order[i][0]} swaps sides`);

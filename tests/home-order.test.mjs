@@ -1,16 +1,22 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { productOrder } from "../lib/home-sections.ts";
+import { entrySide, productOrder } from "../lib/home-sections.ts";
 const PRODUCTS = ["orazaka", "yomizaka", "akinaza", "kachizaka"].map((id) => ({ id }));
 
 const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"));
 
-// Founder, 2026-11-05 (krizaka-internal#2450): the products in one row, Verikora, Sovkora in the centre, Folioviv, then the
-// rest as listed.
-test("the products' row: Verikora, Sovkora in the centre, Folioviv, then the rest as listed", () => {
+// Founder, 2026-11-06 (krizaka-internal#2714; was Verikora, Sovkora, Folioviv in #2450): the products in one row, Sovkora
+// first, then Verikora, then Folioviv, then the rest as listed; the sides alternate by position.
+test("the products' row: Sovkora first, then Verikora, then Folioviv, then the rest as listed", () => {
   const ids = productOrder(PRODUCTS).map((p) => p.id);
-  assert.deepEqual(ids, ["yomizaka", "orazaka", "akinaza", "kachizaka"]);
+  assert.deepEqual(ids, ["orazaka", "yomizaka", "akinaza", "kachizaka"]);
+  const sides = ["orazaka", "yomizaka", "akinaza"].map((id) => entrySide(PRODUCTS, id));
+  assert.deepEqual(
+    sides,
+    ["plate-left", "card-left", "plate-left"],
+    "Sovkora's carousel left, Verikora's tag left, Folioviv's carousel left",
+  );
 });
 
 // krizaka-internal#2445: the hero speaks to the property manager, so its lead opens on Verikora and runs on Sovkora; the
@@ -23,7 +29,7 @@ test("the hero lead opens on Verikora, in short sentences, no em dash, Sovkora �
     assert.doesNotMatch(lead, /moteur d'IA|AI engine/, `${l}: the engine is « ours », the word AI is not the pitch`);
     assert.match(
       msg(l).site.home.products.lead,
-      /Verikora.*Sovkora.*Folioviv/s,
+      /Sovkora.*Verikora.*Folioviv/s,
       `${l}: § 2's lead, in the row's order`,
     );
     assert.doesNotMatch(msg(l).site.home.products.lead, /moteur d'IA|AI engine/, `${l}: § 2's lead`);

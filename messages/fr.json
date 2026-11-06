@@ -230,7 +230,7 @@
       "products": {
         "number": "§ 2",
         "title": "Nos produits : des outils de gestion et de conformité, et le moteur qui les fait tourner.",
-        "lead": "Verikora vérifie les papiers : baux, contrats, factures. Sovkora, notre moteur, fait tourner leur IA. Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Chacun vit sur son propre site, avec son code sur GitHub.",
+        "lead": "Sovkora, notre moteur, fait tourner l'IA de nos produits. Verikora vérifie les papiers : baux, contrats, factures. Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Chacun vit sur son propre site, avec son code sur GitHub.",
         "engineUse": "Sur Sovkora · {use}",
         "enginePlanned": "Sur Sovkora, prévu · {use}",
         "flow": {

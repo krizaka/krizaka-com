@@ -51,7 +51,7 @@ test("the products card lists the products in the home's order, each with its ow
   const card = START_PATHS.find((p) => p.id === "products");
   assert.deepEqual(
     card.links.map((l) => l.name),
-    ["Verikora", "Sovkora", "Folioviv"],
+    ["Sovkora", "Verikora", "Folioviv"],
   );
   for (const l of card.links) {
     assert.match(l.href, /^https:\/\/www\.(verikora|sovkora|folioviv)\.com/, l.name);
