@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.1](https://github.com/krizaka/krizaka-com/compare/v0.29.0...v0.29.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* **privacy:** founded in Montréal, no founder name; the Law 25 person in charge at confidentialite@ ([#630](https://github.com/krizaka/krizaka-com/issues/630)) ([438cec2](https://github.com/krizaka/krizaka-com/commit/438cec20c11c85c5b65a910f95109d0ca6fe8789))
+
 ## [0.29.0](https://github.com/krizaka/krizaka-com/compare/v0.28.0...v0.29.0) (2026-11-06)
 
 
