@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.28.0](https://github.com/krizaka/krizaka-com/compare/v0.27.0...v0.28.0) (2026-11-05)
+
+
+### Features
+
+* **home:** four rules, true for a Montréal studio: the check, the document that leaves, Montréal and Canada, built in the open ([#625](https://github.com/krizaka/krizaka-com/issues/625)) ([95dad56](https://github.com/krizaka/krizaka-com/commit/95dad56fb8c6f362c29de0e37ada48bf8ea6b37d))
+* **home:** the offer is a numbered list, public work a ledger, « Where we are going » a loop that works on a phone ([#624](https://github.com/krizaka/krizaka-com/issues/624)) ([36d474e](https://github.com/krizaka/krizaka-com/commit/36d474e25408f1c7d6dc9817027a8f11106c9906))
+
+
+### Bug Fixes
+
+* **cdn:** the manifest names the blog's redrawn covers and remade downloads ([#623](https://github.com/krizaka/krizaka-com/issues/623)) ([3b8c3ae](https://github.com/krizaka/krizaka-com/commit/3b8c3ae0227f20f2590974dca839a1d45baa4300))
+* **services:** Orazaka's addresses move to www.orazaka.com, dev.orazaka.com is removed ([#2600](https://github.com/krizaka/krizaka-com/issues/2600)) ([#628](https://github.com/krizaka/krizaka-com/issues/628)) ([6e90cb0](https://github.com/krizaka/krizaka-com/commit/6e90cb0efc42f9792ac3ceb954343bff0e60c548))
+
 ## [0.27.0](https://github.com/krizaka/krizaka-com/compare/v0.26.1...v0.27.0) (2026-11-05)
 
 
