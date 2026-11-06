@@ -1441,8 +1441,7 @@
             "Vos jetons viennent d'un fournisseur d'identité externe qui signe en RS256 ou ES256 : `krizaka-security` vérifie du HS256 aujourd'hui."
           ],
           "status": "0.2.0 sur Maven Central (2026-10-10) : les quatre modules et les quatre starters, construits et testés sur un vrai PostgreSQL et un vrai RabbitMQ en CI.",
-          "next": {
-          },
+          "next": {},
           "headline": "Un événement publié après le commit se perd au prochain crash.",
           "does": [
             "Les événements passent par un outbox transactionnel : validés ou annulés avec vos données.",

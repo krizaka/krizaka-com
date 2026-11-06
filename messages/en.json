@@ -1438,8 +1438,7 @@
             "Your tokens come from an external identity provider signing with RS256 or ES256: `krizaka-security` verifies HS256 today."
           ],
           "status": "0.2.0 on Maven Central (2026-10-10): the four modules and the four starters, built and tested on real PostgreSQL and RabbitMQ in CI.",
-          "next": {
-          },
+          "next": {},
           "headline": "An event published after the commit is lost on the next crash.",
           "does": [
             "Events go through a transactional outbox: they commit or roll back with your data.",
