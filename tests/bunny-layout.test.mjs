@@ -115,8 +115,15 @@ test("render candidates under site/renders/<run>/ are transient, not misplaced (
   assert.notEqual(misplaced("site/renders/r01.png"), null);
 });
 
-test("Kachizaka (the managed storage, sold as Kridoc) has its brand folder, and is neither retired nor a product site (krizaka-internal#2033)", () => {
-  assert.equal(misplaced("brand/kachizaka/mark-dark.svg"), null);
-  assert.ok(!RETIRED.some((re) => re.test("brand/kachizaka/mark-dark.svg")));
-  assert.notEqual(misplaced("brand/kridoc/mark-dark.svg"), null);
+test("Kridoc (the managed storage) has its brand folder, and is neither retired nor a product site (krizaka-internal#2033)", () => {
+  assert.equal(misplaced("brand/kridoc/mark-dark.svg"), null);
+  assert.equal(misplaced("org/v1/brand/kridoc/mark-dark.svg"), null);
+  assert.ok(!RETIRED.some((re) => re.test("brand/kridoc/mark-dark.svg")));
+  assert.notEqual(misplaced("sites/kridoc/home/a.0123456789.png"), null);
+});
+
+test("the marks keep their code-name folders until krizaka-ui re-exports them under the commercial names (krizaka-internal#2659)", () => {
+  for (const brand of ["sovkora", "verikora", "folioviv", "orazaka", "yomizaka", "akinaza", "kachizaka"]) {
+    assert.equal(misplaced(`org/v1/brand/${brand}/mark-dark.svg`), null, brand);
+  }
 });

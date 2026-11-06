@@ -57,17 +57,17 @@ test("the org's CDN holds the org JSON, the apps, the defaults, the marks, the b
 
 test("four roots only: the org, the sites, the apps, the evidence — nothing else at the root", () => {
   assert.deepEqual(Object.keys(TARGET), ["org", "sites", "apps", "pr-assets"]);
-  assert.deepEqual(SITES, ["www", "blog", "ui", "java", "orazaka", "yomizaka", "akinaza"]);
-  assert.deepEqual(APPS, ["orazaka", "yomizaka", "akinaza"]);
+  assert.deepEqual(SITES, ["www", "blog", "ui", "java", "sovkora", "verikora", "folioviv"]);
+  assert.deepEqual(APPS, ["sovkora", "verikora", "folioviv"]);
   for (const ok of [
-    "sites/akinaza/tour/en/hero.3f2a9c1b7e.mp4",
+    "sites/folioviv/tour/en/hero.3f2a9c1b7e.mp4",
     "sites/blog/posts/cinematic-ai-videos/cover.0123456789.webp",
     "sites/blog/shared/x.0123456789.png",
     "sites/www/home/kit/frames/a.0123456789.png",
     "sites/ui/personas/ada-256.0123456789.webp",
     "sites/ui/maps/cluster-dark.731f2c4fa2.png",
-    "apps/akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif",
-    "apps/yomizaka/uploads/u1/a.0123456789.webp",
+    "apps/folioviv/defaults/cleaning/cover/c-1-640.434684215c.avif",
+    "apps/verikora/uploads/u1/a.0123456789.webp",
   ])
     assert.equal(misplaced(ok), null, ok);
   for (const bad of [
@@ -110,11 +110,17 @@ test("every legacy folder maps to its target, or says why it has none, with the 
     "site/home/backdrop/orazaka.0123456789.mp4": "sites/www/home/backdrop/orazaka.0123456789.mp4",
     "site/blog/shared/x.0123456789.png": "sites/blog/shared/x.0123456789.png",
     "site/blog/cinematic-ai-videos/x.0123456789.png": "sites/blog/posts/cinematic-ai-videos/x.0123456789.png",
-    "site/products/akinaza/tour/a.0123456789.mp4": "sites/akinaza/tour/a.0123456789.mp4",
+    // A legacy folder written under a code name lands under the product's commercial name (2026-11-06).
+    "site/products/akinaza/tour/a.0123456789.mp4": "sites/folioviv/tour/a.0123456789.mp4",
     "site/products/akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif":
-      "apps/akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif",
-    "site/docs/orazaka/mobile/x.0123456789.webp": "sites/orazaka/docs/mobile/x.0123456789.webp",
-    "site/people/yomizaka/hana-512.b0be072833.webp": "sites/yomizaka/personas/hana-512.b0be072833.webp",
+      "apps/folioviv/defaults/cleaning/cover/c-1-640.434684215c.avif",
+    "site/docs/orazaka/mobile/x.0123456789.webp": "sites/sovkora/docs/mobile/x.0123456789.webp",
+    "site/people/yomizaka/hana-512.b0be072833.webp": "sites/verikora/personas/hana-512.b0be072833.webp",
+    // The v2 folders written under the code names before the renames are legacy too: copied, switched, then purged.
+    "sites/orazaka/home/take-en-dark.b6ead638fc.mp4": "sites/sovkora/home/take-en-dark.b6ead638fc.mp4",
+    "sites/yomizaka/tour/a.0123456789.mp4": "sites/verikora/tour/a.0123456789.mp4",
+    "apps/akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif":
+      "apps/folioviv/defaults/cleaning/cover/c-1-640.434684215c.avif",
     "site/people/ui/ada-256.0123456789.webp": "sites/ui/personas/ada-256.0123456789.webp",
     "site/brand-films/relay/a.0123456789.mp4": "org/v1/films/relay/a.0123456789.mp4",
   };
@@ -126,7 +132,16 @@ test("every legacy folder maps to its target, or says why it has none, with the 
     assert.match(p.issue, /^krizaka\/[a-z.-]+#\d+$/, from);
   }
   assert.equal(switchIssue("site/blog/shared/x.0123456789.png"), "krizaka/krizaka-blog#176");
-  assert.equal(switchIssue("site/products/akinaza/tour/a.0123456789.mp4"), "krizaka/akinaza#493");
+  assert.equal(switchIssue("site/products/akinaza/tour/a.0123456789.mp4"), "krizaka/folioviv#493");
+  assert.equal(switchIssue("sites/orazaka/home/a.0123456789.mp4"), "krizaka/krizaka-internal#2659");
+  // The commercial folders are the target layout itself (krizaka-internal#2659: 427 objects were flagged misplaced).
+  for (const ok of [
+    "sites/verikora/tour/a.0123456789.mp4",
+    "sites/sovkora/films/a.0123456789.webm",
+    "apps/folioviv/uploads/u/a.0123456789.webp",
+  ]) {
+    assert.equal(placement(ok).state, "ok", ok);
+  }
   assert.equal(switchIssue("site/home/kit/a.0123456789.png"), "krizaka/krizaka-com#450");
   // The human-name mirror is retired: no target, deleted once unused.
   assert.match(placement("products/orazaka/tour/tea-pour.mp4").why, /retired/);
