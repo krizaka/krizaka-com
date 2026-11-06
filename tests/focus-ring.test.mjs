@@ -8,15 +8,6 @@ import { readFileSync } from "node:fs";
 // 2 px ring is for the keyboard on a control, never for a heading focused by script.
 const css = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
 
-// The real cascade, in Chromium: the site's own focus rules (cut from globals.css) after a base layer like the preset's.
-const page = (extra) => `<style>
-  @layer base { :focus-visible { outline: 2px solid rgb(0, 0, 255); } }
-  ${extra}
-</style>
-<h1 id="h" tabindex="-1">Par où</h1>
-<div id="dlg" role="dialog" tabindex="-1">Dialog</div>
-<button id="b">Go</button>`;
-
 test("globals.css hides the ring of a non-control focused by script, after the unlayered :focus-visible", () => {
   const ring = css.indexOf(":focus-visible {");
   const hide = css.indexOf('[tabindex="-1"]:is(:focus, :focus-visible)');
@@ -24,27 +15,5 @@ test("globals.css hides the ring of a non-control focused by script, after the u
   assert.ok(!css.slice(0, hide).includes("@layer base {") || css.lastIndexOf("@layer base {", hide) < ring);
 });
 
-test("a heading focused by script after a key press has no outline; a keyboard-focused button keeps its ring", async () => {
-  const start = css.indexOf(":focus-visible {");
-  const end = css.indexOf("[cmdk-input]:focus-visible");
-  const site = css.slice(start, end).replaceAll("var(--kz-accent)", "rgb(0, 0, 255)");
-  const { chromium } = await import("playwright");
-  const browser = await chromium.launch();
-  try {
-    const p = await browser.newPage();
-    await p.setContent(page(site));
-    await p.keyboard.press("Shift"); // the last interaction is the keyboard's
-    await p.evaluate(() => document.getElementById("h").focus());
-    const outline = (id) => p.evaluate((i) => getComputedStyle(document.getElementById(i)).outlineStyle, id);
-    assert.equal(await p.evaluate(() => document.getElementById("h").matches(":focus-visible")), true, "premise");
-    assert.equal(await outline("h"), "none", "the h1 has no ring");
-    await p.evaluate(() => document.getElementById("dlg").focus());
-    assert.equal(await outline("dlg"), "none", "a dialog focused by script has no ring");
-    await p.keyboard.press("Tab");
-    await p.evaluate(() => document.getElementById("b").focus());
-    assert.equal(await outline("b"), "solid", "the button keeps its ring for the keyboard");
-    assert.equal(await p.evaluate(() => getComputedStyle(document.getElementById("b")).outlineWidth), "2px");
-  } finally {
-    await browser.close();
-  }
-});
+// The same rules in a real browser (a heading or a dialog focused by script has no ring, a keyboard-focused button keeps it)
+// need Chromium: scripts/check-focus-ring.mjs, run by scripts/ci-container-smoke.sh after `playwright install`.
