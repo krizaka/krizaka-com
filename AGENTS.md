@@ -225,14 +225,16 @@
   adds what is its own, in `app/globals.css` (« SITE MOTION ») and `org-hero.css`: no second conductor, no counter of its
   own. No animation library for new work, no permanent `requestAnimationFrame`, no canvas; docs stay almost still (a
   reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui, not into a copy here.
-  **Two blocks of the home move on their own. The carousels** (founder, 2026-11-05, krizaka-internal#2450;
-  `ShowcaseCarousel`). They advance every 6.5 s by a short fade (nothing travels), with WCAG 2.2.2's rules: a visible
-  pause / play, a pause while the pointer is over them, while the keyboard focus is in them and while they are off screen;
-  under `prefers-reduced-motion` (or Save-Data) nothing advances and no clip plays (posters, previous / next only);
-  previous / next are buttons, arrows work on them; every slide is a figure with its caption and its text alternative,
-  and each carousel has a server-rendered text version. Clips are muted, mounted only for the slide in view after the
-  page's load, in the viewport's rendition (no double download), so the h1 stays the LCP. @krizaka/ui's `MediaCarousel`
-  never advances by itself: its `autoplay` variant is to be added in krizaka-ui, and the home moves to it then.
+  **Two blocks of the home move on their own. The carousels** (founder, 2026-11-05, krizaka-internal#2450; since
+  2026-11-06 @krizaka/ui's `MediaCarousel` v2, krizaka-ui ADR-010, krizaka-internal#2658 — no hand-made carousel here).
+  They advance on their own at each slide's pace by a short fade (nothing travels), with WCAG 2.2.2's rules: a visible
+  pause / play, a pause while the pointer is over them, while the keyboard focus is in them, while the tab is hidden and
+  while they are off screen; under `prefers-reduced-motion` (or Save-Data) nothing advances and no clip plays (posters,
+  previous / next only); previous / next are buttons, arrows, Home and End work on them; every slide is a figure with its
+  caption and its text alternative, and each carousel has a server-rendered text version. One 16:9 rendition on every
+  screen; clips are muted, mounted only for the slide in view after the page's load (no double download), so the h1 stays
+  the LCP; a clip that cannot play leaves its poster; « Sound on » appears only for a slide with an audio track.
+  Their files pass `scripts/check-showcase-media.mjs` (16:9 by pixels, no black bars, no black end card, truthful audio).
   **And « Where we are going »** (founder, 2026-11-05, krizaka-internal#2450; `DirectionLoop`):
   the light rests on one station (now, next, later) every 4.5 s and opens its details, with WCAG 2.2.2's rules — a visible
   pause / play, paused while the pointer is over it, the focus is in it or it is off screen; under

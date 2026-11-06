@@ -1,9 +1,10 @@
 /* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Cahier (krizaka-ui
    ADR-004, #417): the section is a page of the field notebook, on lined paper with its red margin and its number (§ 2).
    Since 2026-11-05 (founder, krizaka-internal#2450) the products stand in one row, Verikora · Sovkora · Folioviv, the
-   engine in the centre (lib/home-sections.ts PRODUCT_ORDER), and each entry pairs its specimen tag with a carousel of what
+   engine in the centre (lib/home-sections.ts PRODUCT_ORDER); since 2026-11-06 (krizaka-internal#2658) their sections follow
+   Sovkora first, then Verikora, then Folioviv (SECTION_ORDER), and each entry pairs its specimen tag with a carousel of what
    was made for it (Showcase, lib/home-showcase.ts: the reels' shots widened to 16:9, the clips Sovkora generated, the
-   brand film; a 4:5 rendition on phones). The tag and the carousel swap sides from one entry to the next, so Sovkora's
+   brand film; one 16:9 rendition on every screen). The tag and the carousel swap sides from one entry to the next, so Sovkora's
    carousel is on the right (entrySide).
    - a carousel: numbered figure (« Fig. 3b », after the hero's Fig. 1: lib/home-sections.ts sectionFigure), which advances
      on its own with a visible pause, still under reduced motion, its text version on the server;
@@ -27,7 +28,7 @@ import { Section } from "@krizaka/ui/page";
 import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { entrySide, productOrder, sectionFigure } from "@/lib/home-sections";
+import { entrySide, productOrder, sectionFigure, sectionOrder } from "@/lib/home-sections";
 import { showcaseOf } from "@/lib/home-showcase";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { IN_DESIGN, type ProductInDesign } from "@/lib/products-in-design";
@@ -53,7 +54,9 @@ const host = (url: string) => new URL(url).host;
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
 
 /** The numbers of the notes follow the order of the page (1, 2, 3), never a gap; the figures follow the hero's Fig. 1 (2, 3, 4). */
-const SHOWN = productOrder(PRODUCTS);
+const SHOWN = sectionOrder(PRODUCTS);
+/** The row above the sections: Verikora, Sovkora in the centre, Folioviv. */
+const ROW = productOrder(PRODUCTS);
 const nOf = (p: Product) => SHOWN.findIndex((x) => x.id === p.id) + 1;
 const fnRef = (p: Product) => <FootnoteRef n={nOf(p)} prefix="kz-note" />;
 
@@ -264,7 +267,8 @@ function DesignEntry({
   );
 }
 
-/** The products (§ 2): one row, Verikora · Sovkora · Folioviv, each with its carousel, then the ones in conception. */
+/** The products (§ 2): one row, Verikora · Sovkora · Folioviv; then their sections, Sovkora · Verikora · Folioviv, each with
+ *  its carousel; then the ones in conception. */
 export default function ProductShowcase({ locale }: Readonly<{ locale: string }>) {
   const t = getDictionary(locale);
   const s = t.site.home.products;
@@ -272,7 +276,7 @@ export default function ProductShowcase({ locale }: Readonly<{ locale: string }>
     <div id="products" className="kz-products">
       <Section id="products-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
         <ol className="kz-prod-row" aria-label={s.rowLabel}>
-          {SHOWN.map((p) => (
+          {ROW.map((p) => (
             <li key={p.id} className={"brand-" + p.id} data-engine={p.id === ENGINE ? "" : undefined}>
               <a href={`#product-${p.id}`}>
                 <ProductLogo id={p.id} size={28} animated={false} />

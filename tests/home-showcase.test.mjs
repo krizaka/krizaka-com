@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { PRODUCT_SHOWCASES, SHOWCASES, showcaseOf, showcaseProblems, showcaseSlides } from "../lib/home-showcase.ts";
 import { barHref } from "../lib/bar-href.ts";
 import { boardProblems, clipsOf, maxCredits, shotsOf, tallFilter } from "../scripts/home-showcase.mjs";
@@ -13,7 +13,6 @@ const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const manifest = JSON.parse(read("lib/cdn-manifest.json"));
 const has = (path) => Boolean(manifest.files[path]);
 const board = JSON.parse(read("content/films/home-showcase.json"));
-const carousel = read("app/components/home/ShowcaseCarousel.tsx");
 
 test("every slide of every carousel has its 16:9 rendition on the CDN (mp4, webm, poster), and at least three slides", () => {
   assert.deepEqual([...SHOWCASES], ["hero", "verikora", "sovkora", "folioviv"]);
@@ -74,65 +73,44 @@ test("every slide has its caption and its text alternative in both languages, an
   }
 });
 
-test("it advances on its own, with WCAG 2.2.2's controls: pause / play, paused on hover, focus and off screen", () => {
-  assert.match(carousel, /const advancing = !still && !stopped && !hovered && !focused && onScreen && total > 1;/);
-  assert.match(carousel, /globalThis\.setTimeout\(\(\) => \{\s*const next = \(active \+ 1\) % total;/);
-  assert.match(carousel, /\}, DWELL_MS\);/);
-  assert.match(carousel, /onPointerEnter=\{\(\) => setHovered\(true\)\}/);
-  assert.match(carousel, /onFocus=\{\(\) => setFocused\(true\)\}/);
-  assert.match(carousel, /IntersectionObserver/);
-  assert.match(carousel, /label=\{stopped \? w\.play : w\.pause\}/, "a visible pause / play, named");
-  assert.match(carousel, /aria-roledescription=\{w\.carousel\}/);
-  assert.match(carousel, /aria-live=\{advancing \? "off" : "polite"\}/, "the counter is announced only while still");
-  assert.match(carousel, /e\.key === "ArrowRight"/, "the arrow keys turn it");
-  assert.doesNotMatch(carousel, /setInterval|requestAnimationFrame/);
-});
+// Since 2026-11-06 (krizaka-internal#2658) the carousel is @krizaka/ui's MediaCarousel v2 (krizaka-ui ADR-010): its own
+// tests prove the clock, the holds, reduced motion, the clip's mounting and its failure, and the sound gesture. Here: the
+// home uses it with those options, and no hand-made carousel is left.
+const showcase = read("app/components/home/Showcase.tsx");
 
-test("still under reduced motion or Save-Data: no timer, no clip, no pause button, no fade", () => {
-  assert.match(carousel, /prefersStill\(globalThis\)/);
-  assert.match(carousel, /\{!still && \(/, "no pause / play when nothing moves");
-  assert.match(carousel, /here && loaded && !still && <Clip/);
-  const css = read("app/components/home/showcase.css").replace(/\/\*[\s\S]*?\*\//g, "");
-  const calm = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce)"));
-  assert.match(calm, /\.kz-show-slide \{\s*transition: none;/);
-  assert.match(calm, /animation: none;/);
-  assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b|rgb\(|hsl\(|blur\(|translate/, "tokens only, nothing travels");
-});
-
-test("one 16:9 rendition on every screen, never the tall one: poster first, the h1 stays the LCP", () => {
-  assert.doesNotMatch(carousel, /\btall\b|WIDE_QUERY|useRendition|min-width: 640/, "no vertical source switching");
-  assert.match(carousel, /src=\{s\.wide\.poster\}/);
-  assert.match(carousel, /<Clip r=\{s\.wide\}/);
-  assert.match(carousel, /here && loaded && !still/, "no clip in the server's HTML");
-  assert.match(
-    carousel,
-    /const draw = seen\.has\(i\) \|\| i === \(active \+ 1\) % total;/,
-    "posters drawn as they come",
+test("the home's carousels are MediaCarousel v2: autoplay, sound as an option, the Cahier frame, the caption in the bar", () => {
+  assert.match(showcase, /import \{ type CarouselSlide, MediaCarousel \} from "@krizaka\/ui\/media-carousel";/);
+  for (const prop of [/\n\s+autoplay\n/, /\n\s+sound\n/, /frame="cahier"/, /caption="bar"/])
+    assert.match(showcase, prop);
+  assert.ok(
+    !existsSync(new URL("../app/components/home/ShowcaseCarousel.tsx", import.meta.url)),
+    "no hand-made carousel",
   );
-  assert.match(carousel, /muted\s+playsInline/);
-  assert.doesNotMatch(carousel, /autoPlay/);
-  assert.match(read("app/components/home/Showcase.tsx"), /<details className="kz-fig-text kz-show-text">/);
+  assert.ok(!existsSync(new URL("../app/components/home/showcase.css", import.meta.url)), "its styles left with it");
+  assert.doesNotMatch(showcase, /setTimeout|setInterval|requestAnimationFrame|<video/);
+});
+
+test("every word of the carousel is the site's, in both languages, the roles included", () => {
+  for (const k of ["previous", "next", "pause", "play", "soundOn", "textVersion"])
+    assert.match(showcase, new RegExp(`${k}: w\\.${k},`), k);
+  assert.match(showcase, /slide: w\.slideOf,/);
+  assert.match(showcase, /carousel: w\.carousel,/);
+  assert.match(showcase, /slideRole: w\.slide,/);
+});
+
+test("one 16:9 rendition on every screen, never the tall one; the text version on the server", () => {
+  assert.match(showcase, /src: cdn\(`\$\{s\.wide\}\.jpg`\)/);
+  assert.match(showcase, /video: \{ webm: cdn\(`\$\{s\.wide\}\.webm`\), mp4: cdn\(`\$\{s\.wide\}\.mp4`\) \}/);
+  assert.doesNotMatch(showcase, /\btall\b/);
+  assert.match(showcase, /<details className="kz-fig-text">/);
   assert.doesNotMatch(read("lib/home-showcase.ts"), /\btall:/, "the data holds no tall rendition");
-  const css = read("app/components/home/showcase.css");
-  assert.match(css, /object-fit: cover;/, "a 16:9 frame filled on every screen");
-  assert.doesNotMatch(css, /aspect-ratio: 4 \/ 5/, "the phone's frame is 16:9 too");
 });
 
-test("a clip that cannot play leaves its poster: the video unmounts when its last source fails", () => {
-  assert.match(carousel, /<source src=\{r\.mp4\} type="video\/mp4" onError=\{\(\) => setBroken\(true\)\} \/>/);
-  assert.match(carousel, /if \(broken\) \{\s*return null;/);
-});
-
-test("sound is an option: muted by default, a toggle only for clips with audio, after a click, on hover or focus, per session", () => {
-  assert.match(carousel, /const sound = soundChosen && current\.audio && \(hovered \|\| focused\) && !still;/);
-  assert.match(carousel, /\{hasAudio && !still && \(/, "no button unless a clip has sound, never under reduced motion");
-  assert.match(carousel, /aria-pressed=\{soundChosen\}/);
-  assert.match(carousel, /sessionStorage/);
-  assert.doesNotMatch(carousel, /localStorage/, "the choice lasts for the session only");
-  assert.match(carousel, /ref\.current\.muted = !sound/);
+test("sound is an option: a slide claims audio only when its file has a track", () => {
+  assert.match(showcase, /audio: s\.audio,/);
   assert.equal(messages("en").site.home.showcase.labels.soundOn, "Sound on");
   assert.equal(messages("fr").site.home.showcase.labels.soundOn, "Activer le son");
-  // Runway's outputs are silent: no slide claims an audio track, so the button ships disabled (never an unlicensed track).
+  // Runway's outputs are silent: no slide claims an audio track, so the button stays hidden (never an unlicensed track).
   assert.ok(SHOWCASES.every((c) => showcaseSlides(c).every((x) => x.audio === false)));
 });
 

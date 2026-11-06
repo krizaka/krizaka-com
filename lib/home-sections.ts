@@ -15,6 +15,10 @@ export function folioOf(section: HomeSection): { page: number; total: number } {
  *  then any other product as listed. */
 export const PRODUCT_ORDER = ["yomizaka", "orazaka", "akinaza"] as const;
 
+/** The products' sections under the row (founder, 2026-11-06, krizaka-internal#2658): Sovkora first, then Verikora, then
+ *  Folioviv, then any other product as listed. The row above keeps Sovkora in the centre (PRODUCT_ORDER). */
+export const SECTION_ORDER = ["orazaka", "yomizaka", "akinaza"] as const;
+
 /** The one product the home serves (krizaka-internal#2445): its reader is the property manager, so the hero's primary
  *  action writes to us on this product's topic of the contact form (lib/contact.ts), and its figure shows this product first. */
 export const HOME_PRODUCT = "yomizaka" satisfies ContactTopic;
@@ -24,19 +28,25 @@ export const HOME_PRODUCT = "yomizaka" satisfies ContactTopic;
 export const HERO_FIGURE = 1;
 /** The number of the n-th figure of the sections (1-based): they follow the hero's, so no two figures share a number. */
 export const sectionFigure = (n: number): number => HERO_FIGURE + n;
-export function productOrder<T extends { id: string }>(products: readonly T[]): T[] {
-  const rank = (id: string) => {
-    const i = (PRODUCT_ORDER as readonly string[]).indexOf(id);
-    return i < 0 ? PRODUCT_ORDER.length : i;
+const orderBy =
+  (order: readonly string[]) =>
+  <T extends { id: string }>(products: readonly T[]): T[] => {
+    const rank = (id: string) => {
+      const i = order.indexOf(id);
+      return i < 0 ? order.length : i;
+    };
+    return [...products].sort((a, b) => rank(a.id) - rank(b.id));
   };
-  return [...products].sort((a, b) => rank(a.id) - rank(b.id));
-}
+/** The products in the row's order (PRODUCT_ORDER). */
+export const productOrder = orderBy(PRODUCT_ORDER);
+/** The products in the sections' order (SECTION_ORDER): the page's order, so the notes and the figures follow it. */
+export const sectionOrder = orderBy(SECTION_ORDER);
 
-/** Where an entry's specimen tag stands beside its carousel on a wide screen: the entries alternate in the row's order,
- *  so Verikora puts its carousel on the left, Sovkora its tag on the left and its carousel on the right (founder,
- *  2026-11-05), Folioviv its carousel on the left again. One column on a phone and a tablet, where there is no side. */
+/** Where an entry's specimen tag stands beside its carousel on a wide screen: the entries alternate in the sections'
+ *  order, Sovkora keeping its tag on the left and its carousel on the right (founder, 2026-11-05), so Verikora puts its
+ *  carousel on the left and Folioviv on the right again. One column on a phone and a tablet, where there is no side. */
 export type EntrySide = "card-left" | "plate-left";
 export function entrySide<T extends { id: string }>(products: readonly T[], id: string): EntrySide {
-  const i = productOrder(products).findIndex((p) => p.id === id);
-  return i % 2 === 0 ? "plate-left" : "card-left";
+  const i = sectionOrder(products).findIndex((p) => p.id === id);
+  return i % 2 === 0 ? "card-left" : "plate-left";
 }

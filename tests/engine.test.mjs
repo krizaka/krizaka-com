@@ -59,7 +59,8 @@ test("the products stand in one row with the engine in the centre — no foundat
     productOrder([{ id: "orazaka" }, { id: "akinaza" }, { id: "yomizaka" }]).map((p) => p.id),
     ["yomizaka", "orazaka", "akinaza"],
   );
-  assert.match(home, /const SHOWN = productOrder\(PRODUCTS\);/);
+  assert.match(home, /const ROW = productOrder\(PRODUCTS\);/, "the row: Sovkora in the centre");
+  assert.match(home, /const SHOWN = sectionOrder\(PRODUCTS\);/, "the sections: Sovkora first (2026-11-06, #2658)");
   assert.match(home, /<ol className="kz-prod-row"/, "the row of the three, each to its entry");
   assert.match(home, /\{engine && <EngineGives t=\{t\} \/>\}/, "the engine's tag folds what it gives");
   assert.doesNotMatch(

@@ -34,6 +34,9 @@ node_modules/.bin/playwright install --with-deps chromium
 node scripts/check-overflow.mjs --base http://localhost:3000
 # The home's carousels, on the real files: 200 and type, a clean 16:9, no pillarbox, no black end card (needs ffmpeg).
 if command -v ffprobe >/dev/null; then KRIZAKA_CHECK_MEDIA=1 node --experimental-strip-types --test tests/home-showcase-media.test.mjs; fi
+# The home's carousels (MediaCarousel v2, krizaka-internal#2658): 16:9, the clip plays, a visible pause, it advances on its
+# own and holds under the pointer; nothing moves under reduced motion (FR and EN, phone and desktop, dark and light).
+node scripts/check-carousels.mjs --base http://localhost:3000
 # Accessibility: axe-core WCAG 2.1 AA (contrast, names, labels, landmarks) on every sitemap page, dark and light, phone and
 # desktop; a11y-baseline.json is the ratchet (a new violation fails, the count only goes down).
 node scripts/check-a11y.mjs --base http://localhost:3000

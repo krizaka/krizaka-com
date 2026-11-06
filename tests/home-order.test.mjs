@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { productOrder } from "../lib/home-sections.ts";
+import { productOrder, sectionOrder } from "../lib/home-sections.ts";
 const PRODUCTS = ["orazaka", "yomizaka", "akinaza", "kachizaka"].map((id) => ({ id }));
 
 const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"));
@@ -11,6 +11,26 @@ const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, impo
 test("the products' row: Verikora, Sovkora in the centre, Folioviv, then the rest as listed", () => {
   const ids = productOrder(PRODUCTS).map((p) => p.id);
   assert.deepEqual(ids, ["yomizaka", "orazaka", "akinaza", "kachizaka"]);
+});
+
+// Founder, 2026-11-06 (krizaka-internal#2658): under the row, the products' sections put Sovkora first, then Verikora,
+// then Folioviv; the row keeps Sovkora in the centre.
+test("the products' sections: Sovkora first, then Verikora, then Folioviv; the row keeps Sovkora in the centre", () => {
+  assert.deepEqual(
+    sectionOrder(PRODUCTS).map((p) => p.id),
+    ["orazaka", "yomizaka", "akinaza", "kachizaka"],
+  );
+  const src = readFileSync(new URL("../app/components/home/ProductShowcase.tsx", import.meta.url), "utf8");
+  assert.match(
+    src,
+    /const SHOWN = sectionOrder\(PRODUCTS\);/,
+    "the sections, the notes and the figures follow the page",
+  );
+  assert.match(
+    src,
+    /\{ROW\.map\(\(p\) => \(\n\s*<li key=\{p\.id\} className=\{"brand-" \+ p\.id\}/,
+    "the row keeps its order",
+  );
 });
 
 // krizaka-internal#2445: the hero speaks to the property manager, so its lead opens on Verikora and runs on Sovkora; the
