@@ -65,8 +65,10 @@ const FAMILY = [
   },
 ] as const;
 
+const APP_KIND = "app" as const;
+
 const familyNode = (f: (typeof FAMILY)[number], description: string) =>
-  f.kind === "app"
+  f.kind === APP_KIND
     ? {
         "@type": "SoftwareApplication",
         "@id": `${f.url}/#software`,
