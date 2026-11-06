@@ -68,7 +68,7 @@ test("upload sends versioned files, records them, and skips what is already ther
   const manifestFile = join(dir, "cdn-manifest.json");
   const logs = [];
   const { calls, fetchImpl } = recorder();
-  await main(["upload", join(dir, "tour"), "--to", "products/yomizaka/tour"], {
+  await main(["upload", join(dir, "tour"), "--to", "products/verikora/tour"], {
     env,
     fetchImpl,
     log: (l) => logs.push(l),
@@ -78,7 +78,7 @@ test("upload sends versioned files, records them, and skips what is already ther
   assert.equal(puts.length, 2);
   assert.equal(
     puts[1].url,
-    `https://storage.bunnycdn.com/kz-zone/sites/yomizaka/tour/alex-bid.${hashOf("mp4")}.mp4`,
+    `https://storage.bunnycdn.com/kz-zone/sites/verikora/tour/alex-bid.${hashOf("mp4")}.mp4`,
     "layout v2: sites/<site>/<kind>/",
   );
   assert.equal(puts[1].headers["Content-Type"], "video/mp4");
@@ -86,14 +86,14 @@ test("upload sends versioned files, records them, and skips what is already ther
   assert.deepEqual(manifest, {
     root: "sites",
     files: {
-      "products/yomizaka/tour/alex-bid.jpg": hashOf("jpg"),
-      "products/yomizaka/tour/alex-bid.mp4": hashOf("mp4"),
+      "products/verikora/tour/alex-bid.jpg": hashOf("jpg"),
+      "products/verikora/tour/alex-bid.mp4": hashOf("mp4"),
     },
   });
   assert.ok(!logs.join("\n").includes("secret-key"), "the key is never printed");
 
   const again = recorder();
-  await main(["upload", join(dir, "tour"), "--to", "products/yomizaka/tour"], {
+  await main(["upload", join(dir, "tour"), "--to", "products/verikora/tour"], {
     env,
     fetchImpl: again.fetchImpl,
     log: () => {},

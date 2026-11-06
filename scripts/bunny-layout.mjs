@@ -5,10 +5,14 @@
 
 export const README_NAME = "README.txt";
 
-export const BRANDS = ["krizaka", "orazaka", "yomizaka", "akinaza"];
-/** The brand folders: the company, the products, and Kachizaka — the code name of the managed storage, sold as Kridoc
-    (krizaka-internal#2033). It has marks, no site and no app, so it is not a product folder. */
-export const BRAND_FOLDERS = [...BRANDS, "kachizaka"];
+/** The products, by commercial name (founder, 2026-11-06, krizaka-internal#2659): one site folder and one app folder each. */
+export const PRODUCTS = ["sovkora", "verikora", "folioviv"];
+/** The legacy folders (site/products/<code>/…) and org/v1/brand/ still carry the code name each product was written under. */
+export const LEGACY_PRODUCT = Object.freeze({ orazaka: "sovkora", yomizaka: "verikora", akinaza: "folioviv" });
+/** The brand folders of org/v1/brand/ (krizaka-ui's export-brand): the company, the products and Kridoc (marks, no site, no
+    app), by commercial name; the code-name folders stay valid until krizaka-ui's commercial-id major re-exports them and
+    nothing names the old ones (krizaka-internal#2659). */
+export const BRAND_FOLDERS = ["krizaka", ...PRODUCTS, "kridoc", ...Object.keys(LEGACY_PRODUCT), "kachizaka"];
 /** The kinds of media under products/<product>/. */
 export const PRODUCT_KINDS = ["home", "tour", "mobile", "gallery", "studios", "docs"];
 
@@ -40,7 +44,7 @@ export const ZONE = {
     what: "the signed services manifest (ADR-003)",
   },
   site: {
-    target: "sites/<site>/<kind>/ · org/v1/films/ · apps/akinaza/defaults/",
+    target: "sites/<site>/<kind>/ · org/v1/films/ · apps/folioviv/defaults/",
     path: "site/<area>/<product?>/<kind>/<name>.<hash>.<ext>",
     what: "the media the pages load (cdn-assets and the product sites), hashed",
   },
@@ -55,8 +59,8 @@ export const ZONE = {
 /**
  * Prefixes of site/ written by ANOTHER writer than cdn-assets (one writer per prefix): `prune` never lists or deletes
  * under them, since their objects are not named by this site's manifest. The product sites name their own media
- * (dev.orazaka.com, dev.yomizaka.com and dev.akinaza.com — their landing recordings under site/products/<product>/tour/, named
- * in each repository's lib/tour.ts); Orazaka's generated clips (gallery-video/, video/) come from its GPU batch;
+ * (dev.sovkora.com, dev.verikora.com and dev.folioviv.com — their landing recordings under site/products/<code name>/tour/, named
+ * in each repository's lib/tour.ts); Sovkora's generated clips (gallery-video/, video/) come from its GPU batch;
  * blog.krizaka.com names its images in krizaka-blog's lib/media.json.
  */
 export const FOREIGN_WRITERS = [
@@ -68,9 +72,12 @@ export const FOREIGN_WRITERS = [
 
 /** The same writers' folders in layout v2: prune never deletes under them either. */
 export const FOREIGN_WRITERS_V2 = [
-  "sites/orazaka/",
-  "sites/yomizaka/",
-  "sites/akinaza/",
+  "sites/sovkora/",
+  "sites/verikora/",
+  "sites/folioviv/",
+  "apps/folioviv/",
+  // Their folders under the code names, legacy since 2026-11-06 (`renamedTarget`): never pruned here, purged once nothing names them.
+  ...Object.keys(LEGACY_PRODUCT).map((code) => `sites/${code}/`),
   "apps/akinaza/",
   "sites/blog/",
   // krizaka-ui writes its own examples, maps and demo shop here; its published packages name them by hashed URL (krizaka-internal#1953).
@@ -82,14 +89,24 @@ export const RETIRED = Object.freeze(
   /** @type {RegExp[]} */ (
     [
       // Empty: the folders of the products that left the org are deleted from the zone by the CTO (krizaka/.github#413), and no
-      // file of this repository names them. A renamed product's old folder is listed here, as a pattern, until it is pruned.
+      // file of this repository names them. A renamed product's old v2 folder is not retired: it is legacy (`renamedTarget`).
     ]
   ),
 );
 
 /**
+ * The v2 folders written under a product's code name before the renames of 2026-11-06 (krizaka-internal#2659) are LEGACY:
+ * `cdn-assets migrate` copies them to the commercial folder, the readers switch, then `purge-unused` deletes them.
+ * `sites/orazaka/home/a.<hash>.mp4` → `sites/sovkora/home/a.<hash>.mp4`; null for any other path.
+ */
+export function renamedTarget(path) {
+  const m = /^(sites|apps)\/([a-z]+)\/(.+)$/.exec(path);
+  return m && Object.hasOwn(LEGACY_PRODUCT, m[2]) ? `${m[1]}/${LEGACY_PRODUCT[m[2]]}/${m[3]}` : null;
+}
+
+/**
  * Where a hashed file of site/ is mirrored in the browsable library, or null when it has no place there.
- * `home/backdrop/orazaka.mp4` → `products/orazaka/home/backdrop.mp4`; `people/ui/ada-256.webp` → `people/personas/ui/ada-256.webp`.
+ * `home/backdrop/sovkora.mp4` → `products/sovkora/home/backdrop.mp4`; `people/ui/ada-256.webp` → `people/personas/ui/ada-256.webp`.
  */
 export function libraryPath(logical) {
   const parts = logical.split("/");
@@ -103,7 +120,7 @@ export function libraryPath(logical) {
   }
   if (area === "home" && a === "kit-native" && parts.length === 3) {
     const m = /^([a-z]+)-(dark|light)\.(.+)$/.exec(b);
-    return m ? `products/${product(m[1])}/home/kit-native-${m[2]}.${m[3]}` : null;
+    return m ? `products/${productOf(m[1])}/home/kit-native-${m[2]}.${m[3]}` : null;
   }
   return null;
 }
@@ -112,7 +129,7 @@ export function libraryPath(logical) {
 export const SITE_AREAS = {
   home: "home/backdrop/<product>, home/kit-native/<product>-<theme> — the home page",
   products:
-    "products/<product>/{tour,gallery,gallery-video,video,mobile}/<clip> — recordings, images and Orazaka-made videos (.mp4 · .webm · -poster.webp) of a product",
+    "products/<product>/{tour,gallery,gallery-video,video,mobile}/<clip> — recordings, images and Sovkora-made videos (.mp4 · .webm · -poster.webp) of a product",
   docs: "docs/<product>/{mobile,…}/<name> — media of the documentation pages (screenshots, clips, posters)",
   people:
     "people/<product>/<person>-{256,512}.webp — the demo personas' portraits, shared by the products (mirrored in people/personas/)",
@@ -131,7 +148,6 @@ export const SITE_AREA_NAMES = Object.keys(SITE_AREAS);
 export const ORG_VERSION = "v1";
 /** No object of org/, sites/ or apps/ sits under more than this many folders. */
 export const MAX_FOLDERS = 5;
-const PRODUCTS = BRANDS.filter((b) => b !== "krizaka");
 /** One folder per public site: krizaka.com, the blog, ui.krizaka.com, java.krizaka.com and each product's dev site. */
 export const SITES = ["www", "blog", "ui", "java", ...PRODUCTS];
 /** One folder per application that reads or stores media of its own at runtime (uploads, generated, its own defaults). */
@@ -205,9 +221,10 @@ export const TARGET = {
 /** The sub-issue of krizaka/.github#368 whose PR switches the readers and writers of a legacy folder (then it is pruned). */
 export const SWITCH_ISSUES = [
   [/^site\/blog\//, "krizaka/krizaka-blog#176"],
-  [/^site\/(?:products|docs|people)\/akinaza\//, "krizaka/akinaza#493"],
-  [/^site\/(?:products|docs|people)\/yomizaka\//, "krizaka/yomizaka#494"],
-  [/^site\/(?:products|docs|people)\/orazaka\//, "krizaka/orazaka-web-client#320"],
+  [/^(?:sites|apps)\/(?:orazaka|yomizaka|akinaza)\//, "krizaka/krizaka-internal#2659"],
+  [/^site\/(?:products|docs|people)\/akinaza\//, "krizaka/folioviv#493"],
+  [/^site\/(?:products|docs|people)\/yomizaka\//, "krizaka/verikora#494"],
+  [/^site\/(?:products|docs|people)\/orazaka\//, "krizaka/sovkora-web#320"],
   [/^site\/people\/ui\/|^ui\/|^maps\/|^brand\/|^site\/brand-films\//, "krizaka/krizaka-ui#817"],
   [/^people\/personas\/ui\//, "krizaka/krizaka-ui#817"],
   [/^defaults\/|^people\/defaults\//, "krizaka/krizaka-ts#200"],
@@ -358,11 +375,15 @@ export function targetMisplaced(path) {
 
 /**
  * Where a LEGACY object goes in the target layout, or null when it has none (the retired mirror, a renamed product):
- * `brand/orazaka/mark-dark.svg` → `org/v1/brand/orazaka/mark-dark.svg`,
- * `site/products/akinaza/tour/a.<hash>.mp4` → `sites/akinaza/tour/a.<hash>.mp4`.
+ * `brand/krizaka/mark-dark.svg` → `org/v1/brand/krizaka/mark-dark.svg`,
+ * `site/products/akinaza/tour/a.<hash>.mp4` → `sites/folioviv/tour/a.<hash>.mp4` (a legacy code-name folder lands under the product).
  */
 export function targetOf(path) {
   if (RETIRED.some((re) => re.test(path))) return null;
+  const renamed = renamedTarget(path);
+  if (renamed) {
+    return renamed;
+  }
   for (const [re, to] of TARGET_OF) {
     const m = re.exec(path);
     if (m) return to(m);
@@ -371,7 +392,9 @@ export function targetOf(path) {
 }
 
 const ORG = `org/${ORG_VERSION}`;
-const PRODUCT = `(${PRODUCTS.join("|")})`;
+/** A product folder of site/: its commercial name, or the code name a legacy object was written under. */
+const PRODUCT = `(${[...PRODUCTS, ...Object.keys(LEGACY_PRODUCT)].join("|")})`;
+const productOf = (folder) => LEGACY_PRODUCT[folder] ?? folder;
 /** The legacy → target rules of `targetOf`, first match wins. */
 const TARGET_OF = [
   [/^defaults\/v1\/(.+)$/, (m) => `${ORG}/defaults/${m[1]}`],
@@ -383,12 +406,12 @@ const TARGET_OF = [
   [/^site\/home\/(.+)$/, (m) => `sites/www/home/${m[1]}`],
   [/^site\/blog\/shared\/(.+)$/, (m) => `sites/blog/shared/${m[1]}`],
   [/^site\/blog\/(.+)$/, (m) => `sites/blog/posts/${m[1]}`],
-  // Akinaza's trade art is what the app shows a shop without a photo, at runtime: the app's own defaults.
-  [/^site\/products\/akinaza\/defaults\/(.+)$/, (m) => `apps/akinaza/defaults/${m[1]}`],
-  [new RegExp(`^site/products/${PRODUCT}/(.+)$`), (m) => `sites/${m[1]}/${m[2]}`],
-  [new RegExp(`^site/docs/${PRODUCT}/(.+)$`), (m) => `sites/${m[1]}/docs/${m[2]}`],
+  // Folioviv's trade art is what the app shows a shop without a photo, at runtime: the app's own defaults.
+  [/^site\/products\/(?:akinaza|folioviv)\/defaults\/(.+)$/, (m) => `apps/folioviv/defaults/${m[1]}`],
+  [new RegExp(`^site/products/${PRODUCT}/(.+)$`), (m) => `sites/${productOf(m[1])}/${m[2]}`],
+  [new RegExp(`^site/docs/${PRODUCT}/(.+)$`), (m) => `sites/${productOf(m[1])}/docs/${m[2]}`],
   [/^site\/people\/ui\/(.+)$/, (m) => `sites/ui/personas/${m[1]}`],
-  [new RegExp(`^site/people/${PRODUCT}/(.+)$`), (m) => `sites/${m[1]}/personas/${m[2]}`],
+  [new RegExp(`^site/people/${PRODUCT}/(.+)$`), (m) => `sites/${productOf(m[1])}/personas/${m[2]}`],
   [/^site\/brand-films\/(.+)$/, (m) => `${ORG}/films/${m[1]}`],
 ];
 
@@ -406,6 +429,13 @@ export function frozenReason(path) {
  * on legacy with --strict.
  */
 export function placement(path) {
+  const renamed = renamedTarget(path);
+  if (renamed) {
+    const bad = targetMisplaced(renamed);
+    return bad
+      ? { state: "misplaced", why: `its target ${renamed} would be misplaced: ${bad}` }
+      : { state: "legacy", target: renamed, issue: switchIssue(path) };
+  }
   if (RETIRED.some((re) => re.test(path))) {
     return { state: "legacy", target: null, why: frozenReason(path), issue: switchIssue(path) };
   }
