@@ -8,21 +8,26 @@
 
 import { displayName } from "@krizaka/org";
 import { z } from "zod";
+import {
+  legacyPreset,
+  productOf,
+  CONTACT_KINDS,
+  type ContactKind,
+  type ContactPreset,
+  type ContactProduct,
+} from "./contact-kinds.ts";
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
-export const CONTACT_TOPICS = [
-  "orazaka",
-  "yomizaka",
-  "akinaza",
-  "blocks",
-  "enterprise",
-  "partnership",
-  "other",
-] as const;
-export type ContactTopic = (typeof CONTACT_TOPICS)[number];
+export {
+  CONTACT_KINDS,
+  CONTACT_PRODUCTS,
+  type ContactKind,
+  type ContactPreset,
+  type ContactProduct,
+} from "./contact-kinds.ts";
 
-/* Where a visitor came from (`/contact?source=<slug>`): pre-selects the topic and travels with the message, so the
+/* Where a visitor came from (`/contact?source=<slug>`): pre-selects the kind and the product and travels with the message, so the
    team knows which page sent it. A slug, never free text. */
 const SOURCE = /^[a-z0-9][a-z0-9-]{0,39}$/;
 export const cleanSource = (v: unknown): string | null => (typeof v === "string" && SOURCE.test(v) ? v : null);
@@ -38,20 +43,20 @@ export function contactSourceFromPath(pathname: string): string {
   return cleanSource(path.split("/")[1]) ?? "home";
 }
 
-/** The topic a source implies — none when the page is about Krizaka as a whole (home, story…). */
-export function topicForSource(source: string | null): ContactTopic | null {
-  if (source === "orazaka" || source === "yomizaka" || source === "akinaza") return source;
-  if (source === "services") {
-    return "enterprise";
-  }
-  if (source === "open-source" || source === "docs-ui" || source === "docs-java") return "blocks";
-  return null;
+/** What a source implies — nothing when the page is about Krizaka as a whole (home, story…). */
+export function presetForSource(source: string | null): ContactPreset {
+  const product = productOf(source) ?? (source && BLOCKS_SOURCES.includes(source) ? "blocks" : null);
+  return { kind: source === "services" ? "business" : null, product };
 }
 
-/** The contact page link, carrying where the visitor is and, when the page knows it, the topic. */
-export function contactHref(source: string | null, topic?: ContactTopic): string {
+/** The pages about the stack's libraries. */
+const BLOCKS_SOURCES = ["open-source", "docs-ui", "docs-java"];
+
+/** The contact page link, carrying where the visitor is, the kind (`topic=`) and the product (`product=`) when the page knows them. */
+export function contactHref(source: string | null, kind?: ContactKind, product?: ContactProduct): string {
   const q = new URLSearchParams();
-  if (topic) q.set("topic", topic);
+  if (kind) q.set("topic", kind);
+  if (product) q.set("product", product);
   if (source) q.set("source", source);
   const s = q.toString();
   return s ? `/contact?${s}` : "/contact";
@@ -65,7 +70,9 @@ export interface ContactMessage {
   name: string;
   email: string;
   company: string;
-  topic: ContactTopic;
+  kind: ContactKind;
+  /** The product it is about, by commercial id; null when it is about Krizaka. */
+  product: ContactProduct | null;
   timeline: ContactTimeline | null;
   message: string;
   locale: "fr" | "en";
@@ -102,11 +109,15 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
   const email = str(b.email);
   const company = str(b.company);
   const message = str(b.message);
-  const topic = CONTACT_TOPICS.includes(b.topic as ContactTopic) ? (b.topic as ContactTopic) : null;
+  // A page loaded before the kinds existed still posts a `topic`: it becomes a kind (« other » for a product topic) and a product.
+  const old = legacyPreset(b.topic);
+  const kind = CONTACT_KINDS.find((k) => k === b.kind) ?? (old ? (old.kind ?? "other") : null);
+  const product = productOf(b.product) ?? old?.product ?? null;
   if (!isValidContactField("name", name)) return { ok: false, field: "name" };
   if (!isValidContactField("email", email)) return { ok: false, field: "email" };
   if (!isValidContactField("company", company)) return { ok: false, field: "company" };
-  if (!topic) return { ok: false, field: "topic" };
+  if (!kind) return { ok: false, field: "kind" };
+  if (str(b.product) && !productOf(b.product)) return { ok: false, field: "product" };
   const timeline = CONTACT_TIMELINES.includes(b.timeline as ContactTimeline) ? (b.timeline as ContactTimeline) : null;
   if (b.timeline !== undefined && b.timeline !== null && b.timeline !== "" && !timeline)
     return { ok: false, field: "timeline" };
@@ -117,7 +128,8 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
       name,
       email,
       company,
-      topic,
+      kind,
+      product,
       timeline,
       message,
       locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en",
@@ -126,15 +138,22 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
   };
 }
 
-const TOPIC_LABEL: Record<ContactTopic, string> = {
-  orazaka: displayName("orazaka"),
-  yomizaka: displayName("yomizaka"),
-  akinaza: displayName("akinaza"),
+const PRODUCT_LABEL: Record<ContactProduct, string> = {
+  verikora: displayName("yomizaka"),
+  folioviv: displayName("akinaza"),
+  sovkora: displayName("orazaka"),
+  kridoc: displayName("kachizaka"),
   blocks: "Building blocks",
-  enterprise: "Entreprise",
-  partnership: "Partnership",
-  other: "Other",
 };
+
+/** The subject of the team's e-mail: `[support · Verikora] Ada (Acme)`, the tag first so the inbox sorts by kind and product. */
+export function contactSubject(m: ContactMessage): string {
+  const company = m.company ? ` (${m.company})` : "";
+  return `[${contactTag(m)}] ${m.name}${company}`;
+}
+
+/** `support · Verikora`, or the kind alone when the message is not about a product. */
+const contactTag = (m: ContactMessage): string => (m.product ? `${m.kind} · ${PRODUCT_LABEL[m.product]}` : m.kind);
 
 const TIMELINE_LABEL: Record<ContactTimeline, string> = {
   now: "As soon as possible",
@@ -182,8 +201,8 @@ export function postMailgun(form: FormData, env: NodeJS.ProcessEnv = process.env
 
 /** Delivers to every configured channel. Returns how many accepted it. */
 export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv = process.env): Promise<number> {
-  const subject = `[krizaka.com] ${TOPIC_LABEL[m.topic]} — ${m.name}${m.company ? ` (${m.company})` : ""}`;
-  const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${TOPIC_LABEL[m.topic]}${m.timeline ? ` · ${TIMELINE_LABEL[m.timeline]}` : ""} · ${m.locale}${m.source ? ` · from ${m.source}` : ""}`;
+  const subject = contactSubject(m);
+  const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${contactTag(m)}${m.timeline ? ` · ${TIMELINE_LABEL[m.timeline]}` : ""} · ${m.locale}${m.source ? ` · from ${m.source}` : ""}`;
   const jobs: Promise<boolean>[] = [];
 
   if (mailConfigured(env) && env.MAIL_CONTACT_TO && env.MAIL_DOMAIN) {
@@ -201,7 +220,8 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
       ["Name", m.name],
       ["E-mail", m.email],
       ["Company", m.company || "—"],
-      ["Topic", TOPIC_LABEL[m.topic]],
+      ["Kind", m.kind],
+      ["Product", m.product ? PRODUCT_LABEL[m.product] : "—"],
       ["Timeline", m.timeline ? TIMELINE_LABEL[m.timeline] : "—"],
       ["Language", m.locale],
       ["Source", m.source ?? "—"],

@@ -314,6 +314,12 @@
   configured by environment and fails closed (503) when nothing is set:
   `MAIL_PROVIDER=mailgun` + `MAIL_API_KEY` + `MAIL_DOMAIN` + `MAIL_CONTACT_TO` (+ `MAIL_API_URL`, `MAIL_FROM`)
   and/or `MAIL_CONTACT_WEBHOOK_URL`. Template: `.env.example`.
+- **No Krizaka e-mail address is public** (founder, 2026-11-06, krizaka-internal#2762; org rule `no-public-email`): « Support » and « Contact » everywhere
+  (here and on the products' sites) are links to this form, which carries the **kind** (`support` · `business` · `other`, `topic=` in the link) and the
+  **product** (`product=` by commercial id: `verikora`, `folioviv`, `sovkora`, `kridoc`, `blocks`), so each received message says what it is: the e-mail
+  subject is `[support · Verikora] <name>` and the body has `Kind:` and `Product:` (`contactSubject`, `lib/contact.ts`). `contactHref(source, kind?, product?)`
+  builds `/contact?topic=support&product=verikora&source=<slug>`. Old links keep working through `lib/contact-kinds.ts` (`topic=yomizaka`, `topic=enterprise`,
+  `product=akinaza`…). The one exception here is the privacy officer's line on the privacy page (Quebec Law 25); `tests/no-public-email.test.mjs` guards it.
 - **Environment variables are named by bounded context** (krizaka/.github#46): `<CONTEXT>_<THING>` with CONTEXT one of
   `APP_` `DATABASE_` `AUTH_` `MEDIA_` `MAIL_` `PUSH_` `PAYMENTS_` `REALTIME_` `ABUSE_` `OBSERVABILITY_` `AI_` `OPERATOR_` —
   never a product (`ORAZAKA_…`) nor a vendor (`BUNNY_…`, `MAILGUN_…`): a vendor is a value (`MAIL_PROVIDER=mailgun`);

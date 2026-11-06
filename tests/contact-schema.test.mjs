@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { validateContact, isValidContactField } from "../lib/contact.ts";
 
-const ok = { name: "Ada", email: "ada@example.com", topic: "other", message: "Hello there, friend." };
+const ok = { name: "Ada", email: "ada@example.com", kind: "other", message: "Hello there, friend." };
 
 test("valid message passes", () => assert.equal(validateContact(ok).ok, true));
 test("field rules are shared with the client", () => {

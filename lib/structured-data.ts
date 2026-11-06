@@ -10,7 +10,7 @@ import { getDictionary } from "@/lib/i18n";
    ═══════════════════════════════════════════════════════════════════ */
 
 import { displayName } from "@krizaka/org";
-import { SITE_URL, GITHUB_ORG_URL, CONTACT_EMAIL, NPM_ORG_URL } from "@/lib/site";
+import { SITE_URL, GITHUB_ORG_URL, NPM_ORG_URL } from "@/lib/site";
 import { siteUrlOf } from "@/lib/product-hosts";
 
 export type Locale = "fr" | "en";
@@ -115,7 +115,6 @@ export function buildSiteGraph(locale: Locale) {
           "Privacy law in Québec (Law 25)",
         ],
         logo: `${SITE_URL}/favicon.svg`,
-        email: CONTACT_EMAIL,
         sameAs: [GITHUB_ORG_URL, NPM_ORG_URL],
         address: {
           "@type": "PostalAddress",

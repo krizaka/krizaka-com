@@ -6,20 +6,22 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { CheckIcon, ChatIcon, ForwardIcon, UsersIcon, WarningIcon } from "@krizaka/icons";
+import { CheckIcon, ChatIcon, FlagIcon, ForwardIcon, UsersIcon, WarningIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
-import { topicForProductSite, topicFromQuery } from "@/lib/contact-products";
+import { presetFromQuery } from "@/lib/contact-products";
 import { format } from "@krizaka/i18n";
 import {
+  CONTACT_KINDS,
+  CONTACT_PRODUCTS,
   CONTACT_TIMELINES,
-  CONTACT_TOPICS,
   CONTACT_MESSAGE_MAX,
   cleanSource,
   isValidContactField,
-  topicForSource,
   type ContactField,
+  type ContactKind,
+  type ContactPreset,
+  type ContactProduct,
   type ContactTimeline,
-  type ContactTopic,
 } from "@/lib/contact";
 import { ProductLogo } from "@krizaka/ui";
 import { Button } from "@krizaka/ui/button";
@@ -53,31 +55,29 @@ function verifyErrorText(errors: Record<string, string>, error: string | undefin
   return format(byCode[error ?? ""] ?? errors.other, { left: String(left ?? 0) });
 }
 
-function TopicIcon({ topic }: { topic: ContactTopic }) {
-  if (topic === "orazaka" || topic === "yomizaka" || topic === "akinaza" || topic === "blocks") {
-    return <ProductLogo id={topic === "blocks" ? "krizaka" : topic} size={26} animated={false} />;
-  }
-  const Icon = topic === "partnership" || topic === "enterprise" ? UsersIcon : ChatIcon;
-  return <Icon size={22} aria-hidden />;
-}
+const KIND_ICON = { support: ChatIcon, business: UsersIcon, other: FlagIcon } as const;
 
-/** Every link to this page carries ?source=<page> (and ?topic= when the page knows it): the topic is pre-selected from
-    it — Yomizaka from Yomizaka, the building blocks from open source — and nothing is pre-selected from a page about
-    Krizaka as a whole. The static page renders without a choice until the URL is read. */
-export default function ContactForm({ defaultTopic = null }: { defaultTopic?: ContactTopic | null }) {
+/** Every link to this page carries ?source=<page>, and ?topic=<kind>&product=<product> when the page knows them: both are
+    pre-selected from it — Support and Verikora from Verikora's footer, the building blocks from open source — and nothing is
+    pre-selected from a page about Krizaka as a whole. The static page renders without a choice until the URL is read. */
+export default function ContactForm({
+  defaultPreset = { kind: null, product: null },
+}: {
+  defaultPreset?: ContactPreset;
+}) {
   return (
-    <Suspense fallback={<Form defaultTopic={defaultTopic} source={null} />}>
-      <FromUrl defaultTopic={defaultTopic} />
+    <Suspense fallback={<Form preset={defaultPreset} source={null} />}>
+      <FromUrl defaultPreset={defaultPreset} />
     </Suspense>
   );
 }
 
-function FromUrl({ defaultTopic }: { defaultTopic: ContactTopic | null }) {
+function FromUrl({ defaultPreset }: { defaultPreset: ContactPreset }) {
   const params = useSearchParams();
-  const requested = params.get("topic");
   const source = cleanSource(params.get("source"));
-  const topic = topicFromQuery(requested) ?? topicForProductSite(source) ?? topicForSource(source) ?? defaultTopic;
-  return <Form key={`${topic}-${source}`} defaultTopic={topic} source={source} />;
+  const found = presetFromQuery({ topic: params.get("topic"), product: params.get("product"), source });
+  const preset = { kind: found.kind ?? defaultPreset.kind, product: found.product ?? defaultPreset.product };
+  return <Form key={`${preset.kind}-${preset.product}-${source}`} preset={preset} source={source} />;
 }
 
 /** Step two: the code mailed to the address. A wrong code stays here (with the tries left); a destroyed or expired one sends the visitor back. */
@@ -159,11 +159,11 @@ function CodeStep({
   );
 }
 
-function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; source: string | null }) {
+function Form({ preset, source }: { preset: ContactPreset; source: string | null }) {
   const { t, locale } = useI18n();
   const c = t.site.contactForm;
-  const [topic, setTopic] = useState<ContactTopic | null>(defaultTopic);
-  const listed = CONTACT_TOPICS;
+  const [kind, setKind] = useState<ContactKind | null>(preset.kind);
+  const [product, setProduct] = useState<ContactProduct | null>(preset.product);
   const [topicMissing, setTopicMissing] = useState(false);
   const [timeline, setTimeline] = useState<ContactTimeline | null>(null);
   const [values, setValues] = useState({ name: "", email: "", company: "", message: "" });
@@ -191,7 +191,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
     e.preventDefault();
     const fields: Field[] = ["name", "email", "message"];
     setTouched({ name: true, email: true, message: true });
-    if (!topic) {
+    if (!kind) {
       setTopicMissing(true);
       formRef.current?.querySelector<HTMLElement>('input[name="topic"]')?.focus();
       return;
@@ -213,7 +213,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, topic, timeline, website, locale, source, captchaToken: captcha }),
+        body: JSON.stringify({ ...values, kind, product, timeline, website, locale, source, captchaToken: captcha }),
       });
       if (res.ok) {
         // Verify first: the message waits on the server until the code mailed to the address comes back.
@@ -301,36 +301,55 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
           aria-invalid={topicMissing || undefined}
           aria-describedby={topicMissing ? "kz-cf-topic-error" : undefined}
         >
-          {listed.map((id) => (
-            <label key={id} className="kz-cf-topic" data-selected={topic === id || undefined}>
-              <input
-                type="radio"
-                name="topic"
-                value={id}
-                checked={topic === id}
-                onChange={() => {
-                  setTopic(id);
-                  setTopicMissing(false);
-                }}
-              />
-              <span className="kz-cf-topic-icon">
-                <TopicIcon topic={id} />
-              </span>
-              <span className="kz-cf-topic-text">
-                <strong>{c.topics[id]}</strong>
-                <small>{c.topicHints[id]}</small>
-              </span>
-              <span className="kz-cf-topic-check" aria-hidden>
-                <CheckIcon size={12} aria-hidden />
-              </span>
-            </label>
-          ))}
+          {CONTACT_KINDS.map((id) => {
+            const Icon = KIND_ICON[id];
+            return (
+              <label key={id} className="kz-cf-topic" data-selected={kind === id || undefined}>
+                <input
+                  type="radio"
+                  name="topic"
+                  value={id}
+                  checked={kind === id}
+                  onChange={() => {
+                    setKind(id);
+                    setTopicMissing(false);
+                  }}
+                />
+                <span className="kz-cf-topic-icon">
+                  <Icon size={22} aria-hidden />
+                </span>
+                <span className="kz-cf-topic-text">
+                  <strong>{c.topics[id]}</strong>
+                  <small>{c.topicHints[id]}</small>
+                </span>
+                <span className="kz-cf-topic-check" aria-hidden>
+                  <CheckIcon size={12} aria-hidden />
+                </span>
+              </label>
+            );
+          })}
         </div>
         {topicMissing && (
           <p id="kz-cf-topic-error" className="kz-cf-error" role="alert">
             {c.errors.topic}
           </p>
         )}
+        <div className="kz-cf-field">
+          <span id="cf-product">{c.stepProduct}</span>
+          <div className="kz-cf-chips" role="group" aria-labelledby="cf-product">
+            {CONTACT_PRODUCTS.map((id) => (
+              <button
+                key={id}
+                type="button"
+                className="kz-cf-chip"
+                aria-pressed={product === id}
+                onClick={() => setProduct((current) => (current === id ? null : id))}
+              >
+                {c.products[id]}
+              </button>
+            ))}
+          </div>
+        </div>
       </fieldset>
 
       <fieldset className="kz-cf-step">
@@ -424,7 +443,7 @@ function Form({ defaultTopic, source }: { defaultTopic: ContactTopic | null; sou
             onBlur={leave("message")}
             maxLength={MESSAGE_MAX}
             rows={6}
-            placeholder={c.placeholders[topic ?? "other"]}
+            placeholder={c.placeholders[kind ?? "other"]}
             aria-invalid={invalid("message") || undefined}
             aria-describedby={invalid("message") ? "cf-message-error" : "cf-message-count"}
             aria-errormessage={invalid("message") ? "cf-message-error" : undefined}

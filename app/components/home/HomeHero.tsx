@@ -76,7 +76,7 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
             <p className="kz-home-lead">{t.lead}</p>
 
             <div className="kz-home-actions">
-              <ButtonLink href={`/${locale}${contactHref("home", HOME_PRODUCT)}`} variant="primary" size="lg">
+              <ButtonLink href={`/${locale}${contactHref("home", undefined, HOME_PRODUCT)}`} variant="primary" size="lg">
                 {t.primary} <ForwardIcon size={16} strokeWidth={2.25} />
               </ButtonLink>
             </div>
