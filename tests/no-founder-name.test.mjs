@@ -20,7 +20,12 @@ test("the founder's name is in no message and no content file", () => {
 });
 
 test("the llms files, built or rendered, carry no founder name", () => {
-  const built = ["public/llms.txt", "public/llms-full.txt", ".next/server/app/llms.txt.body", ".next/server/app/llms-full.txt.body"];
+  const built = [
+    "public/llms.txt",
+    "public/llms-full.txt",
+    ".next/server/app/llms.txt.body",
+    ".next/server/app/llms-full.txt.body",
+  ];
   for (const f of built) {
     const p = new URL(`../${f}`, import.meta.url);
     if (existsSync(p)) assert.doesNotMatch(readFileSync(p, "utf8"), rx, `${f} names the founder`);

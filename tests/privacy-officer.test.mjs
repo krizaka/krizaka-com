@@ -24,7 +24,8 @@ test("Loi 25: the privacy page names the person in charge by role (the president
 });
 
 test("Loi 25: the legal pages' date follows the change", () => {
-  const m = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8")).site.legal.updated;
+  const m = (l) =>
+    JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8")).site.legal.updated;
   assert.match(m("en"), /November 5, 2026/);
   assert.match(m("fr"), /5 novembre 2026/);
 });
