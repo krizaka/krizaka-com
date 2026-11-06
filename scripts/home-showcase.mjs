@@ -65,26 +65,37 @@ export function generatedOf(board) {
 /** The most a generated item costs, in credits: Gen-4.5 bills each second it makes. */
 export const generatedCredits = (item) => Math.ceil(item.seconds * GEN45_CREDITS_PER_SECOND);
 
-/** What is wrong with the generated items, as sentences (empty: fine). */
+/** What is wrong with one generated item's length and words, as sentences. */
+function itemProblems(g, key) {
+  const problems = [];
+  if (!(g.seconds >= GEN45_SECONDS[0] && g.seconds <= GEN45_SECONDS[1])) {
+    problems.push(`${key}: ${GEN45_SECONDS[0]} to ${GEN45_SECONDS[1]} s`);
+  }
+  if (!g.idea?.trim() || !g.prompt?.trim()) {
+    problems.push(`${key}: an idea and a prompt`);
+  }
+  if (g.feature && !/^folioviv:[\w./-]+:\d+$/.test(g.catalogue ?? "")) {
+    problems.push(`${key}: a feature carries its place in the product's words (folioviv:<file>:<line>)`);
+  }
+  if (g.rule && (!g.citation?.trim() || !/^verikora:[\w./-]+:\d+$/.test(g.catalogue ?? ""))) {
+    problems.push(`${key}: a rule carries its citation and its place in the catalogue (verikora:<file>:<line>)`);
+  }
+  return problems;
+}
+
+/** What is wrong with the generated items, as sentences (empty: fine): each item, and one rule per clip in a carousel. */
 export function generatedProblems(board) {
   const problems = [];
   const rules = new Map();
   for (const g of generatedOf(board)) {
     const key = `${g.carousel}/${g.id}`;
-    if (!(g.seconds >= GEN45_SECONDS[0] && g.seconds <= GEN45_SECONDS[1])) {
-      problems.push(`${key}: ${GEN45_SECONDS[0]} to ${GEN45_SECONDS[1]} s`);
+    problems.push(...itemProblems(g, key));
+    const rule = g.rule && `${g.carousel}/${g.rule}`;
+    if (rule && rules.has(rule)) {
+      problems.push(`${key}: ${g.rule} is already shown by ${rules.get(rule)}: one rule per clip`);
     }
-    if (!g.idea?.trim() || !g.prompt?.trim()) {
-      problems.push(`${key}: an idea and a prompt`);
-    }
-    if (g.rule) {
-      if (!g.citation?.trim() || !/^verikora:[\w./-]+:\d+$/.test(g.catalogue ?? "")) {
-        problems.push(`${key}: a rule carries its citation and its place in the catalogue (verikora:<file>:<line>)`);
-      }
-      if (rules.has(`${g.carousel}/${g.rule}`)) {
-        problems.push(`${key}: ${g.rule} is already shown by ${rules.get(`${g.carousel}/${g.rule}`)}: one rule per clip`);
-      }
-      rules.set(`${g.carousel}/${g.rule}`, key);
+    if (rule) {
+      rules.set(rule, key);
     }
   }
   return problems;

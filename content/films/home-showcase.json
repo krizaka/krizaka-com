@@ -293,7 +293,7 @@
     },
     "folioviv": {
       "idea": "A small shop's day, from the first client to going home on time.",
-      "order": ["evening", "home", "sign"],
+      "order": ["evening", "booking", "invoices", "books", "home", "sign"],
       "shots": [
         {
           "id": "morning",
@@ -345,6 +345,32 @@
         {
           "id": "morning",
           "why": "the last 0.3 s is a blurred transition, held as the last frame"
+        }
+      ],
+      "generated": [
+        {
+          "id": "booking",
+          "feature": "pricing.features.booking",
+          "catalogue": "folioviv:apps/web/messages/fr.json:400",
+          "seconds": 6,
+          "idea": "the shop's page and its bookings, with the hours really open: a barber shop ready for the next client, the door bell sways",
+          "prompt": "Inside a small Montréal barber shop at blue hour, an empty barber chair faces a mirror, scissors and a comb laid out neatly on the counter, a small brass bell above the glass door gently swings as if someone is about to come in; warm light inside, snow outside."
+        },
+        {
+          "id": "invoices",
+          "feature": "pricing.features.invoices",
+          "catalogue": "folioviv:apps/web/messages/fr.json:401",
+          "seconds": 6,
+          "idea": "invoices with the taxes exact to the cent: a single copper coin settles exactly on a neat stack of blank invoices",
+          "prompt": "Macro shot on a wooden shop counter: a neat stack of crisp blank paper invoices, a single small copper coin spins slowly and settles perfectly flat on top of the stack; warm lamp light, shallow depth of field."
+        },
+        {
+          "id": "books",
+          "feature": "pricing.features.books",
+          "catalogue": "folioviv:apps/web/messages/fr.json:402",
+          "seconds": 6,
+          "idea": "the books of the period prepared for the owner to file: receipts sorted into folders, the folder closes and waits on the desk",
+          "prompt": "On a small wooden desk against a bare red brick wall with no posters, no frames and no signs, at night, a loose pile of plain blank paper receipts slides neatly into a cardboard folder, the folder closes with a cloth tie and rests beside a brass desk lamp, ready; rain on a small window."
         }
       ]
     }

@@ -650,6 +650,97 @@
       "task": "ad4c1a37-ef87-4bf3-8b40-0db8d76390b6",
       "status": "SUCCEEDED",
       "at": "2026-11-06T05:36:43.676Z"
+    },
+    {
+      "shot": "folioviv/booking",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 108,
+      "task": "d7147310-743b-462f-98b3-4ee3212c93f3",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:51:31.489Z"
+    },
+    {
+      "shot": "folioviv/invoices",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 82,
+      "task": "be4341f8-0a4f-48c5-97e2-79879fe8a893",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:53:20.089Z"
+    },
+    {
+      "shot": "folioviv/books",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 107,
+      "task": "11419f51-ce1d-4552-93cd-809d8d711d5d",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:54:42.499Z"
+    },
+    {
+      "shot": "folioviv/booking",
+      "take": 2,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 89,
+      "task": "551a05a3-9d7d-4241-9348-6192e4bfb260",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:56:29.500Z"
+    },
+    {
+      "shot": "folioviv/invoices",
+      "take": 2,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 108,
+      "task": "d881b410-0c88-43ba-8932-fe52f9101e0d",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:57:58.450Z"
+    },
+    {
+      "shot": "folioviv/books",
+      "take": 2,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 107,
+      "task": "ab977999-4504-4c65-95b4-fb4195ae46c4",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:59:47.012Z"
+    },
+    {
+      "shot": "folioviv/books",
+      "take": 3,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 107,
+      "task": "3ac15a3c-bb7e-4a4b-83ce-195df91381c0",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T06:02:09.652Z"
     }
   ],
   "chosen": {
@@ -744,6 +835,18 @@
     "verikora/balance": {
       "take": 1,
       "why": "the only take; clean, no lettering"
+    },
+    "folioviv/booking": {
+      "take": 1,
+      "why": "clean; take 2 shows signs with fake lettering"
+    },
+    "folioviv/invoices": {
+      "take": 1,
+      "why": "clean; take 2 shows signs with fake lettering"
+    },
+    "folioviv/books": {
+      "take": 3,
+      "why": "bare wall; takes 1 and 2 show posters with fake lettering"
     }
   },
   "rejected": [
@@ -775,10 +878,10 @@
       "capCredits": 5000,
       "balance": {
         "before": 4741,
-        "after": 3877,
-        "at": "2026-11-06T06:00Z"
+        "after": 3373,
+        "at": "2026-11-06T08:30Z"
       },
-      "note": "Verikora's rule clips: 12 Gen-4.5 generations of 6 s at the published 12 credits/s (72 each) = 864 credits, exactly the balance's move: 5 rules × 2 takes, a third take of lowest-rent (the calendar drew garbled numbers), one take of balance, and landlord's second take stopped once submitted (the rule was replaced after take 1 drew fake lettering)."
+      "note": "Verikora's rule clips: 12 Gen-4.5 generations of 6 s at the published 12 credits/s (72 each) = 864 credits, exactly the balance's move: 5 rules × 2 takes, a third take of lowest-rent (the calendar drew garbled numbers), one take of balance, and landlord's second take stopped once submitted (the rule was replaced after take 1 drew fake lettering). Then Folioviv's feature clips: 7 generations (3 features × 2 takes and a third take of books, whose posters drew fake lettering) = 504 credits; total for the issue 1368 credits."
     }
   ]
 }

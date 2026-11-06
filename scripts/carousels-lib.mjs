@@ -12,11 +12,9 @@ export const CAROUSELS = 4;
 
 /** Every viewport × theme × motion preference to load the home in, in French (the default) and English. */
 export function cases(paths = ["/fr", "/en"], viewports = VIEWPORTS, themes = THEMES, preferences = PREFERENCES) {
-  return paths.flatMap((path) =>
-    viewports.flatMap((vp) =>
-      themes.flatMap((theme) => preferences.map((reducedMotion) => ({ path, vp, theme, reducedMotion }))),
-    ),
-  );
+  const looks = viewports.flatMap((vp) => themes.map((theme) => ({ vp, theme })));
+  const withMotion = looks.flatMap((look) => preferences.map((reducedMotion) => ({ ...look, reducedMotion })));
+  return paths.flatMap((path) => withMotion.map((c) => ({ path, ...c })));
 }
 
 const label = (c) => `${c.path} ${c.vp.name} ${c.theme} ${c.reducedMotion}`;
@@ -28,24 +26,43 @@ const label = (c) => `${c.path} ${c.vp.name} ${c.theme} ${c.reducedMotion}`;
 export function carouselProblems(c, reading) {
   const out = [];
   const at = label(c);
-  if (reading.carousels.length !== CAROUSELS)
+  if (reading.carousels.length !== CAROUSELS) {
     out.push(`${at}: ${reading.carousels.length} carousels, expected ${CAROUSELS}`);
+  }
   reading.carousels.forEach((k, i) => {
-    if (Math.abs(k.ratio - 16 / 9) > 0.02) out.push(`${at}: carousel ${i + 1} is ${k.ratio.toFixed(2)}:1, not 16:9`);
-    if (k.error) out.push(`${at}: carousel ${i + 1}'s clip failed (${k.error})`);
+    if (Math.abs(k.ratio - 16 / 9) > 0.02) {
+      out.push(`${at}: carousel ${i + 1} is ${k.ratio.toFixed(2)}:1, not 16:9`);
+    }
+    if (k.error) {
+      out.push(`${at}: carousel ${i + 1}'s clip failed (${k.error})`);
+    }
   });
   const calm = c.reducedMotion === "reduce";
   const first = reading.carousels[0];
   if (calm) {
-    if (reading.carousels.some((k) => k.video)) out.push(`${at}: a clip is mounted under reduced motion`);
-    if (reading.carousels.some((k) => k.pause)) out.push(`${at}: a pause button under reduced motion (nothing moves)`);
-    if (reading.advanced) out.push(`${at}: a carousel advanced under reduced motion`);
+    if (reading.carousels.some((k) => k.video)) {
+      out.push(`${at}: a clip is mounted under reduced motion`);
+    }
+    if (reading.carousels.some((k) => k.pause)) {
+      out.push(`${at}: a pause button under reduced motion (nothing moves)`);
+    }
+    if (reading.advanced) {
+      out.push(`${at}: a carousel advanced under reduced motion`);
+    }
     return out;
   }
-  if (first && !first.playing) out.push(`${at}: the first carousel's clip does not play`);
-  if (reading.carousels.some((k) => !k.pause)) out.push(`${at}: a carousel without its visible pause (WCAG 2.2.2)`);
-  if (!reading.advanced) out.push(`${at}: the first carousel did not advance on its own`);
-  if (!reading.held) out.push(`${at}: the first carousel advanced under the pointer`);
+  if (first && !first.playing) {
+    out.push(`${at}: the first carousel's clip does not play`);
+  }
+  if (reading.carousels.some((k) => !k.pause)) {
+    out.push(`${at}: a carousel without its visible pause (WCAG 2.2.2)`);
+  }
+  if (!reading.advanced) {
+    out.push(`${at}: the first carousel did not advance on its own`);
+  }
+  if (!reading.held) {
+    out.push(`${at}: the first carousel advanced under the pointer`);
+  }
   return out;
 }
 

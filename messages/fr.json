@@ -486,7 +486,7 @@
           "reel": "Les plans titrés viennent de nos reels publiés sur Instagram (@krizakahq), élargis en 16:9 avec Runway Aleph ; sur un téléphone, le cadrage vertical d'origine.",
           "clip": "Les plans marqués « généré avec Sovkora » ont été générés par notre moteur (Wan 2.2) pour le blogue ; le film de la marque aussi.",
           "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque.",
-          "generated": "Les plans des règles de Verikora ont été générés pour cette page avec Runway Gen-4.5 ; chaque règle et son article viennent du catalogue de Verikora, les mots sont dans la légende, jamais dans l'image."
+          "generated": "Les plans des règles de Verikora ont été générés pour cette page avec Runway Gen-4.5 ; chaque règle et son article viennent du catalogue de Verikora, les mots sont dans la légende, jamais dans l'image. Les plans des fonctions de Folioviv ont été générés pour cette page avec Runway Gen-4.5 ; chaque fonction vient des mots de Folioviv, les mots sont dans la légende, jamais dans l'image."
         },
         "slides": {
           "hero": {
@@ -575,6 +575,18 @@
             "sign": {
               "caption": "La marque de Folioviv, près de l'enseigne du barbier",
               "alt": "La marque verte de Folioviv sur un mur de boutique, à côté d'une enseigne de barbier ; le titre « FOLIOVIV » s'inscrit."
+            },
+            "booking": {
+              "caption": "Votre page de boutique et vos réservations, aux heures que vous avez vraiment",
+              "alt": "Un salon de barbier vide à l'heure bleue, la chaise prête, les ciseaux rangés ; la clochette de la porte se balance. Folioviv tient la page de la boutique et ses réservations."
+            },
+            "invoices": {
+              "caption": "Des factures bilingues, la TPS et la TVQ exactes au sou",
+              "alt": "Une pièce de cuivre tourne puis se pose bien à plat sur une pile de factures vierges, sur un comptoir. Folioviv fait des factures avec les taxes exactes au sou."
+            },
+            "books": {
+              "caption": "Les livres de la période, préparés pour que vous les déclariez",
+              "alt": "Des reçus vierges glissent dans une chemise de carton qui se ferme, posée près d'une lampe. Folioviv prépare les livres et les chiffres de taxes ; c'est vous qui déclarez."
             }
           }
         }
