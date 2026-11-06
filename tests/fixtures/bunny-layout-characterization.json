@@ -1,0 +1,1270 @@
+[
+  {
+    "path": "",
+    "placement": {
+      "state": "misplaced",
+      "why": "unknown root \"/\" (allowed: brand, defaults, people, maps, discovery, site, ui, products, README.txt)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "..",
+    "placement": {
+      "state": "misplaced",
+      "why": "unknown root \"../\" (allowed: brand, defaults, people, maps, discovery, site, ui, products, README.txt)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "../",
+    "placement": {
+      "state": "misplaced",
+      "why": "unknown root \"../\" (allowed: brand, defaults, people, maps, discovery, site, ui, products, README.txt)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "README.txt",
+    "placement": { "state": "ok" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "ok"
+  },
+  {
+    "path": "apps/akinaza/defaults/a.0123456789.png",
+    "placement": {
+      "state": "legacy",
+      "target": "apps/folioviv/defaults/a.0123456789.png",
+      "issue": "krizaka/krizaka-internal#2659"
+    },
+    "targetOf": "apps/folioviv/defaults/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "apps/akinaza/defaults/cleaning/blog/c-1-640.434684215c.avif",
+    "placement": {
+      "state": "legacy",
+      "target": "apps/folioviv/defaults/cleaning/blog/c-1-640.434684215c.avif",
+      "issue": "krizaka/krizaka-internal#2659"
+    },
+    "targetOf": "apps/folioviv/defaults/cleaning/blog/c-1-640.434684215c.avif",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "apps/akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif",
+    "placement": {
+      "state": "legacy",
+      "target": "apps/folioviv/defaults/cleaning/cover/c-1-640.434684215c.avif",
+      "issue": "krizaka/krizaka-internal#2659"
+    },
+    "targetOf": "apps/folioviv/defaults/cleaning/cover/c-1-640.434684215c.avif",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "apps/akinaza/tour/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target apps/folioviv/tour/a.0123456789.png would be misplaced: not apps/<sovkora|verikora|folioviv>/<defaults|uploads|generated>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "apps/folioviv/tour/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "apps/brand/uploads/u1/a.0123456789.webp",
+    "placement": {
+      "state": "misplaced",
+      "why": "not apps/<sovkora|verikora|folioviv>/<defaults|uploads|generated>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "apps/folioviv/../cleaning/cover/c-1-640.434684215c.avif",
+    "placement": {
+      "state": "misplaced",
+      "why": "not apps/<sovkora|verikora|folioviv>/<defaults|uploads|generated>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "apps/folioviv/defaults/cleaning/cover/c-1-640.434684215c.avif",
+    "placement": { "state": "ok" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "ok"
+  },
+  {
+    "path": "apps/folioviv/nope/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "not apps/<sovkora|verikora|folioviv>/<defaults|uploads|generated>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "apps/folioviv/uploads/a.0123456789.png",
+    "placement": { "state": "ok" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "ok"
+  },
+  {
+    "path": "brand/",
+    "placement": {
+      "state": "misplaced",
+      "why": "not brand/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<file> or brand/{manifest,index}.json"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "brand/../site/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "not brand/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<file> or brand/{manifest,index}.json"
+    },
+    "targetOf": "org/v1/brand/../site/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "brand/../x",
+    "placement": {
+      "state": "misplaced",
+      "why": "not brand/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<file> or brand/{manifest,index}.json"
+    },
+    "targetOf": "org/v1/brand/../x",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "brand/.github/workflows/bunny-retention.yml",
+    "placement": {
+      "state": "misplaced",
+      "why": "not brand/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<file> or brand/{manifest,index}.json"
+    },
+    "targetOf": "org/v1/brand/.github/workflows/bunny-retention.yml",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "brand/akinaza/logo-dark.svg",
+    "placement": {
+      "state": "legacy",
+      "target": "org/v1/brand/akinaza/logo-dark.svg",
+      "issue": "krizaka/krizaka-ui#817"
+    },
+    "targetOf": "org/v1/brand/akinaza/logo-dark.svg",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "brand/akinaza/x",
+    "placement": { "state": "legacy", "target": "org/v1/brand/akinaza/x", "issue": "krizaka/krizaka-ui#817" },
+    "targetOf": "org/v1/brand/akinaza/x",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "brand/index.json",
+    "placement": { "state": "legacy", "target": "org/v1/brand/index.json", "issue": "krizaka/krizaka-ui#817" },
+    "targetOf": "org/v1/brand/index.json",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "defaults",
+    "placement": {
+      "state": "misplaced",
+      "why": "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "defaults/",
+    "placement": {
+      "state": "misplaced",
+      "why": "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "defaults//1/f.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "defaults/v1/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json"
+    },
+    "targetOf": "org/v1/defaults/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "defaults/v1/app.schema.0123456789.json",
+    "placement": {
+      "state": "misplaced",
+      "why": "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json"
+    },
+    "targetOf": "org/v1/defaults/app.schema.0123456789.json",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "defaults/v1/app.schema.45cbb0d0af.json",
+    "placement": {
+      "state": "misplaced",
+      "why": "not defaults/v<n>/<person|folder|organisation|shop|banner>/<id>-<size>.webp (or <id>.svg) or defaults/v<n>/manifest.json"
+    },
+    "targetOf": "org/v1/defaults/app.schema.45cbb0d0af.json",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "defaults/v12/person/a.svg",
+    "placement": { "state": "legacy", "target": null, "why": null, "issue": "krizaka/krizaka-ts#200" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "discovery/../x",
+    "placement": { "state": "misplaced", "why": "not discovery/services.json" },
+    "targetOf": "org/v1/discovery/../x",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "discovery/kridoc/x",
+    "placement": { "state": "misplaced", "why": "not discovery/services.json" },
+    "targetOf": "org/v1/discovery/kridoc/x",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "discovery/services.json/x",
+    "placement": { "state": "misplaced", "why": "not discovery/services.json" },
+    "targetOf": "org/v1/discovery/services.json/x",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "docs/a b/mobile",
+    "placement": {
+      "state": "misplaced",
+      "why": "unknown root \"docs/\" (allowed: brand, defaults, people, maps, discovery, site, ui, products, README.txt)"
+    },
+    "targetOf": null,
+    "libraryPath": "products/a b/docs/mobile",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "docs/akinaza/a",
+    "placement": {
+      "state": "misplaced",
+      "why": "unknown root \"docs/\" (allowed: brand, defaults, people, maps, discovery, site, ui, products, README.txt)"
+    },
+    "targetOf": null,
+    "libraryPath": "products/akinaza/docs/a",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "docs/akinaza/mobile/a.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "unknown root \"docs/\" (allowed: brand, defaults, people, maps, discovery, site, ui, products, README.txt)"
+    },
+    "targetOf": null,
+    "libraryPath": "products/akinaza/docs/mobile/a.png",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "maps/",
+    "placement": {
+      "state": "misplaced",
+      "why": "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "maps/a b/fonts/Noto Sans/0-255.pbf",
+    "placement": {
+      "state": "misplaced",
+      "why": "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "maps/a.0123456789.png/fonts/Noto_Sans/0-255.pbf",
+    "placement": {
+      "state": "misplaced",
+      "why": "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "maps/v1/fonts/N/0-255.pbf/x",
+    "placement": {
+      "state": "misplaced",
+      "why": "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf"
+    },
+    "targetOf": "org/v1/maps/fonts/N/0-255.pbf/x",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "maps/v1/fonts/Noto_Sans/0-255.pbf",
+    "placement": {
+      "state": "misplaced",
+      "why": "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf"
+    },
+    "targetOf": "org/v1/maps/fonts/Noto_Sans/0-255.pbf",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "maps/v1/fonts/manifest.json/0-255.pbf",
+    "placement": {
+      "state": "misplaced",
+      "why": "not maps/v1/tiles/<region>-<YYYYMMDD>.pmtiles or maps/v1/fonts/<stack>/<a>-<b>.pbf"
+    },
+    "targetOf": "org/v1/maps/fonts/manifest.json/0-255.pbf",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "org",
+    "placement": {
+      "state": "misplaced",
+      "why": "not org/v<n>/<json|defaults|brand|maps|films|discovery>/… (see ORG_PARTS)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "org/../",
+    "placement": {
+      "state": "misplaced",
+      "why": "not org/v<n>/<json|defaults|brand|maps|films|discovery>/… (see ORG_PARTS)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "org/../app.schema.0123456789.json",
+    "placement": {
+      "state": "misplaced",
+      "why": "not org/v<n>/<json|defaults|brand|maps|films|discovery>/… (see ORG_PARTS)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/.github/workflows/bunny-retention.yml",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/avatars/a.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": "people/personas/avatars/a.png",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/avatars/blog",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": "people/personas/avatars/blog",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/avatars/defaults",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": "people/personas/avatars/defaults",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/defaults/v1/../person-3-256.webp",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": "org/v1/defaults/tones/../person-3-256.webp",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/defaults/v1/nope/a.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": "org/v1/defaults/tones/nope/a.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/defaults/v1/person-1.svg",
+    "placement": {
+      "state": "misplaced",
+      "why": "not people/defaults/v1/<brand>/<file> or people/personas/<product>/<file>"
+    },
+    "targetOf": "org/v1/defaults/tones/person-1.svg",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ts#200",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/personas/ui/a.png",
+    "placement": {
+      "state": "legacy",
+      "target": null,
+      "why": "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it",
+      "issue": "krizaka/krizaka-ui#817"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/personas/ui/ada-256.webp",
+    "placement": {
+      "state": "legacy",
+      "target": null,
+      "why": "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it",
+      "issue": "krizaka/krizaka-ui#817"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "people/personas/ui/ada-512.webp",
+    "placement": {
+      "state": "legacy",
+      "target": null,
+      "why": "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it",
+      "issue": "krizaka/krizaka-ui#817"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "pr-assets",
+    "placement": { "state": "misplaced", "why": "not pr-assets/<repo>/<pr-or-topic>/<file>" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "pr-assets/",
+    "placement": { "state": "misplaced", "why": "not pr-assets/<repo>/<pr-or-topic>/<file>" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "pr-assets/X Y",
+    "placement": { "state": "misplaced", "why": "not pr-assets/<repo>/<pr-or-topic>/<file>" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "products/akinaza/misc/a.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "not products/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<home|tour|mobile|gallery|studios|docs>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "products/kridoc/a b",
+    "placement": {
+      "state": "misplaced",
+      "why": "not products/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<home|tour|mobile|gallery|studios|docs>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "products/kridoc/docs/",
+    "placement": {
+      "state": "misplaced",
+      "why": "not products/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<home|tour|mobile|gallery|studios|docs>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": "products/kridoc/docs/",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "products/kridoc/docs/a b",
+    "placement": {
+      "state": "misplaced",
+      "why": "not products/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<home|tour|mobile|gallery|studios|docs>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": "products/kridoc/docs/a b",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "products/kridoc/docs/a/b/c.mp4",
+    "placement": {
+      "state": "legacy",
+      "target": null,
+      "why": "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it",
+      "issue": null
+    },
+    "targetOf": null,
+    "libraryPath": "products/kridoc/docs/a/b/c.mp4",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "products/kridoc/docs/a/org/c.mp4",
+    "placement": {
+      "state": "legacy",
+      "target": null,
+      "why": "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it",
+      "issue": null
+    },
+    "targetOf": null,
+    "libraryPath": "products/kridoc/docs/a/org/c.mp4",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "products/kridoc/docs/a/people/c.mp4",
+    "placement": {
+      "state": "legacy",
+      "target": null,
+      "why": "retired: the human-name mirror of site/ (ADR-014 §1), deleted once nothing names it",
+      "issue": null
+    },
+    "targetOf": null,
+    "libraryPath": "products/kridoc/docs/a/people/c.mp4",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "products/nope/home/a.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "not products/<krizaka|sovkora|verikora|folioviv|kridoc|orazaka|yomizaka|akinaza|kachizaka>/<home|tour|mobile|gallery|studios|docs>/<file>"
+    },
+    "targetOf": null,
+    "libraryPath": "products/nope/home/a.mp4",
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/../a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "site/../ is not an area (home, products, docs, people, blog, brand-films)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/../akinaza/defaults/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "site/../ is not an area (home, products, docs, people, blog, brand-films)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site//akinaza/defaults/cleaning/cover/c-1-640.434684215c.avif",
+    "placement": {
+      "state": "misplaced",
+      "why": "site// is not an area (home, products, docs, people, blog, brand-films)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/a b/orazaka/mobile/x.0123456789.webp",
+    "placement": {
+      "state": "misplaced",
+      "why": "site/a b/ is not an area (home, products, docs, people, blog, brand-films)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/a.0123456789.png/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "site/a.0123456789.png/ is not an area (home, products, docs, people, blog, brand-films)"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/blog/",
+    "placement": { "state": "misplaced", "why": "not <name>.<hash>.<ext> under site/<area>/…" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-blog#176",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/blog/..",
+    "placement": { "state": "misplaced", "why": "not <name>.<hash>.<ext> under site/<area>/…" },
+    "targetOf": "sites/blog/posts/..",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-blog#176",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/blog/cover.png",
+    "placement": { "state": "misplaced", "why": "not <name>.<hash>.<ext> under site/<area>/…" },
+    "targetOf": "sites/blog/posts/cover.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-blog#176",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/blog/sovkora",
+    "placement": { "state": "misplaced", "why": "not <name>.<hash>.<ext> under site/<area>/…" },
+    "targetOf": "sites/blog/posts/sovkora",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-blog#176",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/docs/a.0123456789.png/mobile/clip-watch-poster.9fc5d19c39.webp",
+    "placement": { "state": "misplaced", "why": "not <name>.<hash>.<ext> under site/<area>/…" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/home",
+    "placement": { "state": "misplaced", "why": "not <name>.<hash>.<ext> under site/<area>/…" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/people/a.1234567890.jpg",
+    "placement": { "state": "legacy", "target": null, "why": null, "issue": "krizaka/krizaka-com#450" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/people/a.1234567890.png",
+    "placement": { "state": "legacy", "target": null, "why": null, "issue": "krizaka/krizaka-com#450" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/akinaza/org/a.0123456789.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/org/a.0123456789.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/org/a.0123456789.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/folioviv#493",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/akinaza/people/phone-akinaza-books-en.8206ffd160.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/people/phone-akinaza-books-en.8206ffd160.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/people/phone-akinaza-books-en.8206ffd160.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/folioviv#493",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/akinaza/pr-assets/cleaning/cover/c-1-640.434684215c.avif",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/pr-assets/cleaning/cover/c-1-640.434684215c.avif would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/pr-assets/cleaning/cover/c-1-640.434684215c.avif",
+    "libraryPath": null,
+    "switchIssue": "krizaka/folioviv#493",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/akinaza/sites/a.0123456789.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/sites/a.0123456789.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/sites/a.0123456789.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/folioviv#493",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/akinaza/sites/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/sites/a.0123456789.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/sites/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/folioviv#493",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/akinaza/sovkora/desktop-akinaza-books-fr-captions.f7b918ee3b.vtt",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/sovkora/desktop-akinaza-books-fr-captions.f7b918ee3b.vtt would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/sovkora/desktop-akinaza-books-fr-captions.f7b918ee3b.vtt",
+    "libraryPath": null,
+    "switchIssue": "krizaka/folioviv#493",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/akinaza/v2/a.0123456789.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/v2/a.0123456789.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/v2/a.0123456789.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/folioviv#493",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/akinaza/v2/used.0123456789.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/v2/used.0123456789.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/v2/used.0123456789.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/folioviv#493",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/folioviv/kridoc/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/kridoc/a.0123456789.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/kridoc/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/folioviv/pr-assets/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/pr-assets/a.0123456789.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/pr-assets/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/products/yomizaka/defaults/alex-bid.3f2a9c1b7e.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/verikora/defaults/alex-bid.3f2a9c1b7e.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/verikora/defaults/alex-bid.3f2a9c1b7e.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/verikora#494",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/renders",
+    "placement": { "state": "misplaced", "why": "not site/renders/<run>/<file>" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/renders/a.0123456789.png",
+    "placement": { "state": "misplaced", "why": "not site/renders/<run>/<file>" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "site/renders/f.png",
+    "placement": { "state": "misplaced", "why": "not site/renders/<run>/<file>" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-com#450",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites",
+    "placement": {
+      "state": "misplaced",
+      "why": "not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/",
+    "placement": {
+      "state": "misplaced",
+      "why": "not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/../",
+    "placement": {
+      "state": "misplaced",
+      "why": "not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/a b/tour/a/b/c/e.0123456789.png",
+    "placement": { "state": "misplaced", "why": "deeper than 5 folders" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/akinaza/../x/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/../x/a.0123456789.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/../x/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/akinaza/defaults/a.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/defaults/a.0123456789.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/defaults/a.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/akinaza/misc/a.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/misc/a.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/misc/a.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/akinaza/nosuch-kind/a.8206ffd160.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/nosuch-kind/a.8206ffd160.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/nosuch-kind/a.8206ffd160.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/akinaza/tour/a/b/c/blog",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/tour/a/b/c/blog would be misplaced: deeper than 5 folders"
+    },
+    "targetOf": "sites/folioviv/tour/a/b/c/blog",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/akinaza/tour/a/b/c/e.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/tour/a/b/c/e.0123456789.png would be misplaced: deeper than 5 folders"
+    },
+    "targetOf": "sites/folioviv/tour/a/b/c/e.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/akinaza/tour/a/b/org/e.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/tour/a/b/org/e.0123456789.png would be misplaced: deeper than 5 folders"
+    },
+    "targetOf": "sites/folioviv/tour/a/b/org/e.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/akinaza/tour/hero.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/folioviv/tour/hero.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/folioviv/tour/hero.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/www/home/a/b/c/d/e.0123456789.png",
+    "placement": { "state": "misplaced", "why": "deeper than 5 folders" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "sites/yomizaka/tour/a.mp4",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/verikora/tour/a.mp4 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/verikora/tour/a.mp4",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-internal#2659",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui",
+    "placement": { "state": "misplaced", "why": "not ui/<area>/<file>" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": null,
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/",
+    "placement": { "state": "misplaced", "why": "not ui/<area>/<file>" },
+    "targetOf": null,
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/a",
+    "placement": { "state": "misplaced", "why": "not ui/<area>/<file>" },
+    "targetOf": "sites/ui/a",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/a.0123456789.png/",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/a.0123456789.png/ would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/a.0123456789.png/",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/a.0123456789.png/b.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/a.0123456789.png/b.0123456789.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/a.0123456789.png/b.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/a.png",
+    "placement": { "state": "misplaced", "why": "not ui/<area>/<file>" },
+    "targetOf": "sites/ui/a.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/a/b.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/a/b.0123456789.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/a/b.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/brand/b.0123456789.png",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/brand/b.0123456789.png would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/brand/b.0123456789.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/defaults/",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/defaults/ would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/defaults/",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/loose.png",
+    "placement": { "state": "misplaced", "why": "not ui/<area>/<file>" },
+    "targetOf": "sites/ui/loose.png",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/maps/..",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/maps/.. would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/maps/..",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/maps/a b",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/maps/a b would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/maps/a b",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/maps/defaults",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/maps/defaults would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/maps/defaults",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/maps/org",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/maps/org would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/maps/org",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/maps/v2",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/maps/v2 would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/maps/v2",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  },
+  {
+    "path": "ui/shop/",
+    "placement": {
+      "state": "misplaced",
+      "why": "its target sites/ui/shop/ would be misplaced: not sites/<www|blog|ui|java|sovkora|verikora|folioviv>/<home|tour|gallery|gallery-video|video|cinema|compare|showcase|web|mobile|docs|personas|download|demo|demo-stories|films|posts|shared|landing|maps|shop|first-client>/…/<name>.<hash>.<ext>"
+    },
+    "targetOf": "sites/ui/shop/",
+    "libraryPath": null,
+    "switchIssue": "krizaka/krizaka-ui#817",
+    "assertWritable": "throws"
+  }
+]

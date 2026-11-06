@@ -1,5 +1,22 @@
 # Changelog
 
+## [0.30.0](https://github.com/krizaka/krizaka-com/compare/v0.29.2...v0.30.0) (2026-11-06)
+
+
+### Features
+
+* **home:** each product card says one thing you will love, from a feature that runs ([#645](https://github.com/krizaka/krizaka-com/issues/645)) ([c162f6f](https://github.com/krizaka/krizaka-com/commit/c162f6f0e26351d39124def36dd76e7b330c41b5))
+* **home:** the engine's fold names its packs, installed from the studio ([#648](https://github.com/krizaka/krizaka-com/issues/648)) ([abc22ff](https://github.com/krizaka/krizaka-com/commit/abc22ffb4e0335f2ab933e610f5440fab0f4df0a))
+* **home:** the products row opens on Sovkora, then Verikora, then Folioviv ([#644](https://github.com/krizaka/krizaka-com/issues/644)) ([64e5b20](https://github.com/krizaka/krizaka-com/commit/64e5b20a44d0dabe100c3fd51ee4a3336b5e116a))
+* **story:** the story tells how we work now and where the name comes from ([#636](https://github.com/krizaka/krizaka-com/issues/636)) ([7482f50](https://github.com/krizaka/krizaka-com/commit/7482f50dab0257582d7f4391e106fe47ce4301dc))
+
+
+### Bug Fixes
+
+* **docs:** the docs hub fits its frame and the focus ring shows only for the keyboard ([#635](https://github.com/krizaka/krizaka-com/issues/635)) ([d607669](https://github.com/krizaka/krizaka-com/commit/d607669c1f3649e6d54f2cde62e6810b8c6e3102))
+* **home:** the carousels show 16:9 everywhere, no black or white artefact, sound on as an option ([#637](https://github.com/krizaka/krizaka-com/issues/637)) ([668f9a7](https://github.com/krizaka/krizaka-com/commit/668f9a7b37151b1090ce6ecfd100f978877cb907))
+* **main:** the image takes Alpine's security fixes at build (CVE-2026-85091 in zlib) ([#651](https://github.com/krizaka/krizaka-com/issues/651)) ([8f5a216](https://github.com/krizaka/krizaka-com/commit/8f5a216a9380f72cdef5e297eaf9c1ba6070ba98))
+
 ## [0.29.2](https://github.com/krizaka/krizaka-com/compare/v0.29.1...v0.29.2) (2026-11-06)
 
 
