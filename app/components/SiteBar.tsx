@@ -22,14 +22,14 @@ import { useI18n } from "./I18nProvider";
 import { useLanguageSwitch } from "./LanguageSwitch";
 import { useSiteTheme } from "./SiteTheme";
 import { SITE_REPO_URL } from "@/lib/site";
-import { NAV_BAR_LINKS, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
+import { NAV_BAR_LINKS, barHref, companyLinkText, isDocsSection, isNavActive, localeless } from "@/lib/nav";
 import { MobilePanel } from "./MobilePanel";
 import { SearchCommand } from "./SearchCommand";
 import { DocsCrumb } from "./DocsCrumb";
 import { useContactHref } from "./useContactHref";
 
 export default function SiteBar() {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const language = useLanguageSwitch();
   const m = t.site.menu;
   const contactHref = useContactHref();
@@ -57,7 +57,7 @@ export default function SiteBar() {
             {!docs &&
               NAV_BAR_LINKS.map((l) => (
                 <NavBar.Link key={l.href} asChild active={isNavActive(l, path)}>
-                  <Link href={l.href}>{companyLinkText(t, l).label}</Link>
+                  <Link href={barHref(l, locale, path)}>{companyLinkText(t, l).label}</Link>
                 </NavBar.Link>
               ))}
           </NavBar.Items>

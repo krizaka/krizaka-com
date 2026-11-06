@@ -51,33 +51,6 @@
   margin: 0;
   scroll-margin-top: var(--kz-anchor-offset, 96px);
 }
-/* The two named tabs over the figures, then the figure chosen: no slide, no fade, no timer. */
-.kz-fig-tabs > [role="tablist"] {
-  margin-bottom: 14px;
-  max-width: 100%;
-}
-.kz-fig-one {
-  margin: 0;
-}
-.kz-fig-frame {
-  position: relative;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: var(--kz-surface-1);
-  border: 1px solid var(--kz-border-strong);
-  box-shadow: 4px 4px 0 var(--kz-border-strong);
-}
-.kz-fig-frame button:focus-visible {
-  outline: 2px solid var(--kz-ring, var(--kz-accent));
-  outline-offset: -4px;
-}
-.kz-fig-caption {
-  margin: 10px 0 0;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 18px;
-  color: var(--kz-text-secondary);
-}
 /* The text version of the figures (a native <details>, server-rendered): what each slide shows, in order. */
 .kz-fig-text {
   margin: 14px 0 0;
@@ -161,51 +134,6 @@
   align-items: center;
   gap: 12px 20px;
   margin-top: 32px;
-}
-.kz-home-marks {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px clamp(6px, 1.6vw, 14px);
-  margin: 28px 0 0 -4px;
-  padding: 0;
-  list-style: none;
-}
-.kz-home-marks a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-  min-width: 44px;
-  padding: 6px 4px;
-  border-radius: 2px;
-  font-size: 11.5px;
-  font-weight: 600;
-  color: var(--kz-text-secondary);
-  text-decoration: none;
-  transition:
-    color 0.25s var(--kz-ease, ease),
-    transform 0.25s var(--kz-ease, ease);
-}
-.kz-home-marks a:hover,
-.kz-home-marks a:focus-visible {
-  color: var(--kz-text-primary);
-}
-.kz-home-marks a:focus-visible {
-  outline: 2px solid var(--kz-ring, var(--kz-accent));
-  outline-offset: 2px;
-}
-.kz-home-marks li[data-dim] a {
-  opacity: 0.55;
-}
-@media (max-width: 420px) {
-  .kz-home-marks a > span {
-    font-size: 10.5px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .kz-home-marks a {
-    transition: none;
-  }
 }
 .kz-home-film-length {
   font-family: var(--font-mono);
@@ -591,6 +519,79 @@ html[data-intro="play"] .kz-intro-sweep {
 .kz-home-film {
   padding: 0;
   overflow: hidden;
+}
+
+/* The products' row (krizaka-internal#2450): Verikora · Sovkora · Folioviv, the engine in the centre, each a way into its
+   entry below. Three columns from 640 px, one under the other on a phone; the engine's cell carries its brand rule. */
+.kz-prod-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  margin: 0 0 clamp(32px, 5vw, 56px);
+  padding: 0;
+  list-style: none;
+  border-block: 1px solid var(--kz-border-strong);
+}
+.kz-prod-row li + li {
+  border-top: 1px solid var(--kz-border-subtle);
+}
+.kz-prod-row a {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 14px;
+  align-items: center;
+  padding: 16px 12px;
+  color: var(--kz-text-primary);
+  text-decoration: none;
+  transition: background-color 0.2s var(--kz-ease);
+}
+.kz-prod-row a > svg {
+  grid-row: span 2;
+}
+.kz-prod-row a span {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.2;
+}
+.kz-prod-row a small {
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--kz-text-secondary);
+}
+.kz-prod-row a:hover {
+  background: var(--kz-surface-1);
+}
+.kz-prod-row a:focus-visible {
+  outline: 2px solid var(--kz-ring, var(--kz-accent));
+  outline-offset: -2px;
+}
+.kz-prod-row li[data-engine] a {
+  box-shadow: inset 0 3px 0 var(--kz-accent);
+}
+@media (min-width: 640px) {
+  .kz-prod-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .kz-prod-row li + li {
+    border-top: 0;
+    border-left: 1px solid var(--kz-border-subtle);
+  }
+  .kz-prod-row a {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    text-align: center;
+    row-gap: 6px;
+    padding: 22px 12px;
+  }
+  .kz-prod-row a > svg {
+    grid-row: auto;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kz-prod-row a {
+    transition: none;
+  }
 }
 
 /* ─── Cahier touches (krizaka-ui ADR-004): § 4 and § 5 on ruled paper, with restraint ───

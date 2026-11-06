@@ -4,7 +4,7 @@ import { publicRepositoryCount } from "@/lib/org-stats";
 import { npmPackages, npmWeeklyDownloads } from "@/lib/registry-versions";
 import SiteBar from "../components/SiteBar";
 import HomeHero from "../components/home/HomeHero";
-import ProductShowcase, { EngineSection } from "../components/home/ProductShowcase";
+import ProductShowcase from "../components/home/ProductShowcase";
 import ServicesLine from "../components/home/ServicesLine";
 import Direction from "../components/home/Direction";
 import Principles from "../components/home/Principles";
@@ -30,11 +30,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-/* HOME — one of the site's two views (the other is Open source; 2026-10-17), on the landing template, in this order:
-   the hero (once-per-session intro, the film), the honest chronology: Sovkora, our first build (EngineSection), the
-   products built on it (the only place they are presented: /products answers 308 to #products; the libraries live on
-   /open-source, not here), one line to Our services (Krizaka Entreprise, /services), where we are going (now / next / later), the principles in brief, and it stops there (no Montréal, no contact panel, no FAQ; 2026-10-22). One primary action per
-   section. Every figure is read at build: GitHub (lib/org-stats.ts), npm (lib/registry-versions.ts). */
+/* HOME — one of the site's two views (the other is Docs), on the landing template, in this order (founder, 2026-11-05,
+   krizaka-internal#2450): the hero (one action, its carousel), the products in one row — Verikora, Sovkora in the centre,
+   Folioviv — each with its carousel (the only place they are presented: /products answers 308 to #products), one line to
+   Krizaka Entreprise (/services), where we are going (now / next / later), the principles in brief, and it stops there.
+   One primary action per section. Every figure is read at build: GitHub (lib/org-stats.ts), npm (lib/registry-versions.ts). */
 export default async function Home({ params }: Props) {
   const { locale } = await params;
   const figures = {
@@ -46,7 +46,6 @@ export default async function Home({ params }: Props) {
     <main className="kz-site-main">
       <SiteBar />
       <HomeHero locale={locale} figures={figures} />
-      <EngineSection locale={locale} />
       <ProductShowcase locale={locale} />
       <ServicesLine locale={locale} />
       <Direction locale={locale} />

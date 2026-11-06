@@ -14,14 +14,14 @@ import { useI18n } from "./I18nProvider";
 import { useLanguageSwitch } from "./LanguageSwitch";
 import { useSiteTheme } from "./SiteTheme";
 import { useContactHref } from "./useContactHref";
-import { NAV_BAR_LINKS, companyLinkText, isNavActive } from "@/lib/nav";
+import { NAV_BAR_LINKS, barHref, companyLinkText, isNavActive } from "@/lib/nav";
 
 const ICONS: Record<string, ComponentType<IconProps>> = { repos: PackIcon };
 const row =
   "gap-3 [&>svg]:shrink-0 [&>svg]:text-fg-secondary aria-[current=page]:bg-surface-2 aria-[current=page]:font-semibold";
 
 export function MobilePanel({ path }: { path: string }) {
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const language = useLanguageSwitch();
   const { theme, toggleTheme } = useSiteTheme();
   const contact = useContactHref();
@@ -37,7 +37,7 @@ export function MobilePanel({ path }: { path: string }) {
           const Icon = ICONS[l.icon] ?? StudioIcon;
           return (
             <NavBar.MobileLink key={l.href} asChild active={isNavActive(l, path)} className={row}>
-              <Link href={l.href}>
+              <Link href={barHref(l, locale, path)}>
                 <span className="flex items-center gap-3">
                   <Icon size={18} /> {companyLinkText(t, l).label}
                 </span>

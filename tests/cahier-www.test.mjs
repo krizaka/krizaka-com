@@ -11,7 +11,7 @@ const home = read("app/components/home/home.css");
 const msgs = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read("messages/fr.json")) };
 
 test("the first page is asymmetric: the words on the left, « Fig. 1 » on the right, never centred", () => {
-  assert.match(hero, /<figure id="fig-1" className="kz-fig"/);
+  assert.match(hero, /<div id="fig-1" className="kz-fig">\s*<Showcase carousel="hero"/);
   assert.doesNotMatch(hero, /taped-photo|<TapedPhoto|<Flock|BirdPlate/);
   const inner = home.match(/\.kz-home-hero-inner \{([^}]*)\}/)?.[1] ?? "";
   assert.doesNotMatch(inner, /text-align: center|align-items: center/, "a centred hero");
@@ -27,8 +27,8 @@ test("every section of the home is numbered in the margin (§ n), none carries a
   for (const l of ["en", "fr"]) {
     const h = msgs[l].site.home;
     assert.deepEqual(
-      [h.hero.number, h.engine.number, h.products.number, h.services.number, h.direction.number, h.principles.number],
-      ["§ 1", "§ 2", "§ 3", "§ 4", "§ 5", "§ 6"],
+      [h.hero.number, h.products.number, h.services.number, h.direction.number, h.principles.number],
+      ["§ 1", "§ 2", "§ 3", "§ 4", "§ 5"],
       l,
     );
   }

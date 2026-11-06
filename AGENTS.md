@@ -82,13 +82,25 @@
   Products (status once), Open source, Krizaka — at most six links each, then one legal line that names the company once
   (`Technologies Krizaka Inc. · NEQ … · Montréal (Québec)`), the site's version and the legal links. `SiteFooter.tsx` only
   resolves the words and prefixes the locale; never a column typed in the component (`tests/footer.test.mjs`).
-- **The home's order** (2026-10-22, the honest chronology, #337): the hero (`HomeHero`, whose lead tells it in two or three
-  short sentences), then **Orazaka, our first build** (`EngineSection`, § 2), then **the products built on it** (`ProductShowcase`, § 3: each card names its commercial www address and « Coming soon » (no version: the domain holds a coming-soon page until the product opens, 2026-11-04) and links « See the site »; the tags hang slightly off the square, -0.6° then +0.5°, straight under reduced motion and on focus; the plates redraw what the apps show, demo data said as demo), then the principles (`Principles`, § 4), and it stops there: no Montréal (`Company`) section, no closing contact panel
-  and no FAQ (so no FAQPage JSON-LD; the SEO check asks the home for Organization and WebSite only). Krizaka, the company,
-  was born from that work: the Organization `owns` the products and sites, its `foundingDate` is unchanged. The marks row under the hero
-  follows the story: Orazaka, Akinaza, Yomizaka, then the rest (`heroMarkOrder`). `/story` is in the footer, « Contact us »
-  in the bar. **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live on `/open-source` only (`StackTiles`, from `lib/stack.ts`). **`/open-source` lists only what is open source** — the platform's libraries, kits and tooling (`openSourceRepositories`, `packageRows(…, products)`); the products (Orazaka, Yomizaka, Akinaza) are _operated by Krizaka_, out of every list and table there, and no page here claims a licence for them (a legal session decides). The section numbers (§ n) and the folio (« page n of N ») come from `lib/home-sections.ts`, never typed
-  (`tests/home.test.mjs`, `tests/home-order.test.mjs`).
+- **The home's order** (founder, 2026-11-05, krizaka-internal#2450; supersedes the 2026-10-22 chronology and #2445's
+  « engine as one line »): the hero (`HomeHero`: who we are, a lead in two or three short sentences, **one action**, and on
+  the right « Fig. 1 », the hero's carousel), then **the products in one row, Verikora · Sovkora in the centre · Folioviv**
+  (`ProductShowcase`, § 2, `PRODUCT_ORDER` of `lib/home-sections.ts`): each entry pairs its specimen tag (commercial www
+  address, « See the site », source, release notes, honest status, its bird; the engine's tag folds what it gives and the
+  products it powers) with **a carousel of real media** made for it, the tag and the carousel swapping sides so Sovkora's
+  carousel is on the right; then Krizaka Entreprise in one line (§ 3), where we are going (§ 4), the principles (§ 5), and
+  it stops there: no Montréal section, no closing contact panel, no FAQ (so no FAQPage JSON-LD). **The carousels' media**
+  are data: the storyboard `content/films/home-showcase.json` (the shots cut from the founder's published reels and widened
+  to 16:9 by Runway Aleph, the 16:9 clips Sovkora generated, the brand film, the company media library — whose public use
+  waits on the founder's annex B: a PR that adds a `library` clip says so), rendered by `scripts/home-showcase.mjs` (every
+  run, model and credits in `content/films/home-showcase.log.json`), uploaded under `home/showcase/<carousel>/` with
+  `cdn-assets`, read by `lib/home-showcase.ts`: each slide has a 16:9 rendition for ≥ 640 px and a lighter 4:5 one for
+  phones, the browser loads one; a slide missing a file fails the build. The products are reached one way, the bar's
+  « Products » (`barHref`: the bare anchor on the home, so it scrolls). `/story` is in the footer, « Contact us » in the bar.
+  **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live under Docs (`StackTiles`,
+  from `lib/stack.ts`); the products are _operated by Krizaka_, out of every open-source list, and no page here claims a
+  licence for them. The section numbers (§ n) and the folio come from `lib/home-sections.ts` (`tests/home.test.mjs`,
+  `tests/home-order.test.mjs`, `tests/home-showcase.test.mjs`).
 
 - **Docs (founder, 2026-10-30; overrides every « Open source » line above).** The bar's centre is **Services then Docs**
   (`NAV_BAR_LINKS`); « Docs » (FR « Documentation ») is `/docs`, the old `/open-source` page renamed because it read as « une page de stats ».
@@ -211,7 +223,15 @@
   adds what is its own, in `app/globals.css` (« SITE MOTION ») and `org-hero.css`: no second conductor, no counter of its
   own. No animation library for new work, no permanent `requestAnimationFrame`, no canvas; docs stay almost still (a
   reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui, not into a copy here.
-  **The home's « Where we are going » moves on its own** (founder, 2026-11-05, krizaka-internal#2450; `DirectionLoop`):
+  **Two blocks of the home move on their own. The carousels** (founder, 2026-11-05, krizaka-internal#2450;
+  `ShowcaseCarousel`). They advance every 6.5 s by a short fade (nothing travels), with WCAG 2.2.2's rules: a visible
+  pause / play, a pause while the pointer is over them, while the keyboard focus is in them and while they are off screen;
+  under `prefers-reduced-motion` (or Save-Data) nothing advances and no clip plays (posters, previous / next only);
+  previous / next are buttons, arrows work on them; every slide is a figure with its caption and its text alternative,
+  and each carousel has a server-rendered text version. Clips are muted, mounted only for the slide in view after the
+  page's load, in the viewport's rendition (no double download), so the h1 stays the LCP. @krizaka/ui's `MediaCarousel`
+  never advances by itself: its `autoplay` variant is to be added in krizaka-ui, and the home moves to it then.
+  **And « Where we are going »** (founder, 2026-11-05, krizaka-internal#2450; `DirectionLoop`):
   the light rests on one station (now, next, later) every 4.5 s and opens its details, with WCAG 2.2.2's rules — a visible
   pause / play, paused while the pointer is over it, the focus is in it or it is off screen; under
   `prefers-reduced-motion` nothing moves and every station is open; each station is a button that rests the light there.

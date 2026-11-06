@@ -25,16 +25,13 @@ const visuals = read(VISUALS);
 const css = read(CSS);
 const ids = PRODUCT_RECORDS().map((p) => p.id);
 
-// 2026-11-01 (krizaka-internal#683): the engine's entry shows a product moment too (a request, its answer), like the others;
-// its flow stays on /story (tests/engine.test.mjs).
-test("every product has its plate, the engine included, and each entry shows it with the name of lib/products.ts", () => {
+// 2026-11-01 (krizaka-internal#683): every product, the engine included, has its plate (a product moment), drawn on /story.
+// Since 2026-11-05 (krizaka-internal#2450) the home's entries show a carousel of real media instead (tests/home-showcase.test.mjs).
+test("every product has its plate, the engine included; the home's entries show their carousel instead", () => {
   for (const id of ids) assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
   const showcase = read("app/components/home/ProductShowcase.tsx");
-  assert.equal(
-    showcase.match(/<ProductVisual id=\{p\.id\} name=\{p\.name\} \/>/g)?.length,
-    2,
-    "the engine's and each product's",
-  );
+  assert.doesNotMatch(showcase, /<ProductVisual /);
+  assert.match(showcase, /<Showcase carousel=\{carousel\}/);
   assert.doesNotMatch(showcase, /<EngineFlowView/);
 });
 

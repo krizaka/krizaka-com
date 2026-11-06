@@ -191,7 +191,6 @@
         "film": "Watch the full film",
         "filmLength": "31 s",
         "proofsLabel": "Krizaka in figures, read at build",
-        "marksLabel": "The products, each to its entry",
         "proofs": {
           "groups": {
             "published": "What we publish",
@@ -203,46 +202,9 @@
           "downloads": "npm downloads last week",
           "license": "{license} on every open-source library"
         },
-        "filmClose": "Close the film",
-        "fig": {
-          "figLabel": "Fig. 1, a checked file and Krizaka's film",
-          "pause": "Pause the loop",
-          "play": "Play the loop",
-          "tabs": "Choose the figure",
-          "textVersion": "Text version"
-        },
-        "figText": {
-          "filmShots": "The film's list of shots"
-        },
-        "slides": {
-          "applicant-file": {
-            "title": "Video: a pay stub from the file, read and checked",
-            "alt": "A property manager opens an applicant's file, then the report on a pay stub in it. Demo data.",
-            "caption": "Verikora reads a pay stub and flags a mismatch. Demo data.",
-            "steps": [
-              "The property manager opens an applicant's file.",
-              "He opens a pay stub from the file.",
-              "The report shows what Verikora observed: gross pay minus deductions does not give the net on the stub."
-            ],
-            "tab": "A checked pay stub",
-            "open": "Watch the whole journey"
-          },
-          "film": {
-            "title": "Video: Showing our work, the Krizaka film",
-            "alt": "The Krizaka film: an owl, a beaver and a duck at work, with a notebook.",
-            "caption": "Showing our work, Krizaka's film. Made with Sovkora.",
-            "steps": ["The brand film, without speech: its text version is the list of its shots, on its page."],
-            "tab": "The film",
-            "open": "Watch with sound"
-          }
-        },
-        "secondary": "See a checked file",
-        "figure": "Fig. {fig} — {caption}"
+        "filmClose": "Close the film"
       },
       "engine": {
-        "number": "§ 2",
-        "title": "Sovkora, our first build.",
-        "lead": "The engine everything started from. Every product runs on it.",
         "givesLabel": "What Sovkora provides",
         "powers": "It powers",
         "gives": {
@@ -262,9 +224,9 @@
         "line": "One pipeline, your models, your network. Each product calls it for its AI and never a model directly."
       },
       "products": {
-        "number": "§ 3",
-        "title": "Then the products: management and compliance tools.",
-        "lead": "Verikora checks the paperwork: leases, contracts, invoices. Folioviv runs a service business: bookings, invoices, GST and QST. Each one lives on its own site, with its source on GitHub.",
+        "number": "§ 2",
+        "title": "Our products: management and compliance tools, and the engine that runs them.",
+        "lead": "Verikora checks the paperwork: leases, contracts, invoices. Sovkora, our engine, runs their AI. Folioviv runs a service business: bookings, invoices, GST and QST. Each one lives on its own site, with its source on GitHub.",
         "engineUse": "On Sovkora · {use}",
         "enginePlanned": "On Sovkora, planned · {use}",
         "flow": {
@@ -290,11 +252,6 @@
           "site": "site",
           "latest": "latest release"
         },
-        "figures": {
-          "orazaka": "a request goes in, the answer comes back, ready to use",
-          "yomizaka": "a lease read in full, the forbidden clause flagged with its passage",
-          "akinaza": "a booked appointment becomes a paid invoice, GST and QST included"
-        },
         "notes": {
           "orazaka": "Every request crosses one deterministic pipeline to a local model: your documents, your models, your network. Nothing leaves.",
           "yomizaka": "A lease is checked rule by rule against the law in force on its date; every finding quotes its passage, every check is a traced Sovkora run.",
@@ -315,7 +272,13 @@
             "figure": "A sample document, as Kridoc will keep it. Demo data."
           }
         },
-        "latestValue": "{version} · {date}"
+        "latestValue": "{version} · {date}",
+        "rowLabel": "Our three products, the engine in the centre",
+        "roles": {
+          "yomizaka": "checks the papers",
+          "orazaka": "the engine",
+          "akinaza": "runs the shop"
+        }
       },
       "stack": {
         "facts": {
@@ -378,7 +341,7 @@
         }
       },
       "services": {
-        "number": "§ 4",
+        "number": "§ 3",
         "title": "For companies: Krizaka Entreprise.",
         "lead": "What we build for our products, we can build for you. Tell us about your project.",
         "cta": "Discover Krizaka Entreprise",
@@ -398,7 +361,7 @@
         }
       },
       "direction": {
-        "number": "§ 5",
+        "number": "§ 4",
         "title": "Where we are going.",
         "lead": "In order and without dates: we announce a thing when it runs.",
         "story": "Read our story",
@@ -426,7 +389,7 @@
         "play": "Turn the steps again"
       },
       "principles": {
-        "number": "§ 6",
+        "number": "§ 5",
         "eyebrow": "How we work",
         "title": "Four rules, checked rather than promised.",
         "folio": "page {page} of {total}",
@@ -490,6 +453,146 @@
           "total": "Total",
           "paid": "Paid",
           "run": "run {run}"
+        }
+      },
+      "showcase": {
+        "labels": {
+          "carousel": "carousel",
+          "slide": "slide",
+          "slideOf": "{n} of {total}",
+          "controls": "Controls: {label}",
+          "previous": "Previous slide",
+          "next": "Next slide",
+          "pause": "Pause the carousel",
+          "play": "Play the carousel",
+          "figure": "Fig. {fig} — {caption}",
+          "textVersion": "Text version",
+          "film": "Watch the whole film, with sound"
+        },
+        "carousels": {
+          "hero": "What we make, in pictures",
+          "verikora": "Verikora in pictures",
+          "sovkora": "Sovkora in pictures",
+          "folioviv": "Folioviv in pictures"
+        },
+        "sources": {
+          "reel": "The titled shots come from our reels published on Instagram (@krizakahq), widened to 16:9 with Runway Aleph; on a phone, their original vertical framing. Their titles are in French.",
+          "clip": "The shots marked « generated with Sovkora » were generated by our engine (Wan 2.2) for the blog; so was the brand film.",
+          "library": "A few shots come from Krizaka's media library: generated pictures, with no text, no face and no brand."
+        },
+        "slides": {
+          "hero": {
+            "film": {
+              "caption": "« Montrer son travail » (Showing our work), Krizaka's film, made with Sovkora",
+              "alt": "From Krizaka's film: the owl, the beaver and the duck at work, a notebook open on the table."
+            },
+            "ink": {
+              "caption": "In blue ink: the pen lays its stroke",
+              "alt": "Close-up of a fountain pen drawing a line of blue ink on paper; the French title « à l'encre bleue. » (in blue ink) appears."
+            },
+            "notebook": {
+              "caption": "The blue notebook and the feather",
+              "alt": "A feather on a blue notebook, on a desk by a window at blue hour; the title « KRIZAKA » appears."
+            },
+            "river": {
+              "caption": "Montréal at dawn, the river and Mont Royal",
+              "alt": "Aerial view of the river and the city at dawn; a flight of birds crosses the frame."
+            },
+            "entreprise": {
+              "caption": "Krizaka Entreprise: AI within your walls",
+              "alt": "Servers in a brick room, small blue lights and a lamp at the back; the title « KRIZAKA ENTREPRISE » appears."
+            },
+            "signature": {
+              "caption": "A contract, a signature: let's talk",
+              "alt": "A hand signs a sheet under a brass lamp, an old key on the desk; the French title « parlons-en. » (let's talk) appears."
+            },
+            "bridge": {
+              "caption": "The travelling blue: the Jacques-Cartier bridge in winter",
+              "alt": "The Jacques-Cartier bridge lit in blue at night, ice on the river and snow; the French title « le bleu voyage. » appears."
+            }
+          },
+          "sovkora": {
+            "neon": {
+              "caption": "Sovkora, the AI that stays with you",
+              "alt": "Sovkora's mark in orange neon in a wet brick alley; the titles « SOVKORA » and, in French, « l'IA qui reste chez toi. » (the AI that stays with you) appear."
+            },
+            "duck": {
+              "caption": "The duck builds: your data stays with you",
+              "alt": "A duck at a laptop, by a lamp and a rainy window; the French title « tes données restent chez toi. » (your data stays with you) appears."
+            },
+            "tea": {
+              "caption": "Mint tea poured from high, generated with Sovkora",
+              "alt": "A silver teapot pours a long stream of tea into a small glass, in the golden light of a tent; a shot generated with Sovkora (Wan 2.2)."
+            },
+            "rails": {
+              "caption": "M·C·P: two rails cross, one common language",
+              "alt": "Wet rails cross at night under a blue light; the title « M·C·P » appears."
+            },
+            "pigeon": {
+              "caption": "The pigeon delivers, every time",
+              "alt": "A pigeon on a post before the city at blue hour flies off; the French titles « le pigeon livre, » then « à chaque fois. » (the pigeon delivers, every time) appear."
+            },
+            "snow": {
+              "caption": "A snowy Montréal lane, generated with Sovkora",
+              "alt": "A snowy lane at night, outside staircases and street lamps; a shot generated with Sovkora (Wan 2.2)."
+            },
+            "blue": {
+              "caption": "A courtyard at dusk, generated with Sovkora",
+              "alt": "A blue street, then a courtyard with a fountain at dusk, string lights on; a shot generated with Sovkora (Wan 2.2)."
+            },
+            "cable": {
+              "caption": "Cable cars over the Alps, generated with Sovkora",
+              "alt": "Cable cars pass before snowy peaks at dusk; a shot generated with Sovkora (Wan 2.2)."
+            }
+          },
+          "verikora": {
+            "owl": {
+              "caption": "The owl reads: every finding cites its passage",
+              "alt": "An owl before a blue window at night; the French titles « chaque constat » then « cite son passage. » (every finding cites its passage) appear."
+            },
+            "rag": {
+              "caption": "R·A·G: it searches, it reads, it cites its source",
+              "alt": "Close-up of a printed page under soft light; the title « R·A·G » appears."
+            },
+            "loupe": {
+              "caption": "Verikora, under the magnifier",
+              "alt": "A magnifier over papers, on a desk before a rainy window; the title « VERIKORA » appears."
+            },
+            "signature": {
+              "caption": "A feather pen signs the sheet",
+              "alt": "A hand signs a sheet with a feather pen, a brass inkwell beside it, in window light; the signature is an unreadable stroke."
+            },
+            "sign": {
+              "caption": "Sign? Not before reading",
+              "alt": "A lease on a dark desk under a violet lamp; the French title « signer ? » (sign?) appears."
+            },
+            "files": {
+              "caption": "The papers of a file, on the desk",
+              "alt": "Folders and stacked sheets, a steaming cup and a desk lamp at night; a hand turns a sheet."
+            }
+          },
+          "folioviv": {
+            "morning": {
+              "caption": "9 a.m.: the shop opens",
+              "alt": "A sunny barber shop, a beaver in a chair by the window; the title « 9:00 » appears."
+            },
+            "first-client": {
+              "caption": "The first client",
+              "alt": "A barber at work in a warm shop, lamps and wooden shelves; the French title « le premier client. » (the first client) appears."
+            },
+            "evening": {
+              "caption": "6 p.m.: the floor is swept",
+              "alt": "A barber sweeps the floor at the end of the day, empty chairs, arched windows; the title « 18:00 » appears."
+            },
+            "home": {
+              "caption": "You get home on time",
+              "alt": "A father carries his child on his shoulders along the canal at golden hour, brick and bicycles; the French title « tu rentres à l'heure. » (you get home on time) appears."
+            },
+            "sign": {
+              "caption": "Folioviv's mark, by the barber pole",
+              "alt": "Folioviv's green mark on a shop wall, beside a barber pole; the title « FOLIOVIV » appears."
+            }
+          }
         }
       }
     },

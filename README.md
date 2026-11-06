@@ -50,6 +50,7 @@ records them.
 | The earlier brand film « Le monde de Krizaka : le relais » (retired from every slot; to prune from the CDN) | `site/brand-films/relay/` |
 | The earlier brand film « Le monde de Krizaka : la tournée », its 9:16 cuts and captions (no longer drawn) | `site/brand-films/epic/` |
 | The images and clips of the blog post on what image and video generation costs | `site/blog/what-image-and-video-generation-costs/` |
+| The home's carousels (krizaka-internal#2450): the shots of the founder's reels widened to 16:9 by Runway Aleph 2.0 (not Sovkora: said in each carousel's text version), the clips Sovkora generated for the blog, the brand film's loop, clips of the company media library; storyboard `content/films/home-showcase.json`, runs and credits in `home-showcase.log.json` | `sites/www/home/showcase/` |
 
 New Sovkora renders (the next brand film, product visuals) are added here by `orazaka[bot]` in the pull request that
 records them.
@@ -154,6 +155,12 @@ Every variable of the site is named by its bounded context (krizaka/.github#46) 
 | `ABUSE_CAPTCHA_PROVIDER` | recommended |  |  | The CAPTCHA service of the public forms: `turnstile`. Unset, the check is off (local dev, tests). |
 | `NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY` *(build)* | recommended |  |  | The widget's public site key, read by the browser (inlined at build; `app/components/CaptchaWidget.tsx`). |
 | `ABUSE_CAPTCHA_SECRET_KEY` | recommended | ✓ |  | The widget's secret key; `/api/contact` verifies the token with it before any mail is sent (`lib/captcha.ts`). With the provider set, a missing or invalid token answers 400 `contact.captcha_failed`. |
+
+#### AI — `AI_`
+
+| Variable | Production | Secret | Default | What it does |
+| :--- | :---: | :---: | :--- | :--- |
+| `AI_VIDEO_API_KEY` *(scripts)* | — | ✓ |  | Key of the company's video generation provider — renders the home's carousels (`scripts/home-showcase.mjs`). Never on the host. |
 <!-- /env -->
 
 The e-mail goes out via `POST {MAIL_API_URL}/v3/{MAIL_DOMAIN}/messages` (`lib/contact.ts`)

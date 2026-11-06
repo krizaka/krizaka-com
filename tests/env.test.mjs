@@ -13,7 +13,8 @@ const CONTEXT =
 const VENDOR_OR_PRODUCT =
   /^(NEXT_PUBLIC_)?(ORAZAKA|YOMIZAKA|AKINAZA|KRIZAKA|BUNNY|MAILGUN|RESEND|VERCEL|GITHUB|GH|CONTACT|DO|DIGITALOCEAN)_/;
 // The runtime's and the platforms' own names, read but not ours to name.
-const PLATFORM = new Set(["NODE_ENV", "PORT", "HOSTNAME", "NEXT_PHASE", "NEXT_RUNTIME", "CI", "GITHUB_TOKEN"]);
+// The operating system's and the platform's own variables (PATH: where a tooling script finds ffmpeg).
+const PLATFORM = new Set(["NODE_ENV", "PORT", "HOSTNAME", "NEXT_PHASE", "NEXT_RUNTIME", "CI", "GITHUB_TOKEN", "PATH"]);
 
 test("every variable is <CONTEXT>_<THING>, never a product or a vendor", () => {
   for (const e of ENV_VARS) {

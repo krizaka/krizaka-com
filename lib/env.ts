@@ -13,6 +13,7 @@ export const ENV_CONTEXTS = {
   MEDIA: "Media — the CDN, the storage zone of the asset scripts",
   MAIL: "E-mail — the contact form",
   ABUSE: "Abuse — bot protection of the public forms",
+  AI: "AI — the generation provider of the tooling scripts (never the site at runtime)",
 } as const;
 export type EnvContext = keyof typeof ENV_CONTEXTS;
 export type EnvNeed = "required" | "recommended" | "optional";
@@ -59,6 +60,15 @@ export const ENV_VARS: readonly EnvVar[] = [
     default: "https://krizaka-assets.b-cdn.net",
     schema: url,
     doc: "Where the media (tours, gallery, home backdrop) are served from (`lib/cdn.ts`).",
+  },
+  {
+    name: "AI_VIDEO_API_KEY",
+    context: "AI",
+    need: "optional",
+    secret: true,
+    tooling: true,
+    schema: text,
+    doc: "Key of the company's video generation provider — renders the home's carousels (`scripts/home-showcase.mjs`). Never on the host.",
   },
   {
     name: "MEDIA_STORAGE_API_KEY",

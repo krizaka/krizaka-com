@@ -88,10 +88,7 @@ export function isNavActive(link: NavLink, pathname: string): boolean {
   return (link.match ?? []).some((p) => pathname.startsWith(p));
 }
 
-/** Strips the /fr or /en prefix. */
-export function localeless(pathname: string): string {
-  return pathname.replace(/^\/(fr|en)(?=\/|$)/, "") || "/";
-}
+export { barHref, localeless } from "./bar-href.ts";
 
 /** The label and description of a company entry. */
 export const companyLinkText = (t: TranslationDictionary, link: NavLink<CompanyLinkId>) =>

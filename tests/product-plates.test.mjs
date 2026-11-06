@@ -37,7 +37,7 @@ test("no code name in the plates' words; the name on a plate is the caller's, re
     const words = (o) =>
       JSON.stringify(o, (k, v) => (typeof v === "object" && v && !Array.isArray(v) ? Object.values(v) : v));
     assert.doesNotMatch(words(m.site.home.visuals), CODE_NAMES, `${l}: visuals`);
-    assert.doesNotMatch(words(m.site.home.products.figures), CODE_NAMES, `${l}: figures`);
+    assert.doesNotMatch(words(m.site.home.showcase), CODE_NAMES, `${l}: the carousels' words`);
   }
   const strings = VISUALS.replace(/\/\*[\s\S]*?\*\//g, "").match(/"[^"\n]*"/g) ?? [];
   for (const s of strings) assert.doesNotMatch(s, /^"(Orazaka|Yomizaka|Akinaza)"$/, `a typed product name: ${s}`);

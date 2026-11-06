@@ -191,7 +191,6 @@
         "film": "Voir le film en entier",
         "filmLength": "31 s",
         "proofsLabel": "Krizaka en chiffres, lus au build",
-        "marksLabel": "Les produits, chacun mène à sa fiche",
         "proofs": {
           "groups": {
             "published": "Ce que nous publions",
@@ -203,46 +202,9 @@
           "downloads": "téléchargements npm la semaine dernière",
           "license": "{license} sur chaque bibliothèque open source"
         },
-        "filmClose": "Fermer le film",
-        "fig": {
-          "figLabel": "Fig. 1, un dossier vérifié et le film de Krizaka",
-          "pause": "Mettre la boucle en pause",
-          "play": "Lancer la boucle",
-          "tabs": "Choisir la figure",
-          "textVersion": "Version texte"
-        },
-        "figText": {
-          "filmShots": "La liste des plans du film"
-        },
-        "slides": {
-          "applicant-file": {
-            "title": "Vidéo : un talon de paie du dossier, lu et vérifié",
-            "alt": "Un gestionnaire d'immeuble ouvre le dossier d'une candidate, puis le rapport sur un talon de paie du dossier. Données de démonstration.",
-            "caption": "Verikora lit un talon de paie et signale un écart. Données de démonstration.",
-            "steps": [
-              "Le gestionnaire ouvre le dossier d'une candidate.",
-              "Il ouvre un talon de paie du dossier.",
-              "Le rapport montre ce que Verikora a observé : le salaire brut moins les retenues ne donne pas le net indiqué."
-            ],
-            "tab": "Un talon de paie vérifié",
-            "open": "Voir le parcours en entier"
-          },
-          "film": {
-            "title": "Vidéo : Montrer son travail, le film de Krizaka",
-            "alt": "Le film de Krizaka : un hibou, un castor et un canard au travail, avec un cahier.",
-            "caption": "Montrer son travail, le film de Krizaka. Fait avec Sovkora.",
-            "steps": ["Le film de la marque, sans parole : sa version texte est la liste de ses plans, sur sa page."],
-            "tab": "Le film",
-            "open": "Regarder avec le son"
-          }
-        },
-        "secondary": "Voir un dossier vérifié",
-        "figure": "Fig. {fig} — {caption}"
+        "filmClose": "Fermer le film"
       },
       "engine": {
-        "number": "§ 2",
-        "title": "Sovkora, notre première construction.",
-        "lead": "Le moteur, d'où tout est parti. Chaque produit tourne dessus.",
         "givesLabel": "Ce que fournit Sovkora",
         "powers": "Il propulse",
         "gives": {
@@ -262,9 +224,9 @@
         "line": "Un pipeline, vos modèles, votre réseau. Chaque produit l'appelle pour son IA, jamais un modèle en direct."
       },
       "products": {
-        "number": "§ 3",
-        "title": "Puis les produits : des outils de gestion et de conformité.",
-        "lead": "Verikora vérifie les papiers : baux, contrats, factures. Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Chacun vit sur son propre site, avec son code sur GitHub.",
+        "number": "§ 2",
+        "title": "Nos produits : des outils de gestion et de conformité, et le moteur qui les fait tourner.",
+        "lead": "Verikora vérifie les papiers : baux, contrats, factures. Sovkora, notre moteur, fait tourner leur IA. Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Chacun vit sur son propre site, avec son code sur GitHub.",
         "engineUse": "Sur Sovkora · {use}",
         "enginePlanned": "Sur Sovkora, prévu · {use}",
         "flow": {
@@ -290,11 +252,6 @@
           "site": "site",
           "latest": "dernière version"
         },
-        "figures": {
-          "orazaka": "une demande entre, la réponse revient, prête à servir",
-          "yomizaka": "un bail lu en entier, la clause interdite signalée avec son passage",
-          "akinaza": "un rendez-vous réservé devient une facture payée, TPS et TVQ comprises"
-        },
         "notes": {
           "orazaka": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
           "yomizaka": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Sovkora tracée.",
@@ -315,7 +272,13 @@
             "figure": "Un document d’exemple, tel que Kridoc le rangera. Données de démo."
           }
         },
-        "latestValue": "{version} · {date}"
+        "latestValue": "{version} · {date}",
+        "rowLabel": "Nos trois produits, le moteur au centre",
+        "roles": {
+          "yomizaka": "vérifie les papiers",
+          "orazaka": "le moteur",
+          "akinaza": "fait tourner la boutique"
+        }
       },
       "stack": {
         "facts": {
@@ -378,7 +341,7 @@
         }
       },
       "services": {
-        "number": "§ 4",
+        "number": "§ 3",
         "title": "Pour les entreprises : Krizaka Entreprise.",
         "lead": "Ce que nous bâtissons pour nos produits, nous pouvons le bâtir pour vous. Parlez-nous de votre projet.",
         "cta": "Découvrir Krizaka Entreprise",
@@ -398,7 +361,7 @@
         }
       },
       "direction": {
-        "number": "§ 5",
+        "number": "§ 4",
         "title": "Où nous allons.",
         "lead": "Dans l'ordre et sans dates : nous annonçons une chose quand elle tourne.",
         "story": "Lire notre histoire",
@@ -429,7 +392,7 @@
         "play": "Relancer le défilement des étapes"
       },
       "principles": {
-        "number": "§ 6",
+        "number": "§ 5",
         "eyebrow": "Notre façon de travailler",
         "title": "Quatre règles, vérifiées plutôt que promises.",
         "folio": "page {page} sur {total}",
@@ -493,6 +456,146 @@
           "total": "Total",
           "paid": "Payée",
           "run": "exécution {run}"
+        }
+      },
+      "showcase": {
+        "labels": {
+          "carousel": "carrousel",
+          "slide": "image",
+          "slideOf": "{n} sur {total}",
+          "controls": "Commandes : {label}",
+          "previous": "Image précédente",
+          "next": "Image suivante",
+          "pause": "Mettre le carrousel en pause",
+          "play": "Relancer le carrousel",
+          "figure": "Fig. {fig} — {caption}",
+          "textVersion": "Version texte",
+          "film": "Regarder le film en entier, avec le son"
+        },
+        "carousels": {
+          "hero": "Ce que nous faisons, en images",
+          "verikora": "Verikora en images",
+          "sovkora": "Sovkora en images",
+          "folioviv": "Folioviv en images"
+        },
+        "sources": {
+          "reel": "Les plans titrés viennent de nos reels publiés sur Instagram (@krizakahq), élargis en 16:9 avec Runway Aleph ; sur un téléphone, le cadrage vertical d'origine.",
+          "clip": "Les plans marqués « généré avec Sovkora » ont été générés par notre moteur (Wan 2.2) pour le blogue ; le film de la marque aussi.",
+          "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque."
+        },
+        "slides": {
+          "hero": {
+            "film": {
+              "caption": "« Montrer son travail », le film de Krizaka, fait avec Sovkora",
+              "alt": "Extrait du film de Krizaka : le hibou, le castor et le canard au travail, un cahier ouvert sur la table."
+            },
+            "ink": {
+              "caption": "À l'encre bleue : la plume pose son trait",
+              "alt": "Gros plan sur une plume qui trace un trait d'encre bleue sur du papier ; le titre « à l'encre bleue. » s'inscrit."
+            },
+            "notebook": {
+              "caption": "Le carnet bleu et la plume",
+              "alt": "Une plume posée sur un carnet bleu, sur un bureau près d'une fenêtre à l'heure bleue ; le titre « KRIZAKA » s'inscrit."
+            },
+            "river": {
+              "caption": "Montréal à l'aube, le fleuve et le mont Royal",
+              "alt": "Vue aérienne du fleuve et de la ville à l'aube ; un vol d'oiseaux traverse l'image."
+            },
+            "entreprise": {
+              "caption": "Krizaka Entreprise : l'IA dans vos murs",
+              "alt": "Des serveurs dans une salle de brique, de petites lumières bleues et une lampe au fond ; le titre « KRIZAKA ENTREPRISE » s'inscrit."
+            },
+            "signature": {
+              "caption": "Un contrat, une signature : parlons-en",
+              "alt": "Une main signe une feuille sous une lampe de laiton, une clé ancienne sur le bureau ; le titre « parlons-en. » s'inscrit."
+            },
+            "bridge": {
+              "caption": "Le bleu voyage : le pont Jacques-Cartier en hiver",
+              "alt": "Le pont Jacques-Cartier éclairé en bleu, la nuit, des glaces sur le fleuve et de la neige ; le titre « le bleu voyage. » s'inscrit."
+            }
+          },
+          "sovkora": {
+            "neon": {
+              "caption": "Sovkora, l'IA qui reste chez toi",
+              "alt": "La marque de Sovkora en néon orange dans une ruelle de brique mouillée ; les titres « SOVKORA » et « l'IA qui reste chez toi. » s'inscrivent."
+            },
+            "duck": {
+              "caption": "Le canard construit : tes données restent chez toi",
+              "alt": "Un canard devant un ordinateur portable, près d'une lampe et d'une fenêtre sous la pluie ; le titre « tes données restent chez toi. » s'inscrit."
+            },
+            "tea": {
+              "caption": "Un thé à la menthe versé de haut, généré avec Sovkora",
+              "alt": "Une théière d'argent verse un long filet de thé dans un petit verre, dans la lumière dorée d'une tente ; plan généré avec Sovkora (Wan 2.2)."
+            },
+            "rails": {
+              "caption": "M·C·P : deux rails se croisent, un langage commun",
+              "alt": "Des rails mouillés se croisent, la nuit, sous une lumière bleue ; le titre « M·C·P » s'inscrit."
+            },
+            "pigeon": {
+              "caption": "Le pigeon livre, à chaque fois",
+              "alt": "Un pigeon sur un poteau devant la ville à l'heure bleue, il s'envole ; les titres « le pigeon livre, » puis « à chaque fois. » s'inscrivent."
+            },
+            "snow": {
+              "caption": "Une ruelle de Montréal sous la neige, générée avec Sovkora",
+              "alt": "Une ruelle enneigée la nuit, escaliers extérieurs et lampadaires ; plan généré avec Sovkora (Wan 2.2)."
+            },
+            "blue": {
+              "caption": "Une cour au crépuscule, générée avec Sovkora",
+              "alt": "Une ruelle bleue puis une cour à fontaine au crépuscule, guirlandes allumées ; plan généré avec Sovkora (Wan 2.2)."
+            },
+            "cable": {
+              "caption": "Des télécabines au-dessus des Alpes, générées avec Sovkora",
+              "alt": "Des télécabines passent devant des sommets enneigés au crépuscule ; plan généré avec Sovkora (Wan 2.2)."
+            }
+          },
+          "verikora": {
+            "owl": {
+              "caption": "Le hibou lit : chaque constat cite son passage",
+              "alt": "Un hibou devant une fenêtre bleue, la nuit ; les titres « chaque constat » puis « cite son passage. » s'inscrivent."
+            },
+            "rag": {
+              "caption": "R·A·G : il cherche, il lit, il cite sa source",
+              "alt": "Gros plan sur une page imprimée, sous une lumière douce ; le titre « R·A·G » s'inscrit."
+            },
+            "loupe": {
+              "caption": "Verikora, à la loupe",
+              "alt": "Une loupe au-dessus de papiers, sur un bureau devant une fenêtre sous la pluie ; le titre « VERIKORA » s'inscrit."
+            },
+            "signature": {
+              "caption": "Une plume signe la feuille",
+              "alt": "Une main signe une feuille à la plume, un encrier de laiton à côté, dans la lumière d'une fenêtre ; la signature est un trait illisible."
+            },
+            "sign": {
+              "caption": "Signer ? Pas avant d'avoir lu",
+              "alt": "Un bail sur un bureau sombre, sous une lampe violette ; le titre « signer ? » s'inscrit."
+            },
+            "files": {
+              "caption": "Les pièces d'un dossier, sur le bureau",
+              "alt": "Des chemises et des feuilles empilées, une tasse qui fume et une lampe de bureau, la nuit ; une main tourne une feuille."
+            }
+          },
+          "folioviv": {
+            "morning": {
+              "caption": "9 h : la boutique ouvre",
+              "alt": "Un salon de barbier ensoleillé, un castor dans un fauteuil près de la fenêtre ; le titre « 9:00 » s'inscrit."
+            },
+            "first-client": {
+              "caption": "Le premier client",
+              "alt": "Une barbière au travail dans un salon chaleureux, lampes et étagères de bois ; le titre « le premier client. » s'inscrit."
+            },
+            "evening": {
+              "caption": "18 h : le plancher est balayé",
+              "alt": "Un barbier balaie le plancher en fin de journée, fauteuils vides, fenêtres en arc ; le titre « 18:00 » s'inscrit."
+            },
+            "home": {
+              "caption": "Tu rentres à l'heure",
+              "alt": "Un père porte son enfant sur ses épaules le long du canal, à l'heure dorée, briques et vélos ; le titre « tu rentres à l'heure. » s'inscrit."
+            },
+            "sign": {
+              "caption": "La marque de Folioviv, près de l'enseigne du barbier",
+              "alt": "La marque verte de Folioviv sur un mur de boutique, à côté d'une enseigne de barbier ; le titre « FOLIOVIV » s'inscrit."
+            }
+          }
         }
       }
     },
