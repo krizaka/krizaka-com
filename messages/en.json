@@ -281,7 +281,12 @@
           "orazaka": "the engine",
           "akinaza": "runs the shop"
         },
-        "siteValue": "{host} · not open yet"
+        "siteValue": "{host} · not open yet",
+        "highlights": {
+          "yomizaka": "You'll love this: a « no children » clause flagged, with article 1899 cited.",
+          "orazaka": "You'll love the short-film studio: a brief becomes an edited film.",
+          "akinaza": "You'll love your GST and QST return, prepared from your invoices."
+        }
       },
       "stack": {
         "facts": {

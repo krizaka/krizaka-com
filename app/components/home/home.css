@@ -341,6 +341,17 @@ html[data-intro="play"] .kz-intro-sweep {
   text-decoration-thickness: 2px;
   text-underline-offset: 6px;
 }
+/* One discreet line a buyer will love (lib/product-highlights.ts): a margin note under the tag's line, in the product's ink. */
+.kz-entry-crush {
+  margin: 8px 0 0 !important;
+  padding-left: 10px;
+  border-left: 2px solid var(--kz-accent);
+  color: var(--kz-text-primary);
+  font-style: italic;
+  font-size: 14px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+}
 .kz-entry-uses {
   margin: 8px 0 0 !important;
   font-family: var(--kz-font-mono);
