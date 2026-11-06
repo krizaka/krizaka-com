@@ -88,7 +88,9 @@ test("a product in design stays out of PRODUCTS, the hero, the nav, the sitemap,
     .flatMap((d) => readdirSync(new URL(`../${d}/`, import.meta.url), { recursive: true }).map((f) => `${d}/${f}`))
     .filter((f) => /\.tsx?$/.test(f))
     .filter((f) => /from "[^"]*products-in-design"/.test(read(f)));
-  assert.deepEqual(users.sort(), ["app/components/home/ProductShowcase.tsx"]);
+  // The home's #products, and /story's « what is next », which says where every product stands (founder, 2026-11-06,
+  // krizaka-internal#2648): its name, its status and its line, nothing more.
+  assert.deepEqual(users.sort(), ["app/[locale]/story/page.tsx", "app/components/home/ProductShowcase.tsx"]);
   for (const f of ["content/llms.txt", "content/llms-full.txt"]) assert.doesNotMatch(read(f), /kridoc/i, f);
 });
 

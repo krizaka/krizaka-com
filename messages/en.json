@@ -664,8 +664,8 @@
     "story": {
       "intro": {
         "eyebrow": "Our story",
-        "title": "A Montréal company. One engine. <b>Products built on it.</b>",
-        "lead": "Krizaka is a Montréal company. It built Sovkora first, an AI engine that shows its work: every answer keeps a record of the model that produced it and the rules it followed. Then it built its products on it, Verikora and Folioviv. All three are in development, in the open, with sign-up closed.",
+        "title": "A small Montréal studio. <b>It builds in the open, with agents.</b>",
+        "lead": "Krizaka is a small studio founded in Montréal. We build our software with AI agents, in the open, and we measure how we work. First Sovkora, the AI engine that stays with you. Then the products that run on it, Verikora first.",
         "start": "Start reading",
         "products": "Explore the products"
       },
@@ -674,7 +674,7 @@
       "who": {
         "nav": "Who we are",
         "title": "It started in Montréal",
-        "lead": "Krizaka is a company founded in Montréal. It builds its software with AI agents it directs and reviews. A kris is a blade forged in layers; zaka is the slope you climb one step at a time.",
+        "lead": "Krizaka is a company founded in Montréal, a small studio. It builds its software with AI agents it directs and reviews, and it shows its work: the code, the tickets and the path of every change.",
         "refusal": "We started from one question: where was my document read, by which model, and who can see the result? Software that cannot answer asks for trust on faith. So what we ship is tested and documented, and the blocks it stands on are public.",
         "placesAria": "Where Krizaka is",
         "places": ["Montréal"],
@@ -691,6 +691,54 @@
           "Music: ACE-Step 1.5, generated with Sovkora",
           "Titles set in code, in the faces of @krizaka/fonts",
           "No voice, so no captions: the film's page describes each shot"
+        ]
+      },
+      "name": {
+        "nav": "Where the name comes from",
+        "title": "A name that sounds like two memories",
+        "passage": [
+          "Krizaka is not a dictionary word. To the founders, it first sounds like The King of Fighters and the arcade halls of their youth: the coin slipped into the slot, the close rounds, the rematch asked for right away.",
+          "It also sounds like korassa, <b>كراسة</b>, the Arabic word for a notebook. The school kind, filled in blue ink with a margin left for the corrections. That notebook became our identity: the paper, the blue ink, the margin.",
+          "Two memories, one name: play seriously, and write everything down."
+        ],
+        "card": {
+          "arabic": "كراسة",
+          "gloss": "korassa: the notebook",
+          "caption": "The name, and the word you hear in it."
+        }
+      },
+      "work": {
+        "nav": "How we work",
+        "title": "A studio that works with agents",
+        "lead": "Our software is written by AI agents, one lane per product, from a single board. Nothing merges by hand: a train carries every change to the main branch once its checks are green.",
+        "stepsTitle": "The path of a change",
+        "steps": {
+          "board": {
+            "name": "The board",
+            "line": "Every piece of work starts from a ticket that says what will prove it done."
+          },
+          "lane": {
+            "name": "One lane per product",
+            "line": "One agent session at a time per lane, on one ticket."
+          },
+          "pr": {
+            "name": "The pull request",
+            "line": "The test first, then the code, in the open on GitHub."
+          },
+          "train": {
+            "name": "The train",
+            "line": "It merges when its turn comes, never by hand."
+          },
+          "matrix": {
+            "name": "The matrix",
+            "line": "A deterministic check, no AI: the reference of our rules, repository by repository."
+          }
+        },
+        "more": "The crack, and our speed",
+        "depth": [
+          "When a repository gets stuck on a red change, the crack is called. It starts from the goal: does each open change still make sense? It closes, folds or parks, and only then does it fix. It replaced the firefighter, who fixed first.",
+          "We measure our speed. In early November it dropped: gates added one by one were piling up. We kept what protects, such as security, secrets, accessibility and honest pages, and relaxed or removed what slowed us without protecting.",
+          "Every rule now says what it must improve, and it counts what it refuses. The first measure of this new way of working is set for November 8, 2026."
         ]
       },
       "engine": {
@@ -730,13 +778,9 @@
             ]
           }
         },
-        "lines": {
-          "yomizaka": "Read before you sign. Drop in a lease, a contract or an invoice: Verikora checks it rule by rule and quotes the exact passage behind each finding.",
-          "akinaza": "A small shop's day in one place: bookings, bilingual invoices, and a tax return prepared for the owner to review. Folioviv prepares it and never files it."
-        },
         "proofs": {
           "yomizaka": "Each rule cites its article of law. The Québec rules still wait for a lawyer's review, and the screen says so: it sorts, it does not give legal advice. Sign-up is closed while we test on real leases.",
-          "akinaza": "Appointments, invoices with GST and QST, a ledger the database keeps balanced, and a tax report the merchant reviews and files. In development: sign-up is closed."
+          "akinaza": "Appointments, invoices with GST and QST, a ledger the database keeps balanced, and a tax report the merchant reviews and files. Work is paused while we take Verikora forward."
         }
       },
       "birds": {
@@ -758,7 +802,7 @@
       "next": {
         "nav": "What's next",
         "title": "What comes next",
-        "lead": "Three products are in development, in the open, with sign-up closed. Other ideas were explored and are paused so these can be finished. No date is promised: a product says what it is today.",
+        "lead": "Verikora goes first: it is the product we are taking to its first users, and Sovkora runs it. Folioviv waits its turn. Kridoc is being worked out before it is built. No date is promised.",
         "wire": "Wire Sovkora to {products}, where its use is still planned.",
         "reach": "Bring {products} to a dev preview, each proved on its own checklist.",
         "boardAria": "Where each product stands",

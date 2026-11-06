@@ -14,14 +14,17 @@ import { watchPath } from "@/lib/watch-films";
 import { asLocale, format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
+import { IN_DESIGN } from "@/lib/products-in-design";
 import { publishedCount } from "@/lib/registry-versions";
 import {
+  COMPANY_CHAPTERS,
   ENGINE,
   OPEN_BIRD,
   PRODUCT_BIRD,
   PRODUCT_CHAPTERS,
   STORY_ANCHORS,
   WHO_BIRD,
+  WORK_STEPS,
   type StoryBird,
 } from "@/lib/story";
 import { uiFacts } from "@/lib/ui-facts";
@@ -52,14 +55,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return localizedMetadata(locale, {
     path: "/story",
     en: {
-      title: "Our story — a Montréal company, one engine, products built on it",
+      title: "Our story: a small Montréal studio that builds with agents, in the open",
       description:
-        "Krizaka, a Montréal company, built Sovkora first, an AI engine that shows its work, then its products on it: Verikora and Folioviv, in development. The engine, each product, the open stack and what comes next.",
+        "Krizaka is a small studio founded in Montréal. Where the name comes from, how we build with AI agents and measure it, Sovkora the engine, the products built on it and what comes next.",
     },
     fr: {
-      title: "Notre histoire — une entreprise de Montréal, un moteur, des produits construits dessus",
+      title: "Notre histoire : un petit studio de Montréal qui construit avec des agents, à découvert",
       description:
-        "Krizaka, une entreprise de Montréal, a d'abord construit Sovkora, un moteur d'IA qui montre son travail, puis ses produits dessus : Verikora et Folioviv, en développement. Le moteur, chaque produit, la pile ouverte et la suite.",
+        "Krizaka est un petit studio fondé à Montréal. D'où vient le nom, comment nous construisons avec des agents d'IA et le mesurons, Sovkora le moteur, les produits construits dessus et la suite.",
     },
   });
 }
@@ -77,8 +80,9 @@ function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
 }
 
 /* /story (longform, with a sticky chapter contents): a short intro, then ten-second chapters in a fixed order — who we are,
-   the engine, each product, the open stack, what is next — each a heading, a line or two, one proof visual and its
-   depth in a fold. It is Krizaka's story, the company's: no chapter links to the founder's blog (krizaka-internal#138).
+   where the name comes from, how we work, the engine, each product, the open stack, what is next — each a heading, a
+   line or two, one proof visual and its depth in a fold. A product says the home's line and status (the same messages
+   and data), the products in conception join « what is next » (lib/products-in-design.ts). It is Krizaka's story, the company's: no chapter links to the founder's blog (krizaka-internal#138).
    The brand film « Montrer son travail » is shown once (a poster card in chapter 1, the player opens in a lightbox,
    nothing fetched before; its watch page is one link away). Every figure is read at build; products and their statuses come from
    lib/products.ts, what runs on the engine from lib/engine-uses.ts — nothing is typed here. */
@@ -98,13 +102,16 @@ export default async function StoryPage({ params }: Props) {
 
   const chapterNames = new Map<string, string>([
     ["who", st.who.nav],
+    ["name", st.name.nav],
+    ["work", st.work.nav],
     ["engine", st.engine.nav],
     ["open", st.open.nav],
     ["next", st.next.nav],
     ...PRODUCT_CHAPTERS.map((id) => [id, product(id).name] as [string, string]),
   ]);
+  const plain = new Set<string>([...COMPANY_CHAPTERS, "engine", "open", "next"]);
   const items = STORY_ANCHORS.map((id) => ({
-    id: id === "who" || id === "engine" || id === "open" || id === "next" ? id : `p-${id}`,
+    id: plain.has(id) ? id : `p-${id}`,
     label: chapterNames.get(id)!,
   }));
   const number = (anchor: (typeof STORY_ANCHORS)[number]) => STORY_ANCHORS.indexOf(anchor) + 1;
@@ -177,7 +184,7 @@ export default async function StoryPage({ params }: Props) {
         kicker={h.knowhow[id].name}
         lead={
           <>
-            <p>{st.products.lines[id as keyof typeof st.products.lines]}</p>
+            <p>{h.cards[id].line}</p>
           </>
         }
         bird={bird}
@@ -215,9 +222,10 @@ export default async function StoryPage({ params }: Props) {
 
   /** A sentence that names products. */
   const words = (message: string, list: readonly Product[]) => format(message, { products: names(locale, list) });
-  const planned = ENGINE_USES.filter((u) => u.planned);
+  /** A planned use is said for a product being worked on, never for a paused one. */
+  const planned = ENGINE_USES.filter((u) => u.planned).filter((u) => product(u.id).status !== "paused");
   const developing = PRODUCTS.filter((p) => p.status === "development");
-  const board: Status[] = ["devPreview", "development", "construction"];
+  const board: Status[] = ["devPreview", "development", "construction", "paused"];
 
   return (
     <main className="st" style={{ background: "var(--kz-surface-0)", minHeight: "100vh" }}>
@@ -287,6 +295,70 @@ export default async function StoryPage({ params }: Props) {
           />
 
           <StoryChapter
+            id="name"
+            {...numbered("name")}
+            title={st.name.title}
+            lead={st.name.passage.map((line) => (
+              <p key={line}>
+                <Rich
+                  text={line}
+                  renderBold={(c) => (
+                    <span lang="ar" dir="rtl" className="st-ar">
+                      {c}
+                    </span>
+                  )}
+                />
+              </p>
+            ))}
+            proof={
+              <figure className="st-name-card" aria-labelledby="name-card-caption">
+                <p className="st-name-word" translate="no">
+                  Krizaka
+                </p>
+                <p className="st-name-ar" lang="ar" dir="rtl">
+                  {st.name.card.arabic}
+                </p>
+                <p className="st-name-gloss">{st.name.card.gloss}</p>
+                <figcaption id="name-card-caption" className="st-name-note">
+                  {st.name.card.caption}
+                </figcaption>
+              </figure>
+            }
+          />
+
+          <StoryChapter
+            id="work"
+            {...numbered("work")}
+            title={st.work.title}
+            lead={<p>{st.work.lead}</p>}
+            proof={
+              <figure className="st-work" aria-labelledby="work-steps-title">
+                <figcaption id="work-steps-title" className="st-work-title">
+                  {st.work.stepsTitle}
+                </figcaption>
+                <ol className="st-work-steps">
+                  {WORK_STEPS.map((step) => (
+                    <li key={step} data-step={step}>
+                      <strong>{st.work.steps[step].name}</strong>
+                      <span>{st.work.steps[step].line}</span>
+                    </li>
+                  ))}
+                </ol>
+              </figure>
+            }
+            fold={{
+              summary: st.work.more,
+              children: (
+                <>
+                  {st.work.depth.map((line) => (
+                    <p key={line}>{line}</p>
+                  ))}
+                </>
+              ),
+            }}
+          />
+
+          <StoryChapter
             id="engine"
             {...numbered("engine")}
             brand={ENGINE}
@@ -297,7 +369,12 @@ export default async function StoryPage({ params }: Props) {
               </>
             }
             kicker={h.knowhow.orazaka.name}
-            lead={<p>{st.engine.lead}</p>}
+            lead={
+              <>
+                <p className="st-line">{t.site.home.engine.line}</p>
+                <p>{st.engine.lead}</p>
+              </>
+            }
             bird={PRODUCT_BIRD.orazaka}
             promise={promiseOf(t, PRODUCT_BIRD.orazaka)}
             proof={
@@ -379,6 +456,23 @@ export default async function StoryPage({ params }: Props) {
                     </div>
                   );
                 })}
+                {IN_DESIGN.length > 0 && (
+                  <div className="st-board-col" data-status="design">
+                    <p className="st-board-label">
+                      <ProductStatus status="design" t={t} />
+                    </p>
+                    <ul>
+                      {IN_DESIGN.map((p) => (
+                        <li key={p.id}>{p.name}</li>
+                      ))}
+                    </ul>
+                    {IN_DESIGN.map((p) => (
+                      <p key={p.id} className="st-board-note">
+                        {t.site.home.products.inDesign.lines[p.id]}
+                      </p>
+                    ))}
+                  </div>
+                )}
               </div>
             }
             actions={
