@@ -220,6 +220,10 @@
             "name": "Pipeline",
             "line": "Every request is a traced run."
           },
+          "packs": {
+            "name": "Packs",
+            "line": "Ready-made capabilities installed from the studio: document checks, a short-film studio."
+          },
           "analytics": {
             "name": "Analytics",
             "line": "Results and usage analytics come back to the product."

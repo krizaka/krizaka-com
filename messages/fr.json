@@ -220,6 +220,10 @@
             "name": "Pipeline",
             "line": "Chaque requête est une exécution tracée."
           },
+          "packs": {
+            "name": "Packs",
+            "line": "Des capacités prêtes à installer depuis le studio : vérification de documents, studio court métrage."
+          },
           "analytics": {
             "name": "Analyses",
             "line": "Résultats et analyses d'usage reviennent au produit."
