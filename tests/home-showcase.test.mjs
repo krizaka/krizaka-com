@@ -15,17 +15,17 @@ const has = (path) => Boolean(manifest.files[path]);
 const board = JSON.parse(read("content/films/home-showcase.json"));
 const carousel = read("app/components/home/ShowcaseCarousel.tsx");
 
-test("every slide of every carousel has both renditions on the CDN (mp4, webm, poster), and at least three slides", () => {
+test("every slide of every carousel has its 16:9 rendition on the CDN (mp4, webm, poster), and at least three slides", () => {
   assert.deepEqual([...SHOWCASES], ["hero", "verikora", "sovkora", "folioviv"]);
   assert.deepEqual(showcaseProblems(has), []);
 });
 
 test("a slide missing a file, or a carousel with too few slides, is refused", () => {
-  const problems = showcaseProblems((path) => has(path) && !path.startsWith("home/showcase/sovkora/neon-tall"));
+  const problems = showcaseProblems((path) => has(path) && !path.startsWith("home/showcase/sovkora/tea-wide"));
   assert.deepEqual(problems, [
-    "sovkora/neon: home/showcase/sovkora/neon-tall.mp4 is not in the CDN manifest",
-    "sovkora/neon: home/showcase/sovkora/neon-tall.webm is not in the CDN manifest",
-    "sovkora/neon: home/showcase/sovkora/neon-tall.jpg is not in the CDN manifest",
+    "sovkora/tea: home/showcase/sovkora/tea-wide.mp4 is not in the CDN manifest",
+    "sovkora/tea: home/showcase/sovkora/tea-wide.webm is not in the CDN manifest",
+    "sovkora/tea: home/showcase/sovkora/tea-wide.jpg is not in the CDN manifest",
   ]);
 });
 
@@ -91,7 +91,7 @@ test("it advances on its own, with WCAG 2.2.2's controls: pause / play, paused o
 test("still under reduced motion or Save-Data: no timer, no clip, no pause button, no fade", () => {
   assert.match(carousel, /prefersStill\(globalThis\)/);
   assert.match(carousel, /\{!still && \(/, "no pause / play when nothing moves");
-  assert.match(carousel, /here && loaded && !still && rendition && \(\s*<Clip/);
+  assert.match(carousel, /here && loaded && !still && <Clip/);
   const css = read("app/components/home/showcase.css").replace(/\/\*[\s\S]*?\*\//g, "");
   const calm = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce)"));
   assert.match(calm, /\.kz-show-slide \{\s*transition: none;/);
@@ -99,11 +99,11 @@ test("still under reduced motion or Save-Data: no timer, no clip, no pause butto
   assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b|rgb\(|hsl\(|blur\(|translate/, "tokens only, nothing travels");
 });
 
-test("one rendition per viewport and poster first: the phone never fetches the desktop file, the h1 stays the LCP", () => {
-  assert.match(carousel, /<source media=\{WIDE_QUERY\} srcSet=\{s\.wide\.poster\} \/>/);
-  assert.match(carousel, /src=\{s\.tall\.poster\}/);
-  assert.match(carousel, /r=\{s\[rendition\]\}/, "the clip in the viewport's rendition only");
-  assert.match(carousel, /\(\) => null,\s*\);/, "no rendition on the server: no clip in the HTML");
+test("one 16:9 rendition on every screen, never the tall one: poster first, the h1 stays the LCP", () => {
+  assert.doesNotMatch(carousel, /\btall\b|WIDE_QUERY|useRendition|min-width: 640/, "no vertical source switching");
+  assert.match(carousel, /src=\{s\.wide\.poster\}/);
+  assert.match(carousel, /<Clip r=\{s\.wide\}/);
+  assert.match(carousel, /here && loaded && !still/, "no clip in the server's HTML");
   assert.match(
     carousel,
     /const draw = seen\.has\(i\) \|\| i === \(active \+ 1\) % total;/,
@@ -112,9 +112,31 @@ test("one rendition per viewport and poster first: the phone never fetches the d
   assert.match(carousel, /muted\s+playsInline/);
   assert.doesNotMatch(carousel, /autoPlay/);
   assert.match(read("app/components/home/Showcase.tsx"), /<details className="kz-fig-text kz-show-text">/);
+  assert.doesNotMatch(read("lib/home-showcase.ts"), /\btall:/, "the data holds no tall rendition");
+  const css = read("app/components/home/showcase.css");
+  assert.match(css, /object-fit: cover;/, "a 16:9 frame filled on every screen");
+  assert.doesNotMatch(css, /aspect-ratio: 4 \/ 5/, "the phone's frame is 16:9 too");
 });
 
-test("phone renditions are 4:5 frames cut on the subject, never stretched", () => {
+test("a clip that cannot play leaves its poster: the video unmounts when its last source fails", () => {
+  assert.match(carousel, /<source src=\{r\.mp4\} type="video\/mp4" onError=\{\(\) => setBroken\(true\)\} \/>/);
+  assert.match(carousel, /if \(broken\) \{\s*return null;/);
+});
+
+test("sound is an option: muted by default, a toggle only for clips with audio, after a click, on hover or focus, per session", () => {
+  assert.match(carousel, /const sound = soundChosen && current\.audio && \(hovered \|\| focused\) && !still;/);
+  assert.match(carousel, /\{hasAudio && !still && \(/, "no button unless a clip has sound, never under reduced motion");
+  assert.match(carousel, /aria-pressed=\{soundChosen\}/);
+  assert.match(carousel, /sessionStorage/);
+  assert.doesNotMatch(carousel, /localStorage/, "the choice lasts for the session only");
+  assert.match(carousel, /ref\.current\.muted = !sound/);
+  assert.equal(messages("en").site.home.showcase.labels.soundOn, "Sound on");
+  assert.equal(messages("fr").site.home.showcase.labels.soundOn, "Activer le son");
+  // Runway's outputs are silent: no slide claims an audio track, so the button ships disabled (never an unlicensed track).
+  assert.ok(SHOWCASES.every((c) => showcaseSlides(c).every((x) => x.audio === false)));
+});
+
+test("the encoder still cuts 4:5 frames on the subject (kept for other uses), never stretched", () => {
   assert.equal(tallFilter(1080, 1920), "crop=1080:1350:0:285,scale=544:680:flags=lanczos,setsar=1");
   assert.equal(tallFilter(1280, 720, 0.3), "crop=576:720:96:0,scale=544:680:flags=lanczos,setsar=1");
   assert.equal(tallFilter(1280, 720, 0), "crop=576:720:0:0,scale=544:680:flags=lanczos,setsar=1");

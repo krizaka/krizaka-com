@@ -6,7 +6,7 @@
   "carousels": {
     "hero": {
       "idea": "Krizaka shows its work: the pen, the blue ink, the brick and the river of Montréal.",
-      "order": ["film", "ink", "notebook", "river", "entreprise", "signature", "bridge"],
+      "order": ["film", "river", "entreprise", "signature"],
       "shots": [
         {
           "id": "ink",
@@ -68,11 +68,25 @@
           "idea": "dawn over the river and Mont Royal, a flight of birds",
           "library": true
         }
+      ],
+      "retired": [
+        {
+          "id": "ink",
+          "why": "the clip ends on the vertical reel pillarboxed (black bars) and holds that last frame"
+        },
+        {
+          "id": "notebook",
+          "why": "the clip ends on the reel's black end card and holds it"
+        },
+        {
+          "id": "bridge",
+          "why": "the clip ends on the reel's black end card and holds it"
+        }
       ]
     },
     "sovkora": {
       "idea": "The engine stays with you: the duck builds, the pigeon delivers, the neon says the name.",
-      "order": ["neon", "duck", "tea", "rails", "pigeon", "snow", "blue", "cable"],
+      "order": ["tea", "rails", "pigeon", "snow", "blue", "cable"],
       "shots": [
         {
           "id": "neon",
@@ -141,11 +155,21 @@
           "focus": 0.5,
           "idea": "cable cars over the Alps at dusk, generated with Sovkora (Wan 2.2)"
         }
+      ],
+      "retired": [
+        {
+          "id": "duck",
+          "why": "the clip ends on a black end card, drawn pillarboxed, and holds it (the black slide)"
+        },
+        {
+          "id": "neon",
+          "why": "its first frame is the vertical reel pillarboxed in black bars (a glitch frame), also what the clip starts on"
+        }
       ]
     },
     "verikora": {
       "idea": "Read before you sign: the owl reads, every finding cites its page.",
-      "order": ["owl", "rag", "loupe", "signature", "sign", "files"],
+      "order": ["owl", "loupe", "signature", "sign", "files"],
       "shots": [
         {
           "id": "rag",
@@ -200,11 +224,17 @@
           "idea": "the papers of a file on the desk at night",
           "library": true
         }
+      ],
+      "retired": [
+        {
+          "id": "rag",
+          "why": "the second take is the vertical reel pillarboxed (black bars) in the 16:9 file"
+        }
       ]
     },
     "folioviv": {
       "idea": "A small shop's day, from the first client to going home on time.",
-      "order": ["morning", "first-client", "evening", "home", "sign"],
+      "order": ["evening", "home", "sign"],
       "shots": [
         {
           "id": "morning",
@@ -247,7 +277,17 @@
           "prompt": "Extend the shop wall with the barber pole and the warm light."
         }
       ],
-      "clips": []
+      "clips": [],
+      "retired": [
+        {
+          "id": "first-client",
+          "why": "the last 0.4 s crosses into the next take: a smeared frame with a white rectangle over the phone, held as the last frame"
+        },
+        {
+          "id": "morning",
+          "why": "the last 0.3 s is a blurred transition, held as the last frame"
+        }
+      ]
     }
   },
   "libraries": {

@@ -1,10 +1,11 @@
 /* The home's carousels (krizaka-internal#2450, founder 2026-11-05): the hero's, then one per product — Verikora, Sovkora
    in the centre, Folioviv. Their storyboard is content/films/home-showcase.json (the shots cut from the founder's reels and
    widened to 16:9 by Runway Aleph, the 16:9 clips Sovkora generated, the brand film, the company media library), rendered
-   by scripts/home-showcase.mjs and uploaded with scripts/cdn-assets.mjs under home/showcase/<carousel>/. Each slide has two
-   renditions: `wide` (16:9, 1280x720) for tablets and desktops, `tall` (4:5, 544x680, lighter) for phones, each with its
-   poster: the browser loads only one (lib/cdn.ts resolves both, the carousel picks by the viewport). A slide whose files
-   the manifest does not know fails the build (tests/home-showcase.test.mjs). The words (caption, alt) are messages:
+   by scripts/home-showcase.mjs and uploaded with scripts/cdn-assets.mjs under home/showcase/<carousel>/. Every screen, the
+   phone included, shows the 16:9 rendition (`wide`, 1280x720, object-fit: cover): no vertical anywhere (founder,
+   2026-11-05). A slide whose files the manifest does not know fails the build (tests/home-showcase.test.mjs); a slide
+   whose real file is not a clean 16:9 (pillarbox, end card held on screen) is `retired` in the storyboard, out of the
+   order, until it is remade (scripts/check-showcase-media.mjs reads the real files). The words (caption, alt) are messages:
    site.home.showcase.slides.<carousel>.<id>. */
 
 import board from "../content/films/home-showcase.json" with { type: "json" };
@@ -24,9 +25,10 @@ export interface ShowcaseSlideSpec {
   id: string;
   carousel: Showcase;
   source: SlideSource;
-  /** The logical bases of the two renditions on the CDN (`<base>.mp4|.webm|.jpg`). */
+  /** The logical base of the 16:9 rendition on the CDN (`<base>.mp4|.webm|.jpg`). */
   wide: string;
-  tall: string;
+  /** True when the clip carries an audio track (none does today: Runway's outputs are silent). */
+  audio: boolean;
   /** True for the brand film's slide: it leads to the film's watch page. */
   film: boolean;
 }
@@ -35,6 +37,7 @@ interface BoardItem {
   id: string;
   library?: boolean;
   film?: boolean;
+  audio?: boolean;
 }
 interface BoardCarousel {
   order: string[];
@@ -43,8 +46,7 @@ interface BoardCarousel {
 }
 
 /** The logical base of a rendition of a slide. */
-export const renditionBase = (carousel: string, id: string, kind: "wide" | "tall") =>
-  `home/showcase/${carousel}/${id}-${kind}`;
+export const renditionBase = (carousel: string, id: string) => `home/showcase/${carousel}/${id}-wide`;
 
 /** The slides of a carousel, in their order. */
 export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
@@ -66,8 +68,8 @@ export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
       id,
       carousel,
       source,
-      wide: renditionBase(carousel, id, "wide"),
-      tall: renditionBase(carousel, id, "tall"),
+      wide: renditionBase(carousel, id),
+      audio: Boolean(item.audio),
       film: Boolean(item.film),
     };
   });
@@ -75,9 +77,8 @@ export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
 
 const EXTENSIONS = ["mp4", "webm", "jpg"] as const;
 
-/** The six files of a slide: both renditions, each as mp4, webm and its poster. */
-const filesOf = (s: ShowcaseSlideSpec): string[] =>
-  [s.wide, s.tall].flatMap((base) => EXTENSIONS.map((ext) => `${base}.${ext}`));
+/** The three files of a slide: its 16:9 rendition as mp4, webm and its poster. */
+const filesOf = (s: ShowcaseSlideSpec): string[] => EXTENSIONS.map((ext) => `${s.wide}.${ext}`);
 
 /** What is wrong with the carousels, as sentences (empty: fine). `has` is lib/cdn.ts's onCdn. */
 export function showcaseProblems(has: (path: string) => boolean): string[] {
