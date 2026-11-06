@@ -11,10 +11,11 @@
      « not open yet » (no version: a coming-soon page runs no app), one action « See the page (opening soon) » (the waiting page, new tab) and
      two quiet links, « Source » and « Release notes », the stamp of its honest status (lib/products.ts), its line, its bird,
      what it runs on Sovkora (lib/engine-uses.ts) — and for the engine, what it gives and the products it powers, folded;
+   - under its line, one discreet « you'll love » line about a feature that runs (lib/product-highlights.ts, with its source);
    - the notes at the foot of the section: what each product really does, sourced;
    - after the products, the ones in conception (lib/products-in-design.ts): their tag and a sample document in demo
      data, « Demo soon »; no version, no source, no bird, no note, no date, no sign-up, since nothing is built.
-   Data: lib/products.ts, lib/engine-uses.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words: site.home.products.*,
+   Data: lib/products.ts, lib/engine-uses.ts, lib/product-highlights.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words: site.home.products.*,
    site.home.engine.*, site.products.*, site.story.world.cues. */
 
 import { ForwardIcon } from "@krizaka/icons";
@@ -29,6 +30,7 @@ import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { entrySide, productOrder, sectionFigure } from "@/lib/home-sections";
 import { showcaseOf } from "@/lib/home-showcase";
+import { PRODUCT_HIGHLIGHTS } from "@/lib/product-highlights";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { IN_DESIGN, type ProductInDesign } from "@/lib/products-in-design";
 import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
@@ -174,6 +176,9 @@ function ProductEntry({
         <p>
           {engine ? t.site.home.engine.line : t.site.products.cards[p.id].line}
           {fnRef(p)}
+        </p>
+        <p className="kz-entry-crush" data-feature={PRODUCT_HIGHLIGHTS[p.id].highlight}>
+          {t.site.home.products.highlights[p.id]}
         </p>
         {engine && <EngineGives t={t} />}
         {useText && (
