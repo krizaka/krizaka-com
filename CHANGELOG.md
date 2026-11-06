@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.29.2](https://github.com/krizaka/krizaka-com/compare/v0.29.1...v0.29.2) (2026-11-06)
+
+
+### Bug Fixes
+
+* **cdn:** the Bunny layout knows the products' commercial names: sites/sovkora, verikora, folioviv are the target ([#642](https://github.com/krizaka/krizaka-com/issues/642)) ([096e131](https://github.com/krizaka/krizaka-com/commit/096e131fe610c286c3147a838b8be536e04bbe56))
+* **cdn:** the manifest names chapter 25's pictures and the remade downloads of the blog ([#634](https://github.com/krizaka/krizaka-com/issues/634)) ([e303989](https://github.com/krizaka/krizaka-com/commit/e303989304b1519ca1eddc93dd2d2e628a18a619))
+* **discovery:** the Sovkora app is found on dev.sovkora.com, and each product's own domain is its commercial one ([#639](https://github.com/krizaka/krizaka-com/issues/639)) ([33c8ba9](https://github.com/krizaka/krizaka-com/commit/33c8ba9e291eb4d4e601d4a4c8720283980d05b1))
+
 ## [0.29.1](https://github.com/krizaka/krizaka-com/compare/v0.29.0...v0.29.1) (2026-11-06)
 
 
