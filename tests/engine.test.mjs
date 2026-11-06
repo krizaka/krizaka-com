@@ -178,3 +178,17 @@ test("the engine's figure is the Lab's: the hub with everything around it — th
     assert.match(f.yoursUse, /Krizaka Entreprise/, `${l}: the node says it is the offer, never a named customer`);
   }
 });
+
+// Founder, 2026-11-06 (krizaka-internal#2765): the engine's fold names what it gives, the packs included — installed from
+// Sovkora's studio (krizaka/sovkora-studio-service), the packs in krizaka/sovkora-packs. Four items, each with a name and a
+// line in both languages, in the order the component draws them.
+test("the engine's fold gives models, pipeline, packs and analytics, each named and explained in both languages", () => {
+  const home = read("app/components/home/ProductShowcase.tsx");
+  assert.match(home, /\["models", "pipeline", "packs", "analytics"\] as const/);
+  for (const lang of ["en", "fr"]) {
+    const gives = JSON.parse(read(`messages/${lang}.json`)).site.home.engine.gives;
+    for (const k of ["models", "pipeline", "packs", "analytics"]) {
+      assert.ok(gives[k]?.name && gives[k]?.line, `${lang}: ${k} has a name and a line`);
+    }
+  }
+});
