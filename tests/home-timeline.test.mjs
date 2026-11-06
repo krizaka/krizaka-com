@@ -12,9 +12,9 @@ const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), "utf8");
 test("the sides alternate in the row's order: Sovkora's carousel left, Verikora's tag left, Folioviv's carousel left", () => {
   const order = productOrder(PRODUCTS).map((p) => [p.id, entrySide(PRODUCTS, p.id)]);
   assert.deepEqual(order.slice(0, 3), [
-    ["orazaka", "plate-left"],
-    ["yomizaka", "card-left"],
-    ["akinaza", "plate-left"],
+    ["sovkora", "plate-left"],
+    ["verikora", "card-left"],
+    ["folioviv", "plate-left"],
   ]);
   for (let i = 1; i < order.length; i++) assert.notEqual(order[i][1], order[i - 1][1], `${order[i][0]} swaps sides`);
 });

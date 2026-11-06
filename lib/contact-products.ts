@@ -4,9 +4,9 @@
 import { CONTACT_TOPICS, type ContactTopic } from "./contact.ts";
 
 const COMMERCIAL_TOPIC: Record<string, ContactTopic> = {
-  verikora: "yomizaka",
-  sovkora: "orazaka",
-  folioviv: "akinaza",
+  verikora: "verikora",
+  sovkora: "sovkora",
+  folioviv: "folioviv",
   kridoc: "other",
 };
 

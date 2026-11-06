@@ -1,5 +1,6 @@
 // The plates of the home's entries (founder, 2026-11-01, krizaka-internal#683): one product moment each, input then result,
 // still under reduced motion, and never a code name in their words — the display name comes from lib/products.ts.
+import { findCodeNames } from "@krizaka/org";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -10,7 +11,6 @@ import { cssDecls } from "./helpers/source.mjs";
 const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), "utf8");
 const VISUALS = read("app/components/home/visuals/ProductVisuals.tsx");
 const CSS = "app/components/home/visuals/visuals.css";
-const CODE_NAMES = /orazaka|yomizaka|akinaza|kachizaka/i;
 
 test("under reduced motion and at rest a plate is still on its last step: the result in, the run line full", () => {
   assert.equal(PLATE_REST, PLATE_STEPS - 1);
@@ -36,11 +36,11 @@ test("no code name in the plates' words; the name on a plate is the caller's, re
     // The keys are the code ids (structure); the words, the values, never say a code name.
     const words = (o) =>
       JSON.stringify(o, (k, v) => (typeof v === "object" && v && !Array.isArray(v) ? Object.values(v) : v));
-    assert.doesNotMatch(words(m.site.home.visuals), CODE_NAMES, `${l}: visuals`);
-    assert.doesNotMatch(words(m.site.home.showcase), CODE_NAMES, `${l}: the carousels' words`);
+    assert.deepEqual(findCodeNames(words(m.site.home.visuals)), [], `${l}: visuals`);
+    assert.deepEqual(findCodeNames(words(m.site.home.showcase)), [], `${l}: the carousels' words`);
   }
   const strings = VISUALS.replace(/\/\*[\s\S]*?\*\//g, "").match(/"[^"\n]*"/g) ?? [];
-  for (const s of strings) assert.doesNotMatch(s, /^"(Orazaka|Yomizaka|Akinaza)"$/, `a typed product name: ${s}`);
+  for (const s of strings) assert.doesNotMatch(s, /^"(Sovkora|Verikora|Folioviv)"$/, `a typed product name: ${s}`);
   assert.match(VISUALS, /<span className="pv-app-name">\{name\}<\/span>/);
   assert.match(read("app/components/home/visuals/ProductVisual.tsx"), /<ProductVisuals id=\{id\} name=\{name\}/);
   assert.ok(PRODUCTS.every((p) => typeof p.name === "string" && p.name.length > 0));
@@ -56,8 +56,8 @@ test("the subject is what the tool does; the run id is a small caption, said as 
   assert.equal(cssDecls(CSS, ".pv-caption")["font-size"], "11px");
   for (const l of ["en", "fr"]) {
     const v = JSON.parse(read(`messages/${l}.json`)).site.home.visuals;
-    assert.match(v.akinaza.gst + v.akinaza.qst, l === "fr" ? /TPS.*TVQ/ : /GST.*QST/);
-    assert.ok(v.yomizaka.passage && v.yomizaka.law, `${l}: the finding shows its passage and its article`);
-    assert.equal(v.orazaka.points.length, 3, `${l}: the answer to the request`);
+    assert.match(v.folioviv.gst + v.folioviv.qst, l === "fr" ? /TPS.*TVQ/ : /GST.*QST/);
+    assert.ok(v.verikora.passage && v.verikora.law, `${l}: the finding shows its passage and its article`);
+    assert.equal(v.sovkora.points.length, 3, `${l}: the answer to the request`);
   }
 });

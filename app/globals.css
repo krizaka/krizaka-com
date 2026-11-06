@@ -458,7 +458,7 @@ html .kz-backdrop.bp-glide > .kz-backdrop-dome {
   opacity: 0.7;
 }
 
-/* Terminal (Orazaka three commands) */
+/* Terminal (Sovkora three commands) */
 .bp-term {
   border-radius: 0;
   overflow: hidden;
@@ -543,7 +543,7 @@ html:not([data-motion="ready"])
   }
 }
 
-/* The Orazaka terminal: its three commands are typed in, one after the other, when it arrives. */
+/* The Sovkora terminal: its three commands are typed in, one after the other, when it arrives. */
 .bp-term[data-reveal] pre > div {
   opacity: 0;
   transform: translateX(-6px);

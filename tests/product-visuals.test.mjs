@@ -90,8 +90,8 @@ test("built from @krizaka/ui components, specific to each field, demo data said 
   }
 });
 
-// Akinaza's receipt is real Québec arithmetic: GST 5 % and QST 9.975 % on the price, each rounded to the cent.
-test("Akinaza's receipt: GST and QST to the cent, computed, never typed", async () => {
+// Folioviv's receipt is real Québec arithmetic: GST 5 % and QST 9.975 % on the price, each rounded to the cent.
+test("Folioviv's receipt: GST and QST to the cent, computed, never typed", async () => {
   const src = read("lib/product-visuals.ts");
   assert.match(src, /export const GST = 0\.05;/);
   assert.match(src, /export const QST = 0\.09975;/);

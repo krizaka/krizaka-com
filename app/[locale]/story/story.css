@@ -354,7 +354,7 @@
   list-style: decimal;
 }
 
-/* ═══ THE ENGINE — Orazaka at the centre, the products around it: the home's EngineFlowView (@krizaka/ui/engine-flow),
+/* ═══ THE ENGINE — Sovkora at the centre, the products around it: the home's EngineFlowView (@krizaka/ui/engine-flow),
    radial when the chapter's column is wide enough, top to bottom otherwise (its own container query). ═══ */
 .st-ch-proof > .kz-flow + .st-take-photo {
   margin-top: 18px;

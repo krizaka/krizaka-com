@@ -4,7 +4,7 @@
    architecture files of each product (app/data/*.json).
    ═══════════════════════════════════════════════════════════════════ */
 
-import orazaka from "@/app/data/architecture.json";
+import sovkora from "@/app/data/architecture.json";
 
 export type Loc = "fr" | "en";
 export type L = Record<Loc, string>;
@@ -13,11 +13,11 @@ export interface OrgRepository {
   name: string;
   url: string;
   description: string;
-  product: "krizaka" | "orazaka";
+  product: "krizaka" | "sovkora";
   group: string;
 }
 
-const ORAZAKA_GROUP: Record<string, string> = {
+const SOVKORA_GROUP: Record<string, string> = {
   foundation: "foundation",
   ai: "ai",
   worker: "ai",
@@ -28,9 +28,9 @@ const ORAZAKA_GROUP: Record<string, string> = {
 /** Every public repository of the organisation, from the generated product data. */
 export function orgRepositories(): OrgRepository[] {
   // The workspace manifest lists the Krizaka building blocks it is built on (layer "krizaka"): they belong to the
-  // organisation, not to Orazaka.
+  // organisation, not to Sovkora.
   const oz = (
-    (orazaka as { repositories?: { name: string; url: string; description: string; layer: string }[] }).repositories ??
+    (sovkora as { repositories?: { name: string; url: string; description: string; layer: string }[] }).repositories ??
     []
   ).map((r): OrgRepository =>
     r.layer === "krizaka"
@@ -39,16 +39,16 @@ export function orgRepositories(): OrgRepository[] {
           name: r.name,
           url: r.url,
           description: r.description,
-          product: "orazaka",
-          group: ORAZAKA_GROUP[r.layer] ?? "apps",
+          product: "sovkora",
+          group: SOVKORA_GROUP[r.layer] ?? "apps",
         },
   );
   const workspace: OrgRepository = {
-    name: "orazaka",
-    url: "https://github.com/krizaka/orazaka",
+    name: "sovkora",
+    url: "https://github.com/krizaka/sovkora",
     description:
-      "Orazaka platform workspace: governance contract, workspace manifest, local infrastructure, end-to-end tests and architecture docs. Clones and builds every Orazaka repository.",
-    product: "orazaka",
+      "Sovkora platform workspace: governance contract, workspace manifest, local infrastructure, end-to-end tests and architecture docs. Clones and builds every Sovkora repository.",
+    product: "sovkora",
     group: "workspace",
   };
   // Organisation-level repositories that belong to no product (they have no generated architecture file).

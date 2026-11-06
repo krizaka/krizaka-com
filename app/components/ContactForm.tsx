@@ -54,7 +54,7 @@ function verifyErrorText(errors: Record<string, string>, error: string | undefin
 }
 
 function TopicIcon({ topic }: { topic: ContactTopic }) {
-  if (topic === "orazaka" || topic === "yomizaka" || topic === "akinaza" || topic === "blocks") {
+  if (topic === "sovkora" || topic === "verikora" || topic === "folioviv" || topic === "blocks") {
     return <ProductLogo id={topic === "blocks" ? "krizaka" : topic} size={26} animated={false} />;
   }
   const Icon = topic === "partnership" || topic === "enterprise" ? UsersIcon : ChatIcon;
@@ -62,7 +62,7 @@ function TopicIcon({ topic }: { topic: ContactTopic }) {
 }
 
 /** Every link to this page carries ?source=<page> (and ?topic= when the page knows it): the topic is pre-selected from
-    it — Yomizaka from Yomizaka, the building blocks from open source — and nothing is pre-selected from a page about
+    it — Verikora from Verikora, the building blocks from open source — and nothing is pre-selected from a page about
     Krizaka as a whole. The static page renders without a choice until the URL is read. */
 export default function ContactForm({ defaultTopic = null }: { defaultTopic?: ContactTopic | null }) {
   return (

@@ -11,7 +11,7 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const CONTEXT =
   /^(NEXT_PUBLIC_)?(APP|DATABASE|AUTH|MEDIA|MAIL|PUSH|PAYMENTS|REALTIME|ABUSE|OBSERVABILITY|AI|OPERATOR)_[A-Z0-9_]+$/;
 const VENDOR_OR_PRODUCT =
-  /^(NEXT_PUBLIC_)?(ORAZAKA|YOMIZAKA|AKINAZA|KRIZAKA|BUNNY|MAILGUN|RESEND|VERCEL|GITHUB|GH|CONTACT|DO|DIGITALOCEAN)_/;
+  /^(NEXT_PUBLIC_)?(SOVKORA|VERIKORA|FOLIOVIV|KRIZAKA|BUNNY|MAILGUN|RESEND|VERCEL|GITHUB|GH|CONTACT|DO|DIGITALOCEAN)_/;
 // The runtime's and the platforms' own names, read but not ours to name.
 // The operating system's and the platform's own variables (PATH: where a tooling script finds ffmpeg).
 const PLATFORM = new Set(["NODE_ENV", "PORT", "HOSTNAME", "NEXT_PHASE", "NEXT_RUNTIME", "CI", "GITHUB_TOKEN", "PATH"]);

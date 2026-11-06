@@ -14,7 +14,7 @@ import {
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 const TODAY = "2026-10-20";
 
-function complete(product = "yomizaka") {
+function complete(product = "verikora") {
   const criteria = {};
   for (const id of CRITERIA) criteria[id] = { evidence: `https://example.com/${id}`, checked: "2026-10-16" };
   return { version: 1, product, index: "off", criteria };
@@ -29,7 +29,7 @@ test("an evidence set to null is a gap: the checklist is incomplete and says whi
   c.criteria["journey.core"] = {
     evidence: null,
     gap: "no recorded run",
-    issue: "https://github.com/krizaka/yomizaka/issues/1",
+    issue: "https://github.com/krizaka/verikora/issues/1",
   };
   const r = validateChecklist(c, { today: TODAY });
   assert.equal(r.complete, false);
@@ -67,31 +67,31 @@ test("na is allowed only where the standard allows it, with a real reason", () =
 });
 
 test("a product wearing devPreview needs a complete checklist; any other status is never gated", () => {
-  const statuses = { yomizaka: "devPreview", akinaza: "development", orazaka: "development" };
-  assert.match(assertStatuses(statuses, {}, { today: TODAY }).join("\n"), /yomizaka.*no checklist/);
+  const statuses = { verikora: "devPreview", folioviv: "development", sovkora: "development" };
+  assert.match(assertStatuses(statuses, {}, { today: TODAY }).join("\n"), /verikora.*no checklist/);
   const incomplete = complete();
   incomplete.criteria["docs.current"] = { evidence: null, gap: "not audited" };
   assert.match(
-    assertStatuses(statuses, { yomizaka: incomplete }, { today: TODAY }).join("\n"),
-    /yomizaka.*docs\.current/,
+    assertStatuses(statuses, { verikora: incomplete }, { today: TODAY }).join("\n"),
+    /verikora.*docs\.current/,
   );
-  assert.deepEqual(assertStatuses(statuses, { yomizaka: complete() }, { today: TODAY }), []);
-  assert.deepEqual(assertStatuses({ akinaza: "development" }, {}, { today: TODAY }), []);
+  assert.deepEqual(assertStatuses(statuses, { verikora: complete() }, { today: TODAY }), []);
+  assert.deepEqual(assertStatuses({ folioviv: "development" }, {}, { today: TODAY }), []);
 });
 
 test("a checklist whose product does not match the repository it was read from is refused", () => {
   assert.match(
-    assertStatuses({ yomizaka: "devPreview" }, { yomizaka: complete("akinaza") }, { today: TODAY }).join("\n"),
-    /yomizaka.*product/,
+    assertStatuses({ verikora: "devPreview" }, { verikora: complete("folioviv") }, { today: TODAY }).join("\n"),
+    /verikora.*product/,
   );
 });
 
 test("a time-boxed waiver lets a product keep the badge it had before the gate, and ends on its date", () => {
-  const statuses = { akinaza: "devPreview" };
-  assert.deepEqual(assertStatuses(statuses, {}, { today: "2026-10-20", waivers: { akinaza: "2026-11-01" } }), []);
+  const statuses = { folioviv: "devPreview" };
+  assert.deepEqual(assertStatuses(statuses, {}, { today: "2026-10-20", waivers: { folioviv: "2026-11-01" } }), []);
   assert.match(
-    assertStatuses(statuses, {}, { today: "2026-11-02", waivers: { akinaza: "2026-11-01" } }).join("\n"),
-    /akinaza.*waiver ended/,
+    assertStatuses(statuses, {}, { today: "2026-11-02", waivers: { folioviv: "2026-11-01" } }).join("\n"),
+    /folioviv.*waiver ended/,
   );
 });
 
@@ -103,7 +103,7 @@ test("the real waivers have not expired (the gate becomes strict on the day they
 
 test("lib/products.ts gives every product an explicit status, and the cards and chips know devPreview", () => {
   const statuses = readProductStatuses(read("lib/products.ts"));
-  assert.deepEqual(Object.keys(statuses).sort(), ["akinaza", "orazaka", "yomizaka"]);
+  assert.deepEqual(Object.keys(statuses).sort(), ["folioviv", "sovkora", "verikora"]);
   for (const s of Object.values(statuses))
     assert.ok(["devPreview", "development", "paused", "construction", "upcoming"].includes(s));
   for (const l of ["en", "fr"]) assert.ok(JSON.parse(read(`messages/${l}.json`)).site.nav.status.devPreview.label);
@@ -115,7 +115,7 @@ test("the build reads the checklists before it builds", () => {
   assert.match(read(".gitignore"), /dev-preview-checklists\.json/);
 });
 
-test("no waiver is left: Orazaka is in development", () => {
+test("no waiver is left: Sovkora is in development", () => {
   assert.deepEqual(WAIVERS, {});
   assert.ok(!Object.values(readProductStatuses(read("lib/products.ts"))).includes("devPreview"));
 });

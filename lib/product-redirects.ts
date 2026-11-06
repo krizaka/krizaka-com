@@ -4,15 +4,20 @@
    locale prefix or without it (a config redirect runs before the locale proxy). Read by next.config.ts, tested by
    tests/product-redirects.test.mjs. */
 
+import retired from "./retired-product-ids.json" with { type: "json" };
 import { siteUrlOf } from "./product-hosts.ts";
 
 /** The product's public address (its commercial www domain, lib/product-hosts.ts). The old addresses never lead to a
     code-name or dev host (AGENTS.md §2.4). */
 export const PRODUCT_SITES = {
-  orazaka: siteUrlOf("orazaka"),
-  yomizaka: siteUrlOf("yomizaka"),
-  akinaza: siteUrlOf("akinaza"),
+  sovkora: siteUrlOf("sovkora"),
+  verikora: siteUrlOf("verikora"),
+  folioviv: siteUrlOf("folioviv"),
 } as const;
+
+/** The retired ids that old links still carry, with the commercial id each became (`CODE_NAMES` of @krizaka/org, through
+    lib/retired-product-ids.json, which tests/product-sites.test.mjs keeps equal): an incoming address is accepted, never produced. */
+export const RETIRED_PRODUCT_IDS = Object.entries(retired) as [string, keyof typeof PRODUCT_SITES][];
 
 export interface Redirect {
   source: string;
@@ -40,9 +45,8 @@ const to = (source: string, destination: string): Redirect => ({
   statusCode: 308,
 });
 
-/** The addresses an old Orazaka link may carry (the pages that redirected to /products/orazaka/…, before it left). */
-const ORAZAKA_LEGACY = [
-  "/orazaka",
+/** The addresses an old Sovkora link may carry (the pages that redirected to its product page, before it left). */
+const SOVKORA_LEGACY = [
   "/architecture",
   "/demos",
   "/editions",
@@ -54,19 +58,27 @@ const ORAZAKA_LEGACY = [
   "/use-cases",
 ];
 
+/** A product's old documentation → its site. Verikora's keeps the visitor's language (the coming-soon face has no /docs). */
+const docsRedirects = (id: string): Redirect[] => {
+  const site = PRODUCT_SITES[((retired as Record<string, string>)[id] ?? id) as keyof typeof PRODUCT_SITES];
+  return site === PRODUCT_SITES.verikora
+    ? [
+        { source: `/:locale(fr|en)/docs/${id}/:path*`, destination: `${site}/:locale/`, statusCode: 308 },
+        { source: `/docs/${id}/:path*`, destination: `${site}/`, statusCode: 308 },
+      ]
+    : [to(`/docs/${id}/:path*`, site)];
+};
+
 export function productRedirects(): Redirect[] {
-  const { orazaka, yomizaka } = PRODUCT_SITES;
   return [
     // The products' page merged into the home: /products → the home's products section (same language).
     ...homeSection("/products", "#products"),
     { source: "/:locale(fr|en)/products", destination: "/:locale#products", statusCode: 308 },
     // The product pages, their demos, galleries, journeys and use cases.
     ...(Object.entries(PRODUCT_SITES) as [string, string][]).map(([id, site]) => to(`/products/${id}/:path*`, site)),
-    // The products' documentation (Krizaka UI and Krizaka Java stay here).
-    to("/docs/orazaka/:path*", orazaka),
-    // Its old documentation → its site, in the visitor's language when the address names one (the coming-soon face has no /docs).
-    { source: "/:locale(fr|en)/docs/yomizaka/:path*", destination: `${yomizaka}/:locale/`, statusCode: 308 },
-    { source: "/docs/yomizaka/:path*", destination: `${yomizaka}/`, statusCode: 308 },
+    ...RETIRED_PRODUCT_IDS.map(([old, id]) => to(`/products/${old}/:path*`, PRODUCT_SITES[id])),
+    // The products' documentation (Krizaka UI and Krizaka Java stay here), at the commercial id and at the retired one.
+    ...[...Object.keys(PRODUCT_SITES), ...RETIRED_PRODUCT_IDS.map(([old]) => old)].flatMap((id) => docsRedirects(id)),
     // Any other old product page (a product that left, krizaka/.github#413) → the products section, never a dead site.
     ...homeSection("/products/:path*", "#products"),
     { source: "/:locale(fr|en)/products/:path*", destination: "/:locale#products", statusCode: 308 },
@@ -75,8 +87,10 @@ export function productRedirects(): Redirect[] {
     { source: "/fr/blog/:path+", destination: "https://blog.krizaka.com/fr/:path+/", statusCode: 308 },
     { source: "/:locale(en)?/blog", destination: "https://blog.krizaka.com/", statusCode: 308 },
     { source: "/:locale(en)?/blog/:path+", destination: "https://blog.krizaka.com/:path+/", statusCode: 308 },
-    // Old Orazaka addresses.
-    ...ORAZAKA_LEGACY.map((path) => to(`${path}/:path*`, orazaka)),
+    // Old Sovkora addresses, and the page it had at its retired id.
+    ...[...SOVKORA_LEGACY, ...RETIRED_PRODUCT_IDS.filter(([, id]) => id === "sovkora").map(([old]) => `/${old}`)].map(
+      (path) => to(`${path}/:path*`, PRODUCT_SITES.sovkora),
+    ),
   ];
 }
 

@@ -9,7 +9,7 @@ import { getDictionary } from "@/lib/i18n";
    application (krizaka.com carries no product page, so no application node).
    ═══════════════════════════════════════════════════════════════════ */
 
-import { displayName } from "@krizaka/org";
+import { displayName, org } from "@krizaka/org";
 import { SITE_URL, GITHUB_ORG_URL, CONTACT_EMAIL, NPM_ORG_URL } from "@/lib/site";
 import { siteUrlOf } from "@/lib/product-hosts";
 
@@ -24,26 +24,26 @@ const hreflangOf = (locale: Locale) => HREFLANG[locale];
     Words are messages (`site.structuredData.family.<id>`); here only structure — ids, urls, categories. */
 const FAMILY = [
   {
-    id: "orazaka",
-    name: displayName("orazaka"),
-    url: siteUrlOf("orazaka"),
-    repo: "orazaka",
+    id: "sovkora",
+    name: displayName("sovkora"),
+    url: siteUrlOf("sovkora"),
+    repo: "sovkora",
     category: "BusinessApplication",
     kind: "app",
   },
   {
-    id: "yomizaka",
-    name: displayName("yomizaka"),
-    url: siteUrlOf("yomizaka"),
-    repo: "yomizaka",
+    id: "verikora",
+    name: displayName("verikora"),
+    url: siteUrlOf("verikora"),
+    repo: "verikora",
     category: "BusinessApplication",
     kind: "app",
   },
   {
-    id: "akinaza",
-    name: displayName("akinaza"),
-    url: siteUrlOf("akinaza"),
-    repo: "akinaza",
+    id: "folioviv",
+    name: displayName("folioviv"),
+    url: siteUrlOf("folioviv"),
+    repo: "folioviv",
     category: "BusinessApplication",
     kind: "app",
   },
@@ -65,32 +65,39 @@ const FAMILY = [
   },
 ] as const;
 
-const familyNode = (f: (typeof FAMILY)[number], description: string) =>
-  f.kind === "app"
-    ? {
-        "@type": "SoftwareApplication",
-        "@id": `${f.url}/#software`,
-        name: f.name,
-        url: f.url,
-        description,
-        applicationCategory: f.category,
-        operatingSystem: "Web, iOS, Android",
-        isAccessibleForFree: true,
-        license: "https://www.apache.org/licenses/LICENSE-2.0",
-        codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
-        publisher: { "@id": ORG_ID },
-      }
-    : {
-        "@type": "SoftwareSourceCode",
-        "@id": `${f.url}/#source`,
-        name: f.name,
-        url: f.url,
-        description,
-        programmingLanguage: f.language,
-        license: "https://www.apache.org/licenses/LICENSE-2.0",
-        codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
-        publisher: { "@id": ORG_ID },
-      };
+type FamilyEntry = (typeof FAMILY)[number];
+type AppEntry = Extract<FamilyEntry, { category: string }>;
+type CodeEntry = Exclude<FamilyEntry, AppEntry>;
+
+const appNode = (f: AppEntry, description: string) => ({
+  "@type": "SoftwareApplication",
+  "@id": `${f.url}/#software`,
+  name: f.name,
+  url: f.url,
+  description,
+  applicationCategory: f.category,
+  operatingSystem: "Web, iOS, Android",
+  isAccessibleForFree: true,
+  license: "https://www.apache.org/licenses/LICENSE-2.0",
+  codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
+  publisher: { "@id": ORG_ID },
+});
+
+const codeNode = (f: CodeEntry, description: string) => ({
+  "@type": "SoftwareSourceCode",
+  "@id": `${f.url}/#source`,
+  name: f.name,
+  url: f.url,
+  description,
+  programmingLanguage: f.language,
+  license: "https://www.apache.org/licenses/LICENSE-2.0",
+  codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
+  publisher: { "@id": ORG_ID },
+});
+
+/** An application has a category, a library a language: the shape says which node it is. */
+const familyNode = (f: FamilyEntry, description: string) =>
+  "category" in f ? appNode(f, description) : codeNode(f, description);
 
 /** Sitewide @graph: Organization · WebSite · what the organization owns. */
 export function buildSiteGraph(locale: Locale) {
@@ -116,7 +123,7 @@ export function buildSiteGraph(locale: Locale) {
         ],
         logo: `${SITE_URL}/favicon.svg`,
         email: CONTACT_EMAIL,
-        sameAs: [GITHUB_ORG_URL, NPM_ORG_URL],
+        sameAs: [GITHUB_ORG_URL, NPM_ORG_URL, ...org.links.social.map((s) => s.url)],
         address: {
           "@type": "PostalAddress",
           addressLocality: "Montréal",

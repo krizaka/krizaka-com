@@ -2,7 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { createRequire } from "node:module";
-import { PRODUCT_SITES, lastResortRedirects, productRedirects } from "../lib/product-redirects.ts";
+import { CODE_NAMES } from "@krizaka/org";
+import { PRODUCT_SITES, RETIRED_PRODUCT_IDS, lastResortRedirects, productRedirects } from "../lib/product-redirects.ts";
 
 // The products live on their own sites (their commercial www domains): every old address of a product page, demo or documentation
 // answers 308 with the product's site. The sources are matched with the same path-to-regexp (6.x) Next.js compiles them with.
@@ -19,18 +20,25 @@ const go = (path) => rules.find((rule) => rule.matches(path));
 
 test("the products' sites: the three presented products, each at its commercial www domain (founder, 2026-11-04)", () => {
   assert.deepEqual(PRODUCT_SITES, {
-    orazaka: "https://www.sovkora.com",
-    yomizaka: "https://www.verikora.com",
-    akinaza: "https://www.folioviv.com",
+    sovkora: "https://www.sovkora.com",
+    verikora: "https://www.verikora.com",
+    folioviv: "https://www.folioviv.com",
   });
+});
+
+// The retired ids are read from the org package (the only place they are written): an incoming link is accepted, never produced.
+const OLD = Object.fromEntries(Object.entries(CODE_NAMES).map(([old, id]) => [id, old]));
+
+test("the retired ids come from @krizaka/org and map to the presented products", () => {
+  assert.deepEqual(RETIRED_PRODUCT_IDS.map(([, id]) => id).sort(), ["folioviv", "sovkora", "verikora"]);
 });
 
 test("Verikora's old documentation lands on its site, in the language of the address (the coming-soon face has no /docs)", () => {
   for (const [path, destination] of [
-    ["/fr/docs/yomizaka/getting-started", "https://www.verikora.com/:locale/"],
-    ["/en/docs/yomizaka", "https://www.verikora.com/:locale/"],
-    ["/docs/yomizaka", "https://www.verikora.com/"],
-    ["/docs/yomizaka/api", "https://www.verikora.com/"],
+    [`/fr/docs/${OLD.verikora}/getting-started`, "https://www.verikora.com/:locale/"],
+    [`/en/docs/${OLD.verikora}`, "https://www.verikora.com/:locale/"],
+    [`/docs/${OLD.verikora}`, "https://www.verikora.com/"],
+    [`/docs/${OLD.verikora}/api`, "https://www.verikora.com/"],
   ]) {
     const rule = go(path);
     assert.equal(rule?.destination, destination, path);
@@ -39,7 +47,8 @@ test("Verikora's old documentation lands on its site, in the language of the add
 });
 
 test("every /products/<product> address — with or without the locale, any depth — goes to the product's site, 308", () => {
-  for (const [id, site] of Object.entries(PRODUCT_SITES)) {
+  const ids = [...Object.entries(PRODUCT_SITES), ...RETIRED_PRODUCT_IDS.map(([old, id]) => [old, PRODUCT_SITES[id]])];
+  for (const [id, site] of ids) {
     for (const path of [
       `/products/${id}`,
       `/en/products/${id}`,
@@ -69,10 +78,12 @@ test("the old address of a product that left (krizaka/.github#413) answers 308 w
 
 test("the products' documentation goes to the product's site", () => {
   for (const [path, destination] of [
-    ["/docs/orazaka", "https://www.sovkora.com"],
-    ["/en/docs/orazaka/cli", "https://www.sovkora.com"],
-    ["/fr/docs/orazaka/ui/button", "https://www.sovkora.com"],
-    ["/docs/yomizaka", "https://www.verikora.com/"],
+    [`/docs/${OLD.sovkora}`, "https://www.sovkora.com"],
+    [`/en/docs/${OLD.sovkora}/cli`, "https://www.sovkora.com"],
+    [`/fr/docs/${OLD.sovkora}/ui/button`, "https://www.sovkora.com"],
+    ["/docs/sovkora", "https://www.sovkora.com"],
+    [`/docs/${OLD.verikora}`, "https://www.verikora.com/"],
+    ["/docs/verikora", "https://www.verikora.com/"],
   ]) {
     const rule = go(path);
     assert.ok(rule, path);
@@ -81,9 +92,9 @@ test("the products' documentation goes to the product's site", () => {
   }
 });
 
-test("the old Orazaka addresses that redirected to /products/orazaka/… go to its site", () => {
+test("the old Sovkora addresses that redirected to its product page go to its site", () => {
   for (const path of [
-    "/orazaka",
+    `/${OLD.sovkora}`,
     "/en/architecture",
     "/demos",
     "/fr/editions",

@@ -2,12 +2,19 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import snapshot from "./registry-versions.json";
 import { summary } from "./npm-catalogue";
+import { isOperatedPackage } from "./package-catalogue";
+import { PRODUCT_IDS } from "./product-hosts";
 import { SITE_URL } from "./site";
 
-/** The @krizaka packages as the registry says at build (version + first clause of the description), one per line. */
+/** The @krizaka packages as the registry says at build (version + first clause of the description), one per line: the open-source
+    ones, as /open-source lists them (an operated product's own packages are not). */
 function npmPackages(): string {
-  const data = snapshot as { npm?: Record<string, string>; npmMeta?: Record<string, { description?: string }> };
+  const data = snapshot as {
+    npm?: Record<string, string>;
+    npmMeta?: Record<string, { description?: string; repository?: string }>;
+  };
   const lines = Object.entries(data.npm ?? {})
+    .filter(([name]) => !isOperatedPackage(data.npmMeta, name, PRODUCT_IDS))
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([name, version]) => {
       const about = data.npmMeta?.[name]?.description;

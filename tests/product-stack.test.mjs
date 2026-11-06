@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { displayName } from "@krizaka/org";
 import { readFileSync } from "node:fs";
 import { ENGINE, KITS, PLANNED, provenKit, stackCell, stackRows } from "../lib/product-stack.ts";
 import { PRODUCT_RECORDS } from "./helpers/source.mjs";
@@ -11,7 +12,7 @@ const { products: manifests } = JSON.parse(read("lib/product-manifests.json"));
 const ids = PRODUCT_RECORDS().map((p) => p.id);
 
 test("every product of lib/products.ts has a row", () => {
-  assert.deepEqual(ids, ["orazaka", "yomizaka", "akinaza"]);
+  assert.deepEqual(ids, ["sovkora", "verikora", "folioviv"]);
   const rows = stackRows(ids, manifests);
   assert.deepEqual(
     rows.map((r) => r.id),
@@ -61,9 +62,9 @@ test("the table, product by product", () => {
     c.state === "partial" ? `partial:${c.parts.join("+")}` : c.state === "yes" && c.transport ? c.transport : c.state;
   const table = Object.fromEntries(stackRows(ids, manifests).map((r) => [r.id, r.cells.map(word)]));
   assert.deepEqual(table, {
-    orazaka: ["yes", "yes", "sse", "yes", "engine"],
-    yomizaka: ["yes", "yes", "no", "no", "planned"],
-    akinaza: ["yes", "yes", "sse", "no", "planned"],
+    sovkora: ["yes", "yes", "sse", "yes", "engine"],
+    verikora: ["yes", "yes", "no", "no", "planned"],
+    folioviv: ["yes", "yes", "sse", "no", "planned"],
   });
 });
 
@@ -73,7 +74,7 @@ test("the table is not on /open-source (the products are operated, not open sour
   assert.match(read("app/[locale]/story/page.tsx"), /href="\/docs"/);
 });
 
-test("no message says a product runs on Orazaka while its cell is Planned", () => {
+test("no message says a product runs on Sovkora while its cell is Planned", () => {
   const planned = Object.entries(PLANNED)
     .filter(([, kits]) => kits.includes("engine"))
     .map(([id]) => id);
@@ -84,8 +85,8 @@ test("no message says a product runs on Orazaka while its cell is Planned", () =
     // The engine chapter and what comes next: a sentence naming a planned product next to the engine must say "planned".
     const sentences = [story.engine.lead, story.next.wire, story.next.lead].flatMap((p) => p.split(/(?<=[.!?])\s+/));
     for (const id of planned) {
-      const name = id[0].toUpperCase() + id.slice(1);
-      for (const s of sentences.filter((s) => s.includes(name) && s.includes("Orazaka")))
+      const name = displayName(id);
+      for (const s of sentences.filter((s) => s.includes(name) && s.includes("Sovkora")))
         assert.match(s, words[lang], `${lang} story: "${s}"`);
     }
   }

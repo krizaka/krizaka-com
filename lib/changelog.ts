@@ -15,11 +15,11 @@ export interface ChangeItem {
 }
 
 export interface Release {
-  /** What was released: `@krizaka/ui`, `Orazaka`. */
+  /** What was released: `@krizaka/ui`, `Sovkora`. */
   source: string;
   /** The filter it belongs to (`?produit=`): a product id, `ui` or `java`. */
   product: string;
-  /** Which repository of a product made of several (`edge` for orazaka-edge); absent for a single-repository product. */
+  /** Which repository of a product made of several (`edge` for sovkora-edge-service); absent for a single-repository product. */
   part?: string;
   version: string;
   /** ISO date, `2026-10-17`. */
@@ -32,8 +32,6 @@ export interface Release {
 }
 
 export const CHANGE_TAGS: readonly ChangeTag[] = ["breaking", "security", "feature", "fix", "change"];
-
-const REPO_PR = /https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/pull\/(\d+)/;
 
 /** Public text names no one and carries no em dash: the sources are the team's own words, the page is the company's. */
 export const PERSONAL_NAMES = ["Oussama", "Abid"] as const;
@@ -66,7 +64,7 @@ export function releaseProblems(releases: readonly Release[]): string[] {
 }
 
 /** A line of markdown as a reader reads it: links keep their words, emphasis goes. Code spans stay: the page and the feed
-   draw them as code, so an identifier that carries a code name (`.brand-orazaka`) reads as code, not as a name. */
+   draw them as code, so an identifier that carries a code name (`.brand-sovkora`) reads as code, not as a name. */
 export function plain(md: string): string {
   return cleanText(md)
     .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
@@ -89,10 +87,42 @@ const clip = (s: string, max = 220) => {
   return s.length <= max ? s : `${s.slice(0, max).replace(/\s+\S*$/, "")}…`;
 };
 
+/** A release of a repository lists that repository's pull requests: their address is the repository's current one (GitHub
+    renamed some, and a release written before that links the old name). */
+export const ownPrs = <T extends { pr?: { number: number; url: string } }>(changes: readonly T[], repo: string): T[] =>
+  changes.map((c) =>
+    c.pr ? { ...c, pr: { ...c.pr, url: `https://github.com/krizaka/${repo}/pull/${c.pr.number}` } } : c,
+  );
+
+const URL_END = new Set([")", "]", ">", '"', "'", "`"]);
+
+/** The length of the address at the start of `rest`: up to the first space, closing bracket or quote. */
+function addressLength(rest: string): number {
+  let end = 0;
+  while (end < rest.length && !URL_END.has(rest[end]) && rest[end].trim() !== "") {
+    end++;
+  }
+  return end;
+}
+
+/** Every `https://` address a text holds. */
+export const urlsIn = (text: string): string[] =>
+  text
+    .split("https://")
+    .slice(1)
+    .map((rest) => `https://${rest.slice(0, addressLength(rest))}`);
+
+/** `https://github.com/<org>/<repo>/pull/<n>` as a pull request, `undefined` for any other address. */
+function pullRequestAt(address: string): ChangeItem["pr"] {
+  const url = URL.canParse(address) ? new URL(address) : undefined;
+  const [org, repo, kind, number] = url?.pathname.split("/").slice(1) ?? [];
+  const isPull = url?.host === "github.com" && org && repo && kind === "pull" && Number.isInteger(Number(number));
+  return isPull ? { number: Number(number), url: `https://github.com/${org}/${repo}/pull/${number}` } : undefined;
+}
+
 /** The first PR a line links to, read from its markdown (`[#293](…/pull/293)`) or a bare URL. */
 export function prOf(line: string): ChangeItem["pr"] {
-  const url = REPO_PR.exec(line);
-  return url ? { number: Number(url[1]), url: url[0] } : undefined;
+  return urlsIn(line).map(pullRequestAt).find(Boolean);
 }
 
 const CHANGESET_TAG: Record<string, ChangeTag> = { major: "breaking", minor: "feature", patch: "fix" };
@@ -165,15 +195,30 @@ export function changeFromTitle(title: string, prUrl?: string): ChangeItem | nul
   return { tag, text: sentence.replace(/[.\s]*$/, "."), pr };
 }
 
+/** `fix: x by @someone in <url>` → `fix: x <url>`: the author is not public text. */
+function withoutAuthor(line: string): string {
+  const at = line.lastIndexOf(" by @");
+  const [by, who, within, address] = at < 0 ? [] : line.slice(at).trim().split(/\s+/);
+  const isAuthored = by === "by" && who?.startsWith("@") && within === "in" && address?.startsWith("https://");
+  return isAuthored ? `${line.slice(0, at)} ${address}` : line;
+}
+
+/** A line without the address it ends with. */
+function withoutTrailingUrl(line: string): string {
+  const text = line.trimEnd();
+  const last = text.slice(text.lastIndexOf(" ") + 1);
+  return last.startsWith("https://") ? text.slice(0, text.length - last.length).trimEnd() : text;
+}
+
 /** A GitHub Release body: bullets (`* feat: … by @x in <PR url>`, `- Fix …`), conventional titles tagged, the rest «change». */
 export function parseReleaseBody(body: string): ChangeItem[] {
   const items: ChangeItem[] = [];
   for (const raw of body.split("\n")) {
     const bullet = /^\s*[-*] (.+)$/.exec(raw);
     if (!bullet) continue;
-    const line = bullet[1].replace(/\s+by @[\w-]+ in (https:\/\/\S+)\s*$/, " $1");
+    const line = withoutAuthor(bullet[1]);
     const pr = prOf(line);
-    const title = line.replace(/\s*https:\/\/\S+\s*$/, "");
+    const title = withoutTrailingUrl(line);
     const item = changeFromTitle(plain(title), pr?.url);
     if (item) items.push({ ...item, pr: pr ?? item.pr, text: clip(item.text) });
   }
@@ -234,7 +279,7 @@ export function newestFirst(a: Release, b: Release): number {
 export const changesFor = (r: Pick<Release, "changes" | "fr">, lang: "en" | "fr"): ChangeItem[] =>
   ({ en: r.changes, fr: r.fr ?? r.changes })[lang];
 
-/** What a release is called: `@krizaka/ui 3.22.0`, `Orazaka edge 2026.10.22.1`. */
+/** What a release is called: `@krizaka/ui 3.22.0`, `Sovkora edge 2026.10.22.1`. */
 export const releaseLabel = (r: Pick<Release, "source" | "part" | "version">): string =>
   [r.source, r.part, r.version].filter(Boolean).join(" ");
 

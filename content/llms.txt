@@ -8,9 +8,9 @@
 
 ## Products (each has its own page, coming soon)
 
-- Sovkora — sovereign, on-premise AI orchestration engine. Site: https://www.sovkora.com · source: https://github.com/krizaka/orazaka
-- Verikora (in development) — your documents, read and checked by Sovkora. Site: https://www.verikora.com · source: https://github.com/krizaka/yomizaka
-- Folioviv (in development) — bookings, invoices and a GST/QST ledger for independent Québec shops; it prepares tax returns, the merchant files them. Site: https://www.folioviv.com · source: https://github.com/krizaka/akinaza
+- Sovkora — sovereign, on-premise AI orchestration engine. Site: https://www.sovkora.com · source: https://github.com/krizaka/sovkora
+- Verikora (in development) — your documents, read and checked by Sovkora. Site: https://www.verikora.com · source: https://github.com/krizaka/verikora
+- Folioviv (in development) — bookings, invoices and a GST/QST ledger for independent Québec shops; it prepares tax returns, the merchant files them. Site: https://www.folioviv.com · source: https://github.com/krizaka/folioviv
 
 ## Key pages
 

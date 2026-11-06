@@ -5,7 +5,7 @@ import { kindOfRepository, productOfRepository, repositoriesOf } from "../lib/re
 import { groupOfPackage, groupPackages, summary } from "../lib/npm-catalogue.ts";
 import { calls, countCode, hasCode, hasJsx, importsFrom, jsx, records, strings } from "./helpers/source.mjs";
 
-const PRODUCTS = ["orazaka", "yomizaka", "akinaza"];
+const PRODUCTS = ["sovkora", "verikora", "folioviv"];
 const repo = (name, topics = [], archived = false) => ({
   name,
   description: "",
@@ -16,45 +16,45 @@ const repo = (name, topics = [], archived = false) => ({
 });
 
 test("a repository belongs to the product it is named after, anything else to the platform", () => {
-  assert.equal(productOfRepository("yomizaka", PRODUCTS), "yomizaka");
-  assert.equal(productOfRepository("yomizaka-console", PRODUCTS), "yomizaka");
-  assert.equal(productOfRepository("akinaza-mobile", PRODUCTS), "akinaza");
+  assert.equal(productOfRepository("verikora", PRODUCTS), "verikora");
+  assert.equal(productOfRepository("verikora-console", PRODUCTS), "verikora");
+  assert.equal(productOfRepository("folioviv-mobile", PRODUCTS), "folioviv");
   assert.equal(productOfRepository("krizaka-ui", PRODUCTS), "krizaka");
   assert.equal(productOfRepository(".github", PRODUCTS), "krizaka");
-  // A prefix is a whole segment: "orazakatools" is not Orazaka's.
-  assert.equal(productOfRepository("orazakatools", PRODUCTS), "krizaka");
+  // A prefix is a whole segment: "sovkoratools" is not Sovkora's.
+  assert.equal(productOfRepository("sovkoratools", PRODUCTS), "krizaka");
 });
 
 test("the kind of a repository comes from its topics", () => {
-  assert.equal(kindOfRepository(repo("orazaka"), "orazaka"), "main");
-  assert.equal(kindOfRepository(repo("yomizaka-mobile", ["expo", "react-native"]), "yomizaka"), "mobile");
+  assert.equal(kindOfRepository(repo("sovkora"), "sovkora"), "main");
+  assert.equal(kindOfRepository(repo("verikora-mobile", ["expo", "react-native"]), "verikora"), "mobile");
   assert.equal(
-    kindOfRepository(repo("yomizaka-design-system", ["design-system", "react", "npm-package"]), "yomizaka"),
+    kindOfRepository(repo("verikora-design-system", ["design-system", "react", "npm-package"]), "verikora"),
     "library",
   );
-  assert.equal(kindOfRepository(repo("orazaka-ui-kit", ["react-native", "npm-package"]), "orazaka"), "library");
-  assert.equal(kindOfRepository(repo("orazaka-edge", ["java", "spring-boot"]), "orazaka"), "service");
-  assert.equal(kindOfRepository(repo("orazaka-cli", ["cli", "typescript"]), "orazaka"), "tooling");
+  assert.equal(kindOfRepository(repo("sovkora-ui-kit", ["react-native", "npm-package"]), "sovkora"), "library");
+  assert.equal(kindOfRepository(repo("sovkora-edge-service", ["java", "spring-boot"]), "sovkora"), "service");
+  assert.equal(kindOfRepository(repo("sovkora-cli", ["cli", "typescript"]), "sovkora"), "tooling");
   // Agent Skills: tooling for coding agents, read from the `agent-skills` topic.
   assert.equal(
     kindOfRepository(repo("agent-skills-example", ["agent-skills", "claude-code-plugin"]), "krizaka"),
     "tooling",
   );
-  assert.equal(kindOfRepository(repo("yomizaka-console", ["nextjs", "bff"]), "yomizaka"), "web");
+  assert.equal(kindOfRepository(repo("verikora-console", ["nextjs", "bff"]), "verikora"), "web");
   assert.equal(kindOfRepository(repo("x-y", []), "x"), "other");
 });
 
 test("a product lists all its repositories, main first, archived ones left out", () => {
   const all = [
-    repo("yomizaka-mobile", ["expo"]),
-    repo("yomizaka"),
-    repo("yomizaka-console", ["nextjs"]),
-    repo("yomizaka-old", [], true),
+    repo("verikora-mobile", ["expo"]),
+    repo("verikora"),
+    repo("verikora-console", ["nextjs"]),
+    repo("verikora-old", [], true),
     repo("krizaka-ui", ["design-system"]),
   ];
   assert.deepEqual(
-    repositoriesOf(all, "yomizaka", PRODUCTS).map((r) => r.name),
-    ["yomizaka", "yomizaka-console", "yomizaka-mobile"],
+    repositoriesOf(all, "verikora", PRODUCTS).map((r) => r.name),
+    ["verikora", "verikora-console", "verikora-mobile"],
   );
   assert.deepEqual(
     repositoriesOf(all, "krizaka", PRODUCTS).map((r) => r.name),
@@ -69,7 +69,7 @@ test("npm packages are grouped by their keywords", () => {
   assert.equal(groupOfPackage(["push", "expo"]), "realtime");
   assert.equal(groupOfPackage(["i18n", "cli"]), "data");
   assert.equal(groupOfPackage(["eslint-config", "design-system"]), "tooling");
-  assert.equal(groupOfPackage(["orazaka", "cli"]), "tooling");
+  assert.equal(groupOfPackage(["sovkora", "cli"]), "tooling");
   assert.equal(groupOfPackage([]), "tooling");
 });
 
@@ -79,7 +79,7 @@ test("a description is summarised to its first clause, in whole words", () => {
     "The Krizaka front-end platform's components",
   );
   assert.equal(summary("Mobile push without an SDK: the Expo Push Service relays"), "Mobile push without an SDK");
-  assert.equal(summary("Orazaka shared contracts: TypeScript types."), "Orazaka shared contracts");
+  assert.equal(summary("Sovkora shared contracts: TypeScript types."), "Sovkora shared contracts");
   assert.equal(summary("v1.2 of the thing"), "v1.2 of the thing");
 });
 
@@ -206,8 +206,8 @@ test("how it fits: building blocks → shared services, from the manifests (no p
   const { howItFits } = await import("../lib/how-it-fits.ts");
   const layers = howItFits(
     {
-      yomizaka: { npm: ["@krizaka/ui"], maven: [] },
-      orazaka: { npm: ["@krizaka/ui", "@krizaka/tokens"], maven: ["krizaka-users-client", "krizaka-security"] },
+      verikora: { npm: ["@krizaka/ui"], maven: [] },
+      sovkora: { npm: ["@krizaka/ui", "@krizaka/tokens"], maven: ["krizaka-users-client", "krizaka-security"] },
     },
     {
       "krizaka-users-client": { parent: "krizaka-users" },

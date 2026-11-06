@@ -50,7 +50,7 @@ export const STACK: StackPart[] = [
     registry: "none",
     status: "development",
     action: "lab",
-    actionPath: "/orazaka",
+    actionPath: "/sovkora",
   },
   {
     id: "java",
@@ -80,4 +80,4 @@ export const STACK_LICENCE = "Apache-2.0";
 export const stackActionUrl = (part: StackPart) => `${part.url}${part.actionPath ?? ""}`;
 
 /** `ui.krizaka.com` — an address as it reads in a sentence. */
-export const hostOf = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+export const hostOf = (url: string) => new URL(url).host;

@@ -37,7 +37,7 @@ test("every entry has its words in English and French (site.home.stack.<id>.line
 
 test("the first action goes to the site, the lab to its scene", () => {
   assert.equal(stackActionUrl(STACK[0]), "https://ui.krizaka.com");
-  assert.equal(stackActionUrl(STACK[1]), "https://lab.krizaka.com/orazaka");
+  assert.equal(stackActionUrl(STACK[1]), "https://lab.krizaka.com/sovkora");
   assert.equal(hostOf(STACK[1].url), "lab.krizaka.com");
 });
 

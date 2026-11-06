@@ -140,27 +140,27 @@
       "releaseNotes": "Release notes",
       "releaseNotesAria": "{name}: release notes",
       "cards": {
-        "orazaka": {
+        "sovkora": {
           "line": "The AI that stays home. Your models, your machines: your data stays in."
         },
-        "yomizaka": {
+        "verikora": {
           "line": "Read before you sign. Verikora checks the papers of a rental file and quotes every passage."
         },
-        "akinaza": {
+        "folioviv": {
           "line": "Your bookings and invoices sorted, your taxes prepared."
         }
       },
       "proofBy": "Proved by {name}",
       "knowhow": {
-        "orazaka": {
+        "sovkora": {
           "name": "The engine",
           "proof": "Every request crosses a deterministic pipeline to the best local model: your documents, your models, your network — nothing leaves."
         },
-        "yomizaka": {
+        "verikora": {
           "name": "Reading documents",
           "proof": "A lease checked rule by rule against the law in force on a date, a PDF examined for signs of editing: every finding quotes its passage, every check is a traced Sovkora run."
         },
-        "akinaza": {
+        "folioviv": {
           "name": "Running a shop, for less",
           "proof": "Appointment booking, bilingual GST/QST invoices to the cent, a ledger the database keeps balanced, and a tax report prepared for Revenu Québec, which the merchant reviews and files. Data in Canada."
         }
@@ -172,8 +172,8 @@
         "label": "Powered by Sovkora",
         "planned": "planned",
         "uses": {
-          "yomizaka": "document checks, each a traced run",
-          "akinaza": "the tax assistant"
+          "verikora": "document checks, each a traced run",
+          "folioviv": "the tax assistant"
         },
         "sends": "Each product sends requests, documents and prompts to the engine",
         "gets": "gets back: {list}",
@@ -256,9 +256,9 @@
           "site": "site"
         },
         "notes": {
-          "orazaka": "Every request crosses one deterministic pipeline to a local model: your documents, your models, your network. Nothing leaves.",
-          "yomizaka": "A lease is checked rule by rule against the law in force on its date; every finding quotes its passage, every check is a traced Sovkora run.",
-          "akinaza": "Bilingual invoices with GST and QST to the cent, a ledger the database keeps balanced, and the GST/QST return prepared for the merchant to file."
+          "sovkora": "Every request crosses one deterministic pipeline to a local model: your documents, your models, your network. Nothing leaves.",
+          "verikora": "A lease is checked rule by rule against the law in force on its date; every finding quotes its passage, every check is a traced Sovkora run.",
+          "folioviv": "Bilingual invoices with GST and QST to the cent, a ledger the database keeps balanced, and the GST/QST return prepared for the merchant to file."
         },
         "birds": {
           "beaver": "the beaver"
@@ -266,7 +266,7 @@
         "inDesign": {
           "label": "Being designed",
           "lines": {
-            "kachizaka": "Your company documents, filed and found."
+            "kridoc": "Your company documents, filed and found."
           },
           "plate": {
             "demoSoon": "Demo soon",
@@ -277,15 +277,15 @@
         },
         "rowLabel": "Our three products, the engine in the centre",
         "roles": {
-          "yomizaka": "checks the papers",
-          "orazaka": "the engine",
-          "akinaza": "runs the shop"
+          "verikora": "checks the papers",
+          "sovkora": "the engine",
+          "folioviv": "runs the shop"
         },
         "siteValue": "{host} · not open yet",
         "highlights": {
-          "yomizaka": "You'll love this: a « no children » clause flagged, with article 1899 cited.",
-          "orazaka": "You'll love the short-film studio: a brief becomes an edited film.",
-          "akinaza": "You'll love your GST and QST return, prepared from your invoices."
+          "verikora": "You'll love this: a « no children » clause flagged, with article 1899 cited.",
+          "sovkora": "You'll love the short-film studio: a brief becomes an edited film.",
+          "folioviv": "You'll love your GST and QST return, prepared from your invoices."
         }
       },
       "stack": {
@@ -421,7 +421,7 @@
         }
       },
       "visuals": {
-        "orazaka": {
+        "sovkora": {
           "demo": "demo",
           "promptLabel": "Request",
           "prompt": "Summarize this service contract in three points.",
@@ -434,7 +434,7 @@
           "model": "Local model, on your server",
           "run": "run {run}"
         },
-        "yomizaka": {
+        "verikora": {
           "demo": "demo",
           "file": "Residential lease.pdf",
           "pages": "3 pages",
@@ -448,7 +448,7 @@
           "law": "C.c.Q., art. 1904, para. 1",
           "run": "run {run}"
         },
-        "akinaza": {
+        "folioviv": {
           "demo": "demo",
           "bookingLabel": "Booking",
           "service": "Short cut",
@@ -601,21 +601,21 @@
       "company": "Organisation",
       "optional": "optional",
       "topics": {
-        "orazaka": "Sovkora",
+        "sovkora": "Sovkora",
         "blocks": "Building blocks",
         "partnership": "Partnership",
         "other": "Something else",
-        "yomizaka": "Verikora",
-        "akinaza": "Folioviv",
+        "verikora": "Verikora",
+        "folioviv": "Folioviv",
         "enterprise": "Entreprise"
       },
       "topicHints": {
-        "orazaka": "Deploy or audit the sovereign-AI gateway",
+        "sovkora": "Deploy or audit the sovereign-AI gateway",
         "blocks": "Use or integrate a Krizaka component from Maven Central or npm",
         "partnership": "Integration, reseller or research partnership",
         "other": "Press, careers, a question for the team",
-        "yomizaka": "You rent out homes: tell us about the rental files you check. In development, sign-up closed.",
-        "akinaza": "Talk to us about Folioviv — in development, sign-up closed",
+        "verikora": "You rent out homes: tell us about the rental files you check. In development, sign-up closed.",
+        "folioviv": "Talk to us about Folioviv — in development, sign-up closed",
         "enterprise": "Custom modules, sovereign AI adoption or maintenance"
       },
       "timeline": "When do you need it?",
@@ -626,12 +626,12 @@
       },
       "message": "Your message",
       "placeholders": {
-        "orazaka": "Your infrastructure (cloud, on-prem, air-gapped), the models you run, your compliance constraints…",
+        "sovkora": "Your infrastructure (cloud, on-prem, air-gapped), the models you run, your compliance constraints…",
         "blocks": "The component (security, messaging, users, notifications, billing, UI…), your stack and what you want to build with it…",
         "partnership": "Who you are, what you would build together, the markets you serve…",
         "other": "How can we help?",
-        "yomizaka": "Your buildings, how many files you receive a month, what you check today and how…",
-        "akinaza": "Your shop: what you sell, how you book and invoice today, what your tools cost you…",
+        "verikora": "Your buildings, how many files you receive a month, what you check today and how…",
+        "folioviv": "Your shop: what you sell, how you book and invoice today, what your tools cost you…",
         "enterprise": "Your company, what you want built or adopted, where it must run (your servers, Canada) and when…"
       },
       "counter": "{count} / {max}",
@@ -767,15 +767,15 @@
           "watchRender": "Watch a scene it rendered",
           "renderPlayer": "Video: a scene rendered by {name}",
           "captions": {
-            "orazaka": [
+            "sovkora": [
               "The web client on its dev site: the demo persona asks a question and Sovkora writes the answer."
             ],
-            "yomizaka": [
+            "verikora": [
               "A lease is dropped into the library.",
               "Verikora reads it and keeps its text.",
               "A search for « deposit » finds the clause in every lease."
             ],
-            "akinaza": [
+            "folioviv": [
               "A customer picks a service and books.",
               "The owner sees the day's walks.",
               "A walk report and a photo go to the client.",
@@ -784,8 +784,8 @@
           }
         },
         "proofs": {
-          "yomizaka": "Each rule cites its article of law. The Québec rules still wait for a lawyer's review, and the screen says so: it sorts, it does not give legal advice. Sign-up is closed while we test on real leases.",
-          "akinaza": "Appointments, invoices with GST and QST, a ledger the database keeps balanced, and a tax report the merchant reviews and files. Work is paused while we take Verikora forward."
+          "verikora": "Each rule cites its article of law. The Québec rules still wait for a lawyer's review, and the screen says so: it sorts, it does not give legal advice. Sign-up is closed while we test on real leases.",
+          "folioviv": "Appointments, invoices with GST and QST, a ledger the database keeps balanced, and a tax report the merchant reviews and files. Work is paused while we take Verikora forward."
         }
       },
       "birds": {
@@ -807,7 +807,7 @@
       "next": {
         "nav": "What's next",
         "title": "What comes next",
-        "lead": "Verikora goes first: it is the product we are taking to its first users, and Sovkora runs it. Folioviv waits its turn. Kridoc is being worked out before it is built. No date is promised.",
+        "lead": "Verikora goes first: it is the product we are taking to its first users, and Sovkora is planned to run it. Folioviv waits its turn. Kridoc is being worked out before it is built. No date is promised.",
         "wire": "Wire Sovkora to {products}, where its use is still planned.",
         "reach": "Bring {products} to a dev preview, each proved on its own checklist.",
         "boardAria": "Where each product stands",
@@ -1340,11 +1340,11 @@
     "structuredData": {
       "organization": "Krizaka (Technologies Krizaka Inc.) is a Montréal software studio that builds open-source products — Sovkora, Verikora and Folioviv, each on its own site — and the stack under them: Krizaka UI (ui.krizaka.com) and Krizaka Java (java.krizaka.com).",
       "family": {
-        "orazaka": "Sovereign, on-premise AI orchestration engine: chat, knowledge, jobs and automation under your own roof.",
+        "sovkora": "Sovereign, on-premise AI orchestration engine: chat, knowledge, jobs and automation under your own roof.",
         "krizaka-ui": "The Krizaka design system: React and React Native components, tokens, icons, fonts and charts.",
         "krizaka-java": "The Spring Boot building blocks of every Krizaka service, published on Maven Central under com.krizaka.",
-        "yomizaka": "Leases, contracts and invoices read and checked by Sovkora. In development.",
-        "akinaza": "Your appointments, invoices and taxes, sorted, for salons, studios and the self-employed in Québec. In development."
+        "verikora": "Leases, contracts and invoices read and checked by Sovkora. In development.",
+        "folioviv": "Your appointments, invoices and taxes, sorted, for salons, studios and the self-employed in Québec. In development."
       },
       "socialImage": {
         "tagline": "Open-source software, made in Montréal.",
@@ -1763,9 +1763,9 @@
       "filterLabel": "Filter by product",
       "filters": {
         "all": "Everything",
-        "orazaka": "Sovkora",
-        "akinaza": "Folioviv",
-        "yomizaka": "Verikora",
+        "sovkora": "Sovkora",
+        "folioviv": "Folioviv",
+        "verikora": "Verikora",
         "ui": "Krizaka UI",
         "java": "Krizaka Java"
       },
@@ -1851,7 +1851,7 @@
           "title": "Krizaka TypeScript",
           "line": "Backend building blocks on npm, each package documented on its own site."
         },
-        "orazaka": {
+        "sovkora": {
           "title": "Sovkora",
           "line": "The AI engine behind our products, with its source code on GitHub."
         },

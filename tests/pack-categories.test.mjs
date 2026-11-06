@@ -1,4 +1,4 @@
-// The packs of the generated architecture data stand on the closed list of categories (orazaka-packs#16): the
+// The packs of the generated architecture data stand on the closed list of categories (sovkora-packs#16): the
 // open-source lists and the product sites group by it.
 import test from "node:test";
 import assert from "node:assert/strict";

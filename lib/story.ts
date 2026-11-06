@@ -1,5 +1,5 @@
 /* "Our story" — the structure of /story. Krizaka is the studio that tells it: it forges the platform (the open building
-   blocks), Orazaka is the engine, and the products run on both. Every text lives in messages/<locale>.json under
+   blocks), Sovkora is the engine, and the products run on both. Every text lives in messages/<locale>.json under
    site.story; this module keeps structure only.
 
    - The products come from lib/products.ts (the one list of the site, with their release state): the story's stages
@@ -10,10 +10,10 @@ export { KITS, KIT_PACKAGES, type KitId } from "./product-stack";
 import { PRODUCTS, type ProductId } from "./products";
 
 /** The engine: the product the others are powered by (stage 03). */
-export const ENGINE: ProductId = "orazaka";
+export const ENGINE: ProductId = "sovkora";
 
-/** What the engine proves first (stage 04): a Québec firm's documents (Yomizaka). */
-export const PROVES_FIRST: readonly ProductId[] = ["yomizaka"];
+/** What the engine proves first (stage 04): a Québec firm's documents (Verikora). */
+export const PROVES_FIRST: readonly ProductId[] = ["verikora"];
 
 /** The rest of the roster (stage 05): every other product of lib/products.ts, in its order. */
 export const ROSTER: readonly ProductId[] = PRODUCTS.map((p) => p.id).filter(
@@ -36,9 +36,9 @@ export const WORK_STEPS = ["board", "lane", "pr", "train", "matrix"] as const;
  *  discours »): one promise per subject, never the same bird twice on the page. */
 export type StoryBird = "falcon" | "owl" | "duck" | "flamingo" | "pigeon" | "lovebird" | "crane" | "magpie" | "beaver";
 export const PRODUCT_BIRD: Record<ProductId, StoryBird> = {
-  orazaka: "duck",
-  yomizaka: "owl",
-  akinaza: "beaver",
+  sovkora: "duck",
+  verikora: "owl",
+  folioviv: "beaver",
 };
 export const WHO_BIRD: StoryBird = "falcon";
 export const OPEN_BIRD: StoryBird = "pigeon";

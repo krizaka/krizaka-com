@@ -4,6 +4,7 @@
    link typed here. Tested by tests/package-catalogue.test.mjs (no import alias: Node strips the types and runs it). */
 
 import { releasesUrl } from "./library-links.ts";
+import retiredIds from "./retired-product-ids.json" with { type: "json" };
 import { groupOfPackage, summary, type NpmGroup } from "./npm-catalogue.ts";
 
 export type Registry = "npm" | "maven";
@@ -92,10 +93,22 @@ const repositoryOf = (url: string | undefined): string | undefined =>
         .replace(/\.git$/, "")
     : undefined;
 
+/** Whether a package's source repository is an operated product's (`<product>`, `<product>-cli`): not part of the open-source
+    list. A package published before the renames still names its repository by the retired id (`<retired>-ui-kit`): the
+    same product. */
+export const isOperatedPackage = (
+  npmMeta: Record<string, { repository?: string }> | undefined,
+  name: string,
+  products: readonly string[],
+): boolean => {
+  const repo = repositoryOf(npmMeta?.[name]?.repository);
+  return Boolean(repo && [...products, ...Object.keys(retiredIds)].some((p) => repo === p || repo.startsWith(`${p}-`)));
+};
+
 /** Every published package as a row, npm first, each registry sorted by name. `repositories`: the org's repository
     names (a Maven module's repository is linked only when it exists; an npm package whose source repository is no longer
     public — a paused product's — is left out). `products`: the products' ids — a package built from a product's own
-    repository (`orazaka-cli`, `orazaka-ui-kit`) is part of that operated product, not of the open-source list, and is left
+    repository (`sovkora-cli`, `sovkora-ui-kit`) is part of that operated product, not of the open-source list, and is left
     out. `javaDocs`: the Krizaka Java site. */
 export function packageRows(
   snapshot: RegistrySnapshot,
@@ -104,8 +117,10 @@ export function packageRows(
   products: readonly string[] = [],
 ): PackageRow[] {
   const isPublic = (name: string) => {
+    if (isOperatedPackage(snapshot.npmMeta, name, products)) {
+      return false;
+    }
     const repo = repositoryOf(snapshot.npmMeta?.[name]?.repository);
-    if (repo && products.some((p) => repo === p || repo.startsWith(`${p}-`))) return false;
     return !repo || repositories.length === 0 || repositories.includes(repo);
   };
   const npm = Object.entries(snapshot.npm ?? {})

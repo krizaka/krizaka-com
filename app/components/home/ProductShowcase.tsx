@@ -118,7 +118,7 @@ function tagProps(p: Product, t: TranslationDictionary, locale: string) {
 }
 
 /** What the engine gives and the products it powers, folded in its tag. Only what runs is said (results, analytics; run
- *  events and webhooks are orazaka#189). */
+ *  events and webhooks are sovkora#189). */
 function EngineGives({ t }: Readonly<{ t: TranslationDictionary }>) {
   const e = t.site.home.engine;
   const eng = t.site.products.engine;
@@ -197,7 +197,7 @@ function ProductEntry({
 }
 
 /** The marks of the products in conception: Kridoc has a mark and no palette (@krizaka/ui ProductLogo leaves it out). */
-const DESIGN_MARK = { kachizaka: KridocLogo } as const;
+const DESIGN_MARK = { kridoc: KridocLogo } as const;
 
 /** The plate of a product in conception: a sample document in demo data, said as demo, and the chip « Demo soon ». Drawn from
  *  tokens and @krizaka/ui's Badge and mark — no invented app UI, no date, no sign-up. */

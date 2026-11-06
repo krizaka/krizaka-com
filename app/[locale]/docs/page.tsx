@@ -104,7 +104,7 @@ export default async function DocsPage({ params }: Props) {
           const labels: Record<string, string> = words.links;
           return {
             id: path.id,
-            mark: <ProductLogo id={path.id === "products" ? "orazaka" : "krizaka"} size={20} animated={false} />,
+            mark: <ProductLogo id={path.id === "products" ? "sovkora" : "krizaka"} size={20} animated={false} />,
             title: words.title,
             href: path.href,
             description: words.text,

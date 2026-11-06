@@ -11,12 +11,12 @@ export const SERVICES_PAGE_ORDER = {
   faq: ["scope", "code", "data", "stack", "start"],
 } as const;
 
-export type ServicesProofId = StackId | "orazaka" | "blog";
+export type ServicesProofId = StackId | "sovkora" | "blog";
 
 /* Everything the stack publishes (lib/stack.ts, in its order), then the engine's source and the blog: a new part of
    the stack appears here by itself. */
 export const SERVICES_PROOF: ReadonlyArray<{ id: ServicesProofId; href: string }> = [
   ...STACK.map((part) => ({ id: part.id, href: part.url })),
-  { id: "orazaka", href: PRODUCTS.find((p) => p.id === "orazaka")!.repoUrl },
+  { id: "sovkora", href: PRODUCTS.find((p) => p.id === "sovkora")!.repoUrl },
   { id: "blog", href: BLOG_URL },
 ];

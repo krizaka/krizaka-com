@@ -1,11 +1,11 @@
-/* The engine and the products it powers, drawn on Orazaka's card on the home — @krizaka/ui's EngineFlow (SVG + CSS, the
-   one motion system; the generic piece of krizaka-lab's « Orazaka Neural Pipeline Flow »). Radial on desktop and
-   tablet (Orazaka at the centre: « one engine, the products it powers » in one glance), top to bottom on a phone (the
+/* The engine and the products it powers, drawn on Sovkora's card on the home — @krizaka/ui's EngineFlow (SVG + CSS, the
+   one motion system; the generic piece of krizaka-lab's « Sovkora Neural Pipeline Flow »). Radial on desktop and
+   tablet (Sovkora at the centre: « one engine, the products it powers » in one glance), top to bottom on a phone (the
    products in a row above, flowing down into the engine).
    Only what runs is drawn (lib/engine-uses.ts): requests go in from every wired product and results come back to it;
    a planned product is dim, its conduit dashed and still. No settings for visitors (the lab has them). Pointing at or
-   focusing a product says what it uses Orazaka for, with a link to its site. Paused off screen, still under reduced
-   motion; the text version is each product row's « On Orazaka · … » line. Words: site.home.products.flow.* */
+   focusing a product says what it uses Sovkora for, with a link to its site. Paused off screen, still under reduced
+   motion; the text version is each product row's « On Sovkora · … » line. Words: site.home.products.flow.* */
 
 import { ProductLogo } from "@krizaka/ui";
 import { EngineFlow, type EngineFlowNode } from "@krizaka/ui/engine-flow";

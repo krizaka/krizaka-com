@@ -7,14 +7,15 @@
    Both may be set; the message is accepted when at least one channel delivers it. */
 
 import { displayName } from "@krizaka/org";
+import { isEmail } from "@krizaka/time";
 import { z } from "zod";
 
 const CONTACT_LOCALES = ["en", "fr"] as const;
 
 export const CONTACT_TOPICS = [
-  "orazaka",
-  "yomizaka",
-  "akinaza",
+  "sovkora",
+  "verikora",
+  "folioviv",
   "blocks",
   "enterprise",
   "partnership",
@@ -30,9 +31,9 @@ export const cleanSource = (v: unknown): string | null => (typeof v === "string"
 /** The source of a page: its product, its documentation or open source, else its first segment ("home" for /). */
 export function contactSourceFromPath(pathname: string): string {
   const path = pathname.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
-  if (/^\/(products|docs)\/orazaka(\/|$)/.test(path)) return "orazaka";
-  if (/^\/(products|docs)\/yomizaka(\/|$)/.test(path)) return "yomizaka";
-  if (/^\/products\/akinaza(\/|$)/.test(path)) return "akinaza";
+  if (/^\/(products|docs)\/sovkora(\/|$)/.test(path)) return "sovkora";
+  if (/^\/(products|docs)\/verikora(\/|$)/.test(path)) return "verikora";
+  if (/^\/products\/folioviv(\/|$)/.test(path)) return "folioviv";
   if (/^\/docs\/(ui|java)(\/|$)/.test(path)) return `docs-${path.split("/")[2]}`;
   if (/^\/(open-source|docs)(\/|$)/.test(path)) return "open-source";
   return cleanSource(path.split("/")[1]) ?? "home";
@@ -40,7 +41,7 @@ export function contactSourceFromPath(pathname: string): string {
 
 /** The topic a source implies — none when the page is about Krizaka as a whole (home, story…). */
 export function topicForSource(source: string | null): ContactTopic | null {
-  if (source === "orazaka" || source === "yomizaka" || source === "akinaza") return source;
+  if (source === "sovkora" || source === "verikora" || source === "folioviv") return source;
   if (source === "services") {
     return "enterprise";
   }
@@ -75,15 +76,13 @@ export interface ContactMessage {
 
 export type ContactValidation = { ok: true; value: ContactMessage } | { ok: false; field: string };
 
-const EMAIL = /^[^\s@<>()]+@[^\s@<>()]+\.[^\s@<>()]{2,}$/;
-
 // @fixed: The message size limit is a technical constraint shared by the API and form.
 export const CONTACT_MESSAGE_MAX = 5000;
 
 /** The one validation schema of the contact form: the server (validateContact) and the form's fields read it. */
 export const ContactFormSchema = z.object({
   name: z.string().trim().min(2).max(120),
-  email: z.string().trim().max(200).regex(EMAIL),
+  email: z.string().trim().max(200).refine(isEmail),
   company: z.string().trim().max(160),
   message: z.string().trim().min(10).max(CONTACT_MESSAGE_MAX),
 });
@@ -127,9 +126,9 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
 }
 
 const TOPIC_LABEL: Record<ContactTopic, string> = {
-  orazaka: displayName("orazaka"),
-  yomizaka: displayName("yomizaka"),
-  akinaza: displayName("akinaza"),
+  sovkora: displayName("sovkora"),
+  verikora: displayName("verikora"),
+  folioviv: displayName("folioviv"),
   blocks: "Building blocks",
   enterprise: "Entreprise",
   partnership: "Partnership",

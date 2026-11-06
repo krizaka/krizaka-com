@@ -26,7 +26,7 @@ const state = {
     [...products, ...stack].map((p) => [repoName(p.repoUrl), { discussions: false, issues: true }]),
   ),
 };
-state.repos.orazaka.discussions = true;
+state.repos.sovkora.discussions = true;
 state.repos["krizaka-ui"].discussions = true;
 
 test("the sources are read: the products in the data, the stack and the lab", () => {
@@ -85,11 +85,11 @@ test("without a snapshot (GitHub unreachable at build) nothing claims Discussion
 });
 
 test("a repository whose issues are off is left out of nothing but gets no new-issue link claim", () => {
-  const off = { repos: { ...state.repos, akinaza: { discussions: false, issues: false } } };
-  const e = buildPublicChannels(products, stack, off)[0].entries.find((x) => x.id === "akinaza");
+  const off = { repos: { ...state.repos, folioviv: { discussions: false, issues: false } } };
+  const e = buildPublicChannels(products, stack, off)[0].entries.find((x) => x.id === "folioviv");
   assert.equal(
     e.issues.href,
-    `${products.find((p) => p.id === "akinaza").repoUrl}`,
+    `${products.find((p) => p.id === "folioviv").repoUrl}`,
     "falls back to the repository itself",
   );
 });

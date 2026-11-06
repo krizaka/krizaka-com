@@ -5,11 +5,11 @@ import { contactHref, contactSourceFromPath, topicForSource, validateContact } f
 
 test("names the page a visitor comes from", () => {
   const cases = {
-    "/en/products/yomizaka": "yomizaka",
-    "/fr/products/yomizaka/demo": "yomizaka",
-    "/en/docs/yomizaka/api": "yomizaka",
-    "/en/products/orazaka/demos": "orazaka",
-    "/fr/products/akinaza": "akinaza",
+    "/en/products/verikora": "verikora",
+    "/fr/products/verikora/demo": "verikora",
+    "/en/docs/verikora/api": "verikora",
+    "/en/products/sovkora/demos": "sovkora",
+    "/fr/products/folioviv": "folioviv",
     "/en/open-source": "open-source",
     "/en/docs/ui/button": "docs-ui",
     "/en/docs/java": "docs-java",
@@ -21,9 +21,9 @@ test("names the page a visitor comes from", () => {
 });
 
 test("pre-selects the topic the page is about, and nothing for Krizaka as a whole", () => {
-  assert.equal(topicForSource("yomizaka"), "yomizaka");
-  assert.equal(topicForSource("orazaka"), "orazaka");
-  assert.equal(topicForSource("akinaza"), "akinaza");
+  assert.equal(topicForSource("verikora"), "verikora");
+  assert.equal(topicForSource("sovkora"), "sovkora");
+  assert.equal(topicForSource("folioviv"), "folioviv");
   // A paused product (2026-10-25) is no topic any more.
   assert.equal(topicForSource("unknown-product"), null);
   assert.equal(topicForSource("docs-ui"), "blocks");
@@ -34,7 +34,7 @@ test("pre-selects the topic the page is about, and nothing for Krizaka as a whol
 });
 
 test("builds the link", () => {
-  assert.equal(contactHref("yomizaka"), "/contact?source=yomizaka");
+  assert.equal(contactHref("verikora"), "/contact?source=verikora");
   assert.equal(contactHref("open-source", "blocks"), "/contact?topic=blocks&source=open-source");
   assert.equal(contactHref(null), "/contact");
 });
@@ -43,11 +43,11 @@ test("keeps a clean slug as source and drops anything else", () => {
   const base = {
     name: "Ada Lovelace",
     email: "ada@example.com",
-    topic: "yomizaka",
+    topic: "verikora",
     message: "Hello there, a real message.",
   };
-  const ok = validateContact({ ...base, source: "yomizaka" });
-  assert.equal(ok.ok === true && ok.value.source, "yomizaka");
+  const ok = validateContact({ ...base, source: "verikora" });
+  assert.equal(ok.ok === true && ok.value.source, "verikora");
   const bad = validateContact({ ...base, source: "<script>alert(1)</script>" });
   assert.equal(bad.ok === true && bad.value.source, null);
 });
@@ -55,16 +55,16 @@ test("keeps a clean slug as source and drops anything else", () => {
 // Réunion 6 (2026-11-05, krizaka-internal#2629): the waiting pages write « Nous écrire » with the product's commercial name
 // (`?topic=verikora&source=verikora-com`); the form takes it, and the old code-name topics still work.
 test("takes a product by its commercial name as a topic or a source, and still by its old name", () => {
-  assert.equal(topicFromQuery("verikora"), "yomizaka");
-  assert.equal(topicFromQuery("sovkora"), "orazaka");
-  assert.equal(topicFromQuery("folioviv"), "akinaza");
-  assert.equal(topicFromQuery("yomizaka"), "yomizaka");
+  assert.equal(topicFromQuery("verikora"), "verikora");
+  assert.equal(topicFromQuery("sovkora"), "sovkora");
+  assert.equal(topicFromQuery("folioviv"), "folioviv");
+  assert.equal(topicFromQuery("verikora"), "verikora");
   assert.equal(topicFromQuery("blocks"), "blocks");
   assert.equal(topicFromQuery("kridoc"), "other");
   assert.equal(topicFromQuery("nope"), null);
   assert.equal(topicFromQuery(null), null);
-  assert.equal(topicForProductSite("verikora-com"), "yomizaka");
-  assert.equal(topicForProductSite("sovkora-com"), "orazaka");
-  assert.equal(topicForProductSite("folioviv-com"), "akinaza");
+  assert.equal(topicForProductSite("verikora-com"), "verikora");
+  assert.equal(topicForProductSite("sovkora-com"), "sovkora");
+  assert.equal(topicForProductSite("folioviv-com"), "folioviv");
   assert.equal(topicForProductSite("kridoc-com"), null);
 });

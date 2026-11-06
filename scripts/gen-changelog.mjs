@@ -4,7 +4,7 @@
    Writes the git-ignored lib/changelog.json ({ releases: Release[], platform: { site, release }, fetchedAt }), the shape of lib/changelog.ts:
    - the @krizaka packages of krizaka-ui: each package's changesets CHANGELOG.md (raw GitHub), dated from the npm
      registry's publish times;
-   - GitHub Releases of the products (Orazaka is several repositories) and of Krizaka Java: the repositories are the
+   - GitHub Releases of the products (Sovkora is several repositories) and of Krizaka Java: the repositories are the
      list of krizaka/.github `release-repos.json` (one source, also read by the weekly digest); a release written by the
      shared `release-notes` workflow carries an English and a French section, both kept.
    Only highlights: a release without a change a reader would care about is dropped; the list is cut at 60 entries.
@@ -18,9 +18,11 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { CODE_NAMES } from "@krizaka/org";
 import {
   SITE_REPO,
   newestFirst,
+  ownPrs,
   parseChangesets,
   parseReleaseBodies,
   releaseProblems,
@@ -52,7 +54,11 @@ async function packageReleases(dir) {
   return releases.map((r) => ({ ...r, url: `https://www.npmjs.com/package/${name}/v/${r.version}` }));
 }
 
-async function repoReleases({ id, name, repo, parts }) {
+/** The shared list may still name a product by a retired id: the page speaks the commercial id (`CODE_NAMES` of @krizaka/org). */
+const brandId = (id) => CODE_NAMES[id] ?? id;
+
+async function repoReleases({ id: listed, name, repo, parts }) {
+  const id = brandId(listed);
   const list = await get(`https://api.github.com/repos/krizaka/${repo}/releases?per_page=10`);
   return list
     .filter((r) => !r.draft && r.published_at)
@@ -65,8 +71,8 @@ async function repoReleases({ id, name, repo, parts }) {
         version: String(r.tag_name).replace(/^v/, ""),
         date: r.published_at.slice(0, 10),
         url: r.html_url,
-        changes: en,
-        ...(fr ? { fr } : {}),
+        changes: ownPrs(en, repo),
+        ...(fr ? { fr: ownPrs(fr, repo) } : {}),
       };
     })
     .filter((r) => r.changes.length > 0);

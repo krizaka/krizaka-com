@@ -12,7 +12,7 @@
     "no-hand-ms-hours": 0,
     "no-hand-ms-minutes": 0,
     "no-hand-ms-one-hour": 0,
-    "no-hand-written-validation-regex": 6,
+    "no-hand-written-validation-regex": 5,
     "no-hardcoded-default-media": 0,
     "no-raw-inner-html": 0,
     "no-sort-without-compare": 0,

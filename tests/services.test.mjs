@@ -11,6 +11,7 @@ import {
   verifyManifest,
 } from "@krizaka/discovery";
 import { PRODUCT_DOMAINS, SERVICES, SERVICES_KEY_ID } from "../lib/services.ts";
+import retired from "../lib/retired-product-ids.json" with { type: "json" };
 import { checkSigned, signServices } from "../scripts/services-lib.mjs";
 import { ZONE, assertWritable, misplaced } from "../scripts/bunny-layout.mjs";
 import { PRODUCT_RECORDS } from "./helpers/source.mjs";
@@ -30,8 +31,9 @@ test("every entry is a known product, in a known environment, on the product's o
   const ids = new Set(PRODUCT_RECORDS().map((p) => p.id));
   assert.deepEqual([...ids].sort(), Object.keys(PRODUCT_DOMAINS).sort(), "every product has its domain");
   assert.ok(Object.keys(SERVICES).length >= 1);
-  for (const [product, environments] of Object.entries(SERVICES)) {
-    assert.ok(ids.has(product), `${product} is a product`);
+  for (const [wire, environments] of Object.entries(SERVICES)) {
+    const product = retired[wire]; // the document keeps the id the shipped apps read
+    assert.ok(ids.has(product), `${wire} is a product`);
     for (const [environment, entry] of Object.entries(environments)) {
       assert.ok(["dev", "prod"].includes(environment), `${product}: ${environment}`);
       const suffixes = [...KRIZAKA_HOST_SUFFIXES, PRODUCT_DOMAINS[product]];
