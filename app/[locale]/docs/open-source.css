@@ -8,9 +8,39 @@
   color: var(--kz-text-primary);
 }
 
-/* The collections of the hub: the five parts of the stack in one row on a wide screen (no orphan card). */
+/* The collections of the hub: the four ways in, always inside the page frame (--kz-page-max) and never three-and-one:
+   one column on a phone (360 px included), 2 x 2 on a tablet and a small laptop, one row of four from 70rem. The
+   tracks are minmax(0, 1fr) and the cards min-width 0, so a long link (« Guide de contribution ») is cut with an
+   ellipsis instead of pushing the grid past its frame (founder, 2026-11-05: the fourth card was cut on the right). */
 .os-page .kz-tpl-collections {
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  grid-template-columns: minmax(0, 1fr);
+}
+.os-page .kz-tpl-collections > li {
+  min-width: 0;
+}
+@media (min-width: 40rem) {
+  .os-page .kz-tpl-collections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 70rem) {
+  .os-page .kz-tpl-collections {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+/* The hero is the Cahier's, like every other page's: left, asymmetric (DocsHubPage of @krizaka/ui centres it; until it
+   takes an `align`, the page undoes the centring). */
+.os-page .kz-hero[data-align="center"] > .kz-frame {
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  text-align: start;
+}
+.os-page .kz-hero[data-align="center"] .kz-hero-lead {
+  margin-inline: 0;
+}
+.os-page .kz-hero[data-align="center"] .kz-hero-extra {
+  justify-content: flex-start;
 }
 
 /* The hub: the search's hints, each collection's host, the quick start. */

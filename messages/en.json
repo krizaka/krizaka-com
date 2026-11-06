@@ -1056,7 +1056,7 @@
             "title": "Use our products",
             "text": "Each product documents itself on its own site.",
             "links": {
-              "site": "{name}"
+              "site": "{name} · {status}"
             }
           },
           "contribute": {

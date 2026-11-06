@@ -45,3 +45,35 @@ test("every path of the hub has its words in both languages and 2-3 links, absol
   }
   assert.equal(START_PATHS.find((p) => p.id === "contribute").href, CONTRIBUTING_URL);
 });
+
+// Founder, 2026-11-05 (krizaka-internal#2645): « il reste juste cette page à revoir ».
+test("the products card lists the products in the home's order, each with its own status, to its public page", () => {
+  const card = START_PATHS.find((p) => p.id === "products");
+  assert.deepEqual(
+    card.links.map((l) => l.name),
+    ["Verikora", "Sovkora", "Folioviv"],
+  );
+  for (const l of card.links) {
+    assert.match(l.href, /^https:\/\/www\.(verikora|sovkora|folioviv)\.com/, l.name);
+    assert.ok(l.status, `${l.name}: a status`);
+  }
+  for (const lang of ["en", "fr"]) {
+    assert.match(messages(lang).site.openSource.hub.paths.products.links.site, /\{name\}.*\{status\}/);
+  }
+  assert.match(read("app/[locale]/docs/page.tsx"), /site\.nav\.status\[l\.status\]\.label/);
+});
+
+test("the four ways in stay in the page frame: one column, 2 x 2, then one row of four; the hero is left-aligned", () => {
+  const css = read("app/[locale]/docs/open-source.css");
+  assert.match(css, /\.os-page \.kz-tpl-collections \{\s*grid-template-columns: minmax\(0, 1fr\);/);
+  assert.match(
+    css,
+    /min-width: 40rem\) \{\s*\.os-page \.kz-tpl-collections \{\s*grid-template-columns: repeat\(2, minmax\(0, 1fr\)\)/,
+  );
+  assert.match(
+    css,
+    /min-width: 70rem\) \{\s*\.os-page \.kz-tpl-collections \{\s*grid-template-columns: repeat\(4, minmax\(0, 1fr\)\)/,
+  );
+  assert.doesNotMatch(css, /auto-fit, minmax\(min\(100%, 13rem\)/, "no three-and-one wrap");
+  assert.match(css, /\.kz-hero\[data-align="center"\] > \.kz-frame \{[^}]*justify-items: start/);
+});

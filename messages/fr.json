@@ -1059,7 +1059,7 @@
             "title": "Utiliser nos produits",
             "text": "Chaque produit se documente sur son propre site.",
             "links": {
-              "site": "{name}"
+              "site": "{name} · {status}"
             }
           },
           "contribute": {

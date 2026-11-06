@@ -117,3 +117,8 @@ test("CI runs the arrival check against the container", () => {
     /node scripts\/check-arrival\.mjs --base http:\/\/localhost:3000/,
   );
 });
+
+test("« le cadre » (2026-11-05): a ring on the focused h1 fails; none passes", () => {
+  assert.deepEqual(arrivalProblems(c, { ...landed, h1Outline: "none" }), []);
+  assert.match(arrivalProblems(c, { ...landed, h1Outline: "solid" }).join("\n"), /wears a ring/);
+});
