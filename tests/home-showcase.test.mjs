@@ -3,7 +3,16 @@ import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 import { PRODUCT_SHOWCASES, SHOWCASES, showcaseOf, showcaseProblems, showcaseSlides } from "../lib/home-showcase.ts";
 import { barHref } from "../lib/bar-href.ts";
-import { boardProblems, clipsOf, maxCredits, shotsOf, tallFilter } from "../scripts/home-showcase.mjs";
+import {
+  boardProblems,
+  clipsOf,
+  generatedCredits,
+  generatedOf,
+  generatedProblems,
+  maxCredits,
+  shotsOf,
+  tallFilter,
+} from "../scripts/home-showcase.mjs";
 
 // The home's carousels (founder, 2026-11-05, krizaka-internal#2450): the hero's and one per product, Sovkora in the centre;
 // real media made for each, 16:9 on wide screens and 4:5 on phones, served from Bunny; they advance on their own with
@@ -124,15 +133,25 @@ test("every Runway run is logged with its model and credits, and the issue stays
   const log = JSON.parse(read("content/films/home-showcase.log.json"));
   assert.ok(log.runs.length > 0);
   for (const r of log.runs) {
-    assert.match(r.model, /^aleph2$/, r.shot);
+    assert.match(r.model, /^(aleph2|gen4\.5)$/, r.shot);
     assert.ok(Number.isFinite(r.credits) && r.credits >= 0, r.shot);
   }
+  const aleph = log.runs.filter((r) => r.model === "aleph2");
   const spent = log.checkpoint.balance.before - log.checkpoint.balance.after;
   assert.ok(
-    spent >= log.runs.reduce((n, r) => n + r.credits, 0),
+    spent >= aleph.reduce((n, r) => n + r.credits, 0),
     "the real charge is read from the balance, never below the estimates",
   );
   assert.ok(spent <= log.checkpoint.capCredits, `${spent} credits: over the checkpoint without the founder's go`);
+  // krizaka-internal#2658: Verikora's rule clips (Gen-4.5) have their own checkpoint, read from the balance.
+  for (const c of log.checkpoints ?? []) {
+    const charged = c.balance.before - c.balance.after;
+    const runs = log.runs.filter((r) => r.model === c.model);
+    assert.ok(charged >= runs.reduce((n, r) => n + r.credits, 0), `${c.issue}: never below the logged runs`);
+    assert.ok(charged <= c.capCredits, `${c.issue}: ${charged} credits, over the checkpoint without the founder's go`);
+  }
+  for (const g of generatedOf(board))
+    assert.ok(log.chosen[`${g.carousel}/${g.id}`], `${g.carousel}/${g.id}: a take is chosen`);
   for (const s of shotsOf(board)) {
     assert.ok(maxCredits(s) >= 56, s.id);
     assert.ok(log.chosen[`${s.carousel}/${s.id}`], `${s.carousel}/${s.id}: a take is chosen`);
@@ -153,4 +172,66 @@ test("AGENTS.md says the new rules: the home's order (§ 2) and the carousels' e
   const agents = read("AGENTS.md");
   assert.match(agents, /Verikora · Sovkora in the centre · Folioviv/);
   assert.match(agents, /Two blocks of the home move on their own\. The carousels/);
+});
+
+// Founder, 2026-11-06 (krizaka-internal#2658): Verikora's carousel shows its own clips, each a DIFFERENT real rule of
+// Verikora's catalogue (never the deposit every time, never an invented rule), its article as the product cites it, the
+// words in the caption and never in the picture.
+test("Verikora's generated clips: one real rule each, its citation and its line in the catalogue, the words in the caption", () => {
+  const made = generatedOf(board).filter((g) => g.carousel === "verikora");
+  assert.ok(made.length >= 4, "at least four rules");
+  assert.deepEqual(generatedProblems(board), []);
+  assert.equal(new Set(made.map((g) => g.rule)).size, made.length, "one rule per clip");
+  assert.ok(!made.some((g) => g.rule === "QC-LEASE-004"), "not the deposit every time");
+  for (const g of made) {
+    assert.match(g.rule, /^(QC-LEASE|TS-[A-Z])-\d{3}$/, g.id);
+    assert.match(g.citation, /^C\.c\.Q\., art\. \d{4}/, g.id);
+    assert.match(g.catalogue, /^verikora:apps\/web\/lib\/closing-note\/data\/qc-residential-lease\.json:\d+$/, g.id);
+    assert.match(board.generatedLook, /No readable text/, "no words in the picture");
+    assert.equal(generatedCredits(g), g.seconds * 12, "Gen-4.5's published rate");
+    const article = g.citation.match(/art\. (\d{4})/)[1];
+    for (const l of ["en", "fr"]) {
+      assert.match(messages(l).site.home.showcase.slides.verikora[g.id].caption, new RegExp(article), `${l}: ${g.id}`);
+    }
+  }
+  assert.deepEqual(
+    generatedProblems({
+      ...board,
+      carousels: {
+        x: {
+          generated: [
+            {
+              id: "a",
+              rule: "R-1",
+              citation: "C.c.Q., art. 1",
+              catalogue: "verikora:f.json:1",
+              seconds: 6,
+              idea: "i",
+              prompt: "p",
+            },
+            { id: "b", rule: "R-1", citation: "", catalogue: "elsewhere", seconds: 30, idea: "i", prompt: "p" },
+          ],
+        },
+      },
+    }),
+    [
+      "x/b: 2 to 10 s",
+      "x/b: a rule carries its citation and its place in the catalogue (verikora:<file>:<line>)",
+      "x/b: R-1 is already shown by x/a: one rule per clip",
+    ],
+  );
+  for (const g of made)
+    assert.ok(
+      showcaseSlides("verikora").some((s) => s.id === g.id && s.source === "generated"),
+      g.id,
+    );
+});
+
+// Founder, 2026-11-06: the site says « vous »; a caption never says « tu / tes / ton / ta / toi » (an alt may quote a reel's
+// burned-in title, between « »).
+test("the French captions say « vous », never « tu »", () => {
+  const slides = messages("fr").site.home.showcase.slides;
+  for (const [c, words] of Object.entries(slides))
+    for (const [id, w] of Object.entries(words))
+      assert.doesNotMatch(w.caption, /\b(tu|tes|ton|ta|toi|te)\b/i, `${c}/${id}`);
 });

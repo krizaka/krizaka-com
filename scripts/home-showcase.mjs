@@ -3,6 +3,7 @@
 //
 //   node scripts/home-showcase.mjs plan                        what each shot costs at most, nothing sent
 //   node scripts/home-showcase.mjs render <shot|carousel|all> --env-file <path> [--take <n>] [--out <dir>]
+//   node scripts/home-showcase.mjs generate <carousel|carousel/id|all> --env-file <path> [--take <n>] [--out <dir>]
 //   node scripts/home-showcase.mjs encode <shot|carousel|all> [--out <dir>]
 //   then: node scripts/cdn-assets.mjs upload <out>/upload/<carousel> --to home/showcase/<carousel> --env-file <path>
 //
@@ -11,6 +12,10 @@
 // and the result is kept as <out>/raw/<carousel>-<shot>-t<take>.mp4. Every run is appended to
 // content/films/home-showcase.log.json (model, seconds sent, credits charged, task id), credits read before and after.
 // The key is AI_VIDEO_API_KEY, from the environment or --env-file: never printed.
+// generate: a « generated » item of the storyboard is made from words alone by Runway's text to video model it names
+// (Gen-4.5, 1280:720, its seconds), with the shared `generatedLook` and its own prompt; the result is kept as
+// <out>/raw/<carousel>-<id>-t<take>.mp4 and logged like a render. Krizaka-internal#2658: Verikora's clips, one real rule of
+// Verikora's catalogue each (`rule`, `citation`, `catalogue`), the words of the rule in the caption, never in the picture.
 // encode: the chosen take becomes the wide rendition (1280x720, H.264 + VP9, poster) and the reel's own vertical cut the
 // tall one (a 4:5 frame, 544x680, lighter, poster); a 16:9 clip of « clips » is encoded the same way, its tall a 4:5 crop on its focus: <out>/upload/<carousel>/<shot>-wide.* and <shot>-tall.*.
 
@@ -25,6 +30,10 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const BOARD = path.join(ROOT, "content/films/home-showcase.json");
 const LOG = path.join(ROOT, "content/films/home-showcase.log.json");
 const API = "https://api.dev.runwayml.com/v1";
+// @fixed: Runway's published price of Gen-4.5, per second of output (docs, pricing, 2026-11-06).
+const GEN45_CREDITS_PER_SECOND = 12;
+// @fixed: the shortest and longest clip Gen-4.5 makes from words, in seconds (its validation, 2026-11-06).
+const GEN45_SECONDS = [2, 10];
 // @fixed: Runway's published price of Aleph 2.0, per second of input, and its minimum per generation (docs, 2026-11-05).
 const ALEPH_CREDITS_PER_SECOND = 28;
 // @fixed: the minimum charge of one Aleph 2.0 generation, in credits.
@@ -44,6 +53,41 @@ export function shotsOf(board) {
 /** Every 16:9 clip of the storyboard (no generation: only encoded), with its carousel. */
 export function clipsOf(board) {
   return Object.entries(board.carousels).flatMap(([carousel, c]) => (c.clips ?? []).map((s) => ({ ...s, carousel })));
+}
+
+/** Every item made from words alone (Runway text to video), with its carousel. */
+export function generatedOf(board) {
+  return Object.entries(board.carousels).flatMap(([carousel, c]) =>
+    (c.generated ?? []).map((s) => ({ ...s, carousel })),
+  );
+}
+
+/** The most a generated item costs, in credits: Gen-4.5 bills each second it makes. */
+export const generatedCredits = (item) => Math.ceil(item.seconds * GEN45_CREDITS_PER_SECOND);
+
+/** What is wrong with the generated items, as sentences (empty: fine). */
+export function generatedProblems(board) {
+  const problems = [];
+  const rules = new Map();
+  for (const g of generatedOf(board)) {
+    const key = `${g.carousel}/${g.id}`;
+    if (!(g.seconds >= GEN45_SECONDS[0] && g.seconds <= GEN45_SECONDS[1])) {
+      problems.push(`${key}: ${GEN45_SECONDS[0]} to ${GEN45_SECONDS[1]} s`);
+    }
+    if (!g.idea?.trim() || !g.prompt?.trim()) {
+      problems.push(`${key}: an idea and a prompt`);
+    }
+    if (g.rule) {
+      if (!g.citation?.trim() || !/^verikora:[\w./-]+:\d+$/.test(g.catalogue ?? "")) {
+        problems.push(`${key}: a rule carries its citation and its place in the catalogue (verikora:<file>:<line>)`);
+      }
+      if (rules.has(`${g.carousel}/${g.rule}`)) {
+        problems.push(`${key}: ${g.rule} is already shown by ${rules.get(`${g.carousel}/${g.rule}`)}: one rule per clip`);
+      }
+      rules.set(`${g.carousel}/${g.rule}`, key);
+    }
+  }
+  return problems;
 }
 
 /** The shots a selector names: a shot id (`carousel/shot` or a unique `shot`), a carousel, or `all`. */
@@ -136,6 +180,61 @@ async function api(key, method, route, body) {
 }
 
 const balance = async (key) => (await api(key, "GET", "/organization")).creditBalance;
+
+/** Polls a Runway task until it ends (or 15 minutes pass). */
+async function settle(key, task, name) {
+  let state;
+  const deadline = Date.now() + TASK_TIMEOUT_MS;
+  do {
+    if (Date.now() > deadline) {
+      throw new Error(`${name}: task ${task.id} still ${state?.status} after 15 min`);
+    }
+    await new Promise((r) => setTimeout(r, 8000));
+    state = await api(key, "GET", `/tasks/${task.id}`);
+  } while (!["SUCCEEDED", "FAILED", "CANCELLED"].includes(state.status));
+  return state;
+}
+
+/** Makes one take of a generated item from words (Gen-4.5, 16:9) and logs what it cost. */
+async function generate(board, item, key, out, take) {
+  const name = `${item.carousel}/${item.id}`;
+  const raw = path.join(out, "raw", `${item.carousel}-${item.id}-t${take}.mp4`);
+  if (fs.existsSync(raw)) {
+    return console.log(`${name} take ${take}: already generated`);
+  }
+  fs.mkdirSync(path.dirname(raw), { recursive: true });
+  const before = await balance(key);
+  const started = Date.now();
+  const task = await api(key, "POST", "/text_to_video", {
+    model: item.model ?? "gen4.5",
+    promptText: `${board.generatedLook} ${item.prompt}`,
+    ratio: "1280:720",
+    duration: item.seconds,
+    seed: 1000 * take + 11,
+  });
+  const state = await settle(key, task, name);
+  if (state.status === "SUCCEEDED") {
+    fs.writeFileSync(raw, Buffer.from(await (await fetch(state.output[0])).arrayBuffer()));
+  }
+  const after = await balance(key);
+  const entry = {
+    shot: name,
+    take,
+    model: item.model ?? "gen4.5",
+    secondsMade: item.seconds,
+    credits: generatedCredits(item),
+    usd: generatedCredits(item) / 100,
+    balanceDelta: before - after,
+    wallSeconds: Math.round((Date.now() - started) / 1000),
+    task: task.id,
+    status: state.status,
+    at: new Date(started).toISOString(),
+  };
+  const log = readLog();
+  log.runs.push(entry);
+  fs.writeFileSync(LOG, `${JSON.stringify(log, null, 2)}\n`);
+  console.log(JSON.stringify(entry));
+}
 
 async function render(board, shot, key, out, take) {
   const raw = path.join(out, "raw", `${shot.carousel}-${shot.id}-t${take}.mp4`);
@@ -343,8 +442,25 @@ function encodeClip(board, clip, out) {
   console.log(`${clip.carousel}/${clip.id}: encoded`);
 }
 
+function encodeGenerated(item, out, chosenTake) {
+  const take = chosenTake ?? readLog().chosen[`${item.carousel}/${item.id}`]?.take ?? 1;
+  const raw = path.join(out, "raw", `${item.carousel}-${item.id}-t${take}.mp4`);
+  if (!fs.existsSync(raw)) {
+    throw new Error(`${raw}: generate it first`);
+  }
+  const dir = path.join(out, "upload", item.carousel);
+  fs.mkdirSync(dir, { recursive: true });
+  const [from, to] = item.trim ?? [0, item.seconds];
+  rendition(raw, from, to, WIDE, path.join(dir, `${item.id}-wide`), false);
+  const { w, h } = probe(raw);
+  rendition(raw, from, to, tallFilter(w, h, item.focus), path.join(dir, `${item.id}-tall`), true);
+  console.log(`${item.carousel}/${item.id}: encoded take ${take}`);
+}
+
 function encode(board, item, out, take) {
-  if (item.reel) {
+  if (item.prompt && !item.reel) {
+    encodeGenerated(item, out, take);
+  } else if (item.reel) {
     encodeShot(board, item, out, take);
   } else {
     encodeClip(board, item, out);
@@ -362,6 +478,17 @@ const COMMANDS = {
       console.log(`${s.carousel}/${s.id}\t${(s.to - s.from).toFixed(1)} s\t≤ ${maxCredits(s)} credits`);
     }
     console.log(`total ≤ ${shots.reduce((n, s) => n + maxCredits(s), 0)} credits per take`);
+    const made = generatedOf(board).filter(named(selector));
+    for (const g of made) {
+      console.log(`${g.carousel}/${g.id}\t${g.seconds} s\t${generatedCredits(g)} credits (Gen-4.5)`);
+    }
+    console.log(`generated: ${made.reduce((n, g) => n + generatedCredits(g), 0)} credits per take`);
+  },
+  generate: async ({ board, selector, args, out }) => {
+    const key = keyFrom(args);
+    for (const g of generatedOf(board).filter(named(selector))) {
+      await generate(board, g, key, out, Number(args.take ?? 1));
+    }
   },
   render: async ({ board, selector, args, out }) => {
     const key = keyFrom(args);
@@ -371,7 +498,7 @@ const COMMANDS = {
   },
   encode: async ({ board, selector, args, out }) => {
     const take = args.take ? Number(args.take) : undefined;
-    for (const s of [...shotsOf(board), ...clipsOf(board)].filter(named(selector))) {
+    for (const s of [...shotsOf(board), ...clipsOf(board), ...generatedOf(board)].filter(named(selector))) {
       encode(board, s, out, take);
     }
   },
@@ -381,7 +508,7 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   const [command, selector = "all"] = args._;
   const board = JSON.parse(fs.readFileSync(BOARD, "utf8"));
-  const problems = boardProblems(board);
+  const problems = [...boardProblems(board), ...generatedProblems(board)];
   if (problems.length) {
     throw new Error(problems.join("\n"));
   }
@@ -389,7 +516,7 @@ async function main() {
   const run = COMMANDS[command];
   if (!run) {
     console.log(
-      "usage: node scripts/home-showcase.mjs plan|render|encode <shot|carousel|all> [--env-file <path>] [--take <n>] [--out <dir>]",
+      "usage: node scripts/home-showcase.mjs plan|generate|render|encode <shot|carousel|all> [--env-file <path>] [--take <n>] [--out <dir>]",
     );
     process.exitCode = command ? 1 : 0;
     return;

@@ -18,7 +18,7 @@ export type ProductShowcase = (typeof PRODUCT_SHOWCASES)[number];
 
 /** Where a slide comes from: a reel's take widened by Runway, a 16:9 clip, or a clip of the company media library (whose
  *  public use waits on the founder's assignment to the company, annex B: the PR that ships one says so). */
-export const SlideSource = { Reel: "reel", Clip: "clip", Library: "library" } as const;
+export const SlideSource = { Reel: "reel", Clip: "clip", Library: "library", Generated: "generated" } as const;
 export type SlideSource = (typeof SlideSource)[keyof typeof SlideSource];
 
 export interface ShowcaseSlideSpec {
@@ -35,6 +35,8 @@ export interface ShowcaseSlideSpec {
 
 interface BoardItem {
   id: string;
+  /** A generated clip of a product: the rule of its catalogue it shows (krizaka-internal#2658). */
+  rule?: string;
   library?: boolean;
   film?: boolean;
   audio?: boolean;
@@ -43,6 +45,7 @@ interface BoardCarousel {
   order: string[];
   shots: BoardItem[];
   clips: BoardItem[];
+  generated?: BoardItem[];
 }
 
 /** The logical base of a rendition of a slide. */
@@ -54,13 +57,16 @@ export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
   return c.order.map((id) => {
     const shot = c.shots.find((s) => s.id === id);
     const clip = c.clips.find((s) => s.id === id);
-    const item = shot ?? clip;
+    const made = c.generated?.find((s) => s.id === id);
+    const item = shot ?? clip ?? made;
     if (!item) {
       throw new Error(`${carousel}/${id}: in the order, not in the storyboard`);
     }
     let source: SlideSource = SlideSource.Clip;
     if (shot) {
       source = SlideSource.Reel;
+    } else if (made) {
+      source = SlideSource.Generated;
     } else if (clip?.library) {
       source = SlideSource.Library;
     }

@@ -43,7 +43,19 @@ test("a slide retired for an artefact is out of its order, with its reason", () 
     }
   }
   const retired = Object.values(board.carousels).flatMap((c) => (c.retired ?? []).map((r) => r.id));
-  assert.deepEqual(retired.sort(), ["bridge", "duck", "first-client", "ink", "morning", "neon", "notebook", "rag"]);
+  assert.deepEqual(retired.sort(), [
+    "bridge",
+    "duck",
+    "files",
+    "first-client",
+    "ink",
+    "loupe",
+    "morning",
+    "neon",
+    "notebook",
+    "rag",
+    "signature",
+  ]);
   for (const c of SHOWCASES) {
     assert.ok(showcaseSlides(c).length >= 3, c);
   }

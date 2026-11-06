@@ -494,6 +494,162 @@
       "task": "1791d3cd-956b-49a9-b472-bb823b55c1ee",
       "status": "SUCCEEDED",
       "at": "2026-11-05T22:17:55.144Z"
+    },
+    {
+      "shot": "verikora/children",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 107,
+      "task": "aa36da22-9806-409a-94cc-ab48b9390787",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:18:33.865Z"
+    },
+    {
+      "shot": "verikora/cheques",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 107,
+      "task": "af9b3c6d-4a50-484c-bde4-3dfaee51bd19",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:20:20.954Z"
+    },
+    {
+      "shot": "verikora/stay",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 107,
+      "task": "eedc6919-d5e7-40c6-a91b-f961f23bb1a3",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:22:07.935Z"
+    },
+    {
+      "shot": "verikora/lowest-rent",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 107,
+      "task": "c7f8517d-100b-4573-b9c8-8976aa530766",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:23:55.350Z"
+    },
+    {
+      "shot": "verikora/landlord",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 107,
+      "task": "ede010e9-de4d-49ac-99a8-03af8eb2075e",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:25:42.200Z"
+    },
+    {
+      "shot": "verikora/children",
+      "take": 2,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 128,
+      "task": "21ddf12e-104f-4c60-aead-c8d1b25c1a64",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:27:34.790Z"
+    },
+    {
+      "shot": "verikora/cheques",
+      "take": 2,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 123,
+      "task": "5cd184bd-963b-42d8-999a-7776a7898d9b",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:29:43.028Z"
+    },
+    {
+      "shot": "verikora/stay",
+      "take": 2,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 74,
+      "task": "c86ecd0e-0429-4ff0-90fb-b7dcfd3d6aff",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:31:46.538Z"
+    },
+    {
+      "shot": "verikora/lowest-rent",
+      "take": 2,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 100,
+      "task": "6bac7fcb-db2e-4844-9e3c-a6795401ba67",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:33:00.898Z"
+    },
+    {
+      "shot": "verikora/landlord",
+      "take": 2,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "task": null,
+      "status": "ABANDONED",
+      "at": "2026-11-06T05:41Z",
+      "note": "take 1 showed fake lettering on the nameplates, so the rule was replaced (balance, QC-LEASE-020); the process was stopped while take 2 was already submitted: its charge is read from the balance (4741 before take 1, 4021 after), its output was never fetched"
+    },
+    {
+      "shot": "verikora/lowest-rent",
+      "take": 3,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 104,
+      "task": "fa5e7389-a807-41c3-83a6-5dc6b234952b",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:34:59.175Z"
+    },
+    {
+      "shot": "verikora/balance",
+      "take": 1,
+      "model": "gen4.5",
+      "secondsMade": 6,
+      "credits": 72,
+      "usd": 0.72,
+      "balanceDelta": 72,
+      "wallSeconds": 106,
+      "task": "ad4c1a37-ef87-4bf3-8b40-0db8d76390b6",
+      "status": "SUCCEEDED",
+      "at": "2026-11-06T05:36:43.676Z"
     }
   ],
   "chosen": {
@@ -568,6 +724,26 @@
     "folioviv/sign": {
       "take": 1,
       "why": "the real mark only; take 2 invented a « FOLIOVIV » logo and lettering"
+    },
+    "verikora/children": {
+      "take": 2,
+      "why": "take 1's empty raincoat over the boots reads as an invisible child"
+    },
+    "verikora/cheques": {
+      "take": 1,
+      "why": "the booklet moves; take 2 is a still open book"
+    },
+    "verikora/stay": {
+      "take": 2,
+      "why": "the key is steady; take 1 morphs at its start"
+    },
+    "verikora/lowest-rent": {
+      "take": 3,
+      "why": "envelopes, no lettering; takes 1 and 2 drew a calendar with garbled numbers"
+    },
+    "verikora/balance": {
+      "take": 1,
+      "why": "the only take; clean, no lettering"
     }
   },
   "rejected": [
@@ -591,5 +767,18 @@
       "at": "2026-11-05T22:40Z",
       "note": "The key's balance moved by 4451 credits (5232 after the founder's top-up, 781 after the last take). Runway's own counter shows 39 Aleph 2.0 generations on the key that day and no other model: the 38 runs below plus the throttled attempt. So the real charge is 4451 credits (about 44.5 USD), more than the 3053 credits of the published rate (28 credits/s, 56 minimum) summed in `credits`: about 114 credits per generation. Generation stopped here, under the 5,000-credit checkpoint."
     }
-  }
+  },
+  "checkpoints": [
+    {
+      "issue": "krizaka-internal#2658",
+      "model": "gen4.5",
+      "capCredits": 5000,
+      "balance": {
+        "before": 4741,
+        "after": 3877,
+        "at": "2026-11-06T06:00Z"
+      },
+      "note": "Verikora's rule clips: 12 Gen-4.5 generations of 6 s at the published 12 credits/s (72 each) = 864 credits, exactly the balance's move: 5 rules × 2 takes, a third take of lowest-rent (the calendar drew garbled numbers), one take of balance, and landlord's second take stopped once submitted (the rule was replaced after take 1 drew fake lettering)."
+    }
+  ]
 }

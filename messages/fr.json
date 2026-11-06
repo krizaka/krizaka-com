@@ -485,7 +485,8 @@
         "sources": {
           "reel": "Les plans titrés viennent de nos reels publiés sur Instagram (@krizakahq), élargis en 16:9 avec Runway Aleph ; sur un téléphone, le cadrage vertical d'origine.",
           "clip": "Les plans marqués « généré avec Sovkora » ont été générés par notre moteur (Wan 2.2) pour le blogue ; le film de la marque aussi.",
-          "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque."
+          "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque.",
+          "generated": "Les plans des règles de Verikora ont été générés pour cette page avec Runway Gen-4.5 ; chaque règle et son article viennent du catalogue de Verikora, les mots sont dans la légende, jamais dans l'image."
         },
         "slides": {
           "hero": {
@@ -537,21 +538,29 @@
               "caption": "Le hibou lit : chaque constat cite son passage",
               "alt": "Un hibou devant une fenêtre bleue, la nuit ; les titres « chaque constat » puis « cite son passage. » s'inscrivent."
             },
-            "loupe": {
-              "caption": "Verikora, à la loupe",
-              "alt": "Une loupe au-dessus de papiers, sur un bureau devant une fenêtre sous la pluie ; le titre « VERIKORA » s'inscrit."
-            },
-            "signature": {
-              "caption": "Une plume signe la feuille",
-              "alt": "Une main signe une feuille à la plume, un encrier de laiton à côté, dans la lumière d'une fenêtre ; la signature est un trait illisible."
-            },
             "sign": {
               "caption": "Signer ? Pas avant d'avoir lu",
               "alt": "Un bail sur un bureau sombre, sous une lampe violette ; le titre « signer ? » s'inscrit."
             },
-            "files": {
-              "caption": "Les pièces d'un dossier, sur le bureau",
-              "alt": "Des chemises et des feuilles empilées, une tasse qui fume et une lampe de bureau, la nuit ; une main tourne une feuille."
+            "children": {
+              "caption": "« Il est interdit d'avoir des enfants » : sans effet (C.c.Q., art. 1899)",
+              "alt": "Des petites bottes de pluie rouges d'enfant sur le paillasson d'un appartement, un imperméable jaune accroché au-dessus, la nuit. Verikora signale la clause qui refuse les enfants : elle n'a aucun effet."
+            },
+            "cheques": {
+              "caption": "Des chèques postdatés exigés : interdit (C.c.Q., art. 1904, al. 2)",
+              "alt": "Un carnet de chèques vierges sur un bureau sous la lampe ; ses pages tournent jusqu'à ce qu'il se referme. Verikora signale la clause qui exige des chèques datés d'avance."
+            },
+            "stay": {
+              "caption": "Renoncer au maintien dans les lieux : sans effet (C.c.Q., art. 1936 et 1893)",
+              "alt": "Une clé de laiton à son crochet près de la porte d'un logement habité, la neige à la fenêtre. Verikora signale la clause qui fait renoncer au droit de rester dans le logement."
+            },
+            "lowest-rent": {
+              "caption": "L'avis du plus bas loyer des 12 derniers mois manque (C.c.Q., art. 1896, section G)",
+              "alt": "Douze enveloppes vierges debout dans une boîte de bois, sous une lampe ; la lumière se pose sur la plus basse. Verikora vérifie que la section G du bail donne le plus bas loyer payé dans les douze derniers mois."
+            },
+            "balance": {
+              "caption": "Une clause pourrait être abusive (C.c.Q., art. 1901)",
+              "alt": "Une balance de laiton ancienne sur un bureau : un plateau chargé d'une pile de papiers, l'autre d'une petite clé ; le fléau remonte jusqu'à l'équilibre. Verikora signale la clause qui pourrait être abusive."
             }
           },
           "folioviv": {
@@ -560,7 +569,7 @@
               "alt": "Un barbier balaie le plancher en fin de journée, fauteuils vides, fenêtres en arc ; le titre « 18:00 » s'inscrit."
             },
             "home": {
-              "caption": "Tu rentres à l'heure",
+              "caption": "Vous rentrez à l'heure",
               "alt": "Un père porte son enfant sur ses épaules le long du canal, à l'heure dorée, briques et vélos ; le titre « tu rentres à l'heure. » s'inscrit."
             },
             "sign": {

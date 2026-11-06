@@ -88,7 +88,7 @@
   (`ProductShowcase`, § 2, `PRODUCT_ORDER` of `lib/home-sections.ts`): each entry pairs its specimen tag (commercial www
   address, « See the site », source, release notes, honest status, its bird; the engine's tag folds what it gives and the
   products it powers) with **a carousel of real media** made for it, the tag and the carousel swapping sides so Sovkora's
-  carousel is on the right; then Krizaka Entreprise in one line (§ 3), where we are going (§ 4), the principles (§ 5), and
+  carousel is on the right. Since 2026-11-06 (krizaka-internal#2658) the sections under the row go **Sovkora, Verikora, Folioviv** (`SECTION_ORDER`), the row keeps Sovkora in the centre, and Verikora's carousel shows **one real rule of Verikora's catalogue per clip** (`generated` in the storyboard: rule id, citation, `verikora:<file>:<line>`; made by Runway Gen-4.5, the rule's words in the caption, never in the picture; never the same rule twice); then Krizaka Entreprise in one line (§ 3), where we are going (§ 4), the principles (§ 5), and
   it stops there: no Montréal section, no closing contact panel, no FAQ (so no FAQPage JSON-LD). **The carousels' media**
   are data: the storyboard `content/films/home-showcase.json` (the shots cut from the founder's published reels and widened
   to 16:9 by Runway Aleph, the 16:9 clips Sovkora generated, the brand film, the company media library — whose public use

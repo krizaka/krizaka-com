@@ -169,7 +169,7 @@
     },
     "verikora": {
       "idea": "Read before you sign: the owl reads, every finding cites its page.",
-      "order": ["owl", "loupe", "signature", "sign", "files"],
+      "order": ["owl", "children", "cheques", "stay", "lowest-rent", "balance", "sign"],
       "shots": [
         {
           "id": "rag",
@@ -229,6 +229,65 @@
         {
           "id": "rag",
           "why": "the second take is the vertical reel pillarboxed (black bars) in the 16:9 file"
+        },
+        {
+          "id": "signature",
+          "why": "replaced on 2026-11-06 by the clips of Verikora's own rules (krizaka-internal#2658); its library clip waits on annex B anyway"
+        },
+        {
+          "id": "files",
+          "why": "replaced on 2026-11-06 by the clips of Verikora's own rules (krizaka-internal#2658); its library clip waits on annex B anyway"
+        },
+        {
+          "id": "loupe",
+          "why": "replaced on 2026-11-06 by the clips of Verikora's own rules (krizaka-internal#2658); one title shot of the reel is enough"
+        }
+      ],
+      "generated": [
+        {
+          "id": "children",
+          "rule": "QC-LEASE-006",
+          "citation": "C.c.Q., art. 1899",
+          "catalogue": "verikora:apps/web/lib/closing-note/data/qc-residential-lease.json:92",
+          "seconds": 6,
+          "idea": "a clause refusing children has no effect: a child's small red rain boots stay by the apartment door",
+          "prompt": "In the hallway of an old Montréal apartment at night, a pair of small red children's rain boots stands on a doormat by a wooden door, a tiny yellow raincoat hangs on a hook above; warm lamp light from the living room, slow push-in towards the boots."
+        },
+        {
+          "id": "cheques",
+          "rule": "QC-LEASE-005",
+          "citation": "C.c.Q., art. 1904, al. 2",
+          "catalogue": "verikora:apps/web/lib/closing-note/data/qc-residential-lease.json:78",
+          "seconds": 6,
+          "idea": "post-dated cheques may not be required: a booklet of blank cheques closes and is set aside",
+          "prompt": "On a dark walnut desk under a brass lamp, a booklet of blank paper cheques lies open; a draught from the window slowly turns its pages until the booklet falls closed, then the camera drifts to the rainy window."
+        },
+        {
+          "id": "stay",
+          "rule": "QC-LEASE-007",
+          "citation": "C.c.Q., art. 1936 et 1893",
+          "catalogue": "verikora:apps/web/lib/closing-note/data/qc-residential-lease.json:106",
+          "seconds": 6,
+          "idea": "a waiver of the right to stay has no effect: the key stays on its hook in a lived-in home",
+          "prompt": "Close-up of an old brass apartment key hanging on a small wooden hook by a front door, a warm living room with plants and books softly out of focus behind it; the key sways gently and settles; snow falls past the window."
+        },
+        {
+          "id": "lowest-rent",
+          "rule": "QC-LEASE-008",
+          "citation": "C.c.Q., art. 1896 ; Règlement sur les formulaires de bail obligatoires, section G",
+          "catalogue": "verikora:apps/web/lib/closing-note/data/qc-residential-lease.json:120",
+          "seconds": 6,
+          "idea": "the notice of the lowest rent of the last twelve months: twelve blank envelopes, one for each month, the lamp finds the lowest one",
+          "prompt": "On a dark walnut desk under a brass lamp, twelve plain cream paper envelopes stand upright in a small wooden box, edges only, all blank; the camera glides slowly along them and the warm light settles on one envelope that sits slightly lower than the others; rain on the window behind."
+        },
+        {
+          "id": "balance",
+          "rule": "QC-LEASE-020",
+          "citation": "C.c.Q., art. 1901",
+          "catalogue": "verikora:apps/web/lib/closing-note/data/qc-residential-lease.json:148",
+          "seconds": 6,
+          "idea": "an abusive clause: an old brass balance weighed down on one side by a stack of papers slowly evens out",
+          "prompt": "An antique brass balance scale on a dark walnut desk under a warm lamp at night; one pan is pressed down by a thick stack of plain paper, the other pan holds a single small brass key; slowly the beam rises until both pans are level and the scale comes to rest; rain on the window behind."
         }
       ]
     },
@@ -292,5 +351,6 @@
   },
   "libraries": {
     "media-library": "~/Documents/krizaka/data/media-library/generated-2026-11"
-  }
+  },
+  "generatedLook": "A cinematic 16:9 shot, 35 mm film, shallow depth of field, soft grain. Montréal at night, dark and warm: brass desk-lamp light and cold blue window light, rain on the glass, real textures of paper, wood and brick. Slow, steady camera. No readable text, no letters, no numbers, no logo, no sign, no screen, no face, no person, no hands."
 }
