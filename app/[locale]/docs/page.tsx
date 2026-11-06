@@ -110,7 +110,9 @@ export default async function DocsPage({ params }: Props) {
             description: words.text,
             links: path.links.map((l) => ({
               href: l.href,
-              label: l.name ? format(labels.site, { name: l.name }) : labels[l.id],
+              label: l.name
+                ? format(labels.site, { name: l.name, status: l.status ? site.nav.status[l.status].label : "" })
+                : labels[l.id],
             })),
           };
         })}

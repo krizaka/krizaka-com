@@ -56,7 +56,11 @@ try {
           !isAnchor(link.href)
         )
           continue; // the page's own link: nowhere to arrive
-        await page.locator(`footer a[href="${link.href}"]`).first().click();
+        // By the keyboard (Enter on the focused link): the browser then calls the script's focus on the h1 « visible » —
+        // the case where a ring was drawn round the heading.
+        const footerLink = page.locator(`footer a[href="${link.href}"]`).first();
+        await footerLink.focus();
+        await page.keyboard.press("Enter");
         try {
           if (!isAnchor(link.href))
             await page.waitForFunction(
@@ -79,6 +83,7 @@ try {
                 h1: h1?.textContent?.trim().slice(0, 40),
                 h1Visible: Boolean(rect && rect.bottom > 0 && rect.top < window.innerHeight),
                 h1Focused: document.activeElement === h1,
+                h1Outline: h1 ? getComputedStyle(h1).outlineStyle : undefined,
                 focus: document.activeElement?.tagName.toLowerCase(),
                 hasFooterLink: Boolean(mine),
                 current: mine?.getAttribute("aria-current"),

@@ -245,6 +245,42 @@ body {
   outline: none;
 }
 
+/* « Le cadre » (founder, 2026-11-05): a box drawn round the page's heading. RouteArrival (and a dialog, a sent form, the
+   skip link's target) focuses by script an element that is no control — tabindex="-1", no ring of its own — and when the
+   last key pressed was the keyboard's, the browser calls that focus « visible ». The tailwind preset hides it, but in
+   @layer base: the unlayered :focus-visible above beats it. So the same rule is here, after it, unlayered. A control
+   (a link, a button, a field, a roving item with a role) keeps its 2 px ring; tests/focus-ring.test.mjs, check-arrival. */
+:is(
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    main,
+    header,
+    footer,
+    section,
+    article,
+    aside,
+    nav,
+    div,
+    p,
+    span,
+    li,
+    ul,
+    ol,
+    form,
+    figure
+  ):not([role])[tabindex="-1"]:is(:focus, :focus-visible),
+:is([role="dialog"], [role="alertdialog"], [role="status"], [role="alert"], [role="region"])[tabindex="-1"]:is(
+    :focus,
+    :focus-visible
+  ) {
+  outline: none;
+  box-shadow: none;
+}
+
 /* The search field of the command palette (@krizaka/ui/command) is its whole bar: the palette marks it, not a ring. */
 [cmdk-input]:focus-visible {
   outline: none;

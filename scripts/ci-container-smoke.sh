@@ -45,3 +45,5 @@ node scripts/check-motion.mjs --base http://localhost:3000
 node scripts/check-figures.mjs --base http://localhost:3000
 # A footer link lands at the top of its page, heading focused; one footer landmark per page (/story peer review).
 node scripts/check-arrival.mjs --base http://localhost:3000
+# « Le cadre » in a real browser: no ring on a heading focused by script, the ring for the keyboard on a control
+node scripts/check-focus-ring.mjs

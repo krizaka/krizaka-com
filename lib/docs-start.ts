@@ -3,7 +3,8 @@
    docs live there, never here (AGENTS.md §2.3). Pure: tested by tests/docs-hub.test.mjs. */
 
 import { JAVA_SITE } from "./java-redirects.ts";
-import { PRODUCTS } from "./products.ts";
+import { productOrder } from "./home-sections.ts";
+import { PRODUCTS, type ProductStatus } from "./products.ts";
 import { UI_SITE } from "./ui-redirects.ts";
 import { GOOD_FIRST_URL } from "./library-links.ts";
 
@@ -18,6 +19,8 @@ export interface StartLink {
   href: string;
   /** A product's own name replaces the message. */
   name?: string;
+  /** A product's status, said with the home's words (site.nav.status.<status>). */
+  status?: ProductStatus;
 }
 
 export interface StartPath {
@@ -49,7 +52,8 @@ export const START_PATHS: StartPath[] = [
   {
     id: "products",
     href: "/#products",
-    links: PRODUCTS.map((p) => ({ id: "site", href: p.siteUrl, name: p.name })),
+    // The home's order (Verikora, Sovkora, Folioviv) and the product's own status, each to its public page.
+    links: productOrder(PRODUCTS).map((p) => ({ id: "site", href: p.siteUrl, name: p.name, status: p.status })),
   },
   {
     id: "contribute",
