@@ -363,7 +363,8 @@
 
 - **Layout v2 (ADR-014, krizaka/.github, 2026-10-28)** — Bunny Storage (zone `krizaka-assets`) has four roots, at most five
   folders deep, in reading order: **the org**, then **the sites**, then **the apps** (`scripts/bunny-layout.mjs` is the single
-  source; the README.txt at the zone root is generated from it):
+  source, with its data in `bunny-layout-data.mjs` and its path grammar, named and tested parts instead of long regexes, in
+  `bunny-layout-grammar.mjs` (ADR-026 phase D, #654); the README.txt at the zone root is generated from it):
 
   ```
   org/v<n>/                 Krizaka's own data, the defaults of the family: org.json + apps/<app>.json (@krizaka/org),
