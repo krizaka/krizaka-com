@@ -1583,7 +1583,6 @@
           ],
           "status": "0.1.0 on Maven Central (api, client). 0.2.0 — the outbox implements `OutboxStore.append`, every event has its JSON Schema — is merged and ships in November.",
           "next": {
-            "vocabulary": "Decided: capabilities and units become keys declared in the price book, measurements a map of quantities; Sovkora keeps its enums in Sovkora. A reusable billing block cannot speak one product's vocabulary.",
             "release": "BOM 0.2.0 manages this block at an unpublished 0.2.0: declare 0.1.0 explicitly until BOM 0.3.0."
           },
           "headline": "Debit after and the work ran on credit nobody had. Debit before and failures get billed.",

@@ -49,6 +49,9 @@ const v = (artifactId: string) => mavenVersion(artifactId) ?? "";
 export const USERS_SOURCE = { repo: "krizaka-build", folder: "krizaka-users" } as const;
 
 /** The platform kit's modules live in krizaka-build, under krizaka-platform-kit/ (ADR-021), not in the deleted krizaka-platform-kit repository. */
+/** Billing's artefacts live in krizaka-build, under krizaka-billing/ (ADR-021), not in the deleted krizaka-billing repository. */
+export const BILLING_SOURCE = { repo: "krizaka-build", folder: "krizaka-billing" } as const;
+
 export const PLATFORM_KIT_SOURCE = { repo: "krizaka-build", folder: "krizaka-platform-kit" } as const;
 
 function usersArtifact(id: MavenArtifactId, part: "api" | "client" | "core"): MavenArtifact {
@@ -156,16 +159,16 @@ export const MAVEN_ARTIFACTS: readonly MavenArtifact[] = [
     id: "billingClient",
     groupId: MAVEN_GROUP_ID,
     artifactId: "krizaka-billing-client",
-    repo: "krizaka-billing",
-    dir: "krizaka-billing-client",
+    repo: BILLING_SOURCE.repo,
+    dir: `${BILLING_SOURCE.folder}/krizaka-billing-client`,
     version: v("krizaka-billing-client"),
   },
   {
     id: "billingApi",
     groupId: MAVEN_GROUP_ID,
     artifactId: "krizaka-billing-api",
-    repo: "krizaka-billing",
-    dir: "krizaka-billing-api",
+    repo: BILLING_SOURCE.repo,
+    dir: `${BILLING_SOURCE.folder}/krizaka-billing-api`,
     version: v("krizaka-billing-api"),
   },
   {

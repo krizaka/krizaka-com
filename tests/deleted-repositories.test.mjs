@@ -3,12 +3,12 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
 // 2026-11-06: the founder deleted krizaka/krizaka-users and krizaka/krizaka-platform-kit (both live in krizaka/krizaka-build
-// since ADR-021) and krizaka/krizaka-accounts (empty, created again when a shared accounts site is needed). No link, forum,
+// since ADR-021, as are krizaka-notifications and krizaka-billing) and krizaka/krizaka-accounts (empty, created again when a shared accounts site is needed). No link, forum,
 // tracker or source path of the site names them: a link to a deleted repository is a 404.
 // Not here on purpose: lib/java-redirects.ts (the old /docs/java/<repo> addresses still answer 308), the Maven coordinates
 // (`com.krizaka:krizaka-platform-kit` is a module of krizaka-build) and app/data/architecture.json (generated from the
 // Orazaka workspace by its scripts/generate-docs.mjs).
-const GONE = ["krizaka-accounts", "krizaka-users", "krizaka-platform-kit"];
+const GONE = ["krizaka-accounts", "krizaka-users", "krizaka-platform-kit", "krizaka-notifications", "krizaka-billing"];
 const files = [
   "lib/building-blocks.ts",
   "lib/maven-packages.ts",

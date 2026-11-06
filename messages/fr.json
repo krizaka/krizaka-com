@@ -1586,7 +1586,6 @@
           ],
           "status": "0.1.0 sur Maven Central (api, client). La 0.2.0 — l'outbox implémente `OutboxStore.append`, chaque événement a son JSON Schema — est fusionnée et sort en novembre.",
           "next": {
-            "vocabulary": "Décidé : capacités et unités deviennent des clés déclarées dans la grille tarifaire, les mesures une table de quantités ; Sovkora garde ses enums chez Sovkora. Une brique de facturation réutilisable ne peut pas parler le vocabulaire d'un seul produit.",
             "release": "Le BOM 0.2.0 gère cette brique en 0.2.0, non publiée : déclarez 0.1.0 explicitement jusqu'au BOM 0.3.0."
           },
           "headline": "Débiter après, et le travail tourne à crédit. Débiter avant, et les échecs sont facturés.",

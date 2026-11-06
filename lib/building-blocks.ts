@@ -8,7 +8,7 @@
 
 import type { MascotBird, MascotMood } from "@krizaka/ui/mascots";
 import { JAVA_SITE } from "./java-redirects";
-import { PLATFORM_KIT_SOURCE, USERS_SOURCE } from "./maven-packages";
+import { BILLING_SOURCE, PLATFORM_KIT_SOURCE, USERS_SOURCE } from "./maven-packages";
 import { publishedVersion } from "./registry-versions";
 
 /** Every version on this page is read from the registries at build (lib/registry-versions.ts) — none is typed here. */
@@ -311,7 +311,7 @@ public Order confirm(Order order) {
   },
   {
     id: "krizaka-billing",
-    repo: "krizaka-billing",
+    repo: BILLING_SOURCE.repo,
     bird: "flamingo",
     mood: "welcome",
     hue: "indigo",
@@ -319,7 +319,7 @@ public Order confirm(Order order) {
     registry: "maven",
     forum: "java",
     thread: FORUMS.java.url,
-    docs: "https://github.com/krizaka/krizaka-billing#readme",
+    docs: `https://github.com/krizaka/${BILLING_SOURCE.repo}/tree/main/${BILLING_SOURCE.folder}#readme`,
     releases: [
       {
         coordinate: "com.krizaka:krizaka-billing-api · -client",
@@ -327,10 +327,7 @@ public Order confirm(Order order) {
         url: central("krizaka-billing-client"),
       },
     ],
-    next: [
-      { key: "vocabulary", url: "https://github.com/krizaka/krizaka-billing/issues/7" },
-      { key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" },
-    ],
+    next: [{ key: "release", url: "https://github.com/krizaka/krizaka-build/issues/11" }],
     sample: {
       file: "RenderService.java",
       lang: "java",
