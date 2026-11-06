@@ -24,18 +24,18 @@
     "routeStateSelection": 0,
     "cognitiveComplexity": 7,
     "sonar": 61,
-    "codeRules": 433,
-    "code/curly": 384,
-    "sonarjs/super-linear-regex": 18,
-    "code/max-depth": 42,
-    "sonarjs/no-nested-conditional": 16,
+    "codeRules": 456,
+    "code/curly": 407,
     "sonarjs/no-nested-template-literals": 20,
-    "code/no-console": 6,
-    "sonarjs/redundant-type-aliases": 1,
+    "code/max-depth": 42,
+    "sonarjs/super-linear-regex": 18,
+    "sonarjs/no-nested-conditional": 16,
     "sonarjs/no-os-command-from-path": 3,
     "sonarjs/no-inverted-boolean-check": 1,
     "code/max-nested-callbacks": 1,
     "sonarjs/concise-regex": 1,
-    "sonarjs/void-use": 1
+    "sonarjs/void-use": 1,
+    "code/no-console": 6,
+    "sonarjs/redundant-type-aliases": 1
   }
 }
