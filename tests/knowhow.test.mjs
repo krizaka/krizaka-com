@@ -66,10 +66,11 @@ test("a product card's one line is a hook: 90 characters at most, in both langua
 test("/story keeps its founder's facts and its chapters come from PRODUCTS (the roster is the rest of them)", () => {
   for (const lang of ["en", "fr"]) {
     const who = messages(lang).story.who;
-    // The founder is minimal (2026-10-21): name and city, no studies, lab, year or personal detail.
+    // The founder is not named (réunion 6, 2026-11-05): « fondée à Montréal »; no studies, lab, year or personal detail.
     assert.deepEqual(who.places, ["Montréal"]);
     const text = [who.lead, who.refusal].join(" ");
-    assert.match(text, /Oussama/);
+    assert.doesNotMatch(text, /Oussama|Abid/, `${lang}: the founder is not named`);
+    assert.match(text, /Montréal/);
     assert.doesNotMatch(
       text,
       /20\d\d|19\d\d|laborato|research lab|étudi|studied|mathémat|mathemat|cognit|—/i,
