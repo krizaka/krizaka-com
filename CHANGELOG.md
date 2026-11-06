@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.29.0](https://github.com/krizaka/krizaka-com/compare/v0.28.0...v0.29.0) (2026-11-06)
+
+
+### Features
+
+* **home:** the home shows what we made: carousels that advance on their own, the products in one row with Sovkora in the centre ([#629](https://github.com/krizaka/krizaka-com/issues/629)) ([3e2b2a5](https://github.com/krizaka/krizaka-com/commit/3e2b2a5334bf94dc323fe857e8cbe12cb4c50ab7))
+
 ## [0.28.0](https://github.com/krizaka/krizaka-com/compare/v0.27.0...v0.28.0) (2026-11-05)
 
 
