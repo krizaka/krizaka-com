@@ -36,10 +36,11 @@ export function arrivalProblems(c, r) {
   if (r.scrollY > 2) out.push(`${where}: lands at scrollY ${r.scrollY}, not at the top`);
   if (!r.h1Visible) out.push(`${where}: the page's h1 is not in view${r.h1 ? ` (« ${r.h1} »)` : ""}`);
   if (!r.h1Focused) out.push(`${where}: focus is not on the h1 (it is on ${r.focus})`);
-  if (r.h1Outline && r.h1Outline !== "none")
+  if (r.h1Outline && r.h1Outline !== "none") {
     out.push(
       `${where}: the focused h1 wears a ring (outline-style ${r.h1Outline}): « le cadre », a ring is for a control`,
     );
+  }
   if (r.hasFooterLink && r.current !== "page")
     out.push(`${where}: the footer link is not aria-current="page" on its own page`);
   return out;
