@@ -45,12 +45,12 @@ export function contactSourceFromPath(pathname: string): string {
 
 /** What a source implies — nothing when the page is about Krizaka as a whole (home, story…). */
 export function presetForSource(source: string | null): ContactPreset {
-  const product = productOf(source) ?? (source && BLOCKS_SOURCES.includes(source) ? "blocks" : null);
+  const product = productOf(source) ?? (source && BLOCKS_SOURCES.has(source) ? "blocks" : null);
   return { kind: source === "services" ? "business" : null, product };
 }
 
 /** The pages about the stack's libraries. */
-const BLOCKS_SOURCES = ["open-source", "docs-ui", "docs-java"];
+const BLOCKS_SOURCES: ReadonlySet<string> = new Set(["open-source", "docs-ui", "docs-java"]);
 
 /** The contact page link, carrying where the visitor is, the kind (`topic=`) and the product (`product=`) when the page knows them. */
 export function contactHref(source: string | null, kind?: ContactKind, product?: ContactProduct): string {
@@ -197,10 +197,24 @@ export function postMailgun(form: FormData, env: NodeJS.ProcessEnv = process.env
   );
 }
 
+/** The signature line under the message: who wrote, what about, when, in which language, from which page. */
+function contactSignature(m: ContactMessage): string {
+  const author = m.company ? `${m.name} <${m.email}>, ${m.company}` : `${m.name} <${m.email}>`;
+  const parts = [author, contactTag(m)];
+  if (m.timeline) {
+    parts.push(TIMELINE_LABEL[m.timeline]);
+  }
+  parts.push(m.locale);
+  if (m.source) {
+    parts.push(`from ${m.source}`);
+  }
+  return parts.join(" · ");
+}
+
 /** Delivers to every configured channel. Returns how many accepted it. */
 export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv = process.env): Promise<number> {
   const subject = contactSubject(m);
-  const text = `${m.message}\n\n— ${m.name} <${m.email}>${m.company ? `, ${m.company}` : ""} · ${contactTag(m)}${m.timeline ? ` · ${TIMELINE_LABEL[m.timeline]}` : ""} · ${m.locale}${m.source ? ` · from ${m.source}` : ""}`;
+  const text = `${m.message}\n\n— ${contactSignature(m)}`;
   const jobs: Promise<boolean>[] = [];
 
   if (mailConfigured(env) && env.MAIL_CONTACT_TO && env.MAIL_DOMAIN) {

@@ -23,7 +23,6 @@ import {
   type ContactProduct,
   type ContactTimeline,
 } from "@/lib/contact";
-import { ProductLogo } from "@krizaka/ui";
 import { Button } from "@krizaka/ui/button";
 import CaptchaWidget, { CAPTCHA_SITE_KEY } from "./CaptchaWidget";
 
@@ -62,9 +61,9 @@ const KIND_ICON = { support: ChatIcon, business: UsersIcon, other: FlagIcon } as
     pre-selected from a page about Krizaka as a whole. The static page renders without a choice until the URL is read. */
 export default function ContactForm({
   defaultPreset = { kind: null, product: null },
-}: {
+}: Readonly<{
   defaultPreset?: ContactPreset;
-}) {
+}>) {
   return (
     <Suspense fallback={<Form preset={defaultPreset} source={null} />}>
       <FromUrl defaultPreset={defaultPreset} />
@@ -336,7 +335,7 @@ function Form({ preset, source }: { preset: ContactPreset; source: string | null
         )}
         <div className="kz-cf-field">
           <span id="cf-product">{c.stepProduct}</span>
-          <div className="kz-cf-chips" role="group" aria-labelledby="cf-product">
+          <fieldset className="kz-cf-chips" aria-labelledby="cf-product">
             {CONTACT_PRODUCTS.map((id) => (
               <button
                 key={id}
@@ -348,7 +347,7 @@ function Form({ preset, source }: { preset: ContactPreset; source: string | null
                 {c.products[id]}
               </button>
             ))}
-          </div>
+          </fieldset>
         </div>
       </fieldset>
 
@@ -420,7 +419,7 @@ function Form({ preset, source }: { preset: ContactPreset; source: string | null
           <span id="cf-timeline">
             {c.timeline} <i>— {c.optional}</i>
           </span>
-          <div className="kz-cf-chips" role="group" aria-labelledby="cf-timeline">
+          <fieldset className="kz-cf-chips" aria-labelledby="cf-timeline">
             {CONTACT_TIMELINES.map((id) => (
               <button
                 key={id}
@@ -432,7 +431,7 @@ function Form({ preset, source }: { preset: ContactPreset; source: string | null
                 {c.timelines[id]}
               </button>
             ))}
-          </div>
+          </fieldset>
         </div>
         <label className="kz-cf-field">
           <span>{c.message}</span>
@@ -539,7 +538,7 @@ const STYLES = `
   .kz-cf-count { margin-left:auto; font-family:var(--font-mono, monospace); font-size:11.5px; color:var(--kz-text-secondary); }
   .kz-cf-count[data-near] { color:var(--kz-danger); }
 
-  .kz-cf-chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .kz-cf-chips { display:flex; flex-wrap:wrap; gap:8px; border:0; margin:0; padding:0; min-width:0; }
   .kz-cf-chip { padding:8px 14px; border-radius:999px; font:inherit; font-size:13px; font-weight:500; cursor:pointer;
     color:var(--kz-text-secondary); background:var(--kz-surface-0); border:1px solid var(--kz-border-default);
     transition:border-color 160ms ease, color 160ms ease, background-color 160ms ease; }
