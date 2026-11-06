@@ -9,7 +9,8 @@
 # none of glibc's allocator fragmentation the Next self-hosting guide warns about for image optimisation.
 
 FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f AS base
-RUN apk add --no-cache libc6-compat
+# The distribution's security fixes land between two digest bumps of the base image (CVE-2026-85091, zlib, krizaka-internal#2773).
+RUN apk upgrade --no-cache && apk add --no-cache libc6-compat
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 
@@ -40,6 +41,8 @@ RUN npm run postinstall && npm run build
 
 # 3. Runner — standalone server, unprivileged user.
 FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f AS runner
+# The shipped image takes the distribution's security fixes too (krizaka-internal#2773).
+RUN apk upgrade --no-cache
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \

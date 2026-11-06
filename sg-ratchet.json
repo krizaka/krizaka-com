@@ -2,7 +2,7 @@
   "counters": {
     "no-ambient-clock": 1,
     "no-db-in-service-or-rules": 0,
-    "no-enum-string-compare": 2,
+    "no-enum-string-compare": 1,
     "no-env-in-domain": 0,
     "no-get-time-arithmetic": 0,
     "no-get-time-difference": 0,
@@ -12,7 +12,7 @@
     "no-hand-ms-hours": 0,
     "no-hand-ms-minutes": 0,
     "no-hand-ms-one-hour": 0,
-    "no-hand-written-validation-regex": 5,
+    "no-hand-written-validation-regex": 4,
     "no-hardcoded-default-media": 0,
     "no-raw-inner-html": 0,
     "no-sort-without-compare": 0,

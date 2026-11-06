@@ -9,8 +9,6 @@ export const GITHUB_REPO = "sovkora";
 /** The canonical host: www (the apex answers 308 to www, see deploy/digitalocean/app.yaml). */
 export const SITE_URL = "https://www.krizaka.com";
 
-export const CONTACT_EMAIL = "bonjour@krizaka.com";
-
 /**
  * The company behind the site, as the Registraire des entreprises du Québec publishes it (certificate of 2026-10-08) — what a
  * footer and the legal pages must show. Never the head office's street (a home address), a phone or a tax account number:

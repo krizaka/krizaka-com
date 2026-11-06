@@ -62,7 +62,7 @@ const PROOF_ICON: Record<ServicesProofId, ReactNode> = {
 export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   const s = getDictionary(locale).site.services;
-  const enterprise = contactHref("services", "enterprise");
+  const enterprise = contactHref("services", "business");
   const figureGroups = [
     {
       id: "published",

@@ -48,16 +48,19 @@ test("one action in the hero: it writes to us on Verikora's topic, and nothing e
   const hero = read("app/components/home/HomeHero.tsx");
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
   assert.equal(hero.match(/<ButtonLink\b/g)?.length, 1, "one button");
-  assert.match(hero, /href=\{`\/\$\{locale\}\$\{contactHref\("home", HOME_PRODUCT\)\}`\} variant="primary"/);
+  assert.match(
+    hero,
+    /href=\{`\/\$\{locale\}\$\{contactHref\("home", undefined, HOME_PRODUCT\)\}`\}\s+variant="primary"/,
+  );
   assert.match(hero, /id="fig-1"/, "the carousel is Fig. 1");
   assert.doesNotMatch(hero, /FilmLightbox/, "the film is a slide of the carousel, with a link to its page");
   const { HOME_PRODUCT } = await import("../lib/home-sections.ts");
-  assert.equal(HOME_PRODUCT, "verikora", "the home serves Verikora (its code name is the contact topic's id)");
+  assert.equal(HOME_PRODUCT, "verikora", "the home serves Verikora (the contact form's product, by its commercial id)");
   for (const l of ["en", "fr"]) {
     const h = messages(l).site.home.hero;
     assert.ok(h.primary?.trim(), `${l}: hero.primary`);
     assert.equal(h.secondary, undefined, `${l}: no secondary action`);
-    assert.match(messages(l).site.contactForm.topics.verikora, /^Verikora$/, `${l}: the topic is Verikora's`);
+    assert.match(messages(l).site.contactForm.products.verikora, /^Verikora$/, `${l}: the product is Verikora`);
   }
   assert.equal(messages("fr").site.home.hero.primary, "Parlez-nous de vos dossiers");
   assert.equal(messages("en").site.home.hero.primary, "Talk to us about your files");

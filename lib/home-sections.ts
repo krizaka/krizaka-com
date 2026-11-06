@@ -1,7 +1,7 @@
 /* The home's sections, in order. The numbers in the margin (§ n) and the folios (« page n of N ») are read from this
    list, never typed: removing or adding a section renumbers the rest. */
 
-import type { ContactTopic } from "./contact.ts";
+import type { ContactProduct } from "./contact.ts";
 
 export const HOME_SECTIONS = ["hero", "products", "services", "direction", "principles"] as const;
 export type HomeSection = (typeof HOME_SECTIONS)[number];
@@ -17,7 +17,7 @@ export const PRODUCT_ORDER = ["sovkora", "verikora", "folioviv"] as const;
 
 /** The one product the home serves (krizaka-internal#2445): its reader is the property manager, so the hero's primary
  *  action writes to us on this product's topic of the contact form (lib/contact.ts), and its figure shows this product first. */
-export const HOME_PRODUCT = "verikora" satisfies ContactTopic;
+export const HOME_PRODUCT = "verikora" satisfies ContactProduct;
 
 /** The hero's carousel is Fig. 1 (its slides 1a, 1b…, lib/home-showcase.ts). */
 // @fixed: the hero is the page's first figure, a fact of the page's order.

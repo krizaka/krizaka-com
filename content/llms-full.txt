@@ -10,7 +10,7 @@
   brand marks, page blocks and templates. Documented, generated from its code, at https://ui.krizaka.com
 - Krizaka Java: the Spring Boot building blocks (BOM, parent, starters, messaging, users, notifications, billing, edge)
   published on Maven Central under `com.krizaka`. Documented at https://java.krizaka.com
-- Contact: bonjour@krizaka.com
+- Contact: the form at {{SITE_URL}}/en/contact (support, business or other, per product)
 
 ## Products
 

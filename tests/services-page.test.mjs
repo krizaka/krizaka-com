@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { SERVICES_PAGE_ORDER, SERVICES_PROOF } from "../lib/services-page.ts";
-import { CONTACT_TOPICS, contactHref, topicForSource, validateContact } from "../lib/contact.ts";
+import { CONTACT_KINDS, contactHref, presetForSource, validateContact } from "../lib/contact.ts";
 
 // 2026-10-30 (founder, krizaka-com#487): « Nos services » — Krizaka Entreprise, the one offer for companies.
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
@@ -32,13 +32,13 @@ test("the proof links are public artefacts: the stack's sites (UI, Lab, Java, Ty
   for (const { href } of SERVICES_PROOF) assert.match(href, /^https:\/\//);
 });
 
-test("the one action is the contact form with « Entreprise » preselected", () => {
-  assert.ok(CONTACT_TOPICS.includes("enterprise"));
-  assert.equal(contactHref("services", "enterprise"), "/contact?topic=enterprise&source=services");
-  assert.equal(topicForSource("services"), "enterprise");
+test("the one action is the contact form with the « business » kind preselected", () => {
+  assert.ok(CONTACT_KINDS.includes("business"));
+  assert.equal(contactHref("services", "business"), "/contact?topic=business&source=services");
+  assert.equal(presetForSource("services").kind, "business");
   const page = read("app/[locale]/services/page.tsx");
   assert.equal((page.match(/contactHref\(/g) ?? []).length, 1, "one destination for every action");
-  assert.match(page, /const enterprise = contactHref\("services", "enterprise"\)/);
+  assert.match(page, /const enterprise = contactHref\("services", "business"\)/);
   assert.equal((page.match(/href=\{enterprise\} variant="primary"/g) ?? []).length, 2, "hero and closing call");
   assert.doesNotMatch(
     page,
@@ -47,7 +47,7 @@ test("the one action is the contact form with « Entreprise » preselected", () 
   );
   for (const l of ["en", "fr"]) {
     const c = JSON.parse(read(`messages/${l}.json`));
-    assert.ok(JSON.stringify(c).includes('"enterprise"'), l);
+    assert.ok(c.site.contactForm.topics.business, `${l}: the business kind is worded`);
   }
 });
 

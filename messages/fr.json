@@ -220,6 +220,10 @@
             "name": "Pipeline",
             "line": "Chaque requête est une exécution tracée."
           },
+          "packs": {
+            "name": "Packs",
+            "line": "Des capacités prêtes à installer depuis le studio : vérification de documents, studio court métrage."
+          },
           "analytics": {
             "name": "Analyses",
             "line": "Résultats et analyses d'usage reviennent au produit."
@@ -596,7 +600,8 @@
     },
     "contactForm": {
       "captchaLabel": "Vérification humaine",
-      "stepTopic": "Qu'est-ce qui vous amène ?",
+      "stepTopic": "De quoi s'agit-il ?",
+      "stepProduct": "Quel produit ? (facultatif)",
       "stepDetails": "Comment vous joindre ?",
       "stepMessage": "Dites-nous en plus",
       "name": "Nom",
@@ -604,22 +609,22 @@
       "company": "Organisation",
       "optional": "facultatif",
       "topics": {
-        "sovkora": "Sovkora",
-        "blocks": "Briques Krizaka",
-        "partnership": "Partenariat",
-        "other": "Autre chose",
+        "support": "Support",
+        "business": "Affaires",
+        "other": "Autre chose"
+      },
+      "products": {
         "verikora": "Verikora",
         "folioviv": "Folioviv",
-        "enterprise": "Entreprise"
+        "sovkora": "Sovkora",
+        "kridoc": "Kridoc",
+        "blocks": "Briques Krizaka",
+        "none": "Aucun produit, Krizaka en général"
       },
       "topicHints": {
-        "sovkora": "Déployer ou auditer la passerelle d'IA souveraine",
-        "blocks": "Utiliser ou intégrer un composant Krizaka de Maven Central ou npm",
-        "partnership": "Intégration, revente ou partenariat de recherche",
-        "other": "Presse, carrières, une question pour l'équipe",
-        "verikora": "Vous louez des logements : parlez-nous des dossiers de location que vous vérifiez. En développement, inscription fermée.",
-        "folioviv": "Parlez-nous de Folioviv — en développement, inscriptions fermées",
-        "enterprise": "Modules sur mesure, adoption d'une IA souveraine ou maintenance"
+        "support": "Un produit que vous utilisez ou essayez : une question, un problème, quelque chose qui ne marche pas",
+        "business": "Modules sur mesure, adoption d'une IA souveraine, maintenance, intégration, revente ou partenariat de recherche",
+        "other": "Presse, carrières, une question pour l'équipe"
       },
       "timeline": "Pour quand ?",
       "timelines": {
@@ -629,13 +634,9 @@
       },
       "message": "Votre message",
       "placeholders": {
-        "sovkora": "Votre infrastructure (infonuagique, sur site, isolée), les modèles utilisés, vos contraintes de conformité…",
-        "blocks": "Le composant (sécurité, messagerie, utilisateurs, notifications, facturation, UI…), votre stack et ce que vous voulez construire…",
-        "partnership": "Qui vous êtes, ce que nous construirions ensemble, vos marchés…",
-        "other": "Comment pouvons-nous vous aider ?",
-        "verikora": "Vos immeubles, le nombre de dossiers reçus par mois, ce que vous vérifiez aujourd'hui et comment…",
-        "folioviv": "Votre boutique : ce que vous vendez, comment vous réservez et facturez aujourd'hui, ce que vos outils vous coûtent…",
-        "enterprise": "Votre entreprise, ce que vous voulez construire ou adopter, où cela doit tourner (vos serveurs, le Canada) et pour quand…"
+        "support": "Quel produit et où (page, étape), ce que vous attendiez, ce qui s'est passé…",
+        "business": "Votre entreprise, ce que vous voulez construire ou adopter, où cela doit tourner (vos serveurs, le Canada) et pour quand…",
+        "other": "Comment pouvons-nous vous aider ?"
       },
       "counter": "{count} / {max}",
       "shortcut": "⌘ / Ctrl + Entrée pour envoyer",
@@ -656,7 +657,7 @@
         "message": "Quelques mots de plus, s'il vous plaît — 10 caractères au moins."
       },
       "errors": {
-        "topic": "Choisissez le sujet de votre message.",
+        "topic": "Choisissez l'objet de votre message.",
         "invalid": "Vérifiez le champ indiqué.",
         "rate_limited": "Trop de messages envoyés. Réessayez dans quelques minutes.",
         "captcha_failed": "Confirmez que vous n'êtes pas un robot, puis renvoyez.",
@@ -1220,7 +1221,7 @@
           {
             "title": "Qui nous sommes",
             "paragraphs": [
-              "krizaka.com est publié par {legalName} (NEQ {neq}), société par actions constituée selon la Loi sur les sociétés par actions du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada). Pour nous joindre, utilisez le formulaire de contact ou écrivez à contact@krizaka.com."
+              "krizaka.com est publié par {legalName} (NEQ {neq}), société par actions constituée selon la Loi sur les sociétés par actions du Québec, exerçant sous le nom Krizaka (Montréal, Québec, Canada). Pour nous joindre, utilisez le formulaire de contact."
             ]
           },
           {

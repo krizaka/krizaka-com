@@ -10,7 +10,7 @@ import { getDictionary } from "@/lib/i18n";
    ═══════════════════════════════════════════════════════════════════ */
 
 import { displayName, org } from "@krizaka/org";
-import { SITE_URL, GITHUB_ORG_URL, CONTACT_EMAIL, NPM_ORG_URL } from "@/lib/site";
+import { SITE_URL, GITHUB_ORG_URL, NPM_ORG_URL } from "@/lib/site";
 import { siteUrlOf } from "@/lib/product-hosts";
 
 export type Locale = "fr" | "en";
@@ -29,7 +29,7 @@ const FAMILY = [
     url: siteUrlOf("sovkora"),
     repo: "sovkora",
     category: "BusinessApplication",
-    kind: "app",
+    app: true,
   },
   {
     id: "verikora",
@@ -37,7 +37,7 @@ const FAMILY = [
     url: siteUrlOf("verikora"),
     repo: "verikora",
     category: "BusinessApplication",
-    kind: "app",
+    app: true,
   },
   {
     id: "folioviv",
@@ -45,7 +45,7 @@ const FAMILY = [
     url: siteUrlOf("folioviv"),
     repo: "folioviv",
     category: "BusinessApplication",
-    kind: "app",
+    app: true,
   },
   {
     id: "krizaka-ui",
@@ -53,7 +53,7 @@ const FAMILY = [
     url: "https://ui.krizaka.com",
     repo: "krizaka-ui",
     language: "TypeScript",
-    kind: "code",
+    app: false,
   },
   {
     id: "krizaka-java",
@@ -61,7 +61,7 @@ const FAMILY = [
     url: "https://java.krizaka.com",
     repo: "krizaka-platform-kit",
     language: "Java",
-    kind: "code",
+    app: false,
   },
 ] as const;
 
@@ -122,7 +122,6 @@ export function buildSiteGraph(locale: Locale) {
           "Privacy law in Québec (Law 25)",
         ],
         logo: `${SITE_URL}/favicon.svg`,
-        email: CONTACT_EMAIL,
         sameAs: [GITHUB_ORG_URL, NPM_ORG_URL, ...org.links.social.map((s) => s.url)],
         address: {
           "@type": "PostalAddress",

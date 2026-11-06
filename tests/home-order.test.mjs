@@ -71,7 +71,7 @@ test("Sovkora is an entry like the products: its specimen tag, its carousel as a
   );
   for (const l of ["en", "fr"]) {
     const e = msg(l).site.home.engine;
-    assert.deepEqual(Object.keys(e.gives), ["models", "pipeline", "analytics"], l);
+    assert.deepEqual(Object.keys(e.gives), ["models", "pipeline", "packs", "analytics"], l);
     assert.doesNotMatch(JSON.stringify(e), /[\u2014\u2013]/, l);
   }
 });

@@ -118,7 +118,8 @@ function tagProps(p: Product, t: TranslationDictionary, locale: string) {
 }
 
 /** What the engine gives and the products it powers, folded in its tag. Only what runs is said (results, analytics; run
- *  events and webhooks are sovkora#189). */
+ *  events and webhooks are sovkora#189). Packs: krizaka/sovkora-studio-service installs them from its catalogue
+ *  (/api/v1/studios/packs, /api/v1/studios/{key}/installations); the packs live in krizaka/sovkora-packs. */
 function EngineGives({ t }: Readonly<{ t: TranslationDictionary }>) {
   const e = t.site.home.engine;
   const eng = t.site.products.engine;
@@ -128,7 +129,7 @@ function EngineGives({ t }: Readonly<{ t: TranslationDictionary }>) {
     <details className="kz-entry-gives">
       <summary>{e.givesLabel}</summary>
       <ul>
-        {(["models", "pipeline", "analytics"] as const).map((k) => (
+        {(["models", "pipeline", "packs", "analytics"] as const).map((k) => (
           <li key={k}>
             <b>{e.gives[k].name}</b> <span>{e.gives[k].line}</span>
           </li>
