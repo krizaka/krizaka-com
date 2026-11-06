@@ -82,15 +82,13 @@ export interface ContactMessage {
 
 export type ContactValidation = { ok: true; value: ContactMessage } | { ok: false; field: string };
 
-const EMAIL = /^[^\s@<>()]+@[^\s@<>()]+\.[^\s@<>()]{2,}$/;
-
 // @fixed: The message size limit is a technical constraint shared by the API and form.
 export const CONTACT_MESSAGE_MAX = 5000;
 
 /** The one validation schema of the contact form: the server (validateContact) and the form's fields read it. */
 export const ContactFormSchema = z.object({
   name: z.string().trim().min(2).max(120),
-  email: z.string().trim().max(200).regex(EMAIL),
+  email: z.string().trim().max(200).pipe(z.email()),
   company: z.string().trim().max(160),
   message: z.string().trim().min(10).max(CONTACT_MESSAGE_MAX),
 });

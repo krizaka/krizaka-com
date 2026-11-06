@@ -29,7 +29,7 @@ const FAMILY = [
     url: siteUrlOf("orazaka"),
     repo: "orazaka",
     category: "BusinessApplication",
-    kind: "app",
+    app: true,
   },
   {
     id: "yomizaka",
@@ -37,7 +37,7 @@ const FAMILY = [
     url: siteUrlOf("yomizaka"),
     repo: "yomizaka",
     category: "BusinessApplication",
-    kind: "app",
+    app: true,
   },
   {
     id: "akinaza",
@@ -45,7 +45,7 @@ const FAMILY = [
     url: siteUrlOf("akinaza"),
     repo: "akinaza",
     category: "BusinessApplication",
-    kind: "app",
+    app: true,
   },
   {
     id: "krizaka-ui",
@@ -53,7 +53,7 @@ const FAMILY = [
     url: "https://ui.krizaka.com",
     repo: "krizaka-ui",
     language: "TypeScript",
-    kind: "code",
+    app: false,
   },
   {
     id: "krizaka-java",
@@ -61,12 +61,12 @@ const FAMILY = [
     url: "https://java.krizaka.com",
     repo: "krizaka-platform-kit",
     language: "Java",
-    kind: "code",
+    app: false,
   },
 ] as const;
 
 const familyNode = (f: (typeof FAMILY)[number], description: string) =>
-  f.kind === "app"
+  f.app
     ? {
         "@type": "SoftwareApplication",
         "@id": `${f.url}/#software`,

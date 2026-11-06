@@ -48,7 +48,10 @@ test("one action in the hero: it writes to us on Verikora's topic, and nothing e
   const hero = read("app/components/home/HomeHero.tsx");
   assert.equal(hero.match(/variant="primary"/g)?.length, 1);
   assert.equal(hero.match(/<ButtonLink\b/g)?.length, 1, "one button");
-  assert.match(hero, /href=\{`\/\$\{locale\}\$\{contactHref\("home", undefined, HOME_PRODUCT\)\}`\} variant="primary"/);
+  assert.match(
+    hero,
+    /href=\{`\/\$\{locale\}\$\{contactHref\("home", undefined, HOME_PRODUCT\)\}`\}\s+variant="primary"/,
+  );
   assert.match(hero, /id="fig-1"/, "the carousel is Fig. 1");
   assert.doesNotMatch(hero, /FilmLightbox/, "the film is a slide of the carousel, with a link to its page");
   const { HOME_PRODUCT } = await import("../lib/home-sections.ts");
