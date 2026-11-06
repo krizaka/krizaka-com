@@ -73,3 +73,7 @@ test("no page claims « Loi 25, par construction » until the EFVP is published"
   const claim = /Loi 25,? par construction|Law 25,? by (construction|design)/i;
   for (const l of ["fr", "en"]) assert.doesNotMatch(JSON.stringify(m[l]), claim, l);
 });
+
+test("the engine's entry on the home says Sovkora's canonical line too", () => {
+  for (const l of ["fr", "en"]) assert.equal(m[l].site.home.engine.line, LINES[l].orazaka, l);
+});
