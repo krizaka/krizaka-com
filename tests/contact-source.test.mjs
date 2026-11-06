@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { contactHref, contactSourceFromPath, topicForSource, topicFromQuery, validateContact } from "../lib/contact.ts";
+import { topicForProductSite, topicFromQuery } from "../lib/contact-products.ts";
+import { contactHref, contactSourceFromPath, topicForSource, validateContact } from "../lib/contact.ts";
 
 test("names the page a visitor comes from", () => {
   const cases = {
@@ -62,8 +63,8 @@ test("takes a product by its commercial name as a topic or a source, and still b
   assert.equal(topicFromQuery("kridoc"), "other");
   assert.equal(topicFromQuery("nope"), null);
   assert.equal(topicFromQuery(null), null);
-  assert.equal(topicForSource("verikora-com"), "yomizaka");
-  assert.equal(topicForSource("sovkora-com"), "orazaka");
-  assert.equal(topicForSource("folioviv-com"), "akinaza");
-  assert.equal(topicForSource("kridoc-com"), null);
+  assert.equal(topicForProductSite("verikora-com"), "yomizaka");
+  assert.equal(topicForProductSite("sovkora-com"), "orazaka");
+  assert.equal(topicForProductSite("folioviv-com"), "akinaza");
+  assert.equal(topicForProductSite("kridoc-com"), null);
 });

@@ -48,7 +48,7 @@ const STAMP: Record<ProductStatus, StampTone> = {
 };
 const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
 
-const host = (url: string) => url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+const host = (url: string) => new URL(url).host;
 /** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
 const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
 
