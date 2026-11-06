@@ -62,10 +62,10 @@ test("the committed manifest is signed by a baked key and is the signature of li
 
 test("an edit of the data without a new signature fails the check; so does a hand-edited manifest", () => {
   const edited = structuredClone(SERVICES);
-  edited.orazaka.dev.apiBase = "https://www.orazaka.com";
+  edited.orazaka.dev.apiBase = "https://www.sovkora.com";
   assert.match(checkSigned(signedRaw(), edited)[0], /services:sign/);
   const forged = JSON.parse(signedRaw());
-  forged.services.orazaka.dev.apiBase = "https://www.orazaka.com";
+  forged.services.orazaka.dev.apiBase = "https://www.sovkora.com";
   assert.match(checkSigned(JSON.stringify(forged), SERVICES)[0], /does not verify \(bad-signature\)/);
   assert.match(checkSigned("{", SERVICES)[0], /malformed/);
 });
@@ -86,7 +86,7 @@ test("signing: unchanged data keeps the committed document byte for byte, change
   assert.equal(again.changed, false);
   assert.equal(JSON.stringify(again.manifest), JSON.stringify(first.manifest));
   const moved = structuredClone(SERVICES);
-  moved.orazaka.dev.webBase = "https://app.orazaka.com";
+  moved.orazaka.dev.webBase = "https://app.sovkora.com";
   const next = signServices(moved, {
     previous: first.manifest,
     seed: key.seed,
@@ -103,7 +103,7 @@ test("signing never goes back in time (a replay guard on the phones depends on i
   const key = keypair();
   const first = signServices(SERVICES, { seed: key.seed, keyId: "k1", now: new Date("2026-10-21T14:00:00Z") });
   const moved = structuredClone(SERVICES);
-  moved.orazaka.dev.webBase = "https://app.orazaka.com";
+  moved.orazaka.dev.webBase = "https://app.sovkora.com";
   assert.throws(
     () =>
       signServices(moved, {
@@ -126,14 +126,14 @@ test("an app that discovers from the committed document gets the live addresses,
     appVersion: "1.0.0",
     manifestUrls: [KRIZAKA_MANIFEST_URLS[0]],
     publicKeys: keys,
-    allowedHostSuffixes: [...KRIZAKA_HOST_SUFFIXES, "orazaka.com"],
-    legacy: { orazaka: { apiBase: "https://www.orazaka.com/edge", webBase: "https://www.orazaka.com" } },
+    allowedHostSuffixes: [...KRIZAKA_HOST_SUFFIXES, "sovkora.com"],
+    legacy: { orazaka: { apiBase: "https://dev.sovkora.com/edge", webBase: "https://dev.sovkora.com" } },
     fetch: impl,
   });
   await discovery.start();
-  assert.equal(discovery.getService("orazaka").webBase, "https://www.orazaka.com");
+  assert.equal(discovery.getService("orazaka").webBase, "https://dev.sovkora.com");
   const moved = structuredClone(SERVICES);
-  moved.orazaka.dev.webBase = "https://app.orazaka.com";
+  moved.orazaka.dev.webBase = "https://app.sovkora.com";
   current = signServices(moved, {
     previous: current,
     seed: key.seed,
@@ -142,9 +142,9 @@ test("an app that discovers from the committed document gets the live addresses,
   }).manifest;
   await discovery.refresh();
   assert.deepEqual(discovery.getService("orazaka"), {
-    apiBase: "https://www.orazaka.com/edge",
-    webBase: "https://app.orazaka.com",
-    authBase: "https://www.orazaka.com/edge",
+    apiBase: "https://dev.sovkora.com/edge",
+    webBase: "https://app.sovkora.com",
+    authBase: "https://dev.sovkora.com/edge",
     source: "live",
   });
 });
@@ -234,10 +234,12 @@ test("--live tells which copy serves the committed document, and which is stale 
   assert.equal(rows[3].error, "offline");
 });
 
-// krizaka-internal#2600: dev.orazaka.com was removed from the app on purpose; the manifest (and its signed copy) names www.
-test("Orazaka's addresses are on www.orazaka.com, never on the removed dev host", () => {
+// Org standardisation, step 4 (2026-11-06, krizaka-internal#2660): no code-name host serves anything; a product's
+// development address is dev.<commercial name>.com, and its own domain is the commercial one.
+test("the addresses are on the commercial dev hosts, never on a code-name domain", () => {
   const entry = SERVICES.orazaka.dev;
-  assert.equal(entry.apiBase, "https://www.orazaka.com/edge");
-  assert.equal(entry.webBase, "https://www.orazaka.com");
-  assert.doesNotMatch(signedRaw(), /dev\.orazaka\.com/);
+  assert.equal(entry.apiBase, "https://dev.sovkora.com/edge");
+  assert.equal(entry.webBase, "https://dev.sovkora.com");
+  assert.deepEqual(Object.values(PRODUCT_DOMAINS).sort(), ["folioviv.com", "sovkora.com", "verikora.com"]);
+  assert.doesNotMatch(signedRaw(), /(orazaka|yomizaka|akinaza|kachizaka)\.com/);
 });
