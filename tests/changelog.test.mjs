@@ -326,6 +326,10 @@ test("no em dash in the changelog's words, in either language", () => {
 
 test("the product filter: the address is the state, a paused product is not listed, an unknown value means everything", () => {
   assert.equal(filterOf("yomizaka"), "yomizaka");
+  // The products' waiting pages link by the commercial name (réunion 6, krizaka-internal#2629): no code name in their address.
+  assert.equal(filterOf("verikora"), "yomizaka");
+  assert.equal(filterOf("sovkora"), "orazaka");
+  assert.equal(filterOf("folioviv"), "akinaza");
   assert.equal(filterOf("nope"), undefined);
   assert.equal(filterOf(null), undefined);
   assert.equal(filterHref("", "yomizaka"), "?produit=yomizaka");
