@@ -503,10 +503,6 @@
               "caption": "« Montrer son travail », le film de Krizaka, fait avec Sovkora",
               "alt": "Extrait du film de Krizaka : le hibou, le castor et le canard au travail, un cahier ouvert sur la table."
             },
-            "river": {
-              "caption": "Montréal à l'aube, le fleuve et le mont Royal",
-              "alt": "Vue aérienne du fleuve et de la ville à l'aube ; un vol d'oiseaux traverse l'image."
-            },
             "entreprise": {
               "caption": "Krizaka Entreprise : l'IA dans vos murs",
               "alt": "Des serveurs dans une salle de brique, de petites lumières bleues et une lampe au fond ; le titre « KRIZAKA ENTREPRISE » s'inscrit."
@@ -517,14 +513,6 @@
             }
           },
           "sovkora": {
-            "tea": {
-              "caption": "Un thé à la menthe versé de haut, généré avec Sovkora",
-              "alt": "Une théière d'argent verse un long filet de thé dans un petit verre, dans la lumière dorée d'une tente ; plan généré avec Sovkora (Wan 2.2)."
-            },
-            "rails": {
-              "caption": "M·C·P : deux rails se croisent, un langage commun",
-              "alt": "Des rails mouillés se croisent, la nuit, sous une lumière bleue ; le titre « M·C·P » s'inscrit."
-            },
             "pigeon": {
               "caption": "Le pigeon livre, à chaque fois",
               "alt": "Un pigeon sur un poteau devant la ville à l'heure bleue, il s'envole ; les titres « le pigeon livre, » puis « à chaque fois. » s'inscrivent."
@@ -532,14 +520,6 @@
             "snow": {
               "caption": "Une ruelle de Montréal sous la neige, générée avec Sovkora",
               "alt": "Une ruelle enneigée la nuit, escaliers extérieurs et lampadaires ; plan généré avec Sovkora (Wan 2.2)."
-            },
-            "blue": {
-              "caption": "Une cour au crépuscule, générée avec Sovkora",
-              "alt": "Une ruelle bleue puis une cour à fontaine au crépuscule, guirlandes allumées ; plan généré avec Sovkora (Wan 2.2)."
-            },
-            "cable": {
-              "caption": "Des télécabines au-dessus des Alpes, générées avec Sovkora",
-              "alt": "Des télécabines passent devant des sommets enneigés au crépuscule ; plan généré avec Sovkora (Wan 2.2)."
             }
           },
           "verikora": {
@@ -551,17 +531,9 @@
               "caption": "Verikora, à la loupe",
               "alt": "Une loupe au-dessus de papiers, sur un bureau devant une fenêtre sous la pluie ; le titre « VERIKORA » s'inscrit."
             },
-            "signature": {
-              "caption": "Une plume signe la feuille",
-              "alt": "Une main signe une feuille à la plume, un encrier de laiton à côté, dans la lumière d'une fenêtre ; la signature est un trait illisible."
-            },
             "sign": {
               "caption": "Signer ? Pas avant d'avoir lu",
               "alt": "Un bail sur un bureau sombre, sous une lampe violette ; le titre « signer ? » s'inscrit."
-            },
-            "files": {
-              "caption": "Les pièces d'un dossier, sur le bureau",
-              "alt": "Des chemises et des feuilles empilées, une tasse qui fume et une lampe de bureau, la nuit ; une main tourne une feuille."
             }
           },
           "folioviv": {

@@ -24,11 +24,11 @@ if (problems.length > 0) {
 
 const letter = (i: number) => String.fromCodePoint(97 + i);
 
-/** The words of a film: its caption, its alt, and its transcript (a film says something; a clip does not). */
+/** The words of a film: its caption, its alt, and, when it says something in words, its transcript. */
 interface FilmWords {
   caption: string;
   alt: string;
-  transcript: { lead: string; lines: string[] };
+  transcript?: { lead: string; lines: string[] };
 }
 
 export default function Showcase({

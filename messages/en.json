@@ -500,10 +500,6 @@
               "caption": "« Montrer son travail » (Showing our work), Krizaka's film, made with Sovkora",
               "alt": "From Krizaka's film: the owl, the beaver and the duck at work, a notebook open on the table."
             },
-            "river": {
-              "caption": "Montréal at dawn, the river and Mont Royal",
-              "alt": "Aerial view of the river and the city at dawn; a flight of birds crosses the frame."
-            },
             "entreprise": {
               "caption": "Krizaka Entreprise: AI within your walls",
               "alt": "Servers in a brick room, small blue lights and a lamp at the back; the title « KRIZAKA ENTREPRISE » appears."
@@ -514,14 +510,6 @@
             }
           },
           "sovkora": {
-            "tea": {
-              "caption": "Mint tea poured from high, generated with Sovkora",
-              "alt": "A silver teapot pours a long stream of tea into a small glass, in the golden light of a tent; a shot generated with Sovkora (Wan 2.2)."
-            },
-            "rails": {
-              "caption": "M·C·P: two rails cross, one common language",
-              "alt": "Wet rails cross at night under a blue light; the title « M·C·P » appears."
-            },
             "pigeon": {
               "caption": "The pigeon delivers, every time",
               "alt": "A pigeon on a post before the city at blue hour flies off; the French titles « le pigeon livre, » then « à chaque fois. » (the pigeon delivers, every time) appear."
@@ -529,14 +517,6 @@
             "snow": {
               "caption": "A snowy Montréal lane, generated with Sovkora",
               "alt": "A snowy lane at night, outside staircases and street lamps; a shot generated with Sovkora (Wan 2.2)."
-            },
-            "blue": {
-              "caption": "A courtyard at dusk, generated with Sovkora",
-              "alt": "A blue street, then a courtyard with a fountain at dusk, string lights on; a shot generated with Sovkora (Wan 2.2)."
-            },
-            "cable": {
-              "caption": "Cable cars over the Alps, generated with Sovkora",
-              "alt": "Cable cars pass before snowy peaks at dusk; a shot generated with Sovkora (Wan 2.2)."
             }
           },
           "verikora": {
@@ -548,17 +528,9 @@
               "caption": "Verikora, under the magnifier",
               "alt": "A magnifier over papers, on a desk before a rainy window; the title « VERIKORA » appears."
             },
-            "signature": {
-              "caption": "A feather pen signs the sheet",
-              "alt": "A hand signs a sheet with a feather pen, a brass inkwell beside it, in window light; the signature is an unreadable stroke."
-            },
             "sign": {
               "caption": "Sign? Not before reading",
               "alt": "A lease on a dark desk under a violet lamp; the French title « signer ? » (sign?) appears."
-            },
-            "files": {
-              "caption": "The papers of a file, on the desk",
-              "alt": "Folders and stacked sheets, a steaming cup and a desk lamp at night; a hand turns a sheet."
             }
           },
           "folioviv": {

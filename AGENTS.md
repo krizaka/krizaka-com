@@ -81,8 +81,8 @@
 - **/story lets a feeling show, not an explanation** (founder, 2026-11-06, krizaka-internal#2800: « on vend une émotion, on
   laisse voir une émotion »). The face of a chapter is its head (`SectionHeading`: « § n » in the margin, a lower-case note,
   the title), a line or two, its bird and **one clip of the home's carousels** (`lib/story-clips.ts`, `ClipFigure`): the brand
-  film's loop for who we are, Sovkora's tea for the engine, a feather pen signing for Verikora, a father on the canal for
-  Folioviv, the pigeon for the open stack, dawn over the river for what comes next. A clip is a live slide of its carousel (in the
+  film's loop for who we are, Sovkora's snowy lane for the engine, a magnifier at a rainy window for Verikora, a father on the canal for
+  Folioviv, the pigeon for the open stack, a hand that signs for what comes next. A clip is a live slide of its carousel (in the
   storyboard's `order`, so it passed `check-showcase-media.mjs`); a retired one or a file the manifest does not know fails the
   build, and its caption and alt are the carousel's own messages. The name and how we work have no clip, on purpose (their
   shots are retired, or none shows the work): no clip is forced. The diagrams (the engine's flow), the figures, the products'
@@ -114,11 +114,9 @@
   run, model and credits in `content/films/home-showcase.log.json`), uploaded under `home/showcase/<carousel>/` with
   `cdn-assets`, read by `lib/home-showcase.ts`: each slide has one 16:9 rendition on every screen, the phone included (object-fit: cover; no vertical, founder 2026-11-05);
   a slide missing a file fails the build, and `scripts/check-showcase-media.mjs` reads the real files (HTTP 200 and type, ffprobe 16:9, codecs, no pillarbox,
-  no black end card; a slide that fails is `retired` in the storyboard until remade). **The Sovkora trailer opens the hero's carousel and Sovkora's**
-  (founder, 2026-11-07, krizaka-internal#2837: « la première »): a finished film of the storyboard's `films`, played whole (1 min 51) with its music,
-  its full cut, a 720p cut for phones and its poster under `products/sovkora/films/`, its words in `site.home.films.trailer` (caption, alt, and the
-  transcript of its titles in the text version). Sound is the visitor's choice: every clip starts muted; a « Sound » toggle (`aria-pressed`) sits on
-  the plate of a slide that has sound (the trailer; Runway's outputs are silent), and after its click that film sounds while it plays on screen; another
+  no black end card; a slide that fails is `retired` in the storyboard until remade). **The home's promise stays compliance** (founder, 2026-11-07, krizaka-internal#2837): the h1 did not move, so the hero's carousel is the brand film, Krizaka Entreprise and a hand that signs (`film, entreprise, signature`), and **the Sovkora trailer opens Sovkora's carousel** (`trailer, pigeon, snow`; Verikora's is `sign, owl, loupe`; Folioviv's is unchanged). The trailer is a finished film of the storyboard's `films`, with its sound as the visitor's choice, its words in `site.home.films.trailer` (caption, alt, and the
+  transcript of its titles in the text version). **The media library's clips (`library`) play nowhere until the founder's annex B**: they are `retired` in the storyboard, with their reason, and leave their messages; a slide the founder takes out of a carousel is `retired` the same way (its files stay on the CDN). Sound is the visitor's choice: every clip starts muted; a « Sound » toggle (`aria-pressed`) sits on
+  the plate of a slide that has sound, and after its click that film sounds while it plays on screen; another
   slide or scrolling away mutes it again; nothing is stored. The products are reached one way, the bar's
   « Products » (`barHref`: the bare anchor on the home, so it scrolls). `/story` is in the footer, « Contact us » in the bar.
   **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live under Docs (`StackTiles`,

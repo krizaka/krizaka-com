@@ -6,7 +6,7 @@
   "carousels": {
     "hero": {
       "idea": "Krizaka shows its work: the pen, the blue ink, the brick and the river of Montréal.",
-      "order": ["trailer", "film", "river", "entreprise", "signature"],
+      "order": ["film", "entreprise", "signature"],
       "shots": [
         {
           "id": "ink",
@@ -81,12 +81,16 @@
         {
           "id": "bridge",
           "why": "the clip ends on the reel's black end card and holds it"
+        },
+        {
+          "id": "river",
+          "why": "a media-library clip: its public use waits on the founder's assignment of the library to the company (annex B); out of the hero by his decision of 2026-11-07"
         }
       ]
     },
     "sovkora": {
       "idea": "The engine stays with you: the duck builds, the pigeon delivers, the neon says the name.",
-      "order": ["trailer", "tea", "rails", "pigeon", "snow", "blue", "cable"],
+      "order": ["trailer", "pigeon", "snow"],
       "shots": [
         {
           "id": "neon",
@@ -164,12 +168,28 @@
         {
           "id": "neon",
           "why": "its first frame is the vertical reel pillarboxed in black bars (a glitch frame), also what the clip starts on"
+        },
+        {
+          "id": "tea",
+          "why": "out of Sovkora's carousel by the founder's decision of 2026-11-07 (the carousel keeps the trailer, the Dossiers and the shots that show the engine); its file stays on the CDN"
+        },
+        {
+          "id": "blue",
+          "why": "out of Sovkora's carousel by the founder's decision of 2026-11-07; its file stays on the CDN"
+        },
+        {
+          "id": "cable",
+          "why": "out of Sovkora's carousel by the founder's decision of 2026-11-07; its file stays on the CDN"
+        },
+        {
+          "id": "rails",
+          "why": "out of Sovkora's carousel by the founder's decision of 2026-11-07; its file stays on the CDN"
         }
       ]
     },
     "verikora": {
       "idea": "Read before you sign: the owl reads, every finding cites its page.",
-      "order": ["owl", "loupe", "signature", "sign", "files"],
+      "order": ["sign", "owl", "loupe"],
       "shots": [
         {
           "id": "rag",
@@ -229,6 +249,14 @@
         {
           "id": "rag",
           "why": "the second take is the vertical reel pillarboxed (black bars) in the 16:9 file"
+        },
+        {
+          "id": "signature",
+          "why": "a media-library clip: its public use waits on the founder's assignment of the library to the company (annex B); out of Verikora's carousel by his decision of 2026-11-07"
+        },
+        {
+          "id": "files",
+          "why": "a media-library clip: its public use waits on the founder's assignment of the library to the company (annex B); out of Verikora's carousel by his decision of 2026-11-07"
         }
       ]
     },

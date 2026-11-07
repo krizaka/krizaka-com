@@ -34,40 +34,44 @@ test("every slide of every carousel has its files on the CDN (videos and poster)
 });
 
 test("a slide missing a file, or a carousel with too few slides, is refused", () => {
-  const problems = showcaseProblems((path) => has(path) && !path.startsWith("home/showcase/sovkora/tea-wide"));
+  const problems = showcaseProblems((path) => has(path) && !path.startsWith("home/showcase/sovkora/snow-wide"));
   assert.deepEqual(problems, [
-    "sovkora/tea: home/showcase/sovkora/tea-wide.webm is not in the CDN manifest",
-    "sovkora/tea: home/showcase/sovkora/tea-wide.mp4 is not in the CDN manifest",
-    "sovkora/tea: home/showcase/sovkora/tea-wide.jpg is not in the CDN manifest",
+    "sovkora/snow: home/showcase/sovkora/snow-wide.webm is not in the CDN manifest",
+    "sovkora/snow: home/showcase/sovkora/snow-wide.mp4 is not in the CDN manifest",
+    "sovkora/snow: home/showcase/sovkora/snow-wide.jpg is not in the CDN manifest",
   ]);
   const film = showcaseProblems((path) => has(path) && path !== "products/sovkora/films/trailer-720.mp4");
-  assert.deepEqual(film, [
-    "hero/trailer: products/sovkora/films/trailer-720.mp4 is not in the CDN manifest",
-    "sovkora/trailer: products/sovkora/films/trailer-720.mp4 is not in the CDN manifest",
-  ]);
+  assert.deepEqual(film, ["sovkora/trailer: products/sovkora/films/trailer-720.mp4 is not in the CDN manifest"]);
 });
 
-// The founder's Sovkora trailer (krizaka-internal#2837, 2026-11-07: « elle doit être sur krizaka.com comme hero, la
-// première » and « le hero de Sovkora dans la page d'accueil dans son carrousel »): the first slide of both, with its sound.
-test("the Sovkora trailer opens the hero's carousel and Sovkora's, whole, with its sound, a phone cut and its poster", () => {
+// The founder's Sovkora trailer (krizaka-internal#2837): first slide of Sovkora's carousel, whole, with its sound. The home's
+// promise stays compliance (founder, 2026-11-07): the hero does NOT open on it, and the h1 did not move.
+test("the Sovkora trailer opens Sovkora's carousel (not the hero's), with its sound, a phone cut and its poster", () => {
   assert.deepEqual(FILM_IDS, ["trailer"]);
-  for (const c of ["hero", "sovkora"]) {
-    const [first] = showcaseSlides(c);
-    assert.equal(first.id, "trailer", `${c} opens on the trailer`);
-    assert.equal(first.source, SlideSource.Film);
-    assert.equal(first.audio, true, "the film keeps its music");
-    assert.equal(first.poster, "products/sovkora/films/trailer-poster.webp", "the poster first");
-    assert.deepEqual(first.videos, [
-      { path: "products/sovkora/films/trailer-720.mp4", type: "video/mp4", media: PHONE_CUT },
-      { path: "products/sovkora/films/trailer.mp4", type: "video/mp4" },
-    ]);
-  }
+  const [first] = showcaseSlides("sovkora");
+  assert.equal(first.id, "trailer", "sovkora opens on the trailer");
+  assert.equal(first.source, SlideSource.Film);
+  assert.equal(first.audio, true, "the film keeps its music");
+  assert.equal(first.poster, "products/sovkora/films/trailer-poster.webp", "the poster first");
+  assert.deepEqual(first.videos, [
+    { path: "products/sovkora/films/trailer-720.mp4", type: "video/mp4", media: PHONE_CUT },
+    { path: "products/sovkora/films/trailer.mp4", type: "video/mp4" },
+  ]);
   assert.equal(PHONE_CUT, "(max-width: 767px)");
-  for (const c of ["verikora", "folioviv"])
+  for (const c of ["hero", "verikora", "folioviv"])
     assert.ok(
-      showcaseSlides(c).every((s) => s.source !== SlideSource.Film),
+      showcaseSlides(c).every((s) => s.source !== SlideSource.Film || s.id === "film"),
       c,
     );
+  assert.deepEqual(
+    showcaseSlides("hero").map((s) => s.id),
+    ["film", "entreprise", "signature"],
+    "the hero: the brand film, Krizaka Entreprise, a hand that signs",
+  );
+  assert.deepEqual(
+    showcaseSlides("verikora").map((s) => s.id),
+    ["sign", "owl", "loupe"],
+  );
 });
 
 test("the trailer's words: caption, alt and a transcript of its titles, from the film, in both languages", () => {

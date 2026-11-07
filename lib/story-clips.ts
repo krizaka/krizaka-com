@@ -26,16 +26,16 @@ export interface ClipRef {
 export const STORY_CLIPS = {
   /** The brand film's loop, « Montrer son travail »: the owl, the beaver and the duck at work. It shows its work. */
   who: { carousel: "hero", id: "film" },
-  /** Mint tea poured from high, generated with Sovkora: the AI that stays home welcomes you, and it made this shot. */
-  engine: { carousel: "sovkora", id: "tea" },
-  /** A hand signs the sheet with a feather pen, in window light: calm, because it was read first. */
-  verikora: { carousel: "verikora", id: "signature" },
+  /** A snowy Montréal lane at night, generated with Sovkora: the AI that stays home made this shot (the tea left Sovkora's carousel, 2026-11-07). */
+  engine: { carousel: "sovkora", id: "snow" },
+  /** A magnifier over papers at a rainy window: calm, because it was read first (the feather pen is a library clip, out of the carousel, 2026-11-07). */
+  verikora: { carousel: "verikora", id: "loupe" },
   /** A father carries his child along the canal at golden hour: the books are done, you get home on time. */
   folioviv: { carousel: "folioviv", id: "home" },
   /** The pigeon takes off over the rail yard: it delivers, every time (the chapter's own bird). */
   open: { carousel: "sovkora", id: "pigeon" },
-  /** Dawn over the river and Mont Royal, a flight of birds: a new day, the flock setting off together. */
-  next: { carousel: "hero", id: "river" },
+  /** A hand signs at the lamp, « parlons-en »: what comes next starts with a conversation (dawn over the river is a library clip, out of the hero, 2026-11-07). */
+  next: { carousel: "hero", id: "signature" },
 } as const satisfies Partial<Record<Anchor, ClipRef>>;
 
 export type ClipChapter = keyof typeof STORY_CLIPS;

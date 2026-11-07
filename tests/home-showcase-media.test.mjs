@@ -31,7 +31,34 @@ test("a slide retired for an artefact is out of its order, with its reason", () 
     }
   }
   const retired = Object.values(board.carousels).flatMap((c) => (c.retired ?? []).map((r) => r.id));
-  assert.deepEqual(retired.sort(), ["bridge", "duck", "first-client", "ink", "morning", "neon", "notebook", "rag"]);
+  assert.deepEqual(
+    retired.sort(),
+    [
+      "blue",
+      "bridge",
+      "cable",
+      "duck",
+      "files",
+      "first-client",
+      "ink",
+      "morning",
+      "neon",
+      "notebook",
+      "rag",
+      "rails",
+      "river",
+      "signature",
+      "tea",
+    ].sort(),
+  );
+  // The media library's public use waits on the founder's annex B (decision 2026-11-07): no library clip is live.
+  for (const c of SHOWCASES) {
+    assert.deepEqual(
+      showcaseSlides(c).filter((s) => s.source === "library"),
+      [],
+      `${c} plays no library clip`,
+    );
+  }
   for (const c of SHOWCASES) {
     assert.ok(showcaseSlides(c).length >= 3, c);
   }
