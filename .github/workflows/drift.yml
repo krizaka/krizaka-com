@@ -2,7 +2,7 @@
 # true sources (scripts/check-drift.mjs: product status vs dev-preview.json, repositories, every video / poster / image of
 # lib/cdn-manifest.json answers), refresh the committed snapshot of the products' manifests and, when something moved, open
 # ONE pull request. A source that cannot be read fails the run (red = the Actions tab and the issue below).
-name: drift
+name: Site drift
 
 on:
   schedule:

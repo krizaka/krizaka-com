@@ -1,7 +1,7 @@
 # The release train promotes `production` (production.yml) and DigitalOcean rebuilds and deploys it (krizaka/.github#438, #442):
 # wait until www.krizaka.com serves this commit (/build.json, scripts/build-info.mjs), then IndexNow (changed URLs only) and the
 # family's SEO guard on the live host. Red opens one issue here. It replaces the daily indexnow.yml.
-name: post-deploy
+name: Post-deploy check
 
 on:
   push:

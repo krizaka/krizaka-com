@@ -2,7 +2,7 @@
 # « chore: release » merged), the `production` branch is fast-forwarded to its tag — never forced, never moved backwards —
 # and the DigitalOcean App Platform app, which deploys from `production`, ships it. The logic and its guards live in
 # scripts/promote-production.mjs (tested by tests/promote-production.test.mjs against a real git repository).
-name: production
+name: Promote to production
 
 on:
   release:

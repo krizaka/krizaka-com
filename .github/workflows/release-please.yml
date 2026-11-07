@@ -7,7 +7,7 @@
 # no `release: published`. A GitHub App installation token does start them. Configure once: repository variable
 # RELEASE_APP_ID and secret RELEASE_APP_PRIVATE_KEY (an App with contents + pull-requests write on this repository). Until
 # they exist GITHUB_TOKEN is used and the job dispatches production.yml itself (a workflow_dispatch is allowed).
-name: release-please
+name: Release PR
 
 on:
   push:

@@ -222,3 +222,23 @@ Krizaka is built in the open by a small crew, and every contribution is signed b
 | `sovkora[bot]` | Sovkora, the Krizaka engine: commits the images and videos it generates |
 | `krizaka-agents[bot]` | The team's automation: CI follow-up, issues, pull requests and the roadmap |
 | `dependabot[bot]` | Dependency updates |
+
+<!-- krizaka:workflows:start -->
+## Workflows
+
+What runs in the Actions tab of this repository.
+
+- **Bump @krizaka packages** (`bump-krizaka.yml`): Opens one auto-merged PR that bumps the @krizaka packages after a release. Runs when another repository triggers it, on demand.
+- **Bunny audit** (`bunny-audit.yml`): Audits the Bunny storage zone against its layout (read-only). Runs on a schedule, on demand, on every pull request.
+- **Bunny retention** (`bunny-retention.yml`): Lists what the retention policy would delete from Bunny; it never deletes. Runs on a schedule, on demand.
+- **CI** (`ci.yml`): Lint, tests and build of the repository. Runs on push, on every pull request, in the merge queue.
+- **Dependabot auto-merge** (`dependabot-automerge.yml`): Auto-merges safe Dependabot updates. Runs on every pull request.
+- **Docs map** (`docs-map.yml`): Checks the docs map of the repository. Runs on every pull request.
+- **Site drift** (`drift.yml`): Compares what the site claims with its real sources. Runs on a schedule, on push, on demand.
+- **Merge resolution** (`merge-resolution.yml`): Fails a PR that drops what main added without a deletion-explained line. Runs on every pull request.
+- **Post-deploy check** (`post-deploy.yml`): Waits for the live site to serve the new build, then pings IndexNow. Runs on push, on demand.
+- **Promote to production** (`production.yml`): Fast-forwards the production branch to the release tag. Runs when a release is published, on demand.
+- **Release PR** (`release-please.yml`): Keeps one release PR open from the merged commits; its merge tags the release. Runs on push.
+- **Scorecard** (`scorecard.yml`): OpenSSF Scorecard of the repository. Runs when branch rules change, on a schedule, on demand.
+- **Security scan** (`security.yml`): Secret scan (gitleaks) and workflow scan (zizmor); both are required checks. Runs on every pull request, in the merge queue, on push.
+<!-- krizaka:workflows:end -->
