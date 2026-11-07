@@ -10,7 +10,8 @@ export const CONTACT_KINDS = ["support", "business", "other"] as const;
 export type ContactKind = (typeof CONTACT_KINDS)[number];
 
 /* What it is about, by COMMERCIAL id (the building blocks are the stack's libraries). */
-export const CONTACT_PRODUCTS = ["verikora", "folioviv", "sovkora", "kridoc", "blocks"] as const;
+/** In the home's order (PRODUCT_ORDER), then the products in design, then the building blocks (tests/contact-order.test.mjs). */
+export const CONTACT_PRODUCTS = ["sovkora", "verikora", "folioviv", "kridoc", "blocks"] as const;
 export type ContactProduct = (typeof CONTACT_PRODUCTS)[number];
 
 /** The kind and the product a link or a page implies; each is null when it implies none. */

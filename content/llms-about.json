@@ -1,0 +1,13 @@
+{
+  "products": {
+    "sovkora": "the AI engine our products run on, on the operator's own infrastructure; it holds no certification",
+    "verikora": "the papers of a rental file read and checked: leases against the law in force on their date, every finding quoted, every run traced",
+    "folioviv": "bookings, bilingual invoices with GST/QST and a tax ledger for independent Québec shops; it prepares the GST/QST return, the merchant reviews and files it; not for restaurants and bars"
+  },
+  "stack": {
+    "ui": "the design system of every Krizaka site and product: web and native components, tokens, icons, page blocks and templates (its own index: https://ui.krizaka.com/llms.txt)",
+    "motion": "the motion lab: experimental visuals played on its own site, not a package",
+    "java": "the Spring Boot building blocks (BOM, parent, starters, messaging, users, notifications, billing), published on Maven Central under com.krizaka",
+    "ts": "the TypeScript building blocks of the products' back ends, on npm, one page per package"
+  }
+}

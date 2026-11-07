@@ -1,4 +1,4 @@
-/* What each product runs on — the proof table of /open-source ("One open stack builds all four products").
+/* What each product runs on — the proof table of /open-source ("One open stack builds all the products").
 
    Nothing in a cell is typed: it is read from the products' own manifests (lib/product-manifests.json, written by
    scripts/gen-product-manifests.mjs from the package.json and pom.xml of every repository of the product). The only

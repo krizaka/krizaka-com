@@ -283,6 +283,11 @@ export const changesFor = (r: Pick<Release, "changes" | "fr">, lang: "en" | "fr"
 export const releaseLabel = (r: Pick<Release, "source" | "part" | "version">): string =>
   [r.source, r.part, r.version].filter(Boolean).join(" ");
 
+/** What the entry's chip says under its heading (the source): the part and the version, `conversation-service 2026.11.04.2`.
+ *  The anchor and the feed keep `releaseLabel` (krizaka-internal#2814). */
+export const chipLabel = (r: Pick<Release, "part" | "version">): string =>
+  [r.part, r.version].filter(Boolean).join(" ");
+
 /** A stable anchor: `krizaka-ui-3-22-0`; the bare version is the anchor of the site's own entry. */
 export const anchorOf = (r: Pick<Release, "source" | "part" | "version">): string =>
   releaseLabel(r)

@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.31.0](https://github.com/krizaka/krizaka-com/compare/v0.30.0...v0.31.0) (2026-11-07)
+
+
+### Features
+
+* **changelog:** the public changelog shows what a visitor can see, by a rule written as data ([#663](https://github.com/krizaka/krizaka-com/issues/663)) ([ffe9a15](https://github.com/krizaka/krizaka-com/commit/ffe9a15de3e0bad939c7b5fba260b35d554179c4))
+* **docs:** the docs hub is the notebook's sommaire, not cards ([#657](https://github.com/krizaka/krizaka-com/issues/657)) ([f3b95d9](https://github.com/krizaka/krizaka-com/commit/f3b95d9f516344b8323f777e457494cb0aca3e58))
+* **home:** Kridoc's slot shows a mood photo in the carousels' frame, not a mock app plate ([#658](https://github.com/krizaka/krizaka-com/issues/658)) ([818b026](https://github.com/krizaka/krizaka-com/commit/818b026dc4d5713a6a6673e1b80fbd7dd6bc9b7c))
+* **org:** commercial product ids after @krizaka/org 1.1, Instagram in the footer ([#652](https://github.com/krizaka/krizaka-com/issues/652)) ([3a6013b](https://github.com/krizaka/krizaka-com/commit/3a6013b661a403cfc9cca4a5f3b0f3a5b8f99ff7))
+
+
+### Bug Fixes
+
+* **changelog:** a release line names a renamed repository by its current name ([#664](https://github.com/krizaka/krizaka-com/issues/664)) ([7d4898f](https://github.com/krizaka/krizaka-com/commit/7d4898f4bcbbb3ace212fab3e469d3f31c8cdec7))
+* **changelog:** version chips never cover the tag; contact products in the home's order ([#662](https://github.com/krizaka/krizaka-com/issues/662)) ([1c9cee0](https://github.com/krizaka/krizaka-com/commit/1c9cee0ef876a2de6302dcf8608c3c45a60fe463))
+* **claims:** the social preview and llms.txt say only what is true ([#661](https://github.com/krizaka/krizaka-com/issues/661)) ([f93c7f6](https://github.com/krizaka/krizaka-com/commit/f93c7f6f8bcb8e33762eceda63c0a9c81109ade7))
+* **figures:** a public figure never reads « more than 0 » ([#660](https://github.com/krizaka/krizaka-com/issues/660)) ([fc6b19b](https://github.com/krizaka/krizaka-com/commit/fc6b19be2dfcecfcd21010fefe3dfa0779cfe093))
+
 ## [0.30.0](https://github.com/krizaka/krizaka-com/compare/v0.29.2...v0.30.0) (2026-11-06)
 
 
