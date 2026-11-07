@@ -1052,13 +1052,14 @@
         "title": "Par où voulez-vous commencer ?",
         "lead": "Choisissez ce que vous venez faire. Chaque chemin ouvre la documentation sur son propre site, avec les premières pages à lire.",
         "startLabel": "Commencer ici",
+        "number": "§ {n}",
         "open": "Ouvrir la documentation",
         "stats": "plus de {repositories} dépôts open source · plus de {npm} paquets npm · Apache-2.0",
         "quality": "Chaque changement arrive avec ses tests et rien n'est fusionné avant que la CI soit verte ; chaque page est auditée pour l'accessibilité (WCAG 2.1 AA, en sombre et en clair) avant de paraître.",
         "paths": {
           "ui": {
             "title": "Construire une interface",
-            "text": "Krizaka UI : les composants, gabarits et jetons de design pour React dont sont faits nos sites et nos produits.",
+            "text": "Pour qui construit des écrans en React : Krizaka UI, le kit de nos sites et produits.",
             "links": {
               "start": "Prise en main",
               "templates": "Gabarits",
@@ -1067,7 +1068,7 @@
           },
           "java": {
             "title": "Construire un service Java",
-            "text": "Krizaka Java : les briques Maven sous nos produits, des utilisateurs et de la facturation aux événements et aux webhooks.",
+            "text": "Pour qui écrit un service Java : Krizaka Java, les briques Maven sous nos produits.",
             "links": {
               "start": "Démarrer un service",
               "map": "La carte des briques",
@@ -1076,14 +1077,11 @@
           },
           "products": {
             "title": "Utiliser nos produits",
-            "text": "Chaque produit se documente sur son propre site.",
-            "links": {
-              "site": "{name} · {status}"
-            }
+            "text": "Pour qui utilise nos produits : chacun se documente sur son propre site."
           },
           "contribute": {
             "title": "Contribuer",
-            "text": "Une question, un bogue, une première pull request : tout est sur GitHub, sous Apache-2.0.",
+            "text": "Pour qui veut aider : une question, un bogue, une première pull request, sur GitHub.",
             "links": {
               "guide": "Guide de contribution",
               "goodFirst": "Premières issues",

@@ -1049,13 +1049,14 @@
         "title": "Where do you want to start?",
         "lead": "Pick what you are here to do. Each path opens the documentation on its own site, with the first pages to read.",
         "startLabel": "Start here",
+        "number": "§ {n}",
         "open": "Open the documentation",
         "stats": "more than {repositories} open-source repositories · more than {npm} npm packages · Apache-2.0",
         "quality": "Every change ships with its tests and nothing merges until CI is green; every page is audited for accessibility (WCAG 2.1 AA, dark and light) before it ships.",
         "paths": {
           "ui": {
             "title": "Build an interface",
-            "text": "Krizaka UI: the components, templates and design tokens for React that our sites and products are made of.",
+            "text": "For anyone building screens in React: Krizaka UI, the kit of our sites and products.",
             "links": {
               "start": "Getting started",
               "templates": "Templates",
@@ -1064,7 +1065,7 @@
           },
           "java": {
             "title": "Build a Java service",
-            "text": "Krizaka Java: the Maven building blocks under our products, from users and billing to events and webhooks.",
+            "text": "For anyone writing a Java service: Krizaka Java, the Maven blocks under our products.",
             "links": {
               "start": "Start a service",
               "map": "The building blocks map",
@@ -1073,14 +1074,11 @@
           },
           "products": {
             "title": "Use our products",
-            "text": "Each product documents itself on its own site.",
-            "links": {
-              "site": "{name} · {status}"
-            }
+            "text": "For anyone using our products: each one documents itself on its own site."
           },
           "contribute": {
             "title": "Contribute",
-            "text": "A question, a bug, a first pull request: everything is on GitHub, under Apache-2.0.",
+            "text": "For anyone who wants to help: a question, a bug, a first pull request, on GitHub.",
             "links": {
               "guide": "Contribution guide",
               "goodFirst": "Good first issues",

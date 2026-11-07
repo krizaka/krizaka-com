@@ -32,6 +32,8 @@ node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://ww
 npm ci --ignore-scripts --no-audit --no-fund
 node_modules/.bin/playwright install --with-deps chromium
 node scripts/check-overflow.mjs --base http://localhost:3000
+# The docs hub is the notebook's sommaire, not cards: every row and link, no box, no overflow at 375–1470 px (#2799).
+node --experimental-strip-types scripts/check-docs-hub.mjs --base http://localhost:3000
 # The home's carousels, on the real files: 200 and type, a clean 16:9, no pillarbox, no black end card (needs ffmpeg).
 if command -v ffprobe >/dev/null; then KRIZAKA_CHECK_MEDIA=1 node --experimental-strip-types --test tests/home-showcase-media.test.mjs; fi
 # Accessibility: axe-core WCAG 2.1 AA (contrast, names, labels, landmarks) on every sitemap page, dark and light, phone and

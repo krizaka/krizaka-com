@@ -14,7 +14,7 @@ export const CONDUCT_URL = "https://github.com/krizaka/.github/blob/main/CODE_OF
 export type StartPathId = "ui" | "java" | "products" | "contribute";
 
 export interface StartLink {
-  /** The key of the label in site.openSource.hub.paths.<path>.links (or a product name). */
+  /** The key of the label in site.openSource.hub.paths.<path>.links; a product's link is its name instead. */
   id: string;
   href: string;
   /** A product's own name replaces the message. */
@@ -25,7 +25,7 @@ export interface StartLink {
 
 export interface StartPath {
   id: StartPathId;
-  /** The site the path is about (the card's title links to it). */
+  /** The site the path is about (the row's title links to it). */
   href: string;
   links: StartLink[];
 }
@@ -52,7 +52,7 @@ export const START_PATHS: StartPath[] = [
   {
     id: "products",
     href: "/#products",
-    // The home's order (Verikora, Sovkora, Folioviv) and the product's own status, each to its public page.
+    // The home's order (Sovkora, Verikora, Folioviv) and the product's own status, each to its public page.
     links: productOrder(PRODUCTS).map((p) => ({ id: "site", href: p.siteUrl, name: p.name, status: p.status })),
   },
   {
@@ -65,3 +65,9 @@ export const START_PATHS: StartPath[] = [
     ],
   },
 ];
+
+/** A path's address in the reader's language: an anchor of the home (`/#products`) takes the locale (`/fr#products`), so
+ *  the link lands without a redirect; a site's address is unchanged. */
+export function hrefIn(href: string, locale: string): string {
+  return href.startsWith("/#") ? `/${locale}${href.slice(1)}` : href;
+}
