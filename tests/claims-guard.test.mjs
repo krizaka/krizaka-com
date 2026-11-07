@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
+import { LICENCE, OPEN_SOURCE_EVERYTHING, PRODUCT, PRODUCT_COUNT } from "../lib/public-claims.ts";
 
 const root = new URL("../", import.meta.url).pathname;
 const read = (f) => readFileSync(join(root, f), "utf8");
@@ -14,6 +15,10 @@ function walk(dir, out = []) {
   }
   return out;
 }
+const GENERATED =
+  /^lib\/.*(registry-versions|dev-preview-checklists|github-org|org-stats|cdn-manifest|changelog)[^/]*\.json$/;
+/** The rules themselves (lib/public-claims.ts), not a claim. */
+const RULES = "lib/public-claims.ts";
 const sources = ["app", "lib", "content"]
   .flatMap((d) => {
     try {
@@ -22,12 +27,9 @@ const sources = ["app", "lib", "content"]
       return [];
     }
   })
-  .filter(
-    (f) => !/^lib\/.*(registry-versions|dev-preview-checklists|github-org|org-stats|cdn-manifest)[^/]*\.json$/.test(f),
-  );
-
-const LICENCE = /\b(FSL|BSL)\b|Functional Source|Business Source|Source License/i;
-const PRODUCT = /Sovkora|Verikora|Folioviv|Krizaka (?:Entreprise|Enterprise)/i;
+  // The generated files are not ours to word; lib/changelog.json is the family's live release notes, each line judged by
+  // these rules (lib/public-claims.ts) when it is generated (krizaka-internal#2880): a test never reads live data.
+  .filter((f) => !GENERATED.test(f) && f !== RULES);
 
 test("no message or page claims a licence (FSL, BSL...) for a product (founder, 2026-11-01)", () => {
   for (const f of [...sources, "messages/en.json", "messages/fr.json"]) {
@@ -103,14 +105,8 @@ const CODE_AND_CONTENT = sources.filter((f) => !/^content\/films\//.test(f));
 
 test("no product count in words, and no « everything is open source » line (krizaka-internal#2807)", () => {
   const bad = [
-    [
-      /\b(?:three|four|five|six|seven|eight|nine|ten|trois|quatre|cinq|six|sept|huit|neuf|dix)\s+(?:products|produits)\b/i,
-      "a product count in words",
-    ],
-    [
-      /\b(?:all|everything is|every repository is public under|tout(?: est)? en) open[- ]source\b|every repository is public under apache/i,
-      "a licence claim on everything",
-    ],
+    [PRODUCT_COUNT, "a product count in words"],
+    [OPEN_SOURCE_EVERYTHING, "a licence claim on everything"],
   ];
   for (const f of CODE_AND_CONTENT)
     for (const [i, line] of read(f).split("\n").entries())
