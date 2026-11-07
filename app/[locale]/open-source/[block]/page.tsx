@@ -18,7 +18,7 @@ import FeedbackLinks from "@/app/components/blocks/FeedbackLinks";
 import { BUILDING_BLOCKS, blockById, blockRepoUrl } from "@/lib/building-blocks";
 import { LOCALES } from "@/lib/locales";
 import { format, getDictionary } from "@/lib/i18n";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, shareMetadata } from "@/lib/seo";
 import { reveal } from "@/lib/motion";
 import ButtonLink from "@/app/components/ButtonLink";
 
@@ -47,10 +47,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!block) return {};
   const w = getDictionary(locale).site.blocks;
   const item = w.items[block.id];
+  const title = format(w.page.metaTitle, { name: item.name });
   return {
-    title: format(w.page.metaTitle, { name: item.name }),
+    title,
     description: item.tagline,
     alternates: buildAlternates(locale, `/open-source/${block.id}`),
+    ...shareMetadata(locale, `/open-source/${block.id}`, { title, description: item.tagline }),
   };
 }
 
