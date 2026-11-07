@@ -32,6 +32,8 @@ import {
 } from "../lib/changelog.ts";
 import { commercialWords } from "../lib/commercial-words.ts";
 import { publicReleases } from "../lib/changelog-public.ts";
+import { codeNameProblems } from "./check-code-names.mjs";
+import { claimProblems } from "../lib/public-claims.ts";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "changelog.json");
 const PACKAGES = ["ui", "tokens", "icons", "i18n", "tailwind", "charts"]; // krizaka-ui/packages/<dir>
@@ -101,9 +103,16 @@ const tasks = [
   ...(await productTasks().catch((e) => (console.warn(`changelog: ${e.message}`), []))),
 ];
 const settled = await Promise.allSettled(tasks.map((run) => run()));
+/** A line the page can serve: in commercial words, it passes the build's code-name guard and the claims rules
+    (krizaka-internal#2880). */
+const SERVABLE = (text) => {
+  const said = commercialWords(text);
+  return codeNameProblems(said).length === 0 && claimProblems(said).length === 0;
+};
 const releases = publicReleases(
   settled.flatMap((s) => (s.status === "fulfilled" ? s.value : [])),
   PUBLIC_RULE,
+  SERVABLE,
 )
   .sort(newestFirst)
   .slice(0, MAX);
