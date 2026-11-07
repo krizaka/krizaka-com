@@ -82,7 +82,7 @@ test("the still is the carousels' frame, still: one picture from the manifest, n
   assert.match(still, /src=\{cdn\(still\.poster\)\}/, "the photo's URL comes from the manifest");
   assert.match(still, /alt=\{words\.alt\}/);
   assert.match(still, /width=\{POSTER\.width\}\s+height=\{POSTER\.height\}/, "the 16:9 box is reserved");
-  assert.match(still, /className="kz-show-stage"/, "the carousels' 16:9 plate");
+  assert.match(still, /className="rd-plate kz-show-stage"/, "the carousels' 16:9 plate, the site's plate");
   assert.match(still, /format\(t\.labels\.figure, \{ fig: String\(fig\), caption: words\.caption \}\)/);
   for (const l of ["en", "fr"])
     assert.deepEqual(Object.keys(messages(l).site.home.showcase.stills).sort(), [...STILLS].sort(), `${l}: stills`);

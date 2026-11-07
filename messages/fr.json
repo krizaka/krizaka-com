@@ -674,11 +674,13 @@
         "eyebrow": "Notre histoire",
         "title": "Un petit studio de Montréal. <b>Il construit à découvert, avec des agents.</b>",
         "lead": "Krizaka est un petit studio fondé à Montréal. Nous construisons nos logiciels avec des agents d'IA, à découvert, et nous mesurons notre façon de travailler. D'abord Sovkora, le moteur d'IA qui reste chez vous. Puis les produits qui tournent dessus, Verikora en tête.",
-        "start": "Commencer la lecture",
-        "products": "Découvrir les produits"
+        "start": "Commencer la lecture"
       },
       "toc": "Dans cette histoire",
-      "chapter": "Chapitre {n}",
+      "clips": {
+        "pause": "Mettre le plan en pause",
+        "play": "Relancer le plan"
+      },
       "who": {
         "nav": "Qui nous sommes",
         "title": "Ça a commencé à Montréal",

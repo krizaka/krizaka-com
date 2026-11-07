@@ -581,6 +581,26 @@ html:not([data-motion="ready"])
    prose, two columns, lists that say yes or no, release lines. Frame, headings, cards, decisions, code and calls to
    act are the blocks' (AGENTS.md §4.1).
    ═══════════════════════════════════════════════════════════════════ */
+/* ─── Plates: the site's figures (the home's carousels, /story's clips and takes) ───
+   Cahier: a 1 px rule, square corners, the paper's solid offset shadow (never a blur); the caption under it in the
+   typewriter face. The block that holds the picture sets its own size (16:9, a phone's 9:16). */
+.rd-plate {
+  position: relative;
+  overflow: hidden;
+  background: var(--kz-surface-1);
+  border: 1px solid var(--kz-border-strong);
+  box-shadow: 4px 4px 0 var(--kz-border-strong);
+}
+.rd-plate-caption {
+  margin: 0;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 19px;
+  color: var(--kz-text-secondary);
+  overflow-wrap: anywhere;
+}
+
 .rd-two {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);

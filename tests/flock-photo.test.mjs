@@ -4,10 +4,13 @@ import { test } from "node:test";
 
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 
-test("the story's film poster is a taped photo, while the existing lightbox trigger stays interactive", () => {
+// 2026-11-06 (krizaka-internal#2800): the story's film is no longer a taped poster; its loop is chapter 1's clip and the
+// whole film opens from a @krizaka/ui Button (AGENTS §4: every action is the Button, no page-local button class).
+test("the story's film opens from the site's Button under chapter 1's clip, never from a hand-made button or a taped print", () => {
   const story = read("app/[locale]/story/page.tsx");
-  assert.match(story, /from "@krizaka\/ui\/taped-photo"/);
-  assert.match(story, /<TapedPhoto className="st-film-photo" tilt=\{lean\("who"\)\}>\s*<FilmLightbox/);
-  assert.match(story, /trigger=\{\s*<button type="button" className="st-film"/);
-  assert.match(read("app/[locale]/story/story.css"), /\.st-film:focus-visible\s*\{[^}]*outline-offset:\s*-3px/);
+  assert.doesNotMatch(story, /@krizaka\/ui\/taped-photo|<TapedPhoto/);
+  assert.match(story, /from "@krizaka\/ui\/button"/);
+  assert.match(story, /<FilmLightbox[\s\S]*?trigger=\{\s*<Button type="button" variant="secondary" size="md">/);
+  assert.doesNotMatch(story, /<button type="button" className="st-film"/);
+  assert.doesNotMatch(read("app/[locale]/story/story.css"), /\.st-film(\s|:|\{)/);
 });

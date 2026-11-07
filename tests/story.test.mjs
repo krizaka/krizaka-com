@@ -12,6 +12,8 @@ const chapter = read("app/components/story/StoryChapter.tsx");
 const css = read("app/[locale]/story/story.css");
 const PAGE = "app/[locale]/story/page.tsx";
 const CSS = "app/[locale]/story/story.css";
+const CHAPTER = "app/components/story/StoryChapter.tsx";
+const has = (path) => Boolean(JSON.parse(read("lib/cdn-manifest.json")).files[path]);
 
 test("the page is the longform template with a sticky contents (Toc + TocLayout) and a reading hairline", async () => {
   assert.match(read("lib/page-templates.ts"), /"\/story": "longform"/);
@@ -53,11 +55,22 @@ test("the chapters are, in order: who we are, the name, how we work, the engine,
   assert.ok(hasCode(pageFile, "plain.has(id) ? id : `p-${id}`"));
 });
 
-test("each chapter is readable in ten seconds: heading, a line or two, one proof, depth in a native fold", () => {
-  assert.match(chapter, /<h2 id=\{`\$\{id\}-title`\}/);
-  assert.match(chapter, /<details className="st-ch-fold">/);
+test("each chapter is readable in ten seconds: the site's section head, a line or two, one figure, depth in a native fold", () => {
+  // the head is @krizaka/ui's SectionHeading: « § n » in the margin, the note in lower case, the title (never a hand-made head)
+  assert.ok(importsFrom(CHAPTER, "@krizaka/ui/page"));
+  const head = jsxAll(CHAPTER, "SectionHeading");
+  assert.equal(head.length, 1);
+  assert.equal(head[0].attrs.id, "{`${id}-title`}");
+  assert.equal(head[0].attrs.number, "{`§ ${number}`}");
+  assert.equal(head[0].attrs.size, "sm", "the head of a reading page");
+  assert.ok(!jsx(CHAPTER).some((e) => e.tag === "h2"), "no hand-made heading");
   assert.match(chapter, /aria-labelledby=\{`\$\{id\}-title`\}/);
   assert.match(chapter, /st-ch-proof/);
+  // the fold is the /services questions' shell
+  assert.ok(jsx(CHAPTER).some((e) => e.attrs.className === "kz-tpl-faq st-ch-fold"));
+  assert.ok(jsx(CHAPTER).some((e) => e.tag === "details"));
+  // the lead is the reading pages' prose
+  assert.ok(jsx(CHAPTER).some((e) => e.attrs.className === "rd-prose st-ch-lead"));
   for (const l of ["en", "fr"]) {
     const st = messages(l).story;
     for (const [k, v] of Object.entries({
@@ -71,6 +84,68 @@ test("each chapter is readable in ten seconds: heading, a line or two, one proof
     for (const id of ["verikora", "folioviv"])
       assert.ok(messages(l).products.cards[id].line.length <= 110, `${l}: ${id}`);
   }
+});
+
+// Founder, 2026-11-06 (krizaka-internal#2800): « et qu'il aligne les UI sur le style global dans Our story ». The page
+// draws nothing the site already has: the head is SectionHeading, the fold .kz-tpl-faq, the figures the site's plate, the
+// brand is scoped to what wears it, and the Cahier refusals hold (no gradient, no blur, no rounded card, no uppercase note,
+// no bold display face, no !important).
+test("the page's UI is the site's: one hero action, the brand scoped to its chip and its actions, Cahier refusals in its stylesheet", () => {
+  const hero = jsxAll(PAGE, "PageHero")[0];
+  assert.ok(hero, "a PageHero");
+  const heroButtons = jsxAncestors(PAGE, "ButtonLink").filter((up) => up.includes("PageHero"));
+  assert.equal(heroButtons.length, 1, "one action in the hero, like the home and /services");
+  assert.equal(messages("en").story.intro.products, undefined, "the second hero action's words are gone");
+  // a chapter never wears the brand on its whole section (it would swap the Cahier faces and the margin ink)
+  const section = jsxAll(CHAPTER, "section")[0];
+  assert.equal(section.attrs.className, "st-ch");
+  assert.ok(hasCode(CHAPTER, 'cn("st-ch-actions", branded)'), "the actions wear the product's brand");
+  assert.ok(hasCode(CHAPTER, "<span className={branded}>{meta}</span>"), "so does the status chip");
+  const text = cssText(CSS);
+  assert.doesNotMatch(text, /gradient\((?![^)]*paper-rule)/, "no gradient wash (only the name card's ruling)");
+  assert.doesNotMatch(text, /blur\(|backdrop-filter/, "no frosted glass");
+  assert.doesNotMatch(
+    text,
+    /border-radius: (?!var\(--kz-card-radius, 0\)|50%)/,
+    "square cards; only a round play button",
+  );
+  assert.doesNotMatch(text, /text-transform: uppercase|letter-spacing: 0\.0\d/, "notes are lower case, untracked");
+  assert.doesNotMatch(text, /font-weight: (7|8|9)00/, "no bold display face");
+  assert.doesNotMatch(text, /!important/);
+  assert.doesNotMatch(
+    text,
+    /box-shadow: [^;]*\d+px \d+px \d+px \d+px|box-shadow: 0 \d+px \d+px/,
+    "solid paper shadows only",
+  );
+  for (const gone of [
+    ".st-ch-meta",
+    ".st-ch-n",
+    ".st-ch-title",
+    ".st-ch-kicker",
+    ".st-place",
+    ".st-proof-note",
+    ".st-film-play",
+    ".st-film-caption",
+    ".st-take-photo",
+  ])
+    assert.ok(!cssSelectors(CSS).some((sel) => sel.includes(gone)), `${gone} is dead and gone`);
+  // the plate and its caption are the site's, shared with the home's carousels
+  for (const file of ["app/components/story/ClipFigure.tsx", "app/components/story/TakeCard.tsx"]) {
+    assert.ok(
+      jsx(file).some((e) => /rd-plate\b/.test(e.attrs.className ?? "")),
+      `${file}: the site's plate`,
+    );
+    assert.ok(
+      jsx(file).some((e) => e.attrs.className === "rd-plate-caption"),
+      `${file}: the plate's caption`,
+    );
+  }
+  for (const file of ["app/components/home/ShowcaseCarousel.tsx", "app/components/home/ShowcaseStill.tsx"])
+    assert.ok(
+      jsx(file).some((e) => e.attrs.className === "rd-plate kz-show-stage"),
+      `${file}: the home's frames are the same plate`,
+    );
+  assert.equal(cssDecls("app/globals.css", ".rd-plate")["box-shadow"], "4px 4px 0 var(--kz-border-strong)");
 });
 
 test("each chapter wears the right bird, with its promise from the film or the brand reference; no bird twice", () => {
@@ -87,7 +162,7 @@ test("each chapter wears the right bird, with its promise from the film or the b
   }
 });
 
-test("the film is shown once: one poster card opening the lightbox; no inline player, no autoplay in the text", () => {
+test("the film is shown once: its loop is chapter 1's clip, the whole film opens in a lightbox; no player, no autoplay in the text", () => {
   const p = "app/[locale]/story/page.tsx";
   assert.equal(jsxAll(p, "FilmLightbox").length, 1, "the reference film once");
   assert.ok(hasCode(p, "brandFilm()"), "the film slot: « Montrer son travail » (lib/story-film.ts)");
@@ -95,9 +170,12 @@ test("the film is shown once: one poster card opening the lightbox; no inline pl
   const tags = jsx(p).map((e) => e.tag);
   assert.ok(!tags.includes("VideoPlayer") && !tags.includes("video"), "no player in the reading column");
   assert.ok(!identifiers(p).has("autoPlay") && !identifiers(p).has("autoplay"), "no autoplay");
-  assert.ok(hasCode(p, '<Image className="st-film-poster" src={film.poster}'), "the poster is a content frame");
-  assert.equal(cssDecls(CSS, ".st-film-photo")["max-width"], "420px", "taped print sized for the column");
-  assert.equal(cssDecls(CSS, ".st-film")["aspect-ratio"], "16 / 9", "poster remains 16:9");
+  assert.equal(STORY_CLIPS.who.carousel, "hero");
+  assert.equal(STORY_CLIPS.who.id, "film", "chapter 1's clip is the film's loop, the home's first slide");
+  assert.ok(
+    jsxAncestors(p, "FilmLightbox").every((up) => up.includes("StoryChapter")),
+    "the lightbox opens from chapter 1",
+  );
   const box = "app/components/home/FilmLightbox.tsx";
   assert.ok(jsx(box).some((e) => e.attrs.preload === "none"));
   assert.ok(hasCode(box, "trigger?: ReactNode"));
@@ -143,13 +221,9 @@ test("the next chapter is read from the data: planned uses and products in devel
   }
 });
 
-test("the page keeps the rules: no hard-coded text choice by locale, no colour literal in its stylesheet but the poster's white on black, reduced motion safe", () => {
+test("the page keeps the rules: no hard-coded text choice by locale, no colour literal in its stylesheet, reduced motion safe", () => {
   assert.doesNotMatch(page, /locale === |isFr/);
-  const literal = css.replace(
-    /color-mix\(in oklab, #000 \d+%, transparent\)|color-mix\(in oklab, #fff \d+%, transparent\)|color: #fff;/g,
-    "",
-  );
-  assert.doesNotMatch(literal, /#[0-9a-fA-F]{3,8}\b|rgb\(|zinc-/, "tokens only");
+  assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b|rgb\(|hsl\(|zinc-/, "tokens only");
   assert.doesNotMatch(css, /@keyframes|animation:/, "nothing animates here");
 });
 
@@ -158,7 +232,67 @@ test("the arcade stages are gone from /story", () => {
   for (const l of ["en", "fr"]) assert.equal(messages(l).story.arcade, undefined);
 });
 
-test("each product shows its real take: a poster that plays on click in a lightbox, the mini-visual only as the fallback", () => {
+// Founder, 2026-11-06 (krizaka-internal#2800): « on vend une émotion, on laisse voir une émotion ». A chapter's face shows
+// a clip of the home's carousels, the feeling of the chapter; the name and how we work have none, on purpose.
+test("each chapter with a clip names a live slide of a home carousel, its files in the CDN manifest", () => {
+  assert.deepEqual(storyClipProblems(has), []);
+  assert.deepEqual(Object.keys(STORY_CLIPS), ["who", "engine", "verikora", "folioviv", "open", "next"]);
+  const anchors = ["who", "name", "work", "engine", ...productIds, "open", "next"];
+  for (const chapter of Object.keys(STORY_CLIPS)) assert.ok(anchors.includes(chapter), `${chapter} is a chapter`);
+  assert.equal(STORY_CLIPS.name, undefined, "the name's shots are retired from the carousel: no clip forced");
+  assert.equal(STORY_CLIPS.work, undefined, "no live clip shows the work itself: no clip forced");
+  // two chapters never share a clip
+  const ids = Object.values(STORY_CLIPS).map((c) => `${c.carousel}/${c.id}`);
+  assert.equal(new Set(ids).size, ids.length);
+  // the words are the carousel's own, in both languages
+  for (const l of ["en", "fr"])
+    for (const c of Object.values(STORY_CLIPS)) {
+      const w = messages(l).home.showcase.slides[c.carousel][c.id];
+      assert.ok(w?.caption && w?.alt, `${l}: ${c.carousel}/${c.id} has its caption and its alt`);
+    }
+});
+
+test("a retired slide or a missing file is refused, and the build throws on it", () => {
+  const board = JSON.parse(read("content/films/home-showcase.json"));
+  const retired = board.carousels.hero.retired.map((r) => r.id);
+  assert.ok(retired.includes("notebook") && retired.includes("ink"), "the name's shots are retired today");
+  const missing = storyClipProblems((path) => has(path) && path !== "home/showcase/folioviv/home-wide.webm");
+  assert.deepEqual(missing, ["folioviv: home/showcase/folioviv/home-wide.webm is not in the CDN manifest"]);
+  assert.deepEqual(clipOf("folioviv"), { carousel: "folioviv", id: "home" });
+  assert.equal(clipOf("name"), undefined);
+  const figure = "app/components/story/ClipFigure.tsx";
+  assert.ok(hasCode(figure, "const problems = storyClipProblems(onCdn);"));
+  assert.ok(hasCode(figure, 'throw new Error(`story clips: ${problems.join("; ")}`);'));
+  assert.ok(
+    hasCode(figure, "video(clipBase(clip))"),
+    "the files are read through lib/cdn.ts: an unknown one fails the build",
+  );
+});
+
+test("a clip is muted, looped, playsinline and lazy, over a poster that reserves 16:9 and carries the alt; still under reduced motion", () => {
+  const figure = "app/components/story/ClipFigure.tsx";
+  assert.ok(importsFrom(figure, "@krizaka/ui/pausable-loop"), "the loop is @krizaka/ui's PausableLoop");
+  const loop = jsxAll(figure, "PausableLoop")[0];
+  assert.equal(loop.attrs.poster, "{files.poster}");
+  assert.ok(
+    hasCode(figure, "labels={{ pause: t.story.clips.pause, play: t.story.clips.play }}"),
+    "a visible pause, in words",
+  );
+  const poster = jsxAll(figure, "Image")[0];
+  assert.equal(poster.attrs.src, "{files.poster}");
+  assert.equal(poster.attrs.alt, "{words.alt}", "the poster carries the text alternative");
+  assert.equal(poster.attrs.width, "{1280}");
+  assert.equal(poster.attrs.height, "{720}");
+  assert.equal(cssDecls(CSS, ".st-clip-plate")["aspect-ratio"], "16 / 9", "no layout shift");
+  assert.equal(cssDecls(CSS, ".st-clip-media")["object-fit"], "cover");
+  // muted, looped, playsinline, paused off screen and still under reduced motion are PausableLoop's own contract, tested in
+  // krizaka-ui (a product never tests the library); the PR's browser run shows no <video> under reduced motion.
+  for (const l of ["en", "fr"]) assert.ok(messages(l).story.clips.pause && messages(l).story.clips.play, l);
+  // the caption is the home's figure line
+  assert.ok(hasCode(figure, "format(t.home.showcase.labels.figure, { fig: String(fig), caption: words.caption })"));
+});
+
+test("each product keeps its real take one step deeper: a poster in the fold that plays on click in a lightbox", () => {
   const takes = read("lib/story-takes.ts");
   const ids = ["sovkora", "verikora", "folioviv"];
   for (const id of ids) assert.match(takes, new RegExp(`\\n  ${id}: \\{\\s*ratio:`), `${id} has a take`);
@@ -175,7 +309,10 @@ test("each product shows its real take: a poster that plays on click in a lightb
   assert.match(card, /next\/dynamic/, "the player's code loads on click");
   assert.match(card, /<Dialog\.Root>/);
   assert.match(page, /takeOf\(id, locale\)/);
-  assert.match(page, /takeProof\(id, p\.name, id\) \?\? \(/, "mini-visual = fallback");
+  // the face is the clip; the take goes in the fold, and the mini-visual only when there is neither
+  assert.ok(hasCode(PAGE, "clip(id) ?? take ?? ("), "clip, then take, then mini-visual");
+  assert.ok(hasCode(PAGE, "{clipOf(id) && take}"), "with a clip on the face, the take is in the fold");
+  assert.ok(hasCode(PAGE, "{takeProof(ENGINE, engine.name)}"), "the engine's take, in its fold");
   assert.match(css, /\.st-take-card \{[^}]*width: 168px[^}]*aspect-ratio: 9 \/ 16/, "a fixed small phone frame");
   for (const l of ["en", "fr"])
     for (const k of ["watch", "close", "player", "inLang", "watchRender", "renderPlayer"])
@@ -253,6 +390,7 @@ import { takeVtt } from "../lib/take-captions.ts";
 // lib/story-takes.ts reads the CDN manifest (a JSON import): the test reads its source.
 const TAKE_PRODUCTS = Object.keys(objectMap("lib/story-takes.ts", "SPECS"));
 import { BRAND_FILM, hasTallCut, prefersStill } from "../lib/brand-film.ts";
+import { STORY_CLIPS, clipOf, storyClipProblems } from "../lib/story-clips.ts";
 import {
   PRODUCT_RECORDS,
   constString,
@@ -262,6 +400,7 @@ import {
   cssText,
   hasCode,
   identifiers,
+  importsFrom,
   jsx,
   jsxAll,
   jsxAncestors,
@@ -390,69 +529,41 @@ test("reduced motion or Save-Data: the film waits on its poster (no autoplay)", 
 
 // Taped prints (2026-10-23): every picture or video of /story sits in @krizaka/ui's TapedPhoto — the film poster, each
 // product's take — with a slight tilt that alternates; the diagrams (the engine flow, the mini-visuals) stay as they are.
-test("every picture of /story is a taped print: the film and each take sit inside a TapedPhoto, the diagrams outside", () => {
+// Founder, 2026-11-06 (krizaka-internal#2800): the taped, tilted prints give way to the site's plates (the home's figures):
+// every picture or video of /story is a figure on a plate, with its caption under it; the diagrams stay as they are.
+test("every picture of /story is a figure on the site's plate: the clips, the takes; no taped print, no tilt", () => {
   const take = "app/components/story/TakeCard.tsx";
-  const inPrint = (file, tag) => {
-    const found = jsxAncestors(file, tag);
-    assert.ok(found.length > 0, `${tag} is on the page`);
-    for (const up of found) assert.ok(up.includes("TapedPhoto"), `${tag} sits in a TapedPhoto`);
-  };
-  const outOfPrint = (file, tag) => {
-    const found = jsxAncestors(file, tag);
-    assert.ok(found.length > 0, `${tag} is on the page`);
-    for (const up of found) assert.ok(!up.includes("TapedPhoto"), `${tag} is not framed by a print`);
-  };
-  inPrint(PAGE, "FilmLightbox");
-  inPrint(take, "Image");
-  inPrint(take, "Dialog.Root");
-  assert.equal(
-    jsxAll(PAGE, "Image").length,
-    1,
-    "the film's poster is the page's only picture of its own, the takes come from TakeCard",
-  );
-  assert.equal(jsxAll(take, "TapedPhoto").length, 1, "one print per take");
-  assert.equal(jsxAll(PAGE, "TapedPhoto").length, 1, "the film is the page's own print");
-  assert.ok(hasCode(PAGE, "<TakeCard take={take} name={name} id={id}"), "the page draws the takes through TakeCard");
-  // the diagrams stay as they are
-  outOfPrint(PAGE, "EngineFlowView");
-  outOfPrint(PAGE, "ProductVisual");
-  outOfPrint(PAGE, "ProductLogo");
-  // the print's tilt: slight, and alternating left and right down the chapters
-  assert.ok(
-    hasCode(PAGE, "const lean = (anchor: (typeof STORY_ANCHORS)[number]) => (number(anchor) % 2 ? -1.4 : 1.4);"),
-  );
-  assert.ok(hasCode(PAGE, 'tilt={lean("who")}'));
-  assert.ok(hasCode(PAGE, 'takeProof(ENGINE, engine.name, "engine")'));
-  assert.ok(hasCode(PAGE, "takeProof(id, p.name, id)"));
-  assert.ok(
-    hasCode(take, '<TapedPhoto className="st-take-photo" tilt={tilt}'),
-    "the take's print takes the chapter's tilt",
-  );
-  // the take keeps its caption, its lightbox and its focus ring inside the print
-  assert.ok(hasCode(take, "caption={<>{film ? k.watchRender : k.watch}"));
-  const ring = cssDecls(CSS, ".st-take-card:focus-visible")["outline-offset"];
-  assert.equal(ring, "-3px", "the ring is drawn inside the print, never clipped by its picture");
-  // no hand-made tape: the print is TapedPhoto's own
+  const clipFile = "app/components/story/ClipFigure.tsx";
+  for (const file of [PAGE, take, clipFile]) {
+    assert.ok(!importsFrom(file, "@krizaka/ui/taped-photo"), `${file}: no taped print`);
+    assert.ok(!identifiers(file).has("tilt") && !identifiers(file).has("lean"), `${file}: no tilt`);
+  }
+  assert.equal(jsxAll(PAGE, "Image").length, 0, "the page draws no picture of its own: ClipFigure and TakeCard do");
+  assert.ok(jsx(take).some((e) => e.tag === "figure") && jsx(take).some((e) => e.tag === "figcaption"));
+  assert.ok(jsx(clipFile).some((e) => e.tag === "figure") && jsx(clipFile).some((e) => e.tag === "figcaption"));
+  // the diagrams are never on a plate
+  for (const tag of ["EngineFlowView", "ProductVisual", "ProductLogo"])
+    for (const up of jsxAncestors(PAGE, tag)) assert.ok(!up.includes("ClipFigure"), `${tag} is not framed`);
+  // the take's focus ring is outside the plate, never clipped by its picture
+  assert.equal(cssDecls(CSS, ".st-take-card:focus-visible")["outline-offset"], "2px");
   assert.doesNotMatch(cssText(CSS), /clip-path/i);
-  assert.ok(!cssSelectors(CSS).some((s) => /\.st-[\w-]*tape\b/i.test(s)));
 });
 
 // 2026-10-26 (Oussama: « aligne les photos ou vidéos une fois à droite et une fois à gauche pour que ça fasse histoire »):
 // the chapters' picture alternates sides, in CSS and from the chapter's number; one column on a phone.
-test("the chapters' media alternate sides: right, left, right…, with CSS only, one column below 900px", () => {
+test("the chapters' figures alternate sides: right, left, right…, with CSS only, one column below 1100px", () => {
   const chapterFile = "app/components/story/StoryChapter.tsx";
   assert.ok(hasCode(chapterFile, 'sideOf = (number: number): "right" | "left" => (number % 2 ? "right" : "left")'));
   assert.ok(jsx(chapterFile).some((e) => e.attrs["data-side"] === "{sideOf(number)}"));
-  const desktop = { within: "(min-width: 900px)" };
-  const grid = '.st-ch[data-side="left"] .st-ch-grid';
+  const desktop = { within: "(min-width: 1100px)" };
   const proof = '.st-ch[data-side="left"] .st-ch-proof';
   assert.equal(
-    cssDecls(CSS, grid, desktop)["grid-template-columns"],
-    "minmax(0, 380px) minmax(0, 1fr)",
-    "the swap lives in the desktop media query only",
+    cssDecls(CSS, ".st-ch-grid", desktop)["grid-template-columns"],
+    "minmax(0, 1fr) minmax(0, 1fr)",
+    "the figure takes half the width, like the home's plates",
   );
   assert.equal(cssDecls(CSS, proof, desktop).order, "-1");
-  assert.ok(!cssHas(CSS, grid) && !cssHas(CSS, proof), "a phone keeps the one column and the same order");
+  assert.ok(!cssHas(CSS, proof), "a phone keeps the one column and the same order");
   assert.ok(!jsx(PAGE).some((e) => /(order|direction|gridTemplate)/.test(e.attrs.style ?? "")), "no inline layout");
 });
 
