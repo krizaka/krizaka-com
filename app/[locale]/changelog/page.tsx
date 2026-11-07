@@ -3,12 +3,13 @@ import type { ChangeKind, ChangelogEntry } from "@krizaka/ui/changelog-page";
 import { Ticks } from "@krizaka/ui/page";
 import { buildAlternates } from "@/lib/seo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
-import { anchorOf, changesFor, releaseLabel, type ChangeTag } from "@/lib/changelog";
+import { anchorOf, changesFor, chipLabel, type ChangeTag } from "@/lib/changelog";
 import { FILTER_IDS } from "@/lib/changelog-filter";
 import { PLATFORM, RELEASES } from "@/lib/changelog-data";
 import { GITHUB_ORG_URL } from "@/lib/site";
 import SiteBar from "@/app/components/SiteBar";
 import ChangelogView from "@/app/components/ChangelogView";
+import "./changelog.css";
 
 interface Props {
   params: Promise<{ locale: string }>;
@@ -49,7 +50,7 @@ export default async function ChangelogRoute({ params }: Props) {
     product: r.product,
     date: r.date,
     dateLabel: date.format(new Date(`${r.date}T12:00:00Z`)),
-    version: r.url ? <a href={r.url}>{releaseLabel(r)}</a> : releaseLabel(r),
+    version: r.url ? <a href={r.url}>{chipLabel(r)}</a> : chipLabel(r),
     title: r.source,
     changes: changesFor(r, locale).map((ch) => ({
       kind: KIND[ch.tag],

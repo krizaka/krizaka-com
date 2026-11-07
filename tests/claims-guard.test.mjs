@@ -93,3 +93,26 @@ test("public figures and the downloads total are « more than N », read at buil
     assert.match(hero, new RegExp(`floorFigure\\(figures\\.${k}`), k);
   assert.match(read("app/[locale]/services/page.tsx"), /floorFigure\(npmWeeklyDownloads\(\) \?\? 0\)/);
 });
+
+/* krizaka-internal#2807: every page's social preview said « seven products built on them — all open source » and llms.txt
+   « ships seven products », « Every repository is public under Apache-2.0 », « Everything is open source ». The products are
+   data (lib/products.ts) and carry no licence (AGENTS.md): a count of products is never typed, and no line claims that
+   everything, or every repository, is open source. (The messages join this guard once the Krizaka UI block page has left,
+   krizaka-internal#2804 slice F: its history line counts the products of 2025.) */
+const CODE_AND_CONTENT = sources.filter((f) => !/^content\/films\//.test(f));
+
+test("no product count in words, and no « everything is open source » line (krizaka-internal#2807)", () => {
+  const bad = [
+    [
+      /\b(?:three|four|five|six|seven|eight|nine|ten|trois|quatre|cinq|six|sept|huit|neuf|dix)\s+(?:products|produits)\b/i,
+      "a product count in words",
+    ],
+    [
+      /\b(?:all|everything is|every repository is public under|tout(?: est)? en) open[- ]source\b|every repository is public under apache/i,
+      "a licence claim on everything",
+    ],
+  ];
+  for (const f of CODE_AND_CONTENT)
+    for (const [i, line] of read(f).split("\n").entries())
+      for (const [re, what] of bad) assert.doesNotMatch(line, re, `${f}:${i + 1} says ${what}`);
+});

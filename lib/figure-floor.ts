@@ -17,7 +17,10 @@ export function figureStep(count: number): number {
   return STEPS.find(([below]) => count < below)?.[1] ?? LAST_STEP;
 }
 
+/** The step is the one of the largest value that may be said (the count minus one), so a count that is a step itself (10,
+ *  100…) keeps the finer step below it: 10 says « more than 5 », never « more than 0 » (krizaka-internal#2806). */
 export function floorFigure(count: number): number {
   const n = Number.isFinite(count) ? Math.max(0, Math.floor(count)) : 0;
-  return n < 1 ? 0 : Math.floor((n - 1) / figureStep(n)) * figureStep(n);
+  const below = n - 1;
+  return n < 1 ? 0 : Math.floor(below / figureStep(below)) * figureStep(below);
 }

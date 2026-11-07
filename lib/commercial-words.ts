@@ -1,7 +1,8 @@
 /* A release line is written in the repositories' words (a retired code name, once); the page says the commercial names
-   (krizaka-internal#2103), in prose and in hosts (`dev.<name>.com` → the commercial dev host). A name that is part of a
-   repository path, a package or a longer identifier (`<name>-edge`, `github.com/krizaka/<name>`, `@krizaka/<name>-cli`) is
-   history's own address and stays: GitHub and npm answer to it. */
+   (krizaka-internal#2103), in prose and in hosts (`dev.<name>.com` → the commercial dev host). A reference to a repository of
+   the org (`krizaka/<name>#478`, `github.com/krizaka/<name>`) says its current name: the repositories were renamed and GitHub
+   redirects the old path (krizaka-internal#2836: a build whose sources timed out failed on `krizaka/akinaza#478`). A package
+   or a longer identifier (`@krizaka/<name>-cli`, `<name>-edge`) keeps its published name: npm answers to it. */
 
 import { codeNameMap } from "@krizaka/org";
 
@@ -16,5 +17,11 @@ const said = (word: string): string => {
   return word === word.toLowerCase() ? name.toLowerCase() : name;
 };
 
-/** `text` with every code name said as its commercial name. */
-export const commercialWords = (text: string): string => text.replace(WORD, said);
+/** A repository of the org: `krizaka/<name>` not preceded by `@` (a package) and not followed by more of an identifier. */
+const REPOSITORY = new RegExp(String.raw`(?<![\w@.-])(krizaka/)(${NAMES})(?![\w-])`, "gi");
+
+/** `text` with every code name said as its commercial name, and every renamed repository by its current name. */
+export const commercialWords = (text: string): string =>
+  text
+    .replace(REPOSITORY, (_, owner: string, name: string) => owner + MAP[name.toLowerCase()].toLowerCase())
+    .replace(WORD, said);

@@ -110,8 +110,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
     openGraph: {
       title: isEn ? "Krizaka — open-source software studio" : "Krizaka — studio logiciel open source à Montréal",
       description: isEn
-        ? "Krizaka UI, Krizaka Java and seven products built on them — all open source, made in Montréal."
-        : "Krizaka UI, Krizaka Java et sept produits construits dessus — tout en open source, fait à Montréal.",
+        ? "Sovkora, Verikora and Folioviv, built in the open on our open-source stack: Krizaka UI, Krizaka Java and Krizaka TypeScript. Made in Montréal."
+        : "Sovkora, Verikora et Folioviv, construits au grand jour sur notre pile open source : Krizaka UI, Krizaka Java et Krizaka TypeScript. Fait à Montréal.",
       type: "website",
       url: SITE_URL,
       siteName: "Krizaka",
@@ -122,8 +122,8 @@ export async function generateMetadata({ params }: LayoutProps): Promise<Metadat
       card: "summary_large_image",
       title: isEn ? "Krizaka — open-source software studio" : "Krizaka — studio logiciel open source à Montréal",
       description: isEn
-        ? "Krizaka UI, Krizaka Java and seven products built on them. Open source, made in Montréal."
-        : "Krizaka UI, Krizaka Java et sept produits construits dessus. Open source, fait à Montréal.",
+        ? "Sovkora, Verikora and Folioviv, built in the open on our open-source stack: Krizaka UI, Krizaka Java and Krizaka TypeScript. Made in Montréal."
+        : "Sovkora, Verikora et Folioviv, construits au grand jour sur notre pile open source : Krizaka UI, Krizaka Java et Krizaka TypeScript. Fait à Montréal.",
     },
   };
 }

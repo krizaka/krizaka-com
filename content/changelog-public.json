@@ -1,0 +1,54 @@
+{
+  "about": "What /changelog leaves out (founder, 2026-11-07, krizaka-internal#2832): the team's internal work, which a visitor cannot see. Each kind is a pattern on one line of a release, with its reason. Security and breaking changes are always kept. The repositories' CHANGELOG.md and GitHub releases stay complete; this rule only shapes the public page and its feed.",
+  "keepTags": ["security", "breaking"],
+  "internal": [
+    {
+      "id": "ci",
+      "why": "CI, workflows, pipelines and smoke runs",
+      "pattern": "\\bCI\\b|\\bworkflows?\\b|\\bpipelines?\\b|\\bsmoke\\b|\\bflux de travail\\b",
+      "flags": ""
+    },
+    {
+      "id": "tooling",
+      "why": "lint, format and static-analysis fixes (Sonar rule ids, regexes, ternaries)",
+      "pattern": "\\bruff\\b|\\bprettier\\b|\\beslint\\b|\\bsonar\\w*\\b|\\bregex(?:es)?\\b|\\bternar(?:y|ies)\\b|\\bS\\d{4}\\b",
+      "flags": "i"
+    },
+    {
+      "id": "tests",
+      "why": "tests, test classes, end-to-end journeys and test personas",
+      "pattern": "\\b(?:IT|Test_\\w+|\\w+(?:Test|IT))\\b|\\b(?:stream|unit|integration) tests?\\b|\\b[Tt]he (?:journey|persona)\\b",
+      "flags": ""
+    },
+    {
+      "id": "deps",
+      "why": "dependencies, version pins and bumps",
+      "pattern": "\\bre-?pin(?:s|ned)?\\b|\\bpinned\\b|\\bdependenc(?:y|ies)\\b|\\bdeps\\b|\\bbump(?:s|ed)?\\b|\\bdépendances?\\b|\\bépingl\\w*",
+      "flags": "i"
+    },
+    {
+      "id": "release",
+      "why": "release bumps and version packages",
+      "pattern": "\\brelease-please\\b|\\bversion packages\\b|\\bversion bump\\b",
+      "flags": "i"
+    },
+    {
+      "id": "schema",
+      "why": "database schemas and migrations",
+      "pattern": "\\bFlyway\\b|\\bmigrations?\\b|\\bschema is\\b|\\bschéma\\b",
+      "flags": "i"
+    },
+    {
+      "id": "repository",
+      "why": "where the code lives and how it is built: folders, clones, build order",
+      "pattern": "\\bfolders?\\b|\\bcloned\\b|\\bbuilt after\\b",
+      "flags": "i"
+    },
+    {
+      "id": "dev",
+      "why": "the development hosts and what only they show",
+      "pattern": "^Dev shows\\b|\\bdev\\.[a-z]+\\.com\\b",
+      "flags": ""
+    }
+  ]
+}

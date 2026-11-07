@@ -53,8 +53,27 @@ test("a release line says the commercial names, in prose and hosts; repositories
   assert.equal(commercialWords(`${code} and ${cap(code)}`), `${name} and ${cap(name)}`);
   assert.equal(commercialWords(`moves to www.${code}.com`), `moves to www.${name}.com`);
   assert.equal(commercialWords(`dev.${code}.com`), `dev.${name}.com`);
-  for (const kept of [`${code}-edge`, `github.com/krizaka/${code}`, `@krizaka/${code}-cli`]) {
+  for (const kept of [`${code}-edge`, `@krizaka/${code}-cli`, `@krizaka/${code}`]) {
     assert.equal(commercialWords(kept), kept);
+  }
+});
+
+/* krizaka-internal#2836: a merge-group build timed out on 15 changelog sources, the list filled with older @krizaka/ui lines
+   citing `krizaka/akinaza#478`, and the code-names check refused 48 of them. The org's repositories were renamed (GitHub
+   redirects the old path): a reference to one says its current name, so the page never depends on which sources answered. */
+test("a reference to a renamed repository of the org says its current name, for every retired id", async () => {
+  const { commercialWords } = await import("../lib/commercial-words.ts");
+  const { codeNameProblems } = await import("../scripts/check-code-names.mjs");
+  for (const [code, id] of Object.entries(CODE_NAMES)) {
+    assert.equal(commercialWords(`fills its frame (krizaka/${code}#488).`), `fills its frame (krizaka/${id}#488).`);
+    assert.equal(
+      commercialWords(`https://github.com/krizaka/${code}/pull/12`),
+      `https://github.com/krizaka/${id}/pull/12`,
+    );
+    const line = commercialWords(
+      `feat(shop): ${code} closing call (krizaka/${code}#478 slice 1), see github.com/krizaka/${code}.`,
+    );
+    assert.deepEqual(codeNameProblems(line), [], line);
   }
 });
 

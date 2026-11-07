@@ -56,7 +56,7 @@ export const STACK: StackPart[] = [
     id: "java",
     name: "Krizaka Java",
     url: "https://java.krizaka.com",
-    repoUrl: `${GITHUB_ORG_URL}/krizaka-build`,
+    repoUrl: `${GITHUB_ORG_URL}/krizaka-java`,
     registry: "maven",
     coordinate: "com.krizaka:krizaka-bom",
     status: "released",
