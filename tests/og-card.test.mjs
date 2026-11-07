@@ -27,11 +27,18 @@ test("every page of the sitemap has an image of its own: a route of its own, or 
     assert.ok(existsSync(new URL(`../${routeOf(id)}`, import.meta.url)), `${path || "/"} has no opengraph-image`);
   }
   assert.ok(existsSync(new URL("../app/[locale]/open-source/[block]/opengraph-image.tsx", import.meta.url)));
+  const film = read("app/[locale]/films/[id]/page.tsx");
   assert.match(
-    read("app/[locale]/films/[id]/page.tsx"),
-    /images: \[video\(f\.base\)\.poster\]/,
-    "the film's card is its poster",
+    film,
+    /const \{ poster \} = watchMedia\(f\);/,
+    "the poster of the film's own media (lib/watch-media.ts)",
   );
+  assert.match(
+    film,
+    /openGraph: \{ \.\.\.share\.openGraph, type: "video\.other", images: \[poster\] \}/,
+    "og: its poster",
+  );
+  assert.match(film, /twitter: \{ \.\.\.share\.twitter, images: \[poster\] \}/, "twitter: its poster");
 });
 
 test("the card is the Cahier: the tokens' paper and ink, the fonts' faces, no gradient, no glow, no typed colour", () => {
