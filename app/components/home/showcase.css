@@ -7,13 +7,9 @@
   min-width: 0;
   margin: 0;
 }
+/* The frame is the site's plate (.rd-plate, app/globals.css); the stage only sets its 16:9. */
 .kz-show-stage {
-  position: relative;
   aspect-ratio: 16 / 9;
-  overflow: hidden;
-  background: var(--kz-surface-1);
-  border: 1px solid var(--kz-border-strong);
-  box-shadow: 4px 4px 0 var(--kz-border-strong);
 }
 .kz-show-slide {
   position: absolute;
@@ -79,15 +75,6 @@
   justify-content: space-between;
   gap: 12px;
   margin-top: 14px;
-}
-.kz-show-caption {
-  margin: 0;
-  min-width: 0;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  line-height: 19px;
-  color: var(--kz-text-secondary);
-  overflow-wrap: anywhere;
 }
 .kz-show-count {
   display: inline-block;

@@ -1,11 +1,11 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { ForwardIcon, PlayIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
+import { Button } from "@krizaka/ui/button";
 import { Page } from "@krizaka/ui/page";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { Toc, TocLayout } from "@krizaka/ui/toc";
-import { TapedPhoto } from "@krizaka/ui/taped-photo";
 import { localizedMetadata } from "@/lib/seo";
 import { contactHref } from "@/lib/contact";
 import { ENGINE_USES } from "@/lib/engine-uses";
@@ -27,14 +27,15 @@ import {
   WORK_STEPS,
   type StoryBird,
 } from "@/lib/story";
+import { clipOf } from "@/lib/story-clips";
 import { uiFacts } from "@/lib/ui-facts";
-import { PRODUCTS_ANCHOR } from "@/lib/nav";
 import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
 import FigureTiles from "@/app/components/FigureTiles";
 import Rich from "@/app/components/Rich";
 import { ProductStatus } from "@/app/components/ProductStatus";
 import { StackTiles } from "@/app/components/home/OpenStack";
+import ClipFigure from "@/app/components/story/ClipFigure";
 import FilmCredits from "@/app/components/story/FilmCredits";
 import FilmLightbox from "@/app/components/home/FilmLightbox";
 import ProductVisual from "@/app/components/home/visuals/ProductVisual";
@@ -83,8 +84,11 @@ function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
    where the name comes from, how we work, the engine, each product, the open stack, what is next — each a heading, a
    line or two, one proof visual and its depth in a fold. A product says the home's line and status (the same messages
    and data), the products in conception join « what is next » (lib/products-in-design.ts). It is Krizaka's story, the company's: no chapter links to the founder's blog (krizaka-internal#138).
-   The brand film « Montrer son travail » is shown once (a poster card in chapter 1, the player opens in a lightbox,
-   nothing fetched before; its watch page is one link away). Every figure is read at build; products and their statuses come from
+   The face of a chapter lets a feeling show, not an explanation (founder, 2026-11-06, krizaka-internal#2800): its figure is a
+   clip of the home's carousels (lib/story-clips.ts, ClipFigure), and the diagrams, the products' real takes and the status
+   board sit one step deeper, in the chapter's fold. The brand film « Montrer son travail » is shown once: its loop is
+   chapter 1's clip, the whole film opens in a lightbox (nothing fetched before) and its watch page is one link away. The
+   name and how we work have no clip, on purpose. Every figure is read at build; products and their statuses come from
    lib/products.ts, what runs on the engine from lib/engine-uses.ts — nothing is typed here. */
 export default async function StoryPage({ params }: Props) {
   const locale = asLocale((await params).locale);
@@ -115,11 +119,17 @@ export default async function StoryPage({ params }: Props) {
     label: chapterNames.get(id)!,
   }));
   const number = (anchor: (typeof STORY_ANCHORS)[number]) => STORY_ANCHORS.indexOf(anchor) + 1;
-  const chapterLabel = (n: number) => format(st.chapter, { n: String(n) });
-  const numbered = (anchor: (typeof STORY_ANCHORS)[number]) => ({
-    number: number(anchor),
-    chapterLabel: chapterLabel(number(anchor)),
-  });
+  /** The chapter's clip as its figure (« Fig. n », n its number), or null when it has none. */
+  const clip = (anchor: (typeof STORY_ANCHORS)[number], extra?: ReactNode) => {
+    const ref = clipOf(anchor);
+    return ref ? (
+      <ClipFigure clip={ref} fig={number(anchor)} locale={locale}>
+        {extra}
+      </ClipFigure>
+    ) : null;
+  };
+
+  const figureTiles = <FigureTiles figures={figures} label={st.open.figuresAria} locale={locale} columns />;
 
   const usesList = (
     <ul className="st-uses">
@@ -139,41 +149,29 @@ export default async function StoryPage({ params }: Props) {
     </ul>
   );
 
-  /** The printed pictures lean in turn, left then right, down the chapters (a slight tilt: the print's own lean). */
-  const lean = (anchor: (typeof STORY_ANCHORS)[number]) => (number(anchor) % 2 ? -1.4 : 1.4);
-
-  /** The product's real take (a poster, played in a lightbox on click), when one is recorded; the mini-visual otherwise. */
-  const takeProof = (
-    id: (typeof PRODUCT_CHAPTERS)[number] | typeof ENGINE,
-    name: string,
-    anchor: (typeof STORY_ANCHORS)[number],
-  ) => {
+  /** The product's real take (a poster, played in a lightbox on click), when one is recorded. */
+  const takeProof = (id: (typeof PRODUCT_CHAPTERS)[number] | typeof ENGINE, name: string) => {
     const take = takeOf(id, locale);
     return take ? (
-      <TakeCard
-        take={take}
-        name={name}
-        id={id}
-        other={Boolean(take.lang && take.lang !== locale)}
-        tilt={lean(anchor)}
-      />
+      <TakeCard take={take} name={name} id={id} other={Boolean(take.lang && take.lang !== locale)} />
     ) : null;
   };
 
   const productChapter = (id: (typeof PRODUCT_CHAPTERS)[number]) => {
     const p = product(id);
     const use = ENGINE_USES.find((u) => u.id === id);
-    const useLine = use
-      ? format(use.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, {
-          use: e.uses[use.id as keyof typeof e.uses],
-        })
-      : undefined;
+    const useLine =
+      use &&
+      format(use.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, {
+        use: e.uses[use.id as keyof typeof e.uses],
+      });
     const bird = PRODUCT_BIRD[id];
+    const take = takeProof(id, p.name);
     return (
       <StoryChapter
         key={id}
         id={`p-${id}`}
-        {...numbered(id)}
+        number={number(id)}
         brand={id}
         meta={<ProductStatus status={p.status} t={t} />}
         title={
@@ -190,10 +188,11 @@ export default async function StoryPage({ params }: Props) {
         bird={bird}
         promise={promiseOf(t, bird)}
         proof={
-          takeProof(id, p.name, id) ?? (
+          clip(id) ??
+          take ?? (
             <div className="st-proof">
               <ProductVisual id={id} name={p.name} />
-              <p className="st-proof-note">{st.products.demo}</p>
+              <p className="kz-label">{st.products.demo}</p>
             </div>
           )
         }
@@ -203,6 +202,7 @@ export default async function StoryPage({ params }: Props) {
             <>
               <p>{st.products.proofs[id as keyof typeof st.products.proofs]}</p>
               {useLine && <p className="st-uses-line">{useLine}</p>}
+              {clipOf(id) && take}
             </>
           ),
         }}
@@ -227,6 +227,45 @@ export default async function StoryPage({ params }: Props) {
   const developing = PRODUCTS.filter((p) => p.status === "development");
   const board: Status[] = ["devPreview", "development", "construction", "paused"];
 
+  const statusBoard = (
+    <div className="st-board" role="group" aria-label={st.next.boardAria}>
+      {board.map((status) => {
+        const list = PRODUCTS.filter((p) => p.status === status);
+        return list.length === 0 ? null : (
+          <div key={status} className="st-board-col" data-status={status}>
+            <p className="st-board-label">
+              <ProductStatus status={status} t={t} />
+            </p>
+            <ul>
+              {list.map((p) => (
+                <li key={p.id} className={"brand-" + p.id}>
+                  <ProductLogo id={p.id} size={20} animated={false} /> {p.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+      {IN_DESIGN.length > 0 && (
+        <div className="st-board-col" data-status="design">
+          <p className="st-board-label">
+            <ProductStatus status="design" t={t} />
+          </p>
+          <ul>
+            {IN_DESIGN.map((p) => (
+              <li key={p.id}>{p.name}</li>
+            ))}
+          </ul>
+          {IN_DESIGN.map((p) => (
+            <p key={p.id} className="st-board-note">
+              {t.site.home.products.inDesign.lines[p.id]}
+            </p>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <main className="st" style={{ background: "var(--kz-surface-0)", minHeight: "100vh" }}>
       <SiteBar />
@@ -240,9 +279,6 @@ export default async function StoryPage({ params }: Props) {
           <ButtonLink href="#who" variant="primary" size="lg">
             {st.intro.start} <ForwardIcon size={15} />
           </ButtonLink>
-          <ButtonLink href={PRODUCTS_ANCHOR} size="lg">
-            {st.intro.products}
-          </ButtonLink>
         </div>
       </PageHero>
 
@@ -250,8 +286,8 @@ export default async function StoryPage({ params }: Props) {
         <TocLayout toc={<Toc label={st.toc} items={items} />}>
           <StoryChapter
             id="who"
-            {...numbered("who")}
-            meta={<span className="st-place">{st.who.places.join(" · ")}</span>}
+            number={number("who")}
+            kicker={st.who.places.join(" · ")}
             title={st.who.title}
             lead={
               <>
@@ -261,42 +297,29 @@ export default async function StoryPage({ params }: Props) {
             }
             bird={WHO_BIRD}
             promise={promiseOf(t, WHO_BIRD)}
-            proof={
-              <>
-                <TapedPhoto className="st-film-photo" tilt={lean("who")}>
-                  <FilmLightbox
-                    film={{ mp4: film.mp4, poster: film.poster, tall: film.tall }}
-                    trigger={
-                      <button type="button" className="st-film" aria-label={`${st.who.film} · ${st.who.filmLength}`}>
-                        <Image
-                          className="st-film-poster"
-                          src={film.poster}
-                          alt=""
-                          width={1280}
-                          height={720}
-                          sizes="(min-width: 1100px) 400px, (min-width: 640px) 50vw, 92vw"
-                        />
-                        <span className="st-film-play" aria-hidden>
-                          <PlayIcon size={22} />
-                        </span>
-                        <span className="st-film-caption">
-                          {st.who.film} <span>{st.who.filmLength}</span>
-                        </span>
-                      </button>
-                    }
-                  />
-                </TapedPhoto>
-                <FilmCredits />
+            proof={clip(
+              "who",
+              <div className="st-film-ways">
+                <FilmLightbox
+                  film={{ mp4: film.mp4, poster: film.poster, tall: film.tall }}
+                  trigger={
+                    <Button type="button" variant="secondary" size="md">
+                      <PlayIcon size={15} aria-hidden /> {st.who.film}{" "}
+                      <span className="st-film-length">{st.who.filmLength}</span>
+                    </Button>
+                  }
+                />
                 <ButtonLink href={`/${locale}${watchPath(film.id)}`} variant="ghost" size="md">
                   {st.watch.watchPage}
                 </ButtonLink>
-              </>
-            }
+                <FilmCredits />
+              </div>,
+            )}
           />
 
           <StoryChapter
             id="name"
-            {...numbered("name")}
+            number={number("name")}
             title={st.name.title}
             lead={st.name.passage.map((line) => (
               <p key={line}>
@@ -328,7 +351,7 @@ export default async function StoryPage({ params }: Props) {
 
           <StoryChapter
             id="work"
-            {...numbered("work")}
+            number={number("work")}
             title={st.work.title}
             lead={<p>{st.work.lead}</p>}
             proof={
@@ -360,7 +383,7 @@ export default async function StoryPage({ params }: Props) {
 
           <StoryChapter
             id="engine"
-            {...numbered("engine")}
+            number={number("engine")}
             brand={ENGINE}
             meta={<ProductStatus status={engine.status} t={t} />}
             title={
@@ -377,18 +400,15 @@ export default async function StoryPage({ params }: Props) {
             }
             bird={PRODUCT_BIRD.sovkora}
             promise={promiseOf(t, PRODUCT_BIRD.sovkora)}
-            proof={
-              <>
-                <EngineFlowView t={t} />
-                {takeProof(ENGINE, engine.name, "engine")}
-              </>
-            }
+            proof={clip("engine") ?? <EngineFlowView t={t} />}
             fold={{
               summary: st.engine.more,
               children: (
                 <>
                   <p>{e.sends}.</p>
+                  {clipOf("engine") && <EngineFlowView t={t} />}
                   {usesList}
+                  {takeProof(ENGINE, engine.name)}
                 </>
               ),
             }}
@@ -403,13 +423,21 @@ export default async function StoryPage({ params }: Props) {
 
           <StoryChapter
             id="open"
-            {...numbered("open")}
+            number={number("open")}
             title={st.open.title}
             lead={<p>{st.open.lead}</p>}
             bird={OPEN_BIRD}
             promise={promiseOf(t, OPEN_BIRD)}
-            proof={<FigureTiles figures={figures} label={st.open.figuresAria} locale={locale} columns />}
-            fold={{ summary: st.open.more, children: <StackTiles locale={locale} /> }}
+            proof={clip("open") ?? figureTiles}
+            fold={{
+              summary: st.open.more,
+              children: (
+                <>
+                  {clipOf("open") && figureTiles}
+                  <StackTiles locale={locale} />
+                </>
+              ),
+            }}
             actions={
               <ButtonLink href="/docs" variant="primary">
                 {st.open.cta} <ForwardIcon size={14} />
@@ -419,7 +447,7 @@ export default async function StoryPage({ params }: Props) {
 
           <StoryChapter
             id="next"
-            {...numbered("next")}
+            number={number("next")}
             title={st.next.title}
             lead={
               <>
@@ -437,44 +465,8 @@ export default async function StoryPage({ params }: Props) {
                 </ul>
               </>
             }
-            proof={
-              <div className="st-board" role="group" aria-label={st.next.boardAria}>
-                {board.map((status) => {
-                  const list = PRODUCTS.filter((p) => p.status === status);
-                  return list.length === 0 ? null : (
-                    <div key={status} className="st-board-col" data-status={status}>
-                      <p className="st-board-label">
-                        <ProductStatus status={status} t={t} />
-                      </p>
-                      <ul>
-                        {list.map((p) => (
-                          <li key={p.id} className={"brand-" + p.id}>
-                            <ProductLogo id={p.id} size={20} animated={false} /> {p.name}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  );
-                })}
-                {IN_DESIGN.length > 0 && (
-                  <div className="st-board-col" data-status="design">
-                    <p className="st-board-label">
-                      <ProductStatus status="design" t={t} />
-                    </p>
-                    <ul>
-                      {IN_DESIGN.map((p) => (
-                        <li key={p.id}>{p.name}</li>
-                      ))}
-                    </ul>
-                    {IN_DESIGN.map((p) => (
-                      <p key={p.id} className="st-board-note">
-                        {t.site.home.products.inDesign.lines[p.id]}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </div>
-            }
+            proof={clip("next") ?? statusBoard}
+            fold={clipOf("next") ? { summary: st.next.boardAria, children: statusBoard } : undefined}
             actions={
               <ButtonLink href={contactHref("story")} variant="primary" size="lg">
                 {st.next.cta} <ForwardIcon size={15} />

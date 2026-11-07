@@ -72,12 +72,22 @@
   sitemap, `llms.txt` or the JSON-LD (`tests/products-in-design.test.mjs`). Kridoc (`kridoc`) is the one today; it
   moves to `PRODUCTS` when its repository builds something real.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
-  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), and `brand-films/**` — the
+  only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click, in the chapter's fold), and `brand-films/**` — the
   brand film « Montrer son travail » (`lib/brand-film.ts`, made with Sovkora, approved 2026-11-01: the home's « Watch the
   film », `/story` and its watch page `/films/montrer-son-travail`; no speech, so its text version is the list of its
   shots; its 9:16 cut plays upright on a phone once uploaded) and the loops of each bird, loaded by ui.krizaka.com and the
   products' sites by their hashed URL. A new film replaces it: upload, then `cdn-assets prune`. **/story is Krizaka's
   story, the company's: it never links to the founder's blog** (krizaka-internal#138, `tests/story.test.mjs`).
+- **/story lets a feeling show, not an explanation** (founder, 2026-11-06, krizaka-internal#2800: « on vend une émotion, on
+  laisse voir une émotion »). The face of a chapter is its head (`SectionHeading`: « § n » in the margin, a lower-case note,
+  the title), a line or two, its bird and **one clip of the home's carousels** (`lib/story-clips.ts`, `ClipFigure`): the brand
+  film's loop for who we are, Sovkora's tea for the engine, a feather pen signing for Verikora, a father on the canal for
+  Folioviv, the pigeon for the open stack, dawn over the river for what comes next. A clip is a live slide of its carousel (in the
+  storyboard's `order`, so it passed `check-showcase-media.mjs`); a retired one or a file the manifest does not know fails the
+  build, and its caption and alt are the carousel's own messages. The name and how we work have no clip, on purpose (their
+  shots are retired, or none shows the work): no clip is forced. The diagrams (the engine's flow), the figures, the products'
+  takes and the status board sit one step deeper, in the chapter's fold (`.kz-tpl-faq`). The figures are the site's plates
+  (`.rd-plate`, `.rd-plate-caption` in `app/globals.css`, shared with the home's carousels); no taped print, no tilt.
 - **French is the default language** (Loi 96, `lib/locale-negotiation.ts`): an unprefixed URL goes to the cookie `NEXT_LOCALE` if set, else English only when the browser asks for English and never French, else French; hreflang `x-default` → `/fr`.
 
 - **Services and a short home** (founder, 2026-10-30, #487): the home's « what we know how to do » section is gone; in its slot (§ 4) one line leads to **`/services`** (« Nos services », longform): Krizaka Entreprise, the one offer for companies — custom modules, adoption of a sovereign AI, maintenance — **no price of any kind** (founder, 2026-11-03: « les gens ont besoin de nous, on les laisse venir »: no amount, no « à partir de », no tiers, no « sur devis » / « on quote » — `tests/services-page.test.mjs` refuses them in both languages; they come back only when a product opens and the founder decides on krizaka-internal#40 / #1997), a longform of `PageHero`, the three parts as a numbered list (`OfferList`, founder 2026-11-05: « a list, not three squares »; the home's « For companies » shows the same list, compact, each entry to its part), the proof as a ledger of links (`WorkLedger`, not boxes) and folded questions (`lib/services-page.ts`), one action (the contact form, topic `enterprise`, « Parlez-nous de votre projet »), words in `site.services`, a `Service` JSON-LD node under the Organization, in the bar (Open source · Services), the footer, the sitemap and `llms.txt`. **`/open-source` is lighter**: hero, stack, packages, how it fits, contribute — no CI intro, standards, repositories table or nomenclature (GitHub is the source of the repository list).
@@ -252,7 +262,11 @@
   the light rests on one station (now, next, later) every 4.5 s and opens its details, with WCAG 2.2.2's rules — a visible
   pause / play, paused while the pointer is over it, the focus is in it or it is off screen; under
   `prefers-reduced-motion` nothing moves and every station is open; each station is a button that rests the light there.
-  Nothing travels (a fill and a fade). No other block of the site moves on its own.
+  Nothing travels (a fill and a fade).
+  **And /story's clips** (founder, 2026-11-06, krizaka-internal#2800): each chapter's clip is @krizaka/ui's `PausableLoop` over
+  its poster (the poster reserves the 16:9 frame and carries the alt) — muted, looped, `playsinline`, mounted after the
+  page's load, paused off screen and by its visible pause; under `prefers-reduced-motion` (or Save-Data) no clip is mounted
+  and the poster stays. No other block of the site moves on its own.
 - **Every action is the @krizaka/ui `Button`** — through `ButtonLink` (`app/components/ButtonLink.tsx`, the router
   adapter) for links: `primary` for the one action a block is about, `secondary` for the others, `ghost` for quiet chips;
   **one shape, the Button's default** (an 8 px radius, the radius of a field; never `shape="cut"` — the chamfer is retired,
