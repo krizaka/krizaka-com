@@ -19,11 +19,30 @@ export function cases(paths = PATHS, viewports = VIEWPORTS, themes = THEMES, pre
   );
 }
 
+/** Runs in the page: opens, from its summary, each closed fold (`<details>`) that holds an engine flow, and returns how
+    many it opened. On /story the engine chapter shows a clip and keeps the flow in its fold (#2800): a closed fold keeps
+    the stage laid out but never renders it, so its animations do not run. The visitor opens the fold to see the flow. */
+export function openFlowFolds(doc = document) {
+  let opened = 0;
+  for (const flow of doc.querySelectorAll(".kz-flow")) {
+    const fold = flow.closest("details");
+    if (fold && !fold.open) {
+      fold.querySelector("summary")?.click();
+      opened++;
+    }
+  }
+  return opened;
+}
+
 /** Runs in the page: each photon's own dash-offset readings over ~700 ms, and the hub's animation.
     Interpolated, a photon reads many distinct finite lengths; the 2026-10-20 bug (a unitless keyframe value) gave two
     — `0px` and a `calc()` — and every dot looked frozen. */
-export async function sampleFlowInPage() {
-  const stage = [...document.querySelectorAll(".kz-flow-stage")].find((el) => el.getClientRects().length > 0);
+export async function sampleFlowInPage(doc = document) {
+  // Serialised into the page by page.evaluate: everything it uses is declared inside it. A stage the visitor sees is
+  // rendered, not only laid out (a closed fold's content has client rects but is not rendered).
+  const rendered = (el) =>
+    el.getClientRects().length > 0 && (typeof el.checkVisibility !== "function" || el.checkVisibility());
+  const stage = [...doc.querySelectorAll(".kz-flow-stage")].find(rendered);
   if (!stage) return { error: "no visible EngineFlow stage" };
   const photons = [...stage.querySelectorAll(".kz-flow-photon:not([data-halo])")];
   if (!photons.length) return { error: "no photon drawn" };

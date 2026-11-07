@@ -263,7 +263,7 @@ export default function ShowcaseCarousel({
         }
       }}
     >
-      <div className="kz-show-stage">
+      <div className="rd-plate kz-show-stage">
         {slides.map((s, i) => {
           const draw = seen.has(i) || i === (active + 1) % total;
           const here = i === active;
@@ -301,7 +301,7 @@ export default function ShowcaseCarousel({
         </ol>
       </div>
       <div className="kz-show-bar">
-        <p className="kz-show-caption" aria-live={advancing ? "off" : "polite"}>
+        <p className="rd-plate-caption kz-show-caption" aria-live={advancing ? "off" : "polite"}>
           <span className="kz-show-count">
             {active + 1} / {total}
           </span>

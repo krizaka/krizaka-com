@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { cases, motionProblems, PATHS } from "../scripts/motion-lib.mjs";
+import { cases, motionProblems, openFlowFolds, PATHS, sampleFlowInPage } from "../scripts/motion-lib.mjs";
 
 // The engine flow's dots sat still on every Krizaka site (krizaka-ui: a unitless keyframe value is not interpolable with
 // a length, so each dot flipped between two equivalent offsets). check-overflow runs under reduced motion and could not
@@ -57,4 +57,42 @@ test("CI runs the check against the container", () => {
   assert.match(ci, /container-smoke: scripts\/ci-container-smoke\.sh/);
   const smoke = readFileSync(new URL("../scripts/ci-container-smoke.sh", import.meta.url), "utf8");
   assert.match(smoke, /node scripts\/check-motion\.mjs --base http:\/\/localhost:3000/);
+});
+
+// /story's engine chapter shows a clip and keeps the flow in its fold (#2800). A closed <details> keeps the stage laid out
+// (it has client rects) but never renders it, so its animations do not run: the check read a frozen figure and failed the
+// container job of #659. The visitor opens the fold to see the flow; the check opens it the same way, and a stage that is
+// laid out but not rendered is not a visible one.
+const fold = (open) => {
+  const details = { open, summary: { click: () => (details.open = !details.open) } };
+  details.querySelector = (sel) => (sel === "summary" ? details.summary : null);
+  return details;
+};
+const flowIn = (details) => ({ closest: (sel) => (sel === "details" ? details : null) });
+const docOf = (flows) => ({ querySelectorAll: (sel) => (sel === ".kz-flow" ? flows : []) });
+
+test("a flow in a closed fold is opened from its summary, as a visitor would, before it is sampled", () => {
+  const closed = fold(false);
+  assert.equal(openFlowFolds(docOf([flowIn(closed)])), 1);
+  assert.equal(closed.open, true);
+  const open = fold(true);
+  assert.equal(
+    openFlowFolds(docOf([flowIn(open), flowIn(null)])),
+    0,
+    "an open fold and a flow outside any fold stay as they are",
+  );
+  assert.equal(open.open, true);
+});
+
+test("a stage that is laid out but not rendered (a closed fold) is not a visible stage", async () => {
+  const hidden = { getClientRects: () => [{}], checkVisibility: () => false, querySelectorAll: () => [] };
+  const doc = { querySelectorAll: (sel) => (sel === ".kz-flow-stage" ? [hidden] : []) };
+  assert.deepEqual(await sampleFlowInPage(doc), { error: "no visible EngineFlow stage" });
+});
+
+test("check-motion opens the flow's fold before it scrolls to it and samples it", () => {
+  const check = readFileSync(new URL("../scripts/check-motion.mjs", import.meta.url), "utf8");
+  const open = check.indexOf("page.evaluate(openFlowFolds)");
+  assert.ok(open > 0, "check-motion opens the folds in the page");
+  assert.ok(open < check.indexOf("scrollIntoViewIfNeeded") && open < check.indexOf("page.evaluate(sampleFlowInPage)"));
 });
