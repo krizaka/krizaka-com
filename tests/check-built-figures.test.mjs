@@ -16,7 +16,13 @@ test("a real figure, a decimal or a figure in a script is not a zero figure", ()
   assert.equal(visibleText("<b>a</b><!-- -->b"), " a b");
 });
 
-test("npm run build runs the figures check on the built pages", () => {
-  const build = JSON.parse(readFileSync(new URL("../package.json", import.meta.url), "utf8")).scripts.build;
-  assert.match(build, /node scripts\/check-built-figures\.mjs \.next\/server\/app/);
+test("npm run build runs the figures check on the built pages, in the built-output guard step", () => {
+  const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
+  assert.match(
+    JSON.parse(read("package.json")).scripts.build,
+    /node scripts\/check-code-names\.mjs \.next\/server\/app/,
+  );
+  const guard = read("scripts/check-code-names.mjs");
+  assert.match(guard, /import \{ figureReport \} from "\.\/check-built-figures\.mjs"/);
+  assert.match(guard, /figures\.lines\.length > 0 \? 1 : 0/);
 });

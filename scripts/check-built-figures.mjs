@@ -2,6 +2,7 @@
 /* The built-output guard of the public figures (krizaka-internal#2806): no page the site serves says « more than 0 » or
    « plus de 0 ». A figure is read at build and rounded down (lib/figure-floor.ts); when that gives 0 the page must say
    nothing, never a figure that makes it look broken. It reads the HTML Next.js prerendered, whatever produced the zero.
+   `npm run build` runs it through scripts/check-code-names.mjs, the one step that reads the built pages' words.
      node scripts/check-built-figures.mjs <dir>...   (exit 1 on a hit) */
 
 import { readdirSync, readFileSync, statSync } from "node:fs";
@@ -59,17 +60,23 @@ function* htmlFiles(path) {
   }
 }
 
+/** Every built page under `roots` and the zero figures it says: `{ pages, lines }`, one line per hit (`<file>: « … »`). */
+export function figureReport(roots) {
+  const pages = roots.flatMap((root) => [...htmlFiles(root)]);
+  const lines = pages.flatMap((file) =>
+    zeroFigures(readFileSync(file, "utf8")).map((phrase) => `${file}: « ${phrase} »`),
+  );
+  return { pages: pages.length, lines };
+}
+
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const roots = process.argv.slice(2);
   if (roots.length === 0) {
     console.error("usage: node scripts/check-built-figures.mjs <dir>...");
     process.exit(2);
   }
-  const pages = roots.flatMap((root) => [...htmlFiles(root)]);
-  const lines = pages.flatMap((file) =>
-    zeroFigures(readFileSync(file, "utf8")).map((phrase) => `${file}: « ${phrase} »`),
-  );
+  const { pages, lines } = figureReport(roots);
   lines.forEach((line) => console.error(line));
-  console.log(`figures check: ${pages.length} built page(s), ${lines.length} « more than 0 ».`);
+  console.log(`figures check: ${pages} built page(s), ${lines.length} « more than 0 ».`);
   process.exit(lines.length > 0 ? 1 : 0);
 }

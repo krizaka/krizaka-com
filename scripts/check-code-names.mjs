@@ -2,13 +2,15 @@
 /* The built-output guard: no retired code name in what the site serves (founder, 2026-11-06, krizaka-internal#2659).
    It is `krizaka-code-names` (bin of @krizaka/org) plus one narrow allow-list, scripts/code-names-allowed.json: an exact
    identifier that is a real published name (an npm package), each with its reason. A file or a page is never allowed as a
-   whole. The sources keep the plain bin (`npm run lint`: messages and content).
+   whole. The sources keep the plain bin (`npm run lint`: messages and content). The same step reads the built pages for
+   « more than 0 » (scripts/check-built-figures.mjs, krizaka-internal#2806): one pass over what the site serves.
      node scripts/check-code-names.mjs <file-or-dir>...   (exit 1 on a hit that is not allowed) */
 
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CODE_NAMES } from "@krizaka/org";
+import { figureReport } from "./check-built-figures.mjs";
 
 const ALLOWED = JSON.parse(readFileSync(new URL("./code-names-allowed.json", import.meta.url), "utf8")).tokens.map(
   (t) => t.value,
@@ -89,5 +91,8 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const lines = roots.flatMap((root) => [...files(root)].flatMap(reportOf));
   lines.forEach((line) => console.log(line));
   console.log(`${lines.length} retired code name(s) not allowed.`);
-  process.exit(lines.length > 0 ? 1 : 0);
+  const figures = figureReport(roots);
+  figures.lines.forEach((line) => console.log(line));
+  console.log(`figures check: ${figures.pages} built page(s), ${figures.lines.length} « more than 0 ».`);
+  process.exit(lines.length > 0 || figures.lines.length > 0 ? 1 : 0);
 }
