@@ -4,13 +4,14 @@
      node scripts/check-motion.mjs --base http://localhost:3000
    Exits 1 with one line per page, viewport, theme and preference that does not behave. */
 
-import { cases, motionProblems, sampleFlowInPage } from "./motion-lib.mjs";
+import { cases, motionProblems, openFlowFolds, sampleFlowInPage } from "./motion-lib.mjs";
 import { baseFromArgv, report, visitPages } from "./site-pages.mjs";
 
 const problems = await visitPages(
   baseFromArgv(),
   cases(),
   async (page, c) => {
+    await page.evaluate(openFlowFolds); // on /story the flow sits in the engine chapter's fold: open it, as a visitor does
     await page.locator(".kz-flow").first().scrollIntoViewIfNeeded();
     await page.waitForTimeout(2000); // the loops start ~1.2 s after load (html[data-motion])
     return motionProblems(c, await page.evaluate(sampleFlowInPage));
