@@ -6,7 +6,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { releaseLabel } from "../lib/changelog.ts";
+import { anchorOf, chipLabel, releaseLabel } from "../lib/changelog.ts";
 import { FILTER_IDS } from "../lib/changelog-filter.ts";
 
 const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -15,7 +15,8 @@ const root = path.join(path.dirname(fileURLToPath(import.meta.url)), "..");
 export function changelogProblems(html, { latest, siteVersion }) {
   const problems = [];
   if (!/<h1[^>]*>/.test(html)) problems.push("no h1");
-  if (latest && !html.includes(releaseLabel(latest)))
+  // The entry is its anchor; its chip says the part and the version under the heading (krizaka-internal#2814).
+  if (latest && !(html.includes(`id="${anchorOf(latest)}"`) && html.includes(chipLabel(latest))))
     problems.push(`the latest release (${releaseLabel(latest)}) is not on the page`);
   if (siteVersion && !html.includes(`id="${siteVersion}"`))
     problems.push(`no anchor #${siteVersion} for the site's version`);

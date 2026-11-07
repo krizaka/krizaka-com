@@ -236,8 +236,9 @@ test("the site's version is release-please's: package.json and the manifest agre
 
 test("the build check demands the latest release and the footer's anchor on the page", () => {
   const latest = { source: "@krizaka/ui", version: "3.22.0" };
-  const html = '<h1>What shipped</h1><a>@krizaka/ui 3.22.0</a><span id="0.1.0">x</span>';
+  const html = '<h1>What shipped</h1><li id="krizaka-ui-3-22-0"><a>3.22.0</a></li><span id="0.1.0">x</span>';
   assert.deepEqual(changelogProblems(html, { latest, siteVersion: "0.1.0" }), []);
+  assert.equal(changelogProblems(html.replace("krizaka-ui-3-22-0", "x"), { latest, siteVersion: "0.1.0" }).length, 1);
   assert.equal(changelogProblems(html.replace("3.22.0", "3.21.0"), { latest, siteVersion: "0.1.0" }).length, 1);
   assert.equal(changelogProblems(html.replace('id="0.1.0"', ""), { latest, siteVersion: "0.1.0" }).length, 1);
 });
@@ -391,4 +392,27 @@ test("a pull request is read from a markdown link or a bare address, and only fr
 test("the sitemap's date: a route without a page of its own still gets a date, the clock being the caller's", () => {
   const now = new Date("2026-11-06T12:00:00Z");
   assert.ok(lastModified("/no-such-page", now) instanceof Date);
+});
+
+/* krizaka-internal#2814: « Sovkora conversation-service 2026.11.04.2 » was wider than the date column and covered the change's
+   tag, and it repeated the product its heading already names. The chip says the part and the version; the anchor and the feed
+   keep the full label, so no link breaks; the chip may wrap inside its column. */
+test("a changelog chip never repeats its entry's heading, and the anchor keeps the full label", async () => {
+  const { chipLabel } = await import("../lib/changelog.ts");
+  const a = { source: "Sovkora", part: "conversation-service", version: "2026.11.04.2" };
+  assert.equal(chipLabel(a), "conversation-service 2026.11.04.2");
+  assert.equal(chipLabel({ source: "@krizaka/ui", version: "4.0.0" }), "4.0.0");
+  assert.equal(anchorOf(a), "sovkora-conversation-service-2026-11-04-2", "the anchor is unchanged");
+  const releases = JSON.parse(readFileSync(new URL("../lib/changelog.json", import.meta.url), "utf8")).releases ?? [];
+  for (const r of releases)
+    assert.ok(!chipLabel(r).includes(r.source), `${releaseLabel(r)}: the chip repeats « ${r.source} »`);
+  const page = readFileSync(new URL("../app/[locale]/changelog/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /\{chipLabel\(r\)\}/, "the page draws the chip label");
+  assert.match(page, /import "\.\/changelog\.css";/);
+  const css = readFileSync(new URL("../app/[locale]/changelog/changelog.css", import.meta.url), "utf8");
+  assert.match(
+    css,
+    /\.kz-tpl-log-when \.kz-fact\s*\{[^}]*max-width:\s*100%[^}]*white-space:\s*normal/s,
+    "the chip wraps inside its column",
+  );
 });
