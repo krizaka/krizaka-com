@@ -41,6 +41,7 @@ test("the Organization owns the products and the open-source sites, each publish
   assert.ok((sd.match(/publisher: \{ "@id": ORG_ID \}/g) ?? []).length >= 3);
 });
 
-test("every page has an Open Graph image", () => {
-  assert.match(read("app/[locale]/opengraph-image.tsx"), /ImageResponse/);
+test("every page has an Open Graph image (each page its own: tests/og-card.test.mjs)", () => {
+  assert.match(read("app/[locale]/opengraph-image.tsx"), /shareImage\(shareCardOf\("home", locale\)\)/);
+  assert.match(read("lib/og-card.tsx"), /new ImageResponse\(/);
 });

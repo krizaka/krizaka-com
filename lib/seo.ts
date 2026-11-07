@@ -49,14 +49,36 @@ export function localizedMetadata(
   opts: { path: string; en: LocalizedCopy; fr: LocalizedCopy },
 ): Metadata {
   const copy = normalize(locale) === "en" ? opts.en : opts.fr;
-  const meta: Metadata = {
+  return {
     // The layout appends " | Krizaka"; a title that already names the brand is left as is.
     title: /krizaka/i.test(copy.title) ? { absolute: copy.title } : copy.title,
     description: copy.description,
     alternates: buildAlternates(locale, opts.path),
+    ...shareMetadata(locale, opts.path, copy.og ?? copy),
   };
-  if (copy.og) {
-    meta.openGraph = { title: copy.og.title, description: copy.og.description };
-  }
-  return meta;
+}
+
+/**
+ * The page's own share card (founder, 2026-11-07, krizaka-internal#2833): its Open Graph and Twitter title and description,
+ * and an `og:url` that is its canonical. Every page sets them, so no page shares as the home; the image is the route's own
+ * `opengraph-image.tsx` (lib/og-card.tsx). A page's `openGraph` replaces the layout's, so the site's name and locale are here too.
+ */
+export function shareMetadata(
+  locale: string,
+  path: string,
+  copy: { title: string; description: string },
+): Pick<Metadata, "openGraph" | "twitter"> {
+  const loc = normalize(locale);
+  return {
+    openGraph: {
+      title: copy.title,
+      description: copy.description,
+      url: buildAlternates(loc, path).canonical as string,
+      siteName: "Krizaka",
+      type: "website",
+      locale: loc === "en" ? "en_US" : "fr_CA",
+      alternateLocale: loc === "en" ? "fr_CA" : "en_US",
+    },
+    twitter: { card: "summary_large_image", title: copy.title, description: copy.description },
+  };
 }

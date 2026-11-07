@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { auditHtml, auditRobots } from "../scripts/check-seo.mjs";
+import { auditHtml, auditRobots, shareCard, sharedCards, shareProblems } from "../scripts/check-seo.mjs";
 
 const page = (over = {}) => `<html><head><title>${over.title ?? "Sovkora | Krizaka"}</title>
 <meta name="description" content="${"A description long enough to be useful to a search engine and its readers. ".repeat(1)}"/>
@@ -8,6 +8,7 @@ const page = (over = {}) => `<html><head><title>${over.title ?? "Sovkora | Kriza
 <link rel="alternate" hrefLang="fr-CA" href="https://www.krizaka.com/fr/products"/>
 <link rel="alternate" hrefLang="en" href="https://www.krizaka.com/en/products"/>
 <link rel="alternate" hrefLang="x-default" href="https://www.krizaka.com/fr/products"/>
+${over.share ?? '<meta property="og:title" content="Sovkora"/><meta property="og:url" content="https://www.krizaka.com/en/products"/><meta property="og:image" content="https://www.krizaka.com/en/products/opengraph-image?x"/><meta name="twitter:image" content="https://www.krizaka.com/en/products/opengraph-image?x"/>'}
 <script type="application/ld+json">${over.ld ?? '{"@context":"https://schema.org","@type":"FAQPage"}'}</script></head><body></body></html>`;
 
 test("a well-formed product page has no problem", () => {
@@ -40,4 +41,31 @@ test("robots.txt must welcome the AI crawlers", () => {
       .join("\n") + "Sitemap: https://www.krizaka.com/sitemap.xml";
   assert.deepEqual(auditRobots(ok), []);
   assert.ok(auditRobots("User-Agent: *\nAllow: /").length > 1);
+});
+
+/* krizaka-internal#2833: every page shared the home's og:title, og:url and image. Each page's card is its own now. */
+test("a page without its own share card, or whose og:url is not its canonical, is refused", () => {
+  const none = auditHtml(page({ share: "" }), "/en/products");
+  for (const tag of ["og:title", "og:image", "twitter:image"]) assert.ok(none.includes(`no ${tag}`), tag);
+  const home =
+    '<meta property="og:title" content="Krizaka"/><meta property="og:url" content="https://www.krizaka.com"/><meta property="og:image" content="https://www.krizaka.com/en/opengraph-image"/><meta name="twitter:image" content="x"/>';
+  assert.ok(shareProblems(home, "https://www.krizaka.com/en/products")[0].includes("is not the canonical"));
+  assert.equal(shareCard(page()).title, "Sovkora");
+});
+
+test("two pages of one language never share an og:title or an og:image; the other language may", () => {
+  const card = (title, image) => ({ title, image });
+  assert.deepEqual(
+    sharedCards([
+      ["/en", card("A", "i1")],
+      ["/fr", card("A", "i1")],
+      ["/en/docs", card("B", "i2")],
+    ]),
+    [],
+  );
+  const shared = sharedCards([
+    ["/en", card("A", "i1")],
+    ["/en/docs", card("A", "i1")],
+  ]);
+  assert.deepEqual(shared, ["/en/docs shares its og:title with /en", "/en/docs shares its og:image with /en"]);
 });
