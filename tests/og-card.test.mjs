@@ -51,6 +51,6 @@ test("the card is the Cahier: the tokens' paper and ink, the fonts' faces, no gr
 test("every page sets its own share title and an og:url that is its canonical", () => {
   const seo = read("lib/seo.ts");
   assert.match(seo, /\.\.\.shareMetadata\(locale, opts\.path, copy\.og \?\? copy\)/, "localizedMetadata always shares");
-  for (const f of ["privacy", "terms", "films/[id]", "open-source/[block]"])
+  for (const f of ["privacy", "terms", "changelog", "films/[id]", "open-source/[block]"])
     assert.match(read(`app/[locale]/${f}/page.tsx`), /shareMetadata\(/, f);
 });
