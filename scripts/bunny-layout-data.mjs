@@ -208,7 +208,7 @@ export const SWITCH_ISSUES = [
   [Object.keys(LEGACY_PRODUCT).flatMap((code) => [`sites/${code}/`, `apps/${code}/`]), "krizaka/krizaka-internal#2659"],
   [siteFolders("akinaza"), "krizaka/folioviv#493"],
   [siteFolders("yomizaka"), "krizaka/verikora#494"],
-  [siteFolders("orazaka"), "krizaka/sovkora-web#320"],
+  [siteFolders("orazaka"), "krizaka/krizaka-internal#1274"],
   [["site/people/ui/", "ui/", "maps/", "brand/", "site/brand-films/", "people/personas/ui/"], "krizaka/krizaka-ui#817"],
   [["defaults/", "people/defaults/"], "krizaka/krizaka-ts#200"],
   [["site/", "discovery/"], "krizaka/krizaka-com#450"],

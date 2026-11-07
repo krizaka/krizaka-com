@@ -40,228 +40,168 @@
   ],
   "repositories": [
     {
-      "name": "krizaka-build",
-      "url": "https://github.com/krizaka/krizaka-build",
-      "path": "krizaka/krizaka-build",
+      "name": "krizaka-java",
+      "url": "https://github.com/krizaka/krizaka-java",
+      "path": ".krizaka-java",
       "kind": "maven",
       "layer": "krizaka",
-      "description": "Parent POM (Maven Central metadata, Java 21 build conventions, signed release) and BOM of every Krizaka JVM artifact (com.krizaka).",
+      "description": "The Krizaka Java building blocks (com.krizaka on Maven Central).",
       "dependsOn": []
     },
     {
-      "name": "krizaka-platform-kit",
-      "url": "https://github.com/krizaka/krizaka-platform-kit",
-      "path": "krizaka/krizaka-platform-kit",
-      "kind": "maven",
-      "layer": "krizaka",
-      "description": "Cross-cutting building blocks for Spring Boot services: stateless JWT security with one baseline, service-to-service tokens, idempotent message consumption and a transactional outbox relay.",
-      "dependsOn": [
-        "krizaka-build"
-      ]
-    },
-    {
-      "name": "krizaka-users",
-      "url": "https://github.com/krizaka/krizaka-users",
-      "path": "krizaka/krizaka-users",
-      "kind": "maven",
-      "layer": "krizaka",
-      "description": "Reusable user management for any application: registration, e-mail verification, login (password + Google/GitHub OAuth), forgot/reset password, profile & preferences, API keys, RBAC and JWT issuance — with its contract (krizaka-users-api) and HTTP client (krizaka-users-client).",
-      "dependsOn": [
-        "krizaka-build",
-        "krizaka-platform-kit"
-      ]
-    },
-    {
-      "name": "krizaka-notifications",
-      "url": "https://github.com/krizaka/krizaka-notifications",
-      "path": "krizaka/krizaka-notifications",
-      "kind": "maven",
-      "layer": "krizaka",
-      "description": "Channel-based notification delivery for any application: e-mail (SMTP), SMS (Twilio) and webhooks behind one DeliveryClient port, driven by platform events (user registered, password reset) or explicit notification requests over AMQP.",
-      "dependsOn": [
-        "krizaka-build",
-        "krizaka-platform-kit"
-      ]
-    },
-    {
-      "name": "krizaka-billing",
-      "url": "https://github.com/krizaka/krizaka-billing",
-      "path": "krizaka/krizaka-billing",
-      "kind": "maven",
-      "layer": "krizaka",
-      "description": "Credits, wallets, plans, subscriptions, a price book and metering (hold → settle → release) as a reusable billing service, with its contract (krizaka-billing-api) and a typed HTTP client (krizaka-billing-client).",
-      "dependsOn": [
-        "krizaka-build",
-        "krizaka-platform-kit"
-      ]
-    },
-    {
-      "name": "sovkora-build",
-      "url": "https://github.com/krizaka/sovkora-build",
-      "path": "sovkora-libs/sovkora-build",
+      "name": "build",
+      "url": "https://github.com/krizaka/sovkora/tree/main/build",
+      "path": "build",
       "kind": "maven",
       "layer": "foundation",
-      "description": "Parent POM (Spring Boot / Spring AI BOMs, plugin management, Sovkora BOM) and the shared governance test kit (ArchUnit rules, Testcontainers base) for every Sovkora JVM repository.",
-      "dependsOn": [
-        "krizaka-build"
-      ]
+      "description": "The parent POM sovkora-parent (krizaka-parent from Maven Central, the Spring Boot / Spring AI BOMs, the Sovkora BOM, the ADR-029 naming guards) and the shared governance test kit (ArchUnit rules, Testcontainers base).",
+      "dependsOn": []
     },
     {
-      "name": "sovkora-contracts",
-      "url": "https://github.com/krizaka/sovkora-contracts",
-      "path": "sovkora-libs/sovkora-contracts",
+      "name": "contracts",
+      "url": "https://github.com/krizaka/sovkora/tree/main/contracts",
+      "path": "contracts",
       "kind": "maven",
       "layer": "foundation",
-      "description": "Tier-1 platform contracts shared by every Sovkora service: the job plane (jobs-api) and the application-persistence ports (persistence-app-api). Pure interfaces and records, zero implementation.",
+      "description": "Tier-1 platform contracts shared by every Sovkora service: the job plane (sovkora-jobs-api), the application-persistence ports (sovkora-persistence-api) and the secret sealing (sovkora-crypto). Pure interfaces and records.",
       "dependsOn": [
-        "sovkora-build"
+        "build"
       ]
     },
     {
-      "name": "sovkora-studio-service",
-      "url": "https://github.com/krizaka/sovkora-studio-service",
-      "path": "sovkora-apps/services/sovkora-studio-service",
+      "name": "studio",
+      "url": "https://github.com/krizaka/sovkora/tree/main/services/studio",
+      "path": "services/studio",
       "kind": "maven",
       "layer": "ai",
       "description": "Studio & pack marketplace: pack catalogue, studio blueprints, installations and saga-driven runs, with its contract (studio-api) and HTTP client (studio-client).",
       "dependsOn": [
-        "sovkora-build",
-        "sovkora-contracts",
-        "krizaka-billing"
+        "build",
+        "contracts"
       ]
     },
     {
-      "name": "sovkora-engine",
-      "url": "https://github.com/krizaka/sovkora-engine",
-      "path": "sovkora-libs/sovkora-engine",
+      "name": "engine",
+      "url": "https://github.com/krizaka/sovkora/tree/main/engine",
+      "path": "engine",
       "kind": "maven",
       "layer": "ai",
-      "description": "The Sovkora cognitive SDK: AiClient & provider mesh (core), the interceptor pipeline, tools (MCP · RAG · sandbox), use-case orchestration (business), application persistence and asset encryption.",
+      "description": "The Sovkora cognitive SDK: AiClient & provider mesh (core), the interceptor pipeline, tools (MCP · RAG · sandbox), use-case orchestration (business), application persistence and asset encryption, as sovkora-engine-* modules.",
       "dependsOn": [
-        "sovkora-build",
-        "sovkora-contracts",
-        "krizaka-billing",
-        "sovkora-studio-service"
+        "build",
+        "contracts",
+        "studio"
       ]
     },
     {
-      "name": "sovkora-conversation-service",
-      "url": "https://github.com/krizaka/sovkora-conversation-service",
-      "path": "sovkora-apps/services/sovkora-conversation-service",
+      "name": "conversation",
+      "url": "https://github.com/krizaka/sovkora/tree/main/services/conversation/sovkora-conversation-service",
+      "path": "services/conversation/sovkora-conversation-service",
       "kind": "maven",
       "layer": "ai",
       "description": "Interactive ingress of the Sovkora engine: chat (SSE streaming), intents, models, pipeline, MCP and job APIs — translates transport into Intentions, never business logic.",
       "dependsOn": [
-        "sovkora-build",
-        "sovkora-contracts",
-        "krizaka-users",
-        "krizaka-billing",
-        "sovkora-engine"
+        "build",
+        "contracts",
+        "engine"
       ]
     },
     {
-      "name": "sovkora-job-service",
-      "url": "https://github.com/krizaka/sovkora-job-service",
-      "path": "sovkora-apps/services/sovkora-job-service",
+      "name": "job",
+      "url": "https://github.com/krizaka/sovkora/tree/main/services/job/sovkora-job-service",
+      "path": "services/job/sovkora-job-service",
       "kind": "maven",
       "layer": "ai",
       "description": "Asynchronous job executor of the Sovkora engine: drains the interactive and batch lanes, owns the capability registry and the worker registry.",
       "dependsOn": [
-        "sovkora-build",
-        "sovkora-contracts",
-        "krizaka-users",
-        "krizaka-billing",
-        "sovkora-engine"
+        "build",
+        "contracts",
+        "engine"
       ]
     },
     {
-      "name": "sovkora-knowledge-service",
-      "url": "https://github.com/krizaka/sovkora-knowledge-service",
-      "path": "sovkora-apps/services/sovkora-knowledge-service",
+      "name": "knowledge",
+      "url": "https://github.com/krizaka/sovkora/tree/main/services/knowledge/sovkora-knowledge-service",
+      "path": "services/knowledge/sovkora-knowledge-service",
       "kind": "maven",
       "layer": "ai",
       "description": "Knowledge & RAG retrieval service (pgvector) with asynchronous indexing.",
       "dependsOn": [
-        "sovkora-build"
+        "build"
       ]
     },
     {
-      "name": "sovkora-automation-service",
-      "url": "https://github.com/krizaka/sovkora-automation-service",
-      "path": "sovkora-apps/services/sovkora-automation-service",
+      "name": "automation",
+      "url": "https://github.com/krizaka/sovkora/tree/main/services/automation/sovkora-automation-service",
+      "path": "services/automation/sovkora-automation-service",
       "kind": "maven",
       "layer": "ai",
       "description": "Connector automation (Jira, Slack, WhatsApp, Messenger, CLI agents) with Quartz scheduling and execution telemetry.",
       "dependsOn": [
-        "sovkora-build",
-        "krizaka-billing",
-        "sovkora-engine"
+        "build",
+        "engine"
       ]
     },
     {
-      "name": "sovkora-edge-service",
-      "url": "https://github.com/krizaka/sovkora-edge-service",
-      "path": "sovkora-apps/services/sovkora-edge-service",
+      "name": "edge",
+      "url": "https://github.com/krizaka/sovkora/tree/main/services/edge/sovkora-edge-service",
+      "path": "services/edge/sovkora-edge-service",
       "kind": "maven",
       "layer": "foundation",
       "description": "Transparent HTTP edge in front of every Sovkora service: routing, API-key → JWT exchange, CORS and tracing. Spring MVC + virtual threads.",
       "dependsOn": [
-        "sovkora-build"
+        "build"
       ]
     },
     {
-      "name": "sovkora-worker-media",
-      "url": "https://github.com/krizaka/sovkora-worker-media",
-      "path": "sovkora-apps/workers/sovkora-worker-media",
+      "name": "worker-media",
+      "url": "https://github.com/krizaka/sovkora/tree/main/workers/media",
+      "path": "workers/media",
       "kind": "python",
       "layer": "worker",
       "description": "Native (Metal) Python worker for image/video generation and media composition, speaking the Sovkora AMQP worker protocol.",
       "dependsOn": []
     },
     {
-      "name": "sovkora-ui-kit",
-      "url": "https://github.com/krizaka/sovkora-ui-kit",
-      "path": "sovkora-apps/ui/sovkora-ui-kit",
-      "kind": "npm",
-      "layer": "foundation",
-      "description": "@krizaka/orazaka-shared (TypeScript types, Zod schemas, design tokens) and @krizaka/orazaka-design-system (React components, Tailwind preset, theme, icon registry) for Next.js and React Native apps.",
-      "dependsOn": []
-    },
-    {
-      "name": "sovkora-web",
-      "url": "https://github.com/krizaka/sovkora-web",
-      "path": "sovkora-apps/ui/sovkora-web",
-      "kind": "npm",
+      "name": "web",
+      "url": "https://github.com/krizaka/sovkora/tree/main/apps/web",
+      "path": "apps/web",
+      "kind": "pnpm",
       "layer": "app",
       "description": "Next.js (App Router) client of the Sovkora platform with its mandatory BFF.",
-      "dependsOn": [
-        "sovkora-ui-kit"
-      ]
-    },
-    {
-      "name": "sovkora-mobile",
-      "url": "https://github.com/krizaka/sovkora-mobile",
-      "path": "sovkora-apps/ui/sovkora-mobile",
-      "kind": "npm",
-      "layer": "app",
-      "description": "Expo / React Native client of the Sovkora platform (talks to the edge with Bearer tokens).",
-      "dependsOn": [
-        "sovkora-ui-kit"
-      ]
-    },
-    {
-      "name": "sovkora-cli",
-      "url": "https://github.com/krizaka/sovkora-cli",
-      "path": "sovkora-apps/ui/sovkora-cli",
-      "kind": "npm",
-      "layer": "app",
-      "description": "The `sovkora` developer CLI: install, start, dev, test, docs and pack tooling for the Sovkora workspace, with an offline SQLite queue.",
       "dependsOn": []
     },
     {
-      "name": "sovkora-packs",
-      "url": "https://github.com/krizaka/sovkora-packs",
-      "path": "sovkora-packs",
+      "name": "mobile",
+      "url": "https://github.com/krizaka/sovkora/tree/main/apps/mobile",
+      "path": "apps/mobile",
+      "kind": "pnpm",
+      "layer": "app",
+      "description": "Expo / React Native client of the Sovkora platform (talks to the edge with Bearer tokens).",
+      "dependsOn": []
+    },
+    {
+      "name": "cli",
+      "url": "https://github.com/krizaka/sovkora/tree/main/apps/cli",
+      "path": "apps/cli",
+      "kind": "pnpm",
+      "layer": "app",
+      "description": "The developer CLI: install, start, dev, test, docs and pack tooling for the local Sovkora stack, with an offline SQLite queue.",
+      "dependsOn": []
+    },
+    {
+      "name": "desktop",
+      "url": "https://github.com/krizaka/sovkora/tree/main/apps/desktop",
+      "path": "apps/desktop",
+      "kind": "pnpm",
+      "layer": "app",
+      "description": "The Sovkora desktop app (Tauri 2, Rust and React): the local runtime, the code workspace and the Mac engines, one signed app.",
+      "dependsOn": []
+    },
+    {
+      "name": "packs",
+      "url": "https://github.com/krizaka/sovkora/tree/main/packs",
+      "path": "packs",
       "kind": "packs",
       "layer": "content",
       "description": "Reference packs for the Sovkora Studio marketplace (document validation, media, prospection, real-estate, wellbeing…) and the pack manifest schema.",

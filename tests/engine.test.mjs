@@ -180,7 +180,7 @@ test("the engine's figure is the Lab's: the hub with everything around it — th
 });
 
 // Founder, 2026-11-06 (krizaka-internal#2765): the engine's fold names what it gives, the packs included — installed from
-// Sovkora's studio (krizaka/sovkora-studio-service), the packs in krizaka/sovkora-packs. Four items, each with a name and a
+// Sovkora's studio (krizaka/sovkora services/studio), the packs in krizaka/sovkora packs/. Four items, each with a name and a
 // line in both languages, in the order the component draws them.
 test("the engine's fold gives models, pipeline, packs and analytics, each named and explained in both languages", () => {
   const home = read("app/components/home/ProductShowcase.tsx");

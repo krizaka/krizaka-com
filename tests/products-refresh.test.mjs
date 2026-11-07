@@ -52,7 +52,7 @@ test("no product package in the open-source packages", () => {
     },
     npmMeta: {
       "@krizaka/ui": { repository: "https://github.com/krizaka/krizaka-ui" },
-      "@krizaka/orazaka-cli": { repository: "https://github.com/krizaka/sovkora-cli" },
+      "@krizaka/orazaka-cli": { repository: "https://github.com/krizaka/sovkora" },
       "@krizaka/orazaka-shared": { repository: "https://github.com/krizaka/sovkora-ui-kit" },
       "@krizaka/orazaka-client": { repository: "https://github.com/krizaka/krizaka-ts" },
     },

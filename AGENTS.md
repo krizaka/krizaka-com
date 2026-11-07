@@ -3,9 +3,9 @@
 > Governance contract for **`krizaka-com`**, the public Next.js site of the company Krizaka: a lightweight
 > showcase — Krizaka UI, Krizaka Java, the story, open source, and one page that points to each product's own site.
 > This file is the single source of truth for how the site is built and themed.
-> The product engine has its **own** contract at `products/sovkora/AGENTS.md` (the Sovkora
-> workspace, [`krizaka/sovkora`](https://github.com/krizaka/sovkora), one repository per component) —
-> do not mix the two.
+> The product engine has its **own** contract, the
+> [`AGENTS.md` of `krizaka/sovkora`](https://github.com/krizaka/sovkora/blob/main/AGENTS.md) (one repository since
+> ADR-029: its services, engine, clients, workers and packs are folders) — do not mix the two.
 
 ---
 

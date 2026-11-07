@@ -27,27 +27,30 @@ const SOVKORA_GROUP: Record<string, string> = {
 
 /** Every public repository of the organisation, from the generated product data. */
 export function orgRepositories(): OrgRepository[] {
-  // The workspace manifest lists the Krizaka building blocks it is built on (layer "krizaka"): they belong to the
-  // organisation, not to Sovkora.
+  // The module list names the Krizaka building blocks Sovkora is built on (layer "krizaka"): they belong to the
+  // organisation, not to Sovkora. Sovkora's own modules are folders of krizaka/sovkora (ADR-029: a `/tree/` URL), counted
+  // once as that repository below, never as repositories of their own.
   const oz = (
     (sovkora as { repositories?: { name: string; url: string; description: string; layer: string }[] }).repositories ??
     []
-  ).map((r): OrgRepository =>
-    r.layer === "krizaka"
-      ? { name: r.name, url: r.url, description: r.description, product: "krizaka", group: "domain" }
-      : {
-          name: r.name,
-          url: r.url,
-          description: r.description,
-          product: "sovkora",
-          group: SOVKORA_GROUP[r.layer] ?? "apps",
-        },
-  );
+  )
+    .filter((r) => !r.url.includes("/tree/"))
+    .map((r): OrgRepository =>
+      r.layer === "krizaka"
+        ? { name: r.name, url: r.url, description: r.description, product: "krizaka", group: "domain" }
+        : {
+            name: r.name,
+            url: r.url,
+            description: r.description,
+            product: "sovkora",
+            group: SOVKORA_GROUP[r.layer] ?? "apps",
+          },
+    );
   const workspace: OrgRepository = {
     name: "sovkora",
     url: "https://github.com/krizaka/sovkora",
     description:
-      "Sovkora platform workspace: governance contract, workspace manifest, local infrastructure, end-to-end tests and architecture docs. Clones and builds every Sovkora repository.",
+      "Sovkora, one repository: the services, the engine, the web, mobile, Mac and command-line clients, the media worker, the packs, the local infrastructure and the docs.",
     product: "sovkora",
     group: "workspace",
   };
