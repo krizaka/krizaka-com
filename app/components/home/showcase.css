@@ -30,8 +30,8 @@
   display: block;
 }
 
-/* The progress: one hairline per slide at the foot of the plate; the current one fills over its time on screen, and
-   stops with the carousel. Decorative: the counter says where we are. */
+/* The progress: one hairline per slide at the foot of the plate; the current one fills over its time on screen (a still
+   slide's dwell, a clip's own length), and stops with the carousel. Decorative: the counter says where we are. */
 .kz-show-ticks {
   position: absolute;
   inset: auto 12px 10px;
@@ -59,8 +59,30 @@
   transform-origin: left;
   transform: scaleX(0);
 }
-.kz-show[data-advancing] .kz-show-ticks li span {
+.kz-show[data-clock="dwell"] .kz-show-ticks li span {
   animation: kz-show-fill 6500ms linear forwards;
+}
+/* A clip's tick follows the clip (its time updates, a few a second; no animation frame of our own). */
+.kz-show-ticks li span[data-progress] {
+  transform: scaleX(var(--kz-show-progress, 0));
+  transition: transform 250ms linear;
+}
+
+/* A film's sound: a quiet button in the plate's corner, above the ticks, off by default (krizaka-internal#2837). */
+.kz-show-sound {
+  position: absolute;
+  right: 12px;
+  bottom: 22px;
+  z-index: 1;
+}
+/* Reduced motion: the poster and a play button in the middle of the plate; nothing starts by itself. */
+.kz-show-play {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: max-content;
+  height: max-content;
+  margin: auto;
 }
 
 @keyframes kz-show-fill {
@@ -96,6 +118,11 @@
 .kz-show-text p {
   margin: 8px 0 0;
 }
+.kz-show-text .kz-show-transcript {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  list-style: decimal;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .kz-show-slide {
@@ -103,6 +130,7 @@
   }
   .kz-show-ticks li span {
     animation: none;
+    transition: none;
   }
 }
 

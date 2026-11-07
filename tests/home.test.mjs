@@ -150,7 +150,7 @@ test("the old home — the product showcase, the kit gallery, the rotating title
     const m = messages(lang).site;
     assert.deepEqual(
       Object.keys(m.home),
-      ["hero", "engine", "products", "stack", "services", "direction", "principles", "visuals", "showcase"],
+      ["hero", "engine", "products", "stack", "services", "direction", "principles", "visuals", "showcase", "films"],
       `${lang}: site.home`,
     );
     assert.equal(m.expertise, undefined, `${lang}: site.expertise`);

@@ -3,9 +3,12 @@ import assert from "node:assert/strict";
 import { findCodeNames } from "@krizaka/org";
 import { readFileSync } from "node:fs";
 import {
+  FILM_IDS,
+  PHONE_CUT,
   PRODUCT_SHOWCASES,
   SHOWCASES,
   STILLS,
+  SlideSource,
   showcaseOf,
   showcaseProblems,
   showcaseSlides,
@@ -25,7 +28,7 @@ const has = (path) => Boolean(manifest.files[path]);
 const board = JSON.parse(read("content/films/home-showcase.json"));
 const carousel = read("app/components/home/ShowcaseCarousel.tsx");
 
-test("every slide of every carousel has its 16:9 rendition on the CDN (mp4, webm, poster), and at least three slides", () => {
+test("every slide of every carousel has its files on the CDN (videos and poster), and at least three slides", () => {
   assert.deepEqual([...SHOWCASES], ["hero", "verikora", "sovkora", "folioviv"]);
   assert.deepEqual(showcaseProblems(has), []);
 });
@@ -33,10 +36,59 @@ test("every slide of every carousel has its 16:9 rendition on the CDN (mp4, webm
 test("a slide missing a file, or a carousel with too few slides, is refused", () => {
   const problems = showcaseProblems((path) => has(path) && !path.startsWith("home/showcase/sovkora/tea-wide"));
   assert.deepEqual(problems, [
-    "sovkora/tea: home/showcase/sovkora/tea-wide.mp4 is not in the CDN manifest",
     "sovkora/tea: home/showcase/sovkora/tea-wide.webm is not in the CDN manifest",
+    "sovkora/tea: home/showcase/sovkora/tea-wide.mp4 is not in the CDN manifest",
     "sovkora/tea: home/showcase/sovkora/tea-wide.jpg is not in the CDN manifest",
   ]);
+  const film = showcaseProblems((path) => has(path) && path !== "products/sovkora/films/trailer-720.mp4");
+  assert.deepEqual(film, [
+    "hero/trailer: products/sovkora/films/trailer-720.mp4 is not in the CDN manifest",
+    "sovkora/trailer: products/sovkora/films/trailer-720.mp4 is not in the CDN manifest",
+  ]);
+});
+
+// The founder's Sovkora trailer (krizaka-internal#2837, 2026-11-07: « elle doit être sur krizaka.com comme hero, la
+// première » and « le hero de Sovkora dans la page d'accueil dans son carrousel »): the first slide of both, with its sound.
+test("the Sovkora trailer opens the hero's carousel and Sovkora's, whole, with its sound, a phone cut and its poster", () => {
+  assert.deepEqual(FILM_IDS, ["trailer"]);
+  for (const c of ["hero", "sovkora"]) {
+    const [first] = showcaseSlides(c);
+    assert.equal(first.id, "trailer", `${c} opens on the trailer`);
+    assert.equal(first.source, SlideSource.Film);
+    assert.equal(first.audio, true, "the film keeps its music");
+    assert.equal(first.poster, "products/sovkora/films/trailer-poster.webp", "the poster first");
+    assert.deepEqual(first.videos, [
+      { path: "products/sovkora/films/trailer-720.mp4", type: "video/mp4", media: PHONE_CUT },
+      { path: "products/sovkora/films/trailer.mp4", type: "video/mp4" },
+    ]);
+  }
+  assert.equal(PHONE_CUT, "(max-width: 767px)");
+  for (const c of ["verikora", "folioviv"])
+    assert.ok(
+      showcaseSlides(c).every((s) => s.source !== SlideSource.Film),
+      c,
+    );
+});
+
+test("the trailer's words: caption, alt and a transcript of its titles, from the film, in both languages", () => {
+  const en = messages("en").site.home.films.trailer;
+  const fr = messages("fr").site.home.films.trailer;
+  for (const [l, w] of [
+    ["en", en],
+    ["fr", fr],
+  ]) {
+    assert.ok(w.caption.includes("Sovkora"), `${l}: caption`);
+    assert.ok(w.alt.length > 80 && /1 min 51/.test(w.alt), `${l}: the alt says what it shows and how long`);
+    assert.ok(w.transcript.lead.trim(), `${l}: transcript lead`);
+    assert.deepEqual(findCodeNames(JSON.stringify(w)), [], `${l}: commercial names only`);
+  }
+  assert.equal(en.transcript.lines.length, fr.transcript.lines.length, "one line per title, in each language");
+  assert.equal(en.transcript.lines[0], "Every day, your data leaves.");
+  assert.equal(fr.transcript.lines[0], "Chaque jour, vos données partent.");
+  assert.match(fr.transcript.lines.at(-1), /^Sovkora, l'IA qui reste chez vous\./);
+  for (const l of ["en", "fr"]) assert.ok(messages(l).site.home.showcase.sources.film.trim(), `${l}: sources.film`);
+  const showcase = read("app/components/home/Showcase.tsx");
+  assert.match(showcase, /films\[s\.id\]\.transcript/, "the transcript is in the server's text version");
 });
 
 // A product in conception has no carousel: one still (founder, 2026-11-06, krizaka-internal#2802), a mood photo made locally
@@ -98,7 +150,13 @@ test("the storyboard is coherent: one take per shot, an idea and a prompt each, 
   for (const c of SHOWCASES) {
     const slides = showcaseSlides(c);
     assert.ok(slides.length >= 3, c);
-    for (const s of slides) assert.match(s.wide, new RegExp(`^home/showcase/${c}/${s.id}-wide$`));
+    for (const s of slides.filter((x) => x.source !== SlideSource.Film)) {
+      assert.equal(s.poster, `home/showcase/${c}/${s.id}-wide.jpg`);
+      assert.deepEqual(
+        s.videos.map((v) => v.path),
+        [`home/showcase/${c}/${s.id}-wide.webm`, `home/showcase/${c}/${s.id}-wide.mp4`],
+      );
+    }
   }
   assert.ok(shotsOf(board).length > 0 && clipsOf(board).length > 0);
   assert.deepEqual(findCodeNames(read("content/films/home-showcase.json")), [], "commercial names only");
@@ -115,38 +173,43 @@ test("every slide has its caption and its text alternative in both languages, an
     const s = messages(l).site.home.showcase;
     for (const c of SHOWCASES) {
       assert.ok(s.carousels[c]?.trim(), `${l}: carousels.${c}`);
-      const ids = showcaseSlides(c).map((x) => x.id);
+      const ids = showcaseSlides(c)
+        .filter((x) => x.source !== SlideSource.Film)
+        .map((x) => x.id);
       assert.deepEqual(Object.keys(s.slides[c]).sort(), [...ids].sort(), `${l}: ${c}`);
       for (const id of ids) {
         assert.ok(s.slides[c][id].caption.trim(), `${l}: ${c}/${id} caption`);
         assert.ok(s.slides[c][id].alt.length > 30, `${l}: ${c}/${id} says what it shows`);
       }
     }
-    for (const k of ["pause", "play", "previous", "next", "textVersion", "slideOf", "figure"])
+    for (const k of ["pause", "play", "previous", "next", "textVersion", "slideOf", "figure", "sound", "playVideo"])
       assert.ok(s.labels[k]?.trim(), `${l}: labels.${k}`);
-    for (const k of ["reel", "clip", "library"]) assert.ok(s.sources[k]?.trim(), `${l}: sources.${k}`);
+    for (const k of Object.values(SlideSource)) assert.ok(s.sources[k]?.trim(), `${l}: sources.${k}`);
     assert.doesNotMatch(JSON.stringify(s), /\d+[,.]?\d*\s?\$|\$\s?\d/, `${l}: no amount`);
   }
 });
 
-test("it advances on its own, with WCAG 2.2.2's controls: pause / play, paused on hover, focus and off screen", () => {
-  assert.match(carousel, /const advancing = !still && !stopped && !hovered && !focused && onScreen && total > 1;/);
-  assert.match(carousel, /globalThis\.setTimeout\(\(\) => \{\s*const next = \(active \+ 1\) % total;/);
-  assert.match(carousel, /\}, DWELL_MS\);/);
-  assert.match(carousel, /onPointerEnter=\{\(\) => setHovered\(true\)\}/);
-  assert.match(carousel, /onFocus=\{\(\) => setFocused\(true\)\}/);
+// The rules themselves (a clip's end moves it on, hover and focus hold it, sound after a click, reduced motion) are pure
+// and tested in tests/showcase-player.test.mjs; here, that the carousel is wired to them.
+test("it moves on by itself, with WCAG 2.2.2's controls: pause / play, held on hover, focus and off screen", () => {
+  assert.match(carousel, /stepPlayer\(s, e, env\)/, "every event goes through the tested player");
+  assert.match(carousel, /globalThis\.setTimeout\(\(\) => dispatch\(\{ type: "dwell" \}\), DWELL_MS\)/);
+  assert.match(carousel, /if \(view\.clock !== "dwell"\) \{\s*return;/, "the timer only for a still slide");
+  assert.match(carousel, /onPointerEnter=\{\(\) => dispatch\(\{ type: "hover", on: true \}\)\}/);
+  assert.match(carousel, /onFocus=\{\(\) => dispatch\(\{ type: "focus", on: true \}\)\}/);
   assert.match(carousel, /IntersectionObserver/);
-  assert.match(carousel, /label=\{stopped \? w\.play : w\.pause\}/, "a visible pause / play, named");
+  assert.match(carousel, /label=\{state\.stopped \? w\.play : w\.pause\}/, "a visible pause / play, named");
   assert.match(carousel, /aria-roledescription=\{w\.carousel\}/);
-  assert.match(carousel, /aria-live=\{advancing \? "off" : "polite"\}/, "the counter is announced only while still");
+  assert.match(carousel, /aria-live=\{moving \? "off" : "polite"\}/, "the counter is announced only while still");
   assert.match(carousel, /e\.key === "ArrowRight"/, "the arrow keys turn it");
   assert.doesNotMatch(carousel, /setInterval|requestAnimationFrame/);
 });
 
-test("still under reduced motion or Save-Data: no timer, no clip, no pause button, no fade", () => {
+test("still under reduced motion or Save-Data: no timer, no clip by itself, a play button, no fade", () => {
   assert.match(carousel, /prefersStill\(globalThis\)/);
-  assert.match(carousel, /\{!still && \(/, "no pause / play when nothing moves");
-  assert.match(carousel, /here && loaded && !still && <Clip/);
+  assert.match(carousel, /\{view\.pauseControl && \(/, "no pause / play when nothing moves");
+  assert.match(carousel, /\{view\.playButton && \(/, "a play button on a video slide");
+  assert.match(carousel, /here && view\.clip && \(/);
   const css = read("app/components/home/showcase.css").replace(/\/\*[\s\S]*?\*\//g, "");
   const calm = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce)"));
   assert.match(calm, /\.kz-show-slide \{\s*transition: none;/);
@@ -154,14 +217,17 @@ test("still under reduced motion or Save-Data: no timer, no clip, no pause butto
   assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b|rgb\(|hsl\(|blur\(|translate/, "tokens only, nothing travels");
 });
 
-test("one 16:9 rendition on every screen, never the tall one: poster first, the h1 stays the LCP", () => {
+test("one 16:9 rendition on every screen, never the tall one: poster first, never a clip as the LCP", () => {
   assert.doesNotMatch(carousel, /\btall\b|WIDE_QUERY|useRendition|min-width: 640/, "no vertical source switching");
-  assert.match(carousel, /src=\{s\.wide\.poster\}/);
-  assert.match(carousel, /<Clip r=\{s\.wide\}/);
-  assert.match(carousel, /here && loaded && !still/, "no clip in the server's HTML");
+  assert.match(carousel, /src=\{s\.poster\}/);
   assert.match(
     carousel,
-    /const draw = seen\.has\(i\) \|\| i === \(active \+ 1\) % total;/,
+    /here && view\.clip && \(/,
+    "no clip in the server's HTML: the player mounts it after the load",
+  );
+  assert.match(
+    carousel,
+    /const draw = state\.seen\.includes\(i\) \|\| i === \(active \+ 1\) % total;/,
     "posters drawn as they come",
   );
   assert.match(carousel, /muted\s+playsInline/);
@@ -173,22 +239,22 @@ test("one 16:9 rendition on every screen, never the tall one: poster first, the 
   assert.doesNotMatch(css, /aspect-ratio: 4 \/ 5/, "the phone's frame is 16:9 too");
 });
 
-test("a clip that cannot play leaves its poster: the video unmounts when its last source fails", () => {
-  assert.match(carousel, /<source src=\{r\.mp4\} type="video\/mp4" onError=\{\(\) => setBroken\(true\)\} \/>/);
-  assert.match(carousel, /if \(broken\) \{\s*return null;/);
+test("a clip that cannot play leaves its poster: the player drops the clip when its last source fails", () => {
+  assert.match(carousel, /onError=\{i === sources\.length - 1 \? onBroken : undefined\}/);
+  assert.match(carousel, /dispatch\(\{ type: "broken", slide: active \}\)/);
+  assert.match(carousel, /e\.name === "NotAllowedError"/, "an autoplay refused leaves the poster too");
 });
 
-test("sound is an option: muted by default, a toggle only for clips with audio, after a click, on hover or focus, per session", () => {
-  assert.match(carousel, /const sound = soundChosen && current\.audio && \(hovered \|\| focused\) && !still;/);
-  assert.match(carousel, /\{hasAudio && !still && \(/, "no button unless a clip has sound, never under reduced motion");
-  assert.match(carousel, /aria-pressed=\{soundChosen\}/);
-  assert.match(carousel, /sessionStorage/);
-  assert.doesNotMatch(carousel, /localStorage/, "the choice lasts for the session only");
-  assert.match(carousel, /ref\.current\.muted = !sound/);
-  assert.equal(messages("en").site.home.showcase.labels.soundOn, "Sound on");
-  assert.equal(messages("fr").site.home.showcase.labels.soundOn, "Activer le son");
-  // Runway's outputs are silent: no slide claims an audio track, so the button ships disabled (never an unlicensed track).
-  assert.ok(SHOWCASES.every((c) => showcaseSlides(c).every((x) => x.audio === false)));
+test("sound is the visitor's choice: muted by default, a named toggle only on a film with sound, never stored", () => {
+  assert.match(carousel, /\{view\.soundControl && \(/, "no button unless the slide in view has sound");
+  assert.match(carousel, /label=\{w\.sound\}\s+aria-pressed=\{state\.sound\}/, "named, its state announced");
+  assert.match(carousel, /ref\.current\.muted = !audible/);
+  assert.doesNotMatch(carousel, /sessionStorage|localStorage/, "sound is never on before a click on this page");
+  assert.equal(messages("en").site.home.showcase.labels.sound, "Sound");
+  assert.equal(messages("fr").site.home.showcase.labels.sound, "Son");
+  // Runway's outputs are silent: only a finished film claims an audio track (its music, the founder's own).
+  for (const c of SHOWCASES)
+    for (const x of showcaseSlides(c)) assert.equal(x.audio, x.source === SlideSource.Film, `${c}/${x.id}`);
 });
 
 test("the encoder still cuts 4:5 frames on the subject (kept for other uses), never stretched", () => {
