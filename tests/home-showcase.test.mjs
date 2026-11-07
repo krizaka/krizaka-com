@@ -47,7 +47,7 @@ test("a slide missing a file, or a carousel with too few slides, is refused", ()
 // The founder's Sovkora trailer (krizaka-internal#2837): first slide of Sovkora's carousel, whole, with its sound. The home's
 // promise stays compliance (founder, 2026-11-07): the hero does NOT open on it, and the h1 did not move.
 test("the Sovkora trailer opens Sovkora's carousel (not the hero's), with its sound, a phone cut and its poster", () => {
-  assert.deepEqual(FILM_IDS, ["trailer"]);
+  assert.deepEqual(FILM_IDS, ["trailer", "dossier-nadia", "dossier-sam", "dossier-theo"]);
   const [first] = showcaseSlides("sovkora");
   assert.equal(first.id, "trailer", "sovkora opens on the trailer");
   assert.equal(first.source, SlideSource.Film);
@@ -72,6 +72,57 @@ test("the Sovkora trailer opens Sovkora's carousel (not the hero's), with its so
     showcaseSlides("verikora").map((s) => s.id),
     ["sign", "owl", "loupe"],
   );
+});
+
+// The Dossiers (krizaka-internal#2876): « les Dossiers Sovkora », made-up stories. A carousel plays a loop of at most 10 s of
+// each; the whole film (with its sound) plays on its watch page, with one action to it from the slide.
+test("no whole film plays inside a carousel: a loop of 10 s at most, the whole on its watch page", () => {
+  const films = Object.entries(board.films).filter(([, f]) => typeof f !== "string");
+  assert.deepEqual(
+    showcaseSlides("sovkora").map((s) => s.id),
+    ["trailer", "dossier-nadia", "pigeon", "snow", "dossier-sam"],
+  );
+  const live = new Set(SHOWCASES.flatMap((c) => showcaseSlides(c).map((x) => x.id)));
+  assert.ok(!live.has("dossier-theo"), "Théo is only on his watch page");
+  for (const [id, f] of films) {
+    assert.ok(f.watch, `${id}: a film has its whole on a watch page, never in a carousel`);
+    const [, a, b] = /the loop is (\d+(?:\.\d+)?)-(\d+(?:\.\d+)?) s of the film/.exec(f.cut) ?? [];
+    assert.ok(a !== undefined && Number(b) - Number(a) <= 10, `${id}: its loop is at most 10 s (${f.cut})`);
+    assert.match(f.watch.mp4, new RegExp(`^products/sovkora/films/${id}-full\\.mp4$`));
+    assert.ok(f.watch.seconds >= 60, `${id}: the whole film`);
+    assert.equal(has(f.watch.mp4), true, `${id}: its whole cut is on the CDN`);
+  }
+  for (const s of showcaseSlides("sovkora").filter((x) => x.source === SlideSource.Film)) {
+    assert.equal(s.watch, s.id, `${s.id}: the slide's one action leads to its watch page`);
+  }
+  assert.equal(
+    showcaseSlides("sovkora").find((s) => s.id === "dossier-nadia").audio,
+    false,
+    "a Dossier's loop is silent",
+  );
+});
+
+test("the Dossiers say they are fiction, in both languages, and never claim customers", () => {
+  const rule = {
+    en: { caption: /^Sovkora Files no\. 0[1-3], /, alt: /^A fictional story, faces generated: / },
+    fr: { caption: /^Les Dossiers Sovkora n° 0[1-3], /, alt: /^Histoire inventée, visages générés : / },
+  };
+  for (const l of ["en", "fr"]) {
+    for (const id of ["dossier-nadia", "dossier-sam", "dossier-theo"]) {
+      const w = messages(l).site.home.films[id];
+      assert.match(w.caption, rule[l].caption, `${l} ${id}`);
+      assert.match(w.alt, rule[l].alt, `${l} ${id}`);
+      assert.match(w.watchLabel, /\d min \d+/, `${l} ${id}: the label says how long`);
+      assert.doesNotMatch(`${w.caption} ${w.watchLabel}`, /customer|client|run Sovkora|font tourner/i, `${l} ${id}`);
+      assert.doesNotMatch(w.alt, /run Sovkora|font tourner|our customers|nos clients/i, `${l} ${id}: a story`);
+      assert.deepEqual(findCodeNames(JSON.stringify(w)), [], `${l} ${id}`);
+      assert.ok(w.transcript.lines.length >= 8, `${l} ${id}: the text version of its titles`);
+      assert.equal(
+        w.transcript.lines.length,
+        messages(l === "en" ? "fr" : "en").site.home.films[id].transcript.lines.length,
+      );
+    }
+  }
 });
 
 test("the trailer's words: caption, alt and a transcript of its titles, from the film, in both languages", () => {
@@ -256,9 +307,15 @@ test("sound is the visitor's choice: muted by default, a named toggle only on a 
   assert.doesNotMatch(carousel, /sessionStorage|localStorage/, "sound is never on before a click on this page");
   assert.equal(messages("en").site.home.showcase.labels.sound, "Sound");
   assert.equal(messages("fr").site.home.showcase.labels.sound, "Son");
-  // Runway's outputs are silent: only a finished film claims an audio track (its music, the founder's own).
+  // Runway's outputs are silent: only a finished film claims an audio track (the trailer's loop keeps its music; the
+  // Dossiers' loops are silent, their sound is on their watch page).
+  const withSound = [];
   for (const c of SHOWCASES)
-    for (const x of showcaseSlides(c)) assert.equal(x.audio, x.source === SlideSource.Film, `${c}/${x.id}`);
+    for (const x of showcaseSlides(c)) {
+      assert.ok(!x.audio || x.source === SlideSource.Film, `${c}/${x.id}`);
+      if (x.audio) withSound.push(`${c}/${x.id}`);
+    }
+  assert.deepEqual(withSound, ["sovkora/trailer"]);
 });
 
 test("the encoder still cuts 4:5 frames on the subject (kept for other uses), never stretched", () => {

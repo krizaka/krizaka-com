@@ -25,6 +25,7 @@ import { IconButton } from "@krizaka/ui/button";
 import { cn } from "@krizaka/ui/cn";
 import { format } from "@krizaka/i18n";
 import { useI18n } from "@/app/components/I18nProvider";
+import ButtonLink from "@/app/components/ButtonLink";
 import { prefersStill } from "@/lib/brand-film";
 import {
   DWELL_MS,
@@ -49,6 +50,8 @@ export interface ShowcaseSlideView {
   videos: readonly PlayerSource[];
   /** True when the video has an audio track. */
   audio: boolean;
+  /** The slide's one action, when it plays only a loop of a film: « Watch Nadia's story · 1 min 25 », to its watch page. */
+  watch?: { href: string; label: string };
 }
 
 const subscribeMedia = (query: string) => (notify: () => void) => {
@@ -386,6 +389,16 @@ export default function ShowcaseCarousel({
           </IconButton>
         </fieldset>
       </div>
+      {slides.some((s) => s.watch) && (
+        // Always the height of the action, so a slide without one moves nothing (no layout shift as the slides turn).
+        <div className="kz-show-watch">
+          {current.watch && (
+            <ButtonLink href={current.watch.href} variant="secondary" size="sm">
+              {current.watch.label}
+            </ButtonLink>
+          )}
+        </div>
+      )}
       {children}
     </section>
   );

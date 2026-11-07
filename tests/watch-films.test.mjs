@@ -42,6 +42,7 @@ test("a watch page carries everything Google asks for a video that is the main c
   // The brand film has no speech: no captions track, its text version is the list of its shots, in both languages.
   assert.doesNotMatch(page, /<track/);
   assert.match(page, /f\.shots\.map/);
+  assert.match(page, /words\.version\.lines\.map/, "the text version of every film is on its page");
   for (const l of ["en", "fr"]) {
     const film = JSON.parse(read(`messages/${l}.json`)).site.story.watch.film;
     assert.deepEqual(Object.keys(film.shots), [...BRAND_FILM.shots], l);
@@ -55,7 +56,7 @@ test("every watch film has an upload date, a length, a duration and a page templ
   for (const f of WATCH_FILMS) {
     assert.match(f.uploadDate, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(f.seconds > 0);
-    assert.ok(f.shots.length > 0);
+    assert.ok(f.kind === "brand" ? f.shots.length > 0 : f.mp4.endsWith("-full.mp4"));
     assert.match(read("lib/page-templates.ts"), /"\/films\/\[id\]": "gallery"/);
     assert.equal(watchPath(f.id), `/films/${f.id}`);
   }
@@ -73,8 +74,8 @@ test("the sitemap lists each watch page with its video tags, and the story links
   assert.match(read("app/[locale]/story/page.tsx"), /watchPath\(film\.id\)/);
   assert.deepEqual(
     WATCH_FILMS.map((f) => f.id),
-    [BRAND_FILM.id],
-    "« Montrer son travail » is THE watch page",
+    [BRAND_FILM.id, "trailer", "dossier-nadia", "dossier-sam", "dossier-theo"],
+    "the brand film, the Sovkora trailer and the three Dossiers each have their watch page",
   );
 });
 

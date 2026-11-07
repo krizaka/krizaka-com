@@ -109,6 +109,12 @@
   flex: none;
   gap: 6px;
 }
+.kz-show-watch {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 10px;
+}
 .kz-show-text {
   margin-top: 10px;
 }

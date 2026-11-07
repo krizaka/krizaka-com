@@ -489,7 +489,7 @@
           "reel": "Les plans titrés viennent de nos reels publiés sur Instagram (@krizakahq), élargis en 16:9 avec Runway Aleph ; sur un téléphone, le cadrage vertical d'origine.",
           "clip": "Les plans marqués « généré avec Sovkora » ont été générés par notre moteur (Wan 2.2) pour le blogue ; le film de la marque aussi.",
           "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque.",
-          "film": "La bande-annonce de Sovkora est un film de Krizaka : tous ses personnages sont générés (aucune personne réelle), elle ne montre aucun écran de l'app et sa musique est originale."
+          "film": "La bande-annonce de Sovkora est un film de Krizaka : tous ses personnages sont générés (aucune personne réelle), elle ne montre aucun écran de l'app et sa musique est originale. Les Dossiers Sovkora sont des histoires inventées, aux visages générés."
         },
         "stills": {
           "kridoc": {
@@ -556,6 +556,7 @@
         "trailer": {
           "caption": "Sovkora, la bande-annonce : l'IA qui reste chez vous",
           "alt": "La bande-annonce de Sovkora, 1 min 51, en musique et sans voix : Montréal la nuit, puis sept personnages générés qui font chacun tourner un Studio sur leur propre machine, les dix packs, le moteur et les éditions. Ses mots sont dans la version texte.",
+          "watchLabel": "Voir le film · 1 min 51",
           "transcript": {
             "lead": "Ses mots, tels que le film les montre (titres en français, sous-titres en anglais) :",
             "lines": [
@@ -584,6 +585,72 @@
               "Un film fait avec Sovkora : 7 plans, 1,76 $ de GPU.",
               "Community : open source, maintenant. Business : bientôt. Entreprise : avec Krizaka.",
               "Sovkora, l'IA qui reste chez vous. sovkora.com. Un produit Krizaka, Montréal."
+            ]
+          }
+        },
+        "dossier-nadia": {
+          "caption": "Les Dossiers Sovkora n° 01, Nadia : le bail qui n'a jamais quitté son bureau",
+          "alt": "Histoire inventée, visages générés : Nadia, qui gère 300 logements dans le Vieux-Montréal, dit non à toute demande d'envoyer les documents de ses locataires ailleurs. Un soir, un PDF paraît trop parfait ; le Studio Document Verification de Sovkora examine le fichier lui-même, et c'est Nadia, pas la machine, qui juge. 1 min 25, avec le son ; titres en français, sous-titres en anglais.",
+          "watchLabel": "Voir l'histoire de Nadia · 1 min 25",
+          "transcript": {
+            "lead": "Ses titres, tels que le film les montre (en français, sous-titrés en anglais) :",
+            "lines": [
+              "Vieux-Montréal, 17 h 42.",
+              "1 205 fois, Nadia a dit non.",
+              "Vous pouvez m'envoyer les PDF ? Non. Juste une photo du bail, alors ? Non.",
+              "À tout ce qui voulait ses documents : non.",
+              "300 logements. 1 400 pages par mois. Chaque page porte le nom de quelqu'un : un locataire, un fournisseur, un employé. Ses documents ne quittent pas son bureau. Point.",
+              "Elle lit tout. Les baux, les factures, les contrats de service. Mais ses yeux ne voient pas qui a produit un PDF, ni quand, ni s'il a été retouché après.",
+              "La règle de Nadia : envoyer un bail « dans le nuage », c'est le faire sortir de ses murs. Nadia ne le fait pas. Même quand c'est pratique. Surtout quand c'est pratique.",
+              "Qui l'a produit ? Quand ? Le fichier est lu ici. Il n'est envoyé nulle part.",
+              "Oui. Nadia a dit oui. Parce que cette fois, le document n'a pas bougé.",
+              "Document Verification, le fichier : le Studio examine le fichier lui-même, qui l'a produit, quand, avec quoi, et s'il a été modifié après, et liste les points à éclaircir. Il ne juge jamais ce que dit le document.",
+              "Pourquoi le 15 ? C'est Nadia qui juge. Pas la machine.",
+              "Le contrat. Bail de logement, Québec, 10 règles en vigueur au 2024-02-21. Chaque constat donne sa règle, sa source et le passage du document. Les règles à une date que vous choisissez, pas celles d'aujourd'hui par défaut.",
+              "Classé sensible : effacé après 30 jours, journal en annexe seule, jamais pour entraîner, hors sujet : refusé. Quatre contrôles appliqués par le moteur. Le pack ne peut pas s'en passer.",
+              "Je prends un avocat ? Je rédige et relis des documents. Je ne donne pas de conseil juridique ; pour cela, adressez-vous à un professionnel du droit.",
+              "Des rapports. Jamais des conseils.",
+              "Nadia dit encore non. À tout le reste.",
+              "Sovkora, l'IA qui reste chez vous. sovkora.com. Un produit Krizaka, Montréal."
+            ]
+          }
+        },
+        "dossier-sam": {
+          "caption": "Les Dossiers Sovkora n° 02, Sam : un CSV, une question, un tableau de bord",
+          "alt": "Histoire inventée, visages générés : Sam, analyste dans un bureau de Montréal, refait un tableau de bord à la main chaque nuit parce que son fichier de 4 Go contient de vrais clients et ne peut pas sortir. Une question posée au CSV donne un tableau de bord où chaque chiffre renvoie à sa ligne et à sa colonne, et elle rentre à 18 h 02. 1 min 11, avec le son ; titres en français, sous-titres en anglais.",
+          "watchLabel": "Voir l'histoire de Sam · 1 min 11",
+          "transcript": {
+            "lead": "Ses titres, tels que le film les montre (en français, sous-titrés en anglais) :",
+            "lines": [
+              "Montréal, 23 h 58.",
+              "Sam a menti. 110 fois.",
+              "C'est prêt ? Presque. Chaque « presque », c'était une nuit.",
+              "Le CSV faisait 4 Go. Et il ne pouvait aller nulle part : des clients dedans. Vrais. Des noms, des adresses, des montants.",
+              "Alors Sam faisait ce que tout le monde fait : elle refaisait le tableau à la main. Jusqu'à minuit. Puis un peu plus tard.",
+              "Un CSV. Une question. Un tableau de bord. Chaque chiffre vient de ses données. Et ses données n'ont pas quitté la pièce.",
+              "Pourquoi ce chiffre ? Chaque chiffre a une ligne et une colonne. Chaque réponse garde son run : la sortie, les étapes, l'entrée, un identifiant. Pas de boîte noire.",
+              "Pose ta question. (C'est devenu sa phrase préférée.)",
+              "Sam est rentrée à 18 h 02. Le CSV, lui, n'est jamais sorti.",
+              "L'IA qui reste chez vous. Dossier suivant : Théo."
+            ]
+          }
+        },
+        "dossier-theo": {
+          "caption": "Les Dossiers Sovkora n° 03, Théo : la machine montre, il décide",
+          "alt": "Histoire inventée, visages générés : Théo, un fondateur, épingle quarante-sept fiches et douze mètres de ficelle rouge sur un mur et est sûr que la réponse est le Plateau. Sam exporte les réservations du trimestre, 1 840 par mois dans trois studios, et pose une question ; la machine montre les chiffres, Théo décide, et rien ne quitte la pièce. 1 min 15, avec le son ; titres en français, sous-titres en anglais.",
+          "watchLabel": "Voir l'histoire de Théo · 1 min 15",
+          "transcript": {
+            "lead": "Ses titres, tels que le film les montre (en français, sous-titrés en anglais) :",
+            "lines": [
+              "Théo a une stratégie. 10 mètres de ficelle rouge.",
+              "Plateau. C'est évident. Regarde le mur.",
+              "Le mur disait : Plateau. Quarante-sept fiches, douze mètres de ficelle et une conviction. Le mur n'avait jamais vu une facture.",
+              "Sam a exporté le trimestre. Un fichier. Une question. Pose ta question.",
+              "1 840 réservations par mois. Trois studios. Une question. Folioviv les tenait. Sovkora les a lues. Chez eux : rien n'est parti.",
+              "Et d'où viennent ces clients ? 38 % de Griffintown.",
+              "La machine montre. Théo décide.",
+              "Tu peux enlever la ficelle, maintenant.",
+              "Sovkora, l'IA qui reste chez vous. Dossier suivant : Jules."
             ]
           }
         }
@@ -918,7 +985,9 @@
             "canal": "L'oiseau file au ras d'un canal, à l'heure bleue.",
             "night": "La nuit tombe. Carte de fin : Krizaka, une entreprise de Montréal."
           }
-        }
+        },
+        "titles": "Les titres du film",
+        "backHome": "Retour à l'accueil"
       }
     },
     "openSource": {

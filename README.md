@@ -50,6 +50,7 @@ records them.
 | The earlier brand film « Le monde de Krizaka : le relais » (retired from every slot; to prune from the CDN) | `site/brand-films/relay/` |
 | The earlier brand film « Le monde de Krizaka : la tournée », its 9:16 cuts and captions (no longer drawn) | `site/brand-films/epic/` |
 | The images and clips of the blog post on what image and video generation costs | `site/blog/what-image-and-video-generation-costs/` |
+| The Sovkora trailer and the Sovkora Files (made-up stories, generated faces): a loop in Sovkora's carousel and the whole film on `/films/<id>`, added with `scripts/showcase-add.mjs` | `sites/sovkora/films/` |
 | The home's carousels (krizaka-internal#2450): the shots of the founder's reels widened to 16:9 by Runway Aleph 2.0 (not Sovkora: said in each carousel's text version), the clips Sovkora generated for the blog, the brand film's loop, clips of the company media library; storyboard `content/films/home-showcase.json`, runs and credits in `home-showcase.log.json` | `sites/www/home/showcase/` |
 
 New Sovkora renders (the next brand film, product visuals) are added here by `sovkora[bot]` in the pull request that
@@ -198,6 +199,23 @@ GitHub release; the versions of the packages it runs on belong to the deployment
 The release pull request and the release need a GitHub App token to start CI and `release: published` (GitHub ignores the
 events of `GITHUB_TOKEN`): repository variable `RELEASE_APP_ID`, secret `RELEASE_APP_PRIVATE_KEY`. Without them the
 release job dispatches `production.yml` itself.
+
+## Add a film to a carousel
+
+One command, from a source file read where it lives (nothing from it is committed):
+
+```bash
+node scripts/showcase-add.mjs sovkora my-film /path/to/film.mp4 --teaser 44-53 --poster /path/to/poster.jpg --after trailer
+node scripts/showcase-add.mjs <carousel> <id> <source.mp4> --dry-run     # prints what it would do, writes nothing
+```
+
+It renders a 1280x720 H.264 cut and a lighter phone cut, a poster and (with `--teaser`) the whole film's web cut with its sound,
+uploads them with `scripts/cdn-assets.mjs` under `products/<product>/films/` (credentials through `secret.sh`, never printed),
+records them in `lib/cdn-manifest.json`, adds the film to `content/films/home-showcase.json` (`films`, and the carousel's `order`) and
+writes empty `caption` / `alt` stubs (with `watchLabel` and `transcript` for a film with a watch page) in `messages/en.json` and
+`messages/fr.json` that `npm run lint` refuses until they are written. No whole film plays inside a carousel: over 12 s it needs
+`--teaser <start>-<end>` (at most 10 s), the carousel plays that loop and the film plays whole on `/<locale>/films/<id>`. The order
+of a carousel is only its `order` array. Needs `ffmpeg`, `ffprobe` and `cwebp`. Test: `tests/showcase-add.test.mjs`.
 
 ## Develop
 

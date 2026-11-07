@@ -6,13 +6,20 @@
 // For every slide of every carousel: each of its videos (mp4 and webm for a rendered clip; the phone cut and the full cut
 // for a film, krizaka-internal#2837) and its poster answer 200 with the right content-type; each video is a real 16:9
 // (ffprobe width and height, not just a « wide » key), H.264 (mp4) or VP9 (webm); no frame is a vertical picture
-// pillarboxed in black bars; the last frame is not a black end card; the audio track and the slide's `audio` agree. The still of a product in conception (krizaka-internal#2802): its photo answers
+// pillarboxed in black bars (and, for the films with a watch page, the whole film's web cut and the loop of a film no carousel plays yet); the last frame is not a black end card; the audio track and the slide's `audio` agree. The still of a product in conception (krizaka-internal#2802): its photo answers
 // 200 as a JPEG and is a 16:9 picture. Needs ffmpeg and ffprobe and the network.
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { manifestObject } from "./bunny-layout.mjs";
-import { showcaseSlides, showcaseStill, SHOWCASES, STILLS } from "../lib/home-showcase.ts";
+import {
+  filmSlides,
+  showcaseSlides,
+  showcaseStill,
+  SHOWCASES,
+  STILLS,
+  STORYBOARD_WATCH,
+} from "../lib/home-showcase.ts";
 
 const ROOT = new URL("..", import.meta.url);
 const CDN = (process.env.NEXT_PUBLIC_MEDIA_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(/\/$/, "");
@@ -163,6 +170,27 @@ export async function problemsOf(carousel) {
   return problems;
 }
 
+/** What is wrong with the films that have a watch page: the loop of one that no carousel plays yet, and every whole film (200,
+ *  H.264, 16:9, sound when it says so, no pillarbox, no black end card). */
+export async function filmProblems() {
+  const problems = [];
+  const live = new Set(SHOWCASES.flatMap((c) => showcaseSlides(c).map((s) => s.id)));
+  for (const s of filmSlides().filter((x) => !live.has(x.id))) {
+    const name = `film/${s.id}`;
+    problems.push(...(await httpProblems(name, s)), ...streamProblems(name, s), ...pictureProblems(name, s));
+  }
+  for (const w of STORYBOARD_WATCH) {
+    const name = `film/${w.id} (watch page)`;
+    const whole = { id: w.id, audio: true, poster: w.poster, videos: [{ path: w.mp4, type: "video/mp4" }] };
+    problems.push(
+      ...(await httpProblems(name, whole)),
+      ...streamProblems(name, whole),
+      ...pictureProblems(name, whole),
+    );
+  }
+  return problems;
+}
+
 /** What is wrong with the photo of a product in conception, as sentences (empty: fine). */
 export async function stillProblems(product) {
   const { id, poster } = showcaseStill(product);
@@ -188,6 +216,9 @@ async function main() {
   const all = [];
   for (const c of SHOWCASES.filter((x) => !only || x === only)) {
     all.push(...(await problemsOf(c)));
+  }
+  if (!only || only === "sovkora") {
+    all.push(...(await filmProblems()));
   }
   for (const p of STILLS.filter((x) => !only || x === only)) {
     all.push(...(await stillProblems(p)));
