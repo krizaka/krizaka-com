@@ -168,14 +168,15 @@ export function probe(file) {
 export function cutArgs(source, out, cut, { audio, span }) {
   const seek = span ? ["-ss", String(span.start), "-t", String(span.end - span.start)] : [];
   const bufsize = `${Number.parseInt(cut.maxrate, 10) * 2}k`;
+  // prettier-ignore
   return [
-    ...["-v", "error", "-y", ...seek, "-i", source, "-map", "0:v:0"],
+    "-v", "error", "-y", ...seek, "-i", source, "-map", "0:v:0",
     ...(audio ? ["-map", "0:a:0"] : ["-an"]),
-    ...["-vf", `scale=${cut.width}:${cut.height}:flags=lanczos,setsar=1`],
-    ...["-c:v", "libx264", "-preset", "slow", "-profile:v", "high", "-pix_fmt", "yuv420p"],
-    ...["-crf", String(cut.crf), "-maxrate", cut.maxrate, "-bufsize", bufsize],
+    "-vf", `scale=${cut.width}:${cut.height}:flags=lanczos,setsar=1`,
+    "-c:v", "libx264", "-preset", "slow", "-profile:v", "high", "-pix_fmt", "yuv420p",
+    "-crf", String(cut.crf), "-maxrate", cut.maxrate, "-bufsize", bufsize,
     ...(audio ? ["-c:a", "aac", "-b:a", cut.audio, "-ac", "2"] : []),
-    ...["-movflags", "+faststart", out],
+    "-movflags", "+faststart", out,
   ];
 }
 
@@ -352,10 +353,10 @@ export async function addFilm(opts) {
 }
 
 const USAGE = `usage: node scripts/showcase-add.mjs <carousel> <id> <source.mp4> [--teaser <start>-<end> [--keep-audio]] [--poster file.jpg] [--after <id> | --no-order] [--replace] [--idea "…"] [--product <p>] [--secrets @dev] [--dry-run]`;
-const FLAGS = ["--dry-run", "--no-order", "--replace", "--keep-audio"];
+const FLAGS = new Set(["--dry-run", "--no-order", "--replace", "--keep-audio"]);
 
 async function cli(argv) {
-  const args = parseArgs(argv.filter((a) => !FLAGS.includes(a)));
+  const args = parseArgs(argv.filter((a) => !FLAGS.has(a)));
   const [carousel, id, source] = args._;
   if (args.help || !carousel) {
     console.log(USAGE);
@@ -388,11 +389,10 @@ async function cli(argv) {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  cli(process.argv.slice(2)).then(
-    (code) => process.exit(code),
-    (e) => {
-      console.error(`showcase-add: ${e.message}`);
-      process.exit(1);
-    },
-  );
+  try {
+    process.exit(await cli(process.argv.slice(2)));
+  } catch (e) {
+    console.error(`showcase-add: ${e.message}`);
+    process.exit(1);
+  }
 }
