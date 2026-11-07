@@ -93,7 +93,12 @@ test("no whole film plays inside a carousel: a loop of 10 s at most, the whole o
     assert.equal(has(f.watch.mp4), true, `${id}: its whole cut is on the CDN`);
   }
   for (const s of showcaseSlides("sovkora").filter((x) => x.source === SlideSource.Film)) {
-    assert.equal(s.watch, s.id, `${s.id}: the slide's one action leads to its watch page`);
+    const withheld = board.films[s.id].watch.withheld;
+    assert.equal(
+      s.watch,
+      withheld ? undefined : s.id,
+      `${s.id}: the slide's one action leads to its published watch page`,
+    );
   }
   assert.equal(
     showcaseSlides("sovkora").find((s) => s.id === "dossier-nadia").audio,
@@ -357,4 +362,15 @@ test("AGENTS.md says the new rules: the home's order (§ 2) and the carousels' e
   const agents = read("AGENTS.md");
   assert.match(agents, /Sovkora · Verikora · Folioviv/);
   assert.match(agents, /Two blocks of the home move on their own\. The carousels/);
+});
+
+test("a withheld film's slide has no action to its watch page (the trailer, until its licence card is corrected)", () => {
+  const trailer = showcaseSlides("sovkora").find((s) => s.id === "trailer");
+  assert.ok(trailer, "the trailer's loop still plays in Sovkora's carousel");
+  assert.equal(trailer.watch, undefined, "no « Watch the film » to a page that is not published");
+  for (const id of ["dossier-nadia", "dossier-sam"]) {
+    assert.equal(showcaseSlides("sovkora").find((s) => s.id === id)?.watch, id, `${id}: its action leads to its page`);
+  }
+  // The whole film stays on the CDN and in the manifest: the check of its files does not depend on the hold.
+  assert.ok(manifest.files[board.films.trailer.watch.mp4], "the trailer's web cut is still in the manifest");
 });

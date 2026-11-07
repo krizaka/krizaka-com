@@ -217,6 +217,10 @@ writes empty `caption` / `alt` stubs (with `watchLabel` and `transcript` for a f
 `--teaser <start>-<end>` (at most 10 s), the carousel plays that loop and the film plays whole on `/<locale>/films/<id>`. The order
 of a carousel is only its `order` array. Needs `ffmpeg`, `ffprobe` and `cwebp`. Test: `tests/showcase-add.test.mjs`.
 
+A film whose whole is not ready to publish keeps its loop and has `watch.withheld` with the reason in the storyboard: no
+watch page, no sitemap entry, no action from its slide. The Sovkora trailer is withheld until its licence card is corrected.
+`--replace` keeps the hold; the pull request that brings the corrected file removes the field.
+
 ## Develop
 
 ```bash

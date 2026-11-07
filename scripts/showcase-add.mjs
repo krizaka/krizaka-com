@@ -120,7 +120,9 @@ export function argProblems({ carousel, id, source, after, teaser, noOrder, repl
 /** The storyboard with the film added: `films[id]` and its id in the carousel's order. Pure (returns a copy). */
 export function withFilm(board, { carousel, id, entry, after, noOrder }) {
   const next = structuredClone(board);
-  next.films[id] = entry;
+  // A withheld watch page stays withheld through --replace: lifting the hold is a decision, never a side effect.
+  const withheld = board.films[id]?.watch?.withheld;
+  next.films[id] = withheld && entry.watch ? { ...entry, watch: { ...entry.watch, withheld } } : entry;
   const order = next.carousels[carousel].order;
   if (!noOrder && !order.includes(id)) {
     order.splice(after ? order.indexOf(after) + 1 : order.length, 0, id);

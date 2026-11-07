@@ -70,9 +70,14 @@ interface BoardCarousel {
 interface BoardFilm {
   base: string;
   audio?: boolean;
-  /** The whole film, played on its watch page (/<locale>/films/<id>) and never inside a carousel: its web cut and its length. */
-  watch?: { mp4: string; seconds: number; uploadDate: string; audio?: boolean };
+  /** The whole film, played on its watch page (/<locale>/films/<id>) and never inside a carousel: its web cut and its length.
+   *  `withheld` says why its watch page is not published yet (the trailer's wrong licence card): no page, no sitemap entry,
+   *  no slide action, while its loop still plays. Only a deliberate edit lifts it (showcase-add.mjs --replace keeps it). */
+  watch?: { mp4: string; seconds: number; uploadDate: string; audio?: boolean; withheld?: string };
 }
+
+/** The whole film whose watch page is published, or undefined (no whole film, or its page withheld). */
+const published = (f: BoardFilm) => (f.watch && !f.watch.withheld ? f.watch : undefined);
 
 /** The logical base of a rendition of a slide. */
 export const renditionBase = (carousel: string, id: string) => `home/showcase/${carousel}/${id}-wide`;
@@ -99,19 +104,12 @@ export interface StoryboardWatch {
 }
 
 /** The films with a watch page, in the storyboard's order. */
-export const STORYBOARD_WATCH: readonly StoryboardWatch[] = Object.entries(FILMS).flatMap(([id, f]) =>
-  f.watch
-    ? [
-        {
-          id,
-          mp4: f.watch.mp4,
-          poster: `${f.base}-poster.webp`,
-          seconds: f.watch.seconds,
-          uploadDate: f.watch.uploadDate,
-        },
-      ]
-    : [],
-);
+export const STORYBOARD_WATCH: readonly StoryboardWatch[] = Object.entries(FILMS).flatMap(([id, f]) => {
+  const watch = published(f);
+  return watch
+    ? [{ id, mp4: watch.mp4, poster: `${f.base}-poster.webp`, seconds: watch.seconds, uploadDate: watch.uploadDate }]
+    : [];
+});
 
 /** A finished film's slide: its poster, its phone cut then its full cut, its sound. */
 function filmSlide(id: string, carousel: Showcase, f: BoardFilm): ShowcaseSlideSpec {
@@ -126,7 +124,7 @@ function filmSlide(id: string, carousel: Showcase, f: BoardFilm): ShowcaseSlideS
     ],
     audio: Boolean(f.audio),
     film: false,
-    ...(f.watch ? { watch: id } : {}),
+    ...(published(f) ? { watch: id } : {}),
   };
 }
 

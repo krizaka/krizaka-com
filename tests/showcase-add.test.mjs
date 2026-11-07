@@ -328,3 +328,17 @@ test(
     rmSync(root, { recursive: true, force: true });
   },
 );
+
+test("--replace keeps a withheld watch page withheld: lifting the hold is a decision, never a side effect", () => {
+  const board = {
+    films: { t: { base: "b", watch: { mp4: "old-full.mp4", seconds: 1, uploadDate: "d", withheld: "the card" } } },
+    carousels: { sovkora: { order: ["t"] } },
+  };
+  const entry = { base: "b", watch: { mp4: "new-full.mp4", seconds: 2, uploadDate: "e" } };
+  const next = withFilm(board, { carousel: "sovkora", id: "t", entry });
+  assert.equal(next.films.t.watch.withheld, "the card");
+  assert.equal(next.films.t.watch.mp4, "new-full.mp4", "the new cut is recorded");
+  assert.equal(board.films.t.watch.withheld, "the card", "pure");
+  const loop = withFilm(board, { carousel: "sovkora", id: "t", entry: { base: "b" } });
+  assert.equal(loop.films.t.watch, undefined, "a film re-added without a teaser has no watch page at all");
+});
