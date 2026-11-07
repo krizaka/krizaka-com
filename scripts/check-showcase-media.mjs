@@ -3,10 +3,10 @@
 //
 //   node scripts/check-showcase-media.mjs [--only <carousel>]
 //
-// For every slide of every carousel: the mp4, the webm and the poster answer 200 with the right content-type; the
-// video is a real 16:9 (ffprobe width and height, not just a « wide » key), H.264 (mp4) or VP9 (webm); no frame is a
-// vertical picture pillarboxed in black bars; the last frame (the one a clip holds on screen) is not a black end card;
-// a slide without `audio` has no audio track. The still of a product in conception (krizaka-internal#2802): its photo answers
+// For every slide of every carousel: each of its videos (mp4 and webm for a rendered clip; the phone cut and the full cut
+// for a film, krizaka-internal#2837) and its poster answer 200 with the right content-type; each video is a real 16:9
+// (ffprobe width and height, not just a « wide » key), H.264 (mp4) or VP9 (webm); no frame is a vertical picture
+// pillarboxed in black bars; the last frame is not a black end card; the audio track and the slide's `audio` agree. The still of a product in conception (krizaka-internal#2802): its photo answers
 // 200 as a JPEG and is a 16:9 picture. Needs ffmpeg and ffprobe and the network.
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
@@ -16,8 +16,9 @@ import { showcaseSlides, showcaseStill, SHOWCASES, STILLS } from "../lib/home-sh
 
 const ROOT = new URL("..", import.meta.url);
 const CDN = (process.env.NEXT_PUBLIC_MEDIA_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(/\/$/, "");
-const TYPES = { mp4: "video/mp4", webm: "video/webm", jpg: "image/jpeg" };
-const CODECS = { mp4: "h264", webm: "vp9" };
+const TYPES = { mp4: "video/mp4", webm: "video/webm", jpg: "image/jpeg", webp: "image/webp" };
+const CODECS = { "video/mp4": "h264", "video/webm": "vp9" };
+const extOf = (path) => path.slice(path.lastIndexOf(".") + 1);
 // @fixed: a side band is « black » under this peak luma (0-255); the centre is « picture » over the other one.
 const BLACK_PEAK = 24;
 // @fixed: the centre of a frame is a picture over this peak luma.
@@ -78,13 +79,14 @@ async function head(url) {
 
 async function httpProblems(name, s) {
   const problems = [];
-  for (const ext of Object.keys(TYPES)) {
-    const r = await head(urlOf(`${s.wide}.${ext}`));
+  for (const path of [...s.videos.map((v) => v.path), s.poster]) {
+    const expected = TYPES[extOf(path)];
+    const r = await head(urlOf(path));
     const type = r.headers.get("content-type") ?? "";
     if (r.status !== 200) {
-      problems.push(`${name}.${ext}: HTTP ${r.status}`);
-    } else if (!type.startsWith(TYPES[ext])) {
-      problems.push(`${name}.${ext}: content-type ${type}, expected ${TYPES[ext]}`);
+      problems.push(`${name} ${path}: HTTP ${r.status}`);
+    } else if (!type.startsWith(expected)) {
+      problems.push(`${name} ${path}: content-type ${type}, expected ${expected}`);
     }
   }
   return problems;
@@ -92,30 +94,30 @@ async function httpProblems(name, s) {
 
 function streamProblems(name, s) {
   const problems = [];
-  for (const ext of ["mp4", "webm"]) {
+  for (const v of s.videos) {
     const rows = tool("ffprobe", [
       "-show_entries",
       "stream=codec_type,codec_name,width,height",
       "-of",
       "csv=p=0",
-      urlOf(`${s.wide}.${ext}`),
+      urlOf(v.path),
     ])
       .trim()
       .split("\n")
       .map((l) => l.split(","));
     const video = rows.find((r) => r[1] === "video");
     if (!video) {
-      problems.push(`${name}.${ext}: no video stream`);
+      problems.push(`${name} ${v.path}: no video stream`);
       continue;
     }
-    if (video[0] !== CODECS[ext]) {
-      problems.push(`${name}.${ext}: codec ${video[0]}, expected ${CODECS[ext]}`);
+    if (video[0] !== CODECS[v.type]) {
+      problems.push(`${name} ${v.path}: codec ${video[0]}, expected ${CODECS[v.type]}`);
     }
     if (!isSixteenNine(Number(video[2]), Number(video[3]))) {
-      problems.push(`${name}.${ext}: ${video[2]}x${video[3]} is not 16:9`);
+      problems.push(`${name} ${v.path}: ${video[2]}x${video[3]} is not 16:9`);
     }
     if (rows.some((r) => r[1] === "audio") !== s.audio) {
-      problems.push(`${name}.${ext}: the audio track and the slide's audio flag disagree`);
+      problems.push(`${name} ${v.path}: the audio track and the slide's audio flag disagree`);
     }
   }
   return problems;
@@ -123,7 +125,8 @@ function streamProblems(name, s) {
 
 function pictureProblems(name, s) {
   const problems = [];
-  const url = urlOf(`${s.wide}.mp4`);
+  // The lightest H.264 file: a rendered clip's mp4, a film's phone cut.
+  const url = urlOf(s.videos.find((v) => v.type === "video/mp4").path);
   const left = stat(url, "iw*0.2:ih:0:0", "YMAX");
   const right = stat(url, "iw*0.2:ih:iw*0.8:0", "YMAX");
   const centre = stat(url, "iw*0.3:ih:iw*0.35:0", "YMAX");

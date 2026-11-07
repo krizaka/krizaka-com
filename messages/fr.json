@@ -476,7 +476,8 @@
           "figure": "Fig. {fig} — {caption}",
           "textVersion": "Version texte",
           "film": "Regarder le film en entier, avec le son",
-          "soundOn": "Activer le son"
+          "sound": "Son",
+          "playVideo": "Lire la vidéo : {caption}"
         },
         "carousels": {
           "hero": "Ce que nous faisons, en images",
@@ -487,7 +488,8 @@
         "sources": {
           "reel": "Les plans titrés viennent de nos reels publiés sur Instagram (@krizakahq), élargis en 16:9 avec Runway Aleph ; sur un téléphone, le cadrage vertical d'origine.",
           "clip": "Les plans marqués « généré avec Sovkora » ont été générés par notre moteur (Wan 2.2) pour le blogue ; le film de la marque aussi.",
-          "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque."
+          "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque.",
+          "film": "La bande-annonce de Sovkora est un film de Krizaka : tous ses personnages sont générés (aucune personne réelle), elle ne montre aucun écran de l'app et sa musique est originale."
         },
         "stills": {
           "kridoc": {
@@ -575,6 +577,42 @@
               "caption": "La marque de Folioviv, près de l'enseigne du barbier",
               "alt": "La marque verte de Folioviv sur un mur de boutique, à côté d'une enseigne de barbier ; le titre « FOLIOVIV » s'inscrit."
             }
+          }
+        }
+      },
+      "films": {
+        "trailer": {
+          "caption": "Sovkora, la bande-annonce : l'IA qui reste chez vous",
+          "alt": "La bande-annonce de Sovkora, 1 min 51, en musique et sans voix : Montréal la nuit, puis sept personnages générés qui font chacun tourner un Studio sur leur propre machine, les dix packs, le moteur et les éditions. Ses mots sont dans la version texte.",
+          "transcript": {
+            "lead": "Ses mots, tels que le film les montre (titres en français, sous-titres en anglais) :",
+            "lines": [
+              "Chaque jour, vos données partent.",
+              "Et si elles restaient ?",
+              "Sovkora : l'IA qui reste chez vous.",
+              "Trois choses, faites de votre côté.",
+              "01. Des Studios au prix connu d'avance : une phrase ou un fichier devient une image, une vidéo ou un document vérifié. Le coût estimé s'affiche avant de lancer.",
+              "02. Chaque résultat garde son run : la sortie, ses étapes, son entrée et son identifiant restent ensemble. Tout résultat peut être revérifié.",
+              "03. Un chat et des agents qui demandent d'abord : les modèles tournent sur vos machines. Un agent montre son plan et n'agit qu'une fois approuvé.",
+              "Éric pose une question. La réponse s'écrit sur cette machine.",
+              "Éric pose une question (chat, modèles locaux) : la réponse s'écrit sur cette machine. Les modèles tournent chez lui ; un modèle hébergé seulement s'il le branche.",
+              "Maya, agente immobilière (Real-Estate Reels) : cinq photos deviennent un reel prêt à publier. Le coût estimé s'affiche avant de lancer.",
+              "Nadia, gestionnaire immobilière (Document Verification) : un bail contre les règles de sa juridiction, un PDF contre la retouche. Chaque constat cite sa règle et le passage.",
+              "Théo, fondateur, ventes (Outbound Prospecting) : une liste devient un dossier priorisé, puis une séquence. L'agent montre son plan et attend son oui.",
+              "Sam, analyste de données (Data-driven UI) : un CSV et une question deviennent un tableau de bord vivant, sur ses propres données.",
+              "Jules, créateur vidéo (Video analysis) : ce que dit la vidéo, ses images clés, puis trois titres et des tags à approuver.",
+              "Léa, confiance et sécurité (Media safety) : photo, vidéo ou message vocal, montrable ? Une réponse illisible n'est jamais un oui.",
+              "Dix packs, trente-trois Studios, un métier chacun : Real-Estate Studio, Media Studios, Outbound Prospecting, Recommendations & insights, Wellbeing, Document Verification, Media safety, Message authenticity, Profile photo check, Trade Showcase.",
+              "Wellbeing : mettre en mots ce qu'on vit. Pas un soin. Message authenticity : écrit par une personne ? Un signal, jamais un verdict. Profile photo check : ces photos, un seul vrai profil adulte ? Trade Showcase : vos chantiers deviennent une vitrine qui vend.",
+              "Un moteur. Clients, moteur, workers et modèles : une requête, cinq étapes, un relevé de run.",
+              "Sur votre Mac. Vos serveurs. Votre téléphone.",
+              "37 modèles, 28 sur vos machines. 128 runs mesurés, 9 modèles mesurés, 0 appel de télémétrie.",
+              "Zéro télémétrie. Le prix avant, le run après.",
+              "Open source, Apache-2.0. Le code est ouvert. Lisez-le. Faites-le tourner. Le moteur, l'interface des packs, la ligne de commande et les packs de référence sont publics.",
+              "Un film fait avec Sovkora : 7 plans, 1,76 $ de GPU.",
+              "Community : open source, maintenant. Business : bientôt. Entreprise : avec Krizaka.",
+              "Sovkora, l'IA qui reste chez vous. sovkora.com. Un produit Krizaka, Montréal."
+            ]
           }
         }
       }

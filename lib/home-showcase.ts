@@ -7,6 +7,9 @@
    whose real file is not a clean 16:9 (pillarbox, end card held on screen) is `retired` in the storyboard, out of the
    order, until it is remade (scripts/check-showcase-media.mjs reads the real files). The words (caption, alt) are messages:
    site.home.showcase.slides.<carousel>.<id>.
+   A slide may also be a finished film played whole with its sound (krizaka-internal#2837, founder 2026-11-07: the Sovkora
+   trailer is the hero's first slide and Sovkora's): « films » of the storyboard, its full cut, a lighter cut for phones and
+   its poster under products/<product>/films/; its words are site.home.films.<id>, its transcript in the text version.
    A product in conception has no carousel: it shows one still (founder, 2026-11-06, krizaka-internal#2802), a mood photo
    in the carousels' look and frame, made locally (« stills » of the storyboard: model, seed, prompt). Its poster is read from
    the manifest like a slide's; its words are site.home.showcase.stills.<product>. */
@@ -19,18 +22,30 @@ export type Showcase = (typeof SHOWCASES)[number];
 export const PRODUCT_SHOWCASES = ["verikora", "sovkora", "folioviv"] as const satisfies readonly Showcase[];
 export type ProductShowcase = (typeof PRODUCT_SHOWCASES)[number];
 
-/** Where a slide comes from: a reel's take widened by Runway, a 16:9 clip, or a clip of the company media library (whose
- *  public use waits on the founder's assignment to the company, annex B: the PR that ships one says so). */
-export const SlideSource = { Reel: "reel", Clip: "clip", Library: "library" } as const;
+/** Where a slide comes from: a reel's take widened by Runway, a 16:9 clip, a clip of the company media library (whose
+ *  public use waits on the founder's assignment to the company, annex B: the PR that ships one says so), or a finished film. */
+export const SlideSource = { Reel: "reel", Clip: "clip", Library: "library", Film: "film" } as const;
 export type SlideSource = (typeof SlideSource)[keyof typeof SlideSource];
+
+// @fixed: the screens that get a film's lighter cut, the phones (the hero's figure is full width under 1024 px).
+export const PHONE_CUT = "(max-width: 767px)";
+
+/** A video file of a slide on the CDN (a logical path), best first; `media` names the screens a lighter cut is for. */
+export interface ShowcaseVideoFile {
+  path: string;
+  type: "video/mp4" | "video/webm";
+  media?: string;
+}
 
 export interface ShowcaseSlideSpec {
   id: string;
   carousel: Showcase;
   source: SlideSource;
-  /** The logical base of the 16:9 rendition on the CDN (`<base>.mp4|.webm|.jpg`). */
-  wide: string;
-  /** True when the clip carries an audio track (none does today: Runway's outputs are silent). */
+  /** The logical path of the 16:9 poster: the first paint, and the reduced-motion still. */
+  poster: string;
+  /** The video files, best first: VP9 then H.264 for a rendered clip; the phone cut then the full one for a film. */
+  videos: readonly ShowcaseVideoFile[];
+  /** True when the video carries an audio track (Runway's outputs are silent; a film has its music). */
   audio: boolean;
   /** True for the brand film's slide: it leads to the film's watch page. */
   film: boolean;
@@ -50,14 +65,47 @@ interface BoardCarousel {
   shots: BoardItem[];
   clips: BoardItem[];
 }
+interface BoardFilm {
+  base: string;
+  audio?: boolean;
+}
 
 /** The logical base of a rendition of a slide. */
 export const renditionBase = (carousel: string, id: string) => `home/showcase/${carousel}/${id}-wide`;
+
+/** The finished films of the storyboard, by id (the « $comment » is not one). */
+const FILMS = Object.fromEntries(
+  Object.entries(board.films as Record<string, BoardFilm | string>).filter(
+    (e): e is [string, BoardFilm] => typeof e[1] !== "string",
+  ),
+);
+
+/** The ids of the finished films a carousel may play. */
+export const FILM_IDS = Object.keys(FILMS);
+
+/** A finished film's slide: its poster, its phone cut then its full cut, its sound. */
+function filmSlide(id: string, carousel: Showcase, f: BoardFilm): ShowcaseSlideSpec {
+  return {
+    id,
+    carousel,
+    source: SlideSource.Film,
+    poster: `${f.base}-poster.webp`,
+    videos: [
+      { path: `${f.base}-720.mp4`, type: "video/mp4", media: PHONE_CUT },
+      { path: `${f.base}.mp4`, type: "video/mp4" },
+    ],
+    audio: Boolean(f.audio),
+    film: false,
+  };
+}
 
 /** The slides of a carousel, in their order. */
 export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
   const c = (board.carousels as Record<Showcase, BoardCarousel>)[carousel];
   return c.order.map((id) => {
+    if (FILMS[id]) {
+      return filmSlide(id, carousel, FILMS[id]);
+    }
     const shot = c.shots.find((s) => s.id === id);
     const clip = c.clips.find((s) => s.id === id);
     const item = shot ?? clip;
@@ -70,11 +118,16 @@ export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
     } else if (clip?.library) {
       source = SlideSource.Library;
     }
+    const base = renditionBase(carousel, id);
     return {
       id,
       carousel,
       source,
-      wide: renditionBase(carousel, id),
+      poster: `${base}.jpg`,
+      videos: [
+        { path: `${base}.webm`, type: "video/webm" },
+        { path: `${base}.mp4`, type: "video/mp4" },
+      ],
       audio: Boolean(item.audio),
       film: Boolean(item.film),
     };
@@ -99,10 +152,8 @@ export function showcaseStill(product: Still): ShowcaseStillSpec {
   return { product, id: still.id, poster: `${renditionBase(product, still.id)}.jpg` };
 }
 
-const EXTENSIONS = ["mp4", "webm", "jpg"] as const;
-
-/** The three files of a slide: its 16:9 rendition as mp4, webm and its poster. */
-const filesOf = (s: ShowcaseSlideSpec): string[] => EXTENSIONS.map((ext) => `${s.wide}.${ext}`);
+/** The files of a slide: its videos and its poster. */
+export const filesOf = (s: ShowcaseSlideSpec): string[] => [...s.videos.map((v) => v.path), s.poster];
 
 /** What is wrong with the carousels and the stills, as sentences (empty: fine). `has` is lib/cdn.ts's onCdn. */
 export function showcaseProblems(has: (path: string) => boolean): string[] {

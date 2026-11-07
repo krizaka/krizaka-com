@@ -2,7 +2,8 @@
    speaks to one reader, the Montréal property manager (krizaka-internal#2445): who we are and where, what the product does,
    and one action (founder, 2026-11-05, krizaka-internal#2450): write to us about your files, on HOME_PRODUCT's topic of
    the contact form. On the right, half the width, « Fig. 1 »: the hero's carousel (Showcase, lib/home-showcase.ts), which
-   advances on its own with a visible pause, still under reduced motion, its text version on the server. The products are
+   opens on the Sovkora trailer (founder, 2026-11-07, krizaka-internal#2837: muted until the visitor turns the sound on), moves
+   on at each clip's end with a visible pause, still under reduced motion, its text version on the server. The products are
    reached one way, the bar's « Products » (lib/nav.ts): no row of marks here any more. The section is numbered in the
    margin (§ 1). A server component: the title, the lead and the action are the first paint (LCP) — never revealed, never
    part of the intro.

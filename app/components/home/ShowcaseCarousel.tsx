@@ -1,80 +1,69 @@
 "use client";
 
-/* One carousel of the home (krizaka-internal#2450): the hero's, and one per product. It advances on its own (founder,
+/* One carousel of the home (krizaka-internal#2450): the hero's, and one per product. It moves on by itself (founder,
    2026-11-05, AGENTS.md §4 names this one exception to « nothing moves on its own »), with the rules of WCAG 2.2.2:
-   - a visible pause / play, and it pauses while the pointer is over it or the keyboard focus is in it, and while it is off
-     screen;
-   - under prefers-reduced-motion (or Save-Data) nothing advances and no clip plays: the posters, and the previous / next
-     buttons;
-   - previous / next are buttons, the arrow keys on them turn too; the counter is announced only while nothing advances;
+   - a visible pause / play, and it holds while the pointer is over it or the keyboard focus is in it (the clip pauses and
+     resumes), and while it is off screen;
+   - a video slide lasts as long as its video (krizaka-internal#2837): it moves on at the clip's end, a clip never loops, so
+     no last frame is held; a still slide stays a fixed time. lib/showcase-player.ts holds these rules, tested;
+   - under prefers-reduced-motion (or Save-Data) nothing moves on and no clip starts by itself: the posters, previous / next,
+     and a play button on a video slide (at the clip's end its poster comes back);
+   - previous / next are buttons, the arrow keys on them turn too; the counter is announced only while nothing moves on;
    - every slide is a figure with its caption (« Fig. 3b — … ») and its text alternative (the poster's alt), and the whole
-     carousel has its text version (rendered on the server, passed as children).
-   Media: every slide has one rendition, 16:9, on every screen, the phone included (object-fit: cover; founder,
-   2026-11-05: no vertical anywhere). The poster is drawn only for the slide in view, the ones already seen and the next
-   one; the clip (muted) is mounted only for the slide in view, after the page's load, so the h1 stays the LCP. If the
-   clip cannot play (a file missing, a codec refused) it unmounts and the poster stays.
-   Sound is an option: clips are muted; a toggle appears only when a slide has an audio track (none has today); once
-   the visitor has pressed it, hovering or focusing the carousel unmutes the clip and leaving it mutes again. The choice
-   lasts for the session (sessionStorage); under reduced motion nothing plays, so nothing sounds. The carousel block of @krizaka/ui
-   (MediaCarousel) never advances by itself: this composition is noted for krizaka-ui (an `autoplay` variant). */
+     carousel has its text version (rendered on the server, passed as children: a film's transcript is there).
+   Media: every slide is 16:9 on every screen, the phone included (object-fit: cover; founder, 2026-11-05: no vertical). The
+   poster is drawn only for the slide in view, the ones already seen and the next one; the clip (muted, inline) is mounted
+   only for the slide in view, after the page's load and once the carousel has been on screen, so the LCP is a poster, never a clip, and a
+   carousel below the fold downloads no film. A film's lighter cut goes to phones, chosen once on the client (pickSources).
+   If the clip cannot play (a file missing, a codec refused, autoplay refused) it unmounts and the poster stays.
+   Sound: only after the visitor's click on the sound control of a slide that has sound, for that slide while it plays on
+   screen; another slide or scrolling away mutes it again. The carousel block of @krizaka/ui (MediaCarousel) never moves on
+   by itself: this composition is noted for krizaka-ui (an `autoplay` variant). */
 
-import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useEffectEvent, useReducer, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { IconButton } from "@krizaka/ui/button";
 import { cn } from "@krizaka/ui/cn";
 import { format } from "@krizaka/i18n";
 import { useI18n } from "@/app/components/I18nProvider";
 import { prefersStill } from "@/lib/brand-film";
+import {
+  DWELL_MS,
+  initialPlayer,
+  pickSources,
+  playerView,
+  stepPlayer,
+  type PlayerEnv,
+  type PlayerEvent,
+  type PlayerSource,
+  type PlayerState,
+} from "@/lib/showcase-player";
 
-export interface ShowcaseRendition {
-  mp4: string;
-  webm: string;
-  poster: string;
-}
 export interface ShowcaseSlideView {
   id: string;
   /** « 3b »: the figure's number. */
   fig: string;
   caption: string;
   alt: string;
-  wide: ShowcaseRendition;
-  /** True when the clip has an audio track. */
+  poster: string;
+  /** The video's sources, best first (empty for a still slide); a lighter cut names its screens in `media`. */
+  videos: readonly PlayerSource[];
+  /** True when the video has an audio track. */
   audio: boolean;
 }
 
-// @fixed: how long a slide stays before the next one, a reading time (a caption and a short clip), not a setting.
-const DWELL_MS = 6500;
 const subscribeMedia = (query: string) => (notify: () => void) => {
   const list = globalThis.matchMedia(query);
   list.addEventListener("change", notify);
   return () => list.removeEventListener("change", notify);
 };
 const subscribeCalm = subscribeMedia("(prefers-reduced-motion: reduce)");
-/** True when the visitor asked for less: nothing advances, no clip plays. True on the server too (still first). */
+/** True when the visitor asked for less: nothing moves on, no clip starts by itself. True on the server too (still first). */
 function useStill(): boolean {
   return useSyncExternalStore(
     subscribeCalm,
     () => prefersStill(globalThis),
     () => true,
   );
-}
-const SOUND_KEY = "kz-show-sound";
-const SOUND_EVENT = "kz-show-sound-change";
-const subscribeSound = (notify: () => void) => {
-  globalThis.addEventListener(SOUND_EVENT, notify);
-  return () => globalThis.removeEventListener(SOUND_EVENT, notify);
-};
-/** The visitor's choice of sound, for this session only (false on the server and before any click). */
-function useSound(): [boolean, () => void] {
-  const on = useSyncExternalStore(
-    subscribeSound,
-    () => globalThis.sessionStorage?.getItem(SOUND_KEY) === "1",
-    () => false,
-  );
-  const toggle = () => {
-    globalThis.sessionStorage?.setItem(SOUND_KEY, on ? "0" : "1");
-    globalThis.dispatchEvent(new Event(SOUND_EVENT));
-  };
-  return [on, toggle];
 }
 const subscribeLoad = (notify: () => void) => {
   globalThis.addEventListener("load", notify);
@@ -135,42 +124,67 @@ function tickState(i: number, active: number): "done" | "now" | undefined {
   return i === active ? "now" : undefined;
 }
 
-function Clip({ r, playing, sound }: Readonly<{ r: ShowcaseRendition; playing: boolean; sound: boolean }>) {
+/** The clip of the slide in view: plays and pauses as the player says, sounds only when it says, reports its end, its
+ *  progress and a failure. Its sources are chosen once, on mount, for this screen. */
+function Clip({
+  slide,
+  playing,
+  audible,
+  onEnded,
+  onBroken,
+  onProgress,
+}: Readonly<{
+  slide: ShowcaseSlideView;
+  playing: boolean;
+  audible: boolean;
+  onEnded: () => void;
+  onBroken: () => void;
+  onProgress: (fraction: number) => void;
+}>) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [broken, setBroken] = useState(false);
+  const [sources] = useState(() => pickSources(slide.videos, (q) => globalThis.matchMedia(q).matches));
+  const refused = useEffectEvent(onBroken);
   useEffect(() => {
     if (ref.current) {
-      ref.current.muted = !sound;
+      ref.current.muted = !audible;
     }
-  }, [sound]);
+  }, [audible]);
   useEffect(() => {
     const v = ref.current;
     if (!v) {
       return;
     }
     if (playing) {
-      v.play().catch(() => undefined);
+      // A browser that refuses even a muted autoplay (a phone's power saving) leaves the poster, and the dwell moves on.
+      v.play().catch((e: unknown) => {
+        if (e instanceof DOMException && e.name === "NotAllowedError") {
+          refused();
+        }
+      });
     } else {
       v.pause();
     }
   }, [playing]);
-  if (broken) {
-    return null;
-  }
   return (
     <video
       ref={ref}
       className="kz-show-media"
-      poster={r.poster}
+      poster={slide.poster}
       muted
       playsInline
       preload="auto"
       aria-hidden
       tabIndex={-1}
+      onEnded={onEnded}
+      onTimeUpdate={(e) => {
+        const v = e.currentTarget;
+        onProgress(v.duration > 0 ? v.currentTime / v.duration : 0);
+      }}
     >
-      {/* The lighter encode first (VP9); H.264 for what does not play it. Both failing leaves the poster. */}
-      <source src={r.webm} type="video/webm" />
-      <source src={r.mp4} type="video/mp4" onError={() => setBroken(true)} />
+      {/* The best first; the last one failing leaves the poster. */}
+      {sources.map((src, i) => (
+        <source key={src.src} src={src.src} type={src.type} onError={i === sources.length - 1 ? onBroken : undefined} />
+      ))}
     </video>
   );
 }
@@ -192,47 +206,47 @@ export default function ShowcaseCarousel({
   const w = t.site.home.showcase.labels;
   const still = useStill();
   const loaded = usePageLoaded();
-  const [soundChosen, toggleSound] = useSound();
-  const root = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(0);
-  const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set([0]));
-  const [stopped, setStopped] = useState(false);
-  const [hovered, setHovered] = useState(false);
-  const [focused, setFocused] = useState(false);
-  const [onScreen, setOnScreen] = useState(true);
-  const total = slides.length;
-  const hasAudio = slides.some((s) => s.audio);
-  const advancing = !still && !stopped && !hovered && !focused && onScreen && total > 1;
-
-  const remember = (i: number) => setSeen((seenBefore) => new Set(seenBefore).add(i));
-  const go = (to: number) => {
-    const next = (to + total) % total;
-    setActive(next);
-    remember(next);
+  const env: PlayerEnv = {
+    slides: slides.map((s) => ({ video: s.videos.length > 0, audio: s.audio })),
+    still,
+    loaded,
   };
+  const [state, dispatch] = useReducer(
+    (s: PlayerState, e: PlayerEvent) => stepPlayer(s, e, env),
+    undefined,
+    initialPlayer,
+  );
+  const view = playerView(state, env);
+  const root = useRef<HTMLElement>(null);
+  const tick = useRef<HTMLSpanElement>(null);
+  const total = slides.length;
+  const { active } = state;
 
   useEffect(() => {
     const el = root.current;
-    if (!el || typeof IntersectionObserver === "undefined") {
+    if (!el) {
       return;
     }
-    const io = new IntersectionObserver(([entry]) => setOnScreen(entry.isIntersecting), { threshold: 0.25 });
+    if (typeof IntersectionObserver === "undefined") {
+      dispatch({ type: "screen", on: true });
+      return;
+    }
+    const io = new IntersectionObserver(([entry]) => dispatch({ type: "screen", on: entry.isIntersecting }), {
+      threshold: 0.25,
+    });
     io.observe(el);
     return () => io.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!advancing) {
+    if (view.clock !== "dwell") {
       return;
     }
-    const timer = globalThis.setTimeout(() => {
-      const next = (active + 1) % total;
-      setActive(next);
-      remember(next);
-    }, DWELL_MS);
+    const timer = globalThis.setTimeout(() => dispatch({ type: "dwell" }), DWELL_MS);
     return () => globalThis.clearTimeout(timer);
-  }, [advancing, active, total]);
+  }, [view.clock, active]);
 
+  const go = (to: number) => dispatch({ type: "go", to });
   const onKey = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowRight") {
       go(active + 1);
@@ -243,29 +257,32 @@ export default function ShowcaseCarousel({
     }
     e.preventDefault();
   };
+  const onEnded = () => dispatch({ type: "ended" });
+  const onBroken = () => dispatch({ type: "broken", slide: active });
+  // The current tick fills with the clip's progress (a video slide) or over the dwell (a still one, in CSS).
+  const onProgress = (fraction: number) => tick.current?.style.setProperty("--kz-show-progress", String(fraction));
 
   const current = slides[active];
-  // Sound only after the visitor's click, only on the pointer or the keyboard focus, never under reduced motion.
-  const sound = soundChosen && current.audio && (hovered || focused) && !still;
+  const moving = view.clock !== "none";
   return (
     <section
       ref={root}
       className={cn("kz-show", className)}
       aria-roledescription={w.carousel}
       aria-label={label}
-      data-advancing={advancing ? "" : undefined}
-      onPointerEnter={() => setHovered(true)}
-      onPointerLeave={() => setHovered(false)}
-      onFocus={() => setFocused(true)}
+      data-clock={view.clock}
+      onPointerEnter={() => dispatch({ type: "hover", on: true })}
+      onPointerLeave={() => dispatch({ type: "hover", on: false })}
+      onFocus={() => dispatch({ type: "focus", on: true })}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
-          setFocused(false);
+          dispatch({ type: "focus", on: false });
         }
       }}
     >
       <div className="rd-plate kz-show-stage">
         {slides.map((s, i) => {
-          const draw = seen.has(i) || i === (active + 1) % total;
+          const draw = state.seen.includes(i) || i === (active + 1) % total;
           const here = i === active;
           return (
             <figure
@@ -281,27 +298,68 @@ export default function ShowcaseCarousel({
                 <picture>
                   <img
                     className="kz-show-media"
-                    src={s.wide.poster}
+                    src={s.poster}
                     alt={s.alt}
                     decoding="async"
                     loading={i === 0 ? undefined : "lazy"}
                   />
                 </picture>
               )}
-              {here && loaded && !still && <Clip r={s.wide} playing={onScreen && !stopped} sound={sound} />}
+              {here && view.clip && (
+                <Clip
+                  key={s.id}
+                  slide={s}
+                  playing={view.playing}
+                  audible={view.audible}
+                  onEnded={onEnded}
+                  onBroken={onBroken}
+                  onProgress={onProgress}
+                />
+              )}
             </figure>
           );
         })}
+        {view.playButton && (
+          <IconButton
+            variant="primary"
+            size="lg"
+            className="kz-show-play"
+            label={format(w.playVideo, { caption: current.caption })}
+            onClick={() => dispatch({ type: "watch" })}
+            onKeyDown={onKey}
+          >
+            <PlayGlyph />
+          </IconButton>
+        )}
+        {view.soundControl && (
+          <IconButton
+            variant="secondary"
+            size="sm"
+            className="kz-show-sound"
+            label={w.sound}
+            aria-pressed={state.sound}
+            onClick={() => dispatch({ type: "sound" })}
+            onKeyDown={onKey}
+          >
+            <SoundGlyph on={state.sound} />
+          </IconButton>
+        )}
         <ol className="kz-show-ticks" aria-hidden>
           {slides.map((s, i) => (
             <li key={s.id} data-state={tickState(i, active)}>
-              {i === active && <span key={`${active}-${advancing}`} />}
+              {i === active && (
+                <span
+                  key={view.clip ? `clip-${active}` : `${active}-${view.clock}`}
+                  ref={tick}
+                  data-progress={view.clip ? "" : undefined}
+                />
+              )}
             </li>
           ))}
         </ol>
       </div>
       <div className="kz-show-bar">
-        <p className="rd-plate-caption kz-show-caption" aria-live={advancing ? "off" : "polite"}>
+        <p className="rd-plate-caption kz-show-caption" aria-live={moving ? "off" : "polite"}>
           <span className="kz-show-count">
             {active + 1} / {total}
           </span>
@@ -312,27 +370,15 @@ export default function ShowcaseCarousel({
           <IconButton variant="secondary" size="sm" label={w.previous} onClick={() => go(active - 1)} onKeyDown={onKey}>
             <Chevron back />
           </IconButton>
-          {!still && (
+          {view.pauseControl && (
             <IconButton
               variant="secondary"
               size="sm"
-              label={stopped ? w.play : w.pause}
-              onClick={() => setStopped((v) => !v)}
+              label={state.stopped ? w.play : w.pause}
+              onClick={() => dispatch({ type: "toggle" })}
               onKeyDown={onKey}
             >
-              {stopped ? <PlayGlyph /> : <PauseGlyph />}
-            </IconButton>
-          )}
-          {hasAudio && !still && (
-            <IconButton
-              variant="secondary"
-              size="sm"
-              label={w.soundOn}
-              aria-pressed={soundChosen}
-              onClick={toggleSound}
-              onKeyDown={onKey}
-            >
-              <SoundGlyph on={soundChosen} />
+              {state.stopped ? <PlayGlyph /> : <PauseGlyph />}
             </IconButton>
           )}
           <IconButton variant="secondary" size="sm" label={w.next} onClick={() => go(active + 1)} onKeyDown={onKey}>

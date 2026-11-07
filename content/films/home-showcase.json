@@ -6,7 +6,7 @@
   "carousels": {
     "hero": {
       "idea": "Krizaka shows its work: the pen, the blue ink, the brick and the river of Montréal.",
-      "order": ["film", "river", "entreprise", "signature"],
+      "order": ["trailer", "film", "river", "entreprise", "signature"],
       "shots": [
         {
           "id": "ink",
@@ -86,7 +86,7 @@
     },
     "sovkora": {
       "idea": "The engine stays with you: the duck builds, the pigeon delivers, the neon says the name.",
-      "order": ["tea", "rails", "pigeon", "snow", "blue", "cable"],
+      "order": ["trailer", "tea", "rails", "pigeon", "snow", "blue", "cable"],
       "shots": [
         {
           "id": "neon",
@@ -288,6 +288,16 @@
           "why": "the last 0.3 s is a blurred transition, held as the last frame"
         }
       ]
+    }
+  },
+  "films": {
+    "$comment": "Finished films a carousel plays whole, with their sound (krizaka-internal#2837): never cut or rendered by scripts/home-showcase.mjs, uploaded as they are with scripts/cdn-assets.mjs under products/<product>/films/. Each has its full cut (<base>.mp4), a lighter cut for phones (<base>-720.mp4) and its poster (<base>-poster.webp). A carousel names a film by its id in its order.",
+    "trailer": {
+      "base": "products/sovkora/films/trailer",
+      "idea": "the founder's Sovkora trailer, « l'IA qui reste chez vous »: Montréal at night, seven generated characters each running a Studio, the ten packs, the engine, the editions",
+      "made": "by the founder (2026-11-06): 16:9, 1 min 51, no voice, original music, French titles with English subtitles burned in; every character generated, no real person, no screen of the app",
+      "cut": "his 1080p web cut as it is (H.264 + AAC, faststart, 7.2 Mbps); a 720p cut for phones (2.6 Mbps); no webm: VP9 was no smaller at equal quality",
+      "audio": true
     }
   },
   "libraries": {

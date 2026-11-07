@@ -3,7 +3,7 @@
    Since 2026-11-05 (founder, krizaka-internal#2450) the products stand in one row, Verikora · Sovkora · Folioviv, the
    engine in the centre (lib/home-sections.ts PRODUCT_ORDER), and each entry pairs its specimen tag with a carousel of what
    was made for it (Showcase, lib/home-showcase.ts: the reels' shots widened to 16:9, the clips Sovkora generated, the
-   brand film; a 4:5 rendition on phones). The tag and the carousel swap sides from one entry to the next, so Sovkora's
+   brand film; Sovkora's opens on its trailer, krizaka-internal#2837). The tag and the carousel swap sides from one entry to the next, so Sovkora's
    carousel is on the right (entrySide).
    - a carousel: numbered figure (« Fig. 3b », after the hero's Fig. 1: lib/home-sections.ts sectionFigure), which advances
      on its own with a visible pause, still under reduced motion, its text version on the server;
