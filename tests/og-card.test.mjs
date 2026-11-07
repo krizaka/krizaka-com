@@ -51,6 +51,14 @@ test("the card is the Cahier: the tokens' paper and ink, the fonts' faces, no gr
 test("every page sets its own share title and an og:url that is its canonical", () => {
   const seo = read("lib/seo.ts");
   assert.match(seo, /\.\.\.shareMetadata\(locale, opts\.path, copy\.og \?\? copy\)/, "localizedMetadata always shares");
-  for (const f of ["privacy", "terms", "changelog", "films/[id]", "open-source/[block]"])
+  for (const f of ["changelog", "films/[id]", "open-source/[block]"])
     assert.match(read(`app/[locale]/${f}/page.tsx`), /shareMetadata\(/, f);
+  // The legal pages share one metadata builder (the copies failed the duplicate-code ratchet of #665).
+  assert.match(read("app/components/LegalPage.tsx"), /shareMetadata\(locale, `\/\$\{page\}`/, "legalMetadata shares");
+  for (const page of ["privacy", "terms"])
+    assert.match(
+      read(`app/[locale]/${page}/page.tsx`),
+      new RegExp(`generateMetadata = \\(props: LegalPageProps\\) => legalMetadata\\(props, "${page}"\\)`),
+      page,
+    );
 });

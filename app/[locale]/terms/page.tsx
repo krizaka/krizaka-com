@@ -1,24 +1,8 @@
-import type { Metadata } from "next";
-import { buildAlternates, shareMetadata } from "@/lib/seo";
-import { getDictionary } from "@/lib/i18n";
-import LegalPage from "@/app/components/LegalPage";
+import LegalPage, { legalMetadata, type LegalPageProps } from "@/app/components/LegalPage";
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
+export const generateMetadata = (props: LegalPageProps) => legalMetadata(props, "terms");
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  const doc = getDictionary(locale).site.legal.terms;
-  return {
-    title: doc.metaTitle,
-    description: doc.metaDescription,
-    alternates: buildAlternates(locale, "/terms"),
-    ...shareMetadata(locale, "/terms", { title: doc.title, description: doc.metaDescription }),
-  };
-}
-
-export default async function Page({ params }: Props) {
+export default async function Page({ params }: LegalPageProps) {
   const { locale } = await params;
   return <LegalPage locale={locale} page="terms" />;
 }
