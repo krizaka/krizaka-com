@@ -331,7 +331,7 @@
         "seconds": 111,
         "uploadDate": "2026-11-07",
         "audio": true,
-        "withheld": "the file still ends on a wrong licence card (« Open source · Apache-2.0 »; Sovkora is FSL-1.1 with an Apache-2.0 future licence). The founder is re-editing it; until the corrected file replaces this one (showcase-add.mjs sovkora trailer <new file> --teaser 2-12 --keep-audio --replace), the watch page is not published and the loop (2-12 s, before the card) has no action to it. Remove this field in the pull request that brings the corrected file (krizaka-internal#2876)"
+        "withheld": "the file still ends on a wrong licence card, which the founder is re-editing (the right wording is in krizaka-internal#2876); until the corrected file replaces this one (showcase-add.mjs sovkora trailer <new file> --teaser 2-12 --keep-audio --replace), the watch page is not published and the loop (2-12 s, before the card) has no action to it. Remove this field in the pull request that brings the corrected file (krizaka-internal#2876)"
       }
     },
     "dossier-nadia": {

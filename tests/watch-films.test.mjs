@@ -127,9 +127,24 @@ test("a withheld film has no watch page, and says why; the trailer is withheld u
     ["trailer"],
   );
   assert.match(board.films.trailer.watch.withheld, /licen[cs]e card/i);
-  assert.match(board.films.trailer.watch.withheld, /FSL-1\.1/);
+  assert.match(board.films.trailer.watch.withheld, /krizaka-internal#2876/, "where the right wording is");
   for (const [id] of withheld) {
     assert.equal(watchFilm(id), undefined, `${id}: no watch page`);
   }
   assert.match(board.films.trailer.cut, /the loop is 2-12 s of the film/, "the loop ends before the card");
+});
+
+// The watch page of a storyboard film says its alt as the meta description; check-seo (the container smoke) refuses one
+// outside 30-400 characters, and the French alts of Sam and Théo were 404 and 413 (found by the crack, 2026-11-07).
+test("each watch page's description fits the SEO check's bounds, in both languages", () => {
+  const [, min, max] =
+    /length < (\d+) \|\| decode\(desc\[0\]\)\.length > (\d+)/.exec(read("scripts/check-seo.mjs")) ?? [];
+  assert.ok(min && max, "the bounds are check-seo's own");
+  for (const l of ["en", "fr"]) {
+    const films = JSON.parse(read(`messages/${l}.json`)).site.home.films;
+    for (const f of WATCH_FILMS.filter((x) => x.kind === "storyboard")) {
+      const n = films[f.id].alt.length;
+      assert.ok(n >= Number(min) && n <= Number(max), `${l} ${f.id}: description of ${n} characters (${min}-${max})`);
+    }
+  }
 });
