@@ -63,8 +63,12 @@
   lives in `lib/products-in-design.ts`, not in `PRODUCTS`: the home's #products shows it after the products as an entry of the
   same rhythm (plate left, tag right): the tag carries its mark (`KridocLogo` of `@krizaka/ui`, at 48 px so it is not cropped to the emblem),
   its name from `@krizaka/org`, the stamp, one neutral line and « See the site » to its **live coming-soon site** (`siteUrl`, from the org
-  brand's `domains.site`: www.kridoc.com); the plate shows a sample document in demo data, said as demo, with the chip
-  « Demo soon » (no date, no sign-up, no waiting list). No version, source, bird or note, and nothing in the nav, the hero's marks, the
+  brand's `domains.site`: www.kridoc.com); the plate is **one mood photo in the carousels' frame** (founder, 2026-11-06,
+  krizaka-internal#2802; `ShowcaseStill`): a generated picture of the job it will do, never a screen of an app that does not exist,
+  made locally (FLUX.2 [klein] 4B, no paid run; model, seed and prompt in the storyboard's `stills`), uploaded under
+  `home/showcase/<product>/` and read from the manifest (an unknown file fails the build), captioned « in conception » and with
+  an alt that says it is generated; nothing moves, so the photo is the poster and the reduced-motion still (no date, no sign-up,
+  no waiting list). No version, source, bird or note, and nothing in the nav, the hero's marks, the
   sitemap, `llms.txt` or the JSON-LD (`tests/products-in-design.test.mjs`). Kridoc (`kridoc`) is the one today; it
   moves to `PRODUCTS` when its repository builds something real.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names

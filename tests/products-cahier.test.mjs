@@ -19,7 +19,10 @@ test("built from the Cahier's blocks of @krizaka/ui, on lined paper with its mar
   for (const part of ['from "@krizaka/ui/specimen-tag"', 'from "@krizaka/ui/footnote"', 'from "@krizaka/ui/mascots"'])
     assert.ok(showcase.includes(part), part);
   assert.match(showcase, /<SpecimenTag\b/);
-  assert.match(showcase, /<Caption figure=/);
+  // Every plate is a numbered figure: a product's carousel, or the still of a product in conception (krizaka-internal#2802),
+  // both captioned « Fig. n — … » in the carousels' frame.
+  assert.match(showcase, /<Showcase carousel=\{carousel\} fig=\{sectionFigure\(nOf\(p\)\)\}/);
+  assert.match(showcase, /<ShowcaseStill product=\{p\.id\} fig=\{sectionFigure\(SHOWN\.length \+ 1\)\}/);
   assert.match(showcase, /<Footnotes\b/);
   assert.match(showcase, /<FootnoteRef\b/);
   assert.match(showcase, /<Section id="products-guide" number=\{s\.number\}[^>]*paper="lines"[^>]*margin/);

@@ -215,7 +215,7 @@ test("no two figures of the home share a number: the hero is Fig. 1, the product
   );
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.match(showcase, /fig=\{sectionFigure\(nOf\(p\)\)\}/);
-  assert.match(showcase, /<DesignPlate product=\{p\} n=\{sectionFigure\(SHOWN\.length \+ 1\)\}/);
+  assert.match(showcase, /<ShowcaseStill product=\{p\.id\} fig=\{sectionFigure\(SHOWN\.length \+ 1\)\}/);
   assert.match(showcase, /<FootnoteRef n=\{nOf\(p\)\}/, "the notes keep their own numbers");
 });
 

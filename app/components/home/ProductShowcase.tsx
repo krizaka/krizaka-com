@@ -13,16 +13,16 @@
      what it runs on Sovkora (lib/engine-uses.ts) — and for the engine, what it gives and the products it powers, folded;
    - under its line, one discreet « you'll love » line about a feature that runs (lib/product-highlights.ts, with its source);
    - the notes at the foot of the section: what each product really does, sourced;
-   - after the products, the ones in conception (lib/products-in-design.ts): their tag and a sample document in demo
-     data, « Demo soon »; no version, no source, no bird, no note, no date, no sign-up, since nothing is built.
+   - after the products, the ones in conception (lib/products-in-design.ts): their tag and one mood photo in the carousels'
+     frame (ShowcaseStill, krizaka-internal#2802), captioned as in conception; no version, no source, no bird, no note, no
+     date, no sign-up, no app screen, since nothing is built.
    Data: lib/products.ts, lib/engine-uses.ts, lib/product-highlights.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words: site.home.products.*,
    site.home.engine.*, site.products.*, site.story.world.cues. */
 
 import { ForwardIcon } from "@krizaka/icons";
 import { KridocLogo, ProductLogo } from "@krizaka/ui";
 import { cn } from "@krizaka/ui/cn";
-import { Badge } from "@krizaka/ui/badge";
-import { Caption, FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
+import { FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
 import { Mascot } from "@krizaka/ui/mascots";
 import { Section } from "@krizaka/ui/page";
 import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
@@ -37,7 +37,7 @@ import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
 import ButtonLink from "../ButtonLink";
 import { GitHubMark } from "../brand/GitHubMark";
 import Showcase from "./Showcase";
-import "./visuals/visuals.css";
+import ShowcaseStill from "./ShowcaseStill";
 
 /** The stamp of a status: `ok` only for what is out, `wip` in development, `construction` not open yet. */
 const STAMP: Record<ProductStatus, StampTone> = {
@@ -200,54 +200,21 @@ function ProductEntry({
 /** The marks of the products in conception: Kridoc has a mark and no palette (@krizaka/ui ProductLogo leaves it out). */
 const DESIGN_MARK = { kridoc: KridocLogo } as const;
 
-/** The plate of a product in conception: a sample document in demo data, said as demo, and the chip « Demo soon ». Drawn from
- *  tokens and @krizaka/ui's Badge and mark — no invented app UI, no date, no sign-up. */
-function DesignPlate({
-  product: p,
-  n,
-  t,
-}: Readonly<{ product: ProductInDesign; n: number; t: TranslationDictionary }>) {
-  const v = t.site.home.products.inDesign.plate;
-  const Mark = DESIGN_MARK[p.id];
-  return (
-    <figure className="kz-entry-plate">
-      <div className="pv kz-doc-plate" aria-hidden>
-        <div className="pv-app">
-          <p className="pv-app-bar">
-            <Mark size={18} animated={false} />
-            <span className="pv-app-name">{p.name}</span>
-            <Badge size="sm" tone="accent">
-              {v.demoSoon}
-            </Badge>
-          </p>
-          <div className="kz-doc-sheet">
-            <p className="kz-doc-title">{v.docTitle}</p>
-            <p className="kz-doc-meta">{v.docMeta}</p>
-            <span className="kz-doc-line" />
-            <span className="kz-doc-line" />
-            <span className="kz-doc-line kz-doc-short" />
-            <span className="kz-doc-line" />
-            <span className="kz-doc-line kz-doc-short" />
-          </div>
-        </div>
-      </div>
-      <Caption figure={`${t.site.home.products.figureLabel} ${n}`}>{v.figure}</Caption>
-    </figure>
-  );
-}
-
-/** A product in conception: its plate (a sample document, « Demo soon ») and its tag, numbered after the products, the tag on
- *  the right (the rhythm of the entries before it). It links its live coming-soon site, nothing else. */
+/** A product in conception: its still (a mood photo, in the carousels' frame) and its tag, numbered after the products, the
+ *  tag on the right (the rhythm of the entries before it). It links its live coming-soon site, nothing else. */
 function DesignEntry({
   product: p,
   n,
   t,
-}: Readonly<{ product: ProductInDesign; n: number; t: TranslationDictionary }>) {
+  locale,
+}: Readonly<{ product: ProductInDesign; n: number; t: TranslationDictionary; locale: string }>) {
   const Mark = DESIGN_MARK[p.id];
   const h = t.site.products;
   return (
     <li id={"product-" + p.id} className="kz-entry kz-entry-design" data-product={p.id} data-side="plate-left">
-      <DesignPlate product={p} n={sectionFigure(SHOWN.length + 1)} t={t} />
+      <div className="kz-entry-plate">
+        <ShowcaseStill product={p.id} fig={sectionFigure(SHOWN.length + 1)} locale={locale} />
+      </div>
       <SpecimenTag
         className="kz-entry-tag"
         code={`KZ-${String(n).padStart(2, "0")}`}
@@ -295,7 +262,7 @@ export default function ProductShowcase({ locale }: Readonly<{ locale: string }>
         </ol>
         <ol className="kz-prod-list kz-prod-design" aria-label={s.inDesign.label}>
           {IN_DESIGN.map((p, i) => (
-            <DesignEntry key={p.id} product={p} n={PRODUCTS.length + i + 1} t={t} />
+            <DesignEntry key={p.id} product={p} n={PRODUCTS.length + i + 1} t={t} locale={locale} />
           ))}
         </ol>
         <Footnotes

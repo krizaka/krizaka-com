@@ -6,12 +6,13 @@
 // For every slide of every carousel: the mp4, the webm and the poster answer 200 with the right content-type; the
 // video is a real 16:9 (ffprobe width and height, not just a « wide » key), H.264 (mp4) or VP9 (webm); no frame is a
 // vertical picture pillarboxed in black bars; the last frame (the one a clip holds on screen) is not a black end card;
-// a slide without `audio` has no audio track. Needs ffmpeg and ffprobe and the network.
+// a slide without `audio` has no audio track. The still of a product in conception (krizaka-internal#2802): its photo answers
+// 200 as a JPEG and is a 16:9 picture. Needs ffmpeg and ffprobe and the network.
 import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { manifestObject } from "./bunny-layout.mjs";
-import { showcaseSlides, SHOWCASES } from "../lib/home-showcase.ts";
+import { showcaseSlides, showcaseStill, SHOWCASES, STILLS } from "../lib/home-showcase.ts";
 
 const ROOT = new URL("..", import.meta.url);
 const CDN = (process.env.NEXT_PUBLIC_MEDIA_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(/\/$/, "");
@@ -159,6 +160,25 @@ export async function problemsOf(carousel) {
   return problems;
 }
 
+/** What is wrong with the photo of a product in conception, as sentences (empty: fine). */
+export async function stillProblems(product) {
+  const { id, poster } = showcaseStill(product);
+  const name = `${product}/${id}`;
+  const r = await head(urlOf(poster));
+  const type = r.headers.get("content-type") ?? "";
+  if (r.status !== 200) {
+    return [`${name}.jpg: HTTP ${r.status}`];
+  }
+  if (!type.startsWith(TYPES.jpg)) {
+    return [`${name}.jpg: content-type ${type}, expected ${TYPES.jpg}`];
+  }
+  const [w, h] = tool("ffprobe", ["-show_entries", "stream=width,height", "-of", "csv=p=0", urlOf(poster)])
+    .trim()
+    .split(",")
+    .map(Number);
+  return isSixteenNine(w, h) ? [] : [`${name}.jpg: ${w}x${h} is not 16:9`];
+}
+
 async function main() {
   const flag = process.argv.indexOf("--only");
   const only = flag === -1 ? undefined : process.argv[flag + 1];
@@ -166,11 +186,16 @@ async function main() {
   for (const c of SHOWCASES.filter((x) => !only || x === only)) {
     all.push(...(await problemsOf(c)));
   }
+  for (const p of STILLS.filter((x) => !only || x === only)) {
+    all.push(...(await stillProblems(p)));
+  }
   if (all.length > 0) {
     console.error(all.join("\n"));
     process.exitCode = 1;
   } else {
-    console.log("showcase media: every file answers 200 with its type, a clean 16:9, no pillarbox, no black end card");
+    console.log(
+      "showcase media: every file answers 200 with its type, a clean 16:9, no pillarbox, no black end card; every still a 16:9 JPEG",
+    );
   }
 }
 

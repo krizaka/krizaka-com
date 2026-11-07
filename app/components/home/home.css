@@ -435,9 +435,6 @@ html[data-intro="play"] .kz-intro-sweep {
 .kz-entry[data-lit] .kz-entry-tag {
   border-color: var(--kz-accent);
 }
-.kz-entry[data-lit] .kz-entry-plate .pv {
-  box-shadow: var(--kz-shadow-lg);
-}
 @media (min-width: 1024px) {
   .kz-prod {
     grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
@@ -459,43 +456,10 @@ html[data-intro="play"] .kz-intro-sweep {
     order: -1;
   }
 }
-/* The products in conception: an entry like the others (plate left, tag right), after the products. The plate shows a
-   sample document drawn from tokens — demo data, said as demo, with the chip « Demo soon » (krizaka-internal#2302). */
+/* The products in conception: an entry like the others (plate left, tag right), after the products. The plate is one mood
+   photo in the carousels' frame (ShowcaseStill, showcase.css; krizaka-internal#2802). */
 .kz-prod-design {
   margin-top: clamp(40px, 5vw, 56px);
-}
-.kz-doc-sheet {
-  display: flex;
-  flex: none;
-  flex-direction: column;
-  gap: 8px;
-  margin: 16px auto 0;
-  width: min(100%, 15rem);
-  padding: 12px 14px;
-  overflow: hidden;
-  background: var(--kz-surface-0);
-  border: 1px solid var(--kz-border-subtle);
-  border-radius: var(--kz-radius-sm);
-  box-shadow: var(--kz-shadow-sm);
-}
-.kz-doc-title {
-  font-weight: 600;
-}
-.kz-doc-meta {
-  color: var(--kz-text-muted);
-  font-family: var(--kz-font-mono);
-  font-size: 11px;
-  line-height: 14px;
-}
-.kz-doc-line {
-  display: block;
-  flex: none;
-  height: 6px;
-  border-radius: 3px;
-  background: var(--kz-border-subtle);
-}
-.kz-doc-short {
-  width: 62%;
 }
 .kz-prod-notes {
   max-width: 62rem;
