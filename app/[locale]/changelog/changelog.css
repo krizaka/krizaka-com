@@ -1,0 +1,11 @@
+/* /changelog — the site's own touch on @krizaka/ui's changelog template (krizaka-internal#2814). The release chip sits in the
+   10rem date column; a long part name (« conversation-service 2026.11.04.2 ») wrapped nowhere and covered the change's tag.
+   It may now wrap inside its column. The general fix belongs to krizaka-ui (frozen): krizaka-internal#2804. */
+.kz-tpl-log-when .kz-fact {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  height: auto;
+  line-height: 1.35;
+  padding-block: 3px;
+}
