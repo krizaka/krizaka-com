@@ -27,12 +27,27 @@ export function internalKindOf(change: Pick<ChangeItem, "tag" | "text">, rule: P
   return rule.internal.find((k) => new RegExp(k.pattern, k.flags).test(change.text))?.id ?? null;
 }
 
-const visible = (changes: readonly ChangeItem[], rule: PublicRule) => changes.filter((c) => !internalKindOf(c, rule));
+/** Whether the page may serve a line as written. gen-changelog passes the build's own code-name guard
+ *  (scripts/check-code-names.mjs on the line in commercial words): release notes are read live, and a line that names a
+ *  retired export failed every build once it fell inside the newest entries (krizaka-internal#2880). Such a line is
+ *  dropped, whatever its tag: the site never serves a retired code name. The repository's own notes keep it. */
+export type Servable = (text: string) => boolean;
+const anyLine: Servable = () => true;
 
-/** A release with its internal lines out, or null when none is left. The French lines follow the English ones when the
- *  release wrote both in parallel (same count); otherwise each French line is judged on its own. */
-export function publicRelease<R extends Pick<Release, "changes" | "fr">>(release: R, rule: PublicRule): R | null {
-  const keep = release.changes.map((c) => !internalKindOf(c, rule));
+const shown = (c: Pick<ChangeItem, "tag" | "text">, rule: PublicRule, servable: Servable) =>
+  !internalKindOf(c, rule) && servable(c.text);
+const visible = (changes: readonly ChangeItem[], rule: PublicRule, servable: Servable) =>
+  changes.filter((c) => shown(c, rule, servable));
+
+/** A release with its internal lines (and the lines it could not serve) out, or null when none is left. The French lines
+ *  follow the English ones when the release wrote both in parallel (same count); otherwise each French line is judged on
+ *  its own. A French line the page could not serve is dropped in both cases. */
+export function publicRelease<R extends Pick<Release, "changes" | "fr">>(
+  release: R,
+  rule: PublicRule,
+  servable: Servable = anyLine,
+): R | null {
+  const keep = release.changes.map((c) => shown(c, rule, servable));
   const changes = release.changes.filter((_, i) => keep[i]);
   if (changes.length === 0) {
     return null;
@@ -41,7 +56,10 @@ export function publicRelease<R extends Pick<Release, "changes" | "fr">>(release
   if (!fr) {
     return { ...release, changes };
   }
-  const french = fr.length === release.changes.length ? fr.filter((_, i) => keep[i]) : visible(fr, rule);
+  const french =
+    fr.length === release.changes.length
+      ? fr.filter((c, i) => keep[i] && servable(c.text))
+      : visible(fr, rule, servable);
   return { ...release, changes, fr: french };
 }
 
@@ -49,4 +67,5 @@ export function publicRelease<R extends Pick<Release, "changes" | "fr">>(release
 export const publicReleases = <R extends Pick<Release, "changes" | "fr">>(
   releases: readonly R[],
   rule: PublicRule,
-): R[] => releases.map((r) => publicRelease(r, rule)).filter((r): r is R => r !== null);
+  servable: Servable = anyLine,
+): R[] => releases.map((r) => publicRelease(r, rule, servable)).filter((r): r is R => r !== null);
