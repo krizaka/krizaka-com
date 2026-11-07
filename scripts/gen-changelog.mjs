@@ -7,7 +7,9 @@
    - GitHub Releases of the products (Sovkora is several repositories) and of Krizaka Java: the repositories are the
      list of krizaka/.github `release-repos.json` (one source, also read by the weekly digest); a release written by the
      shared `release-notes` workflow carries an English and a French section, both kept.
-   Only highlights: a release without a change a reader would care about is dropped; the list is cut at 60 entries.
+   Only highlights: a release without a change a reader would care about is dropped; the list is cut at 60 entries. The
+   team's internal work (CI, tooling, tests, dependencies, release bumps, schemas) is left out by the rule written as data in
+   content/changelog-public.json (lib/changelog-public.ts, krizaka-internal#2832), before the cut.
    The public text is linted (lib/changelog.ts `releaseProblems`): no personal name, no em dash; a line that still has
    one fails the build, and the previous deployment stays up.
    GITHUB_TOKEN (when set) lifts the API rate limit. When a source cannot be reached the previous file is kept; without
@@ -29,11 +31,19 @@ import {
   siteReleaseUrl,
 } from "../lib/changelog.ts";
 import { commercialWords } from "../lib/commercial-words.ts";
+import { publicReleases } from "../lib/changelog-public.ts";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "changelog.json");
 const PACKAGES = ["ui", "tokens", "icons", "i18n", "tailwind", "charts"]; // krizaka-ui/packages/<dir>
 const REPOS_LIST = "https://raw.githubusercontent.com/krizaka/.github/main/release-repos.json";
 const MAX = 60;
+/** What the public page leaves out: the team's internal work (content/changelog-public.json). */
+const PUBLIC_RULE = JSON.parse(
+  readFileSync(
+    path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "content", "changelog-public.json"),
+    "utf8",
+  ),
+);
 const headers = {
   "user-agent": "krizaka-com-build",
   ...(process.env.GITHUB_TOKEN ? { authorization: `Bearer ${process.env.GITHUB_TOKEN}` } : {}),
@@ -91,8 +101,10 @@ const tasks = [
   ...(await productTasks().catch((e) => (console.warn(`changelog: ${e.message}`), []))),
 ];
 const settled = await Promise.allSettled(tasks.map((run) => run()));
-const releases = settled
-  .flatMap((s) => (s.status === "fulfilled" ? s.value : []))
+const releases = publicReleases(
+  settled.flatMap((s) => (s.status === "fulfilled" ? s.value : [])),
+  PUBLIC_RULE,
+)
   .sort(newestFirst)
   .slice(0, MAX);
 const problems = releaseProblems(releases);

@@ -21,3 +21,13 @@ test("floorFigure never exceeds the real count and hides what it cannot say", ()
   assert.equal(floorFigure(0), 0);
   assert.equal(floorFigure(Number.NaN), 0);
 });
+
+test("floorFigure says something above 0 for every count from 6 up (/docs read « more than 0 » at 10, krizaka-internal#2806)", () => {
+  assert.equal(floorFigure(10), 5, "10 is « more than 5 », never « more than 0 »");
+  assert.equal(floorFigure(100), 90);
+  assert.equal(floorFigure(1000), 950);
+  for (let n = 6; n < 200000; n += n < 3000 ? 1 : 97) {
+    const shown = floorFigure(n);
+    assert.ok(shown > 0 && shown < n, `${n} → ${shown}`);
+  }
+});
