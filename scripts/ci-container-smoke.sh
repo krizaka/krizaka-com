@@ -36,6 +36,9 @@ node scripts/check-overflow.mjs --base http://localhost:3000
 node --experimental-strip-types scripts/check-docs-hub.mjs --base http://localhost:3000
 # The home's carousels, on the real files: 200 and type, a clean 16:9, no pillarbox, no black end card (needs ffmpeg).
 if command -v ffprobe >/dev/null; then KRIZAKA_CHECK_MEDIA=1 node --experimental-strip-types --test tests/home-showcase-media.test.mjs; fi
+# The films play in a real browser (#2837): the trailer opens the hero and Sovkora's carousel, the phone's cut on a phone,
+# muted until « Sound », the carousel moves on at its end, the poster and a play button under reduced motion.
+node scripts/check-showcase-player.mjs --base http://localhost:3000
 # Accessibility: axe-core WCAG 2.1 AA (contrast, names, labels, landmarks) on every sitemap page, dark and light, phone and
 # desktop; a11y-baseline.json is the ratchet (a new violation fails, the count only goes down).
 node scripts/check-a11y.mjs --base http://localhost:3000

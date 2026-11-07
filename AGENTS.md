@@ -81,8 +81,8 @@
 - **/story lets a feeling show, not an explanation** (founder, 2026-11-06, krizaka-internal#2800: « on vend une émotion, on
   laisse voir une émotion »). The face of a chapter is its head (`SectionHeading`: « § n » in the margin, a lower-case note,
   the title), a line or two, its bird and **one clip of the home's carousels** (`lib/story-clips.ts`, `ClipFigure`): the brand
-  film's loop for who we are, Sovkora's tea for the engine, a feather pen signing for Verikora, a father on the canal for
-  Folioviv, the pigeon for the open stack, dawn over the river for what comes next. A clip is a live slide of its carousel (in the
+  film's loop for who we are, Sovkora's snowy lane for the engine, a magnifier at a rainy window for Verikora, a father on the canal for
+  Folioviv, the pigeon for the open stack, a hand that signs for what comes next. A clip is a live slide of its carousel (in the
   storyboard's `order`, so it passed `check-showcase-media.mjs`); a retired one or a file the manifest does not know fails the
   build, and its caption and alt are the carousel's own messages. The name and how we work have no clip, on purpose (their
   shots are retired, or none shows the work): no clip is forced. The diagrams (the engine's flow), the figures, the products'
@@ -114,8 +114,10 @@
   run, model and credits in `content/films/home-showcase.log.json`), uploaded under `home/showcase/<carousel>/` with
   `cdn-assets`, read by `lib/home-showcase.ts`: each slide has one 16:9 rendition on every screen, the phone included (object-fit: cover; no vertical, founder 2026-11-05);
   a slide missing a file fails the build, and `scripts/check-showcase-media.mjs` reads the real files (HTTP 200 and type, ffprobe 16:9, codecs, no pillarbox,
-  no black end card; a slide that fails is `retired` in the storyboard until remade). Sound is an option: clips are muted, a toggle (« Sound on ») exists only for a clip
-  with an audio track (none today: Runway's outputs are silent), and after a click hover or focus unmutes, for the session only. The products are reached one way, the bar's
+  no black end card; a slide that fails is `retired` in the storyboard until remade). **The home's promise stays compliance** (founder, 2026-11-07, krizaka-internal#2837): the h1 did not move, so the hero's carousel is the brand film, Krizaka Entreprise and a hand that signs (`film, entreprise, signature`), and **the Sovkora trailer opens Sovkora's carousel** (`trailer, pigeon, snow`; Verikora's is `sign, owl, loupe`; Folioviv's is unchanged). The trailer is a finished film of the storyboard's `films`, with its sound as the visitor's choice, its words in `site.home.films.trailer` (caption, alt, and the
+  transcript of its titles in the text version). **The media library's clips (`library`) play nowhere until the founder's annex B**: they are `retired` in the storyboard, with their reason, and leave their messages; a slide the founder takes out of a carousel is `retired` the same way (its files stay on the CDN). Sound is the visitor's choice: every clip starts muted; a « Sound » toggle (`aria-pressed`) sits on
+  the plate of a slide that has sound, and after its click that film sounds while it plays on screen; another
+  slide or scrolling away mutes it again; nothing is stored. The products are reached one way, the bar's
   « Products » (`barHref`: the bare anchor on the home, so it scrolls). `/story` is in the footer, « Contact us » in the bar.
   **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live under Docs (`StackTiles`,
   from `lib/stack.ts`); the products are _operated by Krizaka_, out of every open-source list, and no page here claims a
@@ -251,12 +253,17 @@
   own. No animation library for new work, no permanent `requestAnimationFrame`, no canvas; docs stay almost still (a
   reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui, not into a copy here.
   **Two blocks of the home move on their own. The carousels** (founder, 2026-11-05, krizaka-internal#2450;
-  `ShowcaseCarousel`). They advance every 6.5 s by a short fade (nothing travels), with WCAG 2.2.2's rules: a visible
-  pause / play, a pause while the pointer is over them, while the keyboard focus is in them and while they are off screen;
-  under `prefers-reduced-motion` (or Save-Data) nothing advances and no clip plays (posters, previous / next only);
-  previous / next are buttons, arrows work on them; every slide is a figure with its caption and its text alternative,
-  and each carousel has a server-rendered text version. Clips are muted, mounted only for the slide in view after the
-  page's load, in the viewport's rendition (no double download), so the h1 stays the LCP. @krizaka/ui's `MediaCarousel`
+  `ShowcaseCarousel`, its rules pure and tested in `lib/showcase-player.ts`). A video slide lasts as long as its video: the
+  carousel moves on at the clip's end, a clip never loops, so no last frame is held (krizaka-internal#2837); a still slide (or a
+  clip that cannot play) stays 6.5 s; slides change by a short fade (nothing travels). WCAG 2.2.2's rules: a visible pause /
+  play, and they hold while the pointer is over them, while the keyboard focus is in them (the clip pauses, then resumes) and
+  while they are off screen, until the visitor acts on the slide (sound, play); under `prefers-reduced-motion` (or Save-Data)
+  nothing moves on and no clip starts by itself (posters, previous / next, and a play button on a video slide; at its end the
+  poster comes back); previous / next are buttons, arrows work on them; every slide is a figure with its caption and its text
+  alternative, and each carousel has a server-rendered text version. Clips are muted, mounted only for the slide in view after
+  the page's load and once the carousel has been on screen (no film downloads below the fold), a film's phone cut chosen on the
+  client (`<source media>` is ignored by Chrome and Firefox before 120), so the LCP is a poster or the h1, never a clip; `scripts/check-showcase-player.mjs`
+  (container smoke) plays them in a real browser. @krizaka/ui's `MediaCarousel`
   never advances by itself: its `autoplay` variant is to be added in krizaka-ui, and the home moves to it then.
   **And « Where we are going »** (founder, 2026-11-05, krizaka-internal#2450; `DirectionLoop`):
   the light rests on one station (now, next, later) every 4.5 s and opens its details, with WCAG 2.2.2's rules — a visible
