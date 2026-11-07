@@ -3,6 +3,7 @@
 import Link from "next/link";
 import type { ComponentProps } from "react";
 import { usePathname } from "next/navigation";
+import { org } from "@krizaka/org";
 import { resolveFooterSettings, SiteFooter as FamilyFooter } from "@krizaka/ui/site-footer";
 import { familyLabels } from "@krizaka/ui/sites";
 import { useI18n } from "./I18nProvider";
@@ -28,7 +29,7 @@ export default function SiteFooter() {
       links: footerSettings.legal.links.map((l) => ({ ...l, href: localized(l.href, locale) })),
     },
   };
-  const config = resolveFooterSettings(settings, (key) => messageAt({ site: t.site }, key));
+  const config = resolveFooterSettings(settings, (key) => messageAt({ site: t.site }, key), org.links.social);
 
   return (
     <FamilyFooter

@@ -15,7 +15,7 @@ const messages = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read
 test("Kridoc is in design, named by @krizaka/org, never by its code name", () => {
   assert.deepEqual(
     IN_DESIGN.map((p) => [p.id, p.name, p.status]),
-    [["kachizaka", "Kridoc", "design"]],
+    [["kridoc", "Kridoc", "design"]],
   );
   assert.doesNotMatch(read("lib/products-in-design.ts"), /name: "/, "the name is data, never typed");
 });
@@ -39,7 +39,7 @@ test("the status has its words in both languages, and its stamp", () => {
 
 test("a product in design links its live coming-soon site and shows a « Demo soon » plate, nothing else that is not built", () => {
   const start = showcase.indexOf("function DesignPlate");
-  const entry = showcase.slice(start, showcase.indexOf("/** « Orazaka, our first build »"));
+  const entry = showcase.slice(start, showcase.indexOf("/** « Sovkora, our first build »"));
   assert.ok(start > 0 && entry.length > 0);
   // Not built: no version, no source, no bird, no note, no fields, no run, no sign-up.
   for (const absent of [
@@ -64,7 +64,7 @@ test("a product in design links its live coming-soon site and shows a « Demo so
 test("the site of a product in design is its commercial www address, never a code-name host", () => {
   for (const p of IN_DESIGN) {
     assert.equal(p.siteUrl, "https://www.kridoc.com");
-    assert.doesNotMatch(p.siteUrl, /kachizaka|dev\./);
+    assert.doesNotMatch(p.siteUrl, /dev\./);
   }
 });
 
@@ -83,7 +83,7 @@ test("the plate's words exist in both languages, say demo, and promise no date o
 });
 
 test("a product in design stays out of PRODUCTS, the hero, the nav, the sitemap, llms and the JSON-LD", () => {
-  assert.ok(!Object.keys(readProductStatuses(read("lib/products.ts"))).includes("kachizaka"));
+  assert.ok(!Object.keys(readProductStatuses(read("lib/products.ts"))).includes("kridoc"));
   const users = ["app", "lib"]
     .flatMap((d) => readdirSync(new URL(`../${d}/`, import.meta.url), { recursive: true }).map((f) => `${d}/${f}`))
     .filter((f) => /\.tsx?$/.test(f))
@@ -95,5 +95,5 @@ test("a product in design stays out of PRODUCTS, the hero, the nav, the sitemap,
 });
 
 test("the design status is never gated by the dev-preview checklists", () => {
-  assert.deepEqual(assertStatuses({ kachizaka: "design" }, {}, { today: "2026-11-03" }), []);
+  assert.deepEqual(assertStatuses({ kridoc: "design" }, {}, { today: "2026-11-03" }), []);
 });

@@ -7,7 +7,7 @@
 
 import sites from "./product-sites.json" with { type: "json" };
 
-export const PRODUCT_IDS = ["orazaka", "yomizaka", "akinaza"] as const;
+export const PRODUCT_IDS = ["sovkora", "verikora", "folioviv"] as const;
 export type ProductId = (typeof PRODUCT_IDS)[number];
 
 /** The public origin of a product (`https://www.verikora.com`). */

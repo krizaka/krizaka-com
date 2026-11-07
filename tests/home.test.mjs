@@ -16,7 +16,7 @@ import {
 } from "./helpers/source.mjs";
 
 // The home is one of the site's two views (Oussama, 2026-10-17; the other is Open source): the centred hero, the products
-// (Orazaka the foundation, the products it powers — the only place they are presented), the open-source stack in brief,
+// (Sovkora the foundation, the products it powers — the only place they are presented), the open-source stack in brief,
 // the principles in brief (Montréal and the closing contact left on 2026-10-22: /story is in the footer, Contact us in the bar). No product is pitched, nothing links to the old /docs.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
@@ -125,8 +125,8 @@ test("the products come from lib/products.ts: one card each, in the product's br
   );
   for (const s of SECTIONS) {
     const src = read(`app/components/home/${s}.tsx`);
-    assert.doesNotMatch(src, /["'](orazaka|yomizaka|akinaza)["']/, `${s} names a product by hand`);
-    assert.doesNotMatch(src, /brand-(orazaka|yomizaka|akinaza)/, `${s} paints one product's brand`);
+    assert.doesNotMatch(src, /["'](sovkora|verikora|folioviv)["']/, `${s} names a product by hand`);
+    assert.doesNotMatch(src, /brand-(sovkora|verikora|folioviv)/, `${s} paints one product's brand`);
   }
 });
 
@@ -292,14 +292,14 @@ test("the open-source section: three playable tiles, versions and downloads read
   }
 });
 
-test("Akinaza is for studios, salons and the self-employed, one short human line, never « compliant » (until a lawyer validates)", () => {
+test("Folioviv is for studios, salons and the self-employed, one short human line, never « compliant » (until a lawyer validates)", () => {
   for (const lang of ["en", "fr"]) {
     const text = JSON.stringify(messages(lang), (k, v) => v)
       .split("\n")
       .join(" ");
-    const akinaza = [...text.matchAll(/"akinaza":\{[^{}]*\}|"akinaza":"[^"]*"/g)].map((m) => m[0]).join(" ");
-    assert.doesNotMatch(akinaza, /conforme|conformité|compliant|compliance|complies/i, lang);
-    assert.doesNotMatch(akinaza, /bakeries|boulangeries/i, `${lang}: no on-site consumption businesses`);
+    const folioviv = [...text.matchAll(/"folioviv":\{[^{}]*\}|"folioviv":"[^"]*"/g)].map((m) => m[0]).join(" ");
+    assert.doesNotMatch(folioviv, /conforme|conformité|compliant|compliance|complies/i, lang);
+    assert.doesNotMatch(folioviv, /bakeries|boulangeries/i, `${lang}: no on-site consumption businesses`);
   }
   const en = JSON.stringify(messages("en")),
     fr = JSON.stringify(messages("fr"));
@@ -308,7 +308,7 @@ test("Akinaza is for studios, salons and the self-employed, one short human line
     ["en", messages("en")],
     ["fr", messages("fr")],
   ]) {
-    const line = m.site.products.cards.akinaza.line;
+    const line = m.site.products.cards.folioviv.line;
     assert.ok(line.length <= 60, `${lang}: one short line`);
     assert.doesNotMatch(line, /Loi 25|Loi 96|\bOS\b/, lang);
   }
@@ -329,8 +329,8 @@ test("the section list is the home's five sections, in the founder's order; the 
   assert.match(read("app/components/home/Principles.tsx"), /format\(p\.folio, folioOf\("principles"\)\)/);
 });
 
-// 2026-10-22 (Oussama): Akinaza and Yomizaka are presented as one need — « gestion et conformité » — in the hero's lead and
-// the products section, without the word « intelligent » (Akinaza's own rule: no AI wording for its product).
+// 2026-10-22 (Oussama): Folioviv and Verikora are presented as one need — « gestion et conformité » — in the hero's lead and
+// the products section, without the word « intelligent » (Folioviv's own rule: no AI wording for its product).
 test("the duo is named by its need: management and compliance tools", () => {
   const want = { en: /management and compliance tools/, fr: /outils de gestion et de conformité/ };
   for (const lang of ["en", "fr"]) {
@@ -392,7 +392,7 @@ test("the stack cards: the Motion host from the data, no playground control on a
   assert.doesNotMatch(typed, /github\.io|lab\.krizaka\.com/, "no host typed in the component");
   assert.ok(!calls(stack).some((c) => c.endsWith(".replace")), "no host rewritten in the component");
   assert.match(constString("lib/stack.ts", "LAB_SITE") ?? "", /^https:\/\/[a-z0-9.-]+$/, "one value in the data");
-  const lab = records("lib/stack.ts", "STACK").find((p) => p.actionPath === "/orazaka");
+  const lab = records("lib/stack.ts", "STACK").find((p) => p.actionPath === "/sovkora");
   assert.equal(lab?.url, "LAB_SITE", "the lab's scene derives from the site");
   assert.ok(hasCode(motion, "hint={calm ? undefined : w.hint}"), "a calm flow has no instruction to pick anything");
 });
@@ -455,13 +455,13 @@ test("the home's meta description does not call the products open source (AGENTS
 });
 
 // Rule 3 says « hosted in Canada »: the DigitalOcean region of this site and of Verikora's app stays Toronto (`tor`).
-test("rule 3 stays true: krizaka-com and yomizaka are deployed in the DigitalOcean region tor (Canada)", async () => {
+test("rule 3 stays true: krizaka-com and verikora are deployed in the DigitalOcean region tor (Canada)", async () => {
   const region = (yaml) => yaml.match(/^region:\s*(\S+)/m)?.[1];
   assert.equal(region(read("deploy/digitalocean/app.yaml")), "tor", "krizaka-com leaves Canada");
-  const url = "https://raw.githubusercontent.com/krizaka/yomizaka/main/deploy/digitalocean/dev.app.yaml";
+  const url = "https://raw.githubusercontent.com/krizaka/verikora/main/deploy/digitalocean/dev.app.yaml";
   const res = await fetch(url);
   assert.ok(res.ok, `${url}: ${res.status}`);
-  assert.equal(region(await res.text()), "tor", "yomizaka leaves Canada");
+  assert.equal(region(await res.text()), "tor", "verikora leaves Canada");
 });
 
 test("the accessibility claim is WCAG 2.1 AA, what the guard checks, never 2.2 (home and /docs)", () => {

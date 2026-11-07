@@ -18,8 +18,10 @@ import {
   tagOf,
   textProblems,
 } from "../lib/changelog.ts";
-import { findCodeNames } from "@krizaka/org";
+import { CODE_NAMES, findCodeNames } from "@krizaka/org";
 import { commercialWords } from "../lib/commercial-words.ts";
+import { ownPrs, prOf, urlsIn } from "../lib/changelog.ts";
+import { lastModified } from "../lib/lastmod.ts";
 import { FILTER_IDS, filterHref, filterOf, visibleEntries } from "../lib/changelog-filter.ts";
 import { changelogProblems } from "../scripts/check-changelog-build.mjs";
 
@@ -74,18 +76,18 @@ test("changesets: versions, dates, tags from the level, PR links, plain text, no
 });
 
 test("an identifier in backticks stays code: the page shows it as code, never as a code name in the words", () => {
-  // krizaka-com#561: a krizaka-ui note named `.brand-orazaka`; stripped of its backticks it read as a code name on /changelog.
+  // krizaka-com#561: a krizaka-ui note named `.brand-sovkora`; stripped of its backticks it read as a code name on /changelog.
   const md = `# @krizaka/ui
 
 ## 3.82.0
 
 ### Minor Changes
 
-- [#492](https://github.com/krizaka/krizaka-ui/pull/492) [\`f032b3b\`](https://github.com/x) Thanks [@x](https://github.com/x)! - Under a product brand (\`.brand-orazaka\`, \`-yomizaka\`) the margin ink is the accent of Orazaka.
+- [#492](https://github.com/krizaka/krizaka-ui/pull/492) [\`f032b3b\`](https://github.com/x) Thanks [@x](https://github.com/x)! - Under a product brand (\`.brand-sovkora\`, \`-verikora\`) the margin ink is the accent of Sovkora.
 `;
   const [r] = parseChangesets(md, "@krizaka/ui", () => "2026-11-01");
   const text = commercialWords(r.changes[0].text);
-  assert.equal(text, "Under a product brand (`.brand-orazaka`, `-yomizaka`) the margin ink is the accent of Sovkora.");
+  assert.equal(text, "Under a product brand (`.brand-sovkora`, `-verikora`) the margin ink is the accent of Sovkora.");
   assert.deepEqual(findCodeNames(text), [], "a code span is code, the guard's own rule");
   assert.match(
     read("app/[locale]/changelog/page.tsx"),
@@ -127,11 +129,11 @@ test("tags: breaking and security words win over the level", () => {
 test("release bodies: conventional titles tagged, housekeeping dropped, PR from the URL", () => {
   const body = [
     "## What's Changed",
-    "* feat(chat): voice replies by @oussamaABID in https://github.com/krizaka/orazaka/pull/12",
-    "* fix: the export no longer hangs by @oussamaABID in https://github.com/krizaka/orazaka/pull/13",
-    "* chore(deps): bump zod by @dependabot in https://github.com/krizaka/orazaka/pull/14",
-    "* feat!: new session API by @x in https://github.com/krizaka/orazaka/pull/15",
-    "**Full Changelog**: https://github.com/krizaka/orazaka/compare/a...b",
+    "* feat(chat): voice replies by @oussamaABID in https://github.com/krizaka/sovkora/pull/12",
+    "* fix: the export no longer hangs by @oussamaABID in https://github.com/krizaka/sovkora/pull/13",
+    "* chore(deps): bump zod by @dependabot in https://github.com/krizaka/sovkora/pull/14",
+    "* feat!: new session API by @x in https://github.com/krizaka/sovkora/pull/15",
+    "**Full Changelog**: https://github.com/krizaka/sovkora/compare/a...b",
   ].join("\n");
   const items = parseReleaseBody(body);
   assert.deepEqual(
@@ -254,15 +256,15 @@ const WORKFLOW_BODY = `## English
 
 New: 1. Fixed: 1.
 
-- feat: Reads a lease. https://github.com/krizaka/yomizaka/pull/12
-- fix: Stops the crash. https://github.com/krizaka/yomizaka/pull/13
+- feat: Reads a lease. https://github.com/krizaka/verikora/pull/12
+- fix: Stops the crash. https://github.com/krizaka/verikora/pull/13
 
 ## Français
 
 Nouveautés : 1. Corrections : 1.
 
-- feat: Lit un bail. https://github.com/krizaka/yomizaka/pull/12
-- fix: Corrige le plantage. https://github.com/krizaka/yomizaka/pull/13
+- feat: Lit un bail. https://github.com/krizaka/verikora/pull/12
+- fix: Corrige le plantage. https://github.com/krizaka/verikora/pull/13
 `;
 
 test("a release written by the shared workflow keeps both languages, tags and PRs; any other body is English alone", () => {
@@ -294,11 +296,11 @@ test("the French reader gets the French lines when the release wrote them, else 
 });
 
 test("a release of a product made of several repositories says which one, and its anchor differs", () => {
-  const a = { source: "Orazaka", part: "edge", version: "2026.10.22.1" };
-  const b = { source: "Orazaka", part: "studio", version: "2026.10.22.1" };
-  assert.equal(releaseLabel(a), "Orazaka edge 2026.10.22.1");
+  const a = { source: "Sovkora", part: "edge", version: "2026.10.22.1" };
+  const b = { source: "Sovkora", part: "studio", version: "2026.10.22.1" };
+  assert.equal(releaseLabel(a), "Sovkora edge 2026.10.22.1");
   assert.notEqual(anchorOf(a), anchorOf(b));
-  assert.equal(releaseLabel({ source: "Yomizaka", version: "2026.10.22.1" }), "Yomizaka 2026.10.22.1");
+  assert.equal(releaseLabel({ source: "Verikora", version: "2026.10.22.1" }), "Verikora 2026.10.22.1");
 });
 
 test("public text: an aside naming a person goes, an em dash becomes a colon, and the lint refuses what is left", () => {
@@ -308,7 +310,7 @@ test("public text: an aside naming a person goes, an em dash becomes a colon, an
   assert.deepEqual(textProblems("a — b"), ["an em dash"]);
   assert.deepEqual(textProblems("Reads a lease."), []);
   const release = {
-    source: "Yomizaka",
+    source: "Verikora",
     part: undefined,
     version: "1",
     changes: [{ tag: "fix", text: "Fixed by Abid." }],
@@ -325,18 +327,23 @@ test("no em dash in the changelog's words, in either language", () => {
 });
 
 test("the product filter: the address is the state, a paused product is not listed, an unknown value means everything", () => {
-  assert.equal(filterOf("yomizaka"), "yomizaka");
+  assert.equal(filterOf("verikora"), "verikora");
   // The products' waiting pages link by the commercial name (réunion 6, krizaka-internal#2629): no code name in their address.
-  assert.equal(filterOf("verikora"), "yomizaka");
-  assert.equal(filterOf("sovkora"), "orazaka");
-  assert.equal(filterOf("folioviv"), "akinaza");
+  assert.equal(filterOf("verikora"), "verikora");
+  assert.equal(filterOf("sovkora"), "sovkora");
+  assert.equal(filterOf("folioviv"), "folioviv");
+  // An old shared link keeps working: the retired ids (read from the org package) mean the product they became.
+  for (const [old, id] of Object.entries(CODE_NAMES)) {
+    assert.equal(filterOf(old), FILTER_IDS.includes(id) ? id : undefined, old);
+    assert.equal(filterOf(old.toUpperCase()), FILTER_IDS.includes(id) ? id : undefined, old);
+  }
   assert.equal(filterOf("nope"), undefined);
   assert.equal(filterOf(null), undefined);
-  assert.equal(filterHref("", "yomizaka"), "?produit=yomizaka");
+  assert.equal(filterHref("", "verikora"), "?produit=verikora");
   assert.equal(filterHref("?lang=fr&produit=ui", undefined), "?lang=fr");
   assert.equal(filterHref("?produit=ui", undefined), "?");
-  assert.deepEqual([...FILTER_IDS], ["orazaka", "yomizaka", "akinaza", "ui", "java"]);
-  const entries = [{ product: "yomizaka" }, { product: "paused" }, { product: "ui" }];
+  assert.deepEqual([...FILTER_IDS], ["sovkora", "verikora", "folioviv", "ui", "java"]);
+  const entries = [{ product: "verikora" }, { product: "paused" }, { product: "ui" }];
   assert.equal(visibleEntries(entries, undefined).length, 2);
   assert.deepEqual(visibleEntries(entries, "ui"), [{ product: "ui" }]);
 });
@@ -355,4 +362,33 @@ test("krizaka-com#357: the changelog's row is one size — the filters and the R
   assert.equal((view.match(/<ChipLink\b[^>]*size="md"/g) ?? []).length, 2);
   assert.match(view, /type="application\/rss\+xml"/);
   assert.doesNotMatch(read("app/[locale]/changelog/page.tsx"), /feed=\{<ButtonLink/);
+});
+
+test("a release's pull requests link the repository's current address, not the name it had when the note was written", () => {
+  const changes = [
+    { text: "a", pr: { number: 12, url: "https://github.com/krizaka/former-name/pull/12" } },
+    { text: "b" },
+  ];
+  assert.deepEqual(ownPrs(changes, "current-name"), [
+    { text: "a", pr: { number: 12, url: "https://github.com/krizaka/current-name/pull/12" } },
+    { text: "b" },
+  ]);
+});
+
+test("a pull request is read from a markdown link or a bare address, and only from a pull request address", () => {
+  const pr = { number: 293, url: "https://github.com/krizaka/repo/pull/293" };
+  assert.deepEqual(prOf("[#293](https://github.com/krizaka/repo/pull/293) fixes it"), pr);
+  assert.deepEqual(prOf("fix: x https://github.com/krizaka/repo/pull/293"), pr);
+  assert.equal(prOf("see https://github.com/krizaka/repo/issues/293"), undefined);
+  assert.equal(prOf("see https://example.com/krizaka/repo/pull/293"), undefined);
+  assert.equal(prOf("no address"), undefined);
+  assert.deepEqual(urlsIn('a (https://x.example/a) and "https://y.example/b" c'), [
+    "https://x.example/a",
+    "https://y.example/b",
+  ]);
+});
+
+test("the sitemap's date: a route without a page of its own still gets a date, the clock being the caller's", () => {
+  const now = new Date("2026-11-06T12:00:00Z");
+  assert.ok(lastModified("/no-such-page", now) instanceof Date);
 });

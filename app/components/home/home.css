@@ -675,7 +675,7 @@ html[data-intro="play"] .kz-intro-sweep {
   color: var(--kz-text-secondary);
 }
 
-/* Orazaka's entry (KZ-01): the same plate + specimen tag as the products; what it gives is folded in the tag. Tokens only. */
+/* Sovkora's entry (KZ-01): the same plate + specimen tag as the products; what it gives is folded in the tag. Tokens only. */
 .kz-entry-gives {
   margin: 10px 0 0;
   font-size: 14px;

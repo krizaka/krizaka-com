@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { findCodeNames } from "@krizaka/org";
 import { readFileSync } from "node:fs";
 import { PRODUCT_SHOWCASES, SHOWCASES, showcaseOf, showcaseProblems, showcaseSlides } from "../lib/home-showcase.ts";
 import { barHref } from "../lib/bar-href.ts";
@@ -42,11 +43,7 @@ test("the storyboard is coherent: one take per shot, an idea and a prompt each, 
     for (const s of slides) assert.match(s.wide, new RegExp(`^home/showcase/${c}/${s.id}-wide$`));
   }
   assert.ok(shotsOf(board).length > 0 && clipsOf(board).length > 0);
-  assert.doesNotMatch(
-    read("content/films/home-showcase.json"),
-    /yomizaka|akinaza|orazaka|kachizaka/i,
-    "commercial names only",
-  );
+  assert.deepEqual(findCodeNames(read("content/films/home-showcase.json")), [], "commercial names only");
 });
 
 test("the products' carousels follow the row: Verikora, Sovkora in the centre, Folioviv", () => {

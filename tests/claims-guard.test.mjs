@@ -27,7 +27,7 @@ const sources = ["app", "lib", "content"]
   );
 
 const LICENCE = /\b(FSL|BSL)\b|Functional Source|Business Source|Source License/i;
-const PRODUCT = /Orazaka|Yomizaka|Akinaza|Krizaka (?:Entreprise|Enterprise)/i;
+const PRODUCT = /Sovkora|Verikora|Folioviv|Krizaka (?:Entreprise|Enterprise)/i;
 
 test("no message or page claims a licence (FSL, BSL...) for a product (founder, 2026-11-01)", () => {
   for (const f of [...sources, "messages/en.json", "messages/fr.json"]) {

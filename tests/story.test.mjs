@@ -68,14 +68,14 @@ test("each chapter is readable in ten seconds: heading, a line or two, one proof
       next: st.next.lead,
     }))
       assert.ok(v.length <= 240, `${l}: ${k} lead is ${v.length} characters`);
-    for (const id of ["yomizaka", "akinaza"])
+    for (const id of ["verikora", "folioviv"])
       assert.ok(messages(l).products.cards[id].line.length <= 110, `${l}: ${id}`);
   }
 });
 
 test("each chapter wears the right bird, with its promise from the film or the brand reference; no bird twice", () => {
   const map = objectMap("lib/story.ts", "PRODUCT_BIRD");
-  assert.deepEqual(map, { orazaka: "duck", yomizaka: "owl", akinaza: "beaver" });
+  assert.deepEqual(map, { sovkora: "duck", verikora: "owl", folioviv: "beaver" });
   assert.deepEqual(Object.keys(map).sort(), [...productIds].sort(), "a bird for every product");
   const who = constString("lib/story.ts", "WHO_BIRD");
   const open = constString("lib/story.ts", "OPEN_BIRD");
@@ -160,7 +160,7 @@ test("the arcade stages are gone from /story", () => {
 
 test("each product shows its real take: a poster that plays on click in a lightbox, the mini-visual only as the fallback", () => {
   const takes = read("lib/story-takes.ts");
-  const ids = ["orazaka", "yomizaka", "akinaza"];
+  const ids = ["sovkora", "verikora", "folioviv"];
   for (const id of ids) assert.match(takes, new RegExp(`\\n  ${id}: \\{\\s*ratio:`), `${id} has a take`);
   // every file a take names is on the CDN (recorded in the manifest), in the language it needs
   const { files } = JSON.parse(read("lib/cdn-manifest.json"));
@@ -216,9 +216,9 @@ test("the chapters cast the right birds: falcon for who we are, pigeon for open 
   assert.match(story, /WHO_BIRD: StoryBird = "falcon"/);
   assert.match(story, /OPEN_BIRD: StoryBird = "pigeon"/);
   const cast = Object.fromEntries([...story.matchAll(/^\s+(\w+): "(\w+)",$/gm)].map((m) => [m[1], m[2]]));
-  assert.equal(cast.orazaka, "duck", "the engine builds (2026-10-30: the duck is Orazaka's everywhere)");
-  assert.equal(cast.yomizaka, "owl", "Yomizaka reads documents");
-  assert.equal(cast.akinaza, "beaver", "Akinaza builds the shop's books");
+  assert.equal(cast.sovkora, "duck", "the engine builds (2026-10-30: the duck is Sovkora's everywhere)");
+  assert.equal(cast.verikora, "owl", "Verikora reads documents");
+  assert.equal(cast.folioviv, "beaver", "Folioviv builds the shop's books");
   const birds = [...Object.values(cast), "falcon", "pigeon"];
   assert.equal(new Set(birds).size, birds.length, "never the same bird twice on the page");
   assert.match(
@@ -226,7 +226,7 @@ test("the chapters cast the right birds: falcon for who we are, pigeon for open 
     /bird=\{WHO_BIRD\}\s+promise=\{promiseOf\(t, WHO_BIRD\)\}/,
     "the who chapter's promise is its own bird's",
   );
-  assert.match(page, /bird=\{PRODUCT_BIRD\.orazaka\}\s+promise=\{promiseOf\(t, PRODUCT_BIRD\.orazaka\)\}/);
+  assert.match(page, /bird=\{PRODUCT_BIRD\.sovkora\}\s+promise=\{promiseOf\(t, PRODUCT_BIRD\.sovkora\)\}/);
   assert.match(page, /promise=\{promiseOf\(t, bird\)\}/);
 });
 
@@ -305,9 +305,9 @@ test("the captions route serves each take's lines same-origin and the player lis
 });
 
 test("the engine shows its web client answering (a persona, not the Old Port scene)", () => {
-  const orazaka = objectMap("lib/story-takes.ts", "SPECS").orazaka;
-  assert.equal(orazaka.ratio, "wide");
-  assert.equal(orazaka.mp4, "products/orazaka/home/take-{l}-dark.mp4");
+  const sovkora = objectMap("lib/story-takes.ts", "SPECS").sovkora;
+  assert.equal(sovkora.ratio, "wide");
+  assert.equal(sovkora.mp4, "products/sovkora/home/take-{l}-dark.mp4");
   const words = strings("lib/story-takes.ts").join("\n");
   assert.doesNotMatch(words, /old-port/, "the generated Old Port scene is no longer the engine's take");
   assert.doesNotMatch(words, /take-full|moment-fr-phone/);
@@ -316,13 +316,13 @@ test("the engine shows its web client answering (a persona, not the Old Port sce
     false,
     "the 3-minute walkthrough is out of the manifest",
   );
-  assert.ok(TAKE_PRODUCTS.includes("orazaka"));
+  assert.ok(TAKE_PRODUCTS.includes("sovkora"));
 });
 
-test("no take names Orazaka as the one doing a product's job", () => {
+test("no take names Sovkora as the one doing a product's job", () => {
   const caps = messages("en").story.products.take.captions;
-  for (const id of Object.keys(caps).filter((k) => k !== "orazaka"))
-    assert.doesNotMatch(caps[id].join(" "), /Orazaka/, id);
+  for (const id of Object.keys(caps).filter((k) => k !== "sovkora"))
+    assert.doesNotMatch(caps[id].join(" "), /Sovkora/, id);
   assert.doesNotMatch(JSON.stringify(caps), /\bQA\b/);
 });
 
@@ -478,11 +478,11 @@ test("/story never links to the founder's blog (blog.krizaka.com)", () => {
     assert.doesNotMatch(read(file), /blog\.krizaka\.com|BLOG_URL/, file);
 });
 
-// Only Orazaka, Yomizaka and Akinaza are in focus; the rule `no-departed-product` (krizaka/.github#413) proves no other name is left.
+// Only Sovkora, Verikora and Folioviv are in focus; the rule `no-departed-product` (krizaka/.github#413) proves no other name is left.
 test("/story lists only the products in focus", () => {
   assert.deepEqual(
     [...productIds].sort(),
-    ["akinaza", "orazaka", "yomizaka"],
+    ["folioviv", "sovkora", "verikora"],
     "lib/products.ts lists only the products in focus",
   );
 });

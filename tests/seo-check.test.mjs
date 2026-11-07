@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { auditHtml, auditRobots } from "../scripts/check-seo.mjs";
 
-const page = (over = {}) => `<html><head><title>${over.title ?? "Orazaka | Krizaka"}</title>
+const page = (over = {}) => `<html><head><title>${over.title ?? "Sovkora | Krizaka"}</title>
 <meta name="description" content="${"A description long enough to be useful to a search engine and its readers. ".repeat(1)}"/>
 <link rel="canonical" href="${over.canonical ?? "https://www.krizaka.com/en/products"}"/>
 <link rel="alternate" hrefLang="fr-CA" href="https://www.krizaka.com/fr/products"/>

@@ -21,8 +21,8 @@ import { Badge } from "@krizaka/ui/badge";
 import { format } from "@/lib/i18n";
 import type { ProductId } from "@/lib/products";
 import {
-  AKINAZA_INVOICE,
-  AKINAZA_PRICE,
+  FOLIOVIV_INVOICE,
+  FOLIOVIV_PRICE,
   DEMO_RUNS,
   PLATE_REST,
   PLATE_STEP_MS,
@@ -90,10 +90,10 @@ function Screen({
   );
 }
 
-function Orazaka({ id, name, playing }: PlateProps) {
-  const v = useI18n().t.site.home.visuals.orazaka;
+function Sovkora({ id, name, playing }: PlateProps) {
+  const v = useI18n().t.site.home.visuals.sovkora;
   const step = useStep(playing);
-  const run = format(v.run, { run: DEMO_RUNS.orazaka });
+  const run = format(v.run, { run: DEMO_RUNS.sovkora });
   return (
     <Screen
       id={id}
@@ -127,8 +127,8 @@ function Orazaka({ id, name, playing }: PlateProps) {
   );
 }
 
-function Yomizaka({ id, name, playing }: PlateProps) {
-  const v = useI18n().t.site.home.visuals.yomizaka;
+function Verikora({ id, name, playing }: PlateProps) {
+  const v = useI18n().t.site.home.visuals.verikora;
   const step = useStep(playing);
   return (
     <Screen
@@ -137,7 +137,7 @@ function Yomizaka({ id, name, playing }: PlateProps) {
       demo={v.demo}
       step={step}
       running={v.running}
-      caption={format(v.run, { run: DEMO_RUNS.yomizaka })}
+      caption={format(v.run, { run: DEMO_RUNS.verikora })}
       input={
         <p className="pv-file">
           <KnowledgeIcon size={16} aria-hidden />
@@ -167,11 +167,11 @@ function Yomizaka({ id, name, playing }: PlateProps) {
   );
 }
 
-function Akinaza({ id, name, playing }: PlateProps) {
+function Folioviv({ id, name, playing }: PlateProps) {
   const { t, locale } = useI18n();
-  const v = t.site.home.visuals.akinaza;
+  const v = t.site.home.visuals.folioviv;
   const step = useStep(playing);
-  const r = receipt(AKINAZA_PRICE);
+  const r = receipt(FOLIOVIV_PRICE);
   const money = new Intl.NumberFormat(`${locale}-CA`, { style: "currency", currency: "CAD" });
   return (
     <Screen
@@ -180,7 +180,7 @@ function Akinaza({ id, name, playing }: PlateProps) {
       demo={v.demo}
       step={step}
       running={v.running}
-      caption={format(v.run, { run: DEMO_RUNS.akinaza })}
+      caption={format(v.run, { run: DEMO_RUNS.folioviv })}
       input={
         <p className="pv-booking">
           <CalendarIcon size={16} aria-hidden />
@@ -197,7 +197,7 @@ function Akinaza({ id, name, playing }: PlateProps) {
         <div className="pv-invoice">
           <p className="pv-invoice-head">
             <BillingIcon size={14} aria-hidden />
-            <span className="pv-invoice-title">{format(v.invoice, { no: AKINAZA_INVOICE })}</span>
+            <span className="pv-invoice-title">{format(v.invoice, { no: FOLIOVIV_INVOICE })}</span>
             <Badge tone="success" size="sm" dot>
               {v.paid}
             </Badge>
@@ -224,9 +224,9 @@ function Akinaza({ id, name, playing }: PlateProps) {
 }
 
 const VISUALS: Record<ProductId, (p: PlateProps) => ReactNode> = {
-  orazaka: Orazaka,
-  yomizaka: Yomizaka,
-  akinaza: Akinaza,
+  sovkora: Sovkora,
+  verikora: Verikora,
+  folioviv: Folioviv,
 };
 
 export default function ProductVisuals({ id, name, playing }: PlateProps) {

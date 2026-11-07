@@ -55,7 +55,7 @@ const PROOF_ICON: Record<ServicesProofId, ReactNode> = {
   motion: <PlayIcon size={22} />,
   java: <ServerIcon size={22} />,
   ts: <PackIcon size={22} />,
-  orazaka: <ProductLogo id="orazaka" size={22} animated={false} />,
+  sovkora: <ProductLogo id="sovkora" size={22} animated={false} />,
   blog: <StoryIcon size={22} />,
 };
 

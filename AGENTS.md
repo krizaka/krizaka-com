@@ -3,8 +3,8 @@
 > Governance contract for **`krizaka-com`**, the public Next.js site of the company Krizaka: a lightweight
 > showcase — Krizaka UI, Krizaka Java, the story, open source, and one page that points to each product's own site.
 > This file is the single source of truth for how the site is built and themed.
-> The product engine has its **own** contract at `products/orazaka/AGENTS.md` (the Orazaka
-> workspace, [`krizaka/orazaka`](https://github.com/krizaka/orazaka), one repository per component) —
+> The product engine has its **own** contract at `products/sovkora/AGENTS.md` (the Sovkora
+> workspace, [`krizaka/sovkora`](https://github.com/krizaka/sovkora), one repository per component) —
 > do not mix the two.
 
 ---
@@ -30,31 +30,31 @@
   products section (`#products`) has a card per product (mark from `@krizaka/ui`, name, one neutral line, status,
   « See the site » → `siteUrl` with « Coming soon » as what it shows today (no app version: a coming-soon page runs none), and « Source »; sign-up is closed everywhere); `/products` and `/{en,fr}/products` answer 308 to `/#products` /
   `/<locale>#products`.
-- **Departed products** (Oussama, 2026-10-29, krizaka/.github#413): the org holds Yomizaka, Akinaza, Orazaka and the platforms. krizaka.com names no other
+- **Departed products** (Oussama, 2026-10-29, krizaka/.github#413): the org holds Verikora, Folioviv, Sovkora and the platforms. krizaka.com names no other
   product anywhere — code, messages, docs, configs, manifests; the org's conformance rule `no-departed-product` proves it (history is
   allow-listed in the registry only). An old product address (`/products/<anything else>`) answers 308 with `/#products`
   (`lib/product-redirects.ts`), never a dead site.
-- **Commercial names** (Oussama, 2026-11-01, krizaka-internal#2103): the site shows **Verikora** (code name yomizaka), **Folioviv** (akinaza) and **Sovkora** (orazaka, the engine: « Powered by Sovkora »); Ids, repositories and Bunny paths keep the code names; since 2026-11-04 the public addresses (`siteUrl`, redirects) are the commercial domains too. The display name is data (`brandOf(code).commercialName` of `@krizaka/org`, read by `lib/products.ts`), messages say the commercial name or take `{product}`, and `krizaka-code-names messages content` (in `npm run lint`) refuses a code name in a message or in `content/`; the built HTML is checked by the same bin in CI (`scripts/ci-container-smoke.sh`).
+- **Commercial names** (Oussama, 2026-11-01, krizaka-internal#2103): the site shows **Verikora**, **Folioviv** and **Sovkora** (the engine: « Powered by Sovkora »). **The ids are the commercial ones** (founder, 2026-11-06, krizaka-internal#2659/#2686: `verikora`, `folioviv`, `sovkora`, `kridoc`, the brand ids of `@krizaka/org` ≥ 1.1; the code names are retired): in the code, the messages' keys, the Bunny manifest paths (`products/<id>/…`), the repositories and the addresses. The display name is data (`displayName(id)` of `@krizaka/org`, read by `lib/products.ts`), messages say the commercial name or take `{product}`, and `krizaka-code-names messages content` (in `npm run lint`) refuses a code name in a message or in `content/`. The built pages are checked by `npm run build` (`scripts/check-code-names.mjs`: the same rule, one narrow allow-list in `scripts/code-names-allowed.json`, an exact real npm package name with its reason, never a file or a page; `tests/code-names-check.test.mjs`). **A retired id in an incoming link still works** and is never produced: the table is `CODE_NAMES` of `@krizaka/org`, copied to `lib/retired-product-ids.json` by `scripts/gen-product-sites.mjs` (next.config.ts cannot import the ESM-only package; `tests/product-sites.test.mjs` keeps it equal) and read by `lib/product-redirects.ts` (`/products/<old>`, `/docs/<old>`) and `lib/changelog-filter.ts` (`?produit=<old>`). Two places keep wire names on purpose: the mobile apps' discovery document (`lib/services.ts`, signed, keyed by the id the shipped apps read) and the legacy Bunny migration tooling (`scripts/bunny-layout.mjs`, `scripts/cdn-assets.mjs` and their tests, which describe the old folders).
 - **Old addresses redirect.** `lib/product-redirects.ts` (read by `next.config.ts`, tested by
-  `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Orazaka pages (`/architecture`,
+  `tests/product-redirects.test.mjs`): `/products/<p>(/…)`, `/docs/<p>/*` and the old Sovkora pages (`/architecture`,
   `/demos`, `/use-cases`…) → the product's www address — all 308, with or without the locale prefix.
   Never add a product page back: change the product's site.
 - **The changelog is data** (`/changelog`, krizaka/.github#184): `scripts/gen-changelog.mjs` reads, at build, the GitHub Releases of
   the repositories listed in `krizaka/.github/release-repos.json` (written by the shared `release-notes` workflow: `YYYY.MM.DD.N`,
-  an English and a French section; Orazaka is one product line) and the `@krizaka/*` versions. krizaka/.github's `changelog-rebuild.yml` (environment `dev`) rebuilds
+  an English and a French section; Sovkora is one product line) and the `@krizaka/*` versions. krizaka/.github's `changelog-rebuild.yml` (environment `dev`) rebuilds
   on the `product-release` dispatch and daily. The page filters by `?produit=` (the address is the state), lists only the
   products it presents and the stack, keeps its RSS and shows the French lines on `/fr`. The public
   text has no personal name and no em dash: `cleanText` (lib/changelog.ts) cleans, `releaseProblems` fails the build.
-- **Product first, Orazaka as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Yomizaka reads your lease »); Orazaka appears only as the engine — one discreet « Powered by Orazaka » line and the proof sections (run ids) — never as the one doing the product's job (« Orazaka reads your lease »). Each product repository tests that its hero and steps do not name Orazaka. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are orazaka#189).
-- A product **in development** (`status: "development"`: Orazaka, Yomizaka, Akinaza) is built in the open: its repository is
+- **Product first, Sovkora as the engine.** On a product's own site the product is the subject of the hero, the steps and the feature cards (« Verikora reads your lease »); Sovkora appears only as the engine — one discreet « Powered by Sovkora » line and the proof sections (run ids) — never as the one doing the product's job (« Sovkora reads your lease »). Each product repository tests that its hero and steps do not name Sovkora. The engine card here draws the flow both ways, from `lib/engine-uses.ts`, and claims only what runs (results, analytics; run events and webhooks are sovkora#189).
+- A product **in development** (`status: "development"`: Sovkora, Verikora, Folioviv) is built in the open: its repository is
   public, sign-up is closed, and it says « In development ». Each card links the product's www address (« See the site »), as do the nav, sitemap and JSON-LD; the card never links a `dev.<product>.com` host (it answers 308 to www).
-  Akinaza prepares tax returns and never files them, and is not for restaurants and bars — the card words say so, no more.
+  Folioviv prepares tax returns and never files them, and is not for restaurants and bars — the card words say so, no more.
 - **« Dev preview » is data, not words** ([krizaka/.github `docs/standards/dev-preview.md`](https://github.com/krizaka/.github/blob/main/docs/standards/dev-preview.md), ADR-002).
   `ProductStatus` has `devPreview`; every product has an explicit `status` (no status no longer means a badge). A product may wear
   `devPreview` only when the `dev-preview.json` at the root of its repository is complete (every criterion: fresh evidence URL or a
   justified `na`). `scripts/gen-dev-preview.mjs` (in `npm run build`) reads the checklists from GitHub raw, writes the git-ignored
   `lib/dev-preview-checklists.json`, checks the evidence URLs and **fails the build** if the status is not supported; the pure rules
-  are in `scripts/dev-preview-lib.mjs`, guarded by `tests/dev-preview.test.mjs`. No product wears it today (Orazaka went back to
+  are in `scripts/dev-preview-lib.mjs`, guarded by `tests/dev-preview.test.mjs`. No product wears it today (Sovkora went back to
   `development` on 2026-10-25, the CTO's call) and `WAIVERS` is empty; a waiver is time-boxed and its test fails the day it ends.
   Other statuses are never gated.
 - A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
@@ -65,11 +65,11 @@
   its name from `@krizaka/org`, the stamp, one neutral line and « See the site » to its **live coming-soon site** (`siteUrl`, from the org
   brand's `domains.site`: www.kridoc.com); the plate shows a sample document in demo data, said as demo, with the chip
   « Demo soon » (no date, no sign-up, no waiting list). No version, source, bird or note, and nothing in the nav, the hero's marks, the
-  sitemap, `llms.txt` or the JSON-LD (`tests/products-in-design.test.mjs`). Kridoc (code name `kachizaka`) is the one today; it
+  sitemap, `llms.txt` or the JSON-LD (`tests/products-in-design.test.mjs`). Kridoc (`kridoc`) is the one today; it
   moves to `PRODUCTS` when its repository builds something real.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
   only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click), and `brand-films/**` — the
-  brand film « Montrer son travail » (`lib/brand-film.ts`, made with Orazaka, approved 2026-11-01: the home's « Watch the
+  brand film « Montrer son travail » (`lib/brand-film.ts`, made with Sovkora, approved 2026-11-01: the home's « Watch the
   film », `/story` and its watch page `/films/montrer-son-travail`; no speech, so its text version is the list of its
   shots; its 9:16 cut plays upright on a phone once uploaded) and the loops of each bird, loaded by ui.krizaka.com and the
   products' sites by their hashed URL. A new film replaces it: upload, then `cdn-assets prune`. **/story is Krizaka's
@@ -82,6 +82,10 @@
   Products (status once), Open source, Krizaka — at most six links each, then one legal line that names the company once
   (`Technologies Krizaka Inc. · NEQ … · Montréal (Québec)`), the site's version and the legal links. `SiteFooter.tsx` only
   resolves the words and prefixes the locale; never a column typed in the component (`tests/footer.test.mjs`).
+  **Socials** (founder, 2026-11-06, krizaka-internal#365): the settings name the accounts by id (`social: ["instagram"]`);
+  `SiteFooter.tsx` passes `org.links.social` of `@krizaka/org` to `resolveFooterSettings`, which draws the icon and link on the
+  last line, and the Organization JSON-LD `sameAs` reads the same list. The Instagram address is never typed here.
+  The product ids are the brand ids of `@krizaka/org` 1.x themselves (no bridge); the repositories are the renamed ones.
 - **The home's order** (founder, 2026-11-05, krizaka-internal#2450; supersedes the 2026-10-22 chronology and #2445's
   « engine as one line »): the hero (`HomeHero`: who we are, a lead in two or three short sentences, **one action**, and on
   the right « Fig. 1 », the hero's carousel), then **the products in one row, Sovkora · Verikora · Folioviv** (founder, 2026-11-06,
@@ -206,7 +210,7 @@
 ## 4. Visualizations
 
 - **No architecture drawing here.** Krizaka Java's building blocks map (`ModuleMap`, generated from the POMs) lives on
-  java.krizaka.com (`krizaka-build/site`); the Orazaka models, journeys, pipeline and topology on the products'
+  java.krizaka.com (`krizaka-build/site`); the Sovkora models, journeys, pipeline and topology on the products'
   sites. A schema is added here only when a page here draws it.
 - **Mermaid is retired**, with no fallback: never rendered in the browser, never shipped (`mermaid` is not a dependency),
   and a ` ```mermaid ` fence in a published doc fails the build. (Unpublished
@@ -278,7 +282,7 @@
     go one step up — it never lifts and no light follows the pointer (`PointerLight` is a deprecated no-op).
   - `MascotQuote` — a rule told by a bird (`inline` in an unfolded card or a detail page, `callout` in a section, at
     most one per section). The bird carries a promise, never decoration: the falcon watches (security), the owl reads
-    and knows every face (documents, identity), the duck builds (code) — and is Orazaka's bird everywhere on this site (decision 2026-10-30; the open-source subject of /story wears the pigeon, which delivers) —, the flamingo answers or gets paid, the pigeon
+    and knows every face (documents, identity), the duck builds (code) — and is Sovkora's bird everywhere on this site (decision 2026-10-30; the open-source subject of /story wears the pigeon, which delivers) —, the flamingo answers or gets paid, the pigeon
     delivers. On one page no two subjects wear the same bird in the same mood and hue.
   - `DecisionList` — chose (✓) · refused (✕) · because (→) · what it costs (!). `CodeBlock` / `CodeTabs` — file name,
     highlighted code on the tokens, copy (Maven · Gradle). `TocLayout` + `Toc` — a reading page's sticky contents.
@@ -322,7 +326,7 @@
   `product=akinaza`…). The one exception here is the privacy officer's line on the privacy page (Quebec Law 25); `tests/no-public-email.test.mjs` guards it.
 - **Environment variables are named by bounded context** (krizaka/.github#46): `<CONTEXT>_<THING>` with CONTEXT one of
   `APP_` `DATABASE_` `AUTH_` `MEDIA_` `MAIL_` `PUSH_` `PAYMENTS_` `REALTIME_` `ABUSE_` `OBSERVABILITY_` `AI_` `OPERATOR_` —
-  never a product (`ORAZAKA_…`) nor a vendor (`BUNNY_…`, `MAILGUN_…`): a vendor is a value (`MAIL_PROVIDER=mailgun`);
+  never a product (`SOVKORA_…`) nor a vendor (`BUNNY_…`, `MAILGUN_…`): a vendor is a value (`MAIL_PROVIDER=mailgun`);
   `NEXT_PUBLIC_` only where the browser needs it, then the context. Every variable is declared once in `lib/env.ts`
   (zod); `tests/env.test.mjs` refuses an undeclared or misnamed one and keeps README's table (generated,
   `npm run docs:env`) in sync.
@@ -359,13 +363,14 @@
 
 - **Layout v2 (ADR-014, krizaka/.github, 2026-10-28)** — Bunny Storage (zone `krizaka-assets`) has four roots, at most five
   folders deep, in reading order: **the org**, then **the sites**, then **the apps** (`scripts/bunny-layout.mjs` is the single
-  source; the README.txt at the zone root is generated from it):
+  source, with its data in `bunny-layout-data.mjs` and its path grammar, named and tested parts instead of long regexes, in
+  `bunny-layout-grammar.mjs` (ADR-026 phase D, #654); the README.txt at the zone root is generated from it):
 
   ```
   org/v<n>/                 Krizaka's own data, the defaults of the family: org.json + apps/<app>.json (@krizaka/org),
                             defaults/<kind>/ + defaults/tones/<brand>/, brand/<brand>/, maps/{tiles,fonts}/, films/<series>/, discovery/
   sites/<site>/<kind>/…     what one public site shows (www, blog, ui, java, each dev site), hashed: home, tour, gallery, docs, personas…
-  apps/<app>/<kind>/…       runtime data of one app only (defaults, uploads, generated) — e.g. apps/akinaza/defaults/
+  apps/<app>/<kind>/…       runtime data of one app only (defaults, uploads, generated) — e.g. apps/folioviv/defaults/
   pr-assets/<repo>/<topic>/ PR evidence (§5.1)
   ```
 
@@ -380,7 +385,7 @@
 - **Another zone, not a root: `krizaka-gpu-out`** (2026-11-01, krizaka-internal#2121). Rented GPU pods write their outputs there directly and hold
   only that zone's key (`MEDIA_GPU_STORAGE_API_KEY`), never `MEDIA_STORAGE_API_KEY`; a compromised pod cannot touch the sites. It has no pull
   zone and no layout; objects live under `<day>/<run>/<pod>/` and are deleted after 7 days. The server promotes a validated clip to
-  `krizaka-assets` with `cdn-assets upload` (orazaka `scripts/gpu-out/cli.mjs promote`). The provider and zone are Orazaka admin settings.
+  `krizaka-assets` with `cdn-assets upload` (sovkora `scripts/gpu-out/cli.mjs promote`). The provider and zone are Sovkora admin settings.
 - **Default media URLs (avatars, banners, logos) come from the Krizaka org JSON** (`https://krizaka-assets.b-cdn.net/org/v1/org.json`,
   `@krizaka/org`: `listDefaults(kind)`, `defaultFor(kind, seed)`) — **never hard-coded or bundled in an app**; ast-grep's
   `no-hard-coded-default-media` refuses a `people/defaults`, `defaults/v<n>/` or `krizaka-defaults` path
@@ -405,8 +410,8 @@
   recorded with the same hash is skipped. `check` asks the pull zone for every recorded file; `prune` previews (and
   with `--yes` deletes) the old versions the manifest no longer names, never under another writer's prefixes (`FOREIGN_WRITERS` / `FOREIGN_WRITERS_V2` in `bunny-layout.mjs`: the product sites, the blog), and keeps the legacy `site/` copy of every current entry until the v2 release is live. Same credentials as §5.1, never printed.
 
-- Code never writes a media URL: `lib/cdn.ts` turns a logical path (`cdn("products/orazaka/gallery/
-tea-pour.webp")`, `video("products/orazaka/tour/tea-pour")` → `{ webm, mp4, poster }`) and fails the build on a
+- Code never writes a media URL: `lib/cdn.ts` turns a logical path (`cdn("products/sovkora/gallery/
+tea-pour.webp")`, `video("products/sovkora/tour/tea-pour")` → `{ webm, mp4, poster }`) and fails the build on a
   path the manifest does not know. The host is `NEXT_PUBLIC_MEDIA_CDN_URL` (read at build; default
   `https://krizaka-assets.b-cdn.net`); `next.config` allows it for `next/image` and redirects the old `/assets/…` URLs
   (still used by published `@krizaka/ui` examples) to their file on the CDN.
@@ -470,8 +475,8 @@ with a message and, where safe, a `fix:`; written for Tsx and `.ts` is parsed as
 3. The change reads correctly in **dark and light** mode.
 4. No hand-edited generated content; no hard-coded colors.
 
-_Agent-neutral contract for `krizaka-com`. The Orazaka engine contract lives at
-`products/orazaka/AGENTS.md`._
+_Agent-neutral contract for `krizaka-com`. The Sovkora engine contract lives at
+`products/sovkora/AGENTS.md`._
 
 <!-- BEGIN:nextjs-agent-rules -->
 

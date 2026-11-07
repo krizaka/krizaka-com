@@ -1,0 +1,13 @@
+{
+  "$comment": "The retired code names the BUILT site may still carry (krizaka-internal#2659). Narrow on purpose: an exact identifier, never a file or a page. Everything else is a failure of scripts/check-code-names.mjs.",
+  "tokens": [
+    {
+      "value": "@krizaka/orazaka-design-system",
+      "why": "A real npm package, published under this name; the products' manifests (lib/product-manifests.json) depend on it, so /docs lists it."
+    },
+    {
+      "value": "@krizaka/orazaka-shared",
+      "why": "A real npm package, published under this name; the products' manifests (lib/product-manifests.json) depend on it, so /docs lists it."
+    }
+  ]
+}

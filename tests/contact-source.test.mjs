@@ -5,11 +5,11 @@ import { contactHref, contactSourceFromPath, presetForSource, validateContact } 
 
 test("names the page a visitor comes from", () => {
   const cases = {
-    "/en/products/yomizaka": "yomizaka",
-    "/fr/products/yomizaka/demo": "yomizaka",
-    "/en/docs/yomizaka/api": "yomizaka",
-    "/en/products/orazaka/demos": "orazaka",
-    "/fr/products/akinaza": "akinaza",
+    "/en/products/verikora": "verikora",
+    "/fr/products/verikora/demo": "verikora",
+    "/en/docs/verikora/api": "verikora",
+    "/en/products/sovkora/demos": "sovkora",
+    "/fr/products/folioviv": "folioviv",
     "/en/open-source": "open-source",
     "/en/docs/ui/button": "docs-ui",
     "/en/docs/java": "docs-java",
@@ -51,8 +51,8 @@ test("keeps a clean slug as source and drops anything else", () => {
     kind: "support",
     message: "Hello there, a real message.",
   };
-  const ok = validateContact({ ...base, source: "yomizaka" });
-  assert.equal(ok.ok === true && ok.value.source, "yomizaka");
+  const ok = validateContact({ ...base, source: "verikora" });
+  assert.equal(ok.ok === true && ok.value.source, "verikora");
   const bad = validateContact({ ...base, source: "<script>alert(1)</script>" });
   assert.equal(bad.ok === true && bad.value.source, null);
 });

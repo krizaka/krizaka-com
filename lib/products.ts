@@ -5,7 +5,7 @@
    Four products are paused (2026-10-25): they are not presented here, and their repositories are private. */
 
 import { displayName } from "@krizaka/org";
-import { AKINAZA_REPO_URL, YOMIZAKA_REPO_URL } from "./site.ts";
+import { FOLIOVIV_REPO_URL, VERIKORA_REPO_URL } from "./site.ts";
 import { siteUrlOf, type ProductId } from "./product-hosts.ts";
 
 export type { ProductId } from "./product-hosts.ts";
@@ -32,24 +32,24 @@ export interface Product {
 
 export const PRODUCTS: Product[] = [
   {
-    id: "orazaka",
-    name: displayName("orazaka"),
+    id: "sovkora",
+    name: displayName("sovkora"),
     status: "development",
-    siteUrl: siteUrlOf("orazaka"),
-    repoUrl: "https://github.com/krizaka/orazaka",
+    siteUrl: siteUrlOf("sovkora"),
+    repoUrl: "https://github.com/krizaka/sovkora",
   },
   {
-    id: "yomizaka",
-    name: displayName("yomizaka"),
+    id: "verikora",
+    name: displayName("verikora"),
     status: "development",
-    siteUrl: siteUrlOf("yomizaka"),
-    repoUrl: YOMIZAKA_REPO_URL,
+    siteUrl: siteUrlOf("verikora"),
+    repoUrl: VERIKORA_REPO_URL,
   },
   {
-    id: "akinaza",
-    name: displayName("akinaza"),
+    id: "folioviv",
+    name: displayName("folioviv"),
     status: "paused",
-    siteUrl: siteUrlOf("akinaza"),
-    repoUrl: AKINAZA_REPO_URL,
+    siteUrl: siteUrlOf("folioviv"),
+    repoUrl: FOLIOVIV_REPO_URL,
   },
 ];

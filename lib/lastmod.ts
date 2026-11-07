@@ -1,5 +1,4 @@
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
 import path from "node:path";
 
 /* The sitemap's <lastmod>: the date of the last commit that touched a page's source, read from git at build. Where git
@@ -28,8 +27,9 @@ function commitDate(file?: string): Date | null {
   return date;
 }
 
-/** Last modification of a route (`""`, `"/products/orazaka"`): its page source, else the site's last commit, else now. */
-export function lastModified(routePath: string): Date {
+/** Last modification of a route (`""`, `"/open-source"`): its page source (git knows no commit for a path that is not a page),
+    else the site's last commit, else `now`. */
+export function lastModified(routePath: string, now: Date): Date {
   const page = path.join("app", "[locale]", routePath, "page.tsx");
-  return (existsSync(page) ? commitDate(page) : null) ?? commitDate() ?? new Date();
+  return commitDate(page) ?? commitDate() ?? now;
 }

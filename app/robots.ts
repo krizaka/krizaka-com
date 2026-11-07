@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
 /**
- * AI crawlers we explicitly welcome, so Krizaka/Orazaka can be cited as a source
+ * AI crawlers we explicitly welcome, so Krizaka/Sovkora can be cited as a source
  * in AI answers — Google AI Overviews/Gemini (Google-Extended), ChatGPT
  * (GPTBot/OAI-SearchBot), Perplexity, Claude, Apple Intelligence, Common Crawl.
  * The goal here is maximum citation surface, not content protection.

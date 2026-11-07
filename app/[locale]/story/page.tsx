@@ -368,15 +368,15 @@ export default async function StoryPage({ params }: Props) {
                 <ProductLogo id={ENGINE} size={36} animated={false} /> {st.engine.title}
               </>
             }
-            kicker={h.knowhow.orazaka.name}
+            kicker={h.knowhow.sovkora.name}
             lead={
               <>
                 <p className="st-line">{t.site.home.engine.line}</p>
                 <p>{st.engine.lead}</p>
               </>
             }
-            bird={PRODUCT_BIRD.orazaka}
-            promise={promiseOf(t, PRODUCT_BIRD.orazaka)}
+            bird={PRODUCT_BIRD.sovkora}
+            promise={promiseOf(t, PRODUCT_BIRD.sovkora)}
             proof={
               <>
                 <EngineFlowView t={t} />

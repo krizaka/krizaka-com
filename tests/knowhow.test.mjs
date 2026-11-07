@@ -23,7 +23,7 @@ test("every product of lib/products.ts proves a know-how, in both languages", ()
 
 test("the known know-hows are the ones Oussama named", () => {
   const k = messages("en").products.knowhow;
-  assert.match(k.orazaka.name, /engine/i);
+  assert.match(k.sovkora.name, /engine/i);
 });
 
 test("the home and /story render the products from PRODUCTS: the home's rows, /story's chapters", () => {
@@ -90,7 +90,7 @@ test("/story keeps its founder's facts and its chapters come from PRODUCTS (the 
     );
   }
   const story = read("lib/story.ts");
-  assert.match(story, /PROVES_FIRST[^=]*= \["yomizaka"\]/);
+  assert.match(story, /PROVES_FIRST[^=]*= \["verikora"\]/);
   assert.match(story, /ROSTER[^=]*= PRODUCTS\.map/);
   assert.match(story, /PRODUCT_CHAPTERS[^=]*= \[\.\.\.PROVES_FIRST, \.\.\.ROSTER\]/);
 });

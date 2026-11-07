@@ -5,7 +5,7 @@ import { PRODUCT_RECORDS, hasCode, jsx } from "./helpers/source.mjs";
 
 // The home's #products as Cahier field-guide entries (ADR-004 of krizaka-ui, #417; Oussama 2026-10-20: « our showcase,
 // refined, less AI, very complete and designed »). Each product is an entry: a plate (the live visual and its numbered
-// caption), a specimen tag (number, name, the stamp of its honest status, its line, its bird, what it runs on Orazaka)
+// caption), a specimen tag (number, name, the stamp of its honest status, its line, its bird, what it runs on Sovkora)
 // and a sourced footnote. The engine leads with its own tag and the flow.
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
 const showcase = read("app/components/home/ProductShowcase.tsx");

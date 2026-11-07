@@ -1,4 +1,4 @@
-// krizaka.com claims no Law 25 / GDPR / PIPEDA conformity: Orazaka keeps data on the operator's machines,
+// krizaka.com claims no Law 25 / GDPR / PIPEDA conformity: Sovkora keeps data on the operator's machines,
 // it holds no certification. The machine-read surfaces (llms-full.txt, the Organization JSON-LD) say so too.
 import { test } from "node:test";
 import assert from "node:assert/strict";

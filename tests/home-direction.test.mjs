@@ -67,7 +67,7 @@ test("licence words are true to the repositories: the products are never said to
     const text = readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8");
     assert.doesNotMatch(
       text,
-      /(Yomizaka|Akinaza)[^"]{0,120}(Apache License 2\.0|licence Apache 2\.0)[^"]{0,20}:/,
+      /(Verikora|Folioviv)[^"]{0,120}(Apache License 2\.0|licence Apache 2\.0)[^"]{0,20}:/,
       `${l}: a product named under Apache 2.0`,
     );
     assert.doesNotMatch(

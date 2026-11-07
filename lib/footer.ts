@@ -53,8 +53,8 @@ export const footerSettings = {
       { labelKey: "site.footer.terms", href: "/terms" },
     ],
   },
-  // No social link yet: @krizaka/org publishes none (krizaka-internal#365); the ids go here when it does.
-  social: [],
+  // The accounts to show, by id; their addresses are @krizaka/org's (`org.links.social`), resolved by SiteFooter.tsx.
+  social: ["instagram"],
 } satisfies FooterSettings;
 
 /** A message key (`site.footer.story`) read in a dictionary; a missing key fails loudly (the build), never prints a key. */

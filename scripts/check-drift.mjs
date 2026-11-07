@@ -4,7 +4,7 @@
    - product status (lib/products.ts) against each product's dev-preview.json on GitHub;
    - the committed snapshot of the products' manifests (lib/product-manifests.json) against its age;
    - every product's repository answers;
-   - every demo-shop address (*.akinaza.shop) a public source links answers;
+   - every demo-shop address (*.folioviv.shop) a public source links answers;
    - every media file of lib/cdn-manifest.json (videos, posters) answers on the pull zone.
    A source that cannot be read fails loudly (exit 1). Drift alone exits 0 unless --strict: the workflow's update PR fixes it. */
 import { readFileSync, readdirSync } from "node:fs";

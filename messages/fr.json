@@ -140,27 +140,27 @@
       "releaseNotes": "Journal des versions",
       "releaseNotesAria": "{name} : journal des versions",
       "cards": {
-        "orazaka": {
+        "sovkora": {
           "line": "L'IA qui reste chez vous. Vos modèles, vos machines : vos données ne sortent pas."
         },
-        "yomizaka": {
+        "verikora": {
           "line": "Lisez avant de signer. Verikora vérifie les papiers d'un dossier de location et cite chaque passage."
         },
-        "akinaza": {
+        "folioviv": {
           "line": "Vos rendez-vous et vos factures réglés, vos taxes préparées."
         }
       },
       "proofBy": "Prouvé par {name}",
       "knowhow": {
-        "orazaka": {
+        "sovkora": {
           "name": "Le moteur",
           "proof": "Chaque requête traverse un pipeline déterministe jusqu'au meilleur modèle local : vos documents, vos modèles, votre réseau — rien ne sort."
         },
-        "yomizaka": {
+        "verikora": {
           "name": "La lecture des documents",
           "proof": "Un bail vérifié règle par règle au regard de la loi en vigueur à une date, un PDF examiné à la recherche de retouches : chaque constat cite son passage, chaque vérification est un run Sovkora tracé."
         },
-        "akinaza": {
+        "folioviv": {
           "name": "Tenir une boutique, pour moins cher",
           "proof": "Prise de rendez-vous, factures bilingues TPS/TVQ au cent près, un grand livre que la base garde équilibré et un rapport de taxes préparé pour Revenu Québec, que le commerçant vérifie et produit. Données au Canada."
         }
@@ -172,8 +172,8 @@
         "label": "Propulsé par Sovkora",
         "planned": "prévu",
         "uses": {
-          "yomizaka": "vérifications de documents, chacune une exécution tracée",
-          "akinaza": "l'assistant fiscal"
+          "verikora": "vérifications de documents, chacune une exécution tracée",
+          "folioviv": "l'assistant fiscal"
         },
         "sends": "Chaque produit envoie requêtes, documents et prompts au moteur",
         "gets": "reçoit en retour : {list}",
@@ -260,9 +260,9 @@
           "site": "site"
         },
         "notes": {
-          "orazaka": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
-          "yomizaka": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Sovkora tracée.",
-          "akinaza": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise."
+          "sovkora": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
+          "verikora": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Sovkora tracée.",
+          "folioviv": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise."
         },
         "birds": {
           "beaver": "le castor"
@@ -270,7 +270,7 @@
         "inDesign": {
           "label": "En conception",
           "lines": {
-            "kachizaka": "Vos documents d'entreprise, rangés et retrouvés."
+            "kridoc": "Vos documents d'entreprise, rangés et retrouvés."
           },
           "plate": {
             "demoSoon": "Démo bientôt",
@@ -281,15 +281,15 @@
         },
         "rowLabel": "Nos trois produits, le moteur au centre",
         "roles": {
-          "yomizaka": "vérifie les papiers",
-          "orazaka": "le moteur",
-          "akinaza": "fait tourner la boutique"
+          "verikora": "vérifie les papiers",
+          "sovkora": "le moteur",
+          "folioviv": "fait tourner la boutique"
         },
         "siteValue": "{host} · pas encore ouvert",
         "highlights": {
-          "yomizaka": "Vous allez adorer : une clause « pas d'enfants » repérée, l'article 1899 cité.",
-          "orazaka": "Vous allez adorer le studio court métrage : un brief devient un film monté.",
-          "akinaza": "Vous allez adorer votre déclaration de TPS et TVQ préparée depuis vos factures."
+          "verikora": "Vous allez adorer : une clause « pas d'enfants » repérée, l'article 1899 cité.",
+          "sovkora": "Vous allez adorer le studio court métrage : un brief devient un film monté.",
+          "folioviv": "Vous allez adorer votre déclaration de TPS et TVQ préparée depuis vos factures."
         }
       },
       "stack": {
@@ -428,7 +428,7 @@
         }
       },
       "visuals": {
-        "orazaka": {
+        "sovkora": {
           "demo": "démo",
           "promptLabel": "Demande",
           "prompt": "Résume ce contrat de service en trois points.",
@@ -441,7 +441,7 @@
           "model": "Modèle local, sur votre serveur",
           "run": "exécution {run}"
         },
-        "yomizaka": {
+        "verikora": {
           "demo": "démo",
           "file": "Bail résidentiel.pdf",
           "pages": "3 pages",
@@ -455,7 +455,7 @@
           "law": "C.c.Q., art. 1904, al. 1",
           "run": "exécution {run}"
         },
-        "akinaza": {
+        "folioviv": {
           "demo": "démo",
           "bookingLabel": "Réservation",
           "service": "Coupe courte",
@@ -771,15 +771,15 @@
           "watchRender": "Voir une scène rendue par le moteur",
           "renderPlayer": "Vidéo : une scène rendue par {name}",
           "captions": {
-            "orazaka": [
+            "sovkora": [
               "Le client web sur son site de dev : la persona de démo pose une question et Sovkora écrit la réponse."
             ],
-            "yomizaka": [
+            "verikora": [
               "Un bail est déposé dans la bibliothèque.",
               "Verikora le lit et garde son texte.",
               "Une recherche sur « dépôt » trouve la clause dans chaque bail."
             ],
-            "akinaza": [
+            "folioviv": [
               "Un client choisit un service et réserve.",
               "La propriétaire voit les promenades du jour.",
               "Un rapport de promenade et une photo partent vers le client.",
@@ -788,8 +788,8 @@
           }
         },
         "proofs": {
-          "yomizaka": "Chaque règle cite son article de loi. Les règles québécoises attendent encore la relecture d'un avocat, et l'écran le dit : il trie, il ne donne pas d'avis juridique. Inscriptions fermées pendant nos essais sur de vrais baux.",
-          "akinaza": "Rendez-vous, factures avec TPS et TVQ, un grand livre que la base de données garde équilibré, et un rapport de taxes que le commerçant relit et dépose lui-même. Le travail est en pause pendant que nous menons Verikora."
+          "verikora": "Chaque règle cite son article de loi. Les règles québécoises attendent encore la relecture d'un avocat, et l'écran le dit : il trie, il ne donne pas d'avis juridique. Inscriptions fermées pendant nos essais sur de vrais baux.",
+          "folioviv": "Rendez-vous, factures avec TPS et TVQ, un grand livre que la base de données garde équilibré, et un rapport de taxes que le commerçant relit et dépose lui-même. Le travail est en pause pendant que nous menons Verikora."
         }
       },
       "birds": {
@@ -811,7 +811,7 @@
       "next": {
         "nav": "La suite",
         "title": "La suite",
-        "lead": "Verikora passe en premier : c'est le produit que nous menons jusqu'à ses premiers utilisateurs, et Sovkora le fait tourner. Folioviv attend son tour. Kridoc se précise avant d'être construit. Aucune date promise.",
+        "lead": "Verikora passe en premier : c'est le produit que nous menons jusqu'à ses premiers utilisateurs, et Sovkora est prévu pour le faire tourner. Folioviv attend son tour. Kridoc se précise avant d'être construit. Aucune date promise.",
         "wire": "Brancher Sovkora à {products}, où son usage est encore prévu.",
         "reach": "Amener {products} en préversion de développement, chacun prouvé sur sa propre liste de contrôle.",
         "boardAria": "Où en est chaque produit",
@@ -1344,11 +1344,11 @@
     "structuredData": {
       "organization": "Krizaka (Technologies Krizaka Inc.) est un studio logiciel montréalais qui construit des produits open source — Sovkora, Verikora et Folioviv, chacun sur son propre site — et la pile qui les porte : Krizaka UI (ui.krizaka.com) et Krizaka Java (java.krizaka.com).",
       "family": {
-        "orazaka": "Moteur d'orchestration d'IA souverain et sur site : conversation, connaissances, tâches et automatisation chez vous.",
+        "sovkora": "Moteur d'orchestration d'IA souverain et sur site : conversation, connaissances, tâches et automatisation chez vous.",
         "krizaka-ui": "Le design system de Krizaka : composants React et React Native, tokens, icônes, polices et graphiques.",
         "krizaka-java": "Les briques Spring Boot de chaque service Krizaka, publiées sur Maven Central sous com.krizaka.",
-        "yomizaka": "Des baux, contrats et factures lus et vérifiés par Sovkora. En développement.",
-        "akinaza": "Vos rendez-vous, vos factures et vos taxes, réglés, pour les salons, studios et travailleurs autonomes du Québec. En développement."
+        "verikora": "Des baux, contrats et factures lus et vérifiés par Sovkora. En développement.",
+        "folioviv": "Vos rendez-vous, vos factures et vos taxes, réglés, pour les salons, studios et travailleurs autonomes du Québec. En développement."
       },
       "socialImage": {
         "tagline": "Des logiciels open source, faits à Montréal.",
@@ -1767,9 +1767,9 @@
       "filterLabel": "Filtrer par produit",
       "filters": {
         "all": "Tout",
-        "orazaka": "Sovkora",
-        "akinaza": "Folioviv",
-        "yomizaka": "Verikora",
+        "sovkora": "Sovkora",
+        "folioviv": "Folioviv",
+        "verikora": "Verikora",
         "ui": "Krizaka UI",
         "java": "Krizaka Java"
       },
@@ -1855,7 +1855,7 @@
           "title": "Krizaka TypeScript",
           "line": "Des briques TypeScript pour le serveur, sur npm, chaque paquet documenté sur son site."
         },
-        "orazaka": {
+        "sovkora": {
           "title": "Sovkora",
           "line": "Le moteur d'IA derrière nos produits, avec son code source sur GitHub."
         },

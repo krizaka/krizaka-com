@@ -1,6 +1,6 @@
 /* The site's media — product tours, the gallery, the home backdrop — live on Bunny (the krizaka-assets storage zone,
    under sites/, layout v2 of ADR-014), never in the repository. scripts/cdn-assets.mjs uploads a file as `<name>.<hash>.<ext>` and records
-   its hash in lib/cdn-manifest.json; this module turns a logical path (`products/orazaka/tour/tea-pour.mp4`) into that
+   its hash in lib/cdn-manifest.json; this module turns a logical path (`products/sovkora/tour/tea-pour.mp4`) into that
    URL. A URL never changes content, so the CDN and browsers may keep it as long as they like.
 
    NEXT_PUBLIC_MEDIA_CDN_URL switches the host (a custom hostname later) without touching the code; it is read at build time.
@@ -22,7 +22,7 @@ const versioned = (path: string, hash: string): string => {
   return `${path.slice(0, dot)}.${hash}${path.slice(dot)}`;
 };
 
-/** `products/orazaka/tour/tea-pour.mp4` → `https://…/sites/orazaka/tour/tea-pour.<hash>.mp4`. */
+/** `products/sovkora/tour/tea-pour.mp4` → `https://…/sites/sovkora/tour/tea-pour.<hash>.mp4`. */
 export function cdn(path: string): string {
   const hash = FILES[path];
   if (!hash)

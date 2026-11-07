@@ -8,7 +8,7 @@ export const CRITERIA = [
   "site.signup-closed",
   "site.qa-signin",
   "journey.core",
-  "journey.ai-via-orazaka",
+  "journey.ai-via-sovkora",
   "ui.krizaka-ui",
   "ui.themes-devices",
   "ux.ia-review",
@@ -31,7 +31,7 @@ export const CRITERIA = [
 
 /** Where `na` (not applicable, with a reason) is allowed. */
 export const NA_ALLOWED = new Set([
-  "journey.ai-via-orazaka",
+  "journey.ai-via-sovkora",
   "mobile.build",
   "mobile.ux-review",
   ...CRITERIA.filter((c) => c.startsWith("admin.")),
@@ -42,7 +42,7 @@ export const MAX_AGE_DAYS = 60;
 
 /** Products that wore « Dev preview » before the gate existed keep it until this date while their gaps close. The test
  *  `the real waivers have not expired` fails the day it ends. */
-export const WAIVERS = {}; // none: Orazaka is `development`
+export const WAIVERS = {}; // none: Sovkora is `development`
 
 const DAY = 86_400_000;
 const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);

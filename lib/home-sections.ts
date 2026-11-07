@@ -13,7 +13,7 @@ export function folioOf(section: HomeSection): { page: number; total: number } {
 
 /** The products' row on the home (founder, 2026-11-06, krizaka-internal#2714; was Verikora, Sovkora, Folioviv in #2450):
  *  Sovkora, the engine the products run on, first, then Verikora, then Folioviv, then any other product as listed. */
-export const PRODUCT_ORDER = ["orazaka", "yomizaka", "akinaza"] as const;
+export const PRODUCT_ORDER = ["sovkora", "verikora", "folioviv"] as const;
 
 /** The one product the home serves (krizaka-internal#2445): its reader is the property manager, so the hero's primary
  *  action writes to us on this product's topic of the contact form (lib/contact.ts), and its figure shows this product first. */

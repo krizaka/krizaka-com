@@ -15,8 +15,8 @@ EXPECT=308 check http://localhost:3000/en/open-source
 # Two views (2026-10-17): /products merged into the home, 308 to its products section.
 EXPECT=308 check http://localhost:3000/en/products
 # The products live on their own sites: their old addresses answer 308 (lib/product-redirects.ts).
-EXPECT=308 check http://localhost:3000/en/products/yomizaka
-EXPECT=308 check http://localhost:3000/docs/orazaka/cli
+EXPECT=308 check http://localhost:3000/en/products/verikora
+EXPECT=308 check http://localhost:3000/docs/sovkora/cli
 EXPECT=200 check http://localhost:3000/sitemap.xml
 EXPECT=200 check http://localhost:3000/llms.txt
 EXPECT=307 check http://localhost:3000/

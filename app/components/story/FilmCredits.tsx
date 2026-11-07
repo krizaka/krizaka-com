@@ -1,6 +1,6 @@
 "use client";
 
-/* « Film generated with Orazaka · credits »: the models and tools in one short list, in a @krizaka/ui Dialog.
+/* « Film generated with Sovkora · credits »: the models and tools in one short list, in a @krizaka/ui Dialog.
    The captions live in the film's <track> only. */
 
 import { Dialog } from "@krizaka/ui/dialog";

@@ -19,16 +19,21 @@ test("the home title is the company's; its description names the products and th
 test("the Organization is in Montréal and points to GitHub", () => {
   const graph = read("lib/structured-data.ts");
   assert.match(graph, /addressLocality: "Montréal"/);
-  assert.match(graph, /sameAs: \[GITHUB_ORG_URL/);
+  assert.match(
+    graph,
+    /sameAs: \[GITHUB_ORG_URL, NPM_ORG_URL, \.\.\.org\.links\.social\.map\(/,
+    "the social accounts come from @krizaka/org",
+  );
+  assert.doesNotMatch(graph, /instagram\.com/);
 });
 
 test("the Organization owns the products and the open-source sites, each published by it", () => {
   const sd = read("lib/structured-data.ts");
   assert.match(sd, /owns: owned\.map/);
   for (const url of [
-    'siteUrlOf("orazaka")',
-    'siteUrlOf("yomizaka")',
-    'siteUrlOf("akinaza")',
+    'siteUrlOf("sovkora")',
+    'siteUrlOf("verikora")',
+    'siteUrlOf("folioviv")',
     "https://java.krizaka.com",
   ]) {
     assert.ok(sd.includes(url), `${url} is owned by the Organization`);

@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { entrySide, productOrder } from "../lib/home-sections.ts";
-const PRODUCTS = ["orazaka", "yomizaka", "akinaza", "kachizaka"].map((id) => ({ id }));
+const PRODUCTS = ["sovkora", "verikora", "folioviv", "kridoc"].map((id) => ({ id }));
 
 const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, import.meta.url), "utf8"));
 
@@ -10,8 +10,8 @@ const msg = (l) => JSON.parse(readFileSync(new URL(`../messages/${l}.json`, impo
 // first, then Verikora, then Folioviv, then the rest as listed; the sides alternate by position.
 test("the products' row: Sovkora first, then Verikora, then Folioviv, then the rest as listed", () => {
   const ids = productOrder(PRODUCTS).map((p) => p.id);
-  assert.deepEqual(ids, ["orazaka", "yomizaka", "akinaza", "kachizaka"]);
-  const sides = ["orazaka", "yomizaka", "akinaza"].map((id) => entrySide(PRODUCTS, id));
+  assert.deepEqual(ids, ["sovkora", "verikora", "folioviv", "kridoc"]);
+  const sides = ["sovkora", "verikora", "folioviv"].map((id) => entrySide(PRODUCTS, id));
   assert.deepEqual(
     sides,
     ["plate-left", "card-left", "plate-left"],
@@ -56,11 +56,11 @@ test("Sovkora is an entry like the products: its specimen tag, its carousel as a
   assert.match(gives, /<details className="kz-entry-gives"/, "what it gives is folded in the tag");
   assert.match(fn, /<Bird bird=\{PRODUCT_BIRD\[p\.id\]\}/, "its mascot, the data's");
   assert.match(gives, /ENGINE_USES/, "what it powers is read from lib/engine-uses.ts");
-  assert.doesNotMatch(gives, /webhook|run events|SSE/i, "only what runs is said (orazaka#189)");
+  assert.doesNotMatch(gives, /webhook|run events|SSE/i, "only what runs is said (sovkora#189)");
   assert.match(
     readFileSync(new URL("../lib/story.ts", import.meta.url), "utf8"),
-    /orazaka: "duck"/,
-    "the duck builds: Orazaka's bird everywhere",
+    /sovkora: "duck"/,
+    "the duck builds: Sovkora's bird everywhere",
   );
   const css = readFileSync(new URL("../app/components/home/home.css", import.meta.url), "utf8");
   assert.doesNotMatch(css, /\.kz-foundation/);

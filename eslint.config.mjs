@@ -13,7 +13,7 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Vendor + the nested Orazaka engine (separate project, mid-refactor —
+    // Vendor + the nested Sovkora engine (separate project, mid-refactor —
     // also excluded from tsconfig). Linting these polluted the gate with
     // thousands of vendored/generated issues and can never be "clean".
     "node_modules/**",

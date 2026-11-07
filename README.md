@@ -12,9 +12,9 @@
 <p align="center">
   <a href="https://scorecard.dev/viewer/?uri=github.com/krizaka/krizaka-com"><img src="https://api.scorecard.dev/projects/github.com/krizaka/krizaka-com/badge?style=flat-square" alt="OpenSSF Scorecard" /></a>
   <img src="https://img.shields.io/github/package-json/dependency-version/krizaka/krizaka-com/next?style=flat-square&label=Next.js" alt="Next.js (live from package.json)" />
-  <a href="https://github.com/krizaka/orazaka"><img src="https://img.shields.io/badge/AI_Engine-Sovkora-f67e23?style=flat-square" alt="Sovkora" /></a>
-  <a href="https://github.com/krizaka/yomizaka"><img src="https://img.shields.io/badge/Documents_(in_development)-Verikora-5362c6?style=flat-square" alt="Verikora (in development)" /></a>
-  <a href="https://github.com/krizaka/akinaza"><img src="https://img.shields.io/badge/Shops_(in_development)-Folioviv-2f6f4e?style=flat-square" alt="Folioviv (in development)" /></a>
+  <a href="https://github.com/krizaka/sovkora"><img src="https://img.shields.io/badge/AI_Engine-Sovkora-f67e23?style=flat-square" alt="Sovkora" /></a>
+  <a href="https://github.com/krizaka/verikora"><img src="https://img.shields.io/badge/Documents_(in_development)-Verikora-5362c6?style=flat-square" alt="Verikora (in development)" /></a>
+  <a href="https://github.com/krizaka/folioviv"><img src="https://img.shields.io/badge/Shops_(in_development)-Folioviv-2f6f4e?style=flat-square" alt="Folioviv (in development)" /></a>
   <a href="https://github.com/krizaka"><img src="https://img.shields.io/badge/GitHub_Org-krizaka-196df5?style=flat-square" alt="Krizaka Organization" /></a>
   <img src="https://img.shields.io/badge/Loi%2025%20%2F%20GDPR-success?style=flat-square" alt="Compliance" />
 </p>
@@ -27,9 +27,9 @@
 
 | Product | What it is | Status | Page |
 |---|---|---|---|
-| [Sovkora](https://github.com/krizaka/orazaka) | Sovereign, on-premise AI orchestration engine | In development | [www.sovkora.com](https://www.sovkora.com) |
-| [Verikora](https://github.com/krizaka/yomizaka) | Your documents, read and checked by Sovkora | In development (sign-up closed) | [www.verikora.com](https://www.verikora.com) |
-| [Folioviv](https://github.com/krizaka/akinaza) | Bookings, invoices and a GST/QST ledger for independent Québec shops; prepares the return, never files it | In development (sign-up closed) | [www.folioviv.com](https://www.folioviv.com) |
+| [Sovkora](https://github.com/krizaka/sovkora) | Sovereign, on-premise AI orchestration engine | In development | [www.sovkora.com](https://www.sovkora.com) |
+| [Verikora](https://github.com/krizaka/verikora) | Your documents, read and checked by Sovkora | In development (sign-up closed) | [www.verikora.com](https://www.verikora.com) |
+| [Folioviv](https://github.com/krizaka/folioviv) | Bookings, invoices and a GST/QST ledger for independent Québec shops; prepares the return, never files it | In development (sign-up closed) | [www.folioviv.com](https://www.folioviv.com) |
 
 ---
 

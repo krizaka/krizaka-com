@@ -2,7 +2,7 @@
 
 /* Krizaka Lab, live, in the « Build with our open source » section: the engine flow of @krizaka/ui in a small frame,
    with two of the lab's settings (on /open-source), or at its calm level (the home's row: slow photons and breath, no hint, no control) — the layout and what travels. Four apps around one engine, drawn neutrally (the
-   home's real flow is on Orazaka's card); the lab has the rest. Words arrive as props (site.home.stack.motion). */
+   home's real flow is on Sovkora's card); the lab has the rest. Words arrive as props (site.home.stack.motion). */
 
 import { useState } from "react";
 import { EngineFlow, type FlowLayout } from "@krizaka/ui/engine-flow";

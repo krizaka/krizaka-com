@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { existsSync, readFileSync } from "node:fs";
 
-// Orazaka is the engine every product's AI runs on (2026-10-16): the home and /products show it as the foundation (a
+// Sovkora is the engine every product's AI runs on (2026-10-16): the home and /products show it as the foundation (a
 // wide card, CardGrid `foundation`) with the other products as the cards it powers; /story's engine stage shows the
 // same card. What each product uses it for is honest: a use not wired to a real Studio says "planned".
 const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
@@ -20,7 +20,7 @@ test("every use names a product of lib/products.ts, never the engine itself, and
   assert.ok(uses.length >= 2);
   for (const u of uses) {
     assert.match(products, new RegExp(`id: "${u.id}"`), `${u.id} is a product`);
-    assert.notEqual(u.id, "orazaka");
+    assert.notEqual(u.id, "sovkora");
     for (const l of ["en", "fr"]) assert.ok(messages[l].site.products.engine.uses[u.id], `${l}: uses.${u.id}`);
   }
   for (const l of ["en", "fr"])
@@ -33,7 +33,7 @@ test("a planned use is said planned: the products not wired yet are flagged, the
       .filter((u) => u.planned)
       .map((u) => u.id)
       .sort(),
-    ["akinaza"],
+    ["folioviv"],
   );
   const home = read("app/components/home/ProductShowcase.tsx");
   assert.match(home, /use\?\.planned \? t\.site\.home\.products\.enginePlanned : t\.site\.home\.products\.engineUse/);
@@ -54,10 +54,10 @@ test("a planned use is said planned: the products not wired yet are flagged, the
 test("the products stand in one row, the engine first — no foundation frame, no card in a card", async () => {
   const home = read("app/components/home/ProductShowcase.tsx");
   const { PRODUCT_ORDER, productOrder } = await import("../lib/home-sections.ts");
-  assert.deepEqual(PRODUCT_ORDER, ["orazaka", "yomizaka", "akinaza"], "Sovkora, Verikora, Folioviv");
+  assert.deepEqual(PRODUCT_ORDER, ["sovkora", "verikora", "folioviv"], "Sovkora, Verikora, Folioviv");
   assert.deepEqual(
-    productOrder([{ id: "akinaza" }, { id: "yomizaka" }, { id: "orazaka" }]).map((p) => p.id),
-    ["orazaka", "yomizaka", "akinaza"],
+    productOrder([{ id: "folioviv" }, { id: "verikora" }, { id: "sovkora" }]).map((p) => p.id),
+    ["sovkora", "verikora", "folioviv"],
   );
   assert.match(home, /const SHOWN = productOrder\(PRODUCTS\);/);
   assert.match(home, /<ol className="kz-prod-row"/, "the row of the three, each to its entry");
@@ -79,8 +79,8 @@ test("the products stand in one row, the engine first — no foundation frame, n
   assert.doesNotMatch(css, /\.kz-foundation/, "the engine wears the products' tag, not a foundation plate");
   assert.match(
     read("lib/products.ts"),
-    /id: "orazaka",\s+name: displayName\("orazaka"\),\s+status: "development"/,
-    "Orazaka is in development too: its tag stamps it so, like the others",
+    /id: "sovkora",\s+name: displayName\("sovkora"\),\s+status: "development"/,
+    "Sovkora is in development too: its tag stamps it so, like the others",
   );
   assert.match(home, /status: \{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}/);
 });
@@ -93,8 +93,8 @@ test("each product's entry links to the engine, and the engine's tag to each pro
   assert.match(home, /ENGINE_USES/, "what it powers is read from lib/engine-uses.ts");
 });
 
-// The flow is two-way (2026-10-17): products -> Orazaka (requests, documents, prompts), Orazaka -> products (results,
-// analytics). Only what runs is claimed: run events / signed webhooks are orazaka#189 (open) and are not drawn nor said.
+// The flow is two-way (2026-10-17): products -> Sovkora (requests, documents, prompts), Sovkora -> products (results,
+// analytics). Only what runs is claimed: run events / signed webhooks are sovkora#189 (open) and are not drawn nor said.
 test("the diagram shows both directions, from data, claiming only what runs", () => {
   assert.ok(
     uses.every((u) => u.back.length > 0 && u.back.includes("results")),
@@ -102,7 +102,7 @@ test("the diagram shows both directions, from data, claiming only what runs", ()
   );
   for (const u of uses)
     for (const b of u.back)
-      assert.ok(["results", "analytics"].includes(b), `${u.id}: '${b}' is not live (events/webhooks are orazaka#189)`);
+      assert.ok(["results", "analytics"].includes(b), `${u.id}: '${b}' is not live (events/webhooks are sovkora#189)`);
   assert.deepEqual(
     uses.filter((u) => u.back.includes("analytics")).map((u) => u.id),
     [],
@@ -133,7 +133,7 @@ test("the text version of the drawing is a list of messages in both languages, w
 
 // The engine section uses @krizaka/ui's EngineFlow (2026-10-20, the coordinator's decisions): radial on desktop and
 // tablet, top to bottom on a phone, both ways only where it runs, planned products dim and still, photons, S-shaped
-// Bézier conduits, no settings for visitors, a node says what it uses Orazaka for with a link to its site.
+// Bézier conduits, no settings for visitors, a node says what it uses Sovkora for with a link to its site.
 test("the home's engine card draws @krizaka/ui's EngineFlow from the data, with no settings for visitors", () => {
   const view = read("app/components/home/EngineFlowView.tsx");
   assert.match(

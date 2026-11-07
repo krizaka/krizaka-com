@@ -3,7 +3,7 @@
    Usage:
      node scripts/changelog-draft.mjs --heading "3.23.0" < titles.txt      (one PR title per line)
      git log --format=%s v1.0.0..HEAD | node scripts/changelog-draft.mjs --heading "1.1.0"
-     node scripts/changelog-draft.mjs --heading "1.1.0" --gh krizaka/orazaka --since 2026-10-10   (merged PRs via gh)
+     node scripts/changelog-draft.mjs --heading "1.1.0" --gh krizaka/sovkora --since 2026-10-10   (merged PRs via gh)
    chore / ci / test / docs / refactor lines are housekeeping and left out; `feat!:` and security words are surfaced. */
 
 import { execFileSync } from "node:child_process";

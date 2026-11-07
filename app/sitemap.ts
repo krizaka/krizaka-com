@@ -39,7 +39,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
     return locales.map((loc) => ({
       url: `${baseUrl}/${loc}${path}`,
-      lastModified: lastModified(path),
+      lastModified: lastModified(path, new Date()),
       changeFrequency,
       priority,
       alternates: { languages },

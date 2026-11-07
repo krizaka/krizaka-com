@@ -1,5 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import { findCodeNames } from "@krizaka/org";
 import { existsSync, readFileSync } from "node:fs";
 import { siteHostOf, siteUrlOf, PRODUCT_IDS } from "../lib/product-hosts.ts";
 import { cssDecls, strings } from "./helpers/source.mjs";
@@ -8,6 +9,12 @@ import { PRODUCTS } from "../lib/products.ts";
 // Founder, 2026-11-04 (krizaka-internal#2373): the products' public addresses are their commercial www domains, which show a
 // « coming soon » page until each product opens there. A coming-soon page runs no app: the card reads no version from it.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+
+test("lib/retired-product-ids.json equals the org package's historic table, for the presented products", async () => {
+  const { retiredProductIds } = await import("../scripts/gen-product-sites.mjs");
+  assert.deepEqual(JSON.parse(read("lib/retired-product-ids.json")), retiredProductIds());
+  assert.deepEqual(Object.values(retiredProductIds()).sort(), ["folioviv", "sovkora", "verikora"]);
+});
 
 test("lib/product-sites.json equals @krizaka/org (run scripts/gen-product-sites.mjs when the package changes)", async () => {
   const { productSites } = await import("../scripts/gen-product-sites.mjs");
@@ -23,9 +30,9 @@ test("each product's public address is its commercial www domain, from @krizaka/
   assert.deepEqual(
     PRODUCT_IDS.map((id) => [id, siteUrlOf(id), siteHostOf(id)]),
     [
-      ["orazaka", "https://www.sovkora.com", "www.sovkora.com"],
-      ["yomizaka", "https://www.verikora.com", "www.verikora.com"],
-      ["akinaza", "https://www.folioviv.com", "www.folioviv.com"],
+      ["sovkora", "https://www.sovkora.com", "www.sovkora.com"],
+      ["verikora", "https://www.verikora.com", "www.verikora.com"],
+      ["folioviv", "https://www.folioviv.com", "www.folioviv.com"],
     ],
   );
 });
@@ -65,7 +72,7 @@ test("a product card: the name is plain text, one link per destination, each acc
 });
 
 // The tag's foot styles its links as ink (@krizaka/ui blocks.css `.kz-tag-foot a { color: inherit }`, unlayered), which beat the
-// Button's `text-on-accent`: the « See the site » label drew the tag's ink on the brand fill, under 4.5:1 on Orazaka's orange
+// Button's `text-on-accent`: the « See the site » label drew the tag's ink on the brand fill, under 4.5:1 on Sovkora's orange
 // (ci / Container image, a11y color-contrast, #606). The action wears `kz-tag-action`, whose colours are the Button's again.
 test("the card's action keeps the Button's colours inside the tag's foot (contrast on every brand fill)", () => {
   const foot = read("app/components/home/ProductShowcase.tsx");
@@ -76,7 +83,7 @@ test("the card's action keeps the Button's colours inside the tag's foot (contra
   assert.equal(decls["text-decoration"], "none", "a button is not underlined like the quiet links");
 });
 
-test("no page, message or llms file links a code-name host of a product (www.<code>.com, dev.<code>.com)", () => {
+test("no page, message or llms file links a development host (dev.<name>.com) or a retired code-name host of a product", () => {
   const files = [
     "messages/en.json",
     "messages/fr.json",
@@ -84,5 +91,8 @@ test("no page, message or llms file links a code-name host of a product (www.<co
     "content/llms-full.txt",
     "lib/products.ts",
   ];
-  for (const f of files) assert.doesNotMatch(read(f), /(?:www|dev)\.(?:orazaka|yomizaka|akinaza)\.com/, f);
+  for (const f of files) {
+    assert.doesNotMatch(read(f), /dev\.(?:sovkora|verikora|folioviv)\.com/, f);
+    assert.deepEqual(findCodeNames(read(f)), [], f);
+  }
 });

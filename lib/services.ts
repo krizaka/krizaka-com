@@ -13,6 +13,11 @@
 
 import type { ProductId } from "./products";
 
+/** The product ids of the discovery document, as the shipped mobile apps read them (`services.<id>`): a wire contract, so it
+    keeps the id the apps were built with and moves with them (a coordinated change of sovkora-mobile and this document),
+    not with the site's own ids. `lib/retired-product-ids.json` says which product each one is. */
+type WireId = "orazaka" | "yomizaka" | "akinaza";
+
 export type ServiceEnvironment = "dev" | "prod";
 
 export interface ServiceMessage {
@@ -40,7 +45,7 @@ export interface ServiceEntry {
 /** The key that signs today (the vault's `APP_DISCOVERY_SIGNING_KEY_K1`); `k2` is the standby, kept offline. */
 export const SERVICES_KEY_ID = "k1";
 
-export const SERVICES: Partial<Record<ProductId, Partial<Record<ServiceEnvironment, ServiceEntry>>>> = {
+export const SERVICES: Partial<Record<WireId, Partial<Record<ServiceEnvironment, ServiceEntry>>>> = {
   orazaka: {
     dev: {
       apiBase: "https://dev.sovkora.com/edge",
@@ -54,7 +59,7 @@ export const SERVICES: Partial<Record<ProductId, Partial<Record<ServiceEnvironme
 
 /** The domains a product's addresses may live on, besides krizaka.com: its own commercial domain (`sovkora.com`). */
 export const PRODUCT_DOMAINS: Record<ProductId, string> = {
-  orazaka: "sovkora.com",
-  yomizaka: "verikora.com",
-  akinaza: "folioviv.com",
+  sovkora: "sovkora.com",
+  verikora: "verikora.com",
+  folioviv: "folioviv.com",
 };

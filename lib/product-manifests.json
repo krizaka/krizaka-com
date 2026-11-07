@@ -1,19 +1,20 @@
 {
-  "readAt": "2026-11-02",
+  "readAt": "2026-11-06",
   "products": {
-    "orazaka": {
+    "sovkora": {
       "sources": [
-        "orazaka-web-client:package.json",
-        "orazaka-mobile-client:package.json",
-        "orazaka-edge:pom.xml",
-        "orazaka-ai-engine:pom.xml",
-        "orazaka-automation-service:pom.xml",
-        "orazaka-conversation-service:pom.xml",
-        "orazaka-job-service:pom.xml",
-        "orazaka-knowledge-service:pom.xml"
+        "sovkora-web:package.json",
+        "sovkora-mobile:package.json",
+        "sovkora-edge-service:pom.xml",
+        "sovkora-engine:pom.xml",
+        "sovkora-automation-service:pom.xml",
+        "sovkora-conversation-service:pom.xml",
+        "sovkora-job-service:pom.xml",
+        "sovkora-knowledge-service:pom.xml"
       ],
       "npm": [
         "@krizaka/a11y-audit",
+        "@krizaka/app-config",
         "@krizaka/auth",
         "@krizaka/charts",
         "@krizaka/config",
@@ -45,10 +46,10 @@
         "krizaka-users-api",
         "krizaka-users-client"
       ],
-      "evidence": ["orazaka-web-client:src/core/hooks/useJobSSE.ts"]
+      "evidence": ["sovkora-web:src/core/hooks/useJobSSE.ts"]
     },
-    "yomizaka": {
-      "sources": ["yomizaka:apps/web/package.json"],
+    "verikora": {
+      "sources": ["verikora:apps/web/package.json"],
       "npm": [
         "@krizaka/api-keys",
         "@krizaka/audit",
@@ -64,7 +65,6 @@
         "@krizaka/i18n",
         "@krizaka/icons",
         "@krizaka/intl",
-        "@krizaka/orazaka-client",
         "@krizaka/org",
         "@krizaka/organize",
         "@krizaka/payments",
@@ -72,6 +72,7 @@
         "@krizaka/query",
         "@krizaka/rate-limit",
         "@krizaka/settings",
+        "@krizaka/sovkora-client",
         "@krizaka/storage",
         "@krizaka/tailwind",
         "@krizaka/time",
@@ -82,8 +83,8 @@
       "maven": [],
       "evidence": []
     },
-    "akinaza": {
-      "sources": ["akinaza:apps/web/package.json", "akinaza:apps/mobile/package.json"],
+    "folioviv": {
+      "sources": ["folioviv:apps/web/package.json", "folioviv:apps/mobile/package.json"],
       "npm": [
         "@krizaka/api-keys",
         "@krizaka/app-client",

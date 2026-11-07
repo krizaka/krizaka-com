@@ -33,15 +33,15 @@ export const FOUNDATION_PARTS = {
 export type FoundationPart = keyof typeof FOUNDATION_PARTS;
 
 /** The engine: the product the others are powered by (the cell says so instead of "Yes"). */
-export const ENGINE = "orazaka";
+export const ENGINE = "sovkora";
 
 /** Decided, tracked, not shipped: shown as "Planned", never as "Yes". Each line names its issue.
  */
 export const PLANNED: Record<string, readonly KitId[]> = {
-  // Yomizaka: every analysis is an Orazaka run by design; "Yes" once a run is recorded on dev (lib/demo-run.ts of krizaka/yomizaka).
-  yomizaka: ["engine"],
-  // Akinaza: the tax-assistant Studio on Orazaka (the contract is in packages/mcp; "Yes" once a real run on dev).
-  akinaza: ["engine"],
+  // Verikora: every analysis is an Sovkora run by design; "Yes" once a run is recorded on dev (lib/demo-run.ts of krizaka/verikora).
+  verikora: ["engine"],
+  // Folioviv: the tax-assistant Studio on Sovkora (the contract is in packages/mcp; "Yes" once a real run on dev).
+  folioviv: ["engine"],
 };
 
 /** What the manifests of one product say (lib/product-manifests.json). */
@@ -51,9 +51,9 @@ export interface ProductManifest {
   npm: string[];
   /** The `krizaka-*` Maven artifacts its pom.xml files depend on — the Java platform kit. */
   maven: string[];
-  /** Files that prove what a manifest cannot show (Orazaka's own SSE hook). */
+  /** Files that prove what a manifest cannot show (Sovkora's own SSE hook). */
   evidence: string[];
-  /** A real Orazaka run of this product on dev (its run id, read from the product's recorded run): it runs on the engine. */
+  /** A real Sovkora run of this product on dev (its run id, read from the product's recorded run): it runs on the engine. */
   engineRun?: string;
 }
 export type ProductManifests = Record<string, ProductManifest>;

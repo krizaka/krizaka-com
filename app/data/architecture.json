@@ -1,5 +1,5 @@
 {
-  "product": "orazaka",
+  "product": "sovkora",
   "source": "generated from code by scripts/generate-docs.mjs — do not hand-edit",
   "roles": [
     {
@@ -96,229 +96,229 @@
       ]
     },
     {
-      "name": "orazaka-build",
-      "url": "https://github.com/krizaka/orazaka-build",
-      "path": "orazaka-libs/orazaka-build",
+      "name": "sovkora-build",
+      "url": "https://github.com/krizaka/sovkora-build",
+      "path": "sovkora-libs/sovkora-build",
       "kind": "maven",
       "layer": "foundation",
-      "description": "Parent POM (Spring Boot / Spring AI BOMs, plugin management, Orazaka BOM) and the shared governance test kit (ArchUnit rules, Testcontainers base) for every Orazaka JVM repository.",
+      "description": "Parent POM (Spring Boot / Spring AI BOMs, plugin management, Sovkora BOM) and the shared governance test kit (ArchUnit rules, Testcontainers base) for every Sovkora JVM repository.",
       "dependsOn": [
         "krizaka-build"
       ]
     },
     {
-      "name": "orazaka-contracts",
-      "url": "https://github.com/krizaka/orazaka-contracts",
-      "path": "orazaka-libs/orazaka-contracts",
+      "name": "sovkora-contracts",
+      "url": "https://github.com/krizaka/sovkora-contracts",
+      "path": "sovkora-libs/sovkora-contracts",
       "kind": "maven",
       "layer": "foundation",
-      "description": "Tier-1 platform contracts shared by every Orazaka service: the job plane (jobs-api) and the application-persistence ports (persistence-app-api). Pure interfaces and records, zero implementation.",
+      "description": "Tier-1 platform contracts shared by every Sovkora service: the job plane (jobs-api) and the application-persistence ports (persistence-app-api). Pure interfaces and records, zero implementation.",
       "dependsOn": [
-        "orazaka-build"
+        "sovkora-build"
       ]
     },
     {
-      "name": "orazaka-studio",
-      "url": "https://github.com/krizaka/orazaka-studio",
-      "path": "orazaka-apps/services/orazaka-studio",
+      "name": "sovkora-studio-service",
+      "url": "https://github.com/krizaka/sovkora-studio-service",
+      "path": "sovkora-apps/services/sovkora-studio-service",
       "kind": "maven",
       "layer": "ai",
       "description": "Studio & pack marketplace: pack catalogue, studio blueprints, installations and saga-driven runs, with its contract (studio-api) and HTTP client (studio-client).",
       "dependsOn": [
-        "orazaka-build",
-        "orazaka-contracts",
+        "sovkora-build",
+        "sovkora-contracts",
         "krizaka-billing"
       ]
     },
     {
-      "name": "orazaka-ai-engine",
-      "url": "https://github.com/krizaka/orazaka-ai-engine",
-      "path": "orazaka-libs/orazaka-ai-engine",
+      "name": "sovkora-engine",
+      "url": "https://github.com/krizaka/sovkora-engine",
+      "path": "sovkora-libs/sovkora-engine",
       "kind": "maven",
       "layer": "ai",
-      "description": "The Orazaka cognitive SDK: AiClient & provider mesh (core), the interceptor pipeline, tools (MCP · RAG · sandbox), use-case orchestration (business), application persistence and asset encryption.",
+      "description": "The Sovkora cognitive SDK: AiClient & provider mesh (core), the interceptor pipeline, tools (MCP · RAG · sandbox), use-case orchestration (business), application persistence and asset encryption.",
       "dependsOn": [
-        "orazaka-build",
-        "orazaka-contracts",
+        "sovkora-build",
+        "sovkora-contracts",
         "krizaka-billing",
-        "orazaka-studio"
+        "sovkora-studio-service"
       ]
     },
     {
-      "name": "orazaka-conversation-service",
-      "url": "https://github.com/krizaka/orazaka-conversation-service",
-      "path": "orazaka-apps/services/orazaka-conversation-service",
+      "name": "sovkora-conversation-service",
+      "url": "https://github.com/krizaka/sovkora-conversation-service",
+      "path": "sovkora-apps/services/sovkora-conversation-service",
       "kind": "maven",
       "layer": "ai",
-      "description": "Interactive ingress of the Orazaka engine: chat (SSE streaming), intents, models, pipeline, MCP and job APIs — translates transport into Intentions, never business logic.",
+      "description": "Interactive ingress of the Sovkora engine: chat (SSE streaming), intents, models, pipeline, MCP and job APIs — translates transport into Intentions, never business logic.",
       "dependsOn": [
-        "orazaka-build",
-        "orazaka-contracts",
+        "sovkora-build",
+        "sovkora-contracts",
         "krizaka-users",
         "krizaka-billing",
-        "orazaka-ai-engine"
+        "sovkora-engine"
       ]
     },
     {
-      "name": "orazaka-job-service",
-      "url": "https://github.com/krizaka/orazaka-job-service",
-      "path": "orazaka-apps/services/orazaka-job-service",
+      "name": "sovkora-job-service",
+      "url": "https://github.com/krizaka/sovkora-job-service",
+      "path": "sovkora-apps/services/sovkora-job-service",
       "kind": "maven",
       "layer": "ai",
-      "description": "Asynchronous job executor of the Orazaka engine: drains the interactive and batch lanes, owns the capability registry and the worker registry.",
+      "description": "Asynchronous job executor of the Sovkora engine: drains the interactive and batch lanes, owns the capability registry and the worker registry.",
       "dependsOn": [
-        "orazaka-build",
-        "orazaka-contracts",
+        "sovkora-build",
+        "sovkora-contracts",
         "krizaka-users",
         "krizaka-billing",
-        "orazaka-ai-engine"
+        "sovkora-engine"
       ]
     },
     {
-      "name": "orazaka-knowledge-service",
-      "url": "https://github.com/krizaka/orazaka-knowledge-service",
-      "path": "orazaka-apps/services/orazaka-knowledge-service",
+      "name": "sovkora-knowledge-service",
+      "url": "https://github.com/krizaka/sovkora-knowledge-service",
+      "path": "sovkora-apps/services/sovkora-knowledge-service",
       "kind": "maven",
       "layer": "ai",
       "description": "Knowledge & RAG retrieval service (pgvector) with asynchronous indexing.",
       "dependsOn": [
-        "orazaka-build"
+        "sovkora-build"
       ]
     },
     {
-      "name": "orazaka-automation-service",
-      "url": "https://github.com/krizaka/orazaka-automation-service",
-      "path": "orazaka-apps/services/orazaka-automation-service",
+      "name": "sovkora-automation-service",
+      "url": "https://github.com/krizaka/sovkora-automation-service",
+      "path": "sovkora-apps/services/sovkora-automation-service",
       "kind": "maven",
       "layer": "ai",
       "description": "Connector automation (Jira, Slack, WhatsApp, Messenger, CLI agents) with Quartz scheduling and execution telemetry.",
       "dependsOn": [
-        "orazaka-build",
+        "sovkora-build",
         "krizaka-billing",
-        "orazaka-ai-engine"
+        "sovkora-engine"
       ]
     },
     {
-      "name": "orazaka-edge",
-      "url": "https://github.com/krizaka/orazaka-edge",
-      "path": "orazaka-apps/services/orazaka-edge",
+      "name": "sovkora-edge-service",
+      "url": "https://github.com/krizaka/sovkora-edge-service",
+      "path": "sovkora-apps/services/sovkora-edge-service",
       "kind": "maven",
       "layer": "foundation",
-      "description": "Transparent HTTP edge in front of every Orazaka service: routing, API-key → JWT exchange, CORS and tracing. Spring MVC + virtual threads.",
+      "description": "Transparent HTTP edge in front of every Sovkora service: routing, API-key → JWT exchange, CORS and tracing. Spring MVC + virtual threads.",
       "dependsOn": [
-        "orazaka-build"
+        "sovkora-build"
       ]
     },
     {
-      "name": "orazaka-worker-media",
-      "url": "https://github.com/krizaka/orazaka-worker-media",
-      "path": "orazaka-apps/workers/orazaka-worker-media",
+      "name": "sovkora-worker-media",
+      "url": "https://github.com/krizaka/sovkora-worker-media",
+      "path": "sovkora-apps/workers/sovkora-worker-media",
       "kind": "python",
       "layer": "worker",
-      "description": "Native (Metal) Python worker for image/video generation and media composition, speaking the Orazaka AMQP worker protocol.",
+      "description": "Native (Metal) Python worker for image/video generation and media composition, speaking the Sovkora AMQP worker protocol.",
       "dependsOn": []
     },
     {
-      "name": "orazaka-ui-kit",
-      "url": "https://github.com/krizaka/orazaka-ui-kit",
-      "path": "orazaka-apps/ui/orazaka-ui-kit",
+      "name": "sovkora-ui-kit",
+      "url": "https://github.com/krizaka/sovkora-ui-kit",
+      "path": "sovkora-apps/ui/sovkora-ui-kit",
       "kind": "npm",
       "layer": "foundation",
       "description": "@krizaka/orazaka-shared (TypeScript types, Zod schemas, design tokens) and @krizaka/orazaka-design-system (React components, Tailwind preset, theme, icon registry) for Next.js and React Native apps.",
       "dependsOn": []
     },
     {
-      "name": "orazaka-web-client",
-      "url": "https://github.com/krizaka/orazaka-web-client",
-      "path": "orazaka-apps/ui/orazaka-web-client",
+      "name": "sovkora-web",
+      "url": "https://github.com/krizaka/sovkora-web",
+      "path": "sovkora-apps/ui/sovkora-web",
       "kind": "npm",
       "layer": "app",
-      "description": "Next.js (App Router) client of the Orazaka platform with its mandatory BFF.",
+      "description": "Next.js (App Router) client of the Sovkora platform with its mandatory BFF.",
       "dependsOn": [
-        "orazaka-ui-kit"
+        "sovkora-ui-kit"
       ]
     },
     {
-      "name": "orazaka-mobile-client",
-      "url": "https://github.com/krizaka/orazaka-mobile-client",
-      "path": "orazaka-apps/ui/orazaka-mobile-client",
+      "name": "sovkora-mobile",
+      "url": "https://github.com/krizaka/sovkora-mobile",
+      "path": "sovkora-apps/ui/sovkora-mobile",
       "kind": "npm",
       "layer": "app",
-      "description": "Expo / React Native client of the Orazaka platform (talks to the edge with Bearer tokens).",
+      "description": "Expo / React Native client of the Sovkora platform (talks to the edge with Bearer tokens).",
       "dependsOn": [
-        "orazaka-ui-kit"
+        "sovkora-ui-kit"
       ]
     },
     {
-      "name": "orazaka-cli",
-      "url": "https://github.com/krizaka/orazaka-cli",
-      "path": "orazaka-apps/ui/orazaka-cli",
+      "name": "sovkora-cli",
+      "url": "https://github.com/krizaka/sovkora-cli",
+      "path": "sovkora-apps/ui/sovkora-cli",
       "kind": "npm",
       "layer": "app",
-      "description": "The `orazaka` developer CLI: install, start, dev, test, docs and pack tooling for the Orazaka workspace, with an offline SQLite queue.",
+      "description": "The `sovkora` developer CLI: install, start, dev, test, docs and pack tooling for the Sovkora workspace, with an offline SQLite queue.",
       "dependsOn": []
     },
     {
-      "name": "orazaka-packs",
-      "url": "https://github.com/krizaka/orazaka-packs",
-      "path": "orazaka-packs",
+      "name": "sovkora-packs",
+      "url": "https://github.com/krizaka/sovkora-packs",
+      "path": "sovkora-packs",
       "kind": "packs",
       "layer": "content",
-      "description": "Reference packs for the Orazaka Studio marketplace (document validation, media, prospection, real-estate, wellbeing…) and the pack manifest schema.",
+      "description": "Reference packs for the Sovkora Studio marketplace (document validation, media, prospection, real-estate, wellbeing…) and the pack manifest schema.",
       "dependsOn": []
     }
   ],
   "modules": [
     {
-      "id": "orazaka-cli",
-      "path": "orazaka-apps/ui/orazaka-cli",
-      "repository": "orazaka-cli",
-      "owner": "orazaka",
+      "id": "sovkora-cli",
+      "path": "sovkora-apps/ui/sovkora-cli",
+      "repository": "sovkora-cli",
+      "owner": "sovkora",
       "role": "client",
       "layer": "app",
       "runtime": "node",
       "version": null,
-      "description": "The `orazaka` developer CLI: install, start, dev, test, docs and pack tooling for the Orazaka workspace, with an offline SQLite queue.",
+      "description": "The `sovkora` developer CLI: install, start, dev, test, docs and pack tooling for the Sovkora workspace, with an offline SQLite queue.",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-mobile-client",
-      "path": "orazaka-apps/ui/orazaka-mobile-client",
-      "repository": "orazaka-mobile-client",
-      "owner": "orazaka",
+      "id": "sovkora-mobile",
+      "path": "sovkora-apps/ui/sovkora-mobile",
+      "repository": "sovkora-mobile",
+      "owner": "sovkora",
       "role": "client",
       "layer": "app",
       "runtime": "node",
       "version": null,
-      "description": "Expo / React Native client of the Orazaka platform (talks to the edge with Bearer tokens).",
+      "description": "Expo / React Native client of the Sovkora platform (talks to the edge with Bearer tokens).",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-web-client",
-      "path": "orazaka-apps/ui/orazaka-web-client",
-      "repository": "orazaka-web-client",
-      "owner": "orazaka",
+      "id": "sovkora-web",
+      "path": "sovkora-apps/ui/sovkora-web",
+      "repository": "sovkora-web",
+      "owner": "sovkora",
       "role": "client",
       "layer": "app",
       "runtime": "node",
       "version": null,
-      "description": "Next.js (App Router) client of the Orazaka platform with its mandatory BFF.",
+      "description": "Next.js (App Router) client of the Sovkora platform with its mandatory BFF.",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-automation-service",
-      "path": "orazaka-apps/services/orazaka-automation-service",
-      "repository": "orazaka-automation-service",
-      "owner": "orazaka",
+      "id": "sovkora-automation-service",
+      "path": "sovkora-apps/services/sovkora-automation-service",
+      "repository": "sovkora-automation-service",
+      "owner": "sovkora",
       "role": "service",
       "layer": "app",
       "runtime": "jvm",
@@ -330,40 +330,40 @@
       }
     },
     {
-      "id": "orazaka-conversation-service",
-      "path": "orazaka-apps/services/orazaka-conversation-service",
-      "repository": "orazaka-conversation-service",
-      "owner": "orazaka",
+      "id": "sovkora-conversation-service",
+      "path": "sovkora-apps/services/sovkora-conversation-service",
+      "repository": "sovkora-conversation-service",
+      "owner": "sovkora",
       "role": "service",
       "layer": "app",
       "runtime": "jvm",
       "version": "1.0.0-SNAPSHOT",
-      "description": "Orazaka Conversation Service — interactive host (ex-router): HTTP/SSE ingress, job submission and SSE relay",
+      "description": "Sovkora Conversation Service — interactive host (ex-router): HTTP/SSE ingress, job submission and SSE relay",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-edge",
-      "path": "orazaka-apps/services/orazaka-edge",
-      "repository": "orazaka-edge",
-      "owner": "orazaka",
+      "id": "sovkora-edge-service",
+      "path": "sovkora-apps/services/sovkora-edge-service",
+      "repository": "sovkora-edge-service",
+      "owner": "sovkora",
       "role": "service",
       "layer": "app",
       "runtime": "jvm",
       "version": "1.0.0-SNAPSHOT",
-      "description": "Orazaka Edge Gateway — strangler facade: route table + streaming reverse proxy (transport only, no business logic)",
+      "description": "Sovkora Edge Gateway — strangler facade: route table + streaming reverse proxy (transport only, no business logic)",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-job-service",
-      "path": "orazaka-apps/services/orazaka-job-service",
-      "repository": "orazaka-job-service",
-      "owner": "orazaka",
+      "id": "sovkora-job-service",
+      "path": "sovkora-apps/services/sovkora-job-service",
+      "repository": "sovkora-job-service",
+      "owner": "sovkora",
       "role": "service",
       "layer": "app",
       "runtime": "jvm",
@@ -375,10 +375,10 @@
       }
     },
     {
-      "id": "orazaka-knowledge-service",
-      "path": "orazaka-apps/services/orazaka-knowledge-service",
-      "repository": "orazaka-knowledge-service",
-      "owner": "orazaka",
+      "id": "sovkora-knowledge-service",
+      "path": "sovkora-apps/services/sovkora-knowledge-service",
+      "repository": "sovkora-knowledge-service",
+      "owner": "sovkora",
       "role": "service",
       "layer": "app",
       "runtime": "jvm",
@@ -390,10 +390,10 @@
       }
     },
     {
-      "id": "orazaka-studio-service",
-      "path": "orazaka-apps/services/orazaka-studio/orazaka-studio-service",
-      "repository": "orazaka-studio",
-      "owner": "orazaka",
+      "id": "sovkora-studio-service",
+      "path": "sovkora-apps/services/sovkora-studio-service/sovkora-studio-service",
+      "repository": "sovkora-studio-service",
+      "owner": "sovkora",
       "role": "service",
       "layer": "app",
       "runtime": "jvm",
@@ -405,15 +405,15 @@
       }
     },
     {
-      "id": "orazaka-worker-media",
-      "path": "orazaka-apps/workers/orazaka-worker-media",
-      "repository": "orazaka-worker-media",
-      "owner": "orazaka",
+      "id": "sovkora-worker-media",
+      "path": "sovkora-apps/workers/sovkora-worker-media",
+      "repository": "sovkora-worker-media",
+      "owner": "sovkora",
       "role": "service",
       "layer": "app",
       "runtime": "python",
       "version": null,
-      "description": "Native (Metal) Python worker for image/video generation and media composition, speaking the Orazaka AMQP worker protocol.",
+      "description": "Native (Metal) Python worker for image/video generation and media composition, speaking the Sovkora AMQP worker protocol.",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -465,10 +465,10 @@
       }
     },
     {
-      "id": "orazaka-assets",
-      "path": "orazaka-libs/orazaka-ai-engine/orazaka-assets",
-      "repository": "orazaka-ai-engine",
-      "owner": "orazaka",
+      "id": "sovkora-assets",
+      "path": "sovkora-libs/sovkora-engine/sovkora-assets",
+      "repository": "sovkora-engine",
+      "owner": "sovkora",
       "role": "adapter",
       "layer": "framework",
       "runtime": "jvm",
@@ -480,40 +480,40 @@
       }
     },
     {
-      "id": "orazaka-persistence-app",
-      "path": "orazaka-libs/orazaka-ai-engine/orazaka-persistence-app",
-      "repository": "orazaka-ai-engine",
-      "owner": "orazaka",
+      "id": "sovkora-persistence-app",
+      "path": "sovkora-libs/sovkora-engine/sovkora-persistence-app",
+      "repository": "sovkora-engine",
+      "owner": "sovkora",
       "role": "adapter",
       "layer": "framework",
       "runtime": "jvm",
       "version": "1.0.0-SNAPSHOT",
-      "description": "Orazaka Decoupled Application Persistence & Infrastructure State Management",
+      "description": "Sovkora Decoupled Application Persistence & Infrastructure State Management",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-persistence-bridge",
-      "path": "orazaka-libs/orazaka-ai-engine/orazaka-persistence-bridge",
-      "repository": "orazaka-ai-engine",
-      "owner": "orazaka",
+      "id": "sovkora-persistence-bridge",
+      "path": "sovkora-libs/sovkora-engine/sovkora-persistence-bridge",
+      "repository": "sovkora-engine",
+      "owner": "sovkora",
       "role": "adapter",
       "layer": "framework",
       "runtime": "jvm",
       "version": "1.0.0-SNAPSHOT",
-      "description": "Platform bridge library: package-private @Service adapters that implement the core's DB-backed outbound ports (CapabilityProvider, PipelineConfigProvider, PlatformToolConfigProvider, PlatformMcpServerProvider, UserMcpServerProvider, ValidationPipelineRepository) by delegating to the orazaka-persistence-app-api inbound ports. Bundled by every service that runs the cognitive pipeline in-process (conversation-service, job-service, …) so the shared core beans wire without each service re-implementing the same DB adapters. Discovered via the hosts' com.krizaka.orazaka component scan — no HTTP surface, no entrypoint.",
+      "description": "Platform bridge library: package-private @Service adapters that implement the core's DB-backed outbound ports (CapabilityProvider, PipelineConfigProvider, PlatformToolConfigProvider, PlatformMcpServerProvider, UserMcpServerProvider, ValidationPipelineRepository) by delegating to the sovkora-persistence-app-api inbound ports. Bundled by every service that runs the cognitive pipeline in-process (conversation-service, job-service, …) so the shared core beans wire without each service re-implementing the same DB adapters. Discovered via the hosts' com.krizaka.sovkora component scan — no HTTP surface, no entrypoint.",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-studio-client",
-      "path": "orazaka-apps/services/orazaka-studio/orazaka-studio-client",
-      "repository": "orazaka-studio",
-      "owner": "orazaka",
+      "id": "sovkora-studio-client",
+      "path": "sovkora-apps/services/sovkora-studio-service/sovkora-studio-client",
+      "repository": "sovkora-studio-service",
+      "owner": "sovkora",
       "role": "adapter",
       "layer": "framework",
       "runtime": "jvm",
@@ -563,17 +563,17 @@
       "layer": "framework",
       "runtime": "jvm",
       "version": "0.2.0",
-      "description": "Orazaka User and Identity Persistence Block",
+      "description": "Sovkora User and Identity Persistence Block",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-business",
-      "path": "orazaka-libs/orazaka-ai-engine/orazaka-business",
-      "repository": "orazaka-ai-engine",
-      "owner": "orazaka",
+      "id": "sovkora-business",
+      "path": "sovkora-libs/sovkora-engine/sovkora-business",
+      "repository": "sovkora-engine",
+      "owner": "sovkora",
       "role": "application",
       "layer": "framework",
       "runtime": "jvm",
@@ -585,10 +585,10 @@
       }
     },
     {
-      "id": "orazaka-interceptors",
-      "path": "orazaka-libs/orazaka-ai-engine/orazaka-interceptors",
-      "repository": "orazaka-ai-engine",
-      "owner": "orazaka",
+      "id": "sovkora-interceptors",
+      "path": "sovkora-libs/sovkora-engine/sovkora-interceptors",
+      "repository": "sovkora-engine",
+      "owner": "sovkora",
       "role": "application",
       "layer": "framework",
       "runtime": "jvm",
@@ -600,30 +600,30 @@
       }
     },
     {
-      "id": "orazaka-tools",
-      "path": "orazaka-libs/orazaka-ai-engine/orazaka-tools",
-      "repository": "orazaka-ai-engine",
-      "owner": "orazaka",
+      "id": "sovkora-tools",
+      "path": "sovkora-libs/sovkora-engine/sovkora-tools",
+      "repository": "sovkora-engine",
+      "owner": "sovkora",
       "role": "application",
       "layer": "framework",
       "runtime": "jvm",
       "version": "1.0.0-SNAPSHOT",
-      "description": "Orazaka Tools and MCP Implementations",
+      "description": "Sovkora Tools and MCP Implementations",
       "ports": {
         "inbound": [],
         "outbound": []
       }
     },
     {
-      "id": "orazaka-core",
-      "path": "orazaka-libs/orazaka-ai-engine/orazaka-core",
-      "repository": "orazaka-ai-engine",
-      "owner": "orazaka",
+      "id": "sovkora-core",
+      "path": "sovkora-libs/sovkora-engine/sovkora-core",
+      "repository": "sovkora-engine",
+      "owner": "sovkora",
       "role": "domain",
       "layer": "framework",
       "runtime": "jvm",
       "version": "1.0.0-SNAPSHOT",
-      "description": "Orazaka AI Orchestration Engine",
+      "description": "Sovkora AI Orchestration Engine",
       "ports": {
         "inbound": [
           "AiClient",
@@ -665,7 +665,7 @@
       "layer": "framework",
       "runtime": "jvm",
       "version": "0.2.0",
-      "description": "Orazaka Identity and Access Management Domain",
+      "description": "Sovkora Identity and Access Management Domain",
       "ports": {
         "inbound": [
           "AdminUserService",
@@ -695,10 +695,10 @@
       }
     },
     {
-      "id": "orazaka-jobs-api",
-      "path": "orazaka-libs/orazaka-contracts/orazaka-jobs-api",
-      "repository": "orazaka-contracts",
-      "owner": "orazaka",
+      "id": "sovkora-jobs-api",
+      "path": "sovkora-libs/sovkora-contracts/sovkora-jobs-api",
+      "repository": "sovkora-contracts",
+      "owner": "sovkora",
       "role": "contract",
       "layer": "framework",
       "runtime": "jvm",
@@ -710,10 +710,10 @@
       }
     },
     {
-      "id": "orazaka-persistence-app-api",
-      "path": "orazaka-libs/orazaka-contracts/orazaka-persistence-app-api",
-      "repository": "orazaka-contracts",
-      "owner": "orazaka",
+      "id": "sovkora-persistence-app-api",
+      "path": "sovkora-libs/sovkora-contracts/sovkora-persistence-app-api",
+      "repository": "sovkora-contracts",
+      "owner": "sovkora",
       "role": "contract",
       "layer": "framework",
       "runtime": "jvm",
@@ -739,10 +739,10 @@
       }
     },
     {
-      "id": "orazaka-studio-api",
-      "path": "orazaka-apps/services/orazaka-studio/orazaka-studio-api",
-      "repository": "orazaka-studio",
-      "owner": "orazaka",
+      "id": "sovkora-studio-api",
+      "path": "sovkora-apps/services/sovkora-studio-service/sovkora-studio-api",
+      "repository": "sovkora-studio-service",
+      "owner": "sovkora",
       "role": "contract",
       "layer": "framework",
       "runtime": "jvm",
@@ -822,7 +822,7 @@
       "layer": "framework",
       "runtime": "jvm",
       "version": "0.2.0",
-      "description": "HTTP Idempotency-Key, written once: an action runs at most once per key, a retry with the same key and request replays the stored response, the same key with another request is a 422 Problem Details; PostgreSQL or in-memory store, observed. Promoted from Orazaka (ADR-083).",
+      "description": "HTTP Idempotency-Key, written once: an action runs at most once per key, a retry with the same key and request replays the stored response, the same key with another request is a 422 Problem Details; PostgreSQL or in-memory store, observed. Promoted from Sovkora (ADR-083).",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -882,7 +882,7 @@
       "layer": "framework",
       "runtime": "jvm",
       "version": "0.2.0",
-      "description": "A requests-per-minute limit per key, written once: a token bucket per key (client address by default, or any key you resolve), observe or enforce, 429 with Retry-After as Problem Details, observed. Promoted from the Orazaka edge (ADR-083) and krizaka-users.",
+      "description": "A requests-per-minute limit per key, written once: a token bucket per key (client address by default, or any key you resolve), observe or enforce, 429 with Retry-After as Problem Details, observed. Promoted from the Sovkora edge (ADR-083) and krizaka-users.",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -1062,7 +1062,7 @@
       "layer": "framework",
       "runtime": "jvm",
       "version": "0.2.0",
-      "description": "Signed webhooks, written once, the Standard Webhooks way: sign and send with a stable id and secret rotation, verify what you receive (signature, constant-time, timestamp tolerance) with a 401 Problem Details otherwise; observed. Promoted from Orazaka (orazaka#189) and krizaka-notifications.",
+      "description": "Signed webhooks, written once, the Standard Webhooks way: sign and send with a stable id and secret rotation, verify what you receive (signature, constant-time, timestamp tolerance) with a 401 Problem Details otherwise; observed. Promoted from Sovkora (sovkora#189) and krizaka-notifications.",
       "ports": {
         "inbound": [],
         "outbound": []
@@ -1187,248 +1187,248 @@
       "to": "krizaka-web"
     },
     {
-      "from": "orazaka-automation-service",
+      "from": "sovkora-automation-service",
       "to": "krizaka-billing-client"
     },
     {
-      "from": "orazaka-automation-service",
+      "from": "sovkora-automation-service",
       "to": "krizaka-messaging"
     },
     {
-      "from": "orazaka-automation-service",
+      "from": "sovkora-automation-service",
       "to": "krizaka-security"
     },
     {
-      "from": "orazaka-automation-service",
-      "to": "orazaka-assets"
+      "from": "sovkora-automation-service",
+      "to": "sovkora-assets"
     },
     {
-      "from": "orazaka-business",
-      "to": "orazaka-core"
+      "from": "sovkora-business",
+      "to": "sovkora-core"
     },
     {
-      "from": "orazaka-business",
-      "to": "orazaka-studio-api"
+      "from": "sovkora-business",
+      "to": "sovkora-studio-api"
     },
     {
-      "from": "orazaka-business",
-      "to": "orazaka-studio-client"
+      "from": "sovkora-business",
+      "to": "sovkora-studio-client"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-billing-client"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-spring-boot-starter-app-config"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-spring-boot-starter-observability"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-spring-boot-starter-rabbitmq"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-spring-boot-starter-security"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-spring-boot-starter-web"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-users-api"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-users-client"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-assets"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-assets"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-business"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-business"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-core"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-core"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-interceptors"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-interceptors"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-jobs-api"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-jobs-api"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-persistence-app"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-persistence-app"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-persistence-bridge"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-persistence-bridge"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-studio-client"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-studio-client"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-tools"
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-tools"
     },
     {
-      "from": "orazaka-core",
+      "from": "sovkora-core",
       "to": "krizaka-security"
     },
     {
-      "from": "orazaka-core",
-      "to": "orazaka-persistence-app-api"
+      "from": "sovkora-core",
+      "to": "sovkora-persistence-app-api"
     },
     {
-      "from": "orazaka-edge",
+      "from": "sovkora-edge-service",
       "to": "krizaka-security"
     },
     {
-      "from": "orazaka-interceptors",
+      "from": "sovkora-interceptors",
       "to": "krizaka-billing-api"
     },
     {
-      "from": "orazaka-interceptors",
-      "to": "orazaka-core"
+      "from": "sovkora-interceptors",
+      "to": "sovkora-core"
     },
     {
-      "from": "orazaka-interceptors",
-      "to": "orazaka-jobs-api"
+      "from": "sovkora-interceptors",
+      "to": "sovkora-jobs-api"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-billing-client"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-messaging"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-security"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-users-api"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-users-client"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-assets"
+      "from": "sovkora-job-service",
+      "to": "sovkora-assets"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-business"
+      "from": "sovkora-job-service",
+      "to": "sovkora-business"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-core"
+      "from": "sovkora-job-service",
+      "to": "sovkora-core"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-interceptors"
+      "from": "sovkora-job-service",
+      "to": "sovkora-interceptors"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-jobs-api"
+      "from": "sovkora-job-service",
+      "to": "sovkora-jobs-api"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-persistence-app"
+      "from": "sovkora-job-service",
+      "to": "sovkora-persistence-app"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-persistence-bridge"
+      "from": "sovkora-job-service",
+      "to": "sovkora-persistence-bridge"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-tools"
+      "from": "sovkora-job-service",
+      "to": "sovkora-tools"
     },
     {
-      "from": "orazaka-knowledge-service",
+      "from": "sovkora-knowledge-service",
       "to": "krizaka-messaging"
     },
     {
-      "from": "orazaka-knowledge-service",
+      "from": "sovkora-knowledge-service",
       "to": "krizaka-security"
     },
     {
-      "from": "orazaka-persistence-app",
+      "from": "sovkora-persistence-app",
       "to": "krizaka-messaging"
     },
     {
-      "from": "orazaka-persistence-app",
-      "to": "orazaka-jobs-api"
+      "from": "sovkora-persistence-app",
+      "to": "sovkora-jobs-api"
     },
     {
-      "from": "orazaka-persistence-app",
-      "to": "orazaka-persistence-app-api"
+      "from": "sovkora-persistence-app",
+      "to": "sovkora-persistence-app-api"
     },
     {
-      "from": "orazaka-persistence-app-api",
-      "to": "orazaka-jobs-api"
+      "from": "sovkora-persistence-app-api",
+      "to": "sovkora-jobs-api"
     },
     {
-      "from": "orazaka-persistence-bridge",
-      "to": "orazaka-core"
+      "from": "sovkora-persistence-bridge",
+      "to": "sovkora-core"
     },
     {
-      "from": "orazaka-persistence-bridge",
-      "to": "orazaka-persistence-app-api"
+      "from": "sovkora-persistence-bridge",
+      "to": "sovkora-persistence-app-api"
     },
     {
-      "from": "orazaka-studio-api",
-      "to": "orazaka-jobs-api"
+      "from": "sovkora-studio-api",
+      "to": "sovkora-jobs-api"
     },
     {
-      "from": "orazaka-studio-client",
+      "from": "sovkora-studio-client",
       "to": "krizaka-security"
     },
     {
-      "from": "orazaka-studio-client",
-      "to": "orazaka-studio-api"
+      "from": "sovkora-studio-client",
+      "to": "sovkora-studio-api"
     },
     {
-      "from": "orazaka-studio-service",
+      "from": "sovkora-studio-service",
       "to": "krizaka-billing-api"
     },
     {
-      "from": "orazaka-studio-service",
+      "from": "sovkora-studio-service",
       "to": "krizaka-billing-client"
     },
     {
-      "from": "orazaka-studio-service",
+      "from": "sovkora-studio-service",
       "to": "krizaka-messaging"
     },
     {
-      "from": "orazaka-studio-service",
+      "from": "sovkora-studio-service",
       "to": "krizaka-security"
     },
     {
-      "from": "orazaka-studio-service",
-      "to": "orazaka-jobs-api"
+      "from": "sovkora-studio-service",
+      "to": "sovkora-jobs-api"
     },
     {
-      "from": "orazaka-studio-service",
-      "to": "orazaka-studio-api"
+      "from": "sovkora-studio-service",
+      "to": "sovkora-studio-api"
     },
     {
-      "from": "orazaka-tools",
-      "to": "orazaka-core"
+      "from": "sovkora-tools",
+      "to": "sovkora-core"
     }
   ],
   "flows": [
@@ -1437,7 +1437,7 @@
       "to": "krizaka-notifications-service",
       "kind": "amqp",
       "via": "krizaka.notifications.password-events",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "evt.password.reset"
     },
     {
@@ -1445,306 +1445,306 @@
       "to": "krizaka-notifications-service",
       "kind": "amqp",
       "via": "krizaka.notifications.user-events",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "evt.user.registered"
     },
     {
-      "from": "orazaka-automation-service",
-      "to": "orazaka-studio-service",
+      "from": "sovkora-automation-service",
+      "to": "sovkora-studio-service",
       "kind": "amqp",
-      "via": "orazaka.events.studio.connector",
-      "exchange": "orazaka.events",
+      "via": "sovkora.events.studio.connector",
+      "exchange": "sovkora.events",
       "routingKey": "evt.automation.telemetry"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-automation-service",
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-automation-service",
       "kind": "amqp",
-      "via": "orazaka.jobs.automation",
-      "exchange": "orazaka.jobs",
+      "via": "sovkora.jobs.automation",
+      "exchange": "sovkora.jobs",
       "routingKey": "job.automation.approved"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-job-service",
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-job-service",
       "kind": "amqp",
-      "via": "orazaka.jobs.batch",
-      "exchange": "orazaka.jobs",
+      "via": "sovkora.jobs.batch",
+      "exchange": "sovkora.jobs",
       "routingKey": "job.media.generate"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-job-service",
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-job-service",
       "kind": "amqp",
-      "via": "orazaka.jobs.interactive",
-      "exchange": "orazaka.jobs",
+      "via": "sovkora.jobs.interactive",
+      "exchange": "sovkora.jobs",
       "routingKey": "job.text.*, job.media.analyze"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-studio-service",
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-studio-service",
       "kind": "amqp",
-      "via": "orazaka.events.studio.capability",
-      "exchange": "orazaka.events",
+      "via": "sovkora.events.studio.capability",
+      "exchange": "sovkora.events",
       "routingKey": "evt.capability.changed"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-billing-service",
       "kind": "amqp",
       "via": "krizaka.billing.settlements",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.done"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-notifications-service",
       "kind": "amqp",
       "via": "krizaka.billing.settlements",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.done"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-users-service",
       "kind": "amqp",
       "via": "krizaka.billing.settlements",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.done"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-automation-service",
+      "from": "sovkora-job-service",
+      "to": "sovkora-automation-service",
       "kind": "amqp",
       "via": "krizaka.billing.settlements",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.done"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-conversation-service",
+      "from": "sovkora-job-service",
+      "to": "sovkora-conversation-service",
       "kind": "amqp",
       "via": "krizaka.billing.settlements",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.done"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-conversation-service",
+      "from": "sovkora-job-service",
+      "to": "sovkora-conversation-service",
       "kind": "amqp",
-      "via": "orazaka.events.job-relay",
-      "exchange": "orazaka.events",
+      "via": "sovkora.events.job-relay",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.cancelled"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-knowledge-service",
+      "from": "sovkora-job-service",
+      "to": "sovkora-knowledge-service",
       "kind": "amqp",
       "via": "krizaka.billing.settlements",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.done"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-studio-service",
+      "from": "sovkora-job-service",
+      "to": "sovkora-studio-service",
       "kind": "amqp",
       "via": "krizaka.billing.settlements",
-      "exchange": "orazaka.events",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.done"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-studio-service",
+      "from": "sovkora-job-service",
+      "to": "sovkora-studio-service",
       "kind": "amqp",
-      "via": "orazaka.events.studio",
-      "exchange": "orazaka.events",
+      "via": "sovkora.events.studio",
+      "exchange": "sovkora.events",
       "routingKey": "job.{…}.done"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-studio-service",
+      "from": "sovkora-job-service",
+      "to": "sovkora-studio-service",
       "kind": "amqp",
-      "via": "orazaka.events.studio.capability",
-      "exchange": "orazaka.events",
+      "via": "sovkora.events.studio.capability",
+      "exchange": "sovkora.events",
       "routingKey": "evt.capability.changed"
     },
     {
-      "from": "orazaka-studio-service",
-      "to": "orazaka-automation-service",
+      "from": "sovkora-studio-service",
+      "to": "sovkora-automation-service",
       "kind": "amqp",
-      "via": "orazaka.jobs.automation",
-      "exchange": "orazaka.jobs",
+      "via": "sovkora.jobs.automation",
+      "exchange": "sovkora.jobs",
       "routingKey": "job.automation.approved"
     },
     {
-      "from": "orazaka-studio-service",
-      "to": "orazaka-job-service",
+      "from": "sovkora-studio-service",
+      "to": "sovkora-job-service",
       "kind": "amqp",
-      "via": "orazaka.jobs.batch",
-      "exchange": "orazaka.jobs",
+      "via": "sovkora.jobs.batch",
+      "exchange": "sovkora.jobs",
       "routingKey": "job.media.generate"
     },
     {
-      "from": "orazaka-studio-service",
-      "to": "orazaka-job-service",
+      "from": "sovkora-studio-service",
+      "to": "sovkora-job-service",
       "kind": "amqp",
-      "via": "orazaka.jobs.interactive",
-      "exchange": "orazaka.jobs",
+      "via": "sovkora.jobs.interactive",
+      "exchange": "sovkora.jobs",
       "routingKey": "job.text.*, job.media.analyze"
     },
     {
-      "from": "orazaka-automation-service",
+      "from": "sovkora-automation-service",
       "to": "krizaka-billing-service",
       "kind": "http",
       "via": "krizaka-billing-client"
     },
     {
-      "from": "orazaka-cli",
-      "to": "orazaka-conversation-service",
+      "from": "sovkora-cli",
+      "to": "sovkora-conversation-service",
       "kind": "http",
       "via": "localhost:8080"
     },
     {
-      "from": "orazaka-cli",
-      "to": "orazaka-edge",
+      "from": "sovkora-cli",
+      "to": "sovkora-edge-service",
       "kind": "http",
       "via": "localhost:8088"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-billing-service",
       "kind": "http",
       "via": "krizaka-billing-client"
     },
     {
-      "from": "orazaka-conversation-service",
+      "from": "sovkora-conversation-service",
       "to": "krizaka-users-service",
       "kind": "http",
       "via": "krizaka-users-client"
     },
     {
-      "from": "orazaka-conversation-service",
-      "to": "orazaka-studio-service",
+      "from": "sovkora-conversation-service",
+      "to": "sovkora-studio-service",
       "kind": "http",
-      "via": "orazaka-studio-client"
+      "via": "sovkora-studio-client"
     },
     {
-      "from": "orazaka-edge",
+      "from": "sovkora-edge-service",
       "to": "krizaka-billing-service",
       "kind": "http",
       "via": "route /api/v1/billing"
     },
     {
-      "from": "orazaka-edge",
+      "from": "sovkora-edge-service",
       "to": "krizaka-users-service",
       "kind": "http",
       "via": "route /api/v1/admin/users"
     },
     {
-      "from": "orazaka-edge",
+      "from": "sovkora-edge-service",
       "to": "krizaka-users-service",
       "kind": "http",
       "via": "route /api/v1/api-keys"
     },
     {
-      "from": "orazaka-edge",
+      "from": "sovkora-edge-service",
       "to": "krizaka-users-service",
       "kind": "http",
       "via": "route /api/v1/auth"
     },
     {
-      "from": "orazaka-edge",
+      "from": "sovkora-edge-service",
       "to": "krizaka-users-service",
       "kind": "http",
       "via": "route /api/v1/credentials"
     },
     {
-      "from": "orazaka-edge",
+      "from": "sovkora-edge-service",
       "to": "krizaka-users-service",
       "kind": "http",
       "via": "route /api/v1/interceptions"
     },
     {
-      "from": "orazaka-edge",
+      "from": "sovkora-edge-service",
       "to": "krizaka-users-service",
       "kind": "http",
       "via": "route /api/v1/profile"
     },
     {
-      "from": "orazaka-edge",
-      "to": "orazaka-automation-service",
+      "from": "sovkora-edge-service",
+      "to": "sovkora-automation-service",
       "kind": "http",
       "via": "route /api/v1/automations"
     },
     {
-      "from": "orazaka-edge",
-      "to": "orazaka-automation-service",
+      "from": "sovkora-edge-service",
+      "to": "sovkora-automation-service",
       "kind": "http",
       "via": "route /hooks/"
     },
     {
-      "from": "orazaka-edge",
-      "to": "orazaka-conversation-service",
+      "from": "sovkora-edge-service",
+      "to": "sovkora-conversation-service",
       "kind": "http",
       "via": "route /"
     },
     {
-      "from": "orazaka-edge",
-      "to": "orazaka-knowledge-service",
+      "from": "sovkora-edge-service",
+      "to": "sovkora-knowledge-service",
       "kind": "http",
       "via": "route /api/v1/analytics"
     },
     {
-      "from": "orazaka-edge",
-      "to": "orazaka-knowledge-service",
+      "from": "sovkora-edge-service",
+      "to": "sovkora-knowledge-service",
       "kind": "http",
       "via": "route /api/v1/recommendations"
     },
     {
-      "from": "orazaka-edge",
-      "to": "orazaka-studio-service",
+      "from": "sovkora-edge-service",
+      "to": "sovkora-studio-service",
       "kind": "http",
       "via": "route /api/v1/studios"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-billing-service",
       "kind": "http",
       "via": "krizaka-billing-client"
     },
     {
-      "from": "orazaka-job-service",
+      "from": "sovkora-job-service",
       "to": "krizaka-users-service",
       "kind": "http",
       "via": "krizaka-users-client"
     },
     {
-      "from": "orazaka-job-service",
-      "to": "orazaka-studio-service",
+      "from": "sovkora-job-service",
+      "to": "sovkora-studio-service",
       "kind": "http",
-      "via": "orazaka-studio-client"
+      "via": "sovkora-studio-client"
     },
     {
-      "from": "orazaka-mobile-client",
-      "to": "orazaka-edge",
+      "from": "sovkora-mobile",
+      "to": "sovkora-edge-service",
       "kind": "http",
       "via": "localhost:8088"
     },
     {
-      "from": "orazaka-studio-service",
+      "from": "sovkora-studio-service",
       "to": "krizaka-billing-service",
       "kind": "http",
       "via": "krizaka-billing-client"
     },
     {
-      "from": "orazaka-web-client",
-      "to": "orazaka-conversation-service",
+      "from": "sovkora-web",
+      "to": "sovkora-conversation-service",
       "kind": "http",
       "via": "localhost:8080"
     },
     {
-      "from": "orazaka-web-client",
-      "to": "orazaka-edge",
+      "from": "sovkora-web",
+      "to": "sovkora-edge-service",
       "kind": "http",
       "via": "localhost:8088"
     }
@@ -1892,241 +1892,241 @@
   "messaging": {
     "exchanges": [
       {
-        "name": "orazaka.jobs",
+        "name": "sovkora.jobs",
         "type": "topic"
       },
       {
-        "name": "orazaka.events",
+        "name": "sovkora.events",
         "type": "topic"
       },
       {
-        "name": "orazaka.dlx",
+        "name": "sovkora.dlx",
         "type": "direct"
       }
     ],
     "queues": [
       {
         "name": "krizaka.billing.settlements",
-        "exchange": "orazaka.events",
+        "exchange": "sovkora.events",
         "binding": "job.*.done, job.*.error",
         "dlq": "krizaka.billing.settlements.dlq",
         "declaredBy": "krizaka-billing-service"
       },
       {
         "name": "krizaka.billing.unmetered",
-        "exchange": "orazaka.events",
+        "exchange": "sovkora.events",
         "binding": "evt.turn.unmetered",
         "dlq": "krizaka.billing.unmetered.dlq",
         "declaredBy": "krizaka-billing-service"
       },
       {
         "name": "krizaka.notifications.password-events",
-        "exchange": "orazaka.events",
+        "exchange": "sovkora.events",
         "binding": "evt.password.*",
         "dlq": "krizaka.notifications.password-events.dlq",
         "declaredBy": "krizaka-notifications-service"
       },
       {
         "name": "krizaka.notifications.requests",
-        "exchange": "orazaka.events",
+        "exchange": "sovkora.events",
         "binding": "evt.notification.requested",
         "dlq": "krizaka.notifications.requests.dlq",
         "declaredBy": "krizaka-notifications-service"
       },
       {
         "name": "krizaka.notifications.user-events",
-        "exchange": "orazaka.events",
+        "exchange": "sovkora.events",
         "binding": "evt.user.*",
         "dlq": "krizaka.notifications.user-events.dlq",
         "declaredBy": "krizaka-notifications-service"
       },
       {
-        "name": "orazaka.automation.studio-runs",
-        "exchange": "orazaka.events",
+        "name": "sovkora.automation.studio-runs",
+        "exchange": "sovkora.events",
         "binding": null,
-        "dlq": "orazaka.automation.studio-runs.dlq",
-        "declaredBy": "orazaka-automation-service"
+        "dlq": "sovkora.automation.studio-runs.dlq",
+        "declaredBy": "sovkora-automation-service"
       },
       {
-        "name": "orazaka.events.job-relay",
-        "exchange": "orazaka.events",
+        "name": "sovkora.events.job-relay",
+        "exchange": "sovkora.events",
         "binding": "job.#",
-        "dlq": "orazaka.events.job-relay.dlq",
-        "declaredBy": "orazaka-persistence-app"
+        "dlq": "sovkora.events.job-relay.dlq",
+        "declaredBy": "sovkora-persistence-app"
       },
       {
-        "name": "orazaka.events.studio",
-        "exchange": "orazaka.events",
+        "name": "sovkora.events.studio",
+        "exchange": "sovkora.events",
         "binding": "job.*.done, job.*.error",
-        "dlq": "orazaka.events.studio.dlq",
-        "declaredBy": "orazaka-studio-service"
+        "dlq": "sovkora.events.studio.dlq",
+        "declaredBy": "sovkora-studio-service"
       },
       {
-        "name": "orazaka.events.studio.capability",
-        "exchange": "orazaka.events",
+        "name": "sovkora.events.studio.capability",
+        "exchange": "sovkora.events",
         "binding": "evt.capability.*",
-        "dlq": "orazaka.events.studio.capability.dlq",
-        "declaredBy": "orazaka-studio-service"
+        "dlq": "sovkora.events.studio.capability.dlq",
+        "declaredBy": "sovkora-studio-service"
       },
       {
-        "name": "orazaka.events.studio.connector",
-        "exchange": "orazaka.events",
+        "name": "sovkora.events.studio.connector",
+        "exchange": "sovkora.events",
         "binding": "evt.automation.telemetry",
-        "dlq": "orazaka.events.studio.connector.dlq",
-        "declaredBy": "orazaka-studio-service"
+        "dlq": "sovkora.events.studio.connector.dlq",
+        "declaredBy": "sovkora-studio-service"
       },
       {
-        "name": "orazaka.events.studio.subscription",
-        "exchange": "orazaka.events",
+        "name": "sovkora.events.studio.subscription",
+        "exchange": "sovkora.events",
         "binding": "evt.subscription.*",
-        "dlq": "orazaka.events.studio.subscription.dlq",
-        "declaredBy": "orazaka-studio-service"
+        "dlq": "sovkora.events.studio.subscription.dlq",
+        "declaredBy": "sovkora-studio-service"
       },
       {
-        "name": "orazaka.jobs.automation",
-        "exchange": "orazaka.jobs",
+        "name": "sovkora.jobs.automation",
+        "exchange": "sovkora.jobs",
         "binding": "job.automation.*",
-        "dlq": "orazaka.jobs.automation.dlq",
-        "declaredBy": "orazaka-automation-service"
+        "dlq": "sovkora.jobs.automation.dlq",
+        "declaredBy": "sovkora-automation-service"
       },
       {
-        "name": "orazaka.jobs.batch",
-        "exchange": "orazaka.jobs",
+        "name": "sovkora.jobs.batch",
+        "exchange": "sovkora.jobs",
         "binding": "job.media.generate",
-        "dlq": "orazaka.jobs.batch.dlq",
-        "declaredBy": "orazaka-persistence-app"
+        "dlq": "sovkora.jobs.batch.dlq",
+        "declaredBy": "sovkora-persistence-app"
       },
       {
-        "name": "orazaka.jobs.interactive",
-        "exchange": "orazaka.jobs",
+        "name": "sovkora.jobs.interactive",
+        "exchange": "sovkora.jobs",
         "binding": "job.text.*, job.media.analyze",
-        "dlq": "orazaka.jobs.interactive.dlq",
-        "declaredBy": "orazaka-persistence-app"
+        "dlq": "sovkora.jobs.interactive.dlq",
+        "declaredBy": "sovkora-persistence-app"
       },
       {
-        "name": "orazaka.jobs.rag",
-        "exchange": "orazaka.jobs",
+        "name": "sovkora.jobs.rag",
+        "exchange": "sovkora.jobs",
         "binding": "job.rag.*",
-        "dlq": "orazaka.jobs.rag.dlq",
-        "declaredBy": "orazaka-knowledge-service"
+        "dlq": "sovkora.jobs.rag.dlq",
+        "declaredBy": "sovkora-knowledge-service"
       },
       {
-        "name": "orazaka.jobs.video",
-        "exchange": "orazaka.jobs",
+        "name": "sovkora.jobs.video",
+        "exchange": "sovkora.jobs",
         "binding": "job.video.*",
-        "dlq": "orazaka.jobs.video.dlq",
-        "declaredBy": "orazaka-persistence-app"
+        "dlq": "sovkora.jobs.video.dlq",
+        "declaredBy": "sovkora-persistence-app"
       }
     ],
     "producers": [
       {
         "module": "krizaka-billing-service",
-        "exchange": "orazaka.events",
+        "exchange": "sovkora.events",
         "routingKey": "(dynamic)"
       },
       {
         "module": "krizaka-users-core",
-        "exchange": "orazaka.events",
+        "exchange": "sovkora.events",
         "routingKey": "evt.password.reset"
       },
       {
         "module": "krizaka-users-core",
-        "exchange": "orazaka.events",
+        "exchange": "sovkora.events",
         "routingKey": "evt.user.registered"
       },
       {
-        "module": "orazaka-automation-service",
-        "exchange": "orazaka.jobs",
+        "module": "sovkora-automation-service",
+        "exchange": "sovkora.jobs",
         "routingKey": "(dynamic)"
       },
       {
-        "module": "orazaka-automation-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-automation-service",
+        "exchange": "sovkora.events",
         "routingKey": "evt.automation.telemetry"
       },
       {
-        "module": "orazaka-conversation-service",
-        "exchange": "orazaka.jobs",
+        "module": "sovkora-conversation-service",
+        "exchange": "sovkora.jobs",
         "routingKey": "(capability route)"
       },
       {
-        "module": "orazaka-conversation-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-conversation-service",
+        "exchange": "sovkora.events",
         "routingKey": "(dynamic)"
       },
       {
-        "module": "orazaka-conversation-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-conversation-service",
+        "exchange": "sovkora.events",
         "routingKey": "evt.agent.presence"
       },
       {
-        "module": "orazaka-conversation-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-conversation-service",
+        "exchange": "sovkora.events",
         "routingKey": "evt.capability.changed"
       },
       {
-        "module": "orazaka-conversation-service",
-        "exchange": "orazaka.jobs",
+        "module": "sovkora-conversation-service",
+        "exchange": "sovkora.jobs",
         "routingKey": "job.automation.approved"
       },
       {
-        "module": "orazaka-job-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-job-service",
+        "exchange": "sovkora.events",
         "routingKey": "(dynamic)"
       },
       {
-        "module": "orazaka-job-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-job-service",
+        "exchange": "sovkora.events",
         "routingKey": "evt.capability.changed"
       },
       {
-        "module": "orazaka-job-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-job-service",
+        "exchange": "sovkora.events",
         "routingKey": "job.{…}.cancelled"
       },
       {
-        "module": "orazaka-job-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-job-service",
+        "exchange": "sovkora.events",
         "routingKey": "job.{…}.done"
       },
       {
-        "module": "orazaka-job-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-job-service",
+        "exchange": "sovkora.events",
         "routingKey": "job.{…}.error"
       },
       {
-        "module": "orazaka-job-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-job-service",
+        "exchange": "sovkora.events",
         "routingKey": "job.{…}.progress"
       },
       {
-        "module": "orazaka-studio-service",
-        "exchange": "orazaka.jobs",
+        "module": "sovkora-studio-service",
+        "exchange": "sovkora.jobs",
         "routingKey": "(capability route)"
       },
       {
-        "module": "orazaka-studio-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-studio-service",
+        "exchange": "sovkora.events",
         "routingKey": "evt.studio.run.failed"
       },
       {
-        "module": "orazaka-studio-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-studio-service",
+        "exchange": "sovkora.events",
         "routingKey": "evt.studio.run.started"
       },
       {
-        "module": "orazaka-studio-service",
-        "exchange": "orazaka.events",
+        "module": "sovkora-studio-service",
+        "exchange": "sovkora.events",
         "routingKey": "evt.studio.run.succeeded"
       },
       {
-        "module": "orazaka-studio-service",
-        "exchange": "orazaka.jobs",
+        "module": "sovkora-studio-service",
+        "exchange": "sovkora.jobs",
         "routingKey": "job.automation.approved"
       },
       {
-        "module": "orazaka-studio-service",
-        "exchange": "orazaka.jobs",
+        "module": "sovkora-studio-service",
+        "exchange": "sovkora.jobs",
         "routingKey": "job.cancel.{…}"
       }
     ],
@@ -2162,119 +2162,119 @@
         "retry": "kit"
       },
       {
-        "module": "orazaka-automation-service",
-        "queue": "orazaka.automation.studio-runs",
+        "module": "sovkora-automation-service",
+        "queue": "sovkora.automation.studio-runs",
         "retry": "kit"
       },
       {
-        "module": "orazaka-automation-service",
-        "queue": "orazaka.jobs.automation",
+        "module": "sovkora-automation-service",
+        "queue": "sovkora.jobs.automation",
         "retry": "kit"
       },
       {
-        "module": "orazaka-conversation-service",
-        "queue": "orazaka.events.job-relay",
+        "module": "sovkora-conversation-service",
+        "queue": "sovkora.events.job-relay",
         "retry": "kit"
       },
       {
-        "module": "orazaka-job-service",
-        "queue": "orazaka.jobs.batch",
+        "module": "sovkora-job-service",
+        "queue": "sovkora.jobs.batch",
         "retry": "kit"
       },
       {
-        "module": "orazaka-job-service",
-        "queue": "orazaka.jobs.batch.dlq",
+        "module": "sovkora-job-service",
+        "queue": "sovkora.jobs.batch.dlq",
         "retry": "kit"
       },
       {
-        "module": "orazaka-job-service",
-        "queue": "orazaka.jobs.interactive",
+        "module": "sovkora-job-service",
+        "queue": "sovkora.jobs.interactive",
         "retry": "kit"
       },
       {
-        "module": "orazaka-job-service",
-        "queue": "orazaka.jobs.interactive.dlq",
+        "module": "sovkora-job-service",
+        "queue": "sovkora.jobs.interactive.dlq",
         "retry": "kit"
       },
       {
-        "module": "orazaka-knowledge-service",
-        "queue": "orazaka.jobs.rag",
+        "module": "sovkora-knowledge-service",
+        "queue": "sovkora.jobs.rag",
         "retry": "kit"
       },
       {
-        "module": "orazaka-studio-service",
-        "queue": "orazaka.events.studio",
+        "module": "sovkora-studio-service",
+        "queue": "sovkora.events.studio",
         "retry": "kit"
       },
       {
-        "module": "orazaka-studio-service",
-        "queue": "orazaka.events.studio.capability",
+        "module": "sovkora-studio-service",
+        "queue": "sovkora.events.studio.capability",
         "retry": "kit"
       },
       {
-        "module": "orazaka-studio-service",
-        "queue": "orazaka.events.studio.connector",
+        "module": "sovkora-studio-service",
+        "queue": "sovkora.events.studio.connector",
         "retry": "kit"
       },
       {
-        "module": "orazaka-studio-service",
-        "queue": "orazaka.events.studio.dlq",
+        "module": "sovkora-studio-service",
+        "queue": "sovkora.events.studio.dlq",
         "retry": "kit"
       },
       {
-        "module": "orazaka-studio-service",
-        "queue": "orazaka.events.studio.subscription",
+        "module": "sovkora-studio-service",
+        "queue": "sovkora.events.studio.subscription",
         "retry": "kit"
       },
       {
-        "module": "orazaka-worker-media",
-        "queue": "orazaka.jobs.sound",
+        "module": "sovkora-worker-media",
+        "queue": "sovkora.jobs.sound",
         "retry": "module"
       }
     ],
     "capabilityRoutes": [
       {
-        "feature": "orazaka.studio.media.compose",
+        "feature": "sovkora.studio.media.compose",
         "handler": "media.compose",
         "routingKey": "job.compose.assemble"
       },
       {
-        "feature": "orazaka.core.media.vision",
+        "feature": "sovkora.core.media.vision",
         "handler": "image.analyze",
         "routingKey": "job.media.analyze"
       },
       {
-        "feature": "orazaka.core.media.audio.analysis",
+        "feature": "sovkora.core.media.audio.analysis",
         "handler": "audio.analyze",
         "routingKey": "job.media.generate"
       },
       {
-        "feature": "orazaka.core.media.image",
+        "feature": "sovkora.core.media.image",
         "handler": "image.generate",
         "routingKey": "job.media.generate"
       },
       {
-        "feature": "orazaka.core.media.video.analysis",
+        "feature": "sovkora.core.media.video.analysis",
         "handler": "video.analyze",
         "routingKey": "job.media.generate"
       },
       {
-        "feature": "orazaka.studio.media.sound",
+        "feature": "sovkora.studio.media.sound",
         "handler": "media.sound",
         "routingKey": "job.sound.generate"
       },
       {
-        "feature": "orazaka.core.chat.completion",
+        "feature": "sovkora.core.chat.completion",
         "handler": "text.generate",
         "routingKey": "job.text.process"
       },
       {
-        "feature": "orazaka.core.media.speech",
+        "feature": "sovkora.core.media.speech",
         "handler": "speech.synthesize",
         "routingKey": "job.text.process"
       },
       {
-        "feature": "orazaka.core.media.video",
+        "feature": "sovkora.core.media.video",
         "handler": "video.generate",
         "routingKey": "job.video.generate"
       }
@@ -2379,7 +2379,7 @@
         "role": "adapter",
         "packaging": "jar",
         "version": "0.2.0",
-        "description": "Orazaka User and Identity Persistence Block"
+        "description": "Sovkora User and Identity Persistence Block"
       },
       {
         "id": "krizaka-users-core",
@@ -2388,7 +2388,7 @@
         "role": "domain",
         "packaging": "jar",
         "version": "0.2.0",
-        "description": "Orazaka Identity and Access Management Domain"
+        "description": "Sovkora Identity and Access Management Domain"
       },
       {
         "id": "krizaka-billing-api",
@@ -2514,7 +2514,7 @@
         "role": "platform",
         "packaging": "jar",
         "version": "0.2.0",
-        "description": "HTTP Idempotency-Key, written once: an action runs at most once per key, a retry with the same key and request replays the stored response, the same key with another request is a 422 Problem Details; PostgreSQL or in-memory store, observed. Promoted from Orazaka (ADR-083)."
+        "description": "HTTP Idempotency-Key, written once: an action runs at most once per key, a retry with the same key and request replays the stored response, the same key with another request is a 422 Problem Details; PostgreSQL or in-memory store, observed. Promoted from Sovkora (ADR-083)."
       },
       {
         "id": "krizaka-messaging",
@@ -2550,7 +2550,7 @@
         "role": "platform",
         "packaging": "jar",
         "version": "0.2.0",
-        "description": "A requests-per-minute limit per key, written once: a token bucket per key (client address by default, or any key you resolve), observe or enforce, 429 with Retry-After as Problem Details, observed. Promoted from the Orazaka edge (ADR-083) and krizaka-users."
+        "description": "A requests-per-minute limit per key, written once: a token bucket per key (client address by default, or any key you resolve), observe or enforce, 429 with Retry-After as Problem Details, observed. Promoted from the Sovkora edge (ADR-083) and krizaka-users."
       },
       {
         "id": "krizaka-security",
@@ -2577,7 +2577,7 @@
         "role": "platform",
         "packaging": "jar",
         "version": "0.2.0",
-        "description": "Signed webhooks, written once, the Standard Webhooks way: sign and send with a stable id and secret rotation, verify what you receive (signature, constant-time, timestamp tolerance) with a 401 Problem Details otherwise; observed. Promoted from Orazaka (orazaka#189) and krizaka-notifications."
+        "description": "Signed webhooks, written once, the Standard Webhooks way: sign and send with a stable id and secret rotation, verify what you receive (signature, constant-time, timestamp tolerance) with a 401 Problem Details otherwise; observed. Promoted from Sovkora (sovkora#189) and krizaka-notifications."
       },
       {
         "id": "krizaka-bom",
@@ -3173,8 +3173,8 @@
       ]
     },
     {
-      "key": "orazaka-media",
-      "dir": "orazaka-media",
+      "key": "sovkora-media",
+      "dir": "sovkora-media",
       "version": "1.13.0",
       "tier": "DATA",
       "kind": "TOOLKIT",
@@ -4154,12 +4154,12 @@
             "en": {
               "label": "Outbound Prospecting",
               "tagline": "Your prospect list becomes a sequence ready to send.",
-              "description": "Describe your target and your offer: Orazaka writes a per-prospect angle, then a sequence ready to leave for your channel."
+              "description": "Describe your target and your offer: Sovkora writes a per-prospect angle, then a sequence ready to leave for your channel."
             },
             "fr": {
               "label": "Prospection Outbound",
               "tagline": "Votre liste de prospects devient une séquence prête à envoyer.",
-              "description": "Décrivez votre cible et votre offre : Orazaka rédige un angle par prospect, puis une séquence prête à partir dans votre canal."
+              "description": "Décrivez votre cible et votre offre : Sovkora rédige un angle par prospect, puis une séquence prête à partir dans votre canal."
             }
           }
         },
@@ -4694,12 +4694,12 @@
         "includedCredits": 500
       },
       "capabilities": [
-        "orazaka.validation.document.screen",
-        "orazaka.validation.document.signals",
-        "orazaka.validation.document.assemble"
+        "sovkora.validation.document.screen",
+        "sovkora.validation.document.signals",
+        "sovkora.validation.document.assemble"
       ],
       "workers": [
-        "orazaka-worker-validation"
+        "sovkora-worker-validation"
       ],
       "scopeGuard": true,
       "consent": false,
@@ -4892,10 +4892,10 @@
         "includedCredits": 0
       },
       "capabilities": [
-        "orazaka.echo.text.reverse"
+        "sovkora.echo.text.reverse"
       ],
       "workers": [
-        "orazaka-worker-echo"
+        "sovkora-worker-echo"
       ],
       "scopeGuard": false,
       "consent": false,
@@ -4972,10 +4972,10 @@
       "sortWeight": null,
       "pricing": null,
       "capabilities": [
-        "orazaka.safety.media.assess"
+        "sovkora.safety.media.assess"
       ],
       "workers": [
-        "orazaka-worker-safety"
+        "sovkora-worker-safety"
       ],
       "scopeGuard": true,
       "consent": false,
@@ -5064,10 +5064,10 @@
       "sortWeight": null,
       "pricing": null,
       "capabilities": [
-        "orazaka.message.authenticity.read"
+        "sovkora.message.authenticity.read"
       ],
       "workers": [
-        "orazaka-worker-authenticity"
+        "sovkora-worker-authenticity"
       ],
       "scopeGuard": true,
       "consent": false,
@@ -5148,11 +5148,11 @@
       "sortWeight": null,
       "pricing": null,
       "capabilities": [
-        "orazaka.photo.profile.inspect",
-        "orazaka.photo.profile.assess"
+        "sovkora.photo.profile.inspect",
+        "sovkora.photo.profile.assess"
       ],
       "workers": [
-        "orazaka-worker-photo"
+        "sovkora-worker-photo"
       ],
       "scopeGuard": true,
       "consent": false,
@@ -5306,12 +5306,12 @@
             "en": {
               "label": "Trade Showcase",
               "tagline": "Your job sites become a showcase that sells.",
-              "description": "Drop in photos of your work: Orazaka describes them, then composes a branded showcase visual."
+              "description": "Drop in photos of your work: Sovkora describes them, then composes a branded showcase visual."
             },
             "fr": {
               "label": "Vitrine Artisan",
               "tagline": "Vos chantiers deviennent une vitrine qui vend.",
-              "description": "Déposez les photos de vos réalisations : Orazaka les décrit, puis compose un visuel de vitrine à votre image."
+              "description": "Déposez les photos de vos réalisations : Sovkora les décrit, puis compose un visuel de vitrine à votre image."
             }
           }
         }
@@ -6138,16 +6138,16 @@
   ],
   "cli": {
     "package": "@krizaka/orazaka-cli",
-    "alias": "orazaka",
+    "alias": "sovkora",
     "version": "1.1.0",
-    "bin": "orazaka",
+    "bin": "sovkora",
     "node": ">=22",
     "commands": [
       {
         "name": "agent",
         "top": "agent",
         "isTop": true,
-        "description": "Manage Orazaka local executing agent",
+        "description": "Manage Sovkora local executing agent",
         "args": [],
         "aliases": [],
         "options": []
@@ -6687,7 +6687,7 @@
         "name": "dev",
         "top": "dev",
         "isTop": true,
-        "description": "Launch the full Orazaka application stack in parallel (9 services + Web, Mobile)",
+        "description": "Launch the full Sovkora application stack in parallel (9 services + Web, Mobile)",
         "args": [],
         "aliases": [],
         "options": [
@@ -6912,7 +6912,7 @@
           {
             "flag": "--dir <path>",
             "desc": "Where to clone the platform when no workspace is found",
-            "default": "orazaka"
+            "default": "sovkora"
           },
           {
             "flag": "--depth <n>",
@@ -7051,7 +7051,7 @@
         "args": [
           {
             "name": "<id>",
-            "desc": "Model id (see `orazaka models image list`)"
+            "desc": "Model id (see `sovkora models image list`)"
           }
         ],
         "aliases": [],
@@ -7061,11 +7061,11 @@
         "name": "models use",
         "top": "models",
         "isTop": false,
-        "description": "Make an installed image model the catalogue's default — the one `orazaka start` serves",
+        "description": "Make an installed image model the catalogue's default — the one `sovkora start` serves",
         "args": [
           {
             "name": "<id>",
-            "desc": "Model id (see `orazaka models image list`)"
+            "desc": "Model id (see `sovkora models image list`)"
           }
         ],
         "aliases": [],
@@ -7216,7 +7216,7 @@
         "args": [
           {
             "name": "<manifest>",
-            "desc": "Path to the release manifest (orazaka-release.json)"
+            "desc": "Path to the release manifest (sovkora-release.json)"
           }
         ],
         "aliases": [],
@@ -7292,7 +7292,7 @@
         "name": "start",
         "top": "start",
         "isTop": true,
-        "description": "Start Orazaka infrastructure — dev mode (Docker middleware + AI engines) or full mode (also Router + UI)",
+        "description": "Start Sovkora infrastructure — dev mode (Docker middleware + AI engines) or full mode (also Router + UI)",
         "args": [],
         "aliases": [],
         "options": [
@@ -7337,7 +7337,7 @@
         "name": "status",
         "top": "status",
         "isTop": true,
-        "description": "Show live status of all Orazaka services",
+        "description": "Show live status of all Sovkora services",
         "args": [],
         "aliases": [],
         "options": [
@@ -7357,7 +7357,7 @@
         "name": "stop",
         "top": "stop",
         "isTop": true,
-        "description": "Teardown the Orazaka infrastructure — containers, workers, and state",
+        "description": "Teardown the Sovkora infrastructure — containers, workers, and state",
         "args": [],
         "aliases": [],
         "options": [
@@ -7557,7 +7557,7 @@
           {
             "id": "workspace",
             "title": "Workspace",
-            "detail": "no Orazaka workspace here"
+            "detail": "no Sovkora workspace here"
           },
           {
             "id": "3",
@@ -7573,7 +7573,7 @@
       },
       {
         "command": "start",
-        "description": "Start Orazaka infrastructure — dev mode (Docker middleware + AI engines) or full mode (also Router + UI)",
+        "description": "Start Sovkora infrastructure — dev mode (Docker middleware + AI engines) or full mode (also Router + UI)",
         "phases": [
           {
             "id": "1",
@@ -7614,7 +7614,7 @@
       },
       {
         "command": "dev",
-        "description": "Launch the full Orazaka application stack in parallel (9 services + Web, Mobile)",
+        "description": "Launch the full Sovkora application stack in parallel (9 services + Web, Mobile)",
         "processes": [
           {
             "key": "edge",

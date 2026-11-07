@@ -37,32 +37,32 @@ interface Spec extends Paths {
 }
 
 /* One take per chapter, chosen for what the chapter tells (story peer review, 2026-10-21):
-   - orazaka: the web client on its dev site, the demo persona asking and the engine answering (2026-10-29: it replaces the Old
+   - sovkora: the web client on its dev site, the demo persona asking and the engine answering (2026-10-29: it replaces the Old
    Port scene, a generated clip that was not the product running); the others keep their recordings (a lease read, a shop's day). */
 const SPECS: Partial<Record<ProductId, Spec>> = {
-  orazaka: {
+  sovkora: {
     ratio: "wide",
-    mp4: "products/orazaka/home/take-{l}-dark.mp4",
-    webm: "products/orazaka/home/take-{l}-dark.webm",
-    poster: "products/orazaka/home/take-{l}-dark-poster.webp",
+    mp4: "products/sovkora/home/take-{l}-dark.mp4",
+    webm: "products/sovkora/home/take-{l}-dark.webm",
+    poster: "products/sovkora/home/take-{l}-dark-poster.webp",
     cues: [[0, 9.5]],
   },
-  yomizaka: {
+  verikora: {
     ratio: "phone",
-    mp4: "products/yomizaka/tour/take-{l}.mp4",
-    webm: "products/yomizaka/tour/take-{l}.webm",
-    poster: "products/yomizaka/tour/story-poster-{l}.jpg",
+    mp4: "products/verikora/tour/take-{l}.mp4",
+    webm: "products/verikora/tour/take-{l}.webm",
+    poster: "products/verikora/tour/story-poster-{l}.jpg",
     cues: [
       [0, 6],
       [6, 11],
       [11, 18.2],
     ],
   },
-  akinaza: {
+  folioviv: {
     ratio: "phone",
-    mp4: "products/akinaza/tour/hero-{l}.mp4",
-    webm: "products/akinaza/tour/hero-{l}.webm",
-    poster: "products/akinaza/tour/phone-hero-{l}.jpg",
+    mp4: "products/folioviv/tour/hero-{l}.mp4",
+    webm: "products/folioviv/tour/hero-{l}.webm",
+    poster: "products/folioviv/tour/phone-hero-{l}.jpg",
     cues: [
       [0, 12],
       [12, 25],

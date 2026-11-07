@@ -1,11 +1,11 @@
-/* What each product uses the engine (Orazaka) for — structure only; the words are messages
+/* What each product uses the engine (Sovkora) for — structure only; the words are messages
    (site.products.engine.uses.<id>). `planned`: the product's repository states the intention, and the call is not
    wired to a real Studio yet — the card says "planned", never more. Source: each product repository's README/AGENTS. */
 
 import type { ProductId } from "./products";
 
-/** What comes back from Orazaka to the product — only what runs: `results` (the run's output), `analytics` (the
- *  knowledge-service analytics, ADR-081, read back). Run events (SSE) and signed webhooks are orazaka#189, still open:
+/** What comes back from Sovkora to the product — only what runs: `results` (the run's output), `analytics` (the
+ *  knowledge-service analytics, ADR-081, read back). Run events (SSE) and signed webhooks are sovkora#189, still open:
  *  they are neither drawn nor said until they ship. */
 export type EngineBack = "results" | "analytics";
 
@@ -16,8 +16,8 @@ export interface EngineUse {
 }
 
 export const ENGINE_USES: readonly EngineUse[] = [
-  { id: "yomizaka", back: ["results"] }, // document analyses are Orazaka runs (document-validation pack)
-  { id: "akinaza", back: ["results"], planned: true }, // the tax-assistant Studio (contract and a fake Studio exist)
+  { id: "verikora", back: ["results"] }, // document analyses are Sovkora runs (document-validation pack)
+  { id: "folioviv", back: ["results"], planned: true }, // the tax-assistant Studio (contract and a fake Studio exist)
 ];
 
 /** Beyond our products, the engine serves the applications of a company that adopts it (Krizaka Entreprise, /services):

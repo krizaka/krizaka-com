@@ -11,30 +11,30 @@ const m = { fr: JSON.parse(read("messages/fr.json")), en: JSON.parse(read("messa
 
 const LINES = {
   fr: {
-    yomizaka: "Lisez avant de signer. Verikora vérifie les papiers d'un dossier de location et cite chaque passage.",
-    orazaka: "L'IA qui reste chez vous. Vos modèles, vos machines : vos données ne sortent pas.",
-    akinaza: "Vos rendez-vous et vos factures réglés, vos taxes préparées.",
-    kachizaka: "Vos documents d'entreprise, rangés et retrouvés.",
+    verikora: "Lisez avant de signer. Verikora vérifie les papiers d'un dossier de location et cite chaque passage.",
+    sovkora: "L'IA qui reste chez vous. Vos modèles, vos machines : vos données ne sortent pas.",
+    folioviv: "Vos rendez-vous et vos factures réglés, vos taxes préparées.",
+    kridoc: "Vos documents d'entreprise, rangés et retrouvés.",
   },
   en: {
-    yomizaka: "Read before you sign. Verikora checks the papers of a rental file and quotes every passage.",
-    orazaka: "The AI that stays home. Your models, your machines: your data stays in.",
-    akinaza: "Your bookings and invoices sorted, your taxes prepared.",
-    kachizaka: "Your company documents, filed and found.",
+    verikora: "Read before you sign. Verikora checks the papers of a rental file and quotes every passage.",
+    sovkora: "The AI that stays home. Your models, your machines: your data stays in.",
+    folioviv: "Your bookings and invoices sorted, your taxes prepared.",
+    kridoc: "Your company documents, filed and found.",
   },
 };
 
 test("each product's card says the canonical line, in both languages", () => {
   for (const l of ["fr", "en"]) {
-    for (const id of ["yomizaka", "orazaka", "akinaza"])
+    for (const id of ["verikora", "sovkora", "folioviv"])
       assert.equal(m[l].site.products.cards[id].line, LINES[l][id], `${l}: ${id}`);
-    assert.equal(m[l].site.home.products.inDesign.lines.kachizaka, LINES[l].kachizaka, `${l}: kachizaka`);
+    assert.equal(m[l].site.home.products.inDesign.lines.kridoc, LINES[l].kridoc, `${l}: kridoc`);
   }
 });
 
 test("one status word per product: In development (Verikora, Sovkora), Paused (Folioviv), In design (Kridoc)", () => {
   const status = Object.fromEntries(PRODUCTS.map((p) => [p.id, p.status]));
-  assert.deepEqual(status, { orazaka: "development", yomizaka: "development", akinaza: "paused" });
+  assert.deepEqual(status, { sovkora: "development", verikora: "development", folioviv: "paused" });
   const labels = (l) => Object.fromEntries(Object.entries(m[l].site.nav.status).map(([k, v]) => [k, v.label]));
   assert.equal(labels("fr").development, "En développement");
   assert.equal(labels("fr").paused, "En pause");
@@ -75,5 +75,5 @@ test("no page claims « Loi 25, par construction » until the EFVP is published"
 });
 
 test("the engine's entry on the home says Sovkora's canonical line too", () => {
-  for (const l of ["fr", "en"]) assert.equal(m[l].site.home.engine.line, LINES[l].orazaka, l);
+  for (const l of ["fr", "en"]) assert.equal(m[l].site.home.engine.line, LINES[l].sovkora, l);
 });

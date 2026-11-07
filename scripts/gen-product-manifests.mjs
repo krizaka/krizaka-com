@@ -4,7 +4,7 @@
    which is committed, so the test (tests/product-stack.test.mjs) and the build need no network.
 
    Per product: the @krizaka/* npm dependencies of its package.json files, the krizaka-* Maven artifacts of its pom.xml
-   files (the Java platform kit), and the existence of the files that prove what a manifest cannot (Orazaka's own SSE
+   files (the Java platform kit), and the existence of the files that prove what a manifest cannot (Sovkora's own SSE
    hook). Run it when a product adopts or drops a package, then edit lib/product-stack.ts if a cell changed.
 
    Usage: node scripts/gen-product-manifests.mjs */
@@ -18,22 +18,22 @@ const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib",
 const RAW = "https://raw.githubusercontent.com/krizaka";
 
 /** repo → manifests to read; `evidence` files must exist (a hook a manifest cannot show); `engineRun` is the file that
-    records a real Orazaka run of the product on dev (its run id) — the only proof that it runs on the engine. */
+    records a real Sovkora run of the product on dev (its run id) — the only proof that it runs on the engine. */
 const PRODUCTS = {
-  orazaka: {
-    npm: ["orazaka-web-client:package.json", "orazaka-mobile-client:package.json"],
+  sovkora: {
+    npm: ["sovkora-web:package.json", "sovkora-mobile:package.json"],
     maven: [
-      "orazaka-edge",
-      "orazaka-ai-engine",
-      "orazaka-automation-service",
-      "orazaka-conversation-service",
-      "orazaka-job-service",
-      "orazaka-knowledge-service",
+      "sovkora-edge-service",
+      "sovkora-engine",
+      "sovkora-automation-service",
+      "sovkora-conversation-service",
+      "sovkora-job-service",
+      "sovkora-knowledge-service",
     ].map((r) => `${r}:pom.xml`),
-    evidence: ["orazaka-web-client:src/core/hooks/useJobSSE.ts"],
+    evidence: ["sovkora-web:src/core/hooks/useJobSSE.ts"],
   },
-  yomizaka: { npm: ["yomizaka:apps/web/package.json"], maven: [], engineRun: "yomizaka:apps/web/lib/demo-run.ts" },
-  akinaza: { npm: ["akinaza:apps/web/package.json", "akinaza:apps/mobile/package.json"], maven: [] },
+  verikora: { npm: ["verikora:apps/web/package.json"], maven: [], engineRun: "verikora:apps/web/lib/demo-run.ts" },
+  folioviv: { npm: ["folioviv:apps/web/package.json", "folioviv:apps/mobile/package.json"], maven: [] },
 };
 
 /** The run id a recorded-run file holds (`"runId": "<uuid>"`), or null — never a guess. */

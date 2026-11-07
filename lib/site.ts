@@ -4,7 +4,7 @@
    ═══════════════════════════════════════════════════════════════════ */
 
 export const GITHUB_ORG = "krizaka";
-export const GITHUB_REPO = "orazaka";
+export const GITHUB_REPO = "sovkora";
 
 /** The canonical host: www (the apex answers 308 to www, see deploy/digitalocean/app.yaml). */
 export const SITE_URL = "https://www.krizaka.com";
@@ -34,9 +34,9 @@ export const BLOG_URL = "https://blog.krizaka.com";
 /** The site's own repository. */
 export const SITE_REPO_URL = `${GITHUB_ORG_URL}/krizaka-com`;
 
-/** Yomizaka, documents read and checked by Orazaka (coming soon): its repository. */
-export const YOMIZAKA_REPO_URL = `${GITHUB_ORG_URL}/yomizaka`;
-export const AKINAZA_REPO_URL = `${GITHUB_ORG_URL}/akinaza`;
+/** Verikora, documents read and checked by Sovkora (coming soon): its repository. */
+export const VERIKORA_REPO_URL = `${GITHUB_ORG_URL}/verikora`;
+export const FOLIOVIV_REPO_URL = `${GITHUB_ORG_URL}/folioviv`;
 
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;

@@ -35,9 +35,9 @@ export const cleanSource = (v: unknown): string | null => (typeof v === "string"
 /** The source of a page: its product, its documentation or open source, else its first segment ("home" for /). */
 export function contactSourceFromPath(pathname: string): string {
   const path = pathname.replace(/^\/(en|fr)(?=\/|$)/, "") || "/";
-  if (/^\/(products|docs)\/orazaka(\/|$)/.test(path)) return "orazaka";
-  if (/^\/(products|docs)\/yomizaka(\/|$)/.test(path)) return "yomizaka";
-  if (/^\/products\/akinaza(\/|$)/.test(path)) return "akinaza";
+  if (/^\/(products|docs)\/sovkora(\/|$)/.test(path)) return "sovkora";
+  if (/^\/(products|docs)\/verikora(\/|$)/.test(path)) return "verikora";
+  if (/^\/products\/folioviv(\/|$)/.test(path)) return "folioviv";
   if (/^\/docs\/(ui|java)(\/|$)/.test(path)) return `docs-${path.split("/")[2]}`;
   if (/^\/(open-source|docs)(\/|$)/.test(path)) return "open-source";
   return cleanSource(path.split("/")[1]) ?? "home";
@@ -137,10 +137,10 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
 }
 
 const PRODUCT_LABEL: Record<ContactProduct, string> = {
-  verikora: displayName("yomizaka"),
-  folioviv: displayName("akinaza"),
-  sovkora: displayName("orazaka"),
-  kridoc: displayName("kachizaka"),
+  verikora: displayName("verikora"),
+  folioviv: displayName("folioviv"),
+  sovkora: displayName("sovkora"),
+  kridoc: displayName("kridoc"),
   blocks: "Building blocks",
 };
 
