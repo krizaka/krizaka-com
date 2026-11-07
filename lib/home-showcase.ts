@@ -6,7 +6,10 @@
    2026-11-05). A slide whose files the manifest does not know fails the build (tests/home-showcase.test.mjs); a slide
    whose real file is not a clean 16:9 (pillarbox, end card held on screen) is `retired` in the storyboard, out of the
    order, until it is remade (scripts/check-showcase-media.mjs reads the real files). The words (caption, alt) are messages:
-   site.home.showcase.slides.<carousel>.<id>. */
+   site.home.showcase.slides.<carousel>.<id>.
+   A product in conception has no carousel: it shows one still (founder, 2026-11-06, krizaka-internal#2802), a mood photo
+   in the carousels' look and frame, made locally (« stills » of the storyboard: model, seed, prompt). Its poster is read from
+   the manifest like a slide's; its words are site.home.showcase.stills.<product>. */
 
 import board from "../content/films/home-showcase.json" with { type: "json" };
 
@@ -38,6 +41,9 @@ interface BoardItem {
   library?: boolean;
   film?: boolean;
   audio?: boolean;
+}
+interface BoardStill {
+  id: string;
 }
 interface BoardCarousel {
   order: string[];
@@ -75,14 +81,32 @@ export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
   });
 }
 
+/** The products in conception that show a still, by their id (lib/products-in-design.ts). */
+export const STILLS = ["kridoc"] as const;
+export type Still = (typeof STILLS)[number];
+
+export interface ShowcaseStillSpec {
+  product: Still;
+  id: string;
+  /** The logical path of the photo on the CDN: a 1280x720 JPEG, like a slide's poster. Nothing moves, so it is also the
+   *  reduced-motion still. */
+  poster: string;
+}
+
+/** The still of a product in conception. */
+export function showcaseStill(product: Still): ShowcaseStillSpec {
+  const still = (board.stills as Record<Still, BoardStill>)[product];
+  return { product, id: still.id, poster: `${renditionBase(product, still.id)}.jpg` };
+}
+
 const EXTENSIONS = ["mp4", "webm", "jpg"] as const;
 
 /** The three files of a slide: its 16:9 rendition as mp4, webm and its poster. */
 const filesOf = (s: ShowcaseSlideSpec): string[] => EXTENSIONS.map((ext) => `${s.wide}.${ext}`);
 
-/** What is wrong with the carousels, as sentences (empty: fine). `has` is lib/cdn.ts's onCdn. */
+/** What is wrong with the carousels and the stills, as sentences (empty: fine). `has` is lib/cdn.ts's onCdn. */
 export function showcaseProblems(has: (path: string) => boolean): string[] {
-  return SHOWCASES.flatMap((carousel) => {
+  const carousels = SHOWCASES.flatMap((carousel) => {
     const slides = showcaseSlides(carousel);
     const ids = slides.map((s) => s.id);
     const twice = ids.filter((id, i) => ids.indexOf(id) !== i).map((id) => `${carousel}/${id}: twice in the order`);
@@ -94,6 +118,10 @@ export function showcaseProblems(has: (path: string) => boolean): string[] {
     );
     return [...twice, ...few, ...missing];
   });
+  const stills = STILLS.map(showcaseStill)
+    .filter((s) => !has(s.poster))
+    .map((s) => `${s.product}/${s.id}: ${s.poster} is not in the CDN manifest`);
+  return [...carousels, ...stills];
 }
 
 /** The carousel of a product, by its public name (Verikora → verikora); undefined for a product without one. */

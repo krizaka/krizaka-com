@@ -1,5 +1,6 @@
 /* The products in conception (founder, 2026-11-03, krizaka-internal#2143): named on the home with their mark, one line and
-   the stamp « In design », nothing else — no site, no version, no source, no plate, no bird, no note. Their need and scope
+   the stamp « In design », their coming-soon site and one mood photo (krizaka-internal#2302, #2802: lib/home-showcase.ts
+   `stills`), nothing else — no version, no source, no app screen, no bird, no note. Their need and scope
    are being settled, so nothing is built or offered yet: they stay out of PRODUCTS, so out of the nav, the hero's marks,
    the sitemap, llms.txt, the JSON-LD (`owns`), the dev-version read and the dev-preview gate. A product leaves this list
    for PRODUCTS when its repository builds something real.

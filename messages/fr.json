@@ -248,7 +248,6 @@
           "yoursUse": "Vos applications appellent le même moteur, chez vous ou au Canada : Krizaka Entreprise.",
           "yoursLink": "Voir Krizaka Entreprise"
         },
-        "figureLabel": "fig.",
         "notesLabel": "Notes sur les produits",
         "backLabel": "Retour à la fiche",
         "fields": {
@@ -271,12 +270,6 @@
           "label": "En conception",
           "lines": {
             "kridoc": "Vos documents d'entreprise, rangés et retrouvés."
-          },
-          "plate": {
-            "demoSoon": "Démo bientôt",
-            "docTitle": "Bail résidentiel",
-            "docMeta": "PDF · 4 pages · données de démo",
-            "figure": "Un document d’exemple, tel que Kridoc le rangera. Données de démo."
           }
         },
         "rowLabel": "Nos trois produits, le moteur au centre",
@@ -495,6 +488,12 @@
           "reel": "Les plans titrés viennent de nos reels publiés sur Instagram (@krizakahq), élargis en 16:9 avec Runway Aleph ; sur un téléphone, le cadrage vertical d'origine.",
           "clip": "Les plans marqués « généré avec Sovkora » ont été générés par notre moteur (Wan 2.2) pour le blogue ; le film de la marque aussi.",
           "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque."
+        },
+        "stills": {
+          "kridoc": {
+            "caption": "Kridoc est en conception : vos documents d'entreprise, rangés et retrouvés",
+            "alt": "Photo d'ambiance générée : Mireille, qui tient une quincaillerie de quartier à Montréal, tire de son classeur en bois la feuille qu'elle cherchait et sourit, sous une lampe, des boîtes d'archives derrière elle et une fenêtre à l'heure bleue."
+          }
         },
         "slides": {
           "hero": {
