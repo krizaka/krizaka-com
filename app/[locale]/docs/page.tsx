@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { floorFigure } from "@/lib/figure-floor";
-import Link from "next/link";
 import { ChatIcon, ExternalIcon, FlagIcon } from "@krizaka/icons";
 import { ProductLogo } from "@krizaka/ui";
 import { CodeBlock } from "@krizaka/ui/code-block";
 import { CtaPanel } from "@krizaka/ui/cta-panel";
-import { DocsHubPage } from "@krizaka/ui/docs-hub-page";
 import { Section } from "@krizaka/ui/page";
+import { PageHero } from "@krizaka/ui/page-hero";
 import { localizedMetadata } from "@/lib/seo";
 import { githubRepositories } from "@/lib/org-stats";
 import { openSourceRepositories } from "@/lib/repository-catalogue";
@@ -15,7 +14,7 @@ import manifests from "@/lib/product-manifests.json";
 import { npmPackages, publishedVersion } from "@/lib/registry-versions";
 import { packageRows, type RegistrySnapshot } from "@/lib/package-catalogue";
 import { GOOD_FIRST_URL } from "@/lib/library-links";
-import { CONDUCT_URL, CONTRIBUTING_URL, START_PATHS } from "@/lib/docs-start";
+import { CONDUCT_URL, CONTRIBUTING_URL, START_PATHS, hrefIn } from "@/lib/docs-start";
 import { howItFits } from "@/lib/how-it-fits";
 import { PRODUCTS } from "@/lib/products";
 import { PUBLIC_CHANNELS } from "@/lib/public-channels";
@@ -24,16 +23,19 @@ import { format, getDictionary } from "@/lib/i18n";
 import { STACK } from "@/lib/stack";
 import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
+import { ContentsIndex } from "@/app/components/lists/ContentsIndex";
 import { InstallTabs } from "./StackGlance";
 import { PackagesTable } from "./OpenSourceTables";
 import HowItFits from "./HowItFits";
 import "./open-source.css";
 
-/* /docs — the documentation hub people can follow, on its declared template (docs-hub: @krizaka/ui DocsHubPage).
-   Founder, 2026-10-30: the old /open-source was « une page de stats »; this page answers « where do I start? ».
+/* /docs — the documentation hub people can follow (template docs-hub). Founder, 2026-10-30: the old /open-source was
+   « une page de stats »; this page answers « where do I start? ». Founder, 2026-11-06 (krizaka-internal#2799): « quelque
+   chose d'autre que des cards » — the hub is the notebook's sommaire (ContentsIndex), since DocsHubPage of @krizaka/ui
+   only draws cards; it moves back to the library's block once krizaka-ui has a contents layout.
    1. The hub: the reader picks who they are (build an interface, build a Java service, use a product, contribute); each
-      path opens the documentation on its own site with its first three pages (lib/docs-start.ts), then the quick start
-      of Krizaka UI with the live version.
+      path is one row, § n in the margin, its title to its own site, who it is for, its first pages as plain links
+      (lib/docs-start.ts); then the quick start of Krizaka UI with the live version.
    2. A quiet line of figures (read at build) — never the headline.
    3. How it fits: products → engine → building blocks → shared services, as an ordered list.
    4. Reference, folded: every package and repository (npm, Maven Central, GitHub).
@@ -92,76 +94,74 @@ export default async function DocsPage({ params }: Props) {
     <main className="os-page">
       <SiteBar />
 
-      <DocsHubPage
-        eyebrow={h.eyebrow}
-        title={h.title}
-        lead={h.lead}
-        linkAs={Link}
-        linksLayout="stack"
-        collectionsTitle={h.startLabel}
-        collections={START_PATHS.map((path) => {
-          const words = h.paths[path.id];
-          const labels: Record<string, string> = words.links;
-          return {
-            id: path.id,
-            mark: <ProductLogo id={path.id === "products" ? "sovkora" : "krizaka"} size={20} animated={false} />,
-            title: words.title,
-            href: path.href,
-            description: words.text,
-            links: path.links.map((l) => ({
-              href: l.href,
-              label: l.name
-                ? format(labels.site, { name: l.name, status: l.status ? site.nav.status[l.status].label : "" })
-                : labels[l.id],
-            })),
-          };
-        })}
-        quickstarts={
-          uiVersion
-            ? {
-                title: h.quickstart.title,
-                children: (
-                  <div className="os-quickstart">
-                    <ol className="os-steps">
-                      <li>
-                        <p className="os-step-title">{h.quickstart.install}</p>
-                        <CodeBlock
-                          code={`npm install @krizaka/ui@${uiVersion} @krizaka/tailwind`}
-                          language="bash"
-                          file="terminal"
-                          copyLabel={t.install.copy}
-                          copiedLabel={t.install.copied}
-                        />
-                      </li>
-                      <li>
-                        <p className="os-step-title">{h.quickstart.styles}</p>
-                        <CodeBlock
-                          code={`@import "tailwindcss";\n@import "@krizaka/tailwind";\n@import "@krizaka/ui/tailwind.css";`}
-                          language="css"
-                          file="app/globals.css"
-                          copyLabel={t.install.copy}
-                          copiedLabel={t.install.copied}
-                        />
-                      </li>
-                      <li>
-                        <p className="os-step-title">{h.quickstart.use}</p>
-                        <CodeBlock
-                          code={`import { Button } from "@krizaka/ui/button";\n\n<Button variant="primary">${h.quickstart.sample}</Button>`}
-                          language="tsx"
-                          file="app/page.tsx"
-                          copyLabel={t.install.copy}
-                          copiedLabel={t.install.copied}
-                        />
-                      </li>
-                    </ol>
-                    <p className="os-step-title">{h.quickstart.other}</p>
-                    <InstallTabs locale={locale} skip={["ui"]} />
-                  </div>
-                ),
-              }
-            : undefined
-        }
-      />
+      <PageHero eyebrow={h.eyebrow} title={h.title} lead={h.lead} />
+
+      <Section id="start" title={h.startLabel} headingSize="sm" spacing="sm">
+        <ContentsIndex
+          label={h.startLabel}
+          entries={START_PATHS.map((path, i) => {
+            const words = h.paths[path.id];
+            const labels: Record<string, string> = "links" in words ? words.links : {};
+            return {
+              id: path.id,
+              number: format(h.number, { n: i + 1 }),
+              title: words.title,
+              href: hrefIn(path.href, locale),
+              line: words.text,
+              links: path.links.map((l) =>
+                l.name
+                  ? {
+                      href: l.href,
+                      label: l.name,
+                      note: l.status ? site.nav.status[l.status].label.toLocaleLowerCase(locale) : undefined,
+                    }
+                  : { href: l.href, label: labels[l.id] },
+              ),
+            };
+          })}
+        />
+      </Section>
+
+      {uiVersion && (
+        <Section id="quickstart" title={h.quickstart.title} headingSize="sm" spacing="sm" divider>
+          <div className="os-quickstart">
+            <ol className="os-steps">
+              <li>
+                <p className="os-step-title">{h.quickstart.install}</p>
+                <CodeBlock
+                  code={`npm install @krizaka/ui@${uiVersion} @krizaka/tailwind`}
+                  language="bash"
+                  file="terminal"
+                  copyLabel={t.install.copy}
+                  copiedLabel={t.install.copied}
+                />
+              </li>
+              <li>
+                <p className="os-step-title">{h.quickstart.styles}</p>
+                <CodeBlock
+                  code={`@import "tailwindcss";\n@import "@krizaka/tailwind";\n@import "@krizaka/ui/tailwind.css";`}
+                  language="css"
+                  file="app/globals.css"
+                  copyLabel={t.install.copy}
+                  copiedLabel={t.install.copied}
+                />
+              </li>
+              <li>
+                <p className="os-step-title">{h.quickstart.use}</p>
+                <CodeBlock
+                  code={`import { Button } from "@krizaka/ui/button";\n\n<Button variant="primary">${h.quickstart.sample}</Button>`}
+                  language="tsx"
+                  file="app/page.tsx"
+                  copyLabel={t.install.copy}
+                  copiedLabel={t.install.copied}
+                />
+              </li>
+            </ol>
+            <p className="os-step-title">{h.quickstart.other}</p>
+            <InstallTabs locale={locale} skip={["ui"]} />
+          </div>
+        </Section>
+      )}
 
       <p className="os-stats">
         {format(h.stats, {

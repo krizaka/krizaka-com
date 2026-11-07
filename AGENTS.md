@@ -114,6 +114,13 @@
   (`lib/docs-start.ts`: build an interface → ui.krizaka.com, a Java service → java.krizaka.com, our products, contribute),
   2-3 first pages each, the Krizaka UI quick start, **one quiet line of figures** (never the hero), how it fits, then the
   packages table folded as reference. The documentation itself stays on its own sites; `tests/docs-hub.test.mjs`.
+  **The paths are the notebook's sommaire, not cards** (founder, 2026-11-06, krizaka-internal#2799: « quelque chose d'autre
+  que des cards »): `ContentsIndex` (`app/components/lists/`), one row per path on the Seyès lines (`data-paper="lines"`,
+  `data-margin` of `@krizaka/ui`), `§ n` in the red margin (`site.openSource.hub.number`), the title to its site, one line
+  saying who it is for, the first pages as plain inline links; the products row says each status in words. No border,
+  shadow, radius or pill; one column at every width. `DocsHubPage` only draws cards, so the page composes `PageHero` +
+  `Section` until krizaka-ui has a contents layout. `scripts/check-docs-hub.mjs` (container smoke) reads it in a real
+  browser at 375, 768, 1280 and 1470 px, dark and light: every row and link, no box, no overflow.
 
 ## 2.2 Text & languages — nothing hard-coded
 
@@ -272,7 +279,7 @@
   - `Section` + `SectionHeading` (`@krizaka/ui/page`) — eyebrow · h2 · lead · actions; `divider` (a hairline) or
     `backdrop` (the brand's colour transition) between sections; `Facts` (registry and version `ok`, work in progress
     `wip` — said honestly); `Ticks` — words between backticks in a message (`` `requestId` ``) read as code.
-  - `CardGrid` + `LinkCard` — entry points (the docs hub, a product's docs index, « the other blocks »): the whole card
+  - `CardGrid` + `LinkCard` — entry points (a product's docs index, « the other blocks »; not the docs hub, a sommaire): the whole card
     one link, icon · title · one sentence · the way in.
   - `CardGrid` + `ArgumentCard` — cards that argue, **compact**: icon · name · mono meta, the bird **small in the
     corner** (`mark`), the **hook in one line** (≤ 90 characters, regular weight), compact `facts`, **one short action**

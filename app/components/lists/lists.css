@@ -1,6 +1,7 @@
-/* The site's two list blocks (krizaka-internal#2450): the offer as numbered entries (OfferList) and public work as a ledger
-   (WorkLedger). Cahier: hairlines instead of boxes, the display face for names, the typewriter face for notes, square
-   corners; under the pointer the paper goes one step up, nothing moves. Tokens only, both themes, one column on a phone. */
+/* The site's list blocks: the offer as numbered entries (OfferList) and public work as a ledger (WorkLedger)
+   (krizaka-internal#2450), the docs hub's sommaire (ContentsIndex, #2799). Cahier: hairlines or the ruling instead of
+   boxes, the display face for names, the typewriter face for notes, square corners; under the pointer the paper goes one
+   step up, nothing moves. Tokens only, both themes, one column on a phone. */
 
 /* ---- OfferList ---- */
 .kz-offers-list {
@@ -211,6 +212,125 @@ a.kz-offers-link:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   a.kz-offers-link,
   .kz-ledger-row {
+    transition: none;
+  }
+}
+
+/* ---- ContentsIndex ---- */
+/* The sommaire (krizaka-internal#2799): the notebook's table of contents, not cards. Every line of text sits on a ruled
+   line of the paper (--kz-paper-module, 32 px), shifted so its strong lines run under the text's baseline; the number
+   hangs left of the red margin (`data-margin`, moved to --kz-margin-x); an empty ruled line parts two entries. The
+   title is lifted by the difference of its size so it sits on the same line as the text. Type and spacing only. */
+.kz-contents {
+  --kz-contents-line: var(--kz-paper-module, 32px);
+  --kz-contents-text: 1rem;
+  --kz-contents-title: 1.5rem;
+  --kz-contents-gap: 20px;
+  --kz-margin-x: 3.5rem;
+  margin: 0;
+  padding: var(--kz-contents-line) 0;
+  list-style: none;
+  font-size: var(--kz-contents-text);
+  line-height: var(--kz-contents-line);
+  background-position: 0 calc(var(--kz-contents-line) / 2 + 0.36 * var(--kz-contents-text));
+}
+.kz-contents-row {
+  display: grid;
+  grid-template-columns: var(--kz-margin-x) minmax(0, 1fr);
+  column-gap: var(--kz-contents-gap);
+  align-items: baseline;
+}
+.kz-contents-row + .kz-contents-row {
+  margin-top: var(--kz-contents-line);
+}
+.kz-contents-row > :not(.kz-contents-no) {
+  grid-column: 2;
+  min-width: 0;
+  max-width: 44rem;
+  margin: 0;
+}
+.kz-contents-no,
+.kz-contents-title {
+  position: relative;
+  top: calc((var(--kz-contents-title) - var(--kz-contents-text)) * -0.36);
+}
+.kz-contents-no {
+  grid-column: 1;
+  grid-row: 1;
+  padding-right: 12px;
+  text-align: right;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 16px; /* a small box on the title's baseline: the row stays one ruled line high */
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--kz-paper-rule-margin, var(--kz-accent-text));
+}
+.kz-contents-title {
+  grid-row: 1;
+  font-family: var(--font-display);
+  font-size: var(--kz-contents-title);
+  font-weight: 400;
+  line-height: var(--kz-contents-line);
+  text-wrap: balance;
+}
+.kz-contents-title a {
+  color: var(--kz-text-primary);
+  text-decoration-line: none;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 0.2em;
+}
+.kz-contents-title a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-color: var(--kz-accent);
+}
+.kz-contents-line {
+  color: var(--kz-text-secondary);
+  overflow-wrap: anywhere;
+}
+.kz-contents-links {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  list-style: none;
+}
+.kz-contents-links > li {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.kz-contents-links > li:not(:last-child)::after {
+  content: "·";
+  content: "·" / "";
+  margin-inline: 0.6em;
+  color: var(--kz-text-muted);
+}
+.kz-contents-links a {
+  color: var(--kz-accent-text);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  transition: text-decoration-color 0.2s var(--kz-ease);
+}
+.kz-contents-links a:hover {
+  text-decoration-color: currentColor;
+}
+.kz-contents-note {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1; /* never taller than the text's line */
+  color: var(--kz-text-secondary);
+}
+@media (max-width: 479px) {
+  .kz-contents {
+    --kz-contents-title: 1.25rem;
+    --kz-contents-gap: 14px;
+    --kz-margin-x: 2.75rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kz-contents-links a {
     transition: none;
   }
 }

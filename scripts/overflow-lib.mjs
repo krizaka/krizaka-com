@@ -20,9 +20,9 @@ export function overflowProblem({ path, width, theme }, scrollWidth, culprits = 
   return `${path} at ${width}px (${theme}): ${Math.round(over)}px of horizontal overflow${culprits.length ? ` — ${culprits.join(", ")}` : ""}`;
 }
 
-/** What a page lays out in the frame: headings, the cards of a grid, its folded questions. A table or a code block scrolls in
+/** What a page lays out in the frame: headings, the cards of a grid, its folded questions, the rows of a sommaire. A table or a code block scrolls in
     its own box, so it is not measured. */
-export const FRAMED = "main h1, main h2, main h3, main .kz-cards > *, main .kz-tpl-faq > *";
+export const FRAMED = "main h1, main h2, main h3, main .kz-cards > *, main .kz-tpl-faq > *, main .kz-contents > *";
 
 /** A failure line for the framed boxes that leave the bar's edges (`frame` = the bar's left and right; two pixels of rounding
     allowed): a heading cut at the left edge, cards running past the right (krizaka-internal#231). `boxes`: `{ name, left, right }`.
