@@ -164,6 +164,13 @@ test("an old documentation address no rule claims goes to the products section, 
     assert.match(rule?.destination, /^\/(fr|en|:locale)#products$/, path);
     assert.equal(rule?.statusCode, 308, path);
   }
+  // The docs hub's own share image (krizaka-internal#2833) is a page of this site, not an old address.
+  for (const path of ["/en/docs/opengraph-image", "/fr/docs/opengraph-image"])
+    assert.equal(
+      last.find((r) => r.matches(path)),
+      undefined,
+      path,
+    );
   for (const path of ["/docs", "/en/docs", "/fr/docs"])
     assert.equal(
       last.find((r) => r.matches(path)),

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, shareMetadata } from "@/lib/seo";
 import { getDictionary } from "@/lib/i18n";
 import LegalPage from "@/app/components/LegalPage";
 
@@ -10,7 +10,12 @@ interface Props {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const doc = getDictionary(locale).site.legal.privacy;
-  return { title: doc.metaTitle, description: doc.metaDescription, alternates: buildAlternates(locale, "/privacy") };
+  return {
+    title: doc.metaTitle,
+    description: doc.metaDescription,
+    alternates: buildAlternates(locale, "/privacy"),
+    ...shareMetadata(locale, "/privacy", { title: doc.title, description: doc.metaDescription }),
+  };
 }
 
 export default async function Page({ params }: Props) {
