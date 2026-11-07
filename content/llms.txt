@@ -1,29 +1,26 @@
 # Krizaka
 
-> Krizaka is a Montréal (Québec) open-source software studio. It forges the
-> building blocks of its products — Krizaka UI (design system, web and native)
-> and Krizaka Java (Spring Boot kit) — and ships seven products on them, each on
-> its own page (coming soon). Every repository is public under Apache-2.0 at
-> https://github.com/krizaka.
+> Krizaka is a software studio in Montréal (Québec). It builds its products in the
+> open — their code is public, sign-up is closed — on an open-source stack it
+> publishes under Apache-2.0: Krizaka UI, Krizaka Java and Krizaka TypeScript.
+> Each product has its own site at its own address (coming soon).
 
-## Products (each has its own page, coming soon)
+## Products
 
-- Sovkora — sovereign, on-premise AI orchestration engine. Site: https://www.sovkora.com · source: https://github.com/krizaka/sovkora
-- Verikora (in development) — your documents, read and checked by Sovkora. Site: https://www.verikora.com · source: https://github.com/krizaka/verikora
-- Folioviv (in development) — bookings, invoices and a GST/QST ledger for independent Québec shops; it prepares tax returns, the merchant files them. Site: https://www.folioviv.com · source: https://github.com/krizaka/folioviv
+{{PRODUCTS}}
 
 ## Key pages
 
-- Home — who Krizaka is and its products, one card each with its site and source: {{SITE_URL}}/en#products
-- Open source (Krizaka UI, Krizaka Java and every repository): {{SITE_URL}}/en/open-source
+- Home — who Krizaka is and its products, one entry each with its site and source: {{SITE_URL}}/en#products
+- Docs — where to start with the open-source stack and the products: {{SITE_URL}}/en/docs
 - Our services (Krizaka Entreprise: custom modules, sovereign AI adoption, maintenance): {{SITE_URL}}/en/services
 - Our story (where the names come from): {{SITE_URL}}/en/story
+- Changelog — what shipped, release by release: {{SITE_URL}}/en/changelog
 - Contact the team: {{SITE_URL}}/en/contact
 
-## Documentation
+## Documentation (the open-source stack, each on its own site)
 
-- Krizaka UI (design system, live components): https://ui.krizaka.com (its own index: https://ui.krizaka.com/llms.txt)
-- Krizaka Java (Spring Boot kit, starters, messaging): https://java.krizaka.com
+{{STACK}}
 
 ## Packages (npm, scope @krizaka)
 
@@ -32,7 +29,5 @@
 ## Source
 
 - Organisation: https://github.com/krizaka
-- Krizaka UI: https://github.com/krizaka/krizaka-ui
-- Krizaka Java: https://github.com/krizaka/krizaka-platform-kit
 
 Languages: English and French (Québec). Detailed version: {{SITE_URL}}/llms-full.txt · Sitemap: {{SITE_URL}}/sitemap.xml
