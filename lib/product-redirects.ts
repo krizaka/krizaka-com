@@ -100,6 +100,7 @@ export function productRedirects(): Redirect[] {
 export function lastResortRedirects(): Redirect[] {
   return [
     ...homeSection("/docs/:path+", "#products"),
-    { source: "/:locale(fr|en)/docs/:path+", destination: "/:locale#products", statusCode: 308 },
+    // …except the hub's own share image, /<locale>/docs/opengraph-image (krizaka-internal#2833).
+    { source: "/:locale(fr|en)/docs/:path((?!opengraph-image).+)", destination: "/:locale#products", statusCode: 308 },
   ];
 }

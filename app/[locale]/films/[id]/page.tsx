@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Page } from "@krizaka/ui/page";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { format, getDictionary, asLocale } from "@/lib/i18n";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, shareMetadata } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
 import { buildBreadcrumbJsonLd, buildVideoJsonLd } from "@/lib/structured-data";
 import { isoDuration, watchFilm, watchPath, WATCH_FILMS, WatchKind, type WatchFilm } from "@/lib/watch-films";
@@ -71,11 +71,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {};
   }
   const { title, description } = pageWords(locale, f);
+  const share = shareMetadata(locale, watchPath(f.id), { title, description });
+  const { poster } = watchMedia(f);
   return {
     title: { absolute: `${title} | Krizaka` },
     description,
     alternates: buildAlternates(locale, watchPath(f.id)),
-    openGraph: { title, description, type: "video.other", images: [watchMedia(f).poster] },
+    ...share,
+    // The film's card is its poster: the share image of a watch page is the film itself.
+    openGraph: { ...share.openGraph, type: "video.other", images: [poster] },
+    twitter: { ...share.twitter, images: [poster] },
   };
 }
 

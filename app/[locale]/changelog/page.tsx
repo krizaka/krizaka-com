@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ChangeKind, ChangelogEntry } from "@krizaka/ui/changelog-page";
 import { Ticks } from "@krizaka/ui/page";
-import { buildAlternates } from "@/lib/seo";
+import { buildAlternates, shareMetadata } from "@/lib/seo";
 import { asLocale, format, getDictionary } from "@/lib/i18n";
 import { anchorOf, changesFor, chipLabel, type ChangeTag } from "@/lib/changelog";
 import { FILTER_IDS } from "@/lib/changelog-filter";
@@ -25,6 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       ...buildAlternates(locale, "/changelog"),
       types: { "application/rss+xml": `/${asLocale(locale)}/changelog/feed.xml` },
     },
+    ...shareMetadata(locale, "/changelog", { title: c.metaTitle, description: c.metaDescription }),
   };
 }
 
