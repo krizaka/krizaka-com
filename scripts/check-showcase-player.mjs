@@ -72,6 +72,11 @@ async function opening(page, name, width, problems) {
   if (!first.found || !hero.found) {
     return false;
   }
+  // Guard for krizaka-internal#2946: at most one <video> on the page at load; below-the-fold carousels download nothing.
+  const videoCount = await page.evaluate(() => document.querySelectorAll("video").length);
+  if (videoCount > 1) {
+    problems.push(`${name}: ${videoCount} videos mounted at page load — expected ≤ 1 (one decoder at a time)`);
+  }
   if (TRAILER_POSTER.test(hero.poster)) {
     problems.push(`${name}: the hero opens on the trailer; the home's promise is compliance`);
   }

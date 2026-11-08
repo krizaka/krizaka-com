@@ -119,6 +119,21 @@ test("reduced motion: the poster and a play button; nothing starts or moves on b
   assert.equal(playerView(run(slides, [onScreen, { type: "go", to: 2 }], { still: true }), still).playButton, false);
 });
 
+test("a clip unmounts when the carousel leaves the viewport: one decoder at a time", () => {
+  // Guard for krizaka-internal#2946: s.shown used to stay true forever, keeping the <video> mounted
+  // even when off screen. With 4 carousels on the home, 4 decoders ran simultaneously at page load.
+  const slides = [FILM, VIDEO, STILL];
+  // Carousel comes into view, clip mounts, then it leaves the viewport.
+  const gone = run(slides, [onScreen, { type: "screen", on: false }]);
+  const v = playerView(gone, env(slides));
+  assert.equal(v.clip, false, "clip unmounts once the carousel is off screen");
+  assert.equal(v.playing, false);
+  assert.equal(v.clock, "none");
+  // Comes back into view: clip remounts and plays.
+  const back = stepPlayer(gone, { type: "screen", on: true }, env(slides));
+  assert.equal(playerView(back, env(slides)).clip, true, "clip remounts when the carousel re-enters the viewport");
+});
+
 test("the arrows and previous / next wrap around and remember the posters already shown", () => {
   const slides = [VIDEO, VIDEO, VIDEO];
   const s = run(slides, [onScreen, { type: "go", to: -1 }]);
