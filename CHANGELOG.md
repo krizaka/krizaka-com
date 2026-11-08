@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.32.0](https://github.com/krizaka/krizaka-com/compare/v0.31.0...v0.32.0) (2026-11-08)
+
+
+### Features
+
+* **home:** the Sovkora trailer opens the hero and Sovkora's carousel; a video slide lasts as long as its video ([#666](https://github.com/krizaka/krizaka-com/issues/666)) ([f1442e5](https://github.com/krizaka/krizaka-com/commit/f1442e59797148bf8ffb2e8162074def2c17a3b4))
+* **seo:** every page has its own share image and Open Graph title, in the Cahier ([#665](https://github.com/krizaka/krizaka-com/issues/665)) ([c8410da](https://github.com/krizaka/krizaka-com/commit/c8410dac1aed3c16de9434e9b7ed795803e0f0b6))
+* **showcase:** one command adds a film to a carousel; the Dossiers play as loops with a watch page each, and the trailer's waits for its corrected file ([#669](https://github.com/krizaka/krizaka-com/issues/669)) ([e63db88](https://github.com/krizaka/krizaka-com/commit/e63db882a7d18f3c7eca0f32f8ad9c3a5bee1f27))
+* **story:** the story lets an emotion show: the home's clips in its chapters, its UI on the site's style ([#659](https://github.com/krizaka/krizaka-com/issues/659)) ([1d7c5ee](https://github.com/krizaka/krizaka-com/commit/1d7c5ee10182d8f32edab392d26d1e45903e274f))
+
+
+### Bug Fixes
+
+* **main:** a live changelog line the site could not serve is dropped before the cut ([#667](https://github.com/krizaka/krizaka-com/issues/667)) ([23cd85e](https://github.com/krizaka/krizaka-com/commit/23cd85e40d99465ec4ca4847db22183c37ccf1c3))
+
 ## [0.31.0](https://github.com/krizaka/krizaka-com/compare/v0.30.0...v0.31.0) (2026-11-07)
 
 
