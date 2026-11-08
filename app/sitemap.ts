@@ -2,9 +2,9 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 import { BUILDING_BLOCKS } from "@/lib/building-blocks";
 import { lastModified } from "@/lib/lastmod";
-import { video } from "@/lib/cdn";
 import { format, getDictionary } from "@/lib/i18n";
-import { watchPath, WATCH_FILMS } from "@/lib/watch-films";
+import { watchPath, WatchKind, WATCH_FILMS } from "@/lib/watch-films";
+import { watchMedia } from "@/lib/watch-media";
 
 // A single sitemap is correct here: the protocol limit is 50k URLs / 50 MB, and
 // this site has ~50. A sitemap index buys nothing until we blow past that.
@@ -63,18 +63,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // The watch page of each film: the video is the page's main content, so the sitemap says so (video tags).
   const filmPages = WATCH_FILMS.flatMap((f) => {
-    const media = video(f.base);
+    const media = watchMedia(f);
     return locales.flatMap((loc) =>
       buildEntries(watchPath(f.id), 0.6, "monthly")
         .filter((e) => e.url === `${baseUrl}/${loc}${watchPath(f.id)}`)
         .map((e) => {
-          const t = getDictionary(loc).site.story.watch.film;
+          const dict = getDictionary(loc).site;
+          const t =
+            f.kind === WatchKind.Brand
+              ? {
+                  title: dict.story.watch.film.title,
+                  description: format(dict.story.watch.film.description, { seconds: f.seconds }),
+                }
+              : {
+                  title: dict.home.films[f.id as "trailer"].caption,
+                  description: dict.home.films[f.id as "trailer"].alt,
+                };
           return {
             ...e,
             videos: [
               {
                 title: t.title,
-                description: format(t.description, { seconds: f.seconds }),
+                description: t.description,
                 thumbnail_loc: media.poster,
                 content_loc: media.mp4,
                 duration: f.seconds,

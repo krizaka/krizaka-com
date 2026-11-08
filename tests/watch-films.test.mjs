@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
-import { filmRedirects, isoDuration, RETIRED_FILMS, WATCH_FILMS, watchPath } from "../lib/watch-films.ts";
+import { filmRedirects, isoDuration, RETIRED_FILMS, WATCH_FILMS, watchFilm, watchPath } from "../lib/watch-films.ts";
 import { BRAND_FILM } from "../lib/brand-film.ts";
 import { createRequire } from "node:module";
 import { lastResortRedirects, productRedirects } from "../lib/product-redirects.ts";
@@ -42,6 +42,7 @@ test("a watch page carries everything Google asks for a video that is the main c
   // The brand film has no speech: no captions track, its text version is the list of its shots, in both languages.
   assert.doesNotMatch(page, /<track/);
   assert.match(page, /f\.shots\.map/);
+  assert.match(page, /words\.version\.lines\.map/, "the text version of every film is on its page");
   for (const l of ["en", "fr"]) {
     const film = JSON.parse(read(`messages/${l}.json`)).site.story.watch.film;
     assert.deepEqual(Object.keys(film.shots), [...BRAND_FILM.shots], l);
@@ -55,7 +56,7 @@ test("every watch film has an upload date, a length, a duration and a page templ
   for (const f of WATCH_FILMS) {
     assert.match(f.uploadDate, /^\d{4}-\d{2}-\d{2}$/);
     assert.ok(f.seconds > 0);
-    assert.ok(f.shots.length > 0);
+    assert.ok(f.kind === "brand" ? f.shots.length > 0 : f.mp4.endsWith("-full.mp4"));
     assert.match(read("lib/page-templates.ts"), /"\/films\/\[id\]": "gallery"/);
     assert.equal(watchPath(f.id), `/films/${f.id}`);
   }
@@ -73,8 +74,8 @@ test("the sitemap lists each watch page with its video tags, and the story links
   assert.match(read("app/[locale]/story/page.tsx"), /watchPath\(film\.id\)/);
   assert.deepEqual(
     WATCH_FILMS.map((f) => f.id),
-    [BRAND_FILM.id],
-    "« Montrer son travail » is THE watch page",
+    [BRAND_FILM.id, "dossier-nadia", "dossier-sam", "dossier-theo"],
+    "the brand film and the three Dossiers each have their watch page; the trailer's is withheld",
   );
 });
 
@@ -113,4 +114,37 @@ test("no source names the legacy Bunny folder site/brand-films (layout v2 is org
     (f) => /\.(tsx?|json|mjs)$/.test(f) && /["'`/]site\/brand-films\//.test(read(f)),
   );
   assert.deepEqual(offenders, []);
+});
+
+// The trailer's file still ends on a wrong licence card (« Open source · Apache-2.0 »; Sovkora is FSL-1.1 with an
+// Apache-2.0 future licence). The founder is re-editing it. Until the corrected file replaces it, its watch page is not
+// published: no page, no sitemap entry, no slide action to it. Its 10 s loop (2-12 s) ends before the card and stays.
+test("a withheld film has no watch page, and says why; the trailer is withheld until its licence card is corrected", () => {
+  const board = JSON.parse(read("content/films/home-showcase.json"));
+  const withheld = Object.entries(board.films).filter(([, f]) => typeof f !== "string" && f.watch?.withheld);
+  assert.deepEqual(
+    withheld.map(([id]) => id),
+    ["trailer"],
+  );
+  assert.match(board.films.trailer.watch.withheld, /licen[cs]e card/i);
+  assert.match(board.films.trailer.watch.withheld, /krizaka-internal#2876/, "where the right wording is");
+  for (const [id] of withheld) {
+    assert.equal(watchFilm(id), undefined, `${id}: no watch page`);
+  }
+  assert.match(board.films.trailer.cut, /the loop is 2-12 s of the film/, "the loop ends before the card");
+});
+
+// The watch page of a storyboard film says its alt as the meta description; check-seo (the container smoke) refuses one
+// outside 30-400 characters, and the French alts of Sam and Théo were 404 and 413 (found by the crack, 2026-11-07).
+test("each watch page's description fits the SEO check's bounds, in both languages", () => {
+  const [, min, max] =
+    /length < (\d+) \|\| decode\(desc\[0\]\)\.length > (\d+)/.exec(read("scripts/check-seo.mjs")) ?? [];
+  assert.ok(min && max, "the bounds are check-seo's own");
+  for (const l of ["en", "fr"]) {
+    const films = JSON.parse(read(`messages/${l}.json`)).site.home.films;
+    for (const f of WATCH_FILMS.filter((x) => x.kind === "storyboard")) {
+      const n = films[f.id].alt.length;
+      assert.ok(n >= Number(min) && n <= Number(max), `${l} ${f.id}: description of ${n} characters (${min}-${max})`);
+    }
+  }
 });

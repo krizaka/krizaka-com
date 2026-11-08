@@ -49,6 +49,8 @@ export interface ShowcaseSlideSpec {
   audio: boolean;
   /** True for the brand film's slide: it leads to the film's watch page. */
   film: boolean;
+  /** The id of the film whose watch page the slide's one action leads to (a film played as a loop, its whole on its own page). */
+  watch?: string;
 }
 
 interface BoardItem {
@@ -68,7 +70,14 @@ interface BoardCarousel {
 interface BoardFilm {
   base: string;
   audio?: boolean;
+  /** The whole film, played on its watch page (/<locale>/films/<id>) and never inside a carousel: its web cut and its length.
+   *  `withheld` says why its watch page is not published yet (the trailer's wrong licence card): no page, no sitemap entry,
+   *  no slide action, while its loop still plays. Only a deliberate edit lifts it (showcase-add.mjs --replace keeps it). */
+  watch?: { mp4: string; seconds: number; uploadDate: string; audio?: boolean; withheld?: string };
 }
+
+/** The whole film whose watch page is published, or undefined (no whole film, or its page withheld). */
+const published = (f: BoardFilm) => (f.watch && !f.watch.withheld ? f.watch : undefined);
 
 /** The logical base of a rendition of a slide. */
 export const renditionBase = (carousel: string, id: string) => `home/showcase/${carousel}/${id}-wide`;
@@ -83,6 +92,25 @@ const FILMS = Object.fromEntries(
 /** The ids of the finished films a carousel may play. */
 export const FILM_IDS = Object.keys(FILMS);
 
+/** A film of the storyboard whose whole plays on its own watch page: the carousel plays only its loop (`base`). */
+export interface StoryboardWatch {
+  id: string;
+  /** The logical path of the whole film's web cut (with its sound). */
+  mp4: string;
+  /** The logical path of the poster: the loop's, and the watch page's thumbnail. */
+  poster: string;
+  seconds: number;
+  uploadDate: string;
+}
+
+/** The films with a watch page, in the storyboard's order. */
+export const STORYBOARD_WATCH: readonly StoryboardWatch[] = Object.entries(FILMS).flatMap(([id, f]) => {
+  const watch = published(f);
+  return watch
+    ? [{ id, mp4: watch.mp4, poster: `${f.base}-poster.webp`, seconds: watch.seconds, uploadDate: watch.uploadDate }]
+    : [];
+});
+
 /** A finished film's slide: its poster, its phone cut then its full cut, its sound. */
 function filmSlide(id: string, carousel: Showcase, f: BoardFilm): ShowcaseSlideSpec {
   return {
@@ -96,8 +124,13 @@ function filmSlide(id: string, carousel: Showcase, f: BoardFilm): ShowcaseSlideS
     ],
     audio: Boolean(f.audio),
     film: false,
+    ...(published(f) ? { watch: id } : {}),
   };
 }
+
+/** Every finished film of the storyboard as a slide, in or out of an order (a film not in any carousel yet is still checked). */
+export const filmSlides = (): ShowcaseSlideSpec[] =>
+  Object.entries(FILMS).map(([id, f]) => filmSlide(id, "sovkora", f));
 
 /** The slides of a carousel, in their order. */
 export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
@@ -169,10 +202,17 @@ export function showcaseProblems(has: (path: string) => boolean): string[] {
     );
     return [...twice, ...few, ...missing];
   });
+  const inOrder = new Set(SHOWCASES.flatMap((c) => showcaseSlides(c).map((s) => s.id)));
+  const films = Object.entries(FILMS).flatMap(([id, f]) => {
+    const own = inOrder.has(id) ? [] : filesOf(filmSlide(id, "sovkora", f));
+    return [...own, ...(f.watch ? [f.watch.mp4] : [])]
+      .filter((path) => !has(path))
+      .map((path) => `film/${id}: ${path} is not in the CDN manifest`);
+  });
   const stills = STILLS.map(showcaseStill)
     .filter((s) => !has(s.poster))
     .map((s) => `${s.product}/${s.id}: ${s.poster} is not in the CDN manifest`);
-  return [...carousels, ...stills];
+  return [...carousels, ...films, ...stills];
 }
 
 /** The carousel of a product, by its public name (Verikora → verikora); undefined for a product without one. */

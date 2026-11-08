@@ -14,6 +14,7 @@ import {
   type Showcase as ShowcaseId,
   type ShowcaseSlideSpec,
 } from "@/lib/home-showcase";
+import { watchPath } from "@/lib/watch-films";
 import ShowcaseCarousel from "./ShowcaseCarousel";
 import "./showcase.css";
 
@@ -28,6 +29,7 @@ const letter = (i: number) => String.fromCodePoint(97 + i);
 interface FilmWords {
   caption: string;
   alt: string;
+  watchLabel?: string;
   transcript?: { lead: string; lines: string[] };
 }
 
@@ -51,6 +53,9 @@ export default function Showcase({
     poster: cdn(s.poster),
     videos: s.videos.map((v) => ({ src: cdn(v.path), type: v.type, media: v.media })),
     audio: s.audio,
+    watch: s.watch
+      ? { href: `/${locale}${watchPath(s.watch)}`, label: films[s.watch].watchLabel ?? wordsOf(s).caption }
+      : undefined,
   }));
   const sources = [...new Set(specs.map((s) => s.source))];
   const film = specs.some((s) => s.film);
