@@ -7,8 +7,9 @@
      the visitor acts on the slide in view (sound, play): then it is theirs and plays on. Off screen everything holds.
    - Sound only after the visitor's click on its control, for the film in view while it plays on screen: another slide or
      scrolling away mutes it again.
-   - The clip is mounted only after the page's load (the LCP is a poster, never a clip) and once the carousel has been on screen (a
-     carousel below the fold downloads no film).
+   - The clip is mounted only after the page's load (the LCP is a poster, never a clip) and while the carousel is on screen
+     (IntersectionObserver, threshold 0.25): a carousel below the fold downloads nothing, and a carousel that scrolls away
+     unmounts its video — one decoder at a time (krizaka-internal#2946).
    - Under reduced motion (or Save-Data) nothing moves on and no clip starts by itself: the poster and, on a video slide, a
      play button; at the clip's end the poster comes back. */
 
@@ -126,7 +127,7 @@ export function playerView(s: PlayerState, env: PlayerEnv): PlayerView {
   const slide = env.slides[s.active];
   const video = slide.video && !s.broken.includes(s.active);
   const held = (s.hovered || s.focused) && !s.engaged;
-  const clip = video && env.loaded && s.shown && (!env.still || s.engaged);
+  const clip = video && env.loaded && s.onScreen && (!env.still || s.engaged);
   const playing = clip && s.onScreen && !s.stopped && !held;
   const moving = !env.still && !s.stopped && s.onScreen && !held && env.slides.length > 1;
   let clock: PlayerClock = "none";

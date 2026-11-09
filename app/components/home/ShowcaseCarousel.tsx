@@ -13,8 +13,8 @@
      carousel has its text version (rendered on the server, passed as children: a film's transcript is there).
    Media: every slide is 16:9 on every screen, the phone included (object-fit: cover; founder, 2026-11-05: no vertical). The
    poster is drawn only for the slide in view, the ones already seen and the next one; the clip (muted, inline) is mounted
-   only for the slide in view, after the page's load and once the carousel has been on screen, so the LCP is a poster, never a clip, and a
-   carousel below the fold downloads no film. A film's lighter cut goes to phones, chosen once on the client (pickSources).
+   only for the slide in view, after the page's load and while the carousel is on screen (IntersectionObserver): a carousel
+   below the fold downloads nothing, and one that scrolls away unmounts its video — one decoder at a time (#2946). A film's lighter cut goes to phones, chosen once on the client (pickSources).
    If the clip cannot play (a file missing, a codec refused, autoplay refused) it unmounts and the poster stays.
    Sound: only after the visitor's click on the sound control of a slide that has sound, for that slide while it plays on
    screen; another slide or scrolling away mutes it again. The carousel block of @krizaka/ui (MediaCarousel) never moves on

@@ -58,7 +58,8 @@ const installChecks = () => {
   globalThis.CHECKS = {
     started: (el) => video(el)?.currentTime > 0.5,
     playing: (el) => video(el) !== null && video(el) !== undefined && !video(el).paused,
-    silent: (el) => video(el)?.paused && video(el)?.muted,
+    // Off screen the clip unmounts (one decoder at a time, #2946): an absent <video> is the strongest silence.
+    silent: (el) => !video(el) || (video(el).paused && video(el).muted),
     second: (el) => el?.querySelector(".kz-show-count")?.textContent.trim().startsWith("2 /"),
   };
 };
@@ -71,6 +72,11 @@ async function opening(page, name, width, problems) {
   const first = await page.evaluate(read, SOVKORA);
   if (!first.found || !hero.found) {
     return false;
+  }
+  // Guard for krizaka-internal#2946: at most one <video> on the page at load; below-the-fold carousels download nothing.
+  const videoCount = await page.evaluate(() => document.querySelectorAll("video").length);
+  if (videoCount > 1) {
+    problems.push(`${name}: ${videoCount} videos mounted at page load — expected ≤ 1 (one decoder at a time)`);
   }
   if (TRAILER_POSTER.test(hero.poster)) {
     problems.push(`${name}: the hero opens on the trailer; the home's promise is compliance`);
