@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.32.1](https://github.com/krizaka/krizaka-com/compare/v0.32.0...v0.32.1) (2026-11-09)
+
+
+### Bug Fixes
+
+* **home:** clip unmounts when carousel leaves viewport — one decoder at a time ([#670](https://github.com/krizaka/krizaka-com/issues/670)) ([be68363](https://github.com/krizaka/krizaka-com/commit/be68363a49accd969b8ef16ad18cbb36f6b17d3e))
+
 ## [0.32.0](https://github.com/krizaka/krizaka-com/compare/v0.31.0...v0.32.0) (2026-11-08)
 
 
