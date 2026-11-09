@@ -58,7 +58,8 @@ const installChecks = () => {
   globalThis.CHECKS = {
     started: (el) => video(el)?.currentTime > 0.5,
     playing: (el) => video(el) !== null && video(el) !== undefined && !video(el).paused,
-    silent: (el) => video(el)?.paused && video(el)?.muted,
+    // Off screen the clip unmounts (one decoder at a time, #2946): an absent <video> is the strongest silence.
+    silent: (el) => !video(el) || (video(el).paused && video(el).muted),
     second: (el) => el?.querySelector(".kz-show-count")?.textContent.trim().startsWith("2 /"),
   };
 };
