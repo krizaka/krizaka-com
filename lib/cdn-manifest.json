@@ -1,6 +1,15 @@
 {
   "root": "sites",
   "files": {
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-1200.avif": "d382ca7eec",
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-1200.webp": "d95c683596",
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-1280.avif": "5e2bcb65db",
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-1280.webp": "12e11c5d1b",
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-480.avif": "3c5b562a76",
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-480.webp": "83bca688db",
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-768.avif": "ea597565d9",
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-768.webp": "8f0174df95",
+    "blog/agents-under-a-coordinator/agents-under-a-coordinator-960.webp": "c3af766079",
     "blog/author/github-banner-dark.svg": "4b29ff9f0b",
     "blog/author/github-banner-light.svg": "e8225432bc",
     "blog/ci-the-error-never-leaves-the-editor/shift-left-cover-1200.avif": "bb50d951e3",
