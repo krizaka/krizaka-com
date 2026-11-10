@@ -99,17 +99,18 @@ test("no internal footer link is the source of a redirect", async () => {
   for (const href of internal) assert.ok(!sources.has(`/en${href}`) && !sources.has(`/fr${href}`), `${href} redirects`);
 });
 
-// Krizaka's Instagram (founder, 2026-11-06, krizaka-internal#365): the footer's last line shows the accounts the settings
-// choose by id; the address is @krizaka/org's (`org.links.social`), never typed in this site.
-test("the footer shows Instagram on its last line, the address read from @krizaka/org", async () => {
+// Krizaka's Instagram (founder, 2026-11-06, krizaka-internal#365) and LinkedIn (krizaka-internal#3141): the footer's last line
+// shows the accounts the settings choose by id; the address is @krizaka/org's (`org.links.social`), never typed in this site.
+test("the footer shows Instagram and LinkedIn on its last line, the addresses read from @krizaka/org", async () => {
   const { resolveFooterSettings } = await import("@krizaka/ui/site-footer");
   const { org } = await import("@krizaka/org");
   const { footerSettings } = await import("../lib/footer.ts");
-  assert.deepEqual(footerSettings.social, ["instagram"]);
+  assert.deepEqual(footerSettings.social, ["instagram", "linkedin"]);
   const config = resolveFooterSettings(footerSettings, (key) => key, org.links.social);
   assert.deepEqual(config.social, [
     { id: "instagram", label: "Instagram", href: "https://www.instagram.com/krizakahq/" },
+    { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/krizaka-technologies-inc" },
   ]);
   assert.match(footer, /org\.links\.social/);
-  assert.doesNotMatch(read("lib/footer.ts"), /instagram\.com|No social link yet/);
+  assert.doesNotMatch(read("lib/footer.ts"), /instagram\.com|linkedin\.com|No social link yet/);
 });

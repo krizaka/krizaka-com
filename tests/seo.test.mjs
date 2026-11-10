@@ -16,7 +16,7 @@ test("the home title is the company's; its description names the products and th
   for (const p of ["Krizaka UI", "Krizaka Java", "Sovkora", "Verikora", "Folioviv"]) assert.ok(home.includes(p), p);
 });
 
-test("the Organization is in Montréal and points to GitHub", () => {
+test("the Organization is in Montréal and points to GitHub", async () => {
   const graph = read("lib/structured-data.ts");
   assert.match(graph, /addressLocality: "Montréal"/);
   assert.match(
@@ -25,6 +25,12 @@ test("the Organization is in Montréal and points to GitHub", () => {
     "the social accounts come from @krizaka/org",
   );
   assert.doesNotMatch(graph, /instagram\.com/);
+  // sameAs spreads every account of @krizaka/org: LinkedIn is one of them since @krizaka/org 1.2 (krizaka-internal#3141).
+  const { org } = await import("@krizaka/org");
+  assert.ok(
+    org.links.social.some((s) => s.url === "https://www.linkedin.com/company/krizaka-technologies-inc"),
+    "LinkedIn reaches sameAs",
+  );
 });
 
 test("the Organization owns the products and the open-source sites, each published by it", () => {

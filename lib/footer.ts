@@ -54,7 +54,7 @@ export const footerSettings = {
     ],
   },
   // The accounts to show, by id; their addresses are @krizaka/org's (`org.links.social`), resolved by SiteFooter.tsx.
-  social: ["instagram"],
+  social: ["instagram", "linkedin"],
 } satisfies FooterSettings;
 
 /** A message key (`site.footer.story`) read in a dictionary; a missing key fails loudly (the build), never prints a key. */
