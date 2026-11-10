@@ -19,7 +19,7 @@ jobs:
   # The pipeline is the org's (krizaka/.github docs/standards/ci-and-deploy.md): the changes gate, the caches, the timeouts and the
   # gate that always reports live there. This file says only what is krizaka.com's.
   ci:
-    uses: krizaka/.github/.github/workflows/node-ci.yml@2740a6ac83687da773478a9b108ea885e99f0244 # main (merge queue, layout guard)
+    uses: krizaka/.github/.github/workflows/node-ci.yml@557657634c808a06b920e5d60f2bf7e8c74873d7 # main (merge queue, layout guard)
     permissions:
       contents: read
     secrets:
@@ -43,3 +43,5 @@ jobs:
       # A change that touches no code (issue and PR templates, the dependabot and Scorecard files, licence and policy text)
       # skips the heavy jobs. Fails open.
       ignore: '^\.github/(?!workflows/ci\.yml$)|^(LICENSE|SECURITY|CODE_OF_CONDUCT|SUPPORT)(\.md)?$'
+      # A release-please PR (version bump only) skips the heavy jobs; the gate still reports green.
+      release-files: '^(package\.json|CHANGELOG\.md|package-lock\.json|\.release-please-manifest\.json)$'
