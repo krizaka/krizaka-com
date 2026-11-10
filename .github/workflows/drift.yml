@@ -40,8 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read # the push and the pull request use the app token below, never this job's token
     steps:
       # App token so the pull request's required checks start (krizaka-internal#2158): github.token's PRs start no workflow.
       - id: app
