@@ -40,12 +40,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     permissions:
-      contents: write
-      pull-requests: write
+      contents: read # the push and the pull request use the app token below, never this job's token
     steps:
+      # App token so the pull request's required checks start (krizaka-internal#2158): github.token's PRs start no workflow.
+      - id: app
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          persist-credentials: false
+          token: ${{ steps.app.outputs.token }}
+          persist-credentials: true # the app token pushes the drift branch; it expires with the job
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -54,16 +62,15 @@ jobs:
         run: node scripts/gen-product-manifests.mjs
       - name: Open the update pull request when something moved
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ steps.app.outputs.token }}
         run: |
           if git diff --quiet -- lib/product-manifests.json; then echo "nothing moved"; exit 0; fi
           branch="chore/drift-$(date +%Y-%m-%d)-${GITHUB_RUN_ID}"
           git config user.name "krizaka-agents[bot]"
-          git config user.email "krizaka-agents@users.noreply.github.com"
+          git config user.email "345578919+krizaka-agents[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git commit -am "chore(drift): the products' manifests are read again (krizaka-internal#1888)"
-          git push "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "$branch"
-          # persist-credentials is off, so gh cannot infer the pushed branch: name it (run 41329286394 aborted without it).
+          git push origin "$branch"
           gh pr create --head "$branch" --base main --title "chore(drift): the products' manifests are read again" \
             --body "Weekly drift check (.github/workflows/drift.yml): lib/product-manifests.json moved against its sources. Part of krizaka-internal#1888."
       - name: Claims against sources (fails when a source is missing)
