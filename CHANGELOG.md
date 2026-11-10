@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.0](https://github.com/krizaka/krizaka-com/compare/v0.32.2...v0.33.0) (2026-11-10)
+
+
+### Features
+
+* **footer:** LinkedIn joins Instagram on the footer and in sameAs, from @krizaka/org 1.2 ([#680](https://github.com/krizaka/krizaka-com/issues/680)) ([798db1f](https://github.com/krizaka/krizaka-com/commit/798db1f3a7b0c4bf0c5f5ac6d0e5818895bcac2d))
+
 ## [0.32.2](https://github.com/krizaka/krizaka-com/compare/v0.32.1...v0.32.2) (2026-11-10)
 
 
