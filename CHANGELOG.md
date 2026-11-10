@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.32.2](https://github.com/krizaka/krizaka-com/compare/v0.32.1...v0.32.2) (2026-11-10)
+
+
+### Bug Fixes
+
+* **ci:** release-only PRs skip heavy CI jobs on krizaka-com ([#676](https://github.com/krizaka/krizaka-com/issues/676)) ([c0fa567](https://github.com/krizaka/krizaka-com/commit/c0fa567b772c49e2a542158d39a73ec91d9e1372))
+* **drift:** use app token so the drift PR's required checks start ([#675](https://github.com/krizaka/krizaka-com/issues/675)) ([2837207](https://github.com/krizaka/krizaka-com/commit/2837207c70d7bc495d6a70aec074ebf3fb7b3ad0))
+
 ## [0.32.1](https://github.com/krizaka/krizaka-com/compare/v0.32.0...v0.32.1) (2026-11-09)
 
 
