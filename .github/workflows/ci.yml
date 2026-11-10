@@ -43,3 +43,5 @@ jobs:
       # A change that touches no code (issue and PR templates, the dependabot and Scorecard files, licence and policy text)
       # skips the heavy jobs. Fails open.
       ignore: '^\.github/(?!workflows/ci\.yml$)|^(LICENSE|SECURITY|CODE_OF_CONDUCT|SUPPORT)(\.md)?$'
+      # A release-please PR (version bump only) skips the heavy jobs; the gate still reports green.
+      release-files: '^(package\.json|CHANGELOG\.md|package-lock\.json|\.release-please-manifest\.json)$'
