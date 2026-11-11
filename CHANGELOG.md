@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.1](https://github.com/krizaka/krizaka-com/compare/v0.33.0...v0.33.1) (2026-11-11)
+
+
+### Bug Fixes
+
+* **drift:** sovkora repositories moved to the monorepo (krizaka-internal[#1888](https://github.com/krizaka/krizaka-com/issues/1888)) ([#673](https://github.com/krizaka/krizaka-com/issues/673)) ([7c865ca](https://github.com/krizaka/krizaka-com/commit/7c865ca31408a95676cc8029edc2f2f7bb86af9a))
+
 ## [0.33.0](https://github.com/krizaka/krizaka-com/compare/v0.32.2...v0.33.0) (2026-11-10)
 
 
