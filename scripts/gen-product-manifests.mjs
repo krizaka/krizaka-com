@@ -21,16 +21,16 @@ const RAW = "https://raw.githubusercontent.com/krizaka";
     records a real Sovkora run of the product on dev (its run id) — the only proof that it runs on the engine. */
 const PRODUCTS = {
   sovkora: {
-    npm: ["sovkora-web:package.json", "sovkora-mobile:package.json"],
+    npm: ["sovkora:apps/web/package.json", "sovkora:apps/mobile/package.json"],
     maven: [
-      "sovkora-edge-service",
-      "sovkora-engine",
-      "sovkora-automation-service",
-      "sovkora-conversation-service",
-      "sovkora-job-service",
-      "sovkora-knowledge-service",
-    ].map((r) => `${r}:pom.xml`),
-    evidence: ["sovkora-web:src/core/hooks/useJobSSE.ts"],
+      "sovkora:services/edge/sovkora-edge-service/pom.xml",
+      "sovkora:engine/pom.xml",
+      "sovkora:services/automation/sovkora-automation-service/pom.xml",
+      "sovkora:services/conversation/sovkora-conversation-service/pom.xml",
+      "sovkora:services/job/sovkora-job-service/pom.xml",
+      "sovkora:services/knowledge/sovkora-knowledge-service/pom.xml",
+    ],
+    evidence: ["sovkora:apps/web/src/core/hooks/useJobSSE.ts"],
   },
   verikora: { npm: ["verikora:apps/web/package.json"], maven: [], engineRun: "verikora:apps/web/lib/demo-run.ts" },
   folioviv: { npm: ["folioviv:apps/web/package.json", "folioviv:apps/mobile/package.json"], maven: [] },
