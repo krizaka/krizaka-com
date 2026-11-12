@@ -46,17 +46,19 @@ test("before the page's load and before the carousel is on screen, no clip is mo
   assert.equal(offscreen.clock, "none");
 });
 
-test("the pointer or the focus holds the carousel and pauses the clip, which resumes when they leave", () => {
+test("the pointer and the focus never hold the clip: a hover, a focus, or a click on next leaves it playing (krizaka-internal#3238)", () => {
   const slides = [FILM, VIDEO, VIDEO];
-  for (const held of [
-    { type: "hover", on: true },
-    { type: "focus", on: true },
+  const hover = { type: "hover", on: true };
+  const focus = { type: "focus", on: true };
+  for (const events of [
+    [onScreen, hover],
+    [onScreen, focus],
+    [onScreen, { type: "go", to: 1 }, focus],
+    [onScreen, { type: "go", to: 1 }, hover],
+    [onScreen, { type: "go", to: 1 }, hover, focus],
   ]) {
-    let s = run(slides, [onScreen, held]);
-    assert.deepEqual([playerView(s, env(slides)).playing, playerView(s, env(slides)).clock], [false, "none"]);
-    assert.equal(playerView(s, env(slides)).clip, true, "paused, not unmounted: it resumes where it was");
-    s = stepPlayer(s, { ...held, on: false }, env(slides));
-    assert.deepEqual([playerView(s, env(slides)).playing, playerView(s, env(slides)).clock], [true, "ended"]);
+    const v = playerView(run(slides, events), env(slides));
+    assert.deepEqual([v.playing, v.clock], [true, "ended"], JSON.stringify(events));
   }
 });
 

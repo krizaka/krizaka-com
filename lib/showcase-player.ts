@@ -3,8 +3,8 @@
    vidéo ; si la vidéo est plus petite il attend à la fin avec la dernière image ».
    - A video slide lasts as long as its video: the carousel moves on at the clip's end (`ended`), and a clip never loops,
      so no last frame is held. A still slide, or a clip that cannot play, stays DWELL_MS.
-   - The pointer or the keyboard focus in the carousel holds it, the clip included (paused, then resumed where it was), until
-     the visitor acts on the slide in view (sound, play): then it is theirs and plays on. Off screen everything holds.
+   - The pointer and the keyboard focus never hold it (krizaka-internal#3238: a carousel that froze under the pointer, or after
+     a click on next, read as broken). WCAG 2.2.2 is met by the visible pause / play (`stopped`) and by the hold off screen.
    - Sound only after the visitor's click on its control, for the film in view while it plays on screen: another slide or
      scrolling away mutes it again.
    - The clip is mounted only after the page's load (the LCP is a poster, never a clip) and while the carousel is on screen
@@ -35,12 +35,13 @@ export interface PlayerState {
   seen: readonly number[];
   /** The visitor's pause. */
   stopped: boolean;
+  /** The pointer is over the carousel, the focus is in it: tracked, they hold nothing. */
   hovered: boolean;
   focused: boolean;
   onScreen: boolean;
   /** The carousel has been on screen once. */
   shown: boolean;
-  /** The visitor acted on the slide in view (sound, play): the pointer and the focus no longer hold it. */
+  /** The visitor acted on the slide in view (sound, play): under reduced motion, the clip is then theirs. */
   engaged: boolean;
   /** The visitor turned the sound on for the slide in view. */
   sound: boolean;
@@ -126,10 +127,9 @@ export function stepPlayer(s: PlayerState, e: PlayerEvent, env: PlayerEnv): Play
 export function playerView(s: PlayerState, env: PlayerEnv): PlayerView {
   const slide = env.slides[s.active];
   const video = slide.video && !s.broken.includes(s.active);
-  const held = (s.hovered || s.focused) && !s.engaged;
   const clip = video && env.loaded && s.onScreen && (!env.still || s.engaged);
-  const playing = clip && s.onScreen && !s.stopped && !held;
-  const moving = !env.still && !s.stopped && s.onScreen && !held && env.slides.length > 1;
+  const playing = clip && s.onScreen && !s.stopped;
+  const moving = !env.still && !s.stopped && s.onScreen && env.slides.length > 1;
   let clock: PlayerClock = "none";
   if (moving) {
     clock = video ? "ended" : "dwell";
