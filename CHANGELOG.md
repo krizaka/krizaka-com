@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.2](https://github.com/krizaka/krizaka-com/compare/v0.33.1...v0.33.2) (2026-11-12)
+
+
+### Bug Fixes
+
+* **home:** the carousel never freezes on hover, focus or after a click on next ([#685](https://github.com/krizaka/krizaka-com/issues/685)) ([302e42e](https://github.com/krizaka/krizaka-com/commit/302e42ee8747409126682145c64d80978bacbbed))
+
 ## [0.33.1](https://github.com/krizaka/krizaka-com/compare/v0.33.0...v0.33.1) (2026-11-11)
 
 
