@@ -2,8 +2,7 @@
 
 /* One carousel of the home (krizaka-internal#2450): the hero's, and one per product. It moves on by itself (founder,
    2026-11-05, AGENTS.md §4 names this one exception to « nothing moves on its own »), with the rules of WCAG 2.2.2:
-   - a visible pause / play, and it holds while the pointer is over it or the keyboard focus is in it (the clip pauses and
-     resumes), and while it is off screen;
+   - a visible pause / play, and it holds while it is off screen; the pointer and the focus never hold it (#3238);
    - a video slide lasts as long as its video (krizaka-internal#2837): it moves on at the clip's end, a clip never loops, so
      no last frame is held; a still slide stays a fixed time. lib/showcase-player.ts holds these rules, tested;
    - under prefers-reduced-motion (or Save-Data) nothing moves on and no clip starts by itself: the posters, previous / next,

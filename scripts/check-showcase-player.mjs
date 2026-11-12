@@ -126,6 +126,33 @@ async function sounding(page, name, problems) {
   await settle(page, SOVKORA, "playing", 5000);
 }
 
+/** #3238: a clip under the pointer keeps playing; « next » with the mouse, then the pointer away: the new clip plays. */
+async function unheld(page, name, problems) {
+  const box = await page.locator(`${SOVKORA} .kz-show-stage`).boundingBox();
+  await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+  const before = await page.evaluate(read, SOVKORA);
+  await page.waitForTimeout(1200);
+  const after = await page.evaluate(read, SOVKORA);
+  if (!after.video || after.video.paused || after.video.time <= (before.video?.time ?? 0)) {
+    problems.push(`${name}: hovering the clip freezes it`);
+  }
+  await page.locator(`${SOVKORA} .kz-show-controls button`).last().click();
+  await page.mouse.move(1, 899);
+  const started = await settle(page, SOVKORA, "started", 2000);
+  if (!started) {
+    problems.push(`${name}: after a click on next the new clip does not play (currentTime > 0.5 within 2 s)`);
+  }
+  const label = await page.locator(`${SOVKORA} .kz-show-controls button`).nth(1).getAttribute("aria-label");
+  const paused = await page.evaluate((r) => document.querySelector(r).querySelector("video")?.paused, SOVKORA);
+  if (paused === false && /play|lecture|lire/i.test(label ?? "") && !/pause/i.test(label ?? "")) {
+    problems.push(`${name}: the clip plays but the control says « ${label} »`);
+  }
+  // Back to the trailer for the checks that follow.
+  await page.locator(`${SOVKORA} .kz-show-controls button`).first().click();
+  await page.mouse.move(1, 899);
+  await settle(page, SOVKORA, "started", 5000);
+}
+
 /** The end: seek to the last second and wait for the next slide. */
 async function ending(page, name, problems) {
   await page.evaluate((r) => {
@@ -144,6 +171,8 @@ async function moving(page, base, width, problems) {
   if (!(await opening(page, name, width, problems))) {
     return problems.push(`${name}: no Sovkora carousel playing`);
   }
+  await unheld(page, name, problems);
+  await page.evaluate((r) => document.querySelector(r).scrollIntoView({ block: "center" }), SOVKORA);
   await sounding(page, name, problems);
   await ending(page, name, problems);
 }

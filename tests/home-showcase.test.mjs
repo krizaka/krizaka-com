@@ -249,9 +249,9 @@ test("every slide has its caption and its text alternative in both languages, an
   }
 });
 
-// The rules themselves (a clip's end moves it on, hover and focus hold it, sound after a click, reduced motion) are pure
+// The rules themselves (a clip's end moves it on, sound after a click, reduced motion) are pure
 // and tested in tests/showcase-player.test.mjs; here, that the carousel is wired to them.
-test("it moves on by itself, with WCAG 2.2.2's controls: pause / play, held on hover, focus and off screen", () => {
+test("it moves on by itself, with WCAG 2.2.2's controls: pause / play, held off screen, never by hover or focus", () => {
   assert.match(carousel, /stepPlayer\(s, e, env\)/, "every event goes through the tested player");
   assert.match(carousel, /globalThis\.setTimeout\(\(\) => dispatch\(\{ type: "dwell" \}\), DWELL_MS\)/);
   assert.match(carousel, /if \(view\.clock !== "dwell"\) \{\s*return;/, "the timer only for a still slide");

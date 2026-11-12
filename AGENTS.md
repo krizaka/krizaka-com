@@ -256,8 +256,8 @@
   `ShowcaseCarousel`, its rules pure and tested in `lib/showcase-player.ts`). A video slide lasts as long as its video: the
   carousel moves on at the clip's end, a clip never loops, so no last frame is held (krizaka-internal#2837); a still slide (or a
   clip that cannot play) stays 6.5 s; slides change by a short fade (nothing travels). WCAG 2.2.2's rules: a visible pause /
-  play, and they hold while the pointer is over them, while the keyboard focus is in them (the clip pauses, then resumes) and
-  while they are off screen, until the visitor acts on the slide (sound, play); under `prefers-reduced-motion` (or Save-Data)
+  play, and they hold while they are off screen; **the pointer and the keyboard focus never hold them** (krizaka-internal#3238:
+  no freeze on hover, none after a click on next; the visible pause is the control); under `prefers-reduced-motion` (or Save-Data)
   nothing moves on and no clip starts by itself (posters, previous / next, and a play button on a video slide; at its end the
   poster comes back); previous / next are buttons, arrows work on them; every slide is a figure with its caption and its text
   alternative, and each carousel has a server-rendered text version. Clips are muted, mounted only for the slide in view after
