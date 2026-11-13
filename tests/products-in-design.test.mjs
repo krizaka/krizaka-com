@@ -101,7 +101,7 @@ test("the site of a product in design is its commercial www address, never a cod
 });
 
 test("a product in design stays out of PRODUCTS, the hero, the nav, the sitemap, llms and the JSON-LD", () => {
-  assert.ok(!Object.keys(readProductStatuses(read("lib/products.ts"))).includes("kridoc"));
+  assert.ok(!Object.keys(readProductStatuses()).includes("kridoc"));
   const users = ["app", "lib"]
     .flatMap((d) => readdirSync(new URL(`../${d}/`, import.meta.url), { recursive: true }).map((f) => `${d}/${f}`))
     .filter((f) => /\.tsx?$/.test(f))

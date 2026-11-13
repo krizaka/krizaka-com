@@ -863,7 +863,7 @@
         },
         "proofs": {
           "verikora": "Each rule cites its article of law. The Québec rules still wait for a lawyer's review, and the screen says so: it sorts, it does not give legal advice. Sign-up is closed while we test on real leases.",
-          "folioviv": "Appointments, invoices with GST and QST, a ledger the database keeps balanced, and a tax report the merchant reviews and files. Work is paused while we take Verikora forward."
+          "folioviv": "Appointments, invoices with GST and QST, a ledger the database keeps balanced, and a tax report the merchant reviews and files. It is in development, built in the open."
         }
       },
       "birds": {

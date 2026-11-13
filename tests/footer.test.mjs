@@ -23,7 +23,11 @@ test("the footer's settings pass the admin's validation: products, open source, 
   assert.match(footerSettings.legal.neq, /^\d{10}$/);
   // Products by their commercial name (@krizaka/org displayName), on their www address, never a dev host.
   const products = footerSettings.columns[0];
-  assert.equal(products.status, undefined, "the products differ (one is paused): no single status on the heading");
+  assert.equal(
+    products.status,
+    "development",
+    "every product is in development (the org data): one status on the heading",
+  );
   for (const l of products.links) assert.match(l.href, /^https:\/\/www\./);
 });
 

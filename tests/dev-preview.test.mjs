@@ -1,11 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { statusOf } from "../lib/product-status.ts";
 import {
   CRITERIA,
   WAIVERS,
   assertStatuses,
   readProductStatuses,
+  statusLiterals,
   validateChecklist,
 } from "../scripts/dev-preview-lib.mjs";
 
@@ -101,8 +103,8 @@ test("the real waivers have not expired (the gate becomes strict on the day they
     assert.ok(until >= today, `${id}: the Dev preview waiver ended ${until}: close the gaps or change the status`);
 });
 
-test("lib/products.ts gives every product an explicit status, and the cards and chips know devPreview", () => {
-  const statuses = readProductStatuses(read("lib/products.ts"));
+test("the org data gives every product a status, and the cards and chips know devPreview", () => {
+  const statuses = readProductStatuses();
   assert.deepEqual(Object.keys(statuses).sort(), ["folioviv", "sovkora", "verikora"]);
   for (const s of Object.values(statuses))
     assert.ok(["devPreview", "development", "paused", "construction", "upcoming"].includes(s));
@@ -117,5 +119,39 @@ test("the build reads the checklists before it builds", () => {
 
 test("no waiver is left: Sovkora is in development", () => {
   assert.deepEqual(WAIVERS, {});
-  assert.ok(!Object.values(readProductStatuses(read("lib/products.ts"))).includes("devPreview"));
+  assert.ok(!Object.values(readProductStatuses()).includes("devPreview"));
+});
+
+// krizaka-internal#3425: Folioviv wore « En pause » on the site while the org JSON said development, because the site typed
+// its own status. The status is the org's: read from it, proved by changing it.
+test("changing the org data changes the status the site (and the dev-preview gate) reads", () => {
+  const products = [
+    { id: "sovkora", status: "development" },
+    { id: "folioviv", status: "development" },
+  ];
+  assert.equal(statusOf(products, "folioviv"), "development");
+  const moved = products.map((p) => (p.id === "folioviv" ? { ...p, status: "devPreview" } : p));
+  assert.equal(statusOf(moved, "folioviv"), "devPreview");
+  assert.deepEqual(readProductStatuses(moved), { sovkora: "development", folioviv: "devPreview" });
+  assert.throws(() => statusOf(products, "verikora"), /carries no product/);
+});
+
+test("guard: a status literal typed in the site fails (the old lib/products.ts shape is red)", () => {
+  const OLD = `export const PRODUCTS = [{ id: "folioviv", name: "Folioviv", status: "paused", siteUrl: "x" }];`;
+  assert.deepEqual(statusLiterals(OLD), ['status: "paused"']);
+  assert.deepEqual(statusLiterals(`{ status: 'development' }`), [`status: 'development'`]);
+  assert.deepEqual(statusLiterals(`status: statusOf(org.products, "folioviv")`), []);
+  // every product-bearing module: lib/products.ts types none (lib/products-in-design.ts is the org-less `design` file)
+  for (const f of ["products.ts", "nav.ts", "direction.ts", "llms-sections.ts", "docs-start.ts"])
+    assert.deepEqual(
+      statusLiterals(read(`lib/${f}`)),
+      [],
+      `lib/${f} types a product status: read it from @krizaka/org`,
+    );
+  assert.match(read("lib/products.ts"), /statusOf\(org\.products, "folioviv"\)/);
+});
+
+test("no « paused » product on the site: Folioviv is in development, as the org data says", () => {
+  assert.equal(readProductStatuses().folioviv, "development");
+  for (const l of ["en", "fr"]) assert.doesNotMatch(read(`messages/${l}.json`), /work is paused|travail est en pause/i);
 });

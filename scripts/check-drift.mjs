@@ -62,7 +62,7 @@ const findings = [];
 
 if (!process.argv.includes("--media-only")) {
   const src = read("lib/products.ts");
-  const statuses = readProductStatuses(src);
+  const statuses = readProductStatuses();
   const checklists = await readChecklists(Object.keys(statuses));
   findings.push(...statusFindings(statuses, checklists, { today }));
   findings.push(...staleSnapshot(JSON.parse(read("lib/product-manifests.json")).readAt, { today }));

@@ -1,7 +1,7 @@
 /* « Dev preview » as data (krizaka/.github docs/standards/dev-preview.md, ADR-002). Pure functions, no network: the build
    script (gen-dev-preview.mjs) and tests/dev-preview.test.mjs both use them. The criteria below are the standard's. */
 
-import ts from "typescript";
+import { org } from "@krizaka/org";
 
 export const CRITERIA = [
   "site.healthy",
@@ -82,24 +82,16 @@ export function validateChecklist(c, { today }) {
   return { complete: problems.length === 0, problems };
 }
 
-/** The statuses of lib/products.ts, read from its syntax tree (any layout): the `id` and `status` of each product. */
-export function readProductStatuses(src) {
-  const out = {};
-  const file = ts.createSourceFile("products.ts", src, ts.ScriptTarget.Latest, true);
-  const text = (p, key) => {
-    const prop = p.properties.find((x) => ts.isPropertyAssignment(x) && x.name.getText() === key);
-    return prop && ts.isStringLiteralLike(prop.initializer) ? prop.initializer.text : undefined;
-  };
-  const visit = (n) => {
-    if (ts.isObjectLiteralExpression(n)) {
-      const id = text(n, "id");
-      const status = text(n, "status");
-      if (id && status) out[id] = status;
-    }
-    ts.forEachChild(n, visit);
-  };
-  visit(file);
-  return out;
+/** The statuses the site shows, read from the org data (`org.products` of @krizaka/org): `{ id: status }`. */
+export function readProductStatuses(products = org.products) {
+  return Object.fromEntries(products.map((p) => [p.id, p.status]));
+}
+
+/** The status literals typed in a source file (`status: "development"`): the site reads each status from the org data,
+ *  so a product file that types one is the old shape (krizaka-internal#3425). */
+export function statusLiterals(src) {
+  const set = "design|upcoming|construction|development|paused|devPreview";
+  return [...src.matchAll(new RegExp(`\\bstatus\\s*:\\s*["'](${set})["']`, "g"))].map((m) => m[0]);
 }
 
 /** The problems that forbid the statuses: only `devPreview` is gated; a waiver (until a date) lifts it for a product. */

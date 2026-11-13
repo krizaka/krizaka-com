@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { siteById } from "@krizaka/ui/sites";
 import { existsSync, readFileSync } from "node:fs";
 import { PRODUCT_RECORDS, constString, records } from "./helpers/source.mjs";
+import { PRODUCTS } from "../lib/products.ts";
 
 // The bar of every Krizaka site (NAV-SYS, 2026-10-14): on www, the centre holds this site's sections only, and every
 // other Krizaka site is reached from the family switcher.
@@ -89,9 +90,9 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
-test("the products' statuses: Verikora and Sovkora in development, Folioviv paused (Sovkora left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
-  const status = Object.fromEntries(products.map((p) => [p.id, p.status]));
-  assert.deepEqual(status, { sovkora: "development", verikora: "development", folioviv: "paused" });
+test("the products' statuses: Verikora and Sovkora in development, Folioviv in development, as the org data says (Sovkora left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
+  const status = Object.fromEntries(PRODUCTS.map((p) => [p.id, p.status]));
+  assert.deepEqual(status, { sovkora: "development", verikora: "development", folioviv: "development" });
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {
