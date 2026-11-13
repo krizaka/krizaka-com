@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.5](https://github.com/krizaka/krizaka-com/compare/v0.33.4...v0.33.5) (2026-11-13)
+
+
+### Bug Fixes
+
+* **home:** every video plays through @krizaka/ui, the local carousel and player are gone ([#694](https://github.com/krizaka/krizaka-com/issues/694)) ([5ae640e](https://github.com/krizaka/krizaka-com/commit/5ae640e164bee94cf4bee6cf0d9e0670ecc931a2))
+
 ## [0.33.4](https://github.com/krizaka/krizaka-com/compare/v0.33.3...v0.33.4) (2026-11-13)
 
 
