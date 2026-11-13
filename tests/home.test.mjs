@@ -102,7 +102,7 @@ test("the products come from lib/products.ts: one row each, in the product's bra
   assert.match(showcase, /productOrder\(PRODUCTS\)/);
   assert.match(
     showcase,
-    /<li id=\{"product-" \+ p\.id\} className=\{"kz-row brand-" \+ p\.id\}/,
+    /<li\s+id=\{"product-" \+ p\.id\}\s+className=\{"kz-row brand-" \+ p\.id\}/,
     "each product is an anchor, in its brand",
   );
   assert.match(
