@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.3](https://github.com/krizaka/krizaka-com/compare/v0.33.2...v0.33.3) (2026-11-13)
+
+
+### Bug Fixes
+
+* **release:** the bump job grants contents: read, the pin moves to krizaka/.github a5c115f (krizaka-internal[#3342](https://github.com/krizaka/krizaka-com/issues/3342)) ([#688](https://github.com/krizaka/krizaka-com/issues/688)) ([32190e2](https://github.com/krizaka/krizaka-com/commit/32190e251e1167ac2993395c872850f1d1a670eb))
+
 ## [0.33.2](https://github.com/krizaka/krizaka-com/compare/v0.33.1...v0.33.2) (2026-11-12)
 
 
