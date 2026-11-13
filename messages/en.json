@@ -1189,6 +1189,7 @@
         "metaTitle": "Privacy Policy — Krizaka",
         "metaDescription": "What krizaka.com collects (the contact form only), why, where it goes, who processes it, and your rights under Québec's Law 25, PIPEDA and the GDPR.",
         "title": "Privacy Policy",
+        "updated": "Last updated: November 13, 2026",
         "sections": [
           {
             "id": "responsible",
@@ -1219,6 +1220,7 @@
             "title": "What this website collects",
             "paragraphs": [
               "The only way you give us personal information is the contact form. We receive your name, your e-mail address, your organisation if you give it, the topic, the timing if you give it, your message, the language of the page and the page you came from (so we know which product you asked about).",
+              "Before the message reaches us, two checks protect the form: Cloudflare Turnstile checks that a person sends it (it receives your IP address for that), and a six-digit code, valid for 15 minutes, is sent to your e-mail address; the message leaves only once you enter that code.",
               "We use them only to reply to you. By sending the form you agree that we use them for that. We do not sell them, share them for marketing, use them to profile you or send you anything you did not ask for.",
               "The message is delivered to the team by e-mail, through our e-mail provider Mailgun, and may also be posted to a private team messaging channel. We keep it as long as the conversation needs it, then delete it.",
               "To limit abuse, the server counts messages per IP address in memory (five every ten minutes). That count is not written anywhere and disappears when the server restarts."
@@ -1230,7 +1232,7 @@
             "paragraphs": [
               "Like any web host, the platform that serves this website keeps technical logs — IP address, time, page requested, browser — for security and abuse prevention, under its own policy.",
               "Images, videos and recordings are served from a content delivery network (Bunny). Your browser contacts it directly when a page loads them, so it sees your IP address and the request, as any server does. Fonts and scripts are served by krizaka.com itself.",
-              "There is no analytics, no advertising, no tracking pixel and no social-network widget on this website."
+              "This website measures no audience today: no analytics tool, no advertising, no tracking pixel and no social-network widget. If it ever counts its visits, our own server will do it, without a cookie, an identifier or a stored IP address and without a third-party tool, and this page will say so first."
             ]
           },
           {
@@ -1256,7 +1258,7 @@
             "id": "software",
             "title": "Our software",
             "paragraphs": [
-              "Sovkora and the building blocks are open source and self-hosted: they run on your infrastructure and process data under your control. They send us no telemetry. Verikora and Folioviv are in development and collect nothing through this site.",
+              "The building blocks (Krizaka UI, Krizaka Java, Krizaka TypeScript) are open source: they run on your infrastructure and process data under your control. They send us no telemetry. Sovkora, Verikora and Folioviv are in development, their sign-up is closed and they collect nothing through this site; Kridoc is in design.",
               "If you connect external services to them (AI providers, payment gateways, video CDN), the data you send goes directly to those providers under their own policies."
             ]
           },
@@ -1267,8 +1269,19 @@
               "DigitalOcean — hosts this website and the development environment (Toronto, Canada).",
               "Bunny.net — serves media (images, videos, recordings) of this website, and videos of the development environment.",
               "Mailgun — delivers the contact-form e-mails and those of the development environment.",
+              "Cloudflare — checks, with Turnstile, that a person sends the contact form.",
               "GitHub and npm — host our code and packages. They are not involved when you read this site; they receive the data you give them if you follow a link and use them, under their own policies.",
-              "These providers may process data outside Québec and Canada. We chose them for what they do, and the list is complete as of the date above."
+              "Where this data is, and the assessment the law requires before it leaves Québec, are in the next section. The list is complete as of the date above."
+            ]
+          },
+          {
+            "id": "outside-quebec",
+            "title": "Outside Québec: where your information goes",
+            "paragraphs": [
+              "Under section 17 of Québec's Act respecting the protection of personal information in the private sector, a business must assess the privacy factors before it communicates personal information outside Québec: how sensitive it is, what it will be used for, what protects it, contracts included, and the legal framework of the place it goes to. The communication must also be covered by a written agreement.",
+              "Today, what you give us through this website leaves Québec. This website's server is at DigitalOcean, in Toronto, Ontario: in Canada, but outside Québec. The contact form's e-mails go through Mailgun, in the United States. The bot check goes through Cloudflare, which receives your IP address. Media are served by Bunny, a content delivery network whose servers are spread around the world; we are preparing their move to DigitalOcean, in Toronto.",
+              "That assessment is being prepared: it is not finished, and this page will say when it is.",
+              "Our products receive nothing through this website: the data they process is not covered by this page."
             ]
           },
           {
@@ -1277,6 +1290,24 @@
             "paragraphs": [
               "Under Québec's Law 25, the federal PIPEDA and, if you are in Europe, the GDPR, you may ask to access, correct or delete the information you sent us, withdraw your consent, and obtain a copy of it in a usual format. Write to us through the contact form and we will answer within 30 days.",
               "If you are not satisfied, you may complain to the Commission d'accès à l'information du Québec, to the Office of the Privacy Commissioner of Canada or, in Europe, to your data protection authority."
+            ]
+          },
+          {
+            "id": "automated-decisions",
+            "title": "Does a machine decide alone?",
+            "paragraphs": [
+              "Under section 12.1 of the Act, a person must be told of a decision based exclusively on automated processing of their information at the latest when it is communicated to them. They may then ask which information was used and the reasons and main factors of the decision, have their information corrected, and submit their observations to a member of the team who can review the decision.",
+              "This website makes no decision about you based exclusively on automated processing. Its only automatic refusals protect the form against abuse: the bot check, the code sent to your address and the limit of five messages every ten minutes. They concern one sending, not you; if one of them blocks you, try again later or write to the person in charge named above.",
+              "Neither do our products in development. Verikora reads documents and flags what it sees, never scoring the person or giving a verdict on them: a person decides, Verikora decides nothing. Folioviv prepares tax returns; the merchant files them, and Folioviv transmits nothing to any government. Kridoc is in design and processes no information yet. Sovkora, the engine, returns its results to the product that calls it; it can automatically refuse a request whose content breaks its content policy, and that refusal concerns the request, not the person."
+            ]
+          },
+          {
+            "id": "incidents",
+            "title": "If an incident affects your information",
+            "paragraphs": [
+              "A confidentiality incident is an unauthorised access to, use or communication of personal information, or its loss. Under section 3.5 of the Act, when an incident presents a risk of serious injury, we must promptly notify the Commission d'accès à l'information and each person concerned. Under section 3.8, we must keep a register of these incidents and give it to the Commission on request.",
+              "The person in charge of the protection of personal information, the president of the company, assesses the risk and gives these notices. Our register is being set up, and this page will say when it is.",
+              "If you think an incident affects information you gave us, tell us through the contact form, at krizaka.com/contact (topic “Other”)."
             ]
           },
           {
