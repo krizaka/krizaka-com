@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.4](https://github.com/krizaka/krizaka-com/compare/v0.33.3...v0.33.4) (2026-11-13)
+
+
+### Bug Fixes
+
+* **privacy:** the privacy page answers the five questions — automated decisions, incident notice, information leaving Québec ([#692](https://github.com/krizaka/krizaka-com/issues/692)) ([c3b9cd8](https://github.com/krizaka/krizaka-com/commit/c3b9cd8c27d06ffbf793e81aa288c120e32686ac))
+
 ## [0.33.3](https://github.com/krizaka/krizaka-com/compare/v0.33.2...v0.33.3) (2026-11-13)
 
 
