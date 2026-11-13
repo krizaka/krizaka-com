@@ -16,6 +16,66 @@ const ROOT = "section[aria-roledescription]";
 /** The first carousel of the page that offers a sound toggle on its opening slide (Sovkora's trailer), or the first one. */
 const clipOf = (root) => root.locator("video").first();
 
+/** A carousel scrolled to plays by itself, muted, and a mouse click on « next » (#3238) never freezes it. */
+async function playsOn(page, root, label, problems) {
+  await root.scrollIntoViewIfNeeded();
+  try {
+    await clipOf(root).waitFor({ state: "attached", timeout: 15000 });
+    await page.waitForFunction((el) => el.querySelector("video")?.currentTime > 0.3, await root.elementHandle(), {
+      timeout: 15000,
+    });
+  } catch {
+    problems.push(`${label} did not start by itself once on screen`);
+    return;
+  }
+  if (!(await clipOf(root).evaluate((v) => v.muted))) {
+    problems.push(`${label} sounds before any press`);
+  }
+  await root.getByRole("button", { name: "Next slide" }).first().click();
+  const samples = [];
+  for (let k = 0; k < 4; k++) {
+    await page.waitForTimeout(500);
+    samples.push(await clipOf(root).evaluate((v) => ({ paused: v.paused, t: v.currentTime })));
+  }
+  if (samples.some((x) => x.paused) || new Set(samples.map((x) => x.t)).size < 2) {
+    problems.push(`${label} froze after a click on next (${JSON.stringify(samples)})`);
+  }
+}
+
+/** Sound: only after the press, and only for the slide it was pressed on. */
+async function sounds(page, name, problems) {
+  const root = page
+    .locator(ROOT)
+    .filter({ has: page.getByRole("button", { name: "Sound" }) })
+    .first();
+  const toggle = root.getByRole("button", { name: "Sound" });
+  if ((await toggle.count()) === 0) {
+    problems.push(`${name}: no carousel offers a sound toggle`);
+    return;
+  }
+  await root.scrollIntoViewIfNeeded();
+  // Back to the slide that has sound (the trailer, the first of its carousel).
+  for (let k = 0; k < 6 && !(await root.textContent()).includes("1 / "); k++) {
+    await root.getByRole("button", { name: "Next slide" }).first().click();
+    await page.waitForTimeout(300);
+  }
+  await page.waitForTimeout(1200);
+  const muted = () => clipOf(root).evaluate((v) => v.muted);
+  if (!(await muted())) {
+    problems.push(`${name}: the clip sounds before any press`);
+  }
+  await toggle.click();
+  await page.waitForTimeout(800);
+  if ((await toggle.getAttribute("aria-pressed")) !== "true" || (await muted())) {
+    problems.push(`${name}: a press on the sound toggle did not unmute the clip`);
+  }
+  await root.getByRole("button", { name: "Next slide" }).first().click();
+  await page.waitForTimeout(800);
+  if (!(await muted())) {
+    problems.push(`${name}: the sound stayed on after moving to the next slide`);
+  }
+}
+
 async function moving(page, base, width, problems) {
   await page.setViewportSize({ width, height: 900 });
   await page.goto(`${base}/en`, { waitUntil: "load" });
@@ -33,61 +93,9 @@ async function moving(page, base, width, problems) {
     return;
   }
   for (let i = 0; i < total; i++) {
-    const root = roots.nth(i);
-    await root.scrollIntoViewIfNeeded();
-    try {
-      await clipOf(root).waitFor({ state: "attached", timeout: 15000 });
-      await page.waitForFunction((el) => el.querySelector("video")?.currentTime > 0.3, await root.elementHandle(), {
-        timeout: 15000,
-      });
-    } catch {
-      problems.push(`${name}: carousel ${i + 1} did not start by itself once on screen`);
-      continue;
-    }
-    if (!(await clipOf(root).evaluate((v) => v.muted))) {
-      problems.push(`${name}: carousel ${i + 1} sounds before any press`);
-    }
-    // #3238: a mouse click on « next » never freezes the carousel: the clip of the new slide keeps playing.
-    await root.getByRole("button", { name: "Next slide" }).first().click();
-    const samples = [];
-    for (let k = 0; k < 4; k++) {
-      await page.waitForTimeout(500);
-      samples.push(await clipOf(root).evaluate((v) => ({ paused: v.paused, t: v.currentTime })));
-    }
-    if (samples.some((x) => x.paused) || new Set(samples.map((x) => x.t)).size < 2) {
-      problems.push(`${name}: carousel ${i + 1} froze after a click on next (${JSON.stringify(samples)})`);
-    }
+    await playsOn(page, roots.nth(i), `${name}: carousel ${i + 1}`, problems);
   }
-  // Sound: only after the press, and only for the slide it was pressed on.
-  const root = page
-    .locator(ROOT)
-    .filter({ has: page.getByRole("button", { name: "Sound" }) })
-    .first();
-  const toggle = root.getByRole("button", { name: "Sound" });
-  if ((await toggle.count()) > 0) {
-    await root.scrollIntoViewIfNeeded();
-    // Back to the slide that has sound (the trailer, the first of its carousel).
-    for (let k = 0; k < 6 && !(await root.textContent()).includes("1 / "); k++) {
-      await root.getByRole("button", { name: "Next slide" }).first().click();
-      await page.waitForTimeout(300);
-    }
-    await page.waitForTimeout(1200);
-    if (!(await clipOf(root).evaluate((v) => v.muted))) {
-      problems.push(`${name}: the clip sounds before any press`);
-    }
-    await toggle.click();
-    await page.waitForTimeout(800);
-    if ((await toggle.getAttribute("aria-pressed")) !== "true" || (await clipOf(root).evaluate((v) => v.muted))) {
-      problems.push(`${name}: a press on the sound toggle did not unmute the clip`);
-    }
-    await root.getByRole("button", { name: "Next slide" }).first().click();
-    await page.waitForTimeout(800);
-    if (!(await clipOf(root).evaluate((v) => v.muted))) {
-      problems.push(`${name}: the sound stayed on after moving to the next slide`);
-    }
-  } else {
-    problems.push(`${name}: no carousel offers a sound toggle`);
-  }
+  await sounds(page, name, problems);
 }
 
 async function still(page, base, problems) {
