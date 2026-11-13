@@ -185,6 +185,10 @@ export function showcaseStill(product: Still): ShowcaseStillSpec {
   return { product, id: still.id, poster: `${renditionBase(product, still.id)}.jpg` };
 }
 
+/** The seconds a slide's loop lasts (measured on its file, the storyboard's `durations`), or undefined when not measured. */
+export const slideSeconds = (id: string): number | undefined =>
+  (board.durations as Record<string, number | string>)[id] as number | undefined;
+
 /** The files of a slide: its videos and its poster. */
 export const filesOf = (s: ShowcaseSlideSpec): string[] => [...s.videos.map((v) => v.path), s.poster];
 

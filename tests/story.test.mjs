@@ -140,7 +140,7 @@ test("the page's UI is the site's: one hero action, the brand scoped to its chip
       `${file}: the plate's caption`,
     );
   }
-  for (const file of ["app/components/home/ShowcaseCarousel.tsx", "app/components/home/ShowcaseStill.tsx"])
+  for (const file of ["app/components/home/ShowcaseStill.tsx"])
     assert.ok(
       jsx(file).some((e) => e.attrs.className === "rd-plate kz-show-stage"),
       `${file}: the home's frames are the same plate`,

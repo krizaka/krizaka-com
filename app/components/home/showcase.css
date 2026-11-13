@@ -1,7 +1,6 @@
-/* The home's carousels (Showcase, ShowcaseCarousel; krizaka-internal#2450). Cahier: a framed plate with a thin rule and a
-   solid paper shadow, square corners, the caption under it in the typewriter face, the controls as quiet buttons. A phone
-   frame is 16:9 on every screen, the phone's too (no vertical: founder, 2026-11-05). Slides change by a short fade of the ink; nothing
-   travels, and nothing moves under reduced motion. Tokens only. */
+/* The home's still (ShowcaseStill; krizaka-internal#2450) and the transcript lines inside the library carousel's text version.
+   The moving carousels are @krizaka/ui's MediaCarousel (krizaka-internal#3273): nothing of their own is drawn here. Cahier: a
+   framed plate (.rd-plate) with its caption under it in the typewriter face. A frame is 16:9 on every screen. Tokens only. */
 
 .kz-show {
   min-width: 0;
@@ -11,16 +10,6 @@
 .kz-show-stage {
   aspect-ratio: 16 / 9;
 }
-.kz-show-slide {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  opacity: 0;
-  transition: opacity 600ms var(--kz-ease);
-}
-.kz-show-slide[data-active] {
-  opacity: 1;
-}
 .kz-show-media {
   position: absolute;
   inset: 0;
@@ -29,68 +18,6 @@
   object-fit: cover;
   display: block;
 }
-
-/* The progress: one hairline per slide at the foot of the plate; the current one fills over its time on screen (a still
-   slide's dwell, a clip's own length), and stops with the carousel. Decorative: the counter says where we are. */
-.kz-show-ticks {
-  position: absolute;
-  inset: auto 12px 10px;
-  display: flex;
-  gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  pointer-events: none;
-}
-.kz-show-ticks li {
-  position: relative;
-  flex: 1;
-  height: 2px;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--kz-text-on-media) 30%, transparent);
-}
-.kz-show-ticks li[data-state="done"] {
-  background: var(--kz-text-on-media);
-}
-.kz-show-ticks li span {
-  position: absolute;
-  inset: 0;
-  background: var(--kz-text-on-media);
-  transform-origin: left;
-  transform: scaleX(0);
-}
-.kz-show[data-clock="dwell"] .kz-show-ticks li span {
-  animation: kz-show-fill 6500ms linear forwards;
-}
-/* A clip's tick follows the clip (its time updates, a few a second; no animation frame of our own). */
-.kz-show-ticks li span[data-progress] {
-  transform: scaleX(var(--kz-show-progress, 0));
-  transition: transform 250ms linear;
-}
-
-/* A film's sound: a quiet button in the plate's corner, above the ticks, off by default (krizaka-internal#2837). */
-.kz-show-sound {
-  position: absolute;
-  right: 12px;
-  bottom: 22px;
-  z-index: 1;
-}
-/* Reduced motion: the poster and a play button in the middle of the plate; nothing starts by itself. */
-.kz-show-play {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: max-content;
-  height: max-content;
-  margin: auto;
-}
-
-@keyframes kz-show-fill {
-  to {
-    transform: scaleX(1);
-  }
-}
-
 .kz-show-bar {
   display: flex;
   align-items: flex-start;
@@ -98,52 +25,8 @@
   gap: 12px;
   margin-top: 14px;
 }
-.kz-show-count {
-  display: inline-block;
-  margin-right: 10px;
-  color: var(--kz-text-primary);
-  font-variant-numeric: tabular-nums;
-}
-.kz-show-controls {
-  display: flex;
-  flex: none;
-  gap: 6px;
-}
-.kz-show-watch {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
-  margin-top: 10px;
-}
-.kz-show-text {
-  margin-top: 10px;
-}
-.kz-show-text li {
-  margin: 4px 0;
-}
-.kz-show-text p {
-  margin: 8px 0 0;
-}
-.kz-show-text .kz-show-transcript {
+.kz-show-transcript {
   margin: 6px 0 0;
   padding-left: 18px;
   list-style: decimal;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .kz-show-slide {
-    transition: none;
-  }
-  .kz-show-ticks li span {
-    animation: none;
-    transition: none;
-  }
-}
-
-/* The controls are a fieldset (a named group without the generic role); no browser chrome around it. */
-fieldset.kz-show-controls {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  min-inline-size: 0;
 }

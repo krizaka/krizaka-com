@@ -468,7 +468,6 @@
           "carousel": "carrousel",
           "slide": "image",
           "slideOf": "{n} sur {total}",
-          "controls": "Commandes : {label}",
           "previous": "Image précédente",
           "next": "Image suivante",
           "pause": "Mettre le carrousel en pause",
@@ -477,7 +476,7 @@
           "textVersion": "Version texte",
           "film": "Regarder le film en entier, avec le son",
           "sound": "Son",
-          "playVideo": "Lire la vidéo : {caption}"
+          "close": "Fermer"
         },
         "carousels": {
           "hero": "Ce que nous faisons, en images",
