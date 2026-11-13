@@ -38,7 +38,8 @@ export default function LegalPage({ locale, page }: { locale: string; page: Lega
         back={{ href: "/", label: legal.back }}
         linkAs={Link}
         title={doc.title}
-        updated={legal.updated}
+        // A page that changed alone carries its own date (site.legal.privacy.updated); the others share site.legal.updated.
+        updated={"updated" in doc && typeof doc.updated === "string" ? doc.updated : legal.updated}
         tocLabel={legal.toc}
         sections={doc.sections.map((section, i) => ({
           // A section may name its anchor (`/privacy#accounts`, linked from blog.krizaka.com); the others are numbered.

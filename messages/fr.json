@@ -1192,6 +1192,7 @@
         "metaTitle": "Politique de confidentialité — Krizaka",
         "metaDescription": "Ce que krizaka.com collecte (le formulaire de contact seulement), pourquoi, où cela va, qui le traite, et vos droits selon la Loi 25 du Québec, la LPRPDE et le RGPD.",
         "title": "Politique de confidentialité",
+        "updated": "Dernière mise à jour : 13 novembre 2026",
         "sections": [
           {
             "id": "responsible",
@@ -1222,6 +1223,7 @@
             "title": "Ce que ce site collecte",
             "paragraphs": [
               "Le formulaire de contact est la seule façon de nous confier des renseignements personnels. Nous recevons votre nom, votre courriel, votre organisation si vous l'indiquez, le sujet, l'échéance si vous l'indiquez, votre message, la langue de la page et la page d'où vous venez (pour savoir de quel produit vous parlez).",
+              "Avant que le message nous parvienne, deux vérifications protègent le formulaire : Cloudflare Turnstile vérifie qu'il est envoyé par une personne (il reçoit pour cela votre adresse IP), et un code à six chiffres, valable 15 minutes, est envoyé à votre adresse courriel ; le message part seulement quand vous entrez ce code.",
               "Nous les utilisons seulement pour vous répondre. En envoyant le formulaire, vous acceptez cet usage. Nous ne les vendons pas, ne les partageons pas à des fins de marketing, ne vous profilons pas et ne vous envoyons rien que vous n'ayez demandé.",
               "Le message est remis à l'équipe par courriel, par notre fournisseur Mailgun, et peut aussi être publié dans un canal de messagerie privé de l'équipe. Nous le gardons le temps que la conversation l'exige, puis nous le supprimons.",
               "Pour limiter les abus, le serveur compte en mémoire les messages par adresse IP (cinq par dix minutes). Ce compte n'est écrit nulle part et disparaît au redémarrage du serveur."
@@ -1233,7 +1235,7 @@
             "paragraphs": [
               "Comme tout hébergeur, la plateforme qui sert ce site conserve des journaux techniques — adresse IP, heure, page demandée, navigateur — pour la sécurité et la prévention des abus, selon sa propre politique.",
               "Les images, vidéos et enregistrements sont servis par un réseau de diffusion (Bunny). Votre navigateur le contacte directement quand une page les charge ; il voit donc votre adresse IP et la requête, comme tout serveur. Les polices et scripts sont servis par krizaka.com lui-même.",
-              "Ce site n'a ni mesure d'audience, ni publicité, ni pixel de suivi, ni gadget de réseau social."
+              "Ce site ne mesure aujourd'hui aucune audience : ni outil d'analyse, ni publicité, ni pixel de suivi, ni gadget de réseau social. S'il compte un jour ses visites, ce sera par notre propre serveur, sans témoin, sans identifiant et sans adresse IP conservée, sans outil tiers, et cette page le dira avant."
             ]
           },
           {
@@ -1259,7 +1261,7 @@
             "id": "software",
             "title": "Nos logiciels",
             "paragraphs": [
-              "Sovkora et les briques sont ouverts et auto-hébergés : ils tournent sur votre infrastructure et traitent les données sous votre contrôle. Ils ne nous envoient aucune télémétrie. Verikora et Folioviv sont en développement et ne collectent rien par ce site.",
+              "Les briques (Krizaka UI, Krizaka Java, Krizaka TypeScript) sont ouvertes : elles tournent sur votre infrastructure et traitent les données sous votre contrôle. Elles ne nous envoient aucune télémétrie. Sovkora, Verikora et Folioviv sont en développement, leur inscription est fermée et ils ne collectent rien par ce site ; Kridoc est en conception.",
               "Si vous y branchez des services externes (fournisseurs d'IA, passerelles de paiement, CDN vidéo), les données que vous envoyez vont directement à ces fournisseurs, selon leurs propres politiques."
             ]
           },
@@ -1270,8 +1272,19 @@
               "DigitalOcean — héberge ce site et l'environnement de développement (Toronto, Canada).",
               "Bunny.net — sert les médias (images, vidéos, enregistrements) de ce site, et les vidéos de l'environnement de développement.",
               "Mailgun — achemine les courriels du formulaire de contact et ceux de l'environnement de développement.",
+              "Cloudflare — vérifie, avec Turnstile, que le formulaire de contact est envoyé par une personne.",
               "GitHub et npm — hébergent notre code et nos paquets. Ils n'interviennent pas quand vous lisez ce site ; ils reçoivent ce que vous leur donnez si vous suivez un lien et les utilisez, selon leurs propres politiques.",
-              "Ces fournisseurs peuvent traiter des données hors du Québec et du Canada. Nous les avons choisis pour ce qu'ils font, et la liste est complète à la date ci-dessus."
+              "Où ces données se trouvent, et l'évaluation que la loi demande avant qu'elles quittent le Québec, sont dans la section suivante. La liste est complète à la date ci-dessus."
+            ]
+          },
+          {
+            "id": "outside-quebec",
+            "title": "Hors du Québec : où vont vos renseignements",
+            "paragraphs": [
+              "Selon l'article 17 de la Loi sur la protection des renseignements personnels dans le secteur privé, une entreprise doit évaluer les facteurs relatifs à la vie privée avant de communiquer un renseignement personnel hors du Québec : sa sensibilité, la finalité de son utilisation, les mesures qui le protègent, y compris contractuelles, et le régime juridique du lieu où il va. La communication doit aussi faire l'objet d'une entente écrite.",
+              "Aujourd'hui, ce que vous nous confiez par ce site quitte le Québec. Le serveur de ce site est chez DigitalOcean, à Toronto, en Ontario : au Canada, mais hors du Québec. Les courriels du formulaire passent par Mailgun, aux États-Unis. La vérification anti-robot passe par Cloudflare, qui reçoit votre adresse IP. Les médias sont servis par Bunny, un réseau de diffusion dont les serveurs sont répartis dans le monde ; nous préparons leur déménagement chez DigitalOcean, à Toronto.",
+              "Cette évaluation est en préparation : elle n'est pas terminée, et cette page dira quand elle le sera.",
+              "Nos produits ne reçoivent rien par ce site : les données qu'ils traitent ne sont pas couvertes par cette page."
             ]
           },
           {
@@ -1280,6 +1293,24 @@
             "paragraphs": [
               "Selon la Loi 25 du Québec, la LPRPDE fédérale et, si vous êtes en Europe, le RGPD, vous pouvez demander d'accéder aux renseignements que vous nous avez transmis, de les corriger ou de les supprimer, de retirer votre consentement et d'en obtenir une copie dans un format courant. Écrivez-nous par le formulaire de contact : nous répondons dans les 30 jours.",
               "Si vous n'êtes pas satisfait, vous pouvez porter plainte auprès de la Commission d'accès à l'information du Québec, du Commissariat à la protection de la vie privée du Canada ou, en Europe, de votre autorité de protection des données."
+            ]
+          },
+          {
+            "id": "automated-decisions",
+            "title": "Une machine décide-t-elle seule ?",
+            "paragraphs": [
+              "Selon l'article 12.1 de la loi, une personne doit être informée d'une décision fondée exclusivement sur un traitement automatisé de ses renseignements au plus tard au moment où on la lui communique. Elle peut alors demander quels renseignements ont servi, les raisons et les principaux facteurs de la décision, faire corriger ses renseignements et présenter ses observations à une personne de l'équipe qui peut réviser la décision.",
+              "Ce site ne prend aucune décision à votre sujet fondée exclusivement sur un traitement automatisé. Ses seuls refus automatiques protègent le formulaire contre les abus : la vérification anti-robot, le code envoyé à votre adresse et la limite de cinq messages par dix minutes. Ils portent sur un envoi, pas sur vous ; si l'un d'eux vous bloque, réessayez plus tard ou écrivez à la personne responsable nommée plus haut.",
+              "Nos produits en développement non plus. Verikora lit des documents et signale ce qu'il y voit, sans jamais noter la personne ni rendre de verdict sur elle : une personne décide, Verikora ne décide rien. Folioviv prépare les déclarations de taxes ; c'est le commerçant qui les transmet, et Folioviv ne transmet rien à aucun gouvernement. Kridoc est en conception et ne traite encore aucun renseignement. Sovkora, le moteur, rend ses résultats au produit qui l'appelle ; il peut refuser automatiquement une demande dont le contenu enfreint sa politique de contenu, et ce refus porte sur la demande, pas sur la personne."
+            ]
+          },
+          {
+            "id": "incidents",
+            "title": "Si un incident touche vos renseignements",
+            "paragraphs": [
+              "Un incident de confidentialité, c'est un accès, une utilisation ou une communication non autorisés d'un renseignement personnel, ou sa perte. Selon l'article 3.5 de la loi, quand un incident présente un risque de préjudice sérieux, nous devons aviser avec diligence la Commission d'accès à l'information et chaque personne concernée. Selon l'article 3.8, nous devons tenir un registre de ces incidents et le remettre à la Commission sur demande.",
+              "La personne responsable de la protection des renseignements personnels, le président de la société, évalue le risque et donne ces avis. Notre registre est en cours de mise en place, et cette page dira quand il le sera.",
+              "Si vous pensez qu'un incident touche des renseignements que vous nous avez confiés, dites-le-nous par le formulaire de contact, à krizaka.com/contact (sujet « Autre »)."
             ]
           },
           {
