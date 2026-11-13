@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.33.6](https://github.com/krizaka/krizaka-com/compare/v0.33.5...v0.33.6) (2026-11-13)
+
+
+### Bug Fixes
+
+* **products:** each product's status is read from the org JSON, Folioviv back in development ([#696](https://github.com/krizaka/krizaka-com/issues/696)) ([bb30899](https://github.com/krizaka/krizaka-com/commit/bb30899a810961e436098b3a005f6ce387c1f01f))
+
 ## [0.33.5](https://github.com/krizaka/krizaka-com/compare/v0.33.4...v0.33.5) (2026-11-13)
 
 
