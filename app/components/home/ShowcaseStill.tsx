@@ -8,7 +8,7 @@
 import { cdn } from "@/lib/cdn";
 import { format, getDictionary } from "@/lib/i18n";
 import { showcaseStill, type Still } from "@/lib/home-showcase";
-import "./showcase.css";
+import "./still.css";
 
 // @fixed: the size of every poster of the home's carousels (scripts/home-showcase.mjs encodes them at 1280x720).
 const POSTER = { width: 1280, height: 720 } as const;

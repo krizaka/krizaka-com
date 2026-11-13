@@ -34,13 +34,9 @@ test("the home and /story render the products from PRODUCTS: the home's rows, /s
   assert.match(story, /PRODUCT_CHAPTERS/);
   const home = read("app/components/home/ProductShowcase.tsx");
   // 2026-10-20 (home redesign, « one label instead of three »): on the home the know-how is SHOWN, not said again as a mono
-  // eyebrow beside the status; since 2026-11-05 (krizaka-internal#2450) by each entry's carousel of real media.
+  // eyebrow beside the status; since krizaka-internal#3243 the home has no carousel: a row says it in one line.
   assert.doesNotMatch(home, /h\.knowhow/, "one label per row on the home: the status");
-  assert.match(
-    home,
-    /<Showcase carousel=\{carousel\} fig=\{sectionFigure\(nOf\(p\)\)\} locale=\{locale\} \/>/,
-    "the know-how is shown by the entry's carousel",
-  );
+  assert.doesNotMatch(home, /<Showcase\b/, "no carousel on the home");
   assert.match(home, /href=\{p\.repoUrl\}/);
   assert.doesNotMatch(story, /ProfileCard|StatGauge|ChoiceGrid/, "/story draws no tile of its own");
   const os = read("app/[locale]/docs/page.tsx");

@@ -39,7 +39,7 @@ test("the status has its words in both languages, and its stamp", () => {
 });
 
 test("a product in design links its live coming-soon site and shows its still, nothing else that is not built", () => {
-  const start = showcase.indexOf("function DesignEntry");
+  const start = showcase.indexOf("function DesignRow");
   const entry = showcase.slice(start, showcase.indexOf("/** The products (§ 2)"));
   assert.ok(start > 0 && entry.length > 0);
   // Not built: no version, no source, no bird, no note, no fields, no run, no sign-up.
@@ -57,12 +57,9 @@ test("a product in design links its live coming-soon site and shows its still, n
   // The one link is its site (« See the site »), from the data.
   assert.match(entry, /href=\{p\.siteUrl\}/);
   assert.match(entry, /h\.visitSite/);
-  assert.match(entry, /status=\{\{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}\}/);
-  // Its plate is the still, numbered after the products' carousels.
-  assert.match(
-    entry,
-    /<ShowcaseStill product=\{p\.id\} fig=\{sectionFigure\(SHOWN\.length \+ 1\)\} locale=\{locale\} \/>/,
-  );
+  assert.match(entry, /<Stamp tone=\{STAMP\[p\.status\]\} size="sm">/);
+  // Its plate is the still, a picture (nothing moves).
+  assert.match(entry, /<ShowcaseStill product=\{p\.id\} fig=\{fig\} locale=\{locale\} \/>/);
 });
 
 test("no mock plate is left: no drawn app window, no « Demo soon », no sample document, in code, styles or words", () => {

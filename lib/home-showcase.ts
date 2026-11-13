@@ -18,9 +18,6 @@ import board from "../content/films/home-showcase.json" with { type: "json" };
 
 export const SHOWCASES = ["hero", "verikora", "sovkora", "folioviv"] as const;
 export type Showcase = (typeof SHOWCASES)[number];
-/** The products' carousels, in the page's order: Sovkora in the centre (founder, 2026-11-05). */
-export const PRODUCT_SHOWCASES = ["verikora", "sovkora", "folioviv"] as const satisfies readonly Showcase[];
-export type ProductShowcase = (typeof PRODUCT_SHOWCASES)[number];
 
 /** Where a slide comes from: a reel's take widened by Runway, a 16:9 clip, a clip of the company media library (whose
  *  public use waits on the founder's assignment to the company, annex B: the PR that ships one says so), or a finished film. */
@@ -217,10 +214,4 @@ export function showcaseProblems(has: (path: string) => boolean): string[] {
     .filter((s) => !has(s.poster))
     .map((s) => `${s.product}/${s.id}: ${s.poster} is not in the CDN manifest`);
   return [...carousels, ...films, ...stills];
-}
-
-/** The carousel of a product, by its public name (Verikora → verikora); undefined for a product without one. */
-export function showcaseOf(name: string): ProductShowcase | undefined {
-  const key = name.toLowerCase();
-  return (PRODUCT_SHOWCASES as readonly string[]).includes(key) ? (key as ProductShowcase) : undefined;
 }

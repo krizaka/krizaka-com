@@ -1,15 +1,14 @@
-/* « Where we are going »: now / next / later, no dates (founder, 2026-10-30), redrawn on 2026-11-05 (krizaka-internal#2450:
-   the Stepper broke on a phone; « smarter, more ergonomic, a looping animation that gives more detail of each target »).
-   DirectionLoop draws the three stations and rests on one at a time, opening what it holds; still under reduced motion,
-   with every station open. « Now » carries the products with their honest statuses, read from lib/products.ts; the rest is
-   the stated order (lib/direction.ts), its details are messages. One action: our story. No ruled paper. */
+/* « Where we are going »: now / next / later, no dates (founder, 2026-10-30). Since krizaka-internal#3243 it is a static
+   numbered list, every station open: the page's second self-moving block (the loop) is retired, nothing here moves or
+   pauses. « Now » carries the products with their honest statuses, read from lib/products.ts; the rest is the stated order
+   (lib/direction.ts), its details are messages. One action: our story. No ruled paper. */
 
-import { Facts, Section } from "@krizaka/ui/page";
+import { Section } from "@krizaka/ui/page";
+import { Stamp } from "@krizaka/ui/specimen-tag";
 import ButtonLink from "@/app/components/ButtonLink";
 import { DIRECTION_STEPS, nowProducts } from "@/lib/direction";
 import { format, getDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/products";
-import DirectionLoop from "./DirectionLoop";
 import "./direction.css";
 
 export default function Direction({ locale }: { locale: string }) {
@@ -19,12 +18,16 @@ export default function Direction({ locale }: { locale: string }) {
     nowProducts(PRODUCTS).map((p) => p.name),
   );
   const now = (
-    <Facts
-      items={nowProducts(PRODUCTS).map((p) => ({
-        label: `${p.name} · ${t.site.nav.status[p.status].label}`,
-        tone: p.status === "devPreview" ? ("ok" as const) : ("wip" as const),
-      }))}
-    />
+    <ul className="kz-dir-points kz-dir-now">
+      {nowProducts(PRODUCTS).map((p) => (
+        <li key={p.id}>
+          {p.name}{" "}
+          <Stamp tone={p.status === "devPreview" ? "ok" : "wip"} size="sm">
+            {t.site.nav.status[p.status].label}
+          </Stamp>
+        </li>
+      ))}
+    </ul>
   );
   const points = (items: readonly string[]) => (
     <ul className="kz-dir-points">
@@ -48,15 +51,15 @@ export default function Direction({ locale }: { locale: string }) {
         </ButtonLink>
       }
     >
-      <DirectionLoop
-        labels={{ pause: d.pause, play: d.play, list: d.title }}
-        stations={DIRECTION_STEPS.map((id) => ({
-          id,
-          title: d.steps[id].title,
-          body: format(d.steps[id].body, { names }),
-          details: id === "now" ? now : points(d.steps[id].points),
-        }))}
-      />
+      <ol className="kz-dir-line" aria-label={d.title}>
+        {DIRECTION_STEPS.map((id) => (
+          <li key={id} className="kz-dir-station" data-step={id}>
+            <h3 className="kz-dir-title">{d.steps[id].title}</h3>
+            <p className="kz-dir-body">{format(d.steps[id].body, { names })}</p>
+            {id === "now" ? now : points(d.steps[id].points)}
+          </li>
+        ))}
+      </ol>
     </Section>
   );
 }

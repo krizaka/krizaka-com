@@ -52,8 +52,11 @@ test("one action in the hero: it writes to us on Verikora's topic, and nothing e
     hero,
     /href=\{`\/\$\{locale\}\$\{contactHref\("home", undefined, HOME_PRODUCT\)\}`\}\s+variant="primary"/,
   );
-  assert.match(hero, /id="fig-1"/, "the carousel is Fig. 1");
-  assert.doesNotMatch(hero, /FilmLightbox/, "the film is a slide of the carousel, with a link to its page");
+  assert.doesNotMatch(
+    hero,
+    /Showcase|<video|FilmLightbox/,
+    "no carousel and no film in the hero (krizaka-internal#3243)",
+  );
   const { HOME_PRODUCT } = await import("../lib/home-sections.ts");
   assert.equal(HOME_PRODUCT, "verikora", "the home serves Verikora (the contact form's product, by its commercial id)");
   for (const l of ["en", "fr"]) {
@@ -94,34 +97,30 @@ test("the hero: text painted at once, the figures read at build and climbing", (
   );
 });
 
-test("the products come from lib/products.ts: one card each, in the product's brand", () => {
+test("the products come from lib/products.ts: one row each, in the product's brand", () => {
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.match(showcase, /productOrder\(PRODUCTS\)/);
   assert.match(
     showcase,
-    /<li\s+id=\{"product-" \+ p\.id\}\s+className=\{cn\("kz-entry", engine && "kz-entry-engine", "brand-" \+ p\.id\)\}/,
-    "each product is an anchor the row reaches, in its brand",
+    /<li id=\{"product-" \+ p\.id\} className=\{"kz-row brand-" \+ p\.id\}/,
+    "each product is an anchor, in its brand",
   );
   assert.match(
     showcase,
-    /tone: STAMP\[p\.status\]/,
+    /<Stamp tone=\{STAMP\[p\.status\]\}/,
     "the status is the data's (gated by the dev-preview checklists), stamped",
   );
-  assert.equal(
-    showcase.match(/<SpecimenTag\b/g)?.length,
-    2,
-    "the products and the engine wear the same specimen tag, and so do the products in design: one language",
-  );
+  assert.doesNotMatch(showcase, /<SpecimenTag\b|<Showcase\b|<video|MediaCarousel/, "no card, no carousel, no video");
   assert.doesNotMatch(showcase, /knowhow|kz-pc-meta/, "one label per product: no mono eyebrow beside the status");
   assert.match(
     showcase,
-    /mark: <ProductLogo id=\{p\.id\} size=\{\d+\} animated=\{false\} \/>/,
-    "the mark sits beside the name on the tag, never over the visual",
+    /<ProductLogo id=\{p\.id\} size=\{\d+\} animated=\{false\} \/>/,
+    "the mark sits beside the name",
   );
   assert.match(
     showcase,
     /<ButtonLink\s+href=\{p\.siteUrl\}/,
-    "a card's one action goes to the product's commercial www site (2026-11-04)",
+    "a row's one action goes to the product's commercial www site (2026-11-04)",
   );
   for (const s of SECTIONS) {
     const src = read(`app/components/home/${s}.tsx`);
@@ -167,7 +166,7 @@ test("no FAQ comes back", () => {
 test("the hero has no row of product marks any more, and no media in its own markup", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.doesNotMatch(hero, /kz-home-marks|ProductLogo|heroMarkOrder/);
-  assert.doesNotMatch(hero, /<video|<img/, "the hero's media are the carousel's (Showcase)");
+  assert.doesNotMatch(hero, /<video|<img/, "the hero has no media of its own");
   assert.doesNotMatch(read("app/components/home/home.css"), /\.kz-home-marks/, "no rule of the row left");
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home.hero;
@@ -176,20 +175,17 @@ test("the hero has no row of product marks any more, and no media in its own mar
   }
 });
 
-// « Fig. 1 » is the hero's carousel (krizaka-internal#2450): no polaroid, no tape, no bird legend; after the first-paint text.
-test("the hero is « Fig. 1 »: the hero's carousel, after the first-paint text, no bird legend", () => {
+// The hero has no figure and no carousel (krizaka-internal#3243): the home reads as the company's site.
+test("the hero has no figure: no carousel, no bird legend, nothing that moves", () => {
   const hero = read("app/components/home/HomeHero.tsx");
   assert.doesNotMatch(
     hero,
-    /TapedPhoto|taped-photo|<Flock|AmbientLoop|HERO_FLOCK|<Mascot|kz-fig-bird|HeroFigure/,
-    "no polaroid, tape, live flock, valley loop, bird legend or tabs",
+    /TapedPhoto|taped-photo|<Flock|AmbientLoop|HERO_FLOCK|<Mascot|kz-fig-bird|HeroFigure|Showcase|id="fig-1"/,
+    "no polaroid, tape, live flock, valley loop, bird legend, tabs or carousel",
   );
-  assert.match(
-    hero,
-    /<div id="fig-1" className="kz-fig">\s*<Showcase carousel="hero" fig=\{HERO_FIGURE\} locale=\{locale\} \/>/,
-  );
-  assert.ok(hero.indexOf("kz-home-actions") < hero.indexOf('id="fig-1"'), "the figure follows the first-paint text");
   assert.ok(!existsSync(new URL("../app/components/home/HeroFigure.tsx", import.meta.url)), "the tabs are gone");
+  assert.ok(!existsSync(new URL("../app/components/home/Showcase.tsx", import.meta.url)), "the carousel is gone");
+  assert.ok(!existsSync(new URL("../app/components/home/showcase.css", import.meta.url)), "its stylesheet is gone");
   assert.ok(!existsSync(new URL("../lib/hero-slides.ts", import.meta.url)), "the slides are the storyboard's");
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home.hero;
@@ -197,25 +193,15 @@ test("the hero is « Fig. 1 »: the hero's carousel, after the first-paint text,
   }
 });
 
-test("no two figures of the home share a number: the hero is Fig. 1, the products' carousels follow it", async () => {
-  const { HERO_FIGURE, productOrder, sectionFigure } = await import("../lib/home-sections.ts");
-  const { PRODUCTS } = await import("../lib/products.ts");
+test("no two figures of the home share a number: the still of the product in conception is Fig. 1", async () => {
+  const { STILL_FIGURE, productOrder } = await import("../lib/home-sections.ts");
   const { IN_DESIGN } = await import("../lib/products-in-design.ts");
-  const shown = productOrder(PRODUCTS);
-  const numbers = [
-    HERO_FIGURE,
-    ...shown.map((_, i) => sectionFigure(i + 1)),
-    ...IN_DESIGN.map(() => sectionFigure(shown.length + 1)),
-  ];
-  assert.equal(HERO_FIGURE, 1);
+  const numbers = IN_DESIGN.map((_, i) => STILL_FIGURE + i);
+  assert.equal(STILL_FIGURE, 1);
   assert.equal(new Set(numbers).size, numbers.length, `figures ${numbers.join(", ")}`);
-  assert.ok(
-    numbers.slice(1).every((n) => n >= 2),
-    "the sections' figures start at 2",
-  );
+  assert.equal(typeof productOrder, "function");
   const showcase = read("app/components/home/ProductShowcase.tsx");
-  assert.match(showcase, /fig=\{sectionFigure\(nOf\(p\)\)\}/);
-  assert.match(showcase, /<ShowcaseStill product=\{p\.id\} fig=\{sectionFigure\(SHOWN\.length \+ 1\)\}/);
+  assert.match(showcase, /<ShowcaseStill product=\{p\.id\} fig=\{fig\}/);
   assert.match(showcase, /<FootnoteRef n=\{nOf\(p\)\}/, "the notes keep their own numbers");
 });
 

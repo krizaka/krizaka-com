@@ -78,7 +78,7 @@ test("licence words are true to the repositories: the products are never said to
   }
 });
 
-test("the services and the direction carry content, not ruled paper: the offer as a list, the order as a loop of stations", () => {
+test("the services and the direction carry content, not ruled paper: the offer as a list, the order as a static list of stations", () => {
   const services = read("app/components/home/ServicesLine.tsx");
   const direction = read("app/components/home/Direction.tsx");
   for (const [name, src] of [
@@ -93,30 +93,32 @@ test("the services and the direction carry content, not ruled paper: the offer a
     "each part leads to its entry on /services",
   );
   assert.match(read("app/components/lists/OfferList.tsx"), /id=\{compact \? undefined : `offer-\$\{o\.id\}`\}/);
-  assert.match(direction, /<DirectionLoop/);
+  assert.match(direction, /<ol className="kz-dir-line"/, "a static numbered list (krizaka-internal#3243)");
+  assert.doesNotMatch(direction, /DirectionLoop|"use client"/, "the page's second self-moving block is retired");
+  assert.ok(
+    !existsSync(new URL("../app/components/home/DirectionLoop.tsx", import.meta.url)),
+    "DirectionLoop is deleted",
+  );
   assert.doesNotMatch(direction, /<Stepper/, "the Stepper broke on a phone (krizaka-internal#2450)");
   for (const l of ["en", "fr"]) {
     const h = msg(l).home;
     for (const id of ["modules", "ai", "maintenance"])
       assert.ok(h.services.parts[id].title && h.services.parts[id].line.length <= 90, `${l}: parts.${id}`);
     for (const id of ["next", "later"])
-      assert.ok(h.direction.steps[id].points.length >= 2, `${l}: steps.${id}.points, the details the loop opens`);
-    for (const k of ["pause", "play"]) assert.ok(h.direction[k]?.trim(), `${l}: direction.${k}`);
+      assert.ok(h.direction.steps[id].points.length >= 2, `${l}: steps.${id}.points, the details each station shows`);
+    for (const k of ["pause", "play"])
+      assert.equal(h.direction[k], undefined, `${l}: nothing to pause, direction.${k} is gone`);
     assert.doesNotMatch(JSON.stringify(h.services), FORBIDDEN, l);
   }
 });
 
-test("the direction loop: rests on one station at a time, a visible pause, paused on hover, focus and off screen, still under reduced motion", () => {
-  const loop = read("app/components/home/DirectionLoop.tsx");
-  assert.match(loop, /const moving = !calm && !stopped && !held && onScreen;/);
-  assert.match(loop, /label=\{stopped \? labels\.play : labels\.pause\}/);
-  assert.match(loop, /\{!calm && \(/, "no pause button when nothing moves");
-  assert.match(loop, /const lit = calm \|\| i === on;/, "under reduced motion every station is open");
-  assert.match(loop, /aria-expanded=\{lit\}/);
-  assert.match(loop, /IntersectionObserver/);
-  assert.doesNotMatch(loop, /setInterval|requestAnimationFrame/);
+test("the direction is static: every station open, no timer, no pause, nothing travels", () => {
+  const src = read("app/components/home/Direction.tsx");
+  assert.doesNotMatch(src, /useState|useEffect|setInterval|setTimeout|IntersectionObserver|requestAnimationFrame/);
+  assert.match(src, /DIRECTION_STEPS\.map\(\(id\)/, "the three stations are the data's");
+  assert.doesNotMatch(src, /hidden=|aria-expanded/, "no station is folded");
   const css = read("app/components/home/direction.css").replace(/\/\*[\s\S]*?\*\//g, "");
   assert.match(css, /@media \(min-width: 900px\)/, "one line on a wide screen, down the page on a phone");
-  assert.match(css.slice(css.indexOf("prefers-reduced-motion")), /animation: none;/);
+  assert.doesNotMatch(css, /animation|transition|@keyframes/, "nothing moves");
   assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b|rgb\(|translate/, "tokens only, nothing travels");
 });

@@ -48,17 +48,16 @@ test("the card reads no version from a product's host (no healthz at build): the
 
 test("a product card: the name is plain text, one link per destination, each accessible name unique and naming the product", () => {
   const showcase = read("app/components/home/ProductShowcase.tsx");
-  const tag = showcase.slice(showcase.indexOf("function tagProps"), showcase.indexOf("function EngineEntry"));
-  assert.match(
-    tag,
-    /title: <span className="kz-entry-name">\{p\.name\}<\/span>/,
-    "the name is no second link to the site",
+  const row = showcase.slice(
+    showcase.indexOf("function ProductRow"),
+    showcase.indexOf("/** The marks of the products"),
   );
-  const foot = showcase.slice(showcase.indexOf("function Foot"), showcase.indexOf("function tagProps"));
+  assert.match(row, /<h3 className="kz-row-name">\{p\.name\}<\/h3>/, "the name is no second link to the site");
+  const foot = showcase.slice(showcase.indexOf("function Foot"), showcase.indexOf("function ProductRow"));
   const destinations = ["href={p.siteUrl}", "href={p.repoUrl}", "href={`/${locale}/changelog?produit=${p.id}`}"];
   for (const d of destinations) assert.equal(foot.split(d).length - 1, 1, d);
   assert.equal((foot.match(/href=/g) ?? []).length, destinations.length, "no other link on the card's foot");
-  assert.equal((foot.match(/<ButtonLink\b/g) ?? []).length, 1, "one primary action");
+  assert.equal((foot.match(/<ButtonLink\b/g) ?? []).length, 1, "one button, the site");
   for (const lang of ["fr", "en"]) {
     const m = JSON.parse(read(`messages/${lang}.json`)).site.products;
     const labels = PRODUCTS.flatMap((p) =>
@@ -69,18 +68,6 @@ test("a product card: the name is plain text, one link per destination, each acc
   }
   assert.equal(JSON.parse(read("messages/fr.json")).site.products.releaseNotes, "Journal des versions");
   assert.equal(JSON.parse(read("messages/en.json")).site.products.releaseNotes, "Release notes");
-});
-
-// The tag's foot styles its links as ink (@krizaka/ui blocks.css `.kz-tag-foot a { color: inherit }`, unlayered), which beat the
-// Button's `text-on-accent`: the « See the site » label drew the tag's ink on the brand fill, under 4.5:1 on Sovkora's orange
-// (ci / Container image, a11y color-contrast, #606). The action wears `kz-tag-action`, whose colours are the Button's again.
-test("the card's action keeps the Button's colours inside the tag's foot (contrast on every brand fill)", () => {
-  const foot = read("app/components/home/ProductShowcase.tsx");
-  const action = foot.slice(foot.indexOf("<ButtonLink"), foot.indexOf("</ButtonLink>"));
-  assert.match(action, /className="kz-tag-action"/, "the action carries its class");
-  const decls = cssDecls("app/components/home/home.css", ".kz-tag-foot a.kz-tag-action");
-  assert.equal(decls.color, "var(--kz-on-accent)", "the label is the Button's on-accent colour");
-  assert.equal(decls["text-decoration"], "none", "a button is not underlined like the quiet links");
 });
 
 test("no page, message or llms file links a development host (dev.<name>.com) or a retired code-name host of a product", () => {

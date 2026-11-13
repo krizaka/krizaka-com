@@ -1,9 +1,8 @@
 /* Home hero — the first page of the field notebook (Cahier, krizaka-ui ADR-004, #417): asymmetric, never centred. It
    speaks to one reader, the Montréal property manager (krizaka-internal#2445): who we are and where, what the product does,
    and one action (founder, 2026-11-05, krizaka-internal#2450): write to us about your files, on HOME_PRODUCT's topic of
-   the contact form. On the right, half the width, « Fig. 1 »: the hero's carousel (Showcase, lib/home-showcase.ts), which
-   opens on the Sovkora trailer (founder, 2026-11-07, krizaka-internal#2837: muted until the visitor turns the sound on), moves
-   on at each clip's end with a visible pause, still under reduced motion, its text version on the server. The products are
+   the contact form. On the right, the proof (figures read at build). Nothing moves
+   and no video element is mounted at load (krizaka-internal#3243: the home reads as the company's site, no carousel). The products are
    reached one way, the bar's « Products » (lib/nav.ts): no row of marks here any more. The section is numbered in the
    margin (§ 1). A server component: the title, the lead and the action are the first paint (LCP) — never revealed, never
    part of the intro.
@@ -13,7 +12,7 @@
 
 import { ForwardIcon } from "@krizaka/icons";
 import { KrizakaLogo } from "@krizaka/ui";
-import { HERO_FIGURE, HOME_PRODUCT } from "@/lib/home-sections";
+import { HOME_PRODUCT } from "@/lib/home-sections";
 import { NumberTicker } from "@krizaka/ui/number-ticker";
 import { Page } from "@krizaka/ui/page";
 import { SectionBackdrop } from "@krizaka/ui/section-backdrop";
@@ -24,7 +23,6 @@ import ButtonLink from "@/app/components/ButtonLink";
 import { floorFigure } from "@/lib/figure-floor";
 import { contactHref } from "@/lib/contact";
 import HeroIntro from "./HeroIntro";
-import Showcase from "./Showcase";
 import "./home.css";
 
 export interface HomeFigures {
@@ -114,9 +112,6 @@ export default function HomeHero({ locale, figures }: { locale: string; figures:
               ))}
             </div>
             <p className="kz-home-license">{format(t.proofs.license, { license: "Apache-2.0" })}</p>
-          </div>
-          <div id="fig-1" className="kz-fig">
-            <Showcase carousel="hero" fig={HERO_FIGURE} locale={locale} />
           </div>
         </div>
       </Page>

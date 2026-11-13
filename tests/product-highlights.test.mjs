@@ -54,9 +54,7 @@ test("each highlight is one short line in both languages, honest words, commerci
 });
 
 test("the card shows the highlight under its line, from the data and the messages", () => {
-  const entry = showcase.slice(showcase.indexOf("function ProductEntry"), showcase.indexOf("const DESIGN_MARK"));
-  assert.match(entry, /className="kz-entry-crush" data-feature=\{PRODUCT_HIGHLIGHTS\[p\.id\]\.highlight\}/);
-  assert.match(entry, /t\.site\.home\.products\.highlights\[p\.id\]/);
-  const design = showcase.slice(showcase.indexOf("function DesignEntry"));
-  assert.ok(!design.includes("kz-entry-crush"), "the in-design entry has none");
+  // Since krizaka-internal#3243 the home's rows say one neutral line each: the highlight is no longer on the home.
+  assert.ok(!showcase.includes("kz-entry-crush"), "the rows carry no highlight");
+  assert.ok(!showcase.includes("PRODUCT_HIGHLIGHTS"), "the home does not read the highlights");
 });

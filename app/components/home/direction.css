@@ -1,15 +1,5 @@
-/* « Where we are going » (Direction, DirectionLoop; krizaka-internal#2450). Three stations on a rule: down the page on a
-   phone (the rule on the left), on one line from 900 px. The lit station's mark fills with the accent and its details
-   open; a hairline under its title measures its time. Nothing travels; under reduced motion every station is open and
-   nothing moves. Tokens only. */
-.kz-dir {
-  position: relative;
-}
-.kz-dir-toggle {
-  position: absolute;
-  top: -4px;
-  right: 0;
-}
+/* « Where we are going » (Direction; krizaka-internal#3243): a static numbered list, every station open. Down the page on a
+   phone (the rule on the left), on one line from 900 px. Nothing moves, nothing pauses. Tokens only. */
 .kz-dir-line {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -17,148 +7,69 @@
   margin: 0;
   padding: 0 0 0 4px;
   list-style: none;
+  counter-reset: kz-dir;
 }
 .kz-dir-station {
   position: relative;
   padding: 0 0 26px 30px;
   border-left: 1px solid var(--kz-border-strong);
   min-width: 0;
+  counter-increment: kz-dir;
 }
 .kz-dir-station:last-child {
   border-left-color: transparent;
 }
-.kz-dir-head {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 6px;
-  padding: 0;
-  border: 0;
-  background: none;
-  color: var(--kz-text-primary);
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
-}
-.kz-dir-head:focus-visible {
-  outline: 2px solid var(--kz-ring, var(--kz-accent));
-  outline-offset: 4px;
-}
-.kz-dir-mark {
+.kz-dir-station::before {
+  content: "";
   position: absolute;
-  left: -38px;
-  top: 50%;
+  left: -8px;
+  top: 6px;
   width: 15px;
   height: 15px;
-  margin-top: -7.5px;
   border: 1.5px solid var(--kz-border-strong);
-  background: var(--kz-surface-0);
-  transition:
-    background-color 0.3s var(--kz-ease),
-    border-color 0.3s var(--kz-ease);
-}
-.kz-dir-station[data-lit] .kz-dir-mark {
-  border-color: var(--kz-accent);
   background: var(--kz-accent);
 }
 .kz-dir-title {
+  margin: 0 0 6px;
   font-family: var(--font-display);
   font-size: 1.35rem;
+  font-weight: 400;
   line-height: 1.2;
-}
-.kz-dir-time {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -4px;
-  height: 1px;
-  background: var(--kz-accent);
-  transform-origin: left;
-  transform: scaleX(0);
-  animation: kz-dir-time 4500ms linear forwards;
-}
-@keyframes kz-dir-time {
-  to {
-    transform: scaleX(1);
-  }
+  color: var(--kz-text-primary);
 }
 .kz-dir-body {
-  margin: 0;
-  font-size: 0.98rem;
-  line-height: 1.55;
+  margin: 0 0 10px;
   color: var(--kz-text-secondary);
   overflow-wrap: anywhere;
 }
-.kz-dir-details {
-  margin-top: 12px;
-  animation: kz-dir-open 0.4s var(--kz-ease);
-}
-.kz-dir-details[hidden] {
-  display: none;
-}
-@keyframes kz-dir-open {
-  from {
-    opacity: 0;
-  }
-}
-.kz-dir-details .kz-fact {
-  max-width: 100%;
-  white-space: normal;
-}
 .kz-dir-points {
+  margin: 0;
+  padding-left: 1.2em;
   display: grid;
   gap: 6px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.95rem;
-  line-height: 1.5;
   color: var(--kz-text-primary);
+  overflow-wrap: anywhere;
 }
-.kz-dir-points li {
-  position: relative;
-  padding-left: 18px;
-}
-.kz-dir-points li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 8px;
-  height: 1px;
-  background: var(--kz-accent);
+.kz-dir-now {
+  list-style: none;
+  padding-left: 0;
 }
 @media (min-width: 900px) {
   .kz-dir-line {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 32px;
-    padding: 30px 0 0;
+    padding: 0;
   }
   .kz-dir-station {
-    padding: 26px 0 0;
+    padding: 28px 0 0;
     border-left: 0;
     border-top: 1px solid var(--kz-border-strong);
   }
   .kz-dir-station:last-child {
-    border-top-style: dashed;
+    border-top-color: var(--kz-border-strong);
   }
-  .kz-dir-mark {
+  .kz-dir-station::before {
     left: 0;
-    top: -34px;
-    margin-top: 0;
-  }
-  .kz-dir-toggle {
-    top: -12px;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .kz-dir-mark,
-  .kz-dir-details {
-    transition: none;
-    animation: none;
-  }
-  .kz-dir-time {
-    display: none;
+    top: -8px;
   }
 }
