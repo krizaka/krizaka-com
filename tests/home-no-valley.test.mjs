@@ -12,7 +12,6 @@ const HOME = [
   "app/components/home/HomeHero.tsx",
   "app/components/home/ProductShowcase.tsx",
   "app/components/home/Showcase.tsx",
-  "app/components/home/ShowcaseCarousel.tsx",
 ];
 
 test("the home shows no decorative valley: no flock, no ambient loop, no taped photo", () => {

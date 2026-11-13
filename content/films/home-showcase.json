@@ -3,6 +3,22 @@
   "look": "Expand the frame to a wide cinematic 16:9 shot. Continue the scene naturally on both sides with the same light, palette, lens, depth of field and 35 mm film grain: Montréal, dark and warm, lamp light or blue hour, real textures. Keep everything already in the frame exactly as it is, including the centred title text and the small mono line at the top. Add no new text, no logo, no sign, no screen, no face, no person.",
   "model": "aleph2",
   "sources": "~/Documents/krizaka/data/reels",
+  "durations": {
+    "$comment": "Seconds of the loop each slide plays, measured with ffprobe on the uploaded file (MediaCarousel's autoplay gives a slide this long on screen, within its bounds); a new slide adds its own.",
+    "film": 10,
+    "entreprise": 2.3,
+    "signature": 2.2,
+    "trailer": 10,
+    "dossier-nadia": 9,
+    "pigeon": 5.4,
+    "snow": 5,
+    "dossier-sam": 9,
+    "sign": 2.8,
+    "owl": 2,
+    "loupe": 2.1,
+    "evening": 3.4,
+    "home": 4.4
+  },
   "carousels": {
     "hero": {
       "idea": "Krizaka shows its work: the pen, the blue ink, the brick and the river of Montréal.",

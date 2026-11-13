@@ -252,19 +252,15 @@
   adds what is its own, in `app/globals.css` (« SITE MOTION ») and `org-hero.css`: no second conductor, no counter of its
   own. No animation library for new work, no permanent `requestAnimationFrame`, no canvas; docs stay almost still (a
   reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui, not into a copy here.
-  **Two blocks of the home move on their own. The carousels** (founder, 2026-11-05, krizaka-internal#2450;
-  `ShowcaseCarousel`, its rules pure and tested in `lib/showcase-player.ts`). A video slide lasts as long as its video: the
-  carousel moves on at the clip's end, a clip never loops, so no last frame is held (krizaka-internal#2837); a still slide (or a
-  clip that cannot play) stays 6.5 s; slides change by a short fade (nothing travels). WCAG 2.2.2's rules: a visible pause /
-  play, and they hold while they are off screen; **the pointer and the keyboard focus never hold them** (krizaka-internal#3238:
-  no freeze on hover, none after a click on next; the visible pause is the control); under `prefers-reduced-motion` (or Save-Data)
-  nothing moves on and no clip starts by itself (posters, previous / next, and a play button on a video slide; at its end the
-  poster comes back); previous / next are buttons, arrows work on them; every slide is a figure with its caption and its text
-  alternative, and each carousel has a server-rendered text version. Clips are muted, mounted only for the slide in view after
-  the page's load and once the carousel has been on screen (no film downloads below the fold), a film's phone cut chosen on the
-  client (`<source media>` is ignored by Chrome and Firefox before 120), so the LCP is a poster or the h1, never a clip; `scripts/check-showcase-player.mjs`
-  (container smoke) plays them in a real browser. @krizaka/ui's `MediaCarousel`
-  never advances by itself: its `autoplay` variant is to be added in krizaka-ui, and the home moves to it then.
+  **Two blocks of the home move on their own. The carousels** (founder, 2026-11-05, krizaka-internal#2450; **since krizaka-internal#3273
+  they are `@krizaka/ui`'s `MediaCarousel`**, `frame="cahier"`, `autoplay`, `sound`, drawn by `Showcase.tsx`: the home has no player,
+  carousel or raw `<video>` of its own, and `no-raw-video` of `@krizaka/config` is at 0 in `sg-ratchet.json`). The rules are the
+  library's and tested there: each slide stays as long as its clip (`durations` of the storyboard, measured with ffprobe, 5 to 45 s),
+  held by the visible pause, a hidden tab and being off screen, **never by the pointer or a click on next** (krizaka-internal#3238);
+  sound only after the visitor's press, for the slide in view, muted on the next; under `prefers-reduced-motion` (or Save-Data)
+  nothing moves on and no clip starts by itself; every slide has its caption and alt, and a text version (the film's transcript and
+  its watch page link are in it). One 16:9 rendition on every screen (no phone cut). Do not copy a player here: a missing
+  capability is a krizaka-ui ticket. `scripts/check-showcase-player.mjs` (container smoke) plays them in a real browser.
   **And « Where we are going »** (founder, 2026-11-05, krizaka-internal#2450; `DirectionLoop`):
   the light rests on one station (now, next, later) every 4.5 s and opens its details, with WCAG 2.2.2's rules — a visible
   pause / play, paused while the pointer is over it, the focus is in it or it is off screen; under

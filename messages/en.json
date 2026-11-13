@@ -465,7 +465,6 @@
           "carousel": "carousel",
           "slide": "slide",
           "slideOf": "{n} of {total}",
-          "controls": "Controls: {label}",
           "previous": "Previous slide",
           "next": "Next slide",
           "pause": "Pause the carousel",
@@ -474,7 +473,7 @@
           "textVersion": "Text version",
           "film": "Watch the whole film, with sound",
           "sound": "Sound",
-          "playVideo": "Play the video: {caption}"
+          "close": "Close"
         },
         "carousels": {
           "hero": "What we make, in pictures",

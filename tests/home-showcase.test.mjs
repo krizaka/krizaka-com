@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { findCodeNames } from "@krizaka/org";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import {
   FILM_IDS,
   PHONE_CUT,
@@ -12,6 +12,7 @@ import {
   showcaseOf,
   showcaseProblems,
   showcaseSlides,
+  slideSeconds,
   showcaseStill,
 } from "../lib/home-showcase.ts";
 import { IN_DESIGN } from "../lib/products-in-design.ts";
@@ -26,7 +27,7 @@ const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const manifest = JSON.parse(read("lib/cdn-manifest.json"));
 const has = (path) => Boolean(manifest.files[path]);
 const board = JSON.parse(read("content/films/home-showcase.json"));
-const carousel = read("app/components/home/ShowcaseCarousel.tsx");
+const carousel = read("app/components/home/Showcase.tsx");
 
 test("every slide of every carousel has its files on the CDN (videos and poster), and at least three slides", () => {
   assert.deepEqual([...SHOWCASES], ["hero", "verikora", "sovkora", "folioviv"]);
@@ -242,74 +243,39 @@ test("every slide has its caption and its text alternative in both languages, an
         assert.ok(s.slides[c][id].alt.length > 30, `${l}: ${c}/${id} says what it shows`);
       }
     }
-    for (const k of ["pause", "play", "previous", "next", "textVersion", "slideOf", "figure", "sound", "playVideo"])
+    for (const k of ["pause", "play", "previous", "next", "textVersion", "slideOf", "figure", "sound", "close"])
       assert.ok(s.labels[k]?.trim(), `${l}: labels.${k}`);
     for (const k of Object.values(SlideSource)) assert.ok(s.sources[k]?.trim(), `${l}: sources.${k}`);
     assert.doesNotMatch(JSON.stringify(s), /\d+[,.]?\d*\s?\$|\$\s?\d/, `${l}: no amount`);
   }
 });
 
-// The rules themselves (a clip's end moves it on, sound after a click, reduced motion) are pure
-// and tested in tests/showcase-player.test.mjs; here, that the carousel is wired to them.
-test("it moves on by itself, with WCAG 2.2.2's controls: pause / play, held off screen, never by hover or focus", () => {
-  assert.match(carousel, /stepPlayer\(s, e, env\)/, "every event goes through the tested player");
-  assert.match(carousel, /globalThis\.setTimeout\(\(\) => dispatch\(\{ type: "dwell" \}\), DWELL_MS\)/);
-  assert.match(carousel, /if \(view\.clock !== "dwell"\) \{\s*return;/, "the timer only for a still slide");
-  assert.match(carousel, /onPointerEnter=\{\(\) => dispatch\(\{ type: "hover", on: true \}\)\}/);
-  assert.match(carousel, /onFocus=\{\(\) => dispatch\(\{ type: "focus", on: true \}\)\}/);
-  assert.match(carousel, /IntersectionObserver/);
-  assert.match(carousel, /label=\{state\.stopped \? w\.play : w\.pause\}/, "a visible pause / play, named");
-  assert.match(carousel, /aria-roledescription=\{w\.carousel\}/);
-  assert.match(carousel, /aria-live=\{moving \? "off" : "polite"\}/, "the counter is announced only while still");
-  assert.match(carousel, /e\.key === "ArrowRight"/, "the arrow keys turn it");
-  assert.doesNotMatch(carousel, /setInterval|requestAnimationFrame/);
+// krizaka-internal#3273: the home has no player of its own. Every clip plays through @krizaka/ui's MediaCarousel, whose
+// rules (autoplay held by the visible pause and by being off screen, never by the pointer or a click; sound only after
+// the visitor's press, one slide at a time; reduced motion and Save-Data) are tested in krizaka-ui.
+test("the carousels are @krizaka/ui's MediaCarousel: no local player, no raw <video>", () => {
+  assert.match(carousel, /from "@krizaka\/ui\/media-carousel"/);
+  assert.match(carousel, /<MediaCarousel\b/);
+  assert.match(carousel, /\bautoplay\b/);
+  assert.match(carousel, /\bsound\b/, "the library's sound toggle is on");
+  assert.match(carousel, /frame="cahier"/);
+  assert.doesNotMatch(carousel, /holds=/, "the pointer and a click never hold the carousel (the library's default)");
+  assert.doesNotMatch(carousel, /<video\b|autoPlay|setInterval|requestAnimationFrame|sessionStorage|localStorage/);
+  for (const gone of ["app/components/home/ShowcaseCarousel.tsx", "lib/showcase-player.ts"])
+    assert.equal(existsSync(new URL(`../${gone}`, import.meta.url)), false, `${gone} is deleted`);
+  assert.match(carousel, /<details|textVersion/, "a text version of every slide");
 });
 
-test("still under reduced motion or Save-Data: no timer, no clip by itself, a play button, no fade", () => {
-  assert.match(carousel, /prefersStill\(globalThis\)/);
-  assert.match(carousel, /\{view\.pauseControl && \(/, "no pause / play when nothing moves");
-  assert.match(carousel, /\{view\.playButton && \(/, "a play button on a video slide");
-  assert.match(carousel, /here && view\.clip && \(/);
-  const css = read("app/components/home/showcase.css").replace(/\/\*[\s\S]*?\*\//g, "");
-  const calm = css.slice(css.indexOf("@media (prefers-reduced-motion: reduce)"));
-  assert.match(calm, /\.kz-show-slide \{\s*transition: none;/);
-  assert.match(calm, /animation: none;/);
-  assert.doesNotMatch(css, /#[0-9a-fA-F]{3,8}\b|rgb\(|hsl\(|blur\(|translate/, "tokens only, nothing travels");
+test("every slide declares its measured length (the autoplay's time on screen) and its poster", () => {
+  for (const c of SHOWCASES)
+    for (const x of showcaseSlides(c)) {
+      const seconds = slideSeconds(x.id);
+      assert.ok(typeof seconds === "number" && seconds > 0 && seconds <= 15, `${c}/${x.id}: a loop of 15 s at most`);
+    }
+  assert.match(carousel, /src: cdn\(s\.poster\)/, "poster first, never a clip as the LCP");
 });
 
-test("one 16:9 rendition on every screen, never the tall one: poster first, never a clip as the LCP", () => {
-  assert.doesNotMatch(carousel, /\btall\b|WIDE_QUERY|useRendition|min-width: 640/, "no vertical source switching");
-  assert.match(carousel, /src=\{s\.poster\}/);
-  assert.match(
-    carousel,
-    /here && view\.clip && \(/,
-    "no clip in the server's HTML: the player mounts it after the load",
-  );
-  assert.match(
-    carousel,
-    /const draw = state\.seen\.includes\(i\) \|\| i === \(active \+ 1\) % total;/,
-    "posters drawn as they come",
-  );
-  assert.match(carousel, /muted\s+playsInline/);
-  assert.doesNotMatch(carousel, /autoPlay/);
-  assert.match(read("app/components/home/Showcase.tsx"), /<details className="kz-fig-text kz-show-text">/);
-  assert.doesNotMatch(read("lib/home-showcase.ts"), /\btall:/, "the data holds no tall rendition");
-  const css = read("app/components/home/showcase.css");
-  assert.match(css, /object-fit: cover;/, "a 16:9 frame filled on every screen");
-  assert.doesNotMatch(css, /aspect-ratio: 4 \/ 5/, "the phone's frame is 16:9 too");
-});
-
-test("a clip that cannot play leaves its poster: the player drops the clip when its last source fails", () => {
-  assert.match(carousel, /onError=\{i === sources\.length - 1 \? onBroken : undefined\}/);
-  assert.match(carousel, /dispatch\(\{ type: "broken", slide: active \}\)/);
-  assert.match(carousel, /e\.name === "NotAllowedError"/, "an autoplay refused leaves the poster too");
-});
-
-test("sound is the visitor's choice: muted by default, a named toggle only on a film with sound, never stored", () => {
-  assert.match(carousel, /\{view\.soundControl && \(/, "no button unless the slide in view has sound");
-  assert.match(carousel, /label=\{w\.sound\}\s+aria-pressed=\{state\.sound\}/, "named, its state announced");
-  assert.match(carousel, /ref\.current\.muted = !audible/);
-  assert.doesNotMatch(carousel, /sessionStorage|localStorage/, "sound is never on before a click on this page");
+test("sound is the visitor's choice: only a finished film claims an audio track", () => {
   assert.equal(messages("en").site.home.showcase.labels.sound, "Sound");
   assert.equal(messages("fr").site.home.showcase.labels.sound, "Son");
   // Runway's outputs are silent: only a finished film claims an audio track (the trailer's loop keeps its music; the
