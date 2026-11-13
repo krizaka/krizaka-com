@@ -90,26 +90,16 @@ test("the open-source page and its tables name no product, claim no licence for 
   assert.match(JSON.parse(read("messages/en.json")).site.openSource.lead, /operated by Krizaka/);
 });
 
-test("the cards are pinned tags: tilted one way then the other, straight under reduced motion and on focus", () => {
+test("the rows are not cards: no tilt, no transform, no plate, nothing under the pointer (krizaka-internal#3243)", () => {
   const css = "app/components/home/home.css";
-  const sel = (s) => cssSelectors(css).find((x) => x.endsWith(s)) ?? s;
-  assert.equal(cssDecls(css, sel(":nth-child(odd) .kz-entry-tag")).transform, "rotate(-0.6deg)");
-  assert.equal(cssDecls(css, sel(":nth-child(even) .kz-entry-tag")).transform, "rotate(0.5deg)");
-  assert.equal(
-    cssDecls(css, sel(".kz-entry-tag:focus-within")).transform,
-    "none",
-    "the focus ring is never drawn tilted",
-  );
-  const reduced = { within: "(prefers-reduced-motion: reduce)" };
-  const rule = (s) => cssDecls(css, s, reduced);
-  const flat = cssSelectors(css).filter((s) => s.endsWith(".kz-entry-tag") && cssHas(css, s, reduced));
-  assert.ok(flat.length > 0 && flat.every((s) => rule(s).transform === "none" && rule(s).transition === "none"));
-  // The reduced-motion rule must be at least as specific as the tilt rules (:nth-child(n) matches the pseudo-class weight).
-  assert.ok(flat.some((s) => s.includes(":nth-child(n)")));
-  assert.ok(
-    !jsx("app/components/home/ProductShowcase.tsx").some((e) => /rotate/.test(e.attrs.style ?? "")),
-    "no inline style",
-  );
+  const rows = cssSelectors(css).filter((x) => /\.kz-row/.test(x));
+  assert.ok(rows.length > 0, "the rows have their rules");
+  for (const sel of rows) {
+    const d = cssDecls(css, sel);
+    assert.equal(d.transform, undefined, `${sel}: no transform`);
+    assert.equal(d.animation, undefined, `${sel}: no animation`);
+  }
+  assert.ok(!cssSelectors(css).some((x) => /\.kz-entry(?!-flow)/.test(x)), "no entry (tag and plate) rule is left");
 });
 
 test("the visuals show what the apps do: the finding with its passage and law, the booking's paid invoice, said as demo", () => {

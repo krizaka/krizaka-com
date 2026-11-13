@@ -16,13 +16,12 @@ const messages = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read
 const ids = PRODUCT_RECORDS().map((p) => p.id);
 
 test("built from the Cahier's blocks of @krizaka/ui, on lined paper with its margin and its number — no eyebrow", () => {
-  for (const part of ['from "@krizaka/ui/specimen-tag"', 'from "@krizaka/ui/footnote"', 'from "@krizaka/ui/mascots"'])
+  for (const part of ['from "@krizaka/ui/specimen-tag"', 'from "@krizaka/ui/footnote"'])
     assert.ok(showcase.includes(part), part);
-  assert.match(showcase, /<SpecimenTag\b/);
-  // Every plate is a numbered figure: a product's carousel, or the still of a product in conception (krizaka-internal#2802),
-  // both captioned « Fig. n — … » in the carousels' frame.
-  assert.match(showcase, /<Showcase carousel=\{carousel\} fig=\{sectionFigure\(nOf\(p\)\)\}/);
-  assert.match(showcase, /<ShowcaseStill product=\{p\.id\} fig=\{sectionFigure\(SHOWN\.length \+ 1\)\}/);
+  assert.match(showcase, /<Stamp\b/);
+  // The only figure is the still of a product in conception (krizaka-internal#2802), captioned « Fig. n — … »; no carousel (#3243).
+  assert.doesNotMatch(showcase, /<Showcase\b/);
+  assert.match(showcase, /<ShowcaseStill product=\{p\.id\} fig=\{fig\}/);
   assert.match(showcase, /<Footnotes\b/);
   assert.match(showcase, /<FootnoteRef\b/);
   assert.match(showcase, /<Section id="products-guide" number=\{s\.number\}[^>]*paper="lines"[^>]*margin/);
@@ -36,17 +35,15 @@ test("the stamp says the status honestly, from the data", () => {
   assert.match(showcase, /development: "wip"/);
   assert.match(showcase, /construction: "construction"/);
   assert.match(showcase, /upcoming: "neutral"/);
-  assert.match(showcase, /status: \{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}/);
+  assert.match(
+    showcase,
+    /<Stamp tone=\{STAMP\[p\.status\]\} size="sm">\s*\{t\.site\.nav\.status\[p\.status\]\.label\}/,
+  );
 });
 
-test("each product wears its bird; the five birds of the film say their promise word for word, the family birds their name", () => {
-  assert.match(showcase, /PRODUCT_BIRD\[p\.id\]/);
-  assert.match(showcase, /t\.site\.story\.world\.cues/, "a film bird's line is the film's cue itself, never retyped");
-  for (const l of ["en", "fr"]) {
-    const birds = messages[l].site.home.products.birds;
-    assert.deepEqual(Object.keys(birds).sort(), ["beaver"], `${l}: only the family birds are named here`);
-    for (const b of Object.values(birds)) assert.ok(b.length < 20, `${l}: ${b} is a name, not an invented promise`);
-  }
+// The birds left the home's rows (krizaka-internal#3243): a row is a name, a stamp, a line and its links.
+test("the rows carry no bird", () => {
+  assert.doesNotMatch(showcase, /Mascot|PRODUCT_BIRD/);
 });
 
 test("every entry has a numbered figure (its carousel) and a sourced note, in both languages", () => {
@@ -55,10 +52,7 @@ test("every entry has a numbered figure (its carousel) and a sourced note, in bo
     assert.deepEqual(Object.keys(p.notes).sort(), [...ids].sort(), `${l}: a sourced note per product`);
   }
   const f = "app/components/home/ProductShowcase.tsx";
-  assert.ok(
-    hasCode(f, "fig={sectionFigure(nOf(p))}"),
-    "the carousel is numbered in the page's order, after the hero's Fig. 1",
-  );
+  assert.ok(hasCode(f, "fig={STILL_FIGURE + i}"), "the still is numbered from the home's first figure");
   assert.ok(jsx(f).some((e) => "notes" in e.attrs));
 });
 

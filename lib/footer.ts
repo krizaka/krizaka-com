@@ -6,9 +6,11 @@
    line that names the company once (`legalName · NEQ · city`), the version and the legal links. */
 import type { FooterSettings } from "@krizaka/ui/site-footer";
 
+import { BRAND_FILM } from "./brand-film.ts";
 import { PRODUCTS } from "./products.ts";
 import { BLOG_URL, COMPANY, GITHUB_ORG_URL } from "./site.ts";
 import { STACK } from "./stack.ts";
+import { watchPath } from "./watch-films.ts";
 
 const DEVELOPMENT = "development" as const;
 
@@ -37,6 +39,8 @@ export const footerSettings = {
       links: [
         { labelKey: "site.footer.services", href: "/services" },
         { labelKey: "site.footer.story", href: "/story" },
+        // The film is reached only here and from /story, on its watch page (krizaka-internal#3243): never inside a carousel.
+        { labelKey: "site.footer.film", href: watchPath(BRAND_FILM.id) },
         { labelKey: "site.footer.changelog", href: "/changelog" },
         { labelKey: "site.footer.blog", href: BLOG_URL, external: true },
         { labelKey: "site.footer.contact", href: "/contact" },

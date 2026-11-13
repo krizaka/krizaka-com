@@ -100,28 +100,33 @@
   `SiteFooter.tsx` passes `org.links.social` of `@krizaka/org` to `resolveFooterSettings`, which draws the icon and link on the
   last line, and the Organization JSON-LD `sameAs` reads the same list. The Instagram address is never typed here.
   The product ids are the brand ids of `@krizaka/org` 1.x themselves (no bridge); the repositories are the renamed ones.
-- **The home's order** (founder, 2026-11-05, krizaka-internal#2450; supersedes the 2026-10-22 chronology and #2445's
-  « engine as one line »): the hero (`HomeHero`: who we are, a lead in two or three short sentences, **one action**, and on
-  the right « Fig. 1 », the hero's carousel), then **the products in one row, Sovkora · Verikora · Folioviv** (founder, 2026-11-06,
-  krizaka-internal#2714: the engine first; `ProductShowcase`, § 2, `PRODUCT_ORDER` of `lib/home-sections.ts`): each entry pairs its specimen tag (commercial www
-  address, « See the site », source, release notes, honest status, its bird; the engine's tag folds what it gives and the
-  products it powers) with **a carousel of real media** made for it, the tag and the carousel swapping sides by position (Sovkora's
-  carousel on the left, Verikora's on the right, Folioviv's on the left); then Krizaka Entreprise in one line (§ 3), where we are going (§ 4), the principles (§ 5), and
-  it stops there: no Montréal section, no closing contact panel, no FAQ (so no FAQPage JSON-LD). **The carousels' media**
-  are data: the storyboard `content/films/home-showcase.json` (the shots cut from the founder's published reels and widened
-  to 16:9 by Runway Aleph, the 16:9 clips Sovkora generated, the brand film, the company media library — whose public use
-  waits on the founder's annex B: a PR that adds a `library` clip says so), rendered by `scripts/home-showcase.mjs` (every
-  run, model and credits in `content/films/home-showcase.log.json`), uploaded under `home/showcase/<carousel>/` with
-  `cdn-assets`, read by `lib/home-showcase.ts`: each slide has one 16:9 rendition on every screen, the phone included (object-fit: cover; no vertical, founder 2026-11-05);
-  a slide missing a file fails the build, and `scripts/check-showcase-media.mjs` reads the real files (HTTP 200 and type, ffprobe 16:9, codecs, no pillarbox,
-  no black end card; a slide that fails is `retired` in the storyboard until remade). **The home's promise stays compliance** (founder, 2026-11-07, krizaka-internal#2837): the h1 did not move, so the hero's carousel is the brand film, Krizaka Entreprise and a hand that signs (`film, entreprise, signature`), and **the Sovkora trailer opens Sovkora's carousel** (`trailer, pigeon, snow`; Verikora's is `sign, owl, loupe`; Folioviv's is unchanged). The trailer is a finished film of the storyboard's `films`, with its sound as the visitor's choice, its words in `site.home.films.trailer` (caption, alt, and the
-  transcript of its titles in the text version). **Its watch page is withheld** (`watch.withheld`: the file still ends on a wrong licence card, « Open source · Apache-2.0 », and Sovkora is FSL-1.1 with an Apache-2.0 future licence): no page, no sitemap entry, no action from its slide; its loop (2-12 s) ends before the card and plays. `showcase-add.mjs --replace` keeps a hold; the pull request that brings the corrected file removes the field, as a decision. **The media library's clips (`library`) play nowhere until the founder's annex B**: they are `retired` in the storyboard, with their reason, and leave their messages; a slide the founder takes out of a carousel is `retired` the same way (its files stay on the CDN). **Adding a film is one command**, `node scripts/showcase-add.mjs <carousel> <id> <source.mp4> [--teaser <start>-<end>] [--poster …] [--after <id> | --no-order] [--replace] [--dry-run]` (krizaka-internal#2876; its test is `tests/showcase-add.test.mjs`): it renders the 1280x720 and phone cuts, the webp poster and the whole film's web cut, uploads them with `cdn-assets.mjs` under `products/<product>/films/`, adds the film to `films` and its id to the carousel's `order`, and stubs its words empty so the lint refuses the PR until they are written. The order of a carousel is only its `order` array. **No whole film plays inside a carousel** (a slide lasts as long as its video): the carousel plays a loop of at most 10 s (`--teaser`), the slide has one action (`watchLabel`, « Watch Nadia's story · 1 min 25 ») to the film's **watch page** `/<locale>/films/<id>` (`lib/watch-films.ts`: the brand film, the Sovkora trailer and the Sovkora Files each have one, in the sitemap with its video tags, the text version being the transcript of the film's titles in `site.home.films.<id>`), where the whole film plays with its sound on the player's control. **The Sovkora Files are made-up stories with generated faces** and their words say so (caption « Les Dossiers Sovkora n° 01, Nadia : … », alt « Histoire inventée, visages générés : … »); they are never titled as customers or as people who « run Sovkora ». The source films stay in the company folder, read at run time; only the rendered cuts go to Bunny. Sound is the visitor's choice: every clip starts muted; a « Sound » toggle (`aria-pressed`) sits on
-  the plate of a slide that has sound, and after its click that film sounds while it plays on screen; another
-  slide or scrolling away mutes it again; nothing is stored. The products are reached one way, the bar's
-  « Products » (`barHref`: the bare anchor on the home, so it scrolls). `/story` is in the footer, « Contact us » in the bar.
-  **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java and TypeScript live under Docs (`StackTiles`,
-  from `lib/stack.ts`); the products are _operated by Krizaka_, out of every open-source list, and no page here claims a
-  licence for them. The section numbers (§ n) and the folio come from `lib/home-sections.ts` (`tests/home.test.mjs`,
+- **The home's order** (founder, 2026-11-13, krizaka-internal#3243, after the design intervention #2926, `docs/design/2926-home-media.md`;
+  supersedes #2450, #2714 and #2837): **the home has no carousel and mounts no `<video>` at load** (« le but de krizaka.com c'est le site de la
+  compagnie »): the hero (`HomeHero`: who we are, a lead in two or three short sentences, **one action**, and the proof figures), then
+  **the products as rows, Sovkora · Verikora · Folioviv** (`ProductShowcase`, § 2, `PRODUCT_ORDER` of `lib/home-sections.ts`): each row is its
+  mark, its name, the stamp of its honest status, one neutral line, what it runs on Sovkora, and its links (« See the site » = commercial www
+  address, « Source », release notes), then the product in conception (Kridoc) with its still (a picture, `ShowcaseStill`); the rows are local
+  markup until `@krizaka/ui` ships `SpecimenTag size="row"` (krizaka-internal#3240), when they are swapped for it. Then Krizaka Entreprise in one line
+  (§ 3), « Where we are going » (§ 4) as **a static numbered list** (now / next / later, every station open, `Direction`; `DirectionLoop` is
+  retired), the principles (§ 5), and it stops there: no Montréal section, no closing contact panel, no FAQ. **Each section shows at most one
+  moving image, and only on demand**: today none does. **The films live on their watch pages** `/<locale>/films/<id>` (`lib/watch-films.ts`: the
+  brand film, the Sovkora Files; the Sovkora trailer's page is **withheld** while its file ends on a wrong licence card: `watch.withheld`), reached
+  by a text link from `/story` and from the footer (`lib/footer.ts`), where the whole film plays with its sound on the player's control; never in
+  the page, never autoplayed. **The storyboard** `content/films/home-showcase.json` (rendered by `scripts/home-showcase.mjs`, uploaded under
+  `home/showcase/<carousel>/` with `cdn-assets`, read by `lib/home-showcase.ts`) no longer feeds a carousel: it feeds `/story`'s clips
+  (`lib/story-clips.ts`) and the watch pages; a slide in an `order` must have its files (`scripts/check-showcase-media.mjs` reads the real
+  files), and a slide the founder takes out is `retired` with its reason. The media library's clips (`library`) play nowhere until the founder's
+  annex B. **Adding a film** is one command, `node scripts/showcase-add.mjs <carousel> <id> <source.mp4> [--teaser <start>-<end>] [--poster …]
+[--after <id> | --no-order] [--replace] [--dry-run]` (`tests/showcase-add.test.mjs`): it renders the cuts, uploads them under
+  `products/<product>/films/`, adds the film to `films` and stubs its words empty so the lint refuses the PR until they are written. **The Sovkora
+  Files are made-up stories with generated faces** and their words say so; they are never titled as customers. The source films stay in the
+  company folder; only the rendered cuts go to Bunny. **Sound is a control only where there is sound**: a sound control (the player's mute
+  button) is shown exactly when the served video file has an audio track, and a silent clip says nothing about sound
+  (`scripts/check-sound-control.mjs`: ffprobe on each served file against the page; `scripts/check-showcase-player.mjs`: the home mounts no
+  `<video>` before the visitor asks). The products are reached one way, the bar's « Products » (`barHref`: the bare anchor on the home, so it
+  scrolls). `/story` is in the footer, « Contact us » in the bar. **The libraries are not on the home** (2026-10-26): Krizaka UI, Motion, Java
+  and TypeScript live under Docs (`StackTiles`, from `lib/stack.ts`); the products are _operated by Krizaka_, out of every open-source list, and no
+  page here claims a licence for them. The section numbers (§ n) and the folio come from `lib/home-sections.ts` (`tests/home.test.mjs`,
   `tests/home-order.test.mjs`, `tests/home-showcase.test.mjs`).
 
 - **Docs (founder, 2026-10-30; overrides every « Open source » line above).** The bar's centre is **Services then Docs**
@@ -252,20 +257,10 @@
   adds what is its own, in `app/globals.css` (« SITE MOTION ») and `org-hero.css`: no second conductor, no counter of its
   own. No animation library for new work, no permanent `requestAnimationFrame`, no canvas; docs stay almost still (a
   reading hairline), `/story` keeps its own. Missing generic primitives go to krizaka-ui, not into a copy here.
-  **Two blocks of the home move on their own. The carousels** (founder, 2026-11-05, krizaka-internal#2450; **since krizaka-internal#3273
-  they are `@krizaka/ui`'s `MediaCarousel`**, `frame="cahier"`, `autoplay`, `sound`, drawn by `Showcase.tsx`: the home has no player,
-  carousel or raw `<video>` of its own, and `no-raw-video` of `@krizaka/config` is at 0 in `sg-ratchet.json`). The rules are the
-  library's and tested there: each slide stays as long as its clip (`durations` of the storyboard, measured with ffprobe, 5 to 45 s),
-  held by the visible pause, a hidden tab and being off screen, **never by the pointer or a click on next** (krizaka-internal#3238);
-  sound only after the visitor's press, for the slide in view, muted on the next; under `prefers-reduced-motion` (or Save-Data)
-  nothing moves on and no clip starts by itself; every slide has its caption and alt, and a text version (the film's transcript and
-  its watch page link are in it). One 16:9 rendition on every screen (no phone cut). Do not copy a player here: a missing
-  capability is a krizaka-ui ticket. `scripts/check-showcase-player.mjs` (container smoke) plays them in a real browser.
-  **And « Where we are going »** (founder, 2026-11-05, krizaka-internal#2450; `DirectionLoop`):
-  the light rests on one station (now, next, later) every 4.5 s and opens its details, with WCAG 2.2.2's rules — a visible
-  pause / play, paused while the pointer is over it, the focus is in it or it is off screen; under
-  `prefers-reduced-motion` nothing moves and every station is open; each station is a button that rests the light there.
-  Nothing travels (a fill and a fade).
+  **No block of the home moves on its own** (founder, 2026-11-13, krizaka-internal#3243): the carousels and « Where we are going »'s loop
+  are retired; the home mounts no `<video>`, no timer and no pause control (`scripts/check-showcase-player.mjs` proves it in a real browser).
+  A moving image on a page that keeps one is `@krizaka/ui`'s (`MediaPlayer`, `PausableLoop`), never a copy here; a missing capability is a
+  krizaka-ui ticket.
   **And /story's clips** (founder, 2026-11-06, krizaka-internal#2800): each chapter's clip is @krizaka/ui's `PausableLoop` over
   its poster (the poster reserves the 16:9 frame and carries the alt) — muted, looped, `playsinline`, mounted after the
   page's load, paused off screen and by its visible pause; under `prefers-reduced-motion` (or Save-Data) no clip is mounted

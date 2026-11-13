@@ -7,12 +7,7 @@ import { test } from "node:test";
 
 import { cssSelectors, importsOf, read, strings } from "./helpers/source.mjs";
 
-const HOME = [
-  "app/[locale]/page.tsx",
-  "app/components/home/HomeHero.tsx",
-  "app/components/home/ProductShowcase.tsx",
-  "app/components/home/Showcase.tsx",
-];
+const HOME = ["app/[locale]/page.tsx", "app/components/home/HomeHero.tsx", "app/components/home/ProductShowcase.tsx"];
 
 test("the home shows no decorative valley: no flock, no ambient loop, no taped photo", () => {
   for (const file of HOME) {

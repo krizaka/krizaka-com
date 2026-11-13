@@ -34,11 +34,13 @@ node_modules/.bin/playwright install --with-deps chromium
 node scripts/check-overflow.mjs --base http://localhost:3000
 # The docs hub is the notebook's sommaire, not cards: every row and link, no box, no overflow at 375–1470 px (#2799).
 node --experimental-strip-types scripts/check-docs-hub.mjs --base http://localhost:3000
-# The home's carousels, on the real files: 200 and type, a clean 16:9, no pillarbox, no black end card (needs ffmpeg).
+# The files still drawn (the watch pages, /story's clips), on the real files: 200 and type, a clean 16:9, no pillarbox, no
+# black end card (needs ffmpeg).
 if command -v ffprobe >/dev/null; then KRIZAKA_CHECK_MEDIA=1 node --experimental-strip-types --test tests/home-showcase-media.test.mjs; fi
-# The films play in a real browser (#2837): the trailer opens the hero and Sovkora's carousel, the phone's cut on a phone,
-# muted until « Sound », the carousel moves on at its end, the poster and a play button under reduced motion.
+# The home has no carousel and mounts no <video> at load (krizaka-internal#3243): a real browser, fr and en, 360 and 1440 px.
 node scripts/check-showcase-player.mjs --base http://localhost:3000
+# A sound control exactly when the served video file has an audio track (ffprobe on each file the watch pages and /story mount).
+if command -v ffprobe >/dev/null; then node --experimental-strip-types scripts/check-sound-control.mjs --base http://localhost:3000; fi
 # Accessibility: axe-core WCAG 2.1 AA (contrast, names, labels, landmarks) on every sitemap page, dark and light, phone and
 # desktop; a11y-baseline.json is the ratchet (a new violation fails, the count only goes down).
 node scripts/check-a11y.mjs --base http://localhost:3000

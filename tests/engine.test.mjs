@@ -60,8 +60,7 @@ test("the products stand in one row, the engine first — no foundation frame, n
     ["sovkora", "verikora", "folioviv"],
   );
   assert.match(home, /const SHOWN = productOrder\(PRODUCTS\);/);
-  assert.match(home, /<ol className="kz-prod-row"/, "the row of the three, each to its entry");
-  assert.match(home, /\{engine && <EngineGives t=\{t\} \/>\}/, "the engine's tag folds what it gives");
+  assert.match(home, /<ol className="kz-rows"/, "one row per product (no carousel, krizaka-internal#3243)");
   assert.doesNotMatch(
     home,
     /foundation=|CardGrid|GlowCard|<EngineEntry|EngineSection/,
@@ -82,14 +81,13 @@ test("the products stand in one row, the engine first — no foundation frame, n
     /id: "sovkora",\s+name: displayName\("sovkora"\),\s+status: statusOf\(org\.products, "sovkora"\)/,
     "Sovkora is in development too: its tag stamps it so, like the others",
   );
-  assert.match(home, /status: \{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}/);
+  assert.match(home, /<Stamp tone=\{STAMP\[p\.status\]\} size="sm">/);
 });
 
 test("each product's entry links to the engine, and the engine's tag to each product, from the data", () => {
   const home = read("app/components/home/ProductShowcase.tsx");
   assert.match(home, /data-product=\{p\.id\}/);
   assert.match(home, /href=\{`#product-\$\{ENGINE\}`\}/, "each product's tag links back to the engine");
-  assert.match(home, /href=\{`#product-\$\{x\.id\}`\}/, "the engine's tag links each product it powers");
   assert.match(home, /ENGINE_USES/, "what it powers is read from lib/engine-uses.ts");
 });
 
@@ -176,19 +174,5 @@ test("the engine's figure is the Lab's: the hub with everything around it — th
       .flow;
     assert.ok(f.yours && f.yoursUse && f.yoursLink, l);
     assert.match(f.yoursUse, /Krizaka Entreprise/, `${l}: the node says it is the offer, never a named customer`);
-  }
-});
-
-// Founder, 2026-11-06 (krizaka-internal#2765): the engine's fold names what it gives, the packs included — installed from
-// Sovkora's studio (krizaka/sovkora-studio-service), the packs in krizaka/sovkora-packs. Four items, each with a name and a
-// line in both languages, in the order the component draws them.
-test("the engine's fold gives models, pipeline, packs and analytics, each named and explained in both languages", () => {
-  const home = read("app/components/home/ProductShowcase.tsx");
-  assert.match(home, /\["models", "pipeline", "packs", "analytics"\] as const/);
-  for (const lang of ["en", "fr"]) {
-    const gives = JSON.parse(read(`messages/${lang}.json`)).site.home.engine.gives;
-    for (const k of ["models", "pipeline", "packs", "analytics"]) {
-      assert.ok(gives[k]?.name && gives[k]?.line, `${lang}: ${k} has a name and a line`);
-    }
   }
 });

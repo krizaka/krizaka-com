@@ -27,11 +27,11 @@ const ids = PRODUCT_RECORDS().map((p) => p.id);
 
 // 2026-11-01 (krizaka-internal#683): every product, the engine included, has its plate (a product moment), drawn on /story.
 // Since 2026-11-05 (krizaka-internal#2450) the home's entries show a carousel of real media instead (tests/home-showcase.test.mjs).
-test("every product has its plate, the engine included; the home's entries show their carousel instead", () => {
+test("every product has its plate, the engine included; the home's rows show no plate (krizaka-internal#3243)", () => {
   for (const id of ids) assert.match(visuals, new RegExp(`^  ${id}: [A-Z]\\w+,$`, "m"), id);
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.doesNotMatch(showcase, /<ProductVisual /);
-  assert.match(showcase, /<Showcase carousel=\{carousel\}/);
+  assert.doesNotMatch(showcase, /<Showcase\b/, "no carousel on the home");
   assert.doesNotMatch(showcase, /<EngineFlowView/);
 });
 

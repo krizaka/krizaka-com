@@ -20,21 +20,17 @@
 }
 .kz-home-hero-proof {
   min-width: 0;
-  order: 2; /* below the figure on a phone: title, lead, action, film, specimens, then the marks and figures */
+  order: 2; /* below the words on a phone */
 }
 @media (min-width: 1024px) {
   .kz-home-hero-grid {
-    /* The figure takes half the width (krizaka-internal#2445): the checked file reads at a glance. */
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas: "words fig" "proof fig";
+    grid-template-areas: "words proof";
     column-gap: 56px;
     row-gap: 40px;
   }
   .kz-home-hero-words {
     grid-area: words;
-  }
-  .kz-fig {
-    grid-area: fig;
   }
   .kz-home-hero-proof {
     grid-area: proof;
@@ -43,46 +39,6 @@
 .kz-home-hero-words {
   min-width: 0;
 }
-/* « Fig. 1 — Montrer son travail » (krizaka-internal#2147): the figure of the hero. A thin ink rule, square corners, the
-   paper's solid offset shadow; the film's poster inside, then the caption and the figures' text version. Nothing moves under
-   the pointer: a hover changes a colour only. */
-.kz-fig {
-  min-width: 0;
-  margin: 0;
-  scroll-margin-top: var(--kz-anchor-offset, 96px);
-}
-/* The text version of the figures (a native <details>, server-rendered): what each slide shows, in order. */
-.kz-fig-text {
-  margin: 14px 0 0;
-  font-size: 14.5px;
-  line-height: 1.55;
-  color: var(--kz-text-secondary);
-  overflow-wrap: anywhere;
-}
-.kz-fig-text summary {
-  cursor: pointer;
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--kz-text-primary);
-}
-.kz-fig-text summary:focus-visible,
-.kz-fig-text a:focus-visible {
-  outline: 2px solid var(--kz-ring, var(--kz-accent));
-  outline-offset: 2px;
-}
-.kz-fig-text > ol {
-  margin: 8px 0 6px;
-  padding-left: 1.4em;
-  list-style: decimal;
-}
-.kz-fig-text b {
-  color: var(--kz-text-primary);
-  font-weight: 600;
-}
-.kz-fig-text a {
-  color: var(--kz-accent-text);
-}
-
 .kz-intro-mark {
   display: inline-flex;
 }
@@ -295,28 +251,101 @@ html[data-intro="play"] .kz-intro-sweep {
   }
 }
 
-/* ─── The products (redesigned 2026-10-20): no frame, no card in a card. The engine leads — its words and the flow
-   (@krizaka/ui EngineFlow), sticky beside the list from 1024 px — and the products it powers are a quiet list: a row
-   each, its visual edge to edge, the mark beside the name, one label (the status). A row in the middle of the screen,
-   or pointed at, lights its node in the flow and the reverse (ProductsLink sets `data-lit`). Quiet hovers only: a tint,
-   no lift, no pointer light (krizaka-ui#393). Tokens only. ─── */
-/* ─── The products: a page of the field notebook (Cahier, krizaka-ui ADR-004, #417) ───
-   The engine's tag and its flow, sticky beside the entries on a wide screen; each entry a plate (its live visual and its
-   numbered caption) and a specimen tag. Paper and ink: no glow, no box in a box, no capitals by style. Tokens only. */
-.kz-prod {
-  display: grid;
-  gap: clamp(40px, 5vw, 64px);
-}
-.kz-prod-engine {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
+/* ─── The products: rows on a page of the field notebook (Cahier, krizaka-ui ADR-004; krizaka-internal#3243) ───
+   One row per product: its mark, name and stamp, one line, its links. No card, no tilt, no plate, no motion: ruled off by a
+   hairline like a contents page. The engine's row carries its brand rule. One column at every width; the head wraps. Tokens only. */
+.kz-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--kz-border-strong);
   min-width: 0;
 }
-.kz-prod-engine .kz-tag {
-  max-width: 34rem;
+.kz-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  padding: clamp(20px, 3vw, 28px) 4px;
+  border-bottom: 1px solid var(--kz-border-subtle);
+  min-width: 0;
 }
+.kz-row[data-engine] {
+  box-shadow: inset 3px 0 0 var(--kz-accent);
+  padding-inline-start: 16px;
+}
+.kz-row-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+.kz-row-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--kz-text-primary);
+}
+.kz-row-line,
+.kz-row-uses {
+  margin: 0;
+  max-width: 46rem;
+  overflow-wrap: anywhere;
+}
+.kz-row-line {
+  color: var(--kz-text-primary);
+}
+.kz-row-uses {
+  font-family: var(--kz-font-mono);
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--kz-text-secondary);
+}
+.kz-row-uses[data-planned] {
+  opacity: 0.85;
+}
+.kz-row-uses a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--kz-accent);
+  text-underline-offset: 4px;
+}
+.kz-row-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+  margin-top: 4px;
+}
+.kz-row-links a:not([class*="kz-btn"]):not([data-variant]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--kz-text-primary);
+  text-decoration: underline;
+  text-decoration-color: var(--kz-accent);
+  text-underline-offset: 4px;
+}
+.kz-row-links a:focus-visible {
+  outline: 2px solid var(--kz-ring, var(--kz-accent));
+  outline-offset: 3px;
+}
+/* The product in conception: its mood photo under the row, in the site's plate, at a reading width. */
+.kz-row-plate {
+  margin-top: 12px;
+  max-width: 34rem;
+  min-width: 0;
+}
+.kz-rows-design {
+  border-top: 0;
+  margin-top: clamp(8px, 2vw, 16px);
+}
+.kz-prod-notes {
+  max-width: 62rem;
+  margin-top: clamp(40px, 5vw, 64px);
+}
+/* The engine's flow, drawn on /story (EngineFlowView). */
 .kz-home-flow {
   position: relative;
   z-index: 2;
@@ -332,241 +361,9 @@ html[data-intro="play"] .kz-intro-sweep {
 .kz-entry-flow .kz-caption {
   text-align: center;
 }
-.kz-entry-name {
-  color: inherit;
-  text-decoration: none;
-}
-.kz-entry-name:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
-  text-underline-offset: 6px;
-}
-/* One discreet line a buyer will love (lib/product-highlights.ts): a margin note under the tag's line, in the product's ink. */
-.kz-entry-crush {
-  margin: 8px 0 0 !important;
-  padding-left: 10px;
-  border-left: 2px solid var(--kz-accent);
-  color: var(--kz-text-primary);
-  font-style: italic;
-  font-size: 14px;
-  line-height: 20px;
-  overflow-wrap: anywhere;
-}
-.kz-entry-uses {
-  margin: 8px 0 0 !important;
-  font-family: var(--kz-font-mono);
-  font-size: 13px;
-  line-height: 16px;
-}
-.kz-entry-uses[data-planned] {
-  opacity: 0.78;
-}
-.kz-entry-bird {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 10px 0 0 !important;
-  font-family: var(--kz-font-mono);
-  font-size: 12.5px;
-  line-height: 16px;
-}
-.kz-entry-bird > svg {
-  flex: none;
-}
-.kz-tag-foot a {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-/* The tag's foot draws its links as ink and underlined (@krizaka/ui blocks.css); its one action is a Button, so it gets the
-   Button's label colour back on the brand fill (contrast ≥ 4.5:1 on every brand, both themes). */
-.kz-tag-foot a.kz-tag-action {
-  color: var(--kz-on-accent);
-  text-decoration: none;
-}
-
-.kz-prod-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(40px, 5vw, 56px);
-  min-width: 0;
-}
-.kz-entry {
-  position: relative;
-  display: grid;
-  gap: 16px 24px;
-  align-items: start;
-}
-.kz-entry-plate {
-  margin: 0;
-  min-width: 0;
-}
-.kz-entry-tag {
-  min-width: 0;
-}
-/* Pinned tags (Oussama, 2026-10-26: « the cards not necessarily straight, to keep the same style »): each tag hangs a
-   little off the square, one way then the other. Straight under reduced motion, and straight while one of its links holds
-   the focus, so the focus ring is never drawn tilted. */
-.kz-prod-list > .kz-entry:nth-child(odd) .kz-entry-tag {
-  transform: rotate(-0.6deg);
-}
-.kz-prod-list > .kz-entry:nth-child(even) .kz-entry-tag {
-  transform: rotate(0.5deg);
-}
-.kz-prod-list > .kz-entry .kz-entry-tag {
-  transition: transform 0.25s var(--kz-ease, ease);
-  transform-origin: 50% 0;
-}
-.kz-prod-list > .kz-entry:nth-child(n) .kz-entry-tag:focus-within {
-  transform: none;
-}
-.kz-entry {
-  padding-inline: 4px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .kz-prod-list > .kz-entry:nth-child(n) .kz-entry-tag {
-    transform: none;
-    transition: none;
-  }
-}
-.kz-entry[data-lit] .kz-entry-tag {
-  border-color: var(--kz-accent);
-}
-@media (min-width: 1024px) {
-  .kz-prod {
-    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
-    align-items: start;
-  }
-  .kz-prod-engine {
-    position: sticky;
-    top: var(--kz-anchor-offset);
-  }
-  /* The timeline (krizaka-internal#683): the tag and the plate swap sides from one entry to the next (lib/home-sections.ts
-     entrySide). Below 1024 px the entry is one column, the plate above its tag. */
-  .kz-entry {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  }
-  .kz-entry[data-side="card-left"] {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  }
-  .kz-entry[data-side="card-left"] .kz-entry-tag {
-    order: -1;
-  }
-}
-/* The products in conception: an entry like the others (plate left, tag right), after the products. The plate is one mood
-   photo in the carousels' frame (ShowcaseStill, showcase.css; krizaka-internal#2802). */
-.kz-prod-design {
-  margin-top: clamp(40px, 5vw, 56px);
-}
-.kz-prod-notes {
-  max-width: 62rem;
-  margin-top: clamp(40px, 5vw, 64px);
-}
-
-/* The node of the entry in view (or pointed at) lights in the flow — the same language as the flow's own active node. */
-.kz-prod .kz-flow-node,
-.kz-prod .kz-flow-link {
-  transition: opacity 0.3s var(--kz-ease, ease);
-}
-.kz-prod[data-lit] .kz-flow:not([data-active]) .kz-flow-link:not([data-lit]) {
-  opacity: 0.25;
-}
-.kz-prod[data-lit] .kz-flow-link[data-lit] .kz-flow-wire {
-  opacity: 0.9;
-}
-.kz-prod[data-lit] .kz-flow:not([data-active]) .kz-flow-node[data-lit] {
-  opacity: 1;
-}
-.kz-flow-node[data-lit] .kz-flow-node-mark {
-  border-color: var(--kz-accent);
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--kz-accent) 20%, transparent);
-}
-@media (prefers-reduced-motion: reduce) {
-  .kz-prod .kz-flow-node,
-  .kz-prod .kz-flow-link {
-    transition: none;
-  }
-}
-
 .kz-home-film {
   padding: 0;
   overflow: hidden;
-}
-
-/* The products' row (krizaka-internal#2450): Verikora · Sovkora · Folioviv, the engine in the centre, each a way into its
-   entry below. Three columns from 640 px, one under the other on a phone; the engine's cell carries its brand rule. */
-.kz-prod-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0;
-  margin: 0 0 clamp(32px, 5vw, 56px);
-  padding: 0;
-  list-style: none;
-  border-block: 1px solid var(--kz-border-strong);
-}
-.kz-prod-row li + li {
-  border-top: 1px solid var(--kz-border-subtle);
-}
-.kz-prod-row a {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  grid-template-rows: auto auto;
-  column-gap: 14px;
-  align-items: center;
-  padding: 16px 12px;
-  color: var(--kz-text-primary);
-  text-decoration: none;
-  transition: background-color 0.2s var(--kz-ease);
-}
-.kz-prod-row a > svg {
-  grid-row: span 2;
-}
-.kz-prod-row a span {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
-  line-height: 1.2;
-}
-.kz-prod-row a small {
-  font-family: var(--font-mono);
-  font-size: 12.5px;
-  color: var(--kz-text-secondary);
-}
-.kz-prod-row a:hover {
-  background: var(--kz-surface-1);
-}
-.kz-prod-row a:focus-visible {
-  outline: 2px solid var(--kz-ring, var(--kz-accent));
-  outline-offset: -2px;
-}
-.kz-prod-row li[data-engine] a {
-  box-shadow: inset 0 3px 0 var(--kz-accent);
-}
-@media (min-width: 640px) {
-  .kz-prod-row {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .kz-prod-row li + li {
-    border-top: 0;
-    border-left: 1px solid var(--kz-border-subtle);
-  }
-  .kz-prod-row a {
-    grid-template-columns: minmax(0, 1fr);
-    justify-items: center;
-    text-align: center;
-    row-gap: 6px;
-    padding: 22px 12px;
-  }
-  .kz-prod-row a > svg {
-    grid-row: auto;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .kz-prod-row a {
-    transition: none;
-  }
 }
 
 /* ─── Cahier touches (krizaka-ui ADR-004): § 4 and § 5 on ruled paper, with restraint ───
@@ -637,59 +434,6 @@ html[data-intro="play"] .kz-intro-sweep {
   font-size: 12.5px;
   line-height: 16px;
   color: var(--kz-text-secondary);
-}
-
-/* Sovkora's entry (KZ-01): the same plate + specimen tag as the products; what it gives is folded in the tag. Tokens only. */
-.kz-entry-gives {
-  margin: 10px 0 0;
-  font-size: 14px;
-}
-.kz-entry-gives summary {
-  cursor: pointer;
-  font-family: var(--kz-font-mono);
-  font-size: 12.5px;
-  color: var(--kz-accent-text, var(--kz-accent));
-}
-.kz-entry-gives ul {
-  list-style: none;
-  margin: 8px 0;
-  padding: 0;
-  display: grid;
-  gap: 6px;
-}
-.kz-entry-gives li {
-  padding-left: 10px;
-  border-left: 2px solid var(--kz-accent);
-}
-.kz-entry-gives span,
-.kz-entry-gives p {
-  color: var(--kz-text-muted);
-}
-.kz-entry-gives p {
-  margin: 6px 0 0;
-}
-.kz-entry-powers {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 12px;
-  font-family: var(--kz-font-mono);
-  font-size: 12.5px;
-}
-.kz-entry-powers a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--kz-accent);
-  text-underline-offset: 4px;
-}
-.kz-entry-powers em {
-  font-style: normal;
-  opacity: 0.78;
-}
-.kz-entry-uses a {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--kz-accent);
-  text-underline-offset: 4px;
 }
 
 .kz-home-proofs dd .kz-home-more {

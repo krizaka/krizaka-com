@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// The home's carousels, checked on the REAL files (founder, 2026-11-05: no vertical, no black or white artefact).
+// The storyboard's files, checked on the REAL files (founder, 2026-11-05: no vertical, no black or white artefact). The home has
+// no carousel any more (krizaka-internal#3243): these are the files /story's clips and the watch pages still draw.
 //
 //   node scripts/check-showcase-media.mjs [--only <carousel>]
 //
@@ -51,7 +52,7 @@ const versioned = (p, h) => `${p.slice(0, p.lastIndexOf("."))}.${h}${p.slice(p.l
 export const urlOf = (logical) =>
   `${CDN}/${manifestObject(manifest.root, logical, manifest.files[logical], versioned)}`;
 
-const tool = (cmd, args) =>
+export const tool = (cmd, args) =>
   execFileSync(cmd, ["-v", "error", ...args], {
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],

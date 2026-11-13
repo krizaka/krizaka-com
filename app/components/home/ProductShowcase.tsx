@@ -1,42 +1,30 @@
 /* The products, on the home — the only place krizaka.com presents them (/products answers 308 here). Cahier (krizaka-ui
    ADR-004, #417): the section is a page of the field notebook, on lined paper with its red margin and its number (§ 2).
-   Since 2026-11-05 (founder, krizaka-internal#2450) the products stand in one row, Verikora · Sovkora · Folioviv, the
-   engine in the centre (lib/home-sections.ts PRODUCT_ORDER), and each entry pairs its specimen tag with a carousel of what
-   was made for it (Showcase, lib/home-showcase.ts: the reels' shots widened to 16:9, the clips Sovkora generated, the
-   brand film; Sovkora's opens on its trailer, krizaka-internal#2837). The tag and the carousel swap sides from one entry to the next, so Sovkora's
-   carousel is on the right (entrySide).
-   - a carousel: numbered figure (« Fig. 3b », after the hero's Fig. 1: lib/home-sections.ts sectionFigure), which advances
-     on its own with a visible pause, still under reduced motion, its text version on the server;
-   - a specimen tag: its catalogue number, its name (plain text), its mark, its site (the commercial www domain) and its
-     « not open yet » (no version: a coming-soon page runs no app), one action « See the page (opening soon) » (the waiting page, new tab) and
-     two quiet links, « Source » and « Release notes », the stamp of its honest status (lib/products.ts), its line, its bird,
-     what it runs on Sovkora (lib/engine-uses.ts) — and for the engine, what it gives and the products it powers, folded;
-   - under its line, one discreet « you'll love » line about a feature that runs (lib/product-highlights.ts, with its source);
+   Since krizaka-internal#3243 (founder, 2026-11-13: « le but de krizaka.com c'est le site de la compagnie ») the home has no
+   carousel and mounts no video element: each product is one ROW, Sovkora (the engine) first, then Verikora, then Folioviv — its
+   mark, its name, the stamp of its honest status (lib/products.ts), one neutral line, and its links: « See the site » (its
+   commercial www domain), « Source » and « Release notes ». Nothing moves, nothing is a card. The films live on their watch
+   pages (/films/<id>), reached from /story and the footer.
+   - what each product runs on Sovkora (lib/engine-uses.ts) is one quiet line;
    - the notes at the foot of the section: what each product really does, sourced;
-   - after the products, the ones in conception (lib/products-in-design.ts): their tag and one mood photo in the carousels'
-     frame (ShowcaseStill, krizaka-internal#2802), captioned as in conception; no version, no source, no bird, no note, no
-     date, no sign-up, no app screen, since nothing is built.
-   Data: lib/products.ts, lib/engine-uses.ts, lib/product-highlights.ts, lib/story.ts (PRODUCT_BIRD) — never a hand list. Words: site.home.products.*,
-   site.home.engine.*, site.products.*, site.story.world.cues. */
+   - after the products, the ones in conception (lib/products-in-design.ts): their row and one mood photo (ShowcaseStill,
+     krizaka-internal#2802), captioned as in conception; a still picture, never a screen of an app that does not exist.
+   The row is local until @krizaka/ui ships `SpecimenTag size="row"` (krizaka-internal#3240): then it is swapped for it.
+   Data: lib/products.ts, lib/engine-uses.ts. Words: site.home.products.*, site.products.*. */
 
 import { ForwardIcon } from "@krizaka/icons";
 import { KridocLogo, ProductLogo } from "@krizaka/ui";
-import { cn } from "@krizaka/ui/cn";
 import { FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
-import { Mascot } from "@krizaka/ui/mascots";
 import { Section } from "@krizaka/ui/page";
-import { SpecimenTag, type StampTone } from "@krizaka/ui/specimen-tag";
+import { Stamp, type StampTone } from "@krizaka/ui/specimen-tag";
 import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
-import { entrySide, productOrder, sectionFigure } from "@/lib/home-sections";
-import { showcaseOf } from "@/lib/home-showcase";
-import { PRODUCT_HIGHLIGHTS } from "@/lib/product-highlights";
+import { productOrder, STILL_FIGURE } from "@/lib/home-sections";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { IN_DESIGN, type ProductInDesign } from "@/lib/products-in-design";
-import { ENGINE, PRODUCT_BIRD, type StoryBird } from "@/lib/story";
+import { ENGINE } from "@/lib/story";
 import ButtonLink from "../ButtonLink";
 import { GitHubMark } from "../brand/GitHubMark";
-import Showcase from "./Showcase";
 import ShowcaseStill from "./ShowcaseStill";
 
 /** The stamp of a status: `ok` only for what is out, `wip` in development, `construction` not open yet. */
@@ -48,38 +36,12 @@ const STAMP: Record<ProductStatus, StampTone> = {
   upcoming: "neutral",
   design: "neutral",
 };
-const FILM_BIRDS = ["falcon", "owl", "duck", "flamingo", "pigeon"] as const;
-
-const host = (url: string) => new URL(url).host;
-/** The catalogue number of a product: its place in lib/products.ts (the engine is KZ-01). */
-const code = (p: Product) => `KZ-${String(PRODUCTS.indexOf(p) + 1).padStart(2, "0")}`;
-
-/** The numbers of the notes follow the order of the page (1, 2, 3), never a gap; the figures follow the hero's Fig. 1 (2, 3, 4). */
+/** The numbers of the notes follow the order of the page (1, 2, 3), never a gap; */
 const SHOWN = productOrder(PRODUCTS);
 const nOf = (p: Product) => SHOWN.findIndex((x) => x.id === p.id) + 1;
 const fnRef = (p: Product) => <FootnoteRef n={nOf(p)} prefix="kz-note" />;
 
-/** The bird of a product and what it says: the film's promise for the five birds of the film, its name for the family. */
-function Bird({ bird, t }: Readonly<{ bird: StoryBird; t: TranslationDictionary }>) {
-  const film = (FILM_BIRDS as readonly string[]).includes(bird);
-  const words = film
-    ? t.site.story.world.cues[bird as (typeof FILM_BIRDS)[number]]
-    : t.site.home.products.birds[bird as keyof TranslationDictionary["site"]["home"]["products"]["birds"]];
-  return (
-    <p className="kz-entry-bird">
-      <Mascot bird={bird} mood="welcome" tone="own" size={48} animated={false} aria-hidden />
-      <span>{words}</span>
-    </p>
-  );
-}
-
-/** The site of a product: its commercial www domain, and that it is not open yet (a coming-soon page runs no app, so the card
- *  shows no version: AGENTS §2). Never typed, never read from a dev host. */
-function siteFields(p: Product, s: TranslationDictionary["site"]["home"]["products"]) {
-  return [{ label: s.fields.site, value: format(s.siteValue, { host: host(p.siteUrl) }) }];
-}
-
-/** One action per card, « See the site » (its commercial www domain, a new tab), then two quiet links: the source and the
+/** One action per row, « See the site » (its commercial www domain, a new tab), then two quiet links: the source and the
  *  release notes (the changelog filtered on the product). One link per destination; each accessible name names the product. */
 function Foot({ p, t, locale }: Readonly<{ p: Product; t: TranslationDictionary; locale: string }>) {
   const h = t.site.products;
@@ -87,10 +49,9 @@ function Foot({ p, t, locale }: Readonly<{ p: Product; t: TranslationDictionary;
     <>
       <ButtonLink
         href={p.siteUrl}
-        variant="primary"
+        variant="secondary"
         size="sm"
         rel="noopener"
-        className="kz-tag-action"
         ariaLabel={format(h.visitSiteAria, { name: p.name })}
       >
         {h.visitSite} <ForwardIcon size={13} aria-hidden />
@@ -105,54 +66,8 @@ function Foot({ p, t, locale }: Readonly<{ p: Product; t: TranslationDictionary;
   );
 }
 
-/** What both kinds of entry (the engine, a product) put on their specimen tag: code, name, mark, status, dev fields, footer. */
-function tagProps(p: Product, t: TranslationDictionary, locale: string) {
-  return {
-    code: code(p),
-    title: <span className="kz-entry-name">{p.name}</span>,
-    mark: <ProductLogo id={p.id} size={30} animated={false} />,
-    status: { label: t.site.nav.status[p.status].label, tone: STAMP[p.status] },
-    fields: siteFields(p, t.site.home.products),
-    footer: <Foot p={p} t={t} locale={locale} />,
-  };
-}
-
-/** What the engine gives and the products it powers, folded in its tag. Only what runs is said (results, analytics; run
- *  events and webhooks are sovkora#189). Packs: krizaka/sovkora-studio-service installs them from its catalogue
- *  (/api/v1/studios/packs, /api/v1/studios/{key}/installations); the packs live in krizaka/sovkora-packs. */
-function EngineGives({ t }: Readonly<{ t: TranslationDictionary }>) {
-  const e = t.site.home.engine;
-  const eng = t.site.products.engine;
-  const powered = SHOWN.filter((x) => x.id !== ENGINE);
-  const back = [...new Set(ENGINE_USES.flatMap((u) => u.back))].map((k) => eng.back[k]).join(", ");
-  return (
-    <details className="kz-entry-gives">
-      <summary>{e.givesLabel}</summary>
-      <ul>
-        {(["models", "pipeline", "packs", "analytics"] as const).map((k) => (
-          <li key={k}>
-            <b>{e.gives[k].name}</b> <span>{e.gives[k].line}</span>
-          </li>
-        ))}
-      </ul>
-      <p>{format(eng.gets, { list: back })}</p>
-      <p className="kz-entry-powers">
-        {e.powers}{" "}
-        {powered.map((x) => {
-          const use = ENGINE_USES.find((u) => u.id === x.id);
-          return (
-            <a key={x.id} href={`#product-${x.id}`} data-planned={use?.planned ? "" : undefined}>
-              {x.name}
-              {use?.planned && <em> ({eng.planned})</em>}
-            </a>
-          );
-        })}
-      </p>
-    </details>
-  );
-}
-
-function ProductEntry({
+/** One product: its mark, its name, its status in words, one neutral line, what it runs on Sovkora, then its links. */
+function ProductRow({
   product: p,
   t,
   locale,
@@ -160,39 +75,36 @@ function ProductEntry({
   const engine = p.id === ENGINE;
   const use = ENGINE_USES.find((u) => u.id === p.id);
   const useText = use ? t.site.products.engine.uses[use.id as keyof typeof t.site.products.engine.uses] : undefined;
-  const carousel = showcaseOf(p.name);
   return (
     <li
       id={"product-" + p.id}
-      className={cn("kz-entry", engine && "kz-entry-engine", "brand-" + p.id)}
+      className={"kz-row brand-" + p.id}
       data-product={p.id}
-      data-side={entrySide(PRODUCTS, p.id)}
+      data-engine={engine ? "" : undefined}
     >
-      {carousel && (
-        <div className="kz-entry-plate">
-          <Showcase carousel={carousel} fig={sectionFigure(nOf(p))} locale={locale} />
-        </div>
+      <div className="kz-row-head">
+        <ProductLogo id={p.id} size={30} animated={false} />
+        <h3 className="kz-row-name">{p.name}</h3>
+        <Stamp tone={STAMP[p.status]} size="sm">
+          {t.site.nav.status[p.status].label}
+        </Stamp>
+      </div>
+      <p className="kz-row-line">
+        {engine ? t.site.home.engine.line : t.site.products.cards[p.id].line}
+        {fnRef(p)}
+      </p>
+      {useText && (
+        <p className="kz-row-uses" data-planned={use?.planned ? "" : undefined}>
+          <a href={`#product-${ENGINE}`}>
+            {format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, {
+              use: useText,
+            })}
+          </a>
+        </p>
       )}
-      <SpecimenTag className="kz-entry-tag" {...tagProps(p, t, locale)}>
-        <p>
-          {engine ? t.site.home.engine.line : t.site.products.cards[p.id].line}
-          {fnRef(p)}
-        </p>
-        <p className="kz-entry-crush" data-feature={PRODUCT_HIGHLIGHTS[p.id].highlight}>
-          {t.site.home.products.highlights[p.id]}
-        </p>
-        {engine && <EngineGives t={t} />}
-        {useText && (
-          <p className="kz-entry-uses" data-planned={use?.planned ? "" : undefined}>
-            <a href={`#product-${ENGINE}`}>
-              {format(use?.planned ? t.site.home.products.enginePlanned : t.site.home.products.engineUse, {
-                use: useText,
-              })}
-            </a>
-          </p>
-        )}
-        <Bird bird={PRODUCT_BIRD[p.id]} t={t} />
-      </SpecimenTag>
+      <div className="kz-row-links">
+        <Foot p={p} t={t} locale={locale} />
+      </div>
     </li>
   );
 }
@@ -200,69 +112,52 @@ function ProductEntry({
 /** The marks of the products in conception: Kridoc has a mark and no palette (@krizaka/ui ProductLogo leaves it out). */
 const DESIGN_MARK = { kridoc: KridocLogo } as const;
 
-/** A product in conception: its still (a mood photo, in the carousels' frame) and its tag, numbered after the products, the
- *  tag on the right (the rhythm of the entries before it). It links its live coming-soon site, nothing else. */
-function DesignEntry({
+/** A product in conception: its row and its still (a mood photo). It links its live coming-soon site, nothing else. */
+function DesignRow({
   product: p,
-  n,
+  fig,
   t,
   locale,
-}: Readonly<{ product: ProductInDesign; n: number; t: TranslationDictionary; locale: string }>) {
+}: Readonly<{ product: ProductInDesign; fig: number; t: TranslationDictionary; locale: string }>) {
   const Mark = DESIGN_MARK[p.id];
   const h = t.site.products;
   return (
-    <li id={"product-" + p.id} className="kz-entry kz-entry-design" data-product={p.id} data-side="plate-left">
-      <div className="kz-entry-plate">
-        <ShowcaseStill product={p.id} fig={sectionFigure(SHOWN.length + 1)} locale={locale} />
+    <li id={"product-" + p.id} className="kz-row kz-row-design" data-product={p.id}>
+      <div className="kz-row-head">
+        <Mark size={48} animated={false} />
+        <h3 className="kz-row-name">{p.name}</h3>
+        <Stamp tone={STAMP[p.status]} size="sm">
+          {t.site.nav.status[p.status].label}
+        </Stamp>
       </div>
-      <SpecimenTag
-        className="kz-entry-tag"
-        code={`KZ-${String(n).padStart(2, "0")}`}
-        title={
-          <a href={p.siteUrl} target="_blank" rel="noopener" className="kz-entry-name">
-            {p.name}
-          </a>
-        }
-        mark={<Mark size={48} animated={false} />}
-        status={{ label: t.site.nav.status[p.status].label, tone: STAMP[p.status] }}
-        footer={
-          <a href={p.siteUrl} target="_blank" rel="noopener" aria-label={format(h.visitSiteAria, { name: p.name })}>
-            {h.visitSite} <ForwardIcon size={13} aria-hidden />
-          </a>
-        }
-      >
-        <p>{t.site.home.products.inDesign.lines[p.id]}</p>
-      </SpecimenTag>
+      <p className="kz-row-line">{t.site.home.products.inDesign.lines[p.id]}</p>
+      <div className="kz-row-links">
+        <a href={p.siteUrl} target="_blank" rel="noopener" aria-label={format(h.visitSiteAria, { name: p.name })}>
+          {h.visitSite} <ForwardIcon size={13} aria-hidden />
+        </a>
+      </div>
+      <div className="kz-row-plate">
+        <ShowcaseStill product={p.id} fig={fig} locale={locale} />
+      </div>
     </li>
   );
 }
 
-/** The products (§ 2): one row, Verikora · Sovkora · Folioviv, each with its carousel, then the ones in conception. */
+/** The products (§ 2): one row each, Sovkora · Verikora · Folioviv, then the ones in conception. No carousel, no video. */
 export default function ProductShowcase({ locale }: Readonly<{ locale: string }>) {
   const t = getDictionary(locale);
   const s = t.site.home.products;
   return (
     <div id="products" className="kz-products">
       <Section id="products-guide" number={s.number} title={s.title} lead={s.lead} paper="lines" margin reveal>
-        <ol className="kz-prod-row" aria-label={s.rowLabel}>
+        <ol className="kz-rows" aria-label={s.title}>
           {SHOWN.map((p) => (
-            <li key={p.id} className={"brand-" + p.id} data-engine={p.id === ENGINE ? "" : undefined}>
-              <a href={`#product-${p.id}`}>
-                <ProductLogo id={p.id} size={28} animated={false} />
-                <span>{p.name}</span>
-                <small>{s.roles[p.id]}</small>
-              </a>
-            </li>
+            <ProductRow key={p.id} product={p} t={t} locale={locale} />
           ))}
         </ol>
-        <ol className="kz-prod-list" aria-label={s.title}>
-          {SHOWN.map((p) => (
-            <ProductEntry key={p.id} product={p} t={t} locale={locale} />
-          ))}
-        </ol>
-        <ol className="kz-prod-list kz-prod-design" aria-label={s.inDesign.label}>
+        <ol className="kz-rows kz-rows-design" aria-label={s.inDesign.label}>
           {IN_DESIGN.map((p, i) => (
-            <DesignEntry key={p.id} product={p} n={PRODUCTS.length + i + 1} t={t} locale={locale} />
+            <DesignRow key={p.id} product={p} fig={STILL_FIGURE + i} t={t} locale={locale} />
           ))}
         </ol>
         <Footnotes

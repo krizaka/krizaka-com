@@ -500,10 +500,9 @@ test("the brand film slot reads « Montrer son travail » from the CDN manifest;
     hasTallCut((p) => Boolean(files[p])),
     Boolean(files[`${BRAND_FILM.tallWeb}.mp4`] && files[`${BRAND_FILM.tall}.jpg`]),
   );
-  // every slot plays it: the home's hero carousel (its loop, content/films/home-showcase.json, krizaka-internal#2450, with a
-  // link to the watch page), /story, the watch page
+  // every slot plays it: /story and the watch page; the home has no carousel (krizaka-internal#3243), the footer links the watch page
   assert.match(read("content/films/home-showcase.json"), /montrer-son-travail-loop\./);
-  assert.match(read("app/components/home/Showcase.tsx"), /\/films\/\$\{BRAND_FILM\.id\}/);
+  assert.match(read("lib/footer.ts"), /watchPath\(BRAND_FILM\.id\)/);
   assert.match(page, /const film = brandFilm\(\);/);
   assert.match(read("lib/watch-films.ts"), /base: BRAND_FILM\.base/);
   for (const file of [

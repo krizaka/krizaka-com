@@ -389,9 +389,7 @@
             "body": "More useful products, on the same open stack.",
             "points": ["Kridoc, document storage, in design", "Every new product on Sovkora and Krizaka UI"]
           }
-        },
-        "pause": "Stop the steps from turning",
-        "play": "Turn the steps again"
+        }
       },
       "principles": {
         "number": "§ 5",
@@ -668,6 +666,7 @@
       "label": "Footer",
       "openSourceColumn": "Open source",
       "companyColumn": "Krizaka",
+      "film": "Watch the film",
       "allOpenSource": "All of open source"
     },
     "contactForm": {

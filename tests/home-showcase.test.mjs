@@ -5,11 +5,9 @@ import { existsSync, readFileSync } from "node:fs";
 import {
   FILM_IDS,
   PHONE_CUT,
-  PRODUCT_SHOWCASES,
   SHOWCASES,
   STILLS,
   SlideSource,
-  showcaseOf,
   showcaseProblems,
   showcaseSlides,
   slideSeconds,
@@ -27,7 +25,6 @@ const messages = (lang) => JSON.parse(read(`messages/${lang}.json`));
 const manifest = JSON.parse(read("lib/cdn-manifest.json"));
 const has = (path) => Boolean(manifest.files[path]);
 const board = JSON.parse(read("content/films/home-showcase.json"));
-const carousel = read("app/components/home/Showcase.tsx");
 
 test("every slide of every carousel has its files on the CDN (videos and poster), and at least three slides", () => {
   assert.deepEqual([...SHOWCASES], ["hero", "verikora", "sovkora", "folioviv"]);
@@ -148,8 +145,8 @@ test("the trailer's words: caption, alt and a transcript of its titles, from the
   assert.equal(fr.transcript.lines[0], "Chaque jour, vos données partent.");
   assert.match(fr.transcript.lines.at(-1), /^Sovkora, l'IA qui reste chez vous\./);
   for (const l of ["en", "fr"]) assert.ok(messages(l).site.home.showcase.sources.film.trim(), `${l}: sources.film`);
-  const showcase = read("app/components/home/Showcase.tsx");
-  assert.match(showcase, /films\[s\.id\]\.transcript/, "the transcript is in the server's text version");
+  const watch = read("app/[locale]/films/[id]/page.tsx");
+  assert.match(watch, /w\.transcript\?\.lines/, "the transcript is the text version of the film's watch page");
 });
 
 // A product in conception has no carousel: one still (founder, 2026-11-06, krizaka-internal#2802), a mood photo made locally
@@ -223,12 +220,6 @@ test("the storyboard is coherent: one take per shot, an idea and a prompt each, 
   assert.deepEqual(findCodeNames(read("content/films/home-showcase.json")), [], "commercial names only");
 });
 
-test("the products' carousels follow the row: Verikora, Sovkora in the centre, Folioviv", () => {
-  assert.deepEqual([...PRODUCT_SHOWCASES], ["verikora", "sovkora", "folioviv"]);
-  assert.equal(showcaseOf("Sovkora"), "sovkora");
-  assert.equal(showcaseOf("Kridoc"), undefined);
-});
-
 test("every slide has its caption and its text alternative in both languages, and no word without a slide", () => {
   for (const l of ["en", "fr"]) {
     const s = messages(l).site.home.showcase;
@@ -253,17 +244,25 @@ test("every slide has its caption and its text alternative in both languages, an
 // krizaka-internal#3273: the home has no player of its own. Every clip plays through @krizaka/ui's MediaCarousel, whose
 // rules (autoplay held by the visible pause and by being off screen, never by the pointer or a click; sound only after
 // the visitor's press, one slide at a time; reduced motion and Save-Data) are tested in krizaka-ui.
-test("the carousels are @krizaka/ui's MediaCarousel: no local player, no raw <video>", () => {
-  assert.match(carousel, /from "@krizaka\/ui\/media-carousel"/);
-  assert.match(carousel, /<MediaCarousel\b/);
-  assert.match(carousel, /\bautoplay\b/);
-  assert.match(carousel, /\bsound\b/, "the library's sound toggle is on");
-  assert.match(carousel, /frame="cahier"/);
-  assert.doesNotMatch(carousel, /holds=/, "the pointer and a click never hold the carousel (the library's default)");
-  assert.doesNotMatch(carousel, /<video\b|autoPlay|setInterval|requestAnimationFrame|sessionStorage|localStorage/);
-  for (const gone of ["app/components/home/ShowcaseCarousel.tsx", "lib/showcase-player.ts"])
+test("the home has no carousel and no player of its own: the storyboard feeds /story's clips and the watch pages", () => {
+  for (const gone of [
+    "app/components/home/Showcase.tsx",
+    "app/components/home/showcase.css",
+    "app/components/home/ShowcaseCarousel.tsx",
+    "app/components/home/DirectionLoop.tsx",
+    "lib/showcase-player.ts",
+  ])
     assert.equal(existsSync(new URL(`../${gone}`, import.meta.url)), false, `${gone} is deleted`);
-  assert.match(carousel, /<details|textVersion/, "a text version of every slide");
+  for (const f of [
+    "app/[locale]/page.tsx",
+    "app/components/home/HomeHero.tsx",
+    "app/components/home/ProductShowcase.tsx",
+  ])
+    assert.doesNotMatch(
+      read(f),
+      /MediaCarousel|<video\b|autoPlay|PausableLoop|<Showcase\b/,
+      `${f}: nothing moves at load`,
+    );
 });
 
 test("every slide declares its measured length (the autoplay's time on screen) and its poster", () => {
@@ -272,7 +271,6 @@ test("every slide declares its measured length (the autoplay's time on screen) a
       const seconds = slideSeconds(x.id);
       assert.ok(typeof seconds === "number" && seconds > 0 && seconds <= 15, `${c}/${x.id}: a loop of 15 s at most`);
     }
-  assert.match(carousel, /src: cdn\(s\.poster\)/, "poster first, never a clip as the LCP");
 });
 
 test("sound is the visitor's choice: only a finished film claims an audio track", () => {
@@ -324,15 +322,15 @@ test("the bar's « Products » scrolls on the home and leads to the home's secti
     assert.match(read(f), /<Link href=\{barHref\(l, locale, path\)\}>/, f);
 });
 
-test("AGENTS.md says the new rules: the home's order (§ 2) and the carousels' exception (§ 4)", () => {
+test("AGENTS.md says the new rules: the home's order (§ 2) and that no block of the home moves (§ 4)", () => {
   const agents = read("AGENTS.md");
   assert.match(agents, /Sovkora · Verikora · Folioviv/);
-  assert.match(agents, /Two blocks of the home move on their own\. The carousels/);
+  assert.match(agents, /No block of the home moves on its own/);
 });
 
 test("a withheld film's slide has no action to its watch page (the trailer, until its licence card is corrected)", () => {
   const trailer = showcaseSlides("sovkora").find((s) => s.id === "trailer");
-  assert.ok(trailer, "the trailer's loop still plays in Sovkora's carousel");
+  assert.ok(trailer, "the trailer's loop stays in the storyboard (/story's clips)");
   assert.equal(trailer.watch, undefined, "no « Watch the film » to a page that is not published");
   for (const id of ["dossier-nadia", "dossier-sam"]) {
     assert.equal(showcaseSlides("sovkora").find((s) => s.id === id)?.watch, id, `${id}: its action leads to its page`);
