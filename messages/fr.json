@@ -866,7 +866,7 @@
         },
         "proofs": {
           "verikora": "Chaque règle cite son article de loi. Les règles québécoises attendent encore la relecture d'un avocat, et l'écran le dit : il trie, il ne donne pas d'avis juridique. Inscriptions fermées pendant nos essais sur de vrais baux.",
-          "folioviv": "Rendez-vous, factures avec TPS et TVQ, un grand livre que la base de données garde équilibré, et un rapport de taxes que le commerçant relit et dépose lui-même. Le travail est en pause pendant que nous menons Verikora."
+          "folioviv": "Rendez-vous, factures avec TPS et TVQ, un grand livre que la base de données garde équilibré, et un rapport de taxes que le commerçant relit et dépose lui-même. Il est en développement, construit à découvert."
         }
       },
       "birds": {

@@ -79,7 +79,7 @@ test("the products stand in one row, the engine first — no foundation frame, n
   assert.doesNotMatch(css, /\.kz-foundation/, "the engine wears the products' tag, not a foundation plate");
   assert.match(
     read("lib/products.ts"),
-    /id: "sovkora",\s+name: displayName\("sovkora"\),\s+status: "development"/,
+    /id: "sovkora",\s+name: displayName\("sovkora"\),\s+status: statusOf\(org\.products, "sovkora"\)/,
     "Sovkora is in development too: its tag stamps it so, like the others",
   );
   assert.match(home, /status: \{ label: t\.site\.nav\.status\[p\.status\]\.label, tone: STAMP\[p\.status\] \}/);
