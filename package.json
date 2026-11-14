@@ -49,6 +49,8 @@
   },
   "devDependencies": {
     "@ast-grep/cli": "0.51.0",
+    "@emnapi/core": "^1.11.3",
+    "@emnapi/runtime": "^1.11.3",
     "@krizaka/a11y-audit": "0.2.0",
     "@krizaka/config": "^0.25.0",
     "@tailwindcss/postcss": "^4",
