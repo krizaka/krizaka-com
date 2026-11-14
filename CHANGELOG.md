@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.35.0](https://github.com/krizaka/krizaka-com/compare/v0.34.0...v0.35.0) (2026-11-14)
+
+
+### Features
+
+* **home:** Kridoc is shown like the other products, in development, without the mood photo ([#702](https://github.com/krizaka/krizaka-com/issues/702)) ([26a71dd](https://github.com/krizaka/krizaka-com/commit/26a71ddf92598eb2e78f43cd46f57150e87ec8c6))
+
 ## [0.34.0](https://github.com/krizaka/krizaka-com/compare/v0.33.6...v0.34.0) (2026-11-13)
 
 
