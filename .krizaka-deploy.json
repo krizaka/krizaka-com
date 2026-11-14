@@ -7,7 +7,7 @@
   "spec": "deploy/digitalocean/app.yaml",
   "product": "krizaka",
   "seoFamily": {
-    "script": "scripts/check-seo-family.mjs",
+    "script": "node_modules/@krizaka/config/bin/krizaka-seo-family.mjs",
     "args": ["--organization", "--types", "Organization,WebSite"]
   },
   "waitMinutes": 25

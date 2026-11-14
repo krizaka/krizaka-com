@@ -26,10 +26,11 @@ EXPECT=503 check -X POST http://localhost:3000/api/contact -H 'content-type: app
   -d '{"name":"CI","email":"ci@example.com","company":"","topic":"other","message":"Container smoke test.","locale":"en"}'
 # The SEO contract on the HTML the server really sends (canonical www, hreflang, JSON-LD, robots, llms.txt).
 node scripts/check-seo.mjs --base http://localhost:3000
-# The family contract shared by every Krizaka site (robots, AI crawlers, sitemap, llms.txt, JSON-LD back to the Organization).
-node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization --types Organization,WebSite
 # 360–1440 px, dark and light: no page scrolls sideways (a real browser on the real container).
 npm ci --ignore-scripts --no-audit --no-fund
+# The family contract shared by every Krizaka site (robots, AI crawlers, sitemap, llms.txt, JSON-LD back to the Organization): the
+# `krizaka-seo-family` bin of @krizaka/config, the same audit as every other site.
+npm run seo:check
 node_modules/.bin/playwright install --with-deps chromium
 node scripts/check-overflow.mjs --base http://localhost:3000
 # The docs hub is the notebook's sommaire, not cards: every row and link, no box, no overflow at 375–1470 px (#2799).
