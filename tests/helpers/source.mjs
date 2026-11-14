@@ -188,6 +188,12 @@ export const templates = (file) =>
 /** The products of lib/products.ts, read from the AST. */
 export const PRODUCT_RECORDS = () => records("lib/products.ts", "PRODUCTS");
 
+/** The ids of the products that have a story chapter, a plate and a manifest to read: all but Kridoc (krizaka-internal#3559). */
+export const STORY_PRODUCT_IDS = () =>
+  PRODUCT_RECORDS()
+    .map((p) => p.id)
+    .filter((id) => id !== "kridoc");
+
 // ---- CSS -------------------------------------------------------------------------------------------------------
 const cssCache = new Map();
 export const cssRoot = (file) => {

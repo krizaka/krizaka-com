@@ -22,7 +22,7 @@ import { format } from "@/lib/i18n";
 import type { ProductId as AnyProductId } from "@/lib/products";
 
 /** The products that have a plate: Kridoc has none (nothing of it is drawn). */
-type ProductId = Exclude<AnyProductId, "kridoc">;
+export type ProductId = Exclude<AnyProductId, "kridoc">;
 import {
   FOLIOVIV_INVOICE,
   FOLIOVIV_PRICE,

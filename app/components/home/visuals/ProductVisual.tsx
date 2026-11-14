@@ -8,10 +8,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import type { ProductId as AnyProductId } from "@/lib/products";
-
-/** The products that have a plate: Kridoc has none (nothing of it is drawn). */
-type ProductId = Exclude<AnyProductId, "kridoc">;
+import type { ProductId } from "./ProductVisuals";
 
 const ProductVisuals = dynamic(() => import("./ProductVisuals"), { ssr: false });
 

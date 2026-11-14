@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { read } from "./helpers/source.mjs";
 import { brandOf, displayName, org } from "@krizaka/org";
 import { PRODUCTS } from "../lib/products.ts";
 import { ORG_PENDING } from "../lib/product-status.ts";
@@ -8,8 +8,7 @@ import { productLines } from "../lib/llms-sections.ts";
 
 // Kridoc is shown like the other products (founder, 2026-11-14, krizaka-internal#3559): it left the products in design, joined
 // PRODUCTS in development, lost its mood photo. Everything PRODUCTS feeds is checked here for Kridoc, or says why it is left out.
-const read = (f) => readFileSync(new URL(`../${f}`, import.meta.url), "utf8");
-const messages = { en: JSON.parse(read("messages/en.json")), fr: JSON.parse(read("messages/fr.json")) };
+const messages = Object.fromEntries(["en", "fr"].map((l) => [l, JSON.parse(read(`messages/${l}.json`))]));
 const kridoc = PRODUCTS.find((p) => p.id === "kridoc");
 const about = JSON.parse(read("content/llms-about.json"));
 

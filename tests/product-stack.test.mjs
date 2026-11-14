@@ -3,16 +3,13 @@ import assert from "node:assert/strict";
 import { displayName } from "@krizaka/org";
 import { readFileSync } from "node:fs";
 import { ENGINE, KITS, PLANNED, provenKit, stackCell, stackRows } from "../lib/product-stack.ts";
-import { PRODUCT_RECORDS } from "./helpers/source.mjs";
+import { STORY_PRODUCT_IDS } from "./helpers/source.mjs";
 
 // What each product runs on (no table any more; the rules stay for the story): every cell is read from the products' manifests
 // (lib/product-manifests.json, scripts/gen-product-manifests.mjs) — no network here.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const { products: manifests } = JSON.parse(read("lib/product-manifests.json"));
-// Kridoc has no manifest to read (its repository is private, krizaka-internal#3559): it has no row, no plate, no chapter.
-const ids = PRODUCT_RECORDS()
-  .map((p) => p.id)
-  .filter((id) => id !== "kridoc");
+const ids = STORY_PRODUCT_IDS();
 
 test("every product of lib/products.ts has a row", () => {
   assert.deepEqual(ids, ["sovkora", "verikora", "folioviv"]);

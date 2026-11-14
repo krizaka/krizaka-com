@@ -32,13 +32,8 @@ test("each product's card says the canonical line, in both languages", () => {
 });
 
 test("one status word per product: In development (all four)", () => {
-  const status = Object.fromEntries(PRODUCTS.map((p) => [p.id, p.status]));
-  assert.deepEqual(status, {
-    sovkora: "development",
-    verikora: "development",
-    folioviv: "development",
-    kridoc: "development",
-  });
+  assert.equal(PRODUCTS.length, 4);
+  assert.ok(PRODUCTS.every((p) => p.status === "development"));
   const labels = (l) => Object.fromEntries(Object.entries(m[l].site.nav.status).map(([k, v]) => [k, v.label]));
   assert.equal(labels("fr").development, "En développement");
   assert.equal(labels("fr").paused, "En pause");
