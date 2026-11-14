@@ -7,12 +7,12 @@
 import { displayName, org, type ProductStatus } from "@krizaka/org";
 import { FOLIOVIV_REPO_URL, KRIDOC_REPO_URL, VERIKORA_REPO_URL } from "./site.ts";
 import { siteUrlOf, type ProductId } from "./product-hosts.ts";
-import { ORG_PENDING, statusOf } from "./product-status.ts";
+import { statusOf } from "./product-status.ts";
 
 export type { ProductId } from "./product-hosts.ts";
 
 /** Where a product stands: the org's closed set (`PRODUCT_STATUS` of @krizaka/org), never typed here. The status of each
- *  product is read from the org data (`org.products`, @krizaka/org >= 1.3.0), the one JSON the whole org reads (founder,
+ *  product is read from the org data (`org.products`, @krizaka/org >= 1.5.0), the one JSON the whole org reads (founder,
  *  2026-11-13, krizaka-internal#3425). `devPreview` is gated (scripts/gen-dev-preview.mjs). Words: site.nav.status.<status>. */
 export type { ProductStatus } from "@krizaka/org";
 
@@ -53,8 +53,7 @@ export const PRODUCTS: Product[] = [
   {
     id: "kridoc",
     name: displayName("kridoc"),
-    // @krizaka/org 1.3.0 does not list Kridoc in `org.products` yet: ORG_PENDING holds its status until it does.
-    status: statusOf([...org.products, ...ORG_PENDING], "kridoc"),
+    status: statusOf(org.products, "kridoc"),
     siteUrl: siteUrlOf("kridoc"),
     repoUrl: KRIDOC_REPO_URL,
   },

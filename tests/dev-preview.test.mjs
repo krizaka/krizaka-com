@@ -105,7 +105,7 @@ test("the real waivers have not expired (the gate becomes strict on the day they
 
 test("the org data gives every product a status, and the cards and chips know devPreview", () => {
   const statuses = readProductStatuses();
-  assert.deepEqual(Object.keys(statuses).sort(), ["folioviv", "sovkora", "verikora"]);
+  assert.deepEqual(Object.keys(statuses).sort(), ["folioviv", "kridoc", "sovkora", "verikora"]);
   for (const s of Object.values(statuses))
     assert.ok(["devPreview", "development", "paused", "construction", "upcoming"].includes(s));
   for (const l of ["en", "fr"]) assert.ok(JSON.parse(read(`messages/${l}.json`)).site.nav.status.devPreview.label);

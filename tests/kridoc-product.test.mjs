@@ -3,7 +3,6 @@ import assert from "node:assert/strict";
 import { read } from "./helpers/source.mjs";
 import { brandOf, displayName, org } from "@krizaka/org";
 import { PRODUCTS } from "../lib/products.ts";
-import { ORG_PENDING } from "../lib/product-status.ts";
 import { productLines } from "../lib/llms-sections.ts";
 
 // Kridoc is shown like the other products (founder, 2026-11-14, krizaka-internal#3559): it left the products in design, joined
@@ -21,15 +20,11 @@ test("Kridoc is a product in development, named and linked from @krizaka/org, it
   assert.doesNotMatch(read("lib/products.ts"), /name: "/, "the name is data, never typed");
 });
 
-test("the org's status is read first: the waiver goes the day @krizaka/org lists Kridoc", () => {
-  assert.deepEqual(
-    ORG_PENDING.map((p) => p.id),
-    ["kridoc"],
-  );
-  assert.ok(
-    !org.products.some((p) => p.id === "kridoc"),
-    "@krizaka/org now lists Kridoc: delete ORG_PENDING (lib/product-status.ts) and read the status from org.products",
-  );
+test("the status is read from the org alone: Kridoc is in org.products, no waiver is left", () => {
+  assert.ok(org.products.some((p) => p.id === "kridoc"));
+  assert.equal(kridoc.status, org.products.find((p) => p.id === "kridoc").status);
+  assert.doesNotMatch(read("lib/product-status.ts"), /ORG_PENDING/);
+  assert.doesNotMatch(read("lib/products.ts"), /ORG_PENDING/);
 });
 
 test("the products in design are gone, with their still", () => {
