@@ -265,7 +265,7 @@
           "sovkora": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
           "verikora": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Sovkora tracée.",
           "folioviv": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise.",
-          "kridoc": "Kridoc range les documents et fichiers d'une entreprise, avec la Loi 25 du Québec en tête. Il est en développement et son code n'est pas encore public."
+          "kridoc": "Kridoc range les documents et fichiers d'une entreprise, avec la Loi 25 du Québec en tête. Il est en développement."
         },
         "birds": {
           "beaver": "le castor"

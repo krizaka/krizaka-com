@@ -51,7 +51,9 @@ const FAMILY = [
     id: "kridoc",
     name: displayName("kridoc"),
     url: siteUrlOf("kridoc"),
-    // No `repo`: its repository is private, so its node claims neither a source nor a licence.
+    repo: "kridoc",
+    // Its source is public under the Functional Source License, not Apache: the node names that licence.
+    license: "https://spdx.org/licenses/FSL-1.1-ALv2",
     category: "BusinessApplication",
     app: true,
   },
@@ -87,7 +89,10 @@ const appNode = (f: AppEntry, description: string) => ({
   operatingSystem: "Web, iOS, Android",
   isAccessibleForFree: true,
   ...("repo" in f
-    ? { license: "https://www.apache.org/licenses/LICENSE-2.0", codeRepository: `${GITHUB_ORG_URL}/${f.repo}` }
+    ? {
+        license: "license" in f ? f.license : "https://www.apache.org/licenses/LICENSE-2.0",
+        codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
+      }
     : {}),
   publisher: { "@id": ORG_ID },
 });

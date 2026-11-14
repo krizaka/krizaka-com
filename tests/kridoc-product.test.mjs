@@ -12,12 +12,12 @@ const messages = Object.fromEntries(["en", "fr"].map((l) => [l, JSON.parse(read(
 const kridoc = PRODUCTS.find((p) => p.id === "kridoc");
 const about = JSON.parse(read("content/llms-about.json"));
 
-test("Kridoc is a product in development, named and linked from @krizaka/org, no source while its repository is private", () => {
+test("Kridoc is a product in development, named and linked from @krizaka/org, its source is public", () => {
   assert.ok(kridoc);
   assert.equal(kridoc.name, displayName("kridoc"));
   assert.equal(kridoc.status, "development");
   assert.equal(kridoc.siteUrl, new URL(brandOf("kridoc").domains.site).origin);
-  assert.equal(kridoc.repoUrl, undefined, "a public page never links a private repository");
+  assert.equal(kridoc.repoUrl, "https://github.com/krizaka/kridoc", "krizaka/kridoc is public since 2026-11-14");
   assert.doesNotMatch(read("lib/products.ts"), /name: "/, "the name is data, never typed");
 });
 
@@ -63,21 +63,27 @@ test("every surface PRODUCTS feeds carries Kridoc: nav, llms.txt, JSON-LD", () =
   const line = productLines(PRODUCTS, about, (s) => s)
     .split("\n")
     .find((l) => l.startsWith("- Kridoc ("));
-  assert.ok(line?.includes(`Site: ${kridoc.siteUrl}`) && !line.includes("source:"));
-  // The Organization `owns` every FAMILY entry; Kridoc's node claims no source and no licence (its repository is private).
+  assert.ok(line?.includes(`Site: ${kridoc.siteUrl}`) && line.includes(`source: ${kridoc.repoUrl}`));
+  // The Organization `owns` every FAMILY entry; Kridoc's node names its public source and its own licence (FSL-1.1-ALv2, not Apache).
   const ld = read("lib/structured-data.ts");
   assert.match(ld, /id: "kridoc",\s*name: displayName\("kridoc"\),\s*url: siteUrlOf\("kridoc"\)/);
-  assert.doesNotMatch(ld.slice(ld.indexOf('id: "kridoc"'), ld.indexOf('id: "krizaka-ui"')), /repo:/);
+  const node = ld.slice(ld.indexOf('id: "kridoc"'), ld.indexOf('id: "krizaka-ui"'));
+  assert.match(node, /repo: "kridoc"/);
+  assert.match(node, /license: "https:\/\/spdx\.org\/licenses\/FSL-1\.1-ALv2"/);
   assert.match(ld, /"repo" in f/);
   for (const l of ["en", "fr"]) assert.ok(messages[l].site.structuredData.family.kridoc, l);
 });
 
-test("Kridoc is a row of the home like the others: its mark is KridocLogo, no Source and no release notes", () => {
+test("Kridoc is a row of the home like the others: its mark is KridocLogo, a Source link, no release notes yet", () => {
   const row = read("app/components/home/ProductShowcase.tsx");
   assert.match(row, /<ProductMark id=\{p\.id\} size=\{30\} \/>/);
   assert.match(read("app/components/ProductMark.tsx"), /id === "kridoc" \? \(\s*<KridocLogo/);
   assert.match(row, /\{p\.repoUrl && \(/);
   assert.match(row, /RELEASE_PRODUCT_IDS/);
+  // Release notes are the changelog filtered on the product: krizaka/.github's release-repos.json does not list Kridoc, so no link until it does.
+  assert.doesNotMatch(read("lib/product-hosts.ts"), /RELEASE_PRODUCT_IDS = \[[^\]]*kridoc/);
+  for (const l of ["en", "fr"])
+    assert.doesNotMatch(messages[l].site.home.products.notes.kridoc, /not public|pas encore public/, l);
 });
 
 test("left out on purpose: /story has no chapter, the changelog no chip, the mobile discovery no entry", () => {

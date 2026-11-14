@@ -37,6 +37,7 @@ export const SITE_REPO_URL = `${GITHUB_ORG_URL}/krizaka-com`;
 /** Verikora, documents read and checked by Sovkora (coming soon): its repository. */
 export const VERIKORA_REPO_URL = `${GITHUB_ORG_URL}/verikora`;
 export const FOLIOVIV_REPO_URL = `${GITHUB_ORG_URL}/folioviv`;
+export const KRIDOC_REPO_URL = `${GITHUB_ORG_URL}/kridoc`;
 
 /** The repositories the docs link to. */
 export const KRIZAKA_UI_REPO_URL = `${GITHUB_ORG_URL}/krizaka-ui`;

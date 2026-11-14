@@ -5,7 +5,7 @@
    Kridoc, the business documents and files storage, joined on 2026-11-14. The products paused on 2026-10-25 left the org (krizaka/.github#413): they are not presented here. */
 
 import { displayName, org, type ProductStatus } from "@krizaka/org";
-import { FOLIOVIV_REPO_URL, VERIKORA_REPO_URL } from "./site.ts";
+import { FOLIOVIV_REPO_URL, KRIDOC_REPO_URL, VERIKORA_REPO_URL } from "./site.ts";
 import { siteUrlOf, type ProductId } from "./product-hosts.ts";
 import { ORG_PENDING, statusOf } from "./product-status.ts";
 
@@ -24,7 +24,7 @@ export interface Product {
   /** The product's public address, its commercial www domain (www.verikora.com…, @krizaka/org): what every public link,
    *  sitemap and declaration to a provider uses (lib/product-hosts.ts). Never a code-name host. */
   siteUrl: string;
-  /** Its source on GitHub; absent while its repository is private (Kridoc): a public page never links a 404. */
+  /** Its source on GitHub; a product whose repository is private has none: a public page never links a 404. Kridoc's became public on 2026-11-14. */
   repoUrl?: string;
 }
 
@@ -56,5 +56,6 @@ export const PRODUCTS: Product[] = [
     // @krizaka/org 1.3.0 does not list Kridoc in `org.products` yet: ORG_PENDING holds its status until it does.
     status: statusOf([...org.products, ...ORG_PENDING], "kridoc"),
     siteUrl: siteUrlOf("kridoc"),
+    repoUrl: KRIDOC_REPO_URL,
   },
 ];

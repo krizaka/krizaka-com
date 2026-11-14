@@ -265,7 +265,7 @@
           "sovkora": "Every request crosses one deterministic pipeline to a local model: your documents, your models, your network. Nothing leaves.",
           "verikora": "A lease is checked rule by rule against the law in force on its date; every finding quotes its passage, every check is a traced Sovkora run.",
           "folioviv": "Bilingual invoices with GST and QST to the cent, a ledger the database keeps balanced, and the GST/QST return prepared for the merchant to file.",
-          "kridoc": "Kridoc stores a business's documents and files, with Québec's Law 25 in mind. It is in development and its source is not public yet."
+          "kridoc": "Kridoc stores a business's documents and files, with Québec's Law 25 in mind. It is in development."
         },
         "birds": {
           "beaver": "the beaver"
