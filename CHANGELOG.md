@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.36.0](https://github.com/krizaka/krizaka-com/compare/v0.35.0...v0.36.0) (2026-11-14)
+
+
+### Features
+
+* **home:** Kridoc is shown like the other products, its status read from @krizaka/org ([#708](https://github.com/krizaka/krizaka-com/issues/708)) ([43294c8](https://github.com/krizaka/krizaka-com/commit/43294c89d57c42765cd703e210537c89913d9f6e))
+
 ## [0.35.0](https://github.com/krizaka/krizaka-com/compare/v0.34.0...v0.35.0) (2026-11-14)
 
 
