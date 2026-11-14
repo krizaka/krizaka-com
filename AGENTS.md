@@ -59,18 +59,15 @@
   Other statuses are never gated.
 - A product not released says so with a status chip (`status: "upcoming"` — « Soon »; `"construction"` — « In
   construction »), never beta, early access, waiting list or sign-up. No store button, no invented screenshot or figure.
-- A product **in conception** (`status: "design"`, « En conception » / « In design »; founder, 2026-11-03, krizaka-internal#2143, #2302)
-  lives in `lib/products-in-design.ts`, not in `PRODUCTS`: the home's #products shows it after the products as an entry of the
-  same rhythm (plate left, tag right): the tag carries its mark (`KridocLogo` of `@krizaka/ui`, at 48 px so it is not cropped to the emblem),
-  its name from `@krizaka/org`, the stamp, one neutral line and « See the site » to its **live coming-soon site** (`siteUrl`, from the org
-  brand's `domains.site`: www.kridoc.com); the plate is **one mood photo in the carousels' frame** (founder, 2026-11-06,
-  krizaka-internal#2802; `ShowcaseStill`): a generated picture of the job it will do, never a screen of an app that does not exist,
-  made locally (FLUX.2 [klein] 4B, no paid run; model, seed and prompt in the storyboard's `stills`), uploaded under
-  `home/showcase/<product>/` and read from the manifest (an unknown file fails the build), captioned « in conception » and with
-  an alt that says it is generated; nothing moves, so the photo is the poster and the reduced-motion still (no date, no sign-up,
-  no waiting list). No version, source, bird or note, and nothing in the nav, the hero's marks, the
-  sitemap, `llms.txt` or the JSON-LD (`tests/products-in-design.test.mjs`). Kridoc (`kridoc`) is the one today; it
-  moves to `PRODUCTS` when its repository builds something real.
+- **Kridoc is a product like the others** (founder, 2026-11-14, krizaka-internal#3559: « on peut mettre kridoc comme les autres produits vu qu'on
+  est passé à dev »): it is in `PRODUCTS` (`lib/products.ts`), status `development`, so in the nav, the sitemap-fed lists, `llms.txt`, the JSON-LD
+  (`owns`) and the home's rows; its name is `displayName("kridoc")` and its address `siteUrlOf("kridoc")` (www.kridoc.com), both from `@krizaka/org`.
+  Its line says business documents and files storage with Law 25 in mind, never hosting or databases, no price. It has **no mood photo** (the
+  stills, `ShowcaseStill` and `lib/products-in-design.ts` are gone). Its mark is `KridocLogo` through `ProductMark` (`@krizaka/ui`'s `ProductLogo`
+  has no Kridoc palette). Its repository is private: no `repoUrl`, so no « Source », no « Release notes », no public channel, no JSON-LD source
+  or licence. It is left out of `/story`'s chapters (`NOT_IN_STORY`), the changelog's chips (`RELEASE_PRODUCT_IDS`), the plates and the highlights
+  (nothing of it is drawn or cited yet) and the mobile discovery document. **Its status is a waiver**: `@krizaka/org` 1.3.0 does not list Kridoc in
+  `org.products`, so `ORG_PENDING` (`lib/product-status.ts`) holds it and `tests/kridoc-product.test.mjs` fails the day the org lists it.
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
   only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click, in the chapter's fold), and `brand-films/**` — the
   brand film « Montrer son travail » (`lib/brand-film.ts`, made with Sovkora, approved 2026-11-01: the home's « Watch the
@@ -103,9 +100,9 @@
 - **The home's order** (founder, 2026-11-13, krizaka-internal#3243, after the design intervention #2926, `docs/design/2926-home-media.md`;
   supersedes #2450, #2714 and #2837): **the home has no carousel and mounts no `<video>` at load** (« le but de krizaka.com c'est le site de la
   compagnie »): the hero (`HomeHero`: who we are, a lead in two or three short sentences, **one action**, and the proof figures), then
-  **the products as rows, Sovkora · Verikora · Folioviv** (`ProductShowcase`, § 2, `PRODUCT_ORDER` of `lib/home-sections.ts`): each row is its
+  **the products as rows, Sovkora · Verikora · Folioviv · Kridoc** (`ProductShowcase`, § 2, `PRODUCT_ORDER` of `lib/home-sections.ts`): each row is its
   mark, its name, the stamp of its honest status, one neutral line, what it runs on Sovkora, and its links (« See the site » = commercial www
-  address, « Source », release notes), then the product in conception (Kridoc) with its still (a picture, `ShowcaseStill`); the rows are local
+  address, « Source » and release notes where the repository is public); the rows are local
   markup until `@krizaka/ui` ships `SpecimenTag size="row"` (krizaka-internal#3240), when they are swapped for it. Then Krizaka Entreprise in one line
   (§ 3), « Where we are going » (§ 4) as **a static numbered list** (now / next / later, every station open, `Direction`; `DirectionLoop` is
   retired), the principles (§ 5), and it stops there: no Montréal section, no closing contact panel, no FAQ. **Each section shows at most one

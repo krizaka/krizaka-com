@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { START_PATHS, CONTRIBUTING_URL, hrefIn } from "../lib/docs-start.ts";
+import { PRODUCTS } from "../lib/products.ts";
 import { uiRedirects } from "../lib/ui-redirects.ts";
 
 // 2026-10-30 (founder): « Services first, then Docs » — the old /open-source page was a page of stats; /docs answers
@@ -35,7 +36,9 @@ test("every path of the hub has its words in both languages and 2-3 links, absol
     ["ui", "java", "products", "contribute"],
   );
   for (const p of START_PATHS) {
-    assert.ok(p.links.length >= 2 && p.links.length <= 3, `${p.id}: 2-3 links`);
+    // The products' path has one link per product (Kridoc joined on 2026-11-14), the others 2-3 first pages.
+    const most = p.id === "products" ? PRODUCTS.length : 3;
+    assert.ok(p.links.length >= 2 && p.links.length <= most, `${p.id}: 2-${most} links`);
     for (const l of p.links) assert.match(l.href, /^https:\/\//, `${p.id}/${l.id}`);
     for (const lang of ["en", "fr"]) {
       const w = messages(lang).site.openSource.hub.paths[p.id];
@@ -52,10 +55,10 @@ test("the products row lists the products in the home's order, each with its sta
   const row = START_PATHS.find((p) => p.id === "products");
   assert.deepEqual(
     row.links.map((l) => l.name),
-    ["Sovkora", "Verikora", "Folioviv"],
+    ["Sovkora", "Verikora", "Folioviv", "Kridoc"],
   );
   for (const l of row.links) {
-    assert.match(l.href, /^https:\/\/www\.(verikora|sovkora|folioviv)\.com/, l.name);
+    assert.match(l.href, /^https:\/\/www\.(verikora|sovkora|folioviv|kridoc)\.com/, l.name);
     assert.ok(l.status, `${l.name}: a status`);
   }
   // The status is the home's word for it (site.nav.status), written as a note after the name.

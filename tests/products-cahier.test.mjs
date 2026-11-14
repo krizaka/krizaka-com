@@ -19,9 +19,8 @@ test("built from the Cahier's blocks of @krizaka/ui, on lined paper with its mar
   for (const part of ['from "@krizaka/ui/specimen-tag"', 'from "@krizaka/ui/footnote"'])
     assert.ok(showcase.includes(part), part);
   assert.match(showcase, /<Stamp\b/);
-  // The only figure is the still of a product in conception (krizaka-internal#2802), captioned « Fig. n — … »; no carousel (#3243).
-  assert.doesNotMatch(showcase, /<Showcase\b/);
-  assert.match(showcase, /<ShowcaseStill product=\{p\.id\} fig=\{fig\}/);
+  // No figure: no carousel (#3243), no mood photo any more (Kridoc is a row like the others, #3559).
+  assert.doesNotMatch(showcase, /<Showcase\b|ShowcaseStill/);
   assert.match(showcase, /<Footnotes\b/);
   assert.match(showcase, /<FootnoteRef\b/);
   assert.match(showcase, /<Section id="products-guide" number=\{s\.number\}[^>]*paper="lines"[^>]*margin/);
@@ -46,13 +45,12 @@ test("the rows carry no bird", () => {
   assert.doesNotMatch(showcase, /Mascot|PRODUCT_BIRD/);
 });
 
-test("every entry has a numbered figure (its carousel) and a sourced note, in both languages", () => {
+test("every entry has a sourced note, in both languages", () => {
   for (const l of ["en", "fr"]) {
     const p = messages[l].site.home.products;
     assert.deepEqual(Object.keys(p.notes).sort(), [...ids].sort(), `${l}: a sourced note per product`);
   }
   const f = "app/components/home/ProductShowcase.tsx";
-  assert.ok(hasCode(f, "fig={STILL_FIGURE + i}"), "the still is numbered from the home's first figure");
   assert.ok(jsx(f).some((e) => "notes" in e.attrs));
 });
 

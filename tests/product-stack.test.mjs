@@ -9,7 +9,10 @@ import { PRODUCT_RECORDS } from "./helpers/source.mjs";
 // (lib/product-manifests.json, scripts/gen-product-manifests.mjs) — no network here.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const { products: manifests } = JSON.parse(read("lib/product-manifests.json"));
-const ids = PRODUCT_RECORDS().map((p) => p.id);
+// Kridoc has no manifest to read (its repository is private, krizaka-internal#3559): it has no row, no plate, no chapter.
+const ids = PRODUCT_RECORDS()
+  .map((p) => p.id)
+  .filter((id) => id !== "kridoc");
 
 test("every product of lib/products.ts has a row", () => {
   assert.deepEqual(ids, ["sovkora", "verikora", "folioviv"]);

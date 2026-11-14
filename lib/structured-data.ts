@@ -48,6 +48,14 @@ const FAMILY = [
     app: true,
   },
   {
+    id: "kridoc",
+    name: displayName("kridoc"),
+    url: siteUrlOf("kridoc"),
+    // No `repo`: its repository is private, so its node claims neither a source nor a licence.
+    category: "BusinessApplication",
+    app: true,
+  },
+  {
     id: "krizaka-ui",
     name: "Krizaka UI",
     url: "https://ui.krizaka.com",
@@ -78,8 +86,9 @@ const appNode = (f: AppEntry, description: string) => ({
   applicationCategory: f.category,
   operatingSystem: "Web, iOS, Android",
   isAccessibleForFree: true,
-  license: "https://www.apache.org/licenses/LICENSE-2.0",
-  codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
+  ...("repo" in f
+    ? { license: "https://www.apache.org/licenses/LICENSE-2.0", codeRepository: `${GITHUB_ORG_URL}/${f.repo}` }
+    : {}),
   publisher: { "@id": ORG_ID },
 });
 

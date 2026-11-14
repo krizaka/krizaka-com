@@ -25,11 +25,15 @@ test("each product line says the product's live status, its public address and i
     const line = lines.find((l) => l.startsWith(`- ${p.name} (`));
     assert.ok(line, p.id);
     assert.ok(line.includes(`(${word(p.status).toLowerCase()})`), `${p.id}: status ${p.status}`);
-    assert.ok(line.includes(`Site: ${p.siteUrl}`) && line.includes(`source: ${p.repoUrl}`), `${p.id}: addresses`);
+    assert.ok(
+      line.includes(`Site: ${p.siteUrl}`) &&
+        (p.repoUrl ? line.includes(`source: ${p.repoUrl}`) : !line.includes("source:")),
+      `${p.id}: addresses`,
+    );
   }
   assert.deepEqual(
     lines.map((l) => l.slice(2, l.indexOf(" ("))),
-    ["Sovkora", "Verikora", "Folioviv"].filter((n) => PRODUCTS.some((p) => p.name === n)),
+    ["Sovkora", "Verikora", "Folioviv", "Kridoc"].filter((n) => PRODUCTS.some((p) => p.name === n)),
     "the home's order",
   );
 });

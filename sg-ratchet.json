@@ -20,7 +20,7 @@
     "no-hand-typed-family-name": 24,
     "no-hand-written-validation-regex": 0,
     "no-hardcoded-default-media": 0,
-    "no-long-function": 23,
+    "no-long-function": 21,
     "no-raw-fetch-in-client": 2,
     "no-raw-inner-html": 0,
     "no-raw-video": 0,

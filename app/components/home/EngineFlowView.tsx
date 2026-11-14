@@ -12,6 +12,7 @@ import { EngineFlow, type EngineFlowNode } from "@krizaka/ui/engine-flow";
 import { ENGINE_OFFER, ENGINE_USES } from "@/lib/engine-uses";
 import { format, type TranslationDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/products";
+import { ProductMark } from "../ProductMark";
 import { hostOf } from "@/lib/stack";
 import { ENGINE } from "@/lib/story";
 
@@ -25,7 +26,7 @@ export default function EngineFlowView({ t }: { t: TranslationDictionary }) {
       id: u.id,
       label: p.name,
       className: "brand-" + u.id + " kz-home-n-" + u.id, // kz-home-n-<id>: ProductsLink ties the node to its row
-      mark: <ProductLogo id={u.id} size={28} animated={false} />,
+      mark: <ProductMark id={u.id} size={28} />,
       // Requests in from every wired product; results back where they run (every wired use has `results`).
       flow: u.planned ? "in" : u.back.length > 0 ? "both" : "in",
       planned: u.planned,

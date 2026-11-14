@@ -10,7 +10,7 @@ const read = (p) => readFileSync(new URL(`../${p}`, import.meta.url), "utf8");
 
 test("the home's product cards carry the commercial names, read from @krizaka/org", () => {
   const byId = Object.fromEntries(PRODUCTS.map((p) => [p.id, p.name]));
-  assert.deepEqual(byId, { sovkora: "Sovkora", verikora: "Verikora", folioviv: "Folioviv" });
+  assert.deepEqual(byId, { sovkora: "Sovkora", verikora: "Verikora", folioviv: "Folioviv", kridoc: "Kridoc" });
   assert.doesNotMatch(
     read("lib/products.ts"),
     /name: "(Verikora|Folioviv|Sovkora|Sovkora|Verikora|Folioviv)"/,
@@ -23,6 +23,7 @@ test("the public addresses are the commercial www domains (founder, 2026-11-04):
     sovkora: "https://www.sovkora.com",
     verikora: "https://www.verikora.com",
     folioviv: "https://www.folioviv.com",
+    kridoc: "https://www.kridoc.com",
   });
   for (const p of PRODUCTS) assert.equal(p.siteUrl, new URL(brandOf(p.id).domains.site).origin, p.id);
 });

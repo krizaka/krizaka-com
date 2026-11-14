@@ -6,14 +6,11 @@ import {
   FILM_IDS,
   PHONE_CUT,
   SHOWCASES,
-  STILLS,
   SlideSource,
   showcaseProblems,
   showcaseSlides,
   slideSeconds,
-  showcaseStill,
 } from "../lib/home-showcase.ts";
-import { IN_DESIGN } from "../lib/products-in-design.ts";
 import { barHref } from "../lib/bar-href.ts";
 import { boardProblems, clipsOf, maxCredits, shotsOf, tallFilter } from "../scripts/home-showcase.mjs";
 
@@ -149,53 +146,15 @@ test("the trailer's words: caption, alt and a transcript of its titles, from the
   assert.match(watch, /w\.transcript\?\.lines/, "the transcript is the text version of the film's watch page");
 });
 
-// A product in conception has no carousel: one still (founder, 2026-11-06, krizaka-internal#2802), a mood photo made locally
-// in the carousels' look, drawn in their frame. Nothing moves, so its poster is also the reduced-motion still.
-test("every product in conception has its still, a 16:9 poster read from the CDN manifest", () => {
-  assert.deepEqual(
-    [...STILLS],
-    IN_DESIGN.map((p) => p.id),
+// Kridoc, the last product that showed a mood photo, is a row like the others (krizaka-internal#3559): no still is left.
+test("no product shows a still any more: no stills in the storyboard, in the library or in the messages", () => {
+  assert.equal(board.stills, undefined);
+  assert.ok(!existsSync(new URL("../app/components/home/ShowcaseStill.tsx", import.meta.url)));
+  for (const l of ["en", "fr"]) assert.equal(messages(l).site.home.showcase.stills, undefined, `${l}: stills`);
+  assert.ok(
+    !Object.keys(manifest.files).some((f) => f.startsWith("home/showcase/kridoc/")),
+    "no photo left on the CDN manifest",
   );
-  for (const product of STILLS) {
-    const still = showcaseStill(product);
-    assert.match(still.poster, new RegExp(`^home/showcase/${product}/${still.id}-wide\\.jpg$`));
-    assert.ok(has(still.poster), `${still.poster} is in the manifest`);
-  }
-});
-
-test("a still whose photo the manifest does not know is refused (the build fails)", () => {
-  const { poster, id } = showcaseStill("kridoc");
-  assert.deepEqual(
-    showcaseProblems((path) => has(path) && path !== poster),
-    [`kridoc/${id}: ${poster} is not in the CDN manifest`],
-  );
-});
-
-test("the still was made locally, its take written down: model, seed, prompt, no paid run", () => {
-  for (const product of STILLS) {
-    const s = board.stills[product];
-    assert.ok(s.idea?.trim() && s.prompt?.trim(), `${product}: an idea and a prompt`);
-    assert.ok(Number.isInteger(s.seed), `${product}: a seed`);
-    assert.match(s.model, /FLUX\.2 \[klein\] 4B/);
-    assert.match(s.made, /locally/);
-    assert.equal(s.credits, 0, `${product}: no paid run`);
-    assert.ok(
-      s.candidates.length >= 2 && s.candidates.some((c) => c.id === s.id),
-      `${product}: the kept take is a candidate`,
-    );
-  }
-});
-
-test("the still is the carousels' frame, still: one picture from the manifest, no clip, no timer, its caption numbered", () => {
-  const still = read("app/components/home/ShowcaseStill.tsx");
-  assert.doesNotMatch(still, /"use client"|<video|useEffect|setTimeout|autoPlay/, "nothing moves, on the server");
-  assert.match(still, /src=\{cdn\(still\.poster\)\}/, "the photo's URL comes from the manifest");
-  assert.match(still, /alt=\{words\.alt\}/);
-  assert.match(still, /width=\{POSTER\.width\}\s+height=\{POSTER\.height\}/, "the 16:9 box is reserved");
-  assert.match(still, /className="rd-plate kz-show-stage"/, "the carousels' 16:9 plate, the site's plate");
-  assert.match(still, /format\(t\.labels\.figure, \{ fig: String\(fig\), caption: words\.caption \}\)/);
-  for (const l of ["en", "fr"])
-    assert.deepEqual(Object.keys(messages(l).site.home.showcase.stills).sort(), [...STILLS].sort(), `${l}: stills`);
 });
 
 test("the storyboard is coherent: one take per shot, an idea and a prompt each, every slide of an order exists", () => {

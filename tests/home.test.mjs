@@ -112,11 +112,7 @@ test("the products come from lib/products.ts: one row each, in the product's bra
   );
   assert.doesNotMatch(showcase, /<SpecimenTag\b|<Showcase\b|<video|MediaCarousel/, "no card, no carousel, no video");
   assert.doesNotMatch(showcase, /knowhow|kz-pc-meta/, "one label per product: no mono eyebrow beside the status");
-  assert.match(
-    showcase,
-    /<ProductLogo id=\{p\.id\} size=\{\d+\} animated=\{false\} \/>/,
-    "the mark sits beside the name",
-  );
+  assert.match(showcase, /<ProductMark id=\{p\.id\} size=\{\d+\} \/>/, "the mark sits beside the name");
   assert.match(
     showcase,
     /<ButtonLink\s+href=\{p\.siteUrl\}/,
@@ -193,15 +189,11 @@ test("the hero has no figure: no carousel, no bird legend, nothing that moves", 
   }
 });
 
-test("no two figures of the home share a number: the still of the product in conception is Fig. 1", async () => {
-  const { STILL_FIGURE, productOrder } = await import("../lib/home-sections.ts");
-  const { IN_DESIGN } = await import("../lib/products-in-design.ts");
-  const numbers = IN_DESIGN.map((_, i) => STILL_FIGURE + i);
-  assert.equal(STILL_FIGURE, 1);
-  assert.equal(new Set(numbers).size, numbers.length, `figures ${numbers.join(", ")}`);
+test("the home has no figure of its own (no still, no carousel); the notes keep their own numbers", async () => {
+  const { productOrder } = await import("../lib/home-sections.ts");
   assert.equal(typeof productOrder, "function");
   const showcase = read("app/components/home/ProductShowcase.tsx");
-  assert.match(showcase, /<ShowcaseStill product=\{p\.id\} fig=\{fig\}/);
+  assert.doesNotMatch(showcase, /ShowcaseStill|STILL_FIGURE|IN_DESIGN/);
   assert.match(showcase, /<FootnoteRef n=\{nOf\(p\)\}/, "the notes keep their own numbers");
 });
 

@@ -242,6 +242,11 @@ test("the addresses are on the commercial dev hosts, never on a code-name domain
   const entry = SERVICES.orazaka.dev;
   assert.equal(entry.apiBase, "https://dev.sovkora.com/edge");
   assert.equal(entry.webBase, "https://dev.sovkora.com");
-  assert.deepEqual(Object.values(PRODUCT_DOMAINS).sort(), ["folioviv.com", "sovkora.com", "verikora.com"]);
+  assert.deepEqual(Object.values(PRODUCT_DOMAINS).sort(), [
+    "folioviv.com",
+    "kridoc.com",
+    "sovkora.com",
+    "verikora.com",
+  ]);
   assert.doesNotMatch(signedRaw(), /(orazaka|yomizaka|akinaza|kachizaka)\.com/);
 });

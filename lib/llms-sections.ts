@@ -27,10 +27,10 @@ export function productLines(
   statusWord: (status: ProductStatus) => string,
 ): string {
   return productOrder(products)
-    .map(
-      (p) =>
-        `- ${p.name} (${statusWord(p.status).toLowerCase()}) — ${lineOf(about.products, p.id, "product")}. Site: ${p.siteUrl} · source: ${p.repoUrl}`,
-    )
+    .map((p) => {
+      const source = p.repoUrl ? " · source: " + p.repoUrl : "";
+      return `- ${p.name} (${statusWord(p.status).toLowerCase()}) — ${lineOf(about.products, p.id, "product")}. Site: ${p.siteUrl}${source}`;
+    })
     .join("\n");
 }
 

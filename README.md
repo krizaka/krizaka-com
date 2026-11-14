@@ -7,7 +7,7 @@
 
 <h1 align="center">krizaka-com</h1>
 
-<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Sovkora, Verikora and Folioviv (in development).</strong></p>
+<p align="center"><strong>Public Next.js site for Krizaka &amp; its products: Sovkora, Verikora, Folioviv and Kridoc (in development).</strong></p>
 
 <p align="center">
   <a href="https://scorecard.dev/viewer/?uri=github.com/krizaka/krizaka-com"><img src="https://api.scorecard.dev/projects/github.com/krizaka/krizaka-com/badge?style=flat-square" alt="OpenSSF Scorecard" /></a>
@@ -30,6 +30,7 @@
 | [Sovkora](https://github.com/krizaka/sovkora) | Sovereign, on-premise AI orchestration engine | In development | [www.sovkora.com](https://www.sovkora.com) |
 | [Verikora](https://github.com/krizaka/verikora) | Your documents, read and checked by Sovkora | In development (sign-up closed) | [www.verikora.com](https://www.verikora.com) |
 | [Folioviv](https://github.com/krizaka/folioviv) | Bookings, invoices and a GST/QST ledger for independent Québec shops; prepares the return, never files it | In development (sign-up closed) | [www.folioviv.com](https://www.folioviv.com) |
+| Kridoc | Your business documents and files, stored and found, built for Law 25 (source not public yet) | In development (sign-up closed) | [www.kridoc.com](https://www.kridoc.com) |
 
 ---
 

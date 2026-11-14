@@ -54,7 +54,7 @@ test("a planned use is said planned: the products not wired yet are flagged, the
 test("the products stand in one row, the engine first — no foundation frame, no card in a card", async () => {
   const home = read("app/components/home/ProductShowcase.tsx");
   const { PRODUCT_ORDER, productOrder } = await import("../lib/home-sections.ts");
-  assert.deepEqual(PRODUCT_ORDER, ["sovkora", "verikora", "folioviv"], "Sovkora, Verikora, Folioviv");
+  assert.deepEqual(PRODUCT_ORDER, ["sovkora", "verikora", "folioviv", "kridoc"], "Sovkora, Verikora, Folioviv, Kridoc");
   assert.deepEqual(
     productOrder([{ id: "folioviv" }, { id: "verikora" }, { id: "sovkora" }]).map((p) => p.id),
     ["sovkora", "verikora", "folioviv"],

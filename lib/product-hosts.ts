@@ -7,8 +7,12 @@
 
 import sites from "./product-sites.json" with { type: "json" };
 
-export const PRODUCT_IDS = ["sovkora", "verikora", "folioviv"] as const;
+export const PRODUCT_IDS = ["sovkora", "verikora", "folioviv", "kridoc"] as const;
 export type ProductId = (typeof PRODUCT_IDS)[number];
+
+/** The products that publish releases (the changelog's chips, its release-notes link): Kridoc's repository is private for now
+ *  and cuts none, so it has no chip and no « Release notes » (krizaka-internal#3559). */
+export const RELEASE_PRODUCT_IDS = ["sovkora", "verikora", "folioviv"] as const satisfies readonly ProductId[];
 
 /** The public origin of a product (`https://www.verikora.com`). */
 export const siteUrlOf = (id: ProductId): string => (sites as Record<ProductId, string>)[id];

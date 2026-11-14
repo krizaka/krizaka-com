@@ -17,6 +17,6 @@ export type ServicesProofId = StackId | "sovkora" | "blog";
    the stack appears here by itself. */
 export const SERVICES_PROOF: ReadonlyArray<{ id: ServicesProofId; href: string }> = [
   ...STACK.map((part) => ({ id: part.id, href: part.url })),
-  { id: "sovkora", href: PRODUCTS.find((p) => p.id === "sovkora")!.repoUrl },
+  { id: "sovkora", href: PRODUCTS.find((p) => p.id === "sovkora")!.repoUrl! },
   { id: "blog", href: BLOG_URL },
 ];

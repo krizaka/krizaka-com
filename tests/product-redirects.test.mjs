@@ -18,11 +18,12 @@ const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), "utf
 /** Where an old address goes: the first rule that matches it. */
 const go = (path) => rules.find((rule) => rule.matches(path));
 
-test("the products' sites: the three presented products, each at its commercial www domain (founder, 2026-11-04)", () => {
+test("the products' sites: the four presented products, each at its commercial www domain (founder, 2026-11-04)", () => {
   assert.deepEqual(PRODUCT_SITES, {
     sovkora: "https://www.sovkora.com",
     verikora: "https://www.verikora.com",
     folioviv: "https://www.folioviv.com",
+    kridoc: "https://www.kridoc.com",
   });
 });
 
@@ -30,7 +31,7 @@ test("the products' sites: the three presented products, each at its commercial 
 const OLD = Object.fromEntries(Object.entries(CODE_NAMES).map(([old, id]) => [id, old]));
 
 test("the retired ids come from @krizaka/org and map to the presented products", () => {
-  assert.deepEqual(RETIRED_PRODUCT_IDS.map(([, id]) => id).sort(), ["folioviv", "sovkora", "verikora"]);
+  assert.deepEqual(RETIRED_PRODUCT_IDS.map(([, id]) => id).sort(), ["folioviv", "kridoc", "sovkora", "verikora"]);
 });
 
 test("Verikora's old documentation lands on its site, in the language of the address (the coming-soon face has no /docs)", () => {

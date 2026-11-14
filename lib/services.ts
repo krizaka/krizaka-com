@@ -62,4 +62,5 @@ export const PRODUCT_DOMAINS: Record<ProductId, string> = {
   sovkora: "sovkora.com",
   verikora: "verikora.com",
   folioviv: "folioviv.com",
+  kridoc: "kridoc.com",
 };

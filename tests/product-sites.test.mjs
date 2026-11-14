@@ -13,7 +13,7 @@ const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf
 test("lib/retired-product-ids.json equals the org package's historic table, for the presented products", async () => {
   const { retiredProductIds } = await import("../scripts/gen-product-sites.mjs");
   assert.deepEqual(JSON.parse(read("lib/retired-product-ids.json")), retiredProductIds());
-  assert.deepEqual(Object.values(retiredProductIds()).sort(), ["folioviv", "sovkora", "verikora"]);
+  assert.deepEqual(Object.values(retiredProductIds()).sort(), ["folioviv", "kridoc", "sovkora", "verikora"]);
 });
 
 test("lib/product-sites.json equals @krizaka/org (run scripts/gen-product-sites.mjs when the package changes)", async () => {
@@ -33,6 +33,7 @@ test("each product's public address is its commercial www domain, from @krizaka/
       ["sovkora", "https://www.sovkora.com", "www.sovkora.com"],
       ["verikora", "https://www.verikora.com", "www.verikora.com"],
       ["folioviv", "https://www.folioviv.com", "www.folioviv.com"],
+      ["kridoc", "https://www.kridoc.com", "www.kridoc.com"],
     ],
   );
 });
