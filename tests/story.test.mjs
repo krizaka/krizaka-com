@@ -44,7 +44,7 @@ test("the chapters are, in order: who we are, the name, how we work, the engine,
   assert.ok(
     hasCode(
       lib,
-      "ROSTER: readonly ProductId[] = PRODUCTS.map((p) => p.id).filter((id) => id !== ENGINE && !PROVES_FIRST.includes(id))",
+      "ROSTER: readonly StoryProductId[] = PRODUCTS.map((p) => p.id).filter((id): id is StoryProductId => id !== ENGINE && !(PROVES_FIRST as readonly ProductId[]).includes(id) && !NOT_IN_STORY.includes(id))",
     ),
   );
   const pageFile = "app/[locale]/story/page.tsx";
@@ -140,18 +140,17 @@ test("the page's UI is the site's: one hero action, the brand scoped to its chip
       `${file}: the plate's caption`,
     );
   }
-  for (const file of ["app/components/home/ShowcaseStill.tsx"])
-    assert.ok(
-      jsx(file).some((e) => e.attrs.className === "rd-plate kz-show-stage"),
-      `${file}: the home's frames are the same plate`,
-    );
   assert.equal(cssDecls("app/globals.css", ".rd-plate")["box-shadow"], "4px 4px 0 var(--kz-border-strong)");
 });
 
 test("each chapter wears the right bird, with its promise from the film or the brand reference; no bird twice", () => {
   const map = objectMap("lib/story.ts", "PRODUCT_BIRD");
   assert.deepEqual(map, { sovkora: "duck", verikora: "owl", folioviv: "beaver" });
-  assert.deepEqual(Object.keys(map).sort(), [...productIds].sort(), "a bird for every product");
+  assert.deepEqual(
+    Object.keys(map).sort(),
+    productIds.filter((id) => id !== "kridoc").sort(),
+    "a bird for every product that has a chapter (Kridoc has none yet)",
+  );
   const who = constString("lib/story.ts", "WHO_BIRD");
   const open = constString("lib/story.ts", "OPEN_BIRD");
   const used = [who, open, ...Object.values(map)];
@@ -588,11 +587,11 @@ test("/story never links to the founder's blog (blog.krizaka.com)", () => {
     assert.doesNotMatch(read(file), /blog\.krizaka\.com|BLOG_URL/, file);
 });
 
-// Only Sovkora, Verikora and Folioviv are in focus; the rule `no-departed-product` (krizaka/.github#413) proves no other name is left.
+// Only Sovkora, Verikora, Folioviv and Kridoc are in focus; the rule `no-departed-product` (krizaka/.github#413) proves no other name is left.
 test("/story lists only the products in focus", () => {
   assert.deepEqual(
     [...productIds].sort(),
-    ["folioviv", "sovkora", "verikora"],
+    ["folioviv", "kridoc", "sovkora", "verikora"],
     "lib/products.ts lists only the products in focus",
   );
 });
@@ -667,13 +666,12 @@ test("the work chapter says how we work from the facts: lanes, the board, the tr
   }
 });
 
-test("each product says the home's line and status: the same messages and data, Kridoc from the products in conception", () => {
+test("each product says the home's line and status: the same messages and data, Kridoc on the board only", () => {
   assert.match(page, /<p>\{h\.cards\[id\]\.line\}<\/p>/, "a product chapter's line is the home card's");
   assert.match(page, /\{t\.site\.home\.engine\.line\}/, "the engine says the home's line");
   assert.match(page, /<ProductStatus status=\{p\.status\} t=\{t\} \/>/, "the status is the product's data");
   assert.match(page, /const board: Status\[\] = \["devPreview", "development", "construction", "paused"\];/);
-  assert.match(page, /IN_DESIGN\.map\(\(p\) =>/, "Kridoc is read from lib/products-in-design.ts");
-  assert.match(page, /t\.site\.home\.products\.inDesign\.lines\[p\.id\]/);
+  assert.doesNotMatch(page, /IN_DESIGN|inDesign/, "no product in design is left");
   assert.match(
     page,
     /\.filter\(\(u\) => product\(u\.id\)\.status !== "paused"\)/,

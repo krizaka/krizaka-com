@@ -14,27 +14,26 @@ const LINES = {
     verikora: "Lisez avant de signer. Verikora vérifie les papiers d'un dossier de location et cite chaque passage.",
     sovkora: "L'IA qui reste chez vous. Vos modèles, vos machines : vos données ne sortent pas.",
     folioviv: "Vos rendez-vous et vos factures réglés, vos taxes préparées.",
-    kridoc: "Vos documents d'entreprise, rangés et retrouvés.",
+    kridoc: "Les documents et fichiers de votre entreprise, rangés et retrouvés, pensés pour la Loi 25.",
   },
   en: {
     verikora: "Read before you sign. Verikora checks the papers of a rental file and quotes every passage.",
     sovkora: "The AI that stays home. Your models, your machines: your data stays in.",
     folioviv: "Your bookings and invoices sorted, your taxes prepared.",
-    kridoc: "Your company documents, filed and found.",
+    kridoc: "Your business documents and files, stored and found, built for Law 25.",
   },
 };
 
 test("each product's card says the canonical line, in both languages", () => {
   for (const l of ["fr", "en"]) {
-    for (const id of ["verikora", "sovkora", "folioviv"])
+    for (const id of ["verikora", "sovkora", "folioviv", "kridoc"])
       assert.equal(m[l].site.products.cards[id].line, LINES[l][id], `${l}: ${id}`);
-    assert.equal(m[l].site.home.products.inDesign.lines.kridoc, LINES[l].kridoc, `${l}: kridoc`);
   }
 });
 
-test("one status word per product: In development (all three), In design (Kridoc)", () => {
-  const status = Object.fromEntries(PRODUCTS.map((p) => [p.id, p.status]));
-  assert.deepEqual(status, { sovkora: "development", verikora: "development", folioviv: "development" });
+test("one status word per product: In development (all four)", () => {
+  assert.equal(PRODUCTS.length, 4);
+  assert.ok(PRODUCTS.every((p) => p.status === "development"));
   const labels = (l) => Object.fromEntries(Object.entries(m[l].site.nav.status).map(([k, v]) => [k, v.label]));
   assert.equal(labels("fr").development, "En développement");
   assert.equal(labels("fr").paused, "En pause");

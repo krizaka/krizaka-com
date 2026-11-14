@@ -13,6 +13,7 @@ export const PRODUCT_SITES = {
   sovkora: siteUrlOf("sovkora"),
   verikora: siteUrlOf("verikora"),
   folioviv: siteUrlOf("folioviv"),
+  kridoc: siteUrlOf("kridoc"),
 } as const;
 
 /** The retired ids that old links still carry, with the commercial id each became (`CODE_NAMES` of @krizaka/org, through

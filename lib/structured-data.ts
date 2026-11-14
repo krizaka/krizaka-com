@@ -48,6 +48,16 @@ const FAMILY = [
     app: true,
   },
   {
+    id: "kridoc",
+    name: displayName("kridoc"),
+    url: siteUrlOf("kridoc"),
+    repo: "kridoc",
+    // Its source is public under the Functional Source License, not Apache: the node names that licence.
+    license: "https://spdx.org/licenses/FSL-1.1-ALv2",
+    category: "BusinessApplication",
+    app: true,
+  },
+  {
     id: "krizaka-ui",
     name: "Krizaka UI",
     url: "https://ui.krizaka.com",
@@ -78,8 +88,12 @@ const appNode = (f: AppEntry, description: string) => ({
   applicationCategory: f.category,
   operatingSystem: "Web, iOS, Android",
   isAccessibleForFree: true,
-  license: "https://www.apache.org/licenses/LICENSE-2.0",
-  codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
+  ...("repo" in f
+    ? {
+        license: "license" in f ? f.license : "https://www.apache.org/licenses/LICENSE-2.0",
+        codeRepository: `${GITHUB_ORG_URL}/${f.repo}`,
+      }
+    : {}),
   publisher: { "@id": ORG_ID },
 });
 

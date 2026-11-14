@@ -392,34 +392,5 @@
   },
   "libraries": {
     "media-library": "~/Documents/krizaka/data/media-library/generated-2026-11"
-  },
-  "stills": {
-    "$comment": "A product in conception shows one still, not a carousel (founder, 2026-11-06, krizaka-internal#2802): a mood photo of the job it will do, never an app screen, in the carousels' look. Made locally with FLUX.2 [klein] 4B through mflux on the Mac's GPU (the engine of the blog's image series), under heavy-lock.sh, no paid run: mflux-generate-flux2 --model flux2-klein-4b --quantize 8 --steps 4 --width 1280 --height 720 --seed <seed> --prompt <prompt>. Then the carousels' grade (warm lamp light, blue-hour shadows kept, soft S-curve, light vignette, a film frame's softness, 35 mm grain) and the posters' encode (ffmpeg -q:v 4), uploaded with scripts/cdn-assets.mjs under home/showcase/<product>/<id>-wide.jpg. Each take was looked at in full size for a logo, a screen, readable text or a broken hand.",
-    "kridoc": {
-      "id": "cabinet",
-      "idea": "Mireille, who runs a neighbourhood hardware store in Montréal, pulls the sheet she was looking for from her filing cabinet, at blue hour",
-      "made": "locally, on the Mac's GPU (2026-11-06)",
-      "model": "FLUX.2 [klein] 4B (black-forest-labs, Apache-2.0), mflux, q8, 4 steps",
-      "seed": 2711,
-      "prompt": "Cinematic 35 mm film still, wide 16:9 frame, shallow depth of field, soft film grain, natural candid documentary photography. Montreal, evening, dark and warm: the warm light of one lamp, deep blue shadows from a window at blue hour, real textures, red brick, old wood. No text, no readable writing, no logo, no sign, no screen visible. In the back office of a small family hardware store in Montreal, a woman in her forties with curly dark hair and reading glasses pushed up on her head, wearing a denim work shirt, pulls one folder out of an open drawer of an old wooden filing cabinet and looks at it with a quiet smile of relief. Shelves of cardboard archive boxes and binders behind her, a brick wall, a window at blue hour.",
-      "credits": 0,
-      "candidates": [
-        {
-          "id": "cabinet",
-          "seed": 2711,
-          "note": "kept: the act of finding, the lamp and the blue hour of the other posters, no logo, no screen"
-        },
-        {
-          "id": "counter",
-          "seed": 2711,
-          "note": "a baker holds up the sheet he found at his counter; good, but the found document is less the subject"
-        },
-        {
-          "id": "desk",
-          "seed": 5309,
-          "note": "set aside: a laptop lid carries a brand-like mark and the sheet shows pseudo-text"
-        }
-      ]
-    }
   }
 }

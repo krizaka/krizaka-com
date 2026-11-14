@@ -22,7 +22,7 @@ function snapshot(): ChannelState {
 export function publicChannels(): ChannelGroup[] {
   const stack = STACK.map(({ id, name, repoUrl }) => ({ id, name, repoUrl }));
   return buildPublicChannels(
-    PRODUCTS.map(({ id, name, repoUrl }) => ({ id, name, repoUrl })),
+    PRODUCTS.flatMap(({ id, name, repoUrl }) => (repoUrl ? [{ id, name, repoUrl }] : [])),
     stack,
     snapshot(),
   );

@@ -7,8 +7,13 @@
 
 import sites from "./product-sites.json" with { type: "json" };
 
-export const PRODUCT_IDS = ["sovkora", "verikora", "folioviv"] as const;
+export const PRODUCT_IDS = ["sovkora", "verikora", "folioviv", "kridoc"] as const;
 export type ProductId = (typeof PRODUCT_IDS)[number];
+
+/** The products that publish releases (the changelog's chips, its release-notes link): Kridoc's source is public and it cuts releases,
+ *  but krizaka/.github's release-repos.json does not list it yet, so the changelog has nothing of it to filter: no chip and no
+ *  « Release notes » until it does (krizaka-internal#3559). */
+export const RELEASE_PRODUCT_IDS = ["sovkora", "verikora", "folioviv"] as const satisfies readonly ProductId[];
 
 /** The public origin of a product (`https://www.verikora.com`). */
 export const siteUrlOf = (id: ProductId): string => (sites as Record<ProductId, string>)[id];

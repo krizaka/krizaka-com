@@ -291,11 +291,6 @@
   font-weight: 600;
   color: var(--kz-text-primary);
 }
-.st-board-note {
-  margin: 6px 0 0;
-  font-size: 13px;
-  color: var(--kz-text-secondary);
-}
 
 /* ═══ A PRODUCT'S TAKE (in its fold) — a poster on the plate, the recording plays on click in a lightbox ═══ */
 .st-take {

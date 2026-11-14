@@ -2,7 +2,7 @@
    back and forward and a reload all keep it. Pure, tested by tests/changelog.test.mjs. */
 
 import { CODE_NAMES, displayName } from "@krizaka/org";
-import { PRODUCT_IDS } from "./product-hosts.ts";
+import { RELEASE_PRODUCT_IDS as PRODUCT_IDS } from "./product-hosts.ts";
 
 export const FILTER_PARAM = "produit";
 /** Every filter, in the order of the chips: the products, then the open-source stack. */

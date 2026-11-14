@@ -72,7 +72,7 @@ test("every link to the products leads to the home's section, never to /products
 test("the family: every product on its own site, the stack on its subdomains, and GitHub", () => {
   assert.deepEqual(
     products.map((p) => p.id),
-    ["sovkora", "verikora", "folioviv"],
+    ["sovkora", "verikora", "folioviv", "kridoc"],
   );
   // A product is reached at its public address, its commercial www domain (@krizaka/org) — never a code-name or dev host.
   for (const p of products) {
@@ -90,9 +90,14 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
-test("the products' statuses: Verikora and Sovkora in development, Folioviv in development, as the org data says (Sovkora left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
+test("the products' statuses: all four in development (Kridoc's via ORG_PENDING until the org lists it) (Sovkora left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
   const status = Object.fromEntries(PRODUCTS.map((p) => [p.id, p.status]));
-  assert.deepEqual(status, { sovkora: "development", verikora: "development", folioviv: "development" });
+  assert.deepEqual(status, {
+    sovkora: "development",
+    verikora: "development",
+    folioviv: "development",
+    kridoc: "development",
+  });
 });
 
 test("the bar has no Docs entry and no search outside /docs; the footer has no Docs column", () => {

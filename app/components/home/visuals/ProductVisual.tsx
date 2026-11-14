@@ -8,7 +8,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import type { ProductId } from "@/lib/products";
+import type { ProductId } from "./ProductVisuals";
 
 const ProductVisuals = dynamic(() => import("./ProductVisuals"), { ssr: false });
 

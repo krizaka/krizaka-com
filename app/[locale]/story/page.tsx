@@ -14,7 +14,6 @@ import { watchPath } from "@/lib/watch-films";
 import { asLocale, format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { publicRepositoryCount } from "@/lib/org-stats";
 import { PRODUCTS, type Product, type ProductStatus as Status } from "@/lib/products";
-import { IN_DESIGN } from "@/lib/products-in-design";
 import { publishedCount } from "@/lib/registry-versions";
 import {
   COMPANY_CHAPTERS,
@@ -34,6 +33,7 @@ import ButtonLink from "@/app/components/ButtonLink";
 import FigureTiles from "@/app/components/FigureTiles";
 import Rich from "@/app/components/Rich";
 import { ProductStatus } from "@/app/components/ProductStatus";
+import { ProductMark } from "@/app/components/ProductMark";
 import { StackTiles } from "@/app/components/home/OpenStack";
 import ClipFigure from "@/app/components/story/ClipFigure";
 import FilmCredits from "@/app/components/story/FilmCredits";
@@ -138,7 +138,7 @@ export default async function StoryPage({ params }: Props) {
         const back = new Intl.ListFormat(locale, { type: "conjunction" }).format(u.back.map((b) => e.back[b]));
         return (
           <li key={u.id} className={"brand-" + u.id} data-planned={u.planned ? "" : undefined}>
-            <ProductLogo id={u.id} size={22} animated={false} />
+            <ProductMark id={u.id} size={22} />
             <span>
               <strong>{p.name}</strong> — {e.uses[u.id as keyof typeof e.uses]}
               {u.planned ? ` (${e.planned})` : ""} · {format(e.gets, { list: back })}
@@ -211,9 +211,11 @@ export default async function StoryPage({ params }: Props) {
             <ButtonLink href={p.siteUrl} variant="primary">
               {h.visit} <ForwardIcon size={14} />
             </ButtonLink>
-            <ButtonLink href={p.repoUrl} variant="ghost" ariaLabel={format(h.sourceAria, { name: p.name })}>
-              {h.source}
-            </ButtonLink>
+            {p.repoUrl && (
+              <ButtonLink href={p.repoUrl} variant="ghost" ariaLabel={format(h.sourceAria, { name: p.name })}>
+                {h.source}
+              </ButtonLink>
+            )}
           </>
         }
       />
@@ -239,30 +241,13 @@ export default async function StoryPage({ params }: Props) {
             <ul>
               {list.map((p) => (
                 <li key={p.id} className={"brand-" + p.id}>
-                  <ProductLogo id={p.id} size={20} animated={false} /> {p.name}
+                  <ProductMark id={p.id} size={20} /> {p.name}
                 </li>
               ))}
             </ul>
           </div>
         );
       })}
-      {IN_DESIGN.length > 0 && (
-        <div className="st-board-col" data-status="design">
-          <p className="st-board-label">
-            <ProductStatus status="design" t={t} />
-          </p>
-          <ul>
-            {IN_DESIGN.map((p) => (
-              <li key={p.id}>{p.name}</li>
-            ))}
-          </ul>
-          {IN_DESIGN.map((p) => (
-            <p key={p.id} className="st-board-note">
-              {t.site.home.products.inDesign.lines[p.id]}
-            </p>
-          ))}
-        </div>
-      )}
     </div>
   );
 

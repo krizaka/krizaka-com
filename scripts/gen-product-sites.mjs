@@ -7,7 +7,7 @@
 import { writeFileSync } from "node:fs";
 import { CODE_NAMES, brandOf } from "@krizaka/org";
 
-const IDS = ["sovkora", "verikora", "folioviv"];
+const IDS = ["sovkora", "verikora", "folioviv", "kridoc"];
 export const productSites = () => Object.fromEntries(IDS.map((id) => [id, new URL(brandOf(id).domains.site).origin]));
 
 /** The retired product ids and the commercial id each became: the old links the site still accepts, never produces. */

@@ -12,16 +12,13 @@ export function folioOf(section: HomeSection): { page: number; total: number } {
 }
 
 /** The products' rows on the home (founder, 2026-11-06, krizaka-internal#2714; was Verikora, Sovkora, Folioviv in #2450):
- *  Sovkora, the engine the products run on, first, then Verikora, then Folioviv, then any other product as listed. */
-export const PRODUCT_ORDER = ["sovkora", "verikora", "folioviv"] as const;
+ *  Sovkora, the engine the products run on, first, then Verikora, then Folioviv, then Kridoc, then any other product as listed. */
+export const PRODUCT_ORDER = ["sovkora", "verikora", "folioviv", "kridoc"] as const;
 
 /** The one product the home serves (krizaka-internal#2445): its reader is the property manager, so the hero's primary
  *  action writes to us on this product's topic of the contact form (lib/contact.ts), and its figure shows this product first. */
 export const HOME_PRODUCT = "verikora" satisfies ContactProduct;
 
-/** The home's one figure: the still of the product in conception (« Fig. 1 »). The hero has none: no carousel (krizaka-internal#3243). */
-// @fixed: the still is the page's first and only figure, a fact of the page's order.
-export const STILL_FIGURE = 1;
 export function productOrder<T extends { id: string }>(products: readonly T[]): T[] {
   const rank = (id: string) => {
     const i = (PRODUCT_ORDER as readonly string[]).indexOf(id);

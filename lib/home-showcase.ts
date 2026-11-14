@@ -10,9 +10,7 @@
    A slide may also be a finished film played whole with its sound (krizaka-internal#2837, founder 2026-11-07: the Sovkora
    trailer is the hero's first slide and Sovkora's): « films » of the storyboard, its full cut, a lighter cut for phones and
    its poster under products/<product>/films/; its words are site.home.films.<id>, its transcript in the text version.
-   A product in conception has no carousel: it shows one still (founder, 2026-11-06, krizaka-internal#2802), a mood photo
-   in the carousels' look and frame, made locally (« stills » of the storyboard: model, seed, prompt). Its poster is read from
-   the manifest like a slide's; its words are site.home.showcase.stills.<product>. */
+   No product shows a mood photo any more: Kridoc, the last one, is a row like the others (krizaka-internal#3559). */
 
 import board from "../content/films/home-showcase.json" with { type: "json" };
 
@@ -55,9 +53,6 @@ interface BoardItem {
   library?: boolean;
   film?: boolean;
   audio?: boolean;
-}
-interface BoardStill {
-  id: string;
 }
 interface BoardCarousel {
   order: string[];
@@ -164,24 +159,6 @@ export function showcaseSlides(carousel: Showcase): ShowcaseSlideSpec[] {
   });
 }
 
-/** The products in conception that show a still, by their id (lib/products-in-design.ts). */
-export const STILLS = ["kridoc"] as const;
-export type Still = (typeof STILLS)[number];
-
-export interface ShowcaseStillSpec {
-  product: Still;
-  id: string;
-  /** The logical path of the photo on the CDN: a 1280x720 JPEG, like a slide's poster. Nothing moves, so it is also the
-   *  reduced-motion still. */
-  poster: string;
-}
-
-/** The still of a product in conception. */
-export function showcaseStill(product: Still): ShowcaseStillSpec {
-  const still = (board.stills as Record<Still, BoardStill>)[product];
-  return { product, id: still.id, poster: `${renditionBase(product, still.id)}.jpg` };
-}
-
 /** The seconds a slide's loop lasts (measured on its file, the storyboard's `durations`), or undefined when not measured. */
 export const slideSeconds = (id: string): number | undefined =>
   (board.durations as Record<string, number | string>)[id] as number | undefined;
@@ -189,7 +166,7 @@ export const slideSeconds = (id: string): number | undefined =>
 /** The files of a slide: its videos and its poster. */
 export const filesOf = (s: ShowcaseSlideSpec): string[] => [...s.videos.map((v) => v.path), s.poster];
 
-/** What is wrong with the carousels and the stills, as sentences (empty: fine). `has` is lib/cdn.ts's onCdn. */
+/** What is wrong with the carousels and the films, as sentences (empty: fine). `has` is lib/cdn.ts's onCdn. */
 export function showcaseProblems(has: (path: string) => boolean): string[] {
   const carousels = SHOWCASES.flatMap((carousel) => {
     const slides = showcaseSlides(carousel);
@@ -210,8 +187,5 @@ export function showcaseProblems(has: (path: string) => boolean): string[] {
       .filter((path) => !has(path))
       .map((path) => `film/${id}: ${path} is not in the CDN manifest`);
   });
-  const stills = STILLS.map(showcaseStill)
-    .filter((s) => !has(s.poster))
-    .map((s) => `${s.product}/${s.id}: ${s.poster} is not in the CDN manifest`);
-  return [...carousels, ...films, ...stills];
+  return [...carousels, ...films];
 }

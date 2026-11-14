@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import {
-  PRODUCT_RECORDS,
+  STORY_PRODUCT_IDS,
   calls,
   cssDecls,
   cssSelectors,
@@ -23,7 +23,7 @@ const CSS = "app/components/home/visuals/visuals.css";
 const frame = read(FRAME);
 const visuals = read(VISUALS);
 const css = read(CSS);
-const ids = PRODUCT_RECORDS().map((p) => p.id);
+const ids = STORY_PRODUCT_IDS();
 
 // 2026-11-01 (krizaka-internal#683): every product, the engine included, has its plate (a product moment), drawn on /story.
 // Since 2026-11-05 (krizaka-internal#2450) the home's entries show a carousel of real media instead (tests/home-showcase.test.mjs).

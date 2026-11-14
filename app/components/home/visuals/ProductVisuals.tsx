@@ -19,7 +19,10 @@ import { AiIcon, BillingIcon, CalendarIcon, KnowledgeIcon, LocalIcon, WarningIco
 import { ProductLogo } from "@krizaka/ui";
 import { Badge } from "@krizaka/ui/badge";
 import { format } from "@/lib/i18n";
-import type { ProductId } from "@/lib/products";
+import type { ProductId as AnyProductId } from "@/lib/products";
+
+/** The products that have a plate: Kridoc has none (nothing of it is drawn). */
+export type ProductId = Exclude<AnyProductId, "kridoc">;
 import {
   FOLIOVIV_INVOICE,
   FOLIOVIV_PRICE,

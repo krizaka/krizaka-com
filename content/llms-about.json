@@ -2,7 +2,8 @@
   "products": {
     "sovkora": "the AI engine our products run on, on the operator's own infrastructure; it holds no certification",
     "verikora": "the papers of a rental file read and checked: leases against the law in force on their date, every finding quoted, every run traced",
-    "folioviv": "bookings, bilingual invoices with GST/QST and a tax ledger for independent Québec shops; it prepares the GST/QST return, the merchant reviews and files it; not for restaurants and bars"
+    "folioviv": "bookings, bilingual invoices with GST/QST and a tax ledger for independent Québec shops; it prepares the GST/QST return, the merchant reviews and files it; not for restaurants and bars",
+    "kridoc": "business documents and files storage, built with Québec's Law 25 in mind; in development, its source is not public yet"
   },
   "stack": {
     "ui": "the design system of every Krizaka site and product: web and native components, tokens, icons, page blocks and templates (its own index: https://ui.krizaka.com/llms.txt)",

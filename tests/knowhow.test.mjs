@@ -1,13 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { PRODUCT_RECORDS } from "./helpers/source.mjs";
+import { STORY_PRODUCT_IDS } from "./helpers/source.mjs";
 
 // Krizaka's story is its know-how (2026-10-14): each product proves one thing the studio knows how to do. The home,
 // /open-source and /story are cut that way; a product added to lib/products.ts must say what it proves.
 const read = (file) => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
 const messages = (lang) => JSON.parse(read(`messages/${lang}.json`)).site;
-const ids = PRODUCT_RECORDS().map((p) => p.id);
+const ids = STORY_PRODUCT_IDS();
 
 test("every product of lib/products.ts proves a know-how, in both languages", () => {
   assert.ok(ids.length >= 3, ids.join());

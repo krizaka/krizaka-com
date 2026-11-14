@@ -148,6 +148,9 @@
         },
         "folioviv": {
           "line": "Vos rendez-vous et vos factures réglés, vos taxes préparées."
+        },
+        "kridoc": {
+          "line": "Les documents et fichiers de votre entreprise, rangés et retrouvés, pensés pour la Loi 25."
         }
       },
       "proofBy": "Prouvé par {name}",
@@ -234,7 +237,7 @@
       "products": {
         "number": "§ 2",
         "title": "Nos produits : des outils de gestion et de conformité, et le moteur qui les fait tourner.",
-        "lead": "Sovkora, notre moteur, fait tourner l'IA de nos produits. Verikora vérifie les papiers : baux, contrats, factures. Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Chacun vit sur son propre site, avec son code sur GitHub.",
+        "lead": "Sovkora, notre moteur, fait tourner l'IA de nos produits. Verikora vérifie les papiers : baux, contrats, factures. Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Kridoc range les documents et fichiers d'une entreprise. Chacun vit sur son propre site.",
         "engineUse": "Sur Sovkora · {use}",
         "enginePlanned": "Sur Sovkora, prévu · {use}",
         "flow": {
@@ -261,18 +264,13 @@
         "notes": {
           "sovkora": "Chaque requête traverse un même pipeline déterministe jusqu’à un modèle local : vos documents, vos modèles, votre réseau. Rien ne sort.",
           "verikora": "Un bail est vérifié règle par règle selon le droit en vigueur à sa date ; chaque constat cite son passage, chaque vérification est une exécution Sovkora tracée.",
-          "folioviv": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise."
+          "folioviv": "Des factures bilingues avec TPS et TVQ au cent près, un grand livre que la base garde équilibré, et la déclaration de TPS/TVQ préparée pour que le commerçant la produise.",
+          "kridoc": "Kridoc range les documents et fichiers d'une entreprise, avec la Loi 25 du Québec en tête. Il est en développement."
         },
         "birds": {
           "beaver": "le castor"
         },
-        "inDesign": {
-          "label": "En conception",
-          "lines": {
-            "kridoc": "Vos documents d'entreprise, rangés et retrouvés."
-          }
-        },
-        "rowLabel": "Nos trois produits, le moteur au centre",
+        "rowLabel": "Nos quatre produits, le moteur d'abord",
         "roles": {
           "verikora": "vérifie les papiers",
           "sovkora": "le moteur",
@@ -487,12 +485,6 @@
           "clip": "Les plans marqués « généré avec Sovkora » ont été générés par notre moteur (Wan 2.2) pour le blogue ; le film de la marque aussi.",
           "library": "Quelques plans viennent de la médiathèque de Krizaka : des images générées, sans texte, sans visage ni marque.",
           "film": "La bande-annonce de Sovkora est un film de Krizaka : tous ses personnages sont générés (aucune personne réelle), elle ne montre aucun écran de l'app et sa musique est originale. Les Dossiers Sovkora sont des histoires inventées, aux visages générés."
-        },
-        "stills": {
-          "kridoc": {
-            "caption": "Kridoc est en conception : vos documents d'entreprise, rangés et retrouvés",
-            "alt": "Photo d'ambiance générée : Mireille, qui tient une quincaillerie de quartier à Montréal, tire de son classeur en bois la feuille qu'elle cherchait et sourit, sous une lampe, des boîtes d'archives derrière elle et une fenêtre à l'heure bleue."
-          }
         },
         "slides": {
           "hero": {
@@ -1455,7 +1447,8 @@
         "krizaka-ui": "Le design system de Krizaka : composants React et React Native, tokens, icônes, polices et graphiques.",
         "krizaka-java": "Les briques Spring Boot de chaque service Krizaka, publiées sur Maven Central sous com.krizaka.",
         "verikora": "Des baux, contrats et factures lus et vérifiés par Sovkora. En développement.",
-        "folioviv": "Vos rendez-vous, vos factures et vos taxes, réglés, pour les salons, studios et travailleurs autonomes du Québec. En développement."
+        "folioviv": "Vos rendez-vous, vos factures et vos taxes, réglés, pour les salons, studios et travailleurs autonomes du Québec. En développement.",
+        "kridoc": "Stockage de documents et fichiers d'entreprise, pensé pour la Loi 25 du Québec. En développement."
       },
       "socialImage": {
         "tagline": "Des logiciels open source, faits à Montréal.",

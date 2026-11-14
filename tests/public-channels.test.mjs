@@ -17,7 +17,10 @@ const consts = Object.fromEntries(
 );
 const resolve = (expr) =>
   /^https:/.test(expr) ? expr : orgRepo(expr) ? `https://github.com/krizaka/${orgRepo(expr)}` : consts[expr];
-const products = PRODUCT_RECORDS().map((p) => ({ id: p.id, name: p.name, repoUrl: resolve(p.repoUrl) }));
+// Kridoc's repository is private: it has no repoUrl, so no public channel (krizaka-internal#3559).
+const products = PRODUCT_RECORDS()
+  .filter((p) => p.repoUrl)
+  .map((p) => ({ id: p.id, name: p.name, repoUrl: resolve(p.repoUrl) }));
 const stack = records("lib/stack.ts", "STACK").map((p) => ({ id: p.id, name: p.name, repoUrl: resolve(p.repoUrl) }));
 
 const state = {

@@ -1,7 +1,7 @@
 /* What a buyer will love in each product, said on its card of the home in one discreet line (founder, 2026-11-06,
    krizaka-internal#2695: « vous allez adorer le pack cinéma »). Only what exists and runs today: every feature here names
    its source, the repository and the file that does it, so a line can be checked against the code. No price, no date, no
-   figure. A product in conception (lib/products-in-design.ts) has none: nothing of it is built yet.
+   figure. Kridoc has none yet: nothing of it is built that a line could cite.
    Structure only: the line a card shows is the message site.home.products.highlights.<product>. */
 
 import type { ProductId } from "./product-hosts.ts";
@@ -23,7 +23,8 @@ export interface ProductHighlight {
   highlight: string;
 }
 
-export const PRODUCT_HIGHLIGHTS: Record<ProductId, ProductHighlight> = {
+/** Kridoc has none yet: nothing of it is built that a line could cite. */
+export const PRODUCT_HIGHLIGHTS: Record<Exclude<ProductId, "kridoc">, ProductHighlight> = {
   verikora: {
     features: [
       {
