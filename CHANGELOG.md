@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.34.0](https://github.com/krizaka/krizaka-com/compare/v0.33.6...v0.34.0) (2026-11-13)
+
+
+### Features
+
+* **home:** no carousel left, films on their watch pages ([#699](https://github.com/krizaka/krizaka-com/issues/699)) ([2fe0a5a](https://github.com/krizaka/krizaka-com/commit/2fe0a5a48b58d717cf6388ef6bd8bc837797b3f0))
+
 ## [0.33.6](https://github.com/krizaka/krizaka-com/compare/v0.33.5...v0.33.6) (2026-11-13)
 
 
