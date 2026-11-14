@@ -177,9 +177,9 @@
 ## 2.4 Search engines & AI assistants — one contract for the whole family
 
 - Every Krizaka site (www · ui. · java. · the products' commercial www domains · the dev.<code>.com hosts · the admin consoles) owes
-  the same files, checked by **`scripts/check-seo-family.mjs`** — one dependency-free file, copied unchanged into each
-  site's repository (keep the copies identical; its unit test is `tests/check-seo-family.test.mjs`). CI runs it against the
-  container: `node scripts/check-seo-family.mjs --base http://localhost:3000 --host https://www.krizaka.com --organization`.
+  the same files, checked by **`krizaka-seo-family`** — the one dependency-free audit, shipped as a bin of
+  `@krizaka/config` (never copied into a repository; its tests live in krizaka-ts). `npm run seo:check` runs it against the
+  container (CI does): `krizaka-seo-family --base http://localhost:3000 --host https://www.krizaka.com --organization --types Organization,WebSite`.
 - `robots.txt` with a `Sitemap:` line on the site's host and the **same AI-crawler list everywhere, allowed** on public
   sites (GPTBot, OAI-SearchBot, ChatGPT-User, ClaudeBot, Claude-SearchBot, Claude-User, anthropic-ai, PerplexityBot,
   Perplexity-User, Google-Extended, Applebot(-Extended), Bingbot, CCBot); `sitemap.xml` with hreflang alternates en/fr and
@@ -189,7 +189,7 @@
 - Indexing policy (epic krizaka/.github#119, 2026-10-21; public addresses 2026-11-04): **indexed** — www.krizaka.com, ui., java.
   and the products' public addresses, their commercial www domains (www.verikora.com…; the apex answers 308 with www);
   **`noindex`** — every `dev.<code>.com` (robots `Disallow: /`, `X-Robots-Tag: noindex`; its pages answer 308 to its www, its
-  API keeps serving — checked by `check-seo-family.mjs --redirects-to https://www.<code>.com`) and both `admin.*` consoles — but they still serve
+  API keeps serving — checked by `krizaka-seo-family --redirects-to https://www.<code>.com`) and both `admin.*` consoles — but they still serve
   correct files for the day they open. Providers (Stripe, Google…) are given the www URLs, never a dev host.
   Search Console / Bing verification is by DNS TXT record, never a file or a token in the repository; the sitemap to submit
   is the commercial domain's (`https://www.verikora.com/sitemap.xml`…).
