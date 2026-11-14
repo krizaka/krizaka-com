@@ -90,7 +90,7 @@ test("the family: every product on its own site, the stack on its subdomains, an
   assert.equal(siteById("krizaka").url, "https://www.krizaka.com");
 });
 
-test("the products' statuses: all four in development (Kridoc's via ORG_PENDING until the org lists it) (Sovkora left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
+test("the products' statuses: all four in development (Sovkora left Dev preview on 2026-10-25; the checklists gate it: tests/dev-preview.test.mjs)", () => {
   const status = Object.fromEntries(PRODUCTS.map((p) => [p.id, p.status]));
   assert.deepEqual(status, {
     sovkora: "development",

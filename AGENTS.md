@@ -65,8 +65,7 @@
   Its line says business documents and files storage with Law 25 in mind, never hosting or databases, no price. It has **no mood photo** (the
   stills, `ShowcaseStill` and `lib/products-in-design.ts` are gone). Its mark is `KridocLogo` through `ProductMark` (`@krizaka/ui`'s `ProductLogo`
   has no Kridoc palette). Its repository is public since 2026-11-14 (FSL-1.1-ALv2): `repoUrl` gives its « Source » and the JSON-LD node its source and licence (FSL, not Apache). No « Release notes » and no public channel yet: `krizaka/.github`'s `release-repos.json` does not list it, so the changelog has nothing of it. It is left out of `/story`'s chapters (`NOT_IN_STORY`), the changelog's chips (`RELEASE_PRODUCT_IDS`), the plates and the highlights
-  (nothing of it is drawn or cited yet) and the mobile discovery document. **Its status is a waiver**: `@krizaka/org` 1.3.0 does not list Kridoc in
-  `org.products`, so `ORG_PENDING` (`lib/product-status.ts`) holds it and `tests/kridoc-product.test.mjs` fails the day the org lists it.
+  (nothing of it is drawn or cited yet) and the mobile discovery document. Its status is read from `org.products` like the others (`@krizaka/org` >= 1.5.0).
 - The site's media (Krizaka UI's home gallery, posters) live on Bunny, never in `public/` (§5.2). The CDN manifest names
   only what is still drawn: `home/kit`, `home/kit-native`, `people/**`, the products' real takes that `/story` plays in its lightbox (`lib/story-takes.ts`: a poster per product, the recording on click, in the chapter's fold), and `brand-films/**` — the
   brand film « Montrer son travail » (`lib/brand-film.ts`, made with Sovkora, approved 2026-11-01: the home's « Watch the
