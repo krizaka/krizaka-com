@@ -5,7 +5,7 @@
 
 import { releasesUrl } from "./library-links.ts";
 import retiredIds from "./retired-product-ids.json" with { type: "json" };
-import { groupOfPackage, summary, type NpmGroup } from "./npm-catalogue.ts";
+import { groupOfPackage, summary } from "./npm-catalogue.ts";
 
 export type Registry = "npm" | "maven";
 
@@ -15,7 +15,7 @@ export interface PackageRow {
   name: string;
   registry: Registry;
   /** npm: the group its keywords name (ui · data · realtime · tooling); Maven: the module under krizaka-parent it belongs to. */
-  family: NpmGroup | string;
+  family: string;
   /** What it is, in one line (the first clause of the registry's description). */
   line: string;
   version: string;

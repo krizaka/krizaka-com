@@ -115,7 +115,7 @@ export async function readPrs(objects, { token, org = "krizaka", fetchImpl = glo
   const seen = new Set();
   for (const o of objects) {
     const k = prKeyOf(o.path);
-    if (!k || k.pr === null || seen.has(`${k.repo}#${k.pr}`)) {
+    if ((k?.pr ?? null) === null || seen.has(`${k.repo}#${k.pr}`)) {
       continue;
     }
     seen.add(`${k.repo}#${k.pr}`);

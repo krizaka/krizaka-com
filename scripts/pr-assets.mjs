@@ -24,6 +24,7 @@ import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
 import { assertUnder, layoutHelp } from "./bunny-layout.mjs";
 import { runAsMain } from "./run-main.mjs";
+import { trimEnd } from "./trim-end.mjs";
 
 export const PREFIX = "pr-assets";
 
@@ -56,10 +57,13 @@ const kind = (file) => contentTypeFor(file).split("/")[0];
 
 /** A path segment safe for a storage key: `feat/x y` → `feat-x-y`. */
 export function slug(value, name) {
-  const s = String(value ?? "")
-    .trim()
-    .replace(/[^A-Za-z0-9._-]+/g, "-")
-    .replace(/^-+|-+$/g, "");
+  const s = trimEnd(
+    String(value ?? "")
+      .trim()
+      .replace(/[^\w.-]+/g, "-")
+      .replace(/^-+/, ""),
+    "-",
+  );
   if (!s || s === "." || s === "..") throw new Error(`--${name} is required (letters, digits, . _ -)`);
   return s;
 }
@@ -85,21 +89,18 @@ export function parseArgs(argv) {
 export function parseEnvFile(text) {
   const env = {};
   for (const line of text.split(/\r?\n/)) {
-    const m = line.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
+    const m = /^\s*(?:export\s+)?([A-Za-z_]\w*)\s*=(.*)$/.exec(line);
     if (!m) continue;
     let v = m[2].trim();
     if (/^(['"]).*\1$/.test(v)) v = v.slice(1, -1);
-    else v = v.replace(/\s+#.*$/, "");
+    else v = v.replace(/(?<!\s)\s+#.*$/, "");
     env[m[1]] = v;
   }
   return env;
 }
 
 const host = (v) =>
-  String(v ?? "")
-    .trim()
-    .replace(/^https?:\/\//, "")
-    .replace(/\/+$/, "");
+  trimEnd(String(v ?? "").trim().replace(/^https?:\/\//, ""), "/");
 
 export function loadConfig(env, { requireKey = true } = {}) {
   const cfg = {
@@ -181,10 +182,11 @@ export async function upload({ dir, repo, key, cfg, dryRun = false, fetchImpl = 
  * into `https://<pull zone>/pr-assets/<repo>/<key>/<file>`.
  */
 export function rewriteLinks(text, { repo, from = "docs/screenshots", cfg, owner = "krizaka" }) {
-  const dir = from.replace(/^\.?\/+|\/+$/g, "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const gh = `https://(?:github\\.com/${owner}/${repo}/(?:blob|raw)/[^/\\s]+|raw\\.githubusercontent\\.com/${owner}/${repo}/[^/\\s]+)/`;
+  const dir = trimEnd(from.replace(/^\.?\/+/, ""), "/").replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
+  const END = String.raw`\s)"'` + "`<>";
+  const gh = String.raw`https://(?:github\.com/${owner}/${repo}/(?:blob|raw)/[^/\s]+|raw\.githubusercontent\.com/${owner}/${repo}/[^/\s]+)/`;
   const re = new RegExp(
-    `(?:${gh}|(?<![\\w/.-])(?:\\.{1,2}/)*)${dir}/([^\\s)"'\`<>]+?)(\\?raw=true)?(?=[\\s)"'\`<>]|$)`,
+    String.raw`(?:${gh}|(?<![\w/.-])(?:\.{1,2}/)*)${dir}/([^${END}]+?)(\?raw=true)?(?=[${END}]|$)`,
     "g",
   );
   let count = 0;

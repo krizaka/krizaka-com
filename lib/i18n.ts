@@ -30,7 +30,7 @@ const fr: TranslationDictionary = frMessages;
 
 export const i18n = createI18n<TranslationDictionary, Locale>({ fr, en }, { defaultLocale: DEFAULT_LOCALE });
 
-export function getDictionary(locale: Locale | string): TranslationDictionary {
+export function getDictionary(locale: string): TranslationDictionary {
   return i18n.getDictionary(locale);
 }
 

@@ -29,7 +29,7 @@ export interface Redirect {
 }
 
 /** A browser that asks for English and never French (the rule of lib/locale-negotiation.ts, as a header regex). */
-const ENGLISH_ONLY = [{ type: "header", key: "accept-language", value: "^(?!.*\\bfr).*\\ben" }] as Redirect["has"];
+const ENGLISH_ONLY = [{ type: "header", key: "accept-language", value: String.raw`^(?!.*\bfr).*\ben` }] as Redirect["has"];
 
 /** An address without a locale goes to its final page in ONE hop: the locale proxy would add a second one (`/` → `/fr`). */
 const homeSection = (source: string, section: string): Redirect[] => [

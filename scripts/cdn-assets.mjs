@@ -50,6 +50,7 @@ import {
 } from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 import { runAsMain } from "./run-main.mjs";
+import { trimEnd } from "./trim-end.mjs";
 
 /** The manifest root of layout v2 (ADR-014): entries resolve under sites/, org/v1/films/ and apps/ (manifestObject). "site" is the legacy root. */
 export const ROOT = "sites";
@@ -69,9 +70,7 @@ export function versioned(path, hash) {
 
 /** A logical path: lower-case segments of letters, digits, `-` and `_`, an extension. */
 export function logicalPath(value, name = "to") {
-  const p = String(value ?? "")
-    .trim()
-    .replace(/^\/+|\/+$/g, "");
+  const p = trimEnd(String(value ?? "").trim().replace(/^\/+/, ""), "/");
   if (!/^[a-z0-9_-]+(\/[a-z0-9_-]+)*(\.[a-z0-9]+)?$/.test(p))
     throw new Error(`--${name} "${value}" is not a path like products/folioviv/tour`);
   const area = p.split("/")[0];
@@ -244,8 +243,7 @@ export async function prune({
   // Until the release that reads layout v2 is live (krizaka-com#450), the legacy copy of every current entry serves too.
   const legacyNamed = entries.map(([l, h]) => objectPath(LEGACY_ROOT, l, h));
   const keep = new Set([...named, ...legacyNamed, ...extraKeep]);
-  for (const p of [...keep]) {
-    const t = targetOf(p);
+  for (const t of [...keep].map(targetOf)) {
     if (t) keep.add(t);
   }
   // The folders this manifest writes: site/ (legacy) and the v2 folders its entries land in.

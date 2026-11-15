@@ -5,7 +5,7 @@ export const DEFAULT_MAX_AGE_MIN = 360;
 
 /** True when the generated file may be reused: not CI, not forced, and younger than `maxAgeMin` minutes. */
 export function isFresh({ mtimeMs, now, maxAgeMin = DEFAULT_MAX_AGE_MIN, ci = false, force = false }) {
-  if (ci || force || mtimeMs == null || !(maxAgeMin > 0)) return false;
+  if (ci || force || mtimeMs == null || maxAgeMin <= 0 || Number.isNaN(maxAgeMin)) return false;
   const age = now - mtimeMs;
   return age >= 0 && age < maxAgeMin * 60_000;
 }

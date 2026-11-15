@@ -146,7 +146,7 @@ async function main() {
     ["Maven Central", maven],
   ])
     if (r.status === "rejected")
-      console.warn(`registry-versions: ${name} unreachable (${r.reason?.message}) — keeping what was known`);
+      console.warn(`registry-versions: ${String(name)} unreachable (${r.reason?.message}) — keeping what was known`);
   writeFileSync(OUT, JSON.stringify(out, null, 2) + "\n");
   console.log(
     `registry-versions: ${Object.keys(out.npm).length} npm packages, ${Object.keys(out.maven).length} Maven artifacts`,
