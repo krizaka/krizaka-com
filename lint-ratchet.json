@@ -23,15 +23,12 @@
     "retiredImport": 0,
     "routeStateSelection": 0,
     "cognitiveComplexity": 0,
-    "sonar": 12,
+    "sonar": 2,
     "codeRules": 380,
     "code/curly": 331,
     "code/max-depth": 42,
-    "sonarjs/super-linear-regex": 8,
-    "code/no-console": 6,
     "sonarjs/no-os-command-from-path": 2,
-    "sonarjs/no-inverted-boolean-check": 1,
     "code/max-nested-callbacks": 1,
-    "sonarjs/concise-regex": 1
+    "code/no-console": 6
   }
 }
