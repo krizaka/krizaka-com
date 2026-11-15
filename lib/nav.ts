@@ -10,11 +10,13 @@
      story lives in the footer;
    - right, tools: Repo · theme · language · Contact us. "Docs" is the hub that points to the documentation, which lives on its own sites. */
 
-import type { TranslationDictionary } from "./i18n";
-import { PRODUCTS, type ProductId, type ProductStatus } from "./products";
+import type { TranslationDictionary } from "./i18n.ts";
+import { BRAND_FILM } from "./brand-film.ts";
+import { watchPath } from "./watch-films.ts";
+import { PRODUCTS, type ProductId, type ProductStatus } from "./products.ts";
 
-export type { ProductStatus } from "./products";
-export type CompanyLinkId = "products" | "story" | "repos" | "services" | "contact";
+export type { ProductStatus } from "./products.ts";
+export type CompanyLinkId = "products" | "story" | "films" | "repos" | "services" | "contact";
 
 /** Texts: messages → site.nav.company.<icon> (label, desc). */
 export interface NavLink<I extends CompanyLinkId = CompanyLinkId> {
@@ -45,6 +47,7 @@ export const PRODUCTS_ANCHOR = "/#products";
 export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
   { href: PRODUCTS_ANCHOR, icon: "products" },
   { href: "/story", icon: "story" },
+  { href: watchPath(BRAND_FILM.id), icon: "films", match: ["/films/"] },
   { href: "/docs", icon: "repos", match: ["/open-source/"] },
   { href: "/services", icon: "services" },
   { href: "/contact", icon: "contact" },
@@ -52,8 +55,8 @@ export const NAV_COMPANY: NavLink<CompanyLinkId>[] = [
 
 /** The centre of the bar and the mobile panel's list: the products (a section of the home), the Enterprise offer, the docs.
  *  "Our story" is in the footer (Krizaka column). */
-export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["products", "services", "repos"] as const).map((icon) =>
-  NAV_COMPANY.find((l) => l.icon === icon)!,
+export const NAV_BAR_LINKS: NavLink<CompanyLinkId>[] = (["products", "services", "films", "repos"] as const).map(
+  (icon) => NAV_COMPANY.find((l) => l.icon === icon)!,
 );
 
 /* While the documentation still renders here (/docs, until it has moved to ui.krizaka.com and java.krizaka.com), the

@@ -125,6 +125,10 @@
         "services": {
           "label": "Entreprise",
           "desc": "Krizaka Entreprise"
+        },
+        "films": {
+          "label": "Films",
+          "desc": "Les films du fondateur, dans l'ordre"
         }
       }
     },
@@ -959,7 +963,7 @@
         "back": "Retour à l'histoire",
         "length": "{seconds} secondes",
         "published": "Publié",
-        "watchPage": "Le voir sur sa propre page",
+        "watchPage": "Le voir sur sa page, avec les films dans l'ordre",
         "shots": "Plan par plan",
         "shotsLead": "Le film n'a pas de voix. Voici ce qu'il montre, dans l'ordre.",
         "film": {
@@ -977,7 +981,28 @@
           }
         },
         "titles": "Les titres du film",
-        "backHome": "Retour à l'accueil"
+        "backHome": "Retour à l'accueil",
+        "series": {
+          "heading": "Les films, dans l'ordre",
+          "lead": "Les films du fondateur, l'un après l'autre. Chaque film publié est un lien ; le suivant arrive.",
+          "here": "vous êtes ici",
+          "soon": "à venir",
+          "others": "Les autres films",
+          "items": {
+            "montrer-son-travail": {
+              "title": "Montrer son travail",
+              "hook": "Le premier film : un cahier, une goutte d'encre, puis Montréal où les oiseaux se mettent au travail."
+            },
+            "notre-histoire": {
+              "title": "Notre histoire",
+              "hook": "Le deuxième film : ce qui a cassé, ce qu'on a gardé. Sur YouTube."
+            },
+            "next": {
+              "title": "La suite",
+              "hook": "Un autre film est en route."
+            }
+          }
+        }
       }
     },
     "openSource": {

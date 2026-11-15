@@ -12,6 +12,7 @@ import SiteBar from "@/app/components/SiteBar";
 import ButtonLink from "@/app/components/ButtonLink";
 import { JsonLd } from "@/app/components/JsonLd";
 import WatchPlayer from "@/app/components/WatchPlayer";
+import FilmsTimeline from "@/app/components/FilmsTimeline";
 
 /* /films/<id> — the watch page of one film (template: gallery). The video is the main content of the page, which is
    what Google asks of a page it indexes a video from: title, description, poster, the player, a text version, and the
@@ -140,6 +141,7 @@ export default async function FilmPage({ params }: Readonly<Props>) {
             </ol>
             {words.credit && <p className="rd-prose is-small">{words.credit}</p>}
           </section>
+          <FilmsTimeline locale={locale} currentId={f.id} />
         </div>
       </Page>
     </main>

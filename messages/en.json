@@ -125,6 +125,10 @@
         "services": {
           "label": "Enterprise",
           "desc": "Krizaka Entreprise"
+        },
+        "films": {
+          "label": "Films",
+          "desc": "The founder's films, in order"
         }
       }
     },
@@ -956,7 +960,7 @@
         "back": "Back to the story",
         "length": "{seconds} seconds",
         "published": "Published",
-        "watchPage": "Watch it on its own page",
+        "watchPage": "Watch it on its own page, with the films in order",
         "shots": "Shot by shot",
         "shotsLead": "The film has no voice. Here is what it shows, in order.",
         "film": {
@@ -974,7 +978,28 @@
           }
         },
         "titles": "The film's titles",
-        "backHome": "Back to the home"
+        "backHome": "Back to the home",
+        "series": {
+          "heading": "The films, in order",
+          "lead": "The founder's films, one after the other. Each published film is a link; the next one is on its way.",
+          "here": "you are here",
+          "soon": "coming next",
+          "others": "The other films",
+          "items": {
+            "montrer-son-travail": {
+              "title": "Show your work",
+              "hook": "The first film: a notebook, a drop of ink, then Montréal where the birds get to work."
+            },
+            "notre-histoire": {
+              "title": "Our story",
+              "hook": "The second film: what broke, what we kept. On YouTube."
+            },
+            "next": {
+              "title": "What comes next",
+              "hook": "Another film is on its way."
+            }
+          }
+        }
       }
     },
     "openSource": {
