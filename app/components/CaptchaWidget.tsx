@@ -13,7 +13,7 @@ interface Turnstile {
   remove(id: string): void;
 }
 declare global {
-  var turnstile: Turnstile | undefined; // eslint-disable-line no-var
+  var turnstile: Turnstile | undefined;
 }
 
 const SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";

@@ -137,6 +137,12 @@ function changesetBulletText(raw: string): string | undefined {
   return plain(bullet[1].replace(/^(\[[^\]]*\]\([^)]*\)\s*)+(Thanks \[[^\]]*\]\([^)]*\)!\s*)?-\s*/, "")) || undefined;
 }
 
+/** The version a `## 1.2.3` heading names (`1.2.3-beta.1` too), `undefined` for any other line. */
+function versionHeading(raw: string): string | undefined {
+  const heading = /^## (\S+)$/.exec(raw.trimEnd());
+  return heading && /^\d+\.\d+\.\d+/.test(heading[1]) ? heading[1] : undefined;
+}
+
 /** The releases of a changesets CHANGELOG.md, newest first as written. Dates are not in the file: `dateOf(version)`. */
 export function parseChangesets(
   md: string,
@@ -148,10 +154,10 @@ export function parseChangesets(
   let current: Release | undefined;
   let level: ChangeTag = "change";
   for (const raw of md.split("\n")) {
-    const h2 = /^## (\S+)$/.exec(raw.trimEnd());
-    if (h2 && /^\d+\.\d+\.\d+/.test(h2[1])) {
-      const date = dateOf(h2[1]);
-      current = date ? { source, product, version: h2[1], date, changes: [] } : undefined;
+    const version = versionHeading(raw);
+    if (version) {
+      const date = dateOf(version);
+      current = date ? { source, product, version, date, changes: [] } : undefined;
       if (current) releases.push(current);
       continue;
     }

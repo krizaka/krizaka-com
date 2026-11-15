@@ -22,8 +22,8 @@
 import { createHash } from "node:crypto";
 import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join, relative, resolve, sep } from "node:path";
-import { pathToFileURL } from "node:url";
 import { assertUnder, layoutHelp } from "./bunny-layout.mjs";
+import { runAsMain } from "./run-main.mjs";
 
 export const PREFIX = "pr-assets";
 
@@ -249,11 +249,4 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
   return 1;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  try {
-    process.exit(await main(process.argv.slice(2)));
-  } catch (err) {
-    console.error(`pr-assets: ${err.message}`);
-    process.exit(1);
-  }
-}
+await runAsMain(import.meta.url, "pr-assets", main);

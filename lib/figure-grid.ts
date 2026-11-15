@@ -15,6 +15,6 @@ function largestDivisor(n: number, candidates: readonly number[]): number {
 export function figureColumns(count: number): FigureColumns {
   const n = Math.max(1, Math.floor(count));
   const wide = n <= 5 ? n : largestDivisor(n, [4, 3, 2]);
-  const narrow = n % 2 === 0 ? 2 : n === 3 ? 3 : 1;
+  const narrow = n === 3 ? 3 : largestDivisor(n, [2]);
   return { wide, narrow };
 }

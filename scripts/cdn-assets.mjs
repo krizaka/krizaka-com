@@ -32,7 +32,7 @@
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import {
   FOREIGN_WRITERS,
@@ -49,6 +49,7 @@ import {
   targetOf,
 } from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
+import { runAsMain } from "./run-main.mjs";
 
 /** The manifest root of layout v2 (ADR-014): entries resolve under sites/, org/v1/films/ and apps/ (manifestObject). "site" is the legacy root. */
 export const ROOT = "sites";
@@ -733,11 +734,4 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
   return 1;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  try {
-    process.exit(await main(process.argv.slice(2)));
-  } catch (err) {
-    console.error(`cdn-assets: ${err.message}`);
-    process.exit(1);
-  }
-}
+await runAsMain(import.meta.url, "cdn-assets", main);

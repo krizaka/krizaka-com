@@ -48,6 +48,6 @@ test("the Organization owns the products and the open-source sites, each publish
 });
 
 test("every page has an Open Graph image (each page its own: tests/og-card.test.mjs)", () => {
-  assert.match(read("app/[locale]/opengraph-image.tsx"), /shareImage\(shareCardOf\("home", locale\)\)/);
+  assert.match(read("app/[locale]/opengraph-image.tsx"), /pageShareImage\("home"\)/);
   assert.match(read("lib/og-card.tsx"), /new ImageResponse\(/);
 });
