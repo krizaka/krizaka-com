@@ -84,12 +84,10 @@ function RegistryLinks({ row: r, w }: Readonly<{ row: PackageRow; w: PackagesWor
   );
 }
 
-export function PackagesTable({ rows }: Readonly<{ rows: readonly PackageRow[] }>) {
-  const { t, locale } = useI18n();
-  const w = t.site.openSource.packages;
-  const labels = useTableLabels();
+/** The columns of the packages table: built outside the component, so no renderer is redefined at every render. */
+function packageColumns(w: PackagesWords, locale: string): DataTableColumn<PackageRow>[] {
   const familyLabel = (f: string) => (f in w.families ? w.families[f as keyof typeof w.families] : f);
-  const columns: DataTableColumn<PackageRow>[] = [
+  return [
     {
       id: "name",
       header: w.name,
@@ -125,6 +123,13 @@ export function PackagesTable({ rows }: Readonly<{ rows: readonly PackageRow[] }
       cell: (r) => <RegistryLinks row={r} w={w} />,
     },
   ];
+}
+
+export function PackagesTable({ rows }: Readonly<{ rows: readonly PackageRow[] }>) {
+  const { t, locale } = useI18n();
+  const w = t.site.openSource.packages;
+  const labels = useTableLabels();
+  const columns = packageColumns(w, locale);
   return (
     <DataTable
       caption={w.caption}
