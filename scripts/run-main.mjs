@@ -4,7 +4,9 @@
 import { pathToFileURL } from "node:url";
 
 export async function runAsMain(metaUrl, name, main, argv = process.argv.slice(2)) {
-  if (metaUrl !== pathToFileURL(process.argv[1] ?? "").href) return;
+  if (metaUrl !== pathToFileURL(process.argv[1] ?? "").href) {
+    return;
+  }
   try {
     process.exit(await main(argv));
   } catch (err) {

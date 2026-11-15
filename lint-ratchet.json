@@ -1,5 +1,9 @@
 {
-  "globs": ["app/**/*.tsx", "components/**/*.tsx", "src/**/*.tsx"],
+  "globs": [
+    "app/**/*.tsx",
+    "components/**/*.tsx",
+    "src/**/*.tsx"
+  ],
   "stackGlobs": [
     "app/**/*.{js,jsx,mjs,ts,tsx,mts}",
     "components/**/*.{js,jsx,mjs,ts,tsx,mts}",
@@ -22,14 +26,13 @@
     "localTableOrForm": 2,
     "retiredImport": 0,
     "routeStateSelection": 0,
-    "cognitiveComplexity": 1,
-    "sonar": 14,
-    "codeRules": 385,
-    "code/curly": 336,
+    "cognitiveComplexity": 0,
+    "sonar": 12,
+    "codeRules": 380,
+    "code/curly": 331,
     "code/max-depth": 42,
     "sonarjs/super-linear-regex": 8,
     "code/no-console": 6,
-    "sonarjs/no-nested-conditional": 2,
     "sonarjs/no-os-command-from-path": 2,
     "sonarjs/no-inverted-boolean-check": 1,
     "code/max-nested-callbacks": 1,
