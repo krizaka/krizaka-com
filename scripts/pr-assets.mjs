@@ -100,7 +100,12 @@ export function parseEnvFile(text) {
 }
 
 const host = (v) =>
-  trimEnd(String(v ?? "").trim().replace(/^https?:\/\//, ""), "/");
+  trimEnd(
+    String(v ?? "")
+      .trim()
+      .replace(/^https?:\/\//, ""),
+    "/",
+  );
 
 export function loadConfig(env, { requireKey = true } = {}) {
   const cfg = {

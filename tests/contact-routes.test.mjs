@@ -38,7 +38,13 @@ test("POST /api/contact/verify: bad JSON, wrong types and oversized fields are r
   const bad = await verify(post("http://t/api/contact/verify", "{nope", true));
   assert.equal(bad.status, 400);
   assert.deepEqual(await bad.json(), { error: "invalid_json" });
-  for (const body of [{}, { challengeId: 1, email: "a@b.c", code: "123456" }, { challengeId: "x".repeat(201), email: "a@b.c", code: "1" }, { challengeId: "x", email: "a".repeat(321), code: "1" }, { challengeId: "x", email: "a@b.c", code: "1".repeat(21) }]) {
+  for (const body of [
+    {},
+    { challengeId: 1, email: "a@b.c", code: "123456" },
+    { challengeId: "x".repeat(201), email: "a@b.c", code: "1" },
+    { challengeId: "x", email: "a".repeat(321), code: "1" },
+    { challengeId: "x", email: "a@b.c", code: "1".repeat(21) },
+  ]) {
     const res = await verify(post("http://t/api/contact/verify", body));
     assert.equal(res.status, 400);
     assert.deepEqual(await res.json(), { error: "invalid" });
@@ -46,7 +52,9 @@ test("POST /api/contact/verify: bad JSON, wrong types and oversized fields are r
 });
 
 test("POST /api/contact/verify: an unknown challenge is a refused code, not a delivery", async () => {
-  const res = await verify(post("http://t/api/contact/verify", { challengeId: "nope", email: "a@b.co", code: "123456" }));
+  const res = await verify(
+    post("http://t/api/contact/verify", { challengeId: "nope", email: "a@b.co", code: "123456" }),
+  );
   assert.equal(res.status, 400);
   assert.match((await res.json()).error, /^contact\.code_/);
 });

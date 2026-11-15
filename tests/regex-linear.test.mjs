@@ -44,7 +44,10 @@ test("pr-assets: slug, env file, host and link rewriting give the same results",
   assert.equal(parseEnvFile(`X=1${" ".repeat(BIG)}y`).X, `1${" ".repeat(BIG)}y`);
   assert.equal(fast(() => parseEnvFile(`X=${" ".repeat(BIG)}z`)).X, "z");
   const cfg = { pullZone: "cdn.example" };
-  const r = rewriteLinks("![a](docs/screenshots/12/a.png) ![b](https://github.com/krizaka/r/blob/main/docs/screenshots/12/b.png?raw=true)", { repo: "r", cfg });
+  const r = rewriteLinks(
+    "![a](docs/screenshots/12/a.png) ![b](https://github.com/krizaka/r/blob/main/docs/screenshots/12/b.png?raw=true)",
+    { repo: "r", cfg },
+  );
   assert.equal(r.count, 2);
   assert.equal(r.text, "![a](https://cdn.example/pr-assets/r/12/a.png) ![b](https://cdn.example/pr-assets/r/12/b.png)");
   assert.equal(rewriteLinks("x ./docs/screenshots/1/a.png", { repo: "r", cfg, from: "./docs/screenshots/" }).count, 1);

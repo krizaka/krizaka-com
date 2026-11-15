@@ -70,7 +70,12 @@ export function versioned(path, hash) {
 
 /** A logical path: lower-case segments of letters, digits, `-` and `_`, an extension. */
 export function logicalPath(value, name = "to") {
-  const p = trimEnd(String(value ?? "").trim().replace(/^\/+/, ""), "/");
+  const p = trimEnd(
+    String(value ?? "")
+      .trim()
+      .replace(/^\/+/, ""),
+    "/",
+  );
   if (!/^[a-z0-9_-]+(\/[a-z0-9_-]+)*(\.[a-z0-9]+)?$/.test(p))
     throw new Error(`--${name} "${value}" is not a path like products/folioviv/tour`);
   const area = p.split("/")[0];

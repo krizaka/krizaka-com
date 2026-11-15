@@ -177,7 +177,8 @@ async function imageProblems(base, cards) {
 export function auditRobots(text) {
   const problems = [];
   for (const bot of AI_CRAWLERS)
-    if (!new RegExp(String.raw`User-Agent: ${bot}\s+Allow: /`, "i").test(text)) problems.push(`robots.txt: ${bot} not allowed`);
+    if (!new RegExp(String.raw`User-Agent: ${bot}\s+Allow: /`, "i").test(text))
+      problems.push(`robots.txt: ${bot} not allowed`);
   if (!text.includes(`Sitemap: ${CANONICAL_HOST}/sitemap.xml`)) problems.push("robots.txt: Sitemap is not on www");
   return problems;
 }
