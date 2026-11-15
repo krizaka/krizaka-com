@@ -200,6 +200,40 @@ const USAGE = `usage:
   node scripts/pr-assets.mjs rewrite <file> --repo <repo> [--from docs/screenshots] [--env-file <path>] [--write]
 ${layoutHelp()}`;
 
+async function runUpload(args, target, merged, { fetchImpl, log }) {
+  if (!target) throw new Error("upload needs a directory");
+  const cfg = loadConfig(merged, { requireKey: !args.dryRun });
+  const entries = await upload({
+    dir: target,
+    repo: args.repo,
+    key: args.key,
+    cfg,
+    dryRun: args.dryRun,
+    fetchImpl,
+    log,
+  });
+  log(
+    `\n${entries.length} file(s) ${args.dryRun ? "would be sent" : "sent"} to ${PREFIX}/${slug(args.repo, "repo")}/${slug(args.key, "key")}/ — paste in the PR:\n`,
+  );
+  log(markdownBlock(entries));
+  return 0;
+}
+
+function runRewrite(args, target, merged, { log }) {
+  if (!target) throw new Error("rewrite needs a file");
+  const cfg = loadConfig(merged, { requireKey: false });
+  const { text, count } = rewriteLinks(readFileSync(target, "utf8"), {
+    repo: slug(args.repo, "repo"),
+    from: args.from,
+    cfg,
+  });
+  if (args.write) {
+    if (count) writeFileSync(target, text);
+    log(`${count} link(s) rewritten in ${target}`);
+  } else log(text);
+  return 0;
+}
+
 export async function main(argv, { env = process.env, fetchImpl, log = console.log } = {}) {
   const args = parseArgs(argv);
   const [command, target] = args._;
@@ -209,38 +243,8 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
   }
   const fileEnv = args.envFile ? parseEnvFile(readFileSync(args.envFile, "utf8")) : {};
   const merged = { ...fileEnv, ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)) };
-  if (command === "upload") {
-    if (!target) throw new Error("upload needs a directory");
-    const cfg = loadConfig(merged, { requireKey: !args.dryRun });
-    const entries = await upload({
-      dir: target,
-      repo: args.repo,
-      key: args.key,
-      cfg,
-      dryRun: args.dryRun,
-      fetchImpl,
-      log,
-    });
-    log(
-      `\n${entries.length} file(s) ${args.dryRun ? "would be sent" : "sent"} to ${PREFIX}/${slug(args.repo, "repo")}/${slug(args.key, "key")}/ — paste in the PR:\n`,
-    );
-    log(markdownBlock(entries));
-    return 0;
-  }
-  if (command === "rewrite") {
-    if (!target) throw new Error("rewrite needs a file");
-    const cfg = loadConfig(merged, { requireKey: false });
-    const { text, count } = rewriteLinks(readFileSync(target, "utf8"), {
-      repo: slug(args.repo, "repo"),
-      from: args.from,
-      cfg,
-    });
-    if (args.write) {
-      if (count) writeFileSync(target, text);
-      log(`${count} link(s) rewritten in ${target}`);
-    } else log(text);
-    return 0;
-  }
+  if (command === "upload") return runUpload(args, target, merged, { fetchImpl, log });
+  if (command === "rewrite") return runRewrite(args, target, merged, { log });
   log(USAGE);
   return 1;
 }

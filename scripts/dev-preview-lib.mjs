@@ -47,39 +47,36 @@ export const WAIVERS = {}; // none: Sovkora is `development`
 const DAY = 86_400_000;
 const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);
 
+/** The one problem with a criterion's entry (`undefined` when it is fine). */
+function criterionProblem(id, e, today) {
+  if (!e) return `${id}: missing`;
+  if (e.na !== undefined) {
+    if (!NA_ALLOWED.has(id)) return `${id}: na is not allowed for this criterion`;
+    if (typeof e.na !== "string" || e.na.length < 20) return `${id}: na needs a reason of at least 20 characters`;
+    return undefined;
+  }
+  if (e.evidence === null || e.evidence === undefined) {
+    const gap = e.gap ? ` (${e.gap})` : "";
+    return `${id}: no evidence yet${gap}`;
+  }
+  if (typeof e.evidence !== "string" || !e.evidence.startsWith("https://"))
+    return `${id}: evidence must be an https URL`;
+  if (!e.checked || Number.isNaN(Date.parse(e.checked))) return `${id}: evidence needs its checked date`;
+  if (days(e.checked, today) > MAX_AGE_DAYS) {
+    return `${id}: evidence is stale (checked ${e.checked}, more than ${MAX_AGE_DAYS} days ago)`;
+  }
+  return undefined;
+}
+
 /** Judge one checklist (the parsed dev-preview.json). `complete` = every criterion has fresh evidence or a justified na. */
 export function validateChecklist(c, { today }) {
-  const problems = [];
   const crit = c?.criteria ?? {};
-  for (const id of Object.keys(crit)) if (!CRITERIA.includes(id)) problems.push(`${id}: unknown criterion`);
-  for (const id of CRITERIA) {
-    const e = crit[id];
-    if (!e) {
-      problems.push(`${id}: missing`);
-      continue;
-    }
-    if (e.na !== undefined) {
-      if (!NA_ALLOWED.has(id)) problems.push(`${id}: na is not allowed for this criterion`);
-      else if (typeof e.na !== "string" || e.na.length < 20)
-        problems.push(`${id}: na needs a reason of at least 20 characters`);
-      continue;
-    }
-    if (e.evidence === null || e.evidence === undefined) {
-      const gap = e.gap ? ` (${e.gap})` : "";
-      problems.push(`${id}: no evidence yet${gap}`);
-      continue;
-    }
-    if (typeof e.evidence !== "string" || !e.evidence.startsWith("https://")) {
-      problems.push(`${id}: evidence must be an https URL`);
-      continue;
-    }
-    if (!e.checked || Number.isNaN(Date.parse(e.checked))) {
-      problems.push(`${id}: evidence needs its checked date`);
-      continue;
-    }
-    if (days(e.checked, today) > MAX_AGE_DAYS)
-      problems.push(`${id}: evidence is stale (checked ${e.checked}, more than ${MAX_AGE_DAYS} days ago)`);
-  }
+  const problems = [
+    ...Object.keys(crit)
+      .filter((id) => !CRITERIA.includes(id))
+      .map((id) => `${id}: unknown criterion`),
+    ...CRITERIA.map((id) => criterionProblem(id, crit[id], today)).filter(Boolean),
+  ];
   return { complete: problems.length === 0, problems };
 }
 
@@ -92,7 +89,7 @@ export function readProductStatuses(products = org.products) {
  *  so a product file that types one is the old shape (krizaka-internal#3425). */
 export function statusLiterals(src) {
   const set = "design|upcoming|construction|development|paused|devPreview";
-  return [...src.matchAll(new RegExp(`\\bstatus\\s*:\\s*["'](${set})["']`, "g"))].map((m) => m[0]);
+  return [...src.matchAll(new RegExp(String.raw`\bstatus\s*:\s*["'](${set})["']`, "g"))].map((m) => m[0]);
 }
 
 /** The problems that forbid the statuses: only `devPreview` is gated; a waiver (until a date) lifts it for a product. */

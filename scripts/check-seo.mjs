@@ -17,38 +17,53 @@ const AI_CRAWLERS = ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", 
 const attr = (tag, name) => new RegExp(`${name}="([^"]*)"`, "i").exec(tag)?.[1];
 const decode = (s) => s.replaceAll("&#x27;", "'").replaceAll("&quot;", '"').replaceAll("&amp;", "&");
 
-/** Everything wrong with one page's HTML; `path` is its route ("/en/products"). */
-export function auditHtml(html, path) {
-  const problems = [];
+/** What is wrong with the page's `<title>`s: exactly one, and the brand not repeated. */
+function titleProblems(html) {
   const titles = [...html.matchAll(/<title>([^<]*)<\/title>/g)].map((m) => decode(m[1]));
-  if (titles.length !== 1) problems.push(`${titles.length} <title> (expected 1)`);
-  else if (/Krizaka[^|]*\| Krizaka \| Krizaka|\| Krizaka \| Krizaka/.test(titles[0]))
-    problems.push(`brand repeated in title: ${titles[0]}`);
+  if (titles.length !== 1) return [`${titles.length} <title> (expected 1)`];
+  if (/Krizaka[^|]*\| Krizaka \| Krizaka|\| Krizaka \| Krizaka/.test(titles[0])) {
+    return [`brand repeated in title: ${titles[0]}`];
+  }
+  return [];
+}
+
+/** What is wrong with the meta description: exactly one, of a readable length. */
+function descriptionProblems(html) {
   const desc = [...html.matchAll(/<meta\s[^>]*name="description"[^>]*>/g)].map((m) => attr(m[0], "content"));
-  if (desc.length !== 1) problems.push(`${desc.length} meta description (expected 1)`);
-  else if (decode(desc[0]).length < 30 || decode(desc[0]).length > 400)
-    problems.push(`description length ${decode(desc[0]).length}`);
+  if (desc.length !== 1) return [`${desc.length} meta description (expected 1)`];
+  const length = decode(desc[0]).length;
+  return length < 30 || length > 400 ? [`description length ${length}`] : [];
+}
 
-  const links = [...html.matchAll(/<link\s[^>]*>/g)].map((m) => m[0]);
-  const canonical = links.filter((l) => /rel="canonical"/.test(l)).map((l) => attr(l, "href"));
-  if (canonical.length !== 1) problems.push(`${canonical.length} canonical (expected 1)`);
-  else if (canonical[0] !== `${CANONICAL_HOST}${path}`)
-    problems.push(`canonical ${canonical[0]} is not ${CANONICAL_HOST}${path}`);
+/** What is wrong with the canonical link(s) of a page. */
+function canonicalProblems(canonical, path) {
+  if (canonical.length !== 1) return [`${canonical.length} canonical (expected 1)`];
+  return canonical[0] === `${CANONICAL_HOST}${path}`
+    ? []
+    : [`canonical ${canonical[0]} is not ${CANONICAL_HOST}${path}`];
+}
 
+/** What is wrong with the hreflang alternates: each language declared, on www. */
+function hreflangProblems(links) {
   const alternates = Object.fromEntries(
     links
       .filter((l) => /rel="alternate"/.test(l) && /hreflang/i.test(l))
       .map((l) => [attr(l, "hreflang"), attr(l, "href")]),
   );
+  const problems = [];
   for (const lang of ["fr-CA", "en", "x-default"]) {
     if (!alternates[lang]) problems.push(`hreflang ${lang} missing`);
     else if (!alternates[lang].startsWith(`${CANONICAL_HOST}/`))
       problems.push(`hreflang ${lang} off www: ${alternates[lang]}`);
   }
+  return problems;
+}
 
-  const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
-  if (blocks.length === 0) problems.push("no JSON-LD");
+/** The `@type`s declared by the JSON-LD blocks, and what is wrong with the blocks themselves. */
+function jsonLdOf(blocks) {
+  const problems = [];
   const types = [];
+  if (blocks.length === 0) problems.push("no JSON-LD");
   for (const raw of blocks) {
     try {
       const data = JSON.parse(raw);
@@ -58,6 +73,12 @@ export function auditHtml(html, path) {
       problems.push(`JSON-LD does not parse: ${e.message}`);
     }
   }
+  return { types, problems };
+}
+
+/** The JSON-LD types a page of this route must declare, missing ones reported. */
+function requiredTypeProblems(path, types) {
+  const problems = [];
   if (path.split("/")[2] === undefined || path.split("/").length === 2) {
     for (const t of ["Organization", "WebSite"]) if (!types.includes(t)) problems.push(`home: ${t} JSON-LD missing`);
   }
@@ -65,11 +86,27 @@ export function auditHtml(html, path) {
     for (const t of ["TechArticle", "BreadcrumbList"])
       if (!types.includes(t)) problems.push(`docs page: ${t} JSON-LD missing`);
   }
-  problems.push(...shareProblems(html, canonical[0]));
+  return problems;
+}
+
+/** Everything wrong with one page's HTML; `path` is its route ("/en/products"). */
+export function auditHtml(html, path) {
+  const links = [...html.matchAll(/<link\s[^>]*>/g)].map((m) => m[0]);
+  const canonical = links.filter((l) => /rel="canonical"/.test(l)).map((l) => attr(l, "href"));
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+  const jsonLd = jsonLdOf(blocks);
   // What the page declares to machines (links, meta tags, JSON-LD) — a documentation sample may quote the apex in its text.
   const declared = [...links, ...[...html.matchAll(/<meta\s[^>]*>/g)].map((m) => m[0]), ...blocks].join("\n");
-  if (/https:\/\/krizaka\.com/.test(declared)) problems.push("the apex https://krizaka.com is declared (use www)");
-  return problems;
+  return [
+    ...titleProblems(html),
+    ...descriptionProblems(html),
+    ...canonicalProblems(canonical, path),
+    ...hreflangProblems(links),
+    ...jsonLd.problems,
+    ...requiredTypeProblems(path, jsonLd.types),
+    ...shareProblems(html, canonical[0]),
+    ...(/https:\/\/krizaka\.com/.test(declared) ? ["the apex https://krizaka.com is declared (use www)"] : []),
+  ];
 }
 
 /** The page's share card as its meta tags declare it: `{ title, image, url, twitterImage }` (undefined when missing). */
