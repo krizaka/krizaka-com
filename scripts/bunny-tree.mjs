@@ -11,10 +11,10 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
-import { pathToFileURL } from "node:url";
 import { DEFAULT_PULL_ZONE, listZone } from "./cdn-assets.mjs";
 import { MAX_FOLDERS, TARGET, placement } from "./bunny-layout.mjs";
 import { loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
+import { runAsMain } from "./run-main.mjs";
 
 export const DEFAULT_OUT = join(homedir(), "Documents/krizaka/tools/cockpit-next/data/bunny-tree.json");
 const mb = (bytes) => Math.round((bytes / 1048576) * 100) / 100;
@@ -117,11 +117,4 @@ export async function main(argv, { env = process.env, fetchImpl = globalThis.fet
   return result.totals.misplaced ? 1 : 0;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  try {
-    process.exit(await main(process.argv.slice(2)));
-  } catch (err) {
-    console.error(`bunny-tree: ${err.message}`);
-    process.exit(1);
-  }
-}
+await runAsMain(import.meta.url, "bunny-tree", main);

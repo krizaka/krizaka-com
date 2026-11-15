@@ -27,7 +27,7 @@ function Tile({
   facts,
   href,
   cta,
-}: {
+}: Readonly<{
   name: string;
   meta: string;
   line: string;
@@ -35,7 +35,7 @@ function Tile({
   facts: Fact[];
   href: string;
   cta: string;
-}) {
+}>) {
   return (
     <div className="kz-build-tile">
       <p className="kz-build-meta">{meta}</p>
@@ -58,7 +58,7 @@ const ts = part("ts");
 
 /** The four full cards — Krizaka UI, Krizaka Lab, Krizaka Java, Krizaka TypeScript — in a CardGrid (every tile of a row as
     tall as the tallest), with the examples, the facts and the copy buttons (/open-source, /story). */
-export function StackTiles({ locale }: { locale: string }) {
+export function StackTiles({ locale }: Readonly<{ locale: string }>) {
   const s = getDictionary(locale).site.home.stack;
   const tsPackages = npmPackagesFrom(ts.repoUrl);
   // One package per line: readable on a phone, and it still pastes as one command.

@@ -9,10 +9,10 @@
 
 import { manifestObject } from "../scripts/bunny-layout.mjs";
 import manifest from "./cdn-manifest.json";
+import { stripTrailingSlashes } from "./trim.ts";
 
-export const CDN_URL = (process.env.NEXT_PUBLIC_MEDIA_CDN_URL || "https://krizaka-assets.b-cdn.net").replace(
-  /\/+$/,
-  "",
+export const CDN_URL = stripTrailingSlashes(
+  process.env.NEXT_PUBLIC_MEDIA_CDN_URL || "https://krizaka-assets.b-cdn.net",
 );
 
 const FILES: Record<string, string> = manifest.files;

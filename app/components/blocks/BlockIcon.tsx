@@ -11,7 +11,7 @@ const ICONS = {
 } as const;
 
 /** The signature icon of a building block (@krizaka/icons); its node wears the block's hue and lights up with its card. */
-export default function BlockIcon({ icon, size = 22 }: { icon: BlockIconId; size?: number }) {
+export default function BlockIcon({ icon, size = 22 }: Readonly<{ icon: BlockIconId; size?: number }>) {
   const Icon = ICONS[icon];
   return <Icon size={size} nodeColor="var(--kz-hue, var(--kz-accent))" aria-hidden />;
 }

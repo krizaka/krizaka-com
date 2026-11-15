@@ -23,10 +23,10 @@ const PRINCIPLES: {
 export default function Principles({
   locale,
   figures,
-}: {
+}: Readonly<{
   locale: string;
   figures: { repositories: number; npm: number };
-}) {
+}>) {
   const p = getDictionary(locale).site.home.principles;
   return (
     <Section id="principles" number={p.number} title={p.title} paper="lines" reveal divider margin>

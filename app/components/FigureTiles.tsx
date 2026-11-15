@@ -21,13 +21,13 @@ export default function FigureTiles({
   label,
   locale,
   columns = false,
-}: {
+}: Readonly<{
   figures: readonly FigureTile[];
   label: string;
   locale: string;
   /** Lay the tiles out in full rows (4 → one row, 2 × 2 on a phone) instead of the grid's auto-fit. */
   columns?: boolean;
-}) {
+}>) {
   const cols = columns ? figureColumns(figures.length) : undefined;
   const style = cols
     ? ({ "--kz-fig-cols": cols.wide, "--kz-fig-cols-narrow": cols.narrow } as CSSProperties)

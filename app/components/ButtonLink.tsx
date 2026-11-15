@@ -15,7 +15,7 @@ export default function ButtonLink({
   rel,
   className,
   ariaLabel,
-}: {
+}: Readonly<{
   href: string;
   children: ReactNode;
   variant?: ButtonProps["variant"];
@@ -26,7 +26,7 @@ export default function ButtonLink({
   rel?: string;
   className?: string;
   ariaLabel?: string;
-}) {
+}>) {
   const internal = href.startsWith("/") || href.startsWith("#");
   return (
     <Button asChild variant={variant} size={size} shape={shape} className={className}>

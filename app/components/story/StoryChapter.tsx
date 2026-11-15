@@ -33,7 +33,7 @@ export default function StoryChapter({
   proof,
   fold,
   actions,
-}: {
+}: Readonly<{
   id: string;
   number: number;
   /** The product the chapter is about: its status chip and its actions wear its brand. */
@@ -49,7 +49,7 @@ export default function StoryChapter({
   proof?: ReactNode;
   fold?: ChapterFold;
   actions?: ReactNode;
-}) {
+}>) {
   const branded = brand ? `brand-${brand}` : undefined;
   const note =
     kicker || meta ? (

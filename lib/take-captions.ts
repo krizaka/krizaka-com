@@ -10,5 +10,6 @@ const clock = (t: number) => {
 
 /** The captions of a take in WebVTT: one line of words per cue, at the take's own times (served same-origin, a <track> from the CDN needs CORS). */
 export function takeVtt(cues: TakeCues, words: readonly string[]): string {
-  return `WEBVTT\n\n${cues.map(([a, b], i) => `${clock(a)} --> ${clock(b)}\n${words[i] ?? ""}\n`).join("\n")}`;
+  const blocks = cues.map(([a, b], i) => `${clock(a)} --> ${clock(b)}\n${words[i] ?? ""}\n`);
+  return `WEBVTT\n\n${blocks.join("\n")}`;
 }

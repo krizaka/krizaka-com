@@ -66,7 +66,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const PRODUCT_IDS = PRODUCTS.map((p) => p.id);
 const LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0";
 
-export default async function DocsPage({ params }: Props) {
+export default async function DocsPage({ params }: Readonly<Props>) {
   const { locale } = await params;
   const dict = getDictionary(locale);
   const site = dict.site;

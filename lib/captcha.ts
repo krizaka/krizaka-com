@@ -6,9 +6,9 @@
  * off (local dev, tests); in PRODUCTION it is a refusal (`captchaMissing`): a widget that renders while the key is unset
  * protects nothing and lets every bot through (#464).
  */
-import { createTurnstileVerifier, TURNSTILE_SITEVERIFY_URL, type TurnstileFetch } from "@krizaka/rate-limit/turnstile";
+import { createTurnstileVerifier, type TurnstileFetch } from "@krizaka/rate-limit/turnstile";
 
-export const SITEVERIFY_URL = TURNSTILE_SITEVERIFY_URL;
+export { TURNSTILE_SITEVERIFY_URL as SITEVERIFY_URL } from "@krizaka/rate-limit/turnstile";
 
 type Env = Record<string, string | undefined>;
 

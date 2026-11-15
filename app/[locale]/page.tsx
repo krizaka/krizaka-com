@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
    Folioviv — each with its carousel (the only place they are presented: /products answers 308 to #products), one line to
    Krizaka Entreprise (/services), where we are going (now / next / later), the principles in brief, and it stops there.
    One primary action per section. Every figure is read at build: GitHub (lib/org-stats.ts), npm (lib/registry-versions.ts). */
-export default async function Home({ params }: Props) {
+export default async function Home({ params }: Readonly<Props>) {
   const { locale } = await params;
   const figures = {
     repositories: publicRepositoryCount(),

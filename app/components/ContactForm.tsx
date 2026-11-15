@@ -71,7 +71,7 @@ export default function ContactForm({
   );
 }
 
-function FromUrl({ defaultPreset }: { defaultPreset: ContactPreset }) {
+function FromUrl({ defaultPreset }: Readonly<{ defaultPreset: ContactPreset }>) {
   const params = useSearchParams();
   const source = cleanSource(params.get("source"));
   const found = presetFromQuery({ topic: params.get("topic"), product: params.get("product"), source });
@@ -85,12 +85,12 @@ function CodeStep({
   email,
   onVerified,
   onBack,
-}: {
+}: Readonly<{
   challengeId: string;
   email: string;
   onVerified: () => void;
   onBack: () => void;
-}) {
+}>) {
   const { t } = useI18n();
   const c = t.site.contactForm;
   const [code, setCode] = useState("");
@@ -158,7 +158,7 @@ function CodeStep({
   );
 }
 
-function Form({ preset, source }: { preset: ContactPreset; source: string | null }) {
+function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: string | null }>) {
   const { t, locale } = useI18n();
   const c = t.site.contactForm;
   const [kind, setKind] = useState<ContactKind | null>(preset.kind);

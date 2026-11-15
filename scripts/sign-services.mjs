@@ -72,30 +72,39 @@ export async function live({ raw, urls = KRIZAKA_MANIFEST_URLS, fetchImpl = glob
   return out;
 }
 
+/** The value of `--env-file` found at `argv[at]`: `--env-file=x` or `--env-file x`. */
+function envFileOf(argv, at) {
+  return argv[at].includes("=") ? argv[at].split("=")[1] : argv[at + 1];
+}
+
+/** `--check`: the signed file exists and matches lib/services.ts. */
+function runCheck(previousRaw, services, log) {
+  const problems = previousRaw
+    ? checkSigned(previousRaw, services)
+    : ["lib/services.signed.json is missing: run npm run services:sign"];
+  for (const p of problems) log(p);
+  if (problems.length) process.exitCode = 1;
+  else log("services manifest: signed and in sync with lib/services.ts");
+}
+
+/** `--live`: what the deployed file says against the signed one. */
+async function runLive(previousRaw, log) {
+  const rows = await live({ raw: previousRaw });
+  for (const r of rows) {
+    const failure = r.error ? `  (${r.error})` : "";
+    log(`${r.current ? "current" : "STALE  "}  ${r.status}  ${r.issuedAt ?? ""}  ${r.url}${failure}`);
+  }
+  if (rows.some((r) => !r.current)) process.exitCode = 1;
+}
+
 export async function main(argv = process.argv.slice(2), { log = console.log } = {}) {
   const flags = new Set(argv.filter((a) => a.startsWith("--") && !a.startsWith("--env-file")).map((a) => a.slice(2)));
   const at = argv.findIndex((a) => a === "--env-file" || a.startsWith("--env-file="));
-  const envFile = at < 0 ? undefined : argv[at].includes("=") ? argv[at].split("=")[1] : argv[at + 1];
+  const envFile = at < 0 ? undefined : envFileOf(argv, at);
   const { SERVICES, SERVICES_KEY_ID } = await import("../lib/services.ts");
   const previousRaw = existsSync(SIGNED_FILE) ? readFileSync(SIGNED_FILE, "utf8") : null;
-  if (flags.has("check")) {
-    const problems = previousRaw
-      ? checkSigned(previousRaw, SERVICES)
-      : ["lib/services.signed.json is missing: run npm run services:sign"];
-    for (const p of problems) log(p);
-    if (problems.length) process.exitCode = 1;
-    else log("services manifest: signed and in sync with lib/services.ts");
-    return;
-  }
-  if (flags.has("live")) {
-    const rows = await live({ raw: previousRaw });
-    for (const r of rows)
-      log(
-        `${r.current ? "current" : "STALE  "}  ${r.status}  ${r.issuedAt ?? ""}  ${r.url}${r.error ? `  (${r.error})` : ""}`,
-      );
-    if (rows.some((r) => !r.current)) process.exitCode = 1;
-    return;
-  }
+  if (flags.has("check")) return runCheck(previousRaw, SERVICES, log);
+  if (flags.has("live")) return runLive(previousRaw, log);
   const { manifest, changed } = signServices(SERVICES, {
     previous: previousRaw ? JSON.parse(previousRaw) : undefined,
     seed: readSeed(SERVICES_KEY_ID),

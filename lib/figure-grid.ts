@@ -7,9 +7,14 @@ export interface FigureColumns {
   narrow: number;
 }
 
+/** The first of `candidates` that divides `n`, else 1. */
+function largestDivisor(n: number, candidates: readonly number[]): number {
+  return candidates.find((c) => n % c === 0) ?? 1;
+}
+
 export function figureColumns(count: number): FigureColumns {
   const n = Math.max(1, Math.floor(count));
-  const wide = n <= 5 ? n : n % 4 === 0 ? 4 : n % 3 === 0 ? 3 : n % 2 === 0 ? 2 : 1;
-  const narrow = n % 2 === 0 ? 2 : n === 3 ? 3 : 1;
+  const wide = n <= 5 ? n : largestDivisor(n, [4, 3, 2]);
+  const narrow = n === 3 ? 3 : largestDivisor(n, [2]);
   return { wide, narrow };
 }

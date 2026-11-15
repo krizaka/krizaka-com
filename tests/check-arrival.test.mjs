@@ -74,7 +74,7 @@ test("the locale layout mounts RouteArrival: scroll to 0 and focus on the h1, wh
   const arrival = read("app/components/RouteArrival.tsx");
   assert.match(arrival, /window\.scrollTo\(0, 0\)/);
   assert.match(arrival, /heading\.focus\(\{ preventScroll: true \}\)/);
-  assert.match(arrival, /window\.location\.hash/);
+  assert.match(arrival, /globalThis\.location\.hash/);
   assert.match(arrival, /withoutLocale\(before\) === withoutLocale\(pathname\)/);
 });
 

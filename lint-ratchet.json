@@ -22,20 +22,16 @@
     "localTableOrForm": 2,
     "retiredImport": 0,
     "routeStateSelection": 0,
-    "cognitiveComplexity": 7,
-    "sonar": 50,
-    "codeRules": 429,
-    "code/curly": 380,
-    "sonarjs/super-linear-regex": 15,
+    "cognitiveComplexity": 0,
+    "sonar": 12,
+    "codeRules": 380,
+    "code/curly": 331,
     "code/max-depth": 42,
-    "sonarjs/no-nested-conditional": 12,
-    "sonarjs/no-nested-template-literals": 16,
+    "sonarjs/super-linear-regex": 8,
     "code/no-console": 6,
-    "sonarjs/redundant-type-aliases": 1,
-    "sonarjs/no-os-command-from-path": 3,
+    "sonarjs/no-os-command-from-path": 2,
     "sonarjs/no-inverted-boolean-check": 1,
     "code/max-nested-callbacks": 1,
-    "sonarjs/concise-regex": 1,
-    "sonarjs/void-use": 1
+    "sonarjs/concise-regex": 1
   }
 }

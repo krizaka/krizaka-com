@@ -18,7 +18,7 @@ const ALLOWED = JSON.parse(readFileSync(new URL("./code-names-allowed.json", imp
 const SKIPPED_DIRS = new Set(["node_modules", ".git"]);
 const NAME = new RegExp(Object.keys(CODE_NAMES).join("|"), "gi");
 /** The characters an identifier, a package or an address is made of: a hit is judged inside its whole run of them. */
-const IN_IDENTIFIER = new Set([..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@/._:-"]);
+const IN_IDENTIFIER = new Set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@/._:-");
 
 /** The identifier that holds the characters [from, to) of `line`. */
 export function identifierAround(line, from, to) {

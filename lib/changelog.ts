@@ -1,8 +1,10 @@
-/* The changelog's data, one shape for every source — pure, no import, tested by tests/changelog.test.mjs.
+/* The changelog's data, one shape for every source — pure (one helper, lib/trim.ts), tested by tests/changelog.test.mjs.
    Sources: a changesets CHANGELOG.md (the @krizaka packages), a GitHub Release body (the products), conventional PR
    titles (the draft generator, scripts/changelog-draft.mjs). Nothing is hand-written: scripts/gen-changelog.mjs reads
    the sources at build into the git-ignored lib/changelog.json, and /changelog draws it with @krizaka/ui's template.
    The shape is meant to move to @krizaka/ui as the adapter of the changelog template (krizaka/krizaka-ui#307). */
+
+import { dropLastWord, withFinalPeriod } from "./trim.ts";
 
 export type ChangeTag = "feature" | "fix" | "security" | "breaking" | "change";
 
@@ -36,7 +38,7 @@ export const CHANGE_TAGS: readonly ChangeTag[] = ["breaking", "security", "featu
 /** Public text names no one and carries no em dash: the sources are the team's own words, the page is the company's. */
 export const PERSONAL_NAMES = ["Oussama", "Abid"] as const;
 const NAME = PERSONAL_NAMES.join("|");
-const NAME_ASIDE = new RegExp(`\\s*\\([^)]*\\b(?:${NAME})\\b[^)]*\\)`, "gi");
+const NAME_ASIDE = new RegExp(String.raw`\s*\([^)]*\b(?:${NAME})\b[^)]*\)`, "gi");
 
 /** A colon says what an em dash says; an aside that names a person is dropped. */
 export const cleanText = (s: string): string =>
@@ -49,7 +51,7 @@ export const cleanText = (s: string): string =>
 export function textProblems(text: string): string[] {
   const problems: string[] = [];
   if (text.includes("—")) problems.push("an em dash");
-  const name = new RegExp(`\\b(?:${NAME})\\b`, "i").exec(text)?.[0];
+  const name = new RegExp(String.raw`\b(?:${NAME})\b`, "i").exec(text)?.[0];
   if (name) problems.push(`a personal name (${name})`);
   return problems;
 }
@@ -84,7 +86,7 @@ export function tagOf(text: string, fallback: ChangeTag): ChangeTag {
 const clip = (s: string, max = 220) => {
   const first = /^(.{20,}?[.!?])(\s|$)/.exec(s)?.[1];
   if (first && first.length <= max) return first;
-  return s.length <= max ? s : `${s.slice(0, max).replace(/\s+\S*$/, "")}…`;
+  return s.length <= max ? s : `${dropLastWord(s.slice(0, max))}…`;
 };
 
 /** A release of a repository lists that repository's pull requests: their address is the repository's current one (GitHub
@@ -131,8 +133,14 @@ const CHANGESET_TAG: Record<string, ChangeTag> = { major: "breaking", minor: "fe
     nested list are plumbing, not news). */
 function changesetBulletText(raw: string): string | undefined {
   const bullet = /^- (.+)$/.exec(raw);
-  if (!bullet || /^Updated dependencies/.test(bullet[1])) return undefined;
+  if (!bullet || bullet[1].startsWith("Updated dependencies")) return undefined;
   return plain(bullet[1].replace(/^(\[[^\]]*\]\([^)]*\)\s*)+(Thanks \[[^\]]*\]\([^)]*\)!\s*)?-\s*/, "")) || undefined;
+}
+
+/** The version a `## 1.2.3` heading names (`1.2.3-beta.1` too), `undefined` for any other line. */
+function versionHeading(raw: string): string | undefined {
+  const heading = /^## (\S+)$/.exec(raw.trimEnd());
+  return heading && /^\d+\.\d+\.\d+/.test(heading[1]) ? heading[1] : undefined;
 }
 
 /** The releases of a changesets CHANGELOG.md, newest first as written. Dates are not in the file: `dateOf(version)`. */
@@ -146,10 +154,10 @@ export function parseChangesets(
   let current: Release | undefined;
   let level: ChangeTag = "change";
   for (const raw of md.split("\n")) {
-    const h2 = /^## (\d+\.\d+\.\d+\S*)\s*$/.exec(raw);
-    if (h2) {
-      const date = dateOf(h2[1]);
-      current = date ? { source, product, version: h2[1], date, changes: [] } : undefined;
+    const version = versionHeading(raw);
+    if (version) {
+      const date = dateOf(version);
+      current = date ? { source, product, version, date, changes: [] } : undefined;
       if (current) releases.push(current);
       continue;
     }
@@ -170,7 +178,7 @@ export function parseChangesets(
 }
 
 const CONVENTIONAL =
-  /^(feat|fix|perf|security|sec|revert|refactor|docs|chore|ci|test|build|style|deps)(\([^)]*\))?(!)?:\s*(.+)$/i;
+  /^(feat|fix|perf|security|sec|revert|refactor|docs|chore|ci|test|build|style|deps)(\([^)]*\))?(!)?:\s*(\S.*)$/i;
 const TAG_OF_TYPE: Record<string, ChangeTag> = {
   feat: "feature",
   fix: "fix",
@@ -187,12 +195,16 @@ export function changeFromTitle(title: string, prUrl?: string): ChangeItem | nul
   const m = CONVENTIONAL.exec(title.trim());
   const type = m?.[1].toLowerCase();
   if (m && type && QUIET_TYPES.has(type) && !m[3]) return null;
-  const body = (m ? m[4] : title).replace(/\s*\(#\d+\)\s*$/, "").trim();
+  const body = (m ? m[4] : title)
+    .trimEnd()
+    .replace(/\(#\d+\)$/, "")
+    .trim();
   const sentence = plain(body.replace(/^./, (c) => c.toUpperCase()));
   const tag = tagOf(m?.[3] ? `${type}!: ${body}` : sentence, type ? (TAG_OF_TYPE[type] ?? "change") : "change");
   const num = /\(#(\d+)\)\s*$/.exec(title)?.[1];
-  const pr = prUrl ? prOf(prUrl) : num ? { number: Number(num), url: "" } : undefined;
-  return { tag, text: sentence.replace(/[.\s]*$/, "."), pr };
+  const fromTitle = num ? { number: Number(num), url: "" } : undefined;
+  const pr = prUrl ? prOf(prUrl) : fromTitle;
+  return { tag, text: withFinalPeriod(sentence), pr };
 }
 
 /** `fix: x by @someone in <url>` → `fix: x <url>`: the author is not public text. */
@@ -317,7 +329,9 @@ export function changelogRss(opts: {
         .map((c) => `<li><b>${esc(opts.tagLabel[c.tag])}</b> ${lineHtml(c.text)}</li>`)
         .join("");
       const link = `${opts.pageUrl}#${anchorOf(r)}`;
-      return `<item><title>${esc(releaseLabel(r))}</title><link>${esc(link)}</link><guid isPermaLink="true">${esc(link)}</guid><pubDate>${new Date(`${r.date}T12:00:00Z`).toUTCString()}</pubDate><description>${esc(`<ul>${list}</ul>`)}</description></item>`;
+      const pubDate = new Date(`${r.date}T12:00:00Z`).toUTCString();
+      const description = esc(`<ul>${list}</ul>`);
+      return `<item><title>${esc(releaseLabel(r))}</title><link>${esc(link)}</link><guid isPermaLink="true">${esc(link)}</guid><pubDate>${pubDate}</pubDate><description>${description}</description></item>`;
     })
     .join("");
   return `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>${esc(opts.title)}</title><link>${esc(opts.pageUrl)}</link><description>${esc(opts.description)}</description><language>${opts.language}</language><atom:link href="${esc(opts.feedUrl)}" rel="self" type="application/rss+xml"/>${items}</channel></rss>`;

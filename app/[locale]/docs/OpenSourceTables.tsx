@@ -35,7 +35,7 @@ function useTableLabels(): Partial<DataTableLabels> {
   };
 }
 
-function Links({ links }: { links: readonly { href: string; label: string; aria: string }[] }) {
+function Links({ links }: Readonly<{ links: readonly { href: string; label: string; aria: string }[] }>) {
   return (
     <span className="os-links">
       {links.map((l) => (
@@ -47,12 +47,47 @@ function Links({ links }: { links: readonly { href: string; label: string; aria:
   );
 }
 
-export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
-  const { t, locale } = useI18n();
-  const w = t.site.openSource.packages;
-  const labels = useTableLabels();
+function VersionCell({ version }: Readonly<{ version: string }>) {
+  return <code className="os-version">{version}</code>;
+}
+
+function DownloadsCell({ row, locale, trend }: Readonly<{ row: PackageRow; locale: string; trend: string }>) {
+  if (row.weeklyDownloads == null) return "—";
+  return (
+    <span className="os-downloads">
+      {row.weeklySeries ? (
+        <Sparkline data={row.weeklySeries} variant="area" width={72} height={22} title={`${row.name} — ${trend}`} />
+      ) : null}
+      {new Intl.NumberFormat(locale).format(row.weeklyDownloads)}
+    </span>
+  );
+}
+
+type PackagesWords = ReturnType<typeof useI18n>["t"]["site"]["openSource"]["packages"];
+
+function RegistryLinks({ row: r, w }: Readonly<{ row: PackageRow; w: PackagesWords }>) {
+  return (
+    <Links
+      links={[
+        {
+          href: r.registryUrl,
+          label: r.registry === "npm" ? "npm" : "Central",
+          aria: format(w.registryAria, { name: r.name }),
+        },
+        ...(r.repoUrl ? [{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }] : []),
+        ...(r.releasesUrl
+          ? [{ href: r.releasesUrl, label: w.releases, aria: format(w.releasesAria, { name: r.name }) }]
+          : []),
+        ...(r.docsUrl ? [{ href: r.docsUrl, label: w.docs, aria: format(w.docsAria, { name: r.name }) }] : []),
+      ]}
+    />
+  );
+}
+
+/** The columns of the packages table: built outside the component, so no renderer is redefined at every render. */
+function packageColumns(w: PackagesWords, locale: string): DataTableColumn<PackageRow>[] {
   const familyLabel = (f: string) => (f in w.families ? w.families[f as keyof typeof w.families] : f);
-  const columns: DataTableColumn<PackageRow>[] = [
+  return [
     {
       id: "name",
       header: w.name,
@@ -71,7 +106,7 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
       value: (r) => (r.registry === "npm" ? "npm" : "Maven Central"),
     },
     { id: "family", header: w.family, filter: "facet", value: (r) => familyLabel(r.family), nowrap: true },
-    { id: "version", header: w.version, nowrap: true, cell: (r) => <code className="os-version">{r.version}</code> },
+    { id: "version", header: w.version, nowrap: true, cell: (r) => <VersionCell version={r.version} /> },
     {
       id: "weeklyDownloads",
       header: w.downloads,
@@ -79,40 +114,22 @@ export function PackagesTable({ rows }: { rows: readonly PackageRow[] }) {
       align: "end",
       sortable: true,
       value: (r) => r.weeklyDownloads ?? null,
-      cell: (r) =>
-        r.weeklyDownloads == null ? (
-          "—"
-        ) : (
-          <span className="os-downloads">
-            {r.weeklySeries ? (
-              <Sparkline data={r.weeklySeries} variant="area" width={72} height={22} title={`${r.name} — ${w.trend}`} />
-            ) : null}
-            {new Intl.NumberFormat(locale).format(r.weeklyDownloads)}
-          </span>
-        ),
+      cell: (r) => <DownloadsCell row={r} locale={locale} trend={w.trend} />,
     },
     {
       id: "links",
       header: w.links,
       hideable: false,
-      cell: (r) => (
-        <Links
-          links={[
-            {
-              href: r.registryUrl,
-              label: r.registry === "npm" ? "npm" : "Central",
-              aria: format(w.registryAria, { name: r.name }),
-            },
-            ...(r.repoUrl ? [{ href: r.repoUrl, label: w.repo, aria: format(w.repoAria, { name: r.name }) }] : []),
-            ...(r.releasesUrl
-              ? [{ href: r.releasesUrl, label: w.releases, aria: format(w.releasesAria, { name: r.name }) }]
-              : []),
-            ...(r.docsUrl ? [{ href: r.docsUrl, label: w.docs, aria: format(w.docsAria, { name: r.name }) }] : []),
-          ]}
-        />
-      ),
+      cell: (r) => <RegistryLinks row={r} w={w} />,
     },
   ];
+}
+
+export function PackagesTable({ rows }: Readonly<{ rows: readonly PackageRow[] }>) {
+  const { t, locale } = useI18n();
+  const w = t.site.openSource.packages;
+  const labels = useTableLabels();
+  const columns = packageColumns(w, locale);
   return (
     <DataTable
       caption={w.caption}

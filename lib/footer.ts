@@ -67,7 +67,7 @@ export function messageAt(dictionary: unknown, key: string): string {
     .split(".")
     .reduce<unknown>((node, part) => (node as Record<string, unknown> | undefined)?.[part], dictionary);
   if (typeof value !== "string") {
-    throw new Error(`footer: no message at ${key}`);
+    throw new TypeError(`footer: no message at ${key}`);
   }
   return value;
 }

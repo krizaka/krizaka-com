@@ -42,7 +42,7 @@ const CHANNELS = [
   },
 ];
 
-export default function ContactClient({ groups }: { groups: ChannelGroup[] }) {
+export default function ContactClient({ groups }: Readonly<{ groups: ChannelGroup[] }>) {
   const { t } = useI18n();
 
   // Only keep the first 2 channels (Questions & Bugs), skip "Partenariats & presse"

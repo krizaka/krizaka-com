@@ -37,13 +37,13 @@ const problems = await visitPages(baseFromArgv(), hubCases(), async (page, c) =>
       const s = getComputedStyle(el);
       const why = [];
       const sides = ["Top", "Right", "Bottom", "Left"];
-      if (sides.some((k) => s[`border${k}Style`] !== "none" && parseFloat(s[`border${k}Width`]) > 0)) {
+      if (sides.some((k) => s[`border${k}Style`] !== "none" && Number.parseFloat(s[`border${k}Width`]) > 0)) {
         why.push("border");
       }
       if (s.boxShadow !== "none") {
         why.push("box-shadow");
       }
-      if (parseFloat(s.borderTopLeftRadius) > 0) {
+      if (Number.parseFloat(s.borderTopLeftRadius) > 0) {
         why.push("radius");
       }
       if (el.tagName === "A" && s.backgroundColor !== "rgba(0, 0, 0, 0)" && s.backgroundColor !== "transparent") {

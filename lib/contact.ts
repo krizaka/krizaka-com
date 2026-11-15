@@ -8,6 +8,7 @@
 
 import { displayName } from "@krizaka/org";
 import { z } from "zod";
+import { stripTrailingSlashes } from "./trim.ts";
 import {
   legacyPreset,
   productOf,
@@ -179,10 +180,11 @@ export function contactChannels(env: NodeJS.ProcessEnv = process.env) {
 
 /** One message to the Mailgun HTTP API (POST /v3/{domain}/messages, Basic auth `api:<key>`); `false` when it was refused or unreachable. */
 export function postMailgun(form: FormData, env: NodeJS.ProcessEnv = process.env): Promise<boolean> {
-  const base = (env.MAIL_API_URL || "https://api.mailgun.net").replace(/\/+$/, "");
+  const base = stripTrailingSlashes(env.MAIL_API_URL || "https://api.mailgun.net");
+  const basicToken = Buffer.from(`api:${env.MAIL_API_KEY}`).toString("base64");
   return fetch(`${base}/v3/${encodeURIComponent(env.MAIL_DOMAIN ?? "")}/messages`, {
     method: "POST",
-    headers: { Authorization: `Basic ${Buffer.from(`api:${env.MAIL_API_KEY}`).toString("base64")}` },
+    headers: { Authorization: `Basic ${basicToken}` },
     body: form,
     signal: AbortSignal.timeout(8000),
   }).then(

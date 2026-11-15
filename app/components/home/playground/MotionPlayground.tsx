@@ -28,7 +28,7 @@ export interface MotionPlaygroundWords {
 
 const APPS = ["A", "B", "C", "D"];
 
-export default function MotionPlayground({ w, calm }: { w: MotionPlaygroundWords; calm?: boolean }) {
+export default function MotionPlayground({ w, calm }: Readonly<{ w: MotionPlaygroundWords; calm?: boolean }>) {
   const [layout, setLayout] = useState<FlowLayout>("radial");
   const [mode, setMode] = useState<FlowMode>("both");
   return (

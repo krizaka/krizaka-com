@@ -32,7 +32,7 @@
 import { createHash } from "node:crypto";
 import { mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, dirname, join, resolve } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { execFileSync } from "node:child_process";
 import {
   FOREIGN_WRITERS,
@@ -49,6 +49,7 @@ import {
   targetOf,
 } from "./bunny-layout.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
+import { runAsMain } from "./run-main.mjs";
 
 /** The manifest root of layout v2 (ADR-014): entries resolve under sites/, org/v1/films/ and apps/ (manifestObject). "site" is the legacy root. */
 export const ROOT = "sites";
@@ -82,7 +83,7 @@ export function logicalPath(value, name = "to") {
 export function readManifest(file = MANIFEST) {
   try {
     const m = JSON.parse(readFileSync(file, "utf8"));
-    return { root: m.root ?? ROOT, files: { ...(m.files ?? {}) } };
+    return { root: m.root ?? ROOT, files: { ...m.files } };
   } catch (err) {
     if (err.code === "ENOENT") return { root: ROOT, files: {} };
     throw err;
@@ -139,7 +140,8 @@ export async function upload({
       if (!res.ok) throw new Error(`upload of ${f.logical} failed: HTTP ${res.status}`);
     }
     if (!dryRun) manifest.files[f.logical] = hash;
-    const state = same ? "unchanged" : dryRun ? "would send" : "sent";
+    const pending = dryRun ? "would send" : "sent";
+    const state = same ? "unchanged" : pending;
     log(`${state.padEnd(10)} ${(body.length / 1024).toFixed(0).padStart(6)} kB  ${cdnUrl(cfg, path)}`);
     out.push({ ...f, hash, path, url: cdnUrl(cfg, path), size: body.length, changed: !same, sent: !same && !dryRun });
   }
@@ -366,13 +368,8 @@ export async function purgeUnused({
   return unused;
 }
 
-/**
- * Mirrors what site/ serves into the browsable library (products/<product>/…, people/personas/…) under human names:
- * the newest hashed file of each logical name is copied (downloaded from the pull zone, sent to its library path) unless
- * the library already holds a file of the same size. Nothing under site/ is touched.
- */
-export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetch, log = console.log }) {
-  const site = await listObjects(cfg, ROOT, fetchImpl);
+/** The newest object of each library path: `Map<libraryPath, object>` (the hashed copies of one logical name collapse). */
+function newestByTarget(site) {
   const newest = new Map();
   for (const o of site) {
     const logical = o.path.slice(ROOT.length + 1).replace(/\.[0-9a-f]{10}(\.[a-z0-9]+)$/, "$1");
@@ -381,9 +378,27 @@ export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetc
     const prev = newest.get(target);
     if (!prev || o.changed > prev.changed) newest.set(target, o);
   }
+  return newest;
+}
+
+/** What the library already holds: `Map<path, size>`. */
+async function libraryObjects(cfg, fetchImpl) {
   const existing = new Map();
-  for (const top of ["products", "people/personas"])
+  for (const top of ["products", "people/personas"]) {
     for (const o of await listObjects(cfg, top, fetchImpl)) existing.set(o.path, o.size);
+  }
+  return existing;
+}
+
+/**
+ * Mirrors what site/ serves into the browsable library (products/<product>/…, people/personas/…) under human names:
+ * the newest hashed file of each logical name is copied (downloaded from the pull zone, sent to its library path) unless
+ * the library already holds a file of the same size. Nothing under site/ is touched.
+ */
+export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetch, log = console.log }) {
+  const site = await listObjects(cfg, ROOT, fetchImpl);
+  const newest = newestByTarget(site);
+  const existing = await libraryObjects(cfg, fetchImpl);
   let sent = 0;
   for (const [target, o] of [...newest].sort(([a], [b]) => a.localeCompare(b))) {
     if (existing.get(target) === o.size) continue;
@@ -400,9 +415,8 @@ export async function library({ cfg, dryRun = false, fetchImpl = globalThis.fetc
     if (!res.ok) throw new Error(`upload of ${target} failed: HTTP ${res.status}`);
     sent++;
   }
-  log(
-    `${newest.size} library file(s), ${dryRun ? "to copy" : "copied"}: ${dryRun ? [...newest].filter(([t, o]) => existing.get(t) !== o.size).length : sent}`,
-  );
+  const toCopy = [...newest].filter(([t, o]) => existing.get(t) !== o.size).length;
+  log(`${newest.size} library file(s), ${dryRun ? "to copy" : "copied"}: ${dryRun ? toCopy : sent}`);
   return newest;
 }
 
@@ -598,6 +612,107 @@ const USAGE = `usage:
   node scripts/cdn-assets.mjs readme [--env-file <path>]    publish the layout as README.txt at the zone root
 ${layoutHelp()}`;
 
+/** `upload`: the command's run; returns the exit code. */
+async function runUpload({ args, target, merged, manifest, manifestFile, fetchImpl, log }) {
+  if (!target) throw new Error("upload needs a file or a directory");
+  const cfg = loadConfig(merged, { requireKey: !args.dryRun });
+  const entries = await upload({ src: target, to: args.to, cfg, manifest, dryRun: args.dryRun, fetchImpl, log });
+  if (!args.dryRun) {
+    const sent = entries.find((e) => e.sent);
+    if (sent) {
+      const res = await (fetchImpl ?? globalThis.fetch)(sent.url, { method: "HEAD" });
+      if (!res.ok) throw new Error(`uploaded, but ${sent.url} answers HTTP ${res.status}: check the pull zone`);
+    }
+    writeManifest(manifest, manifestFile);
+  }
+  const sentCount = entries.filter((e) => e.changed).length;
+  const updated = args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`;
+  log(`\n${entries.length} file(s), ${sentCount} ${args.dryRun ? "to send" : "sent"}${updated}`);
+  return 0;
+}
+
+/** `check`: the command's run; returns the exit code. */
+async function runCheck({ merged, manifest, fetchImpl, log }) {
+  const failed = await check({ cfg: loadConfig(merged, { requireKey: false }), manifest, fetchImpl, log });
+  return failed.length ? 1 : 0;
+}
+
+/** `prune`: the command's run; returns the exit code. */
+async function runPrune({ args, argv, merged, manifest, manifestFile, yes, fetchImpl, log }) {
+  await prune({
+    cfg: loadConfig(merged),
+    manifest,
+    yes,
+    retired: argv.includes("--retired"),
+    minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000,
+    extraKeep: otherBranchPaths(manifestFile),
+    fetchImpl,
+    log,
+  });
+  return 0;
+}
+
+/** `library`: the command's run; returns the exit code. */
+async function runLibrary({ log }) {
+  log(
+    "library is retired (ADR-014): the human-name mirror (products/, people/personas/) is no longer written; browse the tree (scripts/bunny-tree.mjs)",
+  );
+  return 1;
+}
+
+/** `tree`: the command's run; returns the exit code. */
+async function runTree({ argv, merged, fetchImpl, log }) {
+  const { misplaced: bad, legacy } = await tree({ cfg: loadConfig(merged), fetchImpl, log });
+  return bad.length || (argv.includes("--strict") && legacy.length) ? 1 : 0;
+}
+
+/** `migrate`: the command's run; returns the exit code. */
+async function runMigrate({ args, merged, yes, fetchImpl, log }) {
+  await migrate({
+    cfg: loadConfig(merged),
+    only: args.only ?? "",
+    yes,
+    accountKey: merged.MEDIA_ACCOUNT_API_KEY,
+    fetchImpl,
+    log,
+  });
+  return 0;
+}
+
+/** `purge-unused`: the command's run; returns the exit code. */
+async function runPurgeUnused({ args, merged, yes, fetchImpl, log }) {
+  if (!args.refs) throw new Error("purge-unused needs --refs <dir> (ref-urls.txt, ref-hex10.txt, ref-prefixes.txt)");
+  const refs = readRefs(args.refs);
+  if (!refs.urls.size) throw new Error(`${args.refs}/ref-urls.txt is empty: refusing to purge without references`);
+  await purgeUnused({
+    cfg: loadConfig(merged),
+    refs,
+    yes,
+    backup: args.backup,
+    minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000,
+    fetchImpl,
+    log,
+  });
+  return 0;
+}
+
+/** `readme`: the command's run; returns the exit code. */
+async function runReadme({ merged, fetchImpl, log }) {
+  await publishReadme({ cfg: loadConfig(merged), accountKey: merged.MEDIA_ACCOUNT_API_KEY, fetchImpl, log });
+  return 0;
+}
+
+const COMMANDS = {
+  upload: runUpload,
+  check: runCheck,
+  prune: runPrune,
+  library: runLibrary,
+  tree: runTree,
+  migrate: runMigrate,
+  "purge-unused": runPurgeUnused,
+  readme: runReadme,
+};
+
 export async function main(argv, { env = process.env, fetchImpl, log = console.log, manifestFile = MANIFEST } = {}) {
   const args = parseArgs(argv.filter((a) => a !== "--yes" && a !== "--retired" && a !== "--strict"));
   const yes = argv.includes("--yes");
@@ -613,91 +728,10 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
     ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)),
   };
   const manifest = readManifest(manifestFile);
-  if (command === "upload") {
-    if (!target) throw new Error("upload needs a file or a directory");
-    const cfg = loadConfig(merged, { requireKey: !args.dryRun });
-    const entries = await upload({ src: target, to: args.to, cfg, manifest, dryRun: args.dryRun, fetchImpl, log });
-    if (!args.dryRun) {
-      const sent = entries.find((e) => e.sent);
-      if (sent) {
-        const res = await (fetchImpl ?? globalThis.fetch)(sent.url, { method: "HEAD" });
-        if (!res.ok) throw new Error(`uploaded, but ${sent.url} answers HTTP ${res.status}: check the pull zone`);
-      }
-      writeManifest(manifest, manifestFile);
-    }
-    const sentCount = entries.filter((e) => e.changed).length;
-    log(
-      `\n${entries.length} file(s), ${sentCount} ${args.dryRun ? "to send" : "sent"}${args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`}`,
-    );
-    return 0;
-  }
-  if (command === "check") {
-    const failed = await check({ cfg: loadConfig(merged, { requireKey: false }), manifest, fetchImpl, log });
-    return failed.length ? 1 : 0;
-  }
-  if (command === "prune") {
-    await prune({
-      cfg: loadConfig(merged),
-      manifest,
-      yes,
-      retired: argv.includes("--retired"),
-      minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000,
-      extraKeep: otherBranchPaths(manifestFile),
-      fetchImpl,
-      log,
-    });
-    return 0;
-  }
-  if (command === "library") {
-    log(
-      "library is retired (ADR-014): the human-name mirror (products/, people/personas/) is no longer written; browse the tree (scripts/bunny-tree.mjs)",
-    );
-    return 1;
-  }
-  if (command === "tree") {
-    const { misplaced: bad, legacy } = await tree({ cfg: loadConfig(merged), fetchImpl, log });
-    return bad.length || (argv.includes("--strict") && legacy.length) ? 1 : 0;
-  }
-  if (command === "migrate") {
-    await migrate({
-      cfg: loadConfig(merged),
-      only: args.only ?? "",
-      yes,
-      accountKey: merged.MEDIA_ACCOUNT_API_KEY,
-      fetchImpl,
-      log,
-    });
-    return 0;
-  }
-  if (command === "purge-unused") {
-    if (!args.refs) throw new Error("purge-unused needs --refs <dir> (ref-urls.txt, ref-hex10.txt, ref-prefixes.txt)");
-    const refs = readRefs(args.refs);
-    if (!refs.urls.size) throw new Error(`${args.refs}/ref-urls.txt is empty: refusing to purge without references`);
-    await purgeUnused({
-      cfg: loadConfig(merged),
-      refs,
-      yes,
-      backup: args.backup,
-      minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000,
-      fetchImpl,
-      log,
-    });
-    return 0;
-  }
-  if (command === "readme") {
-    await publishReadme({ cfg: loadConfig(merged), accountKey: merged.MEDIA_ACCOUNT_API_KEY, fetchImpl, log });
-    return 0;
-  }
+  const run = Object.hasOwn(COMMANDS, command) ? COMMANDS[command] : undefined;
+  if (run) return run({ args, argv, target, merged, manifest, manifestFile, yes, fetchImpl, log });
   log(USAGE);
   return 1;
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  main(process.argv.slice(2)).then(
-    (code) => process.exit(code),
-    (err) => {
-      console.error(`cdn-assets: ${err.message}`);
-      process.exit(1);
-    },
-  );
-}
+await runAsMain(import.meta.url, "cdn-assets", main);

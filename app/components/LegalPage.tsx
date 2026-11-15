@@ -28,7 +28,7 @@ export async function legalMetadata({ params }: LegalPageProps, page: LegalKind)
 }
 
 /** A legal page (privacy, terms) on the Legal template of @krizaka/ui: its sections come from messages → site.legal.<page>. */
-export default function LegalPage({ locale, page }: { locale: string; page: LegalKind }) {
+export default function LegalPage({ locale, page }: Readonly<{ locale: string; page: LegalKind }>) {
   const legal = getDictionary(locale).site.legal;
   const doc = legal[page];
   return (

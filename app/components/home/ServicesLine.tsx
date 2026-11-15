@@ -9,7 +9,7 @@ import { OfferList } from "@/app/components/lists/OfferList";
 import { getDictionary } from "@/lib/i18n";
 import { SERVICES_PAGE_ORDER } from "@/lib/services-page";
 
-export default function ServicesLine({ locale }: { locale: string }) {
+export default function ServicesLine({ locale }: Readonly<{ locale: string }>) {
   const s = getDictionary(locale).site.home.services;
   return (
     <Section

@@ -25,11 +25,11 @@ export function I18nProvider({
   children,
   locale,
   messages,
-}: {
+}: Readonly<{
   children: ReactNode;
   locale: Locale;
   messages: TranslationDictionary;
-}) {
+}>) {
   const router = useRouter();
   const pathname = usePathname();
 

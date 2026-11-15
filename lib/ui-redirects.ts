@@ -13,16 +13,16 @@ export interface Redirect {
   statusCode: 308;
 }
 
-const GET_STARTED = ["installation", "theming"];
-const FOUNDATIONS = ["tokens", "typography", "icons", "motion", "brand-marks"];
-const PACKAGES = ["tailwind", "intl", "i18n", "query", "realtime", "push", "config"];
+const GET_STARTED: ReadonlySet<string> = new Set(["installation", "theming"]);
+const FOUNDATIONS: ReadonlySet<string> = new Set(["tokens", "typography", "icons", "motion", "brand-marks"]);
+const PACKAGES: ReadonlySet<string> = new Set(["tailwind", "intl", "i18n", "query", "realtime", "push", "config"]);
 
 /** The path on ui.krizaka.com (no locale) of a page of the old /docs/ui, by its slug there (`""` for /docs/ui). */
 export function uiPathOf(slug: string): string {
   if (slug === "") return "/";
-  if (GET_STARTED.includes(slug)) return `/${slug}`;
-  if (FOUNDATIONS.includes(slug)) return `/foundations/${slug}`;
-  if (PACKAGES.includes(slug)) return `/packages/${slug}`;
+  if (GET_STARTED.has(slug)) return `/${slug}`;
+  if (FOUNDATIONS.has(slug)) return `/foundations/${slug}`;
+  if (PACKAGES.has(slug)) return `/packages/${slug}`;
   if (slug === "mobile") return "/mobile";
   if (slug === "templates" || slug === "screens") return "/templates";
   if (slug.startsWith("templates-")) return `/templates/${slug.slice("templates-".length)}`;
@@ -40,23 +40,25 @@ export function uiRedirects(): Redirect[] {
   ] as const) {
     for (const slug of named) {
       const path = uiPathOf(slug);
+      const slugPath = slug ? `/${slug}` : "";
+      const folder = path === "/" ? "/" : `${path}/`;
       rules.push({
-        source: `${prefix}/docs/ui${slug ? `/${slug}` : ""}`,
-        destination: `${target}${path === "/" ? "/" : `${path}/`}`,
+        source: `${prefix}/docs/ui${slugPath}`,
+        destination: `${target}${folder}`,
         statusCode: 308,
       });
     }
-    rules.push({
-      source: `${prefix}/docs/ui/templates-:intent`,
-      destination: `${target}/templates/:intent/`,
-      statusCode: 308,
-    });
-    rules.push({ source: `${prefix}/docs/ui/:name`, destination: `${target}/components/:name/`, statusCode: 308 });
-    // Deeper than one segment never existed; keep the reader on the site rather than on a 404.
-    rules.push({ source: `${prefix}/docs/ui/:path+`, destination: `${target}/`, statusCode: 308 });
+    rules.push(
+      { source: `${prefix}/docs/ui/templates-:intent`, destination: `${target}/templates/:intent/`, statusCode: 308 },
+      { source: `${prefix}/docs/ui/:name`, destination: `${target}/components/:name/`, statusCode: 308 },
+      // Deeper than one segment never existed; keep the reader on the site rather than on a 404.
+      { source: `${prefix}/docs/ui/:path+`, destination: `${target}/`, statusCode: 308 },
+    );
   }
   // The old open-source page is the documentation hub (/docs, 2026-10-30): same language.
-  rules.push({ source: "/fr/open-source", destination: "/fr/docs", statusCode: 308 });
-  rules.push({ source: "/:locale(en)?/open-source", destination: "/en/docs", statusCode: 308 });
+  rules.push(
+    { source: "/fr/open-source", destination: "/fr/docs", statusCode: 308 },
+    { source: "/:locale(en)?/open-source", destination: "/en/docs", statusCode: 308 },
+  );
   return rules;
 }

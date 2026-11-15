@@ -13,9 +13,9 @@ import type { ProductId } from "./ProductVisuals";
 const ProductVisuals = dynamic(() => import("./ProductVisuals"), { ssr: false });
 
 const REDUCE = "(prefers-reduced-motion: reduce)";
-const readStill = () => window.matchMedia(REDUCE).matches;
+const readStill = () => globalThis.matchMedia(REDUCE).matches;
 const subscribe = (change: () => void) => {
-  const q = window.matchMedia(REDUCE);
+  const q = globalThis.matchMedia(REDUCE);
   q.addEventListener("change", change);
   return () => q.removeEventListener("change", change);
 };

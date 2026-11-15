@@ -20,7 +20,7 @@ const ICONS: Record<string, ComponentType<IconProps>> = { repos: PackIcon };
 const row =
   "gap-3 [&>svg]:shrink-0 [&>svg]:text-fg-secondary aria-[current=page]:bg-surface-2 aria-[current=page]:font-semibold";
 
-export function MobilePanel({ path }: { path: string }) {
+export function MobilePanel({ path }: Readonly<{ path: string }>) {
   const { t, locale } = useI18n();
   const language = useLanguageSwitch();
   const { theme, toggleTheme } = useSiteTheme();

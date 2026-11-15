@@ -137,8 +137,7 @@ test("a withheld film has no watch page, and says why; the trailer is withheld u
 // The watch page of a storyboard film says its alt as the meta description; check-seo (the container smoke) refuses one
 // outside 30-400 characters, and the French alts of Sam and Théo were 404 and 413 (found by the crack, 2026-11-07).
 test("each watch page's description fits the SEO check's bounds, in both languages", () => {
-  const [, min, max] =
-    /length < (\d+) \|\| decode\(desc\[0\]\)\.length > (\d+)/.exec(read("scripts/check-seo.mjs")) ?? [];
+  const [, min, max] = /length < (\d+) \|\| length > (\d+)/.exec(read("scripts/check-seo.mjs")) ?? [];
   assert.ok(min && max, "the bounds are check-seo's own");
   for (const l of ["en", "fr"]) {
     const films = JSON.parse(read(`messages/${l}.json`)).site.home.films;

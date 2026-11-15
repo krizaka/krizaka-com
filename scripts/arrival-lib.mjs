@@ -34,7 +34,10 @@ export function arrivalProblems(c, r) {
     return out;
   }
   if (r.scrollY > 2) out.push(`${where}: lands at scrollY ${r.scrollY}, not at the top`);
-  if (!r.h1Visible) out.push(`${where}: the page's h1 is not in view${r.h1 ? ` (« ${r.h1} »)` : ""}`);
+  if (!r.h1Visible) {
+    const seen = r.h1 ? ` (« ${r.h1} »)` : "";
+    out.push(`${where}: the page's h1 is not in view${seen}`);
+  }
   if (!r.h1Focused) out.push(`${where}: focus is not on the h1 (it is on ${r.focus})`);
   if (r.h1Outline && r.h1Outline !== "none") {
     out.push(

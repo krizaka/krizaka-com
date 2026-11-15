@@ -13,16 +13,14 @@ interface Turnstile {
   remove(id: string): void;
 }
 declare global {
-  interface Window {
-    turnstile?: Turnstile;
-  }
+  var turnstile: Turnstile | undefined;
 }
 
 const SCRIPT = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
 let loading: Promise<void> | null = null;
 
 function loadScript(): Promise<void> {
-  if (window.turnstile) return Promise.resolve();
+  if (globalThis.turnstile) return Promise.resolve();
   loading ??= new Promise<void>((resolve, reject) => {
     const s = document.createElement("script");
     s.src = SCRIPT;
@@ -43,11 +41,11 @@ export default function CaptchaWidget({
   onToken,
   label,
   language,
-}: {
+}: Readonly<{
   onToken: (token: string | null) => void;
   label: string;
   language: string;
-}) {
+}>) {
   const host = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,9 +54,10 @@ export default function CaptchaWidget({
     let id: string | null = null;
     let cancelled = false;
     const mount = () => {
-      if (cancelled || !window.turnstile) return;
-      if (id) window.turnstile.remove(id);
-      id = window.turnstile.render(el, {
+      const turnstile = globalThis.turnstile;
+      if (cancelled || !turnstile) return;
+      if (id) turnstile.remove(id);
+      id = turnstile.render(el, {
         sitekey: CAPTCHA_SITE_KEY,
         theme: currentTheme(),
         language,
@@ -77,7 +76,7 @@ export default function CaptchaWidget({
     return () => {
       cancelled = true;
       watcher.disconnect();
-      if (id && window.turnstile) window.turnstile.remove(id);
+      if (id && globalThis.turnstile) globalThis.turnstile.remove(id);
     };
   }, [language, onToken]);
 

@@ -48,131 +48,48 @@ const v = (artifactId: string) => mavenVersion(artifactId) ?? "";
 /** The users service's artefacts live in krizaka-build, under krizaka-users/ (ADR-021), not in the old krizaka-users split. */
 export const USERS_SOURCE = { repo: "krizaka-build", folder: "krizaka-users" } as const;
 
-function usersArtifact(id: MavenArtifactId, part: "api" | "client" | "core"): MavenArtifact {
-  const artifactId = `krizaka-users-${part}`;
-  return {
-    id,
-    groupId: MAVEN_GROUP_ID,
-    artifactId,
-    repo: USERS_SOURCE.repo,
-    dir: `${USERS_SOURCE.folder}/${artifactId}`,
-    version: v(artifactId),
-  };
+/** One artifact of the group: its folder is its id unless the repository nests it. */
+function artifact(
+  id: MavenArtifactId,
+  artifactId: string,
+  repo: string,
+  extra: Pick<MavenArtifact, "bom" | "starter"> & { dir?: string } = {},
+): MavenArtifact {
+  const { dir = artifactId, ...flags } = extra;
+  return { id, groupId: MAVEN_GROUP_ID, artifactId, repo, dir, version: v(artifactId), ...flags };
 }
 
+const KIT = "krizaka-platform-kit";
+
+const kit = (id: MavenArtifactId, artifactId: string) => artifact(id, artifactId, KIT);
+const starter = (id: MavenArtifactId, name: string) => {
+  const artifactId = `krizaka-spring-boot-starter-${name}`;
+  return artifact(id, artifactId, KIT, { dir: `starters/${artifactId}`, starter: true });
+};
+const billing = (id: MavenArtifactId, part: "api" | "client") =>
+  artifact(id, `krizaka-billing-${part}`, "krizaka-billing");
+const usersArtifact = (id: MavenArtifactId, part: "api" | "client" | "core") => {
+  const artifactId = `krizaka-users-${part}`;
+  return artifact(id, artifactId, USERS_SOURCE.repo, { dir: `${USERS_SOURCE.folder}/${artifactId}` });
+};
+
 export const MAVEN_ARTIFACTS: readonly MavenArtifact[] = [
-  {
-    id: "bom",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-bom",
-    repo: "krizaka-build",
-    dir: "krizaka-bom",
-    version: v("krizaka-bom"),
-    bom: true,
-  },
-  {
-    id: "starterWeb",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-spring-boot-starter-web",
-    repo: "krizaka-platform-kit",
-    dir: "starters/krizaka-spring-boot-starter-web",
-    version: v("krizaka-spring-boot-starter-web"),
-    starter: true,
-  },
-  {
-    id: "starterSecurity",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-spring-boot-starter-security",
-    repo: "krizaka-platform-kit",
-    dir: "starters/krizaka-spring-boot-starter-security",
-    version: v("krizaka-spring-boot-starter-security"),
-    starter: true,
-  },
-  {
-    id: "starterRabbitmq",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-spring-boot-starter-rabbitmq",
-    repo: "krizaka-platform-kit",
-    dir: "starters/krizaka-spring-boot-starter-rabbitmq",
-    version: v("krizaka-spring-boot-starter-rabbitmq"),
-    starter: true,
-  },
-  {
-    id: "starterObservability",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-spring-boot-starter-observability",
-    repo: "krizaka-platform-kit",
-    dir: "starters/krizaka-spring-boot-starter-observability",
-    version: v("krizaka-spring-boot-starter-observability"),
-    starter: true,
-  },
-  {
-    id: "web",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-web",
-    repo: "krizaka-platform-kit",
-    dir: "krizaka-web",
-    version: v("krizaka-web"),
-  },
-  {
-    id: "security",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-security",
-    repo: "krizaka-platform-kit",
-    dir: "krizaka-security",
-    version: v("krizaka-security"),
-  },
-  {
-    id: "messaging",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-messaging",
-    repo: "krizaka-platform-kit",
-    dir: "krizaka-messaging",
-    version: v("krizaka-messaging"),
-  },
-  {
-    id: "observability",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-observability",
-    repo: "krizaka-platform-kit",
-    dir: "krizaka-observability",
-    version: v("krizaka-observability"),
-  },
+  artifact("bom", "krizaka-bom", "krizaka-build", { bom: true }),
+  starter("starterWeb", "web"),
+  starter("starterSecurity", "security"),
+  starter("starterRabbitmq", "rabbitmq"),
+  starter("starterObservability", "observability"),
+  kit("web", "krizaka-web"),
+  kit("security", "krizaka-security"),
+  kit("messaging", "krizaka-messaging"),
+  kit("observability", "krizaka-observability"),
   usersArtifact("usersClient", "client"),
   usersArtifact("usersApi", "api"),
   usersArtifact("usersCore", "core"),
-  {
-    id: "notificationsApi",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-notifications-api",
-    repo: "krizaka-platform-kit",
-    dir: "krizaka-notifications-api",
-    version: v("krizaka-notifications-api"),
-  },
-  {
-    id: "billingClient",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-billing-client",
-    repo: "krizaka-billing",
-    dir: "krizaka-billing-client",
-    version: v("krizaka-billing-client"),
-  },
-  {
-    id: "billingApi",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-billing-api",
-    repo: "krizaka-billing",
-    dir: "krizaka-billing-api",
-    version: v("krizaka-billing-api"),
-  },
-  {
-    id: "testSupport",
-    groupId: MAVEN_GROUP_ID,
-    artifactId: "krizaka-test-support",
-    repo: "krizaka-build",
-    dir: "krizaka-test-support",
-    version: v("krizaka-test-support"),
-  },
+  kit("notificationsApi", "krizaka-notifications-api"),
+  billing("billingClient", "client"),
+  billing("billingApi", "api"),
+  artifact("testSupport", "krizaka-test-support", "krizaka-build"),
 ];
 
 export const centralUrl = (a: MavenArtifact) => `https://central.sonatype.com/artifact/${a.groupId}/${a.artifactId}`;

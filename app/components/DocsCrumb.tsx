@@ -9,7 +9,7 @@ import { cn } from "@krizaka/ui/cn";
 import { useI18n } from "./I18nProvider";
 import { NAV_DOCS_HUB, docsLinkText, docsSectionOf } from "@/lib/nav";
 
-export function DocsCrumb({ pathname }: { pathname: string }) {
+export function DocsCrumb({ pathname }: Readonly<{ pathname: string }>) {
   const { t } = useI18n();
   const section = docsSectionOf(pathname);
   const crumb =

@@ -11,7 +11,7 @@ export interface FitsWords {
   services: string;
 }
 
-export default function HowItFits({ layers, w }: { layers: Layers; w: FitsWords }) {
+export default function HowItFits({ layers, w }: Readonly<{ layers: Layers; w: FitsWords }>) {
   return (
     <ol className="os-fits">
       <li className="os-fits-layer">

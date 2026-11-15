@@ -36,10 +36,10 @@ const step = (label, cmd, args) => {
 
 if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop())) {
   const files = lintableFiles(changed());
+  const noun = files.length > 1 ? "files" : "file";
+  const lint = files.length ? step(`eslint (${files.length} changed ${noun})`, "npx", ["eslint", ...files]) : true;
   const ok = [
-    files.length
-      ? step(`eslint (${files.length} changed file${files.length > 1 ? "s" : ""})`, "npx", ["eslint", ...files])
-      : true,
+    lint,
     step("tsc --noEmit", "npx", ["tsc", "--noEmit"]),
     step("unit tests", "npm", ["test", "--silent"]),
   ].every(Boolean);

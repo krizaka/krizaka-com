@@ -214,10 +214,11 @@ export function envMarkdown(): string {
       "",
       "| Variable | Production | Secret | Default | What it does |",
       "| :--- | :---: | :---: | :--- | :--- |",
-      ...ENV_VARS.filter((e) => e.context === context).map(
-        (e) =>
-          `| \`${e.name}\`${e.build ? " *(build)*" : ""}${e.tooling ? " *(scripts)*" : ""} | ${need[e.need]} | ${e.secret ? "✓" : ""} | ${e.default ? `\`${e.default}\`` : ""} | ${e.doc} |`,
-      ),
+      ...ENV_VARS.filter((e) => e.context === context).map((e) => {
+        const flags = `${e.build ? " *(build)*" : ""}${e.tooling ? " *(scripts)*" : ""}`;
+        const fallback = e.default ? `\`${e.default}\`` : "";
+        return `| \`${e.name}\`${flags} | ${need[e.need]} | ${e.secret ? "✓" : ""} | ${fallback} | ${e.doc} |`;
+      }),
       "",
     ])
     .join("\n");

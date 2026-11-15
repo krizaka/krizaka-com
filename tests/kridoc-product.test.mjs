@@ -83,7 +83,7 @@ test("Kridoc is a row of the home like the others: its mark is KridocLogo, a Sou
 
 test("left out on purpose: /story has no chapter, the changelog no chip, the mobile discovery no entry", () => {
   const story = read("lib/story.ts");
-  assert.match(story, /NOT_IN_STORY[^=]*= \["kridoc"\]/);
+  assert.match(story, /NOT_IN_STORY[^=]*= new Set\(\["kridoc"\]\)/);
   assert.match(read("lib/product-hosts.ts"), /RELEASE_PRODUCT_IDS = \["sovkora", "verikora", "folioviv"\]/);
   assert.doesNotMatch(read("lib/services.signed.json"), /kridoc/i, "the signed discovery document carries no Kridoc");
 });

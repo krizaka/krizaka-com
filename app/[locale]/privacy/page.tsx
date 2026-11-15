@@ -2,7 +2,7 @@ import LegalPage, { legalMetadata, type LegalPageProps } from "@/app/components/
 
 export const generateMetadata = (props: LegalPageProps) => legalMetadata(props, "privacy");
 
-export default async function Page({ params }: LegalPageProps) {
+export default async function Page({ params }: Readonly<LegalPageProps>) {
   const { locale } = await params;
   return <LegalPage locale={locale} page="privacy" />;
 }

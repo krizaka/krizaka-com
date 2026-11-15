@@ -90,7 +90,7 @@ function promiseOf(t: TranslationDictionary, bird: StoryBird): string {
    chapter 1's clip, the whole film opens in a lightbox (nothing fetched before) and its watch page is one link away. The
    name and how we work have no clip, on purpose. Every figure is read at build; products and their statuses come from
    lib/products.ts, what runs on the engine from lib/engine-uses.ts — nothing is typed here. */
-export default async function StoryPage({ params }: Props) {
+export default async function StoryPage({ params }: Readonly<Props>) {
   const locale = asLocale((await params).locale);
   const t = getDictionary(locale);
   const st = t.site.story;
@@ -180,11 +180,7 @@ export default async function StoryPage({ params }: Props) {
           </>
         }
         kicker={h.knowhow[id].name}
-        lead={
-          <>
-            <p>{h.cards[id].line}</p>
-          </>
-        }
+        lead={<p>{h.cards[id].line}</p>}
         bird={bird}
         promise={promiseOf(t, bird)}
         proof={

@@ -29,10 +29,10 @@ export interface LightboxFilm extends LightboxCut {
 export default function FilmLightbox({
   film,
   trigger,
-}: {
+}: Readonly<{
   film: LightboxFilm;
   /** Another way to open it (/story: the poster card); the home's ghost button by default. */ trigger?: ReactNode;
-}) {
+}>) {
   const { t } = useI18n();
   const [still, setStill] = useState(true);
   const [upright, setUpright] = useState(false);
@@ -46,8 +46,8 @@ export default function FilmLightbox({
     time: (time: string, duration: string) => format(w.labels.time, { time, duration }),
   };
   const open = () => {
-    setStill(prefersStill(window));
-    setUpright(window.matchMedia("(orientation: portrait) and (max-width: 640px)").matches);
+    setStill(prefersStill(globalThis));
+    setUpright(globalThis.matchMedia("(orientation: portrait) and (max-width: 640px)").matches);
   };
   return (
     <Dialog.Root>

@@ -15,7 +15,7 @@ test("every page with words in lib/og-pages.ts has its own image route, which dr
   assert.deepEqual(ids, ["home", "docs", "services", "story", "changelog", "contact", "privacy", "terms"]);
   for (const id of ids) {
     assert.ok(existsSync(new URL(`../${routeOf(id)}`, import.meta.url)), `${id}: ${routeOf(id)}`);
-    assert.match(read(routeOf(id)), new RegExp(`shareImage\\(shareCardOf\\("${id}", locale\\)\\)`), id);
+    assert.match(read(routeOf(id)), new RegExp(`pageShareImage\\("${id}"\\)`), id);
   }
 });
 
