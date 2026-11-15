@@ -82,7 +82,7 @@ export function logicalPath(value, name = "to") {
 export function readManifest(file = MANIFEST) {
   try {
     const m = JSON.parse(readFileSync(file, "utf8"));
-    return { root: m.root ?? ROOT, files: { ...(m.files ?? {}) } };
+    return { root: m.root ?? ROOT, files: { ...m.files } };
   } catch (err) {
     if (err.code === "ENOENT") return { root: ROOT, files: {} };
     throw err;
@@ -139,7 +139,8 @@ export async function upload({
       if (!res.ok) throw new Error(`upload of ${f.logical} failed: HTTP ${res.status}`);
     }
     if (!dryRun) manifest.files[f.logical] = hash;
-    const state = same ? "unchanged" : dryRun ? "would send" : "sent";
+    const pending = dryRun ? "would send" : "sent";
+    const state = same ? "unchanged" : pending;
     log(`${state.padEnd(10)} ${(body.length / 1024).toFixed(0).padStart(6)} kB  ${cdnUrl(cfg, path)}`);
     out.push({ ...f, hash, path, url: cdnUrl(cfg, path), size: body.length, changed: !same, sent: !same && !dryRun });
   }
@@ -626,9 +627,8 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
       writeManifest(manifest, manifestFile);
     }
     const sentCount = entries.filter((e) => e.changed).length;
-    log(
-      `\n${entries.length} file(s), ${sentCount} ${args.dryRun ? "to send" : "sent"}${args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`}`,
-    );
+    const updated = args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`;
+    log(`\n${entries.length} file(s), ${sentCount} ${args.dryRun ? "to send" : "sent"}${updated}`);
     return 0;
   }
   if (command === "check") {
@@ -693,11 +693,10 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  main(process.argv.slice(2)).then(
-    (code) => process.exit(code),
-    (err) => {
-      console.error(`cdn-assets: ${err.message}`);
-      process.exit(1);
-    },
-  );
+  try {
+    process.exit(await main(process.argv.slice(2)));
+  } catch (err) {
+    console.error(`cdn-assets: ${err.message}`);
+    process.exit(1);
+  }
 }

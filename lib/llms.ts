@@ -22,7 +22,8 @@ function npmPackages(): string {
     .sort(([a], [b]) => a.localeCompare(b))
     .map(([name, version]) => {
       const about = data.npmMeta?.[name]?.description;
-      return `- ${name}@${version}${about ? ` — ${summary(about)}` : ""}: https://www.npmjs.com/package/${name}`;
+      const aside = about ? ` — ${summary(about)}` : "";
+      return `- ${name}@${version}${aside}: https://www.npmjs.com/package/${name}`;
     });
   return lines.length ? lines.join("\n") : `- ${SITE_URL}/en/docs`;
 }

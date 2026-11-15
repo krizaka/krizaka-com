@@ -17,7 +17,8 @@ export function cases(paths = PATHS, widths = WIDTHS, themes = THEMES) {
 export function overflowProblem({ path, width, theme }, scrollWidth, culprits = []) {
   const over = scrollWidth - width;
   if (over <= 0.5) return undefined;
-  return `${path} at ${width}px (${theme}): ${Math.round(over)}px of horizontal overflow${culprits.length ? ` — ${culprits.join(", ")}` : ""}`;
+  const named = culprits.length ? ` — ${culprits.join(", ")}` : "";
+  return `${path} at ${width}px (${theme}): ${Math.round(over)}px of horizontal overflow${named}`;
 }
 
 /** What a page lays out in the frame: headings, the cards of a grid, its folded questions, the rows of a sommaire. A table or a code block scrolls in

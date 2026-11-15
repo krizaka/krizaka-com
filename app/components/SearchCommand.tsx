@@ -19,7 +19,10 @@ const SEARCH_TARGETS = [
   { id: "contact", url: "/contact" },
 ] as const;
 
-export function SearchCommand({ open, setOpen }: { open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }) {
+export function SearchCommand({
+  open,
+  setOpen,
+}: Readonly<{ open: boolean; setOpen: Dispatch<SetStateAction<boolean>> }>) {
   const { t } = useI18n();
   const s = t.site.search;
   const router = useRouter();
@@ -35,11 +38,11 @@ export function SearchCommand({ open, setOpen }: { open: boolean; setOpen: Dispa
     };
     // Any button of a page can open it (the docs hub's search): `window.dispatchEvent(new Event("kz:search"))`.
     const onOpen = () => setOpen(true);
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("kz:search", onOpen);
+    globalThis.addEventListener("keydown", onKeyDown);
+    globalThis.addEventListener("kz:search", onOpen);
     return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("kz:search", onOpen);
+      globalThis.removeEventListener("keydown", onKeyDown);
+      globalThis.removeEventListener("kz:search", onOpen);
     };
   }, [setOpen]);
 

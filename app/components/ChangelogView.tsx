@@ -32,7 +32,7 @@ export default function ChangelogView({ entries, feed, filterLabel, allLabel, fi
   const choose = (id: FilterId | undefined) => (e: MouseEvent) => {
     if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     e.preventDefault();
-    setSearch(filterHref(window.location.search, id));
+    setSearch(filterHref(globalThis.location.search, id));
   };
 
   return (
@@ -42,24 +42,22 @@ export default function ChangelogView({ entries, feed, filterLabel, allLabel, fi
         linkAs={Link}
         entries={shown}
         actions={
-          <>
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.5rem", width: "100%" }}>
-              <nav aria-label={filterLabel} style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                {chips.map(({ id, label }) => (
-                  <ChipLink key={id ?? "all"} asChild size="md" selected={selected === id}>
-                    <a href={filterHref("", id)} onClick={choose(id)}>
-                      {label}
-                    </a>
-                  </ChipLink>
-                ))}
-              </nav>
-              <ChipLink asChild size="md" style={{ marginInlineStart: "auto" }}>
-                <a href={feed.href} type="application/rss+xml">
-                  {feed.label}
-                </a>
-              </ChipLink>
-            </div>
-          </>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.5rem", width: "100%" }}>
+            <nav aria-label={filterLabel} style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+              {chips.map(({ id, label }) => (
+                <ChipLink key={id ?? "all"} asChild size="md" selected={selected === id}>
+                  <a href={filterHref("", id)} onClick={choose(id)}>
+                    {label}
+                  </a>
+                </ChipLink>
+              ))}
+            </nav>
+            <ChipLink asChild size="md" style={{ marginInlineStart: "auto" }}>
+              <a href={feed.href} type="application/rss+xml">
+                {feed.label}
+              </a>
+            </ChipLink>
+          </div>
         }
       />
       {shown.length === 0 && entries.length > 0 && (

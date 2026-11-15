@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 /** "krizaka/krizaka-build#11" for a GitHub issue or pull request URL. */
 const shortRef = (url: string) => url.replace("https://github.com/krizaka/", "").replace(/\/(issues|pull)\//, "#");
 
-export default async function BuildingBlockPage({ params }: Props) {
+export default async function BuildingBlockPage({ params }: Readonly<Props>) {
   const { locale, block: id } = await params;
   const block = blockById(id);
   if (!block) notFound();

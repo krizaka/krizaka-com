@@ -16,7 +16,7 @@ import { ProductMark } from "../ProductMark";
 import { hostOf } from "@/lib/stack";
 import { ENGINE } from "@/lib/story";
 
-export default function EngineFlowView({ t }: { t: TranslationDictionary }) {
+export default function EngineFlowView({ t }: Readonly<{ t: TranslationDictionary }>) {
   const f = t.site.home.products.flow;
   const e = t.site.products.engine;
   const engine = PRODUCTS.find((p) => p.id === ENGINE)!;
@@ -28,7 +28,7 @@ export default function EngineFlowView({ t }: { t: TranslationDictionary }) {
       className: "brand-" + u.id + " kz-home-n-" + u.id, // kz-home-n-<id>: ProductsLink ties the node to its row
       mark: <ProductMark id={u.id} size={28} />,
       // Requests in from every wired product; results back where they run (every wired use has `results`).
-      flow: u.planned ? "in" : u.back.length > 0 ? "both" : "in",
+      flow: !u.planned && u.back.length > 0 ? "both" : "in",
       planned: u.planned,
       status: u.planned ? e.planned : undefined,
       description: format(u.planned ? f.usesPlanned : f.uses, { use: e.uses[u.id as keyof typeof e.uses] }),

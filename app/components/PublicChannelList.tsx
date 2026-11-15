@@ -18,11 +18,11 @@ export default function PublicChannelList({
   groups,
   kind,
   words,
-}: {
+}: Readonly<{
   groups: ChannelGroup[];
   kind: ChannelKind;
   words: PublicChannelWords;
-}) {
+}>) {
   return (
     <div className="pc-list">
       {groups.map((g) => (

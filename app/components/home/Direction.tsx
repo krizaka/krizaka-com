@@ -11,7 +11,7 @@ import { format, getDictionary } from "@/lib/i18n";
 import { PRODUCTS } from "@/lib/products";
 import "./direction.css";
 
-export default function Direction({ locale }: { locale: string }) {
+export default function Direction({ locale }: Readonly<{ locale: string }>) {
   const t = getDictionary(locale);
   const d = t.site.home.direction;
   const names = new Intl.ListFormat(locale, { style: "long", type: "conjunction" }).format(

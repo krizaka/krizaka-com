@@ -13,21 +13,14 @@ import type { TranslationDictionary } from "@/lib/i18n";
 import type { ProductStatus as Status } from "@/lib/nav";
 import { cn } from "@krizaka/ui/cn";
 
-function Dot({ status, className }: { status: Status; className?: string }) {
-  return (
-    <span
-      aria-hidden
-      className={cn(
-        "inline-block size-1.5 shrink-0 rotate-45",
-        status === "upcoming" || status === "devPreview"
-          ? "bg-accent"
-          : status === "development"
-            ? "border-[1.5px] border-accent bg-accent/40"
-            : "border-[1.5px] border-accent bg-transparent",
-        className,
-      )}
-    />
-  );
+function dotFill(status: Status): string {
+  if (status === "upcoming" || status === "devPreview") return "bg-accent";
+  if (status === "development") return "border-[1.5px] border-accent bg-accent/40";
+  return "border-[1.5px] border-accent bg-transparent";
+}
+
+function Dot({ status, className }: Readonly<{ status: Status; className?: string }>) {
+  return <span aria-hidden className={cn("inline-block size-1.5 shrink-0 rotate-45", dotFill(status), className)} />;
 }
 
 export function ProductStatus({
@@ -36,14 +29,14 @@ export function ProductStatus({
   variant = "chip",
   ring = false,
   className,
-}: {
+}: Readonly<{
   status: Status;
   t: TranslationDictionary;
   variant?: "chip" | "dot";
   /** A dot laid over a mark: a ring in the surface colour sets it apart. */
   ring?: boolean;
   className?: string;
-}) {
+}>) {
   const words = t.site.nav.status[status];
   if (variant === "dot")
     return (

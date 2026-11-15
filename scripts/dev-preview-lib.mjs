@@ -65,7 +65,8 @@ export function validateChecklist(c, { today }) {
       continue;
     }
     if (e.evidence === null || e.evidence === undefined) {
-      problems.push(`${id}: no evidence yet${e.gap ? ` (${e.gap})` : ""}`);
+      const gap = e.gap ? ` (${e.gap})` : "";
+      problems.push(`${id}: no evidence yet${gap}`);
       continue;
     }
     if (typeof e.evidence !== "string" || !e.evidence.startsWith("https://")) {

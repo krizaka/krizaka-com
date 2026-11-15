@@ -8,11 +8,11 @@ export default function FeedbackLinks({
   block,
   labels,
   variant = "buttons",
-}: {
+}: Readonly<{
   block: BuildingBlock;
   labels: { discuss: string; propose: string; report: string; feedback: string };
   variant?: "buttons" | "icons";
-}) {
+}>) {
   const size = variant === "icons" ? 17 : 16;
   return (
     <ActionBar

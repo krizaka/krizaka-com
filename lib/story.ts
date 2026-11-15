@@ -11,7 +11,7 @@ import { PRODUCTS, type ProductId } from "./products";
 
 /** Kridoc has no chapter yet: its repository is private and nothing of it is told (krizaka-internal#3559). It is on the
  *  status board and everywhere else PRODUCTS feeds. */
-const NOT_IN_STORY: readonly ProductId[] = ["kridoc"];
+const NOT_IN_STORY: ReadonlySet<ProductId> = new Set(["kridoc"]);
 export type StoryProductId = Exclude<ProductId, "kridoc">;
 
 /** The engine: the product the others are powered by (stage 03). */
@@ -23,7 +23,7 @@ export const PROVES_FIRST: readonly StoryProductId[] = ["verikora"];
 /** The rest of the roster (stage 05): every other product of lib/products.ts, in its order. */
 export const ROSTER: readonly StoryProductId[] = PRODUCTS.map((p) => p.id).filter(
   (id): id is StoryProductId =>
-    id !== ENGINE && !(PROVES_FIRST as readonly ProductId[]).includes(id) && !NOT_IN_STORY.includes(id),
+    id !== ENGINE && !(PROVES_FIRST as readonly ProductId[]).includes(id) && !NOT_IN_STORY.has(id),
 );
 
 /** The chapters of /story, in reading order (anchors and the sticky contents): who we are, where the name comes from,

@@ -15,11 +15,7 @@ export const CANONICAL_HOST = "https://www.krizaka.com";
 const AI_CRAWLERS = ["GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "CCBot"];
 
 const attr = (tag, name) => new RegExp(`${name}="([^"]*)"`, "i").exec(tag)?.[1];
-const decode = (s) =>
-  s
-    .replace(/&#x27;/g, "'")
-    .replace(/&quot;/g, '"')
-    .replace(/&amp;/g, "&");
+const decode = (s) => s.replaceAll("&#x27;", "'").replaceAll("&quot;", '"').replaceAll("&amp;", "&");
 
 /** Everything wrong with one page's HTML; `path` is its route ("/en/products"). */
 export function auditHtml(html, path) {

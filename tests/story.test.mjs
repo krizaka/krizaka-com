@@ -44,7 +44,7 @@ test("the chapters are, in order: who we are, the name, how we work, the engine,
   assert.ok(
     hasCode(
       lib,
-      "ROSTER: readonly StoryProductId[] = PRODUCTS.map((p) => p.id).filter((id): id is StoryProductId => id !== ENGINE && !(PROVES_FIRST as readonly ProductId[]).includes(id) && !NOT_IN_STORY.includes(id))",
+      "ROSTER: readonly StoryProductId[] = PRODUCTS.map((p) => p.id).filter((id): id is StoryProductId => id !== ENGINE && !(PROVES_FIRST as readonly ProductId[]).includes(id) && !NOT_IN_STORY.has(id))",
     ),
   );
   const pageFile = "app/[locale]/story/page.tsx";
@@ -519,7 +519,7 @@ test("reduced motion or Save-Data: the film waits on its poster (no autoplay)", 
   assert.equal(prefersStill({ matchMedia: media(false), navigator: { connection: { saveData: true } } }), true);
   assert.equal(prefersStill({}), false);
   const box = read("app/components/home/FilmLightbox.tsx");
-  assert.match(box, /setStill\(prefersStill\(window\)\)/);
+  assert.match(box, /setStill\(prefersStill\(globalThis\)\)/);
   assert.match(box, /autoPlay=\{!still\}/);
   assert.match(box, /poster=\{play\.poster\}/);
   assert.doesNotMatch(box, /pauseWhenHidden=\{false\}/, "the player pauses off screen (its default)");

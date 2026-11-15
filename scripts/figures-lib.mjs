@@ -45,8 +45,10 @@ export function figureProblems({ path, width, theme }, samples) {
   for (const [, row] of rows) {
     const lines = row.map((s) => s.baseline);
     const spread = Math.max(...lines) - Math.min(...lines);
-    if (spread > 1)
-      out.push(`${where}: the figures ${row.map((s) => `« ${s.text} »`).join(" ")} sit ${Math.round(spread)}px apart`);
+    if (spread > 1) {
+      const quoted = row.map((s) => `« ${s.text} »`).join(" ");
+      out.push(`${where}: the figures ${quoted} sit ${Math.round(spread)}px apart`);
+    }
   }
   return out;
 }

@@ -41,7 +41,7 @@ const KIND: Record<ChangeTag, ChangeKind> = {
 
 /* /changelog (changelog) — the company's: the highlights of every release of the family, read at build from the release
    data (scripts/gen-changelog.mjs → lib/changelog.json), never written for the page. */
-export default async function ChangelogRoute({ params }: Props) {
+export default async function ChangelogRoute({ params }: Readonly<Props>) {
   const locale = asLocale((await params).locale);
   const c = getDictionary(locale).site.changelog;
   const date = new Intl.DateTimeFormat(c.langTag, { dateStyle: "long", timeZone: "UTC" });

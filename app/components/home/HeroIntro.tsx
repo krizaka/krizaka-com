@@ -36,7 +36,7 @@ function seenThisSession(): boolean {
 export default function HeroIntro() {
   useEffect(() => {
     const html = document.documentElement;
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduce = globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce || saveData() || seenThisSession()) {
       html.dataset.intro = "skip";
       return;
@@ -44,11 +44,11 @@ export default function HeroIntro() {
     html.dataset.intro = "play";
     const finish = () => {
       html.dataset.intro = "done";
-      window.clearTimeout(timer);
-      for (const type of SKIP_EVENTS) window.removeEventListener(type, finish);
+      globalThis.clearTimeout(timer);
+      for (const type of SKIP_EVENTS) globalThis.removeEventListener(type, finish);
     };
-    const timer = window.setTimeout(finish, INTRO_MS);
-    for (const type of SKIP_EVENTS) window.addEventListener(type, finish, { passive: true });
+    const timer = globalThis.setTimeout(finish, INTRO_MS);
+    for (const type of SKIP_EVENTS) globalThis.addEventListener(type, finish, { passive: true });
     return finish;
   }, []);
   return null;

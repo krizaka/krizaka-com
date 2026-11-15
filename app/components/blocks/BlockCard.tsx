@@ -13,7 +13,7 @@ type Words = TranslationDictionary["site"]["blocks"];
 /** One building block on /open-source, a compact ArgumentCard (@krizaka/ui): its hue, icon, name and repository, its
     bird in the corner, the trap in one line, the facts (registry · version read at build, what is in progress),
     "Details" and the feedback icons. What it does, the decisions and the bird's rule live on /open-source/<block>. */
-export default function BlockCard({ block, w }: { block: BuildingBlock; w: Words }) {
+export default function BlockCard({ block, w }: Readonly<{ block: BuildingBlock; w: Words }>) {
   const item = w.items[block.id];
   const release = block.releases[0];
   return (

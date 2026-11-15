@@ -146,7 +146,7 @@ test("the home's engine card draws @krizaka/ui's EngineFlow from the data, with 
   assert.match(view, /ENGINE_USES\.map/);
   assert.match(
     view,
-    /flow: u\.planned \? "in" : u\.back\.length > 0 \? "both" : "in"/,
+    /flow: !u\.planned && u\.back\.length > 0 \? "both" : "in"/,
     "both ways only where results come back",
   );
   assert.match(view, /planned: u\.planned/);

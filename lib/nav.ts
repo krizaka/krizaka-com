@@ -15,10 +15,9 @@ import { PRODUCTS, type ProductId, type ProductStatus } from "./products";
 
 export type { ProductStatus } from "./products";
 export type CompanyLinkId = "products" | "story" | "repos" | "services" | "contact";
-export type NavIcon = CompanyLinkId;
 
 /** Texts: messages → site.nav.company.<icon> (label, desc). */
-export interface NavLink<I extends NavIcon = NavIcon> {
+export interface NavLink<I extends CompanyLinkId = CompanyLinkId> {
   href: string;
   icon: I;
   /** Extra path prefixes that mark this entry active. */

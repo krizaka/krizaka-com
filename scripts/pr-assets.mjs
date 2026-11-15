@@ -246,11 +246,10 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1] ?? "").href) {
-  main(process.argv.slice(2)).then(
-    (code) => process.exit(code),
-    (err) => {
-      console.error(`pr-assets: ${err.message}`);
-      process.exit(1);
-    },
-  );
+  try {
+    process.exit(await main(process.argv.slice(2)));
+  } catch (err) {
+    console.error(`pr-assets: ${err.message}`);
+    process.exit(1);
+  }
 }

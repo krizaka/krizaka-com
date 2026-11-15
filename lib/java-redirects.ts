@@ -49,10 +49,13 @@ export function javaRedirects(): JavaRedirect[] {
   const pages = JAVA_PAGES.join("|");
   return [
     // The building blocks' pages: each one is its page on the Java site.
-    ...Object.entries(JAVA_BLOCK_PAGES).flatMap(([id, page]) => [
-      rule(`/fr/open-source/${id}`, `${JAVA_SITE}/fr/${page ? `${page}/` : ""}`),
-      rule(`/:locale(en)?/open-source/${id}`, `${JAVA_SITE}/${page ? `${page}/` : ""}`),
-    ]),
+    ...Object.entries(JAVA_BLOCK_PAGES).flatMap(([id, page]) => {
+      const folder = page ? `${page}/` : "";
+      return [
+        rule(`/fr/open-source/${id}`, `${JAVA_SITE}/fr/${folder}`),
+        rule(`/:locale(en)?/open-source/${id}`, `${JAVA_SITE}/${folder}`),
+      ];
+    }),
     // French first: /fr/docs/java/<guide> → /fr/<guide>/ on the site.
     rule(`/fr/docs/java/:slug(${pages})`, `${JAVA_SITE}/fr/:slug/`),
     rule("/fr/docs/java/:path*", `${JAVA_SITE}/fr/`),

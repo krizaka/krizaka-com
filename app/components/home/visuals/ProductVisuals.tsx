@@ -39,8 +39,8 @@ function useStep(playing: boolean): number {
   const [step, setStep] = useState(PLATE_REST);
   useEffect(() => {
     if (!playing) return;
-    const id = window.setTimeout(() => setStep((s) => (s + 1) % PLATE_STEPS), PLATE_STEP_MS[step]);
-    return () => window.clearTimeout(id);
+    const id = globalThis.setTimeout(() => setStep((s) => (s + 1) % PLATE_STEPS), PLATE_STEP_MS[step]);
+    return () => globalThis.clearTimeout(id);
   }, [playing, step]);
   return playing ? step : PLATE_REST;
 }
@@ -93,7 +93,7 @@ function Screen({
   );
 }
 
-function Sovkora({ id, name, playing }: PlateProps) {
+function Sovkora({ id, name, playing }: Readonly<PlateProps>) {
   const v = useI18n().t.site.home.visuals.sovkora;
   const step = useStep(playing);
   const run = format(v.run, { run: DEMO_RUNS.sovkora });
@@ -118,19 +118,17 @@ function Sovkora({ id, name, playing }: PlateProps) {
         </p>
       }
       result={
-        <>
-          <ul className="pv-answer pv-points">
-            {v.points.map((point) => (
-              <li key={point}>{point}</li>
-            ))}
-          </ul>
-        </>
+        <ul className="pv-answer pv-points">
+          {v.points.map((point) => (
+            <li key={point}>{point}</li>
+          ))}
+        </ul>
       }
     />
   );
 }
 
-function Verikora({ id, name, playing }: PlateProps) {
+function Verikora({ id, name, playing }: Readonly<PlateProps>) {
   const v = useI18n().t.site.home.visuals.verikora;
   const step = useStep(playing);
   return (
@@ -170,7 +168,7 @@ function Verikora({ id, name, playing }: PlateProps) {
   );
 }
 
-function Folioviv({ id, name, playing }: PlateProps) {
+function Folioviv({ id, name, playing }: Readonly<PlateProps>) {
   const { t, locale } = useI18n();
   const v = t.site.home.visuals.folioviv;
   const step = useStep(playing);
@@ -232,7 +230,7 @@ const VISUALS: Record<ProductId, (p: PlateProps) => ReactNode> = {
   folioviv: Folioviv,
 };
 
-export default function ProductVisuals({ id, name, playing }: PlateProps) {
+export default function ProductVisuals({ id, name, playing }: Readonly<PlateProps>) {
   const Visual = VISUALS[id];
   return <Visual id={id} name={name} playing={playing} />;
 }

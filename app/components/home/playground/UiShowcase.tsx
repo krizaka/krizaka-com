@@ -43,7 +43,7 @@ const initials = (name: string) =>
     .slice(0, 2)
     .toUpperCase();
 
-export default function UiShowcase({ w }: { w: UiShowcaseWords }) {
+export default function UiShowcase({ w }: Readonly<{ w: UiShowcaseWords }>) {
   return (
     <figure className="kz-play kz-showcase">
       <CardRoot className="kz-showcase-card" radius="lg" role="img" aria-label={w.label} inert>

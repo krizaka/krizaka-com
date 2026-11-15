@@ -38,7 +38,7 @@ if (process.argv[1] && import.meta.url.endsWith(process.argv[1].split("/").pop()
   const files = lintableFiles(changed());
   const ok = [
     files.length
-      ? step(`eslint (${files.length} changed file${files.length > 1 ? "s" : ""})`, "npx", ["eslint", ...files])
+      ? step(`eslint (${files.length} changed ${files.length > 1 ? "files" : "file"})`, "npx", ["eslint", ...files])
       : true,
     step("tsc --noEmit", "npx", ["tsc", "--noEmit"]),
     step("unit tests", "npm", ["test", "--silent"]),

@@ -100,7 +100,10 @@ async function productTasks() {
 
 const tasks = [
   ...PACKAGES.map((dir) => () => packageReleases(dir)),
-  ...(await productTasks().catch((e) => (console.warn(`changelog: ${e.message}`), []))),
+  ...(await productTasks().catch((e) => {
+    console.warn(`changelog: ${e.message}`);
+    return [];
+  })),
 ];
 const settled = await Promise.allSettled(tasks.map((run) => run()));
 /** A line the page can serve: in commercial words, it passes the build's code-name guard and the claims rules

@@ -64,8 +64,10 @@ if (!process.argv.includes("--media-only")) {
   const src = read("lib/products.ts");
   const statuses = readProductStatuses();
   const checklists = await readChecklists(Object.keys(statuses));
-  findings.push(...statusFindings(statuses, checklists, { today }));
-  findings.push(...staleSnapshot(JSON.parse(read("lib/product-manifests.json")).readAt, { today }));
+  findings.push(
+    ...statusFindings(statuses, checklists, { today }),
+    ...staleSnapshot(JSON.parse(read("lib/product-manifests.json")).readAt, { today }),
+  );
   const repos = new Set([...src.matchAll(/https:\/\/github\.com\/krizaka\/[\w.-]+/g)].map((m) => m[0]));
   findings.push(...urlFindings("product repositories", await answersOf([...repos])));
   const published = ["lib", "app", "messages", "content"].flatMap((d) =>

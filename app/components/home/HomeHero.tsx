@@ -32,7 +32,7 @@ export interface HomeFigures {
   downloads?: number;
 }
 
-export default function HomeHero({ locale, figures }: { locale: string; figures: HomeFigures }) {
+export default function HomeHero({ locale, figures }: Readonly<{ locale: string; figures: HomeFigures }>) {
   const dict = getDictionary(locale);
   const t = dict.site.home.hero;
   // Two kinds of figures, said apart (founder, 2026-11-01): what we publish, and what gets used. Each reads « more than N ».

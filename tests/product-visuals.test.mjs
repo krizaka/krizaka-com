@@ -51,7 +51,7 @@ test("it plays when on screen, never under reduced motion, never off screen; no 
   assert.ok(hasCode(FRAME, "const playing = !still && onScreen;"));
   const ids = identifiers(FRAME);
   assert.ok(!ids.has("pointerenter") && !ids.has("FINE") && !strings(FRAME).includes("pointerenter"), "no hover gate");
-  assert.ok(calls(VISUALS).includes("window.clearTimeout"));
+  assert.ok(calls(VISUALS).includes("globalThis.clearTimeout"));
   const reduced = (sel) => cssDecls(CSS, sel, { within: "(prefers-reduced-motion: reduce)" });
   for (const sel of [".pv *", ".pv *::before", ".pv *::after"]) {
     assert.equal(reduced(sel).animation, "none !important", sel);

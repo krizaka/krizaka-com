@@ -28,12 +28,12 @@ export default function TakeCard({
   name,
   id,
   other,
-}: {
+}: Readonly<{
   take: Take;
   name: string;
   /** The product's id: its captions are /<locale>/story/captions/<id>. */ id: string;
   /** The page's language is not the take's. */ other?: boolean;
-}) {
+}>) {
   const { t, locale } = useI18n();
   const w = t.site.story.world;
   const k = t.site.story.products.take;

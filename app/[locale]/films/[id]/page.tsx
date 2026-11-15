@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function FilmPage({ params }: Props) {
+export default async function FilmPage({ params }: Readonly<Props>) {
   const { locale: raw, id } = await params;
   const f = watchFilm(id);
   if (!f) {

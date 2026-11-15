@@ -72,10 +72,15 @@ export async function live({ raw, urls = KRIZAKA_MANIFEST_URLS, fetchImpl = glob
   return out;
 }
 
+/** The value of `--env-file` found at `argv[at]`: `--env-file=x` or `--env-file x`. */
+function envFileOf(argv, at) {
+  return argv[at].includes("=") ? argv[at].split("=")[1] : argv[at + 1];
+}
+
 export async function main(argv = process.argv.slice(2), { log = console.log } = {}) {
   const flags = new Set(argv.filter((a) => a.startsWith("--") && !a.startsWith("--env-file")).map((a) => a.slice(2)));
   const at = argv.findIndex((a) => a === "--env-file" || a.startsWith("--env-file="));
-  const envFile = at < 0 ? undefined : argv[at].includes("=") ? argv[at].split("=")[1] : argv[at + 1];
+  const envFile = at < 0 ? undefined : envFileOf(argv, at);
   const { SERVICES, SERVICES_KEY_ID } = await import("../lib/services.ts");
   const previousRaw = existsSync(SIGNED_FILE) ? readFileSync(SIGNED_FILE, "utf8") : null;
   if (flags.has("check")) {

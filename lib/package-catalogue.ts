@@ -150,11 +150,8 @@ export function packageRows(
   const maven = Object.entries(snapshot.maven ?? {}).map(([artifact, version]): PackageRow => {
     const meta = snapshot.mavenMeta?.[artifact] ?? {};
     const family = mavenFamily(artifact, snapshot.mavenMeta);
-    const repo = meta.scm?.startsWith(GITHUB)
-      ? meta.scm
-      : repositories.includes(family)
-        ? `${GITHUB}${family}`
-        : undefined;
+    const ownRepo = repositories.includes(family) ? `${GITHUB}${family}` : undefined;
+    const repo = meta.scm?.startsWith(GITHUB) ? meta.scm : ownRepo;
     return {
       id: `maven:${artifact}`,
       name: artifact,

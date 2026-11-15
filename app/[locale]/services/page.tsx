@@ -59,7 +59,7 @@ const PROOF_ICON: Record<ServicesProofId, ReactNode> = {
   blog: <StoryIcon size={22} />,
 };
 
-export default async function ServicesPage({ params }: Props) {
+export default async function ServicesPage({ params }: Readonly<Props>) {
   const { locale } = await params;
   const s = getDictionary(locale).site.services;
   const enterprise = contactHref("services", "business");

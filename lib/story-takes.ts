@@ -30,7 +30,7 @@ interface Paths {
 }
 interface Spec extends Paths {
   ratio: Take["ratio"];
-  lang?: Take["lang"];
+  lang?: NonNullable<Take["lang"]>;
   /** The same take under other names in French (the French set predates the English one). */
   fr?: Paths;
   cues: TakeCues;

@@ -17,7 +17,7 @@ export default function RouteArrival() {
   useEffect(() => {
     const before = previous.current;
     previous.current = pathname;
-    if (withoutLocale(before) === withoutLocale(pathname) || window.location.hash) return;
+    if (withoutLocale(before) === withoutLocale(pathname) || globalThis.location.hash) return;
     const root = document.documentElement;
     const behavior = root.style.scrollBehavior;
     root.style.scrollBehavior = "auto";
