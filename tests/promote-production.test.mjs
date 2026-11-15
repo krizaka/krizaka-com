@@ -46,6 +46,8 @@ function fixture() {
     ["user.email", "t@t"],
     ["commit.gpgsign", "false"],
     ["tag.gpgsign", "false"],
+    // The fixture is hermetic: the machine's global hooks (git-guard's identity check) must not judge its invented commits.
+    ["core.hooksPath", "/dev/null"],
   ])
     git(work, "config", k, v);
   git(work, "checkout", "--quiet", "-b", "main");

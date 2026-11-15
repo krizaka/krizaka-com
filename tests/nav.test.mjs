@@ -16,8 +16,8 @@ const stack = records("lib/stack.ts", "STACK")
   .filter((p) => p.url)
   .map(({ id, name, url }) => ({ id, name, url: url === "LAB_SITE" ? motionSite : url }));
 
-test("the mark and the word Krizaka lead home, the centre of the bar is Products · Enterprise · Docs (krizaka-internal#2445); Our story is not in the bar", () => {
-  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["products", "services", "repos"\] as const\)/);
+test("the mark and the word Krizaka lead home, the centre of the bar is Products · Enterprise · Films · Docs (krizaka-internal#2445, #3909); Our story is not in the bar", () => {
+  assert.match(nav, /NAV_BAR_LINKS[^=]*= \(\["products", "services", "films", "repos"\] as const\)/);
   assert.doesNotMatch(nav, /href: "\/products"/, "no /products page: the products are a section of the home");
   assert.match(nav, /PRODUCTS_ANCHOR = "\/#products"/);
   assert.match(nav, /\{ href: PRODUCTS_ANCHOR, icon: "products" \}/, "Products is the home's section, no page");
