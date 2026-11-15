@@ -184,7 +184,7 @@ export function targetMisplaced(path) {
 
 const ORG = `org/${ORG_VERSION}`;
 /** The folders of a product in site/: its commercial name, or the code name a legacy object was written under. */
-const PRODUCT_FOLDERS = [...PRODUCTS, ...Object.keys(LEGACY_PRODUCT)];
+const PRODUCT_FOLDERS = new Set([...PRODUCTS, ...Object.keys(LEGACY_PRODUCT)]);
 
 /** `from…` → `to…`: what follows the prefix is kept, and must not be empty. */
 const moved = (from, to) => (path) =>
@@ -196,7 +196,7 @@ const movedPerProduct = (from, kind) => (path) => {
     return null;
   }
   const [folder, rest] = splitHead(path.slice(from.length)) ?? [];
-  return PRODUCT_FOLDERS.includes(folder) ? `sites/${productOf(folder)}/${kind}${rest}` : null;
+  return PRODUCT_FOLDERS.has(folder) ? `sites/${productOf(folder)}/${kind}${rest}` : null;
 };
 
 const TARGET_OF = [

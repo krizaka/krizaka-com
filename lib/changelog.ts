@@ -38,13 +38,13 @@ export const CHANGE_TAGS: readonly ChangeTag[] = ["breaking", "security", "featu
 /** Public text names no one and carries no em dash: the sources are the team's own words, the page is the company's. */
 export const PERSONAL_NAMES = ["Oussama", "Abid"] as const;
 const NAME = PERSONAL_NAMES.join("|");
-const NAME_ASIDE = new RegExp(String.raw`\s*\([^)]*\b(?:${NAME})\b[^)]*\)`, "gi");
+const NAME_ASIDE = new RegExp(String.raw`(?<!\s)\s*\([^)]*\b(?:${NAME})\b[^)]*\)`, "gi");
 
 /** A colon says what an em dash says; an aside that names a person is dropped. */
 export const cleanText = (s: string): string =>
   s
     .replace(NAME_ASIDE, "")
-    .replace(/\s+—\s+/g, ": ")
+    .replace(/(?<!\s)\s+—\s+/g, ": ")
     .replace(/—/g, "-");
 
 /** What is still wrong with a public line after `cleanText` (empty = fine): the lint of the generator. */
@@ -69,7 +69,7 @@ export function releaseProblems(releases: readonly Release[]): string[] {
    draw them as code, so an identifier that carries a code name (`.brand-sovkora`) reads as code, not as a name. */
 export function plain(md: string): string {
   return cleanText(md)
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^[\]]*)\]\([^)]*\)/g, "$1")
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/\s+/g, " ")
     .trim();

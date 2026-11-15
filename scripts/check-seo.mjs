@@ -67,7 +67,7 @@ function jsonLdOf(blocks) {
   for (const raw of blocks) {
     try {
       const data = JSON.parse(raw);
-      for (const node of data["@graph"] ?? [data]) types.push(...[].concat(node["@type"] ?? []));
+      for (const node of data["@graph"] ?? [data]) types.push(...[node["@type"] ?? []].flat());
       if (!data["@context"]) problems.push("JSON-LD without @context");
     } catch (e) {
       problems.push(`JSON-LD does not parse: ${e.message}`);
@@ -177,7 +177,8 @@ async function imageProblems(base, cards) {
 export function auditRobots(text) {
   const problems = [];
   for (const bot of AI_CRAWLERS)
-    if (!new RegExp(`User-Agent: ${bot}\\s+Allow: /`, "i").test(text)) problems.push(`robots.txt: ${bot} not allowed`);
+    if (!new RegExp(String.raw`User-Agent: ${bot}\s+Allow: /`, "i").test(text))
+      problems.push(`robots.txt: ${bot} not allowed`);
   if (!text.includes(`Sitemap: ${CANONICAL_HOST}/sitemap.xml`)) problems.push("robots.txt: Sitemap is not on www");
   return problems;
 }
