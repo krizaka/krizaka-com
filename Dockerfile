@@ -37,7 +37,8 @@ ENV NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY=$NEXT_PUBLIC_ABUSE_CAPTCHA_SITE_KEY
 ARG APP_COMMIT
 ENV APP_COMMIT=$APP_COMMIT
 ENV NODE_ENV=production
-RUN npm run postinstall && npm run build
+# `npm run build` runs each generator once (a second run doubled the requests to api.npmjs.org, which rate-limits: #4002).
+RUN npm run build
 
 # 3. Runner — standalone server, unprivileged user.
 FROM node:24-alpine@sha256:44fce696f38ba8c987c4db89954051000bbd05ffd8d8659ba15ed4a8602e937f AS runner

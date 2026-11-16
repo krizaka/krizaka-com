@@ -11,41 +11,25 @@
    - Maven Central: every artifact under com/krizaka on repo1 (its directory listing), then each maven-metadata.xml's
      <release> — the authoritative file, not the search index (which lags) — and the released POM's <description>,
      its com.krizaka <parent> and <scm><url> (the repository is derived from them).
-   When a registry cannot be reached, the previous file is kept; without one, an empty one is written and the site
-   hides what it cannot know. The build never fails for it.
+   Requests are paced and retried (scripts/registry-fetch-lib.mjs, Retry-After honoured). A package with no fresh figure
+   takes the one of the previous file; when some still have none, CI and production builds FAIL (the deploy keeps the
+   last release rather than shipping half the figures, krizaka-internal#4002), a developer machine only warns.
+   When npm cannot be reached at all, the previous file is kept (without one, an empty one is written).
 
    Usage: node scripts/gen-registry-versions.mjs   (run on install, by `dev` and by `build`) */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
+import { createFetcher, logLine, missingFigures, withFallback } from "./registry-fetch-lib.mjs";
 import { rangeWindow, weeklyBuckets } from "./npm-downloads-lib.mjs";
 import { fileURLToPath } from "node:url";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "registry-versions.json");
-const TIMEOUT = 8000;
-const get = async (url, as = "json") => {
-  const res = await fetch(url, {
-    headers: { "user-agent": "krizaka-com-build" },
-    signal: AbortSignal.timeout(TIMEOUT),
-  });
-  if (!res.ok) throw new Error(`${url} answered ${res.status}`);
-  return as === "json" ? res.json() : res.text();
-};
+/** One warning line of this script; `text` may carry outside data, so it goes through logLine. */
+const warn = (text) => console.warn(`registry-versions: ${logLine(text)}`);
+const get = createFetcher({ log: warn });
 
-/** api.npmjs.org rate-limits bursts (429): the range requests go one at a time, each retried after a pause. */
-async function getPaced(url, tries = 4) {
-  for (let i = 0; i < tries; i++) {
-    try {
-      return await get(url);
-    } catch (e) {
-      if (i === tries - 1 || !/429/.test(String(e.message))) return null;
-      await new Promise((r) => setTimeout(r, 3000 * (i + 1)));
-    }
-  }
-  return null;
-}
-
-async function npmVersions() {
+export async function npmVersions(get) {
   const { objects } = await get("https://registry.npmjs.org/-/v1/search?text=%40krizaka&size=100");
   const names = objects.map((o) => o.package.name).filter((n) => n.startsWith("@krizaka/"));
   const entries = [];
@@ -54,14 +38,17 @@ async function npmVersions() {
       await (async () => {
         const [latest, downloads] = await Promise.all([
           get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`),
-          get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch(() => null),
+          get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch((e) => {
+            warn(`${name}: no weekly figure (${e.message})`);
+            return null;
+          }),
         ]);
         // npm posts its counts a day or two late: the window ends on the day `last-week` itself ends on (never on a
         // day not yet counted, which would read as 0), so the newest bucket equals the weekly figure.
         const endDay = /^\d{4}-\d{2}-\d{2}$/.test(downloads?.end ?? "") ? downloads.end : null;
         const window = endDay ? rangeWindow(endDay, 12) : null;
         const range = window
-          ? await getPaced(`https://api.npmjs.org/downloads/range/${window.start}:${window.end}/${name}`)
+          ? await get(`https://api.npmjs.org/downloads/range/${window.start}:${window.end}/${name}`).catch(() => null)
           : null;
         const series = window ? weeklyBuckets(range, window.end, 12) : null;
         const repository = typeof latest.repository === "string" ? latest.repository : latest.repository?.url;
@@ -110,7 +97,7 @@ export function pomMeta(xml) {
   return { ...(description ? { description } : {}), ...(parent ? { parent } : {}), ...(scm ? { scm } : {}) };
 }
 
-async function mavenVersions() {
+async function mavenVersions(get) {
   const base = "https://repo1.maven.org/maven2/com/krizaka/";
   const listing = await get(base, "text");
   const artifacts = [...listing.matchAll(/href="([a-z0-9-]+)\/"/g)].map((m) => m[1]);
@@ -129,9 +116,25 @@ async function mavenVersions() {
   };
 }
 
+/** CI and production builds stop on a missing figure (the deploy keeps the last release); a developer machine warns. */
+export function figureVerdict({ missing, total, runtime }) {
+  const strict = Boolean(runtime.CI || runtime.NODE_ENV === "production" || runtime.KRIZAKA_GEN_STRICT);
+  const bad = missing.length > 0 || total === 0;
+  const what = missing.length ? missing.join(", ") : "any package (npm unreachable)";
+  return {
+    fail: strict && bad,
+    message: `registry-versions: no weekly download figure for ${what} after retries — failing the build (krizaka-internal#4002)`,
+  };
+}
+
 async function main() {
   const previous = existsSync(OUT) ? JSON.parse(readFileSync(OUT, "utf8")) : { npm: {}, npmMeta: {}, maven: {} };
-  const [npm, maven] = await Promise.allSettled([npmVersions(), mavenVersions()]);
+  const [npm, maven] = await Promise.allSettled([npmVersions(get), mavenVersions(get)]);
+  if (npm.status === "fulfilled") {
+    const { meta, kept } = withFallback(npm.value.meta, previous.npmMeta);
+    npm.value.meta = meta;
+    if (kept.length) warn(`${kept.length} figure(s) kept from the last good snapshot: ${kept.join(", ")}`);
+  }
   const npmOk = npm.status === "fulfilled" && Object.keys(npm.value.versions).length > 0;
   const mavenOk = maven.status === "fulfilled" && Object.keys(maven.value.versions).length > 0;
   const out = {
@@ -145,8 +148,17 @@ async function main() {
     ["npm", npm],
     ["Maven Central", maven],
   ])
-    if (r.status === "rejected")
-      console.warn(`registry-versions: ${String(name)} unreachable (${r.reason?.message}) — keeping what was known`);
+    if (r.status === "rejected") warn(`${String(name)} unreachable (${r.reason?.message}) — keeping what was known`);
+  const missing = npmOk ? missingFigures(out.npmMeta) : [];
+  const total = Object.keys(out.npm).length;
+  console.log(`registry-versions: ${total - missing.length}/${total} npm packages have a weekly download figure`);
+  // A build that ships half the figures hides « What gets used » on the home: in CI and in production the build stops
+  // (the deploy keeps running the previous release), on a developer machine it only warns.
+  const verdict = figureVerdict({ missing, total, runtime: process["env"] });
+  if (verdict.fail) {
+    console.error(logLine(verdict.message));
+    process.exit(1);
+  }
   writeFileSync(OUT, JSON.stringify(out, null, 2) + "\n");
   console.log(
     `registry-versions: ${Object.keys(out.npm).length} npm packages, ${Object.keys(out.maven).length} Maven artifacts`,
