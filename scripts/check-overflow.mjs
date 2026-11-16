@@ -7,7 +7,10 @@
 import { cases, FRAMED, frameProblem, overflowProblem } from "./overflow-lib.mjs";
 import { baseFromArgv, report, visitPages } from "./site-pages.mjs";
 
-const problems = await visitPages(baseFromArgv(), cases(), async (page, c) => {
+// `--only /films/` keeps the pages whose path contains it (the fast loop on one family of pages).
+const only = process.argv.includes("--only") ? process.argv[process.argv.indexOf("--only") + 1] : "";
+const all = cases().filter((c) => c.path.includes(only));
+const problems = await visitPages(baseFromArgv(), all, async (page, c) => {
   await page.waitForTimeout(1500);
   const { scrollWidth, culprits } = await page.evaluate(() => {
     const w = document.documentElement.clientWidth;
@@ -23,6 +26,21 @@ const problems = await visitPages(baseFromArgv(), cases(), async (page, c) => {
       );
     return { scrollWidth: document.documentElement.scrollWidth, culprits: wide };
   });
+  // A watch page's reading blocks (timeline, list of the other films) hold their text: a box whose content is wider than
+  // itself is text pushed past its edge, even when the page does not scroll (krizaka-internal#3909).
+  if (c.path.includes("/films/")) {
+    culprits.push(
+      ...(await page.evaluate(() =>
+        [...document.querySelectorAll("main .rd-stack, main .rd-stack *")]
+          .filter((el) => el.clientWidth > 0 && el.scrollWidth > el.clientWidth + 1)
+          .slice(0, 3)
+          .map(
+            (el) =>
+              el.tagName.toLowerCase() + "." + String(el.className).split(/\s+/)[0] + " (content wider than its box)",
+          ),
+      )),
+    );
+  }
   // The frame: the headings and cards stay between the edges of the bar (the one shell of every page).
   const { frame, boxes } = await page.evaluate((selector) => {
     const bar = document.querySelector(".kz-site-bar")?.getBoundingClientRect();
@@ -38,4 +56,4 @@ const problems = await visitPages(baseFromArgv(), cases(), async (page, c) => {
   }, FRAMED);
   return [overflowProblem(c, scrollWidth, culprits), frame && frameProblem(c, frame, boxes)].filter(Boolean);
 });
-report(problems, `check-overflow: ${cases().length} page × width × theme, no horizontal scroll`);
+report(problems, `check-overflow: ${all.length} page × width × theme, no horizontal scroll`);

@@ -1,11 +1,25 @@
 /* The pure part of scripts/check-overflow.mjs: what is measured, and how a measure reads. Tested by
    tests/check-overflow.test.mjs. */
 
+/** The films' watch pages (lib/watch-films.ts; tests/check-overflow.test.mjs keeps this list equal to it), the timeline and
+    the list of the other films included (krizaka-internal#3909: text cut on the right at 390 px). */
+export const FILM_IDS = ["montrer-son-travail", "dossier-nadia", "dossier-sam", "dossier-theo"];
+
 /** Phone, tablet, laptop, desktop: the widths every page must fit without a horizontal scroll. */
-export const WIDTHS = [360, 768, 1024, 1440];
+export const WIDTHS = [360, 390, 768, 1024, 1440];
 export const THEMES = ["dark", "light"];
 /** The pages that carry the site's richest blocks. */
-export const PATHS = ["/en", "/fr", "/en/docs", "/fr/docs", "/en/services", "/fr/services", "/en/story", "/en/contact"];
+export const PATHS = [
+  "/en",
+  "/fr",
+  "/en/docs",
+  "/fr/docs",
+  "/en/services",
+  "/fr/services",
+  "/en/story",
+  "/en/contact",
+  ...["en", "fr"].flatMap((locale) => FILM_IDS.map((id) => `/${locale}/films/${id}`)),
+];
 
 /** Every page × width × theme to load. */
 export function cases(paths = PATHS, widths = WIDTHS, themes = THEMES) {
@@ -16,9 +30,11 @@ export function cases(paths = PATHS, widths = WIDTHS, themes = THEMES) {
     `undefined` when it fits. `culprits`: the widest elements that pass the edge, as the browser named them. */
 export function overflowProblem({ path, width, theme }, scrollWidth, culprits = []) {
   const over = scrollWidth - width;
-  if (over <= 0.5) return undefined;
+  // A page can clip what passes its edge (overflow hidden somewhere above) and still read as cut: an element past the
+  // edge is a failure on its own, whatever the page's scrollWidth says.
+  if (over <= 0.5 && culprits.length === 0) return undefined;
   const named = culprits.length ? ` — ${culprits.join(", ")}` : "";
-  return `${path} at ${width}px (${theme}): ${Math.round(over)}px of horizontal overflow${named}`;
+  return `${path} at ${width}px (${theme}): ${Math.max(0, Math.round(over))}px of horizontal overflow${named}`;
 }
 
 /** What a page lays out in the frame: headings, the cards of a grid, its folded questions, the rows of a sommaire. A table or a code block scrolls in
