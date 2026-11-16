@@ -26,15 +26,32 @@ export function cases(paths = PATHS, widths = WIDTHS, themes = THEMES) {
   return paths.flatMap((path) => widths.flatMap((width) => themes.map((theme) => ({ path, width, theme }))));
 }
 
+/** The elements that really pass the viewport's right edge (half a pixel of rounding allowed), named with their right edge, at
+    most three. An element inside a box that scrolls sideways (a code block, a contents strip) is read by scrolling that box,
+    and a visually hidden one (sr-only) is never seen: neither is cut (PR #723). `items`: `{ name, right, scrolled, hidden }`. */
+export function edgeCulprits(items, width) {
+  return items
+    .filter((i) => !i.scrolled && !i.hidden && i.right > width + 0.5)
+    .slice(0, 3)
+    .map((i) => `${i.name} (right ${Math.round(i.right)})`);
+}
+
 /** A failure line when the page scrolls sideways (`scrollWidth` beyond the viewport, half a pixel of rounding allowed);
     `undefined` when it fits. `culprits`: the widest elements that pass the edge, as the browser named them. */
 export function overflowProblem({ path, width, theme }, scrollWidth, culprits = []) {
   const over = scrollWidth - width;
-  // A page can clip what passes its edge (overflow hidden somewhere above) and still read as cut: an element past the
-  // edge is a failure on its own, whatever the page's scrollWidth says.
-  if (over <= 0.5 && culprits.length === 0) return undefined;
+  if (over <= 0.5) return undefined;
   const named = culprits.length ? ` — ${culprits.join(", ")}` : "";
-  return `${path} at ${width}px (${theme}): ${Math.max(0, Math.round(over))}px of horizontal overflow${named}`;
+  return `${path} at ${width}px (${theme}): ${Math.round(over)}px of horizontal overflow${named}`;
+}
+
+/** A failure line when a watch page's reading blocks (the timeline, the list of the other films) cut their text, even when the
+    page does not scroll: something above clips what passes (krizaka-internal#3909). `cut`: the boxes whose content is wider than
+    themselves and the elements past the viewport's edge, named. `undefined` when they hold their text. Every page gets this rule
+    once the bar and the docs' packages table no longer pass the edge at 768 px (PR #723's first run found both). */
+export function readingProblem({ path, width, theme }, cut) {
+  if (cut.length === 0) return undefined;
+  return `${path} at ${width}px (${theme}): text cut in the reading blocks — ${cut.slice(0, 3).join(", ")}`;
 }
 
 /** What a page lays out in the frame: headings, the cards of a grid, its folded questions, the rows of a sommaire. A table or a code block scrolls in

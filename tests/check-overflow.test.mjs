@@ -1,7 +1,16 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { cases, FILM_IDS, frameProblem, overflowProblem, PATHS, WIDTHS } from "../scripts/overflow-lib.mjs";
+import {
+  cases,
+  edgeCulprits,
+  FILM_IDS,
+  frameProblem,
+  overflowProblem,
+  PATHS,
+  readingProblem,
+  WIDTHS,
+} from "../scripts/overflow-lib.mjs";
 
 // 360–1440 px with no horizontal scroll, dark and light (the coordinator, 2026-10-20): checked by CI in a real browser
 // on the container (scripts/check-overflow.mjs); the rules are pure and tested here.
@@ -59,10 +68,25 @@ test("every film watch page is in the measured set, in both languages", async ()
   assert.ok(WIDTHS.includes(360) && WIDTHS.includes(390));
 });
 
-test("an element past the edge is a failure even when scrollWidth fits (clipped overflow)", () => {
+test("a watch page's reading block that cuts its text fails even when scrollWidth fits (clipped overflow)", () => {
   const c = { path: "/fr/films/dossier-sam", width: 390, theme: "light" };
+  assert.equal(overflowProblem(c, 390, ["li.kz-offers-item"]), undefined);
   assert.match(
-    overflowProblem(c, 390, ["li.kz-offers-item"]),
-    /\/fr\/films\/dossier-sam at 390px \(light\).*li\.kz-offers-item/,
+    readingProblem(c, ["li.kz-offers-item (right 402)"]),
+    /\/fr\/films\/dossier-sam at 390px \(light\): text cut in the reading blocks — li\.kz-offers-item/,
   );
+  assert.equal(readingProblem(c, []), undefined);
+});
+
+// PR #723's first run: the guard named code lines in their own scrolling <pre>, /story's contents strip (nav.kz-toc, overflow-x
+// auto) and the docs' sr-only table as « past the edge » on pages that do not scroll. Only what nothing scrolls or hides is cut.
+test("an element in its own scroll box or visually hidden is not past the edge; one clipped by nothing that scrolls is", () => {
+  const items = [
+    { name: "code", right: 395, scrolled: true, hidden: false },
+    { name: "table.kzc-table", right: 597, scrolled: false, hidden: true },
+    { name: "li.kz-offers-item", right: 402, scrolled: false, hidden: false },
+    { name: "a.kz-offers-link", right: 390.4, scrolled: false, hidden: false },
+  ];
+  assert.deepEqual(edgeCulprits(items, 390), ["li.kz-offers-item (right 402)"]);
+  assert.deepEqual(edgeCulprits(items.slice(0, 2), 390), []);
 });
