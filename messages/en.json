@@ -662,8 +662,7 @@
       "label": "Footer",
       "openSourceColumn": "Open source",
       "companyColumn": "Krizaka",
-      "film": "Watch the film",
-      "allOpenSource": "All of open source"
+      "film": "Watch the film"
     },
     "contactForm": {
       "captchaLabel": "Human check",

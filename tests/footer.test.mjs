@@ -99,7 +99,7 @@ test("no internal footer link is the source of a redirect", async () => {
       .map((l) => l.href)
       .filter((h) => h?.startsWith("/")),
   );
-  assert.ok(internal.includes("/docs"));
+  // The column holds at most six links (FOOTER_LIMITS): « All of open source » gave way to Krizaka Rust; the bar keeps Docs.
   for (const href of internal) assert.ok(!sources.has(`/en${href}`) && !sources.has(`/fr${href}`), `${href} redirects`);
 });
 
