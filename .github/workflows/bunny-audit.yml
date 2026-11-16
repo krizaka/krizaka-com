@@ -11,6 +11,7 @@ on:
     paths:
       - scripts/bunny-layout.mjs
       - scripts/cdn-assets.mjs
+      - scripts/bunny-cors.mjs
       - .github/workflows/bunny-audit.yml
 
 permissions:
@@ -41,3 +42,8 @@ jobs:
           MEDIA_STORAGE_ENDPOINT: ${{ secrets.MEDIA_STORAGE_ENDPOINT }}
           MEDIA_CDN_HOSTNAME: ${{ secrets.MEDIA_CDN_HOSTNAME }}
         run: node scripts/cdn-assets.mjs tree
+      - name: cdn-assets cors --check
+        env:
+          MEDIA_ACCOUNT_API_KEY: ${{ secrets.MEDIA_ACCOUNT_API_KEY }}
+          MEDIA_CDN_HOSTNAME: ${{ secrets.MEDIA_CDN_HOSTNAME }}
+        run: node scripts/cdn-assets.mjs cors --check

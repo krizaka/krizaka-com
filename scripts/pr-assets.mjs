@@ -28,7 +28,7 @@ import { trimEnd } from "./trim-end.mjs";
 
 export const PREFIX = "pr-assets";
 
-const TYPES = {
+export const TYPES = {
   png: "image/png",
   jpg: "image/jpeg",
   jpeg: "image/jpeg",
@@ -46,6 +46,8 @@ const TYPES = {
   md: "text/markdown; charset=utf-8",
   csv: "text/csv; charset=utf-8",
   pdf: "application/pdf",
+  epub: "application/epub+zip",
+  woff2: "font/woff2",
 };
 
 export function contentTypeFor(file) {

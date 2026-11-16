@@ -6,6 +6,7 @@
 //   node scripts/cdn-assets.mjs prune [--env-file <path>] [--yes]
 //   node scripts/cdn-assets.mjs tree [--env-file <path>]
 //   node scripts/cdn-assets.mjs readme [--env-file <path>]
+//   node scripts/cdn-assets.mjs cors [--check] [--env-file <path>]
 //
 // `upload` sends each file to `site/<to>/<name>.<hash>.<ext>` — the hash is the first 10 hex of the file's SHA-256, so
 // a URL never changes content and the CDN may cache it for good — then records `<to>/<name>.<ext>` → hash in
@@ -48,6 +49,7 @@ import {
   placement,
   targetOf,
 } from "./bunny-layout.mjs";
+import { applyCors, checkCors } from "./bunny-cors.mjs";
 import { contentTypeFor, listFiles, loadConfig, parseArgs, parseEnvFile } from "./pr-assets.mjs";
 import { runAsMain } from "./run-main.mjs";
 import { trimEnd } from "./trim-end.mjs";
@@ -612,6 +614,7 @@ const USAGE = `usage:
   node scripts/cdn-assets.mjs tree [--env-file <path>] [--strict]   count/size per folder; fails on a misplaced object (and on a legacy one with --strict)
   node scripts/cdn-assets.mjs migrate [--only <prefix>] [--env-file <path>] [--yes]   copy the legacy objects to their target (ADR-014), old paths kept
   node scripts/cdn-assets.mjs purge-unused --refs <dir> [--backup <dir>] [--env-file <path>] [--yes]   delete what is outside layout v2 and named by nothing (refs: see readRefs)
+  node scripts/cdn-assets.mjs cors [--check] [--env-file <path>]   the pull zone's CORS extension list (scripts/bunny-cors.mjs): apply it, or --check it read-only (exit 1 on drift)
   node scripts/cdn-assets.mjs readme [--env-file <path>]    publish the layout as README.txt at the zone root
 ${layoutHelp()}`;
 
@@ -705,7 +708,22 @@ async function runReadme({ merged, fetchImpl, log }) {
   return 0;
 }
 
+/** `cors`: apply the CORS extension list to the pull zone, or `--check` it (read-only); returns the exit code. */
+async function runCors({ argv, merged, fetchImpl, log }) {
+  const accountKey = merged.MEDIA_ACCOUNT_API_KEY;
+  if (!accountKey) {
+    throw new Error("cors needs MEDIA_ACCOUNT_API_KEY (the Bunny account key)");
+  }
+  const opts = { pullZoneHost: merged.MEDIA_CDN_HOSTNAME, accountKey, fetchImpl: fetchImpl ?? globalThis.fetch, log };
+  if (argv.includes("--check")) {
+    return (await checkCors(opts)).ok ? 0 : 1;
+  }
+  await applyCors(opts);
+  return 0;
+}
+
 const COMMANDS = {
+  cors: runCors,
   upload: runUpload,
   check: runCheck,
   prune: runPrune,
@@ -717,7 +735,7 @@ const COMMANDS = {
 };
 
 export async function main(argv, { env = process.env, fetchImpl, log = console.log, manifestFile = MANIFEST } = {}) {
-  const args = parseArgs(argv.filter((a) => a !== "--yes" && a !== "--retired" && a !== "--strict"));
+  const args = parseArgs(argv.filter((a) => a !== "--yes" && a !== "--retired" && a !== "--strict" && a !== "--check"));
   const yes = argv.includes("--yes");
   const [command, target] = args._;
   if (args.help || !command) {
