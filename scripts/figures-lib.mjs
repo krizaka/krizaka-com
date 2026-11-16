@@ -3,15 +3,15 @@
    is a lining, tabular figure (@krizaka/tokens --kz-figures) and the figures of one row share one baseline. Tested by
    tests/figures.test.mjs. */
 
+import { pageCases } from "./site-pages.mjs";
+
 export const WIDTHS = [360, 768, 1440];
 export const THEMES = ["dark", "light"];
 export const PATHS = ["/en", "/fr"];
 /** The figures of a row: the home's proofs, the figure tiles (Stat values) of /story. */
 export const FIGURES = ".kz-home-proofs dd, .kz-fig-grid > * > p:nth-child(2)";
 
-export function cases(paths = PATHS, widths = WIDTHS, themes = THEMES) {
-  return paths.flatMap((path) => widths.flatMap((width) => themes.map((theme) => ({ path, width, theme }))));
-}
+export const cases = (paths = PATHS, widths = WIDTHS, themes = THEMES) => pageCases(paths, widths, themes);
 
 /** Runs in the page: each figure's row (its cell's top), its baseline (the bottom of an empty inline-block appended at the
     end of its text, which sits on the baseline) and its computed font-variant-numeric. */

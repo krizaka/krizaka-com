@@ -1,6 +1,8 @@
 /* The pure part of scripts/check-overflow.mjs: what is measured, and how a measure reads. Tested by
    tests/check-overflow.test.mjs. */
 
+import { pageCases } from "./site-pages.mjs";
+
 /** The films' watch pages (lib/watch-films.ts; tests/check-overflow.test.mjs keeps this list equal to it), the timeline and
     the list of the other films included (krizaka-internal#3909: text cut on the right at 390 px). */
 export const FILM_IDS = ["montrer-son-travail", "dossier-nadia", "dossier-sam", "dossier-theo"];
@@ -22,9 +24,7 @@ export const PATHS = [
 ];
 
 /** Every page × width × theme to load. */
-export function cases(paths = PATHS, widths = WIDTHS, themes = THEMES) {
-  return paths.flatMap((path) => widths.flatMap((width) => themes.map((theme) => ({ path, width, theme }))));
-}
+export const cases = (paths = PATHS, widths = WIDTHS, themes = THEMES) => pageCases(paths, widths, themes);
 
 /** The elements that really pass the viewport's right edge (half a pixel of rounding allowed), named with their right edge, at
     most three. An element inside a box that scrolls sideways (a code block, a contents strip) is read by scrolling that box,

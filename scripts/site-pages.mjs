@@ -3,6 +3,11 @@
    (`kz-theme`), the intro skipped (`kz-intro`) — the page loaded, then the check's own visit. The rule of each check
    stays in its own lib (overflow-lib, motion-lib, figures-lib, home-stack-lib), tested on its own. */
 
+/** Every page × width × theme to load: the cases of a check, from its lib's paths, widths and themes. */
+export function pageCases(paths, widths, themes) {
+  return paths.flatMap((path) => widths.flatMap((width) => themes.map((theme) => ({ path, width, theme }))));
+}
+
 /** The site to check: `--base http://localhost:3000` (the default), without a trailing slash. */
 export function baseFromArgv(argv = process.argv) {
   const i = argv.indexOf("--base");
