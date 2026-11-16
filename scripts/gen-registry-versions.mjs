@@ -20,12 +20,14 @@
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
-import { createFetcher, missingFigures, withFallback } from "./registry-fetch-lib.mjs";
+import { createFetcher, logLine, missingFigures, withFallback } from "./registry-fetch-lib.mjs";
 import { rangeWindow, weeklyBuckets } from "./npm-downloads-lib.mjs";
 import { fileURLToPath } from "node:url";
 
 const OUT = path.join(path.dirname(fileURLToPath(import.meta.url)), "..", "lib", "registry-versions.json");
-const get = createFetcher({ log: (m) => console.warn(`registry-versions: ${m}`) });
+/** One warning line of this script; `text` may carry outside data, so it goes through logLine. */
+const warn = (text) => console.warn(`registry-versions: ${logLine(text)}`);
+const get = createFetcher({ log: warn });
 
 export async function npmVersions(get) {
   const { objects } = await get("https://registry.npmjs.org/-/v1/search?text=%40krizaka&size=100");
@@ -37,7 +39,7 @@ export async function npmVersions(get) {
         const [latest, downloads] = await Promise.all([
           get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`),
           get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch((e) => {
-            console.warn(`registry-versions: ${name}: no weekly figure (${e.message})`);
+            warn(`${name}: no weekly figure (${e.message})`);
             return null;
           }),
         ]);
@@ -131,8 +133,7 @@ async function main() {
   if (npm.status === "fulfilled") {
     const { meta, kept } = withFallback(npm.value.meta, previous.npmMeta);
     npm.value.meta = meta;
-    if (kept.length)
-      console.warn(`registry-versions: ${kept.length} figure(s) kept from the last good snapshot: ${kept.join(", ")}`);
+    if (kept.length) warn(`${kept.length} figure(s) kept from the last good snapshot: ${kept.join(", ")}`);
   }
   const npmOk = npm.status === "fulfilled" && Object.keys(npm.value.versions).length > 0;
   const mavenOk = maven.status === "fulfilled" && Object.keys(maven.value.versions).length > 0;
@@ -147,8 +148,7 @@ async function main() {
     ["npm", npm],
     ["Maven Central", maven],
   ])
-    if (r.status === "rejected")
-      console.warn(`registry-versions: ${String(name)} unreachable (${r.reason?.message}) — keeping what was known`);
+    if (r.status === "rejected") warn(`${String(name)} unreachable (${r.reason?.message}) — keeping what was known`);
   const missing = npmOk ? missingFigures(out.npmMeta) : [];
   const total = Object.keys(out.npm).length;
   console.log(`registry-versions: ${total - missing.length}/${total} npm packages have a weekly download figure`);
@@ -156,7 +156,7 @@ async function main() {
   // (the deploy keeps running the previous release), on a developer machine it only warns.
   const verdict = figureVerdict({ missing, total, runtime: process["env"] });
   if (verdict.fail) {
-    console.error(verdict.message);
+    console.error(logLine(verdict.message));
     process.exit(1);
   }
   writeFileSync(OUT, JSON.stringify(out, null, 2) + "\n");

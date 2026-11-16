@@ -3,6 +3,14 @@
    api.npmjs.org answers 429 to a burst: the requests go through `createFetcher`, which waits `minGapMs` between two
    requests, retries a 429 / 5xx / network error with a growing pause, and honours `Retry-After` (seconds or a date). */
 
+/** A log line built from outside data (a registry answer, an error message) on one line, bounded: no newline or control
+    character can forge another log line (Sonar S5145, log injection). */
+const LOG_LINE_MAX = 300;
+const CONTROL = /[\u0000-\u001f\u007f]+/g;
+export function logLine(text) {
+  return String(text).replace(CONTROL, " ").trim().slice(0, LOG_LINE_MAX);
+}
+
 export const RETRY_AFTER_CAP_MS = 60_000;
 
 /** `Retry-After` header → milliseconds (null when absent or unreadable). */

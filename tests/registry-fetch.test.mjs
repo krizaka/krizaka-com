@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createFetcher, missingFigures, retryAfterMs, withFallback } from "../scripts/registry-fetch-lib.mjs";
+import { createFetcher, logLine, missingFigures, retryAfterMs, withFallback } from "../scripts/registry-fetch-lib.mjs";
 import { figureVerdict, npmVersions } from "../scripts/gen-registry-versions.mjs";
 
 const res = (status, body, headers = {}) => ({
@@ -97,4 +97,13 @@ test("figureVerdict: production and CI fail on a missing figure, a dev machine o
   assert.equal(figureVerdict({ missing: ["x"], total: 2, runtime: {} }).fail, false);
   assert.equal(figureVerdict({ missing: [], total: 2, runtime: { CI: "true" } }).fail, false);
   assert.equal(figureVerdict({ missing: [], total: 0, runtime: { CI: "true" } }).fail, true);
+});
+
+test("a log line built from a registry answer cannot forge another line (Sonar S5145, krizaka-internal#4002)", () => {
+  assert.equal(
+    logLine("@krizaka/ui: 429\nregistry-versions: all good\r"),
+    "@krizaka/ui: 429 registry-versions: all good",
+  );
+  assert.equal(logLine("tab\there\u001b[31m"), "tab here [31m");
+  assert.equal(logLine("x".repeat(500)).length, 300);
 });
