@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.39.0](https://github.com/krizaka/krizaka-com/compare/v0.38.2...v0.39.0) (2026-11-16)
+
+
+### Features
+
+* **footer:** the products and open-source columns read the family of @krizaka/org, Krizaka Rust first (krizaka-internal[#4096](https://github.com/krizaka/krizaka-com/issues/4096)) ([#739](https://github.com/krizaka/krizaka-com/issues/739)) ([b352a34](https://github.com/krizaka/krizaka-com/commit/b352a3470ed90b794a0b5cbf4d0dd3f356ff9f3b))
+
 ## [0.38.2](https://github.com/krizaka/krizaka-com/compare/v0.38.1...v0.38.2) (2026-11-16)
 
 
