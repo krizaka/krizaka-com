@@ -1,15 +1,14 @@
 /* The footer as an admin would configure it (founder, 2026-11-01: « formaté comme l'admin le configure »). krizaka.com
    has no admin and no database: this module is the admin's stand-in, in the exact shape the apps store in their
    settings (`FooterSettings` of @krizaka/ui/site-footer, saved through @krizaka/settings). Words are message keys
-   (`site.footer.*`) or proper nouns; addresses come from the data modules, never typed twice. Internal hrefs are
+   (`site.footer.*`) or proper nouns; the products and open-source links are the family's (lib/family-footer.ts, @krizaka/org), never typed twice. Internal hrefs are
    unprefixed: the renderer adds the locale. Three columns — the products, open source, the company — then one legal
    line that names the company once (`legalName · NEQ · city`), the version and the legal links. */
 import type { FooterSettings } from "@krizaka/ui/site-footer";
 
 import { BRAND_FILM } from "./brand-film.ts";
-import { PRODUCTS } from "./products.ts";
+import { footerLinks, membersOf } from "./family-footer.ts";
 import { BLOG_URL, COMPANY, GITHUB_ORG_URL } from "./site.ts";
-import { STACK } from "./stack.ts";
 import { watchPath } from "./watch-films.ts";
 
 const DEVELOPMENT = "development" as const;
@@ -21,17 +20,13 @@ export const footerSettings = {
       id: "products",
       titleKey: "site.footer.products",
       // Every product is in development: said once, on the heading (krizaka-ui#931).
-      ...(PRODUCTS.every((p) => p.status === DEVELOPMENT) ? { status: DEVELOPMENT } : {}),
-      links: PRODUCTS.map((p) => ({ label: p.name, href: p.siteUrl, external: true })),
+      ...(membersOf("products").every((m) => m.status === DEVELOPMENT) ? { status: DEVELOPMENT } : {}),
+      links: footerLinks("products"),
     },
     {
       id: "open-source",
       titleKey: "site.footer.openSourceColumn",
-      links: [
-        { labelKey: "site.footer.allOpenSource", href: "/docs" },
-        ...STACK.map((part) => ({ label: part.name, href: part.url, external: true })),
-        { label: "GitHub", href: GITHUB_ORG_URL, external: true },
-      ],
+      links: [...footerLinks("open-source"), { label: "GitHub", href: GITHUB_ORG_URL, external: true }],
     },
     {
       id: "company",

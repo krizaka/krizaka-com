@@ -665,8 +665,7 @@
       "label": "Pied de page",
       "openSourceColumn": "Open source",
       "companyColumn": "Krizaka",
-      "film": "Voir le film",
-      "allOpenSource": "Tout l’open source"
+      "film": "Voir le film"
     },
     "contactForm": {
       "captchaLabel": "Vérification humaine",
