@@ -19,8 +19,12 @@ const problems = await visitPages(baseFromArgv(), all, async (page, c) => {
       let hidden = false;
       for (let a = el; a && a !== document.body; a = a.parentElement) {
         const cs = getComputedStyle(a);
-        if (cs.clip !== "auto" || cs.clipPath.startsWith("inset(50%")) hidden = true;
-        if (a !== el && (cs.overflowX === "auto" || cs.overflowX === "scroll")) return { scrolled: true, hidden };
+        if (cs.clip !== "auto" || cs.clipPath.startsWith("inset(50%")) {
+          hidden = true;
+        }
+        if (a !== el && (cs.overflowX === "auto" || cs.overflowX === "scroll")) {
+          return { scrolled: true, hidden };
+        }
       }
       return { scrolled: false, hidden };
     };

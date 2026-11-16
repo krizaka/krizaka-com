@@ -50,7 +50,9 @@ export function overflowProblem({ path, width, theme }, scrollWidth, culprits = 
     themselves and the elements past the viewport's edge, named. `undefined` when they hold their text. Every page gets this rule
     once the bar and the docs' packages table no longer pass the edge at 768 px (PR #723's first run found both). */
 export function readingProblem({ path, width, theme }, cut) {
-  if (cut.length === 0) return undefined;
+  if (cut.length === 0) {
+    return undefined;
+  }
   return `${path} at ${width}px (${theme}): text cut in the reading blocks — ${cut.slice(0, 3).join(", ")}`;
 }
 
