@@ -6,7 +6,7 @@ import { TYPES } from "./pr-assets.mjs";
 /** Every extension `cdn-assets upload` accepts (TYPES) is here, plus the other font formats and what the zone already served with CORS (Bunny's defaults: css, js, eot, mp3, mpeg). */
 export const CORS_EXTENSIONS = [
   ...new Set([...Object.keys(TYPES), "ttf", "woff", "css", "js", "eot", "mp3", "mpeg"]),
-].sort();
+].sort((a, b) => a.localeCompare(b));
 
 const API = "https://api.bunny.net";
 
@@ -33,7 +33,7 @@ export function corsDrift(zone, wanted = CORS_EXTENSIONS) {
   return {
     enabled: zone.EnableAccessControlOriginHeader === true,
     missing: wanted.filter((e) => !live.has(e)),
-    extra: [...live].filter((e) => !wanted.includes(e)).sort(),
+    extra: [...live].filter((e) => !wanted.includes(e)).sort((a, b) => a.localeCompare(b)),
   };
 }
 
