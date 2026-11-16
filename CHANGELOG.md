@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.38.2](https://github.com/krizaka/krizaka-com/compare/v0.38.1...v0.38.2) (2026-11-16)
+
+
+### Bug Fixes
+
+* **registry:** every npm package has a download figure in every build ([#732](https://github.com/krizaka/krizaka-com/issues/732)) ([3ed656f](https://github.com/krizaka/krizaka-com/commit/3ed656fcf2a7d2841f4fcf32e48d3e9ca040d9dc))
+
 ## [0.38.1](https://github.com/krizaka/krizaka-com/compare/v0.38.0...v0.38.1) (2026-11-16)
 
 
