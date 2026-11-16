@@ -1,5 +1,5 @@
 {
-  "readAt": "2026-11-11",
+  "readAt": "2026-11-16",
   "products": {
     "sovkora": {
       "sources": [
@@ -52,6 +52,7 @@
       "sources": ["verikora:apps/web/package.json"],
       "npm": [
         "@krizaka/api-keys",
+        "@krizaka/app-config",
         "@krizaka/audit",
         "@krizaka/auth",
         "@krizaka/brief",
