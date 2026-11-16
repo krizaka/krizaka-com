@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.37.0](https://github.com/krizaka/krizaka-com/compare/v0.36.0...v0.37.0) (2026-11-16)
+
+
+### Features
+
+* **films:** the founder's films as a timeline on every watch page, a Films entry in the bar ([#3909](https://github.com/krizaka/krizaka-com/issues/3909)) ([#719](https://github.com/krizaka/krizaka-com/issues/719)) ([b2c3902](https://github.com/krizaka/krizaka-com/commit/b2c390290a41ea5d4f17a03cb68d50bd7f511f74))
+
 ## [0.36.0](https://github.com/krizaka/krizaka-com/compare/v0.35.0...v0.36.0) (2026-11-14)
 
 
