@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.38.1](https://github.com/krizaka/krizaka-com/compare/v0.38.0...v0.38.1) (2026-11-16)
+
+
+### Bug Fixes
+
+* **films:** the timeline's linked rows no longer bleed past their list on a phone ([#723](https://github.com/krizaka/krizaka-com/issues/723)) ([8afc430](https://github.com/krizaka/krizaka-com/commit/8afc43051efcb4d29d398ff97a7b160b3a03d295))
+
 ## [0.38.0](https://github.com/krizaka/krizaka-com/compare/v0.37.0...v0.38.0) (2026-11-16)
 
 
