@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.38.0](https://github.com/krizaka/krizaka-com/compare/v0.37.0...v0.38.0) (2026-11-16)
+
+
+### Features
+
+* **cdn:** the pull zone's CORS extensions in code, with cors --check ([#724](https://github.com/krizaka/krizaka-com/issues/724)) ([9cf54e2](https://github.com/krizaka/krizaka-com/commit/9cf54e2518abb55793ec5f86ae85fbd2811ea145))
+
 ## [0.37.0](https://github.com/krizaka/krizaka-com/compare/v0.36.0...v0.37.0) (2026-11-16)
 
 
