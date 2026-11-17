@@ -93,6 +93,8 @@ test("the audience paragraph says what the cookieless count keeps and what it ne
     assert.match(text(l, "technical"), kept, l);
     assert.match(text(l, "technical"), never, l);
   }
+  assert.match(text("en", "technical"), /and the blog \(blog\.krizaka\.com\)/);
+  assert.match(text("fr", "technical"), /et le blogue \(blog\.krizaka\.com\)/);
   assert.doesNotMatch(text("en", "technical"), /measures no audience today/);
 });
 
