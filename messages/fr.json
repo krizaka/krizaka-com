@@ -3,7 +3,6 @@
     "products": "Produits",
     "solutions": "Solutions",
     "docs": "Docs",
-    "compliance": "Conformité",
     "menu": "Menu",
     "close": "Fermer",
     "darkMode": "Mode sombre",
@@ -54,7 +53,6 @@
     "openSource": "Open Source",
     "explore": "Explorer",
     "community": "Communauté",
-    "compliance": "Conformité",
     "contact": "Contact",
     "demos": "Démos",
     "packages": "Packages",
@@ -196,7 +194,7 @@
       "hero": {
         "number": "§ 1",
         "eyebrow": "Studio logiciel · Montréal, Québec",
-        "title": "Des logiciels de conformité, construits au grand jour.",
+        "title": "Des logiciels de documents, construits au grand jour.",
         "lead": "Verikora vérifie les papiers d'un dossier de location : talons de paie, baux, relevés. Chaque constat cite sa page. Tout tourne sur Sovkora, notre moteur, et notre code est public.",
         "primary": "Parlez-nous de vos dossiers",
         "film": "Voir le film en entier",
@@ -240,7 +238,7 @@
       },
       "products": {
         "number": "§ 2",
-        "title": "Nos produits : des outils de gestion et de conformité, et le moteur qui les fait tourner.",
+        "title": "Nos produits : des outils pour les documents des gestionnaires et des petites entreprises, et le moteur qui les fait tourner.",
         "lead": "Sovkora, notre moteur, fait tourner l'IA de nos produits. Verikora vérifie les papiers : baux, contrats, factures. Folioviv fait tourner une entreprise de services : rendez-vous, factures, TPS et TVQ. Kridoc range les documents et fichiers d'une entreprise. Chacun vit sur son propre site.",
         "engineUse": "Sur Sovkora · {use}",
         "enginePlanned": "Sur Sovkora, prévu · {use}",
@@ -285,6 +283,21 @@
           "verikora": "Vous allez adorer : une clause « pas d'enfants » repérée, l'article 1899 cité.",
           "sovkora": "Vous allez adorer le studio court métrage : un brief devient un film monté.",
           "folioviv": "Vous allez adorer votre déclaration de TPS et TVQ préparée depuis vos factures."
+        },
+        "howWeBuild": {
+          "title": "Comment nous construisons",
+          "lead": "La technologie avec laquelle nous construisons nos produits.",
+          "line": "Des agents de code qui proposent chaque changement par pull request : des contrôles automatiques refusent ce qui ne passe pas, une personne décide.",
+          "status": "En développement · usage interne",
+          "works": "Fonctionne avec Claude Code",
+          "chaptersLabel": "Le récit, sur le blogue",
+          "siteAria": "Voir le site de Krizaka Agents",
+          "chapters": {
+            "building": "Construire presque seul, avec des agents",
+            "coordinator": "Des agents sous un coordinateur, avec les mesures",
+            "rules": "Travailler avec des agents : des règles qui disent non",
+            "architecture": "L'architecture de notre outillage d'agents IA"
+          }
         }
       },
       "stack": {

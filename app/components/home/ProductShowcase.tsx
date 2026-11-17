@@ -20,6 +20,7 @@ import { ENGINE_USES } from "@/lib/engine-uses";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { productOrder } from "@/lib/home-sections";
 import { RELEASE_PRODUCT_IDS } from "@/lib/product-hosts";
+import { AGENT_CHAPTERS, AGENTS_ID, chapterUrl, howWeBuild } from "@/lib/how-we-build";
 import { PRODUCTS, type Product, type ProductStatus } from "@/lib/products";
 import { ENGINE } from "@/lib/story";
 import ButtonLink from "../ButtonLink";
@@ -112,6 +113,46 @@ function ProductRow({
   );
 }
 
+/** « How we build » (krizaka-internal#4111): Krizaka Agents, apart from the four offers. Same row style, its own small heading,
+ *  no mark, no price, no button: its status in words, « Works with Claude Code » as text, its blog chapters, and its site only
+ *  when the org's data says it answers. */
+function HowWeBuild({ t, locale }: Readonly<{ t: TranslationDictionary; locale: string }>) {
+  const h = t.site.home.products.howWeBuild;
+  const { name, siteUrl } = howWeBuild();
+  return (
+    <section className="kz-build" aria-labelledby="how-we-build-title">
+      <h3 id="how-we-build-title" className="kz-build-title">
+        {h.title}
+      </h3>
+      <p className="kz-build-lead">{h.lead}</p>
+      <ul className="kz-rows" aria-labelledby="how-we-build-title">
+        <li id={"build-" + AGENTS_ID} className="kz-row" data-build={AGENTS_ID}>
+          <div className="kz-row-head">
+            <h4 className="kz-row-name">{name}</h4>
+            <Stamp tone="wip" size="sm">
+              {h.status}
+            </Stamp>
+          </div>
+          <p className="kz-row-line">{h.line}</p>
+          <p className="kz-row-uses">{h.works}</p>
+          <div className="kz-row-links" role="group" aria-label={h.chaptersLabel}>
+            {AGENT_CHAPTERS.map((c) => (
+              <a key={c.id} href={chapterUrl(c.slug, locale)} rel="noopener">
+                {h.chapters[c.id]}
+              </a>
+            ))}
+            {siteUrl && (
+              <a href={siteUrl} rel="noopener" aria-label={h.siteAria}>
+                {new URL(siteUrl).host}
+              </a>
+            )}
+          </div>
+        </li>
+      </ul>
+    </section>
+  );
+}
+
 /** The products (§ 2): one row each, Sovkora · Verikora · Folioviv · Kridoc. No carousel, no video. */
 export default function ProductShowcase({ locale }: Readonly<{ locale: string }>) {
   const t = getDictionary(locale);
@@ -124,6 +165,7 @@ export default function ProductShowcase({ locale }: Readonly<{ locale: string }>
             <ProductRow key={p.id} product={p} t={t} locale={locale} />
           ))}
         </ol>
+        <HowWeBuild t={t} locale={locale} />
         <Footnotes
           className="kz-prod-notes"
           prefix="kz-note"
