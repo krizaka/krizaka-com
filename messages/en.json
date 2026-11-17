@@ -3,7 +3,6 @@
     "products": "Products",
     "solutions": "Solutions",
     "docs": "Docs",
-    "compliance": "Compliance",
     "menu": "Menu",
     "close": "Close",
     "darkMode": "Dark mode",
@@ -54,7 +53,6 @@
     "openSource": "Open Source",
     "explore": "Explore",
     "community": "Community",
-    "compliance": "Compliance",
     "contact": "Contact",
     "demos": "Demos",
     "packages": "Packages",
@@ -196,7 +194,7 @@
       "hero": {
         "number": "§ 1",
         "eyebrow": "Software studio · Montréal, Québec",
-        "title": "Compliance software, built in the open.",
+        "title": "Document software, built in the open.",
         "lead": "Verikora checks the papers in a rental file: pay stubs, leases, statements. Every finding cites its page. It all runs on Sovkora, our engine, and our code is public.",
         "primary": "Talk to us about your files",
         "film": "Watch the full film",
@@ -240,7 +238,7 @@
       },
       "products": {
         "number": "§ 2",
-        "title": "Our products: management and compliance tools, and the engine that runs them.",
+        "title": "Our products: tools for the documents of property managers and small businesses, and the engine that runs them.",
         "lead": "Sovkora, our engine, runs the AI of our products. Verikora checks the paperwork: leases, contracts, invoices. Folioviv runs a service business: bookings, invoices, GST and QST. Kridoc stores a business's documents and files. Each one lives on its own site.",
         "engineUse": "On Sovkora · {use}",
         "enginePlanned": "On Sovkora, planned · {use}",
@@ -285,6 +283,21 @@
           "verikora": "You'll love this: a « no children » clause flagged, with article 1899 cited.",
           "sovkora": "You'll love the short-film studio: a brief becomes an edited film.",
           "folioviv": "You'll love your GST and QST return, prepared from your invoices."
+        },
+        "howWeBuild": {
+          "title": "How we build",
+          "lead": "The technology we build our products with.",
+          "line": "Coding agents that propose every change as a pull request: automatic checks refuse what fails, a person decides.",
+          "status": "In development · internal use",
+          "works": "Works with Claude Code",
+          "chaptersLabel": "The story, in the blog",
+          "siteAria": "See the Krizaka Agents site",
+          "chapters": {
+            "building": "Building almost alone, with agents",
+            "coordinator": "Agents under a coordinator, with the measures",
+            "rules": "Working with agents: rules that say no",
+            "architecture": "The architecture of our AI agents tooling"
+          }
         }
       },
       "stack": {

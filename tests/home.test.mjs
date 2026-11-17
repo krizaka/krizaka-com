@@ -71,8 +71,8 @@ test("one action in the hero: it writes to us on Verikora's topic, and nothing e
 
 // The founder's h1 (2026-11-05, krizaka-internal#2445, supersedes #2424), and a lead that names Verikora first.
 test("the hero's h1 is the founder's, and the lead opens on Verikora", () => {
-  assert.equal(messages("fr").site.home.hero.title, "Des logiciels de conformité, construits au grand jour.");
-  assert.equal(messages("en").site.home.hero.title, "Compliance software, built in the open.");
+  assert.equal(messages("fr").site.home.hero.title, "Des logiciels de documents, construits au grand jour.");
+  assert.equal(messages("en").site.home.hero.title, "Document software, built in the open.");
   for (const l of ["en", "fr"]) {
     const h = messages(l).site.home.hero;
     assert.match(h.lead, /^Verikora /, `${l}: the lead starts with Verikora`);
@@ -307,10 +307,13 @@ test("the section list is the home's five sections, in the founder's order; the 
   assert.match(read("app/components/home/Principles.tsx"), /format\(p\.folio, folioOf\("principles"\)\)/);
 });
 
-// 2026-10-22 (Oussama): Folioviv and Verikora are presented as one need — « gestion et conformité » — in the hero's lead and
-// the products section, without the word « intelligent » (Folioviv's own rule: no AI wording for its product).
-test("the duo is named by its need: management and compliance tools", () => {
-  const want = { en: /management and compliance tools/, fr: /outils de gestion et de conformité/ };
+// krizaka-internal#4112 (supersedes the 2026-10-22 « gestion et conformité » wording): the products are named by the documents
+// they handle, with no compliance claim, and without the word « intelligent » (Folioviv's own rule: no AI wording).
+test("the products are named by their documents, no compliance claim", () => {
+  const want = {
+    en: /documents of property managers and small businesses/,
+    fr: /documents des gestionnaires et des petites entreprises/,
+  };
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home;
     // The hero's lead names Verikora alone since krizaka-internal#2445: the duo is named by its need in #products.
@@ -449,4 +452,82 @@ test("the accessibility claim is WCAG 2.1 AA, what the guard checks, never 2.2 (
     assert.match(messages(l).site.openSource.hub.quality, /WCAG 2\.1 AA/, `${l}: /docs carries the line`);
   }
   assert.match(read("app/[locale]/docs/page.tsx"), /h\.quality/, "/docs renders the line");
+});
+
+// « How we build » (krizaka-internal#4111): Krizaka Agents apart from the four products.
+test("Krizaka Agents sits in a « How we build » row under the products: no price, no button, Claude Code as text", async () => {
+  const { howWeBuild, AGENT_CHAPTERS, chapterUrl } = await import("../lib/how-we-build.ts");
+  const showcase = read("app/components/home/ProductShowcase.tsx");
+  assert.ok(
+    showcase.indexOf("<HowWeBuild t={t}") > showcase.indexOf("</ol>"),
+    "the row comes after the four product rows",
+  );
+  const block = showcase.slice(showcase.indexOf("function HowWeBuild"), showcase.indexOf("/** The products (§ 2)"));
+  assert.doesNotMatch(
+    block,
+    /<ButtonLink|<button|<img|<svg|ProductMark|Logo|repoUrl|price/i,
+    "no button, logo, source or price",
+  );
+  const exact = {
+    en: {
+      title: "How we build",
+      status: "In development · internal use",
+      works: "Works with Claude Code",
+      line: "Coding agents that propose every change as a pull request: automatic checks refuse what fails, a person decides.",
+    },
+    fr: {
+      title: "Comment nous construisons",
+      status: "En développement · usage interne",
+      works: "Fonctionne avec Claude Code",
+      line: "Des agents de code qui proposent chaque changement par pull request : des contrôles automatiques refusent ce qui ne passe pas, une personne décide.",
+    },
+  };
+  for (const lang of ["en", "fr"]) {
+    const h = messages(lang).site.home.products.howWeBuild;
+    for (const [k, v] of Object.entries(exact[lang])) assert.equal(h[k], v, `${lang} ${k}`);
+    assert.doesNotMatch(JSON.stringify(h), /\$|€|price|prix|tarif/i);
+    assert.deepEqual(Object.keys(h.chapters).sort(), AGENT_CHAPTERS.map((c) => c.id).sort());
+  }
+  assert.equal(chapterUrl("a", "fr"), "https://blog.krizaka.com/fr/story/a/");
+  assert.equal(chapterUrl("a", "en"), "https://blog.krizaka.com/story/a/");
+  assert.equal(howWeBuild([]).name, "Krizaka Agents");
+  assert.equal(howWeBuild([]).siteUrl, null);
+});
+
+test("the Krizaka Agents site is linked only when the org says it answers", async () => {
+  const { howWeBuild } = await import("../lib/how-we-build.ts");
+  const m = (siteLive) => ({
+    id: "agents",
+    name: "Krizaka Agents",
+    urls: { site: "https://agents.krizaka.com", siteLive, repo: "https://github.com/krizaka/krizaka-agents" },
+  });
+  assert.equal(howWeBuild([m(false)]).siteUrl, null);
+  assert.equal(howWeBuild([m(true)]).siteUrl, "https://agents.krizaka.com");
+});
+
+// krizaka-internal#4112: the site makes no compliance claim. Any legal page that must quote the word goes in ALLOWED, with its reason.
+test("no message says compliance, conformité or conforme", () => {
+  const ALLOWED = []; // [{ path: "site.legal.x", reason: "…" }]: none today
+  const bad = /complian|conformit|conforme/i;
+  const walk = (node, path, out) => {
+    if (typeof node === "string") {
+      if (bad.test(node) && !ALLOWED.some((a) => a.path === path)) out.push(`${path}: ${node}`);
+    } else if (node && typeof node === "object") {
+      for (const [k, v] of Object.entries(node)) {
+        if (bad.test(k) && !ALLOWED.some((a) => a.path === `${path}.${k}`)) out.push(`${path}.${k} (key)`);
+        walk(v, `${path}.${k}`, out);
+      }
+    }
+  };
+  for (const lang of ["en", "fr"]) {
+    const out = [];
+    walk(messages(lang), lang, out);
+    assert.deepEqual(out, [], `${lang} messages claim compliance`);
+  }
+  for (const [lang, text] of [
+    ["en", "tools for the documents of property managers and small businesses"],
+    ["fr", "des outils pour les documents des gestionnaires et des petites entreprises"],
+  ]) {
+    assert.match(messages(lang).site.home.products.title, new RegExp(text));
+  }
 });
