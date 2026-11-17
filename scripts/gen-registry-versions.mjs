@@ -39,6 +39,13 @@ export async function npmVersions(get) {
         const [latest, downloads] = await Promise.all([
           get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`),
           get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch((e) => {
+            // A package published a day or two ago is not in npm's counts yet: the downloads API answers 404 « package
+            // not found » for a package the registry lists. Not counted yet is 0, not a missing figure (krizaka-internal#4152);
+            // a 429, a 5xx or a network failure stays missing and still fails the strict build (#4002).
+            if (e.status === 404) {
+              warn(`${name}: not counted by npm yet (404), weekly figure 0`);
+              return { downloads: 0 };
+            }
             warn(`${name}: no weekly figure (${e.message})`);
             return null;
           }),
