@@ -79,6 +79,24 @@ test("npmVersions: a registry that keeps failing leaves the figures missing, nev
   assert.deepEqual(missingFigures(meta), ["@krizaka/a", "@krizaka/b"]);
 });
 
+test("npmVersions: a package npm has not counted yet (404 « package not found ») is a figure of 0, not a missing one", async () => {
+  // @krizaka/resilience and @krizaka/visits, first published 2026-11-17 03:00Z: api.npmjs.org answered 404 for a day and
+  // every CI build failed on « no weekly download figure » (krizaka-com#741).
+  const registry = fakeRegistry(() => false);
+  const get = createFetcher({
+    ...noSleep,
+    fetchImpl: async (url) =>
+      url.includes("/point/") && url.endsWith("@krizaka/b")
+        ? res(404, { error: "package @krizaka/b not found" })
+        : registry(url),
+  });
+  const { meta } = await npmVersions(get);
+  assert.deepEqual(missingFigures(meta), []);
+  assert.equal(meta["@krizaka/b"].weeklyDownloads, 0);
+  assert.equal(meta["@krizaka/b"].weeklySeries, undefined);
+  assert.equal(meta["@krizaka/a"].weeklyDownloads, 42);
+});
+
 test("withFallback keeps the last good figure of a package that has none now", () => {
   const { meta, kept } = withFallback(
     { a: {}, b: { weeklyDownloads: 5 } },

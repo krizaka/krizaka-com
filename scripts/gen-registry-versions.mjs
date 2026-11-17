@@ -7,7 +7,7 @@
    mavenMeta: { "krizaka-bom": { description, parent, scm } }, fetchedAt }.
    - npm: every package of the @krizaka scope (registry search), then each package's `latest` dist-tag; its description,
      keywords, repository and homepage as published, and its downloads of the last week (api.npmjs.org; absent when
-     unknown) and its 12 weekly sums (range endpoint, scripts/npm-downloads-lib.mjs) — /open-source's packages table (lib/package-catalogue.ts).
+     unknown, 0 for a package npm has not counted yet: its 404 « package not found » the day it is first published) and its 12 weekly sums (range endpoint, scripts/npm-downloads-lib.mjs) — /open-source's packages table (lib/package-catalogue.ts).
    - Maven Central: every artifact under com/krizaka on repo1 (its directory listing), then each maven-metadata.xml's
      <release> — the authoritative file, not the search index (which lags) — and the released POM's <description>,
      its com.krizaka <parent> and <scm><url> (the repository is derived from them).
@@ -39,6 +39,12 @@ export async function npmVersions(get) {
         const [latest, downloads] = await Promise.all([
           get(`https://registry.npmjs.org/${encodeURIComponent(name)}/latest`),
           get(`https://api.npmjs.org/downloads/point/last-week/${name}`).catch((e) => {
+            // The registry knows the package (its `latest` answers) but npm has counted no download yet: a package
+            // published today answers 404 « package not found » for a day or two. That is a figure, 0, not a failure.
+            if (e.status === 404) {
+              warn(`${name}: not counted by npm yet (new package), weekly figure 0`);
+              return { downloads: 0 };
+            }
             warn(`${name}: no weekly figure (${e.message})`);
             return null;
           }),
