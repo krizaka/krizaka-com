@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.40.0](https://github.com/krizaka/krizaka-com/compare/v0.39.0...v0.40.0) (2026-11-17)
+
+
+### Features
+
+* **products:** Krizaka Agents in a « How we build » row; no compliance claim ([#741](https://github.com/krizaka/krizaka-com/issues/741)) ([9160ca4](https://github.com/krizaka/krizaka-com/commit/9160ca431279716697bb861ea6cb194be0d30a20))
+
+
+### Bug Fixes
+
+* **build:** a package npm has not counted yet has a weekly figure of 0 ([#744](https://github.com/krizaka/krizaka-com/issues/744)) ([f517174](https://github.com/krizaka/krizaka-com/commit/f517174474601353e648375c63963294e00d7d4f))
+
 ## [0.39.0](https://github.com/krizaka/krizaka-com/compare/v0.38.2...v0.39.0) (2026-11-16)
 
 
