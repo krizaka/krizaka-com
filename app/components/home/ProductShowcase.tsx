@@ -135,7 +135,7 @@ function HowWeBuild({ t, locale }: Readonly<{ t: TranslationDictionary; locale: 
           </div>
           <p className="kz-row-line">{h.line}</p>
           <p className="kz-row-uses">{h.works}</p>
-          <div className="kz-row-links" role="group" aria-label={h.chaptersLabel}>
+          <nav className="kz-row-links" aria-label={h.chaptersLabel}>
             {AGENT_CHAPTERS.map((c) => (
               <a key={c.id} href={chapterUrl(c.slug, locale)} rel="noopener">
                 {h.chapters[c.id]}
@@ -146,7 +146,7 @@ function HowWeBuild({ t, locale }: Readonly<{ t: TranslationDictionary; locale: 
                 {new URL(siteUrl).host}
               </a>
             )}
-          </div>
+          </nav>
         </li>
       </ul>
     </section>
