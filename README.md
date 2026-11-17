@@ -138,6 +138,12 @@ Every variable of the site is named by its bounded context (krizaka/.github#46) 
 | `MEDIA_STORAGE_ENDPOINT` *(scripts)* | — |  | `storage.bunnycdn.com` | Storage API host of the zone's region. |
 | `MEDIA_CDN_HOSTNAME` *(scripts)* | — |  |  | Pull zone hostname serving the zone (the scripts check the first file answers publicly). |
 
+#### Database — `DATABASE_`
+
+| Variable | Production | Secret | Default | What it does |
+| :--- | :---: | :---: | :--- | :--- |
+| `DATABASE_VISITS_URL` | — | ✓ |  | Connection string of the `krizaka_visits` database (the runtime role, through its pool). Unset, the visit count is off and nothing else changes; a write error never breaks a page (krizaka-internal#4122). |
+
 #### E-mail — `MAIL_`
 
 | Variable | Production | Secret | Default | What it does |

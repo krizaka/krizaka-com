@@ -78,6 +78,9 @@ services:
       - key: MAIL_PROVIDER
         scope: RUN_TIME
         value: "mailgun"
+      - key: DATABASE_VISITS_URL
+        scope: RUN_TIME
+        type: SECRET
       - key: MAIL_API_KEY
         scope: RUN_TIME
         type: SECRET

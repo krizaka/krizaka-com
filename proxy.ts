@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import type { NextFetchEvent, NextRequest } from "next/server";
 import { negotiateLocale } from "@/lib/locale-negotiation";
+import { countVisit } from "@/lib/visits";
 
 const locales = ["fr", "en"];
 // Loi 96: French is the default. English is served when the visitor chose it (the language
@@ -9,7 +10,7 @@ function getLocale(request: NextRequest): string {
   return negotiateLocale(request.cookies.get("NEXT_LOCALE")?.value, request.headers.get("accept-language"));
 }
 
-export function proxy(request: NextRequest) {
+export function proxy(request: NextRequest, event: NextFetchEvent) {
   const pathname = request.nextUrl.pathname;
 
   // Exclude static assets, api routes, icons, sitemap, robots, etc.
@@ -29,8 +30,12 @@ export function proxy(request: NextRequest) {
     (locale) => !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
   );
 
-  // A /fr or /en page remembers its language, so the site's unprefixed links keep it.
+  // A /fr or /en page remembers its language, so the site's unprefixed links keep it. It is also the one place a visit
+  // is counted (a redirect is not a page): after the response, no cookie, no identifier (lib/visits.ts).
   if (!pathnameIsMissingLocale) {
+    if (request.method === "GET") {
+      event.waitUntil(countVisit(request.headers, pathname, new Date()));
+    }
     const current = pathname.split("/")[1];
     if (request.cookies.get("NEXT_LOCALE")?.value === current) return;
     const response = NextResponse.next();

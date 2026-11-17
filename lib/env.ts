@@ -11,6 +11,7 @@ import { z } from "zod";
 export const ENV_CONTEXTS = {
   APP: "Application — links, build",
   MEDIA: "Media — the CDN, the storage zone of the asset scripts",
+  DATABASE: "Database — the cookieless visit counts",
   MAIL: "E-mail — the contact form",
   ABUSE: "Abuse — bot protection of the public forms",
   AI: "AI — the generation provider of the tooling scripts (never the site at runtime)",
@@ -112,6 +113,14 @@ export const ENV_VARS: readonly EnvVar[] = [
     tooling: true,
     schema: text,
     doc: "Pull zone hostname serving the zone (the scripts check the first file answers publicly).",
+  },
+  {
+    name: "DATABASE_VISITS_URL",
+    context: "DATABASE",
+    need: "optional",
+    secret: true,
+    schema: text,
+    doc: "Connection string of the `krizaka_visits` database (the runtime role, through its pool). Unset, the visit count is off and nothing else changes; a write error never breaks a page (krizaka-internal#4122).",
   },
   {
     name: "MAIL_PROVIDER",

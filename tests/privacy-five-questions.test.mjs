@@ -77,16 +77,28 @@ test("s. 17: where the information goes outside Québec, and the assessment said
   assert.doesNotMatch(text("fr", "outside-quebec"), /évaluation (?:est|a été) (?:faite|terminée|réalisée)/i);
 });
 
-test("the audience sentence follows the cookieless-measure decision (krizaka-internal#3244): none today, cookieless if ever", () => {
-  assert.match(text("en", "technical"), /measures no audience today/);
-  assert.match(text("en", "technical"), /without a cookie, an identifier or a stored IP address/);
-  assert.match(text("fr", "technical"), /ne mesure aujourd'hui aucune audience/);
-  assert.match(text("fr", "technical"), /sans témoin, sans identifiant et sans adresse IP conservée/);
+test("the audience paragraph says what the cookieless count keeps and what it never keeps (krizaka-internal#4122)", () => {
+  for (const [l, kept, never] of [
+    [
+      "en",
+      /one to a counter kept per page, per day and per referring website domain/,
+      /does not store a cookie, an identifier, your IP address, your browser's description/,
+    ],
+    [
+      "fr",
+      /ajoute un à un compteur tenu par page, par jour et par domaine/,
+      /ne conserve ni témoin, ni identifiant, ni votre adresse IP, ni la description de votre navigateur/,
+    ],
+  ]) {
+    assert.match(text(l, "technical"), kept, l);
+    assert.match(text(l, "technical"), never, l);
+  }
+  assert.doesNotMatch(text("en", "technical"), /measures no audience today/);
 });
 
 test("the privacy page's date follows this change, and the page reads it before the shared date", () => {
-  assert.match(privacy("en").updated, /November 13, 2026/);
-  assert.match(privacy("fr").updated, /13 novembre 2026/);
+  assert.match(privacy("en").updated, /November 17, 2026/);
+  assert.match(privacy("fr").updated, /17 novembre 2026/);
   const page = readFileSync(new URL("../app/components/LegalPage.tsx", import.meta.url), "utf8");
   assert.match(page, /"updated" in doc/, "LegalPage reads site.legal.<page>.updated first");
 });
