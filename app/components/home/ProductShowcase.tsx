@@ -17,6 +17,7 @@ import { FootnoteRef, Footnotes } from "@krizaka/ui/footnote";
 import { Section } from "@krizaka/ui/page";
 import { Stamp, type StampTone } from "@krizaka/ui/specimen-tag";
 import { ENGINE_USES } from "@/lib/engine-uses";
+import { contactHref } from "@/lib/contact";
 import { format, getDictionary, type TranslationDictionary } from "@/lib/i18n";
 import { productOrder } from "@/lib/home-sections";
 import { RELEASE_PRODUCT_IDS } from "@/lib/product-hosts";
@@ -113,43 +114,39 @@ function ProductRow({
   );
 }
 
-/** « How we build » (krizaka-internal#4111): Krizaka Agents, apart from the four offers. Same row style, its own small heading,
- *  no mark, no price, no button: its status in words, « Works with Claude Code » as text, its blog chapters, and its site only
- *  when the org's data says it answers. */
-function HowWeBuild({ t, locale }: Readonly<{ t: TranslationDictionary; locale: string }>) {
+/** Krizaka Agents (krizaka-internal#4183; the « How we build » row of #4111 folded in): the last row, after the offers. Same row
+ *  style as a product, no price and no buy wording: its mark-less head, the state in words (« Built for ourselves · not for
+ *  sale for now »), the line for everyone, « Works with Claude Code » as text, its site, « Write to us » (the contact form
+ *  with the topic preselected) and its blog chapters. */
+function AgentsRow({ t, locale }: Readonly<{ t: TranslationDictionary; locale: string }>) {
   const h = t.site.home.products.howWeBuild;
   const { name, siteUrl } = howWeBuild();
   return (
-    <section className="kz-build" aria-labelledby="how-we-build-title">
-      <h3 id="how-we-build-title" className="kz-build-title">
-        {h.title}
-      </h3>
-      <p className="kz-build-lead">{h.lead}</p>
-      <ul className="kz-rows" aria-labelledby="how-we-build-title">
-        <li id={"build-" + AGENTS_ID} className="kz-row" data-build={AGENTS_ID}>
-          <div className="kz-row-head">
-            <h4 className="kz-row-name">{name}</h4>
-            <Stamp tone="wip" size="sm">
-              {h.status}
-            </Stamp>
-          </div>
-          <p className="kz-row-line">{h.line}</p>
-          <p className="kz-row-uses">{h.works}</p>
-          <nav className="kz-row-links" aria-label={h.chaptersLabel}>
-            {AGENT_CHAPTERS.map((c) => (
-              <a key={c.id} href={chapterUrl(c.slug, locale)} rel="noopener">
-                {h.chapters[c.id]}
-              </a>
-            ))}
-            {siteUrl && (
-              <a href={siteUrl} rel="noopener" aria-label={h.siteAria}>
-                {new URL(siteUrl).host}
-              </a>
-            )}
-          </nav>
-        </li>
-      </ul>
-    </section>
+    <li id={"product-" + AGENTS_ID} className="kz-row" data-product={AGENTS_ID} data-build={AGENTS_ID}>
+      <div className="kz-row-head">
+        <h3 className="kz-row-name">{name}</h3>
+        <Stamp tone="wip" size="sm">
+          {h.status}
+        </Stamp>
+      </div>
+      <p className="kz-row-line">{h.line}</p>
+      <p className="kz-row-uses">{h.works}</p>
+      <div className="kz-row-links">
+        <ButtonLink href={siteUrl} variant="secondary" size="sm" rel="noopener" ariaLabel={h.siteAria}>
+          {h.visitSite} <ForwardIcon size={13} aria-hidden />
+        </ButtonLink>
+        <a href={`/${locale}${contactHref(AGENTS_ID, "other", AGENTS_ID)}`} aria-label={h.writeToUsAria}>
+          {h.writeToUs}
+        </a>
+      </div>
+      <nav className="kz-row-links" aria-label={h.chaptersLabel}>
+        {AGENT_CHAPTERS.map((c) => (
+          <a key={c.id} href={chapterUrl(c.slug, locale)} rel="noopener">
+            {h.chapters[c.id]}
+          </a>
+        ))}
+      </nav>
+    </li>
   );
 }
 
@@ -164,8 +161,8 @@ export default function ProductShowcase({ locale }: Readonly<{ locale: string }>
           {SHOWN.map((p) => (
             <ProductRow key={p.id} product={p} t={t} locale={locale} />
           ))}
+          <AgentsRow t={t} locale={locale} />
         </ol>
-        <HowWeBuild t={t} locale={locale} />
         <Footnotes
           className="kz-prod-notes"
           prefix="kz-note"

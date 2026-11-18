@@ -279,6 +279,13 @@ html[data-intro="play"] .kz-intro-sweep {
   align-items: center;
   gap: 8px 14px;
 }
+.kz-row-head .kz-stamp {
+  /* a long status (« Développé pour nous · pas à vendre pour l'instant ») wraps instead of overflowing at 360 px */
+  white-space: normal;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+}
 .kz-row-name {
   margin: 0;
   font-family: var(--font-display);
@@ -330,23 +337,6 @@ html[data-intro="play"] .kz-intro-sweep {
 .kz-row-links a:focus-visible {
   outline: 2px solid var(--kz-ring, var(--kz-accent));
   outline-offset: 3px;
-}
-/* « How we build » (ticket 4111): the same row, set apart by its own small heading. */
-.kz-build {
-  margin-top: clamp(32px, 4vw, 48px);
-  min-width: 0;
-}
-.kz-build-title {
-  margin: 0;
-  font-family: var(--kz-font-mono);
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--kz-text-secondary);
-}
-.kz-build-lead {
-  margin: 4px 0 12px;
-  max-width: 46rem;
-  color: var(--kz-text-secondary);
 }
 .kz-prod-notes {
   max-width: 62rem;

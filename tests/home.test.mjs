@@ -454,55 +454,71 @@ test("the accessibility claim is WCAG 2.1 AA, what the guard checks, never 2.2 (
   assert.match(read("app/[locale]/docs/page.tsx"), /h\.quality/, "/docs renders the line");
 });
 
-// « How we build » (krizaka-internal#4111): Krizaka Agents apart from the four products.
-test("Krizaka Agents sits in a « How we build » row under the products: no price, no button, Claude Code as text", async () => {
+// Krizaka Agents (krizaka-internal#4183, folding the « How we build » row of #4111): the last row of the Products list.
+test("Krizaka Agents is the last row of the products: no price, no buy wording, no mark, Claude Code as text", async () => {
   const { howWeBuild, AGENT_CHAPTERS, chapterUrl } = await import("../lib/how-we-build.ts");
   const showcase = read("app/components/home/ProductShowcase.tsx");
   assert.ok(
-    showcase.indexOf("<HowWeBuild t={t}") > showcase.indexOf("</ol>"),
-    "the row comes after the four product rows",
+    showcase.indexOf("<AgentsRow t={t}") > showcase.indexOf("<ProductRow key"),
+    "the row comes after the offers",
   );
-  const block = showcase.slice(showcase.indexOf("function HowWeBuild"), showcase.indexOf("/** The products (§ 2)"));
-  assert.doesNotMatch(
+  assert.ok(showcase.indexOf("<AgentsRow t={t}") < showcase.indexOf("</ol>"), "and it is inside the products list");
+  assert.doesNotMatch(showcase, /HowWeBuild|kz-build/, "one place only: the separate « How we build » row is gone");
+  const block = showcase.slice(showcase.indexOf("function AgentsRow"), showcase.indexOf("/** The products (§ 2)"));
+  assert.doesNotMatch(block, /<button[\s>]|<img|<svg|ProductMark|Logo|repoUrl|price/i, "no logo, source or price");
+  assert.match(
     block,
-    /<ButtonLink|<button|<img|<svg|ProductMark|Logo|repoUrl|price/i,
-    "no button, logo, source or price",
+    /contactHref\(AGENTS_ID, "other", AGENTS_ID\)/,
+    "« Write to us » is topic=other&product=agents&source=agents",
   );
   const exact = {
     en: {
-      title: "How we build",
-      status: "In development · internal use",
+      status: "Built for ourselves · not for sale for now",
       works: "Works with Claude Code",
-      line: "Coding agents that propose every change as a pull request: automatic checks refuse what fails, a person decides.",
+      writeToUs: "Write to us",
+      line: "How we build our products: AI agents write the changes, automatic checks verify them, a person accepts or refuses them.",
     },
     fr: {
-      title: "Comment nous construisons",
-      status: "En développement · usage interne",
+      status: "Développé pour nous · pas à vendre pour l'instant",
       works: "Fonctionne avec Claude Code",
-      line: "Des agents de code qui proposent chaque changement par pull request : des contrôles automatiques refusent ce qui ne passe pas, une personne décide.",
+      writeToUs: "Nous écrire",
+      line: "La façon dont nous construisons nos produits : des agents IA écrivent les changements, des contrôles les vérifient, une personne les accepte ou les refuse.",
     },
   };
   for (const lang of ["en", "fr"]) {
     const h = messages(lang).site.home.products.howWeBuild;
     for (const [k, v] of Object.entries(exact[lang])) assert.equal(h[k], v, `${lang} ${k}`);
-    assert.doesNotMatch(JSON.stringify(h), /\$|€|price|prix|tarif/i);
+    assert.doesNotMatch(JSON.stringify(h), /\$|€|price|prix|tarif|buy|acheter|achat|harness/i);
     assert.deepEqual(Object.keys(h.chapters).sort(), AGENT_CHAPTERS.map((c) => c.id).sort());
   }
   assert.equal(chapterUrl("a", "fr"), "https://blog.krizaka.com/fr/story/a/");
   assert.equal(chapterUrl("a", "en"), "https://blog.krizaka.com/story/a/");
   assert.equal(howWeBuild([]).name, "Krizaka Agents");
-  assert.equal(howWeBuild([]).siteUrl, null);
 });
 
-test("the Krizaka Agents site is linked only when the org says it answers", async () => {
-  const { howWeBuild } = await import("../lib/how-we-build.ts");
+test("the Krizaka Agents site is the Pages address until the org says the custom domain answers", async () => {
+  const { howWeBuild, AGENTS_PAGES_URL } = await import("../lib/how-we-build.ts");
   const m = (siteLive) => ({
     id: "agents",
     name: "Krizaka Agents",
     urls: { site: "https://agents.krizaka.com", siteLive, repo: "https://github.com/krizaka/krizaka-agents" },
   });
-  assert.equal(howWeBuild([m(false)]).siteUrl, null);
+  assert.equal(howWeBuild([]).siteUrl, AGENTS_PAGES_URL);
+  assert.equal(howWeBuild([m(false)]).siteUrl, AGENTS_PAGES_URL);
   assert.equal(howWeBuild([m(true)]).siteUrl, "https://agents.krizaka.com");
+});
+
+test("Krizaka Agents is in the footer's Products column and in the contact form's products", async () => {
+  const { footerSettings } = await import("../lib/footer.ts");
+  const { productOf, CONTACT_PRODUCTS } = await import("../lib/contact-kinds.ts");
+  const { contactHref } = await import("../lib/contact.ts");
+  const col = footerSettings.columns.find((c) => c.id === "products");
+  assert.equal(col.links.filter((l) => l.label === "Krizaka Agents").length, 1);
+  assert.ok(col.links.length <= 6);
+  assert.equal(productOf("agents"), "agents");
+  assert.ok(CONTACT_PRODUCTS.includes("agents"));
+  assert.equal(contactHref("agents", "other", "agents"), "/contact?topic=other&product=agents&source=agents");
+  for (const lang of ["en", "fr"]) assert.equal(messages(lang).site.contactForm.products.agents, "Krizaka Agents");
 });
 
 // krizaka-internal#4112: the site makes no compliance claim. Any legal page that must quote the word goes in ALLOWED, with its reason.
@@ -530,4 +546,9 @@ test("no message says compliance, conformité or conforme", () => {
   ]) {
     assert.match(messages(lang).site.home.products.title, new RegExp(text));
   }
+});
+
+test("a row's stamp may wrap, so a long status never overflows at 360 px", () => {
+  const css = read("app/components/home/home.css");
+  assert.match(css, /\.kz-row-head \.kz-stamp\s*\{[^}]*white-space:\s*normal/);
 });
