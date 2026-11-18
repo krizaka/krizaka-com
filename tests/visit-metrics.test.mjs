@@ -28,6 +28,12 @@ const logger = () => {
 };
 // A query double that answers the one aggregate statement.
 const queryOf = (rows) => async () => rows;
+const failing = (message) => async () => {
+  throw new Error(message);
+};
+// One push over the shared fixtures; `over` replaces any of query, fetch, creds.
+const push = (log, over = {}) =>
+  pushVisitMetrics({ query: queryOf([]), creds: CREDS, now: NOW, fetch: fakeFetch().fn, log, ...over });
 
 test("windows end with the last finished UTC day", () => {
   assert.deepEqual(windowsOf(NOW), { last: "2026-11-17", from7: "2026-11-11", from30: "2026-10-19" });
@@ -79,12 +85,9 @@ test("a site that is not krizaka.com's own is left out, and a label never holds 
 test("push: POST to the influx endpoint with basic auth, the lines as the body", async () => {
   const f = fakeFetch(204);
   const log = logger();
-  const ok = await pushVisitMetrics({
+  const ok = await push(log, {
     query: queryOf([{ site: "www", referrer_domain: "", d1: 1, d7: 2, d30: 3 }]),
-    creds: CREDS,
-    now: NOW,
     fetch: f.fn,
-    log,
   });
   assert.equal(ok, true);
   assert.equal(f.calls.length, 1);
@@ -98,7 +101,7 @@ test("push: POST to the influx endpoint with basic auth, the lines as the body",
 test("a refused push is one warning without the token, and never throws", async () => {
   const f = fakeFetch(401);
   const log = logger();
-  const ok = await pushVisitMetrics({ query: queryOf([]), creds: CREDS, now: NOW, fetch: f.fn, log });
+  const ok = await push(log, { fetch: f.fn });
   assert.equal(ok, false);
   assert.equal(log.lines.warn.length, 1);
   assert.match(log.lines.warn[0], /401/);
@@ -107,14 +110,8 @@ test("a refused push is one warning without the token, and never throws", async 
 
 test("an unreachable endpoint or a failing database is one warning too", async () => {
   const log = logger();
-  const boom = async () => {
-    throw new Error("network down");
-  };
-  assert.equal(await pushVisitMetrics({ query: queryOf([]), creds: CREDS, now: NOW, fetch: boom, log }), false);
-  const dbDown = async () => {
-    throw new Error("relation does not exist");
-  };
-  assert.equal(await pushVisitMetrics({ query: dbDown, creds: CREDS, now: NOW, fetch: fakeFetch().fn, log }), false);
+  assert.equal(await push(log, { fetch: failing("network down") }), false);
+  assert.equal(await push(log, { query: failing("relation does not exist") }), false);
   assert.equal(log.lines.warn.length, 2);
 });
 

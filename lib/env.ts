@@ -123,30 +123,23 @@ export const ENV_VARS: readonly EnvVar[] = [
     schema: text,
     doc: "Connection string of the `krizaka_visits` database (the runtime role, through its pool). Unset, the visit count is off and nothing else changes; a write error never breaks a page (krizaka-internal#4122).",
   },
-  {
-    name: "OBSERVABILITY_METRICS_PUSH_URL",
+  ...(
+    [
+      [
+        "URL",
+        "Metrics endpoint of the Grafana Cloud stack (the daily push of the visit aggregates adds `/api/v1/push/influx/write`). Any of the three unset: the push is skipped with one log line, nothing else changes (krizaka-internal#4256).",
+      ],
+      ["USER", "Metrics instance id of the stack (basic-auth user of the push)."],
+      ["TOKEN", "Access policy token with `metrics:write` only (basic-auth password of the push)."],
+    ] as const
+  ).map(([part, doc]): EnvVar => ({
+    name: `OBSERVABILITY_METRICS_PUSH_${part}`,
     context: "OBSERVABILITY",
     need: "optional",
     secret: true,
     schema: text,
-    doc: "Metrics endpoint of the Grafana Cloud stack (the daily push of the visit aggregates adds `/api/v1/push/influx/write`). Any of the three unset: the push is skipped with one log line, nothing else changes (krizaka-internal#4256).",
-  },
-  {
-    name: "OBSERVABILITY_METRICS_PUSH_USER",
-    context: "OBSERVABILITY",
-    need: "optional",
-    secret: true,
-    schema: text,
-    doc: "Metrics instance id of the stack (basic-auth user of the push).",
-  },
-  {
-    name: "OBSERVABILITY_METRICS_PUSH_TOKEN",
-    context: "OBSERVABILITY",
-    need: "optional",
-    secret: true,
-    schema: text,
-    doc: "Access policy token with `metrics:write` only (basic-auth password of the push).",
-  },
+    doc,
+  })),
   {
     name: "MAIL_PROVIDER",
     context: "MAIL",
