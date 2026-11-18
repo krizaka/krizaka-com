@@ -24,11 +24,11 @@
     "routeStateSelection": 0,
     "cognitiveComplexity": 0,
     "sonar": 2,
-    "codeRules": 380,
+    "codeRules": 379,
     "code/curly": 331,
-    "code/max-depth": 42,
+    "code/max-depth": 41,
+    "code/no-console": 6,
     "sonarjs/no-os-command-from-path": 2,
-    "code/max-nested-callbacks": 1,
-    "code/no-console": 6
+    "code/max-nested-callbacks": 1
   }
 }

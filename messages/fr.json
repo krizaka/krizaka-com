@@ -1221,7 +1221,7 @@
         "metaTitle": "Politique de confidentialité — Krizaka",
         "metaDescription": "Ce que krizaka.com collecte (le formulaire de contact seulement), pourquoi, où cela va, qui le traite, et vos droits selon la Loi 25 du Québec, la LPRPDE et le RGPD.",
         "title": "Politique de confidentialité",
-        "updated": "Dernière mise à jour : 13 novembre 2026",
+        "updated": "Dernière mise à jour : 17 novembre 2026",
         "sections": [
           {
             "id": "responsible",
@@ -1264,7 +1264,7 @@
             "paragraphs": [
               "Comme tout hébergeur, la plateforme qui sert ce site conserve des journaux techniques — adresse IP, heure, page demandée, navigateur — pour la sécurité et la prévention des abus, selon sa propre politique.",
               "Les images, vidéos et enregistrements sont servis par un réseau de diffusion (Bunny). Votre navigateur le contacte directement quand une page les charge ; il voit donc votre adresse IP et la requête, comme tout serveur. Les polices et scripts sont servis par krizaka.com lui-même.",
-              "Ce site ne mesure aujourd'hui aucune audience : ni outil d'analyse, ni publicité, ni pixel de suivi, ni gadget de réseau social. S'il compte un jour ses visites, ce sera par notre propre serveur, sans témoin, sans identifiant et sans adresse IP conservée, sans outil tiers, et cette page le dira avant."
+              "Ce site et le blogue (blog.krizaka.com) comptent leurs visites avec leurs propres serveurs, et rien d'autre ne les mesure : ni outil d'analyse, ni publicité, ni pixel de suivi, ni gadget de réseau social. Pour chaque page lue, il ajoute un à un compteur tenu par page, par jour et par domaine du site d'où vous venez (par exemple « google.com », jamais l'adresse complète). Il ne conserve ni témoin, ni identifiant, ni votre adresse IP, ni la description de votre navigateur, ni l'adresse complète avec ses paramètres, ni rien qui permettrait de vous distinguer ; les visites des robots connus ne sont pas comptées. Les comptes sont dans la base de données de Krizaka chez DigitalOcean (Toronto), quelques milliers de lignes par jour au plus, et disent quelles pages sont lues, pas qui les lit. Rien n'est transmis à un tiers."
             ]
           },
           {
@@ -1272,7 +1272,7 @@
             "title": "Témoins et stockage local",
             "paragraphs": [
               "Un seul témoin fonctionnel, NEXT_LOCALE, retient la langue que vous avez choisie (un an). Votre préférence de thème (sombre ou clair) est gardée dans le stockage local de votre navigateur, sous le nom kz-theme.",
-              "Aucun témoin de mesure, aucun témoin publicitaire, aucun témoin tiers. Comme ces deux éléments retiennent seulement un choix que vous avez fait, aucune bannière de consentement n'est affichée."
+              "Aucun témoin de mesure, aucun témoin publicitaire, aucun témoin tiers : le comptage des visites ci-dessus n'en utilise aucun. Comme ces deux éléments retiennent seulement un choix que vous avez fait, aucune bannière de consentement n'est affichée."
             ]
           },
           {

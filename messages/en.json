@@ -1218,7 +1218,7 @@
         "metaTitle": "Privacy Policy — Krizaka",
         "metaDescription": "What krizaka.com collects (the contact form only), why, where it goes, who processes it, and your rights under Québec's Law 25, PIPEDA and the GDPR.",
         "title": "Privacy Policy",
-        "updated": "Last updated: November 13, 2026",
+        "updated": "Last updated: November 17, 2026",
         "sections": [
           {
             "id": "responsible",
@@ -1261,7 +1261,7 @@
             "paragraphs": [
               "Like any web host, the platform that serves this website keeps technical logs — IP address, time, page requested, browser — for security and abuse prevention, under its own policy.",
               "Images, videos and recordings are served from a content delivery network (Bunny). Your browser contacts it directly when a page loads them, so it sees your IP address and the request, as any server does. Fonts and scripts are served by krizaka.com itself.",
-              "This website measures no audience today: no analytics tool, no advertising, no tracking pixel and no social-network widget. If it ever counts its visits, our own server will do it, without a cookie, an identifier or a stored IP address and without a third-party tool, and this page will say so first."
+              "This website and the blog (blog.krizaka.com) count their visits with their own servers, and nothing else measures them: no analytics tool, no advertising, no tracking pixel and no social-network widget. For each page read, it adds one to a counter kept per page, per day and per referring website domain (for example « google.com », never the full address you came from). It does not store a cookie, an identifier, your IP address, your browser's description, the full address with its parameters, or anything that could single you out; visits by known robots are not counted. The counts live in Krizaka's database on DigitalOcean (Toronto), at most a few thousand lines a day, and tell us which pages are read, not who reads them. Nothing is shared with a third party."
             ]
           },
           {
@@ -1269,7 +1269,7 @@
             "title": "Cookies and local storage",
             "paragraphs": [
               "One functional cookie, NEXT_LOCALE, remembers the language you chose (one year). Your theme preference (dark or light) is kept in your browser's local storage, under the name kz-theme.",
-              "No analytics cookie, no advertising cookie, no third-party cookie. Because both items only remember a choice you made, no consent banner is shown."
+              "No analytics cookie, no advertising cookie, no third-party cookie: the visit count above uses none. Because both items only remember a choice you made, no consent banner is shown."
             ]
           },
           {
