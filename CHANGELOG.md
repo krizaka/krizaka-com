@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.42.0](https://github.com/krizaka/krizaka-com/compare/v0.41.1...v0.42.0) (2026-11-18)
+
+
+### Features
+
+* **analytics:** krizaka.com counts its visits server-side, cookieless, aggregates only ([#758](https://github.com/krizaka/krizaka-com/issues/758)) ([d6a79bf](https://github.com/krizaka/krizaka-com/commit/d6a79bf73686a5fe707fe4d0fc1635c486e3b373))
+
 ## [0.41.1](https://github.com/krizaka/krizaka-com/compare/v0.41.0...v0.41.1) (2026-11-18)
 
 
