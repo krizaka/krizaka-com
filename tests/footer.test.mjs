@@ -28,7 +28,9 @@ test("the footer's settings pass the admin's validation: products, open source, 
     "development",
     "every product is in development (the org data): one status on the heading",
   );
-  for (const l of products.links) assert.match(l.href, /^https:\/\/www\./);
+  // Krizaka Agents (krizaka-internal#4183) is the one link on its own site (the default Pages address, then agents.krizaka.com).
+  for (const l of products.links.filter((x) => x.label !== "Krizaka Agents")) assert.match(l.href, /^https:\/\/www\./);
+  assert.equal(products.links.at(-1).label, "Krizaka Agents", "Krizaka Agents is the last link of the Products column");
 });
 
 test("every message key of the footer's settings exists in both languages, the company is named once", () => {

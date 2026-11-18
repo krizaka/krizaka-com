@@ -1,6 +1,6 @@
 /* The kinds and the products of the contact form, and the old names kept so every link already written keeps working
    (`/contact?topic=yomizaka`, a message posted by a page loaded before the kinds existed). Data and two lookups, nothing else:
-   a product is known by its commercial id (verikora, folioviv, sovkora, kridoc, blocks); the retired code names (from @krizaka/org) and the old topics are aliases. */
+   a product is known by its commercial id (verikora, folioviv, sovkora, kridoc, agents, blocks); the retired code names (from @krizaka/org) and the old topics are aliases. */
 
 import { CODE_NAMES } from "@krizaka/org";
 
@@ -11,7 +11,7 @@ export type ContactKind = (typeof CONTACT_KINDS)[number];
 
 /* What it is about, by COMMERCIAL id (the building blocks are the stack's libraries). */
 /** In the home's order (PRODUCT_ORDER), then the products in design, then the building blocks (tests/contact-order.test.mjs). */
-export const CONTACT_PRODUCTS = ["sovkora", "verikora", "folioviv", "kridoc", "blocks"] as const;
+export const CONTACT_PRODUCTS = ["sovkora", "verikora", "folioviv", "kridoc", "agents", "blocks"] as const;
 export type ContactProduct = (typeof CONTACT_PRODUCTS)[number];
 
 /** The kind and the product a link or a page implies; each is null when it implies none. */

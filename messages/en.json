@@ -285,13 +285,14 @@
           "folioviv": "You'll love your GST and QST return, prepared from your invoices."
         },
         "howWeBuild": {
-          "title": "How we build",
-          "lead": "The technology we build our products with.",
-          "line": "Coding agents that propose every change as a pull request: automatic checks refuse what fails, a person decides.",
-          "status": "In development · internal use",
+          "line": "How we build our products: AI agents write the changes, automatic checks verify them, a person accepts or refuses them.",
+          "status": "Built for ourselves · not for sale for now",
           "works": "Works with Claude Code",
           "chaptersLabel": "The story, in the blog",
-          "siteAria": "See the Krizaka Agents site",
+          "visitSite": "See the site",
+          "siteAria": "Krizaka Agents: see the site (new tab)",
+          "writeToUs": "Write to us",
+          "writeToUsAria": "Krizaka Agents: write to us",
           "chapters": {
             "building": "Building almost alone, with agents",
             "coordinator": "Agents under a coordinator, with the measures",
@@ -697,6 +698,7 @@
         "folioviv": "Folioviv",
         "sovkora": "Sovkora",
         "kridoc": "Kridoc",
+        "agents": "Krizaka Agents",
         "blocks": "Building blocks",
         "none": "No product, Krizaka in general"
       },

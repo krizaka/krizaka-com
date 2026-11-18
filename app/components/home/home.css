@@ -331,23 +331,6 @@ html[data-intro="play"] .kz-intro-sweep {
   outline: 2px solid var(--kz-ring, var(--kz-accent));
   outline-offset: 3px;
 }
-/* « How we build » (ticket 4111): the same row, set apart by its own small heading. */
-.kz-build {
-  margin-top: clamp(32px, 4vw, 48px);
-  min-width: 0;
-}
-.kz-build-title {
-  margin: 0;
-  font-family: var(--kz-font-mono);
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--kz-text-secondary);
-}
-.kz-build-lead {
-  margin: 4px 0 12px;
-  max-width: 46rem;
-  color: var(--kz-text-secondary);
-}
 .kz-prod-notes {
   max-width: 62rem;
   margin-top: clamp(40px, 5vw, 64px);

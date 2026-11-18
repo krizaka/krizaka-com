@@ -1,10 +1,13 @@
 /* « How we build » (krizaka-internal#4111, words of krizaka-internal#3122): Krizaka Agents, the technology the products are
-   built with, shown in the Products section as its own row under the four offers. Its name, status and site come from the
-   the blog's public routes. A private member is not in the published data, so the name falls back to the proper noun until
-   the org publishes the row; the site is linked only when the data says it answers (`urls.siteLive`), never otherwise. */
+   built with, folded into its card of the Products section (krizaka-internal#4183), last after the offers. A private member is not in the
+   published data, so the name falls back to the proper noun until the org publishes the row; the site is the live custom
+   domain when the data says it answers (`urls.siteLive`), else the default Pages address. */
 import { org } from "@krizaka/org";
 
 export const AGENTS_ID = "agents";
+/** Krizaka Agents' site while its custom domain does not answer: the default Pages address. When agents.krizaka.com answers, the
+ *  org publishes it (`urls.siteLive`) and `howWeBuild` returns it; changing this one constant is the only other edit. */
+export const AGENTS_PAGES_URL = "https://krizaka.github.io/krizaka-agents/";
 /** The proper noun, used only until the org publishes the `agents` member. */
 const FALLBACK_NAME = "Krizaka Agents";
 const BLOG = "https://blog.krizaka.com";
@@ -33,7 +36,7 @@ export function howWeBuild(members: readonly Member[] = org.members) {
   const m = members.find((x) => x.id === AGENTS_ID);
   return {
     name: m?.name ?? FALLBACK_NAME,
-    // Only the site that answers: not the repository (the source is not shown on this row).
-    siteUrl: m?.urls.siteLive && m.urls.site ? m.urls.site : null,
+    // The live custom domain when the org says it answers, else the default Pages address (never the repository: no source here).
+    siteUrl: m?.urls.siteLive && m.urls.site ? m.urls.site : AGENTS_PAGES_URL,
   };
 }

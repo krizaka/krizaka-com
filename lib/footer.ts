@@ -8,10 +8,20 @@ import type { FooterSettings } from "@krizaka/ui/site-footer";
 
 import { BRAND_FILM } from "./brand-film.ts";
 import { footerLinks, membersOf } from "./family-footer.ts";
+import { howWeBuild } from "./how-we-build.ts";
 import { BLOG_URL, COMPANY, GITHUB_ORG_URL } from "./site.ts";
 import { watchPath } from "./watch-films.ts";
 
 const DEVELOPMENT = "development" as const;
+
+/** The products' links, with Krizaka Agents last when the org's published data does not carry it yet (it is a private member). */
+function productLinks() {
+  const links = footerLinks("products");
+  const { name, siteUrl } = howWeBuild();
+  return links.some((l) => l.label === name)
+    ? links
+    : [...links, { label: name, href: siteUrl, external: true as const }];
+}
 
 export const footerSettings = {
   labelKey: "site.footer.label",
@@ -21,7 +31,7 @@ export const footerSettings = {
       titleKey: "site.footer.products",
       // Every product is in development: said once, on the heading (krizaka-ui#931).
       ...(membersOf("products").every((m) => m.status === DEVELOPMENT) ? { status: DEVELOPMENT } : {}),
-      links: footerLinks("products"),
+      links: productLinks(),
     },
     {
       id: "open-source",

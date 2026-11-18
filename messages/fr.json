@@ -285,13 +285,14 @@
           "folioviv": "Vous allez adorer votre déclaration de TPS et TVQ préparée depuis vos factures."
         },
         "howWeBuild": {
-          "title": "Comment nous construisons",
-          "lead": "La technologie avec laquelle nous construisons nos produits.",
-          "line": "Des agents de code qui proposent chaque changement par pull request : des contrôles automatiques refusent ce qui ne passe pas, une personne décide.",
-          "status": "En développement · usage interne",
+          "line": "La façon dont nous construisons nos produits : des agents IA écrivent les changements, des contrôles les vérifient, une personne les accepte ou les refuse.",
+          "status": "Développé pour nous · pas à vendre pour l'instant",
           "works": "Fonctionne avec Claude Code",
           "chaptersLabel": "Le récit, sur le blogue",
-          "siteAria": "Voir le site de Krizaka Agents",
+          "visitSite": "Voir le site",
+          "siteAria": "Krizaka Agents : voir le site (nouvel onglet)",
+          "writeToUs": "Nous écrire",
+          "writeToUsAria": "Krizaka Agents : nous écrire",
           "chapters": {
             "building": "Construire presque seul, avec des agents",
             "coordinator": "Des agents sous un coordinateur, avec les mesures",
@@ -700,6 +701,7 @@
         "folioviv": "Folioviv",
         "sovkora": "Sovkora",
         "kridoc": "Kridoc",
+        "agents": "Krizaka Agents",
         "blocks": "Briques Krizaka",
         "none": "Aucun produit, Krizaka en général"
       },

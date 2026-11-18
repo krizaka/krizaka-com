@@ -142,6 +142,7 @@ const PRODUCT_LABEL: Record<ContactProduct, string> = {
   folioviv: displayName("folioviv"),
   sovkora: displayName("sovkora"),
   kridoc: displayName("kridoc"),
+  agents: "Krizaka Agents",
   blocks: "Building blocks",
 };
 
