@@ -17,8 +17,7 @@ const SITE_HOSTS: Readonly<Record<string, string>> = { www: "krizaka.com" };
 /** The twenty largest referrer hosts per site and window, the rest summed as `other` (bounded series). */
 const TOP_SOURCES = 20;
 // @fixed: a failed push waits an hour before the next request may retry it (one warning an hour at most)
-const RETRY_AFTER_MS = 3_600_000;
-const DAY_MS = 86_400_000;
+const RETRY_AFTER_HOURS = 1;
 const WINDOWS = ["1d", "7d", "30d"] as const;
 type Window = (typeof WINDOWS)[number];
 
@@ -46,12 +45,15 @@ export interface SourceRow {
   d30: number | string;
 }
 
-const iso = (ms: number): string => new Date(ms).toISOString().slice(0, 10);
+const iso = (d: Date): string => d.toISOString().slice(0, 10);
+
+/** `d` moved by whole UTC days. */
+const addUtcDays = (d: Date, days: number): Date =>
+  new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + days));
 
 /** The three windows of a run at `now`: all end with the last finished UTC day. */
 export function windowsOf(now: Date): { last: string; from7: string; from30: string } {
-  const todayMs = Date.parse(iso(now.getTime()));
-  return { last: iso(todayMs - DAY_MS), from7: iso(todayMs - 7 * DAY_MS), from30: iso(todayMs - 30 * DAY_MS) };
+  return { last: iso(addUtcDays(now, -1)), from7: iso(addUtcDays(now, -7)), from30: iso(addUtcDays(now, -30)) };
 }
 
 /** Influx line protocol: a tag value escapes the space, the comma and the equals sign. */
@@ -128,13 +130,13 @@ export async function pushVisitMetrics(args: {
 }
 
 let pushedDay: string | null = null;
-let retryAt = 0;
+let retryAt: Date | null = null;
 let skipLogged = false;
 
 /** For the tests: forget what this process already pushed. */
 export function resetVisitMetricsState(): void {
   pushedDay = null;
-  retryAt = 0;
+  retryAt = null;
   skipLogged = false;
 }
 
@@ -169,12 +171,13 @@ export async function pushVisitMetricsIfDue(now: Date, deps: Partial<VisitMetric
     return false;
   }
   const query = deps.query === undefined ? visitQuery() : deps.query;
-  const day = iso(now.getTime());
-  if (!query || pushedDay === day || now.getTime() < retryAt) {
+  const day = iso(now);
+  if (!query || pushedDay === day || (retryAt !== null && now < retryAt)) {
     return false;
   }
   // Claimed before the await: concurrent requests do not push twice.
-  retryAt = now.getTime() + RETRY_AFTER_MS;
+  retryAt = new Date(now);
+  retryAt.setUTCHours(retryAt.getUTCHours() + RETRY_AFTER_HOURS);
   const ok = await pushVisitMetrics({ query, creds, now, fetch: deps.fetch ?? fetch, log });
   if (ok) {
     pushedDay = day;
