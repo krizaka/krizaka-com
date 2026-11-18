@@ -12,6 +12,7 @@ export const ENV_CONTEXTS = {
   APP: "Application — links, build",
   MEDIA: "Media — the CDN, the storage zone of the asset scripts",
   DATABASE: "Database — the cookieless visit counts",
+  OBSERVABILITY: "Observability — the visit aggregates pushed to the metrics stack",
   MAIL: "E-mail — the contact form",
   ABUSE: "Abuse — bot protection of the public forms",
   AI: "AI — the generation provider of the tooling scripts (never the site at runtime)",
@@ -122,6 +123,23 @@ export const ENV_VARS: readonly EnvVar[] = [
     schema: text,
     doc: "Connection string of the `krizaka_visits` database (the runtime role, through its pool). Unset, the visit count is off and nothing else changes; a write error never breaks a page (krizaka-internal#4122).",
   },
+  ...(
+    [
+      [
+        "URL",
+        "Metrics endpoint of the Grafana Cloud stack (the daily push of the visit aggregates adds `/api/v1/push/influx/write`). Any of the three unset: the push is skipped with one log line, nothing else changes (krizaka-internal#4256).",
+      ],
+      ["USER", "Metrics instance id of the stack (basic-auth user of the push)."],
+      ["TOKEN", "Access policy token with `metrics:write` only (basic-auth password of the push)."],
+    ] as const
+  ).map(([part, doc]): EnvVar => ({
+    name: `OBSERVABILITY_METRICS_PUSH_${part}`,
+    context: "OBSERVABILITY",
+    need: "optional",
+    secret: true,
+    schema: text,
+    doc,
+  })),
   {
     name: "MAIL_PROVIDER",
     context: "MAIL",

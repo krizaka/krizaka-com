@@ -4,7 +4,7 @@
  * bots are not counted; the table is capped per day. Without `DATABASE_VISITS_URL`, or when the write fails, nothing is counted and
  * the page is served as if this did not exist.
  */
-import { dbVisitStore, recordVisit, type VisitStore } from "@krizaka/visits";
+import { dbVisitStore, recordVisit, type Query as VisitQuery, type VisitStore } from "@krizaka/visits";
 import { Pool } from "pg";
 
 /** The `site` of this site's rows; the blog writes its own. */
@@ -18,17 +18,28 @@ let store: VisitStore | null | undefined;
 /** One small pool for the process (the database's own pool does the sharing), created on first use; null when not configured. */
 function visitStore(): VisitStore | null {
   if (store === undefined) {
-    const url = process.env.DATABASE_VISITS_URL;
-    store = url ? storeOver(url) : null;
+    const q = visitQuery();
+    store = q ? dbVisitStore(q) : null;
   }
   return store;
 }
 
-function storeOver(url: string): VisitStore {
+let query: VisitQuery | null | undefined;
+
+/** The one query function over the process's single pool (counts and the daily read share it); null when not configured. */
+export function visitQuery(): VisitQuery | null {
+  if (query === undefined) {
+    const url = process.env.DATABASE_VISITS_URL;
+    query = url ? queryOver(url) : null;
+  }
+  return query;
+}
+
+function queryOver(url: string): VisitQuery {
   // @fixed: one connection is all the role may hold (its limit is 1 on the cluster) and a count is one short statement
   const pool = new Pool({ connectionString: url, max: 1, connectionTimeoutMillis: 2000, idleTimeoutMillis: 10_000 });
   pool.on("error", () => undefined);
-  return dbVisitStore(async (sql, params) => (await pool.query(sql, params as unknown[])).rows);
+  return (async (sql: string, params?: unknown[]) => (await pool.query(sql, params)).rows) as VisitQuery;
 }
 
 /** A router prefetch or a data fetch is not a person reading the page. */

@@ -144,6 +144,14 @@ Every variable of the site is named by its bounded context (krizaka/.github#46) 
 | :--- | :---: | :---: | :--- | :--- |
 | `DATABASE_VISITS_URL` | — | ✓ |  | Connection string of the `krizaka_visits` database (the runtime role, through its pool). Unset, the visit count is off and nothing else changes; a write error never breaks a page (krizaka-internal#4122). |
 
+#### Observability — `OBSERVABILITY_`
+
+| Variable | Production | Secret | Default | What it does |
+| :--- | :---: | :---: | :--- | :--- |
+| `OBSERVABILITY_METRICS_PUSH_URL` | — | ✓ |  | Metrics endpoint of the Grafana Cloud stack (the daily push of the visit aggregates adds `/api/v1/push/influx/write`). Any of the three unset: the push is skipped with one log line, nothing else changes (krizaka-internal#4256). |
+| `OBSERVABILITY_METRICS_PUSH_USER` | — | ✓ |  | Metrics instance id of the stack (basic-auth user of the push). |
+| `OBSERVABILITY_METRICS_PUSH_TOKEN` | — | ✓ |  | Access policy token with `metrics:write` only (basic-auth password of the push). |
+
 #### E-mail — `MAIL_`
 
 | Variable | Production | Secret | Default | What it does |
