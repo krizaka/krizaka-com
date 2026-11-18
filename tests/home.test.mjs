@@ -400,14 +400,14 @@ test("the home's principles are the four rules, in order, with their icons and b
     en: [
       "Four rules, checked rather than promised.",
       "A check reports what it saw",
-      "A document stays only if you choose",
+      "What Verikora keeps, for how long, and why",
       "Made in Montréal, French first, hosted in Canada",
       "Built in the open",
     ],
     fr: [
       "Quatre règles, vérifiées plutôt que promises.",
       "Une vérification dit ce qu'elle a vu",
-      "Un document ne reste que si vous le choisissez",
+      "Ce que Verikora garde, combien de temps et pourquoi",
       "Fait à Montréal, en français d'abord, hébergé au Canada",
       "Construit au grand jour",
     ],
@@ -423,8 +423,8 @@ test("the home's principles are the four rules, in order, with their icons and b
       `${l}: paused or not offered`,
     );
   }
-  assert.match(messages("en").site.home.principles.items.kept.body, /erased after 30 days/);
-  assert.match(messages("fr").site.home.principles.items.kept.body, /au bout de 30 jours/);
+  assert.match(messages("en").site.home.principles.items.kept.body, /one year after the decision/);
+  assert.match(messages("fr").site.home.principles.items.kept.body, /un an après la décision/);
 });
 
 test("the home's meta description does not call the products open source (AGENTS.md § 2: no licence for a product)", () => {
@@ -551,4 +551,16 @@ test("no message says compliance, conformité or conforme", () => {
 test("a row's stamp may wrap, so a long status never overflows at 360 px", () => {
   const css = read("app/components/home/home.css");
   assert.match(css, /\.kz-row-head \.kz-stamp\s*\{[^}]*white-space:\s*normal/);
+});
+
+// krizaka-internal#3705: Law 25 s. 11 asks to keep the information behind a decision at least one year, so the site
+// never promises that Verikora's documents are erased after the check; it says what is kept, how long and why.
+test("no public message promises that documents are « effacés après » / « deleted after » the check", () => {
+  const promise =
+    /effacés? (?:après|une fois|dès)|supprimés? (?:après|une fois|dès) (?:la |leur )?v[ée]rification|(?:deleted|erased) (?:after|once|right after) (?:the |being )?(?:check|checked|verif)/i;
+  for (const l of ["en", "fr"]) {
+    const body = messages(l).site.home.principles.items.kept;
+    assert.doesNotMatch(JSON.stringify(body), promise, `${l}: no erasure promise on Verikora's documents`);
+    assert.match(body.body, /30/, `${l}: the backup window is said`);
+  }
 });

@@ -421,8 +421,8 @@
             "body": "Verikora lit des faits dans le fichier, sans score et sans verdict sur une personne. Chaque rapport dit aussi ce qu'il n'a pas examiné, et la décision reste la vôtre."
           },
           "kept": {
-            "title": "Un document ne reste que si vous le choisissez",
-            "body": "Verikora purge le fichier et son texte une fois vérifié ; seul le rapport reste. Fermer un dossier purge tous ses documents, et leurs copies chiffrées de sauvegarde s'effacent au bout de 30 jours."
+            "title": "Ce que Verikora garde, combien de temps et pourquoi",
+            "body": "Par défaut, Verikora purge le fichier d'un document et son texte juste après la vérification, et garde le rapport, l'empreinte du fichier et le certificat signé, pour qu'une vérification puisse être prouvée plus tard. Un document reste plus longtemps seulement si vous choisissez de le garder. En fermant un dossier de candidat, un gestionnaire peut garder ses documents un an après la décision, la durée que l'article 11 de la Loi 25 du Québec vise pour les renseignements qui fondent une décision. Les sauvegardes chiffrées peuvent encore en contenir une copie le temps de leur rotation : 30 jours pour les nôtres."
           },
           "canada": {
             "title": "Fait à Montréal, en français d'abord, hébergé au Canada",
