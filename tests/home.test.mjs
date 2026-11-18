@@ -547,3 +547,8 @@ test("no message says compliance, conformité or conforme", () => {
     assert.match(messages(lang).site.home.products.title, new RegExp(text));
   }
 });
+
+test("a row's stamp may wrap, so a long status never overflows at 360 px", () => {
+  const css = read("app/components/home/home.css");
+  assert.match(css, /\.kz-row-head \.kz-stamp\s*\{[^}]*white-space:\s*normal/);
+});

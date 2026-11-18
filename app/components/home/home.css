@@ -279,6 +279,13 @@ html[data-intro="play"] .kz-intro-sweep {
   align-items: center;
   gap: 8px 14px;
 }
+.kz-row-head .kz-stamp {
+  /* a long status (« Développé pour nous · pas à vendre pour l'instant ») wraps instead of overflowing at 360 px */
+  white-space: normal;
+  flex-shrink: 1;
+  min-width: 0;
+  max-width: 100%;
+}
 .kz-row-name {
   margin: 0;
   font-family: var(--font-display);
