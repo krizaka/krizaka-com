@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.41.1](https://github.com/krizaka/krizaka-com/compare/v0.41.0...v0.41.1) (2026-11-18)
+
+
+### Bug Fixes
+
+* **copy:** krizaka.com says what Verikora keeps, how long and why, never « effacés après » ([#757](https://github.com/krizaka/krizaka-com/issues/757)) ([4547752](https://github.com/krizaka/krizaka-com/commit/454775277f596394cbbb9a3c3ba697a975758398))
+* **footer:** the footer draws the four org socials and Krizaka Agents' org address ([#755](https://github.com/krizaka/krizaka-com/issues/755)) ([bbbbab1](https://github.com/krizaka/krizaka-com/commit/bbbbab1607ddf7aabbda5c923cbb98c0de9b3c43))
+
 ## [0.41.0](https://github.com/krizaka/krizaka-com/compare/v0.40.0...v0.41.0) (2026-11-18)
 
 
