@@ -81,6 +81,16 @@ services:
       - key: DATABASE_VISITS_URL
         scope: RUN_TIME
         type: SECRET
+      # The daily push of the visit aggregates to Grafana Cloud (lib/visit-metrics.ts, krizaka-internal#4256). Unset: skipped.
+      - key: OBSERVABILITY_METRICS_PUSH_URL
+        scope: RUN_TIME
+        type: SECRET
+      - key: OBSERVABILITY_METRICS_PUSH_USER
+        scope: RUN_TIME
+        type: SECRET
+      - key: OBSERVABILITY_METRICS_PUSH_TOKEN
+        scope: RUN_TIME
+        type: SECRET
       - key: MAIL_API_KEY
         scope: RUN_TIME
         type: SECRET
