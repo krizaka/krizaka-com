@@ -30,6 +30,8 @@ test("the footer's settings pass the admin's validation: products, open source, 
   );
   // Krizaka Agents (krizaka-internal#4183) is the one link on its own site (the default Pages address, then agents.krizaka.com).
   for (const l of products.links.filter((x) => x.label !== "Krizaka Agents")) assert.match(l.href, /^https:\/\/www\./);
+  const { family } = await import("@krizaka/org");
+  assert.equal(products.links.at(-1).href, family.find((m) => m.id === "agents").urls.site);
   assert.equal(products.links.at(-1).label, "Krizaka Agents", "Krizaka Agents is the last link of the Products column");
 });
 
@@ -111,12 +113,40 @@ test("the footer shows Instagram and LinkedIn on its last line, the addresses re
   const { resolveFooterSettings } = await import("@krizaka/ui/site-footer");
   const { org } = await import("@krizaka/org");
   const { footerSettings } = await import("../lib/footer.ts");
-  assert.deepEqual(footerSettings.social, ["instagram", "linkedin"]);
+  assert.deepEqual(
+    footerSettings.social,
+    org.links.social.map((s) => s.id),
+  );
+  assert.deepEqual(footerSettings.social, ["instagram", "facebook", "youtube", "linkedin"]);
   const config = resolveFooterSettings(footerSettings, (key) => key, org.links.social);
-  assert.deepEqual(config.social, [
-    { id: "instagram", label: "Instagram", href: "https://www.instagram.com/krizakahq/" },
-    { id: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/company/krizaka-technologies-inc" },
-  ]);
+  assert.deepEqual(
+    config.social,
+    org.links.social.map((s) => ({ id: s.id, label: s.label, href: s.url })),
+  );
+  assert.equal(config.social.length, 4);
   assert.match(footer, /org\.links\.social/);
   assert.doesNotMatch(read("lib/footer.ts"), /instagram\.com|linkedin\.com|No social link yet/);
+});
+
+// The glyph of each account is its own (krizaka-ui#1065): rendered, the four links carry four distinct drawings.
+test("the footer draws every org social account with its own glyph", async () => {
+  const { createElement } = await import("react");
+  const { renderToStaticMarkup } = await import("react-dom/server");
+  const { resolveFooterSettings, SiteFooter } = await import("@krizaka/ui/site-footer");
+  const { org } = await import("@krizaka/org");
+  const { footerSettings } = await import("../lib/footer.ts");
+  const config = resolveFooterSettings(footerSettings, (key) => key, org.links.social);
+  const html = renderToStaticMarkup(createElement(SiteFooter, { current: "krizaka", variant: "site", config }));
+  const drawings = new Set();
+  for (const s of org.links.social) {
+    const link = html.match(
+      new RegExp(`<a[^>]*href="${s.url.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\\\$&")}"[^>]*>.*?</a>`),
+    );
+    assert.ok(link, `${s.id} is linked to the org's address`);
+    const icon = link[0].match(/data-kz-icon="(\w+)"/);
+    assert.ok(icon, `${s.id} has a glyph`);
+    assert.match(icon[1].toLowerCase(), new RegExp(s.id), `${s.id} draws its own glyph`);
+    drawings.add(icon[1]);
+  }
+  assert.equal(drawings.size, org.links.social.length, "one distinct glyph per account");
 });
