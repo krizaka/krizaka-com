@@ -556,7 +556,8 @@ test("a row's stamp may wrap, so a long status never overflows at 360 px", () =>
 // krizaka-internal#3705: Law 25 s. 11 asks to keep the information behind a decision at least one year, so the site
 // never promises that Verikora's documents are erased after the check; it says what is kept, how long and why.
 test("no public message promises that documents are « effacés après » / « deleted after » the check", () => {
-  const promise = /effacés? (?:après|une fois|dès)|supprimés? (?:après|une fois|dès) (?:la |leur )?v[ée]rification|(?:deleted|erased) (?:after|once|right after) (?:the |being )?(?:check|checked|verif)/i;
+  const promise =
+    /effacés? (?:après|une fois|dès)|supprimés? (?:après|une fois|dès) (?:la |leur )?v[ée]rification|(?:deleted|erased) (?:after|once|right after) (?:the |being )?(?:check|checked|verif)/i;
   for (const l of ["en", "fr"]) {
     const body = messages(l).site.home.principles.items.kept;
     assert.doesNotMatch(JSON.stringify(body), promise, `${l}: no erasure promise on Verikora's documents`);
