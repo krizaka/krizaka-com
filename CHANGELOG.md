@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.0](https://github.com/krizaka/krizaka-com/compare/v0.42.0...v0.43.0) (2026-11-18)
+
+
+### Features
+
+* **analytics:** krizaka.com pushes its visit aggregates to Grafana Cloud once a day ([#760](https://github.com/krizaka/krizaka-com/issues/760)) ([9e36333](https://github.com/krizaka/krizaka-com/commit/9e363331cfa723e2d713db360c250d5a0f1e9d04))
+
 ## [0.42.0](https://github.com/krizaka/krizaka-com/compare/v0.41.1...v0.42.0) (2026-11-18)
 
 
