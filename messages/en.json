@@ -418,8 +418,8 @@
             "body": "Verikora reads facts off the file, with no score and no verdict on a person. Every report also says what it did not examine, and the decision stays yours."
           },
           "kept": {
-            "title": "A document stays only if you choose",
-            "body": "Verikora purges the file and its text once checked; only the report stays. Closing a file purges all its documents, and their encrypted backup copies are erased after 30 days."
+            "title": "What Verikora keeps, for how long, and why",
+            "body": "By default Verikora purges a document's file and its text right after the check, and keeps the report, the file's hash and the signed certificate so a check can be proven later. A document stays longer only if you choose to keep it. When closing an applicant file, a manager may keep its documents one year after the decision, the period Québec's Law 25 (s. 11) refers to for information behind a decision. Encrypted backups can still hold a copy while they rotate: 30 days for ours."
           },
           "canada": {
             "title": "Made in Montréal, French first, hosted in Canada",
