@@ -496,16 +496,16 @@ test("Krizaka Agents is the last row of the products: no price, no buy wording, 
   assert.equal(howWeBuild([]).name, "Krizaka Agents");
 });
 
-test("the Krizaka Agents site is the Pages address until the org says the custom domain answers", async () => {
-  const { howWeBuild, AGENTS_PAGES_URL } = await import("../lib/how-we-build.ts");
-  const m = (siteLive) => ({
-    id: "agents",
-    name: "Krizaka Agents",
-    urls: { site: "https://agents.krizaka.com", siteLive, repo: "https://github.com/krizaka/krizaka-agents" },
-  });
-  assert.equal(howWeBuild([]).siteUrl, AGENTS_PAGES_URL);
-  assert.equal(howWeBuild([m(false)]).siteUrl, AGENTS_PAGES_URL);
-  assert.equal(howWeBuild([m(true)]).siteUrl, "https://agents.krizaka.com");
+test("the Krizaka Agents site is the org's address, never one typed here", async () => {
+  const { howWeBuild } = await import("../lib/how-we-build.ts");
+  const { family } = await import("@krizaka/org");
+  const agents = family.find((m) => m.id === "agents");
+  assert.equal(howWeBuild().siteUrl, agents.urls.site);
+  assert.doesNotMatch(howWeBuild().siteUrl, /github\.io/);
+  assert.doesNotMatch(
+    readFileSync(new URL("../lib/how-we-build.ts", import.meta.url), "utf8"),
+    /github\.io|agents\.krizaka\.com/,
+  );
 });
 
 test("Krizaka Agents is in the footer's Products column and in the contact form's products", async () => {

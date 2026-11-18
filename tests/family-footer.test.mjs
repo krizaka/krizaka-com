@@ -62,12 +62,18 @@ test("a private member is never listed", () => {
   assert.deepEqual(membersOf("products", [priv]), []);
 });
 
-test("Krizaka Rust leads open source, linked to its repository while it has no site", () => {
+test("Krizaka Rust leads open source, on the address the org gives it; every family link is the org's", async () => {
+  const { family } = await import("@krizaka/org");
   const links = footerSettings.columns.find((c) => c.id === "open-source").links;
   assert.equal(links[0].label, "Krizaka Rust");
-  assert.equal(links[0].href, "https://github.com/krizaka/krizaka-rust");
+  assert.equal(links[0].href, linkOf(family.find((m) => m.id === "rust")));
   assert.equal(links.at(-1).label, "GitHub");
-  for (const l of links) assert.doesNotMatch(l.href ?? "", /^https:\/\/(rust|agents)\.krizaka\.com/);
+  for (const col of footerSettings.columns.filter((c) => c.id !== "company"))
+    for (const l of col.links.filter((x) => x.label && x.label !== "GitHub")) {
+      const m = family.find((x) => x.name === l.label);
+      assert.ok(m, l.label);
+      assert.equal(l.href, m.id === "agents" ? m.urls.site : linkOf(m), `${l.label} is the org's address`);
+    }
 });
 
 test("the footer's products are the family's, every link on an answering www address", () => {

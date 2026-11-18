@@ -1,13 +1,9 @@
 /* « How we build » (krizaka-internal#4111, words of krizaka-internal#3122): Krizaka Agents, the technology the products are
-   built with, folded into its card of the Products section (krizaka-internal#4183), last after the offers. A private member is not in the
-   published data, so the name falls back to the proper noun until the org publishes the row; the site is the live custom
-   domain when the data says it answers (`urls.siteLive`), else the default Pages address. */
-import { org } from "@krizaka/org";
+   built with, folded into its card of the Products section (krizaka-internal#4183), last after the offers. Its name and address are the org's
+   (`family` of @krizaka/org, which holds the private members): never an address typed here. */
+import { family } from "@krizaka/org";
 
 export const AGENTS_ID = "agents";
-/** Krizaka Agents' site while its custom domain does not answer: the default Pages address. When agents.krizaka.com answers, the
- *  org publishes it (`urls.siteLive`) and `howWeBuild` returns it; changing this one constant is the only other edit. */
-export const AGENTS_PAGES_URL = "https://krizaka.github.io/krizaka-agents/";
 /** The proper noun, used only until the org publishes the `agents` member. */
 const FALLBACK_NAME = "Krizaka Agents";
 const BLOG = "https://blog.krizaka.com";
@@ -30,13 +26,13 @@ export function chapterUrl(slug: string, locale: string): string {
   return `${BLOG}${LOCALE_PREFIX[locale] ?? ""}/story/${slug}/`;
 }
 
-type Member = (typeof org.members)[number];
+type Member = (typeof family)[number];
 
-export function howWeBuild(members: readonly Member[] = org.members) {
+export function howWeBuild(members: readonly Member[] = family) {
   const m = members.find((x) => x.id === AGENTS_ID);
   return {
     name: m?.name ?? FALLBACK_NAME,
-    // The live custom domain when the org says it answers, else the default Pages address (never the repository: no source here).
-    siteUrl: m?.urls.siteLive && m.urls.site ? m.urls.site : AGENTS_PAGES_URL,
+    // The org's address (private members included, `family`), never typed here and never the repository: no source here.
+    siteUrl: m?.urls.site ?? "",
   };
 }
