@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      contents: write
+      contents: write # pushes the production branch
     steps:
       - id: app
         if: ${{ vars.RELEASE_APP_ID != '' }}
