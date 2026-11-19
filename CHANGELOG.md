@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.1](https://github.com/krizaka/krizaka-com/compare/v0.43.0...v0.43.1) (2026-11-19)
+
+
+### Bug Fixes
+
+* **security:** workflow tokens are read-only by default ([#769](https://github.com/krizaka/krizaka-com/issues/769)) ([db9b68f](https://github.com/krizaka/krizaka-com/commit/db9b68fd695161dc2bcf1b79333ace70b4697592))
+
 ## [0.43.0](https://github.com/krizaka/krizaka-com/compare/v0.42.0...v0.43.0) (2026-11-18)
 
 
