@@ -29,7 +29,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,mjs,cjs,json,css}\""
   },
   "dependencies": {
-    "@krizaka/charts": "^1.0.2",
+    "@krizaka/charts": "^1.0.3",
     "@krizaka/discovery": "^0.1.4",
     "@krizaka/email-verification": "^0.1.0",
     "@krizaka/fonts": "^0.5.4",
