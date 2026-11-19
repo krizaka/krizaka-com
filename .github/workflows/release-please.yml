@@ -25,9 +25,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
-      contents: write
-      pull-requests: write
-      actions: write
+      contents: write # release-please pushes the release commit and tag
+      pull-requests: write # release-please opens and updates the release pull request
+      actions: write # release-please dispatches the follow-up workflows
     steps:
       - id: app
         if: ${{ vars.RELEASE_APP_ID != '' }}
