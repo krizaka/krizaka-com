@@ -193,9 +193,18 @@ async function listObjects(cfg, dir, fetchImpl) {
     pruned: the manifest of every branch not yet merged into origin/main (plus origin/main itself) and the working copy of
     every git worktree (uncommitted uploads). Merged branches are history, not a reason to keep. Outside git: nothing. */
 export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
-  const keep = new Set();
+  return new Set(branchHolders(manifestFile, run).keys());
+}
+
+/** Same walk as otherBranchPaths, but each object path maps to the refs and worktrees that list it (to name them). */
+export function branchHolders(manifestFile = MANIFEST, run = execFileSync) {
+  const keep = new Map();
+  let holder = "";
   const add = (m) => {
-    for (const [l, h] of Object.entries(m.files ?? {})) keep.add(objectPath(m.root ?? ROOT, l, h));
+    for (const [l, h] of Object.entries(m.files ?? {})) {
+      const p = objectPath(m.root ?? ROOT, l, h);
+      keep.set(p, [...(keep.get(p) ?? []), holder]);
+    }
   };
   try {
     const cwd = dirname(manifestFile);
@@ -206,6 +215,7 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
       .split("\n")
       .filter(Boolean);
     for (const ref of [base, ...unmerged]) {
+      holder = ref.replace(/^refs\/(heads|remotes)\//, "");
       try {
         add(JSON.parse(git("show", `${ref}:${rel}`)));
       } catch {
@@ -218,6 +228,7 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
       const dir = /^worktree (.+)$/m.exec(block)?.[1];
       const branch = /^branch (.+)$/m.exec(block)?.[1];
       if (!dir) continue;
+      holder = `worktree ${dir}`;
       try {
         const dirty = run("git", ["status", "--porcelain", "--", rel], { cwd: dir, encoding: "utf8" }).trim() !== "";
         if (dirty || !branch || unmerged.includes(branch)) add(JSON.parse(readFileSync(join(dir, rel), "utf8")));
@@ -231,8 +242,30 @@ export function otherBranchPaths(manifestFile = MANIFEST, run = execFileSync) {
   return keep;
 }
 
-/** Objects younger than this are left alone: another session may have uploaded them and not yet committed its manifest. */
+/** Objects younger than this are left alone: another session may have uploaded them and not yet merged its manifest
+    (krizaka-internal#4473: an upload's manifest commit twice stayed on a local branch for a day). */
+export const PRUNE_MIN_AGE_MS = 7 * 24 * 3600 * 1000;
+/** Legacy purge-unused keeps its 24 h. */
 export const MIN_AGE_MS = 24 * 3600 * 1000;
+
+/** Say what prune keeps because it is recent: unnamed objects, and objects only a local branch or worktree lists (named). */
+function logRecent({ all, unnamed, named, extraKeep, holders, minAgeMs, now, log }) {
+  const isRecent = (o) => o.changed && now - o.changed < minAgeMs;
+  const recentObjs = unnamed.filter(isRecent);
+  if (recentObjs.length) {
+    log(
+      `kept ${recentObjs.length} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be merging its manifest)`,
+    );
+    for (const o of recentObjs) {
+      log(`  kept  ${o.path}  (not in the merged manifest)`);
+    }
+  }
+  for (const o of all.filter((x) => isRecent(x) && !named.has(x.path) && extraKeep.has(x.path))) {
+    log(
+      `  kept  ${o.path}  (not in the merged manifest; held by ${(holders.get(o.path) ?? ["unmerged work"]).join(", ")})`,
+    );
+  }
+}
 
 export async function prune({
   cfg,
@@ -240,7 +273,8 @@ export async function prune({
   yes = false,
   retired = false,
   extraKeep = new Set(),
-  minAgeMs = MIN_AGE_MS,
+  holders = new Map(),
+  minAgeMs = PRUNE_MIN_AGE_MS,
   now = Date.now(),
   fetchImpl = globalThis.fetch,
   log = console.log,
@@ -271,11 +305,7 @@ export async function prune({
     ? all.filter((o) => RETIRED.some((re) => re.test(o.path)) && !legacyNamed.includes(o.path))
     : all.filter((o) => !keep.has(o.path) && !foreign(o.path));
   const stale = unnamed.filter((o) => !o.changed || now - o.changed >= minAgeMs).map((o) => o.path);
-  const recent = unnamed.length - stale.length;
-  if (recent)
-    log(
-      `kept ${recent} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be committing its manifest)`,
-    );
+  logRecent({ all, unnamed, named: new Set([...named, ...legacyNamed]), extraKeep, holders, minAgeMs, now, log });
   for (const p of stale) {
     if (!dirs.some((d) => p.startsWith(`${d}/`))) throw new Error(`${p} is outside the folders this manifest writes`);
     if (yes) await remove(cfg, p, fetchImpl);
@@ -609,7 +639,7 @@ export async function purgeUnhashed({ cfg, paths, accountKey, fetchImpl = global
 const USAGE = `usage:
   node scripts/cdn-assets.mjs upload <file-or-dir> --to <path> [--env-file <path>] [--dry-run]
   node scripts/cdn-assets.mjs check [--env-file <path>]
-  node scripts/cdn-assets.mjs prune [--env-file <path>] [--min-age <hours, default 24>] [--retired] [--yes]
+  node scripts/cdn-assets.mjs prune [--env-file <path>] [--min-age <hours, default 168>] [--retired] [--yes]
   node scripts/cdn-assets.mjs library [--env-file <path>] [--dry-run]   RETIRED (ADR-014): the human-name mirror is no longer written
   node scripts/cdn-assets.mjs tree [--env-file <path>] [--strict]   count/size per folder; fails on a misplaced object (and on a legacy one with --strict)
   node scripts/cdn-assets.mjs migrate [--only <prefix>] [--env-file <path>] [--yes]   copy the legacy objects to their target (ADR-014), old paths kept
@@ -618,8 +648,30 @@ const USAGE = `usage:
   node scripts/cdn-assets.mjs readme [--env-file <path>]    publish the layout as README.txt at the zone root
 ${layoutHelp()}`;
 
+/** krizaka-internal#4473: the manifest lines must reach a PR in the same command, or prune would delete live files. */
+async function ensureManifestPr({ entries, manifestFile, log, open }) {
+  if (!entries.some((e) => e.changed)) {
+    return;
+  }
+  let pr;
+  try {
+    pr = await open({ manifestFile, files: entries.map((e) => e.logical), log });
+  } catch (err) {
+    throw new Error(
+      `uploaded, but no manifest PR could be opened (${err.message}): commit and push ${manifestFile} now`,
+      {
+        cause: err,
+      },
+    );
+  }
+  if (!pr) {
+    throw new Error(`uploaded, but no manifest PR was opened: commit and push ${manifestFile} now`);
+  }
+  log(`manifest PR: ${pr}`);
+}
+
 /** `upload`: the command's run; returns the exit code. */
-async function runUpload({ args, target, merged, manifest, manifestFile, fetchImpl, log }) {
+async function runUpload({ args, target, merged, manifest, manifestFile, fetchImpl, log, openManifestPr }) {
   if (!target) throw new Error("upload needs a file or a directory");
   const cfg = loadConfig(merged, { requireKey: !args.dryRun });
   const entries = await upload({ src: target, to: args.to, cfg, manifest, dryRun: args.dryRun, fetchImpl, log });
@@ -630,11 +682,52 @@ async function runUpload({ args, target, merged, manifest, manifestFile, fetchIm
       if (!res.ok) throw new Error(`uploaded, but ${sent.url} answers HTTP ${res.status}: check the pull zone`);
     }
     writeManifest(manifest, manifestFile);
+    await ensureManifestPr({ entries, manifestFile, log, open: openManifestPr ?? openManifestPrWithTools });
   }
   const sentCount = entries.filter((e) => e.changed).length;
   const updated = args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`;
   log(`\n${entries.length} file(s), ${sentCount} ${args.dryRun ? "to send" : "sent"}${updated}`);
   return 0;
+}
+
+/** The default opener: commit the manifest on the current branch, then `pr-open` (or `pr-push` when a PR is already open). */
+export async function openManifestPrWithTools({ manifestFile, files, log, run = execFileSync }) {
+  const tools = run("kz-config", ["tools"], { encoding: "utf8" }).trim();
+  const cwd = dirname(manifestFile);
+  const git = (...a) => run("git", a, { cwd, encoding: "utf8" }).trim();
+  const branch = git("rev-parse", "--abbrev-ref", "HEAD");
+  if (branch === "main" || branch === "HEAD") {
+    throw new Error(`on ${branch}: work in a worktree branch`);
+  }
+  git("add", "--", manifestFile);
+  git("commit", "-m", `chore(cdn): record ${files.length} uploaded file(s) in the manifest (krizaka-internal#4473)`);
+  const open = JSON.parse(
+    run("gh", ["pr", "list", "--repo", "krizaka/krizaka-com", "--head", branch, "--state", "open", "--json", "url"], {
+      encoding: "utf8",
+    }) || "[]",
+  );
+  if (open.length) {
+    run(join(tools, "pr-push"), ["--repo", "krizaka-com"], { cwd, stdio: "inherit" });
+    return open[0].url;
+  }
+  const out = run(
+    join(tools, "pr-open"),
+    [
+      "--repo",
+      "krizaka-com",
+      "--head",
+      branch,
+      "--title",
+      "chore(cdn): record uploaded files in the manifest",
+      "--lane",
+      "platform",
+      "--refs",
+      "krizaka-internal#4473",
+    ],
+    { cwd, encoding: "utf8" },
+  );
+  log(out.trim());
+  return /https:\/\/github\.com\/\S+\/pull\/\d+/.exec(out)?.[0];
 }
 
 /** `check`: the command's run; returns the exit code. */
@@ -650,8 +743,9 @@ async function runPrune({ args, argv, merged, manifest, manifestFile, yes, fetch
     manifest,
     yes,
     retired: argv.includes("--retired"),
-    minAgeMs: args.minAge === undefined ? MIN_AGE_MS : Number(args.minAge) * 3600000,
+    minAgeMs: args.minAge === undefined ? PRUNE_MIN_AGE_MS : Number(args.minAge) * 3600000,
     extraKeep: otherBranchPaths(manifestFile),
+    holders: branchHolders(manifestFile),
     fetchImpl,
     log,
   });
@@ -734,7 +828,10 @@ const COMMANDS = {
   readme: runReadme,
 };
 
-export async function main(argv, { env = process.env, fetchImpl, log = console.log, manifestFile = MANIFEST } = {}) {
+export async function main(
+  argv,
+  { env = process.env, fetchImpl, log = console.log, manifestFile = MANIFEST, openManifestPr } = {},
+) {
   const args = parseArgs(argv.filter((a) => a !== "--yes" && a !== "--retired" && a !== "--strict" && a !== "--check"));
   const yes = argv.includes("--yes");
   const [command, target] = args._;
@@ -750,7 +847,7 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
   };
   const manifest = readManifest(manifestFile);
   const run = Object.hasOwn(COMMANDS, command) ? COMMANDS[command] : undefined;
-  if (run) return run({ args, argv, target, merged, manifest, manifestFile, yes, fetchImpl, log });
+  if (run) return run({ args, argv, target, merged, manifest, manifestFile, yes, fetchImpl, log, openManifestPr });
   log(USAGE);
   return 1;
 }
