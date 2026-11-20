@@ -248,6 +248,23 @@ export const PRUNE_MIN_AGE_MS = 7 * 24 * 3600 * 1000;
 /** Legacy purge-unused keeps its 24 h. */
 export const MIN_AGE_MS = 24 * 3600 * 1000;
 
+/** Say what prune keeps because it is recent: unnamed objects, and objects only a local branch or worktree lists (named). */
+function logRecent({ all, unnamed, named, extraKeep, holders, minAgeMs, now, log }) {
+  const isRecent = (o) => o.changed && now - o.changed < minAgeMs;
+  const recentObjs = unnamed.filter(isRecent);
+  if (recentObjs.length) {
+    log(
+      `kept ${recentObjs.length} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be merging its manifest)`,
+    );
+    for (const o of recentObjs) log(`  kept  ${o.path}  (not in the merged manifest)`);
+  }
+  for (const o of all.filter((x) => isRecent(x) && !named.has(x.path) && extraKeep.has(x.path))) {
+    log(
+      `  kept  ${o.path}  (not in the merged manifest; held by ${(holders.get(o.path) ?? ["unmerged work"]).join(", ")})`,
+    );
+  }
+}
+
 export async function prune({
   cfg,
   manifest,
@@ -286,21 +303,7 @@ export async function prune({
     ? all.filter((o) => RETIRED.some((re) => re.test(o.path)) && !legacyNamed.includes(o.path))
     : all.filter((o) => !keep.has(o.path) && !foreign(o.path));
   const stale = unnamed.filter((o) => !o.changed || now - o.changed >= minAgeMs).map((o) => o.path);
-  const recentObjs = unnamed.filter((o) => o.changed && now - o.changed < minAgeMs);
-  if (recentObjs.length) {
-    log(
-      `kept ${recentObjs.length} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be merging its manifest)`,
-    );
-    for (const o of recentObjs) log(`  kept  ${o.path}  (not in the merged manifest)`);
-  }
-  // Recent objects only a local branch or worktree lists: say which, so the manifest PR gets opened.
-  const merged = new Set([...named, ...legacyNamed]);
-  for (const o of all) {
-    if (!o.changed || now - o.changed >= minAgeMs || merged.has(o.path) || !extraKeep.has(o.path)) continue;
-    log(
-      `  kept  ${o.path}  (not in the merged manifest; held by ${(holders.get(o.path) ?? ["unmerged work"]).join(", ")})`,
-    );
-  }
+  logRecent({ all, unnamed, named: new Set([...named, ...legacyNamed]), extraKeep, holders, minAgeMs, now, log });
   for (const p of stale) {
     if (!dirs.some((d) => p.startsWith(`${d}/`))) throw new Error(`${p} is outside the folders this manifest writes`);
     if (yes) await remove(cfg, p, fetchImpl);
@@ -643,6 +646,24 @@ const USAGE = `usage:
   node scripts/cdn-assets.mjs readme [--env-file <path>]    publish the layout as README.txt at the zone root
 ${layoutHelp()}`;
 
+/** krizaka-internal#4473: the manifest lines must reach a PR in the same command, or prune would delete live files. */
+async function ensureManifestPr({ entries, manifestFile, log, open }) {
+  if (!entries.some((e) => e.changed)) return;
+  let pr;
+  try {
+    pr = await open({ manifestFile, files: entries.map((e) => e.logical), log });
+  } catch (err) {
+    throw new Error(
+      `uploaded, but no manifest PR could be opened (${err.message}): commit and push ${manifestFile} now`,
+      {
+        cause: err,
+      },
+    );
+  }
+  if (!pr) throw new Error(`uploaded, but no manifest PR was opened: commit and push ${manifestFile} now`);
+  log(`manifest PR: ${pr}`);
+}
+
 /** `upload`: the command's run; returns the exit code. */
 async function runUpload({ args, target, merged, manifest, manifestFile, fetchImpl, log, openManifestPr }) {
   if (!target) throw new Error("upload needs a file or a directory");
@@ -655,23 +676,7 @@ async function runUpload({ args, target, merged, manifest, manifestFile, fetchIm
       if (!res.ok) throw new Error(`uploaded, but ${sent.url} answers HTTP ${res.status}: check the pull zone`);
     }
     writeManifest(manifest, manifestFile);
-    // krizaka-internal#4473: the manifest lines must reach a PR in the same command, or prune would delete live files.
-    const open = openManifestPr ?? openManifestPrWithTools;
-    let pr;
-    if (!entries.some((e) => e.changed)) pr = "none needed (nothing changed)";
-    else
-      try {
-        pr = await open({ manifestFile, files: entries.map((e) => e.logical), log });
-      } catch (err) {
-        throw new Error(
-          `uploaded, but no manifest PR could be opened (${err.message}): commit and push ${manifestFile} now`,
-          {
-            cause: err,
-          },
-        );
-      }
-    if (!pr) throw new Error(`uploaded, but no manifest PR was opened: commit and push ${manifestFile} now`);
-    log(`manifest PR: ${pr}`);
+    await ensureManifestPr({ entries, manifestFile, log, open: openManifestPr ?? openManifestPrWithTools });
   }
   const sentCount = entries.filter((e) => e.changed).length;
   const updated = args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`;
