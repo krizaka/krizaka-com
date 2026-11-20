@@ -282,7 +282,7 @@ test("the bar's « Products » scrolls on the home and leads to the home's secti
 });
 
 test("AGENTS.md says the new rules: the home's order (§ 2) and that no block of the home moves (§ 4)", () => {
-  const agents = read("AGENTS.md");
+  const agents = read("docs/agents.md");
   assert.match(agents, /Sovkora · Verikora · Folioviv/);
   assert.match(agents, /No block of the home moves on its own/);
 });
