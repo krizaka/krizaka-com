@@ -256,7 +256,9 @@ function logRecent({ all, unnamed, named, extraKeep, holders, minAgeMs, now, log
     log(
       `kept ${recentObjs.length} unnamed object(s) uploaded in the last ${minAgeMs / 3600000} h (another session may still be merging its manifest)`,
     );
-    for (const o of recentObjs) log(`  kept  ${o.path}  (not in the merged manifest)`);
+    for (const o of recentObjs) {
+      log(`  kept  ${o.path}  (not in the merged manifest)`);
+    }
   }
   for (const o of all.filter((x) => isRecent(x) && !named.has(x.path) && extraKeep.has(x.path))) {
     log(
@@ -648,7 +650,9 @@ ${layoutHelp()}`;
 
 /** krizaka-internal#4473: the manifest lines must reach a PR in the same command, or prune would delete live files. */
 async function ensureManifestPr({ entries, manifestFile, log, open }) {
-  if (!entries.some((e) => e.changed)) return;
+  if (!entries.some((e) => e.changed)) {
+    return;
+  }
   let pr;
   try {
     pr = await open({ manifestFile, files: entries.map((e) => e.logical), log });
@@ -660,7 +664,9 @@ async function ensureManifestPr({ entries, manifestFile, log, open }) {
       },
     );
   }
-  if (!pr) throw new Error(`uploaded, but no manifest PR was opened: commit and push ${manifestFile} now`);
+  if (!pr) {
+    throw new Error(`uploaded, but no manifest PR was opened: commit and push ${manifestFile} now`);
+  }
   log(`manifest PR: ${pr}`);
 }
 
@@ -690,7 +696,9 @@ export async function openManifestPrWithTools({ manifestFile, files, log, run = 
   const cwd = dirname(manifestFile);
   const git = (...a) => run("git", a, { cwd, encoding: "utf8" }).trim();
   const branch = git("rev-parse", "--abbrev-ref", "HEAD");
-  if (branch === "main" || branch === "HEAD") throw new Error(`on ${branch}: work in a worktree branch`);
+  if (branch === "main" || branch === "HEAD") {
+    throw new Error(`on ${branch}: work in a worktree branch`);
+  }
   git("add", "--", manifestFile);
   git("commit", "-m", `chore(cdn): record ${files.length} uploaded file(s) in the manifest (krizaka-internal#4473)`);
   const open = JSON.parse(
