@@ -73,6 +73,7 @@ test("upload sends versioned files, records them, and skips what is already ther
     fetchImpl,
     log: (l) => logs.push(l),
     manifestFile,
+    openManifestPr: async () => "https://github.com/krizaka/krizaka-com/pull/1",
   });
   const puts = calls.filter((c) => c.method === "PUT");
   assert.equal(puts.length, 2);
@@ -98,6 +99,9 @@ test("upload sends versioned files, records them, and skips what is already ther
     fetchImpl: again.fetchImpl,
     log: () => {},
     manifestFile,
+    openManifestPr: async () => {
+      throw new Error("no PR needed when nothing changed");
+    },
   });
   assert.equal(again.calls.filter((c) => c.method === "PUT").length, 0, "idempotent by hash");
 });
@@ -292,4 +296,100 @@ test("every manifest key resolves to a layout path without a doubled segment", a
     if (/(^|\/)([^/]+)\/\2(\/|$)/.test(object)) bad.push(`${path} -> ${object}`);
   }
   assert.deepEqual(bad, []);
+});
+
+test("an upload opens (or extends) its manifest PR in the same command, and fails loudly without one", async () => {
+  const dir = fixture();
+  const manifestFile = join(dir, "cdn-manifest.json");
+  const opened = [];
+  const logs = [];
+  await main(["upload", join(dir, "tour"), "--to", "products/verikora/tour"], {
+    env,
+    fetchImpl: recorder().fetchImpl,
+    log: (l) => logs.push(l),
+    manifestFile,
+    openManifestPr: async (arg) => {
+      opened.push(arg);
+      return "https://github.com/krizaka/krizaka-com/pull/9";
+    },
+  });
+  assert.equal(opened.length, 1);
+  assert.equal(opened[0].manifestFile, manifestFile);
+  assert.deepEqual(opened[0].files.sort(), [
+    "products/verikora/tour/alex-bid.jpg",
+    "products/verikora/tour/alex-bid.mp4",
+  ]);
+  assert.ok(logs.some((l) => l.includes("pull/9")));
+  for (const openManifestPr of [
+    async () => undefined,
+    async () => {
+      throw new Error("gh down");
+    },
+  ]) {
+    const other = join(mkdtempSync(join(tmpdir(), "cdn-assets-")), "cdn-manifest.json");
+    await assert.rejects(
+      main(["upload", join(dir, "tour"), "--to", "products/verikora/tour"], {
+        env,
+        fetchImpl: recorder().fetchImpl,
+        log: () => {},
+        manifestFile: other,
+        openManifestPr,
+      }),
+      /no manifest PR/,
+    );
+  }
+});
+
+test("prune keeps an object uploaded in the last 7 days that no merged manifest lists, and names who holds it", async () => {
+  const now = Date.parse("2026-11-20T12:00:00Z");
+  const manifest = { root: "sites", files: {} };
+  const listing = {
+    "/site/": [],
+    "/sites/": [{ ObjectName: "www", IsDirectory: true }],
+    "/sites/www/": [{ ObjectName: "home", IsDirectory: true }],
+    "/sites/www/home/": [
+      { ObjectName: "cover.abc.webp", IsDirectory: false, LastChanged: "2026-11-18T12:00:00" },
+      { ObjectName: "old.abc.webp", IsDirectory: false, LastChanged: "2026-10-01T12:00:00" },
+    ],
+  };
+  const fetchImpl = async (url, init = {}) => {
+    const key = Object.keys(listing).find((k) => url.endsWith(k));
+    return { ok: true, status: 200, json: async () => (key ? listing[key] : []), method: init.method };
+  };
+  const m = { root: "sites", files: { "home/x.webp": "1234567890" } };
+  const logs = [];
+  const deleted = await prune({
+    cfg,
+    manifest: m,
+    yes: false,
+    now,
+    fetchImpl,
+    log: (l) => logs.push(l),
+    extraKeep: new Set(["sites/www/home/cover.abc.webp"]),
+    holders: new Map([["sites/www/home/cover.abc.webp", ["wip/krizaka-com-9999"]]]),
+  });
+  assert.deepEqual(deleted, ["sites/www/home/old.abc.webp"], "the 2-day-old object is never a candidate");
+  assert.match(logs.join("\n"), /cover\.abc\.webp.*not in the merged manifest.*wip\/krizaka-com-9999/);
+  // Unheld too: kept for 7 days.
+  const logs2 = [];
+  const d2 = await prune({ cfg, manifest: m, now, fetchImpl, log: (l) => logs2.push(l) });
+  assert.deepEqual(d2, ["sites/www/home/old.abc.webp"]);
+  assert.match(logs2.join("\n"), /kept 1 unnamed object\(s\) uploaded in the last 168 h/);
+});
+
+test("two files of the same name in different folders keep two entries", async () => {
+  const dir = mkdtempSync(join(tmpdir(), "cdn-assets-"));
+  mkdirSync(join(dir, "web"));
+  mkdirSync(join(dir, "web480"));
+  writeFileSync(join(dir, "web", "cover.webp"), "big");
+  writeFileSync(join(dir, "web480", "cover.webp"), "small");
+  const manifestFile = join(dir, "cdn-manifest.json");
+  const opts = { env, fetchImpl: recorder().fetchImpl, log: () => {}, manifestFile, openManifestPr: async () => "pr" };
+  await main(["upload", join(dir, "web"), "--to", "home/blog/cover"], opts);
+  await main(["upload", join(dir, "web480"), "--to", "home/blog/cover-480"], opts);
+  const { files } = readManifest(manifestFile);
+  assert.deepEqual(files, {
+    "home/blog/cover-480/cover.webp": hashOf("small"),
+    "home/blog/cover/cover.webp": hashOf("big"),
+  });
 });
