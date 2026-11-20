@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.2](https://github.com/krizaka/krizaka-com/compare/v0.43.1...v0.43.2) (2026-11-20)
+
+
+### Bug Fixes
+
+* **cdn:** an upload opens its own manifest PR, and prune keeps recent unlisted objects ([#777](https://github.com/krizaka/krizaka-com/issues/777)) ([5a8b47f](https://github.com/krizaka/krizaka-com/commit/5a8b47f9b4876beef8d644662ac96c6e0dbabca5))
+
 ## [0.43.1](https://github.com/krizaka/krizaka-com/compare/v0.43.0...v0.43.1) (2026-11-19)
 
 
