@@ -350,7 +350,7 @@
           "app": "Appli {id}"
         },
         "java": {
-          "line": "Les briques de chaque service Krizaka, un seul BOM sur Maven Central.",
+          "line": "Les briques de chaque service Krizaka, un seul BOM dans notre propre dépôt Maven.",
           "explore": "Ouvrir java.krizaka.com",
           "tool": "Outil de build",
           "copy": "Copier",
@@ -403,10 +403,7 @@
           "later": {
             "title": "Plus tard",
             "body": "D'autres produits utiles, sur la même pile ouverte.",
-            "points": [
-              "Kridoc, le stockage documentaire, en conception",
-              "Chaque nouveau produit sur Sovkora et Krizaka UI"
-            ]
+            "points": ["Chaque nouveau produit sur Sovkora et Krizaka UI"]
           }
         }
       },
@@ -426,7 +423,7 @@
           },
           "canada": {
             "title": "Fait à Montréal, en français d'abord, hébergé au Canada",
-            "body": "Krizaka est une entreprise montréalaise, soumise à la Loi 25. Chaque mot existe en français et en anglais. Ce site et Verikora tournent sur des serveurs au Canada, et ce site n'a ni mesure d'audience ni traceur."
+            "body": "Krizaka est une entreprise montréalaise, soumise à la Loi 25. Chaque mot existe en français et en anglais. Ce site et Verikora tournent sur des serveurs au Canada, et ce site compte lui-même ses visites, sans cookie, sans traceur ni outil d'analyse tiers."
           },
           "open": {
             "title": "Construit au grand jour",
@@ -1039,7 +1036,7 @@
         "tagline": "Les briques que partagent tous les produits : Krizaka UI, les kits Java, le site et les règles de l'organisation."
       },
       "count": "{count} dépôts publics · ",
-      "lead": "Krizaka UI, Krizaka Java et les bibliothèques TypeScript : chaque paquet, chaque version et chaque dépôt, lus sur npm, Maven Central et GitHub au moment de la publication du site. Sous Apache-2.0. Nos produits sont exploités par Krizaka.",
+      "lead": "Krizaka UI, Krizaka Java et les bibliothèques TypeScript : chaque paquet, chaque version et chaque dépôt, lus sur npm, dans notre propre dépôt Maven et sur GitHub au moment de la publication du site. Sous Apache-2.0. Nos produits sont exploités par Krizaka.",
       "figures": {
         "repositories": "dépôts publics",
         "npm": "paquets sur npm",
@@ -1053,8 +1050,8 @@
       "packages": {
         "eyebrow": "paquets",
         "title": "Chaque paquet publié.",
-        "lead": "npm et Maven Central, lus au build. Cherchez, ou filtrez par registre et famille.",
-        "caption": "Chaque paquet Krizaka sur npm et Maven Central",
+        "lead": "Les paquets JavaScript sont publiés sur npm, les artefacts Java dans notre propre dépôt Maven, lus au build. Cherchez, ou filtrez par registre et famille.",
+        "caption": "Chaque paquet Krizaka, sur npm et dans notre propre dépôt Maven",
         "name": "Paquet",
         "registry": "Registre",
         "family": "Famille",
@@ -1163,7 +1160,7 @@
         "startLabel": "Commencer ici",
         "number": "§ {n}",
         "open": "Ouvrir la documentation",
-        "stats": "plus de {repositories} dépôts open source · plus de {npm} paquets npm · Apache-2.0",
+        "stats": "plus de {repositories} dépôts publics · plus de {npm} paquets npm · Apache-2.0",
         "quality": "Chaque changement arrive avec ses tests et rien n'est fusionné avant que la CI soit verte ; chaque page est auditée pour l'accessibilité (WCAG 2.1 AA, en sombre et en clair) avant de paraître.",
         "paths": {
           "ui": {

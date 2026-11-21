@@ -350,7 +350,7 @@
           "app": "App {id}"
         },
         "java": {
-          "line": "The building blocks of every Krizaka service, one BOM on Maven Central.",
+          "line": "The building blocks of every Krizaka service, one BOM in our own Maven repository.",
           "explore": "Open java.krizaka.com",
           "tool": "Build tool",
           "copy": "Copy",
@@ -403,7 +403,7 @@
           "later": {
             "title": "Later",
             "body": "More useful products, on the same open stack.",
-            "points": ["Kridoc, document storage, in design", "Every new product on Sovkora and Krizaka UI"]
+            "points": ["Every new product on Sovkora and Krizaka UI"]
           }
         }
       },
@@ -423,7 +423,7 @@
           },
           "canada": {
             "title": "Made in Montréal, French first, hosted in Canada",
-            "body": "Krizaka is a Montréal company, subject to Québec's Law 25. Every word exists in French and English. This site and Verikora run on servers in Canada, and this site has no analytics and no tracker."
+            "body": "Krizaka is a Montréal company, subject to Québec's Law 25. Every word exists in French and English. This site and Verikora run on servers in Canada, and this site counts its own visits, first-party and cookieless, with no tracker and no third-party analytics."
           },
           "open": {
             "title": "Built in the open",
@@ -1036,7 +1036,7 @@
         "tagline": "The building blocks every product shares: Krizaka UI, the Java kits, the site and the organisation's rules."
       },
       "count": "{count} public repositories · ",
-      "lead": "Krizaka UI, Krizaka Java and the TypeScript libraries: every package, every version and every repository, read from npm, Maven Central and GitHub when the site is published. Under Apache-2.0. Our products are operated by Krizaka.",
+      "lead": "Krizaka UI, Krizaka Java and the TypeScript libraries: every package, every version and every repository, read from npm, our own Maven repository and GitHub when the site is published. Under Apache-2.0. Our products are operated by Krizaka.",
       "figures": {
         "repositories": "public repositories",
         "npm": "packages on npm",
@@ -1050,8 +1050,8 @@
       "packages": {
         "eyebrow": "packages",
         "title": "Every published package.",
-        "lead": "npm and Maven Central, read at build. Search, or filter by registry and family.",
-        "caption": "Every Krizaka package on npm and Maven Central",
+        "lead": "JavaScript packages are published on npm, Java artifacts in our own Maven repository, read at build. Search, or filter by registry and family.",
+        "caption": "Every Krizaka package, on npm and in our own Maven repository",
         "name": "Package",
         "registry": "Registry",
         "family": "Family",
@@ -1160,7 +1160,7 @@
         "startLabel": "Start here",
         "number": "§ {n}",
         "open": "Open the documentation",
-        "stats": "more than {repositories} open-source repositories · more than {npm} npm packages · Apache-2.0",
+        "stats": "more than {repositories} public repositories · more than {npm} npm packages · Apache-2.0",
         "quality": "Every change ships with its tests and nothing merges until CI is green; every page is audited for accessibility (WCAG 2.1 AA, dark and light) before it ships.",
         "paths": {
           "ui": {

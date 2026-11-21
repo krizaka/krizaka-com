@@ -75,7 +75,11 @@ test("how it fits has no product and no engine layer", () => {
 
 test("the open-source page and its tables name no product, claim no licence for one", () => {
   const page = read("app/[locale]/docs/page.tsx");
-  assert.match(page, /openSourceRepositories\(allRepositories, PRODUCT_IDS\)/);
+  assert.match(
+    page,
+    /publicRepositoryCount\(\)/,
+    "one count, the organisation's public repositories, as the home says",
+  );
   assert.doesNotMatch(page, /ProductStackTable|ENGINE_USES|runs-on/);
   const tables = read("app/[locale]/docs/OpenSourceTables.tsx");
   assert.doesNotMatch(tables, /id: "product"|usedBy/);

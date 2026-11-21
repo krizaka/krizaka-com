@@ -7,8 +7,7 @@ import { CtaPanel } from "@krizaka/ui/cta-panel";
 import { Section } from "@krizaka/ui/page";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { localizedMetadata } from "@/lib/seo";
-import { githubRepositories } from "@/lib/org-stats";
-import { openSourceRepositories } from "@/lib/repository-catalogue";
+import { githubRepositories, publicRepositoryCount } from "@/lib/org-stats";
 import snapshot from "@/lib/registry-versions.json";
 import manifests from "@/lib/product-manifests.json";
 import { npmPackages, publishedVersion } from "@/lib/registry-versions";
@@ -74,7 +73,6 @@ export default async function DocsPage({ params }: Readonly<Props>) {
   const h = t.hub;
   const channelGroups = publicChannels();
   const allRepositories = githubRepositories();
-  const repositories = openSourceRepositories(allRepositories, PRODUCT_IDS);
   const javaSite = STACK.find((s) => s.id === "java")!.url;
   const packages = packageRows(
     snapshot as RegistrySnapshot,
@@ -165,7 +163,7 @@ export default async function DocsPage({ params }: Readonly<Props>) {
 
       <p className="os-stats">
         {format(h.stats, {
-          repositories: fmt.format(floorFigure(repositories.length)),
+          repositories: fmt.format(floorFigure(publicRepositoryCount())),
           npm: fmt.format(floorFigure(npmPackages().length)),
         })}
       </p>
