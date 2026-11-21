@@ -104,8 +104,9 @@ test("the services and the direction carry content, not ruled paper: the offer a
     const h = msg(l).home;
     for (const id of ["modules", "ai", "maintenance"])
       assert.ok(h.services.parts[id].title && h.services.parts[id].line.length <= 90, `${l}: parts.${id}`);
-    for (const id of ["next", "later"])
-      assert.ok(h.direction.steps[id].points.length >= 2, `${l}: steps.${id}.points, the details each station shows`);
+    assert.ok(h.direction.steps.next.points.length >= 2, `${l}: steps.next.points, the details each station shows`);
+    // « Later » lost Kridoc's typed stage (krizaka-internal#4605): « now » carries every product with the org's stage.
+    assert.ok(h.direction.steps.later.points.length >= 1, `${l}: steps.later.points, the details each station shows`);
     for (const k of ["pause", "play"])
       assert.equal(h.direction[k], undefined, `${l}: nothing to pause, direction.${k} is gone`);
     assert.doesNotMatch(JSON.stringify(h.services), FORBIDDEN, l);

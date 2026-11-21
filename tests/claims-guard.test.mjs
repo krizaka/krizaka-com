@@ -50,12 +50,18 @@ test("no typed repository count in the source or the messages: counts are read a
   }
 });
 
-test("the docs hub counts the open-source list and says so; 'public' labels read the organisation count", () => {
+test("the home, the docs hub and /services say one repository count: the organisation's public count, read at build", () => {
   for (const l of ["en", "fr"]) {
     const m = JSON.parse(read(`messages/${l}.json`));
-    assert.doesNotMatch(m.site.openSource.hub.stats, /public/i, `${l}: hub stats counts open-source repositories`);
+    assert.match(m.site.openSource.hub.stats, /public|publics/i, `${l}: hub stats counts public repositories`);
+    assert.doesNotMatch(
+      m.site.openSource.hub.stats,
+      /open[- ]source/i,
+      `${l}: no second, smaller « open source » count`,
+    );
   }
-  assert.match(read("app/[locale]/docs/page.tsx"), /repositories\.length/);
+  assert.match(read("app/[locale]/docs/page.tsx"), /publicRepositoryCount\(\)/);
+  assert.doesNotMatch(read("app/[locale]/docs/page.tsx"), /floorFigure\(repositories\.length\)/);
 });
 
 test("no Maven Central count, no « every repository » licence claim (founder, 2026-11-01)", () => {
