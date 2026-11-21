@@ -547,7 +547,7 @@ const STYLES = `
     background:color-mix(in srgb, var(--kz-accent) 8%, var(--kz-surface-0)); }
   .kz-cf-chip:focus-visible { outline:2px solid var(--kz-accent); outline-offset:2px; }
 
-  .kz-cf-captcha { min-height:65px; }
+  .kz-cf-captcha { min-height:65px; margin:0; padding:0; border:0; min-inline-size:0; }
   .kz-cf-hp { position:absolute; left:-10000px; width:1px; height:1px; opacity:0; }
   .kz-cf-error { display:flex; gap:8px; align-items:center; margin:0; font-size:13px; color:var(--kz-danger); }
   .kz-cf-foot { display:flex; flex-wrap:wrap; align-items:center; gap:14px 18px; padding-top:4px; }

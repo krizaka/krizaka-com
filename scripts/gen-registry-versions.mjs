@@ -151,11 +151,11 @@ async function main() {
     mavenMeta: mavenOk ? maven.value.meta : (previous.mavenMeta ?? {}),
     fetchedAt: new Date().toISOString(),
   };
-  for (const [name, r] of [
-    ["npm", npm],
-    ["Maven Central", maven],
+  for (const { name, r } of [
+    { name: "npm", r: npm },
+    { name: "Maven Central", r: maven },
   ])
-    if (r.status === "rejected") warn(`${String(name)} unreachable (${r.reason?.message}) — keeping what was known`);
+    if (r.status === "rejected") warn(`${name} unreachable (${r.reason?.message}) — keeping what was known`);
   const missing = npmOk ? missingFigures(out.npmMeta) : [];
   const total = Object.keys(out.npm).length;
   console.log(`registry-versions: ${total - missing.length}/${total} npm packages have a weekly download figure`);

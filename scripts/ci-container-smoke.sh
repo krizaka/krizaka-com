@@ -6,7 +6,7 @@ IMAGE="${CI_IMAGE:-krizaka-com:ci}"
 docker run -d --name site -p 3000:3000 "$IMAGE"
 trap 'docker logs site | tail -20' EXIT
 for _ in $(seq 1 30); do curl -fsS http://localhost:3000/api/health && break; sleep 1; done
-check() { code=$(curl -s -o /dev/null -w '%{http_code}' "$@"); echo "$code $*"; [ "$code" = "$EXPECT" ]; }
+check() { code=$(curl -s -o /dev/null -w '%{http_code}' "$@"); echo "$code $*"; [[ "$code" = "$EXPECT" ]]; }
 EXPECT=200 check http://localhost:3000/en
 EXPECT=308 check http://localhost:3000/fr/docs/ui
 EXPECT=308 check http://localhost:3000/docs/ui/button

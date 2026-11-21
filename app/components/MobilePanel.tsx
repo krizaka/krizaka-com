@@ -51,13 +51,13 @@ export function MobilePanel({ path }: Readonly<{ path: string }>) {
         <Button asChild variant="primary" size="lg" className="w-full">
           <Link href={contact}>{t.site.menu.contactCta}</Link>
         </Button>
-        <div role="group" aria-label={t.site.menu.preferences} className="grid grid-cols-2 gap-2">
+        <fieldset aria-label={t.site.menu.preferences} className="m-0 grid min-w-0 grid-cols-2 gap-2 border-0 p-0">
           <Button type="button" variant="secondary" onClick={toggleTheme} className="min-h-11">
             {theme === "dark" ? <SunIcon size={16} /> : <MoonIcon size={16} />}
             {theme === "dark" ? t.nav.lightMode : t.nav.darkMode}
           </Button>
           <NavBar.Language {...language} />
-        </div>
+        </fieldset>
       </div>
     </NavBar.Mobile>
   );

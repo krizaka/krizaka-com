@@ -46,7 +46,7 @@ export default function CaptchaWidget({
   label: string;
   language: string;
 }>) {
-  const host = useRef<HTMLDivElement>(null);
+  const host = useRef<HTMLFieldSetElement>(null);
 
   useEffect(() => {
     if (!CAPTCHA_SITE_KEY || !host.current) return;
@@ -81,5 +81,5 @@ export default function CaptchaWidget({
   }, [language, onToken]);
 
   if (!CAPTCHA_SITE_KEY) return null;
-  return <div ref={host} className="kz-cf-captcha" role="group" aria-label={label} />;
+  return <fieldset ref={host} className="kz-cf-captcha" aria-label={label} />;
 }
