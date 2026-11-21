@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.43.3](https://github.com/krizaka/krizaka-com/compare/v0.43.2...v0.43.3) (2026-11-21)
+
+
+### Bug Fixes
+
+* **claims:** the home, docs and story say what is true today (krizaka-internal[#4605](https://github.com/krizaka/krizaka-com/issues/4605)) ([#783](https://github.com/krizaka/krizaka-com/issues/783)) ([ee2220e](https://github.com/krizaka/krizaka-com/commit/ee2220ea86e5f481ec236ee3d3616ba0fceb5d70))
+
 ## [0.43.2](https://github.com/krizaka/krizaka-com/compare/v0.43.1...v0.43.2) (2026-11-20)
 
 
