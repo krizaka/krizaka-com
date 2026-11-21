@@ -27,7 +27,7 @@ npm run seo:check      # seo-family audit against a running container (CI)
 
 ## Architecture & conventions
 
-- Follow the [krizaka-engineering skill](https://github.com/krizaka/krizaka-skills/blob/main/skills/krizaka-engineering/SKILL.md); search its [packages reference](https://github.com/krizaka/krizaka-skills/blob/main/skills/krizaka-engineering/references/packages.md) before writing anything generic.
+- Follow the [krizaka-engineering skill](https://github.com/krizaka/krizaka-agents/blob/main/plugins/krizaka-engineering/skills/krizaka-engineering/SKILL.md); search its [packages reference](https://github.com/krizaka/krizaka-agents/blob/main/plugins/krizaka-engineering/skills/krizaka-engineering/references/packages.md) before writing anything generic.
 - Take libraries first: `@krizaka/*`; a missing function goes into the package first, never a local copy.
 - Keep UI in `app/components/`, logic and data access in `lib/`; Server Components by default, `"use client"` only for state, effects or browser APIs; prefer static generation; send a client only its slice of data.
 - Build every page from `@krizaka/ui` blocks and declare its template in `lib/page-templates.ts`; one shell (`Page`); every action is the `@krizaka/ui` `Button` (`ButtonLink` for links). A missing block goes to krizaka-ui first.
@@ -71,4 +71,4 @@ npm run seo:check      # seo-family audit against a running container (CI)
 - [docs/agents.md](docs/agents.md): the full site contract (generated vs written, home order, docs hub, services, footer, discovery, SEO, theming, page language, media layout, PR captures, tests, ast-grep rules, anti-slop), read by section.
 - [docs/design](docs/design): design notes (home media, Bunny org library).
 - [Org standards](https://github.com/krizaka/.github/tree/main/docs/standards) of krizaka/.github; the [engineering charter](https://github.com/krizaka/.github/blob/main/AGENTS.template.md).
-- [krizaka-engineering skill](https://github.com/krizaka/krizaka-skills/blob/main/skills/krizaka-engineering/SKILL.md).
+- [krizaka-engineering skill](https://github.com/krizaka/krizaka-agents/blob/main/plugins/krizaka-engineering/skills/krizaka-engineering/SKILL.md).
