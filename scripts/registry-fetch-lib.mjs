@@ -46,8 +46,8 @@ export function createFetcher({
         headers: { "user-agent": "krizaka-com-build" },
         signal: AbortSignal.timeout(timeoutMs),
       });
-    } catch (failure) {
-      return { failure, pause: pauseBase }; // network error or timeout: retried
+    } catch (error_) {
+      return { failure: error_, pause: pauseBase }; // network error or timeout: retried
     }
     if (res.ok) {
       return { value: as === "json" ? await res.json() : await res.text() };

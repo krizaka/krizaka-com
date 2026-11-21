@@ -265,6 +265,10 @@
 .st-board {
   display: grid;
   gap: 12px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-inline-size: 0;
 }
 .st-board-col {
   padding: 12px 14px;

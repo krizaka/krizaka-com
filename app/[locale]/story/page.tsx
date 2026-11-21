@@ -226,7 +226,7 @@ export default async function StoryPage({ params }: Readonly<Props>) {
   const board: Status[] = ["devPreview", "development", "construction", "paused"];
 
   const statusBoard = (
-    <div className="st-board" role="group" aria-label={st.next.boardAria}>
+    <fieldset className="st-board" aria-label={st.next.boardAria}>
       {board.map((status) => {
         const list = PRODUCTS.filter((p) => p.status === status);
         return list.length === 0 ? null : (
@@ -244,7 +244,7 @@ export default async function StoryPage({ params }: Readonly<Props>) {
           </div>
         );
       })}
-    </div>
+    </fieldset>
   );
 
   return (
