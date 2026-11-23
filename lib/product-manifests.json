@@ -1,5 +1,5 @@
 {
-  "readAt": "2026-11-16",
+  "readAt": "2026-11-23",
   "products": {
     "sovkora": {
       "sources": [
@@ -58,6 +58,7 @@
         "@krizaka/brief",
         "@krizaka/charts",
         "@krizaka/config",
+        "@krizaka/contract",
         "@krizaka/coupons",
         "@krizaka/credits",
         "@krizaka/db",
