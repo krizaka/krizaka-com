@@ -11,10 +11,10 @@ export const CDN = "https://krizaka-assets.b-cdn.net";
 // CDN file -> committed file
 export const ICONS = {
   "favicon.svg": "public/favicon.svg",
-  "favicon-32.png": "app/icon.png",
-  "apple-touch-icon.png": "app/apple-icon.png",
-  "icon-192.png": "app/icon1.png",
-  "icon-512.png": "app/icon2.png",
+  "favicon-32.png": "public/icon.png",
+  "apple-touch-icon.png": "public/apple-icon.png",
+  "icon-192.png": "public/icon1.png",
+  "icon-512.png": "public/icon2.png",
 };
 
 export async function get(url, tries = 4) {

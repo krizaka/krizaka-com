@@ -298,6 +298,31 @@ test("every manifest key resolves to a layout path without a doubled segment", a
   assert.deepEqual(bad, []);
 });
 
+test("an upload rebuilds the asset registry and commits it with the manifest (krizaka-internal#4482)", async () => {
+  const dir = fixture();
+  const manifestFile = join(dir, "cdn-manifest.json");
+  const registryFile = join(dir, "assets.json");
+  const opened = [];
+  const rebuilt = [];
+  await main(["upload", join(dir, "tour"), "--to", "products/verikora/tour"], {
+    env,
+    fetchImpl: recorder().fetchImpl,
+    log: () => {},
+    manifestFile,
+    refreshRegistry: async () => {
+      rebuilt.push(JSON.parse(readFileSync(manifestFile, "utf8")).files);
+      return registryFile;
+    },
+    openManifestPr: async (arg) => {
+      opened.push(arg);
+      return "https://github.com/krizaka/krizaka-com/pull/9";
+    },
+  });
+  assert.equal(rebuilt.length, 1, "the registry is rebuilt once");
+  assert.ok(rebuilt[0]["products/verikora/tour/alex-bid.mp4"], "after the manifest is written");
+  assert.equal(opened[0].registryFile, registryFile);
+});
+
 test("an upload opens (or extends) its manifest PR in the same command, and fails loudly without one", async () => {
   const dir = fixture();
   const manifestFile = join(dir, "cdn-manifest.json");
@@ -392,4 +417,29 @@ test("two files of the same name in different folders keep two entries", async (
     "home/blog/cover-480/cover.webp": hashOf("small"),
     "home/blog/cover/cover.webp": hashOf("big"),
   });
+});
+
+test("the manifest PR commits the asset registry with the manifest (krizaka-internal#4482)", async () => {
+  const { openManifestPrWithTools } = await import("../scripts/cdn-assets.mjs");
+  const calls = [];
+  const run = (cmd, args) => {
+    calls.push([cmd, ...args]);
+    const answers = { "kz-config": "/tools\n", gh: "[]" };
+    if (args[0] === "rev-parse") {
+      return "wip/x\n";
+    }
+    return answers[cmd] ?? "https://github.com/krizaka/krizaka-com/pull/9\n";
+  };
+  const url = await openManifestPrWithTools({
+    manifestFile: "/repo/lib/cdn-manifest.json",
+    registryFile: "/repo/lib/assets.json",
+    files: ["a.mp4"],
+    log: () => {},
+    run,
+  });
+  assert.equal(url, "https://github.com/krizaka/krizaka-com/pull/9");
+  assert.deepEqual(
+    calls.find((c) => c[0] === "git" && c[1] === "add"),
+    ["git", "add", "--", "/repo/lib/cdn-manifest.json", "/repo/lib/assets.json"],
+  );
 });

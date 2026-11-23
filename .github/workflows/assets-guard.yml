@@ -1,0 +1,53 @@
+# The asset registry (krizaka-internal#4482): lib/assets.json is checked by the org's shared guard, never by a copy of it.
+# krizaka-agents tools/assets-guard.py validates the registry against schemas/assets.schema.json, fails on a registered file
+# that is missing and on an asset a page names that the registry does not list (or whose `pages` omit that page).
+# The page sources it reads are the ones that name committed assets by their served path (the brand icons); the CDN media
+# are named by logical path through lib/cdn.ts, so tests/assets-registry.test.mjs holds them against lib/cdn-manifest.json.
+# krizaka-agents is private: the guard is fetched read-only with the org app's token, scoped to that one repository, at a
+# pinned commit (move the pin when the guard changes).
+name: Assets guard
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  merge_group:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  assets-guard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - id: app
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ vars.RELEASE_APP_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          owner: krizaka
+          repositories: krizaka-agents
+          permission-contents: read
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: krizaka/krizaka-agents
+          ref: 6ed8a00c2d00126993186585ecf9a8e1065edbf4 # main, with the guard of krizaka-agents#482
+          token: ${{ steps.app.outputs.token }}
+          path: .org-guard
+          persist-credentials: false
+          sparse-checkout: |
+            tools/assets-guard.py
+            schemas/assets.schema.json
+          sparse-checkout-cone-mode: false
+      - name: assets-guard
+        run: python3 .org-guard/tools/assets-guard.py --registry lib/assets.json --pages 'app/manifest.ts' --pages 'app/[[]locale]/layout.tsx'

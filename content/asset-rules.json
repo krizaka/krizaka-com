@@ -1,0 +1,137 @@
+{
+  "$comment": "Who owns each asset of krizaka.com and where it comes from (krizaka-internal#4482): read by scripts/assets-registry.mjs, which writes lib/assets.json (the registry checked by the org's assets-guard). The first rule whose `match` is the file (an exact path) or a folder of it (ending in /) wins; a CDN file is matched by its logical path (lib/cdn-manifest.json), a committed file by its repository path. A file no rule matches fails the build of the registry: its owner and origin are decided here, never guessed. `origin` is a closed set: test (a recording or a portrait of the dev data), design (a deliverable: drawn, rendered or generated), founder (a file the founder supplied). `pages` are the sources of this repository that name the files, the address of the other site that uses them, or « TO VALIDATE: … » when no source of this repository names them (the owner decides: keep them for another site, or prune). Under home/showcase/, the storyboard (content/films/home-showcase.json) refines `origin`: a shot cut from a founder's reel is « founder », a clip or a film is « design ».",
+  "rules": [
+    {
+      "match": "public/favicon.svg",
+      "owner": "krizaka-ui (brand export)",
+      "origin": "design",
+      "pages": ["app/[locale]/layout.tsx", "app/manifest.ts"]
+    },
+    {
+      "match": "public/icon.png",
+      "owner": "krizaka-ui (brand export)",
+      "origin": "design",
+      "pages": ["app/[locale]/layout.tsx"]
+    },
+    {
+      "match": "public/apple-icon.png",
+      "owner": "krizaka-ui (brand export)",
+      "origin": "design",
+      "pages": ["app/[locale]/layout.tsx"]
+    },
+    {
+      "match": "public/icon1.png",
+      "owner": "krizaka-ui (brand export)",
+      "origin": "design",
+      "pages": ["app/manifest.ts"]
+    },
+    {
+      "match": "public/icon2.png",
+      "owner": "krizaka-ui (brand export)",
+      "origin": "design",
+      "pages": ["app/manifest.ts"]
+    },
+    {
+      "match": "home/showcase/",
+      "owner": "marketing",
+      "origin": "design",
+      "pages": ["lib/home-showcase.ts", "content/films/home-showcase.json"]
+    },
+    {
+      "match": "home/kit/",
+      "owner": "marketing",
+      "origin": "design",
+      "pages": ["TO VALIDATE: no source of krizaka.com names it"]
+    },
+    {
+      "match": "brand-films/montrer-son-travail/",
+      "owner": "marketing",
+      "origin": "design",
+      "pages": ["lib/brand-film.ts"]
+    },
+    {
+      "match": "brand-films/reels/",
+      "owner": "marketing",
+      "origin": "founder",
+      "pages": ["TO VALIDATE: no source of krizaka.com names it"]
+    },
+    {
+      "match": "brand-films/loops/",
+      "owner": "krizaka-ui (brand films)",
+      "origin": "design",
+      "pages": ["https://ui.krizaka.com/"]
+    },
+    {
+      "match": "brand-films/film/",
+      "owner": "krizaka-ui (brand films)",
+      "origin": "design",
+      "pages": ["https://ui.krizaka.com/"]
+    },
+    {
+      "match": "brand-films/",
+      "owner": "krizaka-ui (brand films)",
+      "origin": "design",
+      "pages": ["TO VALIDATE: no source of krizaka.com names it"]
+    },
+    {
+      "match": "products/sovkora/films/",
+      "owner": "sovkora",
+      "origin": "design",
+      "pages": ["content/films/home-showcase.json"]
+    },
+    {
+      "match": "products/sovkora/video/",
+      "owner": "sovkora",
+      "origin": "design",
+      "pages": ["TO VALIDATE: no source of krizaka.com names it"]
+    },
+    {
+      "match": "products/sovkora/home/",
+      "owner": "sovkora",
+      "origin": "test",
+      "pages": ["lib/story-takes.ts"]
+    },
+    {
+      "match": "products/verikora/tour/",
+      "owner": "verikora",
+      "origin": "test",
+      "pages": ["lib/story-takes.ts"]
+    },
+    {
+      "match": "products/folioviv/tour/",
+      "owner": "folioviv",
+      "origin": "test",
+      "pages": ["lib/story-takes.ts"]
+    },
+    {
+      "match": "products/sovkora/",
+      "owner": "sovkora",
+      "origin": "test",
+      "pages": ["TO VALIDATE: no source of krizaka.com names it"]
+    },
+    {
+      "match": "products/folioviv/",
+      "owner": "folioviv",
+      "origin": "test",
+      "pages": ["TO VALIDATE: no source of krizaka.com names it"]
+    },
+    {
+      "match": "products/verikora/",
+      "owner": "verikora",
+      "origin": "test",
+      "pages": ["TO VALIDATE: no source of krizaka.com names it"]
+    },
+    {
+      "match": "people/ui/",
+      "owner": "krizaka-ui",
+      "origin": "design",
+      "pages": ["lib/people.json"]
+    },
+    {
+      "match": "blog/",
+      "owner": "blog",
+      "origin": "design",
+      "pages": ["https://blog.krizaka.com/"]
+    }
+  ]
+}
