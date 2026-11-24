@@ -10,6 +10,9 @@
 // (`docs/screenshots/<key>/…`, relative or github.com / raw.githubusercontent.com) into the CDN
 // URLs `upload` produced for the same <key> — used to migrate old PR bodies and docs.
 //
+// The folder must be created by this run (mktemp -d) and hold only images and videos: a `.json`, a log, or a folder
+// that existed before the run is refused before anything is sent (krizaka-internal#4759).
+//
 // This script writes only under pr-assets/ (the layout of the zone: scripts/bunny-layout.mjs, AGENTS.md §5.2).
 //
 // Credentials come from the environment, or from a `.env` file given with --env-file:
@@ -56,6 +59,7 @@ export function contentTypeFor(file) {
 }
 
 const kind = (file) => contentTypeFor(file).split("/")[0];
+const isMedia = (file) => ["image", "video"].includes(kind(file));
 
 /** A path segment safe for a storage key: `feat/x y` → `feat-x-y`. */
 export function slug(value, name) {
@@ -153,9 +157,43 @@ export function markdownBlock(entries) {
   return lines.join("\n");
 }
 
-export async function upload({ dir, repo, key, cfg, dryRun = false, fetchImpl = globalThis.fetch, log = console.log }) {
+const createdAt = (dir) => {
+  const s = statSync(dir);
+  return s.birthtimeMs > 0 ? s.birthtimeMs : s.ctimeMs;
+};
+
+/** When this process started (ms): a folder older than that was not made by this run. */
+const processStart = () => Date.now() - process.uptime() * 1000;
+
+/** Throws, with its fix, unless every file of `dir` is an image or a video and the folder was created at or after `startedAt` (ms). */
+export function assertPlainNewMedia(dir, startedAt = processStart()) {
+  const foreign = listFiles(dir).filter((f) => !isMedia(f.rel));
+  if (foreign.length) {
+    const names = foreign.map((f) => f.rel).join(", ");
+    throw new Error(
+      `${dir} holds files that are not images or videos: ${names}. Upload only images and videos: copy the captures into a new folder (mktemp -d) and leave the rest out.`,
+    );
+  }
+  if (createdAt(dir) < startedAt) {
+    throw new Error(
+      `${dir} existed before this run. Copy the captures into a new, empty folder made by this run (mktemp -d) and upload that one.`,
+    );
+  }
+}
+
+export async function upload({
+  dir,
+  repo,
+  key,
+  cfg,
+  dryRun = false,
+  startedAt,
+  fetchImpl = globalThis.fetch,
+  log = console.log,
+}) {
   const files = listFiles(dir);
   if (!files.length) throw new Error(`${dir} has no file to upload`);
+  assertPlainNewMedia(dir, startedAt);
   const entries = [];
   for (const f of files) {
     const path = objectPath(repo, key, f.rel);
@@ -209,7 +247,7 @@ const USAGE = `usage:
   node scripts/pr-assets.mjs rewrite <file> --repo <repo> [--from docs/screenshots] [--env-file <path>] [--write]
 ${layoutHelp()}`;
 
-async function runUpload(args, target, merged, { fetchImpl, log }) {
+async function runUpload(args, target, merged, { fetchImpl, log, startedAt }) {
   if (!target) throw new Error("upload needs a directory");
   const cfg = loadConfig(merged, { requireKey: !args.dryRun });
   const entries = await upload({
@@ -218,6 +256,7 @@ async function runUpload(args, target, merged, { fetchImpl, log }) {
     key: args.key,
     cfg,
     dryRun: args.dryRun,
+    startedAt,
     fetchImpl,
     log,
   });
@@ -243,7 +282,7 @@ function runRewrite(args, target, merged, { log }) {
   return 0;
 }
 
-export async function main(argv, { env = process.env, fetchImpl, log = console.log } = {}) {
+export async function main(argv, { env = process.env, fetchImpl, log = console.log, startedAt } = {}) {
   const args = parseArgs(argv);
   const [command, target] = args._;
   if (args.help || !command) {
@@ -252,7 +291,7 @@ export async function main(argv, { env = process.env, fetchImpl, log = console.l
   }
   const fileEnv = args.envFile ? parseEnvFile(readFileSync(args.envFile, "utf8")) : {};
   const merged = { ...fileEnv, ...Object.fromEntries(Object.entries(env).filter(([, v]) => v)) };
-  if (command === "upload") return runUpload(args, target, merged, { fetchImpl, log });
+  if (command === "upload") return runUpload(args, target, merged, { fetchImpl, log, startedAt });
   if (command === "rewrite") return runRewrite(args, target, merged, { log });
   log(USAGE);
   return 1;
