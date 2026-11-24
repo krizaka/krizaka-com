@@ -1,7 +1,7 @@
 /* A release line is written in the repositories' words (a retired code name, once); the page says the commercial names
    (krizaka-internal#2103), in prose and in hosts (`dev.<name>.com` → the commercial dev host). A reference to a repository of
    the org (`krizaka/<name>#478`, `github.com/krizaka/<name>`) says its current name: the repositories were renamed and GitHub
-   redirects the old path (krizaka-internal#2836: a build whose sources timed out failed on `krizaka/akinaza#478`). A package
+   redirects the old path (krizaka-internal#2836: a build whose sources timed out failed on `krizaka/<old-name>#478`). A package
    or a longer identifier (`@krizaka/<name>-cli`, `<name>-edge`) keeps its published name: npm answers to it. */
 
 import { codeNameMap } from "@krizaka/org";

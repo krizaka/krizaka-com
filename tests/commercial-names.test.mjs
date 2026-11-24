@@ -60,7 +60,7 @@ test("a release line says the commercial names, in prose and hosts; repositories
 });
 
 /* krizaka-internal#2836: a merge-group build timed out on 15 changelog sources, the list filled with older @krizaka/ui lines
-   citing `krizaka/akinaza#478`, and the code-names check refused 48 of them. The org's repositories were renamed (GitHub
+   citing `krizaka/<old-name>#478`, and the code-names check refused 48 of them. The org's repositories were renamed (GitHub
    redirects the old path): a reference to one says its current name, so the page never depends on which sources answered. */
 test("a reference to a renamed repository of the org says its current name, for every retired id", async () => {
   const { commercialWords } = await import("../lib/commercial-words.ts");

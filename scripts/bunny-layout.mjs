@@ -53,7 +53,7 @@ const splitHead = (path) => {
 /**
  * The v2 folders written under a product's code name before the renames of 2026-11-06 (krizaka-internal#2659) are LEGACY:
  * `cdn-assets migrate` copies them to the commercial folder, the readers switch, then `purge-unused` deletes them.
- * `sites/orazaka/home/a.<hash>.mp4` → `sites/sovkora/home/a.<hash>.mp4`; null for any other path.
+ * `site/products/<old-name>/home/a.<hash>.mp4` → `sites/sovkora/home/a.<hash>.mp4`; null for any other path.
  */
 export function renamedTarget(path) {
   const [root, afterRoot] = splitHead(path) ?? [];
@@ -222,7 +222,7 @@ const TARGET_OF = [
 /**
  * Where a LEGACY object goes in the target layout, or null when it has none (the retired mirror, a renamed product):
  * `brand/krizaka/mark-dark.svg` → `org/v1/brand/krizaka/mark-dark.svg`,
- * `site/products/akinaza/tour/a.<hash>.mp4` → `sites/folioviv/tour/a.<hash>.mp4` (a legacy code-name folder lands under the product).
+ * `site/products/<old-name>/tour/a.<hash>.mp4` → `sites/folioviv/tour/a.<hash>.mp4` (a legacy code-name folder lands under the product).
  */
 export function targetOf(path) {
   if (RETIRED.some((re) => re.test(path))) {

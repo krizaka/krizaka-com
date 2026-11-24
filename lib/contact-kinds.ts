@@ -1,5 +1,5 @@
 /* The kinds and the products of the contact form, and the old names kept so every link already written keeps working
-   (`/contact?topic=yomizaka`, a message posted by a page loaded before the kinds existed). Data and two lookups, nothing else:
+   (`/contact?topic=<old-name>`, a message posted by a page loaded before the kinds existed). Data and two lookups, nothing else:
    a product is known by its commercial id (verikora, folioviv, sovkora, kridoc, agents, blocks); the retired code names (from @krizaka/org) and the old topics are aliases. */
 
 import { CODE_NAMES } from "@krizaka/org";
