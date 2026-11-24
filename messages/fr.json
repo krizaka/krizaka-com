@@ -195,7 +195,7 @@
         "number": "§ 1",
         "eyebrow": "Studio logiciel · Montréal, Québec",
         "title": "Des logiciels de documents, construits au grand jour.",
-        "lead": "Verikora vérifie les papiers d'un dossier de location : talons de paie, baux, relevés. Chaque constat cite sa page. Tout tourne sur Sovkora, notre moteur, et notre code est public.",
+        "lead": "Verikora lit un bail, ligne par ligne, du côté du locateur. Chaque constat cite sa page et l'article du Code civil. Tout tourne sur Sovkora, notre moteur, et notre code est public.",
         "primary": "Parlez-nous de vos dossiers",
         "film": "Voir le film en entier",
         "filmLength": "31 s",
