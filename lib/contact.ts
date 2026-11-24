@@ -47,8 +47,26 @@ export function contactSourceFromPath(pathname: string): string {
 /** What a source implies — nothing when the page is about Krizaka as a whole (home, story…). */
 export function presetForSource(source: string | null): ContactPreset {
   const product = productOf(source) ?? (source && BLOCKS_SOURCES.has(source) ? "blocks" : null);
+  if (source === DEMO_SOURCE) return { kind: "demo", product: "verikora" };
   return { kind: source === "services" ? "business" : null, product };
 }
+
+/** The campaign's source: its visitors ask for a Verikora demo and say who they are. */
+const DEMO_SOURCE = "volee";
+
+/** Who asks, for a request from the campaign (optional elsewhere: never asked). */
+export const CONTACT_SEGMENTS = ["owner", "tenant", "shop", "smb"] as const;
+export type ContactSegment = (typeof CONTACT_SEGMENTS)[number];
+
+/** Whether a source's form asks the one more field (the segment). */
+export const asksSegment = (source: string | null): boolean => source === DEMO_SOURCE;
+
+const SEGMENT_LABEL: Record<ContactSegment, string> = {
+  owner: "Owner",
+  tenant: "Tenant",
+  shop: "Shop",
+  smb: "SME",
+};
 
 /** The pages about the stack's libraries. */
 const BLOCKS_SOURCES: ReadonlySet<string> = new Set(["open-source", "docs-ui", "docs-java"]);
@@ -75,6 +93,8 @@ export interface ContactMessage {
   /** The product it is about, by commercial id; null when it is about Krizaka. */
   product: ContactProduct | null;
   timeline: ContactTimeline | null;
+  /** Who asks (owner, tenant, shop, SME); set for a request from the campaign, else null. */
+  segment: ContactSegment | null;
   message: string;
   locale: "fr" | "en";
   /** The page the visitor came from (`?source=`), when known. */
@@ -120,6 +140,8 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
   const timeline = CONTACT_TIMELINES.includes(b.timeline as ContactTimeline) ? (b.timeline as ContactTimeline) : null;
   if (b.timeline !== undefined && b.timeline !== null && b.timeline !== "" && !timeline)
     return { ok: false, field: "timeline" };
+  const segment = CONTACT_SEGMENTS.find((x) => x === b.segment) ?? null;
+  if (asksSegment(cleanSource(b.source)) && !segment) return { ok: false, field: "segment" };
   if (!isValidContactField("message", message)) return { ok: false, field: "message" };
   return {
     ok: true,
@@ -130,6 +152,7 @@ export function validateContact(body: unknown): ContactValidation | { ok: "spam"
       kind,
       product,
       timeline,
+      segment,
       message,
       locale: CONTACT_LOCALES.find((l) => l === b.locale) ?? "en",
       source: cleanSource(b.source),
@@ -204,6 +227,9 @@ export function postMailgun(form: FormData, env: NodeJS.ProcessEnv = process.env
 function contactSignature(m: ContactMessage): string {
   const author = m.company ? `${m.name} <${m.email}>, ${m.company}` : `${m.name} <${m.email}>`;
   const parts = [author, contactTag(m)];
+  if (m.segment) {
+    parts.push(SEGMENT_LABEL[m.segment]);
+  }
   if (m.timeline) {
     parts.push(TIMELINE_LABEL[m.timeline]);
   }
@@ -213,6 +239,20 @@ function contactSignature(m: ContactMessage): string {
   }
   return parts.join(" · ");
 }
+
+/** Every field of the form, as filled in: label and value, in the order the founder reads them. */
+const contactFields = (m: ContactMessage): [string, string][] => [
+  ["Name", m.name],
+  ["E-mail", m.email],
+  ["Company", m.company || "—"],
+  ["Kind", m.kind],
+  ["Product", m.product ? PRODUCT_LABEL[m.product] : "—"],
+  ["Segment", m.segment ? SEGMENT_LABEL[m.segment] : "—"],
+  ["Timeline", m.timeline ? TIMELINE_LABEL[m.timeline] : "—"],
+  ["Language", m.locale],
+  ["Source", m.source ?? "—"],
+  ["Message", m.message],
+];
 
 /** Delivers to every configured channel. Returns how many accepted it. */
 export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv = process.env): Promise<number> {
@@ -230,18 +270,7 @@ export async function deliverContact(m: ContactMessage, env: NodeJS.ProcessEnv =
       form.append("to", to);
     form.append("h:Reply-To", m.email);
     form.append("subject", subject);
-    // Every field of the form, as filled in.
-    const fields: [string, string][] = [
-      ["Name", m.name],
-      ["E-mail", m.email],
-      ["Company", m.company || "—"],
-      ["Kind", m.kind],
-      ["Product", m.product ? PRODUCT_LABEL[m.product] : "—"],
-      ["Timeline", m.timeline ? TIMELINE_LABEL[m.timeline] : "—"],
-      ["Language", m.locale],
-      ["Source", m.source ?? "—"],
-      ["Message", m.message],
-    ];
+    const fields = contactFields(m);
     form.append("text", fields.map(([k, v]) => `${k}: ${v}`).join("\n"));
     form.append(
       "html",

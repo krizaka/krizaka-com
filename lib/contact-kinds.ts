@@ -5,8 +5,8 @@
 import { CODE_NAMES } from "@krizaka/org";
 
 /* What a message is (the founder's rule of 2026-11-06: no Krizaka address is public, « Support » is a kind of this form, so each
-   received message says what it is): support for a product in use, business (enterprise, partnership), anything else. */
-export const CONTACT_KINDS = ["support", "business", "other"] as const;
+   received message says what it is): support for a product in use, business (enterprise, partnership), a demo request (the campaign), anything else. */
+export const CONTACT_KINDS = ["support", "business", "demo", "other"] as const;
 export type ContactKind = (typeof CONTACT_KINDS)[number];
 
 /* What it is about, by COMMERCIAL id (the building blocks are the stack's libraries). */

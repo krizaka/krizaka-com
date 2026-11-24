@@ -691,6 +691,7 @@
       "topics": {
         "support": "Support",
         "business": "Business",
+        "demo": "Demo",
         "other": "Something else"
       },
       "products": {
@@ -704,6 +705,7 @@
       },
       "topicHints": {
         "support": "A product you use or are trying: a question, a problem, something that does not work",
+        "demo": "See Verikora at work, with someone from the team",
         "business": "Custom modules, sovereign AI adoption, maintenance, integration, reseller or research partnership",
         "other": "Press, careers, a question for the team"
       },
@@ -716,6 +718,7 @@
       "message": "Your message",
       "placeholders": {
         "support": "Which product and where (page, step), what you expected, what happened…",
+        "demo": "Your situation in a few words, and when you are free for the demo…",
         "business": "Your company, what you want built or adopted, where it must run (your servers, Canada) and when…",
         "other": "How can we help?"
       },
@@ -724,6 +727,14 @@
       "send": "Send message",
       "sending": "Sending…",
       "sentTitle": "Message sent",
+      "sentPausedBody": "Thank you, {name}. Demos resume on {date}. We will reply to {email} then.",
+      "stepSegment": "You are",
+      "segments": {
+        "owner": "Owner",
+        "tenant": "Tenant",
+        "shop": "Shop",
+        "smb": "Small business"
+      },
       "sentBody": "Thank you, {name}. We reply to {email} within two business days.",
       "verifyTitle": "Check your inbox",
       "verifyBody": "We sent a 6-digit code to {email}. Enter it to send your message: it is valid 15 minutes and works once.",
@@ -735,6 +746,7 @@
       "fieldErrors": {
         "name": "Enter your name (2 characters at least).",
         "email": "Enter a valid email address, we reply there.",
+        "segment": "Tell us who you are.",
         "message": "A few more words please — 10 characters at least."
       },
       "errors": {
@@ -1248,9 +1260,9 @@
             "id": "collected",
             "title": "What this website collects",
             "paragraphs": [
-              "The only way you give us personal information is the contact form. We receive your name, your e-mail address, your organisation if you give it, the topic, the timing if you give it, your message, the language of the page and the page you came from (so we know which product you asked about).",
+              "The only way you give us personal information is the contact form. We receive your name, your e-mail address, your organisation if you give it, the topic, the timing if you give it, your profile (owner, tenant, shop or small business) when a demo request asks for it, your message, the language of the page and the page you came from (so we know which product you asked about).",
               "Before the message reaches us, two checks protect the form: Cloudflare Turnstile checks that a person sends it (it receives your IP address for that), and a six-digit code, valid for 15 minutes, is sent to your e-mail address; the message leaves only once you enter that code.",
-              "We use them only to reply to you. By sending the form you agree that we use them for that. We do not sell them, share them for marketing, use them to profile you or send you anything you did not ask for.",
+              "We use them only to reply to you. By sending the form you agree that we use them for that. We do not sell them, share them for marketing, use them to profile you or send you anything you did not ask for: there is no mailing list.",
               "The message is delivered to the team by e-mail, through our e-mail provider Mailgun, and may also be posted to a private team messaging channel. We keep it as long as the conversation needs it, then delete it.",
               "To limit abuse, the server counts messages per IP address in memory (five every ten minutes). That count is not written anywhere and disappears when the server restarts."
             ]

@@ -691,6 +691,7 @@
       "topics": {
         "support": "Support",
         "business": "Affaires",
+        "demo": "Démo",
         "other": "Autre chose"
       },
       "products": {
@@ -704,6 +705,7 @@
       },
       "topicHints": {
         "support": "Un produit que vous utilisez ou essayez : une question, un problème, quelque chose qui ne marche pas",
+        "demo": "Voir Verikora à l'œuvre, avec quelqu'un de l'équipe",
         "business": "Modules sur mesure, adoption d'une IA souveraine, maintenance, intégration, revente ou partenariat de recherche",
         "other": "Presse, carrières, une question pour l'équipe"
       },
@@ -716,6 +718,7 @@
       "message": "Votre message",
       "placeholders": {
         "support": "Quel produit et où (page, étape), ce que vous attendiez, ce qui s'est passé…",
+        "demo": "Votre situation en quelques mots, et à quel moment vous êtes disponible pour la démo…",
         "business": "Votre entreprise, ce que vous voulez construire ou adopter, où cela doit tourner (vos serveurs, le Canada) et pour quand…",
         "other": "Comment pouvons-nous vous aider ?"
       },
@@ -724,6 +727,14 @@
       "send": "Envoyer le message",
       "sending": "Envoi…",
       "sentTitle": "Message envoyé",
+      "sentPausedBody": "Merci, {name}. Les démos reprennent le {date}. Nous répondrons à {email} à ce moment-là.",
+      "stepSegment": "Vous êtes",
+      "segments": {
+        "owner": "Propriétaire",
+        "tenant": "Locataire",
+        "shop": "Commerce",
+        "smb": "PME"
+      },
       "sentBody": "Merci, {name}. Nous répondons à {email} sous deux jours ouvrables.",
       "verifyTitle": "Consultez votre boîte de réception",
       "verifyBody": "Nous avons envoyé un code à 6 chiffres à {email}. Saisissez-le pour envoyer votre message : il est valable 15 minutes et ne sert qu'une fois.",
@@ -735,6 +746,7 @@
       "fieldErrors": {
         "name": "Indiquez votre nom (2 caractères au moins).",
         "email": "Indiquez un courriel valide, nous y répondrons.",
+        "segment": "Indiquez qui vous êtes.",
         "message": "Quelques mots de plus, s'il vous plaît — 10 caractères au moins."
       },
       "errors": {
@@ -1248,9 +1260,9 @@
             "id": "collected",
             "title": "Ce que ce site collecte",
             "paragraphs": [
-              "Le formulaire de contact est la seule façon de nous confier des renseignements personnels. Nous recevons votre nom, votre courriel, votre organisation si vous l'indiquez, le sujet, l'échéance si vous l'indiquez, votre message, la langue de la page et la page d'où vous venez (pour savoir de quel produit vous parlez).",
+              "Le formulaire de contact est la seule façon de nous confier des renseignements personnels. Nous recevons votre nom, votre courriel, votre organisation si vous l'indiquez, le sujet, l'échéance si vous l'indiquez, votre profil (propriétaire, locataire, commerce ou PME) quand une demande de démonstration le demande, votre message, la langue de la page et la page d'où vous venez (pour savoir de quel produit vous parlez).",
               "Avant que le message nous parvienne, deux vérifications protègent le formulaire : Cloudflare Turnstile vérifie qu'il est envoyé par une personne (il reçoit pour cela votre adresse IP), et un code à six chiffres, valable 15 minutes, est envoyé à votre adresse courriel ; le message part seulement quand vous entrez ce code.",
-              "Nous les utilisons seulement pour vous répondre. En envoyant le formulaire, vous acceptez cet usage. Nous ne les vendons pas, ne les partageons pas à des fins de marketing, ne vous profilons pas et ne vous envoyons rien que vous n'ayez demandé.",
+              "Nous les utilisons seulement pour vous répondre. En envoyant le formulaire, vous acceptez cet usage. Nous ne les vendons pas, ne les partageons pas à des fins de marketing, ne vous profilons pas et ne vous envoyons rien que vous n'ayez demandé : il n'y a aucune liste d'envoi.",
               "Le message est remis à l'équipe par courriel, par notre fournisseur Mailgun, et peut aussi être publié dans un canal de messagerie privé de l'équipe. Nous le gardons le temps que la conversation l'exige, puis nous le supprimons.",
               "Pour limiter les abus, le serveur compte en mémoire les messages par adresse IP (cinq par dix minutes). Ce compte n'est écrit nulle part et disparaît au redémarrage du serveur."
             ]
