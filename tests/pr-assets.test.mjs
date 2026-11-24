@@ -2,8 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import {
+  assertPlainNewMedia,
   contentTypeFor,
   listFiles,
   loadConfig,
@@ -23,7 +24,6 @@ function fixture() {
   mkdirSync(join(dir, "after"));
   writeFileSync(join(dir, "before-dark.png"), "png");
   writeFileSync(join(dir, "after", "home mobile.webm"), "webm");
-  writeFileSync(join(dir, "metrics.json"), "{}");
   writeFileSync(join(dir, ".DS_Store"), "x");
   return dir;
 }
@@ -70,7 +70,7 @@ test("files are listed recursively, hidden files skipped", () => {
   try {
     assert.deepEqual(
       listFiles(dir).map((f) => f.rel),
-      ["after/home mobile.webm", "before-dark.png", "metrics.json"],
+      ["after/home mobile.webm", "before-dark.png"],
     );
   } finally {
     rmSync(dir, { recursive: true });
@@ -87,7 +87,7 @@ test("upload PUTs each file with its type and checksum, then checks the pull zon
   try {
     const entries = await upload({ dir, repo: "krizaka-com", key: "43", cfg, fetchImpl, log: () => {} });
     const puts = calls.filter((c) => c.method === "PUT");
-    assert.equal(puts.length, 3);
+    assert.equal(puts.length, 2);
     assert.equal(puts[0].url, "https://storage.bunnycdn.com/kz-zone/pr-assets/krizaka-com/43/after/home%20mobile.webm");
     assert.equal(puts[0].headers["Content-Type"], "video/webm");
     assert.equal(puts[0].headers.AccessKey, "secret-key");
@@ -99,7 +99,6 @@ test("upload PUTs each file with its type and checksum, then checks the pull zon
       [
         "- [after/home mobile.webm](https://cdn.example.net/pr-assets/krizaka-com/43/after/home%20mobile.webm)",
         "![before-dark.png](https://cdn.example.net/pr-assets/krizaka-com/43/before-dark.png)",
-        "- [metrics.json](https://cdn.example.net/pr-assets/krizaka-com/43/metrics.json)",
       ].join("\n"),
     );
   } finally {
@@ -134,11 +133,68 @@ test("dry-run needs no key and sends nothing; output never contains the key", as
     assert.equal(sent, 0);
     const text = out.join("\n");
     assert.match(text, /\[dry-run\] https:\/\/cdn\.example\.net\/pr-assets\/folioviv\/feat-x\/before-dark\.png/);
-    assert.match(text, /3 file\(s\) would be sent/);
+    assert.match(text, /2 file\(s\) would be sent/);
     assert.doesNotMatch(text, /secret-key/);
   } finally {
     rmSync(dir, { recursive: true });
   }
+});
+
+const before = () => Date.now() - 1000;
+const okFetch = async () => ({ ok: true, status: 200 });
+
+function folder(files) {
+  const dir = mkdtempSync(join(tmpdir(), "pr-assets-"));
+  for (const name of files) {
+    mkdirSync(dirname(join(dir, name)), { recursive: true });
+    writeFileSync(join(dir, name), "x");
+  }
+  return dir;
+}
+
+test("a folder of new images and videos passes", () => {
+  const dir = folder(["a.png", "sub/b.webm", ".DS_Store"]);
+  assert.doesNotThrow(() => assertPlainNewMedia(dir, before()));
+});
+
+test("a folder holding a .json is refused with its fix", () => {
+  const dir = folder(["a.png", "metrics.json"]);
+  assert.throws(() => assertPlainNewMedia(dir, before()), /metrics\.json.*mktemp/s);
+});
+
+test("a folder older than the run is refused with its fix", () => {
+  const dir = folder(["a.png"]);
+  assert.throws(() => assertPlainNewMedia(dir, Date.now() + 60_000), /existed before this run.*mktemp/s);
+});
+
+test("upload sends nothing when the folder is refused", async () => {
+  const dir = folder(["a.png", "m.json"]);
+  const calls = [];
+  const fetchImpl = async (...a) => (calls.push(a), okFetch());
+  await assert.rejects(
+    upload({ dir, repo: "r", key: "1", cfg, startedAt: before(), fetchImpl, log: () => {} }),
+    /m\.json/,
+  );
+  assert.equal(calls.length, 0);
+});
+
+test("a dry run refuses a non-media folder too", async () => {
+  const dir = folder(["a.png", "run.log"]);
+  await assert.rejects(upload({ dir, repo: "r", key: "1", cfg, dryRun: true, log: () => {} }), /run\.log/);
+});
+
+test("main refuses an old folder and names the fix", async () => {
+  const dir = folder(["a.png"]);
+  const env = { MEDIA_STORAGE_API_KEY: "k", MEDIA_STORAGE_ZONE: "z", MEDIA_CDN_HOSTNAME: "cdn.example.net" };
+  await assert.rejects(
+    main(["upload", dir, "--repo", "r", "--key", "1"], {
+      env,
+      fetchImpl: okFetch,
+      log: () => {},
+      startedAt: Date.now() + 60_000,
+    }),
+    /existed before this run.*mktemp/s,
+  );
 });
 
 test("rewrite turns committed capture links into CDN URLs", async () => {
