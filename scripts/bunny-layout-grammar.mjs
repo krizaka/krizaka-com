@@ -34,7 +34,7 @@ export const TILES_FILE = /^[a-z0-9-]+-\d{8}\.pmtiles$/;
 export const FONT_STACK = /^[A-Za-z0-9 ]+$/;
 /** `0-255.pbf`: one range of glyphs. */
 export const FONT_RANGE = /^\d+-\d+\.pbf$/;
-/** `orazaka-dark.mp4`: a kit-native recording, `<product>-<theme>.<ext>`. */
+/** `<product>-dark.mp4`: a kit-native recording, `<product>-<theme>.<ext>`. */
 export const KIT_NATIVE = /^([a-z]+)-(dark|light)\.(.+)$/;
 
 const is = (re, segment) => segment !== undefined && re.test(segment);

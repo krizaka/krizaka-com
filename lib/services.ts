@@ -4,7 +4,7 @@
    then a pull request and its deploy — never a store release. tests/services.test.mjs fails when the data and the
    signature disagree, or when an address leaves its allow-list.
 
-   A product appears here when it has a client that reads it (a mobile app today): Orazaka. Yomizaka and Akinaza have no
+   A product appears here when it has a client that reads it (a mobile app today): Sovkora. Verikora and Folioviv have no
    mobile app reading it yet — their entry arrives with it (one edit).
    The values are what is LIVE: no code-name host serves anything since the org standardisation (2026-11-06,
    krizaka-internal#2660); each product's development app answers on dev.<commercial name>.com (Sovkora on

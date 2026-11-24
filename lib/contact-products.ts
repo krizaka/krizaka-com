@@ -1,6 +1,6 @@
 /* What a contact link says (`/contact?topic=support&product=verikora&source=verikora-footer`): the kind in `topic`, the product by
    its commercial name in `product` (réunion 6, 2026-11-05, krizaka-internal#2629; the kind: founder, 2026-11-06). The old links keep
-   working (contact-kinds.ts): `topic=verikora`, `topic=yomizaka`, `topic=enterprise`. An explicit value beats what the source implies. */
+   working (contact-kinds.ts): `topic=verikora`, `topic=<old-name>`, `topic=enterprise`. An explicit value beats what the source implies. */
 import { presetForSource } from "./contact.ts";
 import { CONTACT_KINDS, legacyPreset, productOf, type ContactKind, type ContactPreset } from "./contact-kinds.ts";
 
