@@ -727,6 +727,21 @@
       "send": "Send message",
       "sending": "Sending…",
       "sentTitle": "Message sent",
+      "resumeDate": "{month} {day}",
+      "months": [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ],
       "sentPausedBody": "Thank you, {name}. Demos resume on {date}. We will reply to {email} then.",
       "stepSegment": "You are",
       "segments": {

@@ -10,7 +10,6 @@ import { CheckIcon, ChatIcon, FlagIcon, ForwardIcon, PlayIcon, UsersIcon, Warnin
 import { useI18n } from "./I18nProvider";
 import { presetFromQuery } from "@/lib/contact-products";
 import { format } from "@krizaka/i18n";
-import { formatDate } from "@krizaka/intl";
 import { demoResumeDate } from "@/lib/contact-pause";
 import {
   CONTACT_KINDS,
@@ -286,7 +285,10 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
             ? format(c.sentPausedBody, {
                 name: sentTo.name,
                 email: sentTo.email,
-                date: formatDate(resumeOn, { locale, style: "long", timeZone: "UTC" }),
+                date: format(c.resumeDate, {
+                  day: String(resumeOn.getUTCDate()),
+                  month: c.months[resumeOn.getUTCMonth()],
+                }),
               })
             : format(c.sentBody, { name: sentTo.name, email: sentTo.email })}
         </p>
