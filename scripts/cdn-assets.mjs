@@ -649,13 +649,13 @@ const USAGE = `usage:
 ${layoutHelp()}`;
 
 /** krizaka-internal#4473: the manifest lines must reach a PR in the same command, or prune would delete live files. */
-async function ensureManifestPr({ entries, manifestFile, log, open }) {
+async function ensureManifestPr({ entries, manifestFile, registryFile, log, open }) {
   if (!entries.some((e) => e.changed)) {
     return;
   }
   let pr;
   try {
-    pr = await open({ manifestFile, files: entries.map((e) => e.logical), log });
+    pr = await open({ manifestFile, registryFile, files: entries.map((e) => e.logical), log });
   } catch (err) {
     throw new Error(
       `uploaded, but no manifest PR could be opened (${err.message}): commit and push ${manifestFile} now`,
@@ -671,7 +671,17 @@ async function ensureManifestPr({ entries, manifestFile, log, open }) {
 }
 
 /** `upload`: the command's run; returns the exit code. */
-async function runUpload({ args, target, merged, manifest, manifestFile, fetchImpl, log, openManifestPr }) {
+async function runUpload({
+  args,
+  target,
+  merged,
+  manifest,
+  manifestFile,
+  fetchImpl,
+  log,
+  openManifestPr,
+  refreshRegistry,
+}) {
   if (!target) throw new Error("upload needs a file or a directory");
   const cfg = loadConfig(merged, { requireKey: !args.dryRun });
   const entries = await upload({ src: target, to: args.to, cfg, manifest, dryRun: args.dryRun, fetchImpl, log });
@@ -682,7 +692,15 @@ async function runUpload({ args, target, merged, manifest, manifestFile, fetchIm
       if (!res.ok) throw new Error(`uploaded, but ${sent.url} answers HTTP ${res.status}: check the pull zone`);
     }
     writeManifest(manifest, manifestFile);
-    await ensureManifestPr({ entries, manifestFile, log, open: openManifestPr ?? openManifestPrWithTools });
+    // krizaka-internal#4482: lib/assets.json registers every file of the manifest; it follows in the same commit.
+    const registryFile = await refreshRegistry?.();
+    await ensureManifestPr({
+      entries,
+      manifestFile,
+      registryFile,
+      log,
+      open: openManifestPr ?? openManifestPrWithTools,
+    });
   }
   const sentCount = entries.filter((e) => e.changed).length;
   const updated = args.dryRun ? "" : `; ${join("lib", basename(manifestFile))} updated`;
@@ -691,7 +709,7 @@ async function runUpload({ args, target, merged, manifest, manifestFile, fetchIm
 }
 
 /** The default opener: commit the manifest on the current branch, then `pr-open` (or `pr-push` when a PR is already open). */
-export async function openManifestPrWithTools({ manifestFile, files, log, run = execFileSync }) {
+export async function openManifestPrWithTools({ manifestFile, registryFile, files, log, run = execFileSync }) {
   const tools = run("kz-config", ["tools"], { encoding: "utf8" }).trim();
   const cwd = dirname(manifestFile);
   const git = (...a) => run("git", a, { cwd, encoding: "utf8" }).trim();
@@ -699,7 +717,7 @@ export async function openManifestPrWithTools({ manifestFile, files, log, run = 
   if (branch === "main" || branch === "HEAD") {
     throw new Error(`on ${branch}: work in a worktree branch`);
   }
-  git("add", "--", manifestFile);
+  git("add", "--", manifestFile, ...(registryFile ? [registryFile] : []));
   git("commit", "-m", `chore(cdn): record ${files.length} uploaded file(s) in the manifest (krizaka-internal#4473)`);
   const open = JSON.parse(
     run("gh", ["pr", "list", "--repo", "krizaka/krizaka-com", "--head", branch, "--state", "open", "--json", "url"], {
@@ -828,9 +846,22 @@ const COMMANDS = {
   readme: runReadme,
 };
 
+/** The site's registry (scripts/assets-registry.mjs), rebuilt from the manifest just written; loaded on use (it reads this module). */
+async function writeSiteRegistry() {
+  const { writeRegistry } = await import("./assets-registry.mjs");
+  return writeRegistry();
+}
+
 export async function main(
   argv,
-  { env = process.env, fetchImpl, log = console.log, manifestFile = MANIFEST, openManifestPr } = {},
+  {
+    env = process.env,
+    fetchImpl,
+    log = console.log,
+    manifestFile = MANIFEST,
+    openManifestPr,
+    refreshRegistry = manifestFile === MANIFEST ? writeSiteRegistry : undefined,
+  } = {},
 ) {
   const args = parseArgs(argv.filter((a) => a !== "--yes" && a !== "--retired" && a !== "--strict" && a !== "--check"));
   const yes = argv.includes("--yes");
@@ -847,7 +878,21 @@ export async function main(
   };
   const manifest = readManifest(manifestFile);
   const run = Object.hasOwn(COMMANDS, command) ? COMMANDS[command] : undefined;
-  if (run) return run({ args, argv, target, merged, manifest, manifestFile, yes, fetchImpl, log, openManifestPr });
+  if (run) {
+    return run({
+      args,
+      argv,
+      target,
+      merged,
+      manifest,
+      manifestFile,
+      yes,
+      fetchImpl,
+      log,
+      openManifestPr,
+      refreshRegistry,
+    });
+  }
   log(USAGE);
   return 1;
 }

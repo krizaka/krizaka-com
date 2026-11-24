@@ -435,7 +435,16 @@ tea-pour.webp")`, `video("products/sovkora/tour/tea-pour")` → `{ webm, mp4, po
   path the manifest does not know. The host is `NEXT_PUBLIC_MEDIA_CDN_URL` (read at build; default
   `https://krizaka-assets.b-cdn.net`); `next.config` allows it for `next/image` and redirects the old `/assets/…` URLs
   (still used by published `@krizaka/ui` examples) to their file on the CDN.
-- Same-origin on purpose: the favicon (`public/favicon.svg`, the manifest and the tab), what Next.js generates (robots,
+- The asset registry (krizaka-internal#4482): `lib/assets.json` lists every asset, a CDN file by its pull-zone address and
+  a committed file by its path, with its owner, origin (`test`, `design`, `founder`) and the pages that use it; a cover
+  (a picture with an avif rendition, at several widths) is one entry whose `variant480` is its 480 web file. It is
+  generated (`npm run assets:registry`, and `cdn-assets upload` rebuilds and commits it with the manifest) from
+  `lib/cdn-manifest.json`, the committed media and `content/asset-rules.json`, where a new folder gets its owner and
+  origin: a file no rule names fails. `tests/assets-registry.test.mjs` holds it to its sources and every cover to its
+  480 web file; the org's `assets-guard` (`.github/workflows/assets-guard.yml`, krizaka-agents `tools/assets-guard.py`)
+  validates it against the schema and fails on a missing file or on an icon a page names unregistered.
+- Same-origin on purpose: the brand icons (`public/favicon.svg`, `public/icon.png`, `public/apple-icon.png`,
+  `public/icon1.png`, `public/icon2.png`, synced from the brand CDN by `scripts/sync-brand-icons.mjs`), what Next.js generates (robots,
   sitemap, `llms.txt`, Open Graph metadata, `/_next/static`) and the fonts (`next/font/local`, preloaded with the page).
   `public/ui-examples/` is generated at build, git-ignored. Nothing else goes in `public/`; a file nothing references is
   deleted, not kept "just in case" — git and Bunny keep the history.
