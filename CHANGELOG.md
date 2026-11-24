@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.45.0](https://github.com/krizaka/krizaka-com/compare/v0.44.0...v0.45.0) (2026-11-24)
+
+
+### Features
+
+* **assets:** pr-assets refuses a non-media or pre-existing upload folder (krizaka-internal[#4759](https://github.com/krizaka/krizaka-com/issues/4759)) ([#792](https://github.com/krizaka/krizaka-com/issues/792)) ([dcaac3a](https://github.com/krizaka/krizaka-com/commit/dcaac3a0bc5c28bbaec13219a41d705fe0323cce))
+
 ## [0.44.0](https://github.com/krizaka/krizaka-com/compare/v0.43.3...v0.44.0) (2026-11-24)
 
 
