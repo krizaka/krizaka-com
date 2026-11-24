@@ -195,7 +195,7 @@
         "number": "§ 1",
         "eyebrow": "Software studio · Montréal, Québec",
         "title": "Document software, built in the open.",
-        "lead": "Verikora checks the papers in a rental file: pay stubs, leases, statements. Every finding cites its page. It all runs on Sovkora, our engine, and our code is public.",
+        "lead": "Verikora reads a lease line by line, on the landlord's side. Every finding cites its page and the Civil Code article. It all runs on Sovkora, our engine, and our code is public.",
         "primary": "Talk to us about your files",
         "film": "Watch the full film",
         "filmLength": "31 s",
