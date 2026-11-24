@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.46.1](https://github.com/krizaka/krizaka-com/compare/v0.46.0...v0.46.1) (2026-11-24)
+
+
+### Bug Fixes
+
+* **home:** the hero no longer names a candidate's pay stubs and statements ([#797](https://github.com/krizaka/krizaka-com/issues/797)) ([3af742f](https://github.com/krizaka/krizaka-com/commit/3af742fb0f5e255fc5b2d61a459beddf1767af04))
+
 ## [0.46.0](https://github.com/krizaka/krizaka-com/compare/v0.45.0...v0.46.0) (2026-11-24)
 
 
