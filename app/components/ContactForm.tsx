@@ -6,12 +6,15 @@
 
 import { Suspense, useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { CheckIcon, ChatIcon, FlagIcon, ForwardIcon, UsersIcon, WarningIcon } from "@krizaka/icons";
+import { CheckIcon, ChatIcon, FlagIcon, ForwardIcon, PlayIcon, UsersIcon, WarningIcon } from "@krizaka/icons";
 import { useI18n } from "./I18nProvider";
 import { presetFromQuery } from "@/lib/contact-products";
 import { format } from "@krizaka/i18n";
+import { demoResumeDate } from "@/lib/contact-pause";
 import {
   CONTACT_KINDS,
+  CONTACT_SEGMENTS,
+  asksSegment,
   CONTACT_PRODUCTS,
   CONTACT_TIMELINES,
   CONTACT_MESSAGE_MAX,
@@ -21,6 +24,7 @@ import {
   type ContactKind,
   type ContactPreset,
   type ContactProduct,
+  type ContactSegment,
   type ContactTimeline,
 } from "@/lib/contact";
 import { Button } from "@krizaka/ui/button";
@@ -54,7 +58,7 @@ function verifyErrorText(errors: Record<string, string>, error: string | undefin
   return format(byCode[error ?? ""] ?? errors.other, { left: String(left ?? 0) });
 }
 
-const KIND_ICON = { support: ChatIcon, business: UsersIcon, other: FlagIcon } as const;
+const KIND_ICON = { support: ChatIcon, business: UsersIcon, demo: PlayIcon, other: FlagIcon } as const;
 
 /** Every link to this page carries ?source=<page>, and ?topic=<kind>&product=<product> when the page knows them: both are
     pre-selected from it — Support and Verikora from Verikora's footer, the building blocks from open source — and nothing is
@@ -165,6 +169,9 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
   const [product, setProduct] = useState<ContactProduct | null>(preset.product);
   const [topicMissing, setTopicMissing] = useState(false);
   const [timeline, setTimeline] = useState<ContactTimeline | null>(null);
+  const [segment, setSegment] = useState<ContactSegment | null>(null);
+  const [segmentMissing, setSegmentMissing] = useState(false);
+  const [resumeOn, setResumeOn] = useState<Date | null>(null);
   const [values, setValues] = useState({ name: "", email: "", company: "", message: "" });
   const [touched, setTouched] = useState<Partial<Record<Field, boolean>>>({});
   const [status, setStatus] = useState<Status>("idle");
@@ -195,6 +202,11 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
       formRef.current?.querySelector<HTMLElement>('input[name="topic"]')?.focus();
       return;
     }
+    if (asksSegment(source) && !segment) {
+      setSegmentMissing(true);
+      formRef.current?.querySelector<HTMLElement>("#cf-segment button")?.focus();
+      return;
+    }
     const firstInvalid = fields.find((f) => !isValidContactField(f, values[f]));
     if (firstInvalid) {
       formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
@@ -212,7 +224,17 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, kind, product, timeline, website, locale, source, captchaToken: captcha }),
+        body: JSON.stringify({
+          ...values,
+          kind,
+          product,
+          timeline,
+          segment,
+          website,
+          locale,
+          source,
+          captchaToken: captcha,
+        }),
       });
       if (res.ok) {
         // Verify first: the message waits on the server until the code mailed to the address comes back.
@@ -247,6 +269,7 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
     setValues({ name: "", email: "", company: "", message: "" });
     setTouched({});
     setTimeline(null);
+    setSegment(null);
     setStatus("idle");
   };
 
@@ -257,7 +280,18 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
           <CheckIcon size={26} aria-hidden />
         </span>
         <h2>{c.sentTitle}</h2>
-        <p>{format(c.sentBody, { name: sentTo.name, email: sentTo.email })}</p>
+        <p>
+          {resumeOn
+            ? format(c.sentPausedBody, {
+                name: sentTo.name,
+                email: sentTo.email,
+                date: format(c.resumeDate, {
+                  day: String(resumeOn.getUTCDate()),
+                  month: c.months[resumeOn.getUTCMonth()],
+                }),
+              })
+            : format(c.sentBody, { name: sentTo.name, email: sentTo.email })}
+        </p>
         <button type="button" className="kz-cf-ghost" onClick={reset}>
           <ForwardIcon size={14} aria-hidden /> {c.another}
         </button>
@@ -271,7 +305,10 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
       <CodeStep
         challengeId={challengeId}
         email={sentTo.email}
-        onVerified={() => setStatus("sent")}
+        onVerified={() => {
+          setResumeOn(kind === "demo" ? demoResumeDate(new Date()) : null);
+          setStatus("sent");
+        }}
         onBack={backToForm}
       />
     );
@@ -415,6 +452,30 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
         <legend>
           <span className="kz-cf-num">3</span> {c.stepMessage}
         </legend>
+        {asksSegment(source) && (
+          <div className="kz-cf-field" id="cf-segment">
+            <span id="cf-segment-label">{c.stepSegment}</span>
+            <fieldset className="kz-cf-chips" aria-labelledby="cf-segment-label">
+              {CONTACT_SEGMENTS.map((id) => (
+                <Button
+                  key={id}
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  shape="pill"
+                  aria-pressed={segment === id}
+                  onClick={() => {
+                    setSegment(id);
+                    setSegmentMissing(false);
+                  }}
+                >
+                  {c.segments[id]}
+                </Button>
+              ))}
+            </fieldset>
+            {segmentMissing && <em role="alert">{c.fieldErrors.segment}</em>}
+          </div>
+        )}
         <div className="kz-cf-field">
           <span id="cf-timeline">
             {c.timeline} <i>— {c.optional}</i>
