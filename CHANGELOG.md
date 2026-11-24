@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.46.0](https://github.com/krizaka/krizaka-com/compare/v0.45.0...v0.46.0) (2026-11-24)
+
+
+### Features
+
+* **contact:** a campaign demo request reaches the founder with what he needs ([#795](https://github.com/krizaka/krizaka-com/issues/795)) ([4e171c3](https://github.com/krizaka/krizaka-com/commit/4e171c308658a9f2e17c85a69e5b7741fc20cefb))
+
 ## [0.45.0](https://github.com/krizaka/krizaka-com/compare/v0.44.0...v0.45.0) (2026-11-24)
 
 
