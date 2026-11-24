@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.44.0](https://github.com/krizaka/krizaka-com/compare/v0.43.3...v0.44.0) (2026-11-24)
+
+
+### Features
+
+* **assets:** krizaka-com holds its asset registry, checked by the shared assets-guard ([#790](https://github.com/krizaka/krizaka-com/issues/790)) ([44981f2](https://github.com/krizaka/krizaka-com/commit/44981f23b72ecd5e6110ff03e1e0f8a9a1590f1b))
+
 ## [0.43.3](https://github.com/krizaka/krizaka-com/compare/v0.43.2...v0.43.3) (2026-11-21)
 
 
