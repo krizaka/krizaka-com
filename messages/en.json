@@ -20,7 +20,6 @@
   "contact": {
     "pageTitle": "Contact & partnerships",
     "heading": "Contact & partnerships",
-    "intro": "Sovkora is an open-source project: most conversations happen in public. Pick the channel that fits your need.",
     "channels": [
       {
         "title": "Questions & help",
@@ -33,12 +32,6 @@
         "desc": "Something's off, or an idea to propose? Open an issue.",
         "cta": "Open an issue",
         "kind": "issues"
-      },
-      {
-        "title": "Partnerships & press",
-        "desc": "Collaboration, integration or media request — write to us directly.",
-        "cta": "Email us",
-        "kind": "email"
       }
     ]
   },
@@ -1440,10 +1433,10 @@
     },
     "contactPage": {
       "eyebrow": "Contact",
-      "title": "Let's talk about your project",
-      "lead": "Deploying Sovkora, building on a Krizaka component, a custom integration, a sovereign-AI audit or a partnership: write to the team, we reply within two business days.",
-      "publicTitle": "Or talk in public",
-      "publicLead": "Questions, bugs and ideas about our open-source repositories are discussed on GitHub.",
+      "title": "Pick the right door",
+      "lead": "A question or a bug about a product goes to GitHub, in public, where others can find the answer. A business request goes to the team, by form.",
+      "publicTitle": "Products and open source, in public",
+      "publicLead": "Questions, bugs and ideas about our products and libraries are discussed on GitHub, so the answer helps the next person too.",
       "nextTitle": "What happens next",
       "nextSteps": [
         {
@@ -1464,7 +1457,35 @@
       "groupStack": "Open source",
       "viaIssue": "via an issue",
       "discussionsAria": "{name}: ask a question",
-      "issuesAria": "{name}: report a bug or propose a feature"
+      "issuesAria": "{name}: report a bug or propose a feature",
+      "sorter": [
+        {
+          "title": "A question about a product",
+          "text": "Ask it in GitHub Discussions.",
+          "href": "#questions"
+        },
+        {
+          "title": "A bug or an idea",
+          "text": "Open a GitHub issue.",
+          "href": "#bugs"
+        },
+        {
+          "title": "A business request",
+          "text": "Write to the team.",
+          "href": "#business"
+        }
+      ],
+      "publicNote": "Never post personal data or a security flaw in public.",
+      "noAccountText": "No GitHub account, or a private question about a product you use?",
+      "noAccountLink": "Write to support",
+      "businessTitle": "A business request",
+      "businessLead": "Custom integration, sovereign-AI audit, partnership or a demo: write to the team, we reply within two business days. This form is for business requests only.",
+      "businessToggle": "Write to the team",
+      "sorterLabel": "Where to go",
+      "meta": {
+        "title": "Contact: questions, bugs and business requests | Krizaka Montréal",
+        "description": "Ask a product question or report a bug on GitHub, or write to the Krizaka team in Montréal for integrations, sovereign-AI audits and partnerships."
+      }
     },
     "search": {
       "placeholder": "Search pages and documentation...",

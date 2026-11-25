@@ -27,7 +27,7 @@ export default function PublicChannelList({
     <div className="pc-list">
       {groups.map((g) => (
         <section key={g.group} aria-label={g.group === "products" ? words.groupProducts : words.groupStack}>
-          <h3 className="pc-group">{g.group === "products" ? words.groupProducts : words.groupStack}</h3>
+          <h4 className="pc-group">{g.group === "products" ? words.groupProducts : words.groupStack}</h4>
           <ul className="pc-rows">
             {g.entries.map((e) => {
               const link = e[kind];

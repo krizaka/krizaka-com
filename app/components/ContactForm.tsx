@@ -130,7 +130,7 @@ function CodeStep({
 
   return (
     <form className="kz-cf" onSubmit={submit} noValidate>
-      <h2>{c.verifyTitle}</h2>
+      <h3>{c.verifyTitle}</h3>
       <p>{format(c.verifyBody, { email })}</p>
       <label className="kz-cf-field">
         <span>{c.codeLabel}</span>
@@ -279,7 +279,7 @@ function Form({ preset, source }: Readonly<{ preset: ContactPreset; source: stri
         <span className="kz-cf-done-mark" aria-hidden>
           <CheckIcon size={26} aria-hidden />
         </span>
-        <h2>{c.sentTitle}</h2>
+        <h3>{c.sentTitle}</h3>
         <p>
           {resumeOn
             ? format(c.sentPausedBody, {
@@ -616,7 +616,7 @@ const STYLES = `
   @media (max-width:560px) { .kz-cf-submit { width:100%; } }
 
   .kz-cf-done { justify-items:center; text-align:center; gap:12px; padding:clamp(32px, 6vw, 56px) 24px; outline:none; }
-  .kz-cf-done h2 { margin:6px 0 0; font-family:var(--font-display), system-ui, sans-serif; font-size:22px; color:var(--kz-text-primary); }
+  .kz-cf-done h3 { margin:6px 0 0; font-family:var(--font-display), system-ui, sans-serif; font-size:22px; color:var(--kz-text-primary); }
   .kz-cf-done p { margin:0; max-width:420px; font-size:15px; line-height:1.6; color:var(--kz-text-secondary); }
   .kz-cf-done-mark { display:grid; place-items:center; width:56px; height:56px; border-radius:50%;
     color:var(--kz-success); background:color-mix(in srgb, var(--kz-success) 14%, transparent);

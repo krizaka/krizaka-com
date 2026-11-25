@@ -20,7 +20,6 @@
   "contact": {
     "pageTitle": "Contact & partenariats",
     "heading": "Contact & partenariats",
-    "intro": "Sovkora est un projet open source : la plupart des échanges se font en public. Choisis le canal qui correspond à ton besoin.",
     "channels": [
       {
         "title": "Questions & entraide",
@@ -33,12 +32,6 @@
         "desc": "Quelque chose ne va pas, ou une idée à proposer ? Ouvre une issue.",
         "cta": "Ouvrir une issue",
         "kind": "issues"
-      },
-      {
-        "title": "Partenariats & presse",
-        "desc": "Collaboration, intégration ou demande média — écris-nous directement.",
-        "cta": "Nous écrire",
-        "kind": "email"
       }
     ]
   },
@@ -1440,10 +1433,10 @@
     },
     "contactPage": {
       "eyebrow": "Contact",
-      "title": "Parlons de votre projet",
-      "lead": "Déploiement de Sovkora, projet bâti sur une brique Krizaka, intégration sur mesure, audit d'IA souveraine ou partenariat : écrivez à l'équipe, nous répondons sous deux jours ouvrables.",
-      "publicTitle": "Ou échangeons en public",
-      "publicLead": "Questions, bogues et idées sur nos dépôts open source se discutent sur GitHub.",
+      "title": "Choisissez la bonne porte",
+      "lead": "Une question ou un bogue sur un produit va sur GitHub, en public, là où d'autres retrouveront la réponse. Une demande d'affaires va à l'équipe, par formulaire.",
+      "publicTitle": "Produits et open source, en public",
+      "publicLead": "Questions, bogues et idées sur nos produits et nos bibliothèques se discutent sur GitHub : la réponse servira aussi à la personne suivante.",
       "nextTitle": "La suite",
       "nextSteps": [
         {
@@ -1464,7 +1457,35 @@
       "groupStack": "Open source",
       "viaIssue": "via une issue",
       "discussionsAria": "{name} : poser une question",
-      "issuesAria": "{name} : signaler un bug ou proposer une fonctionnalité"
+      "issuesAria": "{name} : signaler un bug ou proposer une fonctionnalité",
+      "sorter": [
+        {
+          "title": "Une question sur un produit",
+          "text": "Posez-la dans les Discussions GitHub.",
+          "href": "#questions"
+        },
+        {
+          "title": "Un bogue ou une idée",
+          "text": "Ouvrez une issue GitHub.",
+          "href": "#bugs"
+        },
+        {
+          "title": "Une demande d'affaires",
+          "text": "Écrivez à l'équipe.",
+          "href": "#business"
+        }
+      ],
+      "publicNote": "Ne publiez jamais de donnée personnelle ni de faille de sécurité en public.",
+      "noAccountText": "Pas de compte GitHub, ou une question privée sur un produit que vous utilisez ?",
+      "noAccountLink": "Écrire au support",
+      "businessTitle": "Une demande d'affaires",
+      "businessLead": "Intégration sur mesure, audit d'IA souveraine, partenariat ou démo : écrivez à l'équipe, nous répondons sous deux jours ouvrables. Ce formulaire est réservé aux demandes d'affaires.",
+      "businessToggle": "Écrire à l'équipe",
+      "sorterLabel": "Où aller",
+      "meta": {
+        "title": "Contact : questions, bogues et demandes d'affaires | Krizaka Montréal",
+        "description": "Posez une question de produit ou signalez un bogue sur GitHub, ou écrivez à l'équipe Krizaka à Montréal pour une intégration, un audit d'IA souveraine ou un partenariat."
+      }
     },
     "search": {
       "placeholder": "Rechercher une page, la documentation...",

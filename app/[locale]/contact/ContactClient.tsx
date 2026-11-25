@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Mascot } from "@krizaka/ui/mascots";
 import { ChatIcon, FlagIcon } from "@krizaka/icons";
 import SiteBar from "../../components/SiteBar";
@@ -7,6 +8,9 @@ import { useI18n } from "../../components/I18nProvider";
 import ContactForm from "../../components/ContactForm";
 import { reveal } from "@/lib/motion";
 import { PageHero } from "@krizaka/ui/page-hero";
+import { Button } from "@krizaka/ui/button";
+import { cleanSource } from "@/lib/contact";
+import { BUSINESS_ANCHOR, opensContactFold, SUPPORT_FALLBACK_PRESET } from "@/lib/contact-fold";
 import Link from "next/link";
 import PublicChannelList from "../../components/PublicChannelList";
 import type { ChannelGroup, ChannelKind } from "@/lib/public-channels";
@@ -31,6 +35,7 @@ const CHANNELS = [
     accent: "var(--kz-info-text)",
     glow: "color-mix(in srgb, var(--kz-info) 8%, transparent)",
     kind: "discussions" as ChannelKind,
+    anchor: "questions",
   },
   {
     id: "issues",
@@ -39,13 +44,67 @@ const CHANNELS = [
     accent: "var(--kz-warning-text)",
     glow: "color-mix(in srgb, var(--kz-warning) 8%, transparent)",
     kind: "issues" as ChannelKind,
+    anchor: "bugs",
   },
 ];
 
+/** The arrival's fold state, read from the address once the page is in the browser (the static page cannot know it). */
+function foldFromAddress(): boolean {
+  const q = new URLSearchParams(window.location.search);
+  return opensContactFold({
+    hash: window.location.hash,
+    topic: q.get("topic"),
+    source: cleanSource(q.get("source")),
+  });
+}
+
+function subscribeToHash(notify: () => void): () => void {
+  window.addEventListener("hashchange", notify);
+  return () => window.removeEventListener("hashchange", notify);
+}
+
 export default function ContactClient({ groups }: Readonly<{ groups: ChannelGroup[] }>) {
   const { t } = useI18n();
+  const page = t.site.contactPage;
+  // Arrival: the address decides (the static page renders folded; the browser's address opens it). A click overrides it.
+  const arrivalOpen = useSyncExternalStore(subscribeToHash, foldFromAddress, () => false);
+  const [chosen, setChosen] = useState<boolean | null>(null);
+  // The form is mounted on the first opening and kept afterwards: what was typed survives a fold.
+  const [kept, setKept] = useState(false);
+  const [fallback, setFallback] = useState(false);
+  const businessTitle = useRef<HTMLHeadingElement>(null);
+  const open = chosen ?? arrivalOpen;
+  const mounted = open || kept;
 
-  // Only keep the first 2 channels (Questions & Bugs), skip "Partenariats & presse"
+  useEffect(() => {
+    if (arrivalOpen) {
+      businessTitle.current?.focus();
+    }
+  }, [arrivalOpen]);
+
+  useEffect(() => {
+    const onHash = () => {
+      if (window.location.hash !== BUSINESS_ANCHOR) {
+        return;
+      }
+      setChosen(true);
+      businessTitle.current?.focus();
+    };
+    window.addEventListener("hashchange", onHash);
+    return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+
+  const toggle = () => {
+    setKept(true);
+    setChosen(!open);
+  };
+  const writeToSupport = () => {
+    setFallback(true);
+    setChosen(true);
+    businessTitle.current?.focus();
+  };
+
+  // Only keep the first 2 channels (Questions & Bugs)
   const channels = t.contact.channels.slice(0, 2);
 
   return (
@@ -54,37 +113,27 @@ export default function ContactClient({ groups }: Readonly<{ groups: ChannelGrou
 
       {/* The first screen of the page language (painted at once, no entrance: LCP); the flamingo answers. */}
       <PageHero
-        eyebrow={t.site.contactPage.eyebrow}
-        title={t.site.contactPage.title}
-        lead={t.site.contactPage.lead}
+        eyebrow={page.eyebrow}
+        title={page.title}
+        lead={page.lead}
         aside={<Mascot bird="flamingo" mood="welcome" size={112} />}
         linkAs={Link}
       />
 
-      <div className="kz-frame" style={{ paddingBlock: "56px 80px" }}>
-        {/* ─── Private message to the team, and what happens after ─── */}
-        <div className="contact-main">
-          <ContactForm />
-          <aside className="contact-next" aria-labelledby="contact-next-title">
-            <h2 id="contact-next-title">{t.site.contactPage.nextTitle}</h2>
-            <ol>
-              {t.site.contactPage.nextSteps.map((step, i) => (
-                <li key={step.title}>
-                  <span className="contact-next-num">{i + 1}</span>
-                  <div>
-                    <strong>{step.title}</strong>
-                    <p>{step.text}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <ul className="contact-facts">
-              {t.site.contactPage.facts.map((fact) => (
-                <li key={fact}>{fact}</li>
-              ))}
-            </ul>
-          </aside>
-        </div>
+      <div className="kz-frame" style={{ paddingBlock: "32px 80px" }}>
+        {/* ─── The sorter: three doors, the first screen at 360 px ─── */}
+        <nav aria-label={page.sorterLabel} className="contact-sorter">
+          <ul>
+            {page.sorter.map((row) => (
+              <li key={row.href}>
+                <a href={row.href}>
+                  <strong>{row.title}</strong>
+                  <span>{row.text}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
         {/* #public: /open-source's "contribute" lands here — a discussion or an issue, on the right repository. */}
         <h2
@@ -98,11 +147,9 @@ export default function ContactClient({ groups }: Readonly<{ groups: ChannelGrou
             margin: "0 0 6px",
           }}
         >
-          {t.site.contactPage.publicTitle}
+          {page.publicTitle}
         </h2>
-        <p style={{ fontSize: "14px", color: "var(--kz-text-secondary)", margin: "0 0 20px" }}>
-          {t.site.contactPage.publicLead}
-        </p>
+        <p style={{ fontSize: "14px", color: "var(--kz-text-secondary)", margin: "0 0 20px" }}>{page.publicLead}</p>
 
         {/* ─── Two channels, each a grouped list: Products · Open source ─── */}
         <div
@@ -121,6 +168,7 @@ export default function ContactClient({ groups }: Readonly<{ groups: ChannelGrou
             return (
               <div
                 key={ch.kind}
+                id={channelDef.anchor}
                 className="contact-card"
                 {...reveal(index)}
                 style={{
@@ -173,14 +221,70 @@ export default function ContactClient({ groups }: Readonly<{ groups: ChannelGrou
                 <p style={{ fontSize: "13px", color: "var(--kz-text-secondary)", lineHeight: 1.6, margin: "0 0 16px" }}>
                   {ch.desc}
                 </p>
-                <PublicChannelList groups={groups} kind={kind} words={t.site.contactPage} />
+                <PublicChannelList groups={groups} kind={kind} words={page} />
               </div>
             );
           })}
         </div>
+
+        <p className="contact-note">{page.publicNote}</p>
+        <p className="contact-noaccount">
+          {page.noAccountText}{" "}
+          <Button type="button" variant="ghost" size="sm" onClick={writeToSupport}>
+            {page.noAccountLink}
+          </Button>
+        </p>
+
+        {/* ─── The business request: folded, opened by one clear step ─── */}
+        <section id="business" aria-labelledby="business-title" className="contact-business">
+          <h2 id="business-title" ref={businessTitle} tabIndex={-1}>
+            {page.businessTitle}
+          </h2>
+          <p>{page.businessLead}</p>
+          <Button type="button" variant="outline" aria-expanded={open} aria-controls="business-panel" onClick={toggle}>
+            {page.businessToggle}
+          </Button>
+          <div id="business-panel" hidden={!open} className="contact-main">
+            {mounted && <ContactForm defaultPreset={fallback ? SUPPORT_FALLBACK_PRESET : undefined} />}
+            <aside className="contact-next" aria-labelledby="contact-next-title">
+              <h3 id="contact-next-title">{page.nextTitle}</h3>
+              <ol>
+                {page.nextSteps.map((step, i) => (
+                  <li key={step.title}>
+                    <span className="contact-next-num">{i + 1}</span>
+                    <div>
+                      <strong>{step.title}</strong>
+                      <p>{step.text}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <ul className="contact-facts">
+                {page.facts.map((fact) => (
+                  <li key={fact}>{fact}</li>
+                ))}
+              </ul>
+            </aside>
+          </div>
+        </section>
       </div>
 
       <style>{`
+        .contact-sorter ul { list-style: none; margin: 0 0 40px; padding: 0; display: grid; gap: 8px; }
+        .contact-sorter a { display: grid; gap: 2px; padding: 12px 16px; border: 1px solid var(--kz-border-default); background: var(--kz-surface-1);
+          color: var(--kz-text-primary); text-decoration: none; }
+        .contact-sorter a:hover { border-color: var(--kz-border-strong); background: var(--kz-surface-2); }
+        .contact-sorter strong { font-size: 15px; }
+        .contact-sorter span { font-size: 13px; color: var(--kz-text-secondary); }
+        @media (min-width: 720px) { .contact-sorter ul { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+        .contact-card, .contact-business { scroll-margin-top: var(--kz-anchor-offset, 96px); }
+        .contact-note { margin: 0 0 8px; font-size: 13px; color: var(--kz-text-secondary); }
+        .contact-noaccount { margin: 0 0 56px; font-size: 14px; color: var(--kz-text-secondary); }
+        .contact-business { border-top: 1px solid var(--kz-border-subtle); padding-top: 40px; display: grid; gap: 14px; justify-items: start; }
+        .contact-business h2 { margin: 0; font-family: var(--font-display), system-ui, sans-serif; font-size: 22px; font-weight: 700; color: var(--kz-text-primary); }
+        .contact-business > p { margin: 0; max-width: 62ch; font-size: 14px; line-height: 1.6; color: var(--kz-text-secondary); }
+        .contact-business .contact-main { justify-self: stretch; margin: 12px 0 0; }
+        .contact-business .contact-main[hidden] { display: none; }
 
         /* The channel cards answer the pointer, and their mascot wakes up (still otherwise: nothing loops by itself). */
         .contact-card { transition: border-color 250ms var(--kz-ease), box-shadow 250ms var(--kz-ease), transform 250ms var(--kz-ease), opacity .8s var(--kz-ease), filter .8s var(--kz-ease); }
@@ -202,9 +306,9 @@ export default function ContactClient({ groups }: Readonly<{ groups: ChannelGrou
         }
 
         .contact-main { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(260px, 1fr); gap: clamp(24px, 4vw, 48px);
-          align-items: start; margin-bottom: 72px; }
+          align-items: start; }
         .contact-next { position: sticky; top: 110px; padding: 8px 0; }
-        .contact-next h2 { margin: 0 0 20px; font-family: var(--font-display), system-ui, sans-serif; font-size: 16px; font-weight: 700; color: var(--kz-text-primary); }
+        .contact-next h3 { margin: 0 0 20px; font-family: var(--font-display), system-ui, sans-serif; font-size: 16px; font-weight: 700; color: var(--kz-text-primary); }
         .contact-next ol { position: relative; margin: 0; padding: 0; list-style: none; display: grid; gap: 22px; }
         .contact-next ol::before { content: ""; position: absolute; left: 13px; top: 8px; bottom: 8px; width: 1px; background: var(--kz-border-default); }
         .contact-next li { position: relative; display: flex; gap: 14px; }
