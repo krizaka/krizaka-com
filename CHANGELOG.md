@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.47.0](https://github.com/krizaka/krizaka-com/compare/v0.46.1...v0.47.0) (2026-11-27)
+
+
+### Features
+
+* **contact:** GitHub first, the business form folded below (krizaka-internal[#4902](https://github.com/krizaka/krizaka-com/issues/4902)) ([#807](https://github.com/krizaka/krizaka-com/issues/807)) ([d2a5acc](https://github.com/krizaka/krizaka-com/commit/d2a5acc39dfe276045d16e0d0cd960e3e8e3703d))
+
+
+### Performance
+
+* **ci:** the merge queue reuses the pull-request run that proved the same tree ([#802](https://github.com/krizaka/krizaka-com/issues/802)) ([9f95674](https://github.com/krizaka/krizaka-com/commit/9f956748994a28023b45b0a61110396c63f0f21f))
+
 ## [0.46.1](https://github.com/krizaka/krizaka-com/compare/v0.46.0...v0.46.1) (2026-11-24)
 
 
