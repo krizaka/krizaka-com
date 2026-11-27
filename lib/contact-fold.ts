@@ -1,7 +1,7 @@
 /* When the business form of /contact starts open: the page leads with GitHub, the form is folded below for business
    requests, and anything that already says « write to the team » lands on an open form (krizaka-internal#4902). */
 
-import { asksSegment } from "./contact.ts";
+import { asksSegment, cleanSource } from "./contact.ts";
 import type { ContactPreset } from "./contact-kinds.ts";
 
 /** The anchor of the business block: the sorter's third row, and /services, link to it. */
@@ -19,7 +19,43 @@ export interface FoldQuery {
   source: string | null;
 }
 
+export interface HashTarget {
+  addEventListener(type: "hashchange", listener: () => void): void;
+  removeEventListener(type: "hashchange", listener: () => void): void;
+}
+
+export interface HashLocationTarget extends HashTarget {
+  location: Pick<Location, "search" | "hash">;
+}
+
 /** Whether the form is open on arrival: `#business`, any explicit `topic=`, or the demo source. Else folded. */
 export function opensContactFold({ hash, topic, source }: FoldQuery): boolean {
   return hash === BUSINESS_ANCHOR || (topic ?? "") !== "" || asksSegment(source);
+}
+
+/** The arrival's fold state, read from the address once the page is in the browser (the static page cannot know it). */
+export function foldFromAddress(location: Pick<Location, "search" | "hash"> = globalThis.location): boolean {
+  const q = new URLSearchParams(location.search);
+  return opensContactFold({
+    hash: location.hash,
+    topic: q.get("topic"),
+    source: cleanSource(q.get("source")),
+  });
+}
+
+/** Subscribe to address hash changes; returns the unsubscribe callback. */
+export function subscribeToHash(notify: () => void, target: HashTarget = globalThis): () => void {
+  target.addEventListener("hashchange", notify);
+  return () => target.removeEventListener("hashchange", notify);
+}
+
+/** Subscribe to hash changes that land on `#business`, calling `onOpen` when matched. */
+export function subscribeToBusinessAnchor(onOpen: () => void, target: HashLocationTarget = globalThis): () => void {
+  const onHash = () => {
+    if (target.location.hash !== BUSINESS_ANCHOR) {
+      return;
+    }
+    onOpen();
+  };
+  return subscribeToHash(onHash, target);
 }
