@@ -9,8 +9,12 @@ import ContactForm from "../../components/ContactForm";
 import { reveal } from "@/lib/motion";
 import { PageHero } from "@krizaka/ui/page-hero";
 import { Button } from "@krizaka/ui/button";
-import { cleanSource } from "@/lib/contact";
-import { BUSINESS_ANCHOR, opensContactFold, SUPPORT_FALLBACK_PRESET } from "@/lib/contact-fold";
+import {
+  foldFromAddress,
+  subscribeToBusinessAnchor,
+  subscribeToHash,
+  SUPPORT_FALLBACK_PRESET,
+} from "@/lib/contact-fold";
 import Link from "next/link";
 import PublicChannelList from "../../components/PublicChannelList";
 import type { ChannelGroup, ChannelKind } from "@/lib/public-channels";
@@ -48,21 +52,6 @@ const CHANNELS = [
   },
 ];
 
-/** The arrival's fold state, read from the address once the page is in the browser (the static page cannot know it). */
-function foldFromAddress(): boolean {
-  const q = new URLSearchParams(window.location.search);
-  return opensContactFold({
-    hash: window.location.hash,
-    topic: q.get("topic"),
-    source: cleanSource(q.get("source")),
-  });
-}
-
-function subscribeToHash(notify: () => void): () => void {
-  window.addEventListener("hashchange", notify);
-  return () => window.removeEventListener("hashchange", notify);
-}
-
 export default function ContactClient({ groups }: Readonly<{ groups: ChannelGroup[] }>) {
   const { t } = useI18n();
   const page = t.site.contactPage;
@@ -82,17 +71,14 @@ export default function ContactClient({ groups }: Readonly<{ groups: ChannelGrou
     }
   }, [arrivalOpen]);
 
-  useEffect(() => {
-    const onHash = () => {
-      if (window.location.hash !== BUSINESS_ANCHOR) {
-        return;
-      }
-      setChosen(true);
-      businessTitle.current?.focus();
-    };
-    window.addEventListener("hashchange", onHash);
-    return () => window.removeEventListener("hashchange", onHash);
-  }, []);
+  useEffect(
+    () =>
+      subscribeToBusinessAnchor(() => {
+        setChosen(true);
+        businessTitle.current?.focus();
+      }),
+    [],
+  );
 
   const toggle = () => {
     setKept(true);
